@@ -531,78 +531,105 @@
       color: var(--gold);
     }
 
-    /* ── Selector strip ────────────────────────────────────────── */
+    /* ── Selector strip — line-art glyphs, halo on active ─────── */
 
     .strip-wrap {
-      padding-top: 6px;
-      padding-bottom: 8px;
-      border-top: 1px solid var(--hair);
+      padding: 18px 0 20px;
+      border-top: 1px solid var(--hair-2);
       border-bottom: 1px solid var(--hair);
       background:
-        linear-gradient(180deg, rgba(201,169,97,0.04), transparent 60%),
-        var(--bg-2);
+        radial-gradient(80% 60% at 50% -10%, rgba(201,169,97,0.05), transparent 70%),
+        linear-gradient(180deg, rgba(11,13,18,0.6) 0%, var(--bg) 100%);
+      position: relative;
     }
-    .strip-head {
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 14px 20px 10px;
+    .strip-wrap::before,
+    .strip-wrap::after {
+      content: "";
+      position: absolute; top: 0; bottom: 0;
+      width: 36px;
+      pointer-events: none;
+      z-index: 2;
     }
+    .strip-wrap::before {
+      left: 0;
+      background: linear-gradient(90deg, var(--bg) 0%, transparent 100%);
+    }
+    .strip-wrap::after {
+      right: 0;
+      background: linear-gradient(270deg, var(--bg) 0%, transparent 100%);
+    }
+
     .strip {
       display: flex;
-      gap: 8px;
-      padding: 4px 20px 18px;
+      align-items: center;
+      gap: 4px;
+      padding: 6px 24px 8px;
       overflow-x: auto;
       scroll-snap-type: x proximity;
       scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
     }
     .strip::-webkit-scrollbar { display: none; }
-    .strip__item {
+
+    .strip__glyph {
       flex: 0 0 auto;
-      width: 64px; height: 84px;
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      gap: 4px;
-      background: var(--surface);
-      border: 1px solid var(--hair);
-      scroll-snap-align: start;
+      position: relative;
+      width: 44px; height: 44px;
+      display: grid; place-items: center;
+      border-radius: 50%;
+      background: transparent;
+      border: 1px solid transparent;
+      scroll-snap-align: center;
+      color: var(--ink-mute);
+      font-family: var(--serif);
+      font-variant-emoji: text;
+      font-size: 22px;
+      line-height: 1;
       transition:
-        border-color 420ms var(--ease),
         color 420ms var(--ease),
+        border-color 420ms var(--ease),
         background 420ms var(--ease),
         box-shadow 420ms var(--ease),
-        transform 220ms var(--ease);
-      position: relative;
+        transform 220ms var(--ease),
+        text-shadow 420ms var(--ease);
     }
-    .strip__item:active { transform: scale(0.96); }
-    .strip__item .sym {
-      font-family: var(--serif);
+    .strip__glyph:hover { color: var(--ink-2); }
+    .strip__glyph:active { transform: scale(0.92); }
+
+    .strip__glyph.is-active {
+      color: var(--gold-bright);
       font-size: 26px;
-      color: var(--ink-2);
-      line-height: 1;
-      font-variant-emoji: text;
-      transition: color 280ms var(--ease), text-shadow 280ms var(--ease);
-    }
-    .strip__item .tk {
-      font-family: var(--mono);
-      font-size: 8.5px;
-      letter-spacing: 0.2em;
-      color: var(--ink-mute);
-      transition: color 280ms var(--ease);
-    }
-    .strip__item.is-active {
       border-color: var(--gold);
-      background: linear-gradient(180deg, rgba(201,169,97,0.08), transparent 70%), var(--surface-2);
+      background:
+        radial-gradient(60% 60% at 50% 50%, rgba(201,169,97,0.18), transparent 80%);
       box-shadow:
-        inset 0 1px 0 rgba(222,192,122,0.18),
+        inset 0 0 12px rgba(201,169,97,0.30),
         0 0 0 1px rgba(201,169,97,0.18),
-        0 0 24px -6px rgba(201,169,97,0.35);
+        0 0 24px -2px rgba(201,169,97,0.55),
+        0 0 48px -8px rgba(201,169,97,0.45);
+      text-shadow:
+        0 0 12px rgba(222,192,122,0.65),
+        0 0 1px rgba(255,236,180,0.8);
     }
-    .strip__item.is-active .sym { color: var(--gold-bright); text-shadow: 0 0 12px rgba(201,169,97,0.45); }
-    .strip__item.is-active .tk  { color: var(--gold); }
-    .strip__item::after {
-      content: ""; position: absolute; left: 8px; right: 8px; bottom: 4px;
-      height: 1px; background: var(--hair);
-      opacity: 0;
+
+    .strip__sub {
+      margin-top: 4px;
+      display: flex; align-items: center; justify-content: center;
+      gap: 14px;
+      font-family: var(--mono);
+      font-size: 9.5px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--ink-mute);
     }
-    .strip__item.is-active::after { opacity: 1; background: var(--hair-3); }
+    .strip__sub .chev {
+      color: var(--ink-dim);
+      font-family: var(--serif);
+      font-size: 14px;
+      opacity: 0.7;
+      transition: opacity 320ms var(--ease), transform 420ms var(--ease);
+    }
+    .strip__sub:hover .chev { opacity: 1; }
 
     /* ── Museum label / detail panel ───────────────────────────── */
 
@@ -1282,23 +1309,25 @@
 
       return (
         <section className="strip-wrap" aria-label="Zodiac selector">
-          <div className="strip-head">
-            <span className="label label--gold">Index — Twelve signs</span>
-            <span className="label label--mute">Scroll →</span>
-          </div>
-          <div className="strip" ref={ref}>
+          <div className="strip" ref={ref} role="tablist">
             {SIGNS.map(s => (
               <button
                 key={s.ticker}
-                className={'strip__item' + (active === s.ticker ? ' is-active' : '')}
+                className={'strip__glyph' + (active === s.ticker ? ' is-active' : '')}
                 onClick={() => setActive(s.ticker)}
+                role="tab"
                 aria-pressed={active === s.ticker}
                 aria-label={s.name}
+                title={s.name}
               >
-                <span className="sym">{s.symbol}</span>
-                <span className="tk">{s.ticker.slice(0, 5)}</span>
+                {s.symbol}
               </button>
             ))}
+          </div>
+          <div className="strip__sub">
+            <span className="chev" aria-hidden="true">‹</span>
+            <span>Scroll or drag to explore</span>
+            <span className="chev" aria-hidden="true">›</span>
           </div>
         </section>
       );
