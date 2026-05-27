@@ -1,0 +1,1270 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#08090C" />
+  <meta name="color-scheme" content="dark" />
+  <title>Zodiacs.org — The oldest story, reinvented.</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400;500&display=swap"
+    rel="stylesheet"
+  />
+
+  <style>
+    /* ──────────────────────────────────────────────────────────────
+       Zodiacs.org — Mobile landing
+       Aesthetic: dark museum luxury × ancient astronomical artifact
+       × private banking terminal.
+       ────────────────────────────────────────────────────────────── */
+
+    :root {
+      --bg:            #08090C;
+      --bg-2:          #0B0D12;
+      --surface:       #10131A;
+      --surface-2:     #161A23;
+      --surface-3:     #1C2230;
+
+      --hair:          rgba(201, 169, 97, 0.10);
+      --hair-2:        rgba(201, 169, 97, 0.22);
+      --hair-3:        rgba(201, 169, 97, 0.42);
+      --hair-stone:    rgba(232, 227, 212, 0.06);
+
+      --gold:          #C9A961;
+      --gold-bright:   #DEC07A;
+      --gold-deep:     #8E7541;
+      --bronze:        #6B5638;
+
+      --ink:           #E8E3D4;
+      --ink-2:         #C9C4B5;
+      --ink-dim:       #908B7C;
+      --ink-mute:      #65604F;
+
+      --stone:         #2A2E37;
+      --celestial:     #4A6D94;
+      --celestial-dim: #2C415A;
+
+      --serif:         'Cormorant Garamond', 'EB Garamond', Georgia, Cambria, 'Times New Roman', serif;
+      --mono:          'JetBrains Mono', 'SFMono-Regular', ui-monospace, Menlo, Monaco, Consolas, monospace;
+
+      --ease:          cubic-bezier(.22,.61,.36,1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--serif);
+      font-weight: 400;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+    }
+
+    body {
+      min-height: 100vh;
+      background:
+        radial-gradient(120% 60% at 50% -10%, rgba(201,169,97,0.06), transparent 60%),
+        radial-gradient(120% 80% at 50% 110%, rgba(74,109,148,0.05), transparent 60%),
+        var(--bg);
+    }
+
+    img, svg { display: block; max-width: 100%; }
+
+    button {
+      font: inherit;
+      color: inherit;
+      background: none;
+      border: 0;
+      padding: 0;
+      cursor: pointer;
+    }
+
+    /* ── App shell ─────────────────────────────────────────────── */
+
+    .zd {
+      max-width: 480px;
+      margin: 0 auto;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    @media (min-width: 720px) {
+      .zd { max-width: 460px; box-shadow: 0 0 0 1px var(--hair) inset; }
+    }
+
+    /* ── Micro-typography utilities ────────────────────────────── */
+
+    .label {
+      font-family: var(--mono);
+      font-weight: 400;
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--ink-dim);
+    }
+    .label--gold { color: var(--gold); }
+    .label--mute { color: var(--ink-mute); }
+
+    .mono   { font-family: var(--mono); font-feature-settings: "tnum" 1, "ss01" 1; }
+    .serif  { font-family: var(--serif); }
+    .italic { font-style: italic; }
+
+    .hair { height: 1px; background: var(--hair); width: 100%; border: 0; margin: 0; }
+    .hair--gold { background: linear-gradient(90deg, transparent, var(--hair-3) 18%, var(--hair-3) 82%, transparent); }
+    .hair--vert { width: 1px; height: 100%; background: var(--hair); }
+
+    .dot {
+      display: inline-block; width: 3px; height: 3px;
+      background: var(--gold); border-radius: 50%; vertical-align: middle;
+      margin: 0 8px 2px; opacity: 0.7;
+    }
+
+    /* ── Header ────────────────────────────────────────────────── */
+
+    .hdr {
+      position: sticky; top: 0; z-index: 50;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 56px; padding: 0 20px;
+      background: rgba(8, 9, 12, 0.78);
+      backdrop-filter: saturate(140%) blur(14px);
+      -webkit-backdrop-filter: saturate(140%) blur(14px);
+      border-bottom: 1px solid var(--hair);
+    }
+    .hdr__mark {
+      font-family: var(--serif);
+      font-size: 16px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink);
+    }
+    .hdr__mark .dim { color: var(--gold); font-weight: 500; }
+    .hdr__mark .sep { color: var(--ink-mute); margin: 0 4px; }
+    .hdr__nav {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--ink-2);
+      padding: 8px 10px 8px 14px;
+      border-left: 1px solid var(--hair-2);
+    }
+
+    /* ── Hero ──────────────────────────────────────────────────── */
+
+    .hero {
+      padding: 28px 20px 32px;
+      position: relative;
+    }
+    .hero::before {
+      content: "";
+      position: absolute; inset: 0;
+      background: radial-gradient(70% 50% at 50% 0%, rgba(201,169,97,0.08), transparent 65%);
+      pointer-events: none;
+    }
+    .hero__eyebrow {
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 22px;
+    }
+    .hero__eyebrow .line {
+      flex: 0 0 24px; height: 1px; background: var(--hair-3);
+    }
+    .hero__headline {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: 42px;
+      line-height: 1.04;
+      letter-spacing: -0.005em;
+      color: var(--ink);
+      margin: 0 0 18px;
+    }
+    .hero__headline .it {
+      font-style: italic;
+      color: var(--gold-bright);
+      font-weight: 400;
+    }
+    .hero__sub {
+      font-family: var(--serif);
+      font-size: 16.5px;
+      line-height: 1.55;
+      color: var(--ink-2);
+      max-width: 34ch;
+      margin: 0 0 28px;
+      font-weight: 400;
+    }
+    .hero__cta {
+      display: flex; flex-direction: column; gap: 12px;
+      margin-bottom: 36px;
+    }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+      height: 52px;
+      padding: 0 22px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+      color: var(--ink);
+      background: transparent;
+      border: 1px solid var(--hair-3);
+      box-shadow:
+        inset 0 1px 0 rgba(222, 192, 122, 0.10),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.4);
+      transition: border-color 240ms var(--ease), color 240ms var(--ease), background 240ms var(--ease);
+    }
+    .btn:hover { border-color: var(--gold); color: var(--gold-bright); }
+    .btn--primary { color: var(--gold-bright); }
+    .btn--ghost {
+      height: 44px;
+      border: 0;
+      box-shadow: none;
+      color: var(--ink-2);
+      letter-spacing: 0.24em;
+      position: relative;
+    }
+    .btn--ghost::after {
+      content: ""; position: absolute; left: 22px; right: 22px; bottom: 12px;
+      height: 1px; background: var(--hair-2);
+    }
+    .btn .arr { color: var(--gold); }
+
+    /* ── Featured card ─────────────────────────────────────────── */
+
+    .card {
+      position: relative;
+      background:
+        radial-gradient(120% 60% at 50% 0%, rgba(201,169,97,0.06), transparent 55%),
+        radial-gradient(120% 100% at 50% 100%, rgba(74,109,148,0.04), transparent 60%),
+        linear-gradient(180deg, #14171F 0%, #0C0E14 100%);
+      border: 1px solid var(--hair-3);
+      box-shadow:
+        inset 0 1px 0 rgba(222,192,122,0.14),
+        inset 0 -1px 0 rgba(0,0,0,0.5),
+        0 18px 40px -22px rgba(0,0,0,0.7),
+        0 0 0 1px rgba(0,0,0,0.4);
+    }
+    .card__inner {
+      padding: 18px;
+      border: 1px solid var(--hair);
+      margin: 8px;
+    }
+    .card__head {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 24px;
+    }
+    .card__corner {
+      position: absolute;
+      width: 10px; height: 10px;
+      border-color: var(--gold);
+      border-style: solid;
+      opacity: 0.55;
+    }
+    .card__corner--tl { top: 4px; left: 4px;   border-width: 1px 0 0 1px; }
+    .card__corner--tr { top: 4px; right: 4px;  border-width: 1px 1px 0 0; }
+    .card__corner--bl { bottom: 4px; left: 4px;  border-width: 0 0 1px 1px; }
+    .card__corner--br { bottom: 4px; right: 4px; border-width: 0 1px 1px 0; }
+
+    .glyph-stage {
+      position: relative;
+      height: 200px;
+      display: grid; place-items: center;
+      margin: 4px 0 6px;
+    }
+    .glyph-stage::before {
+      content: "";
+      position: absolute; inset: 0;
+      background: radial-gradient(50% 40% at 50% 50%, rgba(201,169,97,0.18), transparent 70%);
+      pointer-events: none;
+    }
+    .glyph {
+      font-family: var(--serif);
+      font-size: 168px;
+      line-height: 1;
+      color: var(--gold-bright);
+      text-shadow:
+        0 0 28px rgba(201,169,97,0.25),
+        0 0 1px rgba(255,236,180,0.6);
+      transition: opacity 320ms var(--ease), transform 320ms var(--ease);
+    }
+    .glyph--enter { opacity: 0; transform: translateY(6px) scale(0.985); filter: blur(2px); }
+
+    .card__name {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-style: italic;
+      font-size: 36px;
+      line-height: 1;
+      text-align: center;
+      color: var(--ink);
+      margin: 4px 0 8px;
+    }
+    .card__meta {
+      text-align: center;
+      font-family: var(--mono);
+      font-size: 10.5px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--ink-dim);
+    }
+    .card__meta .g { color: var(--gold); }
+    .card__archetype {
+      text-align: center;
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 15px;
+      color: var(--ink-2);
+      margin-top: 10px;
+      letter-spacing: 0.01em;
+    }
+
+    .card__prev {
+      margin-top: 22px;
+      border-top: 1px solid var(--hair);
+      border-bottom: 1px solid var(--hair);
+      padding: 14px 4px;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+    }
+    .card__prev > div { display: flex; flex-direction: column; gap: 6px; }
+    .card__prev > div + div { border-left: 1px solid var(--hair); padding-left: 16px; }
+    .card__prev .val {
+      font-family: var(--mono);
+      font-size: 17px;
+      color: var(--ink);
+      letter-spacing: 0.02em;
+    }
+    .card__prev .val .ccy { color: var(--ink-dim); margin-right: 6px; font-size: 11px; letter-spacing: 0.2em; }
+    .card__prev .val.up   { color: var(--gold-bright); }
+    .card__prev .val.down { color: #B07A6E; }
+
+    .card__bio {
+      margin-top: 16px;
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 14.5px;
+      line-height: 1.55;
+      color: var(--ink-2);
+    }
+
+    /* ── Section frames ────────────────────────────────────────── */
+
+    .sec { padding: 56px 20px; position: relative; }
+    .sec__head {
+      display: flex; align-items: center; gap: 12px;
+      margin-bottom: 22px;
+    }
+    .sec__head .line { flex: 1; height: 1px; background: var(--hair); }
+    .sec__no {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--ink-mute);
+      letter-spacing: 0.22em;
+    }
+    .sec__title {
+      font-family: var(--mono);
+      font-size: 10.5px;
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    /* ── Selector strip ────────────────────────────────────────── */
+
+    .strip-wrap {
+      padding-top: 6px;
+      padding-bottom: 8px;
+      border-top: 1px solid var(--hair);
+      border-bottom: 1px solid var(--hair);
+      background:
+        linear-gradient(180deg, rgba(201,169,97,0.04), transparent 60%),
+        var(--bg-2);
+    }
+    .strip-head {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 14px 20px 10px;
+    }
+    .strip {
+      display: flex;
+      gap: 8px;
+      padding: 4px 20px 18px;
+      overflow-x: auto;
+      scroll-snap-type: x proximity;
+      scrollbar-width: none;
+    }
+    .strip::-webkit-scrollbar { display: none; }
+    .strip__item {
+      flex: 0 0 auto;
+      width: 64px; height: 84px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 4px;
+      background: var(--surface);
+      border: 1px solid var(--hair);
+      scroll-snap-align: start;
+      transition:
+        border-color 280ms var(--ease),
+        color 280ms var(--ease),
+        background 280ms var(--ease),
+        box-shadow 280ms var(--ease),
+        transform 280ms var(--ease);
+      position: relative;
+    }
+    .strip__item .sym {
+      font-family: var(--serif);
+      font-size: 26px;
+      color: var(--ink-2);
+      line-height: 1;
+      transition: color 280ms var(--ease), text-shadow 280ms var(--ease);
+    }
+    .strip__item .tk {
+      font-family: var(--mono);
+      font-size: 8.5px;
+      letter-spacing: 0.2em;
+      color: var(--ink-mute);
+      transition: color 280ms var(--ease);
+    }
+    .strip__item.is-active {
+      border-color: var(--gold);
+      background: linear-gradient(180deg, rgba(201,169,97,0.08), transparent 70%), var(--surface-2);
+      box-shadow:
+        inset 0 1px 0 rgba(222,192,122,0.18),
+        0 0 0 1px rgba(201,169,97,0.18),
+        0 0 24px -6px rgba(201,169,97,0.35);
+    }
+    .strip__item.is-active .sym { color: var(--gold-bright); text-shadow: 0 0 12px rgba(201,169,97,0.45); }
+    .strip__item.is-active .tk  { color: var(--gold); }
+    .strip__item::after {
+      content: ""; position: absolute; left: 8px; right: 8px; bottom: 4px;
+      height: 1px; background: var(--hair);
+      opacity: 0;
+    }
+    .strip__item.is-active::after { opacity: 1; background: var(--hair-3); }
+
+    /* ── Museum label / detail panel ───────────────────────────── */
+
+    .detail {
+      border: 1px solid var(--hair-2);
+      background:
+        linear-gradient(180deg, rgba(201,169,97,0.03), transparent 40%),
+        var(--surface);
+      padding: 22px 20px 24px;
+    }
+    .detail__name {
+      font-family: var(--serif);
+      font-size: 30px;
+      font-style: italic;
+      font-weight: 400;
+      color: var(--ink);
+      margin: 4px 0 4px;
+      line-height: 1;
+    }
+    .detail__ticker {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.26em;
+      color: var(--gold);
+    }
+    .detail__symbol {
+      float: right;
+      font-family: var(--serif);
+      font-size: 44px;
+      line-height: 1;
+      color: var(--gold-bright);
+      margin-left: 12px;
+      text-shadow: 0 0 18px rgba(201,169,97,0.3);
+    }
+    .detail__rows {
+      margin-top: 18px;
+      border-top: 1px solid var(--hair);
+    }
+    .detail__row {
+      display: flex; justify-content: space-between; align-items: baseline;
+      padding: 11px 0;
+      border-bottom: 1px solid var(--hair);
+      gap: 12px;
+    }
+    .detail__row .k {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--ink-dim);
+    }
+    .detail__row .v {
+      font-family: var(--serif);
+      font-size: 16px;
+      color: var(--ink);
+      text-align: right;
+      font-style: italic;
+    }
+    .detail__row .v.mono {
+      font-family: var(--mono);
+      font-style: normal;
+      font-size: 12.5px;
+      color: var(--ink-2);
+      letter-spacing: 0.04em;
+    }
+    .detail__bio {
+      margin-top: 18px;
+      padding: 16px 18px;
+      border: 1px solid var(--hair);
+      border-left: 1px solid var(--hair-3);
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 15.5px;
+      line-height: 1.6;
+      color: var(--ink-2);
+      background: rgba(255,255,255,0.01);
+    }
+
+    /* ── Market data strip ─────────────────────────────────────── */
+
+    .mkt {
+      border: 1px solid var(--hair-2);
+      background: var(--surface);
+      padding: 18px 4px 6px;
+    }
+    .mkt__head {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0 16px 14px;
+      border-bottom: 1px solid var(--hair);
+    }
+    .mkt__head .pulse {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: var(--mono); font-size: 10px;
+      letter-spacing: 0.22em; color: var(--ink-dim);
+      text-transform: uppercase;
+    }
+    .pulse .dot-live {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--gold-bright);
+      box-shadow: 0 0 8px var(--gold);
+      animation: pulse 2.6s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 0.4; }
+      50%      { opacity: 1; }
+    }
+    .mkt__grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+    }
+    .mkt__cell {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--hair);
+    }
+    .mkt__cell:nth-child(odd)  { border-right: 1px solid var(--hair); }
+    .mkt__cell:last-child,
+    .mkt__cell:nth-last-child(2):nth-child(odd) { border-bottom: 0; }
+    .mkt__k {
+      font-family: var(--mono); font-size: 9.5px;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--ink-mute);
+      margin-bottom: 6px;
+    }
+    .mkt__v {
+      font-family: var(--mono);
+      font-size: 15px;
+      color: var(--ink);
+      letter-spacing: 0.02em;
+    }
+    .mkt__v .ccy { color: var(--ink-dim); margin-right: 6px; font-size: 10px; letter-spacing: 0.2em; }
+    .mkt__v.up   { color: var(--gold-bright); }
+    .mkt__v.down { color: #B07A6E; }
+    .mkt__foot {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 12px 16px 8px;
+      font-family: var(--mono); font-size: 9.5px;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--ink-mute);
+    }
+
+    /* ── Philosophy ────────────────────────────────────────────── */
+
+    .phil {
+      padding: 64px 20px 56px;
+      background:
+        radial-gradient(80% 60% at 50% 0%, rgba(74,109,148,0.06), transparent 60%),
+        linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
+      border-top: 1px solid var(--hair);
+      border-bottom: 1px solid var(--hair);
+    }
+    .phil__sup {
+      display: flex; align-items: center; gap: 12px;
+      margin-bottom: 22px;
+    }
+    .phil__sup .line { flex: 1; height: 1px; background: var(--hair); }
+    .phil__body {
+      font-family: var(--serif);
+      font-size: 20px;
+      line-height: 1.55;
+      color: var(--ink);
+      letter-spacing: -0.002em;
+    }
+    .phil__body .dc {
+      font-family: var(--serif);
+      float: left;
+      font-size: 64px;
+      line-height: 0.85;
+      color: var(--gold-bright);
+      padding: 6px 12px 0 0;
+      font-style: italic;
+    }
+    .phil__sig {
+      margin-top: 28px;
+      display: flex; justify-content: space-between; align-items: baseline;
+      font-family: var(--mono); font-size: 10px;
+      letter-spacing: 0.22em; color: var(--ink-mute);
+      text-transform: uppercase;
+    }
+
+    /* ── Twelve signs catalog ──────────────────────────────────── */
+
+    .cat {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .cat__item {
+      position: relative;
+      background: var(--surface);
+      border: 1px solid var(--hair);
+      padding: 14px 12px 12px;
+      text-align: left;
+      transition: border-color 280ms var(--ease), background 280ms var(--ease), box-shadow 280ms var(--ease);
+      display: flex; flex-direction: column; gap: 8px;
+      min-height: 168px;
+    }
+    .cat__item:hover { border-color: var(--hair-2); }
+    .cat__item.is-active {
+      border-color: var(--gold);
+      background: linear-gradient(180deg, rgba(201,169,97,0.05), transparent 60%), var(--surface-2);
+      box-shadow: 0 0 0 1px rgba(201,169,97,0.2), 0 0 24px -8px rgba(201,169,97,0.35);
+    }
+    .cat__no {
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: 0.22em;
+      color: var(--ink-mute);
+    }
+    .cat__sym {
+      font-family: var(--serif);
+      font-size: 44px;
+      line-height: 1;
+      color: var(--gold-bright);
+      text-shadow: 0 0 12px rgba(201,169,97,0.25);
+      margin: 2px 0 0;
+    }
+    .cat__name {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 22px;
+      color: var(--ink);
+      line-height: 1;
+      margin: 4px 0 0;
+    }
+    .cat__tk {
+      font-family: var(--mono);
+      font-size: 9.5px;
+      letter-spacing: 0.22em;
+      color: var(--gold);
+    }
+    .cat__meta {
+      font-family: var(--mono);
+      font-size: 9.5px;
+      letter-spacing: 0.14em;
+      color: var(--ink-mute);
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+    .cat__price {
+      margin-top: auto;
+      padding-top: 8px;
+      border-top: 1px solid var(--hair);
+      display: flex; justify-content: space-between; align-items: baseline;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--ink-2);
+    }
+    .cat__price .ch.up   { color: var(--gold-bright); }
+    .cat__price .ch.down { color: #B07A6E; }
+
+    /* ── Closing ───────────────────────────────────────────────── */
+
+    .close {
+      padding: 80px 20px 64px;
+      text-align: center;
+      position: relative;
+      background:
+        radial-gradient(60% 50% at 50% 0%, rgba(201,169,97,0.08), transparent 70%),
+        var(--bg);
+    }
+    .close__sigil {
+      font-family: var(--serif);
+      color: var(--gold);
+      font-size: 22px;
+      letter-spacing: 1.2em;
+      padding-left: 1.2em;
+      opacity: 0.65;
+      margin-bottom: 28px;
+    }
+    .close__head {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: 34px;
+      line-height: 1.1;
+      color: var(--ink);
+      margin: 0 0 14px;
+    }
+    .close__head .it { font-style: italic; color: var(--gold-bright); }
+    .close__sub {
+      font-family: var(--serif);
+      font-size: 16px;
+      color: var(--ink-2);
+      max-width: 28ch;
+      margin: 0 auto 32px;
+      line-height: 1.5;
+    }
+
+    /* ── Footer ────────────────────────────────────────────────── */
+
+    .ftr {
+      padding: 32px 20px 56px;
+      border-top: 1px solid var(--hair);
+      display: flex; justify-content: space-between; align-items: center;
+      font-family: var(--mono);
+      font-size: 9.5px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--ink-mute);
+    }
+    .ftr .mark { color: var(--ink-2); letter-spacing: 0.18em; }
+    .ftr .mark .g { color: var(--gold); }
+
+    /* ── Transitions on active content ─────────────────────────── */
+
+    .fade-key { animation: fadeInUp 360ms var(--ease) both; }
+    @keyframes fadeInUp {
+      0%   { opacity: 0; transform: translateY(4px); filter: blur(2px); }
+      100% { opacity: 1; transform: translateY(0);   filter: blur(0);   }
+    }
+
+    /* ── Compact width tweaks (≤ 380px / iPhone SE-ish) ────────── */
+    @media (max-width: 380px) {
+      .hero__headline { font-size: 38px; }
+      .glyph { font-size: 152px; }
+      .card__name { font-size: 32px; }
+      .close__head { font-size: 30px; }
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <script type="text/babel" data-presets="react">
+    const { useState, useMemo, useEffect, useRef } = React;
+
+    // ──────────────────────────────────────────────────────────────
+    // Local metadata for all twelve signs.
+    // Market values are placeholder fixtures — never live data.
+    // ──────────────────────────────────────────────────────────────
+    const SIGNS = [
+      {
+        name: 'Aries', ticker: 'ARIES', order: 1,
+        element: 'Fire', modality: 'Cardinal', rulingPlanet: 'Mars',
+        symbol: '♈', archetype: 'The Initiator',
+        shortBio:
+          'The first spark. Aries marks the vernal equinox — long honored across civilizations as the renewal of time and the opening of the symbolic year.',
+        mintAddress: 'zdc1·ARIES·Ω·a4r1eS·0001',
+        marketLinks: { primary: 'placeholder', secondary: 'placeholder' },
+        imagePath: '',
+        marketData: { price: '0.0421', marketCap: '4.21M', fdv: '8.42M', liquidity: '612K', volume24h: '184K', change24h: '+2.34', supply: '100,000,000', lastUpdated: '08:42 UTC' },
+      },
+      {
+        name: 'Taurus', ticker: 'TAURUS', order: 2,
+        element: 'Earth', modality: 'Fixed', rulingPlanet: 'Venus',
+        symbol: '♉', archetype: 'The Keeper',
+        shortBio:
+          'The bull held sacred from Çatalhöyük to Knossos. Taurus carries a long memory of fertility, endurance, and material stewardship.',
+        mintAddress: 'zdc2·TAURUS·Ω·t4uR5·0002',
+        marketLinks: { primary: 'placeholder', secondary: 'placeholder' },
+        imagePath: '',
+        marketData: { price: '0.0617', marketCap: '6.17M', fdv: '12.34M', liquidity: '801K', volume24h: '212K', change24h: '+0.87', supply: '100,000,000', lastUpdated: '08:42 UTC' },
+      },
+      {
+        name: 'Gemini', ticker: 'GEMINI', order: 3,
+        element: 'Air', modality: 'Mutable', rulingPlanet: 'Mercury',
+        symbol: '♊', archetype: 'The Messenger',
+        shortBio:
+          'The twins. From Castor and Pollux to the dual nature of language itself, Gemini holds the symbol of human exchange and discourse.',
+        mintAddress: 'zdc3·GEMINI·Ω·g3m1N·0003',
+        marketLinks: { primary: 'placeholder', secondary: 'placeholder' },
+        imagePath: '',
+        marketData: { price: '0.0289', marketCap: '2.89M', fdv: '5.78M', liquidity: '442K', volume24h: '127K', change24h: '-1.12', supply: '100,000,000', lastUpdated: '08:42 UTC' },
+      },
+      {
+        name: 'Cancer', ticker: 'CANCER', order: 4,
+        element: 'Water', modality: 'Cardinal', rulingPlanet: 'Moon',
+        symbol: '♋', archetype: 'The Vessel',
+        shortBio:
+          'The crab and the moon. The summer solstice. Cancer preserves the ancient image of home, memory, and the inner tide.',
+        mintAddress: 'zdc4·CANCER·Ω·c4n4r·0004',
+        marketLinks: { primary: 'placeholder', secondary: 'placeholder' },
+        imagePath: '',
+        marketData: { price: '0.0512', marketCap: '5.12M', fdv: '10.24M', liquidity: '688K', volume24h: '167K', change24h: '+0.42', supply: '100,000,000', lastUpdated: '08:42 UTC' },
+      },
+      {
+        name: 'Leo', ticker: 'LEO', order: 5,
+        element: 'Fire', modality: 'Fixed', rulingPlanet: 'Sun',
+        symbol: '♌', archetype: 'The Sovereign',
+        shortBio:
+          'The lion. Older than empires. Leo carries the sun at the height of summer — the symbol of radiant authority and visible self.',
+        mintAddress: 'zdc5·LEO·Ω·L30n5·0005',
+        marketLinks: { primary: 'placeholder', secondary: 'placeholder' },
+        imagePath: '',
+        marketData: { price: '0.0894', marketCap: '8.94M', fdv: '17.88M', liquidity: '1.12M', volume24h: '298K', change24h: '+1.78', supply: '100,000,000', lastUpdated: '08:42 UTC' },
+      },
+      {
+        name: 'Virgo', ticker: 'VIRGO', order: 6,
+        element: 'Earth', modality: 'Mutable', rulingPlanet: 'Mercury',
+        symbol: '♍', archetype: 'The Scribe',
+        shortBio:
+          'The maiden of the harvest. Virgo preserves the long lineage of craft, discernment, and the discipline of measure.',
+        mintAddress: 'zdc6·VIRGO·Ω·v1Rg0·0006',
+        marketLinks: { primary: 'placeholder', secondary: 'placeholder' },
+        imagePath: '',
+        marketData: { price: '0.0367', marketCap: '3.67M', fdv: '7.34M', liquidity: '512K', volume24h: '149K', change24h: '-0.34', supply: '100,000,000', lastUpdated: '08:42 UTC' },
+      },
+      {
+        name: 'Libra', ticker: 'LIBRA', order: 7,
+        element: 'Air', modality: 'Cardinal', rulingPlanet: 'Venus',
+        symbol: '♎', archetype: 'The Arbiter',
+        shortBio:
+          'The scales. The autumn equinox. Libra holds the symbol of balance, civic measure, and the law as a cultural form.',
+        mintAddress: 'zdc7·LIBRA·Ω·L1bR4·0007',
+        marketLinks: { primary: 'placeholder', secondary: 'placeholder' },
+        imagePath: '',
+        marketData: { price: '0.0478', marketCap: '4.78M', fdv: '9.56M', liquidity: '634K', volume24h: '178K', change24h: '+0.91', supply: '100,000,000', lastUpdated: '08:42 UTC' },
+      },
+      {
+        name: 'Scorpio', ticker: 'SCORPIO', order: 8,
+        element: 'Water', modality: 'Fixed', rulingPlanet: 'Pluto',
+        symbol: '♏', archetype: 'The Initiate',
+        shortBio:
+          'The scorpion of the deep year. Scorpio carries the rites of transformation — the threshold between what passes and what endures.',
+        mintAddress: 'zdc8·SCORPIO·Ω·5c0Rp·0008',
+        marketLinks: { primary: 'placeholder', secondary: 'placeholder' },
+        imagePath: '',
+        marketData: { price: '0.0723', marketCap: '7.23M', fdv: '14.46M', liquidity: '912K', volume24h: '241K', change24h: '+2.04', supply: '100,000,000', lastUpdated: '08:42 UTC' },
+      },
+      {
+        name: 'Sagittarius', ticker: 'SAGITTARIUS', order: 9,
+        element: 'Fire', modality: 'Mutable', rulingPlanet: 'Jupiter',
+        symbol: '♐', archetype: 'The Seeker',
+        shortBio:
+          'The archer at the galactic center. Sagittarius preserves the impulse to travel, to inquire, to chart what lies beyond the known.',
+        mintAddress: 'zdc9·SAGITTARIUS·Ω·s4g1·0009',
+        marketLinks: { primary: 'placeholder', secondary: 'placeholder' },
+        imagePath: '',
+        marketData: { price: '0.0556', marketCap: '5.56M', fdv: '11.12M', liquidity: '721K', volume24h: '189K', change24h: '+1.23', supply: '100,000,000', lastUpdated: '08:42 UTC' },
+      },
+      {
+        name: 'Capricorn', ticker: 'CAPRICORN', order: 10,
+        element: 'Earth', modality: 'Cardinal', rulingPlanet: 'Saturn',
+        symbol: '♑', archetype: 'The Architect',
+        shortBio:
+          'The sea-goat. The winter solstice. Capricorn carries the long pattern of structure, lineage, and the building of enduring forms.',
+        mintAddress: 'zdc10·CAPRICORN·Ω·c4p1·0010',
+        marketLinks: { primary: 'placeholder', secondary: 'placeholder' },
+        imagePath: '',
+        marketData: { price: '0.0681', marketCap: '6.81M', fdv: '13.62M', liquidity: '847K', volume24h: '224K', change24h: '+0.56', supply: '100,000,000', lastUpdated: '08:42 UTC' },
+      },
+      {
+        name: 'Aquarius', ticker: 'AQUARIUS', order: 11,
+        element: 'Air', modality: 'Fixed', rulingPlanet: 'Uranus',
+        symbol: '♒', archetype: 'The Heretic',
+        shortBio:
+          'The water-bearer. Aquarius holds the symbol of the unbound mind — invention, dissent, and the long arc of cultural shift.',
+        mintAddress: 'zdc11·AQUARIUS·Ω·4qu4·0011',
+        marketLinks: { primary: 'placeholder', secondary: 'placeholder' },
+        imagePath: '',
+        marketData: { price: '0.0432', marketCap: '4.32M', fdv: '8.64M', liquidity: '578K', volume24h: '156K', change24h: '+1.89', supply: '100,000,000', lastUpdated: '08:42 UTC' },
+      },
+      {
+        name: 'Pisces', ticker: 'PISCES', order: 12,
+        element: 'Water', modality: 'Mutable', rulingPlanet: 'Neptune',
+        symbol: '♓', archetype: 'The Mystic',
+        shortBio:
+          'Two fishes bound by a silver cord. Pisces closes the wheel — the symbol of dissolution, depth, and the world before the next renewal.',
+        mintAddress: 'zdc12·PISCES·Ω·p1Sc3·0012',
+        marketLinks: { primary: 'placeholder', secondary: 'placeholder' },
+        imagePath: '',
+        marketData: { price: '0.0398', marketCap: '3.98M', fdv: '7.96M', liquidity: '536K', volume24h: '141K', change24h: '-0.78', supply: '100,000,000', lastUpdated: '08:42 UTC' },
+      },
+    ];
+
+    const ROMAN = ['I','II','III','IV','V','VI','VII','VIII','IX','X','XI','XII'];
+
+    // ──────────────────────────────────────────────────────────────
+    // Sub-components
+    // ──────────────────────────────────────────────────────────────
+
+    function Header() {
+      return (
+        <header className="hdr">
+          <div className="hdr__mark">
+            <span>Zodiacs</span><span className="sep">·</span><span className="dim">org</span>
+          </div>
+          <a className="hdr__nav" href="#catalog">Collection</a>
+        </header>
+      );
+    }
+
+    function Hero({ sign, animKey }) {
+      return (
+        <section className="hero">
+          <div className="hero__eyebrow">
+            <span className="line" />
+            <span className="label label--gold">Cultural assets for a digital era</span>
+          </div>
+
+          <h1 className="hero__headline">
+            The oldest story,<br/>
+            <span className="it">reinvented.</span>
+          </h1>
+
+          <p className="hero__sub">
+            Twelve signs. Thousands of years of cultural memory.
+            Recast as scarce digital symbols for a new generation of collectors.
+          </p>
+
+          <div className="hero__cta">
+            <button className="btn btn--primary">
+              <span>Explore the Signs</span>
+              <span className="arr">→</span>
+            </button>
+            <button className="btn btn--ghost">
+              <span>Read the Thesis</span>
+            </button>
+          </div>
+
+          <FeaturedCard sign={sign} animKey={animKey} />
+        </section>
+      );
+    }
+
+    function FeaturedCard({ sign, animKey }) {
+      const change = sign.marketData.change24h;
+      const up = !change.startsWith('-');
+
+      return (
+        <article className="card" aria-label={`Featured sign — ${sign.name}`}>
+          <span className="card__corner card__corner--tl" />
+          <span className="card__corner card__corner--tr" />
+          <span className="card__corner card__corner--bl" />
+          <span className="card__corner card__corner--br" />
+
+          <div className="card__inner">
+            <div className="card__head">
+              <span className="label label--gold">Featured sign</span>
+              <span className="label label--mute">
+                {ROMAN[sign.order - 1]}<span className="sep">/</span>XII
+              </span>
+            </div>
+
+            <div className="glyph-stage">
+              <div className="glyph fade-key" key={animKey + '-glyph'}>{sign.symbol}</div>
+            </div>
+
+            <div className="fade-key" key={animKey + '-meta'}>
+              <h2 className="card__name">{sign.name}</h2>
+              <div className="card__meta">
+                <span className="g">{sign.ticker}</span>
+                <span className="dot" />
+                <span>{sign.element}</span>
+                <span className="dot" />
+                <span>{sign.modality}</span>
+                <span className="dot" />
+                <span>{sign.rulingPlanet}</span>
+              </div>
+              <div className="card__archetype">— {sign.archetype} —</div>
+            </div>
+
+            <div className="card__prev fade-key" key={animKey + '-prev'}>
+              <div>
+                <span className="label">Price</span>
+                <span className="val"><span className="ccy">USD</span>{sign.marketData.price}</span>
+              </div>
+              <div>
+                <span className="label">24h</span>
+                <span className={'val ' + (up ? 'up' : 'down')}>
+                  {change}%
+                </span>
+              </div>
+            </div>
+
+            <p className="card__bio fade-key" key={animKey + '-bio'}>
+              {sign.shortBio}
+            </p>
+          </div>
+        </article>
+      );
+    }
+
+    function Selector({ active, setActive }) {
+      const ref = useRef(null);
+
+      useEffect(() => {
+        const el = ref.current?.querySelector('.is-active');
+        if (el) el.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+      }, [active]);
+
+      return (
+        <section className="strip-wrap" aria-label="Zodiac selector">
+          <div className="strip-head">
+            <span className="label label--gold">Index — Twelve signs</span>
+            <span className="label label--mute">Scroll →</span>
+          </div>
+          <div className="strip" ref={ref}>
+            {SIGNS.map(s => (
+              <button
+                key={s.ticker}
+                className={'strip__item' + (active === s.ticker ? ' is-active' : '')}
+                onClick={() => setActive(s.ticker)}
+                aria-pressed={active === s.ticker}
+                aria-label={s.name}
+              >
+                <span className="sym">{s.symbol}</span>
+                <span className="tk">{s.ticker.slice(0, 5)}</span>
+              </button>
+            ))}
+          </div>
+        </section>
+      );
+    }
+
+    function DetailPanel({ sign, animKey }) {
+      return (
+        <section className="sec" aria-label="Detail panel">
+          <div className="sec__head">
+            <span className="sec__no">№ 06</span>
+            <span className="line" />
+            <span className="sec__title">Museum label</span>
+          </div>
+
+          <article className="detail fade-key" key={animKey + '-detail'}>
+            <span className="detail__symbol">{sign.symbol}</span>
+            <span className="detail__ticker">{sign.ticker}</span>
+            <h3 className="detail__name">{sign.name}</h3>
+
+            <div className="detail__rows">
+              <div className="detail__row">
+                <span className="k">Order</span>
+                <span className="v mono">{String(sign.order).padStart(2, '0')} / 12</span>
+              </div>
+              <div className="detail__row">
+                <span className="k">Element</span>
+                <span className="v">{sign.element}</span>
+              </div>
+              <div className="detail__row">
+                <span className="k">Modality</span>
+                <span className="v">{sign.modality}</span>
+              </div>
+              <div className="detail__row">
+                <span className="k">Ruling planet</span>
+                <span className="v">{sign.rulingPlanet}</span>
+              </div>
+              <div className="detail__row">
+                <span className="k">Archetype</span>
+                <span className="v">{sign.archetype}</span>
+              </div>
+              <div className="detail__row">
+                <span className="k">Mint address</span>
+                <span className="v mono">{sign.mintAddress}</span>
+              </div>
+            </div>
+
+            <blockquote className="detail__bio">
+              {sign.shortBio}
+            </blockquote>
+          </article>
+        </section>
+      );
+    }
+
+    function MarketStrip({ sign, animKey }) {
+      const d = sign.marketData;
+      const up = !d.change24h.startsWith('-');
+      const cells = [
+        { k: 'Price',       v: <><span className="ccy">USD</span>{d.price}</> },
+        { k: '24h Change',  v: <>{d.change24h}%</>, cls: up ? 'up' : 'down' },
+        { k: 'Market Cap',  v: <><span className="ccy">USD</span>{d.marketCap}</> },
+        { k: 'FDV',         v: <><span className="ccy">USD</span>{d.fdv}</> },
+        { k: 'Liquidity',   v: <><span className="ccy">USD</span>{d.liquidity}</> },
+        { k: '24h Volume',  v: <><span className="ccy">USD</span>{d.volume24h}</> },
+        { k: 'Supply',      v: <>{d.supply}</> },
+        { k: 'Last update', v: <>{d.lastUpdated}</> },
+      ];
+
+      return (
+        <section className="sec" aria-label="Market data">
+          <div className="sec__head">
+            <span className="sec__no">№ 07</span>
+            <span className="line" />
+            <span className="sec__title">Market data · placeholder</span>
+          </div>
+
+          <div className="mkt fade-key" key={animKey + '-mkt'}>
+            <div className="mkt__head">
+              <span className="pulse">
+                <span className="dot-live" />
+                <span>{sign.ticker} · live preview</span>
+              </span>
+              <span className="label label--mute">Indicative only</span>
+            </div>
+
+            <div className="mkt__grid">
+              {cells.map((c, i) => (
+                <div className="mkt__cell" key={i}>
+                  <div className="mkt__k">{c.k}</div>
+                  <div className={'mkt__v' + (c.cls ? ' ' + c.cls : '')}>{c.v}</div>
+                </div>
+              ))}
+            </div>
+
+            <div className="mkt__foot">
+              <span>Source · internal fixtures</span>
+              <span>Not financial advice</span>
+            </div>
+          </div>
+        </section>
+      );
+    }
+
+    function Philosophy() {
+      return (
+        <section className="phil" aria-label="Philosophy">
+          <div className="phil__sup">
+            <span className="label label--gold">№ 08 — Thesis</span>
+            <span className="line" />
+          </div>
+          <p className="phil__body">
+            <span className="dc">B</span>efore modern markets, nations, and digital
+            identities, the zodiac gave civilization a symbolic language for
+            time, character, and destiny. Zodiacs.org preserves that memory
+            in a digital form built around identity, scarcity, and cultural
+            endurance.
+          </p>
+          <div className="phil__sig">
+            <span>Composed in twelve parts</span>
+            <span>·</span>
+            <span>MMXXVI</span>
+          </div>
+        </section>
+      );
+    }
+
+    function CatalogGrid({ active, setActive }) {
+      return (
+        <section className="sec" id="catalog" aria-label="The twelve">
+          <div className="sec__head">
+            <span className="sec__no">№ 09</span>
+            <span className="line" />
+            <span className="sec__title">The twelve · catalog</span>
+          </div>
+
+          <div className="cat">
+            {SIGNS.map(s => {
+              const up = !s.marketData.change24h.startsWith('-');
+              return (
+                <button
+                  key={s.ticker}
+                  className={'cat__item' + (active === s.ticker ? ' is-active' : '')}
+                  onClick={() => {
+                    setActive(s.ticker);
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }}
+                >
+                  <div className="cat__no">№ {String(s.order).padStart(2, '0')} / 12</div>
+                  <div className="cat__sym">{s.symbol}</div>
+                  <div className="cat__name">{s.name}</div>
+                  <div className="cat__tk">{s.ticker}</div>
+                  <div className="cat__meta">{s.element} · {s.archetype}</div>
+                  <div className="cat__price">
+                    <span>${s.marketData.price}</span>
+                    <span className={'ch ' + (up ? 'up' : 'down')}>{s.marketData.change24h}%</span>
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+        </section>
+      );
+    }
+
+    function Closing() {
+      return (
+        <section className="close" aria-label="Closing">
+          <div className="close__sigil">
+            ♈ ♉ ♊ ♋ ♌ ♍ ♎ ♏ ♐ ♑ ♒ ♓
+          </div>
+          <h2 className="close__head">
+            Twelve signs.<br/>
+            <span className="it">One enduring language.</span>
+          </h2>
+          <p className="close__sub">
+            A symbolic collection for a digital era.
+          </p>
+          <button className="btn btn--primary" style={{ width: '100%' }}>
+            <span>Enter the Collection</span>
+            <span className="arr">→</span>
+          </button>
+        </section>
+      );
+    }
+
+    function Footer() {
+      return (
+        <footer className="ftr">
+          <div className="mark">Zodiacs<span className="g">·</span>org</div>
+          <div>© MMXXVI</div>
+        </footer>
+      );
+    }
+
+    // ──────────────────────────────────────────────────────────────
+    // Root
+    // ──────────────────────────────────────────────────────────────
+    function Zodiacs() {
+      const [activeTicker, setActiveTicker] = useState('LEO');
+      const sign = useMemo(
+        () => SIGNS.find(s => s.ticker === activeTicker) ?? SIGNS[0],
+        [activeTicker]
+      );
+
+      return (
+        <div className="zd">
+          <Header />
+          <Hero sign={sign} animKey={activeTicker} />
+          <Selector active={activeTicker} setActive={setActiveTicker} />
+          <DetailPanel sign={sign} animKey={activeTicker} />
+          <MarketStrip sign={sign} animKey={activeTicker} />
+          <Philosophy />
+          <CatalogGrid active={activeTicker} setActive={setActiveTicker} />
+          <Closing />
+          <Footer />
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<Zodiacs />);
+  </script>
+</body>
+</html>
