@@ -702,8 +702,39 @@
         drop-shadow(0 0 1px rgba(255,236,180,0.9));
     }
 
+    /* Countdown ring — thin gold arc that traces the active bezel
+       over SELECTOR_CYCLE_MS, then advances. The SVG is re-keyed in
+       React when active changes, so the CSS animation restarts from
+       zero on each sign. */
+    .strip__ring {
+      position: absolute;
+      inset: -1px;
+      width: 46px; height: 46px;
+      pointer-events: none;
+      z-index: 2;
+      overflow: visible;
+    }
+    .strip__ring circle {
+      fill: none;
+      stroke: var(--gold-bright);
+      stroke-width: 1.4;
+      stroke-linecap: round;
+      transform-origin: center;
+      transform: rotate(-90deg);
+      stroke-dasharray: 133.5;   /* 2π × 21.25 */
+      stroke-dashoffset: 133.5;
+      animation: strip-countdown 4s linear forwards;
+      filter:
+        drop-shadow(0 0 4px rgba(222,192,122,0.7))
+        drop-shadow(0 0 1px rgba(255,236,180,0.9));
+    }
+    @keyframes strip-countdown {
+      from { stroke-dashoffset: 133.5; }
+      to   { stroke-dashoffset: 0; }
+    }
+
     .strip__sub {
-      margin-top: 4px;
+      margin-top: 6px;
       display: flex; align-items: center; justify-content: center;
       gap: 14px;
       font-family: var(--mono);
@@ -711,7 +742,9 @@
       letter-spacing: 0.28em;
       text-transform: uppercase;
       color: var(--ink-mute);
+      transition: color 420ms var(--ease);
     }
+    .strip-wrap.is-autoplay .strip__sub { color: var(--gold-deep); }
     .strip__sub .chev {
       color: var(--ink-dim);
       font-family: var(--serif);
@@ -1440,9 +1473,79 @@
       );
     }
 
+    // Auto-advance cadence (ms) — must match the CSS @keyframes
+    // `strip-countdown` duration. Keep them in lockstep or the visual
+    // ring desyncs from the actual hand-off.
+    const SELECTOR_CYCLE_MS = 4000;
+
     function Selector({ active, setActive }) {
       const ref = useRef(null);
       const mounted = useRef(false);
+      const [autoplay, setAutoplay] = useState(true);
+
+      // Honour OS-level reduced-motion: disable autoplay outright.
+      useEffect(() => {
+        const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+        if (mq.matches) setAutoplay(false);
+        const onChange = () => mq.matches && setAutoplay(false);
+        mq.addEventListener?.('change', onChange);
+        return () => mq.removeEventListener?.('change', onChange);
+      }, []);
+
+      // Pause autoplay while the tab is backgrounded.
+      const [tabVisible, setTabVisible] = useState(
+        typeof document !== 'undefined' ? document.visibilityState === 'visible' : true
+      );
+      useEffect(() => {
+        const onVis = () => setTabVisible(document.visibilityState === 'visible');
+        document.addEventListener('visibilitychange', onVis);
+        return () => document.removeEventListener('visibilitychange', onVis);
+      }, []);
+
+      // Pause autoplay when the strip scrolls off-screen, so the
+      // featured card doesn't quietly change underneath a user who
+      // has scrolled down to read the museum label or catalog.
+      const [stripVisible, setStripVisible] = useState(true);
+      useEffect(() => {
+        const node = ref.current?.parentElement; // .strip-wrap
+        if (!node || typeof IntersectionObserver === 'undefined') return;
+        const io = new IntersectionObserver(
+          ([entry]) => setStripVisible(entry.isIntersecting),
+          { threshold: 0.4 }
+        );
+        io.observe(node);
+        return () => io.disconnect();
+      }, []);
+
+      // Drive the rotation. Each active ticker change resets the timer,
+      // so the countdown ring always starts fresh on the new sign.
+      const running = autoplay && tabVisible && stripVisible;
+      useEffect(() => {
+        if (!running) return;
+        const id = setTimeout(() => {
+          const idx = SIGNS.findIndex(s => s.ticker === active);
+          const next = SIGNS[(idx + 1) % SIGNS.length].ticker;
+          setActive(next);
+        }, SELECTOR_CYCLE_MS);
+        return () => clearTimeout(id);
+      }, [active, running, setActive]);
+
+      // First manual interaction stops autoplay for the session. Both
+      // direct taps and drag/scroll of the strip count as "user took
+      // control", and from then on the page respects the user's pick.
+      const stopAutoplay = () => setAutoplay(false);
+
+      useEffect(() => {
+        const strip = ref.current;
+        if (!strip) return;
+        const handler = () => stopAutoplay();
+        strip.addEventListener('pointerdown', handler, { once: true, passive: true });
+        strip.addEventListener('wheel',       handler, { once: true, passive: true });
+        return () => {
+          strip.removeEventListener('pointerdown', handler);
+          strip.removeEventListener('wheel',       handler);
+        };
+      }, []);
 
       // Horizontal-only centering — never touch page vertical scroll.
       useEffect(() => {
@@ -1458,31 +1561,54 @@
         mounted.current = true;
       }, [active]);
 
+      const handlePick = (ticker) => {
+        stopAutoplay();
+        setActive(ticker);
+      };
+
       return (
-        <section className="strip-wrap" aria-label="Zodiac selector">
+        <section
+          className={'strip-wrap' + (running ? ' is-autoplay' : '')}
+          aria-label="Zodiac selector"
+        >
           <div className="strip" ref={ref} role="tablist">
-            {SIGNS.map(s => (
-              <button
-                key={s.ticker}
-                className={'strip__glyph' + (active === s.ticker ? ' is-active' : '')}
-                onClick={() => setActive(s.ticker)}
-                role="tab"
-                aria-pressed={active === s.ticker}
-                aria-label={s.name}
-                title={s.name}
-              >
-                <img
-                  src={`assets/icons/${s.name.toLowerCase()}.png`}
-                  alt=""
-                  loading="lazy"
-                  decoding="async"
-                />
-              </button>
-            ))}
+            {SIGNS.map(s => {
+              const isActive = active === s.ticker;
+              return (
+                <button
+                  key={s.ticker}
+                  className={'strip__glyph' + (isActive ? ' is-active' : '')}
+                  onClick={() => handlePick(s.ticker)}
+                  role="tab"
+                  aria-pressed={isActive}
+                  aria-label={s.name}
+                  title={s.name}
+                >
+                  <img
+                    src={`assets/icons/${s.name.toLowerCase()}.png`}
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  {isActive && running && (
+                    <svg
+                      key={'ring-' + s.ticker}
+                      className="strip__ring"
+                      viewBox="0 0 44 44"
+                      aria-hidden="true"
+                    >
+                      <circle cx="22" cy="22" r="21.25" />
+                    </svg>
+                  )}
+                </button>
+              );
+            })}
           </div>
           <div className="strip__sub">
             <span className="chev" aria-hidden="true">‹</span>
-            <span>Scroll or drag to explore</span>
+            <span>
+              {running ? 'Auto-rotating · tap to pin' : 'Scroll or drag to explore'}
+            </span>
             <span className="chev" aria-hidden="true">›</span>
           </div>
         </section>
