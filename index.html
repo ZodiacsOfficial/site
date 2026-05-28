@@ -45,6 +45,9 @@
       --gold-deep:     #8E7541;
       --bronze:        #6B5638;
 
+      /* Sage-green system status — restrained so it coexists with gold */
+      --live:          #6FAE7C;
+
       /* Softened from #E8E3D4 — skill rule: softer contrast on premium UI */
       --ink:           #DCD7C7;
       --ink-2:         #BDB8A9;
@@ -129,6 +132,17 @@
       z-index: var(--z-overlay);
     }
     .skip:focus { left: 12px; top: 12px; }
+
+    /* Screen-reader-only utility */
+    .sr-only {
+      position: absolute;
+      width: 1px; height: 1px;
+      padding: 0; margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
 
     /* Fixed grain overlay — breaks digital flatness without breaking perf */
     .grain {
@@ -278,7 +292,7 @@
       position: absolute; inset: -40px 0 0 0;
       background:
         radial-gradient(60% 40% at 50% 0%, rgba(201,169,97,0.10), transparent 65%),
-        radial-gradient(80% 35% at 30% 12%, rgba(74,109,148,0.05), transparent 70%);
+        radial-gradient(80% 35% at 30% 12%, rgba(201,169,97,0.04), transparent 70%);
       pointer-events: none;
     }
 
@@ -292,9 +306,19 @@
       border-radius: 999px;
     }
     .hero__eyebrow .pulse-dot {
-      width: 5px; height: 5px; border-radius: 50%;
-      background: var(--gold-bright);
-      box-shadow: 0 0 8px var(--gold);
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--live);
+      box-shadow:
+        0 0 0 0 rgba(111, 174, 124, 0.55);
+      animation: live-pulse 2.4s cubic-bezier(0.32, 0.72, 0, 1) infinite;
+    }
+    @keyframes live-pulse {
+      0%   { box-shadow: 0 0 0 0   rgba(111, 174, 124, 0.55), 0 0 6px 0 rgba(111, 174, 124, 0.0); transform: scale(1); }
+      40%  { box-shadow: 0 0 0 7px rgba(111, 174, 124, 0.0),  0 0 12px 2px rgba(111, 174, 124, 0.45); transform: scale(1.18); }
+      100% { box-shadow: 0 0 0 0   rgba(111, 174, 124, 0.0),  0 0 6px 0 rgba(111, 174, 124, 0.0); transform: scale(1); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .hero__eyebrow .pulse-dot { animation: none; box-shadow: 0 0 6px rgba(111, 174, 124, 0.55); }
     }
     .hero__headline {
       font-family: var(--serif);
@@ -324,6 +348,13 @@
     .hero__cta {
       display: flex; flex-direction: column; gap: 12px;
       margin-bottom: 48px;
+    }
+    /* Below-card variant — sits between FeaturedCard and DetailPanel.
+       Inherits flex layout from .hero__cta but supplies its own gutter
+       so it doesn't double up with the card's bottom margin. */
+    .hero__cta--below {
+      padding: 32px 20px 8px;
+      margin: 0;
     }
     /* Primary CTA — button-in-button architecture per skill rules */
     .btn {
@@ -1296,12 +1327,13 @@
       );
     }
 
-    function Hero({ sign, animKey }) {
+    function Hero({ sign, animKey, active, setActive }) {
       return (
         <section className="hero" id="main">
           <div className="hero__eyebrow">
-            <span className="pulse-dot" />
+            <span className="pulse-dot" aria-hidden="true" />
             <span className="label label--gold" style={{ fontSize: 9.5 }}>
+              <span className="sr-only">Live. </span>
               Cultural assets · digital era
             </span>
           </div>
@@ -1316,19 +1348,25 @@
             Recast as scarce digital symbols for a new generation of collectors.
           </p>
 
-          <div className="hero__cta">
-            <a className="btn btn--primary" href="#catalog">
-              <span>Explore the signs</span>
-              <span className="arr">→</span>
-            </a>
-            <a className="btn btn--ghost" href="#thesis">
-              <span>Read the thesis</span>
-              <span className="arr" style={{ width: 28, height: 28, background: 'transparent', border: 0, color: 'var(--ink-dim)' }}>↗</span>
-            </a>
-          </div>
+          <Selector active={active} setActive={setActive} />
 
           <FeaturedCard sign={sign} animKey={animKey} />
         </section>
+      );
+    }
+
+    function HeroActions() {
+      return (
+        <div className="hero__cta hero__cta--below">
+          <a className="btn btn--primary" href="#catalog">
+            <span>Explore the signs</span>
+            <span className="arr">→</span>
+          </a>
+          <a className="btn btn--ghost" href="#thesis">
+            <span>Read the thesis</span>
+            <span className="arr" style={{ width: 28, height: 28, background: 'transparent', border: 0, color: 'var(--ink-dim)' }}>↗</span>
+          </a>
+        </div>
       );
     }
 
@@ -1684,8 +1722,13 @@
           <div className="grain" aria-hidden="true" />
           <div className="zd">
             <Header />
-            <Selector active={activeTicker} setActive={setActiveTicker} />
-            <Hero sign={sign} animKey={activeTicker} />
+            <Hero
+              sign={sign}
+              animKey={activeTicker}
+              active={activeTicker}
+              setActive={setActiveTicker}
+            />
+            <HeroActions />
             <DetailPanel sign={sign} animKey={activeTicker} />
             <MarketStrip sign={sign} animKey={activeTicker} />
             <Philosophy />
