@@ -429,9 +429,12 @@
     .glyph-stage {
       position: relative;
       height: 280px;
-      display: grid; place-items: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       margin: 4px 0 10px;
       isolation: isolate;
+      overflow: hidden;
     }
     .glyph-stage::before {
       content: "";
@@ -456,9 +459,10 @@
     .glyph-stage .nugget {
       position: relative;
       z-index: 1;
+      width: auto;
+      height: auto;
       max-width: 78%;
       max-height: 100%;
-      width: auto; height: auto;
       object-fit: contain;
       filter:
         drop-shadow(0 4px 12px rgba(0,0,0,0.55))
@@ -1047,7 +1051,7 @@
     /* ── Compact width tweaks (≤ 380px / iPhone SE-ish) ────────── */
     @media (max-width: 380px) {
       .hero__headline { font-size: 38px; }
-      .glyph { font-size: 152px; }
+      .glyph-stage { height: 240px; }
       .card__name { font-size: 32px; }
       .close__head { font-size: 30px; }
     }
@@ -1623,8 +1627,8 @@
           <div className="grain" aria-hidden="true" />
           <div className="zd">
             <Header />
-            <Hero sign={sign} animKey={activeTicker} />
             <Selector active={activeTicker} setActive={setActiveTicker} />
+            <Hero sign={sign} animKey={activeTicker} />
             <DetailPanel sign={sign} animKey={activeTicker} />
             <MarketStrip sign={sign} animKey={activeTicker} />
             <Philosophy />
