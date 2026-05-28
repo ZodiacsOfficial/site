@@ -426,33 +426,46 @@
     .card__corner--bl { bottom: 4px; left: 4px;  border-width: 0 0 1px 1px; }
     .card__corner--br { bottom: 4px; right: 4px; border-width: 0 1px 1px 0; }
 
+    /* Museum-plinth stage: tall, restrained, no gold "spotlight" glow.
+       Figure bottom-aligns to a hairline plinth and casts a soft dark
+       contact shadow into the card surface. */
     .glyph-stage {
       position: relative;
-      height: 280px;
+      height: 340px;
       display: flex;
-      align-items: center;
+      align-items: flex-end;
       justify-content: center;
-      margin: 4px 0 10px;
+      margin: 8px 0 14px;
+      padding: 12px 0 26px;
       isolation: isolate;
       overflow: hidden;
     }
+    /* Soft floor fade — the lower portion of the stage darkens almost
+       imperceptibly, anchoring the figure. */
     .glyph-stage::before {
       content: "";
       position: absolute;
-      inset: auto 10% -8px 10%;
-      height: 60%;
+      left: 0; right: 0; bottom: 0;
+      height: 42%;
       background:
-        radial-gradient(50% 60% at 50% 100%, rgba(201,169,97,0.22), transparent 70%);
+        linear-gradient(180deg,
+          transparent 0%,
+          rgba(0,0,0,0.10) 60%,
+          rgba(0,0,0,0.22) 100%);
       pointer-events: none;
       z-index: 0;
     }
+    /* Plinth hairline — single gold thread the figure stands on. */
     .glyph-stage::after {
       content: "";
       position: absolute;
-      left: 22%; right: 22%; bottom: 14px;
-      height: 14px;
-      background: radial-gradient(50% 100% at 50% 50%, rgba(0,0,0,0.55), transparent 75%);
-      filter: blur(4px);
+      left: 14%; right: 14%; bottom: 18px;
+      height: 1px;
+      background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(201,169,97,0.55) 22%,
+        rgba(201,169,97,0.55) 78%,
+        transparent 100%);
       pointer-events: none;
       z-index: 0;
     }
@@ -461,12 +474,13 @@
       z-index: 1;
       width: auto;
       height: auto;
-      max-width: 78%;
+      max-width: 88%;
       max-height: 100%;
       object-fit: contain;
+      /* Drop-shadow does the contact-shadow work; no extra radial. */
       filter:
-        drop-shadow(0 4px 12px rgba(0,0,0,0.55))
-        drop-shadow(0 0 22px rgba(201,169,97,0.18));
+        drop-shadow(0 6px 10px rgba(0,0,0,0.55))
+        drop-shadow(0 2px 4px rgba(0,0,0,0.65));
       transition: opacity 320ms var(--ease), transform 320ms var(--ease), filter 320ms var(--ease);
     }
     .glyph--enter { opacity: 0; transform: translateY(6px) scale(0.985); filter: blur(2px); }
@@ -878,18 +892,35 @@
     }
     .cat__sym {
       position: relative;
-      height: 118px;
-      display: flex; align-items: center; justify-content: center;
-      margin: 6px 0 8px;
+      height: 130px;
+      display: flex; align-items: flex-end; justify-content: center;
+      margin: 4px 0 10px;
+      padding: 6px 0 16px;
       overflow: hidden;
       isolation: isolate;
     }
     .cat__sym::before {
       content: "";
       position: absolute;
-      left: 14%; right: 14%; bottom: 6px;
-      height: 22%;
-      background: radial-gradient(50% 100% at 50% 100%, rgba(201,169,97,0.22), transparent 70%);
+      left: 0; right: 0; bottom: 0;
+      height: 38%;
+      background: linear-gradient(180deg,
+        transparent 0%,
+        rgba(0,0,0,0.10) 60%,
+        rgba(0,0,0,0.22) 100%);
+      z-index: 0;
+      pointer-events: none;
+    }
+    .cat__sym::after {
+      content: "";
+      position: absolute;
+      left: 16%; right: 16%; bottom: 10px;
+      height: 1px;
+      background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(201,169,97,0.42) 22%,
+        rgba(201,169,97,0.42) 78%,
+        transparent 100%);
       z-index: 0;
       pointer-events: none;
     }
@@ -897,19 +928,19 @@
       position: relative; z-index: 1;
       width: auto;
       height: 100%;
-      max-width: 86%;
+      max-width: 92%;
       object-fit: contain;
       filter:
-        drop-shadow(0 3px 6px rgba(0,0,0,0.5))
-        drop-shadow(0 0 10px rgba(201,169,97,0.10));
+        drop-shadow(0 4px 6px rgba(0,0,0,0.5))
+        drop-shadow(0 1px 2px rgba(0,0,0,0.6));
       transition: transform 420ms var(--ease), filter 320ms var(--ease);
     }
     .cat__item:hover .cat__sym img,
     .cat__item.is-active .cat__sym img {
       transform: scale(1.04);
       filter:
-        drop-shadow(0 4px 10px rgba(0,0,0,0.6))
-        drop-shadow(0 0 18px rgba(201,169,97,0.26));
+        drop-shadow(0 5px 8px rgba(0,0,0,0.6))
+        drop-shadow(0 2px 3px rgba(0,0,0,0.7));
     }
     .cat__name {
       font-family: var(--serif);
@@ -1051,7 +1082,7 @@
     /* ── Compact width tweaks (≤ 380px / iPhone SE-ish) ────────── */
     @media (max-width: 380px) {
       .hero__headline { font-size: 38px; }
-      .glyph-stage { height: 240px; }
+      .glyph-stage { height: 300px; padding: 8px 0 22px; }
       .card__name { font-size: 32px; }
       .close__head { font-size: 30px; }
     }
