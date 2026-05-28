@@ -5,12 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#08090C" />
   <meta name="color-scheme" content="dark" />
-  <meta name="description" content="Zodiacs.org — twelve cultural assets for a digital era. The oldest symbolic language of civilization, recast as scarce digital signs for a new generation of collectors." />
-  <meta property="og:title" content="Zodiacs.org — The oldest story, reinvented." />
+  <meta name="description" content="Zodiacs.org. Twelve cultural assets for a digital era. The oldest symbolic language of civilization, recast as scarce digital signs for a new generation of collectors." />
+  <meta property="og:title" content="Zodiacs.org. The oldest story, reinvented." />
   <meta property="og:description" content="Twelve signs. Thousands of years of cultural memory. Recast as scarce digital symbols." />
   <meta property="og:type" content="website" />
   <meta name="twitter:card" content="summary_large_image" />
-  <title>Zodiacs.org — The oldest story, reinvented.</title>
+  <title>Zodiacs.org · The oldest story, reinvented.</title>
+
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%2308090C'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' font-family='Cormorant Garamond, Georgia, serif' font-style='italic' font-size='42' fill='%23DEC07A'%3EZ%3C/text%3E%3C/svg%3E" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -80,14 +82,21 @@
       -moz-osx-font-smoothing: grayscale;
       text-rendering: optimizeLegibility;
     }
+    html { scroll-behavior: smooth; }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+    }
 
     body {
-      min-height: 100vh;
+      min-height: 100dvh;
       background:
-        radial-gradient(120% 60% at 50% -10%, rgba(201,169,97,0.06), transparent 60%),
-        radial-gradient(120% 80% at 50% 110%, rgba(74,109,148,0.05), transparent 60%),
+        radial-gradient(120% 60% at 50% -10%, rgba(201,169,97,0.07), transparent 60%),
+        radial-gradient(120% 80% at 50% 110%, rgba(201,169,97,0.03), transparent 60%),
         var(--bg);
     }
+
+    /* Sticky-safe anchor navigation — header sits at top:12px + 12px margin */
+    [id] { scroll-margin-top: 96px; }
 
     img, svg { display: block; max-width: 100%; }
 
@@ -329,6 +338,7 @@
       color: var(--ink);
       background: transparent;
       border: 1px solid var(--hair-3);
+      text-decoration: none;
       box-shadow:
         inset 0 1px 0 rgba(222, 192, 122, 0.12),
         inset 0 -1px 0 rgba(0, 0, 0, 0.5);
@@ -477,10 +487,10 @@
       max-width: 88%;
       max-height: 100%;
       object-fit: contain;
-      /* Drop-shadow does the contact-shadow work; no extra radial. */
+      /* Bronze-tinted contact shadow reads warmer on dark surface than pure black. */
       filter:
-        drop-shadow(0 6px 10px rgba(0,0,0,0.55))
-        drop-shadow(0 2px 4px rgba(0,0,0,0.65));
+        drop-shadow(0 6px 10px rgba(20, 14, 6, 0.55))
+        drop-shadow(0 2px 4px rgba(36, 26, 12, 0.65));
       transition: opacity 320ms var(--ease), transform 320ms var(--ease), filter 320ms var(--ease);
     }
     .glyph--enter { opacity: 0; transform: translateY(6px) scale(0.985); filter: blur(2px); }
@@ -494,6 +504,7 @@
       text-align: center;
       color: var(--ink);
       margin: 4px 0 8px;
+      text-wrap: balance;
     }
     .card__meta {
       text-align: center;
@@ -505,13 +516,23 @@
     }
     .card__meta .g { color: var(--gold); }
     .card__archetype {
-      text-align: center;
+      display: flex; align-items: center; justify-content: center; gap: 14px;
+      margin-top: 12px;
+    }
+    .card__archetype-text {
       font-family: var(--serif);
       font-style: italic;
       font-size: 15px;
       color: var(--ink-2);
-      margin-top: 10px;
       letter-spacing: 0.01em;
+      white-space: nowrap;
+    }
+    .card__archetype-rule {
+      height: 1px; width: 28px;
+      background: linear-gradient(90deg, transparent, rgba(201,169,97,0.45));
+    }
+    .card__archetype-rule + .card__archetype-text + .card__archetype-rule {
+      background: linear-gradient(90deg, rgba(201,169,97,0.45), transparent);
     }
 
     .card__prev {
@@ -931,16 +952,16 @@
       max-width: 92%;
       object-fit: contain;
       filter:
-        drop-shadow(0 4px 6px rgba(0,0,0,0.5))
-        drop-shadow(0 1px 2px rgba(0,0,0,0.6));
+        drop-shadow(0 4px 6px rgba(20, 14, 6, 0.5))
+        drop-shadow(0 1px 2px rgba(36, 26, 12, 0.6));
       transition: transform 420ms var(--ease), filter 320ms var(--ease);
     }
     .cat__item:hover .cat__sym img,
     .cat__item.is-active .cat__sym img {
       transform: scale(1.04);
       filter:
-        drop-shadow(0 5px 8px rgba(0,0,0,0.6))
-        drop-shadow(0 2px 3px rgba(0,0,0,0.7));
+        drop-shadow(0 5px 8px rgba(20, 14, 6, 0.6))
+        drop-shadow(0 2px 3px rgba(36, 26, 12, 0.7));
     }
     .cat__name {
       font-family: var(--serif);
@@ -1003,6 +1024,7 @@
       line-height: 1.1;
       color: var(--ink);
       margin: 0 0 14px;
+      text-wrap: balance;
     }
     .close__head .it { font-style: italic; color: var(--gold-bright); }
     .close__sub {
@@ -1123,7 +1145,7 @@
         element: 'Fire', modality: 'Cardinal', rulingPlanet: 'Mars',
         symbol: '♈︎', archetype: 'The Initiator',
         shortBio:
-          'The first spark. Aries marks the vernal equinox — long honored across civilizations as the renewal of time and the opening of the symbolic year.',
+          'The first spark. Aries marks the vernal equinox, long honored across civilizations as the renewal of time and the opening of the symbolic year.',
         mintAddress: 'zdc1·ARIES·Ω·a4r1eS·0001',
         marketLinks: { primary: 'placeholder', secondary: 'placeholder' },
         imagePath: '',
@@ -1167,7 +1189,7 @@
         element: 'Fire', modality: 'Fixed', rulingPlanet: 'Sun',
         symbol: '♌︎', archetype: 'The Sovereign',
         shortBio:
-          'The lion. Older than empires. Leo carries the sun at the height of summer — the symbol of radiant authority and visible self.',
+          'The lion. Older than empires. Leo carries the sun at the height of summer. The symbol of radiant authority and visible self.',
         mintAddress: 'zdc5·LEO·Ω·L30n5·0005',
         marketLinks: { primary: 'placeholder', secondary: 'placeholder' },
         imagePath: '',
@@ -1200,7 +1222,7 @@
         element: 'Water', modality: 'Fixed', rulingPlanet: 'Pluto',
         symbol: '♏︎', archetype: 'The Initiate',
         shortBio:
-          'The scorpion of the deep year. Scorpio carries the rites of transformation — the threshold between what passes and what endures.',
+          'The scorpion of the deep year. Scorpio carries the rites of transformation. The threshold between what passes and what endures.',
         mintAddress: 'zdc8·SCORPIO·Ω·5c0Rp·0008',
         marketLinks: { primary: 'placeholder', secondary: 'placeholder' },
         imagePath: '',
@@ -1233,7 +1255,7 @@
         element: 'Air', modality: 'Fixed', rulingPlanet: 'Uranus',
         symbol: '♒︎', archetype: 'The Heretic',
         shortBio:
-          'The water-bearer. Aquarius holds the symbol of the unbound mind — invention, dissent, and the long arc of cultural shift.',
+          'The water-bearer. Aquarius holds the symbol of the unbound mind: invention, dissent, the long arc of cultural shift.',
         mintAddress: 'zdc11·AQUARIUS·Ω·4qu4·0011',
         marketLinks: { primary: 'placeholder', secondary: 'placeholder' },
         imagePath: '',
@@ -1244,7 +1266,7 @@
         element: 'Water', modality: 'Mutable', rulingPlanet: 'Neptune',
         symbol: '♓︎', archetype: 'The Mystic',
         shortBio:
-          'Two fishes bound by a silver cord. Pisces closes the wheel — the symbol of dissolution, depth, and the world before the next renewal.',
+          'Two fishes bound by a silver cord. Pisces closes the wheel. The symbol of dissolution, depth, and the world before the next renewal.',
         mintAddress: 'zdc12·PISCES·Ω·p1Sc3·0012',
         marketLinks: { primary: 'placeholder', secondary: 'placeholder' },
         imagePath: '',
@@ -1295,14 +1317,14 @@
           </p>
 
           <div className="hero__cta">
-            <button className="btn btn--primary">
-              <span>Explore the Signs</span>
+            <a className="btn btn--primary" href="#catalog">
+              <span>Explore the signs</span>
               <span className="arr">→</span>
-            </button>
-            <button className="btn btn--ghost">
-              <span>Read the Thesis</span>
+            </a>
+            <a className="btn btn--ghost" href="#thesis">
+              <span>Read the thesis</span>
               <span className="arr" style={{ width: 28, height: 28, background: 'transparent', border: 0, color: 'var(--ink-dim)' }}>↗</span>
-            </button>
+            </a>
           </div>
 
           <FeaturedCard sign={sign} animKey={animKey} />
@@ -1316,7 +1338,7 @@
       const reveal = useReveal();
 
       return (
-        <article ref={reveal} className="card reveal" aria-label={`Featured sign — ${sign.name}`}>
+        <article ref={reveal} className="card reveal" aria-label={`Featured sign · ${sign.name}`}>
           <span className="card__corner card__corner--tl" />
           <span className="card__corner card__corner--tr" />
           <span className="card__corner card__corner--bl" />
@@ -1335,7 +1357,7 @@
                 className="nugget fade-key"
                 key={animKey + '-glyph'}
                 src={`assets/nuggets/${sign.name.toLowerCase()}.png`}
-                alt={`${sign.name} — sculptural figure`}
+                alt={`${sign.name} sculptural figure`}
                 fetchpriority="high"
                 decoding="async"
               />
@@ -1352,7 +1374,11 @@
                 <span className="dot" />
                 <span>{sign.rulingPlanet}</span>
               </div>
-              <div className="card__archetype">— {sign.archetype} —</div>
+              <div className="card__archetype">
+                <span className="card__archetype-rule" aria-hidden="true" />
+                <span className="card__archetype-text">{sign.archetype}</span>
+                <span className="card__archetype-rule" aria-hidden="true" />
+              </div>
             </div>
 
             <div className="card__prev fade-key" key={animKey + '-prev'}>
@@ -1533,9 +1559,9 @@
     function Philosophy() {
       const reveal = useReveal();
       return (
-        <section ref={reveal} className="phil reveal" aria-label="Philosophy">
+        <section ref={reveal} id="thesis" className="phil reveal" aria-label="Philosophy">
           <div className="phil__sup">
-            <span className="label label--gold">№ 08 — Thesis</span>
+            <span className="label label--gold">№ 08 · Thesis</span>
             <span className="line" />
           </div>
           <p className="phil__body">
@@ -1614,10 +1640,10 @@
           <p className="close__sub">
             A symbolic collection for a digital era.
           </p>
-          <button className="btn btn--primary" style={{ width: '100%', justifyContent: 'space-between' }}>
-            <span>Enter the Collection</span>
+          <a className="btn btn--primary" href="#catalog" style={{ width: '100%', justifyContent: 'space-between' }}>
+            <span>Enter the collection</span>
             <span className="arr">→</span>
-          </button>
+          </a>
         </section>
       );
     }
