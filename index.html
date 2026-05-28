@@ -428,26 +428,42 @@
 
     .glyph-stage {
       position: relative;
-      height: 200px;
+      height: 280px;
       display: grid; place-items: center;
-      margin: 4px 0 6px;
+      margin: 4px 0 10px;
+      isolation: isolate;
     }
     .glyph-stage::before {
       content: "";
-      position: absolute; inset: 0;
-      background: radial-gradient(50% 40% at 50% 50%, rgba(201,169,97,0.18), transparent 70%);
+      position: absolute;
+      inset: auto 10% -8px 10%;
+      height: 60%;
+      background:
+        radial-gradient(50% 60% at 50% 100%, rgba(201,169,97,0.22), transparent 70%);
       pointer-events: none;
+      z-index: 0;
     }
-    .glyph {
-      font-family: var(--serif);
-      font-size: 168px;
-      line-height: 1;
-      color: var(--gold-bright);
-      font-variant-emoji: text;
-      text-shadow:
-        0 0 28px rgba(201,169,97,0.25),
-        0 0 1px rgba(255,236,180,0.6);
-      transition: opacity 320ms var(--ease), transform 320ms var(--ease);
+    .glyph-stage::after {
+      content: "";
+      position: absolute;
+      left: 22%; right: 22%; bottom: 14px;
+      height: 14px;
+      background: radial-gradient(50% 100% at 50% 50%, rgba(0,0,0,0.55), transparent 75%);
+      filter: blur(4px);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .glyph-stage .nugget {
+      position: relative;
+      z-index: 1;
+      max-width: 78%;
+      max-height: 100%;
+      width: auto; height: auto;
+      object-fit: contain;
+      filter:
+        drop-shadow(0 4px 12px rgba(0,0,0,0.55))
+        drop-shadow(0 0 22px rgba(201,169,97,0.18));
+      transition: opacity 320ms var(--ease), transform 320ms var(--ease), filter 320ms var(--ease);
     }
     .glyph--enter { opacity: 0; transform: translateY(6px) scale(0.985); filter: blur(2px); }
 
@@ -580,25 +596,24 @@
       background: transparent;
       border: 1px solid transparent;
       scroll-snap-align: center;
-      color: var(--ink-mute);
-      font-family: var(--serif);
-      font-variant-emoji: text;
-      font-size: 22px;
-      line-height: 1;
+      padding: 0;
       transition:
-        color 420ms var(--ease),
         border-color 420ms var(--ease),
         background 420ms var(--ease),
         box-shadow 420ms var(--ease),
-        transform 220ms var(--ease),
-        text-shadow 420ms var(--ease);
+        transform 220ms var(--ease);
     }
-    .strip__glyph:hover { color: var(--ink-2); }
+    .strip__glyph img {
+      width: 26px; height: 26px;
+      object-fit: contain;
+      opacity: 0.42;
+      filter: saturate(0.6) brightness(0.92);
+      transition: opacity 420ms var(--ease), filter 420ms var(--ease), transform 220ms var(--ease);
+    }
+    .strip__glyph:hover img { opacity: 0.7; }
     .strip__glyph:active { transform: scale(0.92); }
 
     .strip__glyph.is-active {
-      color: var(--gold-bright);
-      font-size: 26px;
       border-color: var(--gold);
       background:
         radial-gradient(60% 60% at 50% 50%, rgba(201,169,97,0.18), transparent 80%);
@@ -607,9 +622,14 @@
         0 0 0 1px rgba(201,169,97,0.18),
         0 0 24px -2px rgba(201,169,97,0.55),
         0 0 48px -8px rgba(201,169,97,0.45);
-      text-shadow:
-        0 0 12px rgba(222,192,122,0.65),
-        0 0 1px rgba(255,236,180,0.8);
+    }
+    .strip__glyph.is-active img {
+      width: 30px; height: 30px;
+      opacity: 1;
+      filter:
+        saturate(1.15) brightness(1.08)
+        drop-shadow(0 0 6px rgba(222,192,122,0.55))
+        drop-shadow(0 0 1px rgba(255,236,180,0.9));
     }
 
     .strip__sub {
@@ -657,13 +677,12 @@
     }
     .detail__symbol {
       float: right;
-      font-family: var(--serif);
-      font-size: 44px;
-      line-height: 1;
-      color: var(--gold-bright);
-      margin-left: 12px;
-      font-variant-emoji: text;
-      text-shadow: 0 0 18px rgba(201,169,97,0.3);
+      width: 56px; height: 56px;
+      object-fit: contain;
+      margin: -4px 0 0 14px;
+      filter:
+        drop-shadow(0 0 14px rgba(201,169,97,0.32))
+        drop-shadow(0 1px 2px rgba(0,0,0,0.5));
     }
     .detail__rows {
       margin-top: 18px;
@@ -854,13 +873,39 @@
       color: var(--ink-mute);
     }
     .cat__sym {
-      font-family: var(--serif);
-      font-size: 44px;
-      line-height: 1;
-      color: var(--gold-bright);
-      font-variant-emoji: text;
-      text-shadow: 0 0 12px rgba(201,169,97,0.25);
-      margin: 2px 0 0;
+      position: relative;
+      height: 118px;
+      display: flex; align-items: center; justify-content: center;
+      margin: 6px 0 8px;
+      overflow: hidden;
+      isolation: isolate;
+    }
+    .cat__sym::before {
+      content: "";
+      position: absolute;
+      left: 14%; right: 14%; bottom: 6px;
+      height: 22%;
+      background: radial-gradient(50% 100% at 50% 100%, rgba(201,169,97,0.22), transparent 70%);
+      z-index: 0;
+      pointer-events: none;
+    }
+    .cat__sym img {
+      position: relative; z-index: 1;
+      width: auto;
+      height: 100%;
+      max-width: 86%;
+      object-fit: contain;
+      filter:
+        drop-shadow(0 3px 6px rgba(0,0,0,0.5))
+        drop-shadow(0 0 10px rgba(201,169,97,0.10));
+      transition: transform 420ms var(--ease), filter 320ms var(--ease);
+    }
+    .cat__item:hover .cat__sym img,
+    .cat__item.is-active .cat__sym img {
+      transform: scale(1.04);
+      filter:
+        drop-shadow(0 4px 10px rgba(0,0,0,0.6))
+        drop-shadow(0 0 18px rgba(201,169,97,0.26));
     }
     .cat__name {
       font-family: var(--serif);
@@ -1251,7 +1296,14 @@
             </div>
 
             <div className="glyph-stage">
-              <div className="glyph fade-key" key={animKey + '-glyph'}>{sign.symbol}</div>
+              <img
+                className="nugget fade-key"
+                key={animKey + '-glyph'}
+                src={`assets/nuggets/${sign.name.toLowerCase()}.png`}
+                alt={`${sign.name} — sculptural figure`}
+                fetchpriority="high"
+                decoding="async"
+              />
             </div>
 
             <div className="fade-key" key={animKey + '-meta'}>
@@ -1320,7 +1372,12 @@
                 aria-label={s.name}
                 title={s.name}
               >
-                {s.symbol}
+                <img
+                  src={`assets/icons/${s.name.toLowerCase()}.png`}
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                />
               </button>
             ))}
           </div>
@@ -1344,7 +1401,12 @@
           </div>
 
           <article className="detail fade-key" key={animKey + '-detail'}>
-            <span className="detail__symbol">{sign.symbol}</span>
+            <img
+              className="detail__symbol"
+              src={`assets/icons/${sign.name.toLowerCase()}.png`}
+              alt=""
+              decoding="async"
+            />
             <span className="detail__ticker">{sign.ticker}</span>
             <h3 className="detail__name">{sign.name}</h3>
 
@@ -1480,7 +1542,14 @@
                   }}
                 >
                   <div className="cat__no">№ {String(s.order).padStart(2, '0')} / 12</div>
-                  <div className="cat__sym">{s.symbol}</div>
+                  <div className="cat__sym">
+                    <img
+                      src={`assets/nuggets/thumb/${s.name.toLowerCase()}.png`}
+                      alt={`${s.name} figure`}
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </div>
                   <div className="cat__name">{s.name}</div>
                   <div className="cat__tk">{s.ticker}</div>
                   <div className="cat__meta">{s.element} · {s.archetype}</div>
