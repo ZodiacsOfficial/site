@@ -620,12 +620,14 @@
     /* ── Selector strip — line-art glyphs, halo on active ─────── */
 
     .strip-wrap {
-      padding: 18px 0 20px;
-      border-top: 1px solid var(--hair-2);
+      padding: 22px 0 22px;
+      border-top: 1px solid var(--hair);
       border-bottom: 1px solid var(--hair);
       background:
-        radial-gradient(80% 60% at 50% -10%, rgba(201,169,97,0.05), transparent 70%),
-        linear-gradient(180deg, rgba(11,13,18,0.6) 0%, var(--bg) 100%);
+        linear-gradient(180deg,
+          rgba(0,0,0,0.5) 0%,
+          rgba(0,0,0,0.7) 50%,
+          rgba(0,0,0,0.5) 100%);
       position: relative;
     }
     .strip-wrap::before,
@@ -648,8 +650,8 @@
     .strip {
       display: flex;
       align-items: center;
-      gap: 4px;
-      padding: 6px 24px 8px;
+      gap: 12px;
+      padding: 8px 24px 10px;
       overflow-x: auto;
       scroll-snap-type: x proximity;
       scrollbar-width: none;
@@ -657,80 +659,72 @@
     }
     .strip::-webkit-scrollbar { display: none; }
 
+    /* Glyph buttons — small and dim by default; they recede into the
+       darkness as if half-remembered. The active one is "lit" by a
+       warm amber radial that reads as oil-lamp light, not as UI. */
     .strip__glyph {
       flex: 0 0 auto;
       position: relative;
-      width: 44px; height: 44px;
+      width: 38px; height: 38px;
       display: grid; place-items: center;
       border-radius: 50%;
       background: transparent;
-      border: 1px solid transparent;
-      scroll-snap-align: center;
+      border: 0;
       padding: 0;
-      transition:
-        border-color 420ms var(--ease),
-        background 420ms var(--ease),
-        box-shadow 420ms var(--ease),
-        transform 220ms var(--ease);
+      scroll-snap-align: center;
+      transition: transform 220ms var(--ease);
+    }
+    .strip__glyph::before {
+      content: "";
+      position: absolute;
+      inset: -14px;
+      border-radius: 50%;
+      background:
+        radial-gradient(50% 50% at 50% 50%,
+          rgba(255, 195, 120, 0.42) 0%,
+          rgba(232, 160, 80, 0.22) 35%,
+          rgba(200, 130, 50, 0.07) 65%,
+          transparent 100%);
+      opacity: 0;
+      pointer-events: none;
+      z-index: 0;
+      transition: opacity 720ms var(--ease);
     }
     .strip__glyph img {
-      width: 26px; height: 26px;
+      position: relative;
+      z-index: 1;
+      width: 19px; height: 19px;
       object-fit: contain;
-      opacity: 0.42;
-      filter: saturate(0.6) brightness(0.92);
-      transition: opacity 420ms var(--ease), filter 420ms var(--ease), transform 220ms var(--ease);
+      opacity: 0.28;
+      filter: saturate(0.45) brightness(0.78);
+      transition: opacity 720ms var(--ease), filter 720ms var(--ease), width 320ms var(--ease), height 320ms var(--ease);
     }
-    .strip__glyph:hover img { opacity: 0.7; }
+    .strip__glyph:hover img { opacity: 0.55; filter: saturate(0.7) brightness(0.95); }
     .strip__glyph:active { transform: scale(0.92); }
 
-    .strip__glyph.is-active {
-      border-color: var(--gold);
-      background:
-        radial-gradient(60% 60% at 50% 50%, rgba(201,169,97,0.18), transparent 80%);
-      box-shadow:
-        inset 0 0 12px rgba(201,169,97,0.30),
-        0 0 0 1px rgba(201,169,97,0.18),
-        0 0 24px -2px rgba(201,169,97,0.55),
-        0 0 48px -8px rgba(201,169,97,0.45);
+    /* Active — lamp ignites. No bezel, no border, no UI ring.
+       Glyph swells slightly (19→22px), warms in colour, and the
+       warm radial fades in beneath it. Crossfade is handled by the
+       transition on opacity: when .is-active is removed elsewhere,
+       that glow fades to 0 over 720ms while the new one fades in. */
+    .strip__glyph.is-active::before {
+      opacity: 1;
+      animation: lamp-breathe 4.4s ease-in-out infinite;
     }
     .strip__glyph.is-active img {
-      width: 30px; height: 30px;
+      width: 22px; height: 22px;
       opacity: 1;
       filter:
-        saturate(1.15) brightness(1.08)
-        drop-shadow(0 0 6px rgba(222,192,122,0.55))
-        drop-shadow(0 0 1px rgba(255,236,180,0.9));
+        saturate(1.25) brightness(1.1)
+        drop-shadow(0 0 5px rgba(255, 180, 100, 0.8))
+        drop-shadow(0 0 1px rgba(255, 230, 180, 0.95));
     }
-
-    /* Countdown ring — thin gold arc that traces the active bezel
-       over SELECTOR_CYCLE_MS, then advances. The SVG is re-keyed in
-       React when active changes, so the CSS animation restarts from
-       zero on each sign. */
-    .strip__ring {
-      position: absolute;
-      inset: -1px;
-      width: 46px; height: 46px;
-      pointer-events: none;
-      z-index: 2;
-      overflow: visible;
+    @keyframes lamp-breathe {
+      0%, 100% { transform: scale(1);    filter: brightness(1); }
+      50%      { transform: scale(1.06); filter: brightness(1.12); }
     }
-    .strip__ring circle {
-      fill: none;
-      stroke: var(--gold-bright);
-      stroke-width: 1.4;
-      stroke-linecap: round;
-      transform-origin: center;
-      transform: rotate(-90deg);
-      stroke-dasharray: 133.5;   /* 2π × 21.25 */
-      stroke-dashoffset: 133.5;
-      animation: strip-countdown 4s linear forwards;
-      filter:
-        drop-shadow(0 0 4px rgba(222,192,122,0.7))
-        drop-shadow(0 0 1px rgba(255,236,180,0.9));
-    }
-    @keyframes strip-countdown {
-      from { stroke-dashoffset: 133.5; }
-      to   { stroke-dashoffset: 0; }
+    @media (prefers-reduced-motion: reduce) {
+      .strip__glyph.is-active::before { animation: none; }
     }
 
     .strip__sub {
@@ -1590,16 +1584,6 @@
                     loading="lazy"
                     decoding="async"
                   />
-                  {isActive && running && (
-                    <svg
-                      key={'ring-' + s.ticker}
-                      className="strip__ring"
-                      viewBox="0 0 44 44"
-                      aria-hidden="true"
-                    >
-                      <circle cx="22" cy="22" r="21.25" />
-                    </svg>
-                  )}
                 </button>
               );
             })}
