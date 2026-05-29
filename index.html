@@ -5,13 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#08090C" />
   <meta name="color-scheme" content="dark" />
-  <meta name="description" content="Zodiacs.org. Twelve cultural assets for a digital era. The oldest symbolic language of civilization, recast as scarce digital signs for a new generation of collectors." />
+  <meta name="description" content="Zodiacs.org is the official registry for the canonical 12 Zodiacs cultural assets: native Solana SPL assets with official bridged Base ERC-20 representations, plus a read-only SDK for verification and public ownership display." />
 
   <link rel="canonical" href="https://zodiacs.org/" />
 
   <meta property="og:site_name" content="Zodiacs" />
-  <meta property="og:title" content="Zodiacs.org · The oldest story, reinvented." />
-  <meta property="og:description" content="Twelve signs. Thousands of years of cultural memory. Recast as scarce digital symbols. In partnership with Astrofolio on Solana." />
+  <meta property="og:title" content="Zodiacs.org · Official registry for the 12 Zodiacs." />
+  <meta property="og:description" content="The official Zodiacs.org registry: native Solana Zodiacs, official bridged Base representations, and the read-only Zodiacs SDK." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://zodiacs.org/" />
   <!-- og:image / twitter:image use the currently-live GitHub Pages URL
@@ -22,16 +22,16 @@
   <meta property="og:image" content="https://diasmal917.github.io/zodiacs.org/assets/og/share.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content="Zodiacs.org — sculptural gold figures of the twelve signs, presented as cultural assets in partnership with Astrofolio." />
+  <meta property="og:image:alt" content="Zodiacs.org — the official registry for the twelve Zodiacs cultural assets, native on Solana and bridged to Base." />
   <meta property="og:locale" content="en_US" />
 
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Zodiacs.org · The oldest story, reinvented." />
-  <meta name="twitter:description" content="Twelve signs. Thousands of years of cultural memory. Recast as scarce digital symbols." />
+  <meta name="twitter:title" content="Zodiacs.org · Official registry for the 12 Zodiacs." />
+  <meta name="twitter:description" content="Native Solana Zodiacs and official bridged Base representations. Public registry and read-only SDK." />
   <meta name="twitter:image" content="https://diasmal917.github.io/zodiacs.org/assets/og/share.png" />
-  <meta name="twitter:image:alt" content="Zodiacs.org — sculptural gold figures of the twelve signs." />
+  <meta name="twitter:image:alt" content="Zodiacs.org — the official registry for the twelve Zodiacs cultural assets." />
 
-  <title>Zodiacs.org · The oldest story, reinvented.</title>
+  <title>Zodiacs.org · Official registry for the 12 Zodiacs.</title>
 
   <script type="application/ld+json">
   {
@@ -44,13 +44,7 @@
         "alternateName": "Zodiacs.org",
         "url": "https://zodiacs.org/",
         "logo": "https://zodiacs.org/assets/og/share.png",
-        "description": "A cultural project presenting the twelve signs of the zodiac as scarce digital symbols, in partnership with Astrofolio on Solana.",
-        "parentOrganization": {
-          "@type": "Organization",
-          "name": "Astrofolio",
-          "url": "https://astrofolio.io/",
-          "sameAs": ["https://x.com/astrofoliosol"]
-        }
+        "description": "Maintains the official registry for the canonical 12 Zodiacs cultural assets — native Solana SPL with official bridged Base ERC-20 representations — and a read-only SDK for verification and public ownership display."
       },
       {
         "@type": "WebSite",
@@ -61,11 +55,15 @@
         "inLanguage": "en"
       },
       {
-        "@type": "CreativeWork",
-        "name": "The Zodiacs Collection",
+        "@type": "Dataset",
+        "@id": "https://zodiacs.org/#registry",
+        "name": "Zodiacs Official Registry",
+        "description": "Canonical registry for the 12 Zodiacs cultural assets, including native Solana SPL assets and official bridged Base ERC-20 representations.",
+        "url": "https://zodiacs.org/registry/zodiacs.registry.json",
+        "encodingFormat": "application/json",
+        "license": "https://creativecommons.org/licenses/by/4.0/",
         "creator": { "@id": "https://zodiacs.org/#org" },
-        "description": "Twelve cultural assets for a digital era — one sculptural figure per zodiac sign.",
-        "numberOfItems": 12
+        "isAccessibleForFree": true
       }
     ]
   }
@@ -679,6 +677,295 @@
       text-transform: uppercase;
       color: var(--gold);
     }
+    .sec__lede {
+      font-family: var(--serif);
+      font-size: 16.5px;
+      line-height: 1.55;
+      color: var(--ink-2);
+      max-width: 38ch;
+      margin: 0 0 28px;
+      text-wrap: pretty;
+    }
+
+    /* ── Copy chip (read-only address) ───────────────────────── */
+    .copychip {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 6px 10px;
+      border: 1px solid var(--hair-2);
+      background: rgba(201,169,97,0.04);
+      color: var(--ink-2);
+      cursor: pointer;
+      font-family: var(--mono);
+      font-size: 11.5px;
+      letter-spacing: 0.04em;
+      transition:
+        border-color 280ms var(--ease),
+        background 280ms var(--ease),
+        color 280ms var(--ease),
+        transform 220ms var(--ease);
+    }
+    .copychip:hover {
+      border-color: var(--hair-3);
+      color: var(--ink);
+      background: rgba(201,169,97,0.08);
+    }
+    .copychip:active { transform: scale(0.97); }
+    .copychip__icon {
+      color: var(--gold);
+      font-size: 12px;
+      line-height: 1;
+      transition: color 280ms var(--ease);
+    }
+    .copychip.is-copied {
+      border-color: rgba(111,174,124,0.55);
+      color: var(--live);
+      background: rgba(111,174,124,0.06);
+    }
+    .copychip.is-copied .copychip__icon { color: var(--live); }
+    .card__addr-pending {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 12.5px;
+      color: var(--ink-mute);
+    }
+
+    /* ── Featured card address rows ─────────────────────────── */
+    .card__addr {
+      margin-top: 22px;
+      padding: 12px 4px 4px;
+      border-top: 1px solid var(--hair);
+      display: flex; flex-direction: column; gap: 10px;
+    }
+    .card__addr-row {
+      display: flex; justify-content: space-between; align-items: center;
+      gap: 10px;
+    }
+    .card__addr-k {
+      font-family: var(--mono);
+      font-size: 9.5px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--ink-mute);
+    }
+
+    /* ── Registry section ────────────────────────────────────── */
+    .reg__facts {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1px;
+      background: var(--hair);
+      border: 1px solid var(--hair);
+      margin-bottom: 24px;
+    }
+    .reg__fact {
+      background: var(--bg);
+      padding: 18px 16px;
+    }
+    .reg__fact-k {
+      font-family: var(--serif);
+      font-size: 28px;
+      line-height: 1;
+      color: var(--gold-bright);
+      letter-spacing: -0.01em;
+    }
+    .reg__fact-v {
+      margin-top: 6px;
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--ink-dim);
+    }
+    .reg__meta {
+      margin: 0;
+      border-top: 1px solid var(--hair);
+    }
+    .reg__meta .ext {
+      font-family: var(--mono);
+      font-size: 11.5px;
+      color: var(--gold);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(201,169,97,0.32);
+    }
+    .reg__meta .ext:hover {
+      color: var(--gold-bright);
+      border-bottom-color: var(--gold);
+    }
+
+    /* ── Verifier ─────────────────────────────────────────────── */
+    .vrf {
+      display: flex; gap: 8px;
+      margin-bottom: 14px;
+    }
+    .vrf__input {
+      flex: 1;
+      height: 48px;
+      padding: 0 14px;
+      background: var(--surface);
+      border: 1px solid var(--hair-2);
+      color: var(--ink);
+      font-size: 12.5px;
+      letter-spacing: 0.04em;
+      transition: border-color 220ms var(--ease), background 220ms var(--ease);
+    }
+    .vrf__input::placeholder { color: var(--ink-mute); }
+    .vrf__input:focus {
+      outline: none;
+      border-color: var(--gold);
+      background: var(--surface-2);
+    }
+    .vrf__submit {
+      flex: 0 0 auto;
+      height: 48px;
+      padding: 0 18px;
+      background: transparent;
+      border: 1px solid var(--gold);
+      color: var(--gold-bright);
+      font-family: var(--mono);
+      font-size: 10.5px;
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 220ms var(--ease), color 220ms var(--ease), transform 220ms var(--ease);
+    }
+    .vrf__submit:hover { background: rgba(201,169,97,0.08); color: #fff; }
+    .vrf__submit:active { transform: scale(0.985); }
+    .vrf__examples {
+      display: flex; flex-wrap: wrap; align-items: center; gap: 8px;
+      margin-bottom: 20px;
+    }
+    .vrf__example {
+      padding: 5px 11px;
+      background: transparent;
+      border: 1px solid var(--hair);
+      color: var(--ink-dim);
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: border-color 220ms var(--ease), color 220ms var(--ease);
+    }
+    .vrf__example:hover {
+      border-color: var(--hair-3);
+      color: var(--ink-2);
+    }
+    .vrf__example--clear { color: var(--ink-mute); }
+
+    .vrf__result {
+      border: 1px solid var(--hair-2);
+      padding: 22px 20px;
+      background:
+        linear-gradient(180deg, rgba(201,169,97,0.04), transparent 70%),
+        var(--surface);
+    }
+    .vrf__result--official-base,
+    .vrf__result--official-solana {
+      border-color: rgba(201,169,97,0.42);
+    }
+    .vrf__result--not-found {
+      border-color: var(--hair);
+      background: var(--surface);
+    }
+    .vrf__result-head {
+      display: flex; align-items: center; gap: 12px;
+      font-family: var(--serif);
+      font-size: 17px;
+      line-height: 1.3;
+      color: var(--ink);
+      margin-bottom: 14px;
+    }
+    .vrf__tick {
+      flex: 0 0 auto;
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      display: inline-grid; place-items: center;
+      background: rgba(201,169,97,0.16);
+      color: var(--gold-bright);
+      font-size: 12px;
+      font-family: var(--mono);
+    }
+    .vrf__cross {
+      flex: 0 0 auto;
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      display: inline-grid; place-items: center;
+      background: var(--surface-2);
+      color: var(--ink-mute);
+      font-size: 14px;
+      font-family: var(--mono);
+    }
+    .vrf__result-body {
+      display: flex; flex-direction: column; gap: 16px;
+      padding-top: 14px;
+      border-top: 1px solid var(--hair);
+    }
+    .vrf__result-sign {
+      display: flex; align-items: center; gap: 14px;
+    }
+    .vrf__result-icon {
+      width: 36px; height: 36px;
+      object-fit: contain;
+      opacity: 0.95;
+    }
+    .vrf__result-name {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 22px;
+      color: var(--ink);
+      line-height: 1;
+    }
+    .vrf__result-meta {
+      display: flex; align-items: center; flex-wrap: wrap;
+      gap: 0;
+      margin-top: 4px;
+      font-family: var(--mono);
+      font-size: 9.5px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--ink-dim);
+    }
+    .vrf__result-meta .dot {
+      margin: 0 8px 2px;
+    }
+    .vrf__result-rows {
+      margin: 0;
+    }
+
+    /* ── Catalog (Official 12) ───────────────────────────────── */
+    .cat__head {
+      display: flex; justify-content: space-between; align-items: center;
+      gap: 8px;
+    }
+    .cat__badge {
+      font-size: 8.5px !important;
+      letter-spacing: 0.20em;
+    }
+    .cat__sym--button {
+      background: transparent;
+      border: 0;
+      padding: 0;
+      width: 100%;
+      cursor: pointer;
+    }
+    .cat__addr {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 10px;
+      margin-top: 4px;
+      padding-top: 10px;
+      border-top: 1px solid var(--hair);
+    }
+    .cat__addr-k {
+      font-family: var(--mono);
+      font-size: 8.5px;
+      letter-spacing: 0.20em;
+      text-transform: uppercase;
+      color: var(--ink-mute);
+    }
+    .cat__addr .copychip {
+      padding: 4px 8px;
+      font-size: 10.5px;
+    }
 
     /* ── Selector strip — line-art glyphs, halo on active ─────── */
 
@@ -1094,17 +1381,8 @@
       text-transform: uppercase;
       margin-top: 4px;
     }
-    .cat__price {
-      margin-top: auto;
-      padding-top: 8px;
-      border-top: 1px solid var(--hair);
-      display: flex; justify-content: space-between; align-items: baseline;
-      font-family: var(--mono);
-      font-size: 11px;
-      color: var(--ink-2);
-    }
-    .cat__price .ch.up   { color: var(--gold-bright); }
-    .cat__price .ch.down { color: #B07A6E; }
+    /* (.cat__price retired: catalog cards no longer show financial data.
+       Address row is now rendered by .cat__addr — see new-section CSS.) */
 
     /* ── Closing ───────────────────────────────────────────────── */
 
@@ -1167,28 +1445,21 @@
     .ftr .mark { color: var(--ink-2); letter-spacing: 0.18em; font-family: var(--serif); text-transform: none; font-size: 13px; }
     .ftr .mark .g { color: var(--gold); }
     .ftr__legal {
-      display: inline-flex; gap: 14px;
+      display: inline-flex; flex-wrap: wrap; gap: 12px 14px;
     }
-    .ftr__row--partner {
+    /* Origin credit — quietest possible footer line. Not a brand
+       statement; just acknowledges where this work began. No link, no
+       gold accent, no italic. */
+    .ftr__row--origin {
       justify-content: center;
       text-align: center;
-      font-family: var(--serif);
-      font-size: 12px;
-      font-style: italic;
-      letter-spacing: 0.04em;
-      text-transform: none;
-      color: var(--ink-dim);
-    }
-    .ftr__partner {
-      color: var(--gold);
-      text-decoration: none;
-      border-bottom: 1px solid rgba(201,169,97,0.32);
-      padding-bottom: 1px;
-      transition: color 220ms var(--ease), border-color 220ms var(--ease);
-    }
-    .ftr__partner:hover {
-      color: var(--gold-bright);
-      border-bottom-color: var(--gold);
+      font-family: var(--mono);
+      font-size: 8.5px;
+      letter-spacing: 0.30em;
+      color: var(--ink-mute);
+      padding-top: 14px !important;
+      margin-top: 14px !important;
+      border-top: 1px solid var(--hair) !important;
     }
     .ftr__legal a {
       color: var(--ink-dim);
@@ -1269,140 +1540,84 @@
     // Local metadata for all twelve signs.
     // Market values are placeholder fixtures — never live data.
     // ──────────────────────────────────────────────────────────────
+    // Asset identity = the sign. Chain-specific addresses are
+    // *representations* of that identity. This shape mirrors
+    // registry/zodiacs.registry.json which is the public source of truth.
+    // Solana mints are intentionally null until the native registry
+    // entries are supplied — the UI renders a "from official registry"
+    // placeholder for those.
     const SIGNS = [
-      {
-        name: 'Aries', ticker: 'ARIES', order: 1,
-        element: 'Fire', modality: 'Cardinal', rulingPlanet: 'Mars',
+      { name: 'Aries',       ticker: 'ARIES',       order: 1,  element: 'Fire',  modality: 'Cardinal', rulingPlanet: 'Mars',
         symbol: '♈︎', archetype: 'The Initiator',
-        shortBio:
-          'The first spark. Aries marks the vernal equinox, long honored across civilizations as the renewal of time and the opening of the symbolic year.',
-        mintAddress: 'zdc1·ARIES·Ω·a4r1eS·0001',
-        marketLinks: { primary: 'placeholder', secondary: 'placeholder' },
-        imagePath: '',
-        marketData: { price: '0.0421', marketCap: '4.21M', fdv: '8.42M', liquidity: '612K', volume24h: '184K', change24h: '+2.34', supply: '100,000,000', lastUpdated: '08:42 UTC' },
-      },
-      {
-        name: 'Taurus', ticker: 'TAURUS', order: 2,
-        element: 'Earth', modality: 'Fixed', rulingPlanet: 'Venus',
+        shortBio: 'The first spark. Aries marks the vernal equinox, long honored across civilizations as the renewal of time and the opening of the symbolic year.',
+        representations: { solana: { mint: null, status: 'pending' }, base: { address: '0x3ffB5282F5891Dd8c813E64059EdB0607537eC91', status: 'official' } } },
+      { name: 'Taurus',      ticker: 'TAURUS',      order: 2,  element: 'Earth', modality: 'Fixed',    rulingPlanet: 'Venus',
         symbol: '♉︎', archetype: 'The Keeper',
-        shortBio:
-          'The bull held sacred from Çatalhöyük to Knossos. Taurus carries a long memory of fertility, endurance, and material stewardship.',
-        mintAddress: 'zdc2·TAURUS·Ω·t4uR5·0002',
-        marketLinks: { primary: 'placeholder', secondary: 'placeholder' },
-        imagePath: '',
-        marketData: { price: '0.0617', marketCap: '6.17M', fdv: '12.34M', liquidity: '801K', volume24h: '212K', change24h: '+0.87', supply: '100,000,000', lastUpdated: '08:42 UTC' },
-      },
-      {
-        name: 'Gemini', ticker: 'GEMINI', order: 3,
-        element: 'Air', modality: 'Mutable', rulingPlanet: 'Mercury',
+        shortBio: 'The bull held sacred from Çatalhöyük to Knossos. Taurus carries a long memory of fertility, endurance, and material stewardship.',
+        representations: { solana: { mint: null, status: 'pending' }, base: { address: '0xd5356c6E529569c6912978433DAfb7ca72B5f09C', status: 'official' } } },
+      { name: 'Gemini',      ticker: 'GEMINI',      order: 3,  element: 'Air',   modality: 'Mutable',  rulingPlanet: 'Mercury',
         symbol: '♊︎', archetype: 'The Messenger',
-        shortBio:
-          'The twins. From Castor and Pollux to the dual nature of language itself, Gemini holds the symbol of human exchange and discourse.',
-        mintAddress: 'zdc3·GEMINI·Ω·g3m1N·0003',
-        marketLinks: { primary: 'placeholder', secondary: 'placeholder' },
-        imagePath: '',
-        marketData: { price: '0.0289', marketCap: '2.89M', fdv: '5.78M', liquidity: '442K', volume24h: '127K', change24h: '-1.12', supply: '100,000,000', lastUpdated: '08:42 UTC' },
-      },
-      {
-        name: 'Cancer', ticker: 'CANCER', order: 4,
-        element: 'Water', modality: 'Cardinal', rulingPlanet: 'Moon',
+        shortBio: 'The twins. From Castor and Pollux to the dual nature of language itself, Gemini holds the symbol of human exchange and discourse.',
+        representations: { solana: { mint: null, status: 'pending' }, base: { address: '0x8F6eb25aB4CD2F8f064f7da5E35136D4EC600b4f', status: 'official' } } },
+      { name: 'Cancer',      ticker: 'CANCER',      order: 4,  element: 'Water', modality: 'Cardinal', rulingPlanet: 'Moon',
         symbol: '♋︎', archetype: 'The Vessel',
-        shortBio:
-          'The crab and the moon. The summer solstice. Cancer preserves the ancient image of home, memory, and the inner tide.',
-        mintAddress: 'zdc4·CANCER·Ω·c4n4r·0004',
-        marketLinks: { primary: 'placeholder', secondary: 'placeholder' },
-        imagePath: '',
-        marketData: { price: '0.0512', marketCap: '5.12M', fdv: '10.24M', liquidity: '688K', volume24h: '167K', change24h: '+0.42', supply: '100,000,000', lastUpdated: '08:42 UTC' },
-      },
-      {
-        name: 'Leo', ticker: 'LEO', order: 5,
-        element: 'Fire', modality: 'Fixed', rulingPlanet: 'Sun',
+        shortBio: 'The crab and the moon. The summer solstice. Cancer preserves the ancient image of home, memory, and the inner tide.',
+        representations: { solana: { mint: null, status: 'pending' }, base: { address: '0xb9Fd3c3157C7b69260Ca285FbbC74F6309226378', status: 'official' } } },
+      { name: 'Leo',         ticker: 'LEO',         order: 5,  element: 'Fire',  modality: 'Fixed',    rulingPlanet: 'Sun',
         symbol: '♌︎', archetype: 'The Sovereign',
-        shortBio:
-          'The lion. Older than empires. Leo carries the sun at the height of summer. The symbol of radiant authority and visible self.',
-        mintAddress: 'zdc5·LEO·Ω·L30n5·0005',
-        marketLinks: { primary: 'placeholder', secondary: 'placeholder' },
-        imagePath: '',
-        marketData: { price: '0.0894', marketCap: '8.94M', fdv: '17.88M', liquidity: '1.12M', volume24h: '298K', change24h: '+1.78', supply: '100,000,000', lastUpdated: '08:42 UTC' },
-      },
-      {
-        name: 'Virgo', ticker: 'VIRGO', order: 6,
-        element: 'Earth', modality: 'Mutable', rulingPlanet: 'Mercury',
+        shortBio: 'The lion. Older than empires. Leo carries the sun at the height of summer. The symbol of radiant authority and visible self.',
+        representations: { solana: { mint: null, status: 'pending' }, base: { address: '0x4f7B4c12DE5d47314C86Ed3BA25E289aA139CF75', status: 'official' } } },
+      { name: 'Virgo',       ticker: 'VIRGO',       order: 6,  element: 'Earth', modality: 'Mutable',  rulingPlanet: 'Mercury',
         symbol: '♍︎', archetype: 'The Scribe',
-        shortBio:
-          'The maiden of the harvest. Virgo preserves the long lineage of craft, discernment, and the discipline of measure.',
-        mintAddress: 'zdc6·VIRGO·Ω·v1Rg0·0006',
-        marketLinks: { primary: 'placeholder', secondary: 'placeholder' },
-        imagePath: '',
-        marketData: { price: '0.0367', marketCap: '3.67M', fdv: '7.34M', liquidity: '512K', volume24h: '149K', change24h: '-0.34', supply: '100,000,000', lastUpdated: '08:42 UTC' },
-      },
-      {
-        name: 'Libra', ticker: 'LIBRA', order: 7,
-        element: 'Air', modality: 'Cardinal', rulingPlanet: 'Venus',
+        shortBio: 'The maiden of the harvest. Virgo preserves the long lineage of craft, discernment, and the discipline of measure.',
+        representations: { solana: { mint: null, status: 'pending' }, base: { address: '0xAcFd97106bbE5D931aC430Be76A8E362832D48f4', status: 'official' } } },
+      { name: 'Libra',       ticker: 'LIBRA',       order: 7,  element: 'Air',   modality: 'Cardinal', rulingPlanet: 'Venus',
         symbol: '♎︎', archetype: 'The Arbiter',
-        shortBio:
-          'The scales. The autumn equinox. Libra holds the symbol of balance, civic measure, and the law as a cultural form.',
-        mintAddress: 'zdc7·LIBRA·Ω·L1bR4·0007',
-        marketLinks: { primary: 'placeholder', secondary: 'placeholder' },
-        imagePath: '',
-        marketData: { price: '0.0478', marketCap: '4.78M', fdv: '9.56M', liquidity: '634K', volume24h: '178K', change24h: '+0.91', supply: '100,000,000', lastUpdated: '08:42 UTC' },
-      },
-      {
-        name: 'Scorpio', ticker: 'SCORPIO', order: 8,
-        element: 'Water', modality: 'Fixed', rulingPlanet: 'Pluto',
+        shortBio: 'The scales. The autumn equinox. Libra holds the symbol of balance, civic measure, and the law as a cultural form.',
+        representations: { solana: { mint: null, status: 'pending' }, base: { address: '0x4201eff5F419CD6EEDFb28fa240edeaFc9002204', status: 'official' } } },
+      { name: 'Scorpio',     ticker: 'SCORPIO',     order: 8,  element: 'Water', modality: 'Fixed',    rulingPlanet: 'Pluto',
         symbol: '♏︎', archetype: 'The Initiate',
-        shortBio:
-          'The scorpion of the deep year. Scorpio carries the rites of transformation. The threshold between what passes and what endures.',
-        mintAddress: 'zdc8·SCORPIO·Ω·5c0Rp·0008',
-        marketLinks: { primary: 'placeholder', secondary: 'placeholder' },
-        imagePath: '',
-        marketData: { price: '0.0723', marketCap: '7.23M', fdv: '14.46M', liquidity: '912K', volume24h: '241K', change24h: '+2.04', supply: '100,000,000', lastUpdated: '08:42 UTC' },
-      },
-      {
-        name: 'Sagittarius', ticker: 'SAGITTARIUS', order: 9,
-        element: 'Fire', modality: 'Mutable', rulingPlanet: 'Jupiter',
+        shortBio: 'The scorpion of the deep year. Scorpio carries the rites of transformation. The threshold between what passes and what endures.',
+        representations: { solana: { mint: null, status: 'pending' }, base: { address: '0x0057C9cB6D16C2ecA808788f14d0d0c367b26676', status: 'official' } } },
+      { name: 'Sagittarius', ticker: 'SAGITTARIUS', order: 9,  element: 'Fire',  modality: 'Mutable',  rulingPlanet: 'Jupiter',
         symbol: '♐︎', archetype: 'The Seeker',
-        shortBio:
-          'The archer at the galactic center. Sagittarius preserves the impulse to travel, to inquire, to chart what lies beyond the known.',
-        mintAddress: 'zdc9·SAGITTARIUS·Ω·s4g1·0009',
-        marketLinks: { primary: 'placeholder', secondary: 'placeholder' },
-        imagePath: '',
-        marketData: { price: '0.0556', marketCap: '5.56M', fdv: '11.12M', liquidity: '721K', volume24h: '189K', change24h: '+1.23', supply: '100,000,000', lastUpdated: '08:42 UTC' },
-      },
-      {
-        name: 'Capricorn', ticker: 'CAPRICORN', order: 10,
-        element: 'Earth', modality: 'Cardinal', rulingPlanet: 'Saturn',
+        shortBio: 'The archer at the galactic center. Sagittarius preserves the impulse to travel, to inquire, to chart what lies beyond the known.',
+        representations: { solana: { mint: null, status: 'pending' }, base: { address: '0xD21fAb1EB5E11AC3C281F7cF8096eCC4683eEa9c', status: 'official' } } },
+      { name: 'Capricorn',   ticker: 'CAPRICORN',   order: 10, element: 'Earth', modality: 'Cardinal', rulingPlanet: 'Saturn',
         symbol: '♑︎', archetype: 'The Architect',
-        shortBio:
-          'The sea-goat. The winter solstice. Capricorn carries the long pattern of structure, lineage, and the building of enduring forms.',
-        mintAddress: 'zdc10·CAPRICORN·Ω·c4p1·0010',
-        marketLinks: { primary: 'placeholder', secondary: 'placeholder' },
-        imagePath: '',
-        marketData: { price: '0.0681', marketCap: '6.81M', fdv: '13.62M', liquidity: '847K', volume24h: '224K', change24h: '+0.56', supply: '100,000,000', lastUpdated: '08:42 UTC' },
-      },
-      {
-        name: 'Aquarius', ticker: 'AQUARIUS', order: 11,
-        element: 'Air', modality: 'Fixed', rulingPlanet: 'Uranus',
+        shortBio: 'The sea-goat. The winter solstice. Capricorn carries the long pattern of structure, lineage, and the building of enduring forms.',
+        representations: { solana: { mint: null, status: 'pending' }, base: { address: '0xbFB102C18FDf49f2ffCB9B3aF4522f7DC9f51018', status: 'official' } } },
+      { name: 'Aquarius',    ticker: 'AQUARIUS',    order: 11, element: 'Air',   modality: 'Fixed',    rulingPlanet: 'Uranus',
         symbol: '♒︎', archetype: 'The Heretic',
-        shortBio:
-          'The water-bearer. Aquarius holds the symbol of the unbound mind: invention, dissent, the long arc of cultural shift.',
-        mintAddress: 'zdc11·AQUARIUS·Ω·4qu4·0011',
-        marketLinks: { primary: 'placeholder', secondary: 'placeholder' },
-        imagePath: '',
-        marketData: { price: '0.0432', marketCap: '4.32M', fdv: '8.64M', liquidity: '578K', volume24h: '156K', change24h: '+1.89', supply: '100,000,000', lastUpdated: '08:42 UTC' },
-      },
-      {
-        name: 'Pisces', ticker: 'PISCES', order: 12,
-        element: 'Water', modality: 'Mutable', rulingPlanet: 'Neptune',
+        shortBio: 'The water-bearer. Aquarius holds the symbol of the unbound mind: invention, dissent, the long arc of cultural shift.',
+        representations: { solana: { mint: null, status: 'pending' }, base: { address: '0xccA7CD4F96336Fd26eF6c5F579eaC651bAC5535F', status: 'official' } } },
+      { name: 'Pisces',      ticker: 'PISCES',      order: 12, element: 'Water', modality: 'Mutable',  rulingPlanet: 'Neptune',
         symbol: '♓︎', archetype: 'The Mystic',
-        shortBio:
-          'Two fishes bound by a silver cord. Pisces closes the wheel. The symbol of dissolution, depth, and the world before the next renewal.',
-        mintAddress: 'zdc12·PISCES·Ω·p1Sc3·0012',
-        marketLinks: { primary: 'placeholder', secondary: 'placeholder' },
-        imagePath: '',
-        marketData: { price: '0.0398', marketCap: '3.98M', fdv: '7.96M', liquidity: '536K', volume24h: '141K', change24h: '-0.78', supply: '100,000,000', lastUpdated: '08:42 UTC' },
-      },
+        shortBio: 'Two fishes bound by a silver cord. Pisces closes the wheel. The symbol of dissolution, depth, and the world before the next renewal.',
+        representations: { solana: { mint: null, status: 'pending' }, base: { address: '0x43fA1855a89b7A3e07426Fa7a1B44b4187d29Daf', status: 'official' } } },
     ];
+
+    // Verifier lookup helpers — also the read-only shape the future
+    // @zodiacs/sdk will expose as isOfficialZodiacAddress() etc.
+    const norm = (s) => (s || '').trim();
+    const eq = (a, b) => norm(a).toLowerCase() === norm(b).toLowerCase();
+    function lookupAddress(input) {
+      const q = norm(input);
+      if (!q) return null;
+      for (const sign of SIGNS) {
+        if (sign.representations.base.address && eq(sign.representations.base.address, q)) {
+          return { sign, network: 'base', representation: sign.representations.base };
+        }
+        if (sign.representations.solana.mint && eq(sign.representations.solana.mint, q)) {
+          return { sign, network: 'solana', representation: sign.representations.solana };
+        }
+      }
+      return null;
+    }
+    function truncateAddress(a, lead = 6, tail = 4) {
+      if (!a || a.length <= lead + tail + 2) return a || '';
+      return `${a.slice(0, lead)}…${a.slice(-tail)}`;
+    }
 
     const ROMAN = ['I','II','III','IV','V','VI','VII','VIII','IX','X','XI','XII'];
 
@@ -1417,8 +1632,8 @@
             <div className="hdr__mark">
               <span>Zodiacs</span><span className="sep">·</span><span className="dim">org</span>
             </div>
-            <a className="hdr__nav" href="#catalog">
-              <span>Collection</span>
+            <a className="hdr__nav" href="#registry">
+              <span>Registry</span>
               <span className="chip">↗</span>
             </a>
           </header>
@@ -1433,18 +1648,20 @@
             <span className="pulse-dot" aria-hidden="true" />
             <span className="label label--gold" style={{ fontSize: 9.5 }}>
               <span className="sr-only">Live. </span>
-              Cultural assets · digital era
+              Official Zodiacs.org Registry
             </span>
           </div>
 
           <h1 className="hero__headline">
-            The oldest story,<br/>
-            <span className="it">reinvented.</span>
+            Twelve signs.<br/>
+            <span className="it">One canonical registry.</span>
           </h1>
 
           <p className="hero__sub">
-            Twelve signs. Thousands of years of cultural memory.
-            Recast as scarce digital symbols for a new generation of collectors.
+            The native Zodiacs assets live on Solana. Official bridged
+            representations extend them to Base. Zodiacs.org maintains
+            the public registry, provenance layer, and read-only SDK
+            for apps that build around the original 12.
           </p>
 
           <Selector active={active} setActive={setActive} />
@@ -1457,12 +1674,12 @@
     function HeroActions() {
       return (
         <div className="hero__cta hero__cta--below">
-          <a className="btn btn--primary" href="#catalog">
-            <span>Explore the signs</span>
+          <a className="btn btn--primary" href="#official-twelve">
+            <span>View official registry</span>
             <span className="arr">→</span>
           </a>
-          <a className="btn btn--ghost" href="#thesis">
-            <span>Read the thesis</span>
+          <a className="btn btn--ghost" href="#verify">
+            <span>Verify an address</span>
             <span className="arr" style={{ width: 28, height: 28, background: 'transparent', border: 0, color: 'var(--ink-dim)' }}>↗</span>
           </a>
         </div>
@@ -1470,9 +1687,9 @@
     }
 
     function FeaturedCard({ sign, animKey }) {
-      const change = sign.marketData.change24h;
-      const up = !change.startsWith('-');
       const reveal = useReveal();
+      const baseAddr = sign.representations.base.address;
+      const solanaMint = sign.representations.solana.mint;
 
       return (
         <article ref={reveal} className="card reveal" aria-label={`Featured sign · ${sign.name}`}>
@@ -1483,7 +1700,7 @@
 
           <div className="card__inner">
             <div className="card__head">
-              <span className="label label--gold">Featured sign</span>
+              <span className="label label--gold">Official</span>
               <span className="label label--mute">
                 {ROMAN[sign.order - 1]}<span className="sep">/</span>XII
               </span>
@@ -1518,16 +1735,16 @@
               </div>
             </div>
 
-            <div className="card__prev fade-key" key={animKey + '-prev'}>
-              <div>
-                <span className="label">Price</span>
-                <span className="val"><span className="ccy">USD</span>{sign.marketData.price}</span>
+            <div className="card__addr fade-key" key={animKey + '-addr'}>
+              <div className="card__addr-row">
+                <span className="card__addr-k">Native · Solana</span>
+                {solanaMint
+                  ? <CopyChip text={solanaMint} display={truncateAddress(solanaMint, 4, 4)} />
+                  : <span className="card__addr-pending">from official registry</span>}
               </div>
-              <div>
-                <span className="label">24h</span>
-                <span className={'val ' + (up ? 'up' : 'down')}>
-                  {change}%
-                </span>
+              <div className="card__addr-row">
+                <span className="card__addr-k">Bridged · Base</span>
+                <CopyChip text={baseAddr} display={truncateAddress(baseAddr, 6, 4)} />
               </div>
             </div>
 
@@ -1536,6 +1753,35 @@
             </p>
           </div>
         </article>
+      );
+    }
+
+    /* Read-only copy chip — visible as a monospace truncated address;
+       click copies the full address to clipboard and flashes "Copied". */
+    function CopyChip({ text, display }) {
+      const [copied, setCopied] = useState(false);
+      const onCopy = useCallback(() => {
+        if (!text) return;
+        if (navigator.clipboard?.writeText) {
+          navigator.clipboard.writeText(text).then(() => {
+            setCopied(true);
+            setTimeout(() => setCopied(false), 1400);
+          });
+        }
+      }, [text]);
+      return (
+        <button
+          type="button"
+          className={'copychip' + (copied ? ' is-copied' : '')}
+          onClick={onCopy}
+          aria-label={`Copy address ${text}`}
+          title={text}
+        >
+          <span className="copychip__text mono">{display || text}</span>
+          <span className="copychip__icon" aria-hidden="true">
+            {copied ? '✓' : '⧉'}
+          </span>
+        </button>
       );
     }
 
@@ -1671,12 +1917,215 @@
       );
     }
 
+    /* The 'Registry' section — institutional identity card. Same
+       museum-vitrine aesthetic as the Detail Panel; restated as facts
+       about the registry itself, not about a single sign. */
+    function RegistrySection() {
+      const reveal = useReveal();
+      const facts = [
+        { k: '12',         v: 'Cultural assets' },
+        { k: '1',          v: 'Native origin' },
+        { k: '2',          v: 'Supported networks' },
+        { k: 'Read-only',  v: 'SDK & registry' },
+      ];
+      const meta = [
+        { k: 'Registry',       v: 'Zodiacs Official Registry' },
+        { k: 'Native chain',   v: 'Solana · SPL' },
+        { k: 'Bridged chain',  v: 'Base · ERC-20' },
+        { k: 'Bridge protocols', v: 'Wormhole · Symbiosis' },
+        { k: 'Source',         v: 'zodiacs.org' },
+        { k: 'SDK',            v: '@zodiacs/sdk · read-only' },
+        { k: 'Registry JSON',  v: <a className="ext" href="/registry/zodiacs.registry.json">/registry/zodiacs.registry.json</a> },
+        { k: 'Status',         v: 'Public · verifiable' },
+      ];
+
+      return (
+        <section ref={reveal} id="registry" className="sec reveal" aria-label="Official Registry">
+          <div className="sec__head">
+            <span className="sec__no">№ 02</span>
+            <span className="line" />
+            <span className="sec__title">Official registry</span>
+          </div>
+          <p className="sec__lede">
+            Zodiacs.org maintains the canonical registry for the original
+            12 Zodiacs assets. Each sign has a native Solana SPL
+            representation and an official bridged Base ERC-20
+            representation. The Base addresses are not separate originals.
+            They are official bridged counterparts.
+          </p>
+
+          <div className="reg__facts">
+            {facts.map((f, i) => (
+              <div className="reg__fact" key={i}>
+                <div className="reg__fact-k">{f.k}</div>
+                <div className="reg__fact-v">{f.v}</div>
+              </div>
+            ))}
+          </div>
+
+          <dl className="reg__meta">
+            {meta.map((m, i) => (
+              <div className="detail__row" key={i}>
+                <dt className="k">{m.k}</dt>
+                <dd className="v">{m.v}</dd>
+              </div>
+            ))}
+          </dl>
+        </section>
+      );
+    }
+
+    /* Verifier — the most strategically important section on the page.
+       Real working JS against the embedded SIGNS array. Three states:
+       found-base, found-solana, not-found. Neutral copy for unknowns. */
+    function VerifierSection() {
+      const reveal = useReveal();
+      const [input, setInput] = useState('');
+      const [result, setResult] = useState(null); // null | {state, sign?, network?}
+      const onSubmit = (e) => {
+        e.preventDefault();
+        const hit = lookupAddress(input);
+        if (!hit) { setResult({ state: 'not-found', queried: norm(input) }); return; }
+        setResult({ state: 'official-' + hit.network, sign: hit.sign, network: hit.network, queried: norm(input) });
+      };
+      const onClear = () => { setInput(''); setResult(null); };
+      // Pick three "try-one" examples so the section demonstrates itself.
+      const examples = ['LEO', 'CANCER', 'PISCES'].map(t => SIGNS.find(s => s.ticker === t));
+
+      return (
+        <section ref={reveal} id="verify" className="sec reveal" aria-label="Verify a Zodiac">
+          <div className="sec__head">
+            <span className="sec__no">№ 03</span>
+            <span className="line" />
+            <span className="sec__title">Verify a Zodiac</span>
+          </div>
+          <p className="sec__lede">
+            Paste a Solana mint or a Base address. The registry reports
+            whether it is an official Zodiacs.org representation.
+          </p>
+
+          <form className="vrf" onSubmit={onSubmit}>
+            <label className="sr-only" htmlFor="vrf-input">Address or mint</label>
+            <input
+              id="vrf-input"
+              className="vrf__input mono"
+              type="text"
+              autoComplete="off"
+              spellCheck={false}
+              placeholder="Paste address (0x… or Solana mint)"
+              value={input}
+              onChange={e => setInput(e.target.value)}
+            />
+            <button type="submit" className="vrf__submit">Verify</button>
+          </form>
+
+          <div className="vrf__examples">
+            <span className="label label--mute">Try one</span>
+            {examples.map(s => (
+              <button
+                key={s.ticker}
+                type="button"
+                className="vrf__example"
+                onClick={() => setInput(s.representations.base.address)}
+              >
+                {s.name}
+              </button>
+            ))}
+            {input && (
+              <button type="button" className="vrf__example vrf__example--clear" onClick={onClear}>
+                Clear
+              </button>
+            )}
+          </div>
+
+          {result && (
+            <div className={'vrf__result vrf__result--' + result.state} role="status" aria-live="polite">
+              {result.state === 'official-base' && (
+                <>
+                  <div className="vrf__result-head">
+                    <span className="vrf__tick">✓</span>
+                    <span>Official bridged Zodiacs.org asset on Base.</span>
+                  </div>
+                  <VrfResultBody sign={result.sign} network="base" queried={result.queried} />
+                </>
+              )}
+              {result.state === 'official-solana' && (
+                <>
+                  <div className="vrf__result-head">
+                    <span className="vrf__tick">✓</span>
+                    <span>Official native Zodiacs.org asset on Solana.</span>
+                  </div>
+                  <VrfResultBody sign={result.sign} network="solana" queried={result.queried} />
+                </>
+              )}
+              {result.state === 'not-found' && (
+                <>
+                  <div className="vrf__result-head">
+                    <span className="vrf__cross">—</span>
+                    <span>This address is not listed in the official Zodiacs.org registry.</span>
+                  </div>
+                  <div className="vrf__result-meta mono">{truncateAddress(result.queried, 10, 8) || '—'}</div>
+                </>
+              )}
+            </div>
+          )}
+        </section>
+      );
+    }
+
+    function VrfResultBody({ sign, network, queried }) {
+      return (
+        <div className="vrf__result-body">
+          <div className="vrf__result-sign">
+            <img
+              className="vrf__result-icon"
+              src={`assets/icons/${sign.name.toLowerCase()}.png`}
+              alt=""
+              decoding="async"
+            />
+            <div>
+              <div className="vrf__result-name">{sign.name}</div>
+              <div className="vrf__result-meta">
+                <span className="mono">{sign.ticker}</span>
+                <span className="dot" />
+                <span>{sign.element}</span>
+                <span className="dot" />
+                <span>{sign.modality}</span>
+                <span className="dot" />
+                <span>{sign.rulingPlanet}</span>
+              </div>
+            </div>
+          </div>
+          <dl className="vrf__result-rows">
+            <div className="detail__row">
+              <dt className="k">Network</dt>
+              <dd className="v">{network === 'base' ? 'Base · ERC-20' : 'Solana · SPL'}</dd>
+            </div>
+            <div className="detail__row">
+              <dt className="k">Address</dt>
+              <dd className="v"><CopyChip text={queried} display={truncateAddress(queried, 8, 6)} /></dd>
+            </div>
+            <div className="detail__row">
+              <dt className="k">{network === 'base' ? 'Native counterpart' : 'Bridged counterpart'}</dt>
+              <dd className="v">
+                {network === 'base'
+                  ? (sign.representations.solana.mint
+                      ? <CopyChip text={sign.representations.solana.mint} display={truncateAddress(sign.representations.solana.mint, 4, 4)} />
+                      : <span className="card__addr-pending">from official registry</span>)
+                  : <CopyChip text={sign.representations.base.address} display={truncateAddress(sign.representations.base.address, 6, 4)} />}
+              </dd>
+            </div>
+          </dl>
+        </div>
+      );
+    }
+
     function DetailPanel({ sign, animKey }) {
       const reveal = useReveal();
       return (
         <section ref={reveal} className="sec reveal" aria-label="Detail panel">
           <div className="sec__head">
-            <span className="sec__no">№ 06</span>
+            <span className="sec__no">№ 04</span>
             <span className="line" />
             <span className="sec__title">Museum label</span>
           </div>
@@ -1713,8 +2162,18 @@
                 <span className="v">{sign.archetype}</span>
               </div>
               <div className="detail__row">
-                <span className="k">Mint address</span>
-                <span className="v mono">{sign.mintAddress}</span>
+                <span className="k">Native · Solana</span>
+                <span className="v">
+                  {sign.representations.solana.mint
+                    ? <CopyChip text={sign.representations.solana.mint} display={truncateAddress(sign.representations.solana.mint, 4, 4)} />
+                    : <span className="card__addr-pending">from official registry</span>}
+                </span>
+              </div>
+              <div className="detail__row">
+                <span className="k">Bridged · Base</span>
+                <span className="v">
+                  <CopyChip text={sign.representations.base.address} display={truncateAddress(sign.representations.base.address, 6, 4)} />
+                </span>
               </div>
             </div>
 
@@ -1726,50 +2185,54 @@
       );
     }
 
-    function MarketStrip({ sign, animKey }) {
-      const d = sign.marketData;
-      const up = !d.change24h.startsWith('-');
+    /* Reference data — repurposed from the trading-terminal MarketStrip
+       so the eight-cell vitrine layout is preserved but the contents are
+       registry/provenance facts, not financial. No prices, no FDV, no
+       24h change. Brief explicitly forbids financial-promotion language. */
+    function ReferenceStrip({ sign, animKey }) {
+      const baseAddr = sign.representations.base.address;
+      const solanaMint = sign.representations.solana.mint;
       const cells = [
-        { k: 'Price',       v: <><span className="ccy">USD</span>{d.price}</> },
-        { k: '24h Change',  v: <>{d.change24h}%</>, cls: up ? 'up' : 'down' },
-        { k: 'Market Cap',  v: <><span className="ccy">USD</span>{d.marketCap}</> },
-        { k: 'FDV',         v: <><span className="ccy">USD</span>{d.fdv}</> },
-        { k: 'Liquidity',   v: <><span className="ccy">USD</span>{d.liquidity}</> },
-        { k: '24h Volume',  v: <><span className="ccy">USD</span>{d.volume24h}</> },
-        { k: 'Supply',      v: <>{d.supply}</> },
-        { k: 'Last update', v: <>{d.lastUpdated}</> },
+        { k: 'Native chain',    v: 'Solana' },
+        { k: 'Native mint',     v: <span className="mono">{solanaMint ? truncateAddress(solanaMint, 4, 4) : 'from official registry'}</span> },
+        { k: 'Bridged chain',   v: 'Base' },
+        { k: 'Bridged address', v: <span className="mono">{truncateAddress(baseAddr, 6, 4)}</span> },
+        { k: 'Bridge protocol', v: 'Wormhole · Symbiosis' },
+        { k: 'Registry status', v: 'Official' },
+        { k: 'Holders',         v: 'On-chain · read-only' },
+        { k: 'Last verified',   v: 'Live · registry' },
       ];
 
       const reveal = useReveal();
       return (
-        <section ref={reveal} className="sec reveal" aria-label="Market data">
+        <section ref={reveal} className="sec reveal" aria-label="Reference data">
           <div className="sec__head">
-            <span className="sec__no">№ 07</span>
+            <span className="sec__no">№ 05</span>
             <span className="line" />
-            <span className="sec__title">Market data · placeholder</span>
+            <span className="sec__title">Reference data</span>
           </div>
 
           <div className="mkt fade-key" key={animKey + '-mkt'}>
             <div className="mkt__head">
               <span className="pulse">
                 <span className="dot-live" />
-                <span>{sign.ticker} · live preview</span>
+                <span>{sign.ticker} · official registry</span>
               </span>
-              <span className="label label--mute">Indicative only</span>
+              <span className="label label--mute">Read-only</span>
             </div>
 
             <div className="mkt__grid">
               {cells.map((c, i) => (
                 <div className="mkt__cell" key={i}>
                   <div className="mkt__k">{c.k}</div>
-                  <div className={'mkt__v' + (c.cls ? ' ' + c.cls : '')}>{c.v}</div>
+                  <div className="mkt__v">{c.v}</div>
                 </div>
               ))}
             </div>
 
             <div className="mkt__foot">
-              <span>Source · internal fixtures</span>
-              <span>Not financial advice</span>
+              <span>Source · zodiacs.org/registry</span>
+              <span>No prices · no signals</span>
             </div>
           </div>
         </section>
@@ -1781,7 +2244,7 @@
       return (
         <section ref={reveal} id="thesis" className="phil reveal" aria-label="Philosophy">
           <div className="phil__sup">
-            <span className="label label--gold">№ 08 · Thesis</span>
+            <span className="label label--gold">№ 06 · Thesis</span>
             <span className="line" />
           </div>
           <p className="phil__body">
@@ -1803,44 +2266,57 @@
     function CatalogGrid({ active, setActive }) {
       const reveal = useReveal();
       return (
-        <section ref={reveal} className="sec reveal" id="catalog" aria-label="The twelve">
+        <section ref={reveal} className="sec reveal" id="official-twelve" aria-label="The official twelve">
           <div className="sec__head">
-            <span className="sec__no">№ 09</span>
+            <span className="sec__no">№ 07</span>
             <span className="line" />
-            <span className="sec__title">The twelve · catalog</span>
+            <span className="sec__title">The official 12</span>
           </div>
+          <p className="sec__lede">
+            Each sign has one native Solana representation and one
+            officially bridged Base representation. The cards below show
+            the Base address; the Solana mint lives in the official
+            registry.
+          </p>
 
           <div className="cat">
-            {SIGNS.map(s => {
-              const up = !s.marketData.change24h.startsWith('-');
-              return (
+            {SIGNS.map(s => (
+              <div
+                key={s.ticker}
+                className={'cat__item' + (active === s.ticker ? ' is-active' : '')}
+              >
+                <div className="cat__head">
+                  <span className="cat__no">№ {String(s.order).padStart(2, '0')} / 12</span>
+                  <span className="label label--gold cat__badge">Official</span>
+                </div>
                 <button
-                  key={s.ticker}
-                  className={'cat__item' + (active === s.ticker ? ' is-active' : '')}
+                  type="button"
+                  className="cat__sym cat__sym--button"
                   onClick={() => {
                     setActive(s.ticker);
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                   }}
+                  aria-label={`Feature ${s.name}`}
                 >
-                  <div className="cat__no">№ {String(s.order).padStart(2, '0')} / 12</div>
-                  <div className="cat__sym">
-                    <img
-                      src={`assets/nuggets/thumb/${s.name.toLowerCase()}.png`}
-                      alt={`${s.name} figure`}
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  </div>
-                  <div className="cat__name">{s.name}</div>
-                  <div className="cat__tk">{s.ticker}</div>
-                  <div className="cat__meta">{s.element} · {s.archetype}</div>
-                  <div className="cat__price">
-                    <span>${s.marketData.price}</span>
-                    <span className={'ch ' + (up ? 'up' : 'down')}>{s.marketData.change24h}%</span>
-                  </div>
+                  <img
+                    src={`assets/nuggets/thumb/${s.name.toLowerCase()}.png`}
+                    alt={`${s.name} figure`}
+                    loading="lazy"
+                    decoding="async"
+                  />
                 </button>
-              );
-            })}
+                <div className="cat__name">{s.name}</div>
+                <div className="cat__tk">{s.ticker}</div>
+                <div className="cat__meta">{s.element} · {s.archetype}</div>
+                <div className="cat__addr">
+                  <span className="cat__addr-k">Base</span>
+                  <CopyChip
+                    text={s.representations.base.address}
+                    display={truncateAddress(s.representations.base.address, 5, 4)}
+                  />
+                </div>
+              </div>
+            ))}
           </div>
         </section>
       );
@@ -1860,8 +2336,8 @@
           <p className="close__sub">
             A symbolic collection for a digital era.
           </p>
-          <a className="btn btn--primary" href="#catalog" style={{ width: '100%', justifyContent: 'space-between' }}>
-            <span>Enter the collection</span>
+          <a className="btn btn--primary" href="#official-twelve" style={{ width: '100%', justifyContent: 'space-between' }}>
+            <span>Enter the registry</span>
             <span className="arr">→</span>
           </a>
         </section>
@@ -1875,20 +2351,17 @@
             <div className="mark">Zodiacs<span className="g">·</span>org</div>
             <div>© MMXXVI</div>
           </div>
-          <div className="ftr__row ftr__row--partner">
-            <span>A Zodiacs project · in partnership with{' '}
-              <a className="ftr__partner" href="https://x.com/astrofoliosol" rel="noopener noreferrer">
-                Astrofolio
-              </a>{' '}on Solana
-            </span>
-          </div>
           <div className="ftr__row">
             <div className="ftr__legal">
+              <a href="#registry">Registry</a>
+              <a href="#verify">Verify</a>
+              <a href="/registry/zodiacs.registry.json">JSON</a>
               <a href="#thesis">Thesis</a>
-              <a href="#privacy">Privacy</a>
-              <a href="#terms">Terms</a>
             </div>
-            <div>Not financial advice</div>
+            <div>Read-only</div>
+          </div>
+          <div className="ftr__row ftr__row--origin">
+            <span>Origin · Astrofolio · MMXXVI</span>
           </div>
         </footer>
       );
@@ -1918,8 +2391,10 @@
               setActive={setActiveTicker}
             />
             <HeroActions />
+            <RegistrySection />
+            <VerifierSection />
             <DetailPanel sign={sign} animKey={activeTicker} />
-            <MarketStrip sign={sign} animKey={activeTicker} />
+            <ReferenceStrip sign={sign} animKey={activeTicker} />
             <Philosophy />
             <CatalogGrid active={activeTicker} setActive={setActiveTicker} />
             <Closing />

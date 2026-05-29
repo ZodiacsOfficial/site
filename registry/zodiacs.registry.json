@@ -1,0 +1,192 @@
+{
+  "name": "Zodiacs Official Registry",
+  "version": "1.0.0",
+  "source": "https://zodiacs.org",
+  "updated": "2026-05-28",
+  "status": "public",
+  "license": "CC-BY-4.0 (registry data) — see /docs for asset and SDK terms",
+  "description": "Canonical registry for the 12 Zodiacs cultural assets. Each sign has a native Solana SPL representation and an official bridged Base ERC-20 representation. This file is the public source of truth referenced by Zodiacs.org and the read-only Zodiacs SDK.",
+  "networks": {
+    "solana": {
+      "role": "native",
+      "name": "Solana",
+      "chainId": "solana-mainnet"
+    },
+    "base": {
+      "role": "bridged",
+      "name": "Base",
+      "chainId": 8453,
+      "bridges": ["Wormhole", "Symbiosis"]
+    }
+  },
+  "assets": [
+    {
+      "ticker": "ARIES",
+      "name": "Aries",
+      "order": 1,
+      "symbol": "♈︎",
+      "element": "Fire",
+      "modality": "Cardinal",
+      "rulingPlanet": "Mars",
+      "archetype": "The Initiator",
+      "representations": {
+        "solana": { "mint": null, "status": "pending" },
+        "base":   { "address": "0x3ffB5282F5891Dd8c813E64059EdB0607537eC91", "status": "official", "standard": "ERC-20" }
+      }
+    },
+    {
+      "ticker": "TAURUS",
+      "name": "Taurus",
+      "order": 2,
+      "symbol": "♉︎",
+      "element": "Earth",
+      "modality": "Fixed",
+      "rulingPlanet": "Venus",
+      "archetype": "The Keeper",
+      "representations": {
+        "solana": { "mint": null, "status": "pending" },
+        "base":   { "address": "0xd5356c6E529569c6912978433DAfb7ca72B5f09C", "status": "official", "standard": "ERC-20" }
+      }
+    },
+    {
+      "ticker": "GEMINI",
+      "name": "Gemini",
+      "order": 3,
+      "symbol": "♊︎",
+      "element": "Air",
+      "modality": "Mutable",
+      "rulingPlanet": "Mercury",
+      "archetype": "The Messenger",
+      "representations": {
+        "solana": { "mint": null, "status": "pending" },
+        "base":   { "address": "0x8F6eb25aB4CD2F8f064f7da5E35136D4EC600b4f", "status": "official", "standard": "ERC-20" }
+      }
+    },
+    {
+      "ticker": "CANCER",
+      "name": "Cancer",
+      "order": 4,
+      "symbol": "♋︎",
+      "element": "Water",
+      "modality": "Cardinal",
+      "rulingPlanet": "Moon",
+      "archetype": "The Vessel",
+      "representations": {
+        "solana": { "mint": null, "status": "pending" },
+        "base":   { "address": "0xb9Fd3c3157C7b69260Ca285FbbC74F6309226378", "status": "official", "standard": "ERC-20" }
+      }
+    },
+    {
+      "ticker": "LEO",
+      "name": "Leo",
+      "order": 5,
+      "symbol": "♌︎",
+      "element": "Fire",
+      "modality": "Fixed",
+      "rulingPlanet": "Sun",
+      "archetype": "The Sovereign",
+      "representations": {
+        "solana": { "mint": null, "status": "pending" },
+        "base":   { "address": "0x4f7B4c12DE5d47314C86Ed3BA25E289aA139CF75", "status": "official", "standard": "ERC-20" }
+      }
+    },
+    {
+      "ticker": "VIRGO",
+      "name": "Virgo",
+      "order": 6,
+      "symbol": "♍︎",
+      "element": "Earth",
+      "modality": "Mutable",
+      "rulingPlanet": "Mercury",
+      "archetype": "The Scribe",
+      "representations": {
+        "solana": { "mint": null, "status": "pending" },
+        "base":   { "address": "0xAcFd97106bbE5D931aC430Be76A8E362832D48f4", "status": "official", "standard": "ERC-20" }
+      }
+    },
+    {
+      "ticker": "LIBRA",
+      "name": "Libra",
+      "order": 7,
+      "symbol": "♎︎",
+      "element": "Air",
+      "modality": "Cardinal",
+      "rulingPlanet": "Venus",
+      "archetype": "The Arbiter",
+      "representations": {
+        "solana": { "mint": null, "status": "pending" },
+        "base":   { "address": "0x4201eff5F419CD6EEDFb28fa240edeaFc9002204", "status": "official", "standard": "ERC-20" }
+      }
+    },
+    {
+      "ticker": "SCORPIO",
+      "name": "Scorpio",
+      "order": 8,
+      "symbol": "♏︎",
+      "element": "Water",
+      "modality": "Fixed",
+      "rulingPlanet": "Pluto",
+      "archetype": "The Initiate",
+      "representations": {
+        "solana": { "mint": null, "status": "pending" },
+        "base":   { "address": "0x0057C9cB6D16C2ecA808788f14d0d0c367b26676", "status": "official", "standard": "ERC-20" }
+      }
+    },
+    {
+      "ticker": "SAGITTARIUS",
+      "name": "Sagittarius",
+      "order": 9,
+      "symbol": "♐︎",
+      "element": "Fire",
+      "modality": "Mutable",
+      "rulingPlanet": "Jupiter",
+      "archetype": "The Seeker",
+      "representations": {
+        "solana": { "mint": null, "status": "pending" },
+        "base":   { "address": "0xD21fAb1EB5E11AC3C281F7cF8096eCC4683eEa9c", "status": "official", "standard": "ERC-20" }
+      }
+    },
+    {
+      "ticker": "CAPRICORN",
+      "name": "Capricorn",
+      "order": 10,
+      "symbol": "♑︎",
+      "element": "Earth",
+      "modality": "Cardinal",
+      "rulingPlanet": "Saturn",
+      "archetype": "The Architect",
+      "representations": {
+        "solana": { "mint": null, "status": "pending" },
+        "base":   { "address": "0xbFB102C18FDf49f2ffCB9B3aF4522f7DC9f51018", "status": "official", "standard": "ERC-20" }
+      }
+    },
+    {
+      "ticker": "AQUARIUS",
+      "name": "Aquarius",
+      "order": 11,
+      "symbol": "♒︎",
+      "element": "Air",
+      "modality": "Fixed",
+      "rulingPlanet": "Uranus",
+      "archetype": "The Heretic",
+      "representations": {
+        "solana": { "mint": null, "status": "pending" },
+        "base":   { "address": "0xccA7CD4F96336Fd26eF6c5F579eaC651bAC5535F", "status": "official", "standard": "ERC-20" }
+      }
+    },
+    {
+      "ticker": "PISCES",
+      "name": "Pisces",
+      "order": 12,
+      "symbol": "♓︎",
+      "element": "Water",
+      "modality": "Mutable",
+      "rulingPlanet": "Neptune",
+      "archetype": "The Mystic",
+      "representations": {
+        "solana": { "mint": null, "status": "pending" },
+        "base":   { "address": "0x43fA1855a89b7A3e07426Fa7a1B44b4187d29Daf", "status": "official", "standard": "ERC-20" }
+      }
+    }
+  ]
+}
