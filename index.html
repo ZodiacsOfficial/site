@@ -5,13 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#08090C" />
   <meta name="color-scheme" content="dark" />
-  <meta name="description" content="Zodiacs.org is the official registry for the canonical 12 Zodiacs cultural assets: native Solana SPL assets with official bridged Base ERC-20 representations, plus a read-only SDK for verification and public ownership display." />
+  <meta name="description" content="Zodiacs. Twelve signs. Native to Solana, bridged to Base. A read-only registry and SDK." />
 
   <link rel="canonical" href="https://zodiacs.org/" />
 
   <meta property="og:site_name" content="Zodiacs" />
-  <meta property="og:title" content="Zodiacs.org · Official registry for the 12 Zodiacs." />
-  <meta property="og:description" content="The official Zodiacs.org registry: native Solana Zodiacs, official bridged Base representations, and the read-only Zodiacs SDK." />
+  <meta property="og:title" content="Zodiacs · The Twelve." />
+  <meta property="og:description" content="Twelve signs. Native to Solana, bridged to Base." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://zodiacs.org/" />
   <!-- og:image / twitter:image use the currently-live GitHub Pages URL
@@ -22,16 +22,16 @@
   <meta property="og:image" content="https://diasmal917.github.io/zodiacs.org/assets/og/share.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content="Zodiacs.org — the official registry for the twelve Zodiacs cultural assets, native on Solana and bridged to Base." />
+  <meta property="og:image:alt" content="Zodiacs — twelve sculptural gold figures, native on Solana and bridged to Base." />
   <meta property="og:locale" content="en_US" />
 
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Zodiacs.org · Official registry for the 12 Zodiacs." />
-  <meta name="twitter:description" content="Native Solana Zodiacs and official bridged Base representations. Public registry and read-only SDK." />
+  <meta name="twitter:title" content="Zodiacs · The Twelve." />
+  <meta name="twitter:description" content="Twelve signs. Native to Solana, bridged to Base." />
   <meta name="twitter:image" content="https://diasmal917.github.io/zodiacs.org/assets/og/share.png" />
-  <meta name="twitter:image:alt" content="Zodiacs.org — the official registry for the twelve Zodiacs cultural assets." />
+  <meta name="twitter:image:alt" content="Zodiacs — twelve sculptural gold figures." />
 
-  <title>Zodiacs.org · Official registry for the 12 Zodiacs.</title>
+  <title>Zodiacs · The Twelve.</title>
 
   <script type="application/ld+json">
   {
@@ -44,7 +44,7 @@
         "alternateName": "Zodiacs.org",
         "url": "https://zodiacs.org/",
         "logo": "https://zodiacs.org/assets/og/share.png",
-        "description": "Maintains the official registry for the canonical 12 Zodiacs cultural assets — native Solana SPL with official bridged Base ERC-20 representations — and a read-only SDK for verification and public ownership display."
+        "description": "Twelve signs. Native to Solana, bridged to Base. A read-only registry and SDK."
       },
       {
         "@type": "WebSite",
@@ -57,8 +57,8 @@
       {
         "@type": "Dataset",
         "@id": "https://zodiacs.org/#registry",
-        "name": "Zodiacs Official Registry",
-        "description": "Canonical registry for the 12 Zodiacs cultural assets, including native Solana SPL assets and official bridged Base ERC-20 representations.",
+        "name": "Zodiacs Registry",
+        "description": "The twelve Zodiacs: native Solana SPL and bridged Base ERC-20 representations.",
         "url": "https://zodiacs.org/registry/zodiacs.registry.json",
         "encodingFormat": "application/json",
         "license": "https://creativecommons.org/licenses/by/4.0/",
@@ -516,6 +516,7 @@
       display: flex; justify-content: space-between; align-items: center;
       margin-bottom: 24px;
     }
+    .card__head--right { justify-content: flex-end; }
     .card__corner {
       position: absolute;
       width: 10px; height: 10px;
@@ -1648,20 +1649,18 @@
             <span className="pulse-dot" aria-hidden="true" />
             <span className="label label--gold" style={{ fontSize: 9.5 }}>
               <span className="sr-only">Live. </span>
-              Official Zodiacs.org Registry
+              The Registry
             </span>
           </div>
 
           <h1 className="hero__headline">
             Twelve signs.<br/>
-            <span className="it">One canonical registry.</span>
+            <span className="it">One source.</span>
           </h1>
 
           <p className="hero__sub">
-            The native Zodiacs assets live on Solana. Official bridged
-            representations extend them to Base. Zodiacs.org maintains
-            the public registry, provenance layer, and read-only SDK
-            for apps that build around the original 12.
+            Native to Solana, bridged to Base.
+            Verify any address against the twelve.
           </p>
 
           <Selector active={active} setActive={setActive} />
@@ -1675,7 +1674,7 @@
       return (
         <div className="hero__cta hero__cta--below">
           <a className="btn btn--primary" href="#official-twelve">
-            <span>View official registry</span>
+            <span>Browse the Twelve</span>
             <span className="arr">→</span>
           </a>
           <a className="btn btn--ghost" href="#verify">
@@ -1699,8 +1698,7 @@
           <span className="card__corner card__corner--br" />
 
           <div className="card__inner">
-            <div className="card__head">
-              <span className="label label--gold">Official</span>
+            <div className="card__head card__head--right">
               <span className="label label--mute">
                 {ROMAN[sign.order - 1]}<span className="sep">/</span>XII
               </span>
@@ -1740,7 +1738,7 @@
                 <span className="card__addr-k">Native · Solana</span>
                 {solanaMint
                   ? <CopyChip text={solanaMint} display={truncateAddress(solanaMint, 4, 4)} />
-                  : <span className="card__addr-pending">from official registry</span>}
+                  : <span className="card__addr-pending">—</span>}
               </div>
               <div className="card__addr-row">
                 <span className="card__addr-k">Bridged · Base</span>
@@ -1923,35 +1921,29 @@
     function RegistrySection() {
       const reveal = useReveal();
       const facts = [
-        { k: '12',         v: 'Cultural assets' },
-        { k: '1',          v: 'Native origin' },
-        { k: '2',          v: 'Supported networks' },
-        { k: 'Read-only',  v: 'SDK & registry' },
+        { k: '12',         v: 'Signs' },
+        { k: '1',          v: 'Native chain' },
+        { k: '2',          v: 'Networks' },
+        { k: 'Read-only',  v: 'SDK' },
       ];
       const meta = [
-        { k: 'Registry',       v: 'Zodiacs Official Registry' },
         { k: 'Native chain',   v: 'Solana · SPL' },
         { k: 'Bridged chain',  v: 'Base · ERC-20' },
-        { k: 'Bridge protocols', v: 'Wormhole · Symbiosis' },
-        { k: 'Source',         v: 'zodiacs.org' },
+        { k: 'Bridges',        v: 'Wormhole · Symbiosis' },
         { k: 'SDK',            v: '@zodiacs/sdk · read-only' },
-        { k: 'Registry JSON',  v: <a className="ext" href="/registry/zodiacs.registry.json">/registry/zodiacs.registry.json</a> },
-        { k: 'Status',         v: 'Public · verifiable' },
+        { k: 'Registry',       v: <a className="ext" href="/registry/zodiacs.registry.json">zodiacs.registry.json</a> },
       ];
 
       return (
-        <section ref={reveal} id="registry" className="sec reveal" aria-label="Official Registry">
+        <section ref={reveal} id="registry" className="sec reveal" aria-label="Registry">
           <div className="sec__head">
             <span className="sec__no">№ 02</span>
             <span className="line" />
-            <span className="sec__title">Official registry</span>
+            <span className="sec__title">Registry</span>
           </div>
           <p className="sec__lede">
-            Zodiacs.org maintains the canonical registry for the original
-            12 Zodiacs assets. Each sign has a native Solana SPL
-            representation and an official bridged Base ERC-20
-            representation. The Base addresses are not separate originals.
-            They are official bridged counterparts.
+            Each sign exists once. Native on Solana,
+            with a bridged representation on Base.
           </p>
 
           <div className="reg__facts">
@@ -1993,26 +1985,25 @@
       const examples = ['LEO', 'CANCER', 'PISCES'].map(t => SIGNS.find(s => s.ticker === t));
 
       return (
-        <section ref={reveal} id="verify" className="sec reveal" aria-label="Verify a Zodiac">
+        <section ref={reveal} id="verify" className="sec reveal" aria-label="Verify">
           <div className="sec__head">
             <span className="sec__no">№ 03</span>
             <span className="line" />
-            <span className="sec__title">Verify a Zodiac</span>
+            <span className="sec__title">Verify</span>
           </div>
           <p className="sec__lede">
-            Paste a Solana mint or a Base address. The registry reports
-            whether it is an official Zodiacs.org representation.
+            Paste an address. We'll tell you which sign.
           </p>
 
           <form className="vrf" onSubmit={onSubmit}>
-            <label className="sr-only" htmlFor="vrf-input">Address or mint</label>
+            <label className="sr-only" htmlFor="vrf-input">Address</label>
             <input
               id="vrf-input"
               className="vrf__input mono"
               type="text"
               autoComplete="off"
               spellCheck={false}
-              placeholder="Paste address (0x… or Solana mint)"
+              placeholder="Paste an address"
               value={input}
               onChange={e => setInput(e.target.value)}
             />
@@ -2044,7 +2035,7 @@
                 <>
                   <div className="vrf__result-head">
                     <span className="vrf__tick">✓</span>
-                    <span>Official bridged Zodiacs.org asset on Base.</span>
+                    <span>Bridged Zodiac · Base</span>
                   </div>
                   <VrfResultBody sign={result.sign} network="base" queried={result.queried} />
                 </>
@@ -2053,7 +2044,7 @@
                 <>
                   <div className="vrf__result-head">
                     <span className="vrf__tick">✓</span>
-                    <span>Official native Zodiacs.org asset on Solana.</span>
+                    <span>Native Zodiac · Solana</span>
                   </div>
                   <VrfResultBody sign={result.sign} network="solana" queried={result.queried} />
                 </>
@@ -2062,7 +2053,7 @@
                 <>
                   <div className="vrf__result-head">
                     <span className="vrf__cross">—</span>
-                    <span>This address is not listed in the official Zodiacs.org registry.</span>
+                    <span>Not a Zodiac.</span>
                   </div>
                   <div className="vrf__result-meta mono">{truncateAddress(result.queried, 10, 8) || '—'}</div>
                 </>
@@ -2111,7 +2102,7 @@
                 {network === 'base'
                   ? (sign.representations.solana.mint
                       ? <CopyChip text={sign.representations.solana.mint} display={truncateAddress(sign.representations.solana.mint, 4, 4)} />
-                      : <span className="card__addr-pending">from official registry</span>)
+                      : <span className="card__addr-pending">—</span>)
                   : <CopyChip text={sign.representations.base.address} display={truncateAddress(sign.representations.base.address, 6, 4)} />}
               </dd>
             </div>
@@ -2166,7 +2157,7 @@
                 <span className="v">
                   {sign.representations.solana.mint
                     ? <CopyChip text={sign.representations.solana.mint} display={truncateAddress(sign.representations.solana.mint, 4, 4)} />
-                    : <span className="card__addr-pending">from official registry</span>}
+                    : <span className="card__addr-pending">—</span>}
                 </span>
               </div>
               <div className="detail__row">
@@ -2194,13 +2185,13 @@
       const solanaMint = sign.representations.solana.mint;
       const cells = [
         { k: 'Native chain',    v: 'Solana' },
-        { k: 'Native mint',     v: <span className="mono">{solanaMint ? truncateAddress(solanaMint, 4, 4) : 'from official registry'}</span> },
+        { k: 'Native mint',     v: <span className="mono">{solanaMint ? truncateAddress(solanaMint, 4, 4) : '—'}</span> },
         { k: 'Bridged chain',   v: 'Base' },
         { k: 'Bridged address', v: <span className="mono">{truncateAddress(baseAddr, 6, 4)}</span> },
-        { k: 'Bridge protocol', v: 'Wormhole · Symbiosis' },
-        { k: 'Registry status', v: 'Official' },
-        { k: 'Holders',         v: 'On-chain · read-only' },
-        { k: 'Last verified',   v: 'Live · registry' },
+        { k: 'Bridges',         v: 'Wormhole · Symbiosis' },
+        { k: 'Standard',        v: 'SPL · ERC-20' },
+        { k: 'Holders',         v: 'On-chain' },
+        { k: 'Last verified',   v: 'Live' },
       ];
 
       const reveal = useReveal();
@@ -2216,7 +2207,7 @@
             <div className="mkt__head">
               <span className="pulse">
                 <span className="dot-live" />
-                <span>{sign.ticker} · official registry</span>
+                <span>{sign.ticker}</span>
               </span>
               <span className="label label--mute">Read-only</span>
             </div>
@@ -2228,11 +2219,6 @@
                   <div className="mkt__v">{c.v}</div>
                 </div>
               ))}
-            </div>
-
-            <div className="mkt__foot">
-              <span>Source · zodiacs.org/registry</span>
-              <span>No prices · no signals</span>
             </div>
           </div>
         </section>
@@ -2270,14 +2256,8 @@
           <div className="sec__head">
             <span className="sec__no">№ 07</span>
             <span className="line" />
-            <span className="sec__title">The official 12</span>
+            <span className="sec__title">The Twelve</span>
           </div>
-          <p className="sec__lede">
-            Each sign has one native Solana representation and one
-            officially bridged Base representation. The cards below show
-            the Base address; the Solana mint lives in the official
-            registry.
-          </p>
 
           <div className="cat">
             {SIGNS.map(s => (
@@ -2287,7 +2267,6 @@
               >
                 <div className="cat__head">
                   <span className="cat__no">№ {String(s.order).padStart(2, '0')} / 12</span>
-                  <span className="label label--gold cat__badge">Official</span>
                 </div>
                 <button
                   type="button"
@@ -2337,7 +2316,7 @@
             A symbolic collection for a digital era.
           </p>
           <a className="btn btn--primary" href="#official-twelve" style={{ width: '100%', justifyContent: 'space-between' }}>
-            <span>Enter the registry</span>
+            <span>View the Twelve</span>
             <span className="arr">→</span>
           </a>
         </section>
