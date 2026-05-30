@@ -1385,6 +1385,172 @@
     /* (.cat__price retired: catalog cards no longer show financial data.
        Address row is now rendered by .cat__addr — see new-section CSS.) */
 
+    /* ── SDK section ─────────────────────────────────────────── */
+    .sdk__caps {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1px;
+      background: var(--hair);
+      border: 1px solid var(--hair);
+      margin-bottom: 22px;
+    }
+    @media (min-width: 560px) {
+      .sdk__caps { grid-template-columns: repeat(3, 1fr); }
+    }
+    .sdk__cap {
+      background: var(--bg);
+      padding: 18px 16px;
+    }
+    .sdk__cap-t {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 19px;
+      color: var(--gold-bright);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .sdk__cap-d {
+      font-family: var(--serif);
+      font-size: 14px;
+      line-height: 1.5;
+      color: var(--ink-2);
+    }
+
+    /* Luxury terminal code block */
+    .code {
+      border: 1px solid var(--hair-2);
+      background: #0A0C11;
+      margin-bottom: 14px;
+      overflow: hidden;
+    }
+    .code__bar {
+      display: flex; align-items: center; gap: 12px;
+      padding: 9px 14px;
+      border-bottom: 1px solid var(--hair);
+      background: rgba(201,169,97,0.03);
+    }
+    .code__dots { display: inline-flex; gap: 6px; }
+    .code__dots i {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--hair-3);
+      display: inline-block;
+    }
+    .code__label {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.20em;
+      text-transform: uppercase;
+      color: var(--ink-mute);
+    }
+    .code__copy {
+      margin-left: auto;
+      font-family: var(--mono);
+      font-size: 9.5px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink-dim);
+      cursor: pointer;
+      transition: color 220ms var(--ease);
+    }
+    .code__copy:hover { color: var(--gold); }
+    .code__copy.is-copied { color: var(--live); }
+    .code__pre {
+      margin: 0;
+      padding: 16px 16px 18px;
+      overflow-x: auto;
+      font-family: var(--mono);
+      font-size: 12px;
+      line-height: 1.7;
+      color: var(--ink);
+      -webkit-overflow-scrolling: touch;
+    }
+    .code__pre code { font-family: inherit; white-space: pre; }
+    .code__pre::-webkit-scrollbar { height: 0; }
+
+    /* Resource link row */
+    .res {
+      display: grid; grid-template-columns: 1fr; gap: 1px;
+      background: var(--hair);
+      border: 1px solid var(--hair);
+      margin-top: 22px;
+    }
+    .res__item {
+      display: flex; align-items: baseline; gap: 10px;
+      background: var(--bg);
+      padding: 16px;
+      text-decoration: none;
+      transition: background 280ms var(--ease);
+    }
+    .res__item:hover { background: rgba(201,169,97,0.05); }
+    .res__k {
+      font-family: var(--mono);
+      font-size: 9.5px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--ink-mute);
+      flex: 0 0 64px;
+    }
+    .res__v {
+      font-family: var(--serif);
+      font-size: 15px;
+      color: var(--ink);
+    }
+    .res__arr { margin-left: auto; color: var(--gold); font-size: 13px; }
+
+    /* ── Security · read-only ────────────────────────────────── */
+    .sec__statement {
+      font-family: var(--serif);
+      font-size: 19px;
+      line-height: 1.5;
+      color: var(--ink);
+      max-width: 40ch;
+      margin: 0 0 26px;
+      text-wrap: pretty;
+    }
+    .ro__grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1px;
+      background: var(--hair);
+      border: 1px solid var(--hair);
+    }
+    @media (min-width: 480px) {
+      .ro__grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    .ro__item {
+      display: flex; align-items: center; gap: 10px;
+      background: var(--bg);
+      padding: 16px 14px;
+      font-family: var(--mono);
+      font-size: 10.5px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink-2);
+    }
+    .ro__mark { color: var(--gold-deep); }
+
+    /* ── FAQ ─────────────────────────────────────────────────── */
+    .faq { margin: 0; }
+    .faq__item {
+      padding: 20px 0;
+      border-top: 1px solid var(--hair);
+    }
+    .faq__item:last-child { border-bottom: 1px solid var(--hair); }
+    .faq__q {
+      font-family: var(--serif);
+      font-size: 18px;
+      color: var(--ink);
+      margin: 0 0 8px;
+    }
+    .faq__a {
+      font-family: var(--serif);
+      font-size: 15px;
+      line-height: 1.55;
+      color: var(--ink-dim);
+      margin: 0;
+      max-width: 52ch;
+    }
+
     /* ── Closing ───────────────────────────────────────────────── */
 
     .close {
@@ -1551,51 +1717,51 @@
       { name: 'Aries',       ticker: 'ARIES',       order: 1,  element: 'Fire',  modality: 'Cardinal', rulingPlanet: 'Mars',
         symbol: '♈︎', archetype: 'The Initiator',
         shortBio: 'The first spark. Aries marks the vernal equinox, long honored across civilizations as the renewal of time and the opening of the symbolic year.',
-        representations: { solana: { mint: null, status: 'pending' }, base: { address: '0x3ffB5282F5891Dd8c813E64059EdB0607537eC91', status: 'official' } } },
+        representations: { solana: { mint: 'GhFiFrExPY3proVF96oth1gESWA5QPQzdtb8cy8b1YZv', status: 'official' }, base: { address: '0x3ffB5282F5891Dd8c813E64059EdB0607537eC91', status: 'official' } } },
       { name: 'Taurus',      ticker: 'TAURUS',      order: 2,  element: 'Earth', modality: 'Fixed',    rulingPlanet: 'Venus',
         symbol: '♉︎', archetype: 'The Keeper',
         shortBio: 'The bull held sacred from Çatalhöyük to Knossos. Taurus carries a long memory of fertility, endurance, and material stewardship.',
-        representations: { solana: { mint: null, status: 'pending' }, base: { address: '0xd5356c6E529569c6912978433DAfb7ca72B5f09C', status: 'official' } } },
+        representations: { solana: { mint: 'EjkkxYpfSwS6TAtKKuiJuNMMngYvumc1t1v9ZX1WJKMp', status: 'official' }, base: { address: '0xd5356c6E529569c6912978433DAfb7ca72B5f09C', status: 'official' } } },
       { name: 'Gemini',      ticker: 'GEMINI',      order: 3,  element: 'Air',   modality: 'Mutable',  rulingPlanet: 'Mercury',
         symbol: '♊︎', archetype: 'The Messenger',
         shortBio: 'The twins. From Castor and Pollux to the dual nature of language itself, Gemini holds the symbol of human exchange and discourse.',
-        representations: { solana: { mint: null, status: 'pending' }, base: { address: '0x8F6eb25aB4CD2F8f064f7da5E35136D4EC600b4f', status: 'official' } } },
+        representations: { solana: { mint: 'ARiZfq6dK19uNqxWyRudhbM2MswLyYhVUHdndGkffdGc', status: 'official' }, base: { address: '0x8F6eb25aB4CD2F8f064f7da5E35136D4EC600b4f', status: 'official' } } },
       { name: 'Cancer',      ticker: 'CANCER',      order: 4,  element: 'Water', modality: 'Cardinal', rulingPlanet: 'Moon',
         symbol: '♋︎', archetype: 'The Vessel',
         shortBio: 'The crab and the moon. The summer solstice. Cancer preserves the ancient image of home, memory, and the inner tide.',
-        representations: { solana: { mint: null, status: 'pending' }, base: { address: '0xb9Fd3c3157C7b69260Ca285FbbC74F6309226378', status: 'official' } } },
+        representations: { solana: { mint: 'CmomKM8iPKRSMN7y1jqyW1QKj5bGoZmbvNZXWBJSUdnZ', status: 'official' }, base: { address: '0xb9Fd3c3157C7b69260Ca285FbbC74F6309226378', status: 'official' } } },
       { name: 'Leo',         ticker: 'LEO',         order: 5,  element: 'Fire',  modality: 'Fixed',    rulingPlanet: 'Sun',
         symbol: '♌︎', archetype: 'The Sovereign',
         shortBio: 'The lion. Older than empires. Leo carries the sun at the height of summer. The symbol of radiant authority and visible self.',
-        representations: { solana: { mint: null, status: 'pending' }, base: { address: '0x4f7B4c12DE5d47314C86Ed3BA25E289aA139CF75', status: 'official' } } },
+        representations: { solana: { mint: '8Cd7wXoPb5Yt9cUGtmHNqAEmpMDrhfcVqnGbLC48b8Qm', status: 'official' }, base: { address: '0x4f7B4c12DE5d47314C86Ed3BA25E289aA139CF75', status: 'official' } } },
       { name: 'Virgo',       ticker: 'VIRGO',       order: 6,  element: 'Earth', modality: 'Mutable',  rulingPlanet: 'Mercury',
         symbol: '♍︎', archetype: 'The Scribe',
         shortBio: 'The maiden of the harvest. Virgo preserves the long lineage of craft, discernment, and the discipline of measure.',
-        representations: { solana: { mint: null, status: 'pending' }, base: { address: '0xAcFd97106bbE5D931aC430Be76A8E362832D48f4', status: 'official' } } },
+        representations: { solana: { mint: 'Ez4bst5qu5uqX3AntYWUdafw9XvtFeJ3gugytKKbSJso', status: 'official' }, base: { address: '0xAcFd97106bbE5D931aC430Be76A8E362832D48f4', status: 'official' } } },
       { name: 'Libra',       ticker: 'LIBRA',       order: 7,  element: 'Air',   modality: 'Cardinal', rulingPlanet: 'Venus',
         symbol: '♎︎', archetype: 'The Arbiter',
         shortBio: 'The scales. The autumn equinox. Libra holds the symbol of balance, civic measure, and the law as a cultural form.',
-        representations: { solana: { mint: null, status: 'pending' }, base: { address: '0x4201eff5F419CD6EEDFb28fa240edeaFc9002204', status: 'official' } } },
+        representations: { solana: { mint: '7Zt2KUh5mkpEpPGcNcFy51aGkh9Ycb5ELcqRH1n2GmAe', status: 'official' }, base: { address: '0x4201eff5F419CD6EEDFb28fa240edeaFc9002204', status: 'official' } } },
       { name: 'Scorpio',     ticker: 'SCORPIO',     order: 8,  element: 'Water', modality: 'Fixed',    rulingPlanet: 'Pluto',
         symbol: '♏︎', archetype: 'The Initiate',
         shortBio: 'The scorpion of the deep year. Scorpio carries the rites of transformation. The threshold between what passes and what endures.',
-        representations: { solana: { mint: null, status: 'pending' }, base: { address: '0x0057C9cB6D16C2ecA808788f14d0d0c367b26676', status: 'official' } } },
+        representations: { solana: { mint: 'J4fQTRN13MKpXhVE74t99msKJLbrjegjEgLBnzEv2YH1', status: 'official' }, base: { address: '0x0057C9cB6D16C2ecA808788f14d0d0c367b26676', status: 'official' } } },
       { name: 'Sagittarius', ticker: 'SAGITTARIUS', order: 9,  element: 'Fire',  modality: 'Mutable',  rulingPlanet: 'Jupiter',
         symbol: '♐︎', archetype: 'The Seeker',
         shortBio: 'The archer at the galactic center. Sagittarius preserves the impulse to travel, to inquire, to chart what lies beyond the known.',
-        representations: { solana: { mint: null, status: 'pending' }, base: { address: '0xD21fAb1EB5E11AC3C281F7cF8096eCC4683eEa9c', status: 'official' } } },
+        representations: { solana: { mint: '8x17zMmVjJxqswjX4hNpxVPc7Tr5UabVJF3kv8TKq8Y3', status: 'official' }, base: { address: '0xD21fAb1EB5E11AC3C281F7cF8096eCC4683eEa9c', status: 'official' } } },
       { name: 'Capricorn',   ticker: 'CAPRICORN',   order: 10, element: 'Earth', modality: 'Cardinal', rulingPlanet: 'Saturn',
         symbol: '♑︎', archetype: 'The Architect',
         shortBio: 'The sea-goat. The winter solstice. Capricorn carries the long pattern of structure, lineage, and the building of enduring forms.',
-        representations: { solana: { mint: null, status: 'pending' }, base: { address: '0xbFB102C18FDf49f2ffCB9B3aF4522f7DC9f51018', status: 'official' } } },
+        representations: { solana: { mint: '3C2SN1FjzE9MiLFFVRp7Jhkp8Gjwpk29S2TCSJ2jkHn2', status: 'official' }, base: { address: '0xbFB102C18FDf49f2ffCB9B3aF4522f7DC9f51018', status: 'official' } } },
       { name: 'Aquarius',    ticker: 'AQUARIUS',    order: 11, element: 'Air',   modality: 'Fixed',    rulingPlanet: 'Uranus',
         symbol: '♒︎', archetype: 'The Heretic',
         shortBio: 'The water-bearer. Aquarius holds the symbol of the unbound mind: invention, dissent, the long arc of cultural shift.',
-        representations: { solana: { mint: null, status: 'pending' }, base: { address: '0xccA7CD4F96336Fd26eF6c5F579eaC651bAC5535F', status: 'official' } } },
+        representations: { solana: { mint: 'C49Ut3om3QFTDrMZ5Cr8VcTKPpHDcQ2Fv8mmuJHHigDt', status: 'official' }, base: { address: '0xccA7CD4F96336Fd26eF6c5F579eaC651bAC5535F', status: 'official' } } },
       { name: 'Pisces',      ticker: 'PISCES',      order: 12, element: 'Water', modality: 'Mutable',  rulingPlanet: 'Neptune',
         symbol: '♓︎', archetype: 'The Mystic',
         shortBio: 'Two fishes bound by a silver cord. Pisces closes the wheel. The symbol of dissolution, depth, and the world before the next renewal.',
-        representations: { solana: { mint: null, status: 'pending' }, base: { address: '0x43fA1855a89b7A3e07426Fa7a1B44b4187d29Daf', status: 'official' } } },
+        representations: { solana: { mint: '3JsSsmGzjWDNe9XCw2L9vznC5JU9wSqQeB6ns5pAkPeE', status: 'official' }, base: { address: '0x43fA1855a89b7A3e07426Fa7a1B44b4187d29Daf', status: 'official' } } },
     ];
 
     // Verifier lookup helpers — also the read-only shape the future
@@ -2301,6 +2467,173 @@
       );
     }
 
+    // Real code samples, lifted verbatim from the @zodiacs/sdk README so
+    // what the page shows matches the published API exactly.
+    const SDK_VERIFY = `import {
+  isOfficialZodiacAddress,
+  getRepresentationByAddress,
+  getNativeCounterpart
+} from "@zodiacs/sdk";
+
+const address = "0x3ffB5282F5891Dd8c813E64059EdB0607537eC91";
+
+isOfficialZodiacAddress(address);          // true
+getRepresentationByAddress(address)?.kind; // "bridged"
+getNativeCounterpart(address)?.chain;      // "solana"`;
+
+    const SDK_OWNERSHIP = `import { createPublicClient, http } from "viem";
+import { base } from "viem/chains";
+import { getBaseZodiacsOwnership } from "@zodiacs/sdk";
+
+const client = createPublicClient({ chain: base, transport: http() });
+
+// read-only: balanceOf + decimals, no wallet, no signing
+const ownership = await getBaseZodiacsOwnership(client, ownerAddress);`;
+
+    function CodeBlock({ label, code }) {
+      const [copied, setCopied] = useState(false);
+      const onCopy = useCallback(() => {
+        if (navigator.clipboard?.writeText) {
+          navigator.clipboard.writeText(code).then(() => {
+            setCopied(true);
+            setTimeout(() => setCopied(false), 1400);
+          });
+        }
+      }, [code]);
+      return (
+        <div className="code">
+          <div className="code__bar">
+            <span className="code__dots" aria-hidden="true">
+              <i /><i /><i />
+            </span>
+            <span className="code__label">{label}</span>
+            <button
+              type="button"
+              className={'code__copy' + (copied ? ' is-copied' : '')}
+              onClick={onCopy}
+              aria-label="Copy code"
+            >
+              {copied ? 'Copied' : 'Copy'}
+            </button>
+          </div>
+          <pre className="code__pre"><code>{code}</code></pre>
+        </div>
+      );
+    }
+
+    function SdkSection() {
+      const reveal = useReveal();
+      const caps = [
+        { t: 'Verify', d: 'Check any address against the Twelve. Pure functions, no network call.' },
+        { t: 'Read holdings', d: 'Read balances on Solana and Base through your own RPC. Never custodial.' },
+        { t: 'Render', d: 'Typed metadata and React components for identity surfaces.' },
+      ];
+      return (
+        <section ref={reveal} id="sdk" className="sec reveal" aria-label="SDK">
+          <div className="sec__head">
+            <span className="sec__no">№ 07</span>
+            <span className="line" />
+            <span className="sec__title">SDK</span>
+          </div>
+          <p className="sec__lede">
+            A read-only TypeScript interface to the registry.
+            Verify addresses, read public holdings, render the signs.
+          </p>
+
+          <div className="sdk__caps">
+            {caps.map((c, i) => (
+              <div className="sdk__cap" key={i}>
+                <div className="sdk__cap-t">{c.t}</div>
+                <div className="sdk__cap-d">{c.d}</div>
+              </div>
+            ))}
+          </div>
+
+          <CodeBlock label="install" code="pnpm add @zodiacs/sdk" />
+          <CodeBlock label="verify.ts" code={SDK_VERIFY} />
+          <CodeBlock label="holdings.ts" code={SDK_OWNERSHIP} />
+
+          <div className="res">
+            <a className="res__item" href="https://github.com/ZodiacsOfficial/sdk" rel="noopener noreferrer">
+              <span className="res__k">GitHub</span>
+              <span className="res__v">ZodiacsOfficial/sdk</span>
+              <span className="res__arr" aria-hidden="true">↗</span>
+            </a>
+            <a className="res__item" href="/registry/zodiacs.registry.json">
+              <span className="res__k">Registry</span>
+              <span className="res__v">zodiacs.registry.json</span>
+              <span className="res__arr" aria-hidden="true">↗</span>
+            </a>
+            <a className="res__item" href="https://github.com/ZodiacsOfficial/sdk/tree/main/docs" rel="noopener noreferrer">
+              <span className="res__k">Docs</span>
+              <span className="res__v">Guides &amp; reference</span>
+              <span className="res__arr" aria-hidden="true">↗</span>
+            </a>
+          </div>
+        </section>
+      );
+    }
+
+    function SecuritySection() {
+      const reveal = useReveal();
+      const nots = ['No private keys', 'No custody', 'No signing', 'No swaps', 'No approvals', 'No transactions'];
+      return (
+        <section ref={reveal} id="security" className="sec reveal" aria-label="Read-only by design">
+          <div className="sec__head">
+            <span className="sec__no">№ 08</span>
+            <span className="line" />
+            <span className="sec__title">Read-only by design</span>
+          </div>
+          <p className="sec__statement">
+            The SDK verifies official assets, reads public ownership, and renders
+            metadata. It does not sign, custody, swap, buy, sell, transfer,
+            approve, or submit transactions.
+          </p>
+          <div className="ro__grid">
+            {nots.map((n, i) => (
+              <div className="ro__item" key={i}>
+                <span className="ro__mark" aria-hidden="true">—</span>
+                <span>{n}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+      );
+    }
+
+    function FaqSection() {
+      const reveal = useReveal();
+      const qa = [
+        { q: 'Are the Base Zodiacs separate assets?',
+          a: 'No. They are official bridged representations of the native Solana Zodiacs.' },
+        { q: 'What does the SDK do?',
+          a: 'It verifies registry entries, reads public ownership, and exposes typed metadata and components.' },
+        { q: 'Does the SDK move assets?',
+          a: 'No. It is read-only.' },
+        { q: 'Does Zodiacs claim ownership of astrology?',
+          a: 'No. Zodiacs keeps the register for these twelve assets. It makes no claim over astrology, the signs, or their symbols.' },
+        { q: 'What if an address is not listed?',
+          a: 'The verifier reports that it is not among the Twelve.' },
+      ];
+      return (
+        <section ref={reveal} id="faq" className="sec reveal" aria-label="Questions">
+          <div className="sec__head">
+            <span className="sec__no">№ 09</span>
+            <span className="line" />
+            <span className="sec__title">Questions</span>
+          </div>
+          <dl className="faq">
+            {qa.map((item, i) => (
+              <div className="faq__item" key={i}>
+                <dt className="faq__q">{item.q}</dt>
+                <dd className="faq__a">{item.a}</dd>
+              </div>
+            ))}
+          </dl>
+        </section>
+      );
+    }
+
     function Closing() {
       const reveal = useReveal();
       return (
@@ -2376,6 +2709,9 @@
             <ReferenceStrip sign={sign} animKey={activeTicker} />
             <Philosophy />
             <CatalogGrid active={activeTicker} setActive={setActiveTicker} />
+            <SdkSection />
+            <SecuritySection />
+            <FaqSection />
             <Closing />
             <Footer />
           </div>

@@ -1,6 +1,6 @@
 {
   "name": "Zodiacs Official Registry",
-  "version": "1.0.0",
+  "version": "0.2.0",
   "source": "https://zodiacs.org",
   "updated": "2026-05-28",
   "status": "public",
@@ -16,7 +16,10 @@
       "role": "bridged",
       "name": "Base",
       "chainId": 8453,
-      "bridges": ["Wormhole", "Symbiosis"]
+      "bridges": [
+        "Wormhole",
+        "Symbiosis"
+      ]
     }
   },
   "assets": [
@@ -30,8 +33,15 @@
       "rulingPlanet": "Mars",
       "archetype": "The Initiator",
       "representations": {
-        "solana": { "mint": null, "status": "pending" },
-        "base":   { "address": "0x3ffB5282F5891Dd8c813E64059EdB0607537eC91", "status": "official", "standard": "ERC-20" }
+        "solana": {
+          "mint": "GhFiFrExPY3proVF96oth1gESWA5QPQzdtb8cy8b1YZv",
+          "status": "official"
+        },
+        "base": {
+          "address": "0x3ffB5282F5891Dd8c813E64059EdB0607537eC91",
+          "status": "official",
+          "standard": "ERC-20"
+        }
       }
     },
     {
@@ -44,8 +54,15 @@
       "rulingPlanet": "Venus",
       "archetype": "The Keeper",
       "representations": {
-        "solana": { "mint": null, "status": "pending" },
-        "base":   { "address": "0xd5356c6E529569c6912978433DAfb7ca72B5f09C", "status": "official", "standard": "ERC-20" }
+        "solana": {
+          "mint": "EjkkxYpfSwS6TAtKKuiJuNMMngYvumc1t1v9ZX1WJKMp",
+          "status": "official"
+        },
+        "base": {
+          "address": "0xd5356c6E529569c6912978433DAfb7ca72B5f09C",
+          "status": "official",
+          "standard": "ERC-20"
+        }
       }
     },
     {
@@ -58,8 +75,15 @@
       "rulingPlanet": "Mercury",
       "archetype": "The Messenger",
       "representations": {
-        "solana": { "mint": null, "status": "pending" },
-        "base":   { "address": "0x8F6eb25aB4CD2F8f064f7da5E35136D4EC600b4f", "status": "official", "standard": "ERC-20" }
+        "solana": {
+          "mint": "ARiZfq6dK19uNqxWyRudhbM2MswLyYhVUHdndGkffdGc",
+          "status": "official"
+        },
+        "base": {
+          "address": "0x8F6eb25aB4CD2F8f064f7da5E35136D4EC600b4f",
+          "status": "official",
+          "standard": "ERC-20"
+        }
       }
     },
     {
@@ -72,8 +96,15 @@
       "rulingPlanet": "Moon",
       "archetype": "The Vessel",
       "representations": {
-        "solana": { "mint": null, "status": "pending" },
-        "base":   { "address": "0xb9Fd3c3157C7b69260Ca285FbbC74F6309226378", "status": "official", "standard": "ERC-20" }
+        "solana": {
+          "mint": "CmomKM8iPKRSMN7y1jqyW1QKj5bGoZmbvNZXWBJSUdnZ",
+          "status": "official"
+        },
+        "base": {
+          "address": "0xb9Fd3c3157C7b69260Ca285FbbC74F6309226378",
+          "status": "official",
+          "standard": "ERC-20"
+        }
       }
     },
     {
@@ -86,8 +117,15 @@
       "rulingPlanet": "Sun",
       "archetype": "The Sovereign",
       "representations": {
-        "solana": { "mint": null, "status": "pending" },
-        "base":   { "address": "0x4f7B4c12DE5d47314C86Ed3BA25E289aA139CF75", "status": "official", "standard": "ERC-20" }
+        "solana": {
+          "mint": "8Cd7wXoPb5Yt9cUGtmHNqAEmpMDrhfcVqnGbLC48b8Qm",
+          "status": "official"
+        },
+        "base": {
+          "address": "0x4f7B4c12DE5d47314C86Ed3BA25E289aA139CF75",
+          "status": "official",
+          "standard": "ERC-20"
+        }
       }
     },
     {
@@ -100,8 +138,15 @@
       "rulingPlanet": "Mercury",
       "archetype": "The Scribe",
       "representations": {
-        "solana": { "mint": null, "status": "pending" },
-        "base":   { "address": "0xAcFd97106bbE5D931aC430Be76A8E362832D48f4", "status": "official", "standard": "ERC-20" }
+        "solana": {
+          "mint": "Ez4bst5qu5uqX3AntYWUdafw9XvtFeJ3gugytKKbSJso",
+          "status": "official"
+        },
+        "base": {
+          "address": "0xAcFd97106bbE5D931aC430Be76A8E362832D48f4",
+          "status": "official",
+          "standard": "ERC-20"
+        }
       }
     },
     {
@@ -114,8 +159,15 @@
       "rulingPlanet": "Venus",
       "archetype": "The Arbiter",
       "representations": {
-        "solana": { "mint": null, "status": "pending" },
-        "base":   { "address": "0x4201eff5F419CD6EEDFb28fa240edeaFc9002204", "status": "official", "standard": "ERC-20" }
+        "solana": {
+          "mint": "7Zt2KUh5mkpEpPGcNcFy51aGkh9Ycb5ELcqRH1n2GmAe",
+          "status": "official"
+        },
+        "base": {
+          "address": "0x4201eff5F419CD6EEDFb28fa240edeaFc9002204",
+          "status": "official",
+          "standard": "ERC-20"
+        }
       }
     },
     {
@@ -128,8 +180,15 @@
       "rulingPlanet": "Pluto",
       "archetype": "The Initiate",
       "representations": {
-        "solana": { "mint": null, "status": "pending" },
-        "base":   { "address": "0x0057C9cB6D16C2ecA808788f14d0d0c367b26676", "status": "official", "standard": "ERC-20" }
+        "solana": {
+          "mint": "J4fQTRN13MKpXhVE74t99msKJLbrjegjEgLBnzEv2YH1",
+          "status": "official"
+        },
+        "base": {
+          "address": "0x0057C9cB6D16C2ecA808788f14d0d0c367b26676",
+          "status": "official",
+          "standard": "ERC-20"
+        }
       }
     },
     {
@@ -142,8 +201,15 @@
       "rulingPlanet": "Jupiter",
       "archetype": "The Seeker",
       "representations": {
-        "solana": { "mint": null, "status": "pending" },
-        "base":   { "address": "0xD21fAb1EB5E11AC3C281F7cF8096eCC4683eEa9c", "status": "official", "standard": "ERC-20" }
+        "solana": {
+          "mint": "8x17zMmVjJxqswjX4hNpxVPc7Tr5UabVJF3kv8TKq8Y3",
+          "status": "official"
+        },
+        "base": {
+          "address": "0xD21fAb1EB5E11AC3C281F7cF8096eCC4683eEa9c",
+          "status": "official",
+          "standard": "ERC-20"
+        }
       }
     },
     {
@@ -156,8 +222,15 @@
       "rulingPlanet": "Saturn",
       "archetype": "The Architect",
       "representations": {
-        "solana": { "mint": null, "status": "pending" },
-        "base":   { "address": "0xbFB102C18FDf49f2ffCB9B3aF4522f7DC9f51018", "status": "official", "standard": "ERC-20" }
+        "solana": {
+          "mint": "3C2SN1FjzE9MiLFFVRp7Jhkp8Gjwpk29S2TCSJ2jkHn2",
+          "status": "official"
+        },
+        "base": {
+          "address": "0xbFB102C18FDf49f2ffCB9B3aF4522f7DC9f51018",
+          "status": "official",
+          "standard": "ERC-20"
+        }
       }
     },
     {
@@ -170,8 +243,15 @@
       "rulingPlanet": "Uranus",
       "archetype": "The Heretic",
       "representations": {
-        "solana": { "mint": null, "status": "pending" },
-        "base":   { "address": "0xccA7CD4F96336Fd26eF6c5F579eaC651bAC5535F", "status": "official", "standard": "ERC-20" }
+        "solana": {
+          "mint": "C49Ut3om3QFTDrMZ5Cr8VcTKPpHDcQ2Fv8mmuJHHigDt",
+          "status": "official"
+        },
+        "base": {
+          "address": "0xccA7CD4F96336Fd26eF6c5F579eaC651bAC5535F",
+          "status": "official",
+          "standard": "ERC-20"
+        }
       }
     },
     {
@@ -184,9 +264,17 @@
       "rulingPlanet": "Neptune",
       "archetype": "The Mystic",
       "representations": {
-        "solana": { "mint": null, "status": "pending" },
-        "base":   { "address": "0x43fA1855a89b7A3e07426Fa7a1B44b4187d29Daf", "status": "official", "standard": "ERC-20" }
+        "solana": {
+          "mint": "3JsSsmGzjWDNe9XCw2L9vznC5JU9wSqQeB6ns5pAkPeE",
+          "status": "official"
+        },
+        "base": {
+          "address": "0x43fA1855a89b7A3e07426Fa7a1B44b4187d29Daf",
+          "status": "official",
+          "standard": "ERC-20"
+        }
       }
     }
-  ]
+  ],
+  "upstream": "https://github.com/ZodiacsOfficial/sdk"
 }
