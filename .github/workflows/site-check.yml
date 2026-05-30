@@ -1,0 +1,24 @@
+name: Site Check
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  static-check:
+    name: Static Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate registry JSON
+        run: node -e "JSON.parse(require('node:fs').readFileSync('registry/zodiacs.registry.json', 'utf8'))"
+
+      - name: Check for stale repo or bridge wording
+        run: |
+          ! grep -RInE 'Symbiosis|ZodiacSDK|diasmal917|zodiacs-org/sdk' index.html registry README.md CLAUDE.md

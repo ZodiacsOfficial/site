@@ -2092,7 +2092,7 @@
       const meta = [
         { k: 'Native chain',   v: 'Solana · SPL' },
         { k: 'Bridged chain',  v: 'Base · ERC-20' },
-        { k: 'Bridges',        v: 'Wormhole · Symbiosis' },
+        { k: 'Bridge',         v: 'Wormhole' },
         { k: 'SDK',            v: '@zodiacs/sdk · read-only' },
         { k: 'Registry',       v: <a className="ext" href="/registry/zodiacs.registry.json">zodiacs.registry.json</a> },
       ];
@@ -2351,7 +2351,7 @@
         { k: 'Native mint',     v: <span className="mono">{solanaMint ? truncateAddress(solanaMint, 4, 4) : '—'}</span> },
         { k: 'Bridged chain',   v: 'Base' },
         { k: 'Bridged address', v: <span className="mono">{truncateAddress(baseAddr, 6, 4)}</span> },
-        { k: 'Bridges',         v: 'Wormhole · Symbiosis' },
+        { k: 'Bridge',          v: 'Wormhole' },
         { k: 'Standard',        v: 'SPL · ERC-20' },
         { k: 'Series',          v: <span className="mono">№ {String(sign.order).padStart(2, '0')} / 12</span> },
         { k: 'Element',         v: sign.element },
