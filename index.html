@@ -1701,79 +1701,872 @@
     }
 
     // ──────────────────────────────────────────────────────────────
-    // Local metadata for all twelve signs.
-    // Market values are placeholder fixtures — never live data.
+    // Canonical registry data. This mirrors /registry/zodiacs.registry.json
+    // and the @zodiacs/sdk registry schema: one sign identity, one native
+    // Solana SPL representation, and one official bridged Base ERC-20
+    // representation. The UI derives its display model from this object
+    // instead of maintaining a second address shape.
     // ──────────────────────────────────────────────────────────────
-    // Asset identity = the sign. Chain-specific addresses are
-    // *representations* of that identity. This shape mirrors
-    // registry/zodiacs.registry.json which is the public source of truth.
-    // Solana mints are intentionally null until the native registry
-    // entries are supplied — the UI renders a "from official registry"
-    // placeholder for those.
-    const SIGNS = [
-      { name: 'Aries',       ticker: 'ARIES',       order: 1,  element: 'Fire',  modality: 'Cardinal', rulingPlanet: 'Mars',
-        symbol: '♈︎', archetype: 'The Initiator',
-        shortBio: 'The first spark. Aries marks the vernal equinox, long honored across civilizations as the renewal of time and the opening of the symbolic year.',
-        representations: { solana: { mint: 'GhFiFrExPY3proVF96oth1gESWA5QPQzdtb8cy8b1YZv', status: 'official' }, base: { address: '0x3ffB5282F5891Dd8c813E64059EdB0607537eC91', status: 'official' } } },
-      { name: 'Taurus',      ticker: 'TAURUS',      order: 2,  element: 'Earth', modality: 'Fixed',    rulingPlanet: 'Venus',
-        symbol: '♉︎', archetype: 'The Keeper',
-        shortBio: 'The bull held sacred from Çatalhöyük to Knossos. Taurus carries a long memory of fertility, endurance, and material stewardship.',
-        representations: { solana: { mint: 'EjkkxYpfSwS6TAtKKuiJuNMMngYvumc1t1v9ZX1WJKMp', status: 'official' }, base: { address: '0xd5356c6E529569c6912978433DAfb7ca72B5f09C', status: 'official' } } },
-      { name: 'Gemini',      ticker: 'GEMINI',      order: 3,  element: 'Air',   modality: 'Mutable',  rulingPlanet: 'Mercury',
-        symbol: '♊︎', archetype: 'The Messenger',
-        shortBio: 'The twins. From Castor and Pollux to the dual nature of language itself, Gemini holds the symbol of human exchange and discourse.',
-        representations: { solana: { mint: 'ARiZfq6dK19uNqxWyRudhbM2MswLyYhVUHdndGkffdGc', status: 'official' }, base: { address: '0x8F6eb25aB4CD2F8f064f7da5E35136D4EC600b4f', status: 'official' } } },
-      { name: 'Cancer',      ticker: 'CANCER',      order: 4,  element: 'Water', modality: 'Cardinal', rulingPlanet: 'Moon',
-        symbol: '♋︎', archetype: 'The Vessel',
-        shortBio: 'The crab and the moon. The summer solstice. Cancer preserves the ancient image of home, memory, and the inner tide.',
-        representations: { solana: { mint: 'CmomKM8iPKRSMN7y1jqyW1QKj5bGoZmbvNZXWBJSUdnZ', status: 'official' }, base: { address: '0xb9Fd3c3157C7b69260Ca285FbbC74F6309226378', status: 'official' } } },
-      { name: 'Leo',         ticker: 'LEO',         order: 5,  element: 'Fire',  modality: 'Fixed',    rulingPlanet: 'Sun',
-        symbol: '♌︎', archetype: 'The Sovereign',
-        shortBio: 'The lion. Older than empires. Leo carries the sun at the height of summer. The symbol of radiant authority and visible self.',
-        representations: { solana: { mint: '8Cd7wXoPb5Yt9cUGtmHNqAEmpMDrhfcVqnGbLC48b8Qm', status: 'official' }, base: { address: '0x4f7B4c12DE5d47314C86Ed3BA25E289aA139CF75', status: 'official' } } },
-      { name: 'Virgo',       ticker: 'VIRGO',       order: 6,  element: 'Earth', modality: 'Mutable',  rulingPlanet: 'Mercury',
-        symbol: '♍︎', archetype: 'The Scribe',
-        shortBio: 'The maiden of the harvest. Virgo preserves the long lineage of craft, discernment, and the discipline of measure.',
-        representations: { solana: { mint: 'Ez4bst5qu5uqX3AntYWUdafw9XvtFeJ3gugytKKbSJso', status: 'official' }, base: { address: '0xAcFd97106bbE5D931aC430Be76A8E362832D48f4', status: 'official' } } },
-      { name: 'Libra',       ticker: 'LIBRA',       order: 7,  element: 'Air',   modality: 'Cardinal', rulingPlanet: 'Venus',
-        symbol: '♎︎', archetype: 'The Arbiter',
-        shortBio: 'The scales. The autumn equinox. Libra holds the symbol of balance, civic measure, and the law as a cultural form.',
-        representations: { solana: { mint: '7Zt2KUh5mkpEpPGcNcFy51aGkh9Ycb5ELcqRH1n2GmAe', status: 'official' }, base: { address: '0x4201eff5F419CD6EEDFb28fa240edeaFc9002204', status: 'official' } } },
-      { name: 'Scorpio',     ticker: 'SCORPIO',     order: 8,  element: 'Water', modality: 'Fixed',    rulingPlanet: 'Pluto',
-        symbol: '♏︎', archetype: 'The Initiate',
-        shortBio: 'The scorpion of the deep year. Scorpio carries the rites of transformation. The threshold between what passes and what endures.',
-        representations: { solana: { mint: 'J4fQTRN13MKpXhVE74t99msKJLbrjegjEgLBnzEv2YH1', status: 'official' }, base: { address: '0x0057C9cB6D16C2ecA808788f14d0d0c367b26676', status: 'official' } } },
-      { name: 'Sagittarius', ticker: 'SAGITTARIUS', order: 9,  element: 'Fire',  modality: 'Mutable',  rulingPlanet: 'Jupiter',
-        symbol: '♐︎', archetype: 'The Seeker',
-        shortBio: 'The archer at the galactic center. Sagittarius preserves the impulse to travel, to inquire, to chart what lies beyond the known.',
-        representations: { solana: { mint: '8x17zMmVjJxqswjX4hNpxVPc7Tr5UabVJF3kv8TKq8Y3', status: 'official' }, base: { address: '0xD21fAb1EB5E11AC3C281F7cF8096eCC4683eEa9c', status: 'official' } } },
-      { name: 'Capricorn',   ticker: 'CAPRICORN',   order: 10, element: 'Earth', modality: 'Cardinal', rulingPlanet: 'Saturn',
-        symbol: '♑︎', archetype: 'The Architect',
-        shortBio: 'The sea-goat. The winter solstice. Capricorn carries the long pattern of structure, lineage, and the building of enduring forms.',
-        representations: { solana: { mint: '3C2SN1FjzE9MiLFFVRp7Jhkp8Gjwpk29S2TCSJ2jkHn2', status: 'official' }, base: { address: '0xbFB102C18FDf49f2ffCB9B3aF4522f7DC9f51018', status: 'official' } } },
-      { name: 'Aquarius',    ticker: 'AQUARIUS',    order: 11, element: 'Air',   modality: 'Fixed',    rulingPlanet: 'Uranus',
-        symbol: '♒︎', archetype: 'The Heretic',
-        shortBio: 'The water-bearer. Aquarius holds the symbol of the unbound mind: invention, dissent, the long arc of cultural shift.',
-        representations: { solana: { mint: 'C49Ut3om3QFTDrMZ5Cr8VcTKPpHDcQ2Fv8mmuJHHigDt', status: 'official' }, base: { address: '0xccA7CD4F96336Fd26eF6c5F579eaC651bAC5535F', status: 'official' } } },
-      { name: 'Pisces',      ticker: 'PISCES',      order: 12, element: 'Water', modality: 'Mutable',  rulingPlanet: 'Neptune',
-        symbol: '♓︎', archetype: 'The Mystic',
-        shortBio: 'Two fishes bound by a silver cord. Pisces closes the wheel. The symbol of dissolution, depth, and the world before the next renewal.',
-        representations: { solana: { mint: '3JsSsmGzjWDNe9XCw2L9vznC5JU9wSqQeB6ns5pAkPeE', status: 'official' }, base: { address: '0x43fA1855a89b7A3e07426Fa7a1B44b4187d29Daf', status: 'official' } } },
-    ];
+    const ZODIACS_REGISTRY = {
+          "name": "Zodiacs Official Registry",
+          "source": "https://zodiacs.org",
+          "sdk": "@zodiacs/sdk",
+          "version": "0.2.0",
+          "nativeChain": "solana",
+          "supportedChains": [
+                {
+                      "chain": "solana",
+                      "kind": "native",
+                      "tokenStandard": "SPL"
+                },
+                {
+                      "chain": "base",
+                      "chainId": 8453,
+                      "kind": "bridged",
+                      "tokenStandard": "ERC20"
+                }
+          ],
+          "assets": [
+                {
+                      "sign": "aries",
+                      "displayName": "Aries",
+                      "metadata": {
+                            "element": "fire",
+                            "modality": "cardinal",
+                            "rulingPlanet": "Mars",
+                            "archetype": "The Initiator",
+                            "dateRange": "03-21 to 04-19",
+                            "shortBio": "A cultural asset for symbolic identity expressed through origin, force, and first movement."
+                      },
+                      "native": {
+                            "sign": "aries",
+                            "chain": "solana",
+                            "kind": "native",
+                            "tokenStandard": "SPL",
+                            "address": "GhFiFrExPY3proVF96oth1gESWA5QPQzdtb8cy8b1YZv",
+                            "decimals": 6,
+                            "symbol": "ARIES",
+                            "name": "Aries",
+                            "isCanonicalOrigin": true,
+                            "isOfficialRepresentation": true
+                      },
+                      "representations": [
+                            {
+                                  "sign": "aries",
+                                  "chain": "solana",
+                                  "kind": "native",
+                                  "tokenStandard": "SPL",
+                                  "address": "GhFiFrExPY3proVF96oth1gESWA5QPQzdtb8cy8b1YZv",
+                                  "decimals": 6,
+                                  "symbol": "ARIES",
+                                  "name": "Aries",
+                                  "isCanonicalOrigin": true,
+                                  "isOfficialRepresentation": true
+                            },
+                            {
+                                  "sign": "aries",
+                                  "chain": "base",
+                                  "chainId": 8453,
+                                  "kind": "bridged",
+                                  "tokenStandard": "ERC20",
+                                  "address": "0x3ffB5282F5891Dd8c813E64059EdB0607537eC91",
+                                  "decimals": 6,
+                                  "symbol": "ARIES",
+                                  "name": "Aries",
+                                  "isCanonicalOrigin": false,
+                                  "isOfficialRepresentation": true,
+                                  "originChain": "solana",
+                                  "originAddress": "GhFiFrExPY3proVF96oth1gESWA5QPQzdtb8cy8b1YZv",
+                                  "bridge": {
+                                        "status": "official-bridged",
+                                        "protocol": "wormhole",
+                                        "sourceChain": "solana",
+                                        "destinationChain": "base",
+                                        "notes": "Official bridged Base representation deployed through Wormhole BridgeToken contracts."
+                                  }
+                            }
+                      ]
+                },
+                {
+                      "sign": "taurus",
+                      "displayName": "Taurus",
+                      "metadata": {
+                            "element": "earth",
+                            "modality": "fixed",
+                            "rulingPlanet": "Venus",
+                            "archetype": "The Steward",
+                            "dateRange": "04-20 to 05-20",
+                            "shortBio": "A cultural asset for ownership, form, value, and symbolic endurance."
+                      },
+                      "native": {
+                            "sign": "taurus",
+                            "chain": "solana",
+                            "kind": "native",
+                            "tokenStandard": "SPL",
+                            "address": "EjkkxYpfSwS6TAtKKuiJuNMMngYvumc1t1v9ZX1WJKMp",
+                            "decimals": 6,
+                            "symbol": "TAURUS",
+                            "name": "Taurus",
+                            "isCanonicalOrigin": true,
+                            "isOfficialRepresentation": true
+                      },
+                      "representations": [
+                            {
+                                  "sign": "taurus",
+                                  "chain": "solana",
+                                  "kind": "native",
+                                  "tokenStandard": "SPL",
+                                  "address": "EjkkxYpfSwS6TAtKKuiJuNMMngYvumc1t1v9ZX1WJKMp",
+                                  "decimals": 6,
+                                  "symbol": "TAURUS",
+                                  "name": "Taurus",
+                                  "isCanonicalOrigin": true,
+                                  "isOfficialRepresentation": true
+                            },
+                            {
+                                  "sign": "taurus",
+                                  "chain": "base",
+                                  "chainId": 8453,
+                                  "kind": "bridged",
+                                  "tokenStandard": "ERC20",
+                                  "address": "0xd5356c6E529569c6912978433DAfb7ca72B5f09C",
+                                  "decimals": 6,
+                                  "symbol": "TAURUS",
+                                  "name": "Taurus",
+                                  "isCanonicalOrigin": false,
+                                  "isOfficialRepresentation": true,
+                                  "originChain": "solana",
+                                  "originAddress": "EjkkxYpfSwS6TAtKKuiJuNMMngYvumc1t1v9ZX1WJKMp",
+                                  "bridge": {
+                                        "status": "official-bridged",
+                                        "protocol": "wormhole",
+                                        "sourceChain": "solana",
+                                        "destinationChain": "base",
+                                        "notes": "Official bridged Base representation deployed through Wormhole BridgeToken contracts."
+                                  }
+                            }
+                      ]
+                },
+                {
+                      "sign": "gemini",
+                      "displayName": "Gemini",
+                      "metadata": {
+                            "element": "air",
+                            "modality": "mutable",
+                            "rulingPlanet": "Mercury",
+                            "archetype": "The Messenger",
+                            "dateRange": "05-21 to 06-20",
+                            "shortBio": "A cultural asset for symbolic identity shaped by language, duality, and exchange."
+                      },
+                      "native": {
+                            "sign": "gemini",
+                            "chain": "solana",
+                            "kind": "native",
+                            "tokenStandard": "SPL",
+                            "address": "ARiZfq6dK19uNqxWyRudhbM2MswLyYhVUHdndGkffdGc",
+                            "decimals": 6,
+                            "symbol": "GEMINI",
+                            "name": "Gemini",
+                            "isCanonicalOrigin": true,
+                            "isOfficialRepresentation": true
+                      },
+                      "representations": [
+                            {
+                                  "sign": "gemini",
+                                  "chain": "solana",
+                                  "kind": "native",
+                                  "tokenStandard": "SPL",
+                                  "address": "ARiZfq6dK19uNqxWyRudhbM2MswLyYhVUHdndGkffdGc",
+                                  "decimals": 6,
+                                  "symbol": "GEMINI",
+                                  "name": "Gemini",
+                                  "isCanonicalOrigin": true,
+                                  "isOfficialRepresentation": true
+                            },
+                            {
+                                  "sign": "gemini",
+                                  "chain": "base",
+                                  "chainId": 8453,
+                                  "kind": "bridged",
+                                  "tokenStandard": "ERC20",
+                                  "address": "0x8F6eb25aB4CD2F8f064f7da5E35136D4EC600b4f",
+                                  "decimals": 6,
+                                  "symbol": "GEMINI",
+                                  "name": "Gemini",
+                                  "isCanonicalOrigin": false,
+                                  "isOfficialRepresentation": true,
+                                  "originChain": "solana",
+                                  "originAddress": "ARiZfq6dK19uNqxWyRudhbM2MswLyYhVUHdndGkffdGc",
+                                  "bridge": {
+                                        "status": "official-bridged",
+                                        "protocol": "wormhole",
+                                        "sourceChain": "solana",
+                                        "destinationChain": "base",
+                                        "notes": "Official bridged Base representation deployed through Wormhole BridgeToken contracts."
+                                  }
+                            }
+                      ]
+                },
+                {
+                      "sign": "cancer",
+                      "displayName": "Cancer",
+                      "metadata": {
+                            "element": "water",
+                            "modality": "cardinal",
+                            "rulingPlanet": "Luna",
+                            "archetype": "The Keeper",
+                            "dateRange": "06-21 to 07-22",
+                            "shortBio": "A cultural asset for memory, protection, belonging, and ancestral continuity."
+                      },
+                      "native": {
+                            "sign": "cancer",
+                            "chain": "solana",
+                            "kind": "native",
+                            "tokenStandard": "SPL",
+                            "address": "CmomKM8iPKRSMN7y1jqyW1QKj5bGoZmbvNZXWBJSUdnZ",
+                            "decimals": 6,
+                            "symbol": "CANCER",
+                            "name": "Cancer",
+                            "isCanonicalOrigin": true,
+                            "isOfficialRepresentation": true
+                      },
+                      "representations": [
+                            {
+                                  "sign": "cancer",
+                                  "chain": "solana",
+                                  "kind": "native",
+                                  "tokenStandard": "SPL",
+                                  "address": "CmomKM8iPKRSMN7y1jqyW1QKj5bGoZmbvNZXWBJSUdnZ",
+                                  "decimals": 6,
+                                  "symbol": "CANCER",
+                                  "name": "Cancer",
+                                  "isCanonicalOrigin": true,
+                                  "isOfficialRepresentation": true
+                            },
+                            {
+                                  "sign": "cancer",
+                                  "chain": "base",
+                                  "chainId": 8453,
+                                  "kind": "bridged",
+                                  "tokenStandard": "ERC20",
+                                  "address": "0xb9Fd3c3157C7b69260Ca285FbbC74F6309226378",
+                                  "decimals": 6,
+                                  "symbol": "CANCER",
+                                  "name": "Cancer",
+                                  "isCanonicalOrigin": false,
+                                  "isOfficialRepresentation": true,
+                                  "originChain": "solana",
+                                  "originAddress": "CmomKM8iPKRSMN7y1jqyW1QKj5bGoZmbvNZXWBJSUdnZ",
+                                  "bridge": {
+                                        "status": "official-bridged",
+                                        "protocol": "wormhole",
+                                        "sourceChain": "solana",
+                                        "destinationChain": "base",
+                                        "notes": "Official bridged Base representation deployed through Wormhole BridgeToken contracts."
+                                  }
+                            }
+                      ]
+                },
+                {
+                      "sign": "leo",
+                      "displayName": "Leo",
+                      "metadata": {
+                            "element": "fire",
+                            "modality": "fixed",
+                            "rulingPlanet": "Sun",
+                            "archetype": "The Sovereign",
+                            "dateRange": "07-23 to 08-22",
+                            "shortBio": "A cultural asset for presence, authorship, radiance, and recognition."
+                      },
+                      "native": {
+                            "sign": "leo",
+                            "chain": "solana",
+                            "kind": "native",
+                            "tokenStandard": "SPL",
+                            "address": "8Cd7wXoPb5Yt9cUGtmHNqAEmpMDrhfcVqnGbLC48b8Qm",
+                            "decimals": 6,
+                            "symbol": "LEO",
+                            "name": "Leo",
+                            "isCanonicalOrigin": true,
+                            "isOfficialRepresentation": true
+                      },
+                      "representations": [
+                            {
+                                  "sign": "leo",
+                                  "chain": "solana",
+                                  "kind": "native",
+                                  "tokenStandard": "SPL",
+                                  "address": "8Cd7wXoPb5Yt9cUGtmHNqAEmpMDrhfcVqnGbLC48b8Qm",
+                                  "decimals": 6,
+                                  "symbol": "LEO",
+                                  "name": "Leo",
+                                  "isCanonicalOrigin": true,
+                                  "isOfficialRepresentation": true
+                            },
+                            {
+                                  "sign": "leo",
+                                  "chain": "base",
+                                  "chainId": 8453,
+                                  "kind": "bridged",
+                                  "tokenStandard": "ERC20",
+                                  "address": "0x4f7B4c12DE5d47314C86Ed3BA25E289aA139CF75",
+                                  "decimals": 6,
+                                  "symbol": "LEO",
+                                  "name": "Leo",
+                                  "isCanonicalOrigin": false,
+                                  "isOfficialRepresentation": true,
+                                  "originChain": "solana",
+                                  "originAddress": "8Cd7wXoPb5Yt9cUGtmHNqAEmpMDrhfcVqnGbLC48b8Qm",
+                                  "bridge": {
+                                        "status": "official-bridged",
+                                        "protocol": "wormhole",
+                                        "sourceChain": "solana",
+                                        "destinationChain": "base",
+                                        "notes": "Official bridged Base representation deployed through Wormhole BridgeToken contracts."
+                                  }
+                            }
+                      ]
+                },
+                {
+                      "sign": "virgo",
+                      "displayName": "Virgo",
+                      "metadata": {
+                            "element": "earth",
+                            "modality": "mutable",
+                            "rulingPlanet": "Mercury",
+                            "archetype": "The Archivist",
+                            "dateRange": "08-23 to 09-22",
+                            "shortBio": "A cultural asset for craft, discernment, service, and exacting order."
+                      },
+                      "native": {
+                            "sign": "virgo",
+                            "chain": "solana",
+                            "kind": "native",
+                            "tokenStandard": "SPL",
+                            "address": "Ez4bst5qu5uqX3AntYWUdafw9XvtFeJ3gugytKKbSJso",
+                            "decimals": 6,
+                            "symbol": "VIRGO",
+                            "name": "Virgo",
+                            "isCanonicalOrigin": true,
+                            "isOfficialRepresentation": true
+                      },
+                      "representations": [
+                            {
+                                  "sign": "virgo",
+                                  "chain": "solana",
+                                  "kind": "native",
+                                  "tokenStandard": "SPL",
+                                  "address": "Ez4bst5qu5uqX3AntYWUdafw9XvtFeJ3gugytKKbSJso",
+                                  "decimals": 6,
+                                  "symbol": "VIRGO",
+                                  "name": "Virgo",
+                                  "isCanonicalOrigin": true,
+                                  "isOfficialRepresentation": true
+                            },
+                            {
+                                  "sign": "virgo",
+                                  "chain": "base",
+                                  "chainId": 8453,
+                                  "kind": "bridged",
+                                  "tokenStandard": "ERC20",
+                                  "address": "0xAcFd97106bbE5D931aC430Be76A8E362832D48f4",
+                                  "decimals": 6,
+                                  "symbol": "VIRGO",
+                                  "name": "Virgo",
+                                  "isCanonicalOrigin": false,
+                                  "isOfficialRepresentation": true,
+                                  "originChain": "solana",
+                                  "originAddress": "Ez4bst5qu5uqX3AntYWUdafw9XvtFeJ3gugytKKbSJso",
+                                  "bridge": {
+                                        "status": "official-bridged",
+                                        "protocol": "wormhole",
+                                        "sourceChain": "solana",
+                                        "destinationChain": "base",
+                                        "notes": "Official bridged Base representation deployed through Wormhole BridgeToken contracts."
+                                  }
+                            }
+                      ]
+                },
+                {
+                      "sign": "libra",
+                      "displayName": "Libra",
+                      "metadata": {
+                            "element": "air",
+                            "modality": "cardinal",
+                            "rulingPlanet": "Venus",
+                            "archetype": "The Arbiter",
+                            "dateRange": "09-23 to 10-22",
+                            "shortBio": "A cultural asset for relation, judgment, proportion, and civic balance."
+                      },
+                      "native": {
+                            "sign": "libra",
+                            "chain": "solana",
+                            "kind": "native",
+                            "tokenStandard": "SPL",
+                            "address": "7Zt2KUh5mkpEpPGcNcFy51aGkh9Ycb5ELcqRH1n2GmAe",
+                            "decimals": 6,
+                            "symbol": "LIBRA",
+                            "name": "Libra",
+                            "isCanonicalOrigin": true,
+                            "isOfficialRepresentation": true
+                      },
+                      "representations": [
+                            {
+                                  "sign": "libra",
+                                  "chain": "solana",
+                                  "kind": "native",
+                                  "tokenStandard": "SPL",
+                                  "address": "7Zt2KUh5mkpEpPGcNcFy51aGkh9Ycb5ELcqRH1n2GmAe",
+                                  "decimals": 6,
+                                  "symbol": "LIBRA",
+                                  "name": "Libra",
+                                  "isCanonicalOrigin": true,
+                                  "isOfficialRepresentation": true
+                            },
+                            {
+                                  "sign": "libra",
+                                  "chain": "base",
+                                  "chainId": 8453,
+                                  "kind": "bridged",
+                                  "tokenStandard": "ERC20",
+                                  "address": "0x4201eff5F419CD6EEDFb28fa240edeaFc9002204",
+                                  "decimals": 6,
+                                  "symbol": "LIBRA",
+                                  "name": "Libra",
+                                  "isCanonicalOrigin": false,
+                                  "isOfficialRepresentation": true,
+                                  "originChain": "solana",
+                                  "originAddress": "7Zt2KUh5mkpEpPGcNcFy51aGkh9Ycb5ELcqRH1n2GmAe",
+                                  "bridge": {
+                                        "status": "official-bridged",
+                                        "protocol": "wormhole",
+                                        "sourceChain": "solana",
+                                        "destinationChain": "base",
+                                        "notes": "Official bridged Base representation deployed through Wormhole BridgeToken contracts."
+                                  }
+                            }
+                      ]
+                },
+                {
+                      "sign": "scorpio",
+                      "displayName": "Scorpio",
+                      "metadata": {
+                            "element": "water",
+                            "modality": "fixed",
+                            "rulingPlanet": "Mars",
+                            "archetype": "The Custodian",
+                            "dateRange": "10-23 to 11-21",
+                            "shortBio": "A cultural asset for depth, transformation, secrecy, and resolve."
+                      },
+                      "native": {
+                            "sign": "scorpio",
+                            "chain": "solana",
+                            "kind": "native",
+                            "tokenStandard": "SPL",
+                            "address": "J4fQTRN13MKpXhVE74t99msKJLbrjegjEgLBnzEv2YH1",
+                            "decimals": 6,
+                            "symbol": "SCORPIO",
+                            "name": "Scorpio",
+                            "isCanonicalOrigin": true,
+                            "isOfficialRepresentation": true
+                      },
+                      "representations": [
+                            {
+                                  "sign": "scorpio",
+                                  "chain": "solana",
+                                  "kind": "native",
+                                  "tokenStandard": "SPL",
+                                  "address": "J4fQTRN13MKpXhVE74t99msKJLbrjegjEgLBnzEv2YH1",
+                                  "decimals": 6,
+                                  "symbol": "SCORPIO",
+                                  "name": "Scorpio",
+                                  "isCanonicalOrigin": true,
+                                  "isOfficialRepresentation": true
+                            },
+                            {
+                                  "sign": "scorpio",
+                                  "chain": "base",
+                                  "chainId": 8453,
+                                  "kind": "bridged",
+                                  "tokenStandard": "ERC20",
+                                  "address": "0x0057C9cB6D16C2ecA808788f14d0d0c367b26676",
+                                  "decimals": 6,
+                                  "symbol": "SCORPIO",
+                                  "name": "Scorpio",
+                                  "isCanonicalOrigin": false,
+                                  "isOfficialRepresentation": true,
+                                  "originChain": "solana",
+                                  "originAddress": "J4fQTRN13MKpXhVE74t99msKJLbrjegjEgLBnzEv2YH1",
+                                  "bridge": {
+                                        "status": "official-bridged",
+                                        "protocol": "wormhole",
+                                        "sourceChain": "solana",
+                                        "destinationChain": "base",
+                                        "notes": "Official bridged Base representation deployed through Wormhole BridgeToken contracts."
+                                  }
+                            }
+                      ]
+                },
+                {
+                      "sign": "sagittarius",
+                      "displayName": "Sagittarius",
+                      "metadata": {
+                            "element": "fire",
+                            "modality": "mutable",
+                            "rulingPlanet": "Jupiter",
+                            "archetype": "The Wayfinder",
+                            "dateRange": "11-22 to 12-21",
+                            "shortBio": "A cultural asset for doctrine, journey, horizon, and the search for meaning."
+                      },
+                      "native": {
+                            "sign": "sagittarius",
+                            "chain": "solana",
+                            "kind": "native",
+                            "tokenStandard": "SPL",
+                            "address": "8x17zMmVjJxqswjX4hNpxVPc7Tr5UabVJF3kv8TKq8Y3",
+                            "decimals": 6,
+                            "symbol": "SAGITTARIUS",
+                            "name": "Sagittarius",
+                            "isCanonicalOrigin": true,
+                            "isOfficialRepresentation": true
+                      },
+                      "representations": [
+                            {
+                                  "sign": "sagittarius",
+                                  "chain": "solana",
+                                  "kind": "native",
+                                  "tokenStandard": "SPL",
+                                  "address": "8x17zMmVjJxqswjX4hNpxVPc7Tr5UabVJF3kv8TKq8Y3",
+                                  "decimals": 6,
+                                  "symbol": "SAGITTARIUS",
+                                  "name": "Sagittarius",
+                                  "isCanonicalOrigin": true,
+                                  "isOfficialRepresentation": true
+                            },
+                            {
+                                  "sign": "sagittarius",
+                                  "chain": "base",
+                                  "chainId": 8453,
+                                  "kind": "bridged",
+                                  "tokenStandard": "ERC20",
+                                  "address": "0xD21fAb1EB5E11AC3C281F7cF8096eCC4683eEa9c",
+                                  "decimals": 6,
+                                  "symbol": "SAGITTARIUS",
+                                  "name": "Sagittarius",
+                                  "isCanonicalOrigin": false,
+                                  "isOfficialRepresentation": true,
+                                  "originChain": "solana",
+                                  "originAddress": "8x17zMmVjJxqswjX4hNpxVPc7Tr5UabVJF3kv8TKq8Y3",
+                                  "bridge": {
+                                        "status": "official-bridged",
+                                        "protocol": "wormhole",
+                                        "sourceChain": "solana",
+                                        "destinationChain": "base",
+                                        "notes": "Official bridged Base representation deployed through Wormhole BridgeToken contracts."
+                                  }
+                            }
+                      ]
+                },
+                {
+                      "sign": "capricorn",
+                      "displayName": "Capricorn",
+                      "metadata": {
+                            "element": "earth",
+                            "modality": "cardinal",
+                            "rulingPlanet": "Saturn",
+                            "archetype": "The Institution",
+                            "dateRange": "12-22 to 01-19",
+                            "shortBio": "A cultural asset for structure, time, ascent, and institutional memory."
+                      },
+                      "native": {
+                            "sign": "capricorn",
+                            "chain": "solana",
+                            "kind": "native",
+                            "tokenStandard": "SPL",
+                            "address": "3C2SN1FjzE9MiLFFVRp7Jhkp8Gjwpk29S2TCSJ2jkHn2",
+                            "decimals": 6,
+                            "symbol": "CAPRICORN",
+                            "name": "Capricorn",
+                            "isCanonicalOrigin": true,
+                            "isOfficialRepresentation": true
+                      },
+                      "representations": [
+                            {
+                                  "sign": "capricorn",
+                                  "chain": "solana",
+                                  "kind": "native",
+                                  "tokenStandard": "SPL",
+                                  "address": "3C2SN1FjzE9MiLFFVRp7Jhkp8Gjwpk29S2TCSJ2jkHn2",
+                                  "decimals": 6,
+                                  "symbol": "CAPRICORN",
+                                  "name": "Capricorn",
+                                  "isCanonicalOrigin": true,
+                                  "isOfficialRepresentation": true
+                            },
+                            {
+                                  "sign": "capricorn",
+                                  "chain": "base",
+                                  "chainId": 8453,
+                                  "kind": "bridged",
+                                  "tokenStandard": "ERC20",
+                                  "address": "0xbFB102C18FDf49f2ffCB9B3aF4522f7DC9f51018",
+                                  "decimals": 6,
+                                  "symbol": "CAPRICORN",
+                                  "name": "Capricorn",
+                                  "isCanonicalOrigin": false,
+                                  "isOfficialRepresentation": true,
+                                  "originChain": "solana",
+                                  "originAddress": "3C2SN1FjzE9MiLFFVRp7Jhkp8Gjwpk29S2TCSJ2jkHn2",
+                                  "bridge": {
+                                        "status": "official-bridged",
+                                        "protocol": "wormhole",
+                                        "sourceChain": "solana",
+                                        "destinationChain": "base",
+                                        "notes": "Official bridged Base representation deployed through Wormhole BridgeToken contracts."
+                                  }
+                            }
+                      ]
+                },
+                {
+                      "sign": "aquarius",
+                      "displayName": "Aquarius",
+                      "metadata": {
+                            "element": "air",
+                            "modality": "fixed",
+                            "rulingPlanet": "Saturn",
+                            "archetype": "The Architect",
+                            "dateRange": "01-20 to 02-18",
+                            "shortBio": "A cultural asset for systems, invention, collective identity, and distance."
+                      },
+                      "native": {
+                            "sign": "aquarius",
+                            "chain": "solana",
+                            "kind": "native",
+                            "tokenStandard": "SPL",
+                            "address": "C49Ut3om3QFTDrMZ5Cr8VcTKPpHDcQ2Fv8mmuJHHigDt",
+                            "decimals": 6,
+                            "symbol": "AQUARIUS",
+                            "name": "Aquarius",
+                            "isCanonicalOrigin": true,
+                            "isOfficialRepresentation": true
+                      },
+                      "representations": [
+                            {
+                                  "sign": "aquarius",
+                                  "chain": "solana",
+                                  "kind": "native",
+                                  "tokenStandard": "SPL",
+                                  "address": "C49Ut3om3QFTDrMZ5Cr8VcTKPpHDcQ2Fv8mmuJHHigDt",
+                                  "decimals": 6,
+                                  "symbol": "AQUARIUS",
+                                  "name": "Aquarius",
+                                  "isCanonicalOrigin": true,
+                                  "isOfficialRepresentation": true
+                            },
+                            {
+                                  "sign": "aquarius",
+                                  "chain": "base",
+                                  "chainId": 8453,
+                                  "kind": "bridged",
+                                  "tokenStandard": "ERC20",
+                                  "address": "0xccA7CD4F96336Fd26eF6c5F579eaC651bAC5535F",
+                                  "decimals": 6,
+                                  "symbol": "AQUARIUS",
+                                  "name": "Aquarius",
+                                  "isCanonicalOrigin": false,
+                                  "isOfficialRepresentation": true,
+                                  "originChain": "solana",
+                                  "originAddress": "C49Ut3om3QFTDrMZ5Cr8VcTKPpHDcQ2Fv8mmuJHHigDt",
+                                  "bridge": {
+                                        "status": "official-bridged",
+                                        "protocol": "wormhole",
+                                        "sourceChain": "solana",
+                                        "destinationChain": "base",
+                                        "notes": "Official bridged Base representation deployed through Wormhole BridgeToken contracts."
+                                  }
+                            }
+                      ]
+                },
+                {
+                      "sign": "pisces",
+                      "displayName": "Pisces",
+                      "metadata": {
+                            "element": "water",
+                            "modality": "mutable",
+                            "rulingPlanet": "Jupiter",
+                            "archetype": "The Mystic",
+                            "dateRange": "02-19 to 03-20",
+                            "shortBio": "A cultural asset for image, faith, continuity, and symbolic dissolution."
+                      },
+                      "native": {
+                            "sign": "pisces",
+                            "chain": "solana",
+                            "kind": "native",
+                            "tokenStandard": "SPL",
+                            "address": "3JsSsmGzjWDNe9XCw2L9vznC5JU9wSqQeB6ns5pAkPeE",
+                            "decimals": 6,
+                            "symbol": "PISCES",
+                            "name": "Pisces",
+                            "isCanonicalOrigin": true,
+                            "isOfficialRepresentation": true
+                      },
+                      "representations": [
+                            {
+                                  "sign": "pisces",
+                                  "chain": "solana",
+                                  "kind": "native",
+                                  "tokenStandard": "SPL",
+                                  "address": "3JsSsmGzjWDNe9XCw2L9vznC5JU9wSqQeB6ns5pAkPeE",
+                                  "decimals": 6,
+                                  "symbol": "PISCES",
+                                  "name": "Pisces",
+                                  "isCanonicalOrigin": true,
+                                  "isOfficialRepresentation": true
+                            },
+                            {
+                                  "sign": "pisces",
+                                  "chain": "base",
+                                  "chainId": 8453,
+                                  "kind": "bridged",
+                                  "tokenStandard": "ERC20",
+                                  "address": "0x43fA1855a89b7A3e07426Fa7a1B44b4187d29Daf",
+                                  "decimals": 6,
+                                  "symbol": "PISCES",
+                                  "name": "Pisces",
+                                  "isCanonicalOrigin": false,
+                                  "isOfficialRepresentation": true,
+                                  "originChain": "solana",
+                                  "originAddress": "3JsSsmGzjWDNe9XCw2L9vznC5JU9wSqQeB6ns5pAkPeE",
+                                  "bridge": {
+                                        "status": "official-bridged",
+                                        "protocol": "wormhole",
+                                        "sourceChain": "solana",
+                                        "destinationChain": "base",
+                                        "notes": "Official bridged Base representation deployed through Wormhole BridgeToken contracts."
+                                  }
+                            }
+                      ]
+                }
+          ]
+    };
 
-    // Verifier lookup helpers — also the read-only shape the future
-    // @zodiacs/sdk will expose as isOfficialZodiacAddress() etc.
+    const SITE_SIGN_COPY = {
+          "aries": {
+                "sign": "aries",
+                "order": 1,
+                "symbol": "♈︎",
+                "shortBio": "The first spark. Aries marks the vernal equinox, long honored across civilizations as the renewal of time and the opening of the symbolic year."
+          },
+          "taurus": {
+                "sign": "taurus",
+                "order": 2,
+                "symbol": "♉︎",
+                "shortBio": "The bull held sacred from Çatalhöyük to Knossos. Taurus carries a long memory of fertility, endurance, and material stewardship."
+          },
+          "gemini": {
+                "sign": "gemini",
+                "order": 3,
+                "symbol": "♊︎",
+                "shortBio": "The twins. From Castor and Pollux to the dual nature of language itself, Gemini holds the symbol of human exchange and discourse."
+          },
+          "cancer": {
+                "sign": "cancer",
+                "order": 4,
+                "symbol": "♋︎",
+                "shortBio": "The crab and the moon. The summer solstice. Cancer preserves the ancient image of home, memory, and the inner tide."
+          },
+          "leo": {
+                "sign": "leo",
+                "order": 5,
+                "symbol": "♌︎",
+                "shortBio": "The lion. Older than empires. Leo carries the sun at the height of summer. The symbol of radiant authority and visible self."
+          },
+          "virgo": {
+                "sign": "virgo",
+                "order": 6,
+                "symbol": "♍︎",
+                "shortBio": "The maiden of the harvest. Virgo preserves the long lineage of craft, discernment, and the discipline of measure."
+          },
+          "libra": {
+                "sign": "libra",
+                "order": 7,
+                "symbol": "♎︎",
+                "shortBio": "The scales. The autumn equinox. Libra holds the symbol of balance, civic measure, and the law as a cultural form."
+          },
+          "scorpio": {
+                "sign": "scorpio",
+                "order": 8,
+                "symbol": "♏︎",
+                "shortBio": "The scorpion of the deep year. Scorpio carries the rites of transformation. The threshold between what passes and what endures."
+          },
+          "sagittarius": {
+                "sign": "sagittarius",
+                "order": 9,
+                "symbol": "♐︎",
+                "shortBio": "The archer at the galactic center. Sagittarius preserves the impulse to travel, to inquire, to chart what lies beyond the known."
+          },
+          "capricorn": {
+                "sign": "capricorn",
+                "order": 10,
+                "symbol": "♑︎",
+                "shortBio": "The sea-goat. The winter solstice. Capricorn carries the long pattern of structure, lineage, and the building of enduring forms."
+          },
+          "aquarius": {
+                "sign": "aquarius",
+                "order": 11,
+                "symbol": "♒︎",
+                "shortBio": "The water-bearer. Aquarius holds the symbol of the unbound mind: invention, dissent, the long arc of cultural shift."
+          },
+          "pisces": {
+                "sign": "pisces",
+                "order": 12,
+                "symbol": "♓︎",
+                "shortBio": "Two fishes bound by a silver cord. Pisces closes the wheel. The symbol of dissolution, depth, and the world before the next renewal."
+          }
+    };
+
+    const titleCase = (value) => value
+      ? value.charAt(0).toUpperCase() + value.slice(1)
+      : value;
+
+    function representationFor(asset, chain) {
+      return asset.representations.find((representation) => representation.chain === chain);
+    }
+
+    function toDisplaySign(asset) {
+      const copy = SITE_SIGN_COPY[asset.sign] || {};
+      const solana = representationFor(asset, 'solana');
+      const base = representationFor(asset, 'base');
+
+      return {
+        asset,
+        name: asset.displayName,
+        ticker: asset.native.symbol || asset.displayName.toUpperCase(),
+        order: copy.order || ZODIACS_REGISTRY.assets.indexOf(asset) + 1,
+        element: titleCase(asset.metadata.element),
+        modality: titleCase(asset.metadata.modality),
+        rulingPlanet: asset.metadata.rulingPlanet,
+        symbol: copy.symbol || '',
+        archetype: asset.metadata.archetype,
+        shortBio: copy.shortBio || asset.metadata.shortBio,
+        representations: { solana, base }
+      };
+    }
+
+    const SIGNS = ZODIACS_REGISTRY.assets.map(toDisplaySign);
+
+    // Verifier lookup helpers — same registry semantics exposed by
+    // @zodiacs/sdk through isOfficialZodiacAddress() etc.
     const norm = (s) => (s || '').trim();
     const eq = (a, b) => norm(a).toLowerCase() === norm(b).toLowerCase();
     function lookupAddress(input) {
       const q = norm(input);
       if (!q) return null;
       for (const sign of SIGNS) {
-        if (sign.representations.base.address && eq(sign.representations.base.address, q)) {
-          return { sign, network: 'base', representation: sign.representations.base };
-        }
-        if (sign.representations.solana.mint && eq(sign.representations.solana.mint, q)) {
-          return { sign, network: 'solana', representation: sign.representations.solana };
+        for (const representation of sign.asset.representations) {
+          if (representation.address && eq(representation.address, q)) {
+            return { sign, network: representation.chain, representation };
+          }
         }
       }
       return null;
@@ -1851,7 +2644,7 @@
     function FeaturedCard({ sign, animKey }) {
       const reveal = useReveal();
       const baseAddr = sign.representations.base.address;
-      const solanaMint = sign.representations.solana.mint;
+      const solanaMint = sign.representations.solana.address;
 
       return (
         <article ref={reveal} className="card reveal" aria-label={`Featured sign · ${sign.name}`}>
@@ -2263,8 +3056,8 @@
               <dt className="k">{network === 'base' ? 'Native counterpart' : 'Bridged counterpart'}</dt>
               <dd className="v">
                 {network === 'base'
-                  ? (sign.representations.solana.mint
-                      ? <CopyChip text={sign.representations.solana.mint} display={truncateAddress(sign.representations.solana.mint, 4, 4)} />
+                  ? (sign.representations.solana.address
+                      ? <CopyChip text={sign.representations.solana.address} display={truncateAddress(sign.representations.solana.address, 4, 4)} />
                       : <span className="card__addr-pending">Forthcoming</span>)
                   : <CopyChip text={sign.representations.base.address} display={truncateAddress(sign.representations.base.address, 6, 4)} />}
               </dd>
@@ -2318,8 +3111,8 @@
               <div className="detail__row">
                 <span className="k">Native · Solana</span>
                 <span className="v">
-                  {sign.representations.solana.mint
-                    ? <CopyChip text={sign.representations.solana.mint} display={truncateAddress(sign.representations.solana.mint, 4, 4)} />
+                  {sign.representations.solana.address
+                    ? <CopyChip text={sign.representations.solana.address} display={truncateAddress(sign.representations.solana.address, 4, 4)} />
                     : <span className="card__addr-pending">Forthcoming</span>}
                 </span>
               </div>
@@ -2345,7 +3138,7 @@
        24h change. Brief explicitly forbids financial-promotion language. */
     function ReferenceStrip({ sign, animKey }) {
       const baseAddr = sign.representations.base.address;
-      const solanaMint = sign.representations.solana.mint;
+      const solanaMint = sign.representations.solana.address;
       const cells = [
         { k: 'Native chain',    v: 'Solana' },
         { k: 'Native mint',     v: <span className="mono">{solanaMint ? truncateAddress(solanaMint, 4, 4) : '—'}</span> },
