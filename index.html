@@ -1655,12 +1655,12 @@
 
           <h1 className="hero__headline">
             Twelve signs.<br/>
-            <span className="it">One source.</span>
+            <span className="it">One register.</span>
           </h1>
 
           <p className="hero__sub">
             Native to Solana, bridged to Base.
-            Verify any address against the twelve.
+            Verify any address against the Twelve.
           </p>
 
           <Selector active={active} setActive={setActive} />
@@ -1738,7 +1738,7 @@
                 <span className="card__addr-k">Native · Solana</span>
                 {solanaMint
                   ? <CopyChip text={solanaMint} display={truncateAddress(solanaMint, 4, 4)} />
-                  : <span className="card__addr-pending">—</span>}
+                  : <span className="card__addr-pending">Forthcoming</span>}
               </div>
               <div className="card__addr-row">
                 <span className="card__addr-k">Bridged · Base</span>
@@ -1937,7 +1937,7 @@
       return (
         <section ref={reveal} id="registry" className="sec reveal" aria-label="Registry">
           <div className="sec__head">
-            <span className="sec__no">№ 02</span>
+            <span className="sec__no">№ 01</span>
             <span className="line" />
             <span className="sec__title">Registry</span>
           </div>
@@ -1987,7 +1987,7 @@
       return (
         <section ref={reveal} id="verify" className="sec reveal" aria-label="Verify">
           <div className="sec__head">
-            <span className="sec__no">№ 03</span>
+            <span className="sec__no">№ 02</span>
             <span className="line" />
             <span className="sec__title">Verify</span>
           </div>
@@ -2053,7 +2053,7 @@
                 <>
                   <div className="vrf__result-head">
                     <span className="vrf__cross">—</span>
-                    <span>Not a Zodiac.</span>
+                    <span>Not among the Twelve.</span>
                   </div>
                   <div className="vrf__result-meta mono">{truncateAddress(result.queried, 10, 8) || '—'}</div>
                 </>
@@ -2102,7 +2102,7 @@
                 {network === 'base'
                   ? (sign.representations.solana.mint
                       ? <CopyChip text={sign.representations.solana.mint} display={truncateAddress(sign.representations.solana.mint, 4, 4)} />
-                      : <span className="card__addr-pending">—</span>)
+                      : <span className="card__addr-pending">Forthcoming</span>)
                   : <CopyChip text={sign.representations.base.address} display={truncateAddress(sign.representations.base.address, 6, 4)} />}
               </dd>
             </div>
@@ -2116,7 +2116,7 @@
       return (
         <section ref={reveal} className="sec reveal" aria-label="Detail panel">
           <div className="sec__head">
-            <span className="sec__no">№ 04</span>
+            <span className="sec__no">№ 03</span>
             <span className="line" />
             <span className="sec__title">Museum label</span>
           </div>
@@ -2157,7 +2157,7 @@
                 <span className="v">
                   {sign.representations.solana.mint
                     ? <CopyChip text={sign.representations.solana.mint} display={truncateAddress(sign.representations.solana.mint, 4, 4)} />
-                    : <span className="card__addr-pending">—</span>}
+                    : <span className="card__addr-pending">Forthcoming</span>}
                 </span>
               </div>
               <div className="detail__row">
@@ -2190,15 +2190,15 @@
         { k: 'Bridged address', v: <span className="mono">{truncateAddress(baseAddr, 6, 4)}</span> },
         { k: 'Bridges',         v: 'Wormhole · Symbiosis' },
         { k: 'Standard',        v: 'SPL · ERC-20' },
-        { k: 'Holders',         v: 'On-chain' },
-        { k: 'Last verified',   v: 'Live' },
+        { k: 'Series',          v: <span className="mono">№ {String(sign.order).padStart(2, '0')} / 12</span> },
+        { k: 'Element',         v: sign.element },
       ];
 
       const reveal = useReveal();
       return (
         <section ref={reveal} className="sec reveal" aria-label="Reference data">
           <div className="sec__head">
-            <span className="sec__no">№ 05</span>
+            <span className="sec__no">№ 04</span>
             <span className="line" />
             <span className="sec__title">Reference data</span>
           </div>
@@ -2230,7 +2230,7 @@
       return (
         <section ref={reveal} id="thesis" className="phil reveal" aria-label="Philosophy">
           <div className="phil__sup">
-            <span className="label label--gold">№ 06 · Thesis</span>
+            <span className="label label--gold">№ 05 · Thesis</span>
             <span className="line" />
           </div>
           <p className="phil__body">
@@ -2254,7 +2254,7 @@
       return (
         <section ref={reveal} className="sec reveal" id="official-twelve" aria-label="The official twelve">
           <div className="sec__head">
-            <span className="sec__no">№ 07</span>
+            <span className="sec__no">№ 06</span>
             <span className="line" />
             <span className="sec__title">The Twelve</span>
           </div>
