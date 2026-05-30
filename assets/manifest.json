@@ -1,0 +1,132 @@
+{
+  "schemaVersion": "1.0.0",
+  "name": "Zodiacs.org PNG Asset Manifest",
+  "source": "https://zodiacs.org",
+  "repo": "https://github.com/ZodiacsOfficial/site",
+  "lastVerified": "2026-05-31",
+  "signOrder": [
+    "aries",
+    "taurus",
+    "gemini",
+    "cancer",
+    "leo",
+    "virgo",
+    "libra",
+    "scorpio",
+    "sagittarius",
+    "capricorn",
+    "aquarius",
+    "pisces"
+  ],
+  "families": {
+    "icon": {
+      "directory": "assets/icons",
+      "format": "png",
+      "description": "Compact sign glyph/mark assets used by selectors and labels."
+    },
+    "nugget": {
+      "directory": "assets/nuggets",
+      "format": "png",
+      "description": "Primary sculptural sign figure assets."
+    },
+    "thumbnail": {
+      "directory": "assets/nuggets/thumb",
+      "format": "png",
+      "description": "Smaller figure thumbnails used by grid and mobile UI."
+    },
+    "openGraph": {
+      "directory": "assets/og",
+      "format": "png",
+      "description": "Social sharing preview assets."
+    }
+  },
+  "assets": [
+    {
+      "sign": "aries",
+      "displayName": "Aries",
+      "icon": { "path": "assets/icons/aries.png", "width": 256, "height": 233, "bytes": 5156 },
+      "nugget": { "path": "assets/nuggets/aries.png", "width": 861, "height": 1024, "bytes": 351317 },
+      "thumbnail": { "path": "assets/nuggets/thumb/aries.png", "width": 269, "height": 320, "bytes": 39251 }
+    },
+    {
+      "sign": "taurus",
+      "displayName": "Taurus",
+      "icon": { "path": "assets/icons/taurus.png", "width": 256, "height": 237, "bytes": 10964 },
+      "nugget": { "path": "assets/nuggets/taurus.png", "width": 965, "height": 706, "bytes": 402155 },
+      "thumbnail": { "path": "assets/nuggets/thumb/taurus.png", "width": 320, "height": 234, "bytes": 47485 }
+    },
+    {
+      "sign": "gemini",
+      "displayName": "Gemini",
+      "icon": { "path": "assets/icons/gemini.png", "width": 256, "height": 255, "bytes": 12371 },
+      "nugget": { "path": "assets/nuggets/gemini.png", "width": 685, "height": 1024, "bytes": 409627 },
+      "thumbnail": { "path": "assets/nuggets/thumb/gemini.png", "width": 214, "height": 320, "bytes": 46322 }
+    },
+    {
+      "sign": "cancer",
+      "displayName": "Cancer",
+      "icon": { "path": "assets/icons/cancer.png", "width": 256, "height": 189, "bytes": 15854 },
+      "nugget": { "path": "assets/nuggets/cancer.png", "width": 931, "height": 711, "bytes": 353021 },
+      "thumbnail": { "path": "assets/nuggets/thumb/cancer.png", "width": 320, "height": 244, "bytes": 45363 }
+    },
+    {
+      "sign": "leo",
+      "displayName": "Leo",
+      "icon": { "path": "assets/icons/leo.png", "width": 215, "height": 256, "bytes": 10271 },
+      "nugget": { "path": "assets/nuggets/leo.png", "width": 910, "height": 694, "bytes": 306948 },
+      "thumbnail": { "path": "assets/nuggets/thumb/leo.png", "width": 320, "height": 244, "bytes": 41233 }
+    },
+    {
+      "sign": "virgo",
+      "displayName": "Virgo",
+      "icon": { "path": "assets/icons/virgo.png", "width": 256, "height": 256, "bytes": 13529 },
+      "nugget": { "path": "assets/nuggets/virgo.png", "width": 466, "height": 902, "bytes": 245138 },
+      "thumbnail": { "path": "assets/nuggets/thumb/virgo.png", "width": 165, "height": 320, "bytes": 33354 }
+    },
+    {
+      "sign": "libra",
+      "displayName": "Libra",
+      "icon": { "path": "assets/icons/libra.png", "width": 256, "height": 184, "bytes": 6937 },
+      "nugget": { "path": "assets/nuggets/libra.png", "width": 791, "height": 873, "bytes": 213219 },
+      "thumbnail": { "path": "assets/nuggets/thumb/libra.png", "width": 290, "height": 320, "bytes": 34078 }
+    },
+    {
+      "sign": "scorpio",
+      "displayName": "Scorpio",
+      "icon": { "path": "assets/icons/scorpio.png", "width": 256, "height": 221, "bytes": 9720 },
+      "nugget": { "path": "assets/nuggets/scorpio.png", "width": 674, "height": 806, "bytes": 202589 },
+      "thumbnail": { "path": "assets/nuggets/thumb/scorpio.png", "width": 268, "height": 320, "bytes": 36210 }
+    },
+    {
+      "sign": "sagittarius",
+      "displayName": "Sagittarius",
+      "icon": { "path": "assets/icons/sagittarius.png", "width": 253, "height": 256, "bytes": 8637 },
+      "nugget": { "path": "assets/nuggets/sagittarius.png", "width": 601, "height": 926, "bytes": 214472 },
+      "thumbnail": { "path": "assets/nuggets/thumb/sagittarius.png", "width": 208, "height": 320, "bytes": 29962 }
+    },
+    {
+      "sign": "capricorn",
+      "displayName": "Capricorn",
+      "icon": { "path": "assets/icons/capricorn.png", "width": 236, "height": 256, "bytes": 10817 },
+      "nugget": { "path": "assets/nuggets/capricorn.png", "width": 749, "height": 833, "bytes": 266102 },
+      "thumbnail": { "path": "assets/nuggets/thumb/capricorn.png", "width": 288, "height": 320, "bytes": 42999 }
+    },
+    {
+      "sign": "aquarius",
+      "displayName": "Aquarius",
+      "icon": { "path": "assets/icons/aquarius.png", "width": 256, "height": 104, "bytes": 8782 },
+      "nugget": { "path": "assets/nuggets/aquarius.png", "width": 636, "height": 808, "bytes": 296641 },
+      "thumbnail": { "path": "assets/nuggets/thumb/aquarius.png", "width": 252, "height": 320, "bytes": 48541 }
+    },
+    {
+      "sign": "pisces",
+      "displayName": "Pisces",
+      "icon": { "path": "assets/icons/pisces.png", "width": 191, "height": 256, "bytes": 10026 },
+      "nugget": { "path": "assets/nuggets/pisces.png", "width": 884, "height": 859, "bytes": 359194 },
+      "thumbnail": { "path": "assets/nuggets/thumb/pisces.png", "width": 320, "height": 311, "bytes": 51082 }
+    }
+  ],
+  "openGraph": {
+    "share": { "path": "assets/og/share.png", "width": 1200, "height": 630, "bytes": 133566 }
+  }
+}
