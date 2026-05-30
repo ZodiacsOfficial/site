@@ -2536,7 +2536,7 @@ const ownership = await getBaseZodiacsOwnership(client, ownerAddress);`;
             <span className="sec__title">SDK</span>
           </div>
           <p className="sec__lede">
-            A read-only TypeScript interface to the registry.
+            The official read-only TypeScript interface to the Zodiacs registry.
             Verify addresses, read public holdings, render the signs.
           </p>
 
@@ -2549,11 +2549,16 @@ const ownership = await getBaseZodiacsOwnership(client, ownerAddress);`;
             ))}
           </div>
 
-          <CodeBlock label="install" code="pnpm add @zodiacs/sdk" />
+          <CodeBlock label="install" code="npm i @zodiacs/sdk" />
           <CodeBlock label="verify.ts" code={SDK_VERIFY} />
           <CodeBlock label="holdings.ts" code={SDK_OWNERSHIP} />
 
           <div className="res">
+            <a className="res__item" href="https://www.npmjs.com/package/@zodiacs/sdk" rel="noopener noreferrer">
+              <span className="res__k">npm</span>
+              <span className="res__v">@zodiacs/sdk</span>
+              <span className="res__arr" aria-hidden="true">↗</span>
+            </a>
             <a className="res__item" href="https://github.com/ZodiacsOfficial/sdk" rel="noopener noreferrer">
               <span className="res__k">GitHub</span>
               <span className="res__v">ZodiacsOfficial/sdk</span>
