@@ -1704,6 +1704,118 @@
     /* (.cat__price retired: catalog cards no longer show financial data.
        Address row is now rendered by .cat__addr — see new-section CSS.) */
 
+    /* ── Onchain access ──────────────────────────────────────── */
+    .access__statement {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: 32px;
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+      margin: 0 0 14px;
+      text-wrap: balance;
+    }
+    .access__statement .it { font-style: italic; color: var(--gold-bright); }
+    .access__copy {
+      font-family: var(--serif);
+      font-size: 16px;
+      line-height: 1.55;
+      color: var(--ink-2);
+      max-width: 38ch;
+      margin: 0 0 24px;
+      text-wrap: pretty;
+    }
+    .access__primary {
+      display: grid; grid-template-columns: 1fr; gap: 1px;
+      background: var(--hair);
+      border: 1px solid var(--hair);
+      margin-bottom: 22px;
+    }
+    @media (min-width: 560px) { .access__primary { grid-template-columns: repeat(3, 1fr); } }
+
+    .access__card {
+      position: relative;
+      display: flex; flex-direction: column; gap: 6px;
+      background: linear-gradient(180deg, rgba(201,169,97,0.04), transparent 60%), var(--bg);
+      padding: 22px 18px 24px;
+      transition: background 320ms var(--ease), box-shadow 320ms var(--ease);
+    }
+    .access__card::before {
+      content: ""; position: absolute; inset: 0;
+      box-shadow: inset 0 0 0 1px transparent;
+      pointer-events: none;
+      transition: box-shadow 320ms var(--ease);
+    }
+    .access__card:hover {
+      background: linear-gradient(180deg, rgba(201,169,97,0.07), transparent 70%), var(--bg);
+    }
+    .access__card:hover::before { box-shadow: inset 0 0 0 1px rgba(201,169,97,0.32); }
+    .access__card--featured { padding: 26px 18px 26px; }
+    .access__card--rail     { padding: 20px 18px 22px; }
+
+    .access__logo {
+      min-height: 22px;
+      margin-bottom: 6px;
+    }
+    .access__logo img,
+    .access__logo svg {
+      height: 22px; width: auto; display: block;
+      filter: brightness(1.04) saturate(0.85);
+      opacity: 0.92;
+    }
+    .access__name {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 22px;
+      line-height: 1.1;
+      color: var(--ink);
+    }
+    .access__tag {
+      font-family: var(--mono);
+      font-size: 9.5px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--ink-dim);
+    }
+
+    .access__rail-wrap { margin: 0 -20px 22px; position: relative; }
+    .access__rail-wrap::before, .access__rail-wrap::after {
+      content: ""; position: absolute; top: 0; bottom: 0; width: 20px;
+      pointer-events: none; z-index: 2;
+    }
+    .access__rail-wrap::before { left: 0;  background: linear-gradient(90deg,  var(--bg), transparent); }
+    .access__rail-wrap::after  { right: 0; background: linear-gradient(-90deg, var(--bg), transparent); }
+    .access__rail {
+      display: flex; gap: 10px;
+      padding: 6px 20px 14px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+    }
+    .access__rail::-webkit-scrollbar { display: none; }
+    .access__rail .access__card {
+      flex: 0 0 auto; width: 188px;
+      scroll-snap-align: start;
+      border: 1px solid var(--hair);
+    }
+    @media (min-width: 720px) { .access__rail .access__card { width: 220px; } }
+
+    .access__note {
+      font-family: var(--mono);
+      font-size: 9.5px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--ink-mute);
+      max-width: 52ch;
+      margin: 12px 0 22px;
+    }
+    .access__cta { display: flex; flex-direction: column; gap: 12px; }
+    @media (min-width: 480px) {
+      .access__cta { flex-direction: row; }
+      .access__cta .btn { flex: 1; }
+    }
+
     /* ── SDK section ─────────────────────────────────────────── */
     .sdk__caps {
       display: grid;
@@ -4077,6 +4189,94 @@
       );
     }
 
+    const ACCESS_PRIMARY = [
+      { name: 'Coinbase DEX', tag: 'Base onchain venue',  logo: '/assets/venues/coinbase.svg' },
+      { name: 'Jupiter',      tag: 'Solana aggregator',   logo: '/assets/venues/jupiter.svg'  },
+      { name: 'fomo',         tag: 'Consumer onchain app', logo: '/assets/venues/fomo.svg'     },
+    ];
+    const ACCESS_RAIL = [
+      { name: 'OKX Wallet',     tag: 'Wallet interface',      logo: '/assets/venues/okx-wallet.svg'     },
+      { name: 'Binance Wallet', tag: 'Onchain token access',  logo: '/assets/venues/binance-wallet.svg' },
+      { name: 'Bybit Web3',     tag: 'Web3 interface',        logo: '/assets/venues/bybit-web3.svg'     },
+      { name: 'Phantom',        tag: 'Solana wallet',         logo: '/assets/venues/phantom.svg'        },
+      { name: 'Solflare',       tag: 'Solana wallet',         logo: '/assets/venues/solflare.svg'       },
+      { name: 'Raydium',        tag: 'Solana onchain venue',  logo: '/assets/venues/raydium.svg'        },
+      { name: 'Orca',           tag: 'Solana onchain venue',  logo: '/assets/venues/orca.svg'           },
+    ];
+
+    /* Renders a venue logo if the SVG file exists; renders nothing if
+       the file is missing (graceful no-op until brand assets are added). */
+    function VenueLogo({ src }) {
+      const [failed, setFailed] = useState(false);
+      if (!src || failed) return null;
+      return <img src={src} alt="" onError={() => setFailed(true)} loading="lazy" decoding="async" />;
+    }
+
+    function OnchainAccessSection() {
+      const reveal = useReveal();
+      return (
+        <section ref={reveal} id="onchain-access" className="sec access reveal" aria-label="Onchain access">
+          <div className="sec__head">
+            <span className="sec__no">№ 06</span>
+            <span className="line" />
+            <span className="sec__title">Onchain access</span>
+          </div>
+
+          <h2 className="access__statement">
+            Access Zodiacs across<br/>
+            <span className="it">leading onchain apps.</span>
+          </h2>
+
+          <p className="access__copy">
+            Find and verify official Zodiac token records through major Solana,
+            Base, and wallet interfaces. Always confirm official mint addresses
+            through the Zodiacs.org registry.
+          </p>
+
+          <div className="access__primary" role="list">
+            {ACCESS_PRIMARY.map(v => (
+              <div className="access__card access__card--featured" role="listitem" key={v.name}>
+                <div className="access__logo" aria-hidden="true">
+                  <VenueLogo src={v.logo} />
+                </div>
+                <div className="access__name">{v.name}</div>
+                <div className="access__tag">{v.tag}</div>
+              </div>
+            ))}
+          </div>
+
+          <div className="access__rail-wrap" aria-label="More onchain venues">
+            <div className="access__rail" role="list">
+              {ACCESS_RAIL.map(v => (
+                <div className="access__card access__card--rail" role="listitem" key={v.name}>
+                  <div className="access__logo" aria-hidden="true">
+                    <VenueLogo src={v.logo} />
+                  </div>
+                  <div className="access__name">{v.name}</div>
+                  <div className="access__tag">{v.tag}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <p className="access__note">
+            Official mint addresses should always be verified through the Zodiacs.org registry and SDK.
+          </p>
+
+          <div className="access__cta">
+            <a className="btn btn--primary" href="#verify">
+              <span>Verify official addresses</span>
+              <span className="arr">→</span>
+            </a>
+            <a className="btn btn--ghost" href="#sdk">
+              <span>View SDK</span>
+              <span className="arr" style={{ width: 28, height: 28, background: 'transparent', border: 0, color: 'var(--ink-dim)' }}>↗</span>
+            </a>
+          </div>
+        </section>
+      );
+    }
+
     function ForBuildersSection() {
       const reveal = useReveal();
       const capabilities = [
@@ -4097,7 +4297,7 @@
       return (
         <section ref={reveal} id="builders" className="sec builders reveal" aria-label="For Builders">
           <div className="sec__head">
-            <span className="sec__no">№ 06</span>
+            <span className="sec__no">№ 07</span>
             <span className="line" />
             <span className="sec__title">For Builders</span>
           </div>
@@ -4171,7 +4371,7 @@
       return (
         <section ref={reveal} id="built-with-zodiacs" className="sec built reveal" aria-label="Built With Zodiacs">
           <div className="sec__head">
-            <span className="sec__no">№ 07</span>
+            <span className="sec__no">№ 08</span>
             <span className="line" />
             <span className="sec__title">Built With Zodiacs</span>
           </div>
@@ -4200,7 +4400,7 @@
       return (
         <section ref={reveal} className="sec reveal" id="official-twelve" aria-label="The official twelve">
           <div className="sec__head">
-            <span className="sec__no">№ 08</span>
+            <span className="sec__no">№ 09</span>
             <span className="line" />
             <span className="sec__title">The Twelve</span>
           </div>
@@ -4288,7 +4488,7 @@
       return (
         <section ref={reveal} id="sdk" className="sec reveal" aria-label="SDK">
           <div className="sec__head">
-            <span className="sec__no">№ 09</span>
+            <span className="sec__no">№ 10</span>
             <span className="line" />
             <span className="sec__title">SDK</span>
           </div>
@@ -4346,7 +4546,7 @@
       return (
         <section ref={reveal} id="security" className="sec reveal" aria-label="Read-only by design">
           <div className="sec__head">
-            <span className="sec__no">№ 10</span>
+            <span className="sec__no">№ 11</span>
             <span className="line" />
             <span className="sec__title">Read-only by design</span>
           </div>
@@ -4392,7 +4592,7 @@
       return (
         <section ref={reveal} id="faq" className="sec reveal" aria-label="Questions">
           <div className="sec__head">
-            <span className="sec__no">№ 11</span>
+            <span className="sec__no">№ 12</span>
             <span className="line" />
             <span className="sec__title">Questions</span>
           </div>
@@ -4484,6 +4684,7 @@
             <DetailPanel sign={sign} animKey={activeTicker} />
             <Philosophy />
             <IdentityContextSection />
+            <OnchainAccessSection />
             <ForBuildersSection />
             <BuiltWithZodiacsSection />
             <CatalogGrid active={activeTicker} setActive={setActiveTicker} />
