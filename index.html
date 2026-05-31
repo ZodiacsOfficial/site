@@ -946,6 +946,139 @@
       color: var(--ink-dim);
     }
 
+    /* ── Ecosystem depth ─────────────────────────────────────── */
+    .builders {
+      padding-top: 78px;
+    }
+    .builders__statement {
+      margin: 0 0 24px;
+      max-width: 12ch;
+      font-family: var(--serif);
+      font-size: clamp(35px, 9vw, 68px);
+      line-height: 0.94;
+      letter-spacing: 0;
+      color: var(--ink);
+      text-wrap: balance;
+    }
+    .builders__statement .it {
+      color: var(--gold-bright);
+      font-style: italic;
+    }
+    .builders__copy {
+      margin: 0 0 28px;
+      max-width: 48ch;
+      font-family: var(--serif);
+      font-size: 15.5px;
+      line-height: 1.58;
+      color: var(--ink-2);
+      text-wrap: pretty;
+    }
+    .builders__capabilities {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1px;
+      margin: 0 0 26px;
+      border: 1px solid var(--hair);
+      background: var(--hair);
+    }
+    @media (min-width: 620px) {
+      .builders__capabilities { grid-template-columns: repeat(3, 1fr); }
+    }
+    .builders__cap {
+      min-height: 82px;
+      padding: 14px 12px 12px;
+      background:
+        linear-gradient(180deg, rgba(201,169,97,0.035), transparent 80%),
+        var(--bg);
+    }
+    .builders__cap-k {
+      display: block;
+      margin-bottom: 12px;
+      font-family: var(--mono);
+      font-size: 8px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ink-mute);
+    }
+    .builders__cap-v {
+      font-family: var(--serif);
+      font-size: 15px;
+      line-height: 1.25;
+      color: var(--ink);
+    }
+    .builders__cta {
+      width: 100%;
+      justify-content: space-between;
+    }
+
+    .built {
+      padding-top: 76px;
+    }
+    .built__intro {
+      margin: 0 0 26px;
+      max-width: 42ch;
+      font-family: var(--serif);
+      font-size: 17.5px;
+      line-height: 1.5;
+      color: var(--ink);
+      text-wrap: pretty;
+    }
+    .built__grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1px;
+      border: 1px solid var(--hair);
+      background: var(--hair);
+    }
+    @media (min-width: 620px) {
+      .built__grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    .built__item {
+      position: relative;
+      min-height: 138px;
+      padding: 18px 16px 20px;
+      background:
+        radial-gradient(76% 90% at 50% 0%, rgba(201,169,97,0.07), transparent 68%),
+        var(--bg);
+      overflow: hidden;
+    }
+    .built__item::after {
+      content: "";
+      position: absolute;
+      inset: auto 16px 14px auto;
+      width: 30px;
+      height: 30px;
+      border: 1px solid rgba(201,169,97,0.18);
+      border-radius: 50%;
+      opacity: 0.5;
+    }
+    .built__k {
+      display: block;
+      margin-bottom: 36px;
+      font-family: var(--mono);
+      font-size: 8.5px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--ink-mute);
+    }
+    .built__title {
+      margin: 0 0 8px;
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 21px;
+      line-height: 1;
+      color: var(--gold-bright);
+    }
+    .built__copy {
+      position: relative;
+      z-index: 1;
+      margin: 0;
+      font-family: var(--serif);
+      font-size: 14px;
+      line-height: 1.52;
+      color: var(--ink-2);
+    }
+
     /* ── Verifier ─────────────────────────────────────────────── */
     .vrf {
       display: flex; gap: 8px;
@@ -1989,6 +2122,7 @@
       <nav class="static-site__nav" aria-label="Primary">
         <span>Zodiacs.org</span>
         <a href="/registry/zodiacs.registry.json">Registry JSON</a>
+        <a href="/sdk/">SDK</a>
       </nav>
 
       <section class="static-site__hero" aria-labelledby="static-title">
@@ -2048,6 +2182,40 @@
             <p>Build profiles, receipts, seasonal moments, verifiers, and identity surfaces on app-neutral infrastructure.</p>
           </article>
         </div>
+      </section>
+
+      <section class="static-site__section" id="builders">
+        <h2>For Builders</h2>
+        <p>
+          The same infrastructure behind the registry can live quietly inside
+          other products: wallets, galleries, astrology interfaces, profiles,
+          share cards, and read-only ownership experiences.
+        </p>
+        <div class="static-site__grid">
+          <article class="static-site__card">
+            <h3>Official Verification</h3>
+            <p>Recognize official Zodiacs.org assets and map native Solana origins to bridged Base counterparts.</p>
+          </article>
+          <article class="static-site__card">
+            <h3>Public Shelves</h3>
+            <p>Shape public ownership into Zodiac Shelves, Cosmic Receipts, Zodiac Wheels, and birth chart overlays.</p>
+          </article>
+          <article class="static-site__card">
+            <h3>Quiet Integrations</h3>
+            <p>Bring verified Zodiacs context into wallet views, galleries, profiles, and symbolic interfaces.</p>
+          </article>
+        </div>
+        <p><a href="/sdk/">Explore the SDK →</a></p>
+      </section>
+
+      <section class="static-site__section" id="built-with-zodiacs">
+        <h2>Built With Zodiacs</h2>
+        <p>
+          Zodiacs can sit beneath many kinds of experiences without becoming
+          the whole experience: astrology apps, horoscope products, wallet and
+          gallery views, public profiles, identity layers, social moments, and
+          AI astrology assistants.
+        </p>
       </section>
 
       <section class="static-site__section" id="sdk">
@@ -3686,12 +3854,130 @@
       );
     }
 
+    function ForBuildersSection() {
+      const reveal = useReveal();
+      const capabilities = [
+        'Official asset verification',
+        'Native and bridged mappings',
+        'Public Zodiac Shelves',
+        'Cosmic Receipts',
+        'Zodiac Wheels',
+        'Birth chart overlays',
+        'Wallet integrations',
+        'Gallery integrations',
+        'Public profiles',
+        'Share cards',
+        'Read-only ownership',
+        'Seasonal context'
+      ];
+
+      return (
+        <section ref={reveal} id="builders" className="sec builders reveal" aria-label="For Builders">
+          <div className="sec__head">
+            <span className="sec__no">№ 07</span>
+            <span className="line" />
+            <span className="sec__title">For Builders</span>
+          </div>
+
+          <h2 className="builders__statement">
+            Infrastructure<br/>
+            <span className="it">with a symbolic surface.</span>
+          </h2>
+
+          <p className="builders__copy">
+            Zodiacs are not only a collection of assets. They are a verified
+            symbolic layer that can extend into astrology products, wallets,
+            galleries, profiles, share cards, and read-only ownership
+            experiences.
+          </p>
+
+          <div className="builders__capabilities" aria-label="Builder capabilities">
+            {capabilities.map((capability, i) => (
+              <div className="builders__cap" key={capability}>
+                <span className="builders__cap-k">{String(i + 1).padStart(2, '0')}</span>
+                <span className="builders__cap-v">{capability}</span>
+              </div>
+            ))}
+          </div>
+
+          <a className="btn btn--primary builders__cta" href="/sdk/">
+            <span>Explore the SDK</span>
+            <span className="arr">→</span>
+          </a>
+        </section>
+      );
+    }
+
+    function BuiltWithZodiacsSection() {
+      const reveal = useReveal();
+      const examples = [
+        {
+          t: 'Astrology apps',
+          d: 'Use verified signs as a public layer beside charts, seasons, and symbolic profiles.'
+        },
+        {
+          t: 'Horoscope products',
+          d: 'Anchor seasonal and sign-aware experiences in the official registry.'
+        },
+        {
+          t: 'Wallet experiences',
+          d: 'Show native Solana holdings and official Base representations with clear provenance.'
+        },
+        {
+          t: 'Gallery experiences',
+          d: 'Arrange the Twelve as cultural assets, collections, shelves, and shareable rooms.'
+        },
+        {
+          t: 'Profile systems',
+          d: 'Turn public ownership into badges, wheel coverage, composition, and identity surfaces.'
+        },
+        {
+          t: 'Identity layers',
+          d: 'Give downstream interfaces a shared symbolic record to build around.'
+        },
+        {
+          t: 'Social moments',
+          d: 'Create Cosmic Receipts, seasonal cards, and lightweight public displays.'
+        },
+        {
+          t: 'AI astrology assistants',
+          d: 'Ground symbolic interfaces in verified facts instead of loose address lists.'
+        }
+      ];
+
+      return (
+        <section ref={reveal} id="built-with-zodiacs" className="sec built reveal" aria-label="Built With Zodiacs">
+          <div className="sec__head">
+            <span className="sec__no">№ 08</span>
+            <span className="line" />
+            <span className="sec__title">Built With Zodiacs</span>
+          </div>
+
+          <p className="built__intro">
+            The registry is the visible surface. Beneath it is a small ecosystem
+            layer for the products people already want to make around symbolic
+            identity.
+          </p>
+
+          <div className="built__grid">
+            {examples.map((example, i) => (
+              <article className="built__item" key={example.t}>
+                <span className="built__k">Use case {String(i + 1).padStart(2, '0')}</span>
+                <h3 className="built__title">{example.t}</h3>
+                <p className="built__copy">{example.d}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+      );
+    }
+
     function CatalogGrid({ active, setActive }) {
       const reveal = useReveal();
       return (
         <section ref={reveal} className="sec reveal" id="official-twelve" aria-label="The official twelve">
           <div className="sec__head">
-            <span className="sec__no">№ 07</span>
+            <span className="sec__no">№ 09</span>
             <span className="line" />
             <span className="sec__title">The Twelve</span>
           </div>
@@ -3779,7 +4065,7 @@
       return (
         <section ref={reveal} id="sdk" className="sec reveal" aria-label="SDK">
           <div className="sec__head">
-            <span className="sec__no">№ 08</span>
+            <span className="sec__no">№ 10</span>
             <span className="line" />
             <span className="sec__title">SDK</span>
           </div>
@@ -3801,6 +4087,11 @@
           <CodeBlock label="install" code="npm i @zodiacs/sdk" />
 
           <div className="res">
+            <a className="res__item" href="/sdk/">
+              <span className="res__k">Page</span>
+              <span className="res__v">Explore the SDK</span>
+              <span className="res__arr" aria-hidden="true">↗</span>
+            </a>
             <a className="res__item" href="https://www.npmjs.com/package/@zodiacs/sdk" rel="noopener noreferrer">
               <span className="res__k">npm</span>
               <span className="res__v">@zodiacs/sdk</span>
@@ -3832,7 +4123,7 @@
       return (
         <section ref={reveal} id="security" className="sec reveal" aria-label="Read-only by design">
           <div className="sec__head">
-            <span className="sec__no">№ 09</span>
+            <span className="sec__no">№ 11</span>
             <span className="line" />
             <span className="sec__title">Read-only by design</span>
           </div>
@@ -3872,7 +4163,7 @@
       return (
         <section ref={reveal} id="faq" className="sec reveal" aria-label="Questions">
           <div className="sec__head">
-            <span className="sec__no">№ 10</span>
+            <span className="sec__no">№ 12</span>
             <span className="line" />
             <span className="sec__title">Questions</span>
           </div>
@@ -3921,7 +4212,9 @@
           <div className="ftr__legal">
             <a href="#registry">Registry</a>
             <a href="#verify">Verify</a>
-              <a href="/registry/zodiacs.registry.json">Record</a>
+            <a href="#builders">Builders</a>
+            <a href="/sdk/">SDK</a>
+            <a href="/registry/zodiacs.registry.json">Record</a>
             <a href="#thesis">Thesis</a>
           </div>
             <div>Read-only</div>
@@ -3963,6 +4256,8 @@
             <ReferenceStrip sign={sign} animKey={activeTicker} />
             <Philosophy />
             <IdentityContextSection />
+            <ForBuildersSection />
+            <BuiltWithZodiacsSection />
             <CatalogGrid active={activeTicker} setActive={setActiveTicker} />
             <SdkSection />
             <SecuritySection />

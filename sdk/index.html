@@ -1,0 +1,572 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Zodiacs SDK · Official Zodiacs.org Interface</title>
+  <meta name="description" content="The official read-only interface to the Zodiacs.org registry: verification, native Solana origins, bridged Base representations, public ownership, and symbolic identity context." />
+  <link rel="canonical" href="https://zodiacs.org/sdk/" />
+  <meta property="og:title" content="Zodiacs SDK" />
+  <meta property="og:description" content="A read-only interface for the canonical Zodiacs.org registry and symbolic identity context." />
+  <meta property="og:image" content="https://zodiacs.org/assets/og/share.png" />
+  <meta property="og:url" content="https://zodiacs.org/sdk/" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://zodiacs.org/assets/og/share.png" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%2308090C'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' font-family='Cormorant Garamond, Georgia, serif' font-style='italic' font-size='42' fill='%23DEC07A'%3EZ%3C/text%3E%3C/svg%3E" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+    :root {
+      --bg: #07090d;
+      --surface: #0c0f15;
+      --surface-2: #11151c;
+      --ink: #f4efe3;
+      --ink-2: rgba(244,239,227,0.78);
+      --ink-dim: rgba(244,239,227,0.56);
+      --ink-mute: rgba(244,239,227,0.38);
+      --gold: #c9a961;
+      --gold-bright: #e2c87a;
+      --hair: rgba(201,169,97,0.14);
+      --hair-2: rgba(201,169,97,0.24);
+      --serif: "Cormorant Garamond", Georgia, serif;
+      --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+      --ease: cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    * { box-sizing: border-box; }
+    html { min-height: 100%; background: var(--bg); color: var(--ink); }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(120% 80% at 50% -10%, rgba(201,169,97,0.11), transparent 54%),
+        radial-gradient(85% 70% at 100% 16%, rgba(201,169,97,0.045), transparent 62%),
+        linear-gradient(180deg, #06080c 0%, #090b10 54%, #06080c 100%);
+      color: var(--ink);
+      text-rendering: geometricPrecision;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.4;
+      background-image:
+        linear-gradient(rgba(201,169,97,0.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(201,169,97,0.035) 1px, transparent 1px);
+      background-size: 52px 52px;
+      mask-image: radial-gradient(ellipse at 50% 18%, black, transparent 72%);
+    }
+
+    a { color: inherit; text-decoration: none; }
+    a:hover { color: var(--gold-bright); }
+
+    .shell {
+      width: min(100%, 460px);
+      min-height: 100vh;
+      margin: 0 auto;
+      background: rgba(7,9,13,0.82);
+      box-shadow: 0 0 0 1px var(--hair) inset;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .shell::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 50% 16%, rgba(201,169,97,0.07), transparent 32%),
+        linear-gradient(180deg, transparent, rgba(0,0,0,0.18));
+    }
+
+    .nav {
+      position: sticky;
+      top: 12px;
+      z-index: 2;
+      display: flex;
+      justify-content: center;
+      padding: 14px 16px 0;
+      pointer-events: none;
+    }
+
+    .nav__inner {
+      pointer-events: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      width: min(100%, 360px);
+      height: 48px;
+      padding: 0 6px 0 18px;
+      background: rgba(11,13,18,0.74);
+      backdrop-filter: saturate(160%) blur(18px);
+      -webkit-backdrop-filter: saturate(160%) blur(18px);
+      border: 1px solid var(--hair-2);
+      box-shadow:
+        inset 0 1px 0 rgba(222,192,122,0.10),
+        inset 0 -1px 0 rgba(0,0,0,0.4),
+        0 8px 28px -12px rgba(0,0,0,0.6);
+    }
+
+    .mark {
+      font-family: var(--serif);
+      font-size: 15px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .mark span { color: var(--gold); }
+
+    .nav__link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      height: 36px;
+      padding: 0 6px 0 14px;
+      border-left: 1px solid var(--hair-2);
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--ink-2);
+    }
+
+    .nav__chip {
+      display: inline-grid;
+      place-items: center;
+      width: 26px;
+      height: 26px;
+      border: 1px solid var(--hair-2);
+      color: var(--gold);
+      background: rgba(201,169,97,0.05);
+    }
+
+    main {
+      position: relative;
+      z-index: 1;
+      padding: 58px 20px 84px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 26px;
+      padding: 6px 12px 6px 8px;
+      border: 1px solid var(--hair-2);
+      border-radius: 999px;
+      background: rgba(201,169,97,0.05);
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #6fae7c;
+      box-shadow: 0 0 10px rgba(111,174,124,0.45);
+    }
+
+    h1, h2, h3, p { margin-top: 0; }
+
+    h1 {
+      max-width: 8.5ch;
+      margin-bottom: 22px;
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: clamp(54px, 17vw, 86px);
+      line-height: 0.91;
+      letter-spacing: 0;
+      text-wrap: balance;
+    }
+
+    h1 em, h2 em {
+      color: var(--gold-bright);
+      font-style: italic;
+      font-weight: 400;
+    }
+
+    .hero__copy {
+      max-width: 38ch;
+      margin-bottom: 28px;
+      font-family: var(--serif);
+      font-size: 18px;
+      line-height: 1.5;
+      color: var(--ink-2);
+      text-wrap: pretty;
+    }
+
+    .actions {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin: 0 0 58px;
+    }
+
+    .button {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 52px;
+      padding: 0 10px 0 18px;
+      border: 1px solid var(--hair-2);
+      background: rgba(201,169,97,0.04);
+      color: var(--gold-bright);
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      transition: border-color 280ms var(--ease), background 280ms var(--ease);
+    }
+
+    .button:hover {
+      border-color: var(--gold);
+      background: rgba(201,169,97,0.08);
+    }
+
+    .button span:last-child {
+      display: grid;
+      place-items: center;
+      width: 32px;
+      height: 32px;
+      border: 1px solid var(--hair-2);
+      color: var(--gold);
+    }
+
+    .section {
+      padding: 72px 0 0;
+    }
+
+    .section__head {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 26px;
+    }
+
+    .section__no,
+    .section__title {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .section__no { color: var(--ink-mute); }
+    .section__title { color: var(--gold); }
+    .section__head::before {
+      content: "";
+      flex: 1;
+      height: 1px;
+      order: 2;
+      background: var(--hair);
+    }
+    .section__title { order: 3; }
+
+    h2 {
+      margin-bottom: 22px;
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: clamp(34px, 9vw, 58px);
+      line-height: 0.96;
+      letter-spacing: 0;
+      text-wrap: balance;
+    }
+
+    .lede {
+      max-width: 42ch;
+      margin-bottom: 26px;
+      font-family: var(--serif);
+      font-size: 16.5px;
+      line-height: 1.56;
+      color: var(--ink-2);
+      text-wrap: pretty;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1px;
+      border: 1px solid var(--hair);
+      background: var(--hair);
+    }
+
+    @media (min-width: 640px) {
+      .grid--two { grid-template-columns: repeat(2, 1fr); }
+      .grid--three { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    .card {
+      min-height: 148px;
+      padding: 18px 16px 20px;
+      background:
+        radial-gradient(80% 90% at 50% 0%, rgba(201,169,97,0.06), transparent 70%),
+        var(--bg);
+    }
+
+    .card__k {
+      display: block;
+      margin-bottom: 34px;
+      font-family: var(--mono);
+      font-size: 8.5px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--ink-mute);
+    }
+
+    .card__title {
+      margin-bottom: 8px;
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 21px;
+      line-height: 1;
+      color: var(--gold-bright);
+    }
+
+    .card__copy {
+      margin: 0;
+      font-family: var(--serif);
+      font-size: 14px;
+      line-height: 1.52;
+      color: var(--ink-2);
+    }
+
+    .code {
+      margin: 0 0 14px;
+      border: 1px solid var(--hair-2);
+      background: #0a0c11;
+      overflow: hidden;
+    }
+
+    .code__label {
+      padding: 9px 14px;
+      border-bottom: 1px solid var(--hair);
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--ink-mute);
+    }
+
+    pre {
+      margin: 0;
+      padding: 16px;
+      overflow-x: auto;
+      font-family: var(--mono);
+      font-size: 12px;
+      line-height: 1.7;
+      color: var(--ink);
+    }
+
+    .resource {
+      display: grid;
+      gap: 1px;
+      margin-top: 16px;
+      border: 1px solid var(--hair);
+      background: var(--hair);
+    }
+
+    .resource a {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      padding: 16px;
+      background: var(--bg);
+    }
+
+    .resource strong {
+      flex: 0 0 74px;
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--ink-mute);
+      font-weight: 400;
+    }
+
+    .resource span {
+      font-family: var(--serif);
+      font-size: 15px;
+      color: var(--ink);
+    }
+
+    .note {
+      margin-top: 18px;
+      padding: 18px 16px;
+      border: 1px solid var(--hair-2);
+      background:
+        radial-gradient(80% 120% at 50% 0%, rgba(201,169,97,0.08), transparent 65%),
+        var(--surface);
+      font-family: var(--serif);
+      font-size: 14.5px;
+      line-height: 1.54;
+      color: var(--ink-2);
+    }
+
+    footer {
+      padding-top: 78px;
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ink-mute);
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <nav class="nav" aria-label="Primary">
+      <div class="nav__inner">
+        <a class="mark" href="/">Zodiacs<span>·</span>org</a>
+        <a class="nav__link" href="/">
+          <span>Registry</span>
+          <span class="nav__chip">↗</span>
+        </a>
+      </div>
+    </nav>
+
+    <main>
+      <section aria-labelledby="sdk-title">
+        <div class="eyebrow">Official interface</div>
+        <h1 id="sdk-title">Zodiacs <em>SDK.</em></h1>
+        <p class="hero__copy">
+          A read-only interface for the canonical Zodiacs.org registry: native
+          Solana origins, official Base representations, public ownership, and
+          computed symbolic context.
+        </p>
+        <div class="actions">
+          <a class="button" href="https://github.com/ZodiacsOfficial/sdk" rel="noopener noreferrer">
+            <span>GitHub</span>
+            <span>↗</span>
+          </a>
+          <a class="button" href="https://www.npmjs.com/package/@zodiacs/sdk" rel="noopener noreferrer">
+            <span>@zodiacs/sdk</span>
+            <span>↗</span>
+          </a>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="intro">
+        <div class="section__head">
+          <span class="section__no">№ 01</span>
+          <span class="section__title">Introduction</span>
+        </div>
+        <h2 id="intro">One registry. <em>Many surfaces.</em></h2>
+        <p class="lede">
+          The SDK gives apps a stable way to recognize the Twelve, understand
+          where each representation belongs, read public ownership, and shape
+          that state into identity surfaces.
+        </p>
+        <div class="note">
+          The native Zodiacs are Solana SPL assets. Base ERC-20 addresses are
+          official bridged representations that point back to their Solana
+          origins.
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="capabilities">
+        <div class="section__head">
+          <span class="section__no">№ 02</span>
+          <span class="section__title">Capabilities</span>
+        </div>
+        <h2 id="capabilities">Verified facts for symbolic products.</h2>
+        <div class="grid grid--two">
+          <article class="card">
+            <span class="card__k">Verify</span>
+            <h3 class="card__title">Official addresses</h3>
+            <p class="card__copy">Check whether a Solana mint or Base address belongs to the official registry.</p>
+          </article>
+          <article class="card">
+            <span class="card__k">Map</span>
+            <h3 class="card__title">Native and bridged</h3>
+            <p class="card__copy">Connect each Base representation to the original Solana asset it reflects.</p>
+          </article>
+          <article class="card">
+            <span class="card__k">Read</span>
+            <h3 class="card__title">Public ownership</h3>
+            <p class="card__copy">Read wallet-visible holdings without private keys, custody, signing, or transactions.</p>
+          </article>
+          <article class="card">
+            <span class="card__k">Compose</span>
+            <h3 class="card__title">Identity context</h3>
+            <p class="card__copy">Compute held signs, wheel coverage, element mix, modality mix, and seasonal context.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="applications">
+        <div class="section__head">
+          <span class="section__no">№ 03</span>
+          <span class="section__title">Example applications</span>
+        </div>
+        <h2 id="applications">Built quietly into many kinds of experience.</h2>
+        <p class="lede">
+          The SDK is app-neutral infrastructure. It can support astrology
+          interfaces, horoscope products, wallet views, galleries, profiles,
+          identity layers, share cards, public shelves, Cosmic Receipts, Zodiac
+          Wheels, and AI astrology assistants.
+        </p>
+      </section>
+
+      <section class="section" aria-labelledby="quick-start">
+        <div class="section__head">
+          <span class="section__no">№ 04</span>
+          <span class="section__title">Quick start</span>
+        </div>
+        <h2 id="quick-start">A small install surface.</h2>
+        <p class="lede">
+          Use the package when a product needs the official registry, address
+          verification, read-only ownership, or display-ready symbolic context.
+        </p>
+        <div class="code" aria-label="Install command">
+          <div class="code__label">install</div>
+          <pre><code>npm i @zodiacs/sdk</code></pre>
+        </div>
+        <div class="resource">
+          <a href="https://github.com/ZodiacsOfficial/sdk" rel="noopener noreferrer">
+            <strong>GitHub</strong>
+            <span>ZodiacsOfficial/sdk</span>
+          </a>
+          <a href="/registry/zodiacs.registry.json">
+            <strong>Registry</strong>
+            <span>Machine-readable public record</span>
+          </a>
+          <a href="https://www.npmjs.com/package/@zodiacs/sdk" rel="noopener noreferrer">
+            <strong>npm</strong>
+            <span>@zodiacs/sdk</span>
+          </a>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="posture">
+        <div class="section__head">
+          <span class="section__no">№ 05</span>
+          <span class="section__title">Posture</span>
+        </div>
+        <h2 id="posture">Read-only by design.</h2>
+        <p class="lede">
+          The SDK is made for recognition, verification, metadata, public reads,
+          and identity context. It does not request private keys, provide
+          custody, sign messages, submit transactions, provide approval helpers,
+          or move assets.
+        </p>
+      </section>
+
+      <footer>
+        Zodiacs.org · Official registry · MMXXVI
+      </footer>
+    </main>
+  </div>
+</body>
+</html>
