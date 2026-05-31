@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Zodiacs SDK · Official Zodiacs.org Interface</title>
   <meta name="description" content="The official read-only TypeScript interface to the Zodiacs.org registry: address verification, native Solana origins, bridged Base representations, public ownership reads, and symbolic identity context." />
   <link rel="canonical" href="https://zodiacs.org/sdk/" />
@@ -13,9 +13,13 @@
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:image" content="https://zodiacs.org/assets/og/share.png" />
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%2308090C'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' font-family='Cormorant Garamond, Georgia, serif' font-style='italic' font-size='42' fill='%23DEC07A'%3EZ%3C/text%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet"
+  />
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=IBM+Plex+Mono:wght@400;500&display=swap');
-
     :root {
       --bg: #07090d;
       --surface: #0c0f15;
@@ -29,7 +33,7 @@
       --hair: rgba(201,169,97,0.14);
       --hair-2: rgba(201,169,97,0.24);
       --serif: "Cormorant Garamond", Georgia, serif;
-      --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+      --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
       --ease: cubic-bezier(0.23, 1, 0.32, 1);
     }
 
@@ -97,7 +101,7 @@
       z-index: 2;
       display: flex;
       justify-content: center;
-      padding: 14px 16px 0;
+      padding: max(14px, calc(env(safe-area-inset-top) + 2px)) 16px 0;
       pointer-events: none;
     }
 
@@ -183,7 +187,19 @@
       height: 6px;
       border-radius: 50%;
       background: #6fae7c;
-      box-shadow: 0 0 10px rgba(111,174,124,0.45);
+      flex: 0 0 auto;
+      box-shadow: 0 0 0 0 rgba(111,174,124,0.55);
+      animation: live-pulse 2.4s cubic-bezier(0.32, 0.72, 0, 1) infinite;
+    }
+    /* Matches the main page hero pulse — box-shadow only, never
+       transform, so the dot stays still while the ring expands. */
+    @keyframes live-pulse {
+      0%   { box-shadow: 0 0 0 0   rgba(111, 174, 124, 0.55), 0 0 4px 0 rgba(111, 174, 124, 0.0); }
+      55%  { box-shadow: 0 0 0 7px rgba(111, 174, 124, 0.0),  0 0 10px 2px rgba(111, 174, 124, 0.42); }
+      100% { box-shadow: 0 0 0 0   rgba(111, 174, 124, 0.0),  0 0 4px 0 rgba(111, 174, 124, 0.0); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .eyebrow::before { animation: none; box-shadow: 0 0 6px rgba(111, 174, 124, 0.55); }
     }
 
     h1, h2, h3, p { margin-top: 0; }
@@ -408,12 +424,27 @@
     }
 
     .card {
+      position: relative;
       min-height: 148px;
       padding: 18px 16px 20px;
       background:
         radial-gradient(80% 90% at 50% 0%, rgba(201,169,97,0.06), transparent 70%),
         var(--bg);
+      transition: background 320ms var(--ease);
     }
+    .card::after {
+      content: "";
+      position: absolute; inset: 0;
+      box-shadow: inset 0 0 0 1px transparent;
+      pointer-events: none;
+      transition: box-shadow 320ms var(--ease);
+    }
+    .card:hover {
+      background:
+        radial-gradient(80% 90% at 50% 0%, rgba(201,169,97,0.10), transparent 72%),
+        var(--bg);
+    }
+    .card:hover::after { box-shadow: inset 0 0 0 1px rgba(201,169,97,0.32); }
 
     .card__k {
       display: block;
@@ -952,6 +983,12 @@
       font-size: 10.5px;
       line-height: 1;
       white-space: nowrap;
+      transition: border-color 240ms var(--ease), color 240ms var(--ease), background 240ms var(--ease);
+    }
+    .api__v code:hover {
+      border-color: rgba(201,169,97,0.42);
+      color: var(--gold-bright);
+      background: rgba(201,169,97,0.08);
     }
 
     @media (min-width: 640px) {
@@ -1024,8 +1061,16 @@
       color: var(--ink-2);
     }
 
+    /* Cross-link back to the main page — sits above the footer, styled
+       like the hero's button row so /sdk/ resolves cleanly back to /. */
+    .back-to-registry {
+      margin-top: 64px;
+    }
+
     footer {
-      padding-top: 78px;
+      padding-top: 36px;
+      border-top: 1px solid var(--hair);
+      margin-top: 36px;
       font-family: var(--mono);
       font-size: 9px;
       letter-spacing: 0.2em;
@@ -1661,6 +1706,11 @@ console.log(context.wheelCoverage);</code></pre>
           <span>No transactions</span>
         </div>
       </section>
+
+      <a class="button back-to-registry" href="/">
+        <span>Back to the registry</span>
+        <span>↗</span>
+      </a>
 
       <footer>
         Zodiacs.org · Official registry · MMXXVI
