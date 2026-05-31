@@ -67,6 +67,10 @@ Avoid:
 - overbroad claims about astrology or zodiac symbols
 - language implying custody, transaction execution, or recommendations
 
+Astrofolio may be referenced subtly as a related experience around personal
+Zodiac shelves and symbolic ownership. Do not frame Astrofolio as the parent
+brand, source of truth, or required app for the registry or SDK.
+
 ## Current Page Structure
 
 Main page:
