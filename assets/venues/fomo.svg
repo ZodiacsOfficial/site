@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28" role="img" aria-label="fomo">
+  <circle cx="14" cy="14" r="10.5" fill="none" stroke="#dec07a" stroke-width="1.8"/>
+  <circle cx="14" cy="14" r="3" fill="#dec07a"/>
+  <path d="M14 3.5v5M24.5 14h-5M14 24.5v-5M3.5 14h5" stroke="#dec07a" stroke-width="1.8" stroke-linecap="round"/>
+</svg>

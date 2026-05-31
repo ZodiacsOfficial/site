@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28" role="img" aria-label="Binance Wallet">
+  <path d="M14 3.5 19 8.5 14 13.5 9 8.5 14 3.5Z" fill="#dec07a"/>
+  <path d="M5 12.5 10 17.5 5 22.5 0 17.5 5 12.5Z" fill="#dec07a" opacity=".72" transform="translate(3 -3)"/>
+  <path d="M23 12.5 28 17.5 23 22.5 18 17.5 23 12.5Z" fill="#dec07a" opacity=".72" transform="translate(-3 -3)"/>
+  <path d="M14 14.5 19 19.5 14 24.5 9 19.5 14 14.5Z" fill="#dec07a"/>
+</svg>
