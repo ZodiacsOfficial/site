@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Zodiacs SDK · Official Zodiacs.org Interface</title>
   <meta name="description" content="The official read-only TypeScript interface to the Zodiacs.org registry: address verification, native Solana origins, bridged Base representations, public ownership reads, and symbolic identity context." />
   <link rel="canonical" href="https://zodiacs.org/sdk/" />
@@ -13,9 +13,13 @@
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:image" content="https://zodiacs.org/assets/og/share.png" />
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%2308090C'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' font-family='Cormorant Garamond, Georgia, serif' font-style='italic' font-size='42' fill='%23DEC07A'%3EZ%3C/text%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet"
+  />
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=IBM+Plex+Mono:wght@400;500&display=swap');
-
     :root {
       --bg: #07090d;
       --surface: #0c0f15;
@@ -29,7 +33,7 @@
       --hair: rgba(201,169,97,0.14);
       --hair-2: rgba(201,169,97,0.24);
       --serif: "Cormorant Garamond", Georgia, serif;
-      --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+      --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
       --ease: cubic-bezier(0.23, 1, 0.32, 1);
     }
 
