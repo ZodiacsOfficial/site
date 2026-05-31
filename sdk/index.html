@@ -4,10 +4,10 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Zodiacs SDK · Official Zodiacs.org Interface</title>
-  <meta name="description" content="The official read-only interface to the Zodiacs.org registry: verification, native Solana origins, bridged Base representations, public ownership, and symbolic identity context." />
+  <meta name="description" content="The official read-only TypeScript interface to the Zodiacs.org registry: address verification, native Solana origins, bridged Base representations, public ownership reads, and symbolic identity context." />
   <link rel="canonical" href="https://zodiacs.org/sdk/" />
   <meta property="og:title" content="Zodiacs SDK" />
-  <meta property="og:description" content="A read-only interface for the canonical Zodiacs.org registry and symbolic identity context." />
+  <meta property="og:description" content="A read-only interface for the canonical Zodiacs.org registry, public ownership, and symbolic identity context." />
   <meta property="og:image" content="https://zodiacs.org/assets/og/share.png" />
   <meta property="og:url" content="https://zodiacs.org/sdk/" />
   <meta name="twitter:card" content="summary_large_image" />
@@ -34,7 +34,7 @@
     }
 
     * { box-sizing: border-box; }
-    html { min-height: 100%; background: var(--bg); color: var(--ink); }
+    html { min-height: 100%; background: var(--bg); color: var(--ink); scroll-behavior: smooth; }
     body {
       margin: 0;
       min-height: 100vh;
@@ -99,8 +99,8 @@
       align-items: center;
       justify-content: space-between;
       gap: 14px;
-      width: min(100%, 360px);
-      height: 48px;
+      width: min(100%, 380px);
+      min-height: 48px;
       padding: 0 6px 0 18px;
       background: rgba(11,13,18,0.74);
       backdrop-filter: saturate(160%) blur(18px);
@@ -126,7 +126,7 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      height: 36px;
+      min-height: 36px;
       padding: 0 6px 0 14px;
       border-left: 1px solid var(--hair-2);
       font-family: var(--mono);
@@ -206,6 +206,54 @@
       text-wrap: pretty;
     }
 
+    .hero__art {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      align-items: end;
+      gap: 0;
+      height: 154px;
+      margin: 0 0 22px;
+      border-top: 1px solid var(--hair);
+      border-bottom: 1px solid var(--hair);
+      background:
+        radial-gradient(80% 120% at 50% 42%, rgba(201,169,97,0.10), transparent 68%),
+        linear-gradient(180deg, transparent, rgba(0,0,0,0.24));
+      overflow: hidden;
+    }
+
+    .hero__art::after {
+      content: "";
+      position: absolute;
+      left: 10%;
+      right: 10%;
+      bottom: 23px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(226,200,122,0.46), transparent);
+    }
+
+    .hero__figure {
+      position: relative;
+      z-index: 1;
+      width: 116%;
+      max-height: 150px;
+      object-fit: contain;
+      object-position: center bottom;
+      filter: drop-shadow(0 26px 26px rgba(0,0,0,0.62));
+      opacity: 0.84;
+      transform: translateY(6px);
+    }
+
+    .hero__figure:nth-child(2) {
+      width: 128%;
+      max-height: 164px;
+      opacity: 0.96;
+      transform: translate(-9%, 4px);
+    }
+
+    .hero__figure:first-child { transform: translate(7%, 8px); opacity: 0.62; }
+    .hero__figure:last-child { transform: translate(-12%, 10px); opacity: 0.58; }
+
     .actions {
       display: grid;
       grid-template-columns: 1fr;
@@ -245,6 +293,7 @@
 
     .section {
       padding: 72px 0 0;
+      scroll-margin-top: 90px;
     }
 
     .section__head {
@@ -342,11 +391,49 @@
       color: var(--ink-2);
     }
 
-    .code {
-      margin: 0 0 14px;
+    .examples {
+      display: grid;
+      gap: 18px;
+    }
+
+    .example {
       border: 1px solid var(--hair-2);
+      background:
+        radial-gradient(70% 120% at 50% 0%, rgba(201,169,97,0.06), transparent 70%),
+        rgba(7,9,13,0.76);
+    }
+
+    .example__intro {
+      padding: 17px 16px 0;
+    }
+
+    .example__title {
+      margin: 0 0 8px;
+      font-family: var(--serif);
+      font-size: 22px;
+      font-style: italic;
+      font-weight: 400;
+      color: var(--gold-bright);
+    }
+
+    .example__copy {
+      margin: 0 0 15px;
+      font-family: var(--serif);
+      font-size: 14.5px;
+      line-height: 1.5;
+      color: var(--ink-2);
+    }
+
+    .code {
+      margin: 0;
+      border-top: 1px solid var(--hair);
       background: #0a0c11;
       overflow: hidden;
+    }
+
+    .code--install {
+      margin-bottom: 14px;
+      border: 1px solid var(--hair-2);
     }
 
     .code__label {
@@ -364,9 +451,173 @@
       padding: 16px;
       overflow-x: auto;
       font-family: var(--mono);
-      font-size: 12px;
-      line-height: 1.7;
+      font-size: 11.5px;
+      line-height: 1.68;
       color: var(--ink);
+      scrollbar-color: rgba(201,169,97,0.28) rgba(0,0,0,0.2);
+    }
+
+    code { font-family: var(--mono); }
+
+    .receipt {
+      border: 1px solid var(--hair-2);
+      background:
+        radial-gradient(88% 80% at 50% 0%, rgba(201,169,97,0.10), transparent 70%),
+        linear-gradient(180deg, rgba(17,21,28,0.92), rgba(7,9,13,0.92));
+      overflow: hidden;
+    }
+
+    .receipt__stage {
+      position: relative;
+      min-height: 210px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      align-items: end;
+      padding: 28px 10px 18px;
+      border-bottom: 1px solid var(--hair);
+    }
+
+    .receipt__stage::before {
+      content: "";
+      position: absolute;
+      inset: 30px 14px 24px;
+      border: 1px solid rgba(201,169,97,0.10);
+      opacity: 0.8;
+    }
+
+    .receipt__figure {
+      position: relative;
+      z-index: 1;
+      width: 126%;
+      max-height: 160px;
+      object-fit: contain;
+      object-position: center bottom;
+      filter: drop-shadow(0 24px 24px rgba(0,0,0,0.64));
+      opacity: 0.9;
+    }
+
+    .receipt__figure:nth-child(1) { transform: translateX(8%); opacity: 0.74; }
+    .receipt__figure:nth-child(2) { transform: translateX(-5%); }
+    .receipt__figure:nth-child(3) { transform: translateX(-11%); opacity: 0.82; }
+    .receipt__figure:nth-child(4) { transform: translateX(-16%); opacity: 0.7; }
+
+    .receipt__body {
+      padding: 17px 16px 18px;
+    }
+
+    .receipt__label {
+      margin-bottom: 12px;
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--ink-mute);
+    }
+
+    .receipt__title {
+      margin-bottom: 16px;
+      font-family: var(--serif);
+      font-size: 25px;
+      line-height: 1;
+      color: var(--gold-bright);
+    }
+
+    .receipt__facts {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1px;
+      border: 1px solid var(--hair);
+      background: var(--hair);
+    }
+
+    .fact {
+      min-height: 82px;
+      padding: 12px;
+      background: rgba(7,9,13,0.9);
+    }
+
+    .fact__k {
+      display: block;
+      margin-bottom: 10px;
+      font-family: var(--mono);
+      font-size: 8px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ink-mute);
+    }
+
+    .fact__v {
+      display: block;
+      font-family: var(--serif);
+      font-size: 19px;
+      line-height: 1.08;
+      color: var(--ink);
+    }
+
+    .mini-wheel {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 7px;
+      margin-top: 16px;
+    }
+
+    .mini-wheel span {
+      aspect-ratio: 1;
+      border: 1px solid var(--hair);
+      background: rgba(201,169,97,0.03);
+    }
+
+    .mini-wheel .held {
+      border-color: rgba(226,200,122,0.7);
+      background: rgba(201,169,97,0.18);
+      box-shadow: inset 0 0 0 1px rgba(244,239,227,0.05);
+    }
+
+    .api {
+      border: 1px solid var(--hair);
+      background: var(--hair);
+    }
+
+    .api__row {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      padding: 16px;
+      background: var(--bg);
+    }
+
+    .api__row + .api__row { border-top: 1px solid var(--hair); }
+
+    .api__k {
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ink-mute);
+    }
+
+    .api__v {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .api__v code {
+      display: inline-flex;
+      padding: 7px 8px;
+      border: 1px solid rgba(201,169,97,0.16);
+      background: rgba(201,169,97,0.035);
+      color: var(--ink-2);
+      font-size: 10.5px;
+      line-height: 1;
+      white-space: nowrap;
+    }
+
+    @media (min-width: 640px) {
+      .api__row {
+        grid-template-columns: 112px 1fr;
+        align-items: start;
+      }
     }
 
     .resource {
@@ -414,6 +665,24 @@
       color: var(--ink-2);
     }
 
+    .posture-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1px;
+      border: 1px solid var(--hair);
+      background: var(--hair);
+    }
+
+    .posture-list span {
+      padding: 13px 12px;
+      background: rgba(7,9,13,0.88);
+      font-family: var(--mono);
+      font-size: 8.5px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--ink-2);
+    }
+
     footer {
       padding-top: 78px;
       font-family: var(--mono);
@@ -441,17 +710,22 @@
         <div class="eyebrow">Official interface</div>
         <h1 id="sdk-title">Zodiacs <em>SDK.</em></h1>
         <p class="hero__copy">
-          A read-only interface for the canonical Zodiacs.org registry: native
-          Solana origins, official Base representations, public ownership, and
-          computed symbolic context.
+          A read-only TypeScript interface for the canonical Zodiacs.org
+          registry: official addresses, native Solana origins, bridged Base
+          representations, public ownership, and symbolic identity context.
         </p>
+        <div class="hero__art" aria-label="Zodiacs artwork">
+          <img class="hero__figure" src="/assets/nuggets/thumb/aries.png" alt="Aries figure" />
+          <img class="hero__figure" src="/assets/nuggets/thumb/leo.png" alt="Leo figure" />
+          <img class="hero__figure" src="/assets/nuggets/thumb/pisces.png" alt="Pisces figure" />
+        </div>
         <div class="actions">
+          <a class="button" href="#examples">
+            <span>View examples</span>
+            <span>↓</span>
+          </a>
           <a class="button" href="https://github.com/ZodiacsOfficial/sdk" rel="noopener noreferrer">
             <span>GitHub</span>
-            <span>↗</span>
-          </a>
-          <a class="button" href="https://www.npmjs.com/package/@zodiacs/sdk" rel="noopener noreferrer">
-            <span>@zodiacs/sdk</span>
             <span>↗</span>
           </a>
         </div>
@@ -469,7 +743,7 @@
           that state into identity surfaces.
         </p>
         <div class="note">
-          The native Zodiacs are Solana SPL assets. Base ERC-20 addresses are
+          Native Zodiacs are Solana SPL assets. Base ERC-20 addresses are
           official bridged representations that point back to their Solana
           origins.
         </div>
@@ -505,10 +779,226 @@
         </div>
       </section>
 
-      <section class="section" aria-labelledby="applications">
+      <section class="section" id="examples" aria-labelledby="examples-title">
         <div class="section__head">
           <span class="section__no">№ 03</span>
-          <span class="section__title">Example applications</span>
+          <span class="section__title">Examples</span>
+        </div>
+        <h2 id="examples-title">Four common integrations.</h2>
+        <p class="lede">
+          These are the core paths most apps need: verify an address, show
+          provenance, read public holdings, and compute display-ready context.
+        </p>
+        <div class="examples">
+          <article class="example">
+            <div class="example__intro">
+              <h3 class="example__title">Verify an official address</h3>
+              <p class="example__copy">Resolve a Solana mint or Base address to its sign, chain, and representation type.</p>
+            </div>
+            <div class="code" aria-label="Verify address example">
+              <div class="code__label">verify.ts</div>
+              <pre><code>import { getRepresentationByAddress } from "@zodiacs/sdk";
+
+const representation = getRepresentationByAddress(
+  "0x3ffB5282F5891Dd8c813E64059EdB0607537eC91"
+);
+
+console.log(representation?.sign);  // "aries"
+console.log(representation?.chain); // "base"
+console.log(representation?.kind);  // "bridged"</code></pre>
+            </div>
+          </article>
+
+          <article class="example">
+            <div class="example__intro">
+              <h3 class="example__title">Map Base back to Solana</h3>
+              <p class="example__copy">Show that a Base representation is official while keeping the Solana origin visible.</p>
+            </div>
+            <div class="code" aria-label="Native counterpart example">
+              <div class="code__label">provenance.ts</div>
+              <pre><code>import {
+  getBaseZodiacRepresentation,
+  getNativeCounterpart
+} from "@zodiacs/sdk";
+
+const baseAries = getBaseZodiacRepresentation("aries");
+const origin = getNativeCounterpart(baseAries.address);
+
+console.log(origin?.chain);   // "solana"
+console.log(origin?.kind);    // "native"
+console.log(origin?.address); // Solana SPL mint</code></pre>
+            </div>
+          </article>
+
+          <article class="example">
+            <div class="example__intro">
+              <h3 class="example__title">Read public ownership</h3>
+              <p class="example__copy">Use read-only clients to inspect public balances on Solana and Base.</p>
+            </div>
+            <div class="code" aria-label="Read ownership example">
+              <div class="code__label">ownership.ts</div>
+              <pre><code>import { Connection, PublicKey } from "@solana/web3.js";
+import { createPublicClient, http } from "viem";
+import { base } from "viem/chains";
+import {
+  getBaseZodiacsOwnership,
+  getSolanaZodiacsOwnership
+} from "@zodiacs/sdk";
+
+const connection = new Connection("https://api.mainnet-beta.solana.com");
+const solanaOwner = new PublicKey("...");
+
+const solana = await getSolanaZodiacsOwnership(connection, solanaOwner);
+
+const publicClient = createPublicClient({
+  chain: base,
+  transport: http()
+});
+const baseOwnership = await getBaseZodiacsOwnership(
+  publicClient,
+  "0x..."
+);
+
+console.log(solana.heldSigns);
+console.log(baseOwnership.heldSigns);</code></pre>
+            </div>
+          </article>
+
+          <article class="example">
+            <div class="example__intro">
+              <h3 class="example__title">Compute identity context</h3>
+              <p class="example__copy">Turn ownership into facts a profile, shelf, receipt, or wheel can render.</p>
+            </div>
+            <div class="code" aria-label="Identity context example">
+              <div class="code__label">context.ts</div>
+              <pre><code>import { getZodiacIdentityContext } from "@zodiacs/sdk";
+
+const context = getZodiacIdentityContext(ownership, {
+  sunSign: "leo"
+});
+
+console.log(context.heldSigns);
+console.log(context.elementComposition);
+console.log(context.currentSeasonHeld);
+console.log(context.wheelCoverage);</code></pre>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="receipt-title">
+        <div class="section__head">
+          <span class="section__no">№ 04</span>
+          <span class="section__title">Identity context</span>
+        </div>
+        <h2 id="receipt-title">Display-ready facts, not horoscopes.</h2>
+        <p class="lede">
+          The SDK computes symbolic context from verified public ownership. Apps
+          decide how to present that context; the SDK keeps the source data
+          factual and repeatable.
+        </p>
+        <div class="receipt" aria-label="Sample identity context">
+          <div class="receipt__stage">
+            <img class="receipt__figure" src="/assets/nuggets/thumb/aries.png" alt="Aries figure" />
+            <img class="receipt__figure" src="/assets/nuggets/thumb/gemini.png" alt="Gemini figure" />
+            <img class="receipt__figure" src="/assets/nuggets/thumb/leo.png" alt="Leo figure" />
+            <img class="receipt__figure" src="/assets/nuggets/thumb/pisces.png" alt="Pisces figure" />
+          </div>
+          <div class="receipt__body">
+            <div class="receipt__label">Sample Cosmic Receipt</div>
+            <div class="receipt__title">A public Zodiac shelf.</div>
+            <div class="receipt__facts">
+              <div class="fact">
+                <span class="fact__k">Held signs</span>
+                <span class="fact__v">4 of 12</span>
+              </div>
+              <div class="fact">
+                <span class="fact__k">Wheel coverage</span>
+                <span class="fact__v">33.33%</span>
+              </div>
+              <div class="fact">
+                <span class="fact__k">Element mix</span>
+                <span class="fact__v">Fire · Air · Water</span>
+              </div>
+              <div class="fact">
+                <span class="fact__k">Season</span>
+                <span class="fact__v">Represented</span>
+              </div>
+              <div class="fact">
+                <span class="fact__k">Native</span>
+                <span class="fact__v">2 Solana</span>
+              </div>
+              <div class="fact">
+                <span class="fact__k">Bridged</span>
+                <span class="fact__v">2 Base</span>
+              </div>
+            </div>
+            <div class="mini-wheel" aria-label="Wheel coverage sample">
+              <span class="held"></span><span></span><span class="held"></span><span></span><span class="held"></span><span></span>
+              <span></span><span></span><span></span><span></span><span></span><span class="held"></span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="api-title">
+        <div class="section__head">
+          <span class="section__no">№ 05</span>
+          <span class="section__title">Core API</span>
+        </div>
+        <h2 id="api-title">The useful surfaces at a glance.</h2>
+        <p class="lede">
+          The package is organized around registry facts, representation
+          provenance, public reads, and identity composition.
+        </p>
+        <div class="api" aria-label="Core API reference">
+          <div class="api__row">
+            <div class="api__k">Registry</div>
+            <div class="api__v">
+              <code>getZodiacsRegistry</code>
+              <code>getZodiacAsset</code>
+              <code>getAllZodiacAssets</code>
+            </div>
+          </div>
+          <div class="api__row">
+            <div class="api__k">Verify</div>
+            <div class="api__v">
+              <code>isOfficialZodiacAddress</code>
+              <code>getRepresentationByAddress</code>
+              <code>assertOfficialZodiacAddress</code>
+            </div>
+          </div>
+          <div class="api__row">
+            <div class="api__k">Map</div>
+            <div class="api__v">
+              <code>getNativeCounterpart</code>
+              <code>getBaseZodiacRepresentation</code>
+              <code>getSolanaZodiacRepresentation</code>
+            </div>
+          </div>
+          <div class="api__row">
+            <div class="api__k">Read</div>
+            <div class="api__v">
+              <code>getSolanaZodiacsOwnership</code>
+              <code>getBaseZodiacsOwnership</code>
+              <code>getCrossChainZodiacsOwnership</code>
+            </div>
+          </div>
+          <div class="api__row">
+            <div class="api__k">Context</div>
+            <div class="api__v">
+              <code>getZodiacIdentityContext</code>
+              <code>getCosmicReceiptData</code>
+              <code>getCurrentZodiacSeason</code>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="applications">
+        <div class="section__head">
+          <span class="section__no">№ 06</span>
+          <span class="section__title">Applications</span>
         </div>
         <h2 id="applications">Built quietly into many kinds of experience.</h2>
         <p class="lede">
@@ -519,17 +1009,17 @@
         </p>
       </section>
 
-      <section class="section" aria-labelledby="quick-start">
+      <section class="section" id="quick-start" aria-labelledby="quick-start-title">
         <div class="section__head">
-          <span class="section__no">№ 04</span>
+          <span class="section__no">№ 07</span>
           <span class="section__title">Quick start</span>
         </div>
-        <h2 id="quick-start">A small install surface.</h2>
+        <h2 id="quick-start-title">A small install surface.</h2>
         <p class="lede">
           Use the package when a product needs the official registry, address
           verification, read-only ownership, or display-ready symbolic context.
         </p>
-        <div class="code" aria-label="Install command">
+        <div class="code code--install" aria-label="Install command">
           <div class="code__label">install</div>
           <pre><code>npm i @zodiacs/sdk</code></pre>
         </div>
@@ -551,7 +1041,7 @@
 
       <section class="section" aria-labelledby="posture">
         <div class="section__head">
-          <span class="section__no">№ 05</span>
+          <span class="section__no">№ 08</span>
           <span class="section__title">Posture</span>
         </div>
         <h2 id="posture">Read-only by design.</h2>
@@ -561,6 +1051,14 @@
           custody, sign messages, submit transactions, provide approval helpers,
           or move assets.
         </p>
+        <div class="posture-list" aria-label="Read-only posture">
+          <span>No private keys</span>
+          <span>No custody</span>
+          <span>No signing</span>
+          <span>No swaps</span>
+          <span>No approvals</span>
+          <span>No transactions</span>
+        </div>
       </section>
 
       <footer>
