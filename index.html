@@ -1545,67 +1545,6 @@
       padding: 15px 16px 16px;
     }
 
-    /* ── Market data strip ─────────────────────────────────────── */
-
-    .mkt {
-      border: 1px solid var(--hair-2);
-      background: var(--surface);
-      padding: 18px 4px 6px;
-    }
-    .mkt__head {
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 0 16px 14px;
-      border-bottom: 1px solid var(--hair);
-    }
-    .mkt__head .pulse {
-      display: inline-flex; align-items: center; gap: 8px;
-      font-family: var(--mono); font-size: 10px;
-      letter-spacing: 0.22em; color: var(--ink-dim);
-      text-transform: uppercase;
-    }
-    .pulse .dot-live {
-      width: 6px; height: 6px; border-radius: 50%;
-      background: var(--gold-bright);
-      box-shadow: 0 0 8px var(--gold);
-      animation: pulse 2.6s ease-in-out infinite;
-    }
-    @keyframes pulse {
-      0%, 100% { opacity: 0.4; }
-      50%      { opacity: 1; }
-    }
-    .mkt__grid {
-      display: grid; grid-template-columns: 1fr 1fr;
-    }
-    .mkt__cell {
-      padding: 14px 16px;
-      border-bottom: 1px solid var(--hair);
-    }
-    .mkt__cell:nth-child(odd)  { border-right: 1px solid var(--hair); }
-    .mkt__cell:last-child,
-    .mkt__cell:nth-last-child(2):nth-child(odd) { border-bottom: 0; }
-    .mkt__k {
-      font-family: var(--mono); font-size: 9.5px;
-      letter-spacing: 0.22em; text-transform: uppercase;
-      color: var(--ink-mute);
-      margin-bottom: 6px;
-    }
-    .mkt__v {
-      font-family: var(--mono);
-      font-size: 15px;
-      color: var(--ink);
-      letter-spacing: 0.02em;
-    }
-    .mkt__v .ccy { color: var(--ink-dim); margin-right: 6px; font-size: 10px; letter-spacing: 0.2em; }
-    .mkt__v.up   { color: var(--gold-bright); }
-    .mkt__v.down { color: #B07A6E; }
-    .mkt__foot {
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 12px 16px 8px;
-      font-family: var(--mono); font-size: 9.5px;
-      letter-spacing: 0.22em; text-transform: uppercase;
-      color: var(--ink-mute);
-    }
-
     /* ── Philosophy — asymmetric pull-quote layout ────────────── */
 
     .phil {
@@ -4037,61 +3976,12 @@
       );
     }
 
-    /* Reference data — repurposed from the trading-terminal MarketStrip
-       so the eight-cell vitrine layout is preserved but the contents are
-       registry/provenance facts, not financial. No prices, no FDV, no
-       24h change. Brief explicitly forbids financial-promotion language. */
-    function ReferenceStrip({ sign, animKey }) {
-      const baseAddr = sign.representations.base.address;
-      const solanaMint = sign.representations.solana.address;
-      const cells = [
-        { k: 'Original home',   v: 'Solana' },
-        { k: 'Original record', v: <span className="mono">{solanaMint ? truncateAddress(solanaMint, 4, 4) : '—'}</span> },
-        { k: 'Base presence',   v: 'Official counterpart' },
-        { k: 'Base record',     v: <span className="mono">{truncateAddress(baseAddr, 6, 4)}</span> },
-        { k: 'Route',           v: 'Wormhole' },
-        { k: 'Access',          v: 'Read-only' },
-        { k: 'Series',          v: <span className="mono">№ {String(sign.order).padStart(2, '0')} / 12</span> },
-        { k: 'Element',         v: sign.element },
-      ];
-
-      const reveal = useReveal();
-      return (
-        <section ref={reveal} className="sec reveal" aria-label="Reference data">
-          <div className="sec__head">
-            <span className="sec__no">№ 04</span>
-            <span className="line" />
-            <span className="sec__title">Reference data</span>
-          </div>
-
-          <div className="mkt fade-key" key={animKey + '-mkt'}>
-            <div className="mkt__head">
-              <span className="pulse">
-                <span className="dot-live" />
-                <span>{sign.ticker}</span>
-              </span>
-              <span className="label label--mute">Read-only</span>
-            </div>
-
-            <div className="mkt__grid">
-              {cells.map((c, i) => (
-                <div className="mkt__cell" key={i}>
-                  <div className="mkt__k">{c.k}</div>
-                  <div className="mkt__v">{c.v}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-      );
-    }
-
     function Philosophy() {
       const reveal = useReveal();
       return (
         <section ref={reveal} id="thesis" className="phil reveal" aria-label="Philosophy">
           <div className="phil__sup">
-            <span className="label label--gold">№ 05 · Thesis</span>
+            <span className="label label--gold">№ 04 · Thesis</span>
             <span className="line" />
           </div>
           <p className="phil__body">
@@ -4136,7 +4026,7 @@
       return (
         <section ref={reveal} id="identity" className="sec idctx reveal" aria-label="Identity Context">
           <div className="sec__head">
-            <span className="sec__no">№ 06</span>
+            <span className="sec__no">№ 05</span>
             <span className="line" />
             <span className="sec__title">Identity Context</span>
           </div>
@@ -4207,7 +4097,7 @@
       return (
         <section ref={reveal} id="builders" className="sec builders reveal" aria-label="For Builders">
           <div className="sec__head">
-            <span className="sec__no">№ 07</span>
+            <span className="sec__no">№ 06</span>
             <span className="line" />
             <span className="sec__title">For Builders</span>
           </div>
@@ -4281,7 +4171,7 @@
       return (
         <section ref={reveal} id="built-with-zodiacs" className="sec built reveal" aria-label="Built With Zodiacs">
           <div className="sec__head">
-            <span className="sec__no">№ 08</span>
+            <span className="sec__no">№ 07</span>
             <span className="line" />
             <span className="sec__title">Built With Zodiacs</span>
           </div>
@@ -4310,7 +4200,7 @@
       return (
         <section ref={reveal} className="sec reveal" id="official-twelve" aria-label="The official twelve">
           <div className="sec__head">
-            <span className="sec__no">№ 09</span>
+            <span className="sec__no">№ 08</span>
             <span className="line" />
             <span className="sec__title">The Twelve</span>
           </div>
@@ -4398,7 +4288,7 @@
       return (
         <section ref={reveal} id="sdk" className="sec reveal" aria-label="SDK">
           <div className="sec__head">
-            <span className="sec__no">№ 10</span>
+            <span className="sec__no">№ 09</span>
             <span className="line" />
             <span className="sec__title">SDK</span>
           </div>
@@ -4456,7 +4346,7 @@
       return (
         <section ref={reveal} id="security" className="sec reveal" aria-label="Read-only by design">
           <div className="sec__head">
-            <span className="sec__no">№ 11</span>
+            <span className="sec__no">№ 10</span>
             <span className="line" />
             <span className="sec__title">Read-only by design</span>
           </div>
@@ -4502,7 +4392,7 @@
       return (
         <section ref={reveal} id="faq" className="sec reveal" aria-label="Questions">
           <div className="sec__head">
-            <span className="sec__no">№ 12</span>
+            <span className="sec__no">№ 11</span>
             <span className="line" />
             <span className="sec__title">Questions</span>
           </div>
@@ -4592,7 +4482,6 @@
             <RegistrySection />
             <VerifierSection />
             <DetailPanel sign={sign} animKey={activeTicker} />
-            <ReferenceStrip sign={sign} animKey={activeTicker} />
             <Philosophy />
             <IdentityContextSection />
             <ForBuildersSection />
