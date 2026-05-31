@@ -242,7 +242,7 @@
       background: rgba(201,169,97,0.035);
       color: var(--ink-dim);
       font-family: var(--mono);
-      font-size: 8.5px;
+      font-size: 9px;
       letter-spacing: 0.16em;
       text-transform: uppercase;
     }
@@ -826,12 +826,6 @@
       justify-items: center;
       gap: 8px;
       background: rgba(7,9,13,0.86);
-      transition: background 220ms var(--ease), box-shadow 220ms var(--ease);
-    }
-
-    .receipt__token:hover {
-      background: rgba(201,169,97,0.07);
-      box-shadow: inset 0 0 0 1px rgba(226,200,122,0.20);
     }
 
     .receipt__token img {
@@ -1259,7 +1253,7 @@
           representations, public ownership, and symbolic identity context.
         </p>
         <div class="works-with" aria-label="SDK platform support">
-          TypeScript + React 18+ <span>•</span> Solana + Base
+          TypeScript + React 18+ <span>·</span> Solana + Base
         </div>
         <div class="hero__art" aria-label="Zodiacs artwork">
           <img class="hero__figure" src="/assets/nuggets/thumb/taurus.png" alt="Taurus figure" />
@@ -1563,7 +1557,7 @@ console.log(context.wheelCoverage);</code></pre>
               <span>8 open</span>
             </div>
             <button class="receipt__copy" type="button" data-copy-receipt>
-              Copy receipt data
+              Copy sample receipt JSON
             </button>
           </div>
         </div>
@@ -1836,15 +1830,35 @@ console.log(context.wheelCoverage);</code></pre>
       return trimmed.startsWith("0x") ? trimmed.toLowerCase() : trimmed;
     };
 
-    const renderVerification = (target, representation, registryReady) => {
+    const setVerificationText = (target, value, meta) => {
+      const key = target.querySelector(".receipt__result-k");
+      const resultValue = target.querySelector(".receipt__result-v");
+      const resultMeta = target.querySelector(".receipt__result-meta");
+      if (!key || !resultValue || !resultMeta) return;
+
+      key.textContent = "Verification";
+      resultValue.textContent = value;
+      resultMeta.textContent = meta;
+    };
+
+    const renderVerification = (target, representation, registryReady, rawInput) => {
       if (!target) return;
 
+      if (!rawInput.trim()) {
+        setVerificationText(
+          target,
+          "Paste a Solana mint or Base address.",
+          "Read-only local check"
+        );
+        return;
+      }
+
       if (!representation) {
-        target.innerHTML = `
-          <span class="receipt__result-k">Verification</span>
-          <span class="receipt__result-v">Not found in the official registry.</span>
-          <span class="receipt__result-meta">${registryReady ? "Unknown address" : "Registry unavailable; fallback check active"}</span>
-        `;
+        setVerificationText(
+          target,
+          "Not found in the official registry.",
+          registryReady ? "Unknown address" : "Registry unavailable; fallback check active"
+        );
         return;
       }
 
@@ -1859,11 +1873,7 @@ console.log(context.wheelCoverage);</code></pre>
         isBase && representation.originAddress ? `Origin ${representation.originAddress}` : null
       ].filter(Boolean).join(" · ");
 
-      target.innerHTML = `
-        <span class="receipt__result-k">Verification</span>
-        <span class="receipt__result-v">${status}</span>
-        <span class="receipt__result-meta">${details}</span>
-      `;
+      setVerificationText(target, status, details);
     };
 
     const setupReceiptDemo = async () => {
@@ -1890,10 +1900,10 @@ console.log(context.wheelCoverage);</code></pre>
       const representations = flattenRepresentations(registry);
       const verify = () => {
         const address = normalizeLookupAddress(input.value);
-        const representation = representations.find((item) =>
-          normalizeLookupAddress(item.address) === address
-        );
-        renderVerification(result, representation, registryReady);
+        const representation = address
+          ? representations.find((item) => normalizeLookupAddress(item.address) === address)
+          : null;
+        renderVerification(result, representation, registryReady, input.value);
       };
 
       input.addEventListener("input", verify);
@@ -1903,12 +1913,12 @@ console.log(context.wheelCoverage);</code></pre>
         copyReceipt.addEventListener("click", async () => {
           try {
             await navigator.clipboard.writeText(JSON.stringify(sampleReceiptData, null, 2));
-            copyReceipt.textContent = "Receipt data copied";
+            copyReceipt.textContent = "Sample JSON copied";
             window.setTimeout(() => {
-              copyReceipt.textContent = "Copy receipt data";
+              copyReceipt.textContent = "Copy sample receipt JSON";
             }, 1400);
           } catch {
-            copyReceipt.textContent = "Copy receipt data";
+            copyReceipt.textContent = "Copy sample receipt JSON";
           }
         });
       }
