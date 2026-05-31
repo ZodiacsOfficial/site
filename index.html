@@ -1788,6 +1788,158 @@
     }
     .ftr__legal a:hover { color: var(--gold); }
 
+    /* ── Static fallback for crawlers, audit tools, and no-JS clients ─ */
+    .static-site {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 32px 20px 72px;
+      position: relative;
+      z-index: var(--z-base);
+    }
+    .static-site a {
+      color: var(--gold-bright);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(201,169,97,0.32);
+    }
+    .static-site a:hover {
+      border-bottom-color: var(--gold);
+    }
+    .static-site__nav {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 14px 0 28px;
+      border-bottom: 1px solid var(--hair);
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--ink-mute);
+    }
+    .static-site__hero {
+      padding: 62px 0 46px;
+    }
+    .static-site__eyebrow {
+      display: inline-flex;
+      margin-bottom: 24px;
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+    .static-site h1,
+    .static-site h2,
+    .static-site h3 {
+      font-family: var(--serif);
+      font-weight: 400;
+      color: var(--ink);
+      margin: 0;
+    }
+    .static-site h1 {
+      max-width: 9ch;
+      font-size: clamp(48px, 12vw, 92px);
+      line-height: 0.92;
+    }
+    .static-site h1 em,
+    .static-site h2 em {
+      color: var(--gold-bright);
+      font-style: italic;
+    }
+    .static-site__lede {
+      max-width: 52ch;
+      margin: 24px 0 0;
+      font-family: var(--serif);
+      font-size: 18px;
+      line-height: 1.58;
+      color: var(--ink-2);
+    }
+    .static-site__section {
+      padding: 42px 0;
+      border-top: 1px solid var(--hair);
+    }
+    .static-site h2 {
+      font-size: 34px;
+      line-height: 1;
+      margin-bottom: 16px;
+    }
+    .static-site p,
+    .static-site li {
+      font-family: var(--serif);
+      font-size: 16px;
+      line-height: 1.58;
+      color: var(--ink-2);
+    }
+    .static-site ul {
+      display: grid;
+      gap: 10px;
+      margin: 20px 0 0;
+      padding-left: 20px;
+    }
+    .static-site__grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1px;
+      margin-top: 22px;
+      background: var(--hair);
+      border: 1px solid var(--hair);
+    }
+    @media (min-width: 680px) {
+      .static-site__grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    .static-site__card {
+      padding: 18px;
+      background: rgba(8,10,14,0.88);
+    }
+    .static-site__card h3 {
+      font-size: 23px;
+      font-style: italic;
+      color: var(--gold-bright);
+      margin-bottom: 8px;
+    }
+    .static-site__facts {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1px;
+      margin-top: 20px;
+      background: var(--hair);
+      border: 1px solid var(--hair);
+    }
+    @media (min-width: 560px) {
+      .static-site__facts { grid-template-columns: repeat(2, 1fr); }
+    }
+    .static-site__fact {
+      padding: 15px;
+      background: rgba(8,10,14,0.88);
+    }
+    .static-site__fact strong {
+      display: block;
+      margin-bottom: 7px;
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--ink-mute);
+    }
+    .static-site__code {
+      display: inline-block;
+      padding: 12px 14px;
+      border: 1px solid var(--hair-2);
+      background: #0A0C11;
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--ink);
+    }
+    .static-site__footer {
+      padding-top: 36px;
+      border-top: 1px solid var(--hair);
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ink-mute);
+    }
+
     /* ── Transitions on active content ─────────────────────────── */
 
     .fade-key { animation: fadeInUp 520ms var(--ease) both; }
@@ -1832,7 +1984,102 @@
   </style>
 </head>
 <body>
-  <div id="root"></div>
+  <div id="root">
+    <main class="static-site" id="main">
+      <nav class="static-site__nav" aria-label="Primary">
+        <span>Zodiacs.org</span>
+        <a href="/registry/zodiacs.registry.json">Registry JSON</a>
+      </nav>
+
+      <section class="static-site__hero" aria-labelledby="static-title">
+        <span class="static-site__eyebrow">The Registry</span>
+        <h1 id="static-title">Twelve signs. <em>One register.</em></h1>
+        <p class="static-site__lede">
+          Zodiacs.org is the official source of truth for the twelve Zodiacs:
+          one canonical registry, native Solana SPL assets, and official
+          bridged Base ERC-20 representations.
+        </p>
+      </section>
+
+      <section class="static-site__section" id="registry">
+        <h2>Official Registry</h2>
+        <p>
+          Each sign has one identity. The original asset lives on Solana; its
+          official Base counterpart points back to that origin. The registry
+          helps users, developers, apps, and interfaces verify what belongs to
+          the official Zodiacs.org asset universe.
+        </p>
+        <div class="static-site__facts" aria-label="Registry facts">
+          <div class="static-site__fact"><strong>Signs</strong>12 official Zodiacs</div>
+          <div class="static-site__fact"><strong>Origin</strong>Native Solana SPL assets</div>
+          <div class="static-site__fact"><strong>Base</strong>Official bridged representations</div>
+          <div class="static-site__fact"><strong>Record</strong><a href="/registry/zodiacs.registry.json">Machine-readable registry</a></div>
+        </div>
+      </section>
+
+      <section class="static-site__section" id="verify">
+        <h2>Verify Official Assets</h2>
+        <p>
+          The live page includes an address verifier for Solana mints and Base
+          ERC-20 addresses. Unknown addresses are reported neutrally as not
+          found in the official Zodiacs.org registry.
+        </p>
+      </section>
+
+      <section class="static-site__section" id="identity">
+        <h2>Identity Context</h2>
+        <p>
+          Zodiacs are not just addresses. Verified public ownership can become
+          display-ready symbolic context: held signs, element balance, modality
+          balance, current season, native and bridged representations, and wheel
+          coverage.
+        </p>
+        <div class="static-site__grid">
+          <article class="static-site__card">
+            <h3>Verified Ownership</h3>
+            <p>Confirm whether a wallet holds official Zodiacs.org assets across native Solana and bridged Base representations.</p>
+          </article>
+          <article class="static-site__card">
+            <h3>Symbolic Composition</h3>
+            <p>Turn held signs into element mix, modality mix, wheel coverage, and seasonal context.</p>
+          </article>
+          <article class="static-site__card">
+            <h3>Built For Experiences</h3>
+            <p>Build profiles, receipts, seasonal moments, verifiers, and identity surfaces on app-neutral infrastructure.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="static-site__section" id="sdk">
+        <h2>Zodiacs SDK</h2>
+        <p>
+          The Zodiacs SDK is the public read-only TypeScript interface to the
+          canonical Zodiacs.org registry. Apps can use it to verify official
+          addresses, read public ownership state, render sign metadata, and
+          build identity surfaces.
+        </p>
+        <p><code class="static-site__code">npm i @zodiacs/sdk</code></p>
+        <ul>
+          <li><a href="https://github.com/ZodiacsOfficial/sdk" rel="noopener noreferrer">GitHub: ZodiacsOfficial/sdk</a></li>
+          <li><a href="https://www.npmjs.com/package/@zodiacs/sdk" rel="noopener noreferrer">npm: @zodiacs/sdk</a></li>
+        </ul>
+      </section>
+
+      <section class="static-site__section" id="security">
+        <h2>Read-Only By Design</h2>
+        <p>
+          Zodiacs.org and the SDK are made for recognition, verification,
+          metadata, public ownership reads, and identity surfaces. They do not
+          request private keys, provide custody, sign messages, submit
+          transactions, provide approval helpers, or move assets.
+        </p>
+      </section>
+
+      <footer class="static-site__footer">
+        Zodiacs.org · Official registry · MMXXVI
+      </footer>
+    </main>
+  </div>
 
   <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
   <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
