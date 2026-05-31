@@ -21,4 +21,4 @@ jobs:
 
       - name: Check for stale repo or bridge wording
         run: |
-          ! grep -RInE 'Symbiosis|ZodiacSDK|diasmal917|zodiacs-org/sdk' index.html registry README.md CLAUDE.md
+          ! grep -RInE 'Symbiosis|ZodiacS(DK)|diasmal[[:digit:]]{3}|zodiacs-org/sdk' index.html sdk registry README.md CLAUDE.md DESIGNER_HANDOFF.md
