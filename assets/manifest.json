@@ -45,8 +45,8 @@
       "sign": "aries",
       "displayName": "Aries",
       "icon": { "path": "assets/icons/aries.png", "width": 256, "height": 233, "bytes": 5156 },
-      "nugget": { "path": "assets/nuggets/aries.png", "width": 861, "height": 1024, "bytes": 351317 },
-      "thumbnail": { "path": "assets/nuggets/thumb/aries.png", "width": 269, "height": 320, "bytes": 39251 }
+      "nugget": { "path": "assets/nuggets/aries.png", "width": 861, "height": 1024, "bytes": 242729 },
+      "thumbnail": { "path": "assets/nuggets/thumb/aries.png", "width": 269, "height": 320, "bytes": 28957 }
     },
     {
       "sign": "taurus",
@@ -59,8 +59,8 @@
       "sign": "gemini",
       "displayName": "Gemini",
       "icon": { "path": "assets/icons/gemini.png", "width": 256, "height": 255, "bytes": 12371 },
-      "nugget": { "path": "assets/nuggets/gemini.png", "width": 685, "height": 1024, "bytes": 409627 },
-      "thumbnail": { "path": "assets/nuggets/thumb/gemini.png", "width": 214, "height": 320, "bytes": 46322 }
+      "nugget": { "path": "assets/nuggets/gemini.png", "width": 685, "height": 1024, "bytes": 252972 },
+      "thumbnail": { "path": "assets/nuggets/thumb/gemini.png", "width": 214, "height": 320, "bytes": 31901 }
     },
     {
       "sign": "cancer",
