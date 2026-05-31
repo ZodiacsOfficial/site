@@ -5,13 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#08090C" />
   <meta name="color-scheme" content="dark" />
-  <meta name="description" content="Zodiacs. Twelve signs. Native to Solana, bridged to Base. A read-only registry and SDK." />
+  <meta name="description" content="Zodiacs. Twelve signs, one official record. A safe way to recognize the collection across Solana and Base." />
 
   <link rel="canonical" href="https://zodiacs.org/" />
 
   <meta property="og:site_name" content="Zodiacs" />
   <meta property="og:title" content="Zodiacs · The Twelve." />
-  <meta property="og:description" content="Twelve signs. Native to Solana, bridged to Base." />
+  <meta property="og:description" content="Twelve signs, one official record. A safe way to recognize the collection across Solana and Base." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://zodiacs.org/" />
   <!-- og:image / twitter:image use the canonical zodiacs.org host so
@@ -24,7 +24,7 @@
 
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Zodiacs · The Twelve." />
-  <meta name="twitter:description" content="Twelve signs. Native to Solana, bridged to Base." />
+  <meta name="twitter:description" content="Twelve signs, one official record. A safe way to recognize the collection across Solana and Base." />
   <meta name="twitter:image" content="https://zodiacs.org/assets/og/share.png" />
   <meta name="twitter:image:alt" content="Zodiacs — twelve sculptural gold figures." />
 
@@ -41,7 +41,7 @@
         "alternateName": "Zodiacs.org",
         "url": "https://zodiacs.org/",
         "logo": "https://zodiacs.org/assets/og/share.png",
-        "description": "Twelve signs. Native to Solana, bridged to Base. A read-only registry and SDK."
+        "description": "Twelve signs, one official record. A safe way to recognize the collection across Solana and Base."
       },
       {
         "@type": "WebSite",
@@ -55,7 +55,7 @@
         "@type": "Dataset",
         "@id": "https://zodiacs.org/#registry",
         "name": "Zodiacs Registry",
-        "description": "The twelve Zodiacs: native Solana SPL and bridged Base ERC-20 representations.",
+        "description": "The twelve Zodiacs: original Solana assets with official Base counterparts.",
         "url": "https://zodiacs.org/registry/zodiacs.registry.json",
         "encodingFormat": "application/json",
         "license": "https://creativecommons.org/licenses/by/4.0/",
@@ -2615,8 +2615,8 @@
           </h1>
 
           <p className="hero__sub">
-            Native to Solana, bridged to Base.
-            Verify any address against the Twelve.
+            One official record for the twelve signs.
+            Check what belongs, where it lives, and how it connects.
           </p>
 
           <Selector active={active} setActive={setActive} />
@@ -2878,16 +2878,16 @@
       const reveal = useReveal();
       const facts = [
         { k: '12',         v: 'Signs' },
-        { k: '1',          v: 'Native chain' },
-        { k: '2',          v: 'Networks' },
-        { k: 'Read-only',  v: 'SDK' },
+        { k: '1',          v: 'Origin' },
+        { k: '2',          v: 'Homes' },
+        { k: 'Safe',       v: 'Lookup' },
       ];
       const meta = [
-        { k: 'Native chain',   v: 'Solana · SPL' },
-        { k: 'Bridged chain',  v: 'Base · ERC-20' },
-        { k: 'Bridge',         v: 'Wormhole' },
-        { k: 'SDK',            v: '@zodiacs/sdk · read-only' },
-        { k: 'Registry',       v: <a className="ext" href="/registry/zodiacs.registry.json">zodiacs.registry.json</a> },
+        { k: 'Original home',  v: 'Solana' },
+        { k: 'Base presence',  v: 'Official counterpart' },
+        { k: 'Bridge record',  v: 'Wormhole' },
+        { k: 'Developer kit',  v: '@zodiacs/sdk' },
+        { k: 'Public record',  v: <a className="ext" href="/registry/zodiacs.registry.json">Registry file</a> },
       ];
 
       return (
@@ -2898,8 +2898,8 @@
             <span className="sec__title">Registry</span>
           </div>
           <p className="sec__lede">
-            Each sign exists once. Native on Solana,
-            with a bridged representation on Base.
+            Each sign has one identity. The original asset lives on Solana;
+            its official Base counterpart points back to that origin.
           </p>
 
           <div className="reg__facts">
@@ -3045,15 +3045,15 @@
           </div>
           <dl className="vrf__result-rows">
             <div className="detail__row">
-              <dt className="k">Network</dt>
-              <dd className="v">{network === 'base' ? 'Base · ERC-20' : 'Solana · SPL'}</dd>
+              <dt className="k">Found on</dt>
+              <dd className="v">{network === 'base' ? 'Base' : 'Solana'}</dd>
             </div>
             <div className="detail__row">
               <dt className="k">Address</dt>
               <dd className="v"><CopyChip text={queried} display={truncateAddress(queried, 8, 6)} /></dd>
             </div>
             <div className="detail__row">
-              <dt className="k">{network === 'base' ? 'Native counterpart' : 'Bridged counterpart'}</dt>
+              <dt className="k">{network === 'base' ? 'Original Solana record' : 'Base counterpart'}</dt>
               <dd className="v">
                 {network === 'base'
                   ? (sign.representations.solana.address
@@ -3109,7 +3109,7 @@
                 <span className="v">{sign.archetype}</span>
               </div>
               <div className="detail__row">
-                <span className="k">Native · Solana</span>
+                <span className="k">Original · Solana</span>
                 <span className="v">
                   {sign.representations.solana.address
                     ? <CopyChip text={sign.representations.solana.address} display={truncateAddress(sign.representations.solana.address, 4, 4)} />
@@ -3117,7 +3117,7 @@
                 </span>
               </div>
               <div className="detail__row">
-                <span className="k">Bridged · Base</span>
+                <span className="k">Counterpart · Base</span>
                 <span className="v">
                   <CopyChip text={sign.representations.base.address} display={truncateAddress(sign.representations.base.address, 6, 4)} />
                 </span>
@@ -3140,12 +3140,12 @@
       const baseAddr = sign.representations.base.address;
       const solanaMint = sign.representations.solana.address;
       const cells = [
-        { k: 'Native chain',    v: 'Solana' },
-        { k: 'Native mint',     v: <span className="mono">{solanaMint ? truncateAddress(solanaMint, 4, 4) : '—'}</span> },
-        { k: 'Bridged chain',   v: 'Base' },
-        { k: 'Bridged address', v: <span className="mono">{truncateAddress(baseAddr, 6, 4)}</span> },
-        { k: 'Bridge',          v: 'Wormhole' },
-        { k: 'Standard',        v: 'SPL · ERC-20' },
+        { k: 'Original home',   v: 'Solana' },
+        { k: 'Original record', v: <span className="mono">{solanaMint ? truncateAddress(solanaMint, 4, 4) : '—'}</span> },
+        { k: 'Base presence',   v: 'Official counterpart' },
+        { k: 'Base record',     v: <span className="mono">{truncateAddress(baseAddr, 6, 4)}</span> },
+        { k: 'Route',           v: 'Wormhole' },
+        { k: 'Access',          v: 'Read-only' },
         { k: 'Series',          v: <span className="mono">№ {String(sign.order).padStart(2, '0')} / 12</span> },
         { k: 'Element',         v: sign.element },
       ];
@@ -3257,29 +3257,6 @@
       );
     }
 
-    // Real code samples, lifted verbatim from the @zodiacs/sdk README so
-    // what the page shows matches the published API exactly.
-    const SDK_VERIFY = `import {
-  isOfficialZodiacAddress,
-  getRepresentationByAddress,
-  getNativeCounterpart
-} from "@zodiacs/sdk";
-
-const address = "0x3ffB5282F5891Dd8c813E64059EdB0607537eC91";
-
-isOfficialZodiacAddress(address);          // true
-getRepresentationByAddress(address)?.kind; // "bridged"
-getNativeCounterpart(address)?.chain;      // "solana"`;
-
-    const SDK_OWNERSHIP = `import { createPublicClient, http } from "viem";
-import { base } from "viem/chains";
-import { getBaseZodiacsOwnership } from "@zodiacs/sdk";
-
-const client = createPublicClient({ chain: base, transport: http() });
-
-// read-only: balanceOf + decimals, no wallet, no signing
-const ownership = await getBaseZodiacsOwnership(client, ownerAddress);`;
-
     function CodeBlock({ label, code }) {
       const [copied, setCopied] = useState(false);
       const onCopy = useCallback(() => {
@@ -3314,9 +3291,9 @@ const ownership = await getBaseZodiacsOwnership(client, ownerAddress);`;
     function SdkSection() {
       const reveal = useReveal();
       const caps = [
-        { t: 'Verify', d: 'Check any address against the Twelve. Pure functions, no network call.' },
-        { t: 'Read holdings', d: 'Read balances on Solana and Base through your own RPC. Never custodial.' },
-        { t: 'Render', d: 'Typed metadata and React components for identity surfaces.' },
+        { t: 'Recognize', d: 'Tell whether an address belongs to the official Twelve.' },
+        { t: 'Connect', d: 'Show the Solana origin and the Base counterpart together.' },
+        { t: 'Display', d: 'Use the names, symbols, artwork, and identity data consistently.' },
       ];
       return (
         <section ref={reveal} id="sdk" className="sec reveal" aria-label="SDK">
@@ -3326,8 +3303,9 @@ const ownership = await getBaseZodiacsOwnership(client, ownerAddress);`;
             <span className="sec__title">SDK</span>
           </div>
           <p className="sec__lede">
-            The official read-only TypeScript interface to the Zodiacs registry.
-            Verify addresses, read public holdings, render the signs.
+            The SDK is the developer doorway into the same record shown here.
+            It helps apps recognize official Zodiacs without holding keys or
+            moving assets.
           </p>
 
           <div className="sdk__caps">
@@ -3340,8 +3318,6 @@ const ownership = await getBaseZodiacsOwnership(client, ownerAddress);`;
           </div>
 
           <CodeBlock label="install" code="npm i @zodiacs/sdk" />
-          <CodeBlock label="verify.ts" code={SDK_VERIFY} />
-          <CodeBlock label="holdings.ts" code={SDK_OWNERSHIP} />
 
           <div className="res">
             <a className="res__item" href="https://www.npmjs.com/package/@zodiacs/sdk" rel="noopener noreferrer">
@@ -3355,8 +3331,8 @@ const ownership = await getBaseZodiacsOwnership(client, ownerAddress);`;
               <span className="res__arr" aria-hidden="true">↗</span>
             </a>
             <a className="res__item" href="/registry/zodiacs.registry.json">
-              <span className="res__k">Registry</span>
-              <span className="res__v">zodiacs.registry.json</span>
+              <span className="res__k">Record</span>
+              <span className="res__v">Public record</span>
               <span className="res__arr" aria-hidden="true">↗</span>
             </a>
             <a className="res__item" href="https://github.com/ZodiacsOfficial/sdk/tree/main/docs" rel="noopener noreferrer">
@@ -3380,9 +3356,9 @@ const ownership = await getBaseZodiacsOwnership(client, ownerAddress);`;
             <span className="sec__title">Read-only by design</span>
           </div>
           <p className="sec__statement">
-            The SDK verifies official assets, reads public ownership, and renders
-            metadata. It does not sign, custody, swap, buy, sell, transfer,
-            approve, or submit transactions.
+            The tools are made for recognition and display. They can read public
+            information, but they cannot sign, hold, move, approve, or exchange
+            assets.
           </p>
           <div className="ro__grid">
             {nots.map((n, i) => (
@@ -3400,9 +3376,9 @@ const ownership = await getBaseZodiacsOwnership(client, ownerAddress);`;
       const reveal = useReveal();
       const qa = [
         { q: 'Are the Base Zodiacs separate assets?',
-          a: 'No. They are official bridged representations of the native Solana Zodiacs.' },
+          a: 'No. They are official Base counterparts of the original Solana Zodiacs.' },
         { q: 'What does the SDK do?',
-          a: 'It verifies registry entries, reads public ownership, and exposes typed metadata and components.' },
+          a: 'It gives apps a safe way to recognize the Twelve, show their records, and display identity data consistently.' },
         { q: 'Does the SDK move assets?',
           a: 'No. It is read-only.' },
         { q: 'Does Zodiacs claim ownership of astrology?',
@@ -3458,13 +3434,13 @@ const ownership = await getBaseZodiacsOwnership(client, ownerAddress);`;
             <div className="mark">Zodiacs<span className="g">·</span>org</div>
             <div>© MMXXVI</div>
           </div>
-          <div className="ftr__row">
-            <div className="ftr__legal">
-              <a href="#registry">Registry</a>
-              <a href="#verify">Verify</a>
-              <a href="/registry/zodiacs.registry.json">JSON</a>
-              <a href="#thesis">Thesis</a>
-            </div>
+        <div className="ftr__row">
+          <div className="ftr__legal">
+            <a href="#registry">Registry</a>
+            <a href="#verify">Verify</a>
+              <a href="/registry/zodiacs.registry.json">Record</a>
+            <a href="#thesis">Thesis</a>
+          </div>
             <div>Read-only</div>
           </div>
           <div className="ftr__row ftr__row--origin">
