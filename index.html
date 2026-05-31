@@ -5,13 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#08090C" />
   <meta name="color-scheme" content="dark" />
-  <meta name="description" content="Zodiacs. Twelve signs, one official record. A safe way to recognize the collection across Solana and Base." />
+  <meta name="description" content="Zodiacs. Twelve signs, one official record. Verify official assets across Solana and Base, then build symbolic identity context from public ownership." />
 
   <link rel="canonical" href="https://zodiacs.org/" />
 
   <meta property="og:site_name" content="Zodiacs" />
   <meta property="og:title" content="Zodiacs · The Twelve." />
-  <meta property="og:description" content="Twelve signs, one official record. A safe way to recognize the collection across Solana and Base." />
+  <meta property="og:description" content="Twelve signs, one official record. Verify official assets across Solana and Base, then build symbolic identity context from public ownership." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://zodiacs.org/" />
   <!-- og:image / twitter:image use the canonical zodiacs.org host so
@@ -24,7 +24,7 @@
 
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Zodiacs · The Twelve." />
-  <meta name="twitter:description" content="Twelve signs, one official record. A safe way to recognize the collection across Solana and Base." />
+  <meta name="twitter:description" content="Twelve signs, one official record. Verify official assets across Solana and Base, then build symbolic identity context from public ownership." />
   <meta name="twitter:image" content="https://zodiacs.org/assets/og/share.png" />
   <meta name="twitter:image:alt" content="Zodiacs — twelve sculptural gold figures." />
 
@@ -41,7 +41,7 @@
         "alternateName": "Zodiacs.org",
         "url": "https://zodiacs.org/",
         "logo": "https://zodiacs.org/assets/og/share.png",
-        "description": "Twelve signs, one official record. A safe way to recognize the collection across Solana and Base."
+        "description": "Twelve signs, one official record. Verify official assets across Solana and Base, then build symbolic identity context from public ownership."
       },
       {
         "@type": "WebSite",
@@ -788,6 +788,139 @@
     .reg__meta .ext:hover {
       color: var(--gold-bright);
       border-bottom-color: var(--gold);
+    }
+
+    /* ── Identity context ───────────────────────────────────── */
+    .idctx {
+      position: relative;
+    }
+    .idctx__statement {
+      margin: 0 0 26px;
+      max-width: 11ch;
+      font-family: var(--serif);
+      font-size: clamp(37px, 10vw, 76px);
+      line-height: 0.93;
+      letter-spacing: 0;
+      color: var(--ink);
+      text-wrap: balance;
+    }
+    .idctx__statement .it {
+      color: var(--gold-bright);
+    }
+    .idctx__copy {
+      margin: 0 0 28px;
+      max-width: 47ch;
+      font-family: var(--serif);
+      font-size: 16px;
+      line-height: 1.58;
+      color: var(--ink-2);
+      text-wrap: pretty;
+    }
+    .idctx__grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1px;
+      margin: 0 0 24px;
+      border: 1px solid var(--hair);
+      background: var(--hair);
+    }
+    @media (min-width: 680px) {
+      .idctx__grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    .idctx__card {
+      min-height: 158px;
+      padding: 18px 16px 20px;
+      background:
+        linear-gradient(180deg, rgba(201,169,97,0.045), transparent 76%),
+        var(--bg);
+    }
+    .idctx__num {
+      display: block;
+      margin-bottom: 34px;
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: 0.22em;
+      color: var(--ink-mute);
+    }
+    .idctx__card-title {
+      margin: 0 0 8px;
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 21px;
+      line-height: 1;
+      color: var(--gold-bright);
+    }
+    .idctx__card-copy {
+      margin: 0;
+      font-family: var(--serif);
+      font-size: 14px;
+      line-height: 1.52;
+      color: var(--ink-2);
+    }
+    .idctx__example {
+      border: 1px solid var(--hair-2);
+      background:
+        radial-gradient(80% 120% at 50% 0%, rgba(201,169,97,0.08), transparent 65%),
+        var(--surface);
+      padding: 22px 18px 18px;
+    }
+    .idctx__example-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+    .idctx__example-title {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 22px;
+      color: var(--ink);
+      line-height: 1;
+    }
+    .idctx__example-sub {
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--ink-mute);
+      white-space: nowrap;
+    }
+    .idctx__receipt {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1px;
+      background: var(--hair);
+      border: 1px solid var(--hair);
+    }
+    @media (min-width: 560px) {
+      .idctx__receipt { grid-template-columns: repeat(2, 1fr); }
+    }
+    .idctx__fact {
+      min-height: 72px;
+      padding: 14px 14px 12px;
+      background: rgba(8,10,14,0.86);
+    }
+    .idctx__fact-k {
+      margin-bottom: 8px;
+      font-family: var(--mono);
+      font-size: 8.5px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ink-mute);
+    }
+    .idctx__fact-v {
+      font-family: var(--serif);
+      font-size: 16px;
+      line-height: 1.28;
+      color: var(--ink);
+    }
+    .idctx__note {
+      margin: 16px 0 0;
+      font-family: var(--serif);
+      font-size: 13.5px;
+      line-height: 1.5;
+      color: var(--ink-dim);
     }
 
     /* ── Verifier ─────────────────────────────────────────────── */
@@ -2473,7 +2606,7 @@
                 "sign": "cancer",
                 "order": 4,
                 "symbol": "♋︎",
-                "shortBio": "The crab and the moon. The summer solstice. Cancer preserves the ancient image of home, memory, and the inner tide."
+                "shortBio": "The crab at the summer solstice. Cancer preserves the ancient image of home, memory, and the inner tide."
           },
           "leo": {
                 "sign": "leo",
@@ -2615,8 +2748,8 @@
           </h1>
 
           <p className="hero__sub">
-            One official record for the twelve signs.
-            Check what belongs, where it lives, and how it connects.
+            One official record for the twelve signs. Verify what belongs,
+            where it lives, and how public ownership becomes symbolic context.
           </p>
 
           <Selector active={active} setActive={setActive} />
@@ -2899,7 +3032,8 @@
           </div>
           <p className="sec__lede">
             Each sign has one identity. The original asset lives on Solana;
-            its official Base counterpart points back to that origin.
+            its official Base counterpart points back to that origin. The
+            registry is the source of truth for both.
           </p>
 
           <div className="reg__facts">
@@ -3205,12 +3339,89 @@
       );
     }
 
+    function IdentityContextSection() {
+      const reveal = useReveal();
+      const cards = [
+        {
+          t: 'Verified Ownership',
+          d: 'Confirm whether a wallet holds official Zodiacs.org assets across native Solana and bridged Base representations.'
+        },
+        {
+          t: 'Symbolic Composition',
+          d: 'Turn held signs into element mix, modality mix, wheel coverage, and seasonal context.'
+        },
+        {
+          t: 'Built For Experiences',
+          d: 'Build profiles, receipts, seasonal moments, verifiers, and identity surfaces on app-neutral infrastructure.'
+        }
+      ];
+      const facts = [
+        { k: 'Shelf', v: '4 signs held' },
+        { k: 'Composition', v: 'Fire and water dominant' },
+        { k: 'Season', v: 'Current season represented' },
+        { k: 'Provenance', v: 'Native on Solana · bridged to Base' }
+      ];
+
+      return (
+        <section ref={reveal} id="identity" className="sec idctx reveal" aria-label="Identity Context">
+          <div className="sec__head">
+            <span className="sec__no">№ 06</span>
+            <span className="line" />
+            <span className="sec__title">Identity Context</span>
+          </div>
+
+          <h2 className="idctx__statement">
+            Not just addresses.<br/>
+            <span className="it">A symbolic layer.</span>
+          </h2>
+
+          <p className="idctx__copy">
+            The SDK turns verified public ownership into display-ready symbolic
+            context: held signs, element balance, modality balance, current
+            season, native and bridged representations, and wheel coverage.
+            Apps can use this foundation to build profiles, receipts, seasonal
+            experiences, and astrology-native interfaces without custody,
+            signing, or transactions.
+          </p>
+
+          <div className="idctx__grid">
+            {cards.map((card, i) => (
+              <article className="idctx__card" key={card.t}>
+                <span className="idctx__num">{String(i + 1).padStart(2, '0')}</span>
+                <h3 className="idctx__card-title">{card.t}</h3>
+                <p className="idctx__card-copy">{card.d}</p>
+              </article>
+            ))}
+          </div>
+
+          <div className="idctx__example">
+            <div className="idctx__example-head">
+              <div className="idctx__example-title">Public Zodiacs shelf</div>
+              <div className="idctx__example-sub">Example view</div>
+            </div>
+            <div className="idctx__receipt">
+              {facts.map((fact) => (
+                <div className="idctx__fact" key={fact.k}>
+                  <div className="idctx__fact-k">{fact.k}</div>
+                  <div className="idctx__fact-v">{fact.v}</div>
+                </div>
+              ))}
+            </div>
+            <p className="idctx__note">
+              The SDK provides computed symbolic context and public ownership
+              state. The interface chooses how to present it.
+            </p>
+          </div>
+        </section>
+      );
+    }
+
     function CatalogGrid({ active, setActive }) {
       const reveal = useReveal();
       return (
         <section ref={reveal} className="sec reveal" id="official-twelve" aria-label="The official twelve">
           <div className="sec__head">
-            <span className="sec__no">№ 06</span>
+            <span className="sec__no">№ 07</span>
             <span className="line" />
             <span className="sec__title">The Twelve</span>
           </div>
@@ -3291,21 +3502,21 @@
     function SdkSection() {
       const reveal = useReveal();
       const caps = [
-        { t: 'Recognize', d: 'Tell whether an address belongs to the official Twelve.' },
-        { t: 'Connect', d: 'Show the Solana origin and the Base counterpart together.' },
-        { t: 'Display', d: 'Use the names, symbols, artwork, and identity data consistently.' },
+        { t: 'Verify', d: 'Recognize official Zodiacs.org representations across Solana and Base.' },
+        { t: 'Read', d: 'Read public ownership state without custody, signing, or transactions.' },
+        { t: 'Compose', d: 'Shape held signs into seasonal context, wheel coverage, and identity surfaces.' },
       ];
       return (
         <section ref={reveal} id="sdk" className="sec reveal" aria-label="SDK">
           <div className="sec__head">
-            <span className="sec__no">№ 07</span>
+            <span className="sec__no">№ 08</span>
             <span className="line" />
             <span className="sec__title">SDK</span>
           </div>
           <p className="sec__lede">
-            The SDK is the developer doorway into the same record shown here.
-            It helps apps recognize official Zodiacs without holding keys or
-            moving assets.
+            The SDK is the public interface to the same registry shown here.
+            It gives apps verified facts for recognition, ownership display,
+            and symbolic identity context.
           </p>
 
           <div className="sdk__caps">
@@ -3351,7 +3562,7 @@
       return (
         <section ref={reveal} id="security" className="sec reveal" aria-label="Read-only by design">
           <div className="sec__head">
-            <span className="sec__no">№ 08</span>
+            <span className="sec__no">№ 09</span>
             <span className="line" />
             <span className="sec__title">Read-only by design</span>
           </div>
@@ -3378,7 +3589,9 @@
         { q: 'Are the Base Zodiacs separate assets?',
           a: 'No. They are official Base counterparts of the original Solana Zodiacs.' },
         { q: 'What does the SDK do?',
-          a: 'It gives apps a safe way to recognize the Twelve, show their records, and display identity data consistently.' },
+          a: 'It gives apps a safe way to recognize the Twelve, show their records, read public ownership, and compute symbolic context.' },
+        { q: 'What is identity context?',
+          a: 'A display-ready layer built from public ownership and sign metadata: held signs, element mix, modality mix, current season, and wheel coverage.' },
         { q: 'Does the SDK move assets?',
           a: 'No. It is read-only.' },
         { q: 'Does Zodiacs claim ownership of astrology?',
@@ -3389,7 +3602,7 @@
       return (
         <section ref={reveal} id="faq" className="sec reveal" aria-label="Questions">
           <div className="sec__head">
-            <span className="sec__no">№ 09</span>
+            <span className="sec__no">№ 10</span>
             <span className="line" />
             <span className="sec__title">Questions</span>
           </div>
@@ -3444,7 +3657,7 @@
             <div>Read-only</div>
           </div>
           <div className="ftr__row ftr__row--origin">
-            <span>Origin · Astrofolio · MMXXVI</span>
+            <span>Zodiacs.org · Official registry · MMXXVI</span>
           </div>
         </footer>
       );
@@ -3479,6 +3692,7 @@
             <DetailPanel sign={sign} animKey={activeTicker} />
             <ReferenceStrip sign={sign} animKey={activeTicker} />
             <Philosophy />
+            <IdentityContextSection />
             <CatalogGrid active={activeTicker} setActive={setActiveTicker} />
             <SdkSection />
             <SecuritySection />
