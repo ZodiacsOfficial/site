@@ -223,12 +223,32 @@
 
     .hero__copy {
       max-width: 38ch;
-      margin-bottom: 28px;
+      margin-bottom: 14px;
       font-family: var(--serif);
       font-size: 18px;
       line-height: 1.5;
       color: var(--ink-2);
       text-wrap: pretty;
+    }
+
+    .works-with {
+      display: inline-flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 28px;
+      padding: 8px 10px;
+      border: 1px solid rgba(201,169,97,0.18);
+      background: rgba(201,169,97,0.035);
+      color: var(--ink-dim);
+      font-family: var(--mono);
+      font-size: 8.5px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .works-with span {
+      color: var(--gold);
     }
 
     .hero__art {
@@ -651,6 +671,129 @@
       text-overflow: ellipsis;
     }
 
+    .receipt__try {
+      display: grid;
+      gap: 1px;
+      border-bottom: 1px solid var(--hair);
+      background: var(--hair);
+    }
+
+    .receipt__try-head,
+    .receipt__result {
+      background: rgba(7,9,13,0.82);
+    }
+
+    .receipt__try-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 11px 13px;
+    }
+
+    .receipt__try-head span,
+    .receipt__try-head code,
+    .receipt__input span,
+    .receipt__status,
+    .receipt__result-k {
+      font-family: var(--mono);
+      font-size: 8px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .receipt__try-head span,
+    .receipt__input span,
+    .receipt__result-k {
+      color: var(--ink-mute);
+    }
+
+    .receipt__try-head code,
+    .receipt__status {
+      color: var(--gold);
+    }
+
+    .receipt__input {
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      gap: 1px;
+      background: var(--hair);
+    }
+
+    .receipt__input span,
+    .receipt__input input {
+      min-width: 0;
+      background: rgba(7,9,13,0.76);
+    }
+
+    .receipt__input span {
+      display: flex;
+      align-items: center;
+      padding: 0 13px;
+    }
+
+    .receipt__input input {
+      width: 100%;
+      min-height: 42px;
+      padding: 0 13px;
+      border: 0;
+      border-radius: 0;
+      color: var(--ink);
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.02em;
+      outline: none;
+    }
+
+    .receipt__input input:focus {
+      box-shadow: inset 0 0 0 1px rgba(226,200,122,0.42);
+    }
+
+    .receipt__result {
+      display: grid;
+      gap: 8px;
+      padding: 13px;
+    }
+
+    .receipt__result-v {
+      font-family: var(--serif);
+      font-size: 18px;
+      line-height: 1.18;
+      color: var(--ink);
+    }
+
+    .receipt__result-meta {
+      font-family: var(--mono);
+      font-size: 8px;
+      letter-spacing: 0.12em;
+      line-height: 1.7;
+      text-transform: uppercase;
+      color: var(--ink-dim);
+    }
+
+    .receipt__copy {
+      width: 100%;
+      min-height: 42px;
+      margin-top: 16px;
+      border: 1px solid rgba(201,169,97,0.22);
+      border-radius: 0;
+      background: rgba(201,169,97,0.045);
+      color: var(--gold-bright);
+      cursor: pointer;
+      font-family: var(--mono);
+      font-size: 8.5px;
+      letter-spacing: 0.17em;
+      text-transform: uppercase;
+      transition: border-color 220ms var(--ease), background 220ms var(--ease);
+    }
+
+    .receipt__copy:hover,
+    .receipt__copy:focus-visible {
+      border-color: rgba(226,200,122,0.58);
+      background: rgba(201,169,97,0.075);
+      outline: none;
+    }
+
     .receipt__stage {
       position: relative;
       min-height: 152px;
@@ -683,6 +826,12 @@
       justify-items: center;
       gap: 8px;
       background: rgba(7,9,13,0.86);
+      transition: background 220ms var(--ease), box-shadow 220ms var(--ease);
+    }
+
+    .receipt__token:hover {
+      background: rgba(201,169,97,0.07);
+      box-shadow: inset 0 0 0 1px rgba(226,200,122,0.20);
     }
 
     .receipt__token img {
@@ -1024,6 +1173,20 @@
         grid-template-columns: 1fr;
       }
 
+      .receipt__try-head,
+      .receipt__input {
+        grid-template-columns: 1fr;
+      }
+
+      .receipt__try-head {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .receipt__input span {
+        min-height: 30px;
+      }
+
       .receipt__stage {
         min-height: auto;
         padding: 18px 14px;
@@ -1095,6 +1258,9 @@
           registry: official addresses, native Solana origins, bridged Base
           representations, public ownership, and symbolic identity context.
         </p>
+        <div class="works-with" aria-label="SDK platform support">
+          TypeScript + React 18+ <span>•</span> Solana + Base
+        </div>
         <div class="hero__art" aria-label="Zodiacs artwork">
           <img class="hero__figure" src="/assets/nuggets/thumb/taurus.png" alt="Taurus figure" />
         </div>
@@ -1317,6 +1483,29 @@ console.log(context.wheelCoverage);</code></pre>
             <span>SDK input</span>
             <code>getCosmicReceiptData(ownership)</code>
           </div>
+          <div class="receipt__try" aria-label="Try live address verification">
+            <div class="receipt__try-head">
+              <span>Try it live</span>
+              <code>getRepresentationByAddress(address)</code>
+            </div>
+            <label class="receipt__input" for="receipt-address-input">
+              <span>Address</span>
+              <input
+                id="receipt-address-input"
+                type="text"
+                inputmode="text"
+                autocomplete="off"
+                spellcheck="false"
+                value="0x3ffB5282F5891Dd8c813E64059EdB0607537eC91"
+                aria-describedby="receipt-address-result"
+              />
+            </label>
+            <div class="receipt__result" id="receipt-address-result" aria-live="polite">
+              <span class="receipt__result-k">Verification</span>
+              <span class="receipt__result-v">Loading official registry...</span>
+              <span class="receipt__result-meta">Read-only local check</span>
+            </div>
+          </div>
           <div class="receipt__stage">
             <div class="receipt__tokens" aria-label="Held signs in sample shelf">
               <div class="receipt__token">
@@ -1373,6 +1562,9 @@ console.log(context.wheelCoverage);</code></pre>
               <span class="held">Pisces</span>
               <span>8 open</span>
             </div>
+            <button class="receipt__copy" type="button" data-copy-receipt>
+              Copy receipt data
+            </button>
           </div>
         </div>
       </section>
@@ -1572,6 +1764,157 @@ console.log(context.wheelCoverage);</code></pre>
         }
       });
     });
+
+    const sampleReceiptData = {
+      heldSigns: ["aries", "gemini", "leo", "pisces"],
+      totalHeldSigns: 4,
+      wheelCoverage: "33.33%",
+      elementMix: ["fire", "air", "water"],
+      currentSeasonRepresented: true,
+      representations: {
+        nativeSolana: 2,
+        bridgedBase: 2
+      },
+      generatedBy: [
+        "getCosmicReceiptData",
+        "getZodiacIdentityContext"
+      ]
+    };
+
+    const fallbackRegistry = {
+      assets: [
+        {
+          sign: "aries",
+          displayName: "Aries",
+          native: {
+            sign: "aries",
+            chain: "solana",
+            kind: "native",
+            tokenStandard: "SPL",
+            address: "GhFiFrExPY3proVF96oth1gESWA5QPQzdtb8cy8b1YZv",
+            isCanonicalOrigin: true
+          },
+          representations: [
+            {
+              sign: "aries",
+              chain: "solana",
+              kind: "native",
+              tokenStandard: "SPL",
+              address: "GhFiFrExPY3proVF96oth1gESWA5QPQzdtb8cy8b1YZv",
+              isCanonicalOrigin: true
+            },
+            {
+              sign: "aries",
+              chain: "base",
+              chainId: 8453,
+              kind: "bridged",
+              tokenStandard: "ERC20",
+              address: "0x3ffB5282F5891Dd8c813E64059EdB0607537eC91",
+              originChain: "solana",
+              originAddress: "GhFiFrExPY3proVF96oth1gESWA5QPQzdtb8cy8b1YZv",
+              isCanonicalOrigin: false
+            }
+          ]
+        }
+      ]
+    };
+
+    const formatDisplayName = (value) => value
+      ? value.charAt(0).toUpperCase() + value.slice(1)
+      : "Unknown";
+
+    const flattenRepresentations = (registry) => (registry.assets || []).flatMap((asset) =>
+      (asset.representations || []).map((representation) => ({
+        ...representation,
+        displayName: asset.displayName || formatDisplayName(asset.sign),
+        nativeAddress: asset.native?.address
+      }))
+    );
+
+    const normalizeLookupAddress = (value) => {
+      const trimmed = value.trim();
+      return trimmed.startsWith("0x") ? trimmed.toLowerCase() : trimmed;
+    };
+
+    const renderVerification = (target, representation, registryReady) => {
+      if (!target) return;
+
+      if (!representation) {
+        target.innerHTML = `
+          <span class="receipt__result-k">Verification</span>
+          <span class="receipt__result-v">Not found in the official registry.</span>
+          <span class="receipt__result-meta">${registryReady ? "Unknown address" : "Registry unavailable; fallback check active"}</span>
+        `;
+        return;
+      }
+
+      const isBase = representation.chain === "base";
+      const status = isBase
+        ? "Official bridged Zodiacs.org asset on Base"
+        : "Official native Zodiacs.org asset on Solana";
+      const details = [
+        representation.displayName,
+        representation.tokenStandard,
+        representation.kind,
+        isBase && representation.originAddress ? `Origin ${representation.originAddress}` : null
+      ].filter(Boolean).join(" · ");
+
+      target.innerHTML = `
+        <span class="receipt__result-k">Verification</span>
+        <span class="receipt__result-v">${status}</span>
+        <span class="receipt__result-meta">${details}</span>
+      `;
+    };
+
+    const setupReceiptDemo = async () => {
+      const input = document.querySelector("#receipt-address-input");
+      const result = document.querySelector("#receipt-address-result");
+      const copyReceipt = document.querySelector("[data-copy-receipt]");
+      if (!input || !result) return;
+
+      let registry = fallbackRegistry;
+      let registryReady = false;
+      try {
+        const response = await fetch("/registry/zodiacs.registry.json", { cache: "force-cache" });
+        if (response.ok) {
+          const payload = await response.json();
+          if (Array.isArray(payload.assets)) {
+            registry = payload;
+            registryReady = true;
+          }
+        }
+      } catch {
+        registryReady = false;
+      }
+
+      const representations = flattenRepresentations(registry);
+      const verify = () => {
+        const address = normalizeLookupAddress(input.value);
+        const representation = representations.find((item) =>
+          normalizeLookupAddress(item.address) === address
+        );
+        renderVerification(result, representation, registryReady);
+      };
+
+      input.addEventListener("input", verify);
+      verify();
+
+      if (copyReceipt) {
+        copyReceipt.addEventListener("click", async () => {
+          try {
+            await navigator.clipboard.writeText(JSON.stringify(sampleReceiptData, null, 2));
+            copyReceipt.textContent = "Receipt data copied";
+            window.setTimeout(() => {
+              copyReceipt.textContent = "Copy receipt data";
+            }, 1400);
+          } catch {
+            copyReceipt.textContent = "Copy receipt data";
+          }
+        });
+      }
+    };
+
+    setupReceiptDemo();
 
     if (window.matchMedia("(max-width: 520px)").matches) {
       document.querySelectorAll(".code-details").forEach((details) => {
