@@ -1868,7 +1868,9 @@
           </div>
 
           <p className="access__note">
-            Official mint addresses should always be verified through the Zodiacs.org registry and SDK.
+            Official mint addresses should always be verified through the
+            Zodiacs.org <a className="access__note-link" href="#registry">registry</a> and{' '}
+            <a className="access__note-link" href="#sdk">SDK</a>.
           </p>
 
           <div className="access__cta">
