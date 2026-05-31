@@ -1451,6 +1451,100 @@
       background: rgba(255,255,255,0.01);
     }
 
+    .market {
+      margin-top: 18px;
+      border: 1px solid var(--hair);
+      background:
+        linear-gradient(180deg, rgba(201,169,97,0.025), transparent 62%),
+        rgba(8,10,14,0.52);
+    }
+    .market__head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 15px 16px 13px;
+      border-bottom: 1px solid var(--hair);
+    }
+    .market__label {
+      display: block;
+      margin-bottom: 6px;
+      font-family: var(--mono);
+      font-size: 9.5px;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+    .market__copy,
+    .market__state {
+      margin: 0;
+      font-family: var(--serif);
+      font-size: 13.5px;
+      line-height: 1.45;
+      color: var(--ink-dim);
+      text-wrap: pretty;
+    }
+    .market__source {
+      flex: 0 0 auto;
+      margin-top: 1px;
+      font-family: var(--mono);
+      font-size: 8.5px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ink-mute);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+    }
+    .market__source:hover {
+      color: var(--gold-bright);
+      border-bottom-color: var(--hair-3);
+    }
+    .market__grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+    .market__cell {
+      min-height: 72px;
+      padding: 13px 14px 12px;
+      border-bottom: 1px solid var(--hair);
+    }
+    .market__cell:nth-child(odd) {
+      border-right: 1px solid var(--hair);
+    }
+    .market__cell:nth-last-child(-n + 2) {
+      border-bottom: 0;
+    }
+    .market__k {
+      margin-bottom: 7px;
+      font-family: var(--mono);
+      font-size: 8.5px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ink-mute);
+    }
+    .market__v {
+      font-family: var(--serif);
+      font-size: 16px;
+      line-height: 1.15;
+      color: var(--ink-2);
+      font-style: italic;
+    }
+    .market__v--mono {
+      font-family: var(--mono);
+      font-style: normal;
+      font-size: 12px;
+      letter-spacing: 0.03em;
+    }
+    .market__change--up {
+      color: var(--gold-bright);
+    }
+    .market__change--down {
+      color: #B07A6E;
+    }
+    .market__body {
+      padding: 15px 16px 16px;
+    }
+
     /* ── Market data strip ─────────────────────────────────────── */
 
     .mkt {
@@ -2157,6 +2251,16 @@
           The live page includes an address verifier for Solana mints and Base
           ERC-20 addresses. Unknown addresses are reported neutrally as not
           found in the official Zodiacs.org registry.
+        </p>
+      </section>
+
+      <section class="static-site__section" id="market-context">
+        <h2>Market Context</h2>
+        <p>
+          Each rendered Zodiac detail view may show optional third-party market
+          context from Dex Screener when a Solana pair record is configured.
+          This context may be delayed or unavailable and never changes the
+          registry, identity, or verification status of a sign.
         </p>
       </section>
 
@@ -3126,6 +3230,144 @@
 
     const SIGNS = ZODIACS_REGISTRY.assets.map(toDisplaySign);
 
+    const ZODIAC_MARKET_PAIRS = {
+      aries: {
+        chainId: 'solana',
+        pairId: 'HRn98YLGigP475eS1GaQYRMbqk1V4dkV6tdKyLhVh2iS'
+      },
+      taurus: {
+        chainId: 'solana',
+        pairId: '2GNtxia4fLW3URj5MLqVfgoKrAgDpphtAVazK41eTPfu'
+      },
+      gemini: {
+        chainId: 'solana',
+        pairId: 'HxhdKrB1UpSwfuMoZMVzPVELzbPWHdyN6PHU9CBFium9'
+      },
+      leo: {
+        chainId: 'solana',
+        pairId: '48ErBGMqiZekyLoCcebd7cS5KNQPzqr7QQAK9mzAPQGQ'
+      },
+      virgo: {
+        chainId: 'solana',
+        pairId: '5WcVjf8fzPkHaZqTSZDdbDFL6p2bLbAgEigxpevNrcRh'
+      },
+      libra: {
+        chainId: 'solana',
+        pairId: 'DTXPQjK4ae4h2Wc7D5Rpij8YmSQxqLuTcNKrpBCjcAN9'
+      },
+      scorpio: {
+        chainId: 'solana',
+        pairId: '3d2KYuMgj2yotNC6SKX4HNoeSWp4n8zqZSQ9kFH81Yta'
+      },
+      capricorn: {
+        chainId: 'solana',
+        pairId: '549aknNCvxbiqmikS6sAnY6Dbg37MeENWn6ZFBfc7sin'
+      },
+      aquarius: {
+        chainId: 'solana',
+        pairId: 'BygCEAhCNyWC8Co9yPa4K84NGkgkgMWdib2FG5hhuiUv'
+      },
+      pisces: {
+        chainId: 'solana',
+        pairId: 'Fzz8QrSV8sPKsTtHocwYARE8Zo6Rd4Wv2Ee4JtCuiDko'
+      }
+    };
+
+    const MARKET_CONTEXT_CACHE = new Map();
+    const unavailableMarketContext = (reason = 'unavailable') => ({
+      status: 'unavailable',
+      reason
+    });
+    const toFiniteNumber = (value) => {
+      if (value === null || value === undefined || value === '') return null;
+      const n = Number(value);
+      return Number.isFinite(n) ? n : null;
+    };
+    function formatPriceUsd(value) {
+      const n = toFiniteNumber(value);
+      if (n === null) return '—';
+      if (Math.abs(n) >= 1) return `$${n.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+      const decimals = Math.abs(n) < 0.0001 ? 8 : Math.abs(n) < 0.01 ? 6 : 4;
+      return `$${n.toFixed(decimals).replace(/0+$/, '').replace(/\.$/, '')}`;
+    }
+    function formatUsdCompact(value) {
+      const n = toFiniteNumber(value);
+      if (n === null) return '—';
+      const abs = Math.abs(n);
+      const compact = (divisor, suffix) => `$${(n / divisor).toLocaleString(undefined, { maximumFractionDigits: 1 })}${suffix}`;
+      if (abs >= 1_000_000_000) return compact(1_000_000_000, 'B');
+      if (abs >= 1_000_000) return compact(1_000_000, 'M');
+      if (abs >= 1_000) return compact(1_000, 'K');
+      return `$${n.toLocaleString(undefined, { maximumFractionDigits: 2 })}`;
+    }
+    function formatPercent(value) {
+      const n = toFiniteNumber(value);
+      if (n === null) return '—';
+      const sign = n > 0 ? '+' : '';
+      return `${sign}${n.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}%`;
+    }
+    function formatDexId(value) {
+      if (!value) return '—';
+      return String(value).replace(/[-_]/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
+    }
+    function formatPairDate(value) {
+      const n = toFiniteNumber(value);
+      if (n === null) return '—';
+      const date = new Date(n);
+      if (Number.isNaN(date.getTime())) return '—';
+      return date.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' });
+    }
+    function parseMarketContextPayload(payload, config) {
+      const pairs = Array.isArray(payload?.pairs) ? payload.pairs : null;
+      if (!pairs?.length) return unavailableMarketContext('no-pair');
+      const pair = pairs.find((item) => eq(item?.pairAddress, config.pairId)) || pairs[0];
+      if (!pair || pair.chainId !== config.chainId || !pair.pairAddress) {
+        return unavailableMarketContext('malformed');
+      }
+      return {
+        status: 'ok',
+        pair: {
+          chainId: pair.chainId,
+          dexId: pair.dexId || '',
+          url: pair.url || '',
+          pairAddress: pair.pairAddress,
+          priceUsd: pair.priceUsd,
+          priceChange24h: pair.priceChange?.h24,
+          liquidityUsd: pair.liquidity?.usd,
+          marketCap: pair.marketCap,
+          pairCreatedAt: pair.pairCreatedAt
+        }
+      };
+    }
+    function loadMarketContext(config) {
+      if (!config?.chainId || !config?.pairId) {
+        return Promise.resolve(unavailableMarketContext('not-configured'));
+      }
+      const key = `${config.chainId}:${config.pairId}`;
+      if (MARKET_CONTEXT_CACHE.has(key)) return MARKET_CONTEXT_CACHE.get(key);
+
+      const url = `https://api.dexscreener.com/latest/dex/pairs/${encodeURIComponent(config.chainId)}/${encodeURIComponent(config.pairId)}`;
+      const request = fetch(url)
+        .then(async (response) => {
+          if (!response.ok) return unavailableMarketContext('http');
+          let payload;
+          try {
+            payload = await response.json();
+          } catch {
+            return unavailableMarketContext('json');
+          }
+          return parseMarketContextPayload(payload, config);
+        })
+        .catch(() => unavailableMarketContext('network'))
+        .then((result) => {
+          MARKET_CONTEXT_CACHE.set(key, Promise.resolve(result));
+          return result;
+        });
+
+      MARKET_CONTEXT_CACHE.set(key, request);
+      return request;
+    }
+
     // Verifier lookup helpers — same registry semantics exposed by
     // @zodiacs/sdk through isOfficialZodiacAddress() etc.
     const norm = (s) => (s || '').trim();
@@ -3639,6 +3881,95 @@
       );
     }
 
+    function useMarketContext(sign) {
+      const signKey = sign?.asset?.sign;
+      const config = signKey ? ZODIAC_MARKET_PAIRS[signKey] : null;
+      const [state, setState] = useState(
+        config ? { status: 'loading' } : unavailableMarketContext('not-configured')
+      );
+
+      useEffect(() => {
+        let cancelled = false;
+        if (!config) {
+          setState(unavailableMarketContext('not-configured'));
+          return () => { cancelled = true; };
+        }
+
+        setState({ status: 'loading' });
+        loadMarketContext(config).then((result) => {
+          if (!cancelled) setState(result);
+        });
+
+        return () => { cancelled = true; };
+      }, [signKey]);
+
+      return { config, state };
+    }
+
+    function MarketContext({ sign }) {
+      const { state } = useMarketContext(sign);
+      const pair = state.status === 'ok' ? state.pair : null;
+      const change = toFiniteNumber(pair?.priceChange24h);
+      const changeClass = change === null
+        ? ''
+        : change > 0
+          ? ' market__change--up'
+          : change < 0
+            ? ' market__change--down'
+            : '';
+      const cells = pair ? [
+        { k: 'Price USD', v: formatPriceUsd(pair.priceUsd), mono: true },
+        { k: '24H Change', v: formatPercent(pair.priceChange24h), mono: true, className: changeClass },
+        { k: 'Liquidity', v: formatUsdCompact(pair.liquidityUsd) },
+        { k: 'Market Cap', v: formatUsdCompact(pair.marketCap) },
+        { k: 'Pair Created', v: formatPairDate(pair.pairCreatedAt) },
+        { k: 'Source / DEX', v: formatDexId(pair.dexId) }
+      ] : [];
+
+      return (
+        <aside className="market" aria-label={`${sign.name} market context`}>
+          <div className="market__head">
+            <div>
+              <span className="market__label">Market Context</span>
+              <p className="market__copy">
+                Third-party market context. May be delayed or unavailable.
+              </p>
+            </div>
+            {pair?.url && (
+              <a className="market__source" href={pair.url} rel="noopener noreferrer">
+                Dex Screener ↗
+              </a>
+            )}
+          </div>
+
+          {state.status === 'ok' && (
+            <div className="market__grid">
+              {cells.map((cell) => (
+                <div className="market__cell" key={cell.k}>
+                  <div className="market__k">{cell.k}</div>
+                  <div className={'market__v' + (cell.mono ? ' market__v--mono' : '') + (cell.className || '')}>
+                    {cell.v}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {state.status === 'loading' && (
+            <div className="market__body">
+              <p className="market__state">Loading market context.</p>
+            </div>
+          )}
+
+          {state.status === 'unavailable' && (
+            <div className="market__body">
+              <p className="market__state">Market context unavailable.</p>
+            </div>
+          )}
+        </aside>
+      );
+    }
+
     function DetailPanel({ sign, animKey }) {
       const reveal = useReveal();
       return (
@@ -3699,6 +4030,8 @@
             <blockquote className="detail__bio">
               {sign.shortBio}
             </blockquote>
+
+            <MarketContext sign={sign} />
           </article>
         </section>
       );
