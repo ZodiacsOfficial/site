@@ -218,10 +218,8 @@
     .hero__art {
       position: relative;
       display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      align-items: end;
-      gap: 0;
-      height: 154px;
+      place-items: end center;
+      height: 178px;
       margin: 0 0 22px;
       border-top: 1px solid var(--hair);
       border-bottom: 1px solid var(--hair);
@@ -244,24 +242,14 @@
     .hero__figure {
       position: relative;
       z-index: 1;
-      width: 116%;
-      max-height: 150px;
+      width: min(72%, 270px);
+      max-height: 176px;
       object-fit: contain;
       object-position: center bottom;
       filter: drop-shadow(0 26px 26px rgba(0,0,0,0.62));
-      opacity: 0.84;
-      transform: translateY(6px);
+      opacity: 0.94;
+      transform: translateY(8px);
     }
-
-    .hero__figure:nth-child(2) {
-      width: 128%;
-      max-height: 164px;
-      opacity: 0.96;
-      transform: translate(-9%, 4px);
-    }
-
-    .hero__figure:first-child { transform: translate(7%, 8px); opacity: 0.62; }
-    .hero__figure:last-child { transform: translate(-12%, 10px); opacity: 0.58; }
 
     .actions {
       display: grid;
@@ -631,23 +619,31 @@
       color: var(--ink);
     }
 
-    .mini-wheel {
-      display: grid;
-      grid-template-columns: repeat(6, 1fr);
-      gap: 7px;
+    .coverage-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
       margin-top: 16px;
     }
 
-    .mini-wheel span {
-      aspect-ratio: 1;
-      border: 1px solid var(--hair);
-      background: rgba(201,169,97,0.03);
+    .coverage-strip span {
+      display: inline-flex;
+      align-items: center;
+      min-height: 32px;
+      padding: 0 10px;
+      border: 1px solid rgba(201,169,97,0.18);
+      background: rgba(201,169,97,0.035);
+      font-family: var(--mono);
+      font-size: 8px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--ink-dim);
     }
 
-    .mini-wheel .held {
-      border-color: rgba(226,200,122,0.7);
-      background: rgba(201,169,97,0.18);
-      box-shadow: inset 0 0 0 1px rgba(244,239,227,0.05);
+    .coverage-strip .held {
+      border-color: rgba(226,200,122,0.58);
+      background: rgba(201,169,97,0.14);
+      color: var(--gold-bright);
     }
 
     .api {
@@ -797,15 +793,12 @@
       }
 
       .hero__art {
-        height: 132px;
+        height: 148px;
       }
 
       .hero__figure {
-        max-height: 128px;
-      }
-
-      .hero__figure:nth-child(2) {
-        max-height: 140px;
+        width: min(78%, 250px);
+        max-height: 146px;
       }
 
       .grid--two {
@@ -887,8 +880,8 @@
         margin-bottom: 7px;
       }
 
-      .mini-wheel {
-        gap: 6px;
+      .coverage-strip {
+        gap: 7px;
       }
 
       .api__v code {
@@ -921,9 +914,7 @@
           representations, public ownership, and symbolic identity context.
         </p>
         <div class="hero__art" aria-label="Zodiacs artwork">
-          <img class="hero__figure" src="/assets/nuggets/thumb/aries.png" alt="Aries figure" />
           <img class="hero__figure" src="/assets/nuggets/thumb/leo.png" alt="Leo figure" />
-          <img class="hero__figure" src="/assets/nuggets/thumb/pisces.png" alt="Pisces figure" />
         </div>
         <div class="actions">
           <a class="button" href="#examples">
@@ -1167,9 +1158,12 @@ console.log(context.wheelCoverage);</code></pre>
                 <span class="fact__v">2 Base</span>
               </div>
             </div>
-            <div class="mini-wheel" aria-label="Wheel coverage sample">
-              <span class="held"></span><span></span><span class="held"></span><span></span><span class="held"></span><span></span>
-              <span></span><span></span><span></span><span></span><span></span><span class="held"></span>
+            <div class="coverage-strip" aria-label="Wheel coverage sample">
+              <span class="held">Aries</span>
+              <span class="held">Gemini</span>
+              <span class="held">Leo</span>
+              <span class="held">Pisces</span>
+              <span>8 open</span>
             </div>
           </div>
         </div>
