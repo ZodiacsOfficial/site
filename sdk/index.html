@@ -469,14 +469,43 @@
       border: 1px solid var(--hair-2);
     }
 
+    .code__bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border-bottom: 1px solid var(--hair);
+      background: rgba(10,12,17,0.82);
+    }
+
     .code__label {
       padding: 9px 14px;
-      border-bottom: 1px solid var(--hair);
       font-family: var(--mono);
       font-size: 9px;
       letter-spacing: 0.22em;
       text-transform: uppercase;
       color: var(--ink-mute);
+    }
+
+    .copy-code {
+      align-self: stretch;
+      padding: 0 13px;
+      border: 0;
+      border-left: 1px solid var(--hair);
+      border-radius: 0;
+      background: transparent;
+      color: var(--gold);
+      cursor: pointer;
+      font-family: var(--mono);
+      font-size: 8px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .copy-code:hover,
+    .copy-code:focus-visible {
+      background: rgba(201,169,97,0.06);
+      outline: none;
     }
 
     pre {
@@ -493,12 +522,41 @@
 
     code { font-family: var(--mono); }
 
+    .tok-keyword { color: #e2c87a; }
+    .tok-function { color: #f4efe3; }
+    .tok-string { color: #c9a961; }
+    .tok-comment { color: rgba(244,239,227,0.45); }
+
     .receipt {
       border: 1px solid var(--hair-2);
       background:
         radial-gradient(88% 80% at 50% 0%, rgba(201,169,97,0.10), transparent 70%),
         linear-gradient(180deg, rgba(17,21,28,0.92), rgba(7,9,13,0.92));
       overflow: hidden;
+    }
+
+    .receipt__chrome {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 11px 14px;
+      border-bottom: 1px solid var(--hair);
+      background: rgba(7,9,13,0.62);
+    }
+
+    .receipt__chrome span,
+    .receipt__chrome code {
+      font-family: var(--mono);
+      font-size: 8px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink-mute);
+    }
+
+    .receipt__chrome code {
+      color: var(--gold);
     }
 
     .receipt__stage {
@@ -842,6 +900,10 @@
         padding-inline: 14px;
       }
 
+      .copy-code {
+        padding-inline: 12px;
+      }
+
       .receipt__stage {
         min-height: auto;
         padding: 18px 14px;
@@ -995,7 +1057,10 @@
             <details class="code-details" open>
               <summary>View TypeScript</summary>
               <div class="code" aria-label="Verify address example">
-                <div class="code__label">verify.ts</div>
+                <div class="code__bar">
+                  <div class="code__label">verify.ts</div>
+                  <button class="copy-code" type="button">Copy</button>
+                </div>
                 <pre><code>import {
   getRepresentationByAddress
 } from "@zodiacs/sdk";
@@ -1019,7 +1084,10 @@ console.log(representation?.kind);  // "bridged"</code></pre>
             <details class="code-details" open>
               <summary>View TypeScript</summary>
               <div class="code" aria-label="Native counterpart example">
-                <div class="code__label">provenance.ts</div>
+                <div class="code__bar">
+                  <div class="code__label">provenance.ts</div>
+                  <button class="copy-code" type="button">Copy</button>
+                </div>
                 <pre><code>import {
   getBaseZodiacRepresentation,
   getNativeCounterpart
@@ -1043,7 +1111,10 @@ console.log(origin?.address); // Solana SPL mint</code></pre>
             <details class="code-details" open>
               <summary>View TypeScript</summary>
               <div class="code" aria-label="Read ownership example">
-                <div class="code__label">ownership.ts</div>
+                <div class="code__bar">
+                  <div class="code__label">ownership.ts</div>
+                  <button class="copy-code" type="button">Copy</button>
+                </div>
                 <pre><code>import { Connection, PublicKey } from "@solana/web3.js";
 import { createPublicClient, http } from "viem";
 import { base } from "viem/chains";
@@ -1080,7 +1151,10 @@ console.log(baseOwnership.heldSigns);</code></pre>
             <details class="code-details" open>
               <summary>View TypeScript</summary>
               <div class="code" aria-label="Identity context example">
-                <div class="code__label">context.ts</div>
+                <div class="code__bar">
+                  <div class="code__label">context.ts</div>
+                  <button class="copy-code" type="button">Copy</button>
+                </div>
                 <pre><code>import { getZodiacIdentityContext } from "@zodiacs/sdk";
 
 const context = getZodiacIdentityContext(ownership, {
@@ -1109,6 +1183,10 @@ console.log(context.wheelCoverage);</code></pre>
           factual and repeatable.
         </p>
         <div class="receipt" aria-label="Sample identity context">
+          <div class="receipt__chrome">
+            <span>Component preview</span>
+            <code>CosmicReceiptCard</code>
+          </div>
           <div class="receipt__stage">
             <div class="receipt__tokens" aria-label="Held signs in sample shelf">
               <div class="receipt__token">
@@ -1248,8 +1326,16 @@ console.log(context.wheelCoverage);</code></pre>
           verification, read-only ownership, or display-ready symbolic context.
         </p>
         <div class="code code--install" aria-label="Install command">
-          <div class="code__label">install</div>
+          <div class="code__bar">
+            <div class="code__label">install</div>
+            <button class="copy-code" type="button">Copy</button>
+          </div>
           <pre><code>npm i @zodiacs/sdk</code></pre>
+        </div>
+        <div class="note">
+          React hooks and UI primitives are included, including
+          <code>useZodiacIdentityContext</code>, <code>useCosmicReceiptData</code>,
+          and <code>useCurrentZodiacSeason</code>.
         </div>
         <div class="resource">
           <a href="https://github.com/ZodiacsOfficial/sdk" rel="noopener noreferrer">
@@ -1295,6 +1381,53 @@ console.log(context.wheelCoverage);</code></pre>
     </main>
   </div>
   <script>
+    const escapeHtml = (value) => value
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;");
+
+    const highlightCode = (value) => {
+      const saved = [];
+      const save = (className, text) => {
+        const token = `@@${saved.length}@@`;
+        saved.push(`<span class="${className}">${text}</span>`);
+        return token;
+      };
+
+      let html = escapeHtml(value);
+      html = html.replace(/(\/\/[^\n]*)/g, (match) => save("tok-comment", match));
+      html = html.replace(/("[^\n"]*"|'[^\n']*'|`[^\n`]*`)/g, (match) => save("tok-string", match));
+      html = html.replace(/\b(import|from|const|await|new)\b/g, '<span class="tok-keyword">$1</span>');
+      html = html.replace(/\b(get[A-Za-z0-9_]+|createPublicClient|http|Connection|PublicKey|console|log)\b/g, '<span class="tok-function">$1</span>');
+      saved.forEach((replacement, index) => {
+        html = html.replace(`@@${index}@@`, replacement);
+      });
+      return html;
+    };
+
+    document.querySelectorAll(".code").forEach((block) => {
+      const code = block.querySelector("code");
+      const button = block.querySelector(".copy-code");
+      if (!code) return;
+
+      const source = code.textContent.trimEnd();
+      code.dataset.source = source;
+      code.innerHTML = highlightCode(source);
+
+      if (!button) return;
+      button.addEventListener("click", async () => {
+        try {
+          await navigator.clipboard.writeText(source);
+          button.textContent = "Copied";
+          window.setTimeout(() => {
+            button.textContent = "Copy";
+          }, 1200);
+        } catch {
+          button.textContent = "Copy";
+        }
+      });
+    });
+
     if (window.matchMedia("(max-width: 520px)").matches) {
       document.querySelectorAll(".code-details").forEach((details) => {
         details.removeAttribute("open");
