@@ -255,7 +255,7 @@
       display: grid;
       grid-template-columns: 1fr;
       gap: 10px;
-      margin: 0 0 58px;
+      margin: 0 0 16px;
     }
 
     .button {
@@ -285,6 +285,40 @@
       width: 32px;
       height: 32px;
       border: 1px solid var(--hair-2);
+      color: var(--gold);
+    }
+
+    .jump-nav {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1px;
+      margin: 0 0 58px;
+      border: 1px solid var(--hair);
+      background: var(--hair);
+    }
+
+    .jump-nav a {
+      min-height: 42px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 0 12px;
+      background: rgba(7,9,13,0.86);
+      color: var(--ink-dim);
+      font-family: var(--mono);
+      font-size: 8.5px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      transition: color 220ms var(--ease), background 220ms var(--ease);
+    }
+
+    .jump-nav a:hover {
+      color: var(--gold-bright);
+      background: rgba(201,169,97,0.055);
+    }
+
+    .jump-nav span {
       color: var(--gold);
     }
 
@@ -557,6 +591,33 @@
 
     .receipt__chrome code {
       color: var(--gold);
+    }
+
+    .receipt__meta {
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      gap: 1px;
+      border-bottom: 1px solid var(--hair);
+      background: var(--hair);
+    }
+
+    .receipt__meta span,
+    .receipt__meta code {
+      min-width: 0;
+      padding: 10px 13px;
+      background: rgba(7,9,13,0.76);
+      font-family: var(--mono);
+      font-size: 8px;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      color: var(--ink-mute);
+    }
+
+    .receipt__meta code {
+      color: var(--ink-2);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .receipt__stage {
@@ -904,6 +965,20 @@
         padding-inline: 12px;
       }
 
+      .jump-nav {
+        margin-bottom: 46px;
+      }
+
+      .jump-nav a {
+        min-height: 40px;
+        padding-inline: 10px;
+        font-size: 7.5px;
+      }
+
+      .receipt__meta {
+        grid-template-columns: 1fr;
+      }
+
       .receipt__stage {
         min-height: auto;
         padding: 18px 14px;
@@ -988,6 +1063,12 @@
             <span>↗</span>
           </a>
         </div>
+        <nav class="jump-nav" aria-label="SDK page sections">
+          <a href="#examples">Examples <span>↓</span></a>
+          <a href="#receipt-preview">Receipt <span>↓</span></a>
+          <a href="#core-api">Core API <span>↓</span></a>
+          <a href="#quick-start">Quick start <span>↓</span></a>
+        </nav>
       </section>
 
       <section class="section" aria-labelledby="intro">
@@ -1171,7 +1252,7 @@ console.log(context.wheelCoverage);</code></pre>
         </div>
       </section>
 
-      <section class="section" aria-labelledby="receipt-title">
+      <section class="section" id="receipt-preview" aria-labelledby="receipt-title">
         <div class="section__head">
           <span class="section__no">№ 04</span>
           <span class="section__title">Identity context</span>
@@ -1184,8 +1265,12 @@ console.log(context.wheelCoverage);</code></pre>
         </p>
         <div class="receipt" aria-label="Sample identity context">
           <div class="receipt__chrome">
-            <span>Component preview</span>
+            <span>Styled component preview</span>
             <code>CosmicReceiptCard</code>
+          </div>
+          <div class="receipt__meta">
+            <span>SDK input</span>
+            <code>getCosmicReceiptData(ownership)</code>
           </div>
           <div class="receipt__stage">
             <div class="receipt__tokens" aria-label="Held signs in sample shelf">
@@ -1247,7 +1332,7 @@ console.log(context.wheelCoverage);</code></pre>
         </div>
       </section>
 
-      <section class="section" aria-labelledby="api-title">
+      <section class="section" id="core-api" aria-labelledby="api-title">
         <div class="section__head">
           <span class="section__no">№ 05</span>
           <span class="section__title">Core API</span>
@@ -1296,6 +1381,16 @@ console.log(context.wheelCoverage);</code></pre>
               <code>getZodiacIdentityContext</code>
               <code>getCosmicReceiptData</code>
               <code>getCurrentZodiacSeason</code>
+            </div>
+          </div>
+          <div class="api__row">
+            <div class="api__k">React</div>
+            <div class="api__v">
+              <code>useZodiacIdentityContext</code>
+              <code>useCosmicReceiptData</code>
+              <code>useCurrentZodiacSeason</code>
+              <code>OfficialZodiacTokenCard</code>
+              <code>CosmicReceiptCard</code>
             </div>
           </div>
         </div>
