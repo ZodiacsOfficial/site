@@ -6,7 +6,8 @@ reverse-engineer filenames from `index.html`.
 
 ## Structure
 
-- `icons/<sign>.png` - compact sign glyph/mark assets used by selectors and labels.
+- `icons/<sign>.png` - archived compact sign glyph/mark assets used by selectors and labels.
+- `sdk/zodiac-icons/circle/<sign>.png` - SDK brand kit circle icons.
 - `nuggets/<sign>.png` - primary sculptural sign figures.
 - `nuggets/thumb/<sign>.png` - smaller figure thumbnails for grid and mobile UI.
 - `og/share.png` - 1200 x 630 social sharing image.
@@ -41,7 +42,8 @@ Do not rename these files without updating:
 
 | Family | Count | Format | Notes |
 | --- | ---: | --- | --- |
-| `icons` | 12 | PNG | Transparent compact marks, max dimension around 256 px |
+| `icons` | 12 | PNG | Archived transparent compact marks, max dimension around 256 px |
+| `sdk/zodiac-icons/circle` | 12 | PNG | SDK brand kit circle icons, 1024 x 1024 |
 | `nuggets` | 12 | PNG | Primary figure artwork, original display assets |
 | `nuggets/thumb` | 12 | PNG | Thumbnail variants, max dimension around 320 px |
 | `og` | 1 | PNG | Social preview image, 1200 x 630 |

@@ -4,10 +4,10 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Zodiacs SDK · Official Zodiacs.org Interface</title>
-  <meta name="description" content="The official read-only TypeScript interface to the Zodiacs.org registry: address verification, native Solana origins, bridged Base representations, public ownership reads, and symbolic identity context." />
+  <meta name="description" content="Build astrology apps with verified Zodiac ownership. The official read-only SDK for registry verification, public ownership, identity context, and app-ready Zodiac icons." />
   <link rel="canonical" href="https://zodiacs.org/sdk/" />
   <meta property="og:title" content="Zodiacs SDK" />
-  <meta property="og:description" content="A read-only interface for the canonical Zodiacs.org registry, public ownership, and symbolic identity context." />
+  <meta property="og:description" content="Build astrology apps with verified Zodiac ownership, public reads, identity context, and official Zodiac icon assets." />
   <meta property="og:image" content="https://zodiacs.org/assets/og/share.png" />
   <meta property="og:url" content="https://zodiacs.org/sdk/" />
   <meta name="twitter:card" content="summary_large_image" />
@@ -205,12 +205,12 @@
     h1, h2, h3, p { margin-top: 0; }
 
     h1 {
-      max-width: 8.5ch;
+      max-width: 13ch;
       margin-bottom: 22px;
       font-family: var(--serif);
       font-weight: 400;
-      font-size: clamp(54px, 17vw, 86px);
-      line-height: 0.91;
+      font-size: clamp(38px, 10vw, 50px);
+      line-height: 0.96;
       letter-spacing: 0;
       text-wrap: balance;
     }
@@ -236,7 +236,7 @@
       align-items: center;
       flex-wrap: wrap;
       gap: 8px;
-      margin-bottom: 28px;
+      margin-bottom: 14px;
       padding: 8px 10px;
       border: 1px solid rgba(201,169,97,0.18);
       background: rgba(201,169,97,0.035);
@@ -249,6 +249,18 @@
 
     .works-with span {
       color: var(--gold);
+    }
+
+    .hero__concept {
+      max-width: 35ch;
+      margin: 0 0 28px;
+      padding-left: 14px;
+      border-left: 1px solid var(--hair-2);
+      font-family: var(--serif);
+      font-size: 16px;
+      line-height: 1.48;
+      color: var(--ink-2);
+      text-wrap: pretty;
     }
 
     .hero__art {
@@ -471,6 +483,120 @@
       font-size: 14px;
       line-height: 1.52;
       color: var(--ink-2);
+    }
+
+    .card--compact {
+      min-height: auto;
+    }
+
+    .card--compact .card__k {
+      margin-bottom: 18px;
+    }
+
+    .card__example {
+      margin: 12px 0 0;
+      padding-top: 12px;
+      border-top: 1px solid rgba(201,169,97,0.12);
+      font-family: var(--mono);
+      font-size: 8px;
+      letter-spacing: 0.12em;
+      line-height: 1.55;
+      text-transform: uppercase;
+      color: var(--ink-dim);
+    }
+
+    .flow {
+      display: grid;
+      gap: 1px;
+      border: 1px solid var(--hair);
+      background: var(--hair);
+    }
+
+    .flow__item,
+    .flow__arrow {
+      background: rgba(7,9,13,0.88);
+    }
+
+    .flow__item {
+      padding: 16px;
+    }
+
+    .flow__k {
+      display: block;
+      margin-bottom: 10px;
+      font-family: var(--mono);
+      font-size: 8px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    .flow__v {
+      display: block;
+      font-family: var(--serif);
+      font-size: 20px;
+      line-height: 1.12;
+      color: var(--ink);
+    }
+
+    .flow__arrow {
+      display: grid;
+      place-items: center;
+      min-height: 34px;
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--gold);
+    }
+
+    .icon-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      margin-bottom: 18px;
+      border: 1px solid var(--hair);
+      background: var(--hair);
+    }
+
+    .icon-tile {
+      min-width: 0;
+      padding: 15px 8px 13px;
+      display: grid;
+      justify-items: center;
+      gap: 10px;
+      background:
+        radial-gradient(80% 90% at 50% 0%, rgba(201,169,97,0.07), transparent 72%),
+        rgba(7,9,13,0.9);
+    }
+
+    .icon-tile img {
+      width: 58px;
+      height: 58px;
+      object-fit: contain;
+      border-radius: 50%;
+      filter:
+        drop-shadow(0 12px 16px rgba(0,0,0,0.55))
+        saturate(0.92);
+    }
+
+    .icon-tile span {
+      font-family: var(--mono);
+      font-size: 7px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink-dim);
+    }
+
+    .trust-line {
+      margin-top: 18px;
+      padding: 14px 13px;
+      border: 1px solid var(--hair-2);
+      background: rgba(201,169,97,0.04);
+      font-family: var(--mono);
+      font-size: 8.5px;
+      letter-spacing: 0.13em;
+      line-height: 1.7;
+      text-transform: uppercase;
+      color: var(--gold-bright);
     }
 
     .examples {
@@ -1093,7 +1219,7 @@
       }
 
       h1 {
-        font-size: clamp(48px, 16vw, 64px);
+        font-size: clamp(37px, 10.5vw, 46px);
       }
 
       h2 {
@@ -1241,8 +1367,8 @@
   <div class="shell">
     <nav class="nav" aria-label="Primary">
       <div class="nav__inner">
-        <a class="mark" href="/">Zodiacs<span>·</span>org</a>
-        <a class="nav__link" href="/">
+        <a class="mark" href="../">Zodiacs<span>·</span>org</a>
+        <a class="nav__link" href="../">
           <span>Registry</span>
           <span class="nav__chip">↗</span>
         </a>
@@ -1252,21 +1378,29 @@
     <main>
       <section aria-labelledby="sdk-title">
         <div class="eyebrow">Official interface</div>
-        <h1 id="sdk-title">Zodiacs <em>SDK.</em></h1>
+        <h1 id="sdk-title">Build astrology apps with verified Zodiac ownership.</h1>
         <p class="hero__copy">
-          A read-only TypeScript interface for the canonical Zodiacs.org
-          registry: official addresses, native Solana origins, bridged Base
-          representations, public ownership, and symbolic identity context.
+          The Zodiacs SDK helps apps recognize official Zodiacs, read public
+          ownership, and turn held signs into simple astrology context for
+          charts, profiles, receipts, wheels, compatibility, seasonal moments,
+          and AI astrology experiences.
+        </p>
+        <div class="works-with" aria-label="SDK platform support">
+          TypeScript + React 18+ <span>•</span> Solana + Base
+        </div>
+        <p class="hero__concept">
+          Birth charts show what users were born with. Zodiacs show the signs
+          they choose to carry.
         </p>
         <div class="works-with" aria-label="SDK platform support">
           TypeScript + React 18+ <span>•</span> Solana + Base
         </div>
         <div class="hero__art" aria-label="Zodiacs artwork">
-          <img class="hero__figure" src="/assets/nuggets/thumb/taurus.png" alt="Taurus figure" />
+          <img class="hero__figure" src="../assets/nuggets/thumb/taurus.png" alt="Taurus figure" />
         </div>
         <div class="actions">
-          <a class="button" href="#examples">
-            <span>View examples</span>
+          <a class="button" href="#use-cases">
+            <span>View use cases</span>
             <span>↓</span>
           </a>
           <a class="button" href="https://github.com/ZodiacsOfficial/sdk" rel="noopener noreferrer">
@@ -1275,64 +1409,259 @@
           </a>
         </div>
         <nav class="jump-nav" aria-label="SDK page sections">
-          <a href="#examples">Examples <span>↓</span></a>
-          <a href="#receipt-preview">Receipt <span>↓</span></a>
-          <a href="#core-api">Core API <span>↓</span></a>
+          <a href="#new-input">Input <span>↓</span></a>
+          <a href="#use-cases">Use cases <span>↓</span></a>
+          <a href="#icon-assets">Icons <span>↓</span></a>
           <a href="#quick-start">Quick start <span>↓</span></a>
         </nav>
       </section>
 
-      <section class="section" aria-labelledby="intro">
+      <section class="section" id="new-input" aria-labelledby="new-input-title">
         <div class="section__head">
           <span class="section__no">№ 01</span>
-          <span class="section__title">Introduction</span>
+          <span class="section__title">New input</span>
         </div>
-        <h2 id="intro">One registry. <em>Many surfaces.</em></h2>
+        <h2 id="new-input-title">A new astrology input.</h2>
         <p class="lede">
-          The SDK gives apps a stable way to recognize the Twelve, understand
-          where each representation belongs, read public ownership, and shape
-          that state into identity surfaces.
+          Most astrology apps start with a birth chart. Zodiacs-aware apps can
+          add a second layer: the signs a person actually holds. That means
+          apps can show which signs someone carries, which elements they
+          emphasize, how complete their wheel is, and when a held sign becomes
+          relevant to a reading, profile, or seasonal moment.
         </p>
-        <div class="note">
-          Native Zodiacs are Solana SPL assets. Base ERC-20 addresses are
-          official bridged representations that point back to their Solana
-          origins.
+        <div class="grid grid--three">
+          <article class="card card--compact">
+            <span class="card__k">Birth chart</span>
+            <h3 class="card__title">Born with</h3>
+            <p class="card__copy">The signs and placements a user was born with.</p>
+          </article>
+          <article class="card card--compact">
+            <span class="card__k">Zodiacs ownership</span>
+            <h3 class="card__title">Chosen to hold</h3>
+            <p class="card__copy">The signs a user chooses to hold.</p>
+          </article>
+          <article class="card card--compact">
+            <span class="card__k">App experience</span>
+            <h3 class="card__title">Made useful</h3>
+            <p class="card__copy">Readings, profiles, receipts, compatibility, seasonal moments, and AI astrology.</p>
+          </article>
         </div>
       </section>
 
-      <section class="section" aria-labelledby="capabilities">
+      <section class="section" id="use-cases" aria-labelledby="use-cases-title">
         <div class="section__head">
           <span class="section__no">№ 02</span>
-          <span class="section__title">Capabilities</span>
+          <span class="section__title">Use cases</span>
         </div>
-        <h2 id="capabilities">Verified facts for symbolic products.</h2>
+        <h2 id="use-cases-title">Practical use cases.</h2>
+        <p class="lede">
+          Verified held signs can become a quiet extra layer inside familiar
+          astrology surfaces, without custody, signing, or transactions.
+        </p>
         <div class="grid grid--two">
-          <article class="card">
-            <span class="card__k">Verify</span>
-            <h3 class="card__title">Official addresses</h3>
-            <p class="card__copy">Check whether a Solana mint or Base address belongs to the official registry.</p>
+          <article class="card card--compact">
+            <span class="card__k">01</span>
+            <h3 class="card__title">Birth chart overlay</h3>
+            <p class="card__copy">Combine natal placements with the signs a user holds. Show where held signs support, balance, or contrast the birth chart.</p>
+            <p class="card__example">Born with Fire. Holding Taurus and Virgo adds Earth energy to the profile.</p>
           </article>
-          <article class="card">
-            <span class="card__k">Map</span>
-            <h3 class="card__title">Native and bridged</h3>
-            <p class="card__copy">Connect each Base representation to the original Solana asset it reflects.</p>
+          <article class="card card--compact">
+            <span class="card__k">02</span>
+            <h3 class="card__title">Zodiac shelf and Cosmic Receipt</h3>
+            <p class="card__copy">Show held signs, wheel coverage, element mix, modality mix, and current season match.</p>
+            <p class="card__example">Held signs: Aries, Leo, Pisces. Wheel coverage: 25%. Element mix: Fire + Water.</p>
           </article>
-          <article class="card">
-            <span class="card__k">Read</span>
-            <h3 class="card__title">Public ownership</h3>
-            <p class="card__copy">Read wallet-visible holdings without private keys, custody, signing, or transactions.</p>
+          <article class="card card--compact">
+            <span class="card__k">03</span>
+            <h3 class="card__title">Seasonal moments</h3>
+            <p class="card__copy">Create timely app moments when the current zodiac season matches a sign the user holds.</p>
+            <p class="card__example">Taurus season is active. You hold Taurus. Taurus can count in today’s reading.</p>
           </article>
-          <article class="card">
-            <span class="card__k">Compose</span>
-            <h3 class="card__title">Identity context</h3>
-            <p class="card__copy">Compute held signs, wheel coverage, element mix, modality mix, and seasonal context.</p>
+          <article class="card card--compact">
+            <span class="card__k">04</span>
+            <h3 class="card__title">Compatibility context</h3>
+            <p class="card__copy">Compare charts and held signs to show shared signs, complementary elements, and relationship themes.</p>
+            <p class="card__example">You hold Libra. Their Venus is in Libra. This shared theme can be included.</p>
           </article>
+          <article class="card card--compact">
+            <span class="card__k">05</span>
+            <h3 class="card__title">Digital talisman</h3>
+            <p class="card__copy">Treat a held Zodiac as a symbolic object with history, duration, and personal meaning.</p>
+            <p class="card__example">You’ve held Scorpio for 90 days. Apps can include Scorpio in the long-term profile.</p>
+          </article>
+          <article class="card card--compact">
+            <span class="card__k">06</span>
+            <h3 class="card__title">AI astrology context</h3>
+            <p class="card__copy">Give astrology assistants structured context from verified ownership: held signs, missing signs, mix, coverage, and season.</p>
+            <p class="card__example">Use held signs as extra context for personalized readings without custody or signing.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="reading-thresholds" aria-labelledby="reading-thresholds-title">
+        <div class="section__head">
+          <span class="section__no">№ 03</span>
+          <span class="section__title">Reading layer</span>
+        </div>
+        <h2 id="reading-thresholds-title">From holding to reading.</h2>
+        <p class="lede">
+          Apps can decide when a held sign should simply be shown and when it
+          should count as part of a reading. A tiny balance can be detected. A
+          larger app-defined amount can count in readings. Long-held signs can
+          add extra context over time.
+        </p>
+        <div class="grid grid--two">
+          <article class="card card--compact">
+            <span class="card__k">Detected</span>
+            <h3 class="card__title">Seen by the app</h3>
+            <p class="card__copy">The app sees that the user holds the sign.</p>
+          </article>
+          <article class="card card--compact">
+            <span class="card__k">Counts in readings</span>
+            <h3 class="card__title">Included</h3>
+            <p class="card__copy">The app includes the sign in a reading experience.</p>
+          </article>
+          <article class="card card--compact">
+            <span class="card__k">More weight</span>
+            <h3 class="card__title">More prominent</h3>
+            <p class="card__copy">The app gives the sign more prominence in the experience.</p>
+          </article>
+          <article class="card card--compact">
+            <span class="card__k">Long-held sign</span>
+            <h3 class="card__title">Carried over time</h3>
+            <p class="card__copy">The user has carried the sign over time.</p>
+          </article>
+        </div>
+        <div class="note">
+          Apps may define their own thresholds using balances or supply share.
+          The SDK provides deterministic ownership context; downstream apps
+          decide how to interpret it.
+        </div>
+      </section>
+
+      <section class="section" id="icon-assets" aria-labelledby="icon-assets-title">
+        <div class="section__head">
+          <span class="section__no">№ 04</span>
+          <span class="section__title">Brand kit</span>
+        </div>
+        <h2 id="icon-assets-title">Official Zodiac icons.</h2>
+        <p class="lede">
+          The SDK includes app-ready icons for all twelve Zodiacs, so builders
+          can display verified signs with the same visual language used by
+          Zodiacs.org.
+        </p>
+        <div class="icon-grid" aria-label="Official Zodiac icon grid">
+          <div class="icon-tile"><img src="../assets/sdk/zodiac-icons/circle/aries.png" alt="Aries icon" /><span>Aries</span></div>
+          <div class="icon-tile"><img src="../assets/sdk/zodiac-icons/circle/taurus.png" alt="Taurus icon" /><span>Taurus</span></div>
+          <div class="icon-tile"><img src="../assets/sdk/zodiac-icons/circle/gemini.png" alt="Gemini icon" /><span>Gemini</span></div>
+          <div class="icon-tile"><img src="../assets/sdk/zodiac-icons/circle/cancer.png" alt="Cancer icon" /><span>Cancer</span></div>
+          <div class="icon-tile"><img src="../assets/sdk/zodiac-icons/circle/leo.png" alt="Leo icon" /><span>Leo</span></div>
+          <div class="icon-tile"><img src="../assets/sdk/zodiac-icons/circle/virgo.png" alt="Virgo icon" /><span>Virgo</span></div>
+          <div class="icon-tile"><img src="../assets/sdk/zodiac-icons/circle/libra.png" alt="Libra icon" /><span>Libra</span></div>
+          <div class="icon-tile"><img src="../assets/sdk/zodiac-icons/circle/scorpio.png" alt="Scorpio icon" /><span>Scorpio</span></div>
+          <div class="icon-tile"><img src="../assets/sdk/zodiac-icons/circle/sagittarius.png" alt="Sagittarius icon" /><span>Sagittarius</span></div>
+          <div class="icon-tile"><img src="../assets/sdk/zodiac-icons/circle/capricorn.png" alt="Capricorn icon" /><span>Capricorn</span></div>
+          <div class="icon-tile"><img src="../assets/sdk/zodiac-icons/circle/aquarius.png" alt="Aquarius icon" /><span>Aquarius</span></div>
+          <div class="icon-tile"><img src="../assets/sdk/zodiac-icons/circle/pisces.png" alt="Pisces icon" /><span>Pisces</span></div>
+        </div>
+        <p class="lede">
+          Use the icons in Zodiac shelves, Cosmic Receipts, birth chart
+          overlays, compatibility cards, seasonal moments, profiles, and AI
+          astrology interfaces.
+        </p>
+        <div class="code code--install" aria-label="Icon asset example">
+          <div class="code__bar">
+            <div class="code__label">assets.ts</div>
+            <button class="copy-code" type="button">Copy</button>
+          </div>
+          <pre><code>import { getZodiacIconAsset } from "@zodiacs/sdk/assets";
+
+const leo = getZodiacIconAsset("leo");
+
+console.log(leo.packagePath);
+// "@zodiacs/sdk/assets/zodiac-icons/circle/leo.png"</code></pre>
+        </div>
+      </section>
+
+      <section class="section" id="flow" aria-labelledby="flow-title">
+        <div class="section__head">
+          <span class="section__no">№ 05</span>
+          <span class="section__title">Flow</span>
+        </div>
+        <h2 id="flow-title">From public address to app surface.</h2>
+        <div class="flow" aria-label="SDK ownership flow">
+          <div class="flow__item">
+            <span class="flow__k">Input</span>
+            <span class="flow__v">Public wallet/address</span>
+          </div>
+          <div class="flow__arrow">→</div>
+          <div class="flow__item">
+            <span class="flow__k">Verify</span>
+            <span class="flow__v">Zodiacs SDK</span>
+          </div>
+          <div class="flow__arrow">→</div>
+          <div class="flow__item">
+            <span class="flow__k">Understand</span>
+            <span class="flow__v">Verified held signs</span>
+          </div>
+          <div class="flow__arrow">→</div>
+          <div class="flow__item">
+            <span class="flow__k">Context</span>
+            <span class="flow__v">Astrology context</span>
+          </div>
+          <div class="flow__arrow">→</div>
+          <div class="flow__item">
+            <span class="flow__k">Display</span>
+            <span class="flow__v">App surfaces</span>
+          </div>
+        </div>
+        <div class="trust-line">
+          Official registry. Public reads. No custody. No signing. No transactions.
+        </div>
+      </section>
+
+      <section class="section" id="quick-start" aria-labelledby="quick-start-title">
+        <div class="section__head">
+          <span class="section__no">№ 06</span>
+          <span class="section__title">Quick start</span>
+        </div>
+        <h2 id="quick-start-title">A small install surface.</h2>
+        <p class="lede">
+          Use the package when a product needs the official registry, address
+          verification, read-only ownership, display-ready identity context, or
+          official Zodiac icon assets.
+        </p>
+        <div class="code code--install" aria-label="Install command">
+          <div class="code__bar">
+            <div class="code__label">install</div>
+            <button class="copy-code" type="button">Copy</button>
+          </div>
+          <pre><code>npm i @zodiacs/sdk</code></pre>
+        </div>
+        <div class="note">
+          React hooks and UI primitives are included, including
+          <code>useZodiacIdentityContext</code>, <code>useIdentityReceiptData</code>,
+          <code>IdentityReceiptCard</code>, and <code>ProfileSummaryCard</code>.
+        </div>
+        <div class="resource">
+          <a href="https://github.com/ZodiacsOfficial/sdk" rel="noopener noreferrer">
+            <strong>GitHub</strong>
+            <span>ZodiacsOfficial/sdk</span>
+          </a>
+          <a href="../registry/zodiacs.registry.json">
+            <strong>Registry</strong>
+            <span>Machine-readable public record</span>
+          </a>
+          <a href="https://www.npmjs.com/package/@zodiacs/sdk" rel="noopener noreferrer">
+            <strong>npm</strong>
+            <span>@zodiacs/sdk</span>
+          </a>
         </div>
       </section>
 
       <section class="section" id="examples" aria-labelledby="examples-title">
         <div class="section__head">
-          <span class="section__no">№ 03</span>
+          <span class="section__no">№ 07</span>
           <span class="section__title">Examples</span>
         </div>
         <h2 id="examples-title">Four common integrations.</h2>
@@ -1355,7 +1684,7 @@
                 </div>
                 <pre><code>import {
   getRepresentationByAddress
-} from "@zodiacs/sdk";
+} from "@zodiacs/sdk/core";
 
 const representation = getRepresentationByAddress(
   "0x3ffB5282F5891Dd8c813E64059EdB0607537eC91"
@@ -1383,7 +1712,7 @@ console.log(representation?.kind);  // "bridged"</code></pre>
                 <pre><code>import {
   getBaseZodiacRepresentation,
   getNativeCounterpart
-} from "@zodiacs/sdk";
+} from "@zodiacs/sdk/core";
 
 const baseAries = getBaseZodiacRepresentation("aries");
 const origin = getNativeCounterpart(baseAries.address);
@@ -1410,10 +1739,8 @@ console.log(origin?.address); // Solana SPL mint</code></pre>
                 <pre><code>import { Connection, PublicKey } from "@solana/web3.js";
 import { createPublicClient, http } from "viem";
 import { base } from "viem/chains";
-import {
-  getBaseZodiacsOwnership,
-  getSolanaZodiacsOwnership
-} from "@zodiacs/sdk";
+import { getBaseZodiacsOwnership } from "@zodiacs/sdk/base";
+import { getSolanaZodiacsOwnership } from "@zodiacs/sdk/solana";
 
 const connection = new Connection("https://api.mainnet-beta.solana.com");
 const solanaOwner = new PublicKey("...");
@@ -1447,16 +1774,20 @@ console.log(baseOwnership.heldSigns);</code></pre>
                   <div class="code__label">context.ts</div>
                   <button class="copy-code" type="button">Copy</button>
                 </div>
-                <pre><code>import { getZodiacIdentityContext } from "@zodiacs/sdk";
+                <pre><code>import {
+  getIdentityReceiptData,
+  getZodiacIdentityContext
+} from "@zodiacs/sdk/identity";
 
 const context = getZodiacIdentityContext(ownership, {
   sunSign: "leo"
 });
+const receipt = getIdentityReceiptData(ownership);
 
 console.log(context.heldSigns);
 console.log(context.elementComposition);
 console.log(context.currentSeasonHeld);
-console.log(context.wheelCoverage);</code></pre>
+console.log(receipt.wheelCoverage);</code></pre>
               </div>
             </details>
           </article>
@@ -1465,7 +1796,7 @@ console.log(context.wheelCoverage);</code></pre>
 
       <section class="section" id="receipt-preview" aria-labelledby="receipt-title">
         <div class="section__head">
-          <span class="section__no">№ 04</span>
+          <span class="section__no">№ 08</span>
           <span class="section__title">Identity context</span>
         </div>
         <h2 id="receipt-title">Display-ready facts, not horoscopes.</h2>
@@ -1477,11 +1808,34 @@ console.log(context.wheelCoverage);</code></pre>
         <div class="receipt" aria-label="Sample identity context">
           <div class="receipt__chrome">
             <span>Styled component preview</span>
-            <code>CosmicReceiptCard</code>
+            <code>IdentityReceiptCard</code>
           </div>
           <div class="receipt__meta">
             <span>SDK input</span>
-            <code>getCosmicReceiptData(ownership)</code>
+            <code>getIdentityReceiptData(ownership)</code>
+          </div>
+          <div class="receipt__try" aria-label="Try live address verification">
+            <div class="receipt__try-head">
+              <span>Try it live</span>
+              <code>getRepresentationByAddress(address)</code>
+            </div>
+            <label class="receipt__input" for="receipt-address-input">
+              <span>Address</span>
+              <input
+                id="receipt-address-input"
+                type="text"
+                inputmode="text"
+                autocomplete="off"
+                spellcheck="false"
+                value="0x3ffB5282F5891Dd8c813E64059EdB0607537eC91"
+                aria-describedby="receipt-address-result"
+              />
+            </label>
+            <div class="receipt__result" id="receipt-address-result" aria-live="polite">
+              <span class="receipt__result-k">Verification</span>
+              <span class="receipt__result-v">Loading official registry...</span>
+              <span class="receipt__result-meta">Read-only local check</span>
+            </div>
           </div>
           <div class="receipt__try" aria-label="Try live address verification">
             <div class="receipt__try-head">
@@ -1509,19 +1863,19 @@ console.log(context.wheelCoverage);</code></pre>
           <div class="receipt__stage">
             <div class="receipt__tokens" aria-label="Held signs in sample shelf">
               <div class="receipt__token">
-                <img src="/assets/icons/aries.png" alt="Aries mark" />
+                <img src="../assets/sdk/zodiac-icons/circle/aries.png" alt="Aries icon" />
                 <span>Aries</span>
               </div>
               <div class="receipt__token">
-                <img src="/assets/icons/gemini.png" alt="Gemini mark" />
+                <img src="../assets/sdk/zodiac-icons/circle/gemini.png" alt="Gemini icon" />
                 <span>Gemini</span>
               </div>
               <div class="receipt__token">
-                <img src="/assets/icons/leo.png" alt="Leo mark" />
+                <img src="../assets/sdk/zodiac-icons/circle/leo.png" alt="Leo icon" />
                 <span>Leo</span>
               </div>
               <div class="receipt__token">
-                <img src="/assets/icons/pisces.png" alt="Pisces mark" />
+                <img src="../assets/sdk/zodiac-icons/circle/pisces.png" alt="Pisces icon" />
                 <span>Pisces</span>
               </div>
             </div>
@@ -1571,13 +1925,14 @@ console.log(context.wheelCoverage);</code></pre>
 
       <section class="section" id="core-api" aria-labelledby="api-title">
         <div class="section__head">
-          <span class="section__no">№ 05</span>
+          <span class="section__no">№ 09</span>
           <span class="section__title">Core API</span>
         </div>
         <h2 id="api-title">The useful surfaces at a glance.</h2>
         <p class="lede">
           The package is organized around registry facts, representation
-          provenance, public reads, and identity composition.
+          provenance, public reads, identity composition, React helpers, and
+          official display assets.
         </p>
         <div class="api" aria-label="Core API reference">
           <div class="api__row">
@@ -1616,7 +1971,7 @@ console.log(context.wheelCoverage);</code></pre>
             <div class="api__k">Context</div>
             <div class="api__v">
               <code>getZodiacIdentityContext</code>
-              <code>getCosmicReceiptData</code>
+              <code>getIdentityReceiptData</code>
               <code>getCurrentZodiacSeason</code>
             </div>
           </div>
@@ -1624,70 +1979,26 @@ console.log(context.wheelCoverage);</code></pre>
             <div class="api__k">React</div>
             <div class="api__v">
               <code>useZodiacIdentityContext</code>
-              <code>useCosmicReceiptData</code>
+              <code>useIdentityReceiptData</code>
               <code>useCurrentZodiacSeason</code>
-              <code>OfficialZodiacTokenCard</code>
-              <code>CosmicReceiptCard</code>
+              <code>IdentityReceiptCard</code>
+              <code>ProfileSummaryCard</code>
+            </div>
+          </div>
+          <div class="api__row">
+            <div class="api__k">Assets</div>
+            <div class="api__v">
+              <code>getZodiacIconAsset</code>
+              <code>getAllZodiacIconAssets</code>
+              <code>getZodiacIconAssetPath</code>
             </div>
           </div>
         </div>
       </section>
 
-      <section class="section" aria-labelledby="applications">
-        <div class="section__head">
-          <span class="section__no">№ 06</span>
-          <span class="section__title">Applications</span>
-        </div>
-        <h2 id="applications">Built quietly into many kinds of experience.</h2>
-        <p class="lede">
-          The SDK is app-neutral infrastructure. It can support astrology
-          interfaces, horoscope products, wallet views, galleries, profiles,
-          identity layers, share cards, public shelves, Cosmic Receipts, Zodiac
-          Wheels, and AI astrology assistants.
-        </p>
-      </section>
-
-      <section class="section" id="quick-start" aria-labelledby="quick-start-title">
-        <div class="section__head">
-          <span class="section__no">№ 07</span>
-          <span class="section__title">Quick start</span>
-        </div>
-        <h2 id="quick-start-title">A small install surface.</h2>
-        <p class="lede">
-          Use the package when a product needs the official registry, address
-          verification, read-only ownership, or display-ready symbolic context.
-        </p>
-        <div class="code code--install" aria-label="Install command">
-          <div class="code__bar">
-            <div class="code__label">install</div>
-            <button class="copy-code" type="button">Copy</button>
-          </div>
-          <pre><code>npm i @zodiacs/sdk</code></pre>
-        </div>
-        <div class="note">
-          React hooks and UI primitives are included, including
-          <code>useZodiacIdentityContext</code>, <code>useCosmicReceiptData</code>,
-          and <code>useCurrentZodiacSeason</code>.
-        </div>
-        <div class="resource">
-          <a href="https://github.com/ZodiacsOfficial/sdk" rel="noopener noreferrer">
-            <strong>GitHub</strong>
-            <span>ZodiacsOfficial/sdk</span>
-          </a>
-          <a href="/registry/zodiacs.registry.json">
-            <strong>Registry</strong>
-            <span>Machine-readable public record</span>
-          </a>
-          <a href="https://www.npmjs.com/package/@zodiacs/sdk" rel="noopener noreferrer">
-            <strong>npm</strong>
-            <span>@zodiacs/sdk</span>
-          </a>
-        </div>
-      </section>
-
       <section class="section" aria-labelledby="posture">
         <div class="section__head">
-          <span class="section__no">№ 08</span>
+          <span class="section__no">№ 10</span>
           <span class="section__title">Posture</span>
         </div>
         <h2 id="posture">Read-only by design.</h2>
@@ -1701,9 +2012,9 @@ console.log(context.wheelCoverage);</code></pre>
           <span>No private keys</span>
           <span>No custody</span>
           <span>No signing</span>
-          <span>No swaps</span>
           <span>No approvals</span>
           <span>No transactions</span>
+          <span>No asset movement</span>
         </div>
       </section>
 
@@ -1776,7 +2087,7 @@ console.log(context.wheelCoverage);</code></pre>
         bridgedBase: 2
       },
       generatedBy: [
-        "getCosmicReceiptData",
+        "getIdentityReceiptData",
         "getZodiacIdentityContext"
       ]
     };
@@ -1875,7 +2186,7 @@ console.log(context.wheelCoverage);</code></pre>
       let registry = fallbackRegistry;
       let registryReady = false;
       try {
-        const response = await fetch("/registry/zodiacs.registry.json", { cache: "force-cache" });
+        const response = await fetch("../registry/zodiacs.registry.json", { cache: "force-cache" });
         if (response.ok) {
           const payload = await response.json();
           if (Array.isArray(payload.assets)) {
