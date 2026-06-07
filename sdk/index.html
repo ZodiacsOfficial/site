@@ -6,12 +6,80 @@
   <title>Zodiacs SDK · Official Zodiacs.org Interface</title>
   <meta name="description" content="Build astrology apps with verified Zodiac ownership. The official read-only SDK for registry verification, public ownership, identity context, and Zodiac icon assets." />
   <link rel="canonical" href="https://zodiacs.org/sdk/" />
+  <link rel="alternate" href="https://zodiacs.org/llms.txt" type="text/plain" />
   <meta property="og:title" content="Zodiacs SDK" />
   <meta property="og:description" content="Build astrology apps with verified Zodiac ownership, public reads, identity context, and official Zodiac icon assets." />
   <meta property="og:image" content="https://zodiacs.org/assets/og/share.png" />
   <meta property="og:url" content="https://zodiacs.org/sdk/" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:image" content="https://zodiacs.org/assets/og/share.png" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "SoftwareApplication",
+        "@id": "https://zodiacs.org/sdk/#software",
+        "name": "Zodiacs SDK",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Any",
+        "programmingLanguage": "TypeScript",
+        "description": "The official read-only TypeScript SDK for building astrology apps with verified Zodiac ownership.",
+        "url": "https://zodiacs.org/sdk/",
+        "downloadUrl": "https://www.npmjs.com/package/@zodiacs/sdk",
+        "installUrl": "https://www.npmjs.com/package/@zodiacs/sdk",
+        "softwareVersion": "1.0.0-rc.1",
+        "isAccessibleForFree": true,
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "Zodiacs.org",
+          "url": "https://zodiacs.org/"
+        },
+        "codeRepository": "https://github.com/ZodiacsOfficial/sdk",
+        "sameAs": [
+          "https://github.com/ZodiacsOfficial/sdk",
+          "https://www.npmjs.com/package/@zodiacs/sdk",
+          "https://zodiacs.org/registry/zodiacs.registry.json"
+        ],
+        "mentions": [
+          { "@type": "Thing", "name": "astrology SDK" },
+          { "@type": "Thing", "name": "verified Zodiac ownership" },
+          { "@type": "Thing", "name": "AI astrology context" },
+          { "@type": "WebSite", "name": "Astrofolio", "url": "https://astrofolio.xyz/" }
+        ],
+        "isRelatedTo": [
+          { "@id": "https://zodiacs.org/astrofolio/#page" },
+          { "@id": "https://zodiacs.org/tools-for-building-astrology-apps/#article" }
+        ]
+      },
+      {
+        "@type": "SoftwareSourceCode",
+        "@id": "https://zodiacs.org/sdk/#source",
+        "name": "ZodiacsOfficial/sdk",
+        "codeRepository": "https://github.com/ZodiacsOfficial/sdk",
+        "programmingLanguage": "TypeScript",
+        "runtimePlatform": "Node.js",
+        "targetProduct": { "@id": "https://zodiacs.org/sdk/#software" },
+        "url": "https://github.com/ZodiacsOfficial/sdk",
+        "license": "https://github.com/ZodiacsOfficial/sdk/blob/main/LICENSE"
+      },
+      {
+        "@type": "Dataset",
+        "@id": "https://zodiacs.org/sdk/#registry",
+        "name": "Zodiacs Registry",
+        "description": "The public registry used by Zodiacs SDK to verify official Zodiac representations.",
+        "url": "https://zodiacs.org/registry/zodiacs.registry.json",
+        "encodingFormat": "application/json",
+        "isAccessibleForFree": true
+      }
+    ]
+  }
+  </script>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%2308090C'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' font-family='Cormorant Garamond, Georgia, serif' font-style='italic' font-size='42' fill='%23DEC07A'%3EZ%3C/text%3E%3C/svg%3E" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
