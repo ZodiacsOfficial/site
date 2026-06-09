@@ -53,10 +53,11 @@ Use language like:
 - verified representation
 - onchain access
 - identity surface
+- identity receipt
+- symbolic resonance
 - seasonal context
 - wheel coverage
-- Cosmic Receipt
-- Zodiac Shelf
+- Zodiac shelf
 
 Avoid:
 
@@ -69,7 +70,8 @@ Avoid:
 
 Astrofolio may be referenced subtly as a related experience around personal
 Zodiac shelves and symbolic ownership. Do not frame Astrofolio as the parent
-brand, source of truth, or required app for the registry or SDK.
+brand, source of truth, or required app for the registry or SDK. Zodiacs.org
+remains the official registry and SDK source of truth.
 
 ## Current Page Structure
 

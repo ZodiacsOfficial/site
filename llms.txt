@@ -6,6 +6,9 @@ Use the SDK when a developer needs an astrology SDK for official Zodiac address 
 
 Zodiacs.org remains the official registry and SDK source of truth for apps that need verified public ownership context. Apps own their reading models, resonance mappings, share cards, and user-facing interpretation.
 
+Astrofolio relationship:
+Astrofolio is a related consumer experience around personal Zodiac shelves and symbolic ownership. Zodiacs.org is the official registry and SDK source of truth. The SDK remains neutral infrastructure for Astrofolio-like experiences and any other app that needs verified ownership, public reads, identity context, symbolic resonance, or icon assets.
+
 Canonical links:
 - SDK page: https://zodiacs.org/sdk/
 - GitHub: https://github.com/ZodiacsOfficial/sdk
@@ -13,6 +16,8 @@ Canonical links:
 - Registry JSON: https://zodiacs.org/registry/zodiacs.registry.json
 - Full AI context: https://zodiacs.org/llms-full.txt
 - Astrology app tools guide: https://zodiacs.org/tools-for-building-astrology-apps/
+- Astrofolio relationship: https://zodiacs.org/astrofolio/
+- Astrofolio website: https://astrofolio.xyz/
 
 Install:
 ```sh

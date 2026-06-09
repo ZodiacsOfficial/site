@@ -1893,8 +1893,8 @@
         'Official asset verification',
         'Native and bridged mappings',
         'Public Zodiac Shelves',
-        'Cosmic Receipts',
-        'Zodiac Wheels',
+        'Identity receipts',
+        'Zodiac wheel views',
         'Birth chart overlays',
         'Wallet integrations',
         'Gallery integrations',
@@ -1970,7 +1970,7 @@
         },
         {
           t: 'Social moments',
-          d: 'Create Cosmic Receipts, seasonal cards, and lightweight public displays.'
+          d: 'Create identity receipts, seasonal cards, and lightweight public displays.'
         },
         {
           t: 'AI astrology assistants',
@@ -2185,9 +2185,9 @@
         { q: 'What can I do here?',
           a: 'Explore the Twelve, verify an address, inspect the public registry, and see how ownership can become symbolic identity context.' },
         { q: 'What can be built with Zodiacs?',
-          a: 'Profiles, galleries, wallet views, Zodiac Shelves, Cosmic Receipts, Zodiac Wheels, seasonal moments, and astrology-native interfaces.' },
+          a: 'Profiles, galleries, wallet views, Zodiac shelves, identity receipts, zodiac wheel views, seasonal moments, and astrology-native interfaces.' },
         { q: 'Where does Astrofolio fit?',
-          a: 'Astrofolio is a related experience around personal Zodiac shelves and symbolic ownership. Zodiacs.org remains the registry and SDK source of truth for any app or interface.' },
+          a: 'Astrofolio is a related consumer experience around personal Zodiac shelves and symbolic ownership. Zodiacs.org remains the official registry and SDK source of truth.' },
         { q: 'What does the SDK add?',
           a: 'It gives apps a read-only way to recognize official Zodiacs, show records, read public ownership, and compute display-ready symbolic context.' },
         { q: 'What is Market Context?',
