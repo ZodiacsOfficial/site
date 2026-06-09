@@ -9,6 +9,8 @@ Zodiacs.org remains the official registry and SDK source of truth for apps that 
 Astrofolio relationship:
 Astrofolio is a related consumer experience around personal Zodiac shelves and symbolic ownership. Zodiacs.org is the official registry and SDK source of truth. The SDK remains neutral infrastructure for Astrofolio-like experiences and any other app that needs verified ownership, public reads, identity context, symbolic resonance, or icon assets.
 
+Simastry is a real astrology app pattern for the SDK. A Simastry Aura page can be shared, can include read-only verified Zodiac ownership context, and can optionally use that context in conversations with AI astrologists.
+
 Canonical links:
 - SDK page: https://zodiacs.org/sdk/
 - GitHub: https://github.com/ZodiacsOfficial/sdk
@@ -16,8 +18,14 @@ Canonical links:
 - Registry JSON: https://zodiacs.org/registry/zodiacs.registry.json
 - Full AI context: https://zodiacs.org/llms-full.txt
 - Astrology app tools guide: https://zodiacs.org/tools-for-building-astrology-apps/
+- Astrology SDK page: https://zodiacs.org/astrology-sdk/
+- AI astrology app guide: https://zodiacs.org/build-ai-astrology-app/
+- Zodiac ownership API: https://zodiacs.org/zodiac-ownership-api/
+- Cosmic Receipt: https://zodiacs.org/cosmic-receipt/
 - Astrofolio relationship: https://zodiacs.org/astrofolio/
+- Astrofolio SDK: https://zodiacs.org/astrofolio-sdk/
 - Astrofolio website: https://astrofolio.xyz/
+- Simastry Aura example: https://zodiacs.org/sdk/examples/simastry-aura/
 
 Install:
 ```sh

@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Simastry Aura Example · Zodiacs SDK</title>
+  <meta name="description" content="A runnable Simastry-inspired example showing how a shareable Aura page can include verified Zodiac ownership context from Zodiacs SDK." />
+  <link rel="canonical" href="https://zodiacs.org/sdk/examples/simastry-aura/" />
+  <link rel="alternate" href="https://zodiacs.org/llms.txt" type="text/plain" />
+  <meta property="og:title" content="Simastry Aura Example" />
+  <meta property="og:description" content="Shareable Aura context and AI astrologist conversation context with Zodiacs SDK." />
+  <meta property="og:image" content="https://zodiacs.org/assets/og/share.png" />
+  <meta property="og:url" content="https://zodiacs.org/sdk/examples/simastry-aura/" />
+  <link rel="stylesheet" href="../../../assets/discovery.css" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "@id": "https://zodiacs.org/sdk/examples/simastry-aura/#page",
+    "headline": "Simastry Aura Example",
+    "description": "A Simastry-inspired runnable example for shareable Aura context using Zodiacs SDK.",
+    "url": "https://zodiacs.org/sdk/examples/simastry-aura/",
+    "about": [
+      { "@type": "SoftwareApplication", "name": "Zodiacs SDK", "url": "https://zodiacs.org/sdk/" },
+      { "@type": "SoftwareApplication", "name": "Simastry" },
+      { "@type": "Thing", "name": "AI astrologist conversation context" }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <main class="page">
+    <header>
+      <a class="brand" href="/">Zodiacs.org</a>
+      <nav class="nav" aria-label="Related links">
+        <a href="/sdk/">SDK</a>
+        <a href="/build-ai-astrology-app/">AI astrology</a>
+        <a href="/llms.txt">llms.txt</a>
+      </nav>
+    </header>
+
+    <section>
+      <div class="eyebrow">Runnable example</div>
+      <h1>Simastry Aura with verified Zodiac context.</h1>
+      <p class="lede">
+        Simastry uses Zodiac context in an Aura surface that can be shared. The
+        same read-only context can optionally shape conversations with AI
+        astrologists in the app.
+      </p>
+    </section>
+
+    <section class="demo" aria-label="Simastry Aura context preview">
+      <span class="k">Pattern preview</span>
+      <h2>Build an Aura context payload.</h2>
+      <p>
+        Pick a birth-chart sign and a held Zodiac. This preview shows the shape
+        an app can pass to a share page or AI astrologist prompt after reading
+        ownership through Zodiacs SDK.
+      </p>
+      <div class="demo-controls">
+        <label>
+          Birth chart sun sign
+          <select id="sun-sign">
+            <option value="aries">Aries</option>
+            <option value="taurus">Taurus</option>
+            <option value="gemini">Gemini</option>
+            <option value="cancer">Cancer</option>
+            <option value="leo" selected>Leo</option>
+            <option value="virgo">Virgo</option>
+            <option value="libra">Libra</option>
+            <option value="scorpio">Scorpio</option>
+            <option value="sagittarius">Sagittarius</option>
+            <option value="capricorn">Capricorn</option>
+            <option value="aquarius">Aquarius</option>
+            <option value="pisces">Pisces</option>
+          </select>
+        </label>
+        <label>
+          Verified held sign
+          <select id="held-sign">
+            <option value="aries">Aries</option>
+            <option value="taurus">Taurus</option>
+            <option value="gemini">Gemini</option>
+            <option value="cancer">Cancer</option>
+            <option value="leo">Leo</option>
+            <option value="virgo">Virgo</option>
+            <option value="libra" selected>Libra</option>
+            <option value="scorpio">Scorpio</option>
+            <option value="sagittarius">Sagittarius</option>
+            <option value="capricorn">Capricorn</option>
+            <option value="aquarius">Aquarius</option>
+            <option value="pisces">Pisces</option>
+          </select>
+        </label>
+      </div>
+      <label>
+        Aura context payload
+        <textarea id="payload" readonly></textarea>
+      </label>
+    </section>
+
+    <section>
+      <h2>Production SDK shape.</h2>
+      <pre><code>import { getCrossChainZodiacsOwnership } from "@zodiacs/sdk";
+import { getZodiacIdentityContext } from "@zodiacs/sdk/identity";
+
+const ownership = await getCrossChainZodiacsOwnership({
+  solanaOwner,
+  baseOwner,
+  connection,
+  publicClient
+});
+
+const aura = getZodiacIdentityContext(ownership, {
+  sunSign: "leo"
+});
+
+const aiAstrologistContext = {
+  auraPage: "shareable",
+  heldSigns: aura.heldSigns,
+  elementComposition: aura.elementComposition,
+  currentSeasonHeld: aura.currentSeasonHeld
+};</code></pre>
+    </section>
+
+    <section>
+      <h2>Why this helps AI astrologists.</h2>
+      <p>
+        The AI receives structured facts, not a loose claim. The app can say
+        which signs are held, how they relate to the birth chart, and whether
+        those signs should appear in a shared Aura page or conversation.
+      </p>
+    </section>
+
+    <section class="links" aria-label="Resources">
+      <a class="link" href="/sdk/"><strong>Zodiacs SDK</strong><span>Install and APIs</span></a>
+      <a class="link" href="/build-ai-astrology-app/"><strong>AI astrology app guide</strong><span>Context patterns</span></a>
+      <a class="link" href="/cosmic-receipt/"><strong>Cosmic Receipt</strong><span>Shareable identity facts</span></a>
+      <a class="link" href="/zodiac-ownership-api/"><strong>Ownership API</strong><span>Read-only SDK surface</span></a>
+    </section>
+
+    <footer>Official registry. Public reads. No custody. No signing. No transactions.</footer>
+  </main>
+  <script>
+    const elements = {
+      aries: "fire",
+      taurus: "earth",
+      gemini: "air",
+      cancer: "water",
+      leo: "fire",
+      virgo: "earth",
+      libra: "air",
+      scorpio: "water",
+      sagittarius: "fire",
+      capricorn: "earth",
+      aquarius: "air",
+      pisces: "water"
+    };
+
+    const titleCase = (value) => value.charAt(0).toUpperCase() + value.slice(1);
+    const sun = document.getElementById("sun-sign");
+    const held = document.getElementById("held-sign");
+    const payload = document.getElementById("payload");
+
+    const updatePayload = () => {
+      const sunSign = sun.value;
+      const heldSign = held.value;
+      const data = {
+        app: "Simastry",
+        surface: "shareable Aura page",
+        source: "Zodiacs SDK read-only ownership context",
+        chart: {
+          sunSign: titleCase(sunSign),
+          sunElement: titleCase(elements[sunSign])
+        },
+        verifiedOwnership: {
+          heldSigns: [titleCase(heldSign)],
+          heldElements: [titleCase(elements[heldSign])]
+        },
+        aiAstrologistContext: {
+          includeInConversation: true,
+          promptHint: `${titleCase(heldSign)} is a verified held Zodiac. Use it as carried-sign context beside the birth chart.`
+        },
+        posture: "Official registry. Public reads. No custody. No signing. No transactions."
+      };
+      payload.value = JSON.stringify(data, null, 2);
+    };
+
+    sun.addEventListener("change", updatePayload);
+    held.addEventListener("change", updatePayload);
+    updatePayload();
+  </script>
+</body>
+</html>

@@ -16,9 +16,39 @@
     <priority>0.85</priority>
   </url>
   <url>
+    <loc>https://zodiacs.org/astrology-sdk/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://zodiacs.org/build-ai-astrology-app/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.84</priority>
+  </url>
+  <url>
+    <loc>https://zodiacs.org/zodiac-ownership-api/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.84</priority>
+  </url>
+  <url>
+    <loc>https://zodiacs.org/cosmic-receipt/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.82</priority>
+  </url>
+  <url>
     <loc>https://zodiacs.org/astrofolio/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://zodiacs.org/astrofolio-sdk/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://zodiacs.org/sdk/examples/simastry-aura/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.78</priority>
   </url>
   <url>
     <loc>https://zodiacs.org/llms.txt</loc>
