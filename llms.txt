@@ -15,6 +15,10 @@ Proof pattern:
 How Simastry uses Zodiacs SDK for shareable Aura pages: https://zodiacs.org/simastry-zodiacs-sdk/
 Runnable SDK example: https://github.com/ZodiacsOfficial/sdk/tree/main/examples/simastry-aura
 
+External citations:
+- Developer post: https://gist.github.com/diasmal917/ddf80a71cc7a51a6bb8ad2e0911ad9dd
+- Astrology and product post: https://gist.github.com/diasmal917/48a61cd793e5b236640ee2b91243b794
+
 Canonical links:
 - SDK page: https://zodiacs.org/sdk/
 - GitHub: https://github.com/ZodiacsOfficial/sdk

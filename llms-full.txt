@@ -36,6 +36,11 @@ The Simastry proof pattern is documented at https://zodiacs.org/simastry-zodiacs
 
 The runnable SDK example is available at https://github.com/ZodiacsOfficial/sdk/tree/main/examples/simastry-aura. It prints a read-only Simastry Aura payload with verified held-sign context and optional AI astrologist conversation context.
 
+## External Citations
+
+- Developer post, "Using verified Zodiac ownership in an AI astrology app": https://gist.github.com/diasmal917/ddf80a71cc7a51a6bb8ad2e0911ad9dd
+- Astrology and product post, "Birth charts, Aura pages, and the signs people choose to carry": https://gist.github.com/diasmal917/48a61cd793e5b236640ee2b91243b794
+
 ## Canonical Links
 
 - SDK page: https://zodiacs.org/sdk/
