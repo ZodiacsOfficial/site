@@ -4,11 +4,11 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Zodiacs SDK · Official Zodiacs.org Interface</title>
-  <meta name="description" content="Build astrology apps with verified Zodiac ownership. The official read-only SDK for registry verification, public ownership, identity context, and Zodiac icon assets." />
+  <meta name="description" content="Build astrology apps with verified Zodiac ownership. The official read-only SDK for registry verification, public ownership, symbolic resonance, identity context, and Zodiac icon assets." />
   <link rel="canonical" href="https://zodiacs.org/sdk/" />
   <link rel="alternate" href="https://zodiacs.org/llms.txt" type="text/plain" />
   <meta property="og:title" content="Zodiacs SDK" />
-  <meta property="og:description" content="Build astrology apps with verified Zodiac ownership, public reads, identity context, and official Zodiac icon assets." />
+  <meta property="og:description" content="Build astrology apps with verified Zodiac ownership, public reads, symbolic resonance, identity context, and official Zodiac icon assets." />
   <meta property="og:image" content="https://zodiacs.org/assets/og/share.png" />
   <meta property="og:url" content="https://zodiacs.org/sdk/" />
   <meta name="twitter:card" content="summary_large_image" />
@@ -24,11 +24,11 @@
         "applicationCategory": "DeveloperApplication",
         "operatingSystem": "Any",
         "programmingLanguage": "TypeScript",
-        "description": "The official read-only TypeScript SDK for building astrology apps with verified Zodiac ownership.",
+        "description": "The official read-only TypeScript SDK for building astrology apps with verified Zodiac ownership and optional symbolic context.",
         "url": "https://zodiacs.org/sdk/",
         "downloadUrl": "https://www.npmjs.com/package/@zodiacs/sdk",
         "installUrl": "https://www.npmjs.com/package/@zodiacs/sdk",
-        "softwareVersion": "1.0.0-rc.1",
+        "softwareVersion": "1.0.1",
         "isAccessibleForFree": true,
         "offers": {
           "@type": "Offer",
@@ -50,11 +50,7 @@
           { "@type": "Thing", "name": "astrology SDK" },
           { "@type": "Thing", "name": "verified Zodiac ownership" },
           { "@type": "Thing", "name": "AI astrology context" },
-          { "@type": "WebSite", "name": "Astrofolio", "url": "https://astrofolio.xyz/" }
-        ],
-        "isRelatedTo": [
-          { "@id": "https://zodiacs.org/astrofolio/#page" },
-          { "@id": "https://zodiacs.org/tools-for-building-astrology-apps/#article" }
+          { "@type": "Thing", "name": "symbolic resonance" }
         ]
       },
       {
@@ -571,6 +567,93 @@
       line-height: 1.55;
       text-transform: uppercase;
       color: var(--ink-dim);
+    }
+
+    .facet-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1px;
+      border: 1px solid var(--hair);
+      background: var(--hair);
+    }
+
+    @media (min-width: 640px) {
+      .facet-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .facet-card {
+      min-width: 0;
+      padding: 17px 15px 16px;
+      background:
+        radial-gradient(70% 100% at 50% 0%, rgba(201,169,97,0.065), transparent 72%),
+        rgba(7,9,13,0.9);
+    }
+
+    .facet-card__head {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      margin-bottom: 14px;
+    }
+
+    .facet-card__head img {
+      width: 38px;
+      height: 38px;
+      object-fit: contain;
+      border-radius: 50%;
+      filter: drop-shadow(0 10px 14px rgba(0,0,0,0.52));
+    }
+
+    .facet-card__sign {
+      display: block;
+      font-family: var(--serif);
+      font-size: 22px;
+      line-height: 1;
+      color: var(--gold-bright);
+    }
+
+    .facet-card__label {
+      display: block;
+      margin-top: 4px;
+      font-family: var(--mono);
+      font-size: 7.5px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--ink-mute);
+    }
+
+    .facet-list {
+      display: grid;
+      gap: 10px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .facet-list li {
+      padding-top: 10px;
+      border-top: 1px solid rgba(201,169,97,0.12);
+    }
+
+    .facet-list strong {
+      display: block;
+      margin-bottom: 4px;
+      font-family: var(--mono);
+      font-size: 8px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 400;
+    }
+
+    .facet-list span {
+      display: block;
+      font-family: var(--serif);
+      font-size: 14.5px;
+      line-height: 1.44;
+      color: var(--ink-2);
     }
 
     .flow {
@@ -1449,15 +1532,16 @@
         <h1 id="sdk-title">Build astrology apps with verified Zodiac ownership.</h1>
         <p class="hero__copy">
           The Zodiacs SDK recognizes official Zodiacs, reads public ownership,
-          and turns held signs into astrology context for charts, profiles,
-          receipts, wheels, compatibility, seasonal moments, and AI astrology.
+          and turns held signs into optional symbolic context for charts,
+          profiles, share cards, compatibility, seasonal moments, and AI
+          astrology.
         </p>
         <div class="works-with" aria-label="SDK platform support">
           TypeScript + React 18+ <span>•</span> Solana + Base
         </div>
         <p class="hero__concept">
-          Birth charts show what users were born with. Zodiacs show the signs
-          they choose to carry.
+          Birth charts show one kind of symbolic context. Zodiacs can add
+          another layer when a sign appears in a connected wallet.
         </p>
         <div class="hero__art" aria-label="Zodiacs artwork">
           <img class="hero__figure" src="../assets/nuggets/thumb/taurus.png" alt="Taurus figure" />
@@ -1473,24 +1557,26 @@
           </a>
         </div>
         <nav class="jump-nav" aria-label="SDK page sections">
-          <a href="#new-input">Input <span>↓</span></a>
+          <a href="#new-input">Context <span>↓</span></a>
           <a href="#use-cases">Build <span>↓</span></a>
+          <a href="#symbolic-resonance">Resonance <span>↓</span></a>
           <a href="#icon-assets">Icons <span>↓</span></a>
           <a href="#quick-start">Quick start <span>↓</span></a>
+          <a href="#core-api">API <span>↓</span></a>
         </nav>
       </section>
 
       <section class="section" id="new-input" aria-labelledby="new-input-title">
         <div class="section__head">
           <span class="section__no">№ 01</span>
-          <span class="section__title">New input</span>
+          <span class="section__title">Symbolic context</span>
         </div>
-        <h2 id="new-input-title">A new astrology input.</h2>
+        <h2 id="new-input-title">A verified context layer.</h2>
         <p class="lede">
           Most astrology apps start with a birth chart. Zodiacs adds another
-          input: the signs a person holds. Apps can surface carried signs,
-          emphasized elements, wheel coverage, and seasonal relevance inside a
-          reading, profile, or moment.
+          read-only layer: signs that appear in a connected wallet. Apps can
+          surface verified holdings, emphasized elements, wheel coverage, and
+          seasonal relevance inside a reading, profile, or moment.
         </p>
         <div class="grid grid--three">
           <article class="card card--compact">
@@ -1500,13 +1586,13 @@
           </article>
           <article class="card card--compact">
             <span class="card__k">Zodiacs ownership</span>
-            <h3 class="card__title">Chosen to hold</h3>
-            <p class="card__copy">The signs a user chooses to hold.</p>
+            <h3 class="card__title">Verified in wallet</h3>
+            <p class="card__copy">The signs that appear through public ownership lookup.</p>
           </article>
           <article class="card card--compact">
             <span class="card__k">App experience</span>
             <h3 class="card__title">In the product</h3>
-            <p class="card__copy">Readings, profiles, receipts, compatibility, seasonal moments, and AI astrology.</p>
+            <p class="card__copy">Readings, profiles, share cards, compatibility, seasonal moments, and AI astrology.</p>
           </article>
         </div>
       </section>
@@ -1530,7 +1616,7 @@
           </article>
           <article class="card card--compact">
             <span class="card__k">02</span>
-            <h3 class="card__title">Zodiac shelf and Cosmic Receipt</h3>
+            <h3 class="card__title">Zodiac shelf and identity receipt</h3>
             <p class="card__copy">Held signs, wheel coverage, element mix, modality mix, and current season match in one clean surface.</p>
             <p class="card__example">Aries, Leo, Pisces. Wheel coverage: 25%. Element mix: Fire + Water.</p>
           </article>
@@ -1555,49 +1641,163 @@
           <article class="card card--compact">
             <span class="card__k">06</span>
             <h3 class="card__title">AI astrology context</h3>
-            <p class="card__copy">Structured inputs for astrology assistants: held signs, missing signs, mix, coverage, and season.</p>
+            <p class="card__copy">Structured inputs for astrology assistants: held signs, confirmed absent signs, mix, coverage, and season.</p>
             <p class="card__example">Personalized readings with verified ownership context. No custody. No signing.</p>
           </article>
         </div>
       </section>
 
-      <section class="section" id="reading-thresholds" aria-labelledby="reading-thresholds-title">
+      <section class="section" id="symbolic-resonance" aria-labelledby="symbolic-resonance-title">
         <div class="section__head">
           <span class="section__no">№ 03</span>
-          <span class="section__title">Reading layer</span>
+          <span class="section__title">Symbolic resonance</span>
         </div>
-        <h2 id="reading-thresholds-title">From holding to reading.</h2>
+        <h2 id="symbolic-resonance-title">Facet copy for app surfaces.</h2>
         <p class="lede">
-          Each app defines when a held sign is visible, counted, or given more
-          presence. A balance can be detected. A larger app-defined amount can
-          count in readings. Long-held signs can gain context over time.
+          Apps can map verified holdings into aura bars, hover text, or
+          share-card copy without changing the SDK. Treat every facet as
+          optional symbolic context: if this appears, it may emphasize a quality
+          in the experience.
         </p>
-        <div class="grid grid--two">
-          <article class="card card--compact">
-            <span class="card__k">Detected</span>
-            <h3 class="card__title">Seen by the app</h3>
-            <p class="card__copy">The app sees that the user holds the sign.</p>
+        <div class="facet-grid" aria-label="Symbolic resonance facets">
+          <article class="facet-card">
+            <div class="facet-card__head">
+              <img src="../assets/sdk/zodiac-icons/circle/aries.png" alt="Aries icon" />
+              <div><span class="facet-card__sign">Aries</span><span class="facet-card__label">Fire · Cardinal</span></div>
+            </div>
+            <ul class="facet-list">
+              <li><strong>Courage</strong><span>You move forward even when the path is not fully clear.</span></li>
+              <li><strong>Momentum</strong><span>You bring energy that gets things started.</span></li>
+              <li><strong>Initiative</strong><span>You are often the first to act when something matters.</span></li>
+            </ul>
           </article>
-          <article class="card card--compact">
-            <span class="card__k">Counts in readings</span>
-            <h3 class="card__title">Included</h3>
-            <p class="card__copy">The app includes the sign in a reading experience.</p>
+          <article class="facet-card">
+            <div class="facet-card__head">
+              <img src="../assets/sdk/zodiac-icons/circle/taurus.png" alt="Taurus icon" />
+              <div><span class="facet-card__sign">Taurus</span><span class="facet-card__label">Earth · Fixed</span></div>
+            </div>
+            <ul class="facet-list">
+              <li><strong>Stability</strong><span>You create calm by staying steady and grounded.</span></li>
+              <li><strong>Devotion</strong><span>You show care through consistency and presence.</span></li>
+              <li><strong>Abundance</strong><span>You notice what is enough and help it grow.</span></li>
+            </ul>
           </article>
-          <article class="card card--compact">
-            <span class="card__k">Higher presence</span>
-            <h3 class="card__title">More prominent</h3>
-            <p class="card__copy">The sign receives more presence in the experience.</p>
+          <article class="facet-card">
+            <div class="facet-card__head">
+              <img src="../assets/sdk/zodiac-icons/circle/gemini.png" alt="Gemini icon" />
+              <div><span class="facet-card__sign">Gemini</span><span class="facet-card__label">Air · Mutable</span></div>
+            </div>
+            <ul class="facet-list">
+              <li><strong>Curiosity</strong><span>You stay endlessly interested in how things work.</span></li>
+              <li><strong>Wit</strong><span>You catch patterns quickly and keep the mood alive.</span></li>
+              <li><strong>Adaptability</strong><span>You adjust easily when the situation changes.</span></li>
+            </ul>
           </article>
-          <article class="card card--compact">
-            <span class="card__k">Long-held sign</span>
-            <h3 class="card__title">Carried over time</h3>
-            <p class="card__copy">The user has carried the sign over time.</p>
+          <article class="facet-card">
+            <div class="facet-card__head">
+              <img src="../assets/sdk/zodiac-icons/circle/cancer.png" alt="Cancer icon" />
+              <div><span class="facet-card__sign">Cancer</span><span class="facet-card__label">Water · Cardinal</span></div>
+            </div>
+            <ul class="facet-list">
+              <li><strong>Care</strong><span>You notice what people need before they say it.</span></li>
+              <li><strong>Intuition</strong><span>You often sense the emotional truth underneath the surface.</span></li>
+              <li><strong>Protection</strong><span>You know how to guard what feels tender or important.</span></li>
+            </ul>
+          </article>
+          <article class="facet-card">
+            <div class="facet-card__head">
+              <img src="../assets/sdk/zodiac-icons/circle/leo.png" alt="Leo icon" />
+              <div><span class="facet-card__sign">Leo</span><span class="facet-card__label">Fire · Fixed</span></div>
+            </div>
+            <ul class="facet-list">
+              <li><strong>Radiance</strong><span>You bring warmth and visibility into the room.</span></li>
+              <li><strong>Confidence</strong><span>You are learning to take up space without shrinking.</span></li>
+              <li><strong>Generosity</strong><span>You share attention, warmth, and creative energy freely.</span></li>
+            </ul>
+          </article>
+          <article class="facet-card">
+            <div class="facet-card__head">
+              <img src="../assets/sdk/zodiac-icons/circle/virgo.png" alt="Virgo icon" />
+              <div><span class="facet-card__sign">Virgo</span><span class="facet-card__label">Earth · Mutable</span></div>
+            </div>
+            <ul class="facet-list">
+              <li><strong>Clarity</strong><span>You help make confusing things feel clean and workable.</span></li>
+              <li><strong>Craft</strong><span>You improve things through patience, detail, and care.</span></li>
+              <li><strong>Discernment</strong><span>You can tell what matters and what can be released.</span></li>
+            </ul>
+          </article>
+          <article class="facet-card">
+            <div class="facet-card__head">
+              <img src="../assets/sdk/zodiac-icons/circle/libra.png" alt="Libra icon" />
+              <div><span class="facet-card__sign">Libra</span><span class="facet-card__label">Air · Cardinal</span></div>
+            </div>
+            <ul class="facet-list">
+              <li><strong>Harmony</strong><span>You sense when something needs balance.</span></li>
+              <li><strong>Grace</strong><span>You move through tension with tact and beauty.</span></li>
+              <li><strong>Diplomacy</strong><span>You help different sides find a way to meet.</span></li>
+            </ul>
+          </article>
+          <article class="facet-card">
+            <div class="facet-card__head">
+              <img src="../assets/sdk/zodiac-icons/circle/scorpio.png" alt="Scorpio icon" />
+              <div><span class="facet-card__sign">Scorpio</span><span class="facet-card__label">Water · Fixed</span></div>
+            </div>
+            <ul class="facet-list">
+              <li><strong>Depth</strong><span>You are drawn to what is hidden, intense, and real.</span></li>
+              <li><strong>Magnetism</strong><span>You carry a quiet pull that people can feel.</span></li>
+              <li><strong>Power</strong><span>You can transform pressure into inner strength.</span></li>
+            </ul>
+          </article>
+          <article class="facet-card">
+            <div class="facet-card__head">
+              <img src="../assets/sdk/zodiac-icons/circle/sagittarius.png" alt="Sagittarius icon" />
+              <div><span class="facet-card__sign">Sagittarius</span><span class="facet-card__label">Fire · Mutable</span></div>
+            </div>
+            <ul class="facet-list">
+              <li><strong>Freedom</strong><span>You need space to explore, learn, and expand.</span></li>
+              <li><strong>Vision</strong><span>You look for meaning beyond the immediate moment.</span></li>
+              <li><strong>Fortune</strong><span>You notice openings, timing, and possibility.</span></li>
+            </ul>
+          </article>
+          <article class="facet-card">
+            <div class="facet-card__head">
+              <img src="../assets/sdk/zodiac-icons/circle/capricorn.png" alt="Capricorn icon" />
+              <div><span class="facet-card__sign">Capricorn</span><span class="facet-card__label">Earth · Cardinal</span></div>
+            </div>
+            <ul class="facet-list">
+              <li><strong>Discipline</strong><span>You keep going when the work asks for patience.</span></li>
+              <li><strong>Mastery</strong><span>You build confidence through effort and repetition.</span></li>
+              <li><strong>Legacy</strong><span>You care about what lasts beyond the moment.</span></li>
+            </ul>
+          </article>
+          <article class="facet-card">
+            <div class="facet-card__head">
+              <img src="../assets/sdk/zodiac-icons/circle/aquarius.png" alt="Aquarius icon" />
+              <div><span class="facet-card__sign">Aquarius</span><span class="facet-card__label">Air · Fixed</span></div>
+            </div>
+            <ul class="facet-list">
+              <li><strong>Originality</strong><span>You see things from an angle others might miss.</span></li>
+              <li><strong>Insight</strong><span>You recognize patterns before they become obvious.</span></li>
+              <li><strong>Liberation</strong><span>You help break stale patterns and imagine new ones.</span></li>
+            </ul>
+          </article>
+          <article class="facet-card">
+            <div class="facet-card__head">
+              <img src="../assets/sdk/zodiac-icons/circle/pisces.png" alt="Pisces icon" />
+              <div><span class="facet-card__sign">Pisces</span><span class="facet-card__label">Water · Mutable</span></div>
+            </div>
+            <ul class="facet-list">
+              <li><strong>Imagination</strong><span>You move easily through dreams, symbols, and possibility.</span></li>
+              <li><strong>Compassion</strong><span>You feel deeply and respond with care.</span></li>
+              <li><strong>Mysticism</strong><span>You are comfortable with mystery and unseen meaning.</span></li>
+            </ul>
           </article>
         </div>
         <div class="note">
-          Apps may define their own thresholds using balances or supply share.
-          The SDK provides deterministic ownership context; each product
-          defines its interpretation.
+          Example share copy: Taurus appears in your connected wallet, adding a
+          subtle layer of stability, devotion, and abundance. The SDK provides
+          verified facts; apps own the resonance mapping, bar fill, hover text,
+          and share-card rendering.
         </div>
       </section>
 
@@ -1626,9 +1826,9 @@
           <div class="icon-tile"><img src="../assets/sdk/zodiac-icons/circle/pisces.png" alt="Pisces icon" /><span>Pisces</span></div>
         </div>
         <p class="lede">
-          Use the icons in Zodiac shelves, Cosmic Receipts, birth chart
-          overlays, compatibility cards, seasonal moments, profiles, and AI
-          astrology interfaces.
+          Use the icons in Zodiac shelves, identity receipts, birth chart
+          overlays, compatibility cards, seasonal moments, profiles, symbolic
+          resonance displays, and AI astrology interfaces.
         </p>
         <div class="code code--install" aria-label="Icon asset example">
           <div class="code__bar">
@@ -1663,7 +1863,7 @@ console.log(leo.packagePath);
           <div class="flow__arrow">→</div>
           <div class="flow__item">
             <span class="flow__k">Render</span>
-            <span class="flow__v">Astrology context for app surfaces</span>
+            <span class="flow__v">Symbolic context for app surfaces</span>
           </div>
         </div>
         <div class="trust-line">
@@ -1692,6 +1892,7 @@ console.log(leo.packagePath);
           React hooks and UI primitives are included, including
           <code>useZodiacIdentityContext</code>, <code>useIdentityReceiptData</code>,
           <code>IdentityReceiptCard</code>, and <code>ProfileSummaryCard</code>.
+          See the GitHub guide for neutral symbolic resonance patterns.
         </div>
         <div class="resource">
           <a href="https://github.com/ZodiacsOfficial/sdk" rel="noopener noreferrer">
@@ -1705,6 +1906,10 @@ console.log(leo.packagePath);
           <a href="https://www.npmjs.com/package/@zodiacs/sdk" rel="noopener noreferrer">
             <strong>npm</strong>
             <span>@zodiacs/sdk</span>
+          </a>
+          <a href="https://github.com/ZodiacsOfficial/sdk/blob/main/docs/symbolic-resonance.md" rel="noopener noreferrer">
+            <strong>Guide</strong>
+            <span>Symbolic resonance use case</span>
           </a>
         </div>
       </section>
@@ -1776,7 +1981,7 @@ console.log(ownership.heldSigns);</code></pre>
           <article class="example">
             <div class="example__intro">
               <h3 class="example__title">Compute identity context</h3>
-              <p class="example__copy">Turn ownership into facts for a profile, shelf, receipt, or wheel.</p>
+              <p class="example__copy">Turn ownership into facts for a profile, shelf, identity receipt, or wheel.</p>
             </div>
             <details class="code-details">
               <summary>Code</summary>
@@ -1868,7 +2073,7 @@ console.log(receipt.wheelCoverage);</code></pre>
             </div>
           </div>
           <div class="receipt__body">
-            <div class="receipt__label">Sample Cosmic Receipt</div>
+            <div class="receipt__label">Sample identity receipt</div>
             <div class="receipt__title">A public Zodiac shelf.</div>
             <div class="receipt__facts">
               <div class="fact">
@@ -1901,7 +2106,7 @@ console.log(receipt.wheelCoverage);</code></pre>
               <span class="held">Gemini</span>
               <span class="held">Leo</span>
               <span class="held">Pisces</span>
-              <span>8 open</span>
+              <span>8 confirmed absent</span>
             </div>
             <button class="receipt__copy" type="button" data-copy-receipt>
               Copy receipt data
