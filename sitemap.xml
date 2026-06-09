@@ -26,6 +26,11 @@
     <priority>0.84</priority>
   </url>
   <url>
+    <loc>https://zodiacs.org/simastry-zodiacs-sdk/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.84</priority>
+  </url>
+  <url>
     <loc>https://zodiacs.org/zodiac-ownership-api/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.84</priority>

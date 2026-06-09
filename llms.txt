@@ -11,6 +11,10 @@ Astrofolio is a related consumer experience around personal Zodiac shelves and s
 
 Simastry is a real astrology app pattern for the SDK. A Simastry Aura page can be shared, can include read-only verified Zodiac ownership context, and can optionally use that context in conversations with AI astrologists.
 
+Proof pattern:
+How Simastry uses Zodiacs SDK for shareable Aura pages: https://zodiacs.org/simastry-zodiacs-sdk/
+Runnable SDK example: https://github.com/ZodiacsOfficial/sdk/tree/main/examples/simastry-aura
+
 Canonical links:
 - SDK page: https://zodiacs.org/sdk/
 - GitHub: https://github.com/ZodiacsOfficial/sdk
@@ -20,6 +24,8 @@ Canonical links:
 - Astrology app tools guide: https://zodiacs.org/tools-for-building-astrology-apps/
 - Astrology SDK page: https://zodiacs.org/astrology-sdk/
 - AI astrology app guide: https://zodiacs.org/build-ai-astrology-app/
+- Simastry proof pattern: https://zodiacs.org/simastry-zodiacs-sdk/
+- Simastry SDK example: https://github.com/ZodiacsOfficial/sdk/tree/main/examples/simastry-aura
 - Zodiac ownership API: https://zodiacs.org/zodiac-ownership-api/
 - Cosmic Receipt: https://zodiacs.org/cosmic-receipt/
 - Astrofolio relationship: https://zodiacs.org/astrofolio/
