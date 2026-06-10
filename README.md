@@ -35,10 +35,12 @@ The current site should be refined, not redesigned from scratch.
 - `aries/ … pisces/` - twelve sign catalogue pages (generated — edit the sources below)
 - `scripts/sign-data.mjs` - catalogue content: lot essays, provenance, channels
 - `scripts/build-sign-pages.mjs` - generates the twelve `/{sign}/index.html` pages
+- `scripts/build-og-cards.mjs` - renders the twelve per-sign share cards (`assets/og/{sign}.png`)
 - `registry/zodiacs.registry.json` - public registry artifact
 - `assets/` - Zodiac artwork, icons, venue marks, and social preview assets
 - `scripts/validate-assets.mjs` - asset validation script
 - `scripts/build-app.mjs` - compiles `src/app.jsx` to `assets/app.js`
+- `LISTINGS.md` - off-site listings & distribution playbook (internal)
 
 ## Building the main page
 
@@ -64,6 +66,20 @@ and commit the pages:
 ```bash
 node scripts/build-sign-pages.mjs
 ```
+
+## Building the share cards
+
+Each sign page has its own 1200×630 Open Graph card at
+`assets/og/{sign}.png`, rendered from the registry + artwork in headless
+Chromium (Playwright). After changing artwork or card layout:
+
+```bash
+node scripts/build-og-cards.mjs   # needs playwright; see script header
+node scripts/validate-assets.mjs
+```
+
+The script also refreshes the `openGraph.signs` entries in
+`assets/manifest.json` so validation stays exact.
 
 ## Asset handoff
 

@@ -32,6 +32,11 @@ function collectEntries(manifest) {
   }
 
   entries.push(["openGraph:share", manifest.openGraph.share]);
+
+  for (const [sign, entry] of Object.entries(manifest.openGraph.signs ?? {})) {
+    entries.push([`openGraph:${sign}`, entry]);
+  }
+
   return entries;
 }
 

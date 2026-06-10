@@ -1042,6 +1042,11 @@
             <div className="hdr__mark">
               <span>Zodiacs</span><span className="sep">·</span><span className="dim">org</span>
             </div>
+            <nav className="hdr__links" aria-label="Sections">
+              <a href="#registry">Registry</a>
+              <a href="#verify">Verify</a>
+              <a href="#official-twelve">The Twelve</a>
+            </nav>
             <a className="hdr__nav" href="/sdk/">
               <span>SDK</span>
               <span className="chip">↗</span>
