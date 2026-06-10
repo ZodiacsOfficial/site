@@ -32,12 +32,15 @@ The current site should be refined, not redesigned from scratch.
 - `src/app.jsx` - source for the main page's React app (edit this, not the bundle)
 - `assets/app.js` - precompiled app bundle served by `index.html` (generated)
 - `sdk/index.html` - dedicated SDK page
+- `thesis/index.html` - the extended thesis page (video hero, editorial essay)
 - `aries/ … pisces/` - twelve sign catalogue pages (generated — edit the sources below)
 - `scripts/sign-data.mjs` - catalogue content: lot essays, provenance, channels
 - `scripts/build-sign-pages.mjs` - generates the twelve `/{sign}/index.html` pages
 - `scripts/build-og-cards.mjs` - renders the twelve per-sign share cards (`assets/og/{sign}.png`)
 - `registry/zodiacs.registry.json` - public registry artifact
 - `assets/` - Zodiac artwork, icons, venue marks, and social preview assets
+- `assets/art/` - the astronomical clock artwork (poster JPGs + ambient MP4 loop)
+- `assets/astrofolio/` - Astrofolio's sign glyphs (rendered gold via CSS mask)
 - `scripts/validate-assets.mjs` - asset validation script
 - `scripts/build-app.mjs` - compiles `src/app.jsx` to `assets/app.js`
 - `LISTINGS.md` - off-site listings & distribution playbook (internal)

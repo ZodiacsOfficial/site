@@ -79,6 +79,22 @@
     .link strong { display: block; font-weight: 400; margin-bottom: 4px; }
     .link span { color: var(--ink-dim); font-family: var(--mono); font-size: 12px; }
     footer { margin-top: 72px; padding-top: 20px; border-top: 1px solid var(--hair); color: var(--ink-dim); font-family: var(--mono); font-size: 12px; }
+    .glyphs { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; margin-top: 28px; }
+    .glyphs a {
+      display: flex; flex-direction: column; align-items: center; gap: 10px;
+      border: 1px solid var(--hair); border-radius: 8px;
+      padding: 16px 6px 12px; background: rgba(255,255,255,0.02);
+      transition: border-color 280ms ease, background 280ms ease;
+    }
+    .glyphs a:hover { border-color: rgba(201,169,97,0.45); background: rgba(201,169,97,0.05); }
+    .glyphs .g {
+      width: 24px; height: 24px; background: var(--gold); opacity: 0.85;
+      -webkit-mask: var(--m) center / contain no-repeat;
+      mask: var(--m) center / contain no-repeat;
+    }
+    .glyphs a:hover .g { background: var(--gold-bright); opacity: 1; }
+    .glyphs span.n { font-family: var(--mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-dim); }
+    @media (max-width: 700px) { .glyphs { grid-template-columns: repeat(3, 1fr); } }
     @media (max-width: 700px) {
       header, .nav { display: block; }
       .nav a { display: inline-block; margin: 12px 12px 0 0; }
@@ -158,6 +174,28 @@
       <a class="link" href="https://www.instagram.com/astrofolioonsol/" rel="noopener noreferrer"><strong>Instagram</strong><span>@astrofolioonsol</span></a>
       <a class="link" href="https://tiktok.com/@astrofolio" rel="noopener noreferrer"><strong>TikTok</strong><span>@astrofolio</span></a>
       <a class="link" href="https://t.me/astrofoliosol" rel="noopener noreferrer"><strong>Telegram</strong><span>@astrofoliosol</span></a>
+    </section>
+
+    <section aria-label="The Twelve — catalogue entries">
+      <h2>The Twelve, by glyph.</h2>
+      <p>
+        Astrofolio's sign glyphs, linked to each official catalogue entry —
+        lore, provenance, and the canonical record for every sign.
+      </p>
+      <nav class="glyphs" aria-label="Sign catalogue pages">
+      <a href="/aries/"><span class="g" style="--m:url('/assets/astrofolio/aries.png')" aria-hidden="true"></span><span class="n">Aries</span></a>
+      <a href="/taurus/"><span class="g" style="--m:url('/assets/astrofolio/taurus.png')" aria-hidden="true"></span><span class="n">Taurus</span></a>
+      <a href="/gemini/"><span class="g" style="--m:url('/assets/astrofolio/gemini.png')" aria-hidden="true"></span><span class="n">Gemini</span></a>
+      <a href="/cancer/"><span class="g" style="--m:url('/assets/astrofolio/cancer.png')" aria-hidden="true"></span><span class="n">Cancer</span></a>
+      <a href="/leo/"><span class="g" style="--m:url('/assets/astrofolio/leo.png')" aria-hidden="true"></span><span class="n">Leo</span></a>
+      <a href="/virgo/"><span class="g" style="--m:url('/assets/astrofolio/virgo.png')" aria-hidden="true"></span><span class="n">Virgo</span></a>
+      <a href="/libra/"><span class="g" style="--m:url('/assets/astrofolio/libra.png')" aria-hidden="true"></span><span class="n">Libra</span></a>
+      <a href="/scorpio/"><span class="g" style="--m:url('/assets/astrofolio/scorpio.png')" aria-hidden="true"></span><span class="n">Scorpio</span></a>
+      <a href="/sagittarius/"><span class="g" style="--m:url('/assets/astrofolio/sagittarius.png')" aria-hidden="true"></span><span class="n">Sagittarius</span></a>
+      <a href="/capricorn/"><span class="g" style="--m:url('/assets/astrofolio/capricorn.png')" aria-hidden="true"></span><span class="n">Capricorn</span></a>
+      <a href="/aquarius/"><span class="g" style="--m:url('/assets/astrofolio/aquarius.png')" aria-hidden="true"></span><span class="n">Aquarius</span></a>
+      <a href="/pisces/"><span class="g" style="--m:url('/assets/astrofolio/pisces.png')" aria-hidden="true"></span><span class="n">Pisces</span></a>
+      </nav>
     </section>
 
     <footer>

@@ -1046,6 +1046,7 @@
               <a href="#registry">Registry</a>
               <a href="#verify">Verify</a>
               <a href="#official-twelve">The Twelve</a>
+              <a href="/thesis/">Thesis</a>
             </nav>
             <a className="hdr__nav" href="/sdk/">
               <span>SDK</span>
@@ -1644,12 +1645,19 @@
           </div>
 
           <article className="detail fade-key" key={animKey + '-detail'}>
-            <img
-              className="detail__symbol"
-              src={`assets/icons/${sign.name.toLowerCase()}.png`}
-              alt=""
-              decoding="async"
-            />
+            <a
+              className="detail__symbol-link"
+              href={`/${sign.asset.sign}/`}
+              aria-label={`${sign.name} — open catalogue entry`}
+              title="Open catalogue entry"
+            >
+              <img
+                className="detail__symbol"
+                src={`assets/icons/${sign.name.toLowerCase()}.png`}
+                alt=""
+                decoding="async"
+              />
+            </a>
             <span className="detail__ticker">{sign.ticker}</span>
             <h3 className="detail__name">{sign.name}</h3>
 
@@ -1673,6 +1681,19 @@
               <div className="detail__row">
                 <span className="k">Archetype</span>
                 <span className="v">{sign.archetype}</span>
+              </div>
+              <div className="detail__row">
+                <span className="k">Shelf</span>
+                <span className="v">
+                  <a className="detail__shelf" href="https://astrofolio.xyz/" rel="noopener noreferrer">
+                    <span
+                      className="af-glyph"
+                      style={{ '--m': `url('/assets/astrofolio/${sign.asset.sign}.png')` }}
+                      aria-hidden="true"
+                    />
+                    <span>On Astrofolio</span>
+                  </a>
+                </span>
               </div>
               <div className="detail__row">
                 <span className="k">Original · Solana</span>
@@ -1726,6 +1747,10 @@
             <span>·</span>
             <span>MMXXVI</span>
           </div>
+          <a className="phil__more" href="/thesis/">
+            <span>Read the full thesis — belief is the oldest asset</span>
+            <span className="phil__more-arr" aria-hidden="true">→</span>
+          </a>
         </section>
       );
     }
@@ -2069,6 +2094,28 @@
               </div>
             ))}
           </div>
+
+          <nav className="cat__lots" aria-label="Catalogue entries by glyph">
+            {SIGNS.map(s => (
+              <a
+                key={s.ticker}
+                className="cat__lot"
+                href={`/${s.asset.sign}/`}
+                title={`${s.name} — catalogue entry`}
+                aria-label={`${s.name} — catalogue entry`}
+              >
+                <img
+                  src={`assets/icons/${s.name.toLowerCase()}.png`}
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                />
+              </a>
+            ))}
+          </nav>
+          <p className="cat__lots-note">
+            Tap a glyph to open its catalogue entry — lore, provenance &amp; acquisition.
+          </p>
         </section>
       );
     }

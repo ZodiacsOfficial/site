@@ -1476,7 +1476,35 @@
       filter:
         drop-shadow(0 0 14px rgba(201,169,97,0.32))
         drop-shadow(0 1px 2px rgba(0,0,0,0.5));
+      transition: filter 320ms var(--ease), transform 320ms var(--ease);
     }
+    /* Clickable glyph — routes to the sign's catalogue entry */
+    .detail__symbol-link { float: right; display: block; }
+    .detail__symbol-link .detail__symbol { float: none; }
+    .detail__symbol-link:hover .detail__symbol {
+      transform: scale(1.05);
+      filter:
+        drop-shadow(0 0 20px rgba(201,169,97,0.5))
+        drop-shadow(0 1px 2px rgba(0,0,0,0.5));
+    }
+
+    /* Astrofolio glyph — their black sign marks, masked to registry gold */
+    .af-glyph {
+      display: inline-block;
+      width: 14px; height: 14px;
+      background: var(--gold);
+      opacity: 0.85;
+      -webkit-mask: var(--m) center / contain no-repeat;
+      mask: var(--m) center / contain no-repeat;
+      transition: background 320ms var(--ease), opacity 320ms var(--ease);
+    }
+    .detail__shelf {
+      display: inline-flex; align-items: center; gap: 8px;
+      color: var(--ink-2); text-decoration: none;
+      transition: color 320ms var(--ease);
+    }
+    .detail__shelf:hover { color: var(--gold-bright); }
+    .detail__shelf:hover .af-glyph { background: var(--gold-bright); opacity: 1; }
     .detail__rows {
       margin-top: 18px;
       border-top: 1px solid var(--hair);
@@ -1676,6 +1704,20 @@
       border-top: 1px solid var(--hair);
       border-bottom: 1px solid var(--hair);
       position: relative;
+      isolation: isolate;
+    }
+    /* The astronomical clock — quiet backdrop behind the thesis */
+    .phil::before {
+      content: "";
+      position: absolute; inset: 0;
+      z-index: -1;
+      background-image: url('/assets/art/zodiac-clock-1280.jpg');
+      background-size: cover;
+      background-position: 30% 36%;
+      opacity: 0.14;
+      pointer-events: none;
+      -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 24%, #000 70%, transparent 100%);
+      mask-image: linear-gradient(180deg, transparent 0%, #000 24%, #000 70%, transparent 100%);
     }
     .phil__sup {
       display: flex; align-items: center; gap: 12px;
@@ -1712,6 +1754,21 @@
       letter-spacing: 0.22em; color: var(--ink-mute);
       text-transform: uppercase;
     }
+    .phil__more {
+      margin-top: 30px;
+      display: flex; justify-content: space-between; align-items: center; gap: 12px;
+      max-width: 560px;
+      border: 1px solid var(--hair-2);
+      padding: 16px 16px;
+      text-decoration: none;
+      font-family: var(--mono); font-size: 10px; letter-spacing: 0.22em;
+      text-transform: uppercase; color: var(--ink-2);
+      background: rgba(5, 6, 9, 0.55);
+      transition: border-color 320ms var(--ease), color 320ms var(--ease);
+    }
+    .phil__more:hover { border-color: var(--gold); color: var(--gold-bright); }
+    .phil__more-arr { color: var(--gold); transition: transform 420ms var(--ease); }
+    .phil__more:hover .phil__more-arr { transform: translateX(3px); }
 
     /* ── Twelve signs catalog ──────────────────────────────────── */
 
@@ -1825,6 +1882,42 @@
       color: var(--ink-mute);
       text-transform: uppercase;
       margin-top: 4px;
+    }
+    /* Glyph rail — every icon opens its catalogue entry */
+    .cat__lots {
+      margin-top: 24px;
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 8px;
+    }
+    .cat__lot {
+      display: grid; place-items: center;
+      aspect-ratio: 1;
+      border: 1px solid var(--hair);
+      background: var(--surface);
+      transition:
+        border-color 320ms var(--ease),
+        background 320ms var(--ease),
+        transform 220ms var(--ease);
+    }
+    .cat__lot img {
+      width: 54%; height: 54%;
+      object-fit: contain;
+      opacity: 0.8;
+      transition: opacity 320ms var(--ease), transform 420ms var(--ease);
+    }
+    .cat__lot:hover {
+      border-color: var(--hair-3);
+      background: var(--surface-2);
+      transform: translateY(-2px);
+    }
+    .cat__lot:active { transform: scale(0.96); }
+    .cat__lot:hover img { opacity: 1; transform: scale(1.07); }
+    .cat__lots-note {
+      margin: 12px 0 0;
+      font-family: var(--mono); font-size: 9px;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--ink-mute);
     }
     /* (.cat__price retired: catalog cards no longer show financial data.
        Address row is now rendered by .cat__addr — see new-section CSS.) */
@@ -2495,6 +2588,7 @@
 
       .cat { grid-template-columns: repeat(3, 1fr); gap: 12px; }
       .cat__sym { height: 150px; }
+      .cat__lots { grid-template-columns: repeat(12, 1fr); }
 
       /* Venue rail becomes a grid — no horizontal scroll on desktop */
       .access__rail-wrap { margin: 0 0 22px; }
@@ -2530,6 +2624,7 @@
     <main class="static-site">
       <nav class="static-site__nav" aria-label="Primary">
         <span>Zodiacs.org</span>
+        <a href="/thesis/">Thesis</a>
         <a href="/registry/zodiacs.registry.json">Registry JSON</a>
         <a href="/sdk/">SDK</a>
       </nav>

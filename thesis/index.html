@@ -1,0 +1,621 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#08090C" />
+  <meta name="color-scheme" content="dark" />
+  <title>The Thesis — Belief Is the Oldest Asset | Zodiacs.org</title>
+  <meta name="description" content="Why the twelve Zodiacs — humanity's most durable identity system — belong onchain, and why they endure there. The full thesis behind the official registry." />
+  <link rel="canonical" href="https://zodiacs.org/thesis/" />
+
+  <meta property="og:site_name" content="Zodiacs" />
+  <meta property="og:title" content="The Thesis — Belief Is the Oldest Asset" />
+  <meta property="og:description" content="Why the twelve Zodiacs — humanity's most durable identity system — belong onchain, and why they endure there." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://zodiacs.org/thesis/" />
+  <meta property="og:image" content="https://zodiacs.org/assets/art/zodiac-clock.jpg" />
+  <meta property="og:image:width" content="1920" />
+  <meta property="og:image:height" content="1080" />
+  <meta property="og:image:alt" content="An ancient astronomical zodiac clock face in lapis and gold against a starfield." />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="The Thesis — Belief Is the Oldest Asset" />
+  <meta name="twitter:description" content="Why the twelve Zodiacs belong onchain, and why they endure there." />
+  <meta name="twitter:image" content="https://zodiacs.org/assets/art/zodiac-clock.jpg" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "@id": "https://zodiacs.org/thesis/#article",
+    "headline": "The Thesis — Belief Is the Oldest Asset",
+    "description": "Why the twelve Zodiacs — humanity's most durable identity system — belong onchain, and why they endure there.",
+    "image": "https://zodiacs.org/assets/art/zodiac-clock.jpg",
+    "url": "https://zodiacs.org/thesis/",
+    "inLanguage": "en",
+    "author": { "@type": "Organization", "@id": "https://zodiacs.org/#org", "name": "Zodiacs" },
+    "publisher": { "@type": "Organization", "@id": "https://zodiacs.org/#org", "name": "Zodiacs" },
+    "isPartOf": { "@type": "WebSite", "@id": "https://zodiacs.org/#site" },
+    "about": [
+      { "@type": "Thing", "name": "Astrology" },
+      { "@type": "Dataset", "@id": "https://zodiacs.org/#registry", "name": "Zodiacs Registry" }
+    ]
+  }
+  </script>
+
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%2308090C'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' font-family='Cormorant Garamond, Georgia, serif' font-style='italic' font-size='42' fill='%23DEC07A'%3EZ%3C/text%3E%3C/svg%3E" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg: #050609; --bg-2: #080A0F;
+      --surface: #10131A; --surface-2: #161A23;
+      --hair: rgba(201,169,97,0.10); --hair-2: rgba(201,169,97,0.22); --hair-3: rgba(201,169,97,0.42);
+      --gold: #C9A961; --gold-bright: #DEC07A; --gold-deep: #8E7541;
+      --ink: #DCD7C7; --ink-2: #BDB8A9; --ink-dim: #8A8576; --ink-mute: #5F5A4A;
+      --celestial: #4A6D94;
+      --serif: 'Cormorant Garamond', 'EB Garamond', Georgia, Cambria, 'Times New Roman', serif;
+      --mono: 'JetBrains Mono', 'SFMono-Regular', ui-monospace, Menlo, Monaco, Consolas, monospace;
+      --ease: cubic-bezier(0.32, 0.72, 0, 1);
+      --z-grain: 1; --z-base: 10; --z-nav: 40;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body {
+      margin: 0; padding: 0; background: var(--bg); color: var(--ink);
+      font-family: var(--serif); font-weight: 400;
+      -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+    }
+    html { scroll-behavior: smooth; scrollbar-color: rgba(201,169,97,0.14) #050609; scrollbar-width: thin; }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+    body {
+      min-height: 100dvh;
+      background:
+        radial-gradient(120% 60% at 50% -10%, rgba(201,169,97,0.05), transparent 62%),
+        var(--bg);
+    }
+    [id] { scroll-margin-top: 96px; }
+    img, svg, video { display: block; max-width: 100%; }
+    a { color: inherit; }
+    :focus-visible { outline: 1px solid var(--gold); outline-offset: 3px; box-shadow: 0 0 0 4px rgba(201,169,97,0.12); }
+    :focus:not(:focus-visible) { outline: 0; }
+    .skip {
+      position: absolute; left: -9999px; top: 0; background: var(--surface-2); color: var(--gold);
+      padding: 10px 16px; font-family: var(--mono); font-size: 11px;
+      letter-spacing: 0.22em; text-transform: uppercase; border: 1px solid var(--hair-3); z-index: 60;
+    }
+    .skip:focus { left: 12px; top: 12px; }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+
+    .grain {
+      position: fixed; inset: 0; pointer-events: none; z-index: var(--z-grain);
+      opacity: 0.035; mix-blend-mode: overlay;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.95  0 0 0 0 0.85  0 0 0 0 0.5  0 0 0 0.85 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    }
+
+    .label { font-family: var(--mono); font-weight: 400; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--ink-dim); }
+    .label--gold { color: var(--gold); }
+
+    /* ── Floating pill header ── */
+    .hdr-wrap {
+      position: sticky; top: 12px; z-index: var(--z-nav);
+      display: flex; justify-content: center; pointer-events: none;
+      padding: max(0px, env(safe-area-inset-top)) 16px 0; margin-top: 14px;
+    }
+    .hdr {
+      pointer-events: auto; display: inline-flex; align-items: center; gap: 16px;
+      height: 48px; padding: 0 6px 0 18px;
+      background: rgba(11,13,18,0.72);
+      backdrop-filter: saturate(160%) blur(18px); -webkit-backdrop-filter: saturate(160%) blur(18px);
+      border: 1px solid var(--hair-2);
+      box-shadow: inset 0 1px 0 rgba(222,192,122,0.10), inset 0 -1px 0 rgba(0,0,0,0.4), 0 8px 28px -12px rgba(0,0,0,0.6), 0 0 0 1px rgba(0,0,0,0.35);
+    }
+    .hdr a { text-decoration: none; }
+    .hdr__mark { font-family: var(--serif); font-size: 15px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink); white-space: nowrap; }
+    .hdr__mark .dim { color: var(--gold); font-weight: 500; }
+    .hdr__mark .sep { color: var(--ink-mute); margin: 0 4px; }
+    .hdr__nav {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: var(--mono); font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase;
+      color: var(--ink-2); height: 36px; padding: 0 6px 0 14px;
+      border-left: 1px solid var(--hair-2); transition: color 320ms var(--ease);
+    }
+    .hdr__nav:hover { color: var(--gold-bright); }
+    .hdr__nav .chip {
+      display: inline-grid; place-items: center; width: 26px; height: 26px;
+      border: 1px solid var(--hair-2); background: rgba(201,169,97,0.05);
+      color: var(--gold); font-size: 11px;
+      transition: transform 420ms var(--ease), border-color 320ms var(--ease);
+    }
+    .hdr__nav:hover .chip { transform: translate(2px, -1px); border-color: var(--gold); }
+
+    /* ── Hero — the astronomical clock ── */
+    .hero {
+      position: relative;
+      min-height: min(92dvh, 980px);
+      display: flex; align-items: flex-end;
+      isolation: isolate;
+      margin-top: -76px; /* pull behind the floating header */
+      overflow: hidden;
+    }
+    .hero__media {
+      position: absolute; inset: 0; z-index: -2;
+      width: 100%; height: 100%; object-fit: cover; object-position: 28% 50%;
+      filter: saturate(0.92) brightness(0.9);
+    }
+    .hero__veil {
+      position: absolute; inset: 0; z-index: -1; pointer-events: none;
+      background:
+        linear-gradient(180deg, rgba(5,6,9,0.62) 0%, rgba(5,6,9,0.18) 34%, rgba(5,6,9,0.55) 68%, var(--bg) 98%),
+        radial-gradient(90% 60% at 70% 20%, transparent 40%, rgba(5,6,9,0.42) 100%);
+    }
+    .hero__content {
+      position: relative;
+      width: min(100%, 1140px); margin: 0 auto;
+      padding: 200px 20px 72px;
+    }
+    .hero__eyebrow {
+      display: inline-flex; align-items: center; gap: 10px;
+      margin-bottom: 24px; padding: 6px 14px 6px 10px;
+      background: rgba(5,6,9,0.55);
+      border: 1px solid var(--hair-2); border-radius: 999px;
+      font-family: var(--mono); font-size: 9.5px;
+      letter-spacing: 0.26em; text-transform: uppercase; color: var(--gold);
+      backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+    }
+    .hero__eyebrow .g { color: var(--ink-dim); }
+    .hero__title {
+      margin: 0 0 16px;
+      font-family: var(--serif); font-weight: 400;
+      font-size: clamp(52px, 9.4vw, 110px);
+      line-height: 0.94; letter-spacing: -0.012em; color: #ECE7D8;
+      text-wrap: balance; max-width: 13ch;
+      text-shadow: 0 2px 28px rgba(0,0,0,0.55);
+    }
+    .hero__title .it { font-style: italic; color: var(--gold-bright); }
+    .hero__sub {
+      margin: 0; max-width: 44ch;
+      font-family: var(--serif); font-style: italic;
+      font-size: clamp(18px, 2.6vw, 24px); line-height: 1.4; color: var(--ink-2);
+      text-wrap: pretty; text-shadow: 0 1px 18px rgba(0,0,0,0.6);
+    }
+    .hero__cue {
+      margin-top: 44px;
+      display: inline-flex; align-items: center; gap: 12px;
+      font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.3em;
+      text-transform: uppercase; color: var(--ink-dim);
+    }
+    .hero__cue .line { width: 56px; height: 1px; background: var(--hair-3); }
+
+    /* ── Page shell ── */
+    .pg { max-width: 1140px; margin: 0 auto; position: relative; z-index: var(--z-base); padding: 0 20px; overflow-x: clip; }
+
+    /* ── Essay ── */
+    .essay { padding: 72px 0 24px; }
+    .mov { padding: 44px 0 40px; border-top: 1px solid var(--hair); }
+    .mov:first-child { border-top: 0; padding-top: 0; }
+    .mov__head { display: flex; align-items: baseline; gap: 14px; margin-bottom: 22px; }
+    .mov__no { font-family: var(--mono); font-size: 10px; letter-spacing: 0.22em; color: var(--ink-mute); }
+    .mov__title {
+      margin: 0; font-family: var(--serif); font-weight: 400;
+      font-size: clamp(28px, 4.6vw, 42px); line-height: 1.05; color: var(--ink);
+      letter-spacing: -0.008em; text-wrap: balance;
+    }
+    .mov__title .it { font-style: italic; color: var(--gold-bright); }
+    .mov p {
+      margin: 0 0 18px; max-width: 64ch;
+      font-size: 17.5px; line-height: 1.62; color: var(--ink-2); text-wrap: pretty;
+    }
+    .mov p strong { color: var(--ink); font-weight: 500; }
+    .mov p:last-child { margin-bottom: 0; }
+    .mov .dc {
+      float: left; font-family: var(--serif); font-style: italic;
+      font-size: 64px; line-height: 0.8; color: var(--gold-bright);
+      padding: 6px 12px 0 0;
+    }
+    .mov ul { margin: 0 0 18px; padding-left: 18px; max-width: 62ch; }
+    .mov li { font-size: 17px; line-height: 1.55; color: var(--ink-2); margin-bottom: 8px; }
+    .mov li::marker { color: var(--gold-deep); }
+
+    /* Pull quote — marginalia voice */
+    .quote {
+      margin: 30px 0; padding: 22px 24px 18px;
+      border-left: 1px solid var(--hair-3);
+      background: linear-gradient(90deg, rgba(201,169,97,0.045), transparent 70%);
+      max-width: 58ch;
+    }
+    .quote p {
+      margin: 0 0 10px; font-family: var(--serif); font-style: italic;
+      font-size: 19px; line-height: 1.5; color: var(--ink);
+    }
+    .quote cite {
+      display: block; font-style: normal;
+      font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.22em;
+      text-transform: uppercase; color: var(--ink-dim);
+    }
+
+    /* Stats band */
+    .stats {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px;
+      background: var(--hair); border: 1px solid var(--hair);
+      margin: 34px 0 8px;
+    }
+    .stats__cell { background: var(--bg); padding: 20px 18px 16px; }
+    .stats__k {
+      font-family: var(--serif); font-size: 34px; line-height: 1;
+      color: var(--gold-bright); letter-spacing: -0.01em;
+    }
+    .stats__v { margin-top: 8px; font-family: var(--mono); font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-dim); line-height: 1.6; }
+
+    /* Sign-off */
+    .sig {
+      margin-top: 36px; padding-top: 16px; border-top: 1px solid var(--hair);
+      display: flex; justify-content: space-between; align-items: baseline; gap: 16px;
+      font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.22em;
+      color: var(--ink-mute); text-transform: uppercase;
+    }
+
+    /* ── The Twelve — Astrofolio glyph strip ── */
+    .twelve { padding: 56px 0 64px; border-top: 1px solid var(--hair); }
+    .twelve__head { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+    .twelve__head .line { flex: 1; height: 1px; background: var(--hair); }
+    .twelve__note {
+      margin: 0 0 26px; font-family: var(--mono); font-size: 9.5px;
+      letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-mute);
+    }
+    .twelve__grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;
+    }
+    .twelve__item {
+      display: flex; flex-direction: column; align-items: center; gap: 12px;
+      padding: 20px 8px 16px;
+      border: 1px solid var(--hair); background: var(--surface);
+      text-decoration: none;
+      transition: border-color 380ms var(--ease), background 380ms var(--ease), transform 220ms var(--ease);
+    }
+    .twelve__item:hover { border-color: var(--hair-3); transform: translateY(-2px); background: var(--surface-2); }
+    .twelve__item:active { transform: scale(0.97); }
+    .af-glyph {
+      width: 30px; height: 30px;
+      background: var(--gold);
+      opacity: 0.82;
+      -webkit-mask: var(--m) center / contain no-repeat;
+      mask: var(--m) center / contain no-repeat;
+      transition: opacity 320ms var(--ease), background 320ms var(--ease);
+    }
+    .twelve__item:hover .af-glyph { opacity: 1; background: var(--gold-bright); }
+    .twelve__name { font-family: var(--mono); font-size: 9px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--ink-dim); }
+    .twelve__item:hover .twelve__name { color: var(--ink-2); }
+
+    /* ── Continue rail ── */
+    .cont { padding: 0 0 72px; display: grid; gap: 12px; }
+    .cont a {
+      display: flex; justify-content: space-between; align-items: center; gap: 14px;
+      border: 1px solid var(--hair-2); padding: 18px 18px;
+      text-decoration: none;
+      font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.22em;
+      text-transform: uppercase; color: var(--ink-2);
+      transition: border-color 320ms var(--ease), color 320ms var(--ease);
+    }
+    .cont a:hover { border-color: var(--gold); color: var(--gold-bright); }
+    .cont .arr { color: var(--gold); }
+
+    /* ── Footer ── */
+    .ftr {
+      padding: 36px 0 56px; border-top: 1px solid var(--hair);
+      font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.22em;
+      text-transform: uppercase; color: var(--ink-mute);
+    }
+    .ftr__row { display: flex; justify-content: space-between; align-items: center; gap: 14px; flex-wrap: wrap; }
+    .ftr__row + .ftr__row { margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--hair); }
+    .ftr a { color: var(--ink-dim); text-decoration: none; transition: color 320ms var(--ease); }
+    .ftr a:hover { color: var(--gold); }
+    .ftr .mark { color: var(--ink-2); letter-spacing: 0.18em; font-family: var(--serif); text-transform: none; font-size: 13px; }
+    .ftr .mark .g { color: var(--gold); }
+    .ftr__links { display: inline-flex; flex-wrap: wrap; gap: 12px 16px; }
+
+    /* ── Reveal pacing ── */
+    .reveal { opacity: 0; transform: translateY(22px); transition: opacity 800ms var(--ease), transform 800ms var(--ease); }
+    .reveal.is-in { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) {
+      .reveal { opacity: 1 !important; transform: none !important; transition: none; }
+    }
+
+    /* ── Desktop ── */
+    @media (min-width: 960px) {
+      .hero__content { padding: 240px 20px 88px; }
+      .essay {
+        display: grid; grid-template-columns: 200px minmax(0, 1fr); column-gap: 64px;
+        padding: 88px 0 32px;
+      }
+      .essay__rail {
+        grid-column: 1; position: sticky; top: 110px; align-self: start;
+        display: flex; flex-direction: column; gap: 14px;
+      }
+      .essay__rail .line { width: 64px; height: 1px; background: var(--hair); }
+      .essay__body { grid-column: 2; min-width: 0; }
+      .mov { padding: 52px 0 48px; }
+      .mov p { font-size: 18.5px; }
+      .quote { margin: 34px 0 34px 36px; }
+      .stats { grid-template-columns: repeat(4, 1fr); }
+      .twelve__grid { grid-template-columns: repeat(6, 1fr); }
+      .cont { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 959px) {
+      .essay__rail { display: flex; align-items: center; gap: 12px; margin-bottom: 4px; }
+      .essay__rail .line { flex: 1; height: 1px; background: var(--hair); }
+    }
+  </style>
+</head>
+<body>
+  <a href="#essay" class="skip">Skip to content</a>
+  <div class="grain" aria-hidden="true"></div>
+
+  <div class="hdr-wrap">
+    <header class="hdr" role="banner">
+      <a class="hdr__mark" href="/"><span>Zodiacs</span><span class="sep">·</span><span class="dim">org</span></a>
+      <a class="hdr__nav" href="/#official-twelve">
+        <span>The Twelve</span>
+        <span class="chip">→</span>
+      </a>
+    </header>
+  </div>
+
+  <header class="hero">
+    <video
+      class="hero__media"
+      autoplay muted loop playsinline
+      preload="metadata"
+      poster="/assets/art/zodiac-clock.jpg"
+      aria-hidden="true"
+      tabindex="-1"
+    >
+      <source src="/assets/art/zodiac-clock.mp4" type="video/mp4" />
+    </video>
+    <div class="hero__veil" aria-hidden="true"></div>
+    <div class="hero__content">
+      <span class="hero__eyebrow">The Thesis <span class="g">— Why the Twelve</span></span>
+      <h1 class="hero__title">Belief is the <span class="it">oldest asset.</span></h1>
+      <p class="hero__sub">
+        Why the twelve Zodiacs — humanity's most durable identity system —
+        belong onchain, and why they endure there.
+      </p>
+      <div class="hero__cue" aria-hidden="true"><span class="line"></span><span>Read the argument</span></div>
+    </div>
+  </header>
+
+  <main class="pg">
+    <article class="essay" id="essay">
+      <div class="essay__rail reveal">
+        <span class="label label--gold">№ 04 · Extended</span>
+        <span class="line"></span>
+        <span class="label">The Registry's Argument</span>
+      </div>
+
+      <div class="essay__body">
+        <section class="mov reveal">
+          <div class="mov__head"><span class="mov__no">I</span><h2 class="mov__title">The system that <span class="it">outlived everything.</span></h2></div>
+          <p>
+            <span class="dc">B</span>efore money, before nations, before writing
+            reached most of the world, people organized identity by the sky.
+            The twelve-sign zodiac has run, almost unchanged, from Babylonian
+            star catalogues through Greek mathematics, Roman empire, Islamic
+            astronomy, and the Renaissance — into the phone of nearly every
+            person alive. Roughly nine in ten Americans know their sign.
+            More than a billion people worldwide identify with one.
+          </p>
+          <p>
+            That identity is <strong>permanent</strong>. Nobody stops being a
+            Scorpio. It is <strong>universal</strong> — Leo means the same thing
+            in Lagos, Seoul, New York, and São Paulo. And it is
+            <strong>renewed daily</strong>, by horoscopes, birthdays, seasons,
+            and retrogrades, without anyone spending a cent to keep it alive.
+          </p>
+        </section>
+
+        <section class="mov reveal">
+          <div class="mov__head"><span class="mov__no">II</span><h2 class="mov__title">Attention that <span class="it">renews itself.</span></h2></div>
+          <p>
+            Most cultural assets must manufacture attention to survive.
+            Astrology's attention arrives on schedule. Every day brings a new
+            horoscope; every month the sun changes signs; several times a year
+            a retrograde takes over the feed; every birthday, relationship,
+            and career change sends people back to their chart. The content
+            writes itself, and the audience returns on its own.
+          </p>
+          <p>
+            The largest consumer platforms already follow this attention.
+            Tinder reported a near-20% lift in Likes sent by women on
+            astrology-tagged profiles. Spotify built astrology playlists;
+            Netflix released zodiac watchlists. Co-Star reportedly grew from
+            7.5&nbsp;million to over 30&nbsp;million users in three years.
+            None of these companies care about astrology. They follow
+            recurring mass behavior — and astrology is recurring mass behavior.
+          </p>
+          <div class="stats" role="list" aria-label="Reported figures">
+            <div class="stats__cell" role="listitem"><div class="stats__k">12</div><div class="stats__v">Signs · fixed for millennia</div></div>
+            <div class="stats__cell" role="listitem"><div class="stats__k">~90%</div><div class="stats__v">of Americans know their sign</div></div>
+            <div class="stats__cell" role="listitem"><div class="stats__k">43%</div><div class="stats__v">of women 18–49 say they believe · Pew</div></div>
+            <div class="stats__cell" role="listitem"><div class="stats__k">30M+</div><div class="stats__v">Co-Star users · reported</div></div>
+          </div>
+        </section>
+
+        <section class="mov reveal">
+          <div class="mov__head"><span class="mov__no">III</span><h2 class="mov__title">Belief becomes <span class="it">record.</span></h2></div>
+          <p>
+            What gives gold its price? Not industry. Not utility. A founder of
+            the largest exchange in crypto put it plainly:
+          </p>
+          <blockquote class="quote">
+            <p>"Gold's price is not derived from its industrial or utility
+            value. Just a pure belief system."</p>
+            <cite>— CZ, founder of Binance · October 2025</cite>
+          </blockquote>
+          <p>
+            Astrology is one of the strongest belief networks on Earth — older
+            than any currency, larger than any fandom — and for all of history
+            it produced words, never records. The Twelve change the format,
+            not the meaning: each sign now has one canonical, ownable record.
+            A Leo can hold <em>Leo</em>. Belief, for the first time, has a
+            ledger entry.
+          </p>
+        </section>
+
+        <section class="mov reveal">
+          <div class="mov__head"><span class="mov__no">IV</span><h2 class="mov__title">Twelve. Fixed. <span class="it">Unowned.</span></h2></div>
+          <p>
+            The properties most assets spend their whole lives trying to
+            manufacture, the Twelve begin with:
+          </p>
+          <ul>
+            <li>A <strong>fixed universe</strong> — twelve signs, no version two, no thirteenth lot, no dilution of the set.</li>
+            <li><strong>No owner</strong> — no IP holder, no celebrity, no licensor who can sue, censor, or sell out. The symbols belong to everyone and offend no one.</li>
+            <li><strong>Built-in distribution</strong> — everyone has a sign; the question "which one are you?" is the oldest onboarding flow in the world.</li>
+            <li><strong>Permanent relevance</strong> — the attention cycle resets monthly, forever.</li>
+          </ul>
+          <blockquote class="quote">
+            <p>"We've had memecoins for cats, dogs, frogs, AIs, stocks…
+            astrology coins are a super strong contender for the next big
+            class. Astrology is not only the oldest and most lindy meme—"</p>
+            <cite>— Andrew Kang, Mechanism Capital · December 2024</cite>
+          </blockquote>
+        </section>
+
+        <section class="mov reveal">
+          <div class="mov__head"><span class="mov__no">V</span><h2 class="mov__title">Why Solana. <span class="it">Why Base.</span></h2></div>
+          <p>
+            Identity-first, social, emotional, mobile, short sessions —
+            astrology behaves like the consumer activity Solana has already
+            proven it can carry. Phantom made the wallet feel mainstream;
+            Jupiter made the swap feel ordinary; the memecoin era proved the
+            chain absorbs high-frequency, socially transmitted demand. The
+            native records of the Twelve live there, where the consumer rails
+            are. Official bridged representations extend each sign to Base —
+            one origin, verified everywhere the registry points.
+          </p>
+          <p>
+            The audience most fluent in the symbol — the astrology mainstream
+            of Instagram and TikTok — is not yet the audience setting onchain
+            prices. That gap is the thesis. Social platforms are converging on
+            financial rails; when the rails turn invisible, the culture does
+            the onboarding.
+          </p>
+        </section>
+
+        <section class="mov reveal">
+          <div class="mov__head"><span class="mov__no">VI</span><h2 class="mov__title">The slower <span class="it">bet.</span></h2></div>
+          <p>
+            The Twelve are not a launch; they are a record with history.
+            The collection has been live for years, fully distributed from
+            day one — no presale, no insider allocation, no manufactured
+            volume — with a community that stayed through full market cycles,
+            documented in public on
+            <a href="https://x.com/astrofoliosol" rel="noopener noreferrer">X</a>,
+            <a href="https://www.instagram.com/astrofolioonsol/" rel="noopener noreferrer">Instagram</a>,
+            <a href="https://tiktok.com/@astrofolio" rel="noopener noreferrer">TikTok</a>, and
+            <a href="https://t.me/astrofoliosol" rel="noopener noreferrer">Telegram</a>.
+            Around the record, Astrofolio maintains the consumer surfaces —
+            shelves, multi-buy, physical goods — while this registry keeps
+            the canonical facts.
+          </p>
+          <p>
+            It is a bet on permanence over novelty, identity over irony,
+            cultural persistence over manufactured attention. The oldest
+            identity system in human history did not need crypto to survive.
+            Crypto, looking for its next demographic, may well need it.
+          </p>
+          <div class="sig">
+            <span>Zodiacs.org — The Registry</span>
+            <span>An editorial thesis · not advice</span>
+          </div>
+        </section>
+      </div>
+    </article>
+
+    <section class="twelve reveal" aria-label="The Twelve — catalogue entries">
+      <div class="twelve__head">
+        <span class="label label--gold">The Twelve</span>
+        <span class="line"></span>
+        <span class="label">Catalogue</span>
+      </div>
+      <p class="twelve__note">Open a lot's entry — lore, provenance &amp; the official record. Glyphs courtesy of Astrofolio.</p>
+      <nav class="twelve__grid" aria-label="Sign catalogue pages">
+        <a class="twelve__item" href="/aries/"><span class="af-glyph" style="--m:url('/assets/astrofolio/aries.png')" aria-hidden="true"></span><span class="twelve__name">Aries</span></a>
+        <a class="twelve__item" href="/taurus/"><span class="af-glyph" style="--m:url('/assets/astrofolio/taurus.png')" aria-hidden="true"></span><span class="twelve__name">Taurus</span></a>
+        <a class="twelve__item" href="/gemini/"><span class="af-glyph" style="--m:url('/assets/astrofolio/gemini.png')" aria-hidden="true"></span><span class="twelve__name">Gemini</span></a>
+        <a class="twelve__item" href="/cancer/"><span class="af-glyph" style="--m:url('/assets/astrofolio/cancer.png')" aria-hidden="true"></span><span class="twelve__name">Cancer</span></a>
+        <a class="twelve__item" href="/leo/"><span class="af-glyph" style="--m:url('/assets/astrofolio/leo.png')" aria-hidden="true"></span><span class="twelve__name">Leo</span></a>
+        <a class="twelve__item" href="/virgo/"><span class="af-glyph" style="--m:url('/assets/astrofolio/virgo.png')" aria-hidden="true"></span><span class="twelve__name">Virgo</span></a>
+        <a class="twelve__item" href="/libra/"><span class="af-glyph" style="--m:url('/assets/astrofolio/libra.png')" aria-hidden="true"></span><span class="twelve__name">Libra</span></a>
+        <a class="twelve__item" href="/scorpio/"><span class="af-glyph" style="--m:url('/assets/astrofolio/scorpio.png')" aria-hidden="true"></span><span class="twelve__name">Scorpio</span></a>
+        <a class="twelve__item" href="/sagittarius/"><span class="af-glyph" style="--m:url('/assets/astrofolio/sagittarius.png')" aria-hidden="true"></span><span class="twelve__name">Sagittarius</span></a>
+        <a class="twelve__item" href="/capricorn/"><span class="af-glyph" style="--m:url('/assets/astrofolio/capricorn.png')" aria-hidden="true"></span><span class="twelve__name">Capricorn</span></a>
+        <a class="twelve__item" href="/aquarius/"><span class="af-glyph" style="--m:url('/assets/astrofolio/aquarius.png')" aria-hidden="true"></span><span class="twelve__name">Aquarius</span></a>
+        <a class="twelve__item" href="/pisces/"><span class="af-glyph" style="--m:url('/assets/astrofolio/pisces.png')" aria-hidden="true"></span><span class="twelve__name">Pisces</span></a>
+      </nav>
+    </section>
+
+    <nav class="cont" aria-label="Continue">
+      <a href="/#verify"><span>Verify an official address</span><span class="arr">→</span></a>
+      <a href="/sdk/"><span>Build with the SDK</span><span class="arr">↗</span></a>
+    </nav>
+
+    <footer class="ftr">
+      <div class="ftr__row">
+        <span class="mark">Zodiacs<span class="g">·</span>org</span>
+        <span>The official registry</span>
+      </div>
+      <div class="ftr__row">
+        <span class="ftr__links">
+          <a href="https://x.com/astrofoliosol" rel="noopener noreferrer">X</a>
+          <a href="https://www.instagram.com/astrofolioonsol/" rel="noopener noreferrer">Instagram</a>
+          <a href="https://tiktok.com/@astrofolio" rel="noopener noreferrer">TikTok</a>
+          <a href="https://t.me/astrofoliosol" rel="noopener noreferrer">Telegram</a>
+          <a href="https://astrofolio.xyz/" rel="noopener noreferrer">Astrofolio</a>
+        </span>
+        <span class="ftr__links">
+          <a href="/registry/zodiacs.registry.json">Registry JSON</a>
+          <a href="/llms.txt">llms.txt</a>
+        </span>
+      </div>
+    </footer>
+  </main>
+
+  <script>
+    (function () {
+      var video = document.querySelector('.hero__media');
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+      if (video) {
+        if (reduce.matches) {
+          video.removeAttribute('autoplay');
+          try { video.pause(); } catch (e) {}
+        } else if ('IntersectionObserver' in window) {
+          // Pause the ambient loop when the hero leaves the viewport.
+          new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+              if (entry.isIntersecting) { video.play().catch(function () {}); }
+              else { video.pause(); }
+            });
+          }, { threshold: 0.05 }).observe(video);
+        }
+      }
+
+      if ('IntersectionObserver' in window && !reduce.matches) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-in');
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.12 });
+        document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
+      } else {
+        document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('is-in'); });
+      }
+    })();
+  </script>
+</body>
+</html>

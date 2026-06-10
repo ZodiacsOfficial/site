@@ -19,6 +19,9 @@ External citations:
 - Developer post: https://gist.github.com/diasmal917/ddf80a71cc7a51a6bb8ad2e0911ad9dd
 - Astrology and product post: https://gist.github.com/diasmal917/48a61cd793e5b236640ee2b91243b794
 
+The thesis:
+The extended argument for the Twelve — astrology as humanity's most durable identity system, belief as the oldest asset, fixed supply of twelve unowned symbols, and why the records live natively on Solana with official Base representations: https://zodiacs.org/thesis/
+
 Sign catalogue:
 Each of the twelve Zodiacs has a dedicated catalogue page with lore and history (Babylonian star catalogues, Greek myth, Ptolemy, Dürer), provenance, the official Solana mint, the official Base representation, live market context, and acquisition routes: https://zodiacs.org/aries/ https://zodiacs.org/taurus/ https://zodiacs.org/gemini/ https://zodiacs.org/cancer/ https://zodiacs.org/leo/ https://zodiacs.org/virgo/ https://zodiacs.org/libra/ https://zodiacs.org/scorpio/ https://zodiacs.org/sagittarius/ https://zodiacs.org/capricorn/ https://zodiacs.org/aquarius/ https://zodiacs.org/pisces/
 
@@ -29,6 +32,7 @@ Official channels:
 - Telegram: https://t.me/astrofoliosol
 
 Canonical links:
+- The thesis: https://zodiacs.org/thesis/
 - SDK page: https://zodiacs.org/sdk/
 - GitHub: https://github.com/ZodiacsOfficial/sdk
 - npm: https://www.npmjs.com/package/@zodiacs/sdk
