@@ -1690,6 +1690,11 @@
             </blockquote>
 
             <MarketContext sign={sign} />
+
+            <a className="detail__entry" href={`/${sign.asset.sign}/`}>
+              <span>Full catalogue entry — lore, provenance &amp; acquisition</span>
+              <span className="detail__entry-arr" aria-hidden="true">→</span>
+            </a>
           </article>
         </section>
       );
@@ -1798,18 +1803,18 @@
     }
 
     const ACCESS_PRIMARY = [
-      { name: 'Coinbase DEX', tag: 'Base onchain venue',  logo: '/assets/venues/coinbase.svg' },
-      { name: 'Jupiter',      tag: 'Solana aggregator',   logo: '/assets/venues/jupiter.svg'  },
-      { name: 'fomo',         tag: 'Consumer onchain app', logo: '/assets/venues/fomo.svg'     },
+      { name: 'Coinbase DEX', tag: 'Base onchain venue',  logo: '/assets/venues/coinbase.svg', url: 'https://wallet.coinbase.com/' },
+      { name: 'Jupiter',      tag: 'Solana aggregator',   logo: '/assets/venues/jupiter.svg',  url: 'https://jup.ag/' },
+      { name: 'fomo',         tag: 'Consumer onchain app', logo: '/assets/venues/fomo.svg',    url: 'https://fomo.family/' },
     ];
     const ACCESS_RAIL = [
-      { name: 'OKX Wallet',     tag: 'Wallet interface',      logo: '/assets/venues/okx-wallet.svg'     },
-      { name: 'Binance Wallet', tag: 'Onchain token access',  logo: '/assets/venues/binance-wallet.svg' },
-      { name: 'Bybit Web3',     tag: 'Web3 interface',        logo: '/assets/venues/bybit-web3.svg'     },
-      { name: 'Phantom',        tag: 'Solana wallet',         logo: '/assets/venues/phantom.svg'        },
-      { name: 'Solflare',       tag: 'Solana wallet',         logo: '/assets/venues/solflare.svg'       },
-      { name: 'Raydium',        tag: 'Solana onchain venue',  logo: '/assets/venues/raydium.svg'        },
-      { name: 'Orca',           tag: 'Solana onchain venue',  logo: '/assets/venues/orca.svg'           },
+      { name: 'OKX Wallet',     tag: 'Wallet interface',      logo: '/assets/venues/okx-wallet.svg',     url: 'https://web3.okx.com/' },
+      { name: 'Binance Wallet', tag: 'Onchain token access',  logo: '/assets/venues/binance-wallet.svg', url: 'https://www.binance.com/en/web3wallet' },
+      { name: 'Bybit Web3',     tag: 'Web3 interface',        logo: '/assets/venues/bybit-web3.svg',     url: 'https://www.bybit.com/web3/' },
+      { name: 'Phantom',        tag: 'Solana wallet',         logo: '/assets/venues/phantom.svg',        url: 'https://phantom.com/' },
+      { name: 'Solflare',       tag: 'Solana wallet',         logo: '/assets/venues/solflare.svg',       url: 'https://www.solflare.com/' },
+      { name: 'Raydium',        tag: 'Solana onchain venue',  logo: '/assets/venues/raydium.svg',        url: 'https://raydium.io/' },
+      { name: 'Orca',           tag: 'Solana onchain venue',  logo: '/assets/venues/orca.svg',           url: 'https://www.orca.so/' },
     ];
 
     /* Renders a venue logo if the SVG file exists; renders nothing if
@@ -1843,26 +1848,28 @@
 
           <div className="access__primary" role="list">
             {ACCESS_PRIMARY.map(v => (
-              <div className="access__card access__card--featured" role="listitem" key={v.name}>
+              <a className="access__card access__card--featured" role="listitem" key={v.name}
+                 href={v.url} rel="noopener noreferrer">
                 <div className="access__logo" aria-hidden="true">
                   <VenueLogo src={v.logo} />
                 </div>
                 <div className="access__name">{v.name}</div>
                 <div className="access__tag">{v.tag}</div>
-              </div>
+              </a>
             ))}
           </div>
 
           <div className="access__rail-wrap" aria-label="More onchain venues">
             <div className="access__rail" role="list">
               {ACCESS_RAIL.map(v => (
-                <div className="access__card access__card--rail" role="listitem" key={v.name}>
+                <a className="access__card access__card--rail" role="listitem" key={v.name}
+                   href={v.url} rel="noopener noreferrer">
                   <div className="access__logo" aria-hidden="true">
                     <VenueLogo src={v.logo} />
                   </div>
                   <div className="access__name">{v.name}</div>
                   <div className="access__tag">{v.tag}</div>
-                </div>
+                </a>
               ))}
             </div>
           </div>
@@ -2050,6 +2057,10 @@
                     display={truncateAddress(s.representations.base.address, 5, 4)}
                   />
                 </div>
+                <a className="cat__entry" href={`/${s.asset.sign}/`}>
+                  <span>Catalogue entry</span>
+                  <span className="cat__entry-arr" aria-hidden="true">→</span>
+                </a>
               </div>
             ))}
           </div>
@@ -2259,6 +2270,16 @@
             <a href="#thesis">Thesis</a>
           </div>
             <div>Read-only</div>
+          </div>
+          <div className="ftr__row">
+            <div className="ftr__legal" aria-label="Official channels">
+              <a href="https://x.com/astrofoliosol" rel="noopener noreferrer">X</a>
+              <a href="https://www.instagram.com/astrofolioonsol/" rel="noopener noreferrer">Instagram</a>
+              <a href="https://tiktok.com/@astrofolio" rel="noopener noreferrer">TikTok</a>
+              <a href="https://t.me/astrofoliosol" rel="noopener noreferrer">Telegram</a>
+              <a href="https://astrofolio.xyz/" rel="noopener noreferrer">Astrofolio</a>
+            </div>
+            <div>Channels</div>
           </div>
           <div className="ftr__row ftr__row--origin">
             <span>Zodiacs.org · Official registry · MMXXVI</span>

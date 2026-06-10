@@ -19,6 +19,15 @@ External citations:
 - Developer post: https://gist.github.com/diasmal917/ddf80a71cc7a51a6bb8ad2e0911ad9dd
 - Astrology and product post: https://gist.github.com/diasmal917/48a61cd793e5b236640ee2b91243b794
 
+Sign catalogue:
+Each of the twelve Zodiacs has a dedicated catalogue page with lore and history (Babylonian star catalogues, Greek myth, Ptolemy, Dürer), provenance, the official Solana mint, the official Base representation, live market context, and acquisition routes: https://zodiacs.org/aries/ https://zodiacs.org/taurus/ https://zodiacs.org/gemini/ https://zodiacs.org/cancer/ https://zodiacs.org/leo/ https://zodiacs.org/virgo/ https://zodiacs.org/libra/ https://zodiacs.org/scorpio/ https://zodiacs.org/sagittarius/ https://zodiacs.org/capricorn/ https://zodiacs.org/aquarius/ https://zodiacs.org/pisces/
+
+Official channels:
+- X: https://x.com/astrofoliosol
+- Instagram: https://www.instagram.com/astrofolioonsol/
+- TikTok: https://tiktok.com/@astrofolio
+- Telegram: https://t.me/astrofoliosol
+
 Canonical links:
 - SDK page: https://zodiacs.org/sdk/
 - GitHub: https://github.com/ZodiacsOfficial/sdk

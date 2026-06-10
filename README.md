@@ -32,6 +32,9 @@ The current site should be refined, not redesigned from scratch.
 - `src/app.jsx` - source for the main page's React app (edit this, not the bundle)
 - `assets/app.js` - precompiled app bundle served by `index.html` (generated)
 - `sdk/index.html` - dedicated SDK page
+- `aries/ … pisces/` - twelve sign catalogue pages (generated — edit the sources below)
+- `scripts/sign-data.mjs` - catalogue content: lot essays, provenance, channels
+- `scripts/build-sign-pages.mjs` - generates the twelve `/{sign}/index.html` pages
 - `registry/zodiacs.registry.json` - public registry artifact
 - `assets/` - Zodiac artwork, icons, venue marks, and social preview assets
 - `scripts/validate-assets.mjs` - asset validation script
@@ -51,6 +54,17 @@ node scripts/build-app.mjs
 The site stays a static deploy: `index.html` loads the committed `assets/app.js`
 directly, so no build runs on Vercel.
 
+## Building the sign catalogue pages
+
+The twelve `/{sign}/` pages are generated from the registry plus the catalogue
+content in `scripts/sign-data.mjs` (lot essays, provenance timelines, principal
+stars, market pairs, official channels). After editing either source, regenerate
+and commit the pages:
+
+```bash
+node scripts/build-sign-pages.mjs
+```
+
 ## Asset handoff
 
 PNG artwork is organized and documented in [`assets/README.md`](assets/README.md).
@@ -64,7 +78,7 @@ node scripts/validate-assets.mjs
 
 ## Safety posture
 
-The site should keep the SDK and registry positioned as read-only infrastructure. Avoid copy or UI that implies custody, signing, transaction submission, swaps, market calls to action, or financial promises.
+The site should keep the SDK and registry positioned as read-only infrastructure: no custody, signing, or transaction submission happens on Zodiacs.org itself. Acquisition links on the catalogue pages route to third-party venues (Jupiter, Dex Screener) and are framed as access, never as recommendations. Avoid copy that implies financial promises or urgency.
 
 ## Claude plugin
 

@@ -41,7 +41,35 @@
         "alternateName": "Zodiacs.org",
         "url": "https://zodiacs.org/",
         "logo": "https://zodiacs.org/assets/og/share.png",
-        "description": "Twelve signs, one official record. Verify official assets across Solana and Base, then build symbolic identity context from public ownership."
+        "description": "Twelve signs, one official record. Verify official assets across Solana and Base, then build symbolic identity context from public ownership.",
+        "sameAs": [
+          "https://x.com/astrofoliosol",
+          "https://www.instagram.com/astrofolioonsol/",
+          "https://tiktok.com/@astrofolio",
+          "https://t.me/astrofoliosol",
+          "https://astrofolio.xyz/",
+          "https://github.com/ZodiacsOfficial/sdk"
+        ]
+      },
+      {
+        "@type": "ItemList",
+        "@id": "https://zodiacs.org/#the-twelve",
+        "name": "The Twelve — Zodiac catalogue",
+        "numberOfItems": 12,
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1,  "name": "Aries",       "url": "https://zodiacs.org/aries/" },
+          { "@type": "ListItem", "position": 2,  "name": "Taurus",      "url": "https://zodiacs.org/taurus/" },
+          { "@type": "ListItem", "position": 3,  "name": "Gemini",      "url": "https://zodiacs.org/gemini/" },
+          { "@type": "ListItem", "position": 4,  "name": "Cancer",      "url": "https://zodiacs.org/cancer/" },
+          { "@type": "ListItem", "position": 5,  "name": "Leo",         "url": "https://zodiacs.org/leo/" },
+          { "@type": "ListItem", "position": 6,  "name": "Virgo",       "url": "https://zodiacs.org/virgo/" },
+          { "@type": "ListItem", "position": 7,  "name": "Libra",       "url": "https://zodiacs.org/libra/" },
+          { "@type": "ListItem", "position": 8,  "name": "Scorpio",     "url": "https://zodiacs.org/scorpio/" },
+          { "@type": "ListItem", "position": 9,  "name": "Sagittarius", "url": "https://zodiacs.org/sagittarius/" },
+          { "@type": "ListItem", "position": 10, "name": "Capricorn",   "url": "https://zodiacs.org/capricorn/" },
+          { "@type": "ListItem", "position": 11, "name": "Aquarius",    "url": "https://zodiacs.org/aquarius/" },
+          { "@type": "ListItem", "position": 12, "name": "Pisces",      "url": "https://zodiacs.org/pisces/" }
+        ]
       },
       {
         "@type": "WebSite",
@@ -1255,6 +1283,28 @@
       padding: 4px 8px;
       font-size: 10.5px;
     }
+    /* Catalogue entry link — quiet row at the foot of each catalog card,
+       leading to the sign's dedicated lot page. */
+    .cat__entry {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 8px;
+      margin-top: 2px;
+      padding-top: 10px;
+      border-top: 1px solid var(--hair);
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--ink-dim);
+      text-decoration: none;
+      transition: color 320ms var(--ease);
+    }
+    .cat__entry:hover { color: var(--gold-bright); }
+    .cat__entry-arr {
+      color: var(--gold);
+      transition: transform 420ms var(--ease);
+    }
+    .cat__entry:hover .cat__entry-arr { transform: translateX(3px); }
 
     /* ── Selector strip — line-art glyphs, halo on active ─────── */
 
@@ -1452,6 +1502,33 @@
       color: var(--ink-2);
       background: rgba(255,255,255,0.01);
     }
+    /* Catalogue entry link — leads from the museum label to the sign's
+       dedicated lot page (lore, provenance, acquisition). */
+    .detail__entry {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 12px;
+      margin-top: 14px;
+      padding: 13px 14px;
+      border: 1px solid var(--hair-2);
+      background: rgba(201,169,97,0.04);
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ink-2);
+      text-decoration: none;
+      transition: color 320ms var(--ease), border-color 320ms var(--ease), background 320ms var(--ease);
+    }
+    .detail__entry:hover {
+      color: var(--gold-bright);
+      border-color: var(--gold);
+      background: rgba(201,169,97,0.08);
+    }
+    .detail__entry-arr {
+      color: var(--gold);
+      transition: transform 420ms var(--ease);
+    }
+    .detail__entry:hover .detail__entry-arr { transform: translateX(3px); }
 
     .market {
       position: relative;
@@ -1768,6 +1845,8 @@
       display: flex; flex-direction: column; gap: 6px;
       background: linear-gradient(180deg, rgba(201,169,97,0.04), transparent 60%), var(--bg);
       padding: 22px 18px 24px;
+      text-decoration: none;
+      color: inherit;
       transition: background 320ms var(--ease), box-shadow 320ms var(--ease);
     }
     .access__card::before {
@@ -2377,6 +2456,29 @@
         </p>
       </section>
 
+      <section class="static-site__section" id="catalogue">
+        <h2>The Twelve — Catalogue</h2>
+        <p>
+          Each sign has a dedicated catalogue entry: lore and history from
+          Babylon to the present record, provenance, the official Solana mint
+          and Base representation, live market context, and acquisition routes.
+        </p>
+        <ul>
+          <li><a href="/aries/">Aries — Lot I · The Ram</a></li>
+          <li><a href="/taurus/">Taurus — Lot II · The Bull</a></li>
+          <li><a href="/gemini/">Gemini — Lot III · The Twins</a></li>
+          <li><a href="/cancer/">Cancer — Lot IV · The Crab</a></li>
+          <li><a href="/leo/">Leo — Lot V · The Lion</a></li>
+          <li><a href="/virgo/">Virgo — Lot VI · The Maiden</a></li>
+          <li><a href="/libra/">Libra — Lot VII · The Scales</a></li>
+          <li><a href="/scorpio/">Scorpio — Lot VIII · The Scorpion</a></li>
+          <li><a href="/sagittarius/">Sagittarius — Lot IX · The Archer</a></li>
+          <li><a href="/capricorn/">Capricorn — Lot X · The Goat-Fish</a></li>
+          <li><a href="/aquarius/">Aquarius — Lot XI · The Water-Bearer</a></li>
+          <li><a href="/pisces/">Pisces — Lot XII · The Fishes</a></li>
+        </ul>
+      </section>
+
       <section class="static-site__section" id="identity">
         <h2>Identity Context</h2>
         <p>
@@ -2461,6 +2563,14 @@
       </section>
 
       <footer class="static-site__footer">
+        <p style="margin:0 0 14px">
+          Channels:
+          <a href="https://x.com/astrofoliosol" rel="noopener noreferrer">X</a> ·
+          <a href="https://www.instagram.com/astrofolioonsol/" rel="noopener noreferrer">Instagram</a> ·
+          <a href="https://tiktok.com/@astrofolio" rel="noopener noreferrer">TikTok</a> ·
+          <a href="https://t.me/astrofoliosol" rel="noopener noreferrer">Telegram</a> ·
+          <a href="https://astrofolio.xyz/" rel="noopener noreferrer">Astrofolio</a>
+        </p>
         Zodiacs.org · Official registry · MMXXVI
       </footer>
     </main>
