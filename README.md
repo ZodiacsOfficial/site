@@ -33,9 +33,12 @@ The current site should be refined, not redesigned from scratch.
 - `assets/app.js` - precompiled app bundle served by `index.html` (generated)
 - `sdk/index.html` - dedicated SDK page
 - `thesis/index.html` - the extended thesis page (video hero, editorial essay)
+- `archive/` - The Archive: dated moments, press, origin records + feeds (generated)
 - `aries/ … pisces/` - twelve sign catalogue pages (generated — edit the sources below)
 - `scripts/sign-data.mjs` - catalogue content: lot essays, provenance, channels
 - `scripts/build-sign-pages.mjs` - generates the twelve `/{sign}/index.html` pages
+- `scripts/archive-data.mjs` - archive content: entries, verbatim quotes, press kit
+- `scripts/build-archive.mjs` - generates `/archive/` + `feed.json` + `rss.xml`
 - `scripts/build-og-cards.mjs` - renders the twelve per-sign share cards (`assets/og/{sign}.png`)
 - `scripts/build-pulse.mjs` - refreshes `assets/pulse.json` (The Pulse attention data)
 - `registry/zodiacs.registry.json` - public registry artifact
@@ -69,6 +72,18 @@ and commit the pages:
 
 ```bash
 node scripts/build-sign-pages.mjs
+```
+
+## Building the archive
+
+`/archive/` (plus its JSON Feed and RSS) is generated from
+`scripts/archive-data.mjs`. Quotes in that file are verbatim records; the
+builder validates entry ids, dates, types, and checks any quoted mint address
+against `registry/zodiacs.registry.json` — a mismatch fails the build. After
+editing, regenerate and commit the output:
+
+```bash
+node scripts/build-archive.mjs
 ```
 
 ## Building the share cards

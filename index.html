@@ -8,6 +8,8 @@
   <meta name="description" content="Zodiacs. Twelve signs, one official record. Verify official assets across Solana and Base, then build symbolic identity context from public ownership." />
 
   <link rel="canonical" href="https://zodiacs.org/" />
+  <link rel="alternate" type="application/rss+xml" title="Zodiacs — The Archive" href="/archive/rss.xml" />
+  <link rel="alternate" type="application/feed+json" title="Zodiacs — The Archive" href="/archive/feed.json" />
 
   <meta property="og:site_name" content="Zodiacs" />
   <meta property="og:title" content="Zodiacs · The Twelve." />
@@ -446,6 +448,15 @@
     }
     @media (prefers-reduced-motion: reduce) {
       .hero__eyebrow .pulse-dot { animation: none; box-shadow: 0 0 6px rgba(111, 174, 124, 0.55); }
+    }
+    /* Season notation — a quiet catalogue line under the eyebrow pill */
+    .hero__season {
+      margin: -16px 2px 28px;
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--ink-dim);
     }
     .hero__headline {
       font-family: var(--serif);
@@ -992,6 +1003,162 @@
       font-size: 13.5px;
       line-height: 1.5;
       color: var(--ink-dim);
+    }
+
+    /* ── Shelf viewer (inside Identity Context) ─────────────────── */
+    .shelf__form { margin: 0 0 18px; }
+    .shelf__label {
+      display: block;
+      margin-bottom: 8px;
+      font-family: var(--mono);
+      font-size: 8.5px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ink-mute);
+    }
+    .shelf__row { display: flex; gap: 8px; }
+    .shelf__input {
+      flex: 1;
+      min-width: 0;
+      height: 44px;
+      padding: 0 12px;
+      background: var(--surface);
+      border: 1px solid var(--hair-2);
+      color: var(--ink);
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      transition: border-color 220ms var(--ease), background 220ms var(--ease);
+    }
+    .shelf__input::placeholder { color: var(--ink-mute); }
+    .shelf__input:focus {
+      outline: none;
+      border-color: var(--gold);
+      background: var(--surface-2);
+    }
+    .shelf__input:disabled { opacity: 0.55; }
+    .shelf__submit {
+      flex: 0 0 auto;
+      height: 44px;
+      padding: 0 16px;
+      background: transparent;
+      border: 1px solid var(--gold);
+      color: var(--gold-bright);
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 220ms var(--ease), color 220ms var(--ease), transform 220ms var(--ease);
+    }
+    .shelf__submit:hover { background: rgba(201,169,97,0.08); color: #fff; }
+    .shelf__submit:active { transform: scale(0.985); }
+    .shelf__submit:disabled { opacity: 0.55; cursor: default; }
+    .shelf__hint {
+      margin: 10px 0 0;
+      font-family: var(--serif);
+      font-size: 13px;
+      line-height: 1.5;
+      color: var(--ink-2);
+    }
+    .shelf__hint a { color: var(--gold-bright); }
+    .shelf__clear {
+      padding: 0;
+      background: transparent;
+      border: 0;
+      border-bottom: 1px solid var(--hair-3);
+      color: var(--ink-dim);
+      font-family: var(--mono);
+      font-size: 9.5px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: color 220ms var(--ease), border-color 220ms var(--ease);
+    }
+    .shelf__clear:hover { color: var(--ink-2); border-color: var(--gold); }
+    .shelf__signs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+    .shelf__sign {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px 6px 8px;
+      border: 1px solid var(--hair-2);
+      background: var(--surface);
+      text-decoration: none;
+      transition: border-color 220ms var(--ease), background 220ms var(--ease);
+    }
+    .shelf__sign:hover {
+      border-color: rgba(201,169,97,0.42);
+      background: var(--surface-2);
+    }
+    .shelf__sign img { width: 26px; height: 26px; display: block; }
+    .shelf__sign-name {
+      font-family: var(--serif);
+      font-size: 14px;
+      color: var(--ink);
+    }
+    .shelf__sign-amt {
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: 0.12em;
+      color: var(--ink-mute);
+    }
+    .shelf__empty {
+      padding: 26px 16px;
+      border: 1px solid var(--hair);
+      background: var(--surface);
+      text-align: center;
+    }
+    .shelf__empty-line {
+      margin: 0 0 8px;
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 17px;
+      color: var(--ink-2);
+    }
+    .shelf__empty-sub {
+      margin: 0;
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+    .shelf__empty-sub a { color: var(--gold-bright); text-decoration: none; }
+    .shelf__skel {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1px;
+      background: var(--hair);
+      border: 1px solid var(--hair);
+    }
+    @media (min-width: 560px) {
+      .shelf__skel { grid-template-columns: repeat(2, 1fr); }
+    }
+    .shelf__skel-cell {
+      min-height: 72px;
+      padding: 14px;
+      background: rgba(8,10,14,0.86);
+    }
+    .shelf__skel-bar {
+      height: 9px;
+      width: 38%;
+      background: var(--hair-2);
+    }
+    .shelf__skel-bar + .shelf__skel-bar {
+      margin-top: 12px;
+      width: 62%;
+      height: 13px;
+    }
+    @media (prefers-reduced-motion: no-preference) {
+      .shelf__skel-bar { animation: shelf-pulse 1.4s var(--ease) infinite alternate; }
+    }
+    @keyframes shelf-pulse {
+      from { opacity: 0.45; }
+      to   { opacity: 1; }
     }
 
     /* ── Ecosystem depth ─────────────────────────────────────── */
@@ -2333,6 +2500,23 @@
     .ro__mark { color: var(--gold-deep); }
 
     /* ── FAQ ─────────────────────────────────────────────────── */
+    .faq__group + .faq__group { margin-top: 38px; }
+    .faq__group-label {
+      display: flex; align-items: center; gap: 14px;
+      margin: 0 0 4px;
+      font-family: var(--mono);
+      font-weight: 400;
+      font-size: 9.5px;
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+    .faq__group-label::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: var(--hair);
+    }
     .faq { margin: 0; }
     .faq__item {
       position: relative;
@@ -2681,7 +2865,7 @@
         padding: 104px 72px 100px;
       }
       .hero > * { grid-column: 1; min-width: 0; }
-      .hero > .card { grid-column: 2; grid-row: 1 / span 4; align-self: center; }
+      .hero > .card { grid-column: 2; grid-row: 1 / span 5; align-self: center; }
       .hero__eyebrow { justify-self: start; }
       .hero__headline { font-size: clamp(64px, 6.4vw, 86px); margin-bottom: 26px; }
       .hero__sub { font-size: 19px; max-width: 42ch; margin-bottom: 40px; }
@@ -2773,6 +2957,7 @@
       <nav class="static-site__nav" aria-label="Primary">
         <span>Zodiacs.org</span>
         <a href="/thesis/">Thesis</a>
+        <a href="/archive/">Archive</a>
         <a href="/registry/zodiacs.registry.json">Registry JSON</a>
         <a href="/sdk/">SDK</a>
       </nav>
@@ -2930,6 +3115,18 @@
           <li><a href="https://github.com/ZodiacsOfficial/sdk" rel="noopener noreferrer">GitHub: ZodiacsOfficial/sdk</a></li>
           <li><a href="https://www.npmjs.com/package/@zodiacs/sdk" rel="noopener noreferrer">npm: @zodiacs/sdk</a></li>
         </ul>
+      </section>
+
+      <section class="static-site__section" id="archive-static">
+        <h2>The Archive</h2>
+        <p>
+          Dated moments, press, and origin records for the twelve Zodiacs,
+          including the February 2025 episode in which Dave Portnoy bought
+          the official Libra by accident and posted its mint verbatim.
+          <a href="/archive/">Read the archive</a>, or subscribe via
+          <a href="/archive/rss.xml">RSS</a> /
+          <a href="/archive/feed.json">JSON Feed</a>.
+        </p>
       </section>
 
       <section class="static-site__section" id="security">

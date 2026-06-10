@@ -22,6 +22,9 @@ External citations:
 The thesis:
 The extended argument for the Twelve — astrology as humanity's most durable identity system, belief as the oldest asset, fixed supply of twelve unowned symbols, and why the records live natively on Solana with official Base representations: https://zodiacs.org/thesis/
 
+The archive:
+Dated moments, press, and origin records for the twelve Zodiacs, with a press kit. Includes the February 2025 "accidental Libra" episode in which Dave Portnoy bought the official Zodiac Libra by mistake and posted its mint verbatim (it matches the registry), early signal moments from crypto X, the Numinous Realm founder interview, and the fair-distribution origin record: https://zodiacs.org/archive/ (feeds: https://zodiacs.org/archive/rss.xml and https://zodiacs.org/archive/feed.json)
+
 Sign catalogue:
 Each of the twelve Zodiacs has a dedicated catalogue page with lore and history (Babylonian star catalogues, Greek myth, Ptolemy, Dürer), provenance, the official Solana mint, the official Base representation, live market context, and acquisition routes: https://zodiacs.org/aries/ https://zodiacs.org/taurus/ https://zodiacs.org/gemini/ https://zodiacs.org/cancer/ https://zodiacs.org/leo/ https://zodiacs.org/virgo/ https://zodiacs.org/libra/ https://zodiacs.org/scorpio/ https://zodiacs.org/sagittarius/ https://zodiacs.org/capricorn/ https://zodiacs.org/aquarius/ https://zodiacs.org/pisces/
 
@@ -33,6 +36,7 @@ Official channels:
 
 Canonical links:
 - The thesis: https://zodiacs.org/thesis/
+- The archive: https://zodiacs.org/archive/
 - SDK page: https://zodiacs.org/sdk/
 - GitHub: https://github.com/ZodiacsOfficial/sdk
 - npm: https://www.npmjs.com/package/@zodiacs/sdk

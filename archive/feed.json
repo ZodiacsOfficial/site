@@ -1,0 +1,88 @@
+{
+  "version": "https://jsonfeed.org/version/1.1",
+  "title": "Zodiacs — The Archive",
+  "home_page_url": "https://zodiacs.org/archive/",
+  "feed_url": "https://zodiacs.org/archive/feed.json",
+  "description": "Dated moments, press, and origin records for the twelve Zodiacs: the accidental Libra, the astrology girlies, and a register that verified itself in public.",
+  "language": "en",
+  "items": [
+    {
+      "id": "https://zodiacs.org/archive/#pure-belief",
+      "url": "https://zodiacs.org/archive/#pure-belief",
+      "title": "A pure belief system",
+      "content_html": "<p>CZ describes gold as a pure belief system. The thesis applies the same lens to symbols that outlast the institutions around them.</p><blockquote><p>Gold is a pure belief system.</p><p>Changpeng Zhao (CZ)</p></blockquote>",
+      "content_text": "CZ describes gold as a pure belief system. The thesis applies the same lens to symbols that outlast the institutions around them.",
+      "date_published": "2025-10-01T12:00:00Z"
+    },
+    {
+      "id": "https://zodiacs.org/archive/#accidental-libra",
+      "url": "https://zodiacs.org/archive/#accidental-libra",
+      "title": "The accidental Libra",
+      "content_html": "<p>During the collapse of an unrelated token called LIBRA, Dave Portnoy bought the official Zodiac Libra by mistake, posted its mint verbatim to millions, and the record verified itself in public.</p><p>Days earlier, a token named LIBRA, amplified from the account of Argentina’s president, had collapsed in public view. Portnoy, who had been caught in that fall, went back in. He picked the wrong Libra: the zodiac one.</p><p>Reports at the time put the move at a surge of roughly 3,000 percent (Decrypt, Yahoo Finance). The number mattered less than the mechanism. A verbatim mint address, posted in public, checkable against a registry that had been published long before.</p><blockquote><p>Ps - I rugged myself! I’m buying the wrong libra! This league!!</p><p>Dave Portnoy · @stoolpresidente</p></blockquote><blockquote><p>Anybody wanna buy some fake Libra? Warning. This is a meme coin. I bought it by accident. It will be volatile. It will eventually go to zero. It may rip. It may tank. Don’t put on more than you can lose!!! It’s a collectible<br />7Zt2KUh5mkpEpPGcNcFy51aGkh9Ycb5ELcqRH1n2GmAe</p><p>Dave Portnoy · @stoolpresidente</p></blockquote><blockquote><p>😂😂 Maybe I did Astrofolio maybe I did.</p><p>Dave Portnoy · @stoolpresidente</p></blockquote><blockquote><p>Fake politicians come and go, but the signs are timeless.</p><p>Astrofolio · @astrofoliosol</p></blockquote>",
+      "content_text": "During the collapse of an unrelated token called LIBRA, Dave Portnoy bought the official Zodiac Libra by mistake, posted its mint verbatim to millions, and the record verified itself in public.",
+      "date_published": "2025-02-17T12:00:00Z",
+      "external_url": "https://x.com/stoolpresidente/status/1891526647033024920"
+    },
+    {
+      "id": "https://zodiacs.org/archive/#zodiac-iwo",
+      "url": "https://zodiacs.org/archive/#zodiac-iwo",
+      "title": "A nod from inversebrah",
+      "content_html": "<p>The most-watched lurker on crypto X turns its attention to the zodiac, in the signature shorthand.</p><p>Eleven days later, his Libra poll was running while Portnoy bought the wrong one.</p><blockquote><p>wise move tbw consider investing in ur zodiac also iwo</p><p>inversebrah · @inversebrah</p></blockquote>",
+      "content_text": "The most-watched lurker on crypto X turns its attention to the zodiac, in the signature shorthand.",
+      "date_published": "2025-02-06T12:00:00Z",
+      "external_url": "https://x.com/inversebrah/status/1887520374964867250"
+    },
+    {
+      "id": "https://zodiacs.org/archive/#onboarding-wave",
+      "url": "https://zodiacs.org/archive/#onboarding-wave",
+      "title": "Twelve hundred first wallets",
+      "content_html": "<p>An Astrofolio airdrop run with iJaadee brings more than 1,200 women onchain, most of them to their first Solana wallet.</p><p>A community arriving through the signs themselves, many for the first time.</p><blockquote><p>@phantom Amazing stuff rn, @astrofoliosol and @iJaadee just organically onboarded 1200+ real women, to (most) their first Phantom and Solana via a @astrofoliosol airdrop!</p><p>wantonwallet · @wantonwallet, founder</p></blockquote>",
+      "content_text": "An Astrofolio airdrop run with iJaadee brings more than 1,200 women onchain, most of them to their first Solana wallet.",
+      "date_published": "2025-01-27T12:00:00Z",
+      "external_url": "https://x.com/wantonwallet/status/1883692206349021677"
+    },
+    {
+      "id": "https://zodiacs.org/archive/#astrology-girlies",
+      "url": "https://zodiacs.org/archive/#astrology-girlies",
+      "title": "The astrology girlies arrive",
+      "content_html": "<p>iJaadee, an astrology voice with a six-figure following, calls her community into the twelve coins.</p><p>Her argument was structural: seven years of astro twitter, a centralized belief, all twelve signs accessible, and an identity rule that assigns everyone three of them: sun, moon, and rising.</p><blockquote><p>astrology girlies prepare yourself to invest in the @astrofoliosol coins … coin identity (easy. invest in your sun moon and rising sign)</p><p>iJaadee · @iJaadee</p></blockquote>",
+      "content_text": "iJaadee, an astrology voice with a six-figure following, calls her community into the twelve coins.",
+      "date_published": "2025-01-19T12:00:00Z",
+      "external_url": "https://x.com/iJaadee/status/1880988151805538587"
+    },
+    {
+      "id": "https://zodiacs.org/archive/#oldest-meme",
+      "url": "https://zodiacs.org/archive/#oldest-meme",
+      "title": "Human civilization’s oldest meme",
+      "content_html": "<p>Andrew Kang of Mechanism Capital frames astrology as the longest-running meme in human history.</p><p>The registry’s own version of the argument lives on the thesis page: symbols with millennia of continuity make durable records.</p><blockquote><p>Astrology — Human Civilization’s Oldest Meme</p><p>Andrew Kang · @Rewkang</p></blockquote>",
+      "content_text": "Andrew Kang of Mechanism Capital frames astrology as the longest-running meme in human history.",
+      "date_published": "2024-12-14T12:00:00Z"
+    },
+    {
+      "id": "https://zodiacs.org/archive/#astrologers-arrive",
+      "url": "https://zodiacs.org/archive/#astrologers-arrive",
+      "title": "The astrologers have arrived",
+      "content_html": "<p>TikTokInvestors, the account that catalogues retail’s arrival in every cycle, files the zodiac moment early.</p><blockquote><p>The astrologers have arrived</p><p>TikTokInvestors · @TikTokInvestors</p></blockquote>",
+      "content_text": "TikTokInvestors, the account that catalogues retail’s arrival in every cycle, files the zodiac moment early.",
+      "date_published": "2024-11-22T12:00:00Z",
+      "external_url": "https://x.com/TikTokInvestors/status/1859805329145594113"
+    },
+    {
+      "id": "https://zodiacs.org/archive/#horoscopes-to-hodl",
+      "url": "https://zodiacs.org/archive/#horoscopes-to-hodl",
+      "title": "Horoscopes to HODL",
+      "content_html": "<p>Numinous Realm publishes a long-form profile: an interview with the founder on fair distribution, BRC-20 origins, and what makes a perfect Lindy meme.</p><p>The project began in January 2024, inspired by the BRC-20 zodiac inscriptions: twelve signs, minted fairly, no presale. The founder’s phrase for it: the perfect Lindy meme.</p><blockquote><p>Astrology enthusiasts, meme lovers, and crypto degens.</p><p>On the community · Numinous Realm</p></blockquote>",
+      "content_text": "Numinous Realm publishes a long-form profile: an interview with the founder on fair distribution, BRC-20 origins, and what makes a perfect Lindy meme.",
+      "date_published": "2024-08-29T12:00:00Z",
+      "external_url": "https://numinousrealm.com/news/horoscopes-to-hodl-building-your-astrofolio"
+    },
+    {
+      "id": "https://zodiacs.org/archive/#origin",
+      "url": "https://zodiacs.org/archive/#origin",
+      "title": "Twelve mints, one register",
+      "content_html": "<p>The twelve Zodiacs are minted on Solana and fully distributed. No presale, no allocation, a public record from the first day.</p><p>Each sign is one canonical SPL asset. Official Base representations follow by Wormhole bridge, each pointing back to its Solana origin.</p><p>The community has since held through full market cycles. The register at zodiacs.org keeps the canonical addresses public and verifiable.</p>",
+      "content_text": "The twelve Zodiacs are minted on Solana and fully distributed. No presale, no allocation, a public record from the first day.",
+      "date_published": "2024-01-01T12:00:00Z"
+    }
+  ]
+}

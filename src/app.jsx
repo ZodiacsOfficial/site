@@ -870,6 +870,41 @@
 
     const SIGNS = ZODIACS_REGISTRY.assets.map(toDisplaySign);
 
+    // Current zodiac season, derived from registry dateRange metadata
+    // ("MM-DD to MM-DD"). Capricorn wraps the year boundary. Visitor-local
+    // time; the registry range is the source of truth, not astronomical
+    // ingress.
+    function parseDateRange(range) {
+      const m = /^(\d{2})-(\d{2}) to (\d{2})-(\d{2})$/.exec(range || '');
+      return m ? { sm: +m[1], sd: +m[2], em: +m[3], ed: +m[4] } : null;
+    }
+
+    function currentSeason(now = new Date()) {
+      const md = (now.getMonth() + 1) * 100 + now.getDate();
+      for (const sign of SIGNS) {
+        const r = parseDateRange(sign.asset.metadata.dateRange);
+        if (!r) continue;
+        const start = r.sm * 100 + r.sd;
+        const end = r.em * 100 + r.ed;
+        const inSeason = start <= end
+          ? (md >= start && md <= end)
+          : (md >= start || md <= end);
+        if (!inSeason) continue;
+        let seasonStart = new Date(now.getFullYear(), r.sm - 1, r.sd);
+        if (seasonStart > now) {
+          seasonStart = new Date(now.getFullYear() - 1, r.sm - 1, r.sd);
+        }
+        let seasonEnd = new Date(seasonStart.getFullYear(), r.em - 1, r.ed);
+        if (seasonEnd < seasonStart) {
+          seasonEnd = new Date(seasonStart.getFullYear() + 1, r.em - 1, r.ed);
+        }
+        const day = Math.floor((now - seasonStart) / 86400000) + 1;
+        const total = Math.floor((seasonEnd - seasonStart) / 86400000) + 1;
+        return { sign, day, total };
+      }
+      return null;
+    }
+
     const ZODIAC_MARKET_PAIRS = {
       aries: {
         chainId: 'solana',
@@ -1058,6 +1093,7 @@
     }
 
     function Hero({ sign, animKey, active, setActive }) {
+      const season = useMemo(() => currentSeason(), []);
       return (
         <section className="hero" id="main">
           <div className="hero__eyebrow">
@@ -1067,6 +1103,11 @@
               The Registry
             </span>
           </div>
+          {season && (
+            <div className="hero__season">
+              {season.sign.name} season · day {season.day} of {season.total}
+            </div>
+          )}
 
           <h1 className="hero__headline">
             Twelve signs.<br/>
@@ -1969,6 +2010,281 @@
       );
     }
 
+    // ---- Shelf viewer (read-only public lookup) ----------------------------
+    // Reads native Solana holdings for a pasted wallet address through the
+    // public RPC. One POST per submit, per-session cache, no polling, no
+    // wallet connection. Unavailable-safe: the example receipt stands in
+    // whenever the lookup cannot run.
+    const SOLANA_RPC_URL = 'https://api.mainnet-beta.solana.com';
+    const SOLANA_TOKEN_PROGRAM = 'TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA';
+    const SOLANA_ADDRESS_RE = /^[1-9A-HJ-NP-Za-km-z]{32,44}$/;
+    const ZODIAC_SOLANA_MINTS = new Map(
+      SIGNS
+        .filter((s) => s.representations.solana && s.representations.solana.address)
+        .map((s) => [s.representations.solana.address, s])
+    );
+    const SHELF_CACHE = new Map();
+
+    function shortAddress(value) {
+      const s = String(value || '');
+      return s.length > 12 ? `${s.slice(0, 4)}…${s.slice(-4)}` : s;
+    }
+
+    async function fetchShelfHoldings(owner) {
+      if (SHELF_CACHE.has(owner)) return SHELF_CACHE.get(owner);
+      const request = (async () => {
+        const res = await fetch(SOLANA_RPC_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            jsonrpc: '2.0',
+            id: 1,
+            method: 'getTokenAccountsByOwner',
+            params: [owner, { programId: SOLANA_TOKEN_PROGRAM }, { encoding: 'jsonParsed' }]
+          })
+        });
+        if (res.status === 429) {
+          const err = new Error('rate-limited');
+          err.kind = 'rate';
+          throw err;
+        }
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const payload = await res.json();
+        if (payload.error) {
+          const message = String(payload.error.message || '');
+          const err = new Error(message || 'RPC error');
+          if (payload.error.code === -32602 || /invalid/i.test(message)) err.kind = 'invalid';
+          else if (/limit|too many/i.test(message)) err.kind = 'rate';
+          throw err;
+        }
+        const accounts = payload.result && Array.isArray(payload.result.value)
+          ? payload.result.value
+          : [];
+        const held = [];
+        for (const item of accounts) {
+          const info = item?.account?.data?.parsed?.info;
+          if (!info) continue;
+          const sign = ZODIAC_SOLANA_MINTS.get(info.mint);
+          const amount = toFiniteNumber(info.tokenAmount && info.tokenAmount.uiAmount);
+          if (sign && amount !== null && amount > 0) held.push({ sign, amount });
+        }
+        held.sort((a, b) => a.sign.order - b.sign.order);
+        return held;
+      })();
+      SHELF_CACHE.set(owner, request);
+      try {
+        return await request;
+      } catch (err) {
+        SHELF_CACHE.delete(owner);
+        throw err;
+      }
+    }
+
+    function shelfComposition(held) {
+      const counts = new Map();
+      for (const h of held) {
+        counts.set(h.sign.element, (counts.get(h.sign.element) || 0) + 1);
+      }
+      const ranked = [...counts.entries()].sort((a, b) => b[1] - a[1]);
+      if (ranked.length === 1) return `${ranked[0][0]} only`;
+      if (ranked.length === 4 && ranked[0][1] === ranked[3][1]) return 'All four elements, balanced';
+      return `${ranked[0][0]} and ${ranked[1][0].toLowerCase()} dominant`;
+    }
+
+    const SHELF_EXAMPLE_FACTS = [
+      { k: 'Shelf', v: '4 signs held' },
+      { k: 'Composition', v: 'Fire and water dominant' },
+      { k: 'Season', v: 'Current season represented' },
+      { k: 'Provenance', v: 'Native on Solana · bridged to Base' }
+    ];
+
+    function ShelfViewer() {
+      const [input, setInput] = useState('');
+      const [view, setView] = useState({ state: 'idle' });
+      const lookupSeq = useRef(0);
+      const season = useMemo(() => currentSeason(), []);
+
+      const onSubmit = async (e) => {
+        e.preventDefault();
+        const address = input.trim();
+        if (!address || view.state === 'loading') return;
+        if (ZODIAC_SOLANA_MINTS.has(address) || lookupAddress(address)) {
+          setView({ state: 'mint-hint' });
+          return;
+        }
+        if (!SOLANA_ADDRESS_RE.test(address)) {
+          setView({ state: 'invalid' });
+          return;
+        }
+        const seq = ++lookupSeq.current;
+        setView({ state: 'loading' });
+        try {
+          const held = await fetchShelfHoldings(address);
+          if (seq !== lookupSeq.current) return;
+          setView(held.length
+            ? { state: 'holds', address, held }
+            : { state: 'empty', address });
+        } catch (err) {
+          if (seq !== lookupSeq.current) return;
+          if (err.kind === 'invalid') setView({ state: 'invalid' });
+          else if (err.kind === 'rate') setView({ state: 'rate' });
+          else setView({ state: 'error' });
+        }
+      };
+
+      const onClear = () => {
+        lookupSeq.current += 1;
+        setInput('');
+        setView({ state: 'idle' });
+      };
+
+      const live = view.state === 'holds' || view.state === 'empty';
+      const loading = view.state === 'loading';
+
+      const hint = {
+        invalid: 'Not a valid Solana address.',
+        'mint-hint': null, // rendered with a link below
+        rate: 'The public lookup is busy right now. Try again in a moment.',
+        error: 'Shelf lookup is unavailable right now. The example view stands in.'
+      }[view.state];
+
+      let liveFacts = null;
+      if (view.state === 'holds') {
+        const seasonHeld = season
+          ? view.held.some((h) => h.sign.name === season.sign.name)
+          : false;
+        liveFacts = [
+          { k: 'Shelf', v: `${view.held.length} of 12 signs` },
+          { k: 'Composition', v: shelfComposition(view.held) },
+          {
+            k: 'Season',
+            v: season
+              ? `${season.sign.name} season ${seasonHeld ? 'represented' : 'not represented'}`
+              : 'Season unavailable'
+          },
+          { k: 'Wallet', v: shortAddress(view.address) }
+        ];
+      }
+
+      return (
+        <div className="idctx__example">
+          <div className="idctx__example-head">
+            <div className="idctx__example-title">Public Zodiacs shelf</div>
+            <div className="idctx__example-sub">
+              {live ? 'Live · read-only' : 'Example view'}
+            </div>
+          </div>
+
+          <form className="shelf__form" onSubmit={onSubmit}>
+            <label className="shelf__label" htmlFor="shelf-input">
+              View a public shelf
+            </label>
+            <div className="shelf__row">
+              <input
+                id="shelf-input"
+                className="shelf__input mono"
+                type="text"
+                autoComplete="off"
+                spellCheck={false}
+                placeholder="Paste a Solana wallet address"
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                disabled={loading}
+              />
+              <button type="submit" className="shelf__submit" disabled={loading}>
+                {loading ? 'Reading' : 'View'}
+              </button>
+            </div>
+            {hint && <p className="shelf__hint">{hint}</p>}
+            {view.state === 'mint-hint' && (
+              <p className="shelf__hint">
+                That is an official Zodiac record, not a wallet. To check a
+                token address, use <a href="#verify">Verify</a> above.
+              </p>
+            )}
+            {live && (
+              <p className="shelf__hint">
+                <button type="button" className="shelf__clear" onClick={onClear}>
+                  Back to the example view
+                </button>
+              </p>
+            )}
+          </form>
+
+          <div role="status" aria-live="polite">
+            {loading && (
+              <div className="shelf__skel" aria-label="Reading shelf">
+                {[0, 1, 2, 3].map((i) => (
+                  <div className="shelf__skel-cell" key={i}>
+                    <div className="shelf__skel-bar" />
+                    <div className="shelf__skel-bar" />
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {view.state === 'holds' && (
+              <>
+                <div className="shelf__signs">
+                  {view.held.map((h) => (
+                    <a
+                      className="shelf__sign"
+                      key={h.sign.name}
+                      href={`/${h.sign.name.toLowerCase()}/`}
+                    >
+                      <img
+                        src={`assets/icons/${h.sign.name.toLowerCase()}.png`}
+                        alt=""
+                        loading="lazy"
+                        width="26"
+                        height="26"
+                      />
+                      <span className="shelf__sign-name">{h.sign.name}</span>
+                      <span className="shelf__sign-amt">{formatCompact(h.amount)}</span>
+                    </a>
+                  ))}
+                </div>
+                <div className="idctx__receipt">
+                  {liveFacts.map((fact) => (
+                    <div className="idctx__fact" key={fact.k}>
+                      <div className="idctx__fact-k">{fact.k}</div>
+                      <div className="idctx__fact-v">{fact.v}</div>
+                    </div>
+                  ))}
+                </div>
+              </>
+            )}
+
+            {view.state === 'empty' && (
+              <div className="shelf__empty">
+                <p className="shelf__empty-line">No Zodiacs on this shelf yet.</p>
+                <p className="shelf__empty-sub">
+                  <a href="#official-twelve">Browse the Twelve</a>
+                </p>
+              </div>
+            )}
+
+            {!live && !loading && (
+              <div className="idctx__receipt">
+                {SHELF_EXAMPLE_FACTS.map((fact) => (
+                  <div className="idctx__fact" key={fact.k}>
+                    <div className="idctx__fact-k">{fact.k}</div>
+                    <div className="idctx__fact-v">{fact.v}</div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
+          <p className="idctx__note">
+            {live
+              ? 'Reads native Solana holdings through the public RPC. Bridged Base representations are not included in this view.'
+              : 'The SDK provides computed symbolic context and public ownership state. The interface chooses how to present it.'}
+          </p>
+        </div>
+      );
+    }
+
     function IdentityContextSection() {
       const reveal = useReveal();
       const cards = [
@@ -1985,13 +2301,6 @@
           d: 'Build profiles, receipts, seasonal moments, verifiers, and identity surfaces on app-neutral infrastructure.'
         }
       ];
-      const facts = [
-        { k: 'Shelf', v: '4 signs held' },
-        { k: 'Composition', v: 'Fire and water dominant' },
-        { k: 'Season', v: 'Current season represented' },
-        { k: 'Provenance', v: 'Native on Solana · bridged to Base' }
-      ];
-
       return (
         <section ref={reveal} id="identity" className="sec idctx reveal" aria-label="Identity Context">
           <div className="sec__head">
@@ -2024,24 +2333,7 @@
             ))}
           </div>
 
-          <div className="idctx__example">
-            <div className="idctx__example-head">
-              <div className="idctx__example-title">Public Zodiacs shelf</div>
-              <div className="idctx__example-sub">Example view</div>
-            </div>
-            <div className="idctx__receipt">
-              {facts.map((fact) => (
-                <div className="idctx__fact" key={fact.k}>
-                  <div className="idctx__fact-k">{fact.k}</div>
-                  <div className="idctx__fact-v">{fact.v}</div>
-                </div>
-              ))}
-            </div>
-            <p className="idctx__note">
-              The SDK provides computed symbolic context and public ownership
-              state. The interface chooses how to present it.
-            </p>
-          </div>
+          <ShelfViewer />
         </section>
       );
     }
@@ -2454,30 +2746,80 @@
       );
     }
 
+    const FAQ_GROUPS = [
+      {
+        label: 'The Registry',
+        items: [
+          { q: 'What is Zodiacs.org?',
+            a: 'The official public registry for the twelve Zodiacs: their identities, records, origin, and verified representations.' },
+          { q: 'What can I do here?',
+            a: 'Explore the Twelve, verify an address, inspect the public registry, and see how ownership can become symbolic identity context.' },
+          { q: 'What can be built with Zodiacs?',
+            a: 'Profiles, galleries, wallet views, Zodiac shelves, identity receipts, zodiac wheel views, seasonal moments, and astrology-native interfaces.' },
+          { q: 'Where does Astrofolio fit?',
+            a: 'Astrofolio is a related consumer experience around personal Zodiac shelves and symbolic ownership. Zodiacs.org remains the official registry and SDK source of truth.' },
+          { q: 'What does the SDK add?',
+            a: 'It gives apps a read-only way to recognize official Zodiacs, show records, read public ownership, and compute display-ready symbolic context.' },
+          { q: 'Why Solana and Base?',
+            a: 'The original Zodiacs live on Solana. The Base records are official bridged counterparts that point back to those Solana origins.' }
+        ]
+      },
+      {
+        label: 'Acquisition & Ownership',
+        items: [
+          { q: 'How do I acquire a Zodiac?',
+            a: 'Through public onchain venues. Each sign’s catalogue page lists access routes, including Jupiter with the official Solana mint preloaded and the live market pair. Zodiacs.org itself never sells, swaps, or executes anything.' },
+          { q: 'Do I need a special wallet?',
+            a: 'Any wallet that holds SPL tokens on Solana or ERC-20 tokens on Base will do. The registry is wallet-neutral; the Onchain Access section lists familiar interfaces.' },
+          { q: 'Was there a presale or team allocation?',
+            a: 'No. The twelve were minted on Solana in 2024 and fully distributed. There was no presale, and the record has been public from the start.' }
+        ]
+      },
+      {
+        label: 'Legitimacy & Trust',
+        items: [
+          { q: 'How do I know an address is official?',
+            a: 'Check it against the record. The verifier recognizes exactly twenty-four addresses: twelve native Solana mints and twelve bridged Base representations. Anything else is reported as not among the Twelve.' },
+          { q: 'Other tokens use the same names. Which is real?',
+            a: 'Names and tickers can be copied; addresses cannot. Only the addresses in the registry are official records. When in doubt, verify the address itself, never the ticker.' },
+          { q: 'Is this related to the LIBRA token from the news?',
+            a: <>No. In early 2025 an unrelated token of that name collapsed in public view, and buyers went looking for the real one. The official Libra record predates that episode and sits in the registry. The full story is preserved in <a href="/archive/#accidental-libra">the archive</a>.</> },
+          { q: 'What if an address is not listed?',
+            a: 'The verifier reports that it is not among the Twelve.' }
+        ]
+      },
+      {
+        label: 'Astrology & Culture',
+        items: [
+          { q: 'Why put the zodiac onchain?',
+            a: 'The twelve signs are a symbolic language in continuous use for more than two thousand years, an identity system older than most institutions that issue identity. The registry gives each sign one durable public record.' },
+          { q: 'Do I have to believe in astrology?',
+            a: 'No. The signs function as cultural symbols whether or not the stars are consulted. The registry records assets and provenance, not doctrine.' },
+          { q: 'Can I only hold my own sign?',
+            a: 'Anyone may hold any sign, in any combination. Many begin with their sun sign; collectors assemble elements, seasons, or the full wheel.' },
+          { q: 'Does Zodiacs claim ownership of astrology?',
+            a: 'No. Zodiacs keeps the register for these twelve assets. It makes no claim over astrology, the signs, or their symbols.' }
+        ]
+      },
+      {
+        label: 'Risk & Posture',
+        items: [
+          { q: 'Are Zodiacs an investment?',
+            a: 'They are cultural assets, and nothing on this site is financial advice. Market context is shown for transparency and moves in both directions. Access routes are listed as routes, not recommendations.' },
+          { q: 'What are the risks?',
+            a: 'The usual onchain ones: prices move, liquidity varies, bridges and contracts carry technical risk. Hold what you are content to hold.' },
+          { q: 'What happens if this site goes away?',
+            a: 'Nothing happens to the assets. They live onchain. The registry file is mirrored in the SDK package and the public repository, so the record outlives any single page.' },
+          { q: 'Does the site or SDK move assets?',
+            a: 'No. The site and SDK are read-only.' },
+          { q: 'What is Market Context?',
+            a: 'Optional third-party context from Dex Screener. It may be delayed or unavailable and is secondary to identity, registry, and verification.' }
+        ]
+      }
+    ];
+
     function FaqSection() {
       const reveal = useReveal();
-      const qa = [
-        { q: 'What is Zodiacs.org?',
-          a: 'The official public registry for the twelve Zodiacs: their identities, records, origin, and verified representations.' },
-        { q: 'What can I do here?',
-          a: 'Explore the Twelve, verify an address, inspect the public registry, and see how ownership can become symbolic identity context.' },
-        { q: 'What can be built with Zodiacs?',
-          a: 'Profiles, galleries, wallet views, Zodiac shelves, identity receipts, zodiac wheel views, seasonal moments, and astrology-native interfaces.' },
-        { q: 'Where does Astrofolio fit?',
-          a: 'Astrofolio is a related consumer experience around personal Zodiac shelves and symbolic ownership. Zodiacs.org remains the official registry and SDK source of truth.' },
-        { q: 'What does the SDK add?',
-          a: 'It gives apps a read-only way to recognize official Zodiacs, show records, read public ownership, and compute display-ready symbolic context.' },
-        { q: 'What is Market Context?',
-          a: 'Optional third-party context from Dex Screener. It may be delayed or unavailable and is secondary to identity, registry, and verification.' },
-        { q: 'Why Solana and Base?',
-          a: 'The original Zodiacs live on Solana. The Base records are official bridged counterparts that point back to those Solana origins.' },
-        { q: 'Does the site or SDK move assets?',
-          a: 'No. The site and SDK are read-only.' },
-        { q: 'Does Zodiacs claim ownership of astrology?',
-          a: 'No. Zodiacs keeps the register for these twelve assets. It makes no claim over astrology, the signs, or their symbols.' },
-        { q: 'What if an address is not listed?',
-          a: 'The verifier reports that it is not among the Twelve.' },
-      ];
       return (
         <section ref={reveal} id="faq" className="sec reveal" aria-label="Questions">
           <div className="sec__head">
@@ -2485,14 +2827,19 @@
             <span className="line" />
             <h2 className="sec__title">Questions</h2>
           </div>
-          <dl className="faq">
-            {qa.map((item, i) => (
-              <div className="faq__item" key={i}>
-                <dt className="faq__q">{item.q}</dt>
-                <dd className="faq__a">{item.a}</dd>
-              </div>
-            ))}
-          </dl>
+          {FAQ_GROUPS.map((group) => (
+            <div className="faq__group" key={group.label}>
+              <h3 className="faq__group-label">{group.label}</h3>
+              <dl className="faq">
+                {group.items.map((item) => (
+                  <div className="faq__item" key={item.q}>
+                    <dt className="faq__q">{item.q}</dt>
+                    <dd className="faq__a">{item.a}</dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
+          ))}
         </section>
       );
     }
@@ -2534,6 +2881,7 @@
             <a href="/sdk/">SDK</a>
             <a href="/registry/zodiacs.registry.json">Record</a>
             <a href="#thesis">Thesis</a>
+            <a href="/archive/">Archive</a>
           </div>
             <div>Read-only</div>
           </div>

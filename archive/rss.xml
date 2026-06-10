@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Zodiacs — The Archive</title>
+    <link>https://zodiacs.org/archive/</link>
+    <atom:link href="https://zodiacs.org/archive/rss.xml" rel="self" type="application/rss+xml" />
+    <description>Dated moments, press, and origin records for the twelve Zodiacs: the accidental Libra, the astrology girlies, and a register that verified itself in public.</description>
+    <language>en</language>
+    <lastBuildDate>Wed, 01 Oct 2025 12:00:00 GMT</lastBuildDate>
+    <item>
+      <title>A pure belief system</title>
+      <link>https://zodiacs.org/archive/#pure-belief</link>
+      <guid isPermaLink="true">https://zodiacs.org/archive/#pure-belief</guid>
+      <pubDate>Wed, 01 Oct 2025 12:00:00 GMT</pubDate>
+      <description>CZ describes gold as a pure belief system. The thesis applies the same lens to symbols that outlast the institutions around them.</description>
+    </item>
+    <item>
+      <title>The accidental Libra</title>
+      <link>https://zodiacs.org/archive/#accidental-libra</link>
+      <guid isPermaLink="true">https://zodiacs.org/archive/#accidental-libra</guid>
+      <pubDate>Mon, 17 Feb 2025 12:00:00 GMT</pubDate>
+      <description>During the collapse of an unrelated token called LIBRA, Dave Portnoy bought the official Zodiac Libra by mistake, posted its mint verbatim to millions, and the record verified itself in public.</description>
+    </item>
+    <item>
+      <title>A nod from inversebrah</title>
+      <link>https://zodiacs.org/archive/#zodiac-iwo</link>
+      <guid isPermaLink="true">https://zodiacs.org/archive/#zodiac-iwo</guid>
+      <pubDate>Thu, 06 Feb 2025 12:00:00 GMT</pubDate>
+      <description>The most-watched lurker on crypto X turns its attention to the zodiac, in the signature shorthand.</description>
+    </item>
+    <item>
+      <title>Twelve hundred first wallets</title>
+      <link>https://zodiacs.org/archive/#onboarding-wave</link>
+      <guid isPermaLink="true">https://zodiacs.org/archive/#onboarding-wave</guid>
+      <pubDate>Mon, 27 Jan 2025 12:00:00 GMT</pubDate>
+      <description>An Astrofolio airdrop run with iJaadee brings more than 1,200 women onchain, most of them to their first Solana wallet.</description>
+    </item>
+    <item>
+      <title>The astrology girlies arrive</title>
+      <link>https://zodiacs.org/archive/#astrology-girlies</link>
+      <guid isPermaLink="true">https://zodiacs.org/archive/#astrology-girlies</guid>
+      <pubDate>Sun, 19 Jan 2025 12:00:00 GMT</pubDate>
+      <description>iJaadee, an astrology voice with a six-figure following, calls her community into the twelve coins.</description>
+    </item>
+    <item>
+      <title>Human civilization’s oldest meme</title>
+      <link>https://zodiacs.org/archive/#oldest-meme</link>
+      <guid isPermaLink="true">https://zodiacs.org/archive/#oldest-meme</guid>
+      <pubDate>Sat, 14 Dec 2024 12:00:00 GMT</pubDate>
+      <description>Andrew Kang of Mechanism Capital frames astrology as the longest-running meme in human history.</description>
+    </item>
+    <item>
+      <title>The astrologers have arrived</title>
+      <link>https://zodiacs.org/archive/#astrologers-arrive</link>
+      <guid isPermaLink="true">https://zodiacs.org/archive/#astrologers-arrive</guid>
+      <pubDate>Fri, 22 Nov 2024 12:00:00 GMT</pubDate>
+      <description>TikTokInvestors, the account that catalogues retail’s arrival in every cycle, files the zodiac moment early.</description>
+    </item>
+    <item>
+      <title>Horoscopes to HODL</title>
+      <link>https://zodiacs.org/archive/#horoscopes-to-hodl</link>
+      <guid isPermaLink="true">https://zodiacs.org/archive/#horoscopes-to-hodl</guid>
+      <pubDate>Thu, 29 Aug 2024 12:00:00 GMT</pubDate>
+      <description>Numinous Realm publishes a long-form profile: an interview with the founder on fair distribution, BRC-20 origins, and what makes a perfect Lindy meme.</description>
+    </item>
+    <item>
+      <title>Twelve mints, one register</title>
+      <link>https://zodiacs.org/archive/#origin</link>
+      <guid isPermaLink="true">https://zodiacs.org/archive/#origin</guid>
+      <pubDate>Mon, 01 Jan 2024 12:00:00 GMT</pubDate>
+      <description>The twelve Zodiacs are minted on Solana and fully distributed. No presale, no allocation, a public record from the first day.</description>
+    </item>
+  </channel>
+</rss>

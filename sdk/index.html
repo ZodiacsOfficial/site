@@ -1525,6 +1525,85 @@
         line-height: 1.25;
       }
     }
+    /* ── Desktop editorial expansion (≥1020px) ──────────────────────
+       Mirrors the homepage treatment: the 460px shell stays canonical on
+       mobile; wide viewports open into an 1180px museum spread with each
+       section's label as a sticky left rail. Below 1020px nothing here
+       applies. */
+    @media (min-width: 1020px) {
+      [id] { scroll-margin-top: 120px; }
+
+      .shell { width: min(100%, 1180px); }
+
+      main { padding: 64px 72px 96px; }
+
+      .nav__inner { width: min(100%, 560px); }
+
+      /* Hero: copy left, artwork right */
+      .hero {
+        display: grid;
+        grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+        column-gap: 72px;
+        align-items: center;
+      }
+      .hero > * { grid-column: 1; min-width: 0; }
+      .hero .hero__art {
+        grid-column: 2;
+        grid-row: 1 / span 6;
+        height: 100%;
+        min-height: 440px;
+        margin: 0;
+      }
+      .hero .hero__figure {
+        width: min(82%, 360px);
+        max-height: 400px;
+      }
+      h1 { font-size: clamp(38px, 3.4vw, 48px); max-width: 22ch; }
+      .hero .hero__copy,
+      .hero .hero__concept { max-width: 52ch; }
+      .hero .actions { grid-template-columns: repeat(2, 1fr); }
+      .hero .jump-nav {
+        grid-column: 1 / -1;
+        grid-template-columns: repeat(6, 1fr);
+        margin: 48px 0 0;
+      }
+
+      /* Sections: sticky label rail left, content right */
+      .section {
+        padding: 110px 0 0;
+        display: grid;
+        grid-template-columns: 200px minmax(0, 1fr);
+        column-gap: 64px;
+        align-items: start;
+      }
+      .section > * { grid-column: 2; min-width: 0; }
+      .section > .section__head {
+        grid-column: 1;
+        grid-row: 1 / span 40;
+        position: sticky;
+        top: 110px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 14px;
+        margin-bottom: 0;
+      }
+      .section__head::before {
+        flex: 0 0 auto;
+        width: 64px;
+      }
+      .section__title { white-space: normal; }
+
+      h2 { font-size: clamp(40px, 4vw, 58px); }
+      .lede { font-size: 19px; max-width: 56ch; }
+
+      .facet-grid { grid-template-columns: repeat(3, 1fr); }
+      .icon-grid { grid-template-columns: repeat(6, 1fr); }
+      .flow { grid-template-columns: 1fr 44px 1fr 44px 1fr; }
+      .flow__arrow { min-height: 0; }
+      .api__row { grid-template-columns: 160px 1fr; }
+      .posture-list { grid-template-columns: repeat(3, 1fr); }
+      .receipt { max-width: 640px; }
+    }
   </style>
 </head>
 <body>
@@ -1540,7 +1619,7 @@
     </nav>
 
     <main>
-      <section aria-labelledby="sdk-title">
+      <section class="hero" aria-labelledby="sdk-title">
         <div class="eyebrow">Official interface</div>
         <h1 id="sdk-title">Build astrology apps with verified Zodiac ownership.</h1>
         <p class="hero__copy">
