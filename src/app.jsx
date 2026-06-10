@@ -1755,6 +1755,220 @@
       );
     }
 
+    /* ── The Pulse — attention instrument ─────────────────────────
+       Measured layer: Wikipedia pageviews for the twelve sign articles,
+       fetched from the open Wikimedia API (snapshot in /assets/pulse.json,
+       refreshed live in the visitor's browser). Search layer: Google
+       Trends snapshot + link-out. Platform layer: editorial estimates,
+       footnoted as approximations. Lazy-loaded; unavailable-safe. */
+    const WIKI_SIGN_ARTICLES = SIGNS.map(s => `${s.name}_(astrology)`);
+
+    function formatCompact(n) {
+      if (n == null || !isFinite(n)) return '—';
+      if (n >= 1e6) return (n / 1e6).toFixed(1) + 'M';
+      if (n >= 1e3) return (n / 1e3).toFixed(1) + 'K';
+      return String(Math.round(n));
+    }
+
+    function pulseDateRange() {
+      const end = new Date(Date.now() - 24 * 3600 * 1000);
+      const start = new Date(end.getTime() - 29 * 24 * 3600 * 1000);
+      const ymd = (d) => d.toISOString().slice(0, 10).replaceAll('-', '');
+      return [ymd(start), ymd(end)];
+    }
+
+    function fetchLiveTwelve() {
+      const [start, end] = pulseDateRange();
+      const cacheKey = 'zd-pulse-live-' + end;
+      try {
+        const hit = sessionStorage.getItem(cacheKey);
+        if (hit) return Promise.resolve(JSON.parse(hit));
+      } catch (e) { /* storage unavailable */ }
+      return Promise.all(
+        WIKI_SIGN_ARTICLES.map(a =>
+          fetch(`https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/en.wikipedia/all-access/user/${encodeURIComponent(a)}/daily/${start}/${end}`)
+            .then(r => { if (!r.ok) throw new Error('http ' + r.status); return r.json(); })
+        )
+      ).then(results => {
+        const byDate = new Map();
+        for (const j of results) {
+          for (const item of (j.items ?? [])) {
+            const d = item.timestamp.slice(0, 8);
+            byDate.set(d, (byDate.get(d) ?? 0) + item.views);
+          }
+        }
+        const series = [...byDate.entries()].sort(([a], [b]) => (a < b ? -1 : 1)).map(([, v]) => v);
+        if (!series.length) throw new Error('empty');
+        const avg = Math.round(series.reduce((s, v) => s + v, 0) / series.length);
+        const out = { avgDay: avg, lastDay: series[series.length - 1], series };
+        try { sessionStorage.setItem(cacheKey, JSON.stringify(out)); } catch (e) { /* ignore */ }
+        return out;
+      });
+    }
+
+    function Sparkline({ series }) {
+      if (!series || series.length < 2) return null;
+      const w = 320, h = 56, pad = 4;
+      const min = Math.min(...series), max = Math.max(...series);
+      const span = Math.max(max - min, 1);
+      const pts = series.map((v, i) => {
+        const x = pad + (i / (series.length - 1)) * (w - pad * 2);
+        const y = h - pad - ((v - min) / span) * (h - pad * 2);
+        return `${x.toFixed(1)},${y.toFixed(1)}`;
+      }).join(' ');
+      return (
+        <svg className="pulse__spark" viewBox={`0 0 ${w} ${h}`} preserveAspectRatio="none" role="img" aria-label="30-day attention sparkline">
+          <polyline points={pts} fill="none" stroke="var(--gold)" strokeWidth="1.4" vectorEffect="non-scaling-stroke" />
+        </svg>
+      );
+    }
+
+    function PulseSection() {
+      const reveal = useReveal();
+      const hostRef = useRef(null);
+      const [enabled, setEnabled] = useState(false);
+      const [pulse, setPulse] = useState(null);   // snapshot JSON
+      const [live, setLive] = useState(null);     // live Wikipedia refresh
+      const [failed, setFailed] = useState(false);
+
+      useEffect(() => {
+        const el = hostRef.current;
+        if (!el || enabled) return undefined;
+        if (!('IntersectionObserver' in window)) { setEnabled(true); return undefined; }
+        const io = new IntersectionObserver(([entry]) => {
+          if (entry.isIntersecting) { setEnabled(true); io.disconnect(); }
+        }, { rootMargin: '240px 0px' });
+        io.observe(el);
+        return () => io.disconnect();
+      }, [enabled]);
+
+      useEffect(() => {
+        if (!enabled) return;
+        fetch('/assets/pulse.json')
+          .then(r => { if (!r.ok) throw new Error('http ' + r.status); return r.json(); })
+          .then(setPulse)
+          .catch(() => setFailed(true));
+        fetchLiveTwelve().then(setLive).catch(() => { /* snapshot remains */ });
+      }, [enabled]);
+
+      const wiki = pulse?.wikipedia;
+      const avgDay = live?.avgDay ?? wiki?.twelveAvgDay;
+      const series = live?.series ?? wiki?.series?.map(d => d.views);
+      const sourceLabel = live
+        ? 'Source: Wikimedia · live'
+        : (wiki ? `Source: Wikimedia · captured ${pulse.capturedAt}` : '');
+      const trends = pulse?.trends;
+      const trendsMax = trends ? Math.max(...trends.averages, 1) : 1;
+
+      return (
+        <section ref={reveal} id="pulse" className="sec reveal" aria-label="The Pulse">
+          <div className="sec__head">
+            <span className="sec__no">№ 05</span>
+            <span className="line" />
+            <h2 className="sec__title">The Pulse</h2>
+          </div>
+
+          <h3 className="pulse__statement">
+            Attention is the <span className="it">oldest currency.</span>
+          </h3>
+          <p className="sec__lede">
+            The Twelve are read, tagged, and searched every day at a scale
+            most tokens never touch. Measured where measurement is open;
+            estimated — and labeled — where it is not.
+          </p>
+
+          <div ref={hostRef} className="pulse" aria-busy={enabled && !pulse && !failed}>
+            {failed && !pulse && (
+              <div className="pulse__state">Attention data unavailable — the argument stands in the <a href="/thesis/">thesis</a>.</div>
+            )}
+
+            {wiki && (
+              <>
+                <div className="pulse__head">
+                  <span className="label label--gold">Reading the Twelve</span>
+                  <span className="pulse__src">{sourceLabel}{live ? <span className="pulse__dot" aria-hidden="true" /> : null}</span>
+                </div>
+                <div className="pulse__grid">
+                  <div className="pulse__cell pulse__cell--wide">
+                    <div className="pulse__k">Encyclopedia reads · all twelve signs</div>
+                    <div className="pulse__v">{formatCompact(avgDay)}<span className="pulse__unit"> / day</span></div>
+                    {series ? <Sparkline series={series} /> : null}
+                    <div className="pulse__sub">Trailing 30 days · en.wikipedia</div>
+                  </div>
+                  {(wiki.comparisons ?? []).map(c => (
+                    <div className="pulse__cell" key={c.label}>
+                      <div className="pulse__k">vs {c.label}</div>
+                      <div className="pulse__v pulse__v--x">{c.multiple}×</div>
+                      <div className="pulse__sub">{formatCompact(c.avgDay)} / day</div>
+                    </div>
+                  ))}
+                </div>
+              </>
+            )}
+
+            {trends && (
+              <div className="pulse__block">
+                <div className="pulse__head">
+                  <span className="label label--gold">Searching the sky</span>
+                  <span className="pulse__src">Source: Google Trends · captured {trends.capturedAt} · 12-mo relative</span>
+                </div>
+                <div className="pulse__bars">
+                  {trends.terms.map((t, i) => (
+                    <div className="pulse__bar" key={t}>
+                      <span className="pulse__bar-k">“{t}”</span>
+                      <span className="pulse__bar-track">
+                        <span
+                          className={'pulse__bar-fill' + (i === 0 ? ' is-twelve' : '')}
+                          style={{ width: Math.max((trends.averages[i] / trendsMax) * 100, 2) + '%' }}
+                        />
+                      </span>
+                      <span className="pulse__bar-v">{trends.averages[i]}</span>
+                    </div>
+                  ))}
+                </div>
+                <a
+                  className="pulse__out"
+                  href={`https://trends.google.com/trends/explore?date=today%2012-m&q=${encodeURIComponent(trends.terms.join(','))}`}
+                  rel="noopener noreferrer"
+                >
+                  Open the live comparison <span aria-hidden="true">↗</span>
+                </a>
+              </div>
+            )}
+
+            {pulse?.estimates && (
+              <div className="pulse__block">
+                <div className="pulse__head">
+                  <span className="label label--gold">Across the feeds</span>
+                  <span className="pulse__src">Estimates · {pulse.estimates.capturedAt}</span>
+                </div>
+                <div className="pulse__grid pulse__grid--est">
+                  {pulse.estimates.items.map(it => (
+                    <div className="pulse__cell" key={it.k}>
+                      <div className="pulse__k">{it.k} <span className="pulse__est">est.</span></div>
+                      <div className="pulse__v">{it.v}</div>
+                      <div className="pulse__sub">{it.unit}</div>
+                    </div>
+                  ))}
+                </div>
+                <p className="pulse__note">
+                  Platform figures are estimates approximated by Claude
+                  (Anthropic) from public cumulative hashtag and search-volume
+                  data — directional, not measured. Encyclopedia figures are
+                  measured.
+                </p>
+              </div>
+            )}
+          </div>
+
+          <a className="pulse__more" href="/thesis/#pulse">
+            <span>The full instrument — inside the thesis</span>
+            <span className="pulse__more-arr" aria-hidden="true">→</span>
+          </a>
+        </section>
+      );
+    }
+
     function IdentityContextSection() {
       const reveal = useReveal();
       const cards = [
@@ -1781,7 +1995,7 @@
       return (
         <section ref={reveal} id="identity" className="sec idctx reveal" aria-label="Identity Context">
           <div className="sec__head">
-            <span className="sec__no">№ 05</span>
+            <span className="sec__no">№ 06</span>
             <span className="line" />
             <span className="sec__title">Identity Context</span>
           </div>
@@ -1860,7 +2074,7 @@
       return (
         <section ref={reveal} id="onchain-access" className="sec access reveal" aria-label="Onchain access">
           <div className="sec__head">
-            <span className="sec__no">№ 06</span>
+            <span className="sec__no">№ 07</span>
             <span className="line" />
             <span className="sec__title">Onchain access</span>
           </div>
@@ -1944,7 +2158,7 @@
       return (
         <section ref={reveal} id="builders" className="sec builders reveal" aria-label="For Builders">
           <div className="sec__head">
-            <span className="sec__no">№ 07</span>
+            <span className="sec__no">№ 08</span>
             <span className="line" />
             <span className="sec__title">For Builders</span>
           </div>
@@ -2018,7 +2232,7 @@
       return (
         <section ref={reveal} id="built-with-zodiacs" className="sec built reveal" aria-label="Built With Zodiacs">
           <div className="sec__head">
-            <span className="sec__no">№ 08</span>
+            <span className="sec__no">№ 09</span>
             <span className="line" />
             <h2 className="sec__title">Built With Zodiacs</h2>
           </div>
@@ -2047,7 +2261,7 @@
       return (
         <section ref={reveal} className="sec reveal" id="official-twelve" aria-label="The official twelve">
           <div className="sec__head">
-            <span className="sec__no">№ 09</span>
+            <span className="sec__no">№ 10</span>
             <span className="line" />
             <h2 className="sec__title">The Twelve</h2>
           </div>
@@ -2161,7 +2375,7 @@
       return (
         <section ref={reveal} id="sdk" className="sec reveal" aria-label="SDK">
           <div className="sec__head">
-            <span className="sec__no">№ 10</span>
+            <span className="sec__no">№ 11</span>
             <span className="line" />
             <h2 className="sec__title">SDK</h2>
           </div>
@@ -2219,7 +2433,7 @@
       return (
         <section ref={reveal} id="security" className="sec reveal" aria-label="Read-only by design">
           <div className="sec__head">
-            <span className="sec__no">№ 11</span>
+            <span className="sec__no">№ 12</span>
             <span className="line" />
             <h2 className="sec__title">Read-only by design</h2>
           </div>
@@ -2267,7 +2481,7 @@
       return (
         <section ref={reveal} id="faq" className="sec reveal" aria-label="Questions">
           <div className="sec__head">
-            <span className="sec__no">№ 12</span>
+            <span className="sec__no">№ 13</span>
             <span className="line" />
             <h2 className="sec__title">Questions</h2>
           </div>
@@ -2368,6 +2582,7 @@
             <VerifierSection />
             <DetailPanel sign={sign} animKey={activeTicker} />
             <Philosophy />
+            <PulseSection />
             <IdentityContextSection />
             <OnchainAccessSection />
             <ForBuildersSection />

@@ -1922,6 +1922,148 @@
     /* (.cat__price retired: catalog cards no longer show financial data.
        Address row is now rendered by .cat__addr — see new-section CSS.) */
 
+    /* ── The Pulse — attention instrument ───────────────────── */
+    .pulse__statement {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: 32px;
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+      margin: 0 0 18px;
+      text-wrap: balance;
+    }
+    .pulse__statement .it { font-style: italic; color: var(--gold-bright); }
+    .pulse {
+      border: 1px solid var(--hair-2);
+      background:
+        radial-gradient(120% 80% at 50% 0%, rgba(201,169,97,0.04), transparent 60%),
+        var(--surface);
+      padding: 16px 16px 18px;
+      box-shadow: inset 0 1px 0 rgba(222,192,122,0.08), inset 0 -1px 0 rgba(0,0,0,0.4);
+    }
+    .pulse__head {
+      display: flex; justify-content: space-between; align-items: baseline; gap: 10px;
+      margin: 18px 0 10px;
+      flex-wrap: wrap;
+    }
+    .pulse > .pulse__head:first-child { margin-top: 0; }
+    .pulse__src {
+      font-family: var(--mono); font-size: 8.5px;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--ink-mute);
+      display: inline-flex; align-items: center; gap: 7px;
+    }
+    .pulse__dot {
+      width: 5px; height: 5px; border-radius: 50%;
+      background: var(--live);
+      box-shadow: 0 0 6px rgba(111,174,124,0.6);
+    }
+    .pulse__grid {
+      display: grid; grid-template-columns: repeat(2, 1fr);
+      gap: 1px; background: var(--hair);
+      border: 1px solid var(--hair);
+    }
+    .pulse__cell { background: var(--bg); padding: 14px 12px 12px; min-width: 0; }
+    .pulse__cell--wide { grid-column: 1 / -1; }
+    .pulse__k {
+      font-family: var(--mono); font-size: 8.5px;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--ink-dim);
+      margin-bottom: 8px;
+    }
+    .pulse__v {
+      font-family: var(--serif);
+      font-size: 30px; line-height: 1;
+      color: var(--gold-bright); letter-spacing: -0.01em;
+      font-feature-settings: "tnum" 1;
+    }
+    .pulse__v--x { color: var(--ink); }
+    .pulse__unit { font-style: italic; font-size: 15px; color: var(--ink-dim); }
+    .pulse__sub {
+      margin-top: 6px;
+      font-family: var(--mono); font-size: 8.5px;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--ink-mute);
+    }
+    .pulse__spark { width: 100%; height: 44px; margin: 12px 0 2px; opacity: 0.92; }
+    .pulse__block { margin-top: 4px; }
+    .pulse__bars { display: grid; gap: 9px; }
+    .pulse__bar {
+      display: grid; grid-template-columns: 96px 1fr 34px;
+      align-items: center; gap: 10px;
+    }
+    .pulse__bar-k {
+      font-family: var(--mono); font-size: 9px;
+      letter-spacing: 0.1em; color: var(--ink-2);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .pulse__bar-track {
+      display: block; height: 10px;
+      border: 1px solid var(--hair);
+      background: rgba(0,0,0,0.35);
+    }
+    .pulse__bar-fill {
+      display: block; height: 100%;
+      background: linear-gradient(90deg, var(--gold-deep), var(--gold));
+      opacity: 0.45;
+      transition: width 800ms var(--ease);
+    }
+    .pulse__bar-fill.is-twelve { opacity: 1; }
+    .pulse__bar-v {
+      font-family: var(--mono); font-size: 9px; text-align: right;
+      color: var(--ink-dim); font-feature-settings: "tnum" 1;
+    }
+    .pulse__out {
+      display: inline-flex; align-items: center; gap: 8px;
+      margin-top: 12px;
+      font-family: var(--mono); font-size: 9px;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--ink-dim); text-decoration: none;
+      border-bottom: 1px solid rgba(201,169,97,0.22);
+      padding-bottom: 2px;
+      transition: color 320ms var(--ease), border-bottom-color 320ms var(--ease);
+    }
+    .pulse__out:hover { color: var(--gold-bright); border-bottom-color: var(--gold); }
+    .pulse__est {
+      display: inline-block;
+      font-family: var(--mono); font-size: 7.5px;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--gold);
+      border: 1px solid var(--hair-2);
+      padding: 1px 5px;
+      margin-left: 5px;
+      vertical-align: 1px;
+    }
+    .pulse__note {
+      margin: 14px 0 0;
+      font-family: var(--mono); font-size: 8.5px;
+      letter-spacing: 0.08em;
+      line-height: 1.75;
+      color: var(--ink-mute);
+      max-width: 62ch;
+    }
+    .pulse__state {
+      font-family: var(--mono); font-size: 10px;
+      letter-spacing: 0.14em; color: var(--ink-dim);
+      padding: 6px 0;
+    }
+    .pulse__state a { color: var(--gold); text-decoration: none; }
+    .pulse__more {
+      margin-top: 18px;
+      display: flex; justify-content: space-between; align-items: center; gap: 12px;
+      max-width: 560px;
+      border: 1px solid var(--hair-2);
+      padding: 15px 16px;
+      text-decoration: none;
+      font-family: var(--mono); font-size: 10px; letter-spacing: 0.22em;
+      text-transform: uppercase; color: var(--ink-2);
+      transition: border-color 320ms var(--ease), color 320ms var(--ease);
+    }
+    .pulse__more:hover { border-color: var(--gold); color: var(--gold-bright); }
+    .pulse__more-arr { color: var(--gold); transition: transform 420ms var(--ease); }
+    .pulse__more:hover .pulse__more-arr { transform: translateX(3px); }
+
     /* ── Onchain access ──────────────────────────────────────── */
     .access__statement {
       font-family: var(--serif);
@@ -2581,7 +2723,13 @@
 
       .idctx__statement,
       .builders__statement,
-      .access__statement { font-size: 40px; max-width: 24ch; }
+      .access__statement,
+      .pulse__statement { font-size: 40px; max-width: 24ch; }
+
+      .pulse__grid { grid-template-columns: repeat(4, 1fr); }
+      .pulse__grid--est { grid-template-columns: repeat(4, 1fr); }
+      .pulse__cell--wide { grid-column: 1 / -1; }
+      .pulse__bar { grid-template-columns: 120px 1fr 40px; }
 
       .detail__bio { max-width: 62ch; }
       .faq__a { max-width: 64ch; }
@@ -2661,6 +2809,20 @@
           The live page includes an address verifier for Solana mints and Base
           ERC-20 addresses. Unknown addresses are reported neutrally as not
           found in the official Zodiacs.org registry.
+        </p>
+      </section>
+
+      <section class="static-site__section" id="pulse-static">
+        <h2>The Pulse — Attention, Measured</h2>
+        <p>
+          The twelve zodiac sign articles draw roughly 17,500 encyclopedia
+          reader views per day combined (Wikimedia pageviews, captured June
+          2026) — about 55 times the Dogecoin article, 25 times Ethereum's,
+          and 60 times Solana's. On Google Trends, the search term
+          "horoscope" averages higher twelve-month interest than "ethereum",
+          "solana", or "dogecoin". The live page renders this as an
+          instrument with live Wikimedia data; the extended argument is at
+          <a href="/thesis/">the thesis</a>.
         </p>
       </section>
 

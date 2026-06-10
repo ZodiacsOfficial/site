@@ -37,6 +37,7 @@ The current site should be refined, not redesigned from scratch.
 - `scripts/sign-data.mjs` - catalogue content: lot essays, provenance, channels
 - `scripts/build-sign-pages.mjs` - generates the twelve `/{sign}/index.html` pages
 - `scripts/build-og-cards.mjs` - renders the twelve per-sign share cards (`assets/og/{sign}.png`)
+- `scripts/build-pulse.mjs` - refreshes `assets/pulse.json` (The Pulse attention data)
 - `registry/zodiacs.registry.json` - public registry artifact
 - `assets/` - Zodiac artwork, icons, venue marks, and social preview assets
 - `assets/art/` - the astronomical clock artwork (poster JPGs + ambient MP4 loop)

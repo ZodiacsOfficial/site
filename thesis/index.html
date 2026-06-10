@@ -249,6 +249,96 @@
     }
     .stats__v { margin-top: 8px; font-family: var(--mono); font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-dim); line-height: 1.6; }
 
+    /* The Pulse — attention instrument */
+    .pulse {
+      margin: 34px 0 8px;
+      border: 1px solid var(--hair-2);
+      background:
+        radial-gradient(120% 80% at 50% 0%, rgba(201,169,97,0.04), transparent 60%),
+        var(--surface);
+      padding: 16px 16px 18px;
+      box-shadow: inset 0 1px 0 rgba(222,192,122,0.08), inset 0 -1px 0 rgba(0,0,0,0.4);
+    }
+    .pulse__head {
+      display: flex; justify-content: space-between; align-items: baseline; gap: 10px;
+      margin: 18px 0 10px; flex-wrap: wrap;
+    }
+    .pulse > .pulse__head:first-child { margin-top: 0; }
+    .pulse__src {
+      font-family: var(--mono); font-size: 8.5px;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--ink-mute);
+      display: inline-flex; align-items: center; gap: 7px;
+    }
+    .pulse__dot {
+      width: 5px; height: 5px; border-radius: 50%;
+      background: #6FAE7C; box-shadow: 0 0 6px rgba(111,174,124,0.6);
+      display: none;
+    }
+    .pulse.is-live .pulse__dot { display: inline-block; }
+    .pulse__grid {
+      display: grid; grid-template-columns: repeat(2, 1fr);
+      gap: 1px; background: var(--hair); border: 1px solid var(--hair);
+    }
+    .pulse__cell { background: var(--bg); padding: 14px 12px 12px; min-width: 0; }
+    .pulse__cell--wide { grid-column: 1 / -1; }
+    .pulse__k {
+      font-family: var(--mono); font-size: 8.5px;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--ink-dim); margin-bottom: 8px;
+    }
+    .pulse__v {
+      font-family: var(--serif); font-size: 30px; line-height: 1;
+      color: var(--gold-bright); letter-spacing: -0.01em;
+      font-feature-settings: "tnum" 1;
+    }
+    .pulse__v--x { color: var(--ink); }
+    .pulse__unit { font-style: italic; font-size: 15px; color: var(--ink-dim); }
+    .pulse__sub {
+      margin-top: 6px;
+      font-family: var(--mono); font-size: 8.5px;
+      letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-mute);
+    }
+    .pulse__spark { width: 100%; height: 44px; margin: 12px 0 2px; opacity: 0.92; display: block; }
+    .pulse__block { margin-top: 4px; }
+    .pulse__bars { display: grid; gap: 9px; }
+    .pulse__bar { display: grid; grid-template-columns: 110px 1fr 36px; align-items: center; gap: 10px; }
+    .pulse__bar-k {
+      font-family: var(--mono); font-size: 9px; letter-spacing: 0.1em; color: var(--ink-2);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .pulse__bar-track { display: block; height: 10px; border: 1px solid var(--hair); background: rgba(0,0,0,0.35); }
+    .pulse__bar-fill {
+      display: block; height: 100%;
+      background: linear-gradient(90deg, var(--gold-deep), var(--gold));
+      opacity: 0.45; transition: width 800ms var(--ease);
+    }
+    .pulse__bar-fill.is-twelve { opacity: 1; }
+    .pulse__bar-v { font-family: var(--mono); font-size: 9px; text-align: right; color: var(--ink-dim); font-feature-settings: "tnum" 1; }
+    .pulse__out {
+      display: inline-flex; align-items: center; gap: 8px; margin-top: 12px;
+      font-family: var(--mono); font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--ink-dim); text-decoration: none;
+      border-bottom: 1px solid rgba(201,169,97,0.22); padding-bottom: 2px;
+      transition: color 320ms var(--ease), border-bottom-color 320ms var(--ease);
+    }
+    .pulse__out:hover { color: var(--gold-bright); border-bottom-color: var(--gold); }
+    .pulse__est {
+      display: inline-block; font-family: var(--mono); font-size: 7.5px;
+      letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold);
+      border: 1px solid var(--hair-2); padding: 1px 5px; margin-left: 5px; vertical-align: 1px;
+    }
+    .pulse__note {
+      margin: 14px 0 0; font-family: var(--mono); font-size: 8.5px;
+      letter-spacing: 0.08em; line-height: 1.75; color: var(--ink-mute); max-width: 62ch;
+    }
+    .pulse__state { font-family: var(--mono); font-size: 10px; letter-spacing: 0.14em; color: var(--ink-dim); padding: 6px 0; }
+    @media (min-width: 960px) {
+      .pulse__grid { grid-template-columns: repeat(4, 1fr); }
+      .pulse__cell--wide { grid-column: 1 / -1; }
+      .pulse__bar { grid-template-columns: 130px 1fr 40px; }
+    }
+
     /* Sign-off */
     .sig {
       margin-top: 36px; padding-top: 16px; border-top: 1px solid var(--hair);
@@ -440,6 +530,48 @@
             <div class="stats__cell" role="listitem"><div class="stats__k">43%</div><div class="stats__v">of women 18–49 say they believe · Pew</div></div>
             <div class="stats__cell" role="listitem"><div class="stats__k">30M+</div><div class="stats__v">Co-Star users · reported</div></div>
           </div>
+
+          <p style="margin-top: 26px;">
+            This is not rhetoric; it is measurable. The instrument below reads
+            open sources — encyclopedia pageviews, search interest — and puts
+            the Twelve beside the tokens everyone already knows.
+          </p>
+
+          <div class="pulse" id="pulse" data-pulse>
+            <div class="pulse__head">
+              <span class="label label--gold">The Pulse — attention, measured</span>
+              <span class="pulse__src"><span data-pulse-src>Loading…</span><span class="pulse__dot" aria-hidden="true"></span></span>
+            </div>
+            <div class="pulse__grid" data-pulse-wiki>
+              <div class="pulse__cell pulse__cell--wide">
+                <div class="pulse__k">Encyclopedia reads · all twelve signs</div>
+                <div class="pulse__v" data-pulse-avg>—<span class="pulse__unit"> / day</span></div>
+                <div data-pulse-spark></div>
+                <div class="pulse__sub">Trailing 30 days · en.wikipedia</div>
+              </div>
+            </div>
+            <div class="pulse__block" data-pulse-trends hidden>
+              <div class="pulse__head">
+                <span class="label label--gold">Searching the sky</span>
+                <span class="pulse__src" data-pulse-trends-src></span>
+              </div>
+              <div class="pulse__bars" data-pulse-bars></div>
+              <a class="pulse__out" data-pulse-trends-link rel="noopener noreferrer">Open the live comparison <span aria-hidden="true">↗</span></a>
+            </div>
+            <div class="pulse__block" data-pulse-est-block hidden>
+              <div class="pulse__head">
+                <span class="label label--gold">Across the feeds</span>
+                <span class="pulse__src" data-pulse-est-src></span>
+              </div>
+              <div class="pulse__grid" data-pulse-est></div>
+              <p class="pulse__note">
+                Platform figures are estimates approximated by Claude
+                (Anthropic) from public cumulative hashtag and search-volume
+                data — directional, not measured. Encyclopedia figures are
+                measured; search figures are Google Trends relative interest.
+              </p>
+            </div>
+          </div>
         </section>
 
         <section class="mov reveal">
@@ -615,6 +747,126 @@
       } else {
         document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('is-in'); });
       }
+    })();
+
+    /* ── The Pulse — snapshot from /assets/pulse.json, refreshed live
+       against the open Wikimedia pageviews API in the visitor's browser. */
+    (function () {
+      var host = document.querySelector('[data-pulse]');
+      if (!host || !window.fetch) return;
+
+      var SIGNS = ['Aries','Taurus','Gemini','Cancer','Leo','Virgo','Libra','Scorpio','Sagittarius','Capricorn','Aquarius','Pisces'];
+
+      function compact(n) {
+        if (n == null || !isFinite(n)) return '—';
+        if (n >= 1e6) return (n / 1e6).toFixed(1) + 'M';
+        if (n >= 1e3) return (n / 1e3).toFixed(1) + 'K';
+        return String(Math.round(n));
+      }
+
+      function sparkline(series) {
+        if (!series || series.length < 2) return '';
+        var w = 320, h = 56, pad = 4;
+        var min = Math.min.apply(null, series), max = Math.max.apply(null, series);
+        var span = Math.max(max - min, 1);
+        var pts = series.map(function (v, i) {
+          var x = pad + (i / (series.length - 1)) * (w - pad * 2);
+          var y = h - pad - ((v - min) / span) * (h - pad * 2);
+          return x.toFixed(1) + ',' + y.toFixed(1);
+        }).join(' ');
+        return '<svg class="pulse__spark" viewBox="0 0 ' + w + ' ' + h + '" preserveAspectRatio="none" role="img" aria-label="30-day attention sparkline">' +
+          '<polyline points="' + pts + '" fill="none" stroke="#C9A961" stroke-width="1.4" vector-effect="non-scaling-stroke"/></svg>';
+      }
+
+      function setAvg(avg) {
+        host.querySelector('[data-pulse-avg]').innerHTML =
+          compact(avg) + '<span class="pulse__unit"> / day</span>';
+      }
+
+      function renderComparisons(comps) {
+        var grid = host.querySelector('[data-pulse-wiki]');
+        grid.querySelectorAll('.pulse__cell:not(.pulse__cell--wide)').forEach(function (el) { el.remove(); });
+        (comps || []).forEach(function (c) {
+          var cell = document.createElement('div');
+          cell.className = 'pulse__cell';
+          cell.innerHTML =
+            '<div class="pulse__k">vs ' + c.label + '</div>' +
+            '<div class="pulse__v pulse__v--x">' + c.multiple + '×</div>' +
+            '<div class="pulse__sub">' + compact(c.avgDay) + ' / day</div>';
+          grid.appendChild(cell);
+        });
+      }
+
+      fetch('/assets/pulse.json')
+        .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+        .then(function (pulse) {
+          var wiki = pulse.wikipedia;
+          if (wiki) {
+            host.querySelector('[data-pulse-src]').textContent = 'Source: Wikimedia · captured ' + pulse.capturedAt;
+            setAvg(wiki.twelveAvgDay);
+            host.querySelector('[data-pulse-spark]').innerHTML =
+              sparkline((wiki.series || []).map(function (d) { return d.views; }));
+            renderComparisons(wiki.comparisons);
+          }
+
+          var trends = pulse.trends;
+          if (trends) {
+            var block = host.querySelector('[data-pulse-trends]');
+            block.hidden = false;
+            host.querySelector('[data-pulse-trends-src]').textContent =
+              'Source: Google Trends · captured ' + trends.capturedAt + ' · 12-mo relative';
+            var max = Math.max.apply(null, trends.averages.concat([1]));
+            host.querySelector('[data-pulse-bars]').innerHTML = trends.terms.map(function (t, i) {
+              var width = Math.max((trends.averages[i] / max) * 100, 2);
+              return '<div class="pulse__bar">' +
+                '<span class="pulse__bar-k">“' + t + '”</span>' +
+                '<span class="pulse__bar-track"><span class="pulse__bar-fill' + (i === 0 ? ' is-twelve' : '') + '" style="width:' + width + '%"></span></span>' +
+                '<span class="pulse__bar-v">' + trends.averages[i] + '</span></div>';
+            }).join('');
+            host.querySelector('[data-pulse-trends-link]').href =
+              'https://trends.google.com/trends/explore?date=today%2012-m&q=' + encodeURIComponent(trends.terms.join(','));
+          }
+
+          if (pulse.estimates) {
+            var eb = host.querySelector('[data-pulse-est-block]');
+            eb.hidden = false;
+            host.querySelector('[data-pulse-est-src]').textContent = 'Estimates · ' + pulse.estimates.capturedAt;
+            host.querySelector('[data-pulse-est]').innerHTML = pulse.estimates.items.map(function (it) {
+              return '<div class="pulse__cell">' +
+                '<div class="pulse__k">' + it.k + ' <span class="pulse__est">est.</span></div>' +
+                '<div class="pulse__v">' + it.v + '</div>' +
+                '<div class="pulse__sub">' + it.unit + '</div></div>';
+            }).join('');
+          }
+        })
+        .catch(function () {
+          host.querySelector('[data-pulse-src]').textContent = 'Attention data unavailable';
+        });
+
+      // Live refresh — visitors fetch Wikimedia directly (open, CORS-enabled).
+      var end = new Date(Date.now() - 24 * 3600 * 1000);
+      var start = new Date(end.getTime() - 29 * 24 * 3600 * 1000);
+      var ymd = function (d) { return d.toISOString().slice(0, 10).replace(/-/g, ''); };
+      Promise.all(SIGNS.map(function (s) {
+        return fetch('https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/en.wikipedia/all-access/user/' +
+          encodeURIComponent(s + '_(astrology)') + '/daily/' + ymd(start) + '/' + ymd(end))
+          .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); });
+      })).then(function (results) {
+        var byDate = {};
+        results.forEach(function (j) {
+          (j.items || []).forEach(function (item) {
+            var d = item.timestamp.slice(0, 8);
+            byDate[d] = (byDate[d] || 0) + item.views;
+          });
+        });
+        var series = Object.keys(byDate).sort().map(function (k) { return byDate[k]; });
+        if (!series.length) return;
+        var avg = Math.round(series.reduce(function (s, v) { return s + v; }, 0) / series.length);
+        setAvg(avg);
+        host.querySelector('[data-pulse-spark]').innerHTML = sparkline(series);
+        host.querySelector('[data-pulse-src]').textContent = 'Source: Wikimedia · live';
+        host.classList.add('is-live');
+      }).catch(function () { /* snapshot remains */ });
     })();
   </script>
 </body>
