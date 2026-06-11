@@ -1948,9 +1948,9 @@
                   </div>
                   {(wiki.comparisons ?? []).map(c => (
                     <div className="pulse__cell" key={c.label}>
-                      <div className="pulse__k">All twelve vs {c.label}</div>
+                      <div className="pulse__k">vs {c.label}</div>
                       <div className="pulse__v pulse__v--x">{c.multiple}×</div>
-                      <div className="pulse__sub">{formatCompact(c.avgDay)} / day</div>
+                      <div className="pulse__sub">{formatCompact(c.avgDay)} / day · single article</div>
                     </div>
                   ))}
                 </div>
@@ -2009,7 +2009,7 @@
               <div className="pulse__block">
                 <div className="pulse__head">
                   <span className="label label--gold">Searching the sky</span>
-                  <span className="pulse__src">Source: Google Trends · captured {trends.capturedAt} · 12-mo relative</span>
+                  <span className="pulse__src">Source: Google Trends · captured {trends.capturedAt} · 12mo relative</span>
                 </div>
                 <div className="pulse__bars">
                   {trends.terms.map((t, i) => (

@@ -249,16 +249,18 @@
       color: var(--gold-bright); letter-spacing: -0.01em;
     }
     .stats__v { margin-top: 8px; font-family: var(--mono); font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-dim); line-height: 1.6; }
-    .stats__src {
-      margin: 10px 0 0; font-family: var(--mono); font-size: 9.5px;
+    /* Caption rules carry .mov so they outrank the essay's body-text
+       sizing (.mov p) — without it these captions render at 17.5px. */
+    .mov .stats__src {
+      margin: 10px 0 0; font-family: var(--mono); font-size: 10px;
       letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-mute); line-height: 1.9;
     }
-    .stats__src a {
+    .mov .stats__src a {
       color: var(--ink-dim); text-decoration: none;
       border-bottom: 1px solid rgba(201,169,97,0.22); padding-bottom: 1px;
       transition: color 320ms var(--ease), border-bottom-color 320ms var(--ease);
     }
-    .stats__src a:hover { color: var(--gold-bright); border-bottom-color: var(--gold); }
+    .mov .stats__src a:hover { color: var(--gold-bright); border-bottom-color: var(--gold); }
 
     /* The Pulse — attention instrument */
     .pulse {
@@ -276,6 +278,7 @@
     }
     .pulse > .pulse__head:first-child { margin-top: 0; }
     .pulse__src {
+      margin-left: auto; text-align: right;
       font-family: var(--mono); font-size: 8.5px;
       letter-spacing: 0.16em; text-transform: uppercase;
       color: var(--ink-mute);
@@ -321,7 +324,7 @@
     }
     .pulse__bar-track { display: block; height: 10px; border: 1px solid var(--hair); background: rgba(0,0,0,0.35); position: relative; }
     .pulse__bar-tick { position: absolute; top: -3px; bottom: -3px; width: 1px; background: var(--gold-bright); opacity: 0.8; pointer-events: none; }
-    .pulse__claim { margin: 0 0 14px; font-family: var(--serif); font-style: italic; font-size: 15.5px; line-height: 1.5; color: var(--ink); max-width: 56ch; }
+    .mov .pulse__claim { margin: 0 0 14px; font-family: var(--serif); font-style: italic; font-size: 15.5px; line-height: 1.5; color: var(--ink); max-width: 56ch; }
     .pulse__bar-fill {
       display: block; height: 100%;
       background: linear-gradient(90deg, var(--gold-deep), var(--gold));
@@ -342,11 +345,11 @@
       letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold);
       border: 1px solid var(--hair-2); padding: 1px 5px; margin-left: 5px; vertical-align: 1px;
     }
-    .pulse__note {
-      margin: 14px 0 0; font-family: var(--mono); font-size: 9.5px;
-      letter-spacing: 0.08em; line-height: 1.75; color: var(--ink-mute); max-width: 62ch;
+    .mov .pulse__note {
+      margin: 14px 0 0; font-family: var(--mono); font-size: 10px;
+      letter-spacing: 0.06em; line-height: 1.8; color: var(--ink-mute); max-width: 58ch;
     }
-    .pulse__note--lead { margin: 0 0 12px; }
+    .mov .pulse__note--lead { margin: 0 0 12px; }
     .pulse__state { font-family: var(--mono); font-size: 10px; letter-spacing: 0.14em; color: var(--ink-dim); padding: 6px 0; }
     @media (min-width: 960px) {
       .pulse__grid { grid-template-columns: repeat(4, 1fr); }
@@ -892,9 +895,9 @@
           var cell = document.createElement('div');
           cell.className = 'pulse__cell';
           cell.innerHTML =
-            '<div class="pulse__k">All twelve vs ' + c.label + '</div>' +
+            '<div class="pulse__k">vs ' + c.label + '</div>' +
             '<div class="pulse__v pulse__v--x">' + c.multiple + '×</div>' +
-            '<div class="pulse__sub">' + compact(c.avgDay) + ' / day</div>';
+            '<div class="pulse__sub">' + compact(c.avgDay) + ' / day · single article</div>';
           grid.appendChild(cell);
         });
       }
@@ -982,7 +985,7 @@
             var block = host.querySelector('[data-pulse-trends]');
             block.hidden = false;
             host.querySelector('[data-pulse-trends-src]').textContent =
-              'Source: Google Trends · captured ' + trends.capturedAt + ' · 12-mo relative';
+              'Source: Google Trends · captured ' + trends.capturedAt + ' · 12mo relative';
             var max = Math.max.apply(null, trends.averages.concat([1]));
             host.querySelector('[data-pulse-bars]').innerHTML = trends.terms.map(function (t, i) {
               var width = Math.max((trends.averages[i] / max) * 100, 2);
