@@ -644,7 +644,7 @@ ${JSON.stringify(jsonLd(m), null, 2)}
 
   <main class="pg" id="main">
     <section class="lot" aria-labelledby="lot-title">
-      <img class="lot__icon" src="/assets/icons/${m.slug}.png" alt="" decoding="async" width="30" height="30" />
+      <img class="lot__icon" src="/assets/sdk/zodiac-icons/circle/${m.slug}.png" alt="" decoding="async" width="30" height="30" />
       <span class="lot__eyebrow">Catalogue <span class="g">·</span> Lot ${p.lot} of XII <span class="g">·</span> ${esc(m.ticker)}</span>
       <h1 class="lot__title" id="lot-title">${esc(m.name)} <span class="glyph">${p.glyph}</span></h1>
       <p class="lot__epithet">${esc(p.epithet)}</p>
@@ -756,7 +756,7 @@ ${beats.map((b) => `        <div class="prov__item">
         </a>
       </div>
       <a class="acq__shelf" href="https://astrofolio.xyz/" rel="noopener noreferrer">
-        <img class="acq__shelf-icon" src="/assets/icons/${m.slug}.png" alt="" loading="lazy" decoding="async" width="18" height="18" />
+        <img class="acq__shelf-icon" src="/assets/sdk/zodiac-icons/circle/${m.slug}.png" alt="" loading="lazy" decoding="async" width="18" height="18" />
         <span>${esc(m.name)} on the Astrofolio shelf — the related consumer experience</span>
         <span class="acq__shelf-arr" aria-hidden="true">↗</span>
       </a>

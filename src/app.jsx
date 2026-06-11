@@ -1735,7 +1735,7 @@
                   <a className="detail__shelf" href="https://astrofolio.xyz/" rel="noopener noreferrer">
                     <img
                       className="detail__shelf-icon"
-                      src={`/assets/icons/${sign.asset.sign}.png`}
+                      src={`/assets/sdk/zodiac-icons/circle/${sign.asset.sign}.png`}
                       alt=""
                       loading="lazy"
                       decoding="async"
@@ -2967,7 +2967,7 @@
                 aria-label={`${s.name} — catalogue entry`}
               >
                 <img
-                  src={`assets/icons/${s.asset.sign}.png`}
+                  src={`assets/sdk/zodiac-icons/circle/${s.asset.sign}.png`}
                   alt=""
                   loading="lazy"
                   decoding="async"
