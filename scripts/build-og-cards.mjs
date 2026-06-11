@@ -111,7 +111,7 @@ function cardHtml(asset, port) {
     line-height: 1.7;
   }
   .lotline b { font-weight: 400; color: #DEC07A; }
-  .lotline .sep { color: #5F5A4A; padding: 0 10px; }
+  .lotline .sep { color: #88826A; padding: 0 10px; }
   .dates {
     margin-top: 14px;
     font-family: 'JetBrains Mono', monospace;

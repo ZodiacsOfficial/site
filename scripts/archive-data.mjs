@@ -179,11 +179,13 @@ export const ARCHIVE_ENTRIES = [
     ],
     quotes: [
       {
-        text: 'Astrology — Human Civilization’s Oldest Meme',
-        attribution: 'Andrew Kang · @Rewkang'
+        text: 'Astrology - Human Civilization’s Oldest Meme',
+        attribution: 'Andrew Kang · @Rewkang',
+        sourceUrl: 'https://x.com/Rewkang/status/1867976901501009965'
       }
     ],
     sources: [
+      { label: 'The original post on X', url: 'https://x.com/Rewkang/status/1867976901501009965' },
       { label: 'The thesis, on this site', url: '/thesis/' }
     ],
     signs: []
@@ -261,7 +263,7 @@ export const ARCHIVE_ENTRIES = [
   },
   {
     id: 'pure-belief',
-    date: '2025-10-01',
+    date: '2025-10-29',
     dateDisplay: 'October 2025',
     type: 'context',
     title: 'A pure belief system',
@@ -271,11 +273,15 @@ export const ARCHIVE_ENTRIES = [
     body: [],
     quotes: [
       {
-        text: 'Gold is a pure belief system.',
-        attribution: 'Changpeng Zhao (CZ)'
+        text:
+          'Gold’s price is not derived from its industrial or utility ' +
+          'value. Just a pure belief system.',
+        attribution: 'Changpeng Zhao (CZ)',
+        sourceUrl: 'https://x.com/cz_binance/status/1983514879643292126'
       }
     ],
     sources: [
+      { label: 'The original post on X', url: 'https://x.com/cz_binance/status/1983514879643292126' },
       { label: 'The thesis, on this site', url: '/thesis/' }
     ],
     signs: []

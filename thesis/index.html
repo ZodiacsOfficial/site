@@ -55,7 +55,7 @@
       --surface: #10131A; --surface-2: #161A23;
       --hair: rgba(201,169,97,0.10); --hair-2: rgba(201,169,97,0.22); --hair-3: rgba(201,169,97,0.42);
       --gold: #C9A961; --gold-bright: #DEC07A; --gold-deep: #8E7541;
-      --ink: #DCD7C7; --ink-2: #BDB8A9; --ink-dim: #8A8576; --ink-mute: #5F5A4A;
+      --ink: #DCD7C7; --ink-2: #BDB8A9; --ink-dim: #8A8576; --ink-mute: #88826A;
       --celestial: #4A6D94;
       --serif: 'Cormorant Garamond', 'EB Garamond', Georgia, Cambria, 'Times New Roman', serif;
       --mono: 'JetBrains Mono', 'SFMono-Regular', ui-monospace, Menlo, Monaco, Consolas, monospace;
@@ -248,6 +248,16 @@
       color: var(--gold-bright); letter-spacing: -0.01em;
     }
     .stats__v { margin-top: 8px; font-family: var(--mono); font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-dim); line-height: 1.6; }
+    .stats__src {
+      margin: 10px 0 0; font-family: var(--mono); font-size: 8.5px;
+      letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-mute); line-height: 1.9;
+    }
+    .stats__src a {
+      color: var(--ink-dim); text-decoration: none;
+      border-bottom: 1px solid rgba(201,169,97,0.22); padding-bottom: 1px;
+      transition: color 320ms var(--ease), border-bottom-color 320ms var(--ease);
+    }
+    .stats__src a:hover { color: var(--gold-bright); border-bottom-color: var(--gold); }
 
     /* The Pulse — attention instrument */
     .pulse {
@@ -332,6 +342,7 @@
       margin: 14px 0 0; font-family: var(--mono); font-size: 8.5px;
       letter-spacing: 0.08em; line-height: 1.75; color: var(--ink-mute); max-width: 62ch;
     }
+    .pulse__note--lead { margin: 0 0 12px; }
     .pulse__state { font-family: var(--mono); font-size: 10px; letter-spacing: 0.14em; color: var(--ink-dim); padding: 6px 0; }
     @media (min-width: 960px) {
       .pulse__grid { grid-template-columns: repeat(4, 1fr); }
@@ -494,7 +505,8 @@
             star catalogues through Greek mathematics, Roman empire, Islamic
             astronomy, and the Renaissance — into the phone of nearly every
             person alive. Roughly nine in ten Americans know their sign.
-            More than a billion people worldwide identify with one.
+            Worldwide the audience is larger still: across much of Asia,
+            astrology remains woven into marriage, naming, and daily life.
           </p>
           <p>
             That identity is <strong>permanent</strong>. Nobody stops being a
@@ -517,9 +529,9 @@
           </p>
           <p>
             The largest consumer platforms already follow this attention.
-            Tinder reported a near-20% lift in Likes sent by women on
-            astrology-tagged profiles. Spotify built astrology playlists;
-            Netflix released zodiac watchlists. Co-Star reportedly grew from
+            <a href="https://www.tinderpressroom.com/2026-03-12-Tinder-Debuts-Inaugural-Product-Keynote-Tinder-Sparks-2026-Start-Something-New" rel="noopener noreferrer">Tinder reported a near-20% lift</a> in Likes sent by women on
+            astrology-tagged profiles. <a href="https://newsroom.spotify.com/2019-02-01/spotify-celebrates-new-cosmic-playlists-with-readings-from-guest-astrologer/" rel="noopener noreferrer">Spotify built astrology playlists</a>;
+            <a href="https://www.hollywoodreporter.com/tv/tv-news/netflix-astrology-hub-zodiac-sign-1236349558/" rel="noopener noreferrer">Netflix released zodiac watchlists</a>. <a href="https://www.statista.com/statistics/1451873/costar-registered-users/" rel="noopener noreferrer">Co-Star reportedly grew</a> from
             7.5&nbsp;million to over 30&nbsp;million users in three years.
             None of these companies care about astrology. They follow
             recurring mass behavior — and astrology is recurring mass behavior.
@@ -530,9 +542,16 @@
             <div class="stats__cell" role="listitem"><div class="stats__k">43%</div><div class="stats__v">of women 18–49 say they believe · Pew</div></div>
             <div class="stats__cell" role="listitem"><div class="stats__k">30M+</div><div class="stats__v">Co-Star users · reported</div></div>
           </div>
+          <p class="stats__src">
+            Sources:
+            <a href="https://today.yougov.com/entertainment/articles/42292-one-four-americans-say-they-believe-astrology" rel="noopener noreferrer">YouGov, 2022</a> ·
+            <a href="https://www.pewresearch.org/religion/2025/05/21/3-in-10-americans-consult-astrology-tarot-cards-or-fortune-tellers/" rel="noopener noreferrer">Pew Research, 2025</a> ·
+            <a href="https://www.tinderpressroom.com/2026-03-12-Tinder-Debuts-Inaugural-Product-Keynote-Tinder-Sparks-2026-Start-Something-New" rel="noopener noreferrer">Tinder, 2026</a> ·
+            <a href="https://www.statista.com/statistics/1451873/costar-registered-users/" rel="noopener noreferrer">Statista (Co-Star)</a>
+          </p>
 
           <p style="margin-top: 26px;">
-            This is not rhetoric; it is measurable. The instrument below reads
+            This is not rhetoric; most of it is measurable. The instrument below reads
             open sources — encyclopedia pageviews, search interest — and puts
             the Twelve beside the tokens everyone already knows.
           </p>
@@ -560,16 +579,16 @@
             </div>
             <div class="pulse__block" data-pulse-est-block hidden>
               <div class="pulse__head">
-                <span class="label label--gold">Across the feeds</span>
+                <span class="label label--gold">Across the feeds · editorial estimates</span>
                 <span class="pulse__src" data-pulse-est-src></span>
               </div>
-              <div class="pulse__grid" data-pulse-est></div>
-              <p class="pulse__note">
-                Platform figures are estimates approximated by Claude
-                (Anthropic) from public cumulative hashtag and search-volume
-                data — directional, not measured. Encyclopedia figures are
-                measured; search figures are Google Trends relative interest.
+              <p class="pulse__note pulse__note--lead">
+                Platform figures are editorial estimates from public
+                cumulative hashtag and search-volume data — directional, not
+                measured. Encyclopedia figures are measured; search figures
+                are Google Trends relative interest.
               </p>
+              <div class="pulse__grid" data-pulse-est></div>
             </div>
           </div>
         </section>
@@ -583,7 +602,7 @@
           <blockquote class="quote">
             <p>"Gold's price is not derived from its industrial or utility
             value. Just a pure belief system."</p>
-            <cite>— CZ, founder of Binance · October 2025</cite>
+            <cite>— <a href="https://x.com/cz_binance/status/1983514879643292126" rel="noopener noreferrer">CZ, founder of Binance · October 2025</a></cite>
           </blockquote>
           <p>
             Astrology is one of the strongest belief networks on Earth — older
@@ -603,15 +622,16 @@
           </p>
           <ul>
             <li>A <strong>fixed universe</strong> — twelve signs, no version two, no thirteenth lot, no dilution of the set.</li>
-            <li><strong>No owner</strong> — no IP holder, no celebrity, no licensor who can sue, censor, or sell out. The symbols belong to everyone and offend no one.</li>
+            <li><strong>Unowned symbols</strong> — the zodiac itself is public domain: no IP holder, no celebrity, no licensor who can sue, censor, or sell out. The symbols belong to everyone and offend no one.</li>
             <li><strong>Built-in distribution</strong> — everyone has a sign; the question "which one are you?" is the oldest onboarding flow in the world.</li>
             <li><strong>Permanent relevance</strong> — the attention cycle resets monthly, forever.</li>
           </ul>
           <blockquote class="quote">
             <p>"We've had memecoins for cats, dogs, frogs, AIs, stocks…
-            astrology coins are a super strong contender for the next big
-            class. Astrology is not only the oldest and most lindy meme—"</p>
-            <cite>— Andrew Kang, Mechanism Capital · December 2024</cite>
+            Astrology coins (@astrofoliosol) are a super strong contender for
+            the next big class of memecoins. Astrology is not only the oldest
+            and most lindy meme…"</p>
+            <cite>— <a href="https://x.com/Rewkang/status/1867976901501009965" rel="noopener noreferrer">Andrew Kang, Mechanism Capital · December 2024</a></cite>
           </blockquote>
         </section>
 
@@ -641,7 +661,7 @@
           <p>
             The Twelve are not a launch; they are a record with history.
             The collection has been live for years, fully distributed from
-            day one — no presale, no insider allocation, no manufactured
+            day one — <a href="/archive/#horoscopes-to-hodl">no presale, no insider allocation</a>, no manufactured
             volume — with a community that stayed through full market cycles,
             documented in public on
             <a href="https://x.com/astrofoliosol" rel="noopener noreferrer">X</a>,

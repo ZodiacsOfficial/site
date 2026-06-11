@@ -43,13 +43,13 @@ const COMPARISONS = [
 ];
 
 /*
- * Editorial platform estimates. Shown on-site with the footnote:
- * "approximated by Claude (Anthropic) … directional, not measured."
+ * Editorial platform estimates. Shown on-site with the disclaimer:
+ * "editorial estimates … directional, not measured."
  * Update `capturedAt` when revising the figures.
  */
 const ESTIMATES = {
   capturedAt: '2026-06',
-  by: 'Approximated by Claude (Anthropic) from public cumulative hashtag and search-volume figures',
+  by: 'Editorial estimates from public cumulative hashtag and search-volume figures',
   items: [
     { k: 'X', v: '≈250K', unit: 'astrology posts / day' },
     { k: 'Instagram', v: '≈80K', unit: 'sign-tagged posts / day' },

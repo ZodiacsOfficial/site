@@ -249,7 +249,7 @@ ${JSON.stringify(jsonLd(), null, 2)}
       --hair: rgba(201,169,97,0.10); --hair-2: rgba(201,169,97,0.22); --hair-3: rgba(201,169,97,0.42);
       --gold: #C9A961; --gold-bright: #DEC07A; --gold-deep: #8E7541;
       --live: #6FAE7C;
-      --ink: #DCD7C7; --ink-2: #BDB8A9; --ink-dim: #8A8576; --ink-mute: #5F5A4A;
+      --ink: #DCD7C7; --ink-2: #BDB8A9; --ink-dim: #8A8576; --ink-mute: #88826A;
       --serif: 'Cormorant Garamond', 'EB Garamond', Georgia, Cambria, serif;
       --mono: 'JetBrains Mono', ui-monospace, Menlo, Consolas, monospace;
       --ease: cubic-bezier(0.32, 0.72, 0, 1);

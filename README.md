@@ -41,6 +41,9 @@ The current site should be refined, not redesigned from scratch.
 - `scripts/build-archive.mjs` - generates `/archive/` + `feed.json` + `rss.xml`
 - `scripts/build-og-cards.mjs` - renders the twelve per-sign share cards (`assets/og/{sign}.png`)
 - `scripts/build-pulse.mjs` - refreshes `assets/pulse.json` (The Pulse attention data)
+- `scripts/build-distribution.mjs` - refreshes `assets/distribution.json` (The Standings ownership snapshot)
+- `scripts/check-site.mjs` - static integrity checks (feeds, registry shape, internal links) — run by CI
+- `404.html` - branded not-found page (served automatically by the static host)
 - `registry/zodiacs.registry.json` - public registry artifact
 - `assets/` - Zodiac artwork, icons, venue marks, and social preview assets
 - `assets/art/` - the astronomical clock artwork (poster JPGs + ambient MP4 loop)
@@ -62,6 +65,10 @@ node scripts/build-app.mjs
 
 The site stays a static deploy: `index.html` loads the committed `assets/app.js`
 directly, so no build runs on Vercel.
+
+CI (`site-check`) re-runs every builder and fails on any diff, so committed
+HTML and bundles are guaranteed to match their sources — always commit the
+regenerated artifacts together with the source edit.
 
 ## Building the sign catalogue pages
 

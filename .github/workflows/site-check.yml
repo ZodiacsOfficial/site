@@ -16,9 +16,27 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
 
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
       - name: Validate registry JSON
         run: node -e "JSON.parse(require('node:fs').readFileSync('registry/zodiacs.registry.json', 'utf8'))"
 
       - name: Check for stale repo or bridge wording
         run: |
           ! grep -RInE 'Symbiosis|ZodiacS(DK)|diasmal[[:digit:]]{3}|zodiacs-org/sdk' index.html sdk registry README.md CLAUDE.md DESIGNER_HANDOFF.md
+
+      - name: Feeds, registry shape, internal links
+        run: node scripts/check-site.mjs
+
+      # Committed HTML must match what the builders produce from sources.
+      # (build-app.mjs fetches pinned @babel/standalone from unpkg; the
+      # other builders are fully offline.)
+      - name: Build drift
+        run: |
+          node scripts/build-app.mjs
+          node scripts/build-sign-pages.mjs
+          node scripts/build-archive.mjs
+          git diff --exit-code

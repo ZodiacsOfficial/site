@@ -102,14 +102,15 @@ The visible section numbering currently runs:
 № 03 Museum label
 № 04 Thesis
 № 05 The Pulse
-№ 06 Identity Context
-№ 07 Onchain access
-№ 08 For Builders
-№ 09 Built With Zodiacs
-№ 10 The Twelve
-№ 11 SDK
-№ 12 Read-only by design
-№ 13 Questions
+№ 06 The Standings
+№ 07 Identity Context
+№ 08 Onchain access
+№ 09 For Builders
+№ 10 Built With Zodiacs
+№ 11 The Twelve
+№ 12 SDK
+№ 13 Read-only by design
+№ 14 Questions
 ```
 
 Dedicated SDK page:
@@ -152,11 +153,28 @@ The Pulse (№ 05, and on the thesis page):
   twelve sign articles vs token articles (snapshot in `assets/pulse.json`,
   refreshed live in the visitor's browser from the open Wikimedia API).
   Search layer: Google Trends snapshot + link-out. Platform layer
-  (X / Instagram / TikTok / Google volumes): editorial estimates,
-  footnoted on-site as approximated by Claude — keep that footnote.
+  (X / Instagram / TikTok / Google volumes): editorial estimates from
+  public hashtag and search-volume data, disclaimed on-site ABOVE the
+  figures ("directional, not measured") — keep that disclaimer leading.
 - Data refresh: `node scripts/build-pulse.mjs`, also run weekly by the
   `pulse-refresh` GitHub Action. The panel must stay quiet, factual,
   source-labeled, and unavailable-safe — same rules as Market Context.
+
+The Standings (№ 06):
+
+- The market leaderboard + ownership spread. Live layer: one batched
+  DexScreener read ranks the twelve by market cap (lots without an
+  indexed pair say so — never invent figures). Snapshot layer:
+  `assets/distribution.json` (top-1/10/20 token-account share of supply
+  per sign, read from the public Solana RPC) — refreshed weekly by the
+  `distribution-refresh` GitHub Action via
+  `node scripts/build-distribution.mjs`.
+- The method note under the table is load-bearing honesty: largest
+  accounts include DEX liquidity pools, so wallet concentration is lower
+  than the raw figure reads. Keep it. The section voice is observational
+  ("the registry does not rank; the market does") — no hype, no CTAs.
+- Adding this section renumbered everything after the Pulse: sections now
+  run № 01–№ 14. Section ids (anchors) did not change.
 
 Thesis page:
 
@@ -172,9 +190,10 @@ Astrofolio glyphs:
 
 - `assets/astrofolio/{sign}.png` — Astrofolio's black sign glyphs,
   rendered in registry gold via CSS `mask`. Used as quiet connective
-  tissue: the museum-label Shelf row, the catalogue pages' acquisition
-  shelf link, the thesis page strip, and the relationship page grid.
-  Keep them subordinate to the sculptural Zodiac artwork.
+  tissue: the catalogue pages' acquisition shelf link, the thesis page
+  strip, and the relationship page grid. (The museum-label Shelf row now
+  carries the official SDK icon instead.) Keep them subordinate to the
+  sculptural Zodiac artwork.
 
 The Archive:
 
@@ -235,7 +254,7 @@ Season eyebrow (hero):
   metadata (Capricorn wraps the year). If the computation cannot run,
   the pill quietly falls back to `The Registry` — never an error.
 
-Shelf viewer states to preserve (inside № 06 Identity Context):
+Shelf viewer states to preserve (inside № 07 Identity Context):
 
 - Idle: the static "Example view" receipt (never remove the example —
   it is the permanent fallback).
@@ -250,7 +269,7 @@ Shelf viewer states to preserve (inside № 06 Identity Context):
 - Any other failure: quiet unavailable line; the example view stands
   in. Same unavailable-safe rules as Market Context.
 
-FAQ (№ 13):
+FAQ (№ 14):
 
 - 22 questions in five labeled groups (The Registry, Acquisition &
   Ownership, Legitimacy & Trust, Astrology & Culture, Risk & Posture).
@@ -392,7 +411,12 @@ Before handoff changes ship:
 
 ```bash
 node scripts/validate-assets.mjs
+node scripts/check-site.mjs
 ```
+
+If a generated surface changed (`src/app.jsx`, sign data, archive data),
+re-run its builder and commit the regenerated output with the source —
+CI re-runs every builder and fails on any diff.
 
 Then verify:
 

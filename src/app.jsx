@@ -1727,10 +1727,14 @@
                 <span className="k">Shelf</span>
                 <span className="v">
                   <a className="detail__shelf" href="https://astrofolio.xyz/" rel="noopener noreferrer">
-                    <span
-                      className="af-glyph"
-                      style={{ '--m': `url('/assets/astrofolio/${sign.asset.sign}.png')` }}
-                      aria-hidden="true"
+                    <img
+                      className="detail__shelf-icon"
+                      src={`/assets/icons/${sign.asset.sign}.png`}
+                      alt=""
+                      loading="lazy"
+                      decoding="async"
+                      width="16"
+                      height="16"
                     />
                     <span>On Astrofolio</span>
                   </a>
@@ -1980,9 +1984,14 @@
             {pulse?.estimates && (
               <div className="pulse__block">
                 <div className="pulse__head">
-                  <span className="label label--gold">Across the feeds</span>
+                  <span className="label label--gold">Across the feeds · editorial estimates</span>
                   <span className="pulse__src">Estimates · {pulse.estimates.capturedAt}</span>
                 </div>
+                <p className="pulse__note pulse__note--lead">
+                  Platform figures are editorial estimates from public
+                  cumulative hashtag and search-volume data — directional,
+                  not measured. Encyclopedia figures are measured.
+                </p>
                 <div className="pulse__grid pulse__grid--est">
                   {pulse.estimates.items.map(it => (
                     <div className="pulse__cell" key={it.k}>
@@ -1992,12 +2001,6 @@
                     </div>
                   ))}
                 </div>
-                <p className="pulse__note">
-                  Platform figures are estimates approximated by Claude
-                  (Anthropic) from public cumulative hashtag and search-volume
-                  data — directional, not measured. Encyclopedia figures are
-                  measured.
-                </p>
               </div>
             )}
           </div>
@@ -2006,6 +2009,182 @@
             <span>The full instrument — inside the thesis</span>
             <span className="pulse__more-arr" aria-hidden="true">→</span>
           </a>
+        </section>
+      );
+    }
+
+    // ---- № 06 · The standings ----------------------------------------------
+    // Twelve lots, read from the market. Two labeled layers, same honesty
+    // contract as the Pulse: live DexScreener reads, and a weekly on-chain
+    // distribution snapshot committed to the repository
+    // (assets/distribution.json, refreshed by a scheduled action).
+    function StandingsSection() {
+      const reveal = useReveal();
+      const hostRef = useRef(null);
+      const [enabled, setEnabled] = useState(false);
+      const [rows, setRows] = useState(null);
+      const [failed, setFailed] = useState(false);
+      const [dist, setDist] = useState(null);
+
+      useEffect(() => {
+        const el = hostRef.current;
+        if (!el || enabled) return undefined;
+        if (!('IntersectionObserver' in window)) { setEnabled(true); return undefined; }
+        const io = new IntersectionObserver(([entry]) => {
+          if (entry.isIntersecting) { setEnabled(true); io.disconnect(); }
+        }, { rootMargin: '240px 0px' });
+        io.observe(el);
+        return () => io.disconnect();
+      }, [enabled]);
+
+      useEffect(() => {
+        if (!enabled) return;
+        const mints = SIGNS
+          .map((s) => s.representations.solana?.address)
+          .filter(Boolean);
+        fetch(`https://api.dexscreener.com/tokens/v1/solana/${mints.join(',')}`)
+          .then((r) => { if (!r.ok) throw new Error('http ' + r.status); return r.json(); })
+          .then((payload) => {
+            const pairs = Array.isArray(payload) ? payload : payload?.pairs;
+            if (!Array.isArray(pairs)) throw new Error('shape');
+            const best = new Map();
+            for (const p of pairs) {
+              const mint = p?.baseToken?.address;
+              if (!mint) continue;
+              const liq = toFiniteNumber(p?.liquidity?.usd) ?? 0;
+              const prev = best.get(mint);
+              if (!prev || liq > prev.liq) best.set(mint, { liq, pair: p });
+            }
+            setRows(SIGNS.map((s) => {
+              const mint = s.representations.solana?.address;
+              const pair = (mint && best.get(mint)?.pair) || null;
+              return {
+                sign: s,
+                priceUsd: pair?.priceUsd ?? null,
+                change24h: pair?.priceChange?.h24 ?? null,
+                marketCap: toFiniteNumber(pair?.marketCap ?? pair?.fdv)
+              };
+            }));
+          })
+          .catch(() => setFailed(true));
+        fetch('/assets/distribution.json')
+          .then((r) => { if (!r.ok) throw new Error('http ' + r.status); return r.json(); })
+          .then(setDist)
+          .catch(() => { /* the leaderboard stands without the snapshot */ });
+      }, [enabled]);
+
+      const ranked = rows
+        ? [...rows].sort((a, b) => (b.marketCap ?? -1) - (a.marketCap ?? -1))
+        : null;
+      const distFor = (slug) => dist?.signs?.[slug] || null;
+      const pctShare = (value) => {
+        const n = toFiniteNumber(value);
+        return n === null
+          ? '—'
+          : `${n.toLocaleString(undefined, { maximumFractionDigits: 1 })}%`;
+      };
+
+      return (
+        <section ref={reveal} id="standings" className="sec reveal" aria-label="The standings">
+          <div className="sec__head">
+            <span className="sec__no">№ 06</span>
+            <span className="line" />
+            <h2 className="sec__title">The Standings</h2>
+          </div>
+
+          <h3 className="standings__statement">
+            The registry does not rank. <span className="it">The market does.</span>
+          </h3>
+          <p className="sec__lede">
+            Twelve fixed lots, one open market. Prices are read live from
+            DexScreener; ownership spread is read from the chain and
+            snapshotted weekly. Nothing here is curated or weighted.
+          </p>
+
+          <div ref={hostRef} className="standings" aria-busy={enabled && !ranked && !failed}>
+            {!ranked && !failed && (
+              <div className="standings__state">Reading the market…</div>
+            )}
+            {failed && !ranked && (
+              <div className="standings__state">
+                Market data unavailable. The records stand in the <a href="#registry">registry</a>.
+              </div>
+            )}
+            {ranked && (
+              <>
+                <div className="standings__src">
+                  Source: DexScreener · live
+                  {dist ? ` · ownership snapshot ${dist.capturedAt}` : ''}
+                </div>
+                <div className="standings__scroll">
+                  <table className="standings__table">
+                    <thead>
+                      <tr>
+                        <th className="standings__th--n" scope="col" aria-label="Rank">#</th>
+                        <th scope="col">Lot</th>
+                        <th className="standings__th--r" scope="col">Price USD</th>
+                        <th className="standings__th--r" scope="col">24H</th>
+                        <th className="standings__th--r" scope="col">Market cap</th>
+                        <th className="standings__th--r" scope="col">Top-10 share</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {ranked.map((row, i) => {
+                        const slug = row.sign.asset.sign;
+                        const d = distFor(slug);
+                        const change = toFiniteNumber(row.change24h);
+                        const changeClass = change === null
+                          ? ''
+                          : change > 0 ? ' market__change--up' : change < 0 ? ' market__change--down' : '';
+                        return (
+                          <tr key={row.sign.ticker}>
+                            <td className="standings__n">
+                              {row.marketCap !== null ? String(i + 1).padStart(2, '0') : '—'}
+                            </td>
+                            <td className="standings__lot">
+                              <a href={`/${slug}/`}>
+                                <img
+                                  src={`assets/icons/${slug}.png`}
+                                  alt=""
+                                  loading="lazy"
+                                  decoding="async"
+                                  width="18"
+                                  height="18"
+                                />
+                                <span className="standings__name">{row.sign.name}</span>
+                                <span className="standings__tick">{row.sign.ticker}</span>
+                              </a>
+                            </td>
+                            {row.marketCap === null && row.priceUsd === null ? (
+                              <td className="standings__v standings__v--dim" colSpan="3">
+                                Not indexed. The record stands regardless.
+                              </td>
+                            ) : (
+                              <>
+                                <td className="standings__v standings__v--mono">{formatPriceUsd(row.priceUsd)}</td>
+                                <td className={`standings__v standings__v--mono${changeClass}`}>{formatPercent(row.change24h)}</td>
+                                <td className="standings__v">{formatUsdCompact(row.marketCap)}</td>
+                              </>
+                            )}
+                            <td className="standings__v standings__v--mono">{pctShare(d?.top10Pct)}</td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+                <p className="standings__note">
+                  Market figures are read live and move with the market; the
+                  registry records them, it does not rank them. Top-10 share
+                  is the portion of on-chain supply held by the ten largest
+                  token accounts, read from the Solana RPC
+                  {dist ? ` and captured ${dist.capturedAt}` : ''}. The
+                  largest accounts include DEX liquidity pools, so wallet
+                  concentration is lower than the raw figure reads.
+                </p>
+              </>
+            )}
+          </div>
         </section>
       );
     }
@@ -2304,7 +2483,7 @@
       return (
         <section ref={reveal} id="identity" className="sec idctx reveal" aria-label="Identity Context">
           <div className="sec__head">
-            <span className="sec__no">№ 06</span>
+            <span className="sec__no">№ 07</span>
             <span className="line" />
             <span className="sec__title">Identity Context</span>
           </div>
@@ -2366,7 +2545,7 @@
       return (
         <section ref={reveal} id="onchain-access" className="sec access reveal" aria-label="Onchain access">
           <div className="sec__head">
-            <span className="sec__no">№ 07</span>
+            <span className="sec__no">№ 08</span>
             <span className="line" />
             <span className="sec__title">Onchain access</span>
           </div>
@@ -2450,7 +2629,7 @@
       return (
         <section ref={reveal} id="builders" className="sec builders reveal" aria-label="For Builders">
           <div className="sec__head">
-            <span className="sec__no">№ 08</span>
+            <span className="sec__no">№ 09</span>
             <span className="line" />
             <span className="sec__title">For Builders</span>
           </div>
@@ -2524,7 +2703,7 @@
       return (
         <section ref={reveal} id="built-with-zodiacs" className="sec built reveal" aria-label="Built With Zodiacs">
           <div className="sec__head">
-            <span className="sec__no">№ 09</span>
+            <span className="sec__no">№ 10</span>
             <span className="line" />
             <h2 className="sec__title">Built With Zodiacs</h2>
           </div>
@@ -2553,7 +2732,7 @@
       return (
         <section ref={reveal} className="sec reveal" id="official-twelve" aria-label="The official twelve">
           <div className="sec__head">
-            <span className="sec__no">№ 10</span>
+            <span className="sec__no">№ 11</span>
             <span className="line" />
             <h2 className="sec__title">The Twelve</h2>
           </div>
@@ -2667,7 +2846,7 @@
       return (
         <section ref={reveal} id="sdk" className="sec reveal" aria-label="SDK">
           <div className="sec__head">
-            <span className="sec__no">№ 11</span>
+            <span className="sec__no">№ 12</span>
             <span className="line" />
             <h2 className="sec__title">SDK</h2>
           </div>
@@ -2725,7 +2904,7 @@
       return (
         <section ref={reveal} id="security" className="sec reveal" aria-label="Read-only by design">
           <div className="sec__head">
-            <span className="sec__no">№ 12</span>
+            <span className="sec__no">№ 13</span>
             <span className="line" />
             <h2 className="sec__title">Read-only by design</h2>
           </div>
@@ -2779,7 +2958,7 @@
         label: 'Legitimacy & Trust',
         items: [
           { q: 'How do I know an address is official?',
-            a: 'Check it against the record. The verifier recognizes exactly twenty-four addresses: twelve native Solana mints and twelve bridged Base representations. Anything else is reported as not among the Twelve.' },
+            a: <>Check it against the record. The verifier recognizes exactly twenty-four addresses: twelve native Solana mints and twelve bridged Base representations. Anything else is reported as not among the Twelve. The same addresses are mirrored in the public SDK repository and match the mints Astrofolio&rsquo;s own app routes to, and the Libra record was corroborated character for character in public view, in the events preserved in <a href="/archive/#accidental-libra">the archive</a>.</> },
           { q: 'Other tokens use the same names. Which is real?',
             a: 'Names and tickers can be copied; addresses cannot. Only the addresses in the registry are official records. When in doubt, verify the address itself, never the ticker.' },
           { q: 'Is this related to the LIBRA token from the news?',
@@ -2823,7 +3002,7 @@
       return (
         <section ref={reveal} id="faq" className="sec reveal" aria-label="Questions">
           <div className="sec__head">
-            <span className="sec__no">№ 13</span>
+            <span className="sec__no">№ 14</span>
             <span className="line" />
             <h2 className="sec__title">Questions</h2>
           </div>
@@ -2931,6 +3110,7 @@
             <DetailPanel sign={sign} animKey={activeTicker} />
             <Philosophy />
             <PulseSection />
+            <StandingsSection />
             <IdentityContextSection />
             <OnchainAccessSection />
             <ForBuildersSection />

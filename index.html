@@ -136,7 +136,7 @@
       --ink:           #DCD7C7;
       --ink-2:         #BDB8A9;
       --ink-dim:       #8A8576;
-      --ink-mute:      #5F5A4A;
+      --ink-mute:      #88826A;
 
       --stone:         #2A2E37;
       --celestial:     #4A6D94;
@@ -1655,23 +1655,13 @@
         drop-shadow(0 1px 2px rgba(0,0,0,0.5));
     }
 
-    /* Astrofolio glyph — their black sign marks, masked to registry gold */
-    .af-glyph {
-      display: inline-block;
-      width: 14px; height: 14px;
-      background: var(--gold);
-      opacity: 0.85;
-      -webkit-mask: var(--m) center / contain no-repeat;
-      mask: var(--m) center / contain no-repeat;
-      transition: background 320ms var(--ease), opacity 320ms var(--ease);
-    }
     .detail__shelf {
       display: inline-flex; align-items: center; gap: 8px;
       color: var(--ink-2); text-decoration: none;
       transition: color 320ms var(--ease);
     }
+    .detail__shelf-icon { display: block; width: 16px; height: 16px; }
     .detail__shelf:hover { color: var(--gold-bright); }
-    .detail__shelf:hover .af-glyph { background: var(--gold-bright); opacity: 1; }
     .detail__rows {
       margin-top: 18px;
       border-top: 1px solid var(--hair);
@@ -2210,6 +2200,7 @@
       color: var(--ink-mute);
       max-width: 62ch;
     }
+    .pulse__note--lead { margin: 0 0 12px; }
     .pulse__state {
       font-family: var(--mono); font-size: 10px;
       letter-spacing: 0.14em; color: var(--ink-dim);
@@ -2230,6 +2221,94 @@
     .pulse__more:hover { border-color: var(--gold); color: var(--gold-bright); }
     .pulse__more-arr { color: var(--gold); transition: transform 420ms var(--ease); }
     .pulse__more:hover .pulse__more-arr { transform: translateX(3px); }
+
+    /* ── The standings — market leaderboard + distribution ──── */
+    .standings__statement {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: 32px;
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+      margin: 0 0 18px;
+      text-wrap: balance;
+    }
+    .standings__statement .it { font-style: italic; color: var(--gold-bright); }
+    .standings {
+      border: 1px solid var(--hair-2);
+      background: linear-gradient(180deg, var(--surface) 0%, var(--bg-2) 100%);
+      padding: 20px 20px 18px;
+    }
+    .standings__src {
+      font-family: var(--mono); font-size: 9px;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--ink-dim);
+      margin: 0 0 12px;
+    }
+    .standings__scroll { overflow-x: auto; }
+    .standings__table {
+      width: 100%; min-width: 560px;
+      border-collapse: collapse;
+    }
+    .standings__table th {
+      text-align: left;
+      font-family: var(--mono); font-size: 8.5px; font-weight: 400;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--ink-mute);
+      padding: 8px 10px;
+      border-bottom: 1px solid var(--hair-2);
+      white-space: nowrap;
+    }
+    .standings__table th.standings__th--n { width: 34px; }
+    .standings__table th.standings__th--r { text-align: right; }
+    .standings__table td {
+      padding: 11px 10px;
+      border-bottom: 1px solid var(--hair);
+      white-space: nowrap;
+    }
+    .standings__table tbody tr:last-child td { border-bottom: none; }
+    .standings__n {
+      font-family: var(--mono); font-size: 10px;
+      letter-spacing: 0.08em; color: var(--gold);
+    }
+    .standings__lot a {
+      display: inline-flex; align-items: center; gap: 10px;
+      color: var(--ink); text-decoration: none;
+      transition: color 320ms var(--ease);
+    }
+    .standings__lot a:hover { color: var(--gold-bright); }
+    .standings__lot img { display: block; }
+    .standings__name { font-family: var(--serif); font-size: 15px; }
+    .standings__tick {
+      font-family: var(--mono); font-size: 8.5px;
+      letter-spacing: 0.14em; color: var(--ink-mute);
+    }
+    .standings__v {
+      text-align: right;
+      font-family: var(--serif); font-size: 14px; font-style: italic;
+      color: var(--ink-2);
+    }
+    .standings__v--mono {
+      font-family: var(--mono); font-style: normal;
+      font-size: 10.5px; letter-spacing: 0.03em;
+    }
+    .standings__v--dim {
+      text-align: left;
+      font-size: 13px; color: var(--ink-dim);
+    }
+    .standings__note {
+      margin: 14px 0 0;
+      font-family: var(--mono); font-size: 8.5px;
+      letter-spacing: 0.08em; line-height: 1.75;
+      color: var(--ink-mute);
+      max-width: 70ch;
+    }
+    .standings__state {
+      font-family: var(--mono); font-size: 10px;
+      letter-spacing: 0.14em; color: var(--ink-dim);
+      padding: 6px 0;
+    }
+    .standings__state a { color: var(--gold); text-decoration: none; }
 
     /* ── Onchain access ──────────────────────────────────────── */
     .access__statement {
@@ -2908,7 +2987,8 @@
       .idctx__statement,
       .builders__statement,
       .access__statement,
-      .pulse__statement { font-size: 40px; max-width: 24ch; }
+      .pulse__statement,
+      .standings__statement { font-size: 40px; max-width: 24ch; }
 
       .pulse__grid { grid-template-columns: repeat(4, 1fr); }
       .pulse__grid--est { grid-template-columns: repeat(4, 1fr); }
