@@ -649,6 +649,20 @@
       pointer-events: none;
       z-index: 0;
     }
+    .glyph-stage .nugget-link {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+    }
+    .glyph-stage .nugget-link:hover .nugget { transform: translateY(-3px); }
+    .glyph-stage .nugget-link:focus-visible {
+      outline: 1px solid var(--gold);
+      outline-offset: -1px;
+    }
     .glyph-stage .nugget {
       position: relative;
       z-index: 1;
@@ -1444,11 +1458,13 @@
       letter-spacing: 0.20em;
     }
     .cat__sym--button {
+      display: block;
       background: transparent;
       border: 0;
       padding: 0;
       width: 100%;
       cursor: pointer;
+      text-decoration: none;
     }
     .cat__addr {
       display: flex; align-items: center; justify-content: space-between;

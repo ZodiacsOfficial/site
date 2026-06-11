@@ -181,7 +181,7 @@ Thesis page:
 - `/thesis/` — the extended argument for the Twelve, expanded from the
   homepage's № 04 Thesis section. Ambient video hero (the astronomical
   clock artwork, muted loop with poster + reduced-motion fallback),
-  editorial essay in six movements, reported-figures band, pull quotes,
+  editorial essay in seven movements, reported-figures bands, pull quote,
   and an Astrofolio-glyph strip linking to all twelve catalogue entries.
 - The same artwork appears as a quiet backdrop behind the homepage
   thesis section, which links to the full page.

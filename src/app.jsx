@@ -1161,14 +1161,20 @@
             </div>
 
             <div className="glyph-stage">
-              <img
-                className="nugget fade-key"
-                key={animKey + '-glyph'}
-                src={`assets/nuggets/${sign.name.toLowerCase()}.png`}
-                alt={`${sign.name} sculptural figure`}
-                fetchpriority="high"
-                decoding="async"
-              />
+              <a
+                className="nugget-link"
+                href={`/${sign.asset.sign}/`}
+                aria-label={`Open the ${sign.name} catalogue entry`}
+              >
+                <img
+                  className="nugget fade-key"
+                  key={animKey + '-glyph'}
+                  src={`assets/nuggets/${sign.name.toLowerCase()}.png`}
+                  alt={`${sign.name} sculptural figure`}
+                  fetchpriority="high"
+                  decoding="async"
+                />
+              </a>
             </div>
 
             <div className="fade-key" key={animKey + '-meta'}>
@@ -2746,14 +2752,10 @@
                 <div className="cat__head">
                   <span className="cat__no">№ {String(s.order).padStart(2, '0')} / 12</span>
                 </div>
-                <button
-                  type="button"
+                <a
                   className="cat__sym cat__sym--button"
-                  onClick={() => {
-                    setActive(s.ticker);
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                  }}
-                  aria-label={`Feature ${s.name}`}
+                  href={`/${s.asset.sign}/`}
+                  aria-label={`Open the ${s.name} catalogue entry`}
                 >
                   <img
                     src={`assets/nuggets/thumb/${s.name.toLowerCase()}.png`}
@@ -2761,7 +2763,7 @@
                     loading="lazy"
                     decoding="async"
                   />
-                </button>
+                </a>
                 <div className="cat__name">{s.name}</div>
                 <div className="cat__tk">{s.ticker}</div>
                 <div className="cat__meta">{s.element} · {s.archetype}</div>
