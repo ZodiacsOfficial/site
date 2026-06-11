@@ -295,6 +295,8 @@ ${JSON.stringify(jsonLd(m), null, 2)}
 
     /* ── Lot header ── */
     .lot { padding: 64px 0 36px; position: relative; }
+    /* Official sign icon, from the SDK asset set — the plate's seal */
+    .lot__icon { display: block; width: 30px; height: 30px; margin: 0 0 16px; }
     .lot__eyebrow {
       display: inline-flex; align-items: center; gap: 10px;
       margin-bottom: 26px; padding: 6px 14px 6px 10px;
@@ -559,15 +561,6 @@ ${JSON.stringify(jsonLd(m), null, 2)}
     }
     .acq__note a { color: var(--ink-dim); text-decoration: none; border-bottom: 1px solid rgba(201,169,97,0.22); }
     .acq__note a:hover { color: var(--gold-bright); border-bottom-color: var(--gold); }
-    /* Astrofolio glyph — their sign mark, masked to registry gold */
-    .af-glyph {
-      display: inline-block; flex: 0 0 auto;
-      width: 16px; height: 16px;
-      background: var(--gold); opacity: 0.85;
-      -webkit-mask: var(--m) center / contain no-repeat;
-      mask: var(--m) center / contain no-repeat;
-      transition: background 320ms var(--ease), opacity 320ms var(--ease);
-    }
     .acq__shelf {
       margin: 18px 0 0;
       display: flex; align-items: center; gap: 10px;
@@ -579,7 +572,8 @@ ${JSON.stringify(jsonLd(m), null, 2)}
       transition: border-color 320ms var(--ease), color 320ms var(--ease);
     }
     .acq__shelf:hover { border-color: var(--gold); color: var(--gold-bright); }
-    .acq__shelf:hover .af-glyph { background: var(--gold-bright); opacity: 1; }
+    /* Official sign icon, from the SDK asset set */
+    .acq__shelf-icon { display: block; flex: 0 0 auto; width: 18px; height: 18px; }
     .acq__shelf-arr { margin-left: auto; color: var(--gold); }
 
     /* Next lot / strip */
@@ -650,6 +644,7 @@ ${JSON.stringify(jsonLd(m), null, 2)}
 
   <main class="pg" id="main">
     <section class="lot" aria-labelledby="lot-title">
+      <img class="lot__icon" src="/assets/icons/${m.slug}.png" alt="" decoding="async" width="30" height="30" />
       <span class="lot__eyebrow">Catalogue <span class="g">·</span> Lot ${p.lot} of XII <span class="g">·</span> ${esc(m.ticker)}</span>
       <h1 class="lot__title" id="lot-title">${esc(m.name)} <span class="glyph">${p.glyph}</span></h1>
       <p class="lot__epithet">${esc(p.epithet)}</p>
@@ -761,7 +756,7 @@ ${beats.map((b) => `        <div class="prov__item">
         </a>
       </div>
       <a class="acq__shelf" href="https://astrofolio.xyz/" rel="noopener noreferrer">
-        <span class="af-glyph" style="--m:url('/assets/astrofolio/${m.slug}.png')" aria-hidden="true"></span>
+        <img class="acq__shelf-icon" src="/assets/icons/${m.slug}.png" alt="" loading="lazy" decoding="async" width="18" height="18" />
         <span>${esc(m.name)} on the Astrofolio shelf — the related consumer experience</span>
         <span class="acq__shelf-arr" aria-hidden="true">↗</span>
       </a>

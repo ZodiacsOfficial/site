@@ -1739,8 +1739,8 @@
                       alt=""
                       loading="lazy"
                       decoding="async"
-                      width="16"
-                      height="16"
+                      width="20"
+                      height="20"
                     />
                     <span>On Astrofolio</span>
                   </a>
@@ -2956,6 +2956,26 @@
           </div>
 
           <CodeBlock label="install" code="npm i @zodiacs/sdk" />
+
+          <div className="sdk__icons" role="group" aria-label="Official sign icons, shipped with the SDK">
+            {SIGNS.map(s => (
+              <a
+                key={s.ticker}
+                className="sdk__icons-item"
+                href={`/${s.asset.sign}/`}
+                title={`${s.name} — catalogue entry`}
+                aria-label={`${s.name} — catalogue entry`}
+              >
+                <img
+                  src={`assets/icons/${s.asset.sign}.png`}
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                />
+              </a>
+            ))}
+            <span className="sdk__icons-note">Official icon assets · all twelve · shipped with the SDK</span>
+          </div>
 
           <div className="res">
             <a className="res__item" href="/sdk/">

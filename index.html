@@ -1676,7 +1676,7 @@
       color: var(--ink-2); text-decoration: none;
       transition: color 320ms var(--ease);
     }
-    .detail__shelf-icon { display: block; width: 16px; height: 16px; }
+    .detail__shelf-icon { display: block; width: 20px; height: 20px; }
     .detail__shelf:hover { color: var(--gold-bright); }
     .detail__rows {
       margin-top: 18px;
@@ -2544,6 +2544,29 @@
     }
     .code__pre code { font-family: inherit; white-space: pre; }
     .code__pre::-webkit-scrollbar { height: 0; }
+
+    /* Official icon strip — the SDK's visible asset set */
+    .sdk__icons {
+      display: flex; flex-wrap: wrap; align-items: center;
+      gap: 12px 14px;
+      margin: 18px 0;
+      padding: 14px 16px;
+      border: 1px solid var(--hair);
+    }
+    .sdk__icons-item {
+      display: block;
+      opacity: 0.85;
+      transition: opacity 320ms var(--ease), transform 320ms var(--ease);
+    }
+    .sdk__icons-item:hover { opacity: 1; transform: translateY(-2px); }
+    .sdk__icons-item img { display: block; width: 22px; height: 22px; }
+    .sdk__icons-note {
+      flex-basis: 100%;
+      margin-top: 4px;
+      font-family: var(--mono); font-size: 8.5px;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--ink-mute);
+    }
 
     /* Resource link row */
     .res {
