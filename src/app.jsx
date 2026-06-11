@@ -1093,14 +1093,26 @@
     }
 
     // ---- Cinematic opening — full-bleed ambient film ------------------------
-    // The first viewport: the astronomical clock loop (shared with the
-    // thesis hero) under a quiet wordmark. Poster paints first; the film
-    // pauses off-screen and stands down entirely for reduced motion or
-    // data-saver. Landscape footage, crop-tuned so the dial holds the
-    // frame on portrait screens. Lives outside the .zd shell — the shell
-    // clips horizontal overflow, and this act must run edge to edge.
+    // The first viewport: the registry's own film (a slow macro pan
+    // across a painted astronomical dial, palindrome-looped) under a
+    // quiet wordmark. Poster paints first; the film pauses off-screen
+    // and stands down entirely for reduced motion or data-saver.
+    // Portrait phones get a baked 9:16 crop; everything else the
+    // landscape master. Lives outside the .zd shell — the shell clips
+    // horizontal overflow, and this act must run edge to edge.
     function CineHero() {
       const videoRef = useRef(null);
+      const media = useMemo(() => (
+        window.matchMedia('(orientation: portrait)').matches
+          ? {
+              src: 'assets/art/registry-loop-portrait.mp4',
+              poster: 'assets/art/registry-loop-poster-portrait.jpg'
+            }
+          : {
+              src: 'assets/art/registry-loop.mp4',
+              poster: 'assets/art/registry-loop-poster.jpg'
+            }
+      ), []);
       useEffect(() => {
         const video = videoRef.current;
         if (!video) return undefined;
@@ -1129,11 +1141,11 @@
             loop
             playsInline
             preload="metadata"
-            poster="assets/art/zodiac-clock-1280.jpg"
+            poster={media.poster}
             aria-hidden="true"
             tabIndex={-1}
           >
-            <source src="assets/art/zodiac-clock.mp4" type="video/mp4" />
+            <source src={media.src} type="video/mp4" />
           </video>
           <div className="cine__scrim" aria-hidden="true" />
           <div className="cine__content">

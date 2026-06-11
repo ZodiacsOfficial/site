@@ -95,15 +95,15 @@ Main page:
 16. Closing
 17. Footer
 
-The cinematic opening (CineHero in src/app.jsx) reuses the thesis page's
-astronomical-clock loop (`assets/art/zodiac-clock.mp4` + 1280 poster) at
-full viewport: poster paints first, the film pauses off-screen, and
-reduced-motion / data-saver visitors get the still. The landscape footage
-is crop-tuned for portrait via `object-position: 24% 50%` (the dial sits
-in the left half of the frame). To upgrade the footage later (e.g., a
-dedicated Seedance render), replace the mp4 + poster files or point the
-CineHero source at new ones — keep loops slow, dark, gold-on-near-black,
-seamless, muted, ≤ ~6 MB desktop / ~3 MB portrait.
+The cinematic opening (CineHero in src/app.jsx) plays the registry's own
+film — a slow macro pan across a painted astronomical dial,
+palindrome-looped so it never jump-cuts (`assets/art/registry-loop.mp4`
+landscape + `registry-loop-portrait.mp4` baked 9:16 crop, with matching
+poster JPGs). Poster paints first, the film pauses off-screen, and
+reduced-motion / data-saver visitors get the still. Orientation is
+chosen once at mount. To regrade or replace footage, keep loops slow,
+dark-leaning, seamless, muted, ≤ ~3 MB per orientation; the thesis page
+keeps its own clock loop (`assets/art/zodiac-clock.*`).
 
 The visible section numbering currently runs:
 
