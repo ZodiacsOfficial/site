@@ -123,15 +123,34 @@ async function buildWikipedia() {
 
 async function buildTrends() {
   // Best-effort; Google 429s datacenter IPs routinely.
+  const { averages, points } = await fetchTrendsSeries(TRENDS_TERMS);
+  return {
+    capturedAt: new Date().toISOString().slice(0, 10),
+    terms: TRENDS_TERMS,
+    averages,
+    points,
+  };
+}
+
+const browserUA =
+  'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36';
+let trendsCookiePromise = null;
+function trendsCookie() {
+  trendsCookiePromise ??= fetch('https://trends.google.com/', { headers: { 'User-Agent': browserUA } })
+    .then((home) => (home.headers.getSetCookie?.() ?? []).map((c) => c.split(';')[0]).join('; '));
+  return trendsCookiePromise;
+}
+
+// One explore + multiline round trip for up to five terms; returns the
+// 12-month average relative interest per term (Google's 0-100 scale,
+// relative within this request only).
+async function fetchTrendsSeries(terms) {
   const req = {
-    comparisonItem: TRENDS_TERMS.map((keyword) => ({ keyword, geo: '', time: 'today 12-m' })),
+    comparisonItem: terms.map((keyword) => ({ keyword, geo: '', time: 'today 12-m' })),
     category: 0,
     property: '',
   };
-  const browserUA =
-    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36';
-  const home = await fetch('https://trends.google.com/', { headers: { 'User-Agent': browserUA } });
-  const cookie = (home.headers.getSetCookie?.() ?? []).map((c) => c.split(';')[0]).join('; ');
+  const cookie = await trendsCookie();
   const explore = await fetch(
     'https://trends.google.com/trends/api/explore?hl=en-US&tz=0&req=' + encodeURIComponent(JSON.stringify(req)),
     { headers: { 'User-Agent': browserUA, Cookie: cookie } },
@@ -153,11 +172,53 @@ async function buildTrends() {
     v: p.value,
   }));
   const avg = (i) => Math.round(points.reduce((s, p) => s + p.v[i], 0) / Math.max(points.length, 1));
+  return { averages: terms.map((_, i) => avg(i)), points };
+}
+
+/*
+ * Per-sign search interest, measured with compound queries.
+ *
+ * Bare sign terms are hopelessly ambiguous in English ("cancer" measures
+ * the disease, "gemini" measures Google's model), so each sign is
+ * measured as the explicit query "{sign} horoscope" — unambiguous for
+ * every sign, and an undercount by design (it misses bare zodiac-intent
+ * searches). Trends compares at most five terms per request, so the
+ * twelve run in three batches of four, each sharing the anchor term
+ * "dogecoin"; values are stored relative to the anchor (dogecoin = 1).
+ * Best-effort per batch: failed batches keep the previous snapshot's
+ * values for those signs.
+ */
+const SIGN_TRENDS_ANCHOR = 'dogecoin';
+
+async function buildSignTrends(previousSignTrends) {
+  const slugs = SIGNS.map((s) => s.toLowerCase());
+  const values = { ...(previousSignTrends?.values ?? {}) };
+  let freshBatches = 0;
+  for (let i = 0; i < slugs.length; i += 4) {
+    const batch = slugs.slice(i, i + 4);
+    try {
+      const terms = batch.map((slug) => `${slug} horoscope`).concat(SIGN_TRENDS_ANCHOR);
+      const { averages } = await fetchTrendsSeries(terms);
+      const anchorAvg = averages.at(-1);
+      if (!anchorAvg) throw new Error('anchor term scored zero');
+      batch.forEach((slug, j) => {
+        values[slug] = Math.round((averages[j] / anchorAvg) * 100) / 100;
+      });
+      freshBatches += 1;
+    } catch (err) {
+      console.warn(`sign trends batch ${batch.join(',')}: kept previous (${err.message})`);
+    }
+    await new Promise((r) => setTimeout(r, 4000));
+  }
+  if (freshBatches === 0 && Object.keys(values).length === 0) {
+    throw new Error('no batch succeeded and no previous snapshot');
+  }
   return {
-    capturedAt: new Date().toISOString().slice(0, 10),
-    terms: TRENDS_TERMS,
-    averages: TRENDS_TERMS.map((_, i) => avg(i)),
-    points,
+    capturedAt: freshBatches > 0 ? new Date().toISOString().slice(0, 10) : previousSignTrends?.capturedAt ?? null,
+    anchor: SIGN_TRENDS_ANCHOR,
+    query: '{sign} horoscope',
+    unit: `relative to "${SIGN_TRENDS_ANCHOR}" = 1`,
+    values,
   };
 }
 
@@ -172,6 +233,7 @@ const pulse = {
   capturedAt: new Date().toISOString().slice(0, 10),
   wikipedia: await buildWikipedia(),
   trends: previous?.trends ?? null,
+  trendsSigns: previous?.trendsSigns ?? null,
   estimates: ESTIMATES,
 };
 
@@ -180,6 +242,13 @@ try {
   console.log('trends: captured');
 } catch (err) {
   console.warn(`trends: kept previous snapshot (${err.message})`);
+}
+
+try {
+  pulse.trendsSigns = await buildSignTrends(previous?.trendsSigns);
+  console.log('sign trends: captured');
+} catch (err) {
+  console.warn(`sign trends: kept previous snapshot (${err.message})`);
 }
 
 await writeFile(outPath, JSON.stringify(pulse, null, 2) + '\n');

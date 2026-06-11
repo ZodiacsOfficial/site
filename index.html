@@ -2166,6 +2166,7 @@
       display: grid; grid-template-columns: 96px 1fr 34px;
       align-items: center; gap: 10px;
     }
+    .pulse__bars--terms .pulse__bar { grid-template-columns: 150px 1fr 40px; }
     .pulse__bar-k {
       font-family: var(--mono); font-size: 9px;
       letter-spacing: 0.1em; color: var(--ink-2);
@@ -2175,6 +2176,18 @@
       display: block; height: 10px;
       border: 1px solid var(--hair);
       background: rgba(0,0,0,0.35);
+      position: relative;
+    }
+    .pulse__bar-tick {
+      position: absolute; top: -3px; bottom: -3px; width: 1px;
+      background: var(--gold-bright); opacity: 0.8;
+      pointer-events: none;
+    }
+    .pulse__claim {
+      margin: 0 0 14px;
+      font-family: var(--serif); font-style: italic;
+      font-size: 15.5px; line-height: 1.5; color: var(--ink);
+      max-width: 56ch;
     }
     .pulse__bar-fill {
       display: block; height: 100%;

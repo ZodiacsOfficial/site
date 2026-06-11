@@ -1948,12 +1948,60 @@
                   </div>
                   {(wiki.comparisons ?? []).map(c => (
                     <div className="pulse__cell" key={c.label}>
-                      <div className="pulse__k">vs {c.label}</div>
+                      <div className="pulse__k">All twelve vs {c.label}</div>
                       <div className="pulse__v pulse__v--x">{c.multiple}×</div>
                       <div className="pulse__sub">{formatCompact(c.avgDay)} / day</div>
                     </div>
                   ))}
                 </div>
+
+                {wiki.perSignAvgDay && (wiki.comparisons ?? []).length > 0 && (() => {
+                  const rows = SIGNS
+                    .map(s => ({ name: s.name, v: wiki.perSignAvgDay[s.asset.sign] }))
+                    .filter(r => Number.isFinite(r.v));
+                  if (!rows.length) return null;
+                  const strongest = wiki.comparisons.reduce((a, b) => (b.avgDay > a.avgDay ? b : a));
+                  const maxSign = Math.max(...rows.map(r => r.v));
+                  const weakest = Math.min(...rows.map(r => r.v));
+                  const sorted = rows.map(r => r.v).sort((a, b) => a - b);
+                  const median = sorted[Math.floor(sorted.length / 2)];
+                  const ratio = weakest / Math.max(strongest.avgDay, 1);
+                  const tickPct = Math.min((strongest.avgDay / maxSign) * 100, 100);
+                  return (
+                    <div className="pulse__block">
+                      <div className="pulse__head">
+                        <span className="label label--gold">One sign at a time</span>
+                        <span className="pulse__src">Wikimedia · single articles, same window</span>
+                      </div>
+                      <p className="pulse__claim">
+                        {ratio > 1
+                          ? `No aggregation needed: every sign, alone, out-reads every token article. The quietest sign runs ${ratio.toFixed(1)}× the strongest token.`
+                          : `One on one: the median sign reads at ${(median / Math.max(strongest.avgDay, 1)).toFixed(1)}× the strongest token article.`}
+                      </p>
+                      <div className="pulse__bars">
+                        {rows.map(r => (
+                          <div className="pulse__bar" key={r.name}>
+                            <span className="pulse__bar-k">{r.name}</span>
+                            <span className="pulse__bar-track">
+                              <span
+                                className="pulse__bar-fill is-twelve"
+                                style={{ width: Math.max((r.v / maxSign) * 100, 2) + '%' }}
+                              />
+                              <span className="pulse__bar-tick" style={{ left: tickPct + '%' }} aria-hidden="true" />
+                            </span>
+                            <span className="pulse__bar-v">{formatCompact(r.v)}</span>
+                          </div>
+                        ))}
+                      </div>
+                      <p className="pulse__note">
+                        Reads per day, one disambiguated article per sign.
+                        Gold line: the strongest token article in the same
+                        window ({strongest.label}, {formatCompact(strongest.avgDay)} / day).
+                        Token articles: {wiki.comparisons.map(c => `${c.label} ${formatCompact(c.avgDay)}`).join(' · ')}.
+                      </p>
+                    </div>
+                  );
+                })()}
               </>
             )}
 
@@ -1986,6 +2034,46 @@
                 </a>
               </div>
             )}
+
+            {pulse?.trendsSigns?.values && (() => {
+              const ts = pulse.trendsSigns;
+              const rows = SIGNS
+                .map(s => ({ name: s.name, slug: s.asset.sign, v: ts.values[s.asset.sign] }))
+                .filter(r => Number.isFinite(r.v));
+              if (!rows.length) return null;
+              const max = Math.max(...rows.map(r => r.v), 1);
+              const tickPct = Math.min((1 / max) * 100, 100);
+              return (
+                <div className="pulse__block">
+                  <div className="pulse__head">
+                    <span className="label label--gold">Searching, sign by sign</span>
+                    <span className="pulse__src">Google Trends · captured {ts.capturedAt} · “{ts.anchor}” = 1</span>
+                  </div>
+                  <div className="pulse__bars pulse__bars--terms">
+                    {rows.map(r => (
+                      <div className="pulse__bar" key={r.slug}>
+                        <span className="pulse__bar-k">“{r.slug} horoscope”</span>
+                        <span className="pulse__bar-track">
+                          <span
+                            className="pulse__bar-fill is-twelve"
+                            style={{ width: Math.max((r.v / max) * 100, 2) + '%' }}
+                          />
+                          <span className="pulse__bar-tick" style={{ left: tickPct + '%' }} aria-hidden="true" />
+                        </span>
+                        <span className="pulse__bar-v">{r.v.toFixed(1)}×</span>
+                      </div>
+                    ))}
+                  </div>
+                  <p className="pulse__note">
+                    Bare sign terms are ambiguous in English (cancer the
+                    disease, gemini the model), so each bar measures the
+                    explicit query, an undercount by design. Gold line:
+                    “{ts.anchor}” search interest over the same twelve
+                    months, set to 1.
+                  </p>
+                </div>
+              );
+            })()}
 
             {pulse?.estimates && (
               <div className="pulse__block">

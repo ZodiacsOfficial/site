@@ -151,11 +151,19 @@ The Pulse (№ 05, and on the thesis page):
 
 - The attention instrument. Measured layer: Wikipedia pageviews for the
   twelve sign articles vs token articles (snapshot in `assets/pulse.json`,
-  refreshed live in the visitor's browser from the open Wikimedia API).
-  Search layer: Google Trends snapshot + link-out. Platform layer
-  (X / Instagram / TikTok / Google volumes): editorial estimates from
-  public hashtag and search-volume data, disclaimed on-site ABOVE the
-  figures ("directional, not measured") — keep that disclaimer leading.
+  refreshed live in the visitor's browser from the open Wikimedia API) —
+  shown combined (chips labeled "All twelve vs X") AND one sign at a time
+  (twelve bars, single disambiguated articles, with the strongest token
+  article as a gold reference line; the claim line above the bars is
+  computed from the data, never hardcoded — keep it conditional).
+  Search layer: practice-level Google Trends ("horoscope" vs tokens) +
+  per-sign compound queries ("{sign} horoscope", anchored to "dogecoin"
+  = 1 across batches; bare sign terms are ambiguous — cancer, gemini —
+  so the explicit query is the honest undercount; that method note must
+  stay). Platform layer (X / Instagram / TikTok / Google volumes):
+  editorial estimates from public hashtag and search-volume data,
+  disclaimed on-site ABOVE the figures ("directional, not measured") —
+  keep that disclaimer leading.
 - Data refresh: `node scripts/build-pulse.mjs`, also run weekly by the
   `pulse-refresh` GitHub Action. The panel must stay quiet, factual,
   source-labeled, and unavailable-safe — same rules as Market Context.

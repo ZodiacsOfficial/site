@@ -313,11 +313,14 @@
     .pulse__block { margin-top: 4px; }
     .pulse__bars { display: grid; gap: 9px; }
     .pulse__bar { display: grid; grid-template-columns: 110px 1fr 36px; align-items: center; gap: 10px; }
+    .pulse__bars--terms .pulse__bar { grid-template-columns: 160px 1fr 40px; }
     .pulse__bar-k {
       font-family: var(--mono); font-size: 9px; letter-spacing: 0.1em; color: var(--ink-2);
       white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
-    .pulse__bar-track { display: block; height: 10px; border: 1px solid var(--hair); background: rgba(0,0,0,0.35); }
+    .pulse__bar-track { display: block; height: 10px; border: 1px solid var(--hair); background: rgba(0,0,0,0.35); position: relative; }
+    .pulse__bar-tick { position: absolute; top: -3px; bottom: -3px; width: 1px; background: var(--gold-bright); opacity: 0.8; pointer-events: none; }
+    .pulse__claim { margin: 0 0 14px; font-family: var(--serif); font-style: italic; font-size: 15.5px; line-height: 1.5; color: var(--ink); max-width: 56ch; }
     .pulse__bar-fill {
       display: block; height: 100%;
       background: linear-gradient(90deg, var(--gold-deep), var(--gold));
@@ -569,6 +572,15 @@
                 <div class="pulse__sub">Trailing 30 days · en.wikipedia</div>
               </div>
             </div>
+            <div class="pulse__block" data-pulse-signs-block hidden>
+              <div class="pulse__head">
+                <span class="label label--gold">One sign at a time</span>
+                <span class="pulse__src">Wikimedia · single articles, same window</span>
+              </div>
+              <p class="pulse__claim" data-pulse-signs-claim></p>
+              <div class="pulse__bars" data-pulse-signs></div>
+              <p class="pulse__note" data-pulse-signs-note></p>
+            </div>
             <div class="pulse__block" data-pulse-trends hidden>
               <div class="pulse__head">
                 <span class="label label--gold">Searching the sky</span>
@@ -576,6 +588,19 @@
               </div>
               <div class="pulse__bars" data-pulse-bars></div>
               <a class="pulse__out" data-pulse-trends-link rel="noopener noreferrer">Open the live comparison <span aria-hidden="true">↗</span></a>
+            </div>
+            <div class="pulse__block" data-pulse-signterms-block hidden>
+              <div class="pulse__head">
+                <span class="label label--gold">Searching, sign by sign</span>
+                <span class="pulse__src" data-pulse-signterms-src></span>
+              </div>
+              <div class="pulse__bars pulse__bars--terms" data-pulse-signterms></div>
+              <p class="pulse__note">
+                Bare sign terms are ambiguous in English (cancer the disease,
+                gemini the model), so each bar measures the explicit query,
+                an undercount by design. The gold line is the anchor token's
+                search interest over the same twelve months, set to 1.
+              </p>
             </div>
             <div class="pulse__block" data-pulse-est-block hidden>
               <div class="pulse__head">
@@ -866,11 +891,74 @@
           var cell = document.createElement('div');
           cell.className = 'pulse__cell';
           cell.innerHTML =
-            '<div class="pulse__k">vs ' + c.label + '</div>' +
+            '<div class="pulse__k">All twelve vs ' + c.label + '</div>' +
             '<div class="pulse__v pulse__v--x">' + c.multiple + '×</div>' +
             '<div class="pulse__sub">' + compact(c.avgDay) + ' / day</div>';
           grid.appendChild(cell);
         });
+      }
+
+      // Per-sign encyclopedia reads — one disambiguated article per sign,
+      // each bar beside the strongest token article (gold line). All
+      // values are from the snapshot; the claim line is computed, never
+      // asserted: if the data stops supporting it, the copy changes.
+      function renderPerSign(wiki) {
+        var per = wiki && wiki.perSignAvgDay;
+        var comps = (wiki && wiki.comparisons) || [];
+        if (!per || !comps.length) return;
+        var rows = SIGNS.map(function (s) {
+          return { name: s, v: per[s.toLowerCase()] };
+        }).filter(function (r) { return isFinite(r.v); });
+        if (!rows.length) return;
+        var strongest = comps.reduce(function (a, b) { return b.avgDay > a.avgDay ? b : a; });
+        var values = rows.map(function (r) { return r.v; });
+        var maxSign = Math.max.apply(null, values);
+        var weakest = Math.min.apply(null, values);
+        var sorted = values.slice().sort(function (a, b) { return a - b; });
+        var median = sorted[Math.floor(sorted.length / 2)];
+        var ratio = weakest / Math.max(strongest.avgDay, 1);
+        var tick = Math.min((strongest.avgDay / maxSign) * 100, 100);
+        host.querySelector('[data-pulse-signs-block]').hidden = false;
+        host.querySelector('[data-pulse-signs-claim]').textContent = ratio > 1
+          ? 'No aggregation needed: every sign, alone, out-reads every token article. The quietest sign runs ' + ratio.toFixed(1) + '× the strongest token.'
+          : 'One on one: the median sign reads at ' + (median / Math.max(strongest.avgDay, 1)).toFixed(1) + '× the strongest token article.';
+        host.querySelector('[data-pulse-signs]').innerHTML = rows.map(function (r) {
+          var width = Math.max((r.v / maxSign) * 100, 2);
+          return '<div class="pulse__bar">' +
+            '<span class="pulse__bar-k">' + r.name + '</span>' +
+            '<span class="pulse__bar-track"><span class="pulse__bar-fill is-twelve" style="width:' + width + '%"></span>' +
+            '<span class="pulse__bar-tick" style="left:' + tick + '%" aria-hidden="true"></span></span>' +
+            '<span class="pulse__bar-v">' + compact(r.v) + '</span></div>';
+        }).join('');
+        host.querySelector('[data-pulse-signs-note]').textContent =
+          'Reads per day, one disambiguated article per sign. Gold line: the strongest token article in the same window (' +
+          strongest.label + ', ' + compact(strongest.avgDay) + ' / day). Token articles: ' +
+          comps.map(function (c) { return c.label + ' ' + compact(c.avgDay); }).join(' · ') + '.';
+      }
+
+      // Per-sign search interest — explicit "{sign} horoscope" queries,
+      // anchored to a token term so the twelve are comparable across
+      // batches. Hidden until the snapshot carries the data.
+      function renderSignTerms(ts) {
+        if (!ts || !ts.values) return;
+        var rows = SIGNS.map(function (s) {
+          var slug = s.toLowerCase();
+          return { slug: slug, v: ts.values[slug] };
+        }).filter(function (r) { return isFinite(r.v); });
+        if (!rows.length) return;
+        var max = Math.max.apply(null, rows.map(function (r) { return r.v; }).concat([1]));
+        var tick = Math.min((1 / max) * 100, 100);
+        host.querySelector('[data-pulse-signterms-block]').hidden = false;
+        host.querySelector('[data-pulse-signterms-src]').textContent =
+          'Google Trends · captured ' + ts.capturedAt + ' · “' + ts.anchor + '” = 1';
+        host.querySelector('[data-pulse-signterms]').innerHTML = rows.map(function (r) {
+          var width = Math.max((r.v / max) * 100, 2);
+          return '<div class="pulse__bar">' +
+            '<span class="pulse__bar-k">“' + r.slug + ' horoscope”</span>' +
+            '<span class="pulse__bar-track"><span class="pulse__bar-fill is-twelve" style="width:' + width + '%"></span>' +
+            '<span class="pulse__bar-tick" style="left:' + tick + '%" aria-hidden="true"></span></span>' +
+            '<span class="pulse__bar-v">' + r.v.toFixed(1) + '×</span></div>';
+        }).join('');
       }
 
       fetch('/assets/pulse.json')
@@ -883,7 +971,10 @@
             host.querySelector('[data-pulse-spark]').innerHTML =
               sparkline((wiki.series || []).map(function (d) { return d.views; }));
             renderComparisons(wiki.comparisons);
+            renderPerSign(wiki);
           }
+
+          renderSignTerms(pulse.trendsSigns);
 
           var trends = pulse.trends;
           if (trends) {
