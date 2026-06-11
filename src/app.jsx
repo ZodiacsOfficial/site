@@ -905,54 +905,6 @@
       return null;
     }
 
-    const ZODIAC_MARKET_PAIRS = {
-      aries: {
-        chainId: 'solana',
-        pairId: 'HRn98YLGigP475eS1GaQYRMbqk1V4dkV6tdKyLhVh2iS'
-      },
-      taurus: {
-        chainId: 'solana',
-        pairId: '2GNtxia4fLW3URj5MLqVfgoKrAgDpphtAVazK41eTPfu'
-      },
-      gemini: {
-        chainId: 'solana',
-        pairId: 'HxhdKrB1UpSwfuMoZMVzPVELzbPWHdyN6PHU9CBFium9'
-      },
-      leo: {
-        chainId: 'solana',
-        pairId: '48ErBGMqiZekyLoCcebd7cS5KNQPzqr7QQAK9mzAPQGQ'
-      },
-      virgo: {
-        chainId: 'solana',
-        pairId: '5WcVjf8fzPkHaZqTSZDdbDFL6p2bLbAgEigxpevNrcRh'
-      },
-      libra: {
-        chainId: 'solana',
-        pairId: 'DTXPQjK4ae4h2Wc7D5Rpij8YmSQxqLuTcNKrpBCjcAN9'
-      },
-      scorpio: {
-        chainId: 'solana',
-        pairId: '3d2KYuMgj2yotNC6SKX4HNoeSWp4n8zqZSQ9kFH81Yta'
-      },
-      capricorn: {
-        chainId: 'solana',
-        pairId: '549aknNCvxbiqmikS6sAnY6Dbg37MeENWn6ZFBfc7sin'
-      },
-      aquarius: {
-        chainId: 'solana',
-        pairId: 'BygCEAhCNyWC8Co9yPa4K84NGkgkgMWdib2FG5hhuiUv'
-      },
-      pisces: {
-        chainId: 'solana',
-        pairId: 'Fzz8QrSV8sPKsTtHocwYARE8Zo6Rd4Wv2Ee4JtCuiDko'
-      }
-    };
-
-    const MARKET_CONTEXT_CACHE = new Map();
-    const unavailableMarketContext = (reason = 'unavailable') => ({
-      status: 'unavailable',
-      reason
-    });
     const toFiniteNumber = (value) => {
       if (value === null || value === undefined || value === '') return null;
       const n = Number(value);
@@ -980,67 +932,6 @@
       if (n === null) return '—';
       const sign = n > 0 ? '+' : '';
       return `${sign}${n.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}%`;
-    }
-    function formatDexId(value) {
-      if (!value) return '—';
-      return String(value).replace(/[-_]/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
-    }
-    function formatPairDate(value) {
-      const n = toFiniteNumber(value);
-      if (n === null) return '—';
-      const date = new Date(n);
-      if (Number.isNaN(date.getTime())) return '—';
-      return date.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' });
-    }
-    function parseMarketContextPayload(payload, config) {
-      const pairs = Array.isArray(payload?.pairs) ? payload.pairs : null;
-      if (!pairs?.length) return unavailableMarketContext('no-pair');
-      const pair = pairs.find((item) => eq(item?.pairAddress, config.pairId)) || pairs[0];
-      if (!pair || pair.chainId !== config.chainId || !pair.pairAddress) {
-        return unavailableMarketContext('malformed');
-      }
-      return {
-        status: 'ok',
-        pair: {
-          chainId: pair.chainId,
-          dexId: pair.dexId || '',
-          url: pair.url || '',
-          pairAddress: pair.pairAddress,
-          priceUsd: pair.priceUsd,
-          priceChange24h: pair.priceChange?.h24,
-          liquidityUsd: pair.liquidity?.usd,
-          marketCap: pair.marketCap,
-          pairCreatedAt: pair.pairCreatedAt
-        }
-      };
-    }
-    function loadMarketContext(config) {
-      if (!config?.chainId || !config?.pairId) {
-        return Promise.resolve(unavailableMarketContext('not-configured'));
-      }
-      const key = `${config.chainId}:${config.pairId}`;
-      if (MARKET_CONTEXT_CACHE.has(key)) return MARKET_CONTEXT_CACHE.get(key);
-
-      const url = `https://api.dexscreener.com/latest/dex/pairs/${encodeURIComponent(config.chainId)}/${encodeURIComponent(config.pairId)}`;
-      const request = fetch(url)
-        .then(async (response) => {
-          if (!response.ok) return unavailableMarketContext('http');
-          let payload;
-          try {
-            payload = await response.json();
-          } catch {
-            return unavailableMarketContext('json');
-          }
-          return parseMarketContextPayload(payload, config);
-        })
-        .catch(() => unavailableMarketContext('network'))
-        .then((result) => {
-          MARKET_CONTEXT_CACHE.set(key, Promise.resolve(result));
-          return result;
-        });
-
-      MARKET_CONTEXT_CACHE.set(key, request);
-      return request;
     }
 
     // Verifier lookup helpers — same registry semantics exposed by
@@ -1661,231 +1552,20 @@
       );
     }
 
-    function useMarketContext(sign, enabled) {
-      const signKey = sign?.asset?.sign;
-      const config = signKey ? ZODIAC_MARKET_PAIRS[signKey] : null;
-      const [state, setState] = useState(
-        config ? { status: 'idle' } : unavailableMarketContext('not-configured')
-      );
-
-      useEffect(() => {
-        let cancelled = false;
-        if (!config) {
-          setState(unavailableMarketContext('not-configured'));
-          return () => { cancelled = true; };
-        }
-        // Defer the third-party request until the panel is actually in
-        // view. Autoplay rotates the featured sign, and we don't want to
-        // fan out a fetch for every sign before the reader scrolls here.
-        if (!enabled) {
-          setState({ status: 'idle' });
-          return () => { cancelled = true; };
-        }
-
-        setState({ status: 'loading' });
-        loadMarketContext(config).then((result) => {
-          if (!cancelled) setState(result);
-        });
-
-        return () => { cancelled = true; };
-      }, [signKey, enabled]);
-
-      return { config, state };
-    }
-
-    function MarketContext({ sign }) {
-      const ref = useRef(null);
-      const [inView, setInView] = useState(false);
-      useEffect(() => {
-        const node = ref.current;
-        if (!node) return;
-        if (typeof IntersectionObserver === 'undefined') { setInView(true); return; }
-        const io = new IntersectionObserver(([entry]) => {
-          if (entry.isIntersecting) { setInView(true); io.disconnect(); }
-        }, { rootMargin: '0px 0px 15% 0px' });
-        io.observe(node);
-        return () => io.disconnect();
-      }, []);
-      const { state } = useMarketContext(sign, inView);
-      const pair = state.status === 'ok' ? state.pair : null;
-      const change = toFiniteNumber(pair?.priceChange24h);
-      const changeClass = change === null
-        ? ''
-        : change > 0
-          ? ' market__change--up'
-          : change < 0
-            ? ' market__change--down'
-            : '';
-      const cells = pair ? [
-        { k: 'Price USD', v: formatPriceUsd(pair.priceUsd), mono: true },
-        { k: '24H Change', v: formatPercent(pair.priceChange24h), mono: true, className: changeClass },
-        { k: 'Liquidity', v: formatUsdCompact(pair.liquidityUsd) },
-        { k: 'Market Cap', v: formatUsdCompact(pair.marketCap) },
-        { k: 'Pair Created', v: formatPairDate(pair.pairCreatedAt) },
-        { k: 'Source / DEX', v: formatDexId(pair.dexId) }
-      ] : [];
-
-      return (
-        <aside ref={ref} className="market" aria-label={`${sign.name} market context`}>
-          <div className="market__head">
-            <div>
-              <span className="market__label">Market Context</span>
-              <p className="market__copy">
-                Third-party market context. May be delayed or unavailable.
-              </p>
-            </div>
-            {pair?.url && (
-              <a className="market__source" href={pair.url} rel="noopener noreferrer">
-                Dex Screener ↗
-              </a>
-            )}
-          </div>
-
-          {state.status === 'ok' && (
-            <div className="market__grid">
-              {cells.map((cell) => (
-                <div className="market__cell" key={cell.k}>
-                  <div className="market__k">{cell.k}</div>
-                  <div className={'market__v' + (cell.mono ? ' market__v--mono' : '') + (cell.className || '')}>
-                    {cell.v}
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-
-          {state.status === 'loading' && (
-            <div className="market__body">
-              <p className="market__state">Loading market context.</p>
-            </div>
-          )}
-
-          {state.status === 'unavailable' && (
-            <div className="market__body">
-              <p className="market__state">Market context unavailable.</p>
-            </div>
-          )}
-        </aside>
-      );
-    }
-
-    function DetailPanel({ sign, animKey }) {
-      const reveal = useReveal();
-      return (
-        <section ref={reveal} className="sec reveal" aria-label="Detail panel">
-          <div className="sec__head">
-            <span className="sec__no">Nº 03</span>
-            <span className="line" />
-            <h2 className="sec__title">Museum label</h2>
-          </div>
-
-          <article className="detail fade-key" key={animKey + '-detail'}>
-            <a
-              className="detail__symbol-link"
-              href={`/${sign.asset.sign}/`}
-              aria-label={`${sign.name} — open catalogue entry`}
-              title="Open catalogue entry"
-            >
-              <img
-                className="detail__symbol"
-                src={`assets/icons/${sign.name.toLowerCase()}.png`}
-                alt=""
-                decoding="async"
-              />
-            </a>
-            <span className="detail__ticker">{sign.ticker}</span>
-            <h3 className="detail__name">{sign.name}</h3>
-
-            <div className="detail__rows">
-              <div className="detail__row">
-                <span className="k">Order</span>
-                <span className="v mono">{String(sign.order).padStart(2, '0')} / 12</span>
-              </div>
-              <div className="detail__row">
-                <span className="k">Element</span>
-                <span className="v">{sign.element}</span>
-              </div>
-              <div className="detail__row">
-                <span className="k">Modality</span>
-                <span className="v">{sign.modality}</span>
-              </div>
-              <div className="detail__row">
-                <span className="k">Ruling planet</span>
-                <span className="v">{sign.rulingPlanet}</span>
-              </div>
-              <div className="detail__row">
-                <span className="k">Archetype</span>
-                <span className="v">{sign.archetype}</span>
-              </div>
-              <div className="detail__row">
-                <span className="k">Shelf</span>
-                <span className="v">
-                  <a className="detail__shelf" href="https://astrofolio.xyz/" rel="noopener noreferrer">
-                    <img
-                      className="detail__shelf-icon"
-                      src={`/assets/sdk/zodiac-icons/circle/${sign.asset.sign}.png`}
-                      alt=""
-                      loading="lazy"
-                      decoding="async"
-                      width="20"
-                      height="20"
-                    />
-                    <span>On Astrofolio</span>
-                  </a>
-                </span>
-              </div>
-              <div className="detail__row">
-                <span className="k">Original · Solana</span>
-                <span className="v">
-                  {sign.representations.solana.address
-                    ? <CopyChip text={sign.representations.solana.address} display={truncateAddress(sign.representations.solana.address, 4, 4)} />
-                    : <span className="card__addr-pending">Forthcoming</span>}
-                </span>
-              </div>
-              <div className="detail__row">
-                <span className="k">Counterpart · Base</span>
-                <span className="v">
-                  <CopyChip text={sign.representations.base.address} display={truncateAddress(sign.representations.base.address, 6, 4)} />
-                </span>
-              </div>
-            </div>
-
-            <blockquote className="detail__bio">
-              {sign.shortBio}
-            </blockquote>
-
-            <MarketContext sign={sign} />
-
-            <a className="detail__entry" href={`/${sign.asset.sign}/`}>
-              <span>Full catalogue entry — lore, provenance &amp; acquisition</span>
-              <span className="detail__entry-arr" aria-hidden="true">→</span>
-            </a>
-          </article>
-        </section>
-      );
-    }
-
     function Philosophy() {
       const reveal = useReveal();
       return (
         <section ref={reveal} id="thesis" className="phil reveal" aria-label="Philosophy">
           <h2 className="sr-only">Thesis</h2>
           <div className="phil__sup">
-            <span className="label label--gold">Nº 04 · Thesis</span>
+            <span className="label label--gold">Nº 05 · Thesis</span>
             <span className="line" />
           </div>
           <p className="phil__body">
             <span className="dc">B</span>efore modern markets, nations, and digital
             identities, the zodiac gave civilization a symbolic language for
-            time, character, and destiny. Zodiacs.org preserves that memory
-            in a digital form built around identity, scarcity, and cultural
-            endurance.
+            time, character, and destiny.
           </p>
-          <div className="phil__sig">
-            <span>Composed in twelve parts</span>
-            <span>·</span>
-            <span>MMXXVI</span>
-          </div>
           <a className="phil__more" href="/thesis/">
             <span>Read the full thesis — belief is the oldest asset</span>
             <span className="phil__more-arr" aria-hidden="true">→</span>
@@ -2002,7 +1682,7 @@
       return (
         <section ref={reveal} id="pulse" className="sec reveal" aria-label="The Pulse">
           <div className="sec__head">
-            <span className="sec__no">Nº 05</span>
+            <span className="sec__no">Nº 07</span>
             <span className="line" />
             <h2 className="sec__title">The Pulse</h2>
           </div>
@@ -2269,14 +1949,11 @@
       return (
         <section ref={reveal} id="standings" className="sec reveal" aria-label="The standings">
           <div className="sec__head">
-            <span className="sec__no">Nº 06</span>
+            <span className="sec__no">Nº 08</span>
             <span className="line" />
             <h2 className="sec__title">The Standings</h2>
           </div>
 
-          <h3 className="standings__statement">
-            The registry does not rank. <span className="it">The market does.</span>
-          </h3>
           <p className="sec__lede">
             Twelve fixed lots, one open market. Prices are read live from
             DexScreener; ownership spread is read from the chain and
@@ -2367,6 +2044,12 @@
               </>
             )}
           </div>
+
+          <p className="standings__note">
+            Or read a single shelf: paste any public wallet to see which of
+            the Twelve it holds.
+          </p>
+          <ShelfViewer />
         </section>
       );
     }
@@ -2646,59 +2329,6 @@
       );
     }
 
-    function IdentityContextSection() {
-      const reveal = useReveal();
-      const cards = [
-        {
-          t: 'Verified Ownership',
-          d: 'Confirm whether a wallet holds official Zodiacs.org assets across native Solana and bridged Base representations.'
-        },
-        {
-          t: 'Symbolic Composition',
-          d: 'Turn held signs into element mix, modality mix, wheel coverage, and seasonal context.'
-        },
-        {
-          t: 'Built For Experiences',
-          d: 'Build profiles, receipts, seasonal moments, verifiers, and identity surfaces on app-neutral infrastructure.'
-        }
-      ];
-      return (
-        <section ref={reveal} id="identity" className="sec idctx reveal" aria-label="Identity Context">
-          <div className="sec__head">
-            <span className="sec__no">Nº 07</span>
-            <span className="line" />
-            <span className="sec__title">Identity Context</span>
-          </div>
-
-          <h2 className="idctx__statement">
-            Not just addresses.<br/>
-            <span className="it">A symbolic layer.</span>
-          </h2>
-
-          <p className="idctx__copy">
-            The SDK turns verified public ownership into display-ready symbolic
-            context: held signs, element balance, modality balance, current
-            season, native and bridged representations, and wheel coverage.
-            Apps can use this foundation to build profiles, receipts, seasonal
-            experiences, and astrology-native interfaces without custody,
-            signing, or transactions.
-          </p>
-
-          <div className="idctx__grid">
-            {cards.map((card, i) => (
-              <article className="idctx__card" key={card.t}>
-                <span className="idctx__num">{String(i + 1).padStart(2, '0')}</span>
-                <h3 className="idctx__card-title">{card.t}</h3>
-                <p className="idctx__card-copy">{card.d}</p>
-              </article>
-            ))}
-          </div>
-
-          <ShelfViewer />
-        </section>
-      );
-    }
-
     const ACCESS_PRIMARY = [
       { name: 'Coinbase DEX', tag: 'Base onchain venue',  logo: '/assets/venues/coinbase.svg', url: 'https://wallet.coinbase.com/' },
       { name: 'Jupiter',      tag: 'Solana aggregator',   logo: '/assets/venues/jupiter.svg',  url: 'https://jup.ag/' },
@@ -2727,15 +2357,10 @@
       return (
         <section ref={reveal} id="onchain-access" className="sec access reveal" aria-label="Onchain access">
           <div className="sec__head">
-            <span className="sec__no">Nº 08</span>
+            <span className="sec__no">Nº 04</span>
             <span className="line" />
             <span className="sec__title">Onchain access</span>
           </div>
-
-          <h2 className="access__statement">
-            Access Zodiacs across<br/>
-            <span className="it">leading onchain apps.</span>
-          </h2>
 
           <p className="access__copy">
             Find and verify official Zodiac token records through major Solana,
@@ -2743,22 +2368,9 @@
             through the Zodiacs.org registry.
           </p>
 
-          <div className="access__primary" role="list">
-            {ACCESS_PRIMARY.map(v => (
-              <a className="access__card access__card--featured" role="listitem" key={v.name}
-                 href={v.url} rel="noopener noreferrer">
-                <div className="access__logo" aria-hidden="true">
-                  <VenueLogo src={v.logo} />
-                </div>
-                <div className="access__name">{v.name}</div>
-                <div className="access__tag">{v.tag}</div>
-              </a>
-            ))}
-          </div>
-
-          <div className="access__rail-wrap" aria-label="More onchain venues">
+          <div className="access__rail-wrap" aria-label="Onchain venues">
             <div className="access__rail" role="list">
-              {ACCESS_RAIL.map(v => (
+              {[...ACCESS_PRIMARY, ...ACCESS_RAIL].map(v => (
                 <a className="access__card access__card--rail" role="listitem" key={v.name}
                    href={v.url} rel="noopener noreferrer">
                   <div className="access__logo" aria-hidden="true">
@@ -2774,77 +2386,19 @@
           <p className="access__note">
             Official mint addresses should always be verified through the
             Zodiacs.org <a className="access__note-link" href="#registry">registry</a> and{' '}
-            <a className="access__note-link" href="#sdk">SDK</a>.
+            <a className="access__note-link" href="#builders">SDK</a>.
           </p>
-
-          <div className="access__cta">
-            <p className="access__note" style={{ margin: 0 }}>
-              <a className="access__note-link" href="#verify">Verify official addresses →</a>
-            </p>
-            <p className="access__note" style={{ margin: 0 }}>
-              <a className="access__note-link" href="#sdk">View SDK ↗</a>
-            </p>
-          </div>
         </section>
       );
     }
 
     function ForBuildersSection() {
       const reveal = useReveal();
-      const capabilities = [
-        'Official asset verification',
-        'Native and bridged mappings',
-        'Public Zodiac Shelves',
-        'Identity receipts',
-        'Zodiac wheel views',
-        'Birth chart overlays',
-        'Wallet integrations',
-        'Gallery integrations',
-        'Public profiles',
-        'Share cards',
-        'Read-only ownership',
-        'Seasonal context'
+      const caps = [
+        { t: 'Verify', d: 'Recognize official Zodiacs.org representations across Solana and Base.' },
+        { t: 'Read', d: 'Read public ownership state without custody, signing, or transactions.' },
+        { t: 'Compose', d: 'Shape held signs into seasonal context, wheel coverage, and identity surfaces.' },
       ];
-
-      return (
-        <section ref={reveal} id="builders" className="sec builders reveal" aria-label="For Builders">
-          <div className="sec__head">
-            <span className="sec__no">Nº 09</span>
-            <span className="line" />
-            <span className="sec__title">For Builders</span>
-          </div>
-
-          <h2 className="builders__statement">
-            Infrastructure<br/>
-            <span className="it">with a symbolic surface.</span>
-          </h2>
-
-          <p className="builders__copy">
-            Zodiacs are not only a collection of assets. They are a verified
-            symbolic layer that can extend into astrology products, wallets,
-            galleries, profiles, share cards, and read-only ownership
-            experiences.
-          </p>
-
-          <div className="builders__capabilities" aria-label="Builder capabilities">
-            {capabilities.map((capability, i) => (
-              <div className="builders__cap" key={capability}>
-                <span className="builders__cap-k">{String(i + 1).padStart(2, '0')}</span>
-                <span className="builders__cap-v">{capability}</span>
-              </div>
-            ))}
-          </div>
-
-          <a className="btn btn--primary builders__cta" href="/sdk/">
-            <span>Explore the SDK</span>
-            <span className="arr">→</span>
-          </a>
-        </section>
-      );
-    }
-
-    function BuiltWithZodiacsSection() {
-      const reveal = useReveal();
       const examples = [
         {
           t: 'Astrology apps',
@@ -2881,19 +2435,40 @@
       ];
 
       return (
-        <section ref={reveal} id="built-with-zodiacs" className="sec built reveal" aria-label="What You Could Build">
+        <section ref={reveal} id="builders" className="sec builders reveal" aria-label="For Builders">
           <div className="sec__head">
-            <span className="sec__no">Nº 10</span>
+            <span className="sec__no">Nº 06</span>
             <span className="line" />
-            <h2 className="sec__title">What You Could Build</h2>
+            <span className="sec__title">For Builders</span>
           </div>
 
-          <p className="built__intro">
-            The registry is the visible surface. Beneath it is a small ecosystem
-            layer for the products people already want to make around symbolic
-            identity.
+          <h2 className="builders__statement">
+            Infrastructure<br/>
+            <span className="it">with a symbolic surface.</span>
+          </h2>
+
+          <p className="builders__copy">
+            Zodiacs are not only a collection of assets. They are a verified
+            symbolic layer that can extend into astrology products, wallets,
+            galleries, profiles, share cards, and read-only ownership
+            experiences. The SDK turns verified public ownership into
+            display-ready symbolic context: held signs, element balance,
+            modality balance, current season, native and bridged
+            representations, and wheel coverage.
           </p>
 
+          <div className="sdk__caps">
+            {caps.map((c, i) => (
+              <div className="sdk__cap" key={i}>
+                <div className="sdk__cap-t">{c.t}</div>
+                <div className="sdk__cap-d">{c.d}</div>
+              </div>
+            ))}
+          </div>
+
+          <CodeBlock label="install" code="npm i @zodiacs/sdk" />
+
+          <h3 className="label label--gold" style={{ margin: '34px 0 14px' }}>What You Could Build</h3>
           <div className="built__grid">
             {examples.map((example, i) => (
               <article className="built__item" key={example.t}>
@@ -2903,6 +2478,34 @@
               </article>
             ))}
           </div>
+
+          <div className="res">
+            <a className="res__item" href="https://www.npmjs.com/package/@zodiacs/sdk" rel="noopener noreferrer">
+              <span className="res__k">npm</span>
+              <span className="res__v">@zodiacs/sdk</span>
+              <span className="res__arr" aria-hidden="true">↗</span>
+            </a>
+            <a className="res__item" href="https://github.com/ZodiacsOfficial/sdk" rel="noopener noreferrer">
+              <span className="res__k">GitHub</span>
+              <span className="res__v">ZodiacsOfficial/sdk</span>
+              <span className="res__arr" aria-hidden="true">↗</span>
+            </a>
+            <a className="res__item" href="/registry/zodiacs.registry.json">
+              <span className="res__k">Record</span>
+              <span className="res__v">Public record</span>
+              <span className="res__arr" aria-hidden="true">↗</span>
+            </a>
+            <a className="res__item" href="/sdk/#examples">
+              <span className="res__k">Docs</span>
+              <span className="res__v">Guides &amp; reference</span>
+              <span className="res__arr" aria-hidden="true">↗</span>
+            </a>
+          </div>
+
+          <a className="btn btn--primary builders__cta" href="/sdk/">
+            <span>Explore the SDK</span>
+            <span className="arr">→</span>
+          </a>
         </section>
       );
     }
@@ -2912,7 +2515,7 @@
       return (
         <section ref={reveal} className="sec reveal" id="official-twelve" aria-label="The official twelve">
           <div className="sec__head">
-            <span className="sec__no">Nº 11</span>
+            <span className="sec__no">Nº 03</span>
             <span className="line" />
             <h2 className="sec__title">The Twelve</h2>
           </div>
@@ -3012,95 +2615,13 @@
       );
     }
 
-    function SdkSection() {
-      const reveal = useReveal();
-      const caps = [
-        { t: 'Verify', d: 'Recognize official Zodiacs.org representations across Solana and Base.' },
-        { t: 'Read', d: 'Read public ownership state without custody, signing, or transactions.' },
-        { t: 'Compose', d: 'Shape held signs into seasonal context, wheel coverage, and identity surfaces.' },
-      ];
-      return (
-        <section ref={reveal} id="sdk" className="sec reveal" aria-label="SDK">
-          <div className="sec__head">
-            <span className="sec__no">Nº 12</span>
-            <span className="line" />
-            <h2 className="sec__title">SDK</h2>
-          </div>
-          <p className="sec__lede">
-            The SDK is the public interface to the same registry shown here.
-            It gives apps verified facts for recognition, ownership display,
-            and symbolic identity context.
-          </p>
-
-          <div className="sdk__caps">
-            {caps.map((c, i) => (
-              <div className="sdk__cap" key={i}>
-                <div className="sdk__cap-t">{c.t}</div>
-                <div className="sdk__cap-d">{c.d}</div>
-              </div>
-            ))}
-          </div>
-
-          <CodeBlock label="install" code="npm i @zodiacs/sdk" />
-
-          <div className="sdk__icons" role="group" aria-label="Official sign icons, shipped with the SDK">
-            {SIGNS.map(s => (
-              <a
-                key={s.ticker}
-                className="sdk__icons-item"
-                href={`/${s.asset.sign}/`}
-                title={`${s.name} — catalogue entry`}
-                aria-label={`${s.name} — catalogue entry`}
-              >
-                <img
-                  src={`assets/sdk/zodiac-icons/circle/${s.asset.sign}.png`}
-                  alt=""
-                  loading="lazy"
-                  decoding="async"
-                />
-              </a>
-            ))}
-            <span className="sdk__icons-note">Official icon assets · all twelve · shipped with the SDK</span>
-          </div>
-
-          <div className="res">
-            <a className="res__item" href="/sdk/">
-              <span className="res__k">Page</span>
-              <span className="res__v">Explore the SDK</span>
-              <span className="res__arr" aria-hidden="true">↗</span>
-            </a>
-            <a className="res__item" href="https://www.npmjs.com/package/@zodiacs/sdk" rel="noopener noreferrer">
-              <span className="res__k">npm</span>
-              <span className="res__v">@zodiacs/sdk</span>
-              <span className="res__arr" aria-hidden="true">↗</span>
-            </a>
-            <a className="res__item" href="https://github.com/ZodiacsOfficial/sdk" rel="noopener noreferrer">
-              <span className="res__k">GitHub</span>
-              <span className="res__v">ZodiacsOfficial/sdk</span>
-              <span className="res__arr" aria-hidden="true">↗</span>
-            </a>
-            <a className="res__item" href="/registry/zodiacs.registry.json">
-              <span className="res__k">Record</span>
-              <span className="res__v">Public record</span>
-              <span className="res__arr" aria-hidden="true">↗</span>
-            </a>
-            <a className="res__item" href="/sdk/#examples">
-              <span className="res__k">Docs</span>
-              <span className="res__v">Guides &amp; reference</span>
-              <span className="res__arr" aria-hidden="true">↗</span>
-            </a>
-          </div>
-        </section>
-      );
-    }
-
     function SecuritySection() {
       const reveal = useReveal();
       const nots = ['No private keys', 'No custody', 'No signing', 'No swaps', 'No approvals', 'No transactions'];
       return (
         <section ref={reveal} id="security" className="sec reveal" aria-label="Read-only by design">
           <div className="sec__head">
-            <span className="sec__no">Nº 13</span>
+            <span className="sec__no">Nº 09</span>
             <span className="line" />
             <h2 className="sec__title">Read-only by design</h2>
           </div>
@@ -3198,7 +2719,7 @@
       return (
         <section ref={reveal} id="faq" className="sec reveal" aria-label="Questions">
           <div className="sec__head">
-            <span className="sec__no">Nº 14</span>
+            <span className="sec__no">Nº 10</span>
             <span className="line" />
             <h2 className="sec__title">Questions</h2>
           </div>
@@ -3307,16 +2828,12 @@
             <HeroActions />
             <RegistrySection />
             <VerifierSection />
-            <DetailPanel sign={sign} animKey={activeTicker} />
+            <CatalogGrid active={activeTicker} setActive={setActiveTicker} />
+            <OnchainAccessSection />
             <Philosophy />
+            <ForBuildersSection />
             <PulseSection />
             <StandingsSection />
-            <IdentityContextSection />
-            <OnchainAccessSection />
-            <ForBuildersSection />
-            <BuiltWithZodiacsSection />
-            <CatalogGrid active={activeTicker} setActive={setActiveTicker} />
-            <SdkSection />
             <SecuritySection />
             <FaqSection />
             <Closing />
