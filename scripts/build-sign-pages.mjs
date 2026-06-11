@@ -188,6 +188,7 @@ ${JSON.stringify(jsonLd(m), null, 2)}
       margin: 0; padding: 0;
       background: var(--bg); color: var(--ink);
       font-family: var(--serif);
+      -webkit-text-size-adjust: 100%; text-size-adjust: 100%;
       -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
     }
     html { scroll-behavior: smooth; scrollbar-color: rgba(201,169,97,0.14) #050609; scrollbar-width: thin; }
