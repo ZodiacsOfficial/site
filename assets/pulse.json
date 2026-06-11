@@ -1,16 +1,12 @@
 {
-  "capturedAt": "2026-06-10",
+  "capturedAt": "2026-06-11",
   "wikipedia": {
     "rangeDays": 30,
-    "from": "20260511",
-    "to": "20260609",
-    "twelveAvgDay": 17512,
-    "lastDay": 18563,
+    "from": "20260512",
+    "to": "20260610",
+    "twelveAvgDay": 17562,
+    "lastDay": 18167,
     "series": [
-      {
-        "date": "20260511",
-        "views": 16681
-      },
       {
         "date": "20260512",
         "views": 16748
@@ -126,42 +122,46 @@
       {
         "date": "20260609",
         "views": 18563
+      },
+      {
+        "date": "20260610",
+        "views": 18167
       }
     ],
     "perSignAvgDay": {
-      "aries": 1457,
-      "taurus": 1496,
-      "gemini": 3207,
-      "cancer": 1003,
-      "leo": 888,
+      "aries": 1456,
+      "taurus": 1510,
+      "gemini": 3229,
+      "cancer": 1005,
+      "leo": 887,
       "virgo": 1256,
-      "libra": 1118,
-      "scorpio": 1205,
-      "sagittarius": 2016,
+      "libra": 1119,
+      "scorpio": 1204,
+      "sagittarius": 2027,
       "capricorn": 1544,
-      "aquarius": 1243,
-      "pisces": 1081
+      "aquarius": 1246,
+      "pisces": 1079
     },
     "comparisons": [
       {
         "label": "Dogecoin",
-        "avgDay": 321,
+        "avgDay": 320,
         "multiple": 55
       },
       {
         "label": "Ethereum",
-        "avgDay": 692,
+        "avgDay": 696,
         "multiple": 25
       },
       {
         "label": "Solana",
-        "avgDay": 292,
-        "multiple": 60
+        "avgDay": 288,
+        "multiple": 61
       },
       {
         "label": "Shiba Inu",
         "avgDay": 91,
-        "multiple": 192
+        "multiple": 193
       }
     ]
   },
@@ -659,6 +659,7 @@
       }
     ]
   },
+  "trendsSigns": null,
   "estimates": {
     "capturedAt": "2026-06",
     "by": "Editorial estimates from public cumulative hashtag and search-volume figures",
