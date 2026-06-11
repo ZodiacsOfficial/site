@@ -77,22 +77,33 @@ remains the official registry and SDK source of truth.
 
 Main page:
 
-1. Hero
-2. Registry
-3. Verify
-4. Museum label / detail panel
-5. Thesis
-6. The Pulse
-7. Identity Context
-8. Onchain Access
-9. For Builders
-10. Built With Zodiacs
-11. The Twelve
-12. SDK
-13. Read-only by design
-14. Questions
-15. Closing
-16. Footer
+1. Cinematic opening (full-bleed ambient film, outside the .zd shell)
+2. Hero
+3. Registry
+4. Verify
+5. Museum label / detail panel
+6. Thesis
+7. The Pulse
+8. Identity Context
+9. Onchain Access
+10. For Builders
+11. Built With Zodiacs
+12. The Twelve
+13. SDK
+14. Read-only by design
+15. Questions
+16. Closing
+17. Footer
+
+The cinematic opening (CineHero in src/app.jsx) reuses the thesis page's
+astronomical-clock loop (`assets/art/zodiac-clock.mp4` + 1280 poster) at
+full viewport: poster paints first, the film pauses off-screen, and
+reduced-motion / data-saver visitors get the still. The landscape footage
+is crop-tuned for portrait via `object-position: 24% 50%` (the dial sits
+in the left half of the frame). To upgrade the footage later (e.g., a
+dedicated Seedance render), replace the mp4 + poster files or point the
+CineHero source at new ones — keep loops slow, dark, gold-on-near-black,
+seamless, muted, ≤ ~6 MB desktop / ~3 MB portrait.
 
 The visible section numbering currently runs:
 

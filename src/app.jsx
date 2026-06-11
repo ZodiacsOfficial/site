@@ -1092,6 +1092,63 @@
       );
     }
 
+    // ---- Cinematic opening — full-bleed ambient film ------------------------
+    // The first viewport: the astronomical clock loop (shared with the
+    // thesis hero) under a quiet wordmark. Poster paints first; the film
+    // pauses off-screen and stands down entirely for reduced motion or
+    // data-saver. Landscape footage, crop-tuned so the dial holds the
+    // frame on portrait screens. Lives outside the .zd shell — the shell
+    // clips horizontal overflow, and this act must run edge to edge.
+    function CineHero() {
+      const videoRef = useRef(null);
+      useEffect(() => {
+        const video = videoRef.current;
+        if (!video) return undefined;
+        const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+        const saveData = !!(navigator.connection && navigator.connection.saveData);
+        if (reduce.matches || saveData) {
+          video.removeAttribute('autoplay');
+          try { video.pause(); } catch { /* the poster stands in */ }
+          return undefined;
+        }
+        if (!('IntersectionObserver' in window)) return undefined;
+        const io = new IntersectionObserver(([entry]) => {
+          if (entry.isIntersecting) video.play().catch(() => {});
+          else video.pause();
+        }, { threshold: 0.05 });
+        io.observe(video);
+        return () => io.disconnect();
+      }, []);
+      return (
+        <section className="cine" aria-label="Zodiacs.org — the official registry of the Twelve">
+          <video
+            ref={videoRef}
+            className="cine__media"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            poster="assets/art/zodiac-clock-1280.jpg"
+            aria-hidden="true"
+            tabIndex={-1}
+          >
+            <source src="assets/art/zodiac-clock.mp4" type="video/mp4" />
+          </video>
+          <div className="cine__scrim" aria-hidden="true" />
+          <div className="cine__content">
+            <span className="cine__eyebrow">The Official Registry · Est. MMXXIV</span>
+            <p className="cine__mark">Zodiacs<span className="g">·</span>org</p>
+            <p className="cine__line">Belief is the oldest asset.</p>
+          </div>
+          <a className="cine__cue" href="#main" aria-label="Enter the registry">
+            <span>Enter the registry</span>
+            <span className="cine__cue-line" aria-hidden="true" />
+          </a>
+        </section>
+      );
+    }
+
     function Hero({ sign, animKey, active, setActive }) {
       const season = useMemo(() => currentSeason(), []);
       return (
@@ -3206,6 +3263,7 @@
           <a href="#main" className="skip">Skip to content</a>
           <div className="stars" aria-hidden="true" />
           <div className="grain" aria-hidden="true" />
+          <CineHero />
           <div className="zd">
             <Header />
             <Hero

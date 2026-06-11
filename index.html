@@ -280,6 +280,99 @@
       background-attachment: fixed;
     }
 
+    /* ── Cinematic opening — full-bleed ambient film ───────────── */
+
+    .cine {
+      position: relative;
+      height: 100vh;
+      height: 100svh;
+      min-height: 540px;
+      overflow: hidden;
+      background: var(--bg);
+      z-index: var(--z-base);
+    }
+    .cine__media {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      /* The dial sits in the left half of the footage — keep it in
+         frame when portrait screens crop the sides. */
+      object-position: 24% 50%;
+      filter: saturate(0.94) brightness(0.92);
+    }
+    .cine__scrim {
+      position: absolute; inset: 0;
+      background:
+        linear-gradient(180deg,
+          rgba(5,6,9,0.50) 0%,
+          rgba(5,6,9,0.04) 26%,
+          rgba(5,6,9,0.04) 52%,
+          rgba(5,6,9,0.86) 100%);
+      pointer-events: none;
+    }
+    .cine__content {
+      position: absolute; left: 0; right: 0; bottom: 17vh;
+      display: flex; flex-direction: column; align-items: center;
+      text-align: center;
+      padding: 0 24px;
+      animation: cineIn 1500ms var(--ease) 200ms both;
+    }
+    @keyframes cineIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: none; }
+    }
+    .cine__eyebrow {
+      font-family: var(--mono); font-size: 9px;
+      letter-spacing: 0.34em; text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 18px;
+      text-shadow: 0 1px 12px rgba(0,0,0,0.8);
+    }
+    .cine__mark {
+      margin: 0;
+      font-family: var(--serif); font-weight: 400;
+      font-size: clamp(38px, 9.6vw, 84px);
+      letter-spacing: 0.14em; text-transform: uppercase;
+      line-height: 1;
+      color: #ECE7D8;
+      text-shadow: 0 2px 30px rgba(0,0,0,0.7);
+      white-space: nowrap;
+    }
+    .cine__mark .g { color: var(--gold-bright); }
+    .cine__line {
+      margin: 16px 0 0;
+      font-family: var(--serif); font-style: italic;
+      font-size: clamp(15px, 2.6vw, 20px);
+      color: var(--ink-2);
+      text-shadow: 0 1px 16px rgba(0,0,0,0.75);
+      text-wrap: balance;
+    }
+    .cine__cue {
+      position: absolute; left: 50%; transform: translateX(-50%);
+      bottom: max(26px, env(safe-area-inset-bottom));
+      display: flex; flex-direction: column; align-items: center; gap: 10px;
+      text-decoration: none;
+      font-family: var(--mono); font-size: 8.5px;
+      letter-spacing: 0.3em; text-transform: uppercase;
+      color: var(--ink-dim);
+      transition: color 320ms var(--ease);
+    }
+    .cine__cue:hover { color: var(--gold-bright); }
+    .cine__cue-line {
+      width: 1px; height: 34px;
+      background: linear-gradient(180deg, var(--gold), transparent);
+      transform-origin: top;
+      animation: cineCue 2.8s var(--ease) infinite;
+    }
+    @keyframes cineCue {
+      0%, 100% { transform: scaleY(0.5); opacity: 0.45; }
+      50% { transform: scaleY(1); opacity: 1; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .cine__content { animation: none; }
+      .cine__cue-line { animation: none; }
+    }
+
     /* ── App shell ─────────────────────────────────────────────── */
 
     .zd {
