@@ -1198,14 +1198,13 @@
     function HeroActions() {
       return (
         <div className="hero__cta hero__cta--below">
-          <a className="btn btn--primary" href="#official-twelve">
-            <span>Browse the Twelve</span>
+          <a className="btn btn--primary" href="#verify">
+            <span>Verify an address</span>
             <span className="arr">→</span>
           </a>
-          <a className="btn btn--ghost" href="#verify">
-            <span>Verify an address</span>
-            <span className="arr" style={{ width: 28, height: 28, background: 'transparent', border: 0, color: 'var(--ink-dim)' }}>↗</span>
-          </a>
+          <p className="access__note" style={{ margin: 0, alignSelf: 'center' }}>
+            <a className="access__note-link" href="#official-twelve">Browse the Twelve →</a>
+          </p>
         </div>
       );
     }
@@ -1494,6 +1493,26 @@
               </div>
             ))}
           </dl>
+
+          <h3 className="label label--mute" style={{ margin: '34px 0 4px' }}>Provenance</h3>
+          <dl className="reg__meta">
+            <div className="detail__row">
+              <dt className="k">Maintainer</dt>
+              <dd className="v">Astrofolio</dd>
+            </div>
+            <div className="detail__row">
+              <dt className="k">Registry version</dt>
+              <dd className="v mono">{ZODIACS_REGISTRY.version}</dd>
+            </div>
+            <div className="detail__row">
+              <dt className="k">Last updated</dt>
+              <dd className="v mono">2026-05-30</dd>
+            </div>
+          </dl>
+
+          <p className="access__note" style={{ margin: '18px 0 0' }}>
+            <a className="access__note-link" href="/archive/">From the Archive — the February 2025 accident that broadcast the official Libra mint, verbatim. →</a>
+          </p>
         </section>
       );
     }
@@ -2759,14 +2778,12 @@
           </p>
 
           <div className="access__cta">
-            <a className="btn btn--primary" href="#verify">
-              <span>Verify official addresses</span>
-              <span className="arr">→</span>
-            </a>
-            <a className="btn btn--ghost" href="#sdk">
-              <span>View SDK</span>
-              <span className="arr" style={{ width: 28, height: 28, background: 'transparent', border: 0, color: 'var(--ink-dim)' }}>↗</span>
-            </a>
+            <p className="access__note" style={{ margin: 0 }}>
+              <a className="access__note-link" href="#verify">Verify official addresses →</a>
+            </p>
+            <p className="access__note" style={{ margin: 0 }}>
+              <a className="access__note-link" href="#sdk">View SDK ↗</a>
+            </p>
           </div>
         </section>
       );
@@ -2864,11 +2881,11 @@
       ];
 
       return (
-        <section ref={reveal} id="built-with-zodiacs" className="sec built reveal" aria-label="Built With Zodiacs">
+        <section ref={reveal} id="built-with-zodiacs" className="sec built reveal" aria-label="What You Could Build">
           <div className="sec__head">
             <span className="sec__no">Nº 10</span>
             <span className="line" />
-            <h2 className="sec__title">Built With Zodiacs</h2>
+            <h2 className="sec__title">What You Could Build</h2>
           </div>
 
           <p className="built__intro">
@@ -3216,10 +3233,9 @@
           <p className="close__sub">
             A symbolic collection for a digital era.
           </p>
-          <a className="btn btn--primary" href="#official-twelve" style={{ width: '100%', justifyContent: 'space-between' }}>
-            <span>View the Twelve</span>
-            <span className="arr">→</span>
-          </a>
+          <p className="access__note" style={{ margin: '0 auto' }}>
+            <a className="access__note-link" href="#official-twelve">View the Twelve →</a>
+          </p>
         </section>
       );
     }
@@ -3242,6 +3258,10 @@
             <a href="/archive/">Archive</a>
           </div>
             <div>Read-only</div>
+          </div>
+          <div className="ftr__row">
+            <div>Zodiacs.org is maintained by Astrofolio.</div>
+            <div>Maintainer</div>
           </div>
           <div className="ftr__row">
             <div className="ftr__legal" aria-label="Official channels">

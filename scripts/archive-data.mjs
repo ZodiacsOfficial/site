@@ -30,7 +30,7 @@ export const ARCHIVE_ENTRIES = [
     id: 'accidental-libra',
     date: '2025-02-17',
     type: 'moment',
-    title: 'The accidental Libra',
+    title: 'Dave Portnoy buys the official Libra by accident, posts its mint verbatim.',
     lede:
       'During the collapse of an unrelated token called LIBRA, Dave Portnoy ' +
       'bought the official Zodiac Libra by mistake, posted its mint verbatim ' +
