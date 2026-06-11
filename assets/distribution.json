@@ -9,12 +9,26 @@
       "top10Pct": 28.11,
       "top20Pct": 38.83
     },
+    "taurus": {
+      "supply": "999971193.609047",
+      "accountsSampled": 20,
+      "top1Pct": 9.92,
+      "top10Pct": 25.88,
+      "top20Pct": 37.48
+    },
     "gemini": {
       "supply": "999873370.845281",
       "accountsSampled": 20,
       "top1Pct": 7.58,
       "top10Pct": 22.69,
       "top20Pct": 32.75
+    },
+    "cancer": {
+      "supply": "999939090.363424",
+      "accountsSampled": 20,
+      "top1Pct": 10.86,
+      "top10Pct": 25.24,
+      "top20Pct": 35.4
     },
     "leo": {
       "supply": "999799059.031383",
@@ -30,12 +44,33 @@
       "top10Pct": 27.45,
       "top20Pct": 38.13
     },
+    "libra": {
+      "supply": "999795492.095314",
+      "accountsSampled": 20,
+      "top1Pct": 12.56,
+      "top10Pct": 27.31,
+      "top20Pct": 37.58
+    },
     "scorpio": {
       "supply": "999991345.402552",
       "accountsSampled": 20,
       "top1Pct": 10.4,
       "top10Pct": 25.91,
       "top20Pct": 36.91
+    },
+    "sagittarius": {
+      "supply": "999522043.557561",
+      "accountsSampled": 20,
+      "top1Pct": 9.83,
+      "top10Pct": 28.11,
+      "top20Pct": 38.78
+    },
+    "aquarius": {
+      "supply": "999989951.789259",
+      "accountsSampled": 20,
+      "top1Pct": 10.57,
+      "top10Pct": 25.22,
+      "top20Pct": 36.05
     },
     "pisces": {
       "supply": "999916175.753681",
