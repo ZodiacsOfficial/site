@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="theme-color" content="#08090C" />
+  <meta name="theme-color" content="#0D0A07" />
   <meta name="color-scheme" content="dark" />
   <title>Capricorn — Lot X of XII · Official CAPRICORN Record | Zodiacs.org</title>
   <meta name="description" content="The Goat-Fish. The gate of return. The official Capricorn record: lore and provenance of the sign, native Solana mint, official Base representation, live market context, and acquisition." />
@@ -23,11 +23,11 @@
   <meta name="twitter:description" content="The Goat-Fish. The gate of return. Provenance from Babylon to the onchain record." />
   <meta name="twitter:image" content="https://zodiacs.org/assets/og/capricorn.png" />
 
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%2308090C'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' font-family='Cormorant Garamond, Georgia, serif' font-style='italic' font-size='42' fill='%23DEC07A'%3EZ%3C/text%3E%3C/svg%3E" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%230D0A07'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' font-family='Cormorant Garamond, Georgia, serif' font-style='italic' font-size='42' fill='%23E9C766'%3EZ%3C/text%3E%3C/svg%3E" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
 
   <script type="application/ld+json">
 {
@@ -83,14 +83,16 @@
 
   <style>
     :root {
-      --bg: #050609; --bg-2: #080A0F;
-      --surface: #10131A; --surface-2: #161A23;
-      --hair: rgba(201,169,97,0.10); --hair-2: rgba(201,169,97,0.22); --hair-3: rgba(201,169,97,0.42);
-      --gold: #C9A961; --gold-bright: #DEC07A; --gold-deep: #8E7541;
-      --live: #6FAE7C;
-      --ink: #DCD7C7; --ink-2: #BDB8A9; --ink-dim: #8A8576; --ink-mute: #88826A;
+      --bg: #0A0705; --bg-2: #0E0A07;
+      --surface: #171109; --surface-2: #1E160C;
+      --hair: rgba(210,167,78,0.10); --hair-2: rgba(210,167,78,0.22); --hair-3: rgba(210,167,78,0.42);
+      --gold: #D2A74E; --gold-bright: #E9C766; --gold-deep: #9A7733;
+      --live: #5FA08C;
+      --ink: #E8DEC4; --ink-2: #C9BDA1; --ink-dim: #988A6E; --ink-mute: #968860;
       --serif: 'Cormorant Garamond', 'EB Garamond', Georgia, Cambria, serif;
       --mono: 'JetBrains Mono', ui-monospace, Menlo, Consolas, monospace;
+      --display: 'Cinzel', 'Cormorant Garamond', Georgia, serif;
+      --vermilion: #D4603F;
       --ease: cubic-bezier(0.32, 0.72, 0, 1);
       --z-grain: 1; --z-base: 10; --z-nav: 40;
     }
@@ -102,13 +104,13 @@
       -webkit-text-size-adjust: 100%; text-size-adjust: 100%;
       -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
     }
-    html { scroll-behavior: smooth; scrollbar-color: rgba(201,169,97,0.14) #050609; scrollbar-width: thin; }
+    html { scroll-behavior: smooth; scrollbar-color: rgba(210,167,78,0.14) #0A0705; scrollbar-width: thin; }
     @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
     body {
       min-height: 100dvh;
       background:
-        radial-gradient(120% 60% at 50% -10%, rgba(201,169,97,0.05), transparent 62%),
-        radial-gradient(120% 80% at 50% 110%, rgba(201,169,97,0.02), transparent 62%),
+        radial-gradient(120% 60% at 50% -10%, rgba(210,167,78,0.05), transparent 62%),
+        radial-gradient(120% 80% at 50% 110%, rgba(210,167,78,0.02), transparent 62%),
         var(--bg);
     }
     [id] { scroll-margin-top: 96px; }
@@ -117,7 +119,7 @@
     button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
     :focus-visible {
       outline: 1px solid var(--gold); outline-offset: 3px;
-      box-shadow: 0 0 0 4px rgba(201,169,97,0.12);
+      box-shadow: 0 0 0 4px rgba(210,167,78,0.12);
     }
     :focus:not(:focus-visible) { outline: 0; }
     .skip {
@@ -136,24 +138,24 @@
     .grain {
       position: fixed; inset: 0; pointer-events: none; z-index: var(--z-grain);
       opacity: 0.035; mix-blend-mode: overlay;
-      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.95  0 0 0 0 0.85  0 0 0 0 0.5  0 0 0 0.85 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.93  0 0 0 0 0.80  0 0 0 0 0.42  0 0 0 0.85 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
     }
     .stars {
       position: fixed; inset: 0; pointer-events: none; z-index: var(--z-grain);
       opacity: 0.34; mix-blend-mode: screen;
       background-image:
-        radial-gradient(1px 1px at 8% 12%, rgba(232,227,212,0.7), transparent 60%),
-        radial-gradient(1px 1px at 22% 38%, rgba(201,169,97,0.6), transparent 60%),
-        radial-gradient(1px 1px at 71% 8%, rgba(232,227,212,0.45), transparent 60%),
-        radial-gradient(1px 1px at 88% 24%, rgba(201,169,97,0.55), transparent 60%),
-        radial-gradient(1px 1px at 44% 62%, rgba(232,227,212,0.4), transparent 60%),
-        radial-gradient(1px 1px at 92% 71%, rgba(232,227,212,0.5), transparent 60%);
+        radial-gradient(1px 1px at 8% 12%, rgba(232,222,196,0.7), transparent 60%),
+        radial-gradient(1px 1px at 22% 38%, rgba(210,167,78,0.6), transparent 60%),
+        radial-gradient(1px 1px at 71% 8%, rgba(232,222,196,0.45), transparent 60%),
+        radial-gradient(1px 1px at 88% 24%, rgba(210,167,78,0.55), transparent 60%),
+        radial-gradient(1px 1px at 44% 62%, rgba(232,222,196,0.4), transparent 60%),
+        radial-gradient(1px 1px at 92% 71%, rgba(232,222,196,0.5), transparent 60%);
       background-attachment: fixed;
     }
 
     .label {
-      font-family: var(--mono); font-weight: 400; font-size: 10px;
-      letter-spacing: 0.22em; text-transform: uppercase; color: var(--ink-dim);
+      font-family: var(--display); font-weight: 500; font-size: 9.5px;
+      letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-dim);
     }
     .label--gold { color: var(--gold); }
 
@@ -167,17 +169,17 @@
       pointer-events: auto;
       display: inline-flex; align-items: center; gap: 16px;
       height: 48px; padding: 0 6px 0 18px;
-      background: rgba(11,13,18,0.72);
+      background: rgba(18,13,9,0.72);
       backdrop-filter: saturate(160%) blur(18px);
       -webkit-backdrop-filter: saturate(160%) blur(18px);
       border: 1px solid var(--hair-2);
       box-shadow:
-        inset 0 1px 0 rgba(222,192,122,0.10), inset 0 -1px 0 rgba(0,0,0,0.4),
+        inset 0 1px 0 rgba(233,199,102,0.10), inset 0 -1px 0 rgba(0,0,0,0.4),
         0 8px 28px -12px rgba(0,0,0,0.6), 0 0 0 1px rgba(0,0,0,0.35);
     }
     .hdr a { text-decoration: none; }
     .hdr__mark {
-      font-family: var(--serif); font-size: 15px; letter-spacing: 0.18em;
+      font-family: var(--display); font-weight: 400; font-size: 13px; letter-spacing: 0.14em;
       text-transform: uppercase; color: var(--ink); white-space: nowrap;
     }
     .hdr__mark .dim { color: var(--gold); font-weight: 500; }
@@ -193,7 +195,7 @@
     .hdr__nav:hover { color: var(--gold-bright); }
     .hdr__nav .chip {
       display: inline-grid; place-items: center; width: 26px; height: 26px;
-      border: 1px solid var(--hair-2); background: rgba(201,169,97,0.05);
+      border: 1px solid var(--hair-2); background: rgba(210,167,78,0.05);
       color: var(--gold); font-size: 11px;
       transition: transform 420ms var(--ease), border-color 320ms var(--ease);
     }
@@ -212,10 +214,10 @@
     .lot__eyebrow {
       display: inline-flex; align-items: center; gap: 10px;
       margin-bottom: 26px; padding: 6px 14px 6px 10px;
-      background: rgba(201,169,97,0.05);
+      background: rgba(210,167,78,0.05);
       border: 1px solid var(--hair-2); border-radius: 999px;
-      font-family: var(--mono); font-size: 9.5px;
-      letter-spacing: 0.26em; text-transform: uppercase; color: var(--gold);
+      font-family: var(--display); font-weight: 500; font-size: 9px;
+      letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold);
     }
     .lot__eyebrow .g { color: var(--ink-dim); }
     .lot__title {
@@ -248,11 +250,11 @@
     .card {
       position: relative;
       background:
-        radial-gradient(120% 60% at 50% 0%, rgba(201,169,97,0.06), transparent 55%),
-        linear-gradient(180deg, #14171F 0%, #0C0E14 100%);
+        radial-gradient(120% 60% at 50% 0%, rgba(210,167,78,0.06), transparent 55%),
+        linear-gradient(180deg, #1D150C 0%, #100B06 100%);
       border: 1px solid var(--hair-3);
       box-shadow:
-        inset 0 1px 0 rgba(222,192,122,0.14), inset 0 -1px 0 rgba(0,0,0,0.5),
+        inset 0 1px 0 rgba(233,199,102,0.14), inset 0 -1px 0 rgba(0,0,0,0.5),
         0 18px 40px -22px rgba(0,0,0,0.7), 0 0 0 1px rgba(0,0,0,0.4);
     }
     .card__inner { padding: 18px; border: 1px solid var(--hair); margin: 8px; }
@@ -274,7 +276,7 @@
     }
     .stage::after {
       content: ""; position: absolute; left: 14%; right: 14%; bottom: 20px; height: 1px;
-      background: linear-gradient(90deg, transparent 0%, rgba(201,169,97,0.55) 22%, rgba(201,169,97,0.55) 78%, transparent 100%);
+      background: linear-gradient(90deg, transparent 0%, rgba(210,167,78,0.55) 22%, rgba(210,167,78,0.55) 78%, transparent 100%);
       pointer-events: none; z-index: 0;
     }
     .stage img {
@@ -340,7 +342,7 @@
       content: ""; position: absolute; left: -26px; top: 7px;
       width: 9px; height: 9px; border-radius: 50%;
       background: var(--bg); border: 1px solid var(--gold);
-      box-shadow: 0 0 10px rgba(201,169,97,0.35);
+      box-shadow: 0 0 10px rgba(210,167,78,0.35);
     }
     .prov__era {
       display: flex; align-items: baseline; gap: 10px; margin-bottom: 6px;
@@ -356,7 +358,7 @@
     /* Record (addresses) */
     .rec {
       border: 1px solid var(--hair-2);
-      background: linear-gradient(180deg, rgba(201,169,97,0.03), transparent 40%), var(--surface);
+      background: linear-gradient(180deg, rgba(210,167,78,0.03), transparent 40%), var(--surface);
       padding: 22px 20px 20px;
     }
     .rec__row {
@@ -373,7 +375,7 @@
     .rec__link {
       font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.16em;
       text-transform: uppercase; color: var(--gold); text-decoration: none;
-      border-bottom: 1px solid rgba(201,169,97,0.32); padding-bottom: 2px;
+      border-bottom: 1px solid rgba(210,167,78,0.32); padding-bottom: 2px;
       transition: color 280ms var(--ease), border-bottom-color 280ms var(--ease);
     }
     .rec__link:hover { color: var(--gold-bright); border-bottom-color: var(--gold); }
@@ -381,20 +383,20 @@
     .copychip {
       display: inline-flex; align-items: center; gap: 8px;
       padding: 6px 10px; border: 1px solid var(--hair-2);
-      background: rgba(201,169,97,0.04); color: var(--ink-2);
+      background: rgba(210,167,78,0.04); color: var(--ink-2);
       cursor: pointer; font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.04em;
       transition: border-color 280ms var(--ease), color 280ms var(--ease), transform 220ms var(--ease);
     }
     .copychip:hover { border-color: var(--hair-3); color: var(--ink); }
     .copychip:active { transform: scale(0.97); }
     .copychip__icon { color: var(--gold); font-size: 12px; line-height: 1; }
-    .copychip.is-copied { border-color: rgba(111,174,124,0.55); color: var(--live); }
+    .copychip.is-copied { border-color: rgba(95,160,140,0.55); color: var(--live); }
     .copychip.is-copied .copychip__icon { color: var(--live); }
 
     /* Market panel */
     .market {
       position: relative; border: 1px solid var(--hair);
-      background: linear-gradient(180deg, rgba(201,169,97,0.025), transparent 62%), rgba(8,10,14,0.52);
+      background: linear-gradient(180deg, rgba(210,167,78,0.025), transparent 62%), rgba(14,10,7,0.52);
     }
     .market::after {
       content: ""; position: absolute; top: 0; right: 0; width: 10px; height: 10px;
@@ -429,7 +431,7 @@
     .market__v { font-family: var(--serif); font-style: italic; font-size: 15px; line-height: 1.15; color: var(--ink-2); }
     .market__v--mono { font-family: var(--mono); font-style: normal; font-size: 11.5px; letter-spacing: 0.03em; }
     .market__v--up { color: var(--gold-bright); }
-    .market__v--down { color: #B07A6E; }
+    .market__v--down { color: var(--vermilion); }
     .market__state { margin: 0; padding: 15px 16px 16px; font-family: var(--serif); font-style: italic; font-size: 13.5px; color: var(--ink-mute); }
     .market__state::before { content: "—"; margin-right: 8px; font-style: normal; }
 
@@ -447,7 +449,7 @@
       font-family: var(--mono); font-size: 11px; letter-spacing: 0.26em;
       text-transform: uppercase; color: var(--ink);
       border: 1px solid var(--hair-3); text-decoration: none;
-      box-shadow: inset 0 1px 0 rgba(222,192,122,0.12), inset 0 -1px 0 rgba(0,0,0,0.5);
+      box-shadow: inset 0 1px 0 rgba(233,199,102,0.12), inset 0 -1px 0 rgba(0,0,0,0.5);
       transition: border-color 420ms var(--ease), color 420ms var(--ease), transform 220ms var(--ease);
     }
     .btn:hover { border-color: var(--gold); color: var(--gold-bright); }
@@ -461,17 +463,17 @@
     .btn--primary:hover::before { border-color: var(--hair-2); }
     .btn .arr {
       display: inline-grid; place-items: center; width: 40px; height: 40px;
-      background: rgba(201,169,97,0.06); border: 1px solid var(--hair-2);
+      background: rgba(210,167,78,0.06); border: 1px solid var(--hair-2);
       color: var(--gold); font-size: 13px;
       transition: transform 420ms var(--ease), background 320ms var(--ease), border-color 320ms var(--ease);
     }
-    .btn:hover .arr { transform: translate(3px, -1px); background: rgba(201,169,97,0.14); border-color: var(--gold); }
+    .btn:hover .arr { transform: translate(3px, -1px); background: rgba(210,167,78,0.14); border-color: var(--gold); }
     .acq__note {
       margin: 18px 0 0; font-family: var(--mono); font-size: 9.5px;
       letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-mute);
       max-width: 60ch; line-height: 1.8;
     }
-    .acq__note a { color: var(--ink-dim); text-decoration: none; border-bottom: 1px solid rgba(201,169,97,0.22); }
+    .acq__note a { color: var(--ink-dim); text-decoration: none; border-bottom: 1px solid rgba(210,167,78,0.22); }
     .acq__note a:hover { color: var(--gold-bright); border-bottom-color: var(--gold); }
     .acq__shelf {
       margin: 18px 0 0;
@@ -495,10 +497,10 @@
       background: var(--bg); padding: 20px 18px 22px; text-decoration: none;
       transition: background 320ms var(--ease);
     }
-    .nextlot a:hover { background: rgba(201,169,97,0.05); }
+    .nextlot a:hover { background: rgba(210,167,78,0.05); }
     .nextlot .dir { font-family: var(--mono); font-size: 9px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--ink-mute); }
     .nextlot .nm { font-family: var(--serif); font-style: italic; font-size: 24px; color: var(--ink); line-height: 1; }
-    .nextlot .lt { font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.22em; color: var(--gold); text-transform: uppercase; }
+    .nextlot .lt { font-family: var(--display); font-weight: 500; font-size: 9px; letter-spacing: 0.16em; color: var(--gold); text-transform: uppercase; }
     .nextlot a:last-child { text-align: right; align-items: flex-end; }
 
     .strip {
@@ -523,7 +525,7 @@
     }
     .ftr__row { display: flex; justify-content: space-between; align-items: center; gap: 14px; flex-wrap: wrap; }
     .ftr__row + .ftr__row { margin-top: 18px; padding-top: 18px; border-top: 1px solid var(--hair); }
-    .ftr .mark { color: var(--ink-2); letter-spacing: 0.18em; font-family: var(--serif); text-transform: none; font-size: 13px; }
+    .ftr .mark { color: var(--ink-2); letter-spacing: 0.14em; font-family: var(--display); font-weight: 400; text-transform: none; font-size: 11.5px; }
     .ftr .mark .g { color: var(--gold); }
     .ftr__links { display: inline-flex; flex-wrap: wrap; gap: 12px 16px; }
     .ftr__links a { color: var(--ink-dim); text-decoration: none; transition: color 320ms var(--ease); }
@@ -570,7 +572,7 @@
           <span class="card__corner card__corner--bl"></span><span class="card__corner card__corner--br"></span>
           <div class="card__inner">
             <div class="card__head">
-              <span class="label">№ 10 / 12</span>
+              <span class="label">Nº 10 / 12</span>
               <span class="label label--gold">Official record</span>
             </div>
             <div class="stage">

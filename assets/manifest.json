@@ -318,73 +318,73 @@
         "path": "assets/og/aries.png",
         "width": 1200,
         "height": 630,
-        "bytes": 459506
+        "bytes": 513659
       },
       "taurus": {
         "path": "assets/og/taurus.png",
         "width": 1200,
         "height": 630,
-        "bytes": 461925
+        "bytes": 514567
       },
       "gemini": {
         "path": "assets/og/gemini.png",
         "width": 1200,
         "height": 630,
-        "bytes": 485861
+        "bytes": 537360
       },
       "cancer": {
         "path": "assets/og/cancer.png",
         "width": 1200,
         "height": 630,
-        "bytes": 462743
+        "bytes": 516646
       },
       "leo": {
         "path": "assets/og/leo.png",
         "width": 1200,
         "height": 630,
-        "bytes": 427857
+        "bytes": 483577
       },
       "virgo": {
         "path": "assets/og/virgo.png",
         "width": 1200,
         "height": 630,
-        "bytes": 446793
+        "bytes": 503368
       },
       "libra": {
         "path": "assets/og/libra.png",
         "width": 1200,
         "height": 630,
-        "bytes": 452680
+        "bytes": 504327
       },
       "scorpio": {
         "path": "assets/og/scorpio.png",
         "width": 1200,
         "height": 630,
-        "bytes": 470154
+        "bytes": 523857
       },
       "sagittarius": {
         "path": "assets/og/sagittarius.png",
         "width": 1200,
         "height": 630,
-        "bytes": 430243
+        "bytes": 484911
       },
       "capricorn": {
         "path": "assets/og/capricorn.png",
         "width": 1200,
         "height": 630,
-        "bytes": 509744
+        "bytes": 563234
       },
       "aquarius": {
         "path": "assets/og/aquarius.png",
         "width": 1200,
         "height": 630,
-        "bytes": 542188
+        "bytes": 593825
       },
       "pisces": {
         "path": "assets/og/pisces.png",
         "width": 1200,
         "height": 630,
-        "bytes": 478642
+        "bytes": 530761
       }
     }
   }

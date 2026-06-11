@@ -303,10 +303,13 @@ Design-discipline note (taste-skill):
   input, error below, skeleton loaders, composed empty states), quote
   treatment, copy audits, contrast, and motion restraint.
 - Consciously retained against its generic defaults, as established
-  brand: Cormorant Garamond display serif (the skill's own
-  editorial/heritage exception), the `№` section numbering system, the
-  live pulse dot, and em-dashes inside existing approved copy and
-  verbatim quotes. New editorial copy avoids em-dashes.
+  brand: Cormorant Garamond body/editorial serif plus Cinzel engraved
+  display caps (the skill's editorial/heritage exception; the gilt +
+  parchment palette qualifies under its override clause because it is
+  sampled from the brand's own hero film), the lot-numbering system
+  (written `Nº` because Cinzel lacks the `№` glyph), the live pulse
+  dot, and em-dashes inside existing approved copy and verbatim
+  quotes. New editorial copy avoids em-dashes.
 
 ## Visual System
 
@@ -314,13 +317,22 @@ Primary file:
 
 - `index.html`
 
+The palette is anchored to the hero film (the painted astronomical
+dial): warm lacquer blacks, gilt gold, parchment inks, with the dial's
+vermilion and painted teal as small semantic accents.
+
 The site currently uses:
 
-- `Cormorant Garamond` for editorial serif text
-- `JetBrains Mono` for labels and system text
-- Dark background around `#050609`
-- Gold accent around `#c9a961` / `#dec07a`
-- Hairline borders through rgba gold values
+- `Cormorant Garamond` for editorial serif text (italics live here —
+  Cinzel has none)
+- `Cinzel` (400/500) for the engraved display layer: wordmarks,
+  eyebrows/labels, section and lot numerals, archive year markers
+- `JetBrains Mono` for data readouts and system text (instrument layer)
+- Dark lacquer background around `#0A0705`
+- Gilt accent around `#D2A74E` / `#E9C766` (matched to the film's dial)
+- Vermilion `#D4603F` strictly for market-down; teal-sage `#5FA08C` for
+  live states; lapis `#3E6378` for rare decorative washes, never text
+- Hairline borders through rgba(210,167,78) values
 
 Keep cards sharp and restrained. Avoid rounded SaaS cards, bright gradients, oversized decorative blobs, or heavy chart-like UI.
 

@@ -1467,7 +1467,7 @@
       return (
         <section ref={reveal} id="registry" className="sec reveal" aria-label="Registry">
           <div className="sec__head">
-            <span className="sec__no">№ 01</span>
+            <span className="sec__no">Nº 01</span>
             <span className="line" />
             <h2 className="sec__title">Registry</h2>
           </div>
@@ -1518,7 +1518,7 @@
       return (
         <section ref={reveal} id="verify" className="sec reveal" aria-label="Verify">
           <div className="sec__head">
-            <span className="sec__no">№ 02</span>
+            <span className="sec__no">Nº 02</span>
             <span className="line" />
             <h2 className="sec__title">Verify</h2>
           </div>
@@ -1755,7 +1755,7 @@
       return (
         <section ref={reveal} className="sec reveal" aria-label="Detail panel">
           <div className="sec__head">
-            <span className="sec__no">№ 03</span>
+            <span className="sec__no">Nº 03</span>
             <span className="line" />
             <h2 className="sec__title">Museum label</h2>
           </div>
@@ -1852,7 +1852,7 @@
         <section ref={reveal} id="thesis" className="phil reveal" aria-label="Philosophy">
           <h2 className="sr-only">Thesis</h2>
           <div className="phil__sup">
-            <span className="label label--gold">№ 04 · Thesis</span>
+            <span className="label label--gold">Nº 04 · Thesis</span>
             <span className="line" />
           </div>
           <p className="phil__body">
@@ -1983,7 +1983,7 @@
       return (
         <section ref={reveal} id="pulse" className="sec reveal" aria-label="The Pulse">
           <div className="sec__head">
-            <span className="sec__no">№ 05</span>
+            <span className="sec__no">Nº 05</span>
             <span className="line" />
             <h2 className="sec__title">The Pulse</h2>
           </div>
@@ -2176,7 +2176,7 @@
       );
     }
 
-    // ---- № 06 · The standings ----------------------------------------------
+    // ---- Nº 06 · The standings ----------------------------------------------
     // Twelve lots, read from the market. Two labeled layers, same honesty
     // contract as the Pulse: live DexScreener reads, and a weekly on-chain
     // distribution snapshot committed to the repository
@@ -2250,7 +2250,7 @@
       return (
         <section ref={reveal} id="standings" className="sec reveal" aria-label="The standings">
           <div className="sec__head">
-            <span className="sec__no">№ 06</span>
+            <span className="sec__no">Nº 06</span>
             <span className="line" />
             <h2 className="sec__title">The Standings</h2>
           </div>
@@ -2646,7 +2646,7 @@
       return (
         <section ref={reveal} id="identity" className="sec idctx reveal" aria-label="Identity Context">
           <div className="sec__head">
-            <span className="sec__no">№ 07</span>
+            <span className="sec__no">Nº 07</span>
             <span className="line" />
             <span className="sec__title">Identity Context</span>
           </div>
@@ -2708,7 +2708,7 @@
       return (
         <section ref={reveal} id="onchain-access" className="sec access reveal" aria-label="Onchain access">
           <div className="sec__head">
-            <span className="sec__no">№ 08</span>
+            <span className="sec__no">Nº 08</span>
             <span className="line" />
             <span className="sec__title">Onchain access</span>
           </div>
@@ -2792,7 +2792,7 @@
       return (
         <section ref={reveal} id="builders" className="sec builders reveal" aria-label="For Builders">
           <div className="sec__head">
-            <span className="sec__no">№ 09</span>
+            <span className="sec__no">Nº 09</span>
             <span className="line" />
             <span className="sec__title">For Builders</span>
           </div>
@@ -2866,7 +2866,7 @@
       return (
         <section ref={reveal} id="built-with-zodiacs" className="sec built reveal" aria-label="Built With Zodiacs">
           <div className="sec__head">
-            <span className="sec__no">№ 10</span>
+            <span className="sec__no">Nº 10</span>
             <span className="line" />
             <h2 className="sec__title">Built With Zodiacs</h2>
           </div>
@@ -2895,7 +2895,7 @@
       return (
         <section ref={reveal} className="sec reveal" id="official-twelve" aria-label="The official twelve">
           <div className="sec__head">
-            <span className="sec__no">№ 11</span>
+            <span className="sec__no">Nº 11</span>
             <span className="line" />
             <h2 className="sec__title">The Twelve</h2>
           </div>
@@ -2907,7 +2907,7 @@
                 className={'cat__item' + (active === s.ticker ? ' is-active' : '')}
               >
                 <div className="cat__head">
-                  <span className="cat__no">№ {String(s.order).padStart(2, '0')} / 12</span>
+                  <span className="cat__no">Nº {String(s.order).padStart(2, '0')} / 12</span>
                 </div>
                 <a
                   className="cat__sym cat__sym--button"
@@ -3005,7 +3005,7 @@
       return (
         <section ref={reveal} id="sdk" className="sec reveal" aria-label="SDK">
           <div className="sec__head">
-            <span className="sec__no">№ 12</span>
+            <span className="sec__no">Nº 12</span>
             <span className="line" />
             <h2 className="sec__title">SDK</h2>
           </div>
@@ -3083,7 +3083,7 @@
       return (
         <section ref={reveal} id="security" className="sec reveal" aria-label="Read-only by design">
           <div className="sec__head">
-            <span className="sec__no">№ 13</span>
+            <span className="sec__no">Nº 13</span>
             <span className="line" />
             <h2 className="sec__title">Read-only by design</h2>
           </div>
@@ -3181,7 +3181,7 @@
       return (
         <section ref={reveal} id="faq" className="sec reveal" aria-label="Questions">
           <div className="sec__head">
-            <span className="sec__no">№ 14</span>
+            <span className="sec__no">Nº 14</span>
             <span className="line" />
             <h2 className="sec__title">Questions</h2>
           </div>

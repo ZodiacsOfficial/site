@@ -51,28 +51,28 @@ function cardHtml(asset, port) {
 <base href="http://127.0.0.1:${port}/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   * { margin: 0; box-sizing: border-box; }
   html, body { width: 1200px; height: 630px; overflow: hidden; }
   body {
     position: relative;
     background:
-      radial-gradient(90% 70% at 78% 18%, rgba(201,169,97,0.10), transparent 60%),
-      radial-gradient(110% 60% at 20% 110%, rgba(201,169,97,0.05), transparent 60%),
-      #050609;
-    color: #DCD7C7;
+      radial-gradient(90% 70% at 78% 18%, rgba(210,167,78,0.10), transparent 60%),
+      radial-gradient(110% 60% at 20% 110%, rgba(210,167,78,0.05), transparent 60%),
+      #0A0705;
+    color: #E8DEC4;
     font-family: 'Cormorant Garamond', Georgia, serif;
   }
   .grain {
     position: absolute; inset: 0; opacity: 0.05; mix-blend-mode: overlay;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.95  0 0 0 0 0.85  0 0 0 0 0.5  0 0 0 0.85 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.93  0 0 0 0 0.80  0 0 0 0 0.42  0 0 0 0.85 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
   }
   .frame {
     position: absolute; inset: 22px;
-    border: 1px solid rgba(201,169,97,0.26);
+    border: 1px solid rgba(210,167,78,0.26);
   }
-  .tick { position: absolute; width: 12px; height: 12px; border: 0 solid #C9A961; opacity: 0.7; }
+  .tick { position: absolute; width: 12px; height: 12px; border: 0 solid #D2A74E; opacity: 0.7; }
   .tick--tl { top: 16px; left: 16px; border-width: 1px 0 0 1px; }
   .tick--tr { top: 16px; right: 16px; border-width: 1px 1px 0 0; }
   .tick--bl { bottom: 16px; left: 16px; border-width: 0 0 1px 1px; }
@@ -86,46 +86,46 @@ function cardHtml(asset, port) {
   }
   .left { display: flex; flex-direction: column; min-width: 0; }
   .eyebrow {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 15px; font-weight: 400;
-    letter-spacing: 0.32em; text-transform: uppercase;
-    color: #C9A961;
+    font-family: 'Cinzel', 'Cormorant Garamond', serif;
+    font-size: 14px; font-weight: 500;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: #D2A74E;
   }
-  .eyebrow .dim { color: #8A8576; }
+  .eyebrow .dim { color: #988A6E; }
   .mid { margin: auto 0; padding-bottom: 26px; }
   .name {
     font-style: italic; font-weight: 300;
     font-size: ${nameSize(name)}px;
     line-height: 0.96;
     letter-spacing: -0.012em;
-    color: #ECE7D8;
+    color: #F2E8CE;
     white-space: nowrap;
   }
-  .name .end { color: #C9A961; }
+  .name .end { color: #D2A74E; }
   .lotline {
     margin-top: 30px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 15px; letter-spacing: 0.22em; text-transform: uppercase;
-    color: #BDB8A9;
+    font-family: 'Cinzel', 'Cormorant Garamond', serif;
+    font-size: 14px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase;
+    color: #C9BDA1;
     text-wrap: balance;
     line-height: 1.7;
   }
-  .lotline b { font-weight: 400; color: #DEC07A; }
-  .lotline .sep { color: #88826A; padding: 0 10px; }
+  .lotline b { font-weight: 400; color: #E9C766; }
+  .lotline .sep { color: #968860; padding: 0 10px; }
   .dates {
     margin-top: 14px;
     font-family: 'JetBrains Mono', monospace;
     font-size: 13px; letter-spacing: 0.3em; text-transform: uppercase;
-    color: #8A8576;
+    color: #988A6E;
   }
   .foot {
     display: flex; flex-direction: column; gap: 9px;
     font-family: 'JetBrains Mono', monospace;
     font-size: 13px; letter-spacing: 0.24em; text-transform: uppercase;
-    color: #8A8576;
+    color: #988A6E;
     white-space: nowrap;
   }
-  .foot .url { color: #DEC07A; }
+  .foot .url { color: #E9C766; }
   .stage {
     position: relative;
     display: flex; align-items: flex-end; justify-content: center;
@@ -137,7 +137,7 @@ function cardHtml(asset, port) {
   }
   .stage::after {
     content: ""; position: absolute; left: 10%; right: 10%; bottom: 26px; height: 1px;
-    background: linear-gradient(90deg, transparent 0%, rgba(201,169,97,0.6) 22%, rgba(201,169,97,0.6) 78%, transparent 100%);
+    background: linear-gradient(90deg, transparent 0%, rgba(210,167,78,0.6) 22%, rgba(210,167,78,0.6) 78%, transparent 100%);
   }
   .stage img {
     position: relative; z-index: 1;

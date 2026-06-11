@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#0D0A07" />
   <title>Zodiacs SDK · Official Zodiacs.org Interface</title>
   <meta name="description" content="Build astrology apps with verified Zodiac ownership. The official read-only SDK for registry verification, public ownership, symbolic resonance, identity context, and Zodiac icon assets." />
   <link rel="canonical" href="https://zodiacs.org/sdk/" />
@@ -89,28 +90,29 @@
     ]
   }
   </script>
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%2308090C'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' font-family='Cormorant Garamond, Georgia, serif' font-style='italic' font-size='42' fill='%23DEC07A'%3EZ%3C/text%3E%3C/svg%3E" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%230D0A07'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' font-family='Cormorant Garamond, Georgia, serif' font-style='italic' font-size='42' fill='%23E9C766'%3EZ%3C/text%3E%3C/svg%3E" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
-    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=JetBrains+Mono:wght@400;500&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=JetBrains+Mono:wght@400;500&display=swap"
     rel="stylesheet"
   />
   <style>
     :root {
-      --bg: #07090d;
-      --surface: #0c0f15;
-      --surface-2: #11151c;
-      --ink: #f4efe3;
-      --ink-2: rgba(244,239,227,0.78);
-      --ink-dim: rgba(244,239,227,0.56);
-      --ink-mute: rgba(244,239,227,0.5);
-      --gold: #c9a961;
-      --gold-bright: #e2c87a;
-      --hair: rgba(201,169,97,0.14);
-      --hair-2: rgba(201,169,97,0.24);
+      --bg: #0C0906;
+      --surface: #130E08;
+      --surface-2: #19130B;
+      --ink: #F4EBD2;
+      --ink-2: rgba(244,235,210,0.78);
+      --ink-dim: rgba(244,235,210,0.56);
+      --ink-mute: rgba(244,235,210,0.5);
+      --gold: #D2A74E;
+      --gold-bright: #E9C766;
+      --hair: rgba(210,167,78,0.14);
+      --hair-2: rgba(210,167,78,0.24);
       --serif: "Cormorant Garamond", Georgia, serif;
       --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+      --display: "Cinzel", "Cormorant Garamond", Georgia, serif;
       --ease: cubic-bezier(0.23, 1, 0.32, 1);
     }
 
@@ -127,9 +129,9 @@
       margin: 0;
       min-height: 100vh;
       background:
-        radial-gradient(120% 80% at 50% -10%, rgba(201,169,97,0.11), transparent 54%),
-        radial-gradient(85% 70% at 100% 16%, rgba(201,169,97,0.045), transparent 62%),
-        linear-gradient(180deg, #06080c 0%, #090b10 54%, #06080c 100%);
+        radial-gradient(120% 80% at 50% -10%, rgba(210,167,78,0.11), transparent 54%),
+        radial-gradient(85% 70% at 100% 16%, rgba(210,167,78,0.045), transparent 62%),
+        linear-gradient(180deg, #0A0805 0%, #0F0B07 54%, #0A0805 100%);
       color: var(--ink);
       text-rendering: geometricPrecision;
       -webkit-font-smoothing: antialiased;
@@ -143,8 +145,8 @@
       pointer-events: none;
       opacity: 0.4;
       background-image:
-        linear-gradient(rgba(201,169,97,0.045) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(201,169,97,0.035) 1px, transparent 1px);
+        linear-gradient(rgba(210,167,78,0.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(210,167,78,0.035) 1px, transparent 1px);
       background-size: 52px 52px;
       mask-image: radial-gradient(ellipse at 50% 18%, black, transparent 72%);
     }
@@ -156,7 +158,7 @@
       width: min(100%, 460px);
       min-height: 100vh;
       margin: 0 auto;
-      background: rgba(7,9,13,0.82);
+      background: rgba(12,9,6,0.82);
       box-shadow: 0 0 0 1px var(--hair) inset;
       position: relative;
       overflow: hidden;
@@ -168,7 +170,7 @@
       inset: 0;
       pointer-events: none;
       background:
-        radial-gradient(circle at 50% 16%, rgba(201,169,97,0.07), transparent 32%),
+        radial-gradient(circle at 50% 16%, rgba(210,167,78,0.07), transparent 32%),
         linear-gradient(180deg, transparent, rgba(0,0,0,0.18));
     }
 
@@ -191,20 +193,21 @@
       width: min(100%, 380px);
       min-height: 48px;
       padding: 0 6px 0 18px;
-      background: rgba(11,13,18,0.74);
+      background: rgba(18,13,9,0.74);
       backdrop-filter: saturate(160%) blur(18px);
       -webkit-backdrop-filter: saturate(160%) blur(18px);
       border: 1px solid var(--hair-2);
       box-shadow:
-        inset 0 1px 0 rgba(222,192,122,0.10),
+        inset 0 1px 0 rgba(233,199,102,0.10),
         inset 0 -1px 0 rgba(0,0,0,0.4),
         0 8px 28px -12px rgba(0,0,0,0.6);
     }
 
     .mark {
-      font-family: var(--serif);
-      font-size: 15px;
-      letter-spacing: 0.18em;
+      font-family: var(--display);
+      font-weight: 400;
+      font-size: 13px;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
       white-space: nowrap;
     }
@@ -232,7 +235,7 @@
       height: 26px;
       border: 1px solid var(--hair-2);
       color: var(--gold);
-      background: rgba(201,169,97,0.05);
+      background: rgba(210,167,78,0.05);
     }
 
       main {
@@ -250,10 +253,11 @@
       padding: 6px 12px 6px 8px;
       border: 1px solid var(--hair-2);
       border-radius: 999px;
-      background: rgba(201,169,97,0.05);
-      font-family: var(--mono);
-      font-size: 9px;
-      letter-spacing: 0.22em;
+      background: rgba(210,167,78,0.05);
+      font-family: var(--display);
+      font-weight: 500;
+      font-size: 8.5px;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
       color: var(--gold);
     }
@@ -263,20 +267,20 @@
       width: 6px;
       height: 6px;
       border-radius: 50%;
-      background: #6fae7c;
+      background: #5FA08C;
       flex: 0 0 auto;
-      box-shadow: 0 0 0 0 rgba(111,174,124,0.55);
+      box-shadow: 0 0 0 0 rgba(95,160,140,0.55);
       animation: live-pulse 2.4s cubic-bezier(0.32, 0.72, 0, 1) infinite;
     }
     /* Matches the main page hero pulse — box-shadow only, never
        transform, so the dot stays still while the ring expands. */
     @keyframes live-pulse {
-      0%   { box-shadow: 0 0 0 0   rgba(111, 174, 124, 0.55), 0 0 4px 0 rgba(111, 174, 124, 0.0); }
-      55%  { box-shadow: 0 0 0 7px rgba(111, 174, 124, 0.0),  0 0 10px 2px rgba(111, 174, 124, 0.42); }
-      100% { box-shadow: 0 0 0 0   rgba(111, 174, 124, 0.0),  0 0 4px 0 rgba(111, 174, 124, 0.0); }
+      0%   { box-shadow: 0 0 0 0   rgba(95,160,140, 0.55), 0 0 4px 0 rgba(95,160,140, 0.0); }
+      55%  { box-shadow: 0 0 0 7px rgba(95,160,140, 0.0),  0 0 10px 2px rgba(95,160,140, 0.42); }
+      100% { box-shadow: 0 0 0 0   rgba(95,160,140, 0.0),  0 0 4px 0 rgba(95,160,140, 0.0); }
     }
     @media (prefers-reduced-motion: reduce) {
-      .eyebrow::before { animation: none; box-shadow: 0 0 6px rgba(111, 174, 124, 0.55); }
+      .eyebrow::before { animation: none; box-shadow: 0 0 6px rgba(95,160,140, 0.55); }
     }
 
     h1, h2, h3, p { margin-top: 0; }
@@ -315,8 +319,8 @@
       gap: 8px;
       margin-bottom: 14px;
       padding: 8px 10px;
-      border: 1px solid rgba(201,169,97,0.18);
-      background: rgba(201,169,97,0.035);
+      border: 1px solid rgba(210,167,78,0.18);
+      background: rgba(210,167,78,0.035);
       color: var(--ink-dim);
       font-family: var(--mono);
       font-size: 8.5px;
@@ -349,7 +353,7 @@
       border-top: 1px solid var(--hair);
       border-bottom: 1px solid var(--hair);
       background:
-        radial-gradient(80% 120% at 50% 42%, rgba(201,169,97,0.10), transparent 68%),
+        radial-gradient(80% 120% at 50% 42%, rgba(210,167,78,0.10), transparent 68%),
         linear-gradient(180deg, transparent, rgba(0,0,0,0.24));
       overflow: hidden;
     }
@@ -361,7 +365,7 @@
       right: 10%;
       bottom: 23px;
       height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(226,200,122,0.46), transparent);
+      background: linear-gradient(90deg, transparent, rgba(233,199,102,0.46), transparent);
     }
 
     .hero__figure {
@@ -390,7 +394,7 @@
       min-height: 52px;
       padding: 0 10px 0 18px;
       border: 1px solid var(--hair-2);
-      background: rgba(201,169,97,0.04);
+      background: rgba(210,167,78,0.04);
       color: var(--gold-bright);
       font-family: var(--mono);
       font-size: 11px;
@@ -401,7 +405,7 @@
 
     .button:hover {
       border-color: var(--gold);
-      background: rgba(201,169,97,0.08);
+      background: rgba(210,167,78,0.08);
     }
 
     .button span:last-child {
@@ -429,7 +433,7 @@
       justify-content: space-between;
       gap: 8px;
       padding: 0 12px;
-      background: rgba(7,9,13,0.86);
+      background: rgba(12,9,6,0.86);
       color: var(--ink-dim);
       font-family: var(--mono);
       font-size: 8.5px;
@@ -440,7 +444,7 @@
 
     .jump-nav a:hover {
       color: var(--gold-bright);
-      background: rgba(201,169,97,0.055);
+      background: rgba(210,167,78,0.055);
     }
 
     .jump-nav span {
@@ -459,7 +463,6 @@
       margin-bottom: 26px;
     }
 
-    .section__no,
     .section__title {
       font-family: var(--mono);
       font-size: 10px;
@@ -468,7 +471,15 @@
       white-space: nowrap;
     }
 
-    .section__no { color: var(--ink-mute); }
+    .section__no {
+      font-family: var(--display);
+      font-weight: 500;
+      font-size: 9.5px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      color: var(--ink-mute);
+    }
     .section__title { color: var(--gold); }
     .section__head::before {
       content: "";
@@ -517,7 +528,7 @@
       min-height: 148px;
       padding: 18px 16px 20px;
       background:
-        radial-gradient(80% 90% at 50% 0%, rgba(201,169,97,0.06), transparent 70%),
+        radial-gradient(80% 90% at 50% 0%, rgba(210,167,78,0.06), transparent 70%),
         var(--bg);
       transition: background 320ms var(--ease);
     }
@@ -530,10 +541,10 @@
     }
     .card:hover {
       background:
-        radial-gradient(80% 90% at 50% 0%, rgba(201,169,97,0.10), transparent 72%),
+        radial-gradient(80% 90% at 50% 0%, rgba(210,167,78,0.10), transparent 72%),
         var(--bg);
     }
-    .card:hover::after { box-shadow: inset 0 0 0 1px rgba(201,169,97,0.32); }
+    .card:hover::after { box-shadow: inset 0 0 0 1px rgba(210,167,78,0.32); }
 
     .card__k {
       display: block;
@@ -573,7 +584,7 @@
     .card__example {
       margin: 12px 0 0;
       padding-top: 12px;
-      border-top: 1px solid rgba(201,169,97,0.12);
+      border-top: 1px solid rgba(210,167,78,0.12);
       font-family: var(--mono);
       font-size: 8px;
       letter-spacing: 0.12em;
@@ -600,8 +611,8 @@
       min-width: 0;
       padding: 17px 15px 16px;
       background:
-        radial-gradient(70% 100% at 50% 0%, rgba(201,169,97,0.065), transparent 72%),
-        rgba(7,9,13,0.9);
+        radial-gradient(70% 100% at 50% 0%, rgba(210,167,78,0.065), transparent 72%),
+        rgba(12,9,6,0.9);
     }
 
     .facet-card__head {
@@ -647,7 +658,7 @@
 
     .facet-list li {
       padding-top: 10px;
-      border-top: 1px solid rgba(201,169,97,0.12);
+      border-top: 1px solid rgba(210,167,78,0.12);
     }
 
     .facet-list strong {
@@ -678,7 +689,7 @@
 
     .flow__item,
     .flow__arrow {
-      background: rgba(7,9,13,0.88);
+      background: rgba(12,9,6,0.88);
     }
 
     .flow__item {
@@ -728,8 +739,8 @@
       justify-items: center;
       gap: 10px;
       background:
-        radial-gradient(80% 90% at 50% 0%, rgba(201,169,97,0.07), transparent 72%),
-        rgba(7,9,13,0.9);
+        radial-gradient(80% 90% at 50% 0%, rgba(210,167,78,0.07), transparent 72%),
+        rgba(12,9,6,0.9);
     }
 
     .icon-tile img {
@@ -754,7 +765,7 @@
       margin-top: 18px;
       padding: 14px 13px;
       border: 1px solid var(--hair-2);
-      background: rgba(201,169,97,0.04);
+      background: rgba(210,167,78,0.04);
       font-family: var(--mono);
       font-size: 8.5px;
       letter-spacing: 0.13em;
@@ -771,8 +782,8 @@
     .example {
       border: 1px solid var(--hair-2);
       background:
-        radial-gradient(70% 120% at 50% 0%, rgba(201,169,97,0.06), transparent 70%),
-        rgba(7,9,13,0.76);
+        radial-gradient(70% 120% at 50% 0%, rgba(210,167,78,0.06), transparent 70%),
+        rgba(12,9,6,0.76);
       min-width: 0;
     }
 
@@ -814,7 +825,7 @@
       letter-spacing: 0.22em;
       text-transform: uppercase;
       color: var(--ink-mute);
-      background: rgba(10,12,17,0.86);
+      background: rgba(17,12,8,0.86);
     }
 
     .code-details summary::-webkit-details-marker {
@@ -835,7 +846,7 @@
     .code {
       margin: 0;
       border-top: 1px solid var(--hair);
-      background: #0a0c11;
+      background: #120D07;
       overflow: hidden;
     }
 
@@ -850,7 +861,7 @@
       justify-content: space-between;
       gap: 12px;
       border-bottom: 1px solid var(--hair);
-      background: rgba(10,12,17,0.82);
+      background: rgba(17,12,8,0.82);
     }
 
     .code__label {
@@ -879,7 +890,7 @@
 
     .copy-code:hover,
     .copy-code:focus-visible {
-      background: rgba(201,169,97,0.06);
+      background: rgba(210,167,78,0.06);
       outline: none;
     }
 
@@ -891,22 +902,22 @@
       font-size: 11.5px;
       line-height: 1.68;
       color: var(--ink);
-      scrollbar-color: rgba(201,169,97,0.28) rgba(0,0,0,0.2);
+      scrollbar-color: rgba(210,167,78,0.28) rgba(0,0,0,0.2);
       max-width: 100%;
     }
 
     code { font-family: var(--mono); }
 
-    .tok-keyword { color: #e2c87a; }
-    .tok-function { color: #f4efe3; }
-    .tok-string { color: #c9a961; }
-    .tok-comment { color: rgba(244,239,227,0.45); }
+    .tok-keyword { color: #E9C766; }
+    .tok-function { color: #F4EBD2; }
+    .tok-string { color: #D2A74E; }
+    .tok-comment { color: rgba(244,235,210,0.45); }
 
     .receipt {
       border: 1px solid var(--hair-2);
       background:
-        radial-gradient(88% 80% at 50% 0%, rgba(201,169,97,0.10), transparent 70%),
-        linear-gradient(180deg, rgba(17,21,28,0.92), rgba(7,9,13,0.92));
+        radial-gradient(88% 80% at 50% 0%, rgba(210,167,78,0.10), transparent 70%),
+        linear-gradient(180deg, rgba(25,19,11,0.92), rgba(12,9,6,0.92));
       overflow: hidden;
     }
 
@@ -918,7 +929,7 @@
       gap: 10px;
       padding: 11px 14px;
       border-bottom: 1px solid var(--hair);
-      background: rgba(7,9,13,0.62);
+      background: rgba(12,9,6,0.62);
     }
 
     .receipt__chrome span,
@@ -946,7 +957,7 @@
     .receipt__meta code {
       min-width: 0;
       padding: 10px 13px;
-      background: rgba(7,9,13,0.76);
+      background: rgba(12,9,6,0.76);
       font-family: var(--mono);
       font-size: 8px;
       letter-spacing: 0.13em;
@@ -970,7 +981,7 @@
 
     .receipt__try-head,
     .receipt__result {
-      background: rgba(7,9,13,0.82);
+      background: rgba(12,9,6,0.82);
     }
 
     .receipt__try-head {
@@ -1013,7 +1024,7 @@
     .receipt__input span,
     .receipt__input input {
       min-width: 0;
-      background: rgba(7,9,13,0.76);
+      background: rgba(12,9,6,0.76);
     }
 
     .receipt__input span {
@@ -1036,7 +1047,7 @@
     }
 
     .receipt__input input:focus {
-      box-shadow: inset 0 0 0 1px rgba(226,200,122,0.42);
+      box-shadow: inset 0 0 0 1px rgba(233,199,102,0.42);
     }
 
     .receipt__result {
@@ -1065,9 +1076,9 @@
       width: 100%;
       min-height: 42px;
       margin-top: 16px;
-      border: 1px solid rgba(201,169,97,0.22);
+      border: 1px solid rgba(210,167,78,0.22);
       border-radius: 0;
-      background: rgba(201,169,97,0.045);
+      background: rgba(210,167,78,0.045);
       color: var(--gold-bright);
       cursor: pointer;
       font-family: var(--mono);
@@ -1079,8 +1090,8 @@
 
     .receipt__copy:hover,
     .receipt__copy:focus-visible {
-      border-color: rgba(226,200,122,0.58);
-      background: rgba(201,169,97,0.075);
+      border-color: rgba(233,199,102,0.58);
+      background: rgba(210,167,78,0.075);
       outline: none;
     }
 
@@ -1095,7 +1106,7 @@
       content: "";
       position: absolute;
       inset: 30px 14px 24px;
-      border: 1px solid rgba(201,169,97,0.10);
+      border: 1px solid rgba(210,167,78,0.10);
       opacity: 0.8;
     }
 
@@ -1105,8 +1116,8 @@
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 1px;
-      border: 1px solid rgba(201,169,97,0.16);
-      background: rgba(201,169,97,0.12);
+      border: 1px solid rgba(210,167,78,0.16);
+      background: rgba(210,167,78,0.12);
     }
 
     .receipt__token {
@@ -1115,13 +1126,13 @@
       display: grid;
       justify-items: center;
       gap: 8px;
-      background: rgba(7,9,13,0.86);
+      background: rgba(12,9,6,0.86);
       transition: background 220ms var(--ease), box-shadow 220ms var(--ease);
     }
 
     .receipt__token:hover {
-      background: rgba(201,169,97,0.07);
-      box-shadow: inset 0 0 0 1px rgba(226,200,122,0.20);
+      background: rgba(210,167,78,0.07);
+      box-shadow: inset 0 0 0 1px rgba(233,199,102,0.20);
     }
 
     .receipt__token img {
@@ -1187,7 +1198,7 @@
     .fact {
       min-height: 82px;
       padding: 12px;
-      background: rgba(7,9,13,0.9);
+      background: rgba(12,9,6,0.9);
     }
 
     .fact__k {
@@ -1220,8 +1231,8 @@
       align-items: center;
       min-height: 32px;
       padding: 0 10px;
-      border: 1px solid rgba(201,169,97,0.18);
-      background: rgba(201,169,97,0.035);
+      border: 1px solid rgba(210,167,78,0.18);
+      background: rgba(210,167,78,0.035);
       font-family: var(--mono);
       font-size: 8px;
       letter-spacing: 0.15em;
@@ -1230,8 +1241,8 @@
     }
 
     .coverage-strip .held {
-      border-color: rgba(226,200,122,0.58);
-      background: rgba(201,169,97,0.14);
+      border-color: rgba(233,199,102,0.58);
+      background: rgba(210,167,78,0.14);
       color: var(--gold-bright);
     }
 
@@ -1267,8 +1278,8 @@
     .api__v code {
       display: inline-flex;
       padding: 7px 8px;
-      border: 1px solid rgba(201,169,97,0.16);
-      background: rgba(201,169,97,0.035);
+      border: 1px solid rgba(210,167,78,0.16);
+      background: rgba(210,167,78,0.035);
       color: var(--ink-2);
       font-size: 10.5px;
       line-height: 1;
@@ -1276,9 +1287,9 @@
       transition: border-color 240ms var(--ease), color 240ms var(--ease), background 240ms var(--ease);
     }
     .api__v code:hover {
-      border-color: rgba(201,169,97,0.42);
+      border-color: rgba(210,167,78,0.42);
       color: var(--gold-bright);
-      background: rgba(201,169,97,0.08);
+      background: rgba(210,167,78,0.08);
     }
 
     @media (min-width: 640px) {
@@ -1325,7 +1336,7 @@
       padding: 18px 16px;
       border: 1px solid var(--hair-2);
       background:
-        radial-gradient(80% 120% at 50% 0%, rgba(201,169,97,0.08), transparent 65%),
+        radial-gradient(80% 120% at 50% 0%, rgba(210,167,78,0.08), transparent 65%),
         var(--surface);
       font-family: var(--serif);
       font-size: 14.5px;
@@ -1343,7 +1354,7 @@
 
     .posture-list span {
       padding: 13px 12px;
-      background: rgba(7,9,13,0.88);
+      background: rgba(12,9,6,0.88);
       font-family: var(--mono);
       font-size: 8.5px;
       letter-spacing: 0.16em;
@@ -1429,7 +1440,7 @@
       }
 
       .code-details {
-        border-top-color: rgba(201,169,97,0.20);
+        border-top-color: rgba(210,167,78,0.20);
       }
 
       pre {
@@ -1660,7 +1671,7 @@
 
       <section class="section" id="new-input" aria-labelledby="new-input-title">
         <div class="section__head">
-          <span class="section__no">№ 01</span>
+          <span class="section__no">Nº 01</span>
           <span class="section__title">Symbolic context</span>
         </div>
         <h2 id="new-input-title">A verified context layer.</h2>
@@ -1691,7 +1702,7 @@
 
       <section class="section" id="use-cases" aria-labelledby="use-cases-title">
         <div class="section__head">
-          <span class="section__no">№ 02</span>
+          <span class="section__no">Nº 02</span>
           <span class="section__title">Build</span>
         </div>
         <h2 id="use-cases-title">What apps can build.</h2>
@@ -1741,7 +1752,7 @@
 
       <section class="section" id="symbolic-resonance" aria-labelledby="symbolic-resonance-title">
         <div class="section__head">
-          <span class="section__no">№ 03</span>
+          <span class="section__no">Nº 03</span>
           <span class="section__title">Symbolic resonance</span>
         </div>
         <h2 id="symbolic-resonance-title">Facet copy for app surfaces.</h2>
@@ -1895,7 +1906,7 @@
 
       <section class="section" id="icon-assets" aria-labelledby="icon-assets-title">
         <div class="section__head">
-          <span class="section__no">№ 04</span>
+          <span class="section__no">Nº 04</span>
           <span class="section__title">Brand kit</span>
         </div>
         <h2 id="icon-assets-title">Official Zodiac icons.</h2>
@@ -1938,7 +1949,7 @@ console.log(leo.packagePath);
 
       <section class="section" id="flow" aria-labelledby="flow-title">
         <div class="section__head">
-          <span class="section__no">№ 05</span>
+          <span class="section__no">Nº 05</span>
           <span class="section__title">Flow</span>
         </div>
         <h2 id="flow-title">From public address to app surface.</h2>
@@ -1965,7 +1976,7 @@ console.log(leo.packagePath);
 
       <section class="section" id="quick-start" aria-labelledby="quick-start-title">
         <div class="section__head">
-          <span class="section__no">№ 06</span>
+          <span class="section__no">Nº 06</span>
           <span class="section__title">Quick start</span>
         </div>
         <h2 id="quick-start-title">Install the SDK.</h2>
@@ -2008,7 +2019,7 @@ console.log(leo.packagePath);
 
       <section class="section" id="examples" aria-labelledby="examples-title">
         <div class="section__head">
-          <span class="section__no">№ 07</span>
+          <span class="section__no">Nº 07</span>
           <span class="section__title">Examples</span>
         </div>
         <h2 id="examples-title">Integration paths.</h2>
@@ -2104,7 +2115,7 @@ console.log(receipt.wheelCoverage);</code></pre>
 
       <section class="section" id="receipt-preview" aria-labelledby="receipt-title">
         <div class="section__head">
-          <span class="section__no">№ 08</span>
+          <span class="section__no">Nº 08</span>
           <span class="section__title">Identity context</span>
         </div>
         <h2 id="receipt-title">Facts for identity surfaces.</h2>
@@ -2209,7 +2220,7 @@ console.log(receipt.wheelCoverage);</code></pre>
 
       <section class="section" id="core-api" aria-labelledby="api-title">
         <div class="section__head">
-          <span class="section__no">№ 09</span>
+          <span class="section__no">Nº 09</span>
           <span class="section__title">Core API</span>
         </div>
         <h2 id="api-title">Core SDK surfaces.</h2>
@@ -2282,7 +2293,7 @@ console.log(receipt.wheelCoverage);</code></pre>
 
       <section class="section" aria-labelledby="posture">
         <div class="section__head">
-          <span class="section__no">№ 10</span>
+          <span class="section__no">Nº 10</span>
           <span class="section__title">Posture</span>
         </div>
         <h2 id="posture">Read-only by design.</h2>

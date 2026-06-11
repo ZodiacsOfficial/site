@@ -1,12 +1,12 @@
 :root {
-  --bg: #07090d;
-  --surface: #0d1017;
-  --ink: #f4efe3;
-  --ink-2: rgba(244,239,227,0.76);
-  --ink-dim: rgba(244,239,227,0.54);
-  --gold: #c9a961;
-  --gold-bright: #e2c87a;
-  --hair: rgba(201,169,97,0.18);
+  --bg: #0C0906;
+  --surface: #140E08;
+  --ink: #F4EBD2;
+  --ink-2: rgba(244,235,210,0.76);
+  --ink-dim: rgba(244,235,210,0.54);
+  --gold: #D2A74E;
+  --gold-bright: #E9C766;
+  --hair: rgba(210,167,78,0.18);
   --serif: Georgia, "Times New Roman", serif;
   --mono: ui-monospace, SFMono-Regular, Menlo, monospace;
 }
@@ -24,8 +24,8 @@ body {
   min-height: 100vh;
   font-family: var(--serif);
   background:
-    radial-gradient(100% 60% at 50% -10%, rgba(201,169,97,0.13), transparent 58%),
-    linear-gradient(180deg, #06080c 0%, #0a0d13 100%);
+    radial-gradient(100% 60% at 50% -10%, rgba(210,167,78,0.13), transparent 58%),
+    linear-gradient(180deg, #0A0805 0%, #110D08 100%);
   color: var(--ink);
   line-height: 1.55;
 }
@@ -133,7 +133,7 @@ li { margin: 9px 0; }
 .link,
 .demo {
   border: 1px solid var(--hair);
-  background: rgba(13,16,23,0.74);
+  background: rgba(21,15,9,0.74);
   border-radius: 8px;
 }
 
