@@ -1,28 +1,12 @@
 {
-  "capturedAt": "2026-06-11",
+  "capturedAt": "2026-06-15",
   "wikipedia": {
     "rangeDays": 30,
-    "from": "20260512",
-    "to": "20260610",
-    "twelveAvgDay": 17562,
-    "lastDay": 18167,
+    "from": "20260516",
+    "to": "20260614",
+    "twelveAvgDay": 17714,
+    "lastDay": 17905,
     "series": [
-      {
-        "date": "20260512",
-        "views": 16748
-      },
-      {
-        "date": "20260513",
-        "views": 16487
-      },
-      {
-        "date": "20260514",
-        "views": 16003
-      },
-      {
-        "date": "20260515",
-        "views": 17187
-      },
       {
         "date": "20260516",
         "views": 15773
@@ -126,42 +110,58 @@
       {
         "date": "20260610",
         "views": 18167
+      },
+      {
+        "date": "20260611",
+        "views": 17318
+      },
+      {
+        "date": "20260612",
+        "views": 18095
+      },
+      {
+        "date": "20260613",
+        "views": 17674
+      },
+      {
+        "date": "20260614",
+        "views": 17905
       }
     ],
     "perSignAvgDay": {
-      "aries": 1456,
-      "taurus": 1510,
-      "gemini": 3229,
-      "cancer": 1005,
-      "leo": 887,
-      "virgo": 1256,
-      "libra": 1119,
+      "aries": 1446,
+      "taurus": 1529,
+      "gemini": 3292,
+      "cancer": 1021,
+      "leo": 902,
+      "virgo": 1259,
+      "libra": 1121,
       "scorpio": 1204,
-      "sagittarius": 2027,
-      "capricorn": 1544,
-      "aquarius": 1246,
-      "pisces": 1079
+      "sagittarius": 2087,
+      "capricorn": 1533,
+      "aquarius": 1251,
+      "pisces": 1072
     },
     "comparisons": [
       {
         "label": "Dogecoin",
-        "avgDay": 320,
-        "multiple": 55
+        "avgDay": 319,
+        "multiple": 56
       },
       {
         "label": "Ethereum",
-        "avgDay": 696,
+        "avgDay": 695,
         "multiple": 25
       },
       {
         "label": "Solana",
-        "avgDay": 288,
-        "multiple": 61
+        "avgDay": 275,
+        "multiple": 64
       },
       {
         "label": "Shiba Inu",
         "avgDay": 91,
-        "multiple": 193
+        "multiple": 195
       }
     ]
   },
