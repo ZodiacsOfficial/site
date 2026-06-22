@@ -1,40 +1,12 @@
 {
-  "capturedAt": "2026-06-15",
+  "capturedAt": "2026-06-22",
   "wikipedia": {
     "rangeDays": 30,
-    "from": "20260516",
-    "to": "20260614",
-    "twelveAvgDay": 17714,
-    "lastDay": 17905,
+    "from": "20260523",
+    "to": "20260621",
+    "twelveAvgDay": 17913,
+    "lastDay": 19640,
     "series": [
-      {
-        "date": "20260516",
-        "views": 15773
-      },
-      {
-        "date": "20260517",
-        "views": 16290
-      },
-      {
-        "date": "20260518",
-        "views": 16709
-      },
-      {
-        "date": "20260519",
-        "views": 17046
-      },
-      {
-        "date": "20260520",
-        "views": 17096
-      },
-      {
-        "date": "20260521",
-        "views": 18346
-      },
-      {
-        "date": "20260522",
-        "views": 18225
-      },
       {
         "date": "20260523",
         "views": 16821
@@ -126,42 +98,70 @@
       {
         "date": "20260614",
         "views": 17905
+      },
+      {
+        "date": "20260615",
+        "views": 18028
+      },
+      {
+        "date": "20260616",
+        "views": 17799
+      },
+      {
+        "date": "20260617",
+        "views": 18057
+      },
+      {
+        "date": "20260618",
+        "views": 17151
+      },
+      {
+        "date": "20260619",
+        "views": 17221
+      },
+      {
+        "date": "20260620",
+        "views": 17560
+      },
+      {
+        "date": "20260621",
+        "views": 19640
       }
     ],
     "perSignAvgDay": {
-      "aries": 1446,
-      "taurus": 1529,
-      "gemini": 3292,
-      "cancer": 1021,
-      "leo": 902,
-      "virgo": 1259,
-      "libra": 1121,
-      "scorpio": 1204,
-      "sagittarius": 2087,
-      "capricorn": 1533,
+      "aries": 1435,
+      "taurus": 1572,
+      "gemini": 3289,
+      "cancer": 1099,
+      "leo": 927,
+      "virgo": 1268,
+      "libra": 1137,
+      "scorpio": 1203,
+      "sagittarius": 2131,
+      "capricorn": 1520,
       "aquarius": 1251,
-      "pisces": 1072
+      "pisces": 1081
     },
     "comparisons": [
       {
         "label": "Dogecoin",
-        "avgDay": 319,
-        "multiple": 56
+        "avgDay": 325,
+        "multiple": 55
       },
       {
         "label": "Ethereum",
-        "avgDay": 695,
-        "multiple": 25
+        "avgDay": 701,
+        "multiple": 26
       },
       {
         "label": "Solana",
-        "avgDay": 275,
-        "multiple": 64
+        "avgDay": 264,
+        "multiple": 68
       },
       {
         "label": "Shiba Inu",
-        "avgDay": 91,
-        "multiple": 195
+        "avgDay": 94,
+        "multiple": 191
       }
     ]
   },
