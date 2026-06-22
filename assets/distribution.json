@@ -1,5 +1,5 @@
 {
-  "capturedAt": "2026-06-15",
+  "capturedAt": "2026-06-22",
   "method": "getTokenSupply + getTokenLargestAccounts via public Solana RPC. Shares are of raw on-chain supply; the largest accounts include DEX liquidity pools, so wallet concentration is lower than the raw figures read.",
   "signs": {
     "aries": {
@@ -17,11 +17,11 @@
       "top20Pct": 37.48
     },
     "gemini": {
-      "supply": "999873370.845281",
+      "supply": "999873368.815688",
       "accountsSampled": 20,
-      "top1Pct": 7.46,
-      "top10Pct": 22.57,
-      "top20Pct": 32.64
+      "top1Pct": 8.05,
+      "top10Pct": 23.16,
+      "top20Pct": 33.23
     },
     "cancer": {
       "supply": "999939090.363424",
