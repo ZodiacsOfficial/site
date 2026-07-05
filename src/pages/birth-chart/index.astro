@@ -1,0 +1,142 @@
+---
+import Base from '../../layouts/Base.astro';
+import ChartCalculator from '../../islands/ChartCalculator';
+import '../../styles/calculator.css';
+
+const faq = [
+  {
+    q: 'What is a birth chart?',
+    a: 'A birth chart (or natal chart) is a map of where every planet sat — from your point of view on Earth — at the exact moment and place you were born. It records your Sun, Moon, and Rising signs plus the positions of Mercury through Pluto across twelve houses.',
+  },
+  {
+    q: 'Do I need my exact birth time?',
+    a: 'For your rising sign and houses, yes — the ascendant changes roughly every two hours. Without a time we compute planets for noon: your Sun and usually your Moon are still exact to the day. Birth certificates, baby books, and parents are the usual sources.',
+  },
+  {
+    q: 'How accurate is this calculator?',
+    a: 'Planetary positions are computed with a professional-grade astronomical engine and are continuously tested against NASA JPL reference data to within a few hundredths of a degree — the same standard serious astrology software uses. Historical time zones, including pre-1922 local mean time and wartime clock changes, are resolved from the full IANA database.',
+  },
+  {
+    q: 'What happens to my birth data?',
+    a: 'Nothing leaves your device. The entire chart is computed in your browser; there is no account, no upload, and no server that ever sees your birth details. If you choose to save a chart, it is stored in your own browser only.',
+  },
+  {
+    q: 'Whole sign or Placidus houses — which should I pick?',
+    a: 'Whole sign is the oldest system and the friendliest to read: each house is one full sign. Placidus is the most common modern default and divides houses by time of rising, so their sizes vary. Try both — your planets stay put; only the house boundaries move.',
+  },
+];
+
+const jsonLd = [
+  {
+    '@type': 'WebApplication',
+    name: 'Free Birth Chart Calculator',
+    url: 'https://zodiacs.org/birth-chart/',
+    applicationCategory: 'LifestyleApplication',
+    operatingSystem: 'Web',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    featureList: 'Sun, Moon, Rising, planets Mercury–Pluto, True Node, whole sign and Placidus houses, aspects',
+  },
+  {
+    '@type': 'FAQPage',
+    mainEntity: faq.map(({ q, a }) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: { '@type': 'Answer', text: a },
+    })),
+  },
+  {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Zodiacs.org', item: 'https://zodiacs.org/' },
+      { '@type': 'ListItem', position: 2, name: 'Tools', item: 'https://zodiacs.org/tools/' },
+      { '@type': 'ListItem', position: 3, name: 'Birth chart calculator', item: 'https://zodiacs.org/birth-chart/' },
+    ],
+  },
+];
+---
+<Base
+  title="Free Birth Chart Calculator — Sun, Moon & Rising | Zodiacs.org"
+  description="Calculate your full birth chart free: Sun, Moon, Rising, all planets, houses, and aspects — computed on your device with astronomical accuracy, explained in plain language."
+  path="/birth-chart/"
+  jsonLd={jsonLd}
+>
+  <section class="section--tight container">
+    <div class="tool-hero">
+      <span class="eyebrow"><span class="dot"></span> Free · no signup · on-device</span>
+      <h1>Your birth chart, computed properly.</h1>
+      <p>
+        Enter your birth details and get the whole map — Sun, Moon, Rising,
+        every planet, houses, and aspects — calculated with astronomical
+        precision and explained like a human wrote it.
+      </p>
+    </div>
+
+    <ChartCalculator mode="full" client:load />
+  </section>
+
+  <section class="section--tight container container--narrow">
+    <div class="prose">
+      <h2>What you're looking at</h2>
+      <p>
+        A birth chart is a snapshot of the sky from where you were born, at the
+        minute you were born. The wheel shows the twelve signs around the
+        outside, the twelve houses inside, and each planet placed at its exact
+        degree. Three placements carry most of the story for beginners:
+      </p>
+      <ul>
+        <li><strong>Sun</strong> — your core identity; the sign most people already know.</li>
+        <li><strong>Moon</strong> — your emotional weather; how you feel and recharge.</li>
+        <li><strong>Rising</strong> (ascendant) — the sign coming over the eastern horizon as you were born; how people first read you, and what lays out your houses.</li>
+      </ul>
+      <p>
+        The lines across the middle are aspects — angles between planets that
+        astrologers read as conversations: trines flow, squares argue
+        productively, oppositions negotiate.
+      </p>
+      <p>
+        We show our work: every chart lists its computed UTC instant,
+        coordinates, and house system. The math is tested against NASA JPL
+        reference data on every change — <a href="/methodology/">here's exactly how it's computed</a>.
+      </p>
+    </div>
+  </section>
+
+  <section class="section--tight container container--narrow">
+    <div class="section-head"><h2>Questions, answered</h2></div>
+    <div class="faq">
+      {faq.map(({ q, a }) => (
+        <details class="faq__item">
+          <summary>{q}</summary>
+          <p>{a}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+</Base>
+
+<style>
+  .tool-hero { max-width: 62ch; margin-bottom: clamp(28px, 5vw, 44px); }
+  .tool-hero h1 {
+    margin: 18px 0 14px;
+    font-size: var(--text-2xl);
+    font-weight: 640;
+    letter-spacing: -0.03em;
+    line-height: 1.08;
+    text-wrap: balance;
+  }
+  .tool-hero p { margin: 0; color: var(--muted); font-size: var(--text-lg); text-wrap: pretty; }
+  .faq { display: grid; gap: 8px; }
+  .faq__item {
+    border: 1px solid var(--hair-1);
+    border-radius: var(--r-md);
+    background: var(--void-1);
+    padding: 4px 18px;
+  }
+  .faq__item summary {
+    cursor: pointer;
+    padding: 12px 0;
+    font-weight: 550;
+    color: var(--text);
+  }
+  .faq__item p { margin: 2px 0 16px; color: var(--text-2); font-size: var(--text-sm); line-height: 1.65; }
+</style>

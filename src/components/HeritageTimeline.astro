@@ -1,0 +1,82 @@
+---
+import type { Heritage } from '../lib/legacy/sign-lore';
+
+interface Props {
+  lore: Heritage;
+  hue: string;
+}
+const { lore, hue } = Astro.props;
+
+const beats = [
+  ...(lore.provenancePrelude ? [lore.provenancePrelude] : []),
+  { era: 'c. 1000 BC', place: 'Babylon', body: lore.provenanceBabylon },
+  {
+    era: 'c. 450 BC', place: 'Babylon',
+    body: 'Fixed as one of twelve equal signs when Babylonian astronomers divide the sun’s path into the first zodiac — the frame still in use today.',
+  },
+  { era: 'c. 270 BC', place: 'The Hellenistic world', body: lore.provenanceGreece },
+  {
+    era: 'AD 150', place: 'Alexandria',
+    body: 'Canonized in Ptolemy’s Almagest among the forty-eight classical constellations; carried through the Arabic observatories into medieval Europe.',
+  },
+  {
+    era: 'AD 1515', place: 'Nuremberg',
+    body: 'Engraved in Albrecht Dürer’s celestial planispheres, the first printed star charts of the Western sky.',
+  },
+];
+---
+<ol class="timeline" style={`--sign:${hue}`}>
+  {beats.map((b) => (
+    <li class="timeline__item">
+      <div class="timeline__era mono">{b.era} <span>· {b.place}</span></div>
+      <p>{b.body}</p>
+    </li>
+  ))}
+</ol>
+
+<style>
+  .timeline {
+    margin: 0;
+    padding: 0 0 0 24px;
+    list-style: none;
+    position: relative;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 4px;
+    top: 8px;
+    bottom: 8px;
+    width: 1px;
+    background: linear-gradient(180deg, transparent, var(--hair-2) 10%, var(--hair-2) 90%, transparent);
+  }
+  .timeline__item { position: relative; padding-bottom: 22px; }
+  .timeline__item:last-child { padding-bottom: 0; }
+  .timeline__item::before {
+    content: '';
+    position: absolute;
+    left: -24px;
+    top: 6px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--void-0);
+    border: 1.5px solid var(--sign);
+    box-shadow: 0 0 10px color-mix(in oklab, var(--sign) 45%, transparent);
+  }
+  .timeline__era {
+    margin-bottom: 5px;
+    font-size: 10.5px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--sign);
+  }
+  .timeline__era span { color: var(--faint); }
+  .timeline__item p {
+    margin: 0;
+    max-width: 58ch;
+    font-size: var(--text-sm);
+    line-height: 1.65;
+    color: var(--text-2);
+  }
+</style>

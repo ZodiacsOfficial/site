@@ -1,0 +1,59 @@
+---
+import type { Sign } from '../lib/signs';
+import { ELEMENT_LABEL, MODALITY_LABEL } from '../lib/signs';
+
+interface Props {
+  sign: Sign;
+  star: { name: string; note: string };
+  babylonianRecord: string;
+}
+const { sign, star, babylonianRecord } = Astro.props;
+
+const rows: [string, string][] = [
+  ['Dates', sign.dates],
+  ['Element', ELEMENT_LABEL[sign.element]],
+  ['Modality', MODALITY_LABEL[sign.modality]],
+  ['Ruling planet', sign.classicRuler ? `${sign.ruler} (${sign.classicRuler}, traditional)` : sign.ruler],
+  ['Polarity', sign.polarity === 'day' ? 'Day (yang)' : 'Night (yin)'],
+  ['Natural house', `${sign.house}${sign.house === 1 ? 'st' : sign.house === 2 ? 'nd' : sign.house === 3 ? 'rd' : 'th'}`],
+  ['Principal star', `${star.name} — ${star.note}`],
+  ['Babylonian record', babylonianRecord],
+];
+---
+<dl class="facts" style={`--sign:${sign.hue}`}>
+  {rows.map(([k, v]) => (
+    <div class="facts__row">
+      <dt>{k}</dt>
+      <dd>{v}</dd>
+    </div>
+  ))}
+</dl>
+
+<style>
+  .facts {
+    margin: 0;
+    border-top: 1px solid var(--hair-2);
+  }
+  .facts__row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 18px;
+    padding: 11px 0;
+    border-bottom: 1px solid var(--hair-1);
+  }
+  dt {
+    flex: 0 0 auto;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--faint);
+  }
+  dd {
+    margin: 0;
+    text-align: right;
+    font-size: var(--text-sm);
+    color: var(--text);
+  }
+</style>

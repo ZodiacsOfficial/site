@@ -1,0 +1,133 @@
+---
+import Base from '../../layouts/Base.astro';
+
+const tools = [
+  {
+    href: '/birth-chart/',
+    title: 'Birth chart calculator',
+    promise: 'The whole map — Sun, Moon, Rising, every planet, houses, aspects.',
+    hue: 'var(--sign-cancer)',
+    glyph: '☉',
+    live: true,
+  },
+  {
+    href: '/moon-sign/',
+    title: 'Moon sign calculator',
+    promise: 'How you feel — your emotional weather, found in twenty seconds.',
+    hue: 'var(--sign-pisces)',
+    glyph: '☽',
+    live: true,
+  },
+  {
+    href: '/rising-sign/',
+    title: 'Rising sign calculator',
+    promise: 'How people first read you — needs the clock, rewards the precision.',
+    hue: 'var(--sign-libra)',
+    glyph: 'ASC',
+    live: true,
+  },
+];
+
+const upcoming = [
+  { title: 'Compatibility', promise: 'Two charts, honestly compared — beyond sun signs.' },
+  { title: 'Moon phase', promise: 'Tonight’s moon, and the moon you were born under.' },
+  { title: 'Saturn return', promise: 'When yours hits, and what it actually asks of you.' },
+];
+
+const jsonLd = [
+  {
+    '@type': 'CollectionPage',
+    name: 'Free astrology tools',
+    url: 'https://zodiacs.org/tools/',
+    description: 'Free astrology calculators computed on your device: birth chart, moon sign, rising sign.',
+  },
+];
+---
+<Base
+  title="Free Astrology Tools & Calculators | Zodiacs.org"
+  description="Free astrology calculators, no signup: birth chart, moon sign, and rising sign — computed on your device with astronomical accuracy and explained in plain language."
+  path="/tools/"
+  jsonLd={jsonLd}
+>
+  <section class="section container">
+    <div class="section-head">
+      <span class="eyebrow"><span class="dot"></span> Free · no paywall · no signup</span>
+      <h2 style="margin-top:16px">Calculators that show their work.</h2>
+      <p>
+        Everything here runs on your device with a tested astronomical engine —
+        your birth data never leaves the browser.
+      </p>
+    </div>
+
+    <div class="tools-grid">
+      {tools.map((t) => (
+        <a class="shell tinted" href={t.href} style={`--sign:${t.hue}`}>
+          <div class="core tinted tool-card">
+            <span class="tool-card__glyph mono">{t.glyph}</span>
+            <h3>{t.title}</h3>
+            <p>{t.promise}</p>
+            <span class="tool-card__go">Open →</span>
+          </div>
+        </a>
+      ))}
+    </div>
+
+    <div class="tools-upcoming">
+      <span class="mono--label">In the works</span>
+      <ul>
+        {upcoming.map((u) => (
+          <li><strong>{u.title}</strong> — {u.promise}</li>
+        ))}
+      </ul>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .tools-grid {
+    display: grid;
+    gap: 14px;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 760px) { .tools-grid { grid-template-columns: repeat(3, 1fr); } }
+  .tool-card {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 26px 22px;
+    min-height: 210px;
+  }
+  .tool-card__glyph {
+    font-size: 24px;
+    color: var(--sign);
+    letter-spacing: 0.06em;
+  }
+  .tool-card h3 {
+    margin: 4px 0 0;
+    font-size: var(--text-lg);
+    font-weight: 620;
+    letter-spacing: -0.02em;
+    color: var(--text);
+  }
+  .tool-card p { margin: 0; font-size: var(--text-sm); color: var(--text-2); line-height: 1.6; }
+  .tool-card__go {
+    margin-top: auto;
+    font-size: 13px;
+    font-weight: 550;
+    color: var(--text);
+  }
+  .tools-upcoming {
+    margin-top: clamp(28px, 5vw, 44px);
+    padding-top: 24px;
+    border-top: 1px solid var(--hair-1);
+  }
+  .tools-upcoming ul {
+    margin: 12px 0 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 8px;
+  }
+  .tools-upcoming li { font-size: var(--text-sm); color: var(--muted); }
+  .tools-upcoming strong { color: var(--text-2); font-weight: 600; }
+</style>
