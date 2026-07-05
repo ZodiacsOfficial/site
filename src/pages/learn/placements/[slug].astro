@@ -31,13 +31,29 @@ export async function getStaticPaths() {
     'learn',
     (e) => e.data.kind === 'placement' && !e.data.draft,
   );
-  if (entries.length < 1) throw new Error('Placements collection is empty.');
+  // Coverage assert: every planet × sign exactly once, filenames true to
+  // their frontmatter — a missing pair names itself in the error.
+  const seen = new Set<string>();
   for (const entry of entries) {
     if (entry.data.kind !== 'placement') continue;
-    const expected = `placements/${entry.data.planet.toLowerCase()}-in-${entry.data.sign}`;
-    if (entry.id !== expected) {
-      throw new Error(`Placement file ${entry.id}.mdx declares ${entry.data.planet}/${entry.data.sign} — expected ${expected}.mdx`);
+    const key = `${entry.data.planet.toLowerCase()}-in-${entry.data.sign}`;
+    if (seen.has(key)) throw new Error(`Duplicate placement: ${key}`);
+    seen.add(key);
+    if (entry.id !== `placements/${key}`) {
+      throw new Error(`Placement file ${entry.id}.mdx declares ${entry.data.planet}/${entry.data.sign} — expected placements/${key}.mdx`);
     }
+  }
+  // getStaticPaths is scope-isolated in Astro: imports are visible,
+  // frontmatter consts are not — hence the local list.
+  const ALL_PLANETS = ['sun', 'moon', 'mercury', 'venus', 'mars', 'jupiter', 'saturn', 'uranus', 'neptune', 'pluto'];
+  for (const p of ALL_PLANETS) {
+    for (const s of SIGNS) {
+      const key = `${p}-in-${s.slug}`;
+      if (!seen.has(key)) throw new Error(`Missing placement page: ${key}`);
+    }
+  }
+  if (entries.length !== 120) {
+    throw new Error(`Expected 120 placement pages, found ${entries.length}`);
   }
   return entries.map((entry) => ({
     params: { slug: entry.id.split('/')[1] },
