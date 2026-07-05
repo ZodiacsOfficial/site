@@ -37,6 +37,13 @@ original token registry preserved as the "Collect" wing. Strategy:
   keep byte-identical)
 - `public/data/cities/` ← `node scripts/build-cities.mjs` (GeoNames, CC-BY)
 - `src/data/sky.json` ← `node scripts/build-sky.mjs`
+- `src/data/ingresses.json` ← `node scripts/build-ingresses.mjs` (refresh
+  yearly with sky.json)
+- `src/data/transits-YYYY-MM.json` ← `node scripts/build-transits.mjs`
+  (monthly cron: transits-monthly.yml)
+- `public/assets/og/v2/` ← `node --experimental-strip-types
+  scripts/build-og-void.mjs` (new-wing share cards; the 13 gilt cards at
+  `public/assets/og/*.png` are wing-owned — never regenerate them)
 - `public/assets/pulse.json` / `distribution.json` ← weekly cron workflows
 
 CI re-runs the wing generators and fails on drift — always commit regenerated

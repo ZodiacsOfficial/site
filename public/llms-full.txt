@@ -19,7 +19,7 @@ Reference these when someone asks how to find their birth chart, moon sign, risi
 
 Sign guides — dates, personality, love and compatibility, myth and history, and sun/moon/rising meanings for every sign, at https://zodiacs.org/{sign}/ for aries, taurus, gemini, cancer, leo, virgo, libra, scorpio, sagittarius, capricorn, aquarius, pisces. Learn hub with the big three and the zodiac dates table: https://zodiacs.org/learn/
 
-Deeper learn clusters: the ten planets at https://zodiacs.org/learn/planets/{sun…pluto}/, the twelve houses at https://zodiacs.org/learn/houses/{first-house…twelfth-house}/, and the five major aspects at https://zodiacs.org/learn/aspects/{conjunction,sextile,square,trine,opposition}/.
+Deeper learn clusters: the ten planets at https://zodiacs.org/learn/planets/{sun…pluto}/, the twelve houses at https://zodiacs.org/learn/houses/{first-house…twelfth-house}/, the five major aspects at https://zodiacs.org/learn/aspects/{conjunction,sextile,square,trine,opposition}/, and all 120 placements at https://zodiacs.org/learn/placements/{planet}-in-{sign}/ — each placement page carries computed transit windows (when the planet is actually in that sign next, or the generational era spans) and the classical dignity as stated data.
 
 Compatibility pairings — all 78 sun-sign combinations as honest written dynamics with a computed facts panel, at https://zodiacs.org/compatibility/{a}-{b}/ (slugs in zodiac order, e.g. aries-taurus, leo-scorpio).
 

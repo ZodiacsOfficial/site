@@ -38,6 +38,12 @@ jobs:
         run: |
           ! grep -RInE 'Solana|DexScreener|Jupiter swap|ERC-20|SPL record|memecoin|market cap' src/pages src/components src/islands src/content src/layouts
 
+      - name: Voice — banned tells stay out of the copy
+        # The smug vocabulary CLAUDE.md bans on new surfaces, enforced
+        # over every content file and template the agents touch.
+        run: |
+          ! grep -RIniE 'done properly|computed properly|shows? (its|their) work|like a human( wrote it)?|no mush|not vibes|speaks human' src/content src/pages src/components src/islands
+
       - name: Build
         run: npm run build
 

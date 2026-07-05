@@ -87,6 +87,20 @@ const jsonLd = [
   </section>
 
   <section class="section--tight container container--narrow">
+    <div class="section-head">
+      <h2>The twelve moons, read closely</h2>
+      <p>A full page on each Moon placement — how it feels, what it needs, where it grows.</p>
+    </div>
+    <div class="moon-placements">
+      {['aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo', 'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces'].map((slug) => (
+        <a class="moon-placements__chip" href={`/learn/placements/moon-in-${slug}/`}>
+          Moon in {slug.charAt(0).toUpperCase() + slug.slice(1)}
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="section--tight container container--narrow">
     <div class="section-head"><h2>Questions, answered</h2></div>
     <div class="faq">
       {faq.map(({ q, a }) => (
@@ -112,6 +126,18 @@ const jsonLd = [
     text-wrap: balance;
   }
   .tool-hero p { margin: 0; color: var(--muted); font-size: var(--text-lg); text-wrap: pretty; }
+  .moon-placements { display: flex; flex-wrap: wrap; gap: 6px 4px; }
+  .moon-placements__chip {
+    padding: 5px 12px;
+    border-radius: var(--r-full);
+    border: 1px solid var(--hair-1);
+    font-size: 13px;
+    color: var(--text-2);
+    text-decoration: none;
+    transition: color var(--dur-1) var(--ease), border-color var(--dur-1) var(--ease);
+  }
+  .moon-placements__chip:hover { color: var(--text); border-color: var(--hair-3); }
+
   .faq { display: grid; gap: 8px; }
   .faq__item {
     border: 1px solid var(--hair-1);

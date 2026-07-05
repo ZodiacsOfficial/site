@@ -104,6 +104,11 @@ const jsonLd = [
         <p>The angles between planets — the chart’s wiring, friendly and otherwise.</p>
         <span class="clusters__count mono">5 guides →</span>
       </a>
+      <a class="tile clusters__card" href="/learn/placements/">
+        <strong>The placements</strong>
+        <p>Every planet in every sign — how each combination actually behaves.</p>
+        <span class="clusters__count mono">120 guides →</span>
+      </a>
     </div>
   </section>
 
@@ -186,7 +191,8 @@ const jsonLd = [
   .learn-note a { color: var(--text); }
 
   .clusters { display: grid; gap: 12px; grid-template-columns: 1fr; }
-  @media (min-width: 760px) { .clusters { grid-template-columns: repeat(3, 1fr); } }
+  @media (min-width: 700px) { .clusters { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1020px) { .clusters { grid-template-columns: repeat(4, 1fr); } }
   .clusters__card {
     display: grid;
     gap: 8px;

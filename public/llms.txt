@@ -17,7 +17,7 @@ Free tools:
 Sign guides (dates, personality, love and compatibility, myth and history, sun/moon/rising meanings):
 https://zodiacs.org/aries/ https://zodiacs.org/taurus/ https://zodiacs.org/gemini/ https://zodiacs.org/cancer/ https://zodiacs.org/leo/ https://zodiacs.org/virgo/ https://zodiacs.org/libra/ https://zodiacs.org/scorpio/ https://zodiacs.org/sagittarius/ https://zodiacs.org/capricorn/ https://zodiacs.org/aquarius/ https://zodiacs.org/pisces/
 Learn hub (big three, zodiac dates table): https://zodiacs.org/learn/
-Learn clusters: the planets https://zodiacs.org/learn/planets/ · the houses https://zodiacs.org/learn/houses/ · the aspects https://zodiacs.org/learn/aspects/
+Learn clusters: the planets https://zodiacs.org/learn/planets/ · the houses https://zodiacs.org/learn/houses/ · the aspects https://zodiacs.org/learn/aspects/ · the placements (every planet in every sign, 120 pages with computed transit windows and classical dignities, e.g. /learn/placements/venus-in-scorpio/) https://zodiacs.org/learn/placements/
 Compatibility pairings (all 78 sun-sign combinations, e.g. /compatibility/aries-taurus/): https://zodiacs.org/compatibility/
 Monthly horoscopes (transit-grounded, dated claims, per-sign at /horoscopes/{sign}/): https://zodiacs.org/horoscopes/
 

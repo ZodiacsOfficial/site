@@ -85,6 +85,16 @@ const learn = defineCollection({
       updated: z.coerce.date(),
       draft: z.boolean().default(false),
     }),
+    z.object({
+      kind: z.literal('placement'),
+      planet: z.enum(['Sun', 'Moon', 'Mercury', 'Venus', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto']),
+      sign: signEnum,
+      title: z.string(),
+      description: z.string().max(170),
+      faq: z.array(z.object({ q: z.string(), a: z.string() })).min(3),
+      updated: z.coerce.date(),
+      draft: z.boolean().default(false),
+    }),
   ]),
 });
 

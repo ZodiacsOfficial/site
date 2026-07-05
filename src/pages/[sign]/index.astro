@@ -134,6 +134,21 @@ const jsonLd = [
           </p>
         </section>
 
+        <section class="guide-placements reveal">
+          <h2>Planets in {sign.name}</h2>
+          <p class="guide-placements__note">
+            The Sun is one of ten planets that can wear this sign — each
+            reads differently.
+          </p>
+          <div class="guide-placements__chips">
+            {['Sun', 'Moon', 'Mercury', 'Venus', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto'].map((p) => (
+              <a class="chip" href={`/learn/placements/${p.toLowerCase()}-in-${sign.slug}/`} style={`--sign:${sign.hue}`}>
+                {p} in {sign.name}
+              </a>
+            ))}
+          </div>
+        </section>
+
         <section class="reveal">
           <Faq items={guide.data.faq} heading={`${sign.name}, asked and answered`} />
         </section>
@@ -255,6 +270,15 @@ const jsonLd = [
   }
   .guide-compat__chips { display: flex; flex-wrap: wrap; gap: 8px; }
   .guide-compat__note { margin: 8px 0 0; font-size: var(--text-sm); color: var(--faint); }
+
+  .guide-placements h2 {
+    margin: 0 0 8px;
+    font-size: var(--text-xl);
+    font-weight: 620;
+    letter-spacing: -0.02em;
+  }
+  .guide-placements__note { margin: 0 0 14px; font-size: var(--text-sm); color: var(--faint); }
+  .guide-placements__chips { display: flex; flex-wrap: wrap; gap: 8px; }
 
   .guide-side { display: grid; gap: 14px; }
   .guide-side__core { padding: 20px; display: grid; gap: 12px; }

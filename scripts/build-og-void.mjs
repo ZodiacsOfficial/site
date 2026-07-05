@@ -1,12 +1,13 @@
 /*
  * Generates the new wing's Open Graph share cards in the Cosmic Void
- * system — 112 PNGs (1200×630) under public/assets/og/v2/:
+ * system — 1200×630 PNGs under public/assets/og/v2/:
  *
  *   share.png              site-wide default
  *   sign/{slug}.png        the 12 sign guides
- *   tool/{key}.png         calculators + hubs (9)
+ *   tool/{key}.png         calculators + hubs
  *   pair/{a}-{b}.png       all 78 compatibility pairings
  *   horoscope/{slug}.png   the 12 horoscope pages (month-free, evergreen)
+ *   placements/{planet}.png  one per planet, shared by its 12 placement pages
  *
  * The legacy gilt cards at assets/og/*.png stay byte-identical — the
  * collector's wing still references them. This script never touches
@@ -210,6 +211,23 @@ function pairCard(a, b) {
   return shell(body, `zodiacs.org/compatibility/${a.slug}-${b.slug}/`);
 }
 
+function placementCard(planet, glyph) {
+  const discsRow = SIGNS.map((s) =>
+    `<span style="display:inline-block;width:26px;height:26px;border-radius:50%;background:${s.hue};margin-right:10px;"></span>`,
+  ).join('');
+  const body = `
+  <div class="stage">
+    <div class="left">
+      <span class="kicker">Placements</span>
+      <div class="display" style="font-size: 72px; line-height: 1.08;">${planet} through<br/>the signs</div>
+      <div class="sub" style="font-size: 26px; color: ${MUTED}; max-width: 620px;">All twelve ${planet} placements, read closely.</div>
+      <div style="margin-top: 26px; line-height: 0;">${discsRow}</div>
+    </div>
+    <span style="font-family: 'EB Garamond', serif; font-size: 220px; color: ${INK2}; opacity: 0.9; line-height: 1;">${glyph}</span>
+  </div>`;
+  return shell(body, 'zodiacs.org/learn/placements/');
+}
+
 function horoscopeCard(s) {
   const body = `
   <div class="stage">
@@ -239,7 +257,7 @@ const TOOLS = [
 ];
 
 // ── Render loop ───────────────────────────────────────────────────────
-for (const dir of ['', 'sign', 'tool', 'pair', 'horoscope']) {
+for (const dir of ['', 'sign', 'tool', 'pair', 'horoscope', 'placements']) {
   await mkdir(resolve(OUT, dir), { recursive: true });
 }
 
@@ -271,6 +289,13 @@ for (let i = 0; i < SIGNS.length; i += 1) {
   }
 }
 for (const s of SIGNS) await shoot(horoscopeCard(s), `horoscope/${s.slug}.png`);
+const PLANET_GLYPHS = {
+  Sun: '☉', Moon: '☽', Mercury: '☿', Venus: '♀', Mars: '♂',
+  Jupiter: '♃', Saturn: '♄', Uranus: '♅', Neptune: '♆', Pluto: '♇',
+};
+for (const [planet, glyph] of Object.entries(PLANET_GLYPHS)) {
+  await shoot(placementCard(planet, glyph), `placements/${planet.toLowerCase()}.png`);
+}
 
 await browser.close();
 

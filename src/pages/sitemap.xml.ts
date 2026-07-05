@@ -32,6 +32,7 @@ export const GET: APIRoute = async () => {
     { loc: '/learn/planets/', priority: 0.7 },
     { loc: '/learn/houses/', priority: 0.7 },
     { loc: '/learn/aspects/', priority: 0.7 },
+    { loc: '/learn/placements/', priority: 0.7 },
     { loc: '/methodology/', priority: 0.6 },
     ...guides.map((g) => ({
       loc: `/${g.data.sign}/`,
