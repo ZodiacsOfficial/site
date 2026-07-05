@@ -1,0 +1,37 @@
+---
+/**
+ * The pastel SDK sign icon at a canonical rendered size. Serves the
+ * pre-resized AVIF/WebP derivatives (never the raw 1024px PNGs) and
+ * exposes the sign's hue as --sign on the element for tinting.
+ */
+import { signBySlug } from '../lib/signs';
+
+interface Props {
+  sign: string;
+  /** Rendered CSS pixels. Tiers: ≤24→48src, ≤64→128src, else 400src. */
+  size?: number;
+  alt?: string;
+  loading?: 'lazy' | 'eager';
+  class?: string;
+}
+
+const { sign, size = 24, alt = '', loading = 'lazy', class: className } = Astro.props;
+const s = signBySlug(sign);
+const tier = size <= 24 ? 48 : size <= 64 ? 128 : 400;
+---
+<picture class:list={['sign-icon', className]} style={`--sign:${s.hue}`}>
+  <source srcset={`/assets/zodiac-icons/${tier}/${sign}.avif`} type="image/avif" />
+  <img
+    src={`/assets/zodiac-icons/${tier}/${sign}.webp`}
+    width={size}
+    height={size}
+    alt={alt}
+    loading={loading}
+    decoding="async"
+  />
+</picture>
+
+<style>
+  .sign-icon { display: inline-block; line-height: 0; }
+  .sign-icon img { width: 100%; height: auto; border-radius: 50%; }
+</style>

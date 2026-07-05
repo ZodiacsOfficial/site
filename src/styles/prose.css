@@ -1,0 +1,104 @@
+/* ────────────────────────────────────────────────────────────────────
+   zodiacs.org — long-form prose (guides, learn pages, methodology)
+   ──────────────────────────────────────────────────────────────────── */
+
+.prose {
+  max-width: 68ch;
+  font-size: 1.0625rem;
+  line-height: 1.72;
+  color: var(--text-2);
+}
+
+.prose > * + * { margin-top: 1.15em; }
+
+.prose h2 {
+  margin: 2.2em 0 0.6em;
+  font-size: var(--text-xl);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  color: var(--text);
+  text-wrap: balance;
+}
+.prose h3 {
+  margin: 1.8em 0 0.5em;
+  font-size: var(--text-lg);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  color: var(--text);
+}
+
+.prose p { margin: 0 0 1.05em; text-wrap: pretty; }
+.prose strong { color: var(--text); font-weight: 600; }
+.prose em { color: var(--text); }
+
+.prose a {
+  color: var(--text);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in oklab, var(--sign, var(--link)) 55%, transparent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: text-decoration-color var(--dur-1) var(--ease);
+}
+.prose a:hover { text-decoration-color: var(--sign, var(--link)); }
+
+.prose ul, .prose ol { padding-left: 1.3em; margin: 0 0 1.05em; }
+.prose li { margin: 0.35em 0; }
+.prose li::marker { color: var(--faint); }
+
+.prose blockquote {
+  margin: 1.4em 0;
+  padding: 4px 0 4px 20px;
+  border-left: 2px solid color-mix(in oklab, var(--sign, var(--accent)) 55%, transparent);
+  color: var(--text);
+  font-style: italic;
+}
+
+.prose code {
+  font-family: var(--font-mono);
+  font-size: 0.86em;
+  background: var(--void-3);
+  border: 1px solid var(--hair-1);
+  border-radius: 6px;
+  padding: 0.12em 0.4em;
+}
+
+.prose hr {
+  border: 0;
+  height: 1px;
+  margin: 2.4em 0;
+  background: linear-gradient(90deg, transparent, var(--hair-2) 18%, var(--hair-2) 82%, transparent);
+}
+
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-sm);
+  margin: 1.4em 0;
+}
+.prose th {
+  text-align: left;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--faint);
+  font-weight: 500;
+  padding: 10px 14px 10px 0;
+  border-bottom: 1px solid var(--hair-2);
+}
+.prose td {
+  padding: 10px 14px 10px 0;
+  border-bottom: 1px solid var(--hair-1);
+  color: var(--text-2);
+}
+.prose td:first-child { color: var(--text); }
+
+.prose figure { margin: 1.6em 0; }
+.prose figcaption {
+  margin-top: 10px;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.06em;
+  color: var(--faint);
+}

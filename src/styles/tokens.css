@@ -1,0 +1,121 @@
+/* ────────────────────────────────────────────────────────────────────
+   zodiacs.org — "Cosmic Void" design tokens
+   Dark, cool, premium. The 12 pastel icon hues are the accent spectrum.
+   This sheet is linked ONLY by new (Astro) surfaces — never by the
+   legacy Warm Gilt wing, which keeps its own inline styles.
+   ──────────────────────────────────────────────────────────────────── */
+
+/* Self-hosted variable fonts (SIL OFL 1.1 — see /fonts/OFL-*.txt) */
+@font-face {
+  font-family: 'Instrument Sans';
+  src: url('/fonts/instrument-sans-latin-wght-normal.woff2') format('woff2-variations');
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Instrument Sans';
+  src: url('/fonts/instrument-sans-latin-wght-italic.woff2') format('woff2-variations');
+  font-weight: 400 700;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('/fonts/jetbrains-mono-latin-wght-normal.woff2') format('woff2-variations');
+  font-weight: 300 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  /* ── Void scale — cool near-blacks, page bg → raised surfaces ── */
+  --void-0: #060709;
+  --void-1: #0A0C11;
+  --void-2: #0F121A;
+  --void-3: #151925;
+  --void-4: #1C2130;
+
+  /* ── Ink scale — cool off-whites ── */
+  --ink-0: #EEF1F7;
+  --ink-1: #C6CCDA;
+  --ink-2: #8E96AB;
+  --ink-3: #5F6779;
+
+  /* ── Hairlines ── */
+  --hair-1: rgba(198, 204, 218, 0.08);
+  --hair-2: rgba(198, 204, 218, 0.16);
+  --hair-3: rgba(198, 204, 218, 0.28);
+
+  /* ── The twelve — exact pastel icon-disc hues ── */
+  --sign-aries: #DE8E79;
+  --sign-taurus: #B9D4BE;
+  --sign-gemini: #B29DD0;
+  --sign-cancer: #B6D4E4;
+  --sign-leo: #E0A9B4;
+  --sign-virgo: #B7D9B0;
+  --sign-libra: #D3A9DE;
+  --sign-scorpio: #B9DCE8;
+  --sign-sagittarius: #E0B080;
+  --sign-capricorn: #C0DEA8;
+  --sign-aquarius: #AE8FC9;
+  --sign-pisces: #A9D4C4;
+
+  /* ── Element families ── */
+  --el-fire: var(--sign-aries);
+  --el-earth: var(--sign-taurus);
+  --el-air: var(--sign-gemini);
+  --el-water: var(--sign-cancer);
+
+  /* ── Semantic roles ── */
+  --bg: var(--void-0);
+  --surface: var(--void-2);
+  --surface-2: var(--void-3);
+  --text: var(--ink-0);
+  --text-2: var(--ink-1);
+  --muted: var(--ink-2);
+  --faint: var(--ink-3);
+  --accent: var(--sign-cancer);
+  --link: var(--sign-scorpio);
+  --live: #7FC4A6;
+  --caution: #E0B080;
+
+  /* ── Type ── */
+  --font-sans: 'Instrument Sans', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, Menlo, Consolas, monospace;
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: clamp(1.1rem, 1rem + 0.5vw, 1.25rem);
+  --text-xl: clamp(1.4rem, 1.2rem + 1vw, 1.75rem);
+  --text-2xl: clamp(1.9rem, 1.5rem + 2vw, 2.6rem);
+  --text-hero: clamp(2.7rem, 1.8rem + 4.4vw, 5.1rem);
+
+  /* ── Space (4-base) ── */
+  --s-1: 4px;  --s-2: 8px;   --s-3: 12px; --s-4: 16px;
+  --s-6: 24px; --s-8: 32px;  --s-12: 48px; --s-16: 64px;
+  --s-24: 96px; --s-32: 128px;
+
+  /* ── Radius / bezel ── */
+  --r-sm: 8px;
+  --r-md: 14px;
+  --r-lg: 22px;
+  --r-xl: 30px;
+  --r-full: 999px;
+  --bezel: 6px; /* gap between a card's outer shell and inner core */
+
+  /* ── Motion ── */
+  --ease: cubic-bezier(0.32, 0.72, 0, 1);
+  --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-1: 180ms;
+  --dur-2: 420ms;
+  --dur-3: 800ms;
+
+  /* ── Layers ── */
+  --z-orbs: 1;
+  --z-base: 10;
+  --z-nav: 40;
+  --z-overlay: 50;
+
+  color-scheme: dark;
+}

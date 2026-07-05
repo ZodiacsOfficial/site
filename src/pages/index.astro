@@ -1,0 +1,37 @@
+---
+import Base from '../layouts/Base.astro';
+import SignIcon from '../components/SignIcon.astro';
+import { SIGNS } from '../lib/signs';
+---
+<Base
+  title="Zodiacs.org — Free birth charts, sign guides & astrology tools"
+  description="See the sky you were born under. Free birth charts, moon signs, and rising signs — accurate, private, computed on your device, explained in plain language."
+  path="/"
+>
+  <section class="section container" style="text-align:center">
+    <span class="eyebrow"><span class="dot"></span> Free astrology, done properly</span>
+    <h1 style="font-size:var(--text-hero);font-weight:640;letter-spacing:-0.035em;line-height:1.02;margin:22px auto 16px;max-width:14ch;text-wrap:balance">
+      See the sky you were born under.
+    </h1>
+    <p style="max-width:52ch;margin:0 auto 30px;color:var(--muted);font-size:var(--text-lg)">
+      Free birth charts, moon signs, and compatibility — accurate, private,
+      computed on your device, explained in plain language.
+    </p>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+      <a class="btn btn--primary" href="/birth-chart/"><span>Get your free birth chart</span><span class="orb">↗</span></a>
+      <a class="btn btn--ghost" href="/learn/"><span>Explore the twelve signs</span></a>
+    </div>
+  </section>
+
+  <section class="section--tight container" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px">
+    {SIGNS.map((s) => (
+      <a class="shell" href={`/${s.slug}/`} style={`--sign:${s.hue}`}>
+        <div class="core tinted" style="display:flex;flex-direction:column;align-items:center;gap:10px;padding:22px 12px">
+          <SignIcon sign={s.slug} size={64} />
+          <strong style="font-size:15px">{s.name}</strong>
+          <span class="mono" style="font-size:10.5px;color:var(--faint)">{s.dates}</span>
+        </div>
+      </a>
+    ))}
+  </section>
+</Base>

@@ -1,0 +1,332 @@
+---
+/**
+ * Floating pill navigation. The Signs item opens a 12-icon pastel grid —
+ * the icons are the navigation. The profile glyph fills once the visitor
+ * has saved something (read from localStorage, progressive).
+ */
+import { SIGNS } from '../lib/signs';
+import SignIcon from './SignIcon.astro';
+
+const links = [
+  { href: '/tools/', label: 'Tools' },
+  { href: '/learn/', label: 'Learn' },
+  { href: '/collect/', label: 'Collect' },
+];
+const path = Astro.url.pathname;
+---
+<div class="nav-wrap">
+  <nav class="nav" aria-label="Primary" data-nav>
+    <a class="nav__mark" href="/"><span>Zodiacs</span><span class="nav__tld">.org</span></a>
+
+    <div class="nav__links">
+      <button class="nav__link nav__signs-btn" type="button" data-signs-toggle aria-expanded="false" aria-controls="signs-menu">
+        Signs
+        <svg width="8" height="5" viewBox="0 0 8 5" fill="none" aria-hidden="true"><path d="M1 1l3 3 3-3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      {links.map((l) => (
+        <a class="nav__link" href={l.href} aria-current={path.startsWith(l.href) ? 'page' : undefined}>{l.label}</a>
+      ))}
+    </div>
+
+    <a class="nav__profile" href="/profile/" aria-label="Your cosmic profile" data-profile-glyph>
+      <svg width="17" height="17" viewBox="0 0 17 17" fill="none" aria-hidden="true">
+        <circle cx="8.5" cy="8.5" r="6.9" stroke="currentColor" stroke-width="1.3" />
+        <circle class="nav__profile-core" cx="8.5" cy="8.5" r="2.6" fill="currentColor" />
+      </svg>
+    </a>
+
+    <button class="nav__burger" type="button" data-menu-toggle aria-expanded="false" aria-controls="mobile-menu" aria-label="Menu">
+      <span class="nav__burger-line"></span>
+      <span class="nav__burger-line"></span>
+    </button>
+  </nav>
+
+  <div class="signs-menu" id="signs-menu" data-signs-menu hidden>
+    <div class="signs-menu__grid">
+      {SIGNS.map((s) => (
+        <a class="signs-menu__item" href={`/${s.slug}/`} style={`--sign:${s.hue}`}>
+          <SignIcon sign={s.slug} size={32} />
+          <span class="signs-menu__name">{s.name}</span>
+          <span class="signs-menu__dates">{s.dates}</span>
+        </a>
+      ))}
+    </div>
+  </div>
+</div>
+
+<div class="mobile-menu" id="mobile-menu" data-mobile-menu hidden>
+  <nav aria-label="Mobile">
+    <div class="mobile-menu__group">
+      <span class="mobile-menu__label">The site</span>
+      <a class="mobile-menu__link" style="--i:0" href="/tools/">Tools</a>
+      <a class="mobile-menu__link" style="--i:1" href="/learn/">Learn</a>
+      <a class="mobile-menu__link" style="--i:2" href="/profile/">Your profile</a>
+      <a class="mobile-menu__link" style="--i:3" href="/collect/">Collect</a>
+    </div>
+    <div class="mobile-menu__group">
+      <span class="mobile-menu__label">The twelve</span>
+      <div class="mobile-menu__signs">
+        {SIGNS.map((s, i) => (
+          <a class="mobile-menu__sign" style={`--i:${4 + i}`} href={`/${s.slug}/`} aria-label={s.name}>
+            <SignIcon sign={s.slug} size={40} />
+            <span>{s.name}</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </nav>
+</div>
+
+<style>
+  .nav-wrap {
+    position: fixed;
+    top: 14px;
+    left: 0;
+    right: 0;
+    z-index: var(--z-nav);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    pointer-events: none;
+    padding-top: env(safe-area-inset-top);
+  }
+  .nav {
+    pointer-events: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 18px;
+    height: 52px;
+    padding: 0 10px 0 20px;
+    border-radius: var(--r-full);
+    background: rgba(10, 12, 17, 0.66);
+    backdrop-filter: saturate(150%) blur(18px);
+    -webkit-backdrop-filter: saturate(150%) blur(18px);
+    border: 1px solid var(--hair-2);
+    box-shadow:
+      inset 0 1px 0 rgba(238, 241, 247, 0.06),
+      0 12px 32px -14px rgba(0, 0, 0, 0.7);
+  }
+  .nav__mark {
+    font-weight: 650;
+    font-size: 15.5px;
+    letter-spacing: -0.02em;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .nav__tld { color: var(--faint); font-weight: 500; }
+
+  .nav__links { display: none; align-items: center; gap: 2px; }
+  @media (min-width: 760px) { .nav__links { display: inline-flex; } }
+
+  .nav__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 13px;
+    border-radius: var(--r-full);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-2);
+    text-decoration: none;
+    transition: color var(--dur-1) var(--ease), background var(--dur-2) var(--ease);
+  }
+  .nav__link:hover { color: var(--text); background: rgba(198, 204, 218, 0.07); }
+  .nav__link[aria-current='page'] { color: var(--text); }
+  .nav__signs-btn svg { transition: transform var(--dur-2) var(--ease); }
+  .nav__signs-btn[aria-expanded='true'] svg { transform: rotate(180deg); }
+
+  .nav__profile {
+    display: inline-grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: 1px solid var(--hair-2);
+    color: var(--muted);
+    transition: color var(--dur-2) var(--ease), border-color var(--dur-2) var(--ease), transform var(--dur-1) var(--ease);
+  }
+  .nav__profile:hover { color: var(--text); border-color: var(--hair-3); }
+  .nav__profile:active { transform: scale(0.94); }
+  .nav__profile-core { opacity: 0; transition: opacity var(--dur-2) var(--ease); }
+  .nav__profile.has-saves { color: var(--accent); border-color: color-mix(in oklab, var(--accent) 45%, transparent); }
+  .nav__profile.has-saves .nav__profile-core { opacity: 1; }
+
+  .nav__burger {
+    display: inline-grid;
+    place-items: center;
+    gap: 5px;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: 1px solid var(--hair-2);
+  }
+  @media (min-width: 760px) { .nav__burger { display: none; } }
+  .nav__burger-line {
+    display: block;
+    width: 14px;
+    height: 1.5px;
+    border-radius: 2px;
+    background: var(--text-2);
+    transition: transform var(--dur-2) var(--ease);
+  }
+  .nav__burger[aria-expanded='true'] .nav__burger-line:first-child { transform: translateY(3.25px) rotate(45deg); }
+  .nav__burger[aria-expanded='true'] .nav__burger-line:last-child { transform: translateY(-3.25px) rotate(-45deg); }
+
+  /* ── Signs dropdown ── */
+  .signs-menu {
+    pointer-events: auto;
+    margin-top: 10px;
+    width: min(100% - 32px, 620px);
+    border-radius: var(--r-lg);
+    background: rgba(10, 12, 17, 0.82);
+    backdrop-filter: saturate(150%) blur(22px);
+    -webkit-backdrop-filter: saturate(150%) blur(22px);
+    border: 1px solid var(--hair-2);
+    box-shadow: 0 24px 60px -24px rgba(0, 0, 0, 0.8);
+    padding: 10px;
+    opacity: 0;
+    transform: translateY(-6px) scale(0.99);
+    transition: opacity var(--dur-2) var(--ease), transform var(--dur-2) var(--ease);
+  }
+  .signs-menu.is-open { opacity: 1; transform: none; }
+  .signs-menu__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2px;
+  }
+  @media (min-width: 640px) { .signs-menu__grid { grid-template-columns: repeat(3, 1fr); } }
+  .signs-menu__item {
+    display: grid;
+    grid-template-columns: 32px 1fr;
+    grid-template-rows: auto auto;
+    column-gap: 12px;
+    align-items: center;
+    padding: 10px 12px;
+    border-radius: var(--r-md);
+    text-decoration: none;
+    transition: background var(--dur-1) var(--ease);
+  }
+  .signs-menu__item:hover { background: color-mix(in oklab, var(--sign) 12%, transparent); }
+  .signs-menu__item :global(.sign-icon) { grid-row: span 2; }
+  .signs-menu__name { font-size: 14px; font-weight: 550; color: var(--text); line-height: 1.25; }
+  .signs-menu__dates {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    color: var(--faint);
+  }
+
+  /* ── Mobile overlay ── */
+  .mobile-menu {
+    position: fixed;
+    inset: 0;
+    z-index: calc(var(--z-nav) - 1);
+    background: rgba(6, 7, 9, 0.88);
+    backdrop-filter: blur(26px) saturate(140%);
+    -webkit-backdrop-filter: blur(26px) saturate(140%);
+    padding: calc(96px + env(safe-area-inset-top)) 24px 40px;
+    overflow-y: auto;
+  }
+  .mobile-menu__group + .mobile-menu__group { margin-top: 34px; }
+  .mobile-menu__label {
+    display: block;
+    margin-bottom: 14px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--faint);
+  }
+  .mobile-menu__link {
+    display: block;
+    padding: 10px 0;
+    font-size: 28px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    text-decoration: none;
+    color: var(--text);
+  }
+  .mobile-menu__signs {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px 10px;
+  }
+  .mobile-menu__sign {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    font-size: 12.5px;
+    font-weight: 500;
+    color: var(--text-2);
+  }
+  .mobile-menu.is-open .mobile-menu__link,
+  .mobile-menu.is-open .mobile-menu__sign,
+  .mobile-menu.is-open .mobile-menu__label {
+    animation: menu-in 640ms var(--ease) both;
+    animation-delay: calc(40ms * var(--i, 0));
+  }
+  @keyframes menu-in {
+    from { opacity: 0; transform: translateY(14px); filter: blur(4px); }
+    to { opacity: 1; transform: none; filter: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .mobile-menu.is-open .mobile-menu__link,
+    .mobile-menu.is-open .mobile-menu__sign,
+    .mobile-menu.is-open .mobile-menu__label { animation: none; }
+    .signs-menu { transition: none; }
+  }
+</style>
+
+<script>
+  const navWrap = document.querySelector('[data-nav]')?.parentElement;
+  const signsBtn = document.querySelector('[data-signs-toggle]') as HTMLButtonElement | null;
+  const signsMenu = document.querySelector('[data-signs-menu]') as HTMLElement | null;
+  const burger = document.querySelector('[data-menu-toggle]') as HTMLButtonElement | null;
+  const mobileMenu = document.querySelector('[data-mobile-menu]') as HTMLElement | null;
+
+  function setSigns(open: boolean) {
+    if (!signsBtn || !signsMenu) return;
+    signsBtn.setAttribute('aria-expanded', String(open));
+    if (open) {
+      signsMenu.hidden = false;
+      requestAnimationFrame(() => signsMenu.classList.add('is-open'));
+    } else {
+      signsMenu.classList.remove('is-open');
+      window.setTimeout(() => { signsMenu.hidden = true; }, 240);
+    }
+  }
+
+  signsBtn?.addEventListener('click', () => {
+    setSigns(signsBtn.getAttribute('aria-expanded') !== 'true');
+  });
+  document.addEventListener('click', (e) => {
+    if (!navWrap?.contains(e.target as Node)) setSigns(false);
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') { setSigns(false); setMobile(false); }
+  });
+
+  function setMobile(open: boolean) {
+    if (!burger || !mobileMenu) return;
+    burger.setAttribute('aria-expanded', String(open));
+    mobileMenu.hidden = !open;
+    mobileMenu.classList.toggle('is-open', open);
+    document.documentElement.style.overflow = open ? 'hidden' : '';
+  }
+  burger?.addEventListener('click', () => {
+    setMobile(burger.getAttribute('aria-expanded') !== 'true');
+  });
+  mobileMenu?.addEventListener('click', (e) => {
+    if ((e.target as HTMLElement).closest('a')) setMobile(false);
+  });
+
+  // Profile glyph fills once anything is saved on this device.
+  try {
+    const raw = localStorage.getItem('zodiacs.profile.v1');
+    if (raw && JSON.parse(raw)?.charts?.length) {
+      document.querySelector('[data-profile-glyph]')?.classList.add('has-saves');
+    }
+  } catch { /* private mode etc. — glyph stays empty */ }
+</script>

@@ -1,0 +1,262 @@
+/* ────────────────────────────────────────────────────────────────────
+   zodiacs.org — base styles + shared primitives (new surfaces only)
+   ──────────────────────────────────────────────────────────────────── */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  scrollbar-color: var(--void-4) var(--void-0);
+  scrollbar-width: thin;
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body { min-height: 100dvh; }
+
+/* Ambient pastel orbs — fixed, ultra-quiet, GPU-cheap. */
+.orbs {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: var(--z-orbs);
+  background:
+    radial-gradient(46% 34% at 82% -6%, rgba(178, 157, 208, 0.10), transparent 68%),
+    radial-gradient(40% 30% at 8% 12%, rgba(182, 212, 228, 0.07), transparent 66%),
+    radial-gradient(52% 40% at 50% 112%, rgba(169, 212, 196, 0.05), transparent 70%);
+}
+.dust {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: var(--z-orbs);
+  opacity: 0.5;
+  background-image:
+    radial-gradient(1px 1px at 11% 17%, rgba(238, 241, 247, 0.35), transparent 60%),
+    radial-gradient(1px 1px at 27% 64%, rgba(178, 157, 208, 0.28), transparent 60%),
+    radial-gradient(1px 1px at 52% 31%, rgba(238, 241, 247, 0.22), transparent 60%),
+    radial-gradient(1.5px 1.5px at 69% 78%, rgba(182, 212, 228, 0.26), transparent 60%),
+    radial-gradient(1px 1px at 84% 22%, rgba(238, 241, 247, 0.30), transparent 60%),
+    radial-gradient(1px 1px at 93% 58%, rgba(169, 212, 196, 0.24), transparent 60%);
+}
+
+[id] { scroll-margin-top: 96px; }
+img, svg, video { display: block; max-width: 100%; }
+a { color: inherit; }
+button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+input, select { font: inherit; }
+
+::selection { background: rgba(178, 157, 208, 0.32); color: var(--ink-0); }
+
+:focus-visible {
+  outline: 1.5px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+:focus:not(:focus-visible) { outline: 0; }
+
+.skip {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  background: var(--void-3);
+  color: var(--text);
+  padding: 10px 16px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  border: 1px solid var(--hair-3);
+  border-radius: var(--r-full);
+  z-index: 60;
+}
+.skip:focus { left: 12px; top: 12px; }
+
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ── Layout primitives ─────────────────────────────────────────── */
+.container {
+  width: min(100% - 40px, 1120px);
+  margin-inline: auto;
+  position: relative;
+  z-index: var(--z-base);
+}
+.container--narrow { width: min(100% - 40px, 780px); }
+
+.section { padding-block: clamp(72px, 12vw, 136px); }
+.section--tight { padding-block: clamp(48px, 8vw, 88px); }
+
+.section-head { max-width: 56ch; margin-bottom: clamp(28px, 5vw, 52px); }
+.section-head h2 {
+  margin: 0 0 12px;
+  font-size: var(--text-2xl);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.12;
+  text-wrap: balance;
+}
+.section-head p { margin: 0; color: var(--muted); font-size: var(--text-lg); text-wrap: pretty; }
+
+/* ── Eyebrow pill ──────────────────────────────────────────────── */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 12px;
+  border: 1px solid var(--hair-2);
+  border-radius: var(--r-full);
+  background: rgba(198, 204, 218, 0.04);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.eyebrow .dot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--live);
+  box-shadow: 0 0 8px rgba(127, 196, 166, 0.7);
+}
+
+/* ── Buttons — island pills with nested orb icon ───────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 10px 10px 22px;
+  border-radius: var(--r-full);
+  font-weight: 550;
+  font-size: var(--text-base);
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  border: 1px solid var(--hair-2);
+  color: var(--text);
+  background: rgba(198, 204, 218, 0.05);
+  transition: border-color var(--dur-2) var(--ease), background var(--dur-2) var(--ease), transform var(--dur-1) var(--ease);
+}
+.btn:hover { border-color: var(--hair-3); background: rgba(198, 204, 218, 0.09); }
+.btn:active { transform: scale(0.98); }
+.btn .orb {
+  display: inline-grid;
+  place-items: center;
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: rgba(198, 204, 218, 0.09);
+  border: 1px solid var(--hair-2);
+  font-size: 14px;
+  line-height: 1;
+  transition: transform var(--dur-2) var(--ease), background var(--dur-2) var(--ease);
+}
+.btn:hover .orb { transform: translate(2px, -1px) scale(1.05); background: rgba(198, 204, 218, 0.16); }
+
+.btn--primary {
+  background: var(--ink-0);
+  border-color: var(--ink-0);
+  color: var(--void-0);
+}
+.btn--primary:hover { background: #ffffff; border-color: #ffffff; }
+.btn--primary .orb {
+  background: rgba(6, 7, 9, 0.10);
+  border-color: rgba(6, 7, 9, 0.14);
+}
+.btn--primary:hover .orb { background: rgba(6, 7, 9, 0.16); }
+
+.btn--ghost { background: transparent; }
+
+/* ── Double-bezel card: outer shell + inner core ───────────────── */
+.shell {
+  background: rgba(198, 204, 218, 0.035);
+  border: 1px solid var(--hair-1);
+  border-radius: var(--r-xl);
+  padding: var(--bezel);
+}
+.core {
+  background: linear-gradient(180deg, var(--void-2) 0%, var(--void-1) 100%);
+  border: 1px solid var(--hair-1);
+  border-radius: calc(var(--r-xl) - var(--bezel));
+  box-shadow: inset 0 1px 0 rgba(238, 241, 247, 0.05);
+  height: 100%;
+}
+
+/* Interactive card variant */
+a.shell { display: block; text-decoration: none; transition: border-color var(--dur-2) var(--ease), transform var(--dur-2) var(--ease); }
+a.shell:hover { border-color: color-mix(in oklab, var(--sign, var(--accent)) 45%, transparent); transform: translateY(-2px); }
+a.shell:hover .core { border-color: color-mix(in oklab, var(--sign, var(--accent)) 28%, transparent); }
+
+/* Sign-tinted wash (set --sign on the element) */
+.tinted .core,
+.core.tinted {
+  background:
+    radial-gradient(120% 80% at 50% 0%, color-mix(in oklab, var(--sign, var(--accent)) 9%, transparent), transparent 60%),
+    linear-gradient(180deg, var(--void-2) 0%, var(--void-1) 100%);
+}
+
+/* ── Mono data text ("sky receipts") ───────────────────────────── */
+.mono {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  letter-spacing: 0.02em;
+  color: var(--text-2);
+  font-variant-numeric: tabular-nums;
+}
+.mono--label {
+  font-size: 10.5px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+/* ── Scroll reveal ─────────────────────────────────────────────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  filter: blur(5px);
+  transition:
+    opacity var(--dur-3) var(--ease),
+    transform var(--dur-3) var(--ease),
+    filter var(--dur-3) var(--ease);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform, filter;
+}
+.reveal.is-in { opacity: 1; transform: translateY(0); filter: blur(0); }
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+  }
+}
+
+/* ── Hairline divider ──────────────────────────────────────────── */
+.rule {
+  border: 0;
+  height: 1px;
+  margin: 0;
+  background: linear-gradient(90deg, transparent, var(--hair-2) 18%, var(--hair-2) 82%, transparent);
+}
