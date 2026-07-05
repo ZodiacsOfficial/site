@@ -9,6 +9,9 @@ import { loadProfile, deleteChart, renameChart } from '../lib/profile/store';
 import type { Profile, SavedChart } from '../lib/profile/schema';
 import { signForLongitude, formatLongitude } from '../lib/signs';
 
+/** "Cancer Sun · 1907-07-06" → "Cancer Sun" for compact CTAs. */
+const handle = (name: string) => name.split('·')[0].trim() || name;
+
 function ChipRow({ chart }: { chart: SavedChart }) {
   const find = (name: string) => chart.summary.bodies.find((b) => b.body === name);
   const entries: { label: string; lon: number | null }[] = [
@@ -139,11 +142,19 @@ export default function ProfileManager() {
       {profile.charts.length >= 2 && (
         <div class="pf-next shell tinted" style="--sign:var(--sign-libra)">
           <div class="core tinted pf-next__core">
-            <strong>Two charts saved — compatibility is coming.</strong>
+            <strong>
+              Compare {handle(profile.charts[0].name)} &amp; {handle(profile.charts[1].name)}
+            </strong>
             <p>
-              Synastry (two charts, honestly compared) is the next tool we're
-              building. Your saved charts will plug straight into it.
+              Two charts saved is a comparison waiting to happen: every
+              cross-chart aspect, read honestly, computed on this device.
             </p>
+            <a
+              class="btn btn--primary pf-next__cta"
+              href={`/compatibility/?a=${profile.charts[0].id}&b=${profile.charts[1].id}`}
+            >
+              <span>Compare these two charts</span><span class="orb">↗</span>
+            </a>
           </div>
         </div>
       )}

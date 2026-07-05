@@ -10,6 +10,7 @@ import SignIcon from './SignIcon.astro';
 const links = [
   { href: '/tools/', label: 'Tools' },
   { href: '/learn/', label: 'Learn' },
+  { href: '/horoscopes/', label: 'Horoscopes' },
   { href: '/collect/', label: 'Collect' },
 ];
 const path = Astro.url.pathname;
@@ -60,14 +61,15 @@ const path = Astro.url.pathname;
       <span class="mobile-menu__label">The site</span>
       <a class="mobile-menu__link" style="--i:0" href="/tools/">Tools</a>
       <a class="mobile-menu__link" style="--i:1" href="/learn/">Learn</a>
-      <a class="mobile-menu__link" style="--i:2" href="/profile/">Your profile</a>
-      <a class="mobile-menu__link" style="--i:3" href="/collect/">Collect</a>
+      <a class="mobile-menu__link" style="--i:2" href="/horoscopes/">Horoscopes</a>
+      <a class="mobile-menu__link" style="--i:3" href="/profile/">Your profile</a>
+      <a class="mobile-menu__link" style="--i:4" href="/collect/">Collect</a>
     </div>
     <div class="mobile-menu__group">
       <span class="mobile-menu__label">The twelve</span>
       <div class="mobile-menu__signs">
         {SIGNS.map((s, i) => (
-          <a class="mobile-menu__sign" style={`--i:${4 + i}`} href={`/${s.slug}/`} aria-label={s.name}>
+          <a class="mobile-menu__sign" style={`--i:${5 + i}`} href={`/${s.slug}/`} aria-label={s.name}>
             <SignIcon sign={s.slug} size={40} />
             <span>{s.name}</span>
           </a>

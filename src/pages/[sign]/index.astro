@@ -7,6 +7,7 @@ import HeritageTimeline from '../../components/HeritageTimeline.astro';
 import CollectBand from '../../components/CollectBand.astro';
 import Faq from '../../components/Faq.astro';
 import { SIGNS, SIGN_SLUGS, signBySlug, ELEMENT_LABEL } from '../../lib/signs';
+import { pairSlug } from '../../lib/compat';
 import { heritage } from '../../lib/legacy/sign-lore';
 
 export async function getStaticPaths() {
@@ -107,8 +108,8 @@ const jsonLd = [
               {guide.data.compat.easeful.map((slug) => {
                 const s = signBySlug(slug);
                 return (
-                  <a class="chip" href={`/${s.slug}/`} style={`--sign:${s.hue}`}>
-                    <SignIcon sign={s.slug} size={18} class="chip__icon" /> {s.name}
+                  <a class="chip" href={`/compatibility/${pairSlug(sign.slug, s.slug)}/`} style={`--sign:${s.hue}`}>
+                    <SignIcon sign={s.slug} size={18} class="chip__icon" /> {sign.name} &amp; {s.name}
                   </a>
                 );
               })}
@@ -120,16 +121,16 @@ const jsonLd = [
               {guide.data.compat.charged.map((slug) => {
                 const s = signBySlug(slug);
                 return (
-                  <a class="chip" href={`/${s.slug}/`} style={`--sign:${s.hue}`}>
-                    <SignIcon sign={s.slug} size={18} class="chip__icon" /> {s.name}
+                  <a class="chip" href={`/compatibility/${pairSlug(sign.slug, s.slug)}/`} style={`--sign:${s.hue}`}>
+                    <SignIcon sign={s.slug} size={18} class="chip__icon" /> {sign.name} &amp; {s.name}
                   </a>
                 );
               })}
             </div>
           </div>
           <p class="guide-compat__note">
-            Sun-sign chemistry is the first sentence, not the story — a real
-            comparison reads both whole charts.
+            Sun-sign chemistry is the first sentence, not the story — for the
+            whole thing, <a href="/compatibility/">compare two full charts</a>.
           </p>
         </section>
 

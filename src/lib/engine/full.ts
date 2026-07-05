@@ -83,6 +83,15 @@ function lonAt(name: BodyName, date: Date): number {
   return eclipticOfDate(planet.body, date).lon;
 }
 
+/**
+ * Single-body tropical longitude at an instant. The cheap primitive the
+ * return-scanner needs — computeBodies would price every step at twelve
+ * bodies plus speeds.
+ */
+export function bodyLongitude(name: BodyName, date: Date): number {
+  return lonAt(name, date);
+}
+
 /** Longitude speed in degrees/day by central difference (±6h). */
 export function longitudeSpeed(name: BodyName, date: Date): number {
   const h = 0.25;

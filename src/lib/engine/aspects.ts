@@ -22,7 +22,7 @@ export const ASPECTS: readonly AspectDef[] = [
 
 const LUMINARIES = new Set(['Sun', 'Moon']);
 /** Bodies that participate in aspect detection. */
-const ASPECT_BODIES = new Set([
+export const ASPECT_BODIES = new Set([
   'Sun', 'Moon', 'Mercury', 'Venus', 'Mars',
   'Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto',
 ]);
@@ -33,6 +33,28 @@ export function separation(a: number, b: number): number {
   return d > 180 ? 360 - d : d;
 }
 
+/**
+ * Best-matching major aspect between two longitudes, or null when none
+ * is in orb. Luminary orbs apply when either body is the Sun or Moon.
+ * Shared by natal aspect detection and inter-chart synastry.
+ */
+export function matchAspect(
+  aBody: string,
+  aLon: number,
+  bBody: string,
+  bLon: number,
+): { def: AspectDef; orb: number } | null {
+  const sep = separation(aLon, bLon);
+  const luminary = LUMINARIES.has(aBody) || LUMINARIES.has(bBody);
+  let best: { def: AspectDef; orb: number } | null = null;
+  for (const def of ASPECTS) {
+    const orb = Math.abs(sep - def.angle);
+    const max = luminary ? def.orbLuminary : def.orb;
+    if (orb <= max && (!best || orb < best.orb)) best = { def, orb };
+  }
+  return best;
+}
+
 export function findAspects(bodies: BodyPosition[]): Aspect[] {
   const list = bodies.filter((b) => ASPECT_BODIES.has(b.body));
   const out: Aspect[] = [];
@@ -41,15 +63,7 @@ export function findAspects(bodies: BodyPosition[]): Aspect[] {
     for (let j = i + 1; j < list.length; j += 1) {
       const A = list[i];
       const B = list[j];
-      const sep = separation(A.lon, B.lon);
-      const luminary = LUMINARIES.has(A.body) || LUMINARIES.has(B.body);
-
-      let best: { def: AspectDef; orb: number } | null = null;
-      for (const def of ASPECTS) {
-        const orb = Math.abs(sep - def.angle);
-        const max = luminary ? def.orbLuminary : def.orb;
-        if (orb <= max && (!best || orb < best.orb)) best = { def, orb };
-      }
+      const best = matchAspect(A.body, A.lon, B.body, B.lon);
       if (!best) continue;
 
       // Applying: is the separation moving toward the exact angle?

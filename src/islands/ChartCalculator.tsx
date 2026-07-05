@@ -10,6 +10,7 @@
  */
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import PlaceSearch from './PlaceSearch';
+import SignChip from './SignChip';
 import Wheel from '../lib/wheel/Wheel';
 import { SIGNS, degreeInSign, formatLongitude, signBySlug, signForLongitude } from '../lib/signs';
 import { bigThree } from '../lib/interpretations';
@@ -33,19 +34,6 @@ const GLYPHS: Record<string, string> = {
 
 let enginePromise: Promise<typeof import('../lib/engine/full')> | null = null;
 const loadEngine = () => (enginePromise ??= import('../lib/engine/full'));
-
-function SignChip({ lon }: { lon: number }) {
-  const s = signForLongitude(lon);
-  return (
-    <a class="chip" href={`/${s.slug}/`} style={`--sign:${s.hue}`}>
-      <picture class="chip__icon">
-        <source srcset={`/assets/zodiac-icons/48/${s.slug}.avif`} type="image/avif" />
-        <img src={`/assets/zodiac-icons/48/${s.slug}.webp`} width="18" height="18" alt="" loading="lazy" decoding="async" />
-      </picture>
-      {s.name}
-    </a>
-  );
-}
 
 export default function ChartCalculator({ mode }: Props) {
   const [date, setDate] = useState('');

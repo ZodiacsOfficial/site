@@ -1,0 +1,78 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../../layouts/Base.astro';
+
+const ORDINALS = [
+  'First', 'Second', 'Third', 'Fourth', 'Fifth', 'Sixth',
+  'Seventh', 'Eighth', 'Ninth', 'Tenth', 'Eleventh', 'Twelfth',
+];
+
+const entries = await getCollection('learn', (e) => e.data.kind === 'house' && !e.data.draft);
+const houses = Array.from({ length: 12 }, (_, i) => {
+  const entry = entries.find((e) => e.data.kind === 'house' && e.data.house === i + 1);
+  if (!entry) throw new Error(`Missing house page: ${i + 1}`);
+  return {
+    n: i + 1,
+    slug: entry.id.split('/')[1],
+    theme: entry.data.kind === 'house' ? entry.data.theme : '',
+  };
+});
+
+const jsonLd = [
+  {
+    '@type': 'CollectionPage',
+    name: 'The twelve houses in astrology',
+    url: 'https://zodiacs.org/learn/houses/',
+    description: 'What the twelve houses of a birth chart mean, from self to solitude — each explained plainly.',
+  },
+  {
+    '@type': 'ItemList',
+    numberOfItems: 12,
+    itemListElement: houses.map((h) => ({
+      '@type': 'ListItem',
+      position: h.n,
+      name: `The ${ORDINALS[h.n - 1].toLowerCase()} house`,
+      url: `https://zodiacs.org/learn/houses/${h.slug}/`,
+    })),
+  },
+];
+---
+<Base
+  title="The 12 Houses in Astrology — What Each One Means | Zodiacs.org"
+  description="The twelve houses of a birth chart explained plainly: money, home, work, partnership, career, and the rest of life's floor plan — house by house."
+  path="/learn/houses/"
+  jsonLd={jsonLd}
+>
+  <section class="section--tight container container--narrow">
+    <div class="cluster-hero reveal">
+      <em class="kicker">Learn</em>
+      <h1 class="display">The twelve houses</h1>
+      <p>
+        If planets are the actors and signs their costumes, houses are the
+        rooms where the scenes happen: money, siblings, home, work, marriage,
+        reputation. They come from your birth time — which is why the clock
+        matters so much in a chart.
+      </p>
+    </div>
+
+    <ol class="cluster-list reveal">
+      {houses.map((h) => (
+        <li>
+          <a class="cluster-row" href={`/learn/houses/${h.slug}/`}>
+            <span class="cluster-row__num mono">{h.n}</span>
+            <span class="cluster-row__name">{ORDINALS[h.n - 1]} house</span>
+            <span class="cluster-row__role">{h.theme}</span>
+            <span class="cluster-row__go">→</span>
+          </a>
+        </li>
+      ))}
+    </ol>
+
+    <p class="cluster-note reveal">
+      Houses need your birth time — <a href="/birth-chart/">run your chart</a>
+      to see all twelve populated. Or continue with
+      <a href="/learn/planets/">the planets</a> and
+      <a href="/learn/aspects/">the aspects</a>.
+    </p>
+  </section>
+</Base>

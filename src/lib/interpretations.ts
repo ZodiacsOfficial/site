@@ -52,6 +52,25 @@ export const RISING: Table = {
   pisces: 'You arrive gentle and a little unplaceable; people project freely onto the soft focus. Your attention feels like empathy because it is.',
 };
 
+/**
+ * Natal-Saturn readings for the return calculator: what the audit tends
+ * to examine, by the sign Saturn held at birth. Same register as above.
+ */
+export const SATURN_RETURN: Table = {
+  aries: 'Saturn in Aries spent your twenties teaching you to act under restraint — every impulsive start that collapsed was tuition. The return audits independence: which of the things you started are actually yours, built to your specifications, and which were just fast exits.',
+  taurus: 'You have been building security the slow way, and mistrusting anything you didn’t earn brick by brick. The return audits ownership: what you keep because it holds you up, and what you keep because letting go feels like losing.',
+  gemini: 'Saturn here disciplines a quick mind — the scattered interests, the unfinished courses, the ideas explained brilliantly and shipped never. The return audits your words: which conversations became craft, which promises became a body of work.',
+  cancer: 'Saturn in Cancer builds walls around soft things and calls it responsibility. The return audits home: the family you came from, the one you are making, and the difference between protecting people and managing them.',
+  leo: 'You have been earning the spotlight the hard way, suspicious of applause you didn’t work for. The return audits recognition: the difference between attention and respect, and whether the performance still has you in it.',
+  virgo: 'Saturn in Virgo doubles the standards and triples the checklist. The return audits rigor itself: where precision genuinely serves the work, and where it became fear wearing a lab coat.',
+  libra: 'Saturn does some of its best work in Libra — commitments here are chosen slowly and honored long. The return audits your contracts: which relationships are load-bearing, which are decorative, and what fairness actually costs.',
+  scorpio: 'You hold things — feelings, information, grudges, people — with a grip that took decades to learn. The return audits control: what loosens when you finally let it, and what was never yours to carry.',
+  sagittarius: 'Saturn in Sagittarius tests belief against experience, one disillusionment at a time. The return audits conviction: which of your twenties’ certainties survived contact with the world, and what you actually stand on now.',
+  capricorn: 'Saturn is home in Capricorn, and the climb has been the plan since before you could name it. The return audits the ladder: whether it leans against the right wall, and who you were becoming while you climbed.',
+  aquarius: 'Saturn ruled Aquarius long before Uranus arrived, and it shows: your structures serve systems, groups, the long future. The return audits allegiance: which communities deserve your architecture, and where detachment became absence.',
+  pisces: 'Saturn in Pisces builds levees in open water — boundaries around a compassion that would otherwise take everything on. The return audits the flood line: where softness is your actual strength, and where it became leakage nobody thanked you for.',
+};
+
 export function bigThree(kind: 'sun' | 'moon' | 'rising', slug: string): string {
   const table = kind === 'sun' ? SUN : kind === 'moon' ? MOON : RISING;
   return table[slug] ?? '';

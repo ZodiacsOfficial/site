@@ -1,0 +1,158 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../../layouts/Base.astro';
+import SignIcon from '../../../components/SignIcon.astro';
+import { SIGNS, SIGN_SLUGS, signBySlug } from '../../../lib/signs';
+import { dayLabel, eventList, monthLabel } from '../../../lib/horoscopes';
+
+export async function getStaticPaths() {
+  const all = await getCollection('horoscopes', ({ data }) => !data.draft);
+  const latestMonth = all.map((e) => e.data.month).sort().at(-1);
+  if (!latestMonth) throw new Error('Horoscopes collection is empty.');
+  const current = all.filter((e) => e.data.month === latestMonth);
+  const slugs = current.map((e) => e.data.sign).sort();
+  if (JSON.stringify(slugs) !== JSON.stringify([...SIGN_SLUGS].sort())) {
+    throw new Error(`Horoscope month ${latestMonth} must cover exactly the 12 signs; found: ${slugs.join(', ')}`);
+  }
+  return current.map((entry) => ({ params: { sign: entry.data.sign }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const sign = signBySlug(entry.data.sign);
+const label = monthLabel(entry.data.month);
+const events = eventList(entry.data.month);
+const { Content } = await render(entry);
+
+const others = SIGNS.filter((s) => s.slug !== sign.slug);
+
+const jsonLd = [
+  {
+    '@type': 'Article',
+    headline: `${sign.name} horoscope — ${label}`,
+    description: `${sign.name} in ${label}: a monthly horoscope grounded in the computed sky, with the month's real transit dates.`,
+    url: `https://zodiacs.org/horoscopes/${sign.slug}/`,
+    dateModified: entry.data.updated.toISOString(),
+    author: { '@type': 'Organization', name: 'Zodiacs.org', url: 'https://zodiacs.org/' },
+    about: { '@type': 'Thing', name: `${sign.name} (astrology)` },
+  },
+  {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Zodiacs.org', item: 'https://zodiacs.org/' },
+      { '@type': 'ListItem', position: 2, name: 'Horoscopes', item: 'https://zodiacs.org/horoscopes/' },
+      { '@type': 'ListItem', position: 3, name: sign.name, item: `https://zodiacs.org/horoscopes/${sign.slug}/` },
+    ],
+  },
+];
+---
+<Base
+  title={`${sign.name} Monthly Horoscope — ${label} | Zodiacs.org`}
+  description={`${sign.name} in ${label}, grounded in the real sky: dated transits, the month's lunations, and what they mean for you — no vague cosmic weather.`}
+  path={`/horoscopes/${sign.slug}/`}
+  type="article"
+  jsonLd={jsonLd}
+>
+  <article class="container container--narrow horo" style={`--sign:${sign.hue}`}>
+    <header class="horo__hero reveal">
+      <SignIcon sign={sign.slug} size={88} loading="eager" class="horo__icon" />
+      <div>
+        <em class="kicker">Monthly horoscope · {label}</em>
+        <h1 class="display">{sign.name}</h1>
+        <p class="horo__dates mono">{sign.dates}</p>
+      </div>
+    </header>
+
+    <div class="prose reveal">
+      <Content />
+    </div>
+
+    <section class="horo__receipts reveal">
+      <h2>The month’s sky, computed</h2>
+      <p class="horo__receipts-note">
+        Every date above comes from this list — the month’s events as our
+        engine computed them. Times are universal time.
+      </p>
+      <ul class="horo__events">
+        {events.map((e) => (
+          <li>
+            <span class="horo__event-date mono">{dayLabel(e.at)}</span>
+            <span class="horo__event-label">{e.label}</span>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <div class="horo__cta shell tinted reveal">
+      <div class="core tinted horo__cta-core">
+        <strong>This read your sun sign. Your chart says more.</strong>
+        <p>
+          The same transits land differently depending on where your houses
+          fall — finding yours takes your birth time and little else.
+        </p>
+        <a class="btn btn--primary" href="/birth-chart/"><span>Get your free birth chart</span><span class="orb">↗</span></a>
+      </div>
+    </div>
+
+    <nav class="horo__others reveal" aria-label="Other signs">
+      <span class="horo__others-head">The other eleven</span>
+      <div class="horo__others-chips">
+        {others.map((s) => (
+          <a class="chip" href={`/horoscopes/${s.slug}/`} style={`--sign:${s.hue}`}>
+            <SignIcon sign={s.slug} size={18} class="chip__icon" /> {s.name}
+          </a>
+        ))}
+      </div>
+    </nav>
+  </article>
+</Base>
+
+<style>
+  .horo { display: grid; gap: clamp(26px, 5vw, 44px); padding-block: clamp(24px, 5vw, 56px) clamp(36px, 6vw, 72px); }
+  .horo__hero { display: flex; align-items: center; gap: clamp(18px, 4vw, 32px); }
+  .horo__hero :global(.horo__icon) {
+    width: clamp(64px, 9vw, 88px);
+    border-radius: 50%;
+    filter: drop-shadow(0 14px 34px color-mix(in oklab, var(--sign) 28%, transparent));
+  }
+  .horo__hero h1 { margin: 10px 0 8px; font-size: clamp(2.4rem, 1.7rem + 3.6vw, 4rem); line-height: 0.98; }
+  .horo__dates { margin: 0; font-size: 11px; color: var(--faint); letter-spacing: 0.06em; }
+
+  .horo__receipts h2 { margin: 0 0 8px; font-size: var(--text-xl); font-weight: 620; letter-spacing: -0.02em; }
+  .horo__receipts-note { margin: 0 0 16px; font-size: var(--text-sm); color: var(--muted); max-width: 56ch; }
+  .horo__events { margin: 0; padding: 0; list-style: none; display: grid; }
+  .horo__events li {
+    display: grid;
+    grid-template-columns: 64px 1fr;
+    gap: 14px;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--hair-1);
+    align-items: baseline;
+  }
+  .horo__events li:first-child { border-top: 1px solid var(--hair-1); }
+  .horo__event-date { font-size: 11px; color: var(--faint); letter-spacing: 0.05em; }
+  .horo__event-label { font-size: var(--text-sm); color: var(--text-2); }
+
+  .horo__cta-core { padding: clamp(22px, 4vw, 32px); display: grid; gap: 10px; justify-items: start; }
+  .horo__cta-core strong { font-size: var(--text-lg); letter-spacing: -0.01em; }
+  .horo__cta-core p { margin: 0; font-size: var(--text-sm); color: var(--text-2); max-width: 52ch; }
+
+  .horo__others { display: grid; gap: 12px; padding-top: 18px; border-top: 1px solid var(--hair-1); }
+  .horo__others-head { font-weight: 600; font-size: var(--text-sm); color: var(--text); }
+  .horo__others-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 3px 10px 3px 4px;
+    border-radius: var(--r-full);
+    border: 1px solid color-mix(in oklab, var(--sign, var(--accent)) 35%, transparent);
+    background: color-mix(in oklab, var(--sign, var(--accent)) 9%, transparent);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text);
+    text-decoration: none;
+    transition: background var(--dur-1) var(--ease);
+  }
+  .chip:hover { background: color-mix(in oklab, var(--sign, var(--accent)) 16%, transparent); }
+  .chip :global(.chip__icon img) { border-radius: 50%; }
+</style>

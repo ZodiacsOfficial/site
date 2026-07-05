@@ -8,7 +8,13 @@ const tools = [
     promise: 'The whole map: Sun, Moon, rising, every planet, houses, aspects.',
     hue: 'var(--sign-cancer)',
     glyph: '☉',
-    live: true,
+  },
+  {
+    href: '/compatibility/',
+    title: 'Compatibility',
+    promise: 'Two charts, honestly compared: every cross-chart aspect, translated.',
+    hue: 'var(--sign-libra)',
+    glyph: '☌',
   },
   {
     href: '/moon-sign/',
@@ -16,22 +22,28 @@ const tools = [
     promise: 'How you feel, and what settles you.',
     hue: 'var(--sign-pisces)',
     glyph: '☽',
-    live: true,
   },
   {
     href: '/rising-sign/',
     title: 'Rising sign calculator',
     promise: 'How people first read you. Needs your birth time.',
-    hue: 'var(--sign-libra)',
+    hue: 'var(--sign-gemini)',
     glyph: 'ASC',
-    live: true,
   },
-];
-
-const upcoming = [
-  { title: 'Compatibility', promise: 'Two charts, honestly compared, beyond sun signs.' },
-  { title: 'Moon phase', promise: 'Tonight’s moon, and the moon you were born under.' },
-  { title: 'Saturn return', promise: 'When yours hits, and what it actually asks of you.' },
+  {
+    href: '/moon-phase/',
+    title: 'Moon phase',
+    promise: 'Tonight’s moon, and the moon of any date you care about.',
+    hue: 'var(--sign-cancer)',
+    glyph: '☾',
+  },
+  {
+    href: '/saturn-return/',
+    title: 'Saturn return',
+    promise: 'When yours hits, exactly, and what it tends to ask.',
+    hue: 'var(--sign-capricorn)',
+    glyph: '♄',
+  },
 ];
 
 const jsonLd = [
@@ -72,11 +84,12 @@ const jsonLd = [
     </div>
 
     <div class="tools-upcoming">
-      <em class="kicker">In the works</em>
+      <em class="kicker">And for the month ahead</em>
       <ul>
-        {upcoming.map((u) => (
-          <li><strong>{u.title}.</strong> {u.promise}</li>
-        ))}
+        <li>
+          <strong>Horoscopes.</strong> Monthly, for every sign, written against
+          the computed sky — <a href="/horoscopes/">read this month’s</a>.
+        </li>
       </ul>
     </div>
   </section>
@@ -88,7 +101,8 @@ const jsonLd = [
     gap: 14px;
     grid-template-columns: 1fr;
   }
-  @media (min-width: 760px) { .tools-grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (min-width: 700px) { .tools-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1000px) { .tools-grid { grid-template-columns: repeat(3, 1fr); } }
   .tool-card {
     display: flex;
     flex-direction: column;
@@ -129,4 +143,5 @@ const jsonLd = [
   }
   .tools-upcoming li { font-size: var(--text-sm); color: var(--muted); }
   .tools-upcoming strong { color: var(--text-2); font-weight: 600; }
+  .tools-upcoming a { color: var(--text); }
 </style>

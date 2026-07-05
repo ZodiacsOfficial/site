@@ -1,0 +1,79 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../../layouts/Base.astro';
+import { ASPECTS } from '../../../lib/engine/aspects';
+
+const ASPECT_ORDER = ['conjunction', 'sextile', 'square', 'trine', 'opposition'];
+
+const entries = await getCollection('learn', (e) => e.data.kind === 'aspect' && !e.data.draft);
+const aspects = ASPECT_ORDER.map((type) => {
+  const entry = entries.find((e) => e.data.kind === 'aspect' && e.data.aspect === type);
+  if (!entry) throw new Error(`Missing aspect page: ${type}`);
+  const def = ASPECTS.find((a) => a.type === type)!;
+  return {
+    type,
+    name: type.charAt(0).toUpperCase() + type.slice(1),
+    slug: entry.id.split('/')[1],
+    theme: entry.data.kind === 'aspect' ? entry.data.theme : '',
+    angle: def.angle,
+  };
+});
+
+const jsonLd = [
+  {
+    '@type': 'CollectionPage',
+    name: 'Aspects in astrology',
+    url: 'https://zodiacs.org/learn/aspects/',
+    description: 'The five major aspects explained: conjunction, sextile, square, trine, and opposition — what each angle means in a birth chart.',
+  },
+  {
+    '@type': 'ItemList',
+    numberOfItems: aspects.length,
+    itemListElement: aspects.map((a, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: a.name,
+      url: `https://zodiacs.org/learn/aspects/${a.slug}/`,
+    })),
+  },
+];
+---
+<Base
+  title="Aspects in Astrology — Conjunction, Square, Trine & More | Zodiacs.org"
+  description="The five major aspects of a birth chart explained plainly: conjunction, sextile, square, trine, and opposition — what each angle between planets means."
+  path="/learn/aspects/"
+  jsonLd={jsonLd}
+>
+  <section class="section--tight container container--narrow">
+    <div class="cluster-hero reveal">
+      <em class="kicker">Learn</em>
+      <h1 class="display">The aspects</h1>
+      <p>
+        Aspects are the angles between planets — the wiring of a chart. Two
+        planets sixty degrees apart cooperate; ninety degrees apart, they
+        argue. Five angles carry most of the meaning, and they’re the five
+        this site’s calculator counts.
+      </p>
+    </div>
+
+    <ol class="cluster-list reveal">
+      {aspects.map((a) => (
+        <li>
+          <a class="cluster-row" href={`/learn/aspects/${a.slug}/`}>
+            <span class="cluster-row__num mono">{a.angle}°</span>
+            <span class="cluster-row__name">{a.name}</span>
+            <span class="cluster-row__role">{a.theme}</span>
+            <span class="cluster-row__go">→</span>
+          </a>
+        </li>
+      ))}
+    </ol>
+
+    <p class="cluster-note reveal">
+      See your own wiring: <a href="/birth-chart/">the chart calculator</a>
+      lists every major aspect with its exact orb. Or continue with
+      <a href="/learn/planets/">the planets</a> and
+      <a href="/learn/houses/">the houses</a>.
+    </p>
+  </section>
+</Base>

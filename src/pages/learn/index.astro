@@ -83,6 +83,30 @@ const jsonLd = [
 
   <section class="section--tight container">
     <div class="section-head reveal">
+      <h2>Go deeper</h2>
+      <p>The rest of the chart, cluster by cluster.</p>
+    </div>
+    <div class="clusters reveal">
+      <a class="tile clusters__card" href="/learn/planets/">
+        <strong>The planets</strong>
+        <p>Ten planets, ten jobs — from the Sun’s identity to Pluto’s slow excavations.</p>
+        <span class="clusters__count mono">10 guides →</span>
+      </a>
+      <a class="tile clusters__card" href="/learn/houses/">
+        <strong>The houses</strong>
+        <p>Life’s floor plan: money, home, work, partnership, reputation, solitude.</p>
+        <span class="clusters__count mono">12 guides →</span>
+      </a>
+      <a class="tile clusters__card" href="/learn/aspects/">
+        <strong>The aspects</strong>
+        <p>The angles between planets — the chart’s wiring, friendly and otherwise.</p>
+        <span class="clusters__count mono">5 guides →</span>
+      </a>
+    </div>
+  </section>
+
+  <section class="section--tight container">
+    <div class="section-head reveal">
       <h2>Zodiac dates, elements &amp; rulers</h2>
       <p>The whole system on one table. Dates shift by a day some years — born on a boundary? <a href="/birth-chart/">Compute it exactly</a>.</p>
     </div>
@@ -158,4 +182,18 @@ const jsonLd = [
   .dates-table td a:hover { text-decoration: underline; text-underline-offset: 3px; }
   .learn-note { margin-top: 18px; font-size: var(--text-sm); color: var(--muted); }
   .learn-note a { color: var(--text); }
+
+  .clusters { display: grid; gap: 12px; grid-template-columns: 1fr; }
+  @media (min-width: 760px) { .clusters { grid-template-columns: repeat(3, 1fr); } }
+  .clusters__card {
+    display: grid;
+    gap: 8px;
+    align-content: start;
+    padding: 20px;
+    text-decoration: none;
+    color: var(--text);
+  }
+  .clusters__card strong { font-size: var(--text-lg); letter-spacing: -0.015em; }
+  .clusters__card p { margin: 0; font-size: var(--text-sm); color: var(--text-2); line-height: 1.6; }
+  .clusters__count { font-size: 10.5px; color: var(--faint); letter-spacing: 0.08em; margin-top: 4px; }
 </style>

@@ -12,19 +12,47 @@ const SITE = 'https://zodiacs.org';
 
 export const GET: APIRoute = async () => {
   const guides = await getCollection('guides', ({ data }) => !data.draft);
+  const pairs = await getCollection('pairs', ({ data }) => !data.draft);
+  const learn = await getCollection('learn', ({ data }) => !data.draft);
+  const horoscopes = await getCollection('horoscopes', ({ data }) => !data.draft);
+  const latestMonth = horoscopes.map((h) => h.data.month).sort().at(-1);
 
   const urls: { loc: string; priority: number; lastmod?: string }[] = [
     { loc: '/', priority: 1.0 },
     { loc: '/birth-chart/', priority: 0.95 },
+    { loc: '/compatibility/', priority: 0.9 },
     { loc: '/moon-sign/', priority: 0.9 },
     { loc: '/rising-sign/', priority: 0.9 },
+    { loc: '/moon-phase/', priority: 0.85 },
+    { loc: '/saturn-return/', priority: 0.85 },
     { loc: '/learn/', priority: 0.85 },
+    { loc: '/horoscopes/', priority: 0.8 },
     { loc: '/tools/', priority: 0.8 },
+    { loc: '/learn/planets/', priority: 0.7 },
+    { loc: '/learn/houses/', priority: 0.7 },
+    { loc: '/learn/aspects/', priority: 0.7 },
     { loc: '/methodology/', priority: 0.6 },
     ...guides.map((g) => ({
       loc: `/${g.data.sign}/`,
       priority: 0.9,
       lastmod: g.data.updated.toISOString().slice(0, 10),
+    })),
+    ...horoscopes
+      .filter((h) => h.data.month === latestMonth)
+      .map((h) => ({
+        loc: `/horoscopes/${h.data.sign}/`,
+        priority: 0.7,
+        lastmod: h.data.updated.toISOString().slice(0, 10),
+      })),
+    ...pairs.map((p) => ({
+      loc: `/compatibility/${p.id}/`,
+      priority: 0.75,
+      lastmod: p.data.updated.toISOString().slice(0, 10),
+    })),
+    ...learn.map((l) => ({
+      loc: `/learn/${l.id}/`,
+      priority: 0.65,
+      lastmod: l.data.updated.toISOString().slice(0, 10),
     })),
     ...LEGACY_URLS.map((u) => ({ loc: u.path, priority: u.priority })),
   ];

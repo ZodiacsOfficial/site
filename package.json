@@ -19,6 +19,7 @@
     "data:cities": "node scripts/build-cities.mjs",
     "data:icons": "node scripts/build-icons.mjs",
     "data:sky": "node scripts/build-sky.mjs",
+    "data:transits": "node scripts/build-transits.mjs",
     "report:bundles": "node scripts/report-bundles.mjs"
   },
   "dependencies": {
