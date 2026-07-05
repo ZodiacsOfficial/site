@@ -8,6 +8,7 @@ import { useEffect, useMemo, useState } from 'preact/hooks';
 import PlaceSearch from './PlaceSearch';
 import SignChip from './SignChip';
 import { loadProfile } from '../lib/profile/store';
+import { EMPTY_PROFILE } from '../lib/profile/schema';
 import type { Profile, SavedChart } from '../lib/profile/schema';
 import { summarizePair } from '../lib/engine/synastry';
 import type { MinimalBody, PairSummary } from '../lib/engine/synastry';
@@ -39,6 +40,8 @@ interface Person {
   label: string;
   bodies: MinimalBody[];
   asc: number | null;
+  /** False when the birth time was unknown — the Moon is a noon estimate. */
+  timeKnown: boolean;
 }
 
 const emptySlot = (): SlotState => ({
@@ -53,6 +56,7 @@ async function resolveSaved(chart: SavedChart): Promise<Person> {
     label: handleOf(chart.name),
     bodies: chart.summary.bodies.map(({ body, lon }) => ({ body, lon })),
     asc: chart.summary.angles?.asc ?? null,
+    timeKnown: chart.birth.timeKnown,
   };
   // Stale engine? Recompute from birth input when we can; the stored
   // summary stays the honest fallback.
@@ -76,6 +80,7 @@ async function resolveSaved(chart: SavedChart): Promise<Person> {
       label: stored.label,
       bodies: result.bodies.map(({ body, lon }) => ({ body, lon })),
       asc: result.angles?.asc ?? null,
+      timeKnown: chart.birth.timeKnown,
     };
   } catch {
     return stored;
@@ -98,6 +103,7 @@ async function resolveForm(slot: SlotState, fallbackLabel: string): Promise<Pers
     label: slot.name.trim() || fallbackLabel,
     bodies: result.bodies.map(({ body, lon }) => ({ body, lon })),
     asc: result.angles?.asc ?? null,
+    timeKnown,
   };
 }
 
@@ -211,7 +217,9 @@ function BalanceBars({ person, balance }: { person: string; balance: Record<stri
 }
 
 export default function SynastryCalculator() {
-  const [profile, setProfile] = useState<Profile | null>(null);
+  // Starts as the empty profile so the form server-renders; the mount
+  // effect swaps in the device's real profile (dropdowns appear then).
+  const [profile, setProfile] = useState<Profile>(EMPTY_PROFILE);
   const [slotA, setSlotA] = useState<SlotState>(emptySlot());
   const [slotB, setSlotB] = useState<SlotState>(emptySlot());
   const [result, setResult] = useState<{ a: Person; b: Person; summary: PairSummary } | null>(null);
@@ -241,18 +249,22 @@ export default function SynastryCalculator() {
     return () => window.removeEventListener('zodiacs:profile', sync);
   }, []);
 
-  const charts = profile?.charts ?? [];
+  const charts = profile.charts;
 
   const slotReady = (slot: SlotState) =>
     slot.source === 'saved'
       ? charts.some((c) => c.id === slot.savedId)
       : slot.date !== '' && slot.city !== null;
 
-  const canCompare = slotReady(slotA) && slotReady(slotB) && !busy;
+  const sameSaved =
+    slotA.source === 'saved' && slotB.source === 'saved'
+    && slotA.savedId !== '' && slotA.savedId === slotB.savedId;
+
+  const canCompare = slotReady(slotA) && slotReady(slotB) && !sameSaved && !busy;
 
   async function compare(e?: Event) {
     e?.preventDefault();
-    if (!slotReady(slotA) || !slotReady(slotB)) return;
+    if (!slotReady(slotA) || !slotReady(slotB) || sameSaved) return;
     setBusy(true);
     setError('');
     try {
@@ -288,8 +300,6 @@ export default function SynastryCalculator() {
     return { href: `/compatibility/${pairSlug(sa.slug, sb.slug)}/`, a: sa.name, b: sb.name };
   }, [result]);
 
-  if (!profile) return <p class="pf-loading mono">Loading…</p>;
-
   return (
     <div class="calc">
       <form class="calc__form shell" onSubmit={compare}>
@@ -304,6 +314,9 @@ export default function SynastryCalculator() {
             <span class="orb">↗</span>
           </button>
           <p class="calc__privacy">Computed on your device — birth data never leaves it.</p>
+          {sameSaved && (
+            <p class="field__help">That’s the same chart twice — pick two different ones to compare.</p>
+          )}
           {charts.length < 2 && (
             <p class="field__help">
               Charts you <a href="/birth-chart/">calculate and save</a> appear here as
@@ -316,6 +329,14 @@ export default function SynastryCalculator() {
 
       {result && (
         <div class="calc__result">
+          {(!result.a.timeKnown || !result.b.timeKnown) && (
+            <p class="notice">
+              No birth time for {[result.a, result.b].filter((p) => !p.timeKnown).map((p) => p.label).join(' and ')},
+              so that Moon is a midday estimate — it can sit up to six degrees
+              off, and a Moon aspect near the edge of its orb may come or go
+              with the real time.
+            </p>
+          )}
           <div class="syn__people">
             <PersonCard person={result.a} />
             <span class="syn__vs mono">×</span>

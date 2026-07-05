@@ -37,7 +37,7 @@ const jsonLd = [
     url: `https://zodiacs.org/${sign.slug}/`,
     dateModified: guide.data.updated.toISOString(),
     author: { '@type': 'Organization', name: 'Zodiacs.org', url: 'https://zodiacs.org/' },
-    image: `https://zodiacs.org/assets/og/${sign.slug}.png`,
+    image: `https://zodiacs.org/assets/og/v2/sign/${sign.slug}.png`,
     about: { '@type': 'Thing', name: `${sign.name} (astrology)` },
   },
   {
@@ -62,7 +62,7 @@ const jsonLd = [
   title={guide.data.title}
   description={guide.data.description}
   path={`/${sign.slug}/`}
-  image={`/assets/og/${sign.slug}.png`}
+  image={`/assets/og/v2/sign/${sign.slug}.png`}
   imageAlt={`${sign.name} — sign guide on Zodiacs.org`}
   type="article"
   jsonLd={jsonLd}

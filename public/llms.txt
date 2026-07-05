@@ -11,6 +11,7 @@ Free tools:
 - Rising sign calculator: https://zodiacs.org/rising-sign/
 - Moon phase (tonight + any date): https://zodiacs.org/moon-phase/
 - Saturn return calculator (exact dates, retrograde passes included): https://zodiacs.org/saturn-return/
+- Mercury retrograde dates 2026–2027 (computed, station to station): https://zodiacs.org/mercury-retrograde/
 - All tools: https://zodiacs.org/tools/
 
 Sign guides (dates, personality, love and compatibility, myth and history, sun/moon/rising meanings):

@@ -171,6 +171,34 @@ for (const file of files) {
   }
 }
 
+// ---- 5b. Share-card images (og:image / twitter:image) -------------------------
+// These live in content="…" attributes as absolute URLs, so the href/src
+// pass above never sees them — yet a broken share card fails silently in
+// the wild. Every referenced card must exist in dist.
+const ogRe = /(?:property="og:image"|name="twitter:image")\s+content="([^"]+)"/g;
+for (const file of files) {
+  const html = idCache.get(file) ?? (await readFile(file, 'utf8'));
+  const rel = relative(root, file);
+  for (const m of html.matchAll(ogRe)) {
+    let path;
+    try {
+      const url = new URL(m[1], 'https://zodiacs.org');
+      if (url.origin !== 'https://zodiacs.org') {
+        fail(`${rel}: share image on foreign origin — ${m[1]}`);
+        continue;
+      }
+      path = url.pathname;
+    } catch {
+      fail(`${rel}: unparsable share image URL — ${m[1]}`);
+      continue;
+    }
+    const target = targetPath(path);
+    if (!target || !(await exists(target))) {
+      fail(`${rel}: missing share image ${m[1]}`);
+    }
+  }
+}
+
 // ---- 6. Sitemap --------------------------------------------------------------
 const sitemap = await readFile(resolve(root, 'sitemap.xml'), 'utf8');
 if (!sitemap.startsWith('<?xml')) fail('sitemap.xml: missing XML declaration');

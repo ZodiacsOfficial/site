@@ -37,6 +37,7 @@ const jsonLd = [
     url: `https://zodiacs.org/compatibility/${facts.slug}/`,
     dateModified: entry.data.updated.toISOString(),
     author: { '@type': 'Organization', name: 'Zodiacs.org', url: 'https://zodiacs.org/' },
+    image: `https://zodiacs.org/assets/og/v2/pair/${facts.slug}.png`,
     about: [
       { '@type': 'Thing', name: `${a.name} (astrology)` },
       { '@type': 'Thing', name: `${b.name} (astrology)` },
@@ -56,6 +57,8 @@ const jsonLd = [
   title={entry.data.title}
   description={entry.data.description}
   path={`/compatibility/${facts.slug}/`}
+  image={`/assets/og/v2/pair/${facts.slug}.png`}
+  imageAlt={`${a.name} and ${b.name} compatibility — Zodiacs.org`}
   type="article"
   jsonLd={jsonLd}
 >
@@ -191,6 +194,15 @@ const jsonLd = [
     padding: 18px;
     text-decoration: none;
     color: var(--text);
+  }
+  @media (min-width: 560px) {
+    .pair-panel__sign {
+      grid-template-columns: auto 1fr;
+      column-gap: 16px;
+      align-content: center;
+      align-items: start;
+    }
+    .pair-panel__sign :global(.pair-panel__sign-icon) { grid-row: 1 / span 3; align-self: center; }
   }
   .pair-panel__sign :global(img) { border-radius: 50%; }
   .pair-panel__sign-name { font-weight: 620; font-size: var(--text-lg); letter-spacing: -0.01em; }

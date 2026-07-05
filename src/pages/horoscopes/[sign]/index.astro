@@ -33,6 +33,7 @@ const jsonLd = [
     url: `https://zodiacs.org/horoscopes/${sign.slug}/`,
     dateModified: entry.data.updated.toISOString(),
     author: { '@type': 'Organization', name: 'Zodiacs.org', url: 'https://zodiacs.org/' },
+    image: `https://zodiacs.org/assets/og/v2/horoscope/${sign.slug}.png`,
     about: { '@type': 'Thing', name: `${sign.name} (astrology)` },
   },
   {
@@ -49,6 +50,8 @@ const jsonLd = [
   title={`${sign.name} Monthly Horoscope — ${label} | Zodiacs.org`}
   description={`${sign.name} in ${label}, grounded in the real sky: dated transits, the month's lunations, and what they mean for you — no vague cosmic weather.`}
   path={`/horoscopes/${sign.slug}/`}
+  image={`/assets/og/v2/horoscope/${sign.slug}.png`}
+  imageAlt={`${sign.name} monthly horoscope — Zodiacs.org`}
   type="article"
   jsonLd={jsonLd}
 >

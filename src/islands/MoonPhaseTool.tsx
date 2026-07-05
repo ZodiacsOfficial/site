@@ -49,7 +49,8 @@ interface Lookup {
   lon: number;
   /** Second sign when a date-only Moon crossed a boundary that day. */
   altLon: number | null;
-  approximate: boolean;
+  /** Honesty caption for the clock assumptions used, '' when exact. */
+  caption: string;
 }
 
 export default function MoonPhaseTool() {
@@ -96,13 +97,21 @@ export default function MoonPhaseTool() {
         }
       }
 
+      const caption = city && hasTime
+        ? ''
+        : city
+          ? 'Read at midday local time — adding the clock time pins the degree exactly.'
+          : hasTime
+            ? 'The time is read as universal time — add a birthplace to convert your local clock.'
+            : 'Read at midday universal time — a time and place pin the degree exactly.';
+
       setResult({
         phase: moonPhaseName(utc),
         angle,
         illum: moonIlluminationFromAngle(angle),
         lon,
         altLon,
-        approximate: !city || !hasTime,
+        caption,
       });
     } catch (err) {
       setError('Something went wrong computing that moon. Please try again.');
@@ -114,23 +123,24 @@ export default function MoonPhaseTool() {
 
   return (
     <div class="calc mp">
-      {now && (
-        <div class="mp__tonight shell">
-          <div class="core mp__tonight-core">
-            <PhaseDisc angle={moonPhaseAngle(now)} />
-            <div class="mp__tonight-facts">
-              <em class="kicker">Right now</em>
-              <strong class="mp__phase">{moonPhaseName(now)}</strong>
-              <span class="mono mp__meta">
-                {Math.round(moonIllumination(now) * 100)}% illuminated · Moon in {signForLongitude(moonLongitude(now)).name}
-              </span>
-              <span class="mono mp__meta mp__meta--faint">
-                {now.toISOString().replace('T', ' · ').slice(0, 18)} UTC
-              </span>
-            </div>
+      {/* Same shell before hydration so the page doesn't jump. */}
+      <div class="mp__tonight shell">
+        <div class="core mp__tonight-core">
+          <PhaseDisc angle={now ? moonPhaseAngle(now) : 0} />
+          <div class="mp__tonight-facts">
+            <em class="kicker">Right now</em>
+            <strong class="mp__phase">{now ? moonPhaseName(now) : 'Reading the sky…'}</strong>
+            <span class="mono mp__meta">
+              {now
+                ? `${Math.round(moonIllumination(now) * 100)}% illuminated · Moon in ${signForLongitude(moonLongitude(now)).name}`
+                : '—'}
+            </span>
+            <span class="mono mp__meta mp__meta--faint">
+              {now ? `${now.toISOString().replace('T', ' · ').slice(0, 18)} UTC` : ' '}
+            </span>
           </div>
         </div>
-      )}
+      </div>
 
       <form class="calc__form shell" onSubmit={lookup}>
         <div class="core calc__core">
@@ -192,11 +202,8 @@ export default function MoonPhaseTool() {
               it moves too slowly for hours to matter.
             </p>
           )}
-          {result.approximate && result.altLon === null && (
-            <p class="field__help">
-              Read {city ? 'at midday local time' : 'at midday universal time'} —
-              adding a time and place pins the degree exactly.
-            </p>
+          {result.caption !== '' && result.altLon === null && (
+            <p class="field__help">{result.caption}</p>
           )}
           <div class="calc__actions">
             <a class="btn btn--ghost" href="/birth-chart/">

@@ -25,6 +25,7 @@ export const GET: APIRoute = async () => {
     { loc: '/rising-sign/', priority: 0.9 },
     { loc: '/moon-phase/', priority: 0.85 },
     { loc: '/saturn-return/', priority: 0.85 },
+    { loc: '/mercury-retrograde/', priority: 0.85 },
     { loc: '/learn/', priority: 0.85 },
     { loc: '/horoscopes/', priority: 0.8 },
     { loc: '/tools/', priority: 0.8 },
