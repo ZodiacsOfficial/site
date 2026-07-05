@@ -1,0 +1,91 @@
+{
+  "name": "Frida Kahlo",
+  "birth": "July 6, 1907 · 8:30 AM · Coyoacán, Mexico",
+  "utc": "1907-07-06T15:06:36.000Z",
+  "bodies": [
+    {
+      "body": "Sun",
+      "lon": 103.3755,
+      "retrograde": false
+    },
+    {
+      "body": "Moon",
+      "lon": 59.7121,
+      "retrograde": false
+    },
+    {
+      "body": "Mercury",
+      "lon": 126.3359,
+      "retrograde": false
+    },
+    {
+      "body": "Venus",
+      "lon": 84.3393,
+      "retrograde": false
+    },
+    {
+      "body": "Mars",
+      "lon": 283.3963,
+      "retrograde": true
+    },
+    {
+      "body": "Jupiter",
+      "lon": 110.4352,
+      "retrograde": false
+    },
+    {
+      "body": "Saturn",
+      "lon": 357.4452,
+      "retrograde": false
+    },
+    {
+      "body": "Uranus",
+      "lon": 280.6122,
+      "retrograde": true
+    },
+    {
+      "body": "Neptune",
+      "lon": 102.399,
+      "retrograde": false
+    },
+    {
+      "body": "Pluto",
+      "lon": 83.7468,
+      "retrograde": false
+    },
+    {
+      "body": "North Node",
+      "lon": 113.4131,
+      "retrograde": true
+    },
+    {
+      "body": "South Node",
+      "lon": 293.4131,
+      "retrograde": true
+    }
+  ],
+  "angles": {
+    "asc": 143.5128,
+    "mc": 53.3284
+  },
+  "houses": {
+    "system": "whole",
+    "cusps": [
+      120,
+      150,
+      180,
+      210,
+      240,
+      270,
+      300,
+      330,
+      0,
+      30,
+      60,
+      90
+    ]
+  },
+  "flags": [
+    "lmt"
+  ]
+}
