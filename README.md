@@ -1,135 +1,73 @@
 # zodiacs.org
 
-Official website repository for Zodiacs.org.
+Official website repository for Zodiacs.org — a free astrology platform
+(Learn / Tools / Collect) with the original token registry preserved as the
+site's collector's wing.
 
-Live site:
+Live site: https://zodiacs.org · Strategy: [`docs/STRATEGY.md`](docs/STRATEGY.md)
 
-- https://zodiacs.org
-- https://zodiacs.org/sdk/
+Production deploys from the `main` branch through Vercel (Astro static build).
 
-Production deploys from the `main` branch through Vercel.
+## The two wings
 
-## Designer handoff
-
-The full polish handoff is in [`DESIGNER_HANDOFF.md`](DESIGNER_HANDOFF.md).
-
-Use that document for:
-
-- brand tone
-- current page structure
-- visual system notes
-- interaction requirements
-- asset locations
-- registry and verifier constraints
-- polish opportunities
-- QA checklist
-
-The current site should be refined, not redesigned from scratch.
+- **New site (Astro)** — everything in `src/`: homepage, 12 sign guides at
+  `/{sign}/`, calculators (`/birth-chart/`, `/moon-sign/`, `/rising-sign/`),
+  learn pages, and the local-first cosmic profile. Dark "Cosmic Void" design
+  system, Instrument Sans + JetBrains Mono, the pastel SDK sign icons as the
+  core visual language. No token/market language on these surfaces.
+- **Legacy wing (`public/`)** — the registry experience, served verbatim at
+  its historical URLs: `/collect/` (the original registry landing),
+  `/collect/{sign}/` (catalogue pages), `/thesis/`, `/archive/`, `/sdk/`, and
+  the discovery ring. Warm Gilt museum aesthetic, unchanged.
 
 ## Repository structure
 
-- `index.html` - main Zodiacs.org landing page (loads the precompiled app)
-- `src/app.jsx` - source for the main page's React app (edit this, not the bundle)
-- `assets/app.js` - precompiled app bundle served by `index.html` (generated)
-- `sdk/index.html` - dedicated SDK page
-- `thesis/index.html` - the extended thesis page (video hero, editorial essay)
-- `archive/` - The Archive: dated moments, press, origin records + feeds (generated)
-- `aries/ … pisces/` - twelve sign catalogue pages (generated — edit the sources below)
-- `scripts/sign-data.mjs` - catalogue content: lot essays, provenance, channels
-- `scripts/build-sign-pages.mjs` - generates the twelve `/{sign}/index.html` pages
-- `scripts/archive-data.mjs` - archive content: entries, verbatim quotes, press kit
-- `scripts/build-archive.mjs` - generates `/archive/` + `feed.json` + `rss.xml`
-- `scripts/build-og-cards.mjs` - renders the twelve per-sign share cards (`assets/og/{sign}.png`)
-- `scripts/build-pulse.mjs` - refreshes `assets/pulse.json` (The Pulse attention data)
-- `scripts/build-distribution.mjs` - refreshes `assets/distribution.json` (The Standings ownership snapshot)
-- `scripts/check-site.mjs` - static integrity checks (feeds, registry shape, internal links) — run by CI
-- `404.html` - branded not-found page (served automatically by the static host)
-- `registry/zodiacs.registry.json` - public registry artifact
-- `assets/` - Zodiac artwork, icons, venue marks, and social preview assets
-- `assets/art/` - the astronomical clock artwork (poster JPGs + ambient MP4 loop)
-- `assets/astrofolio/` - Astrofolio's sign glyphs (rendered gold via CSS mask)
-- `scripts/validate-assets.mjs` - asset validation script
-- `scripts/build-app.mjs` - compiles `src/app.jsx` to `assets/app.js`
-- `LISTINGS.md` - off-site listings & distribution playbook (internal)
+- `src/pages/` — Astro routes (homepage, guides, calculators, profile, sitemap)
+- `src/lib/engine/` — client-side chart engine (astronomy-engine + in-house
+  houses/aspects; `engine/full.ts` is the only module importing the ephemeris)
+- `src/content/guides/` — the 12 sign guides (MDX, zod-validated)
+- `src/styles/tokens.css` — the Cosmic Void design tokens
+- `src/app.jsx` — source for the legacy registry SPA served at `/collect/`
+- `public/` — the legacy wing + root artifacts, shipped byte-verbatim
+- `scripts/` — wing generators + data pipelines (see below)
+- `docs/STRATEGY.md` — product/UX/SEO/technical strategy
 
-## Building the main page
+## Generated output (edit sources, then regenerate and commit both)
 
-The page's interactivity lives in `src/app.jsx`. It is compiled ahead of time to
-`assets/app.js` (using Babel's React preset) so visitors never download or run a
-compiler in the browser. After editing `src/app.jsx`, regenerate the bundle and
-commit both files:
+| Output | Generator | Source |
+| --- | --- | --- |
+| `public/collect/{sign}/index.html` | `npm run legacy:signs` | `scripts/sign-data.mjs` + registry JSON |
+| `public/archive/` + feeds | `npm run legacy:archive` | `scripts/archive-data.mjs` |
+| `public/assets/app.js` | `npm run legacy:app` | `src/app.jsx` |
+| `public/assets/og/*.png` | `npm run legacy:og` | registry + artwork (Playwright) |
+| `public/assets/zodiac-icons/{48,128,400}/` | `npm run data:icons` | `public/assets/sdk/zodiac-icons/circle/` |
+| `public/data/cities/` | `npm run data:cities` | GeoNames (CC-BY 4.0) |
+| `src/data/sky.json` | `npm run data:sky` | astronomy-engine |
+| `public/assets/pulse.json`, `distribution.json` | weekly cron workflows | Wikimedia / Solana RPC |
+
+CI (`site-check`) builds the Astro site, runs the engine accuracy vectors,
+checks every link in `dist/`, and re-runs the wing generators failing on any
+drift — commit regenerated output together with the source edit.
+
+## Development
 
 ```bash
-node scripts/build-app.mjs
-```
-
-The site stays a static deploy: `index.html` loads the committed `assets/app.js`
-directly, so no build runs on Vercel.
-
-CI (`site-check`) re-runs every builder and fails on any diff, so committed
-HTML and bundles are guaranteed to match their sources — always commit the
-regenerated artifacts together with the source edit.
-
-## Building the sign catalogue pages
-
-The twelve `/{sign}/` pages are generated from the registry plus the catalogue
-content in `scripts/sign-data.mjs` (lot essays, provenance timelines, principal
-stars, market pairs, official channels). After editing either source, regenerate
-and commit the pages:
-
-```bash
-node scripts/build-sign-pages.mjs
-```
-
-## Building the archive
-
-`/archive/` (plus its JSON Feed and RSS) is generated from
-`scripts/archive-data.mjs`. Quotes in that file are verbatim records; the
-builder validates entry ids, dates, types, and checks any quoted mint address
-against `registry/zodiacs.registry.json` — a mismatch fails the build. After
-editing, regenerate and commit the output:
-
-```bash
-node scripts/build-archive.mjs
-```
-
-## Building the share cards
-
-Each sign page has its own 1200×630 Open Graph card at
-`assets/og/{sign}.png`, rendered from the registry + artwork in headless
-Chromium (Playwright). After changing artwork or card layout:
-
-```bash
-node scripts/build-og-cards.mjs   # needs playwright; see script header
-node scripts/validate-assets.mjs
-```
-
-The script also refreshes the `openGraph.signs` entries in
-`assets/manifest.json` so validation stays exact.
-
-## Asset handoff
-
-PNG artwork is organized and documented in [`assets/README.md`](assets/README.md).
-The machine-readable inventory is [`assets/manifest.json`](assets/manifest.json).
-
-Validate the full PNG set from the repo root:
-
-```bash
-node scripts/validate-assets.mjs
+npm install
+npm run dev        # Astro dev server
+npm run build      # static build to dist/
+npm run check      # astro check (types)
+npm test           # engine accuracy vectors (vitest)
+node scripts/check-dist.mjs   # link/artifact integrity over dist/
 ```
 
 ## Safety posture
 
-The site should keep the SDK and registry positioned as read-only infrastructure: no custody, signing, or transaction submission happens on Zodiacs.org itself. Acquisition links on the catalogue pages route to third-party venues (Jupiter, Dex Screener) and are framed as access, never as recommendations. Avoid copy that implies financial promises or urgency.
+The registry wing stays read-only infrastructure: no custody, signing, or
+transaction submission happens on Zodiacs.org. Acquisition links on catalogue
+pages route to third-party venues and are framed as access, never as
+recommendations. Crypto/market language never appears outside the wing —
+CI enforces this.
 
-## Claude plugin
-
-The frontend design plugin config is stored in `.claude/settings.json`:
-
-```json
-{
-  "enabledPlugins": {
-    "frontend-design@anthropics": true
-  }
-}
-```
+Birth data entered into the calculators is computed entirely client-side and
+never leaves the visitor's device; saved charts live in the browser's local
+storage. Place search data: GeoNames.org (CC BY 4.0).

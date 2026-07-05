@@ -9,8 +9,8 @@ on:
       - main
 
 jobs:
-  static-check:
-    name: Static Check
+  build-check:
+    name: Build & Check
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -20,23 +20,63 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
+          cache: npm
+
+      - name: Install
+        run: npm ci
 
       - name: Validate registry JSON
-        run: node -e "JSON.parse(require('node:fs').readFileSync('registry/zodiacs.registry.json', 'utf8'))"
+        run: node -e "JSON.parse(require('node:fs').readFileSync('public/registry/zodiacs.registry.json', 'utf8'))"
 
       - name: Check for stale repo or bridge wording
         run: |
-          ! grep -RInE 'Symbiosis|ZodiacS(DK)|diasmal[[:digit:]]{3}|zodiacs-org/sdk' index.html sdk registry README.md CLAUDE.md DESIGNER_HANDOFF.md
+          ! grep -RInE 'Symbiosis|ZodiacS(DK)|diasmal[[:digit:]]{3}|zodiacs-org/sdk' public/collect/index.html public/sdk public/registry README.md CLAUDE.md DESIGNER_HANDOFF.md
 
-      - name: Feeds, registry shape, internal links
-        run: node scripts/check-site.mjs
+      - name: Wing language stays in the wing
+        # Crypto/market vocabulary must never appear on the new consumer
+        # surfaces. The wing itself (public/) is exempt by construction.
+        run: |
+          ! grep -RInE 'Solana|DexScreener|Jupiter swap|ERC-20|SPL record|memecoin|market cap' src/pages src/components src/islands src/content src/layouts
 
-      # Committed HTML must match what the builders produce from sources.
-      # (build-app.mjs fetches pinned @babel/standalone from unpkg; the
-      # other builders are fully offline.)
-      - name: Build drift
+      - name: Build
+        run: npm run build
+
+      - name: Typecheck
+        run: npm run check
+
+      - name: Engine accuracy vectors
+        run: npm test
+
+      - name: Link & artifact integrity over dist
+        run: node scripts/check-dist.mjs
+
+      - name: Bundle size report
+        run: node scripts/report-bundles.mjs
+
+  legacy-drift:
+    name: Legacy wing drift
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      # Committed wing HTML must match what the builders produce from
+      # sources (build-app resolves the pinned local @babel/standalone,
+      # so this job runs fully offline).
+      - name: Rebuild wing output from sources
         run: |
           node scripts/build-app.mjs
           node scripts/build-sign-pages.mjs
           node scripts/build-archive.mjs
-          git diff --exit-code
+
+      - name: Drift gate
+        run: git diff --exit-code -- public/
