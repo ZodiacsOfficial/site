@@ -1,7 +1,7 @@
 import { readFile } from "node:fs/promises";
 
-const manifestPath = new URL("../assets/manifest.json", import.meta.url);
-const repoRoot = new URL("../", import.meta.url);
+const manifestPath = new URL("../public/assets/manifest.json", import.meta.url);
+const repoRoot = new URL("../public/", import.meta.url);
 const pngSignature = "89504e470d0a1a0a";
 
 function assetUrl(path) {
