@@ -67,7 +67,10 @@ const FAVICON = "data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/sv
               }
             }
           },
-          { threshold: 0.12, rootMargin: '0px 0px -8% 0px' }
+          // threshold 0: tall blocks (full articles) must still reveal —
+          // a ratio threshold never fires for elements taller than the
+          // viewport.
+          { threshold: 0, rootMargin: '0px 0px -8% 0px' }
         );
         reveals.forEach((el) => io.observe(el));
       } else {

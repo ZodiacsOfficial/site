@@ -83,9 +83,12 @@ export default function Wheel({
     }
   }
 
+  // Padding keeps the ASC/MC labels inside the viewBox.
+  const pad = size * 0.05;
+
   return (
     <svg
-      viewBox={`0 0 ${size} ${size}`}
+      viewBox={`${-pad} ${-pad} ${size + pad * 2} ${size + pad * 2}`}
       width="100%"
       role="img"
       aria-label="Birth chart wheel"
@@ -107,8 +110,16 @@ export default function Wheel({
               d={arcPath(from + 1.5, from + 28.5, (rSigns + rSignsIn) / 2)}
               fill="none"
               stroke={s.hue}
-              stroke-opacity="0.34"
+              stroke-opacity="0.15"
               stroke-width={rSigns - rSignsIn - 6}
+            />
+            <path
+              d={arcPath(from + 1.5, from + 28.5, rSigns - 1)}
+              fill="none"
+              stroke={s.hue}
+              stroke-opacity="0.8"
+              stroke-width="2"
+              stroke-linecap="round"
             />
             <text
               x={label.x}
@@ -191,7 +202,7 @@ export default function Wheel({
               {GLYPHS[b.body] ?? '•'}
             </text>
             {b.retrograde && (
-              <text x={p.x + size * 0.030} y={p.y + size * 0.026} text-anchor="middle" font-size={size * 0.018} fill="rgba(224,176,128,0.9)">℞</text>
+              <text x={p.x + size * 0.032} y={p.y + size * 0.028} text-anchor="middle" font-size={size * 0.017} fill="rgba(224,176,128,0.9)" font-family="var(--font-mono)">Rx</text>
             )}
           </g>
         );

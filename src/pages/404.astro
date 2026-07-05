@@ -1,0 +1,65 @@
+---
+import Base from '../layouts/Base.astro';
+import SignIcon from '../components/SignIcon.astro';
+import { SIGNS } from '../lib/signs';
+---
+<Base
+  title="Page not found — Zodiacs.org"
+  description="That page isn't in this sky. Try a sign guide or your free birth chart."
+  path="/404.html"
+  noindex
+>
+  <section class="section container nf">
+    <span class="eyebrow">404 · Uncharted</span>
+    <h1>That page isn't in this sky.</h1>
+    <p>
+      Whatever was here has moved or never existed. The twelve, however, are
+      exactly where they've been for 2,500 years:
+    </p>
+    <div class="nf__signs">
+      {SIGNS.map((s) => (
+        <a href={`/${s.slug}/`} aria-label={s.name} style={`--sign:${s.hue}`}>
+          <SignIcon sign={s.slug} size={40} />
+        </a>
+      ))}
+    </div>
+    <div class="nf__ctas">
+      <a class="btn btn--primary" href="/"><span>Back to the start</span><span class="orb">→</span></a>
+      <a class="btn btn--ghost" href="/birth-chart/"><span>Get your free birth chart</span></a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .nf { text-align: center; display: grid; justify-items: center; gap: 18px; }
+  .nf h1 {
+    margin: 6px 0 0;
+    font-size: var(--text-2xl);
+    font-weight: 640;
+    letter-spacing: -0.03em;
+    max-width: 16ch;
+    text-wrap: balance;
+  }
+  .nf p { margin: 0; max-width: 44ch; color: var(--muted); }
+  .nf__signs {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin: 10px 0;
+    max-width: 560px;
+  }
+  .nf__signs a {
+    display: grid;
+    place-items: center;
+    padding: 6px;
+    border-radius: 50%;
+    border: 1px solid transparent;
+    transition: border-color var(--dur-2) var(--ease), transform var(--dur-1) var(--ease);
+  }
+  .nf__signs a:hover {
+    border-color: color-mix(in oklab, var(--sign) 55%, transparent);
+    transform: translateY(-2px);
+  }
+  .nf__ctas { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+</style>

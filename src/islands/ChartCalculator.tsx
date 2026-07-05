@@ -332,7 +332,7 @@ export default function ChartCalculator({ mode }: Props) {
                     animate
                   />
                   <p class="calc__receipt mono">
-                    {chart.input.utc.toISOString().replace('T', ' · ').slice(0, 22)} UTC
+                    {chart.input.utc.toISOString().replace('T', ' · ').slice(0, 21)} UTC
                     {city ? ` · ${city.lat.toFixed(2)}°, ${city.lon.toFixed(2)}°` : ''}
                     {chart.houses ? ` · ${chart.houses.system === 'whole' ? 'Whole sign' : 'Placidus'} houses` : ''}
                     {' · engine v'}{chart.engineVersion}
@@ -352,7 +352,7 @@ export default function ChartCalculator({ mode }: Props) {
                         <td class="mono">{p.label.split(' ')[0]}</td>
                         <td><SignChip lon={p.lon} /></td>
                         {chart.houses && <td class="mono">{p.house}</td>}
-                        <td class="mono calc__retro">{p.retrograde ? '℞' : ''}</td>
+                        <td class="mono calc__retro">{p.retrograde ? 'Rx' : ''}</td>
                       </tr>
                     ))}
                   </tbody>
