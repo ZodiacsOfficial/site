@@ -53,12 +53,11 @@ const jsonLd = [
 >
   <section class="section--tight container">
     <div class="tool-hero">
-      <span class="eyebrow"><span class="dot"></span> Free · no signup · on-device</span>
-      <h1>Find your rising sign.</h1>
+      <h1 class="display">Find your rising sign.</h1>
       <p>
-        The ascendant is how the world meets you — the sign climbing the
-        eastern horizon at your first breath. It needs the clock, and it
-        rewards the precision.
+        The ascendant is how the world first meets you: the sign climbing the
+        eastern horizon the moment you were born. It needs your birth time, and
+        it repays the precision.
       </p>
     </div>
 
@@ -107,11 +106,13 @@ const jsonLd = [
 <style>
   .tool-hero { max-width: 62ch; margin-bottom: clamp(28px, 5vw, 44px); }
   .tool-hero h1 {
-    margin: 18px 0 14px;
+    margin: 0 0 16px;
+    font-family: var(--font-serif);
     font-size: var(--text-2xl);
-    font-weight: 640;
-    letter-spacing: -0.03em;
-    line-height: 1.08;
+    font-weight: 500;
+    letter-spacing: -0.005em;
+    line-height: 1.04;
+    font-variant-numeric: oldstyle-figures;
     text-wrap: balance;
   }
   .tool-hero p { margin: 0; color: var(--muted); font-size: var(--text-lg); text-wrap: pretty; }

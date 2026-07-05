@@ -62,12 +62,11 @@ const jsonLd = [
 >
   <section class="section--tight container">
     <div class="tool-hero">
-      <span class="eyebrow"><span class="dot"></span> Free · no signup · on-device</span>
-      <h1>Your birth chart, computed properly.</h1>
+      <h1 class="display">Your complete birth chart.</h1>
       <p>
-        Enter your birth details and get the whole map — Sun, Moon, Rising,
-        every planet, houses, and aspects — calculated with astronomical
-        precision and explained like a human wrote it.
+        Your Sun, Moon, and rising, every planet, the houses, and the aspects
+        between them, calculated from your exact birth moment and kept on your
+        device.
       </p>
     </div>
 
@@ -94,9 +93,10 @@ const jsonLd = [
         productively, oppositions negotiate.
       </p>
       <p>
-        We show our work: every chart lists its computed UTC instant,
-        coordinates, and house system. The math is tested against NASA JPL
-        reference data on every change — <a href="/methodology/">here's exactly how it's computed</a>.
+        Every chart lists the exact time and place it was calculated from, its
+        coordinates, and its house system, so nothing is taken on faith. The
+        positions are tested against NASA JPL reference data on every change.
+        Here is <a href="/methodology/">exactly how it is computed</a>.
       </p>
     </div>
   </section>
@@ -117,11 +117,13 @@ const jsonLd = [
 <style>
   .tool-hero { max-width: 62ch; margin-bottom: clamp(28px, 5vw, 44px); }
   .tool-hero h1 {
-    margin: 18px 0 14px;
+    margin: 0 0 16px;
+    font-family: var(--font-serif);
     font-size: var(--text-2xl);
-    font-weight: 640;
-    letter-spacing: -0.03em;
-    line-height: 1.08;
+    font-weight: 500;
+    letter-spacing: -0.005em;
+    line-height: 1.04;
+    font-variant-numeric: oldstyle-figures;
     text-wrap: balance;
   }
   .tool-hero p { margin: 0; color: var(--muted); font-size: var(--text-lg); text-wrap: pretty; }

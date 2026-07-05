@@ -11,12 +11,12 @@ import '../../styles/calculator.css';
 >
   <section class="section--tight container container--narrow">
     <div class="pf-hero">
-      <span class="eyebrow">Your cosmic profile · Astrofolio</span>
-      <h1>Keep what you discover.</h1>
+      <em class="kicker">Your cosmic profile, by Astrofolio</em>
+      <h1 class="display">Your charts, kept.</h1>
       <p>
-        Astrofolio is where what you discover gets kept — charts,
-        relationships, your cosmic profile. Optional, free, and stored on
-        <strong> this device</strong>: nothing here touches a server.
+        Save any chart you calculate and it stays here: your charts, the
+        relationships you follow, your cosmic profile. Free, no account, and
+        stored on <strong>this device</strong>. Nothing touches a server.
       </p>
     </div>
 
@@ -25,8 +25,8 @@ import '../../styles/calculator.css';
     <aside class="pf-note">
       <p class="mono">
         On-device means: clearing your browser data clears this profile.
-        Accounts with cross-device sync are the next Astrofolio step —
-        built on the same data you see here, imported losslessly.
+        Accounts with cross-device sync are the next Astrofolio step, built on
+        the same data you see here and imported losslessly.
       </p>
     </aside>
   </section>
@@ -35,11 +35,9 @@ import '../../styles/calculator.css';
 <style is:global>
   .pf-hero { max-width: 58ch; margin-bottom: clamp(26px, 5vw, 42px); }
   .pf-hero h1 {
-    margin: 18px 0 14px;
+    margin: 14px 0 14px;
     font-size: var(--text-2xl);
-    font-weight: 640;
-    letter-spacing: -0.03em;
-    line-height: 1.08;
+    line-height: 1.04;
   }
   .pf-hero p { margin: 0; color: var(--muted); font-size: var(--text-lg); text-wrap: pretty; }
   .pf-hero strong { color: var(--text-2); }

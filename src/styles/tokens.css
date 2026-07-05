@@ -28,6 +28,30 @@
   font-display: swap;
 }
 
+/* EB Garamond — display headlines only. An old-almanac serif for the
+   celestial-atlas register; kept distinct from the wing's Cormorant. */
+@font-face {
+  font-family: 'EB Garamond';
+  src: url('/fonts/eb-garamond-latin-400-normal.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'EB Garamond';
+  src: url('/fonts/eb-garamond-latin-500-normal.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'EB Garamond';
+  src: url('/fonts/eb-garamond-latin-400-italic.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
 :root {
   /* ── Void scale — cool near-blacks, page bg → raised surfaces ── */
   --void-0: #060709;
@@ -75,21 +99,24 @@
   --text-2: var(--ink-1);
   --muted: var(--ink-2);
   --faint: var(--ink-3);
-  --accent: var(--sign-cancer);
-  --link: var(--sign-scorpio);
-  --live: #7FC4A6;
-  --caution: #E0B080;
+  /* One restrained accent behavior. The twelve pastel disc hues are the
+     only chroma on the site; links are ink with a hairline underline that
+     warms to the active sign hue on hover (see prose.css / base.css).
+     No standalone --live / --caution / gold on the cool surfaces — that
+     gilt lives exclusively in the legacy Registry wing. */
+  --accent: var(--ink-1);
 
   /* ── Type ── */
+  --font-serif: 'EB Garamond', 'Iowan Old Style', Georgia, serif;
   --font-sans: 'Instrument Sans', system-ui, -apple-system, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, Menlo, Consolas, monospace;
   --text-xs: 0.75rem;
   --text-sm: 0.875rem;
   --text-base: 1rem;
-  --text-lg: clamp(1.1rem, 1rem + 0.5vw, 1.25rem);
-  --text-xl: clamp(1.4rem, 1.2rem + 1vw, 1.75rem);
-  --text-2xl: clamp(1.9rem, 1.5rem + 2vw, 2.6rem);
-  --text-hero: clamp(2.7rem, 1.8rem + 4.4vw, 5.1rem);
+  --text-lg: clamp(1.12rem, 1rem + 0.6vw, 1.3rem);
+  --text-xl: clamp(1.55rem, 1.2rem + 1.4vw, 2.1rem);
+  --text-2xl: clamp(2.1rem, 1.5rem + 2.8vw, 3.2rem);
+  --text-hero: clamp(3rem, 1.7rem + 6vw, 6rem);
 
   /* ── Space (4-base) ── */
   --s-1: 4px;  --s-2: 8px;   --s-3: 12px; --s-4: 16px;

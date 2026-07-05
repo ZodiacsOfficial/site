@@ -48,8 +48,8 @@ export default function DemoChart() {
           );
         })}
         <p class="demo__cta-line">
-          That's a real chart, computed from the 1907 sky — local mean time,
-          seconds and all. <strong>Yours takes about twenty seconds.</strong>
+          A real chart, computed from the 1907 sky down to the local mean time
+          of the era. <strong>Yours takes about twenty seconds.</strong>
         </p>
         <a class="btn btn--primary" href="/birth-chart/">
           <span>Get your free birth chart</span><span class="orb">↗</span>

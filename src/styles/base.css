@@ -29,16 +29,17 @@ html, body {
 
 body { min-height: 100dvh; }
 
-/* Ambient pastel orbs — fixed, ultra-quiet, GPU-cheap. */
+/* A single faint cool depth wash — no SaaS aurora, no chroma. Depth
+   comes from one near-black vignette; the only color on the site is the
+   twelve pastel discs. */
 .orbs {
   position: fixed;
   inset: 0;
   pointer-events: none;
   z-index: var(--z-orbs);
   background:
-    radial-gradient(46% 34% at 82% -6%, rgba(178, 157, 208, 0.10), transparent 68%),
-    radial-gradient(40% 30% at 8% 12%, rgba(182, 212, 228, 0.07), transparent 66%),
-    radial-gradient(52% 40% at 50% 112%, rgba(169, 212, 196, 0.05), transparent 70%);
+    radial-gradient(80% 55% at 50% -12%, rgba(198, 204, 218, 0.05), transparent 62%),
+    radial-gradient(90% 60% at 50% 118%, rgba(10, 12, 17, 0.6), transparent 66%);
 }
 .dust {
   position: fixed;
@@ -106,41 +107,64 @@ input, select { font: inherit; }
 }
 .container--narrow { width: min(100% - 40px, 780px); }
 
-.section { padding-block: clamp(72px, 12vw, 136px); }
-.section--tight { padding-block: clamp(48px, 8vw, 88px); }
+.section { padding-block: clamp(88px, 11vw, 168px); }
+.section--tight { padding-block: clamp(56px, 8vw, 104px); }
 
-.section-head { max-width: 56ch; margin-bottom: clamp(28px, 5vw, 52px); }
+.section-head { max-width: 34ch; margin-bottom: clamp(32px, 5vw, 60px); }
 .section-head h2 {
-  margin: 0 0 12px;
+  margin: 0 0 14px;
+  font-family: var(--font-serif);
   font-size: var(--text-2xl);
-  font-weight: 600;
-  letter-spacing: -0.025em;
-  line-height: 1.12;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  line-height: 1.04;
+  font-variant-numeric: oldstyle-figures;
   text-wrap: balance;
 }
-.section-head p { margin: 0; color: var(--muted); font-size: var(--text-lg); text-wrap: pretty; }
+.section-head p {
+  margin: 0;
+  max-width: 46ch;
+  color: var(--muted);
+  font-size: var(--text-lg);
+  text-wrap: pretty;
+}
+
+/* Display serif utility — h1/h2 scale headlines. */
+.display {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  line-height: 1.03;
+  font-variant-numeric: oldstyle-figures;
+  text-wrap: balance;
+}
+.display em, .kicker {
+  font-style: italic;
+  font-weight: 400;
+}
+/* Sentence-case serif-italic kicker — the elegant replacement for the
+   mono-caps eyebrow. Use sparingly. */
+.kicker {
+  display: block;
+  font-family: var(--font-serif);
+  font-size: var(--text-lg);
+  color: var(--muted);
+}
 
 /* ── Eyebrow pill ──────────────────────────────────────────────── */
+/* Reserved for genuine data kickers only (e.g. a guide's element + dates).
+   Never a slogan, never with a status dot. Most sections use no kicker,
+   or the sentence-case .kicker above. */
 .eyebrow {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 5px 12px;
-  border: 1px solid var(--hair-2);
-  border-radius: var(--r-full);
-  background: rgba(198, 204, 218, 0.04);
   font-family: var(--font-mono);
-  font-size: 10px;
-  font-weight: 500;
-  letter-spacing: 0.22em;
+  font-size: 10.5px;
+  font-weight: 400;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--muted);
-}
-.eyebrow .dot {
-  width: 5px; height: 5px;
-  border-radius: 50%;
-  background: var(--live);
-  box-shadow: 0 0 8px rgba(127, 196, 166, 0.7);
+  color: var(--faint);
 }
 
 /* ── Buttons — island pills with nested orb icon ───────────────── */
@@ -214,6 +238,23 @@ a.shell:hover .core { border-color: color-mix(in oklab, var(--sign, var(--accent
   background:
     radial-gradient(120% 80% at 50% 0%, color-mix(in oklab, var(--sign, var(--accent)) 9%, transparent), transparent 60%),
     linear-gradient(180deg, var(--void-2) 0%, var(--void-1) 100%);
+}
+
+/* Light tile — the restrained alternative to a double-bezel, for grids of
+   equal items (the twelve signs) where a card-per-item is repetition, not
+   hierarchy. A single hairline, a whisper of the sign hue on hover. */
+.tile {
+  display: block;
+  border: 1px solid var(--hair-1);
+  border-radius: var(--r-lg);
+  background: rgba(198, 204, 218, 0.015);
+  text-decoration: none;
+  transition: border-color var(--dur-2) var(--ease), background var(--dur-2) var(--ease), transform var(--dur-2) var(--ease);
+}
+.tile:hover {
+  border-color: color-mix(in oklab, var(--sign, var(--accent)) 42%, transparent);
+  background: color-mix(in oklab, var(--sign, var(--accent)) 6%, transparent);
+  transform: translateY(-2px);
 }
 
 /* ── Mono data text ("sky receipts") ───────────────────────────── */

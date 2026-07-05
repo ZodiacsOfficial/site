@@ -67,7 +67,7 @@
   color: var(--faint);
 }
 .calc__error { margin: 12px 0 0; color: var(--sign-aries); font-size: var(--text-sm); }
-.calc__saved { margin: 10px 0 0; color: var(--live); font-size: var(--text-sm); }
+.calc__saved { margin: 10px 0 0; color: var(--text-2); font-size: var(--text-sm); }
 .calc__saved a { color: inherit; }
 
 /* Place typeahead */
@@ -130,8 +130,8 @@
   margin: 0;
   padding: 12px 16px;
   border-radius: var(--r-md);
-  border: 1px solid color-mix(in oklab, var(--caution) 35%, transparent);
-  background: color-mix(in oklab, var(--caution) 7%, transparent);
+  border: 1px solid var(--hair-2);
+  background: rgba(198, 204, 218, 0.035);
   font-size: var(--text-sm);
   color: var(--text-2);
 }
@@ -216,7 +216,7 @@
 }
 .calc__table td:first-child { color: var(--text); font-weight: 500; }
 .calc__glyph { display: inline-block; width: 20px; color: var(--muted); }
-.calc__retro { color: var(--caution); }
+.calc__retro { color: var(--muted); }
 
 .chip {
   display: inline-flex;

@@ -44,10 +44,24 @@ output together with the source edit.
 
 ## Voice rules (new surfaces)
 
-Plain language first, jargon translated inline. Confident and warm; never
-woo-woo, never salesy, no financial language anywhere outside the wing.
-Computed facts stated with degrees and timestamps — the site shows its work.
-Canonical labels live in `docs/STRATEGY.md` §4.
+Plain, confident, warm, unadorned — how a literate person actually talks.
+Never woo-woo, never salesy, no financial language outside the wing. Say what
+the site does, not that it does it "properly"; state computed facts with
+degrees and timestamps rather than boasting about them. Banned as smug tells:
+"done/computed properly", "shows its work", "like a human", "no mush", "not
+vibes", clever sentence-fragment headlines, and mono-caps eyebrow tags on
+every section. Chrome should sound like `src/lib/interpretations.ts` — dry,
+specific, calm. Canonical labels live in `docs/STRATEGY.md` §4.
+
+## Design system (new surfaces)
+
+"Cosmic Void": near-monochrome cool void + the twelve pastel disc hues as the
+ONLY chroma. Display headlines are EB Garamond (`--font-serif`, the `.display`
+utility / `.section-head h2`); body/UI is Instrument Sans; data is JetBrains
+Mono. No decorative status dots, no gradient/aurora backgrounds, no gold on
+cool surfaces (gilt lives only in the wing). Reserve `.shell`/`.core` bezels
+for elevated moments; grids of equal items use the light `.tile`. Kickers are
+sentence-case serif-italic (`.kicker`), not mono-caps eyebrows.
 
 ## Engine
 

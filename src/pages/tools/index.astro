@@ -5,7 +5,7 @@ const tools = [
   {
     href: '/birth-chart/',
     title: 'Birth chart calculator',
-    promise: 'The whole map — Sun, Moon, Rising, every planet, houses, aspects.',
+    promise: 'The whole map: Sun, Moon, rising, every planet, houses, aspects.',
     hue: 'var(--sign-cancer)',
     glyph: '☉',
     live: true,
@@ -13,7 +13,7 @@ const tools = [
   {
     href: '/moon-sign/',
     title: 'Moon sign calculator',
-    promise: 'How you feel — your emotional weather, found in twenty seconds.',
+    promise: 'How you feel, and what settles you.',
     hue: 'var(--sign-pisces)',
     glyph: '☽',
     live: true,
@@ -21,7 +21,7 @@ const tools = [
   {
     href: '/rising-sign/',
     title: 'Rising sign calculator',
-    promise: 'How people first read you — needs the clock, rewards the precision.',
+    promise: 'How people first read you. Needs your birth time.',
     hue: 'var(--sign-libra)',
     glyph: 'ASC',
     live: true,
@@ -29,7 +29,7 @@ const tools = [
 ];
 
 const upcoming = [
-  { title: 'Compatibility', promise: 'Two charts, honestly compared — beyond sun signs.' },
+  { title: 'Compatibility', promise: 'Two charts, honestly compared, beyond sun signs.' },
   { title: 'Moon phase', promise: 'Tonight’s moon, and the moon you were born under.' },
   { title: 'Saturn return', promise: 'When yours hits, and what it actually asks of you.' },
 ];
@@ -51,11 +51,10 @@ const jsonLd = [
 >
   <section class="section container">
     <div class="section-head">
-      <span class="eyebrow"><span class="dot"></span> Free · no paywall · no signup</span>
-      <h2 style="margin-top:16px">Calculators that show their work.</h2>
+      <h2>The calculators</h2>
       <p>
-        Everything here runs on your device with a tested astronomical engine —
-        your birth data never leaves the browser.
+        Each one runs on your device with a tested astronomical engine. Your
+        birth data never leaves the browser.
       </p>
     </div>
 
@@ -73,10 +72,10 @@ const jsonLd = [
     </div>
 
     <div class="tools-upcoming">
-      <span class="mono--label">In the works</span>
+      <em class="kicker">In the works</em>
       <ul>
         {upcoming.map((u) => (
-          <li><strong>{u.title}</strong> — {u.promise}</li>
+          <li><strong>{u.title}.</strong> {u.promise}</li>
         ))}
       </ul>
     </div>

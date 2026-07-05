@@ -18,14 +18,14 @@ const jsonLd = [
   jsonLd={jsonLd}
 >
   <section class="section container container--narrow">
-    <span class="eyebrow">Methodology</span>
-    <h1 class="method-title">The site shows its work.</h1>
+    <em class="kicker">Methodology</em>
+    <h1 class="method-title display">How we calculate your chart.</h1>
 
     <div class="prose">
       <p>
-        Astrology sites rarely tell you how they compute anything. This page is
-        the opposite: everything a chart on zodiacs.org claims, and exactly how
-        it's calculated.
+        Most astrology sites never explain their math. This one does. Here is
+        everything a chart on zodiacs.org claims, and exactly how it is
+        calculated.
       </p>
 
       <h2>The ephemeris</h2>
@@ -60,7 +60,7 @@ const jsonLd = [
         so on the chart.
       </p>
 
-      <h2>Time zones — where most calculators go wrong</h2>
+      <h2>Time zones</h2>
       <p>
         A birth chart is only as good as its clock conversion. We resolve your
         birth time against the <strong>complete IANA time zone history</strong>
@@ -75,8 +75,8 @@ const jsonLd = [
         <li><strong>Very old dates</strong> use the local mean time of your birthplace's reference zone, the same convention professional software applies. For births before civil time standardization, a chart can differ by a few clock minutes from tools that use the exact town meridian — we flag these charts too.</li>
       </ul>
       <p>
-        Every result prints its computed UTC instant so the conversion is
-        checkable, not vibes.
+        Every result lists its computed UTC instant, so the conversion is
+        yours to check.
       </p>
 
       <h2>Birthplace search</h2>
@@ -87,7 +87,7 @@ const jsonLd = [
         to ~1 km precision — far finer than a birth chart needs.
       </p>
 
-      <h2>Privacy: nothing to trust, by design</h2>
+      <h2>Privacy</h2>
       <p>
         The entire calculation happens in your browser. Your birth date, time,
         and place are never transmitted anywhere — there is no server-side
@@ -104,8 +104,8 @@ const jsonLd = [
       </ul>
 
       <p>
-        Found a discrepancy? We treat accuracy reports as bugs, not opinions —
-        the sky is checkable.
+        Found a discrepancy? We treat accuracy reports as bugs. The sky is
+        checkable, and so is our arithmetic.
       </p>
     </div>
   </section>
@@ -113,10 +113,8 @@ const jsonLd = [
 
 <style>
   .method-title {
-    margin: 18px 0 22px;
+    margin: 14px 0 24px;
     font-size: var(--text-2xl);
-    font-weight: 640;
-    letter-spacing: -0.03em;
-    line-height: 1.08;
+    line-height: 1.04;
   }
 </style>

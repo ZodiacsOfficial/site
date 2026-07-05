@@ -61,7 +61,7 @@ export default function ProfileManager() {
         <div class="core pf-empty__core">
           <h2>Nothing saved yet.</h2>
           <p>
-            Charts you save will live here — on your device, not ours. Run a
+            Charts you save will live here, on your device, not ours. Run a
             chart and tap <strong>Save this chart</strong> to start your
             cosmic profile.
           </p>
