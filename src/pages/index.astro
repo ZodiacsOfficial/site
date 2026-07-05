@@ -1,37 +1,463 @@
 ---
 import Base from '../layouts/Base.astro';
 import SignIcon from '../components/SignIcon.astro';
+import ZodiacWheelHero from '../islands/ZodiacWheelHero';
+import SkyTicker from '../islands/SkyTicker';
+import DemoChart from '../islands/DemoChart';
 import { SIGNS } from '../lib/signs';
+
+const faq = [
+  {
+    q: 'Is this actually free?',
+    a: 'Yes — every calculator and guide on zodiacs.org is free, with no signup, no paywall, and no teaser results. Charts are computed in your own browser, which costs us nothing per use, so there is nothing to gate.',
+  },
+  {
+    q: 'How accurate are the charts?',
+    a: 'Planetary positions come from a professional-grade astronomical engine, tested automatically against NASA JPL reference data to within a few hundredths of a degree. Time zones are resolved against the complete historical database, including pre-1922 local mean time. Every chart prints its computed UTC instant so you can check the work.',
+  },
+  {
+    q: 'What happens to my birth data?',
+    a: 'It never leaves your device. Calculations run entirely in your browser; there is no upload, no account, and no server that sees your birth details. Saving a chart stores it in your own browser only.',
+  },
+  {
+    q: 'What is Astrofolio?',
+    a: 'Astrofolio is where what you discover gets kept — charts you save, relationships you track, your cosmic profile. It starts on this device, free, with no account. Syncing across devices is coming next.',
+  },
+  {
+    q: 'What is the Registry?',
+    a: 'The collector’s wing of the site: a museum-style catalogue of the twelve signs as canonical records, with its own archive and thesis. It is deliberately separate from the astrology tools — visit it if collecting interests you; ignore it freely if not.',
+  },
+];
+
+const jsonLd = [
+  {
+    '@type': 'Organization',
+    '@id': 'https://zodiacs.org/#org',
+    name: 'Zodiacs',
+    alternateName: 'Zodiacs.org',
+    url: 'https://zodiacs.org/',
+    logo: 'https://zodiacs.org/assets/og/share.png',
+    sameAs: [
+      'https://x.com/astrofoliosol',
+      'https://www.instagram.com/astrofolioonsol/',
+      'https://tiktok.com/@astrofolio',
+      'https://t.me/astrofoliosol',
+      'https://astrofolio.xyz/',
+      'https://github.com/ZodiacsOfficial/sdk',
+    ],
+  },
+  {
+    '@type': 'WebSite',
+    '@id': 'https://zodiacs.org/#site',
+    url: 'https://zodiacs.org/',
+    name: 'Zodiacs.org',
+    description: 'Free birth charts, sign guides, and astrology tools — computed on your device.',
+    publisher: { '@id': 'https://zodiacs.org/#org' },
+    inLanguage: 'en',
+  },
+  {
+    '@type': 'FAQPage',
+    mainEntity: faq.map(({ q, a }) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: { '@type': 'Answer', text: a },
+    })),
+  },
+];
+
+const tools = [
+  { href: '/birth-chart/', title: 'Birth chart', promise: 'The whole map — planets, houses, aspects.', hue: 'var(--sign-cancer)', glyph: '☉' },
+  { href: '/moon-sign/', title: 'Moon sign', promise: 'How you feel — found in twenty seconds.', hue: 'var(--sign-pisces)', glyph: '☽' },
+  { href: '/rising-sign/', title: 'Rising sign', promise: 'How people first read you.', hue: 'var(--sign-libra)', glyph: 'ASC' },
+  { href: '/learn/', title: 'Sign guides', promise: 'All twelve, written like a human.', hue: 'var(--sign-leo)', glyph: '♌' },
+];
 ---
 <Base
-  title="Zodiacs.org — Free birth charts, sign guides & astrology tools"
+  title="Zodiacs.org — Free Birth Charts, Sign Guides & Astrology Tools"
   description="See the sky you were born under. Free birth charts, moon signs, and rising signs — accurate, private, computed on your device, explained in plain language."
   path="/"
+  jsonLd={jsonLd}
 >
-  <section class="section container" style="text-align:center">
-    <span class="eyebrow"><span class="dot"></span> Free astrology, done properly</span>
-    <h1 style="font-size:var(--text-hero);font-weight:640;letter-spacing:-0.035em;line-height:1.02;margin:22px auto 16px;max-width:14ch;text-wrap:balance">
-      See the sky you were born under.
-    </h1>
-    <p style="max-width:52ch;margin:0 auto 30px;color:var(--muted);font-size:var(--text-lg)">
-      Free birth charts, moon signs, and compatibility — accurate, private,
-      computed on your device, explained in plain language.
-    </p>
-    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
-      <a class="btn btn--primary" href="/birth-chart/"><span>Get your free birth chart</span><span class="orb">↗</span></a>
-      <a class="btn btn--ghost" href="/learn/"><span>Explore the twelve signs</span></a>
+  <!-- Legacy hash deep-links (the registry SPA lived here) → the wing. -->
+  <script is:inline>
+    (function () {
+      var h = location.hash;
+      if (['#verify', '#registry', '#official-twelve', '#sdk', '#market', '#faq-registry', '#identity', '#pulse', '#standings'].indexOf(h) !== -1) {
+        location.replace('/collect/' + h);
+      }
+    })();
+  </script>
+
+  <!-- 01 · Hero -->
+  <section class="hero container">
+    <div class="hero__copy">
+      <span class="eyebrow reveal"><span class="dot"></span> Free astrology, done properly</span>
+      <h1 class="reveal" style="--reveal-delay:60ms">See the sky you were born under.</h1>
+      <p class="hero__sub reveal" style="--reveal-delay:120ms">
+        Free birth charts, moon signs, and compatibility — accurate, private,
+        computed on your device, explained in plain language.
+      </p>
+      <div class="hero__ctas reveal" style="--reveal-delay:180ms">
+        <a class="btn btn--primary" href="/birth-chart/"><span>Get your free birth chart</span><span class="orb">↗</span></a>
+        <a class="btn btn--ghost" href="/learn/"><span>Explore the twelve signs</span></a>
+      </div>
+    </div>
+    <div class="hero__wheel reveal" style="--reveal-delay:140ms">
+      <ZodiacWheelHero client:load />
     </div>
   </section>
 
-  <section class="section--tight container" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px">
-    {SIGNS.map((s) => (
-      <a class="shell" href={`/${s.slug}/`} style={`--sign:${s.hue}`}>
-        <div class="core tinted" style="display:flex;flex-direction:column;align-items:center;gap:10px;padding:22px 12px">
-          <SignIcon sign={s.slug} size={64} />
-          <strong style="font-size:15px">{s.name}</strong>
-          <span class="mono" style="font-size:10.5px;color:var(--faint)">{s.dates}</span>
-        </div>
+  <!-- 02 · Live sky proof strip -->
+  <section class="container ticker-band reveal">
+    <SkyTicker client:load />
+  </section>
+
+  <!-- 03 · Tools -->
+  <section class="section container">
+    <div class="section-head reveal">
+      <h2>Free tools. No paywall, no signup.</h2>
+      <p>Calculators that show their work — every result prints the math it stands on.</p>
+    </div>
+    <div class="home-tools">
+      {tools.map((t, i) => (
+        <a class="shell tinted reveal" href={t.href} style={`--sign:${t.hue};--reveal-delay:${i * 70}ms`}>
+          <div class="core tinted home-tool">
+            <span class="home-tool__glyph mono">{t.glyph}</span>
+            <h3>{t.title}</h3>
+            <p>{t.promise}</p>
+            <span class="home-tool__go">Open →</span>
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- 04 · Demo chart -->
+  <section class="section container">
+    <div class="section-head reveal">
+      <h2>This is what you get.</h2>
+      <p>A real chart — Frida Kahlo's, computed from the 1907 sky — annotated in plain language.</p>
+    </div>
+    <div class="reveal">
+      <DemoChart client:visible />
+    </div>
+  </section>
+
+  <!-- 05 · The Twelve -->
+  <section class="section container" id="signs">
+    <div class="section-head reveal">
+      <h2>The twelve, in plain language.</h2>
+      <p>Personality, love, strengths, myth — a real guide for every sign, no horoscope mush.</p>
+    </div>
+    <div class="twelve">
+      {SIGNS.map((s, i) => (
+        <a class="shell reveal" href={`/${s.slug}/`} style={`--sign:${s.hue};--reveal-delay:${(i % 6) * 50}ms`}>
+          <div class="core tinted twelve__card">
+            <SignIcon sign={s.slug} size={64} />
+            <strong>{s.name}</strong>
+            <span class="mono twelve__dates">{s.dates}</span>
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- 06 · Three pillars -->
+  <section class="section container">
+    <div class="section-head reveal">
+      <h2>One sky, three ways in.</h2>
+    </div>
+    <div class="pillars">
+      <div class="pillar reveal">
+        <span class="mono--label">Learn</span>
+        <h3>Guides that speak human</h3>
+        <p>Twelve sign guides, the big three, and how to actually read a chart — jargon translated inline, history included.</p>
+        <a href="/learn/">Start here →</a>
+      </div>
+      <div class="pillar reveal" style="--reveal-delay:80ms">
+        <span class="mono--label">Tools</span>
+        <h3>Calculators that show their work</h3>
+        <p>Birth chart, moon, rising — astronomical accuracy, historical time zones, every result checkable.</p>
+        <a href="/tools/">Open the tools →</a>
+      </div>
+      <div class="pillar reveal" style="--reveal-delay:160ms">
+        <span class="mono--label">Keep · Astrofolio</span>
+        <h3>A cosmic profile that's yours</h3>
+        <p>Save charts, come back to them, track the people you care about. It lives on your device — optional, free.</p>
+        <a href="/profile/">Your profile →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 07 · Persona doors -->
+  <section class="section--tight container">
+    <div class="doors">
+      <a class="door reveal" href="/learn/">
+        <span class="mono--label">New here?</span>
+        <span class="door__title">Start with the big three</span>
+        <span class="door__sub">Sun, moon, rising — the ten-minute version.</span>
       </a>
-    ))}
+      <a class="door reveal" href="/birth-chart/" style="--reveal-delay:70ms">
+        <span class="mono--label">Chart-literate?</span>
+        <span class="door__title">Full chart, your house system</span>
+        <span class="door__sub">Whole sign or Placidus, aspects and all.</span>
+      </a>
+      <a class="door door--collect reveal" href="/collect/" style="--reveal-delay:140ms">
+        <span class="mono--label">A collector?</span>
+        <span class="door__title">Enter the collector's wing</span>
+        <span class="door__sub">The Registry — a museum of the Twelve.</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- 08 · FAQ -->
+  <section class="section container container--narrow">
+    <div class="section-head reveal"><h2>Fair questions.</h2></div>
+    <div class="faq reveal">
+      {faq.map(({ q, a }) => (
+        <details class="faq__item">
+          <summary>{q}</summary>
+          <p>{a}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+
+  <!-- 09 · Close -->
+  <section class="section container close">
+    <p class="close__kicker mono reveal">The sky's already moving.</p>
+    <h2 class="reveal" style="--reveal-delay:60ms">See where it started for you.</h2>
+    <div class="reveal" style="--reveal-delay:140ms">
+      <a class="btn btn--primary" href="/birth-chart/"><span>Get your free birth chart</span><span class="orb">↗</span></a>
+    </div>
   </section>
 </Base>
+
+<style>
+  /* ── Hero ── */
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(36px, 6vw, 64px);
+    align-items: center;
+    padding-block: clamp(28px, 6vw, 84px);
+  }
+  @media (min-width: 900px) { .hero { grid-template-columns: 1.05fr 0.95fr; } }
+  .hero h1 {
+    margin: 22px 0 18px;
+    font-size: var(--text-hero);
+    font-weight: 650;
+    letter-spacing: -0.037em;
+    line-height: 1.0;
+    max-width: 13ch;
+    text-wrap: balance;
+  }
+  .hero__sub {
+    margin: 0 0 30px;
+    max-width: 46ch;
+    color: var(--muted);
+    font-size: var(--text-lg);
+    line-height: 1.6;
+    text-wrap: pretty;
+  }
+  .hero__ctas { display: flex; flex-wrap: wrap; gap: 12px; }
+  .hero__wheel { display: grid; place-items: center; }
+
+  /* Wheel hero (island styles are global by necessity) */
+  :global(.wheelhero) {
+    position: relative;
+    width: min(78vw, 440px);
+    aspect-ratio: 1;
+    display: grid;
+    place-items: center;
+  }
+  :global(.wheelhero__halo) {
+    position: absolute;
+    inset: 6%;
+    border-radius: 50%;
+    border: 1px solid var(--hair-1);
+    background:
+      radial-gradient(48% 48% at 50% 50%, rgba(178, 157, 208, 0.07), transparent 70%);
+  }
+  :global(.wheelhero__ring) { position: absolute; inset: 0; animation: orbit 120s linear infinite; }
+  :global(.wheelhero__spoke) { position: absolute; inset: 0; transform: rotate(var(--a)); }
+  :global(.wheelhero__arm) {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) translateY(calc(min(78vw, 440px) / -2 + 9%));
+  }
+  :global(.wheelhero__counter) { transform: rotate(var(--na)); animation: orbit 120s linear infinite reverse; }
+  :global(.wheelhero__icon) { position: relative; display: block; line-height: 0; }
+  :global(.wheelhero__icon img) {
+    border-radius: 50%;
+    width: clamp(36px, 9vw, 52px);
+    height: auto;
+    transition: transform var(--dur-2) var(--ease);
+    filter: drop-shadow(0 6px 18px rgba(0, 0, 0, 0.45));
+  }
+  :global(.wheelhero__icon:hover img) { transform: scale(1.12); }
+  :global(.wheelhero__tip) {
+    position: absolute;
+    left: 50%;
+    top: calc(100% + 6px);
+    transform: translateX(-50%);
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-1);
+    opacity: 0;
+    transition: opacity var(--dur-2) var(--ease);
+    pointer-events: none;
+    white-space: nowrap;
+  }
+  :global(.wheelhero__icon:hover .wheelhero__tip) { opacity: 1; }
+  :global(.wheelhero:hover .wheelhero__ring),
+  :global(.wheelhero:hover .wheelhero__counter) { animation-play-state: paused; }
+  :global(.wheelhero__core) {
+    position: relative;
+    display: grid;
+    justify-items: center;
+    gap: 4px;
+    z-index: 2;
+  }
+  :global(.wheelhero__phase) { font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-2); }
+  :global(.wheelhero__moonsign) { font-size: 10px; color: var(--faint); letter-spacing: 0.08em; }
+  @keyframes orbit { to { transform: rotate(360deg); } }
+  @media (prefers-reduced-motion: reduce) {
+    :global(.wheelhero__ring), :global(.wheelhero__counter) { animation: none !important; }
+  }
+
+  /* ── Ticker ── */
+  .ticker-band {
+    border-block: 1px solid var(--hair-1);
+    padding-block: 14px;
+  }
+  :global(.skyticker) {
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px 10px;
+    font-size: 12px;
+    letter-spacing: 0.05em;
+    color: var(--text-2);
+  }
+  :global(.skyticker__label) {
+    font-size: 9.5px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--live);
+    margin-right: 6px;
+  }
+  :global(.skyticker__sep) { color: var(--faint); margin-right: 10px; }
+
+  /* ── Tools ── */
+  .home-tools { display: grid; gap: 12px; grid-template-columns: 1fr 1fr; }
+  @media (min-width: 900px) { .home-tools { grid-template-columns: repeat(4, 1fr); } }
+  .home-tool { display: flex; flex-direction: column; gap: 8px; padding: 22px 18px; min-height: 172px; }
+  .home-tool__glyph { font-size: 21px; color: var(--sign); }
+  .home-tool h3 { margin: 2px 0 0; font-size: var(--text-base); font-weight: 620; letter-spacing: -0.01em; color: var(--text); }
+  .home-tool p { margin: 0; font-size: 13px; color: var(--text-2); line-height: 1.55; }
+  .home-tool__go { margin-top: auto; font-size: 12.5px; font-weight: 550; color: var(--text); }
+
+  /* ── Demo ── */
+  :global(.demo) { display: grid; gap: 22px; grid-template-columns: 1fr; align-items: start; }
+  @media (min-width: 960px) { :global(.demo) { grid-template-columns: 1.15fr 0.85fr; } }
+  :global(.demo__wheel-core) { padding: clamp(14px, 2.5vw, 26px); }
+  :global(.demo__receipt) { margin: 12px 0 0; text-align: center; font-size: 10.5px; letter-spacing: 0.06em; color: var(--faint); }
+  :global(.demo__callouts) { display: grid; gap: 12px; align-content: start; }
+  :global(.demo__callout) {
+    display: grid;
+    gap: 5px;
+    padding: 14px 16px;
+    border: 1px solid color-mix(in oklab, var(--sign) 30%, transparent);
+    border-radius: var(--r-md);
+    background: color-mix(in oklab, var(--sign) 6%, transparent);
+  }
+  :global(.demo__callout strong) { font-size: var(--text-lg); letter-spacing: -0.01em; }
+  :global(.demo__callout p) { margin: 0; font-size: var(--text-sm); color: var(--text-2); line-height: 1.55; }
+  :global(.demo__cta-line) { margin: 8px 0 2px; font-size: var(--text-sm); color: var(--muted); line-height: 1.6; }
+  :global(.demo__cta-line strong) { color: var(--text); }
+
+  /* ── The Twelve ── */
+  .twelve { display: grid; gap: 10px; grid-template-columns: repeat(2, 1fr); }
+  @media (min-width: 640px) { .twelve { grid-template-columns: repeat(3, 1fr); } }
+  @media (min-width: 960px) { .twelve { grid-template-columns: repeat(6, 1fr); } }
+  .twelve__card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 9px;
+    padding: 20px 10px 16px;
+    text-align: center;
+  }
+  .twelve__card strong { font-size: 14.5px; font-weight: 600; color: var(--text); }
+  .twelve__dates { font-size: 9.5px; color: var(--faint); letter-spacing: 0.05em; }
+
+  /* ── Pillars ── */
+  .pillars { display: grid; gap: 14px; grid-template-columns: 1fr; }
+  @media (min-width: 860px) { .pillars { grid-template-columns: repeat(3, 1fr); } }
+  .pillar {
+    display: grid;
+    gap: 10px;
+    align-content: start;
+    padding: 26px 22px;
+    border: 1px solid var(--hair-1);
+    border-radius: var(--r-lg);
+    background: linear-gradient(180deg, var(--void-1), transparent);
+  }
+  .pillar h3 { margin: 0; font-size: var(--text-lg); font-weight: 620; letter-spacing: -0.015em; }
+  .pillar p { margin: 0; font-size: var(--text-sm); color: var(--text-2); line-height: 1.6; }
+  .pillar a { margin-top: 4px; font-size: 13.5px; font-weight: 550; color: var(--text); text-decoration: none; }
+  .pillar a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+  /* ── Doors ── */
+  .doors { display: grid; gap: 12px; grid-template-columns: 1fr; }
+  @media (min-width: 860px) { .doors { grid-template-columns: repeat(3, 1fr); } }
+  .door {
+    display: grid;
+    gap: 6px;
+    padding: 20px;
+    border: 1px solid var(--hair-1);
+    border-radius: var(--r-md);
+    text-decoration: none;
+    transition: border-color var(--dur-2) var(--ease), background var(--dur-2) var(--ease);
+  }
+  .door:hover { border-color: var(--hair-3); background: rgba(198, 204, 218, 0.04); }
+  .door__title { font-size: var(--text-base); font-weight: 600; color: var(--text); letter-spacing: -0.01em; }
+  .door__sub { font-size: 13px; color: var(--muted); }
+  .door--collect {
+    background: linear-gradient(90deg, rgba(210, 167, 78, 0.05), transparent 65%);
+  }
+  .door--collect:hover { border-color: rgba(210, 167, 78, 0.4); }
+
+  /* ── FAQ ── */
+  .faq { display: grid; gap: 8px; }
+  .faq__item {
+    border: 1px solid var(--hair-1);
+    border-radius: var(--r-md);
+    background: var(--void-1);
+    padding: 4px 18px;
+  }
+  .faq__item summary { cursor: pointer; padding: 12px 0; font-weight: 550; color: var(--text); }
+  .faq__item p { margin: 2px 0 16px; color: var(--text-2); font-size: var(--text-sm); line-height: 1.65; }
+
+  /* ── Close ── */
+  .close { text-align: center; }
+  .close__kicker {
+    margin: 0 0 10px;
+    font-size: 11px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--faint);
+  }
+  .close h2 {
+    margin: 0 0 26px;
+    font-size: var(--text-2xl);
+    font-weight: 640;
+    letter-spacing: -0.03em;
+    text-wrap: balance;
+  }
+</style>

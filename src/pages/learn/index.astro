@@ -1,0 +1,162 @@
+---
+import Base from '../../layouts/Base.astro';
+import SignIcon from '../../components/SignIcon.astro';
+import { SIGNS, ELEMENT_LABEL, MODALITY_LABEL } from '../../lib/signs';
+
+const jsonLd = [
+  {
+    '@type': 'CollectionPage',
+    name: 'Learn astrology',
+    url: 'https://zodiacs.org/learn/',
+    description: 'Zodiac sign guides, the big three, and zodiac dates — astrology explained in plain language.',
+  },
+  {
+    '@type': 'ItemList',
+    name: 'Zodiac sign guides',
+    numberOfItems: 12,
+    itemListElement: SIGNS.map((s, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: s.name,
+      url: `https://zodiacs.org/${s.slug}/`,
+    })),
+  },
+];
+---
+<Base
+  title="Learn Astrology — Zodiac Signs, Dates & the Big Three | Zodiacs.org"
+  description="Astrology in plain language: all 12 zodiac sign guides, the sun–moon–rising big three explained, and the full table of zodiac dates, elements, and rulers."
+  path="/learn/"
+  jsonLd={jsonLd}
+>
+  <section class="section--tight container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Learn</span>
+      <h2 style="margin-top:16px">Astrology that speaks human.</h2>
+      <p>
+        No gatekeeping, no mush. Start with your own chart, read your signs,
+        and learn the system as you go.
+      </p>
+    </div>
+  </section>
+
+  <section class="section--tight container">
+    <div class="bigthree reveal">
+      <h2>The big three, in sixty seconds</h2>
+      <div class="bigthree__grid">
+        <div class="bigthree__item">
+          <span class="mono--label">Sun ☉</span>
+          <p><strong>Who you are.</strong> Your core identity and engine — the sign everyone already asks about. Set by your birth <em>date</em>.</p>
+        </div>
+        <div class="bigthree__item">
+          <span class="mono--label">Moon ☽</span>
+          <p><strong>How you feel.</strong> Your emotional weather, comforts, and needs. Changes sign every ~2.5 days — <a href="/moon-sign/">find yours</a>.</p>
+        </div>
+        <div class="bigthree__item">
+          <span class="mono--label">Rising ASC</span>
+          <p><strong>How people first read you.</strong> The sign on the eastern horizon at your birth — needs your birth time. <a href="/rising-sign/">Calculate it</a>.</p>
+        </div>
+      </div>
+      <a class="btn btn--primary" href="/birth-chart/"><span>Get all three at once</span><span class="orb">↗</span></a>
+    </div>
+  </section>
+
+  <section class="section container" id="signs">
+    <div class="section-head reveal">
+      <h2>The twelve signs</h2>
+      <p>Every guide covers personality, love, strengths, myth and history, and what the sign means as your sun, moon, or rising.</p>
+    </div>
+    <div class="learn-grid">
+      {SIGNS.map((s, i) => (
+        <a class="shell reveal" href={`/${s.slug}/`} style={`--sign:${s.hue};--reveal-delay:${(i % 4) * 60}ms`}>
+          <div class="core tinted learn-card">
+            <SignIcon sign={s.slug} size={64} />
+            <div>
+              <strong>{s.name}</strong>
+              <span class="mono learn-card__dates">{s.dates}</span>
+              <p>{s.essence}</p>
+            </div>
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="section--tight container">
+    <div class="section-head reveal">
+      <h2>Zodiac dates, elements &amp; rulers</h2>
+      <p>The whole system on one table. Dates shift by a day some years — born on a boundary? <a href="/birth-chart/">Compute it exactly</a>.</p>
+    </div>
+    <div class="table-wrap reveal">
+      <table class="dates-table">
+        <thead>
+          <tr><th>Sign</th><th>Dates</th><th>Element</th><th>Modality</th><th>Ruler</th></tr>
+        </thead>
+        <tbody>
+          {SIGNS.map((s) => (
+            <tr style={`--sign:${s.hue}`}>
+              <td><a href={`/${s.slug}/`}><SignIcon sign={s.slug} size={20} /> {s.name} {s.glyph}</a></td>
+              <td class="mono">{s.dates}</td>
+              <td>{ELEMENT_LABEL[s.element]}</td>
+              <td>{MODALITY_LABEL[s.modality]}</td>
+              <td>{s.ruler}{s.classicRuler ? ` (${s.classicRuler})` : ''}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <p class="learn-note reveal">
+      Curious how any of this is computed? The math is public:
+      <a href="/methodology/">how we compute your chart</a>.
+    </p>
+  </section>
+</Base>
+
+<style>
+  .bigthree {
+    border: 1px solid var(--hair-1);
+    border-radius: var(--r-lg);
+    background: linear-gradient(180deg, var(--void-1), transparent);
+    padding: clamp(22px, 4vw, 36px);
+  }
+  .bigthree h2 { margin: 0 0 20px; font-size: var(--text-xl); font-weight: 620; letter-spacing: -0.02em; }
+  .bigthree__grid { display: grid; gap: 18px; grid-template-columns: 1fr; margin-bottom: 24px; }
+  @media (min-width: 760px) { .bigthree__grid { grid-template-columns: repeat(3, 1fr); } }
+  .bigthree__item p { margin: 8px 0 0; font-size: var(--text-sm); color: var(--text-2); line-height: 1.6; }
+  .bigthree__item strong { color: var(--text); }
+  .bigthree__item a { color: var(--text); }
+
+  .learn-grid { display: grid; gap: 12px; grid-template-columns: 1fr; }
+  @media (min-width: 680px) { .learn-grid { grid-template-columns: 1fr 1fr; } }
+  @media (min-width: 1020px) { .learn-grid { grid-template-columns: repeat(4, 1fr); } }
+  .learn-card { display: flex; gap: 14px; padding: 18px; align-items: flex-start; }
+  .learn-card strong { display: block; font-size: 15px; color: var(--text); }
+  .learn-card__dates { display: block; margin: 2px 0 6px; font-size: 10px; color: var(--faint); letter-spacing: 0.05em; }
+  .learn-card p { margin: 0; font-size: 12.5px; color: var(--text-2); line-height: 1.5; }
+
+  .table-wrap { overflow-x: auto; }
+  .dates-table { width: 100%; border-collapse: collapse; font-size: var(--text-sm); }
+  .dates-table th {
+    text-align: left;
+    padding: 10px 16px 10px 0;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: var(--faint);
+    border-bottom: 1px solid var(--hair-2);
+  }
+  .dates-table td { padding: 10px 16px 10px 0; border-bottom: 1px solid var(--hair-1); color: var(--text-2); white-space: nowrap; }
+  .dates-table td a {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text);
+    font-weight: 550;
+    text-decoration: none;
+  }
+  .dates-table td a:hover { text-decoration: underline; text-underline-offset: 3px; }
+  .learn-note { margin-top: 18px; font-size: var(--text-sm); color: var(--muted); }
+  .learn-note a { color: var(--text); }
+</style>
