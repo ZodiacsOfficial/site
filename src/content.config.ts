@@ -95,6 +95,17 @@ const learn = defineCollection({
       updated: z.coerce.date(),
       draft: z.boolean().default(false),
     }),
+    // Rising-sign profiles route at /rising-sign/{sign}/, not /learn/ —
+    // the sitemap's learn loop must keep filtering this kind out.
+    z.object({
+      kind: z.literal('rising'),
+      sign: signEnum,
+      title: z.string(),
+      description: z.string().max(170),
+      faq: z.array(z.object({ q: z.string(), a: z.string() })).min(3),
+      updated: z.coerce.date(),
+      draft: z.boolean().default(false),
+    }),
   ]),
 });
 

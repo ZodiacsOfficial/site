@@ -26,6 +26,10 @@ export const GET: APIRoute = async () => {
     { loc: '/moon-phase/', priority: 0.85 },
     { loc: '/saturn-return/', priority: 0.85 },
     { loc: '/mercury-retrograde/', priority: 0.85 },
+    { loc: '/transits/', priority: 0.85 },
+    { loc: '/eclipses/', priority: 0.85 },
+    { loc: '/full-moon-calendar/', priority: 0.85 },
+    { loc: '/retrogrades/', priority: 0.8 },
     { loc: '/learn/', priority: 0.85 },
     { loc: '/horoscopes/', priority: 0.8 },
     { loc: '/tools/', priority: 0.8 },
@@ -51,11 +55,20 @@ export const GET: APIRoute = async () => {
       priority: 0.75,
       lastmod: p.data.updated.toISOString().slice(0, 10),
     })),
-    ...learn.map((l) => ({
-      loc: `/learn/${l.id}/`,
-      priority: 0.65,
-      lastmod: l.data.updated.toISOString().slice(0, 10),
-    })),
+    // Rising profiles live at /rising-sign/{sign}/, outside /learn/ —
+    // an unfiltered loop here would emit URLs that have no files.
+    ...learn.flatMap((l) =>
+      l.data.kind === 'rising'
+        ? [{
+            loc: `/rising-sign/${l.data.sign}/`,
+            priority: 0.8,
+            lastmod: l.data.updated.toISOString().slice(0, 10),
+          }]
+        : [{
+            loc: `/learn/${l.id}/`,
+            priority: 0.65,
+            lastmod: l.data.updated.toISOString().slice(0, 10),
+          }]),
     ...LEGACY_URLS.map((u) => ({ loc: u.path, priority: u.priority })),
   ];
 

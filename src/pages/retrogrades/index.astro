@@ -2,6 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import sky from '../../data/sky.json';
 import { bodyLongitude } from '../../lib/engine/full';
+import type { BodyName } from '../../lib/engine/types';
 import { formatLongitude } from '../../lib/signs';
 
 // All computed at build time from the committed sky data — receipts,
@@ -24,7 +25,7 @@ const RHYTHM: Record<string, string> = {
 const fmt = (d: Date) =>
   d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
 
-const windows = (sky.retrogrades as { planet: string; from: string; to: string | null }[]).map((r) => {
+const windows = (sky.retrogrades as { planet: BodyName; from: string; to: string | null }[]).map((r) => {
   const from = new Date(r.from);
   const to = r.to ? new Date(r.to) : null;
   // A window that opens exactly at the data horizon was clamped, not
