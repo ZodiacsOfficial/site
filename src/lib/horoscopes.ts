@@ -32,6 +32,12 @@ export function transitsFor(month: string): TransitFile | null {
   return null;
 }
 
+/** The newest committed transit month ('YYYY-MM'), or null if none. */
+export function latestTransitMonth(): string | null {
+  const months = Object.values(transitFiles).map((m) => m.default.month).sort();
+  return months.at(-1) ?? null;
+}
+
 const sn = (slug: string) => signBySlug(slug).name;
 
 /** The month's events as one chronological, human-readable list. */
