@@ -13,7 +13,7 @@ const jsonLd = [
 ---
 <Base
   title="How We Compute Your Chart — Methodology & Privacy | Zodiacs.org"
-  description="The exact astronomy behind every chart on zodiacs.org: the ephemeris, house systems, historical timezone handling, accuracy testing against NASA JPL data, and why your birth data never leaves your device."
+  description="The exact astronomy behind every chart on zodiacs.org: the ephemeris, house systems, historical timezone handling, accuracy testing against NASA JPL data, and the local-first privacy model."
   path="/methodology/"
   jsonLd={jsonLd}
 >
@@ -90,10 +90,11 @@ const jsonLd = [
       <h2>Privacy</h2>
       <p>
         The entire calculation happens in your browser. Your birth date, time,
-        and place are never transmitted anywhere — there is no server-side
-        chart API, no account requirement, and no analytics attached to birth
-        data. Charts you save live in your browser's local storage, on your
-        device, deletable by you at any time.
+        and place are not sent to a chart API, and there is no account
+        requirement or analytics attached to birth data. Charts you save live
+        in your browser's local storage first, deletable by you at any time. If
+        you choose account sync, saved charts upload to your Supabase account
+        and are protected by row-level security.
       </p>
 
       <h2>Honest limits</h2>

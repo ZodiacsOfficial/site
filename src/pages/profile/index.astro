@@ -7,7 +7,6 @@ import '../../styles/calculator.css';
   title="Your Cosmic Profile | Zodiacs.org"
   description="Charts you save live here — on your device, not ours. Your cosmic profile, powered by Astrofolio."
   path="/profile/"
-  noindex
 >
   <section class="section--tight container container--narrow">
     <div class="pf-hero">
@@ -16,7 +15,7 @@ import '../../styles/calculator.css';
       <p>
         Save any chart you calculate and it stays here: your charts, the
         relationships you follow, your cosmic profile. Free, no account, and
-        stored on <strong>this device</strong>. Nothing touches a server.
+        stored on <strong>this device first</strong>. Account sync is optional.
       </p>
     </div>
 
@@ -24,9 +23,9 @@ import '../../styles/calculator.css';
 
     <aside class="pf-note">
       <p class="mono">
-        On-device means: clearing your browser data clears this profile.
-        Accounts with cross-device sync are the next Astrofolio step, built on
-        the same data you see here and imported losslessly.
+        On-device means: clearing your browser data clears local-only saves.
+        If you turn on account sync, saved charts and removals are uploaded to your
+        Supabase account and protected by row-level security.
       </p>
     </aside>
   </section>
@@ -43,7 +42,34 @@ import '../../styles/calculator.css';
   .pf-hero strong { color: var(--text-2); }
 
   .pf { display: grid; gap: 16px; }
-  .pf-loading { color: var(--faint); }
+  .pf-sync__core {
+    padding: 18px 20px;
+    display: grid;
+    gap: 14px;
+  }
+  @media (min-width: 680px) {
+    .pf-sync__core {
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+    }
+  }
+  .pf-sync__core strong { display: block; margin-bottom: 4px; font-size: var(--text-lg); }
+  .pf-sync__core p { margin: 0; color: var(--text-2); font-size: var(--text-sm); line-height: 1.55; }
+  .pf-sync__message { margin-top: 8px !important; color: var(--muted) !important; }
+  .pf-sync__message--error { color: var(--sign-aries) !important; }
+  .pf-sync__form {
+    display: grid;
+    gap: 10px;
+    min-width: min(100%, 310px);
+  }
+  .pf-sync__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: flex-start;
+  }
+  .pf-sync__form .btn { justify-content: space-between; }
+  .pf-loading { color: var(--muted); }
   .pf-count { margin: 0; font-size: 11px; letter-spacing: 0.08em; color: var(--faint); }
   .pf-list { display: grid; gap: 12px; }
   .pf-chart__core { padding: 20px; display: grid; gap: 12px; }
@@ -95,5 +121,5 @@ import '../../styles/calculator.css';
   .pf-next__core .btn { margin-top: 6px; }
   .pf-foot { display: flex; }
   .pf-note { margin-top: clamp(24px, 5vw, 40px); }
-  .pf-note p { margin: 0; font-size: 11px; line-height: 1.7; color: var(--faint); letter-spacing: 0.04em; }
+  .pf-note p { margin: 0; font-size: 12px; line-height: 1.7; color: var(--muted); letter-spacing: 0.04em; }
 </style>

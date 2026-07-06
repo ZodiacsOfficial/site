@@ -25,11 +25,10 @@ type Row = [string, string | 0, number, number, number, number, number, number];
 let indexPromise: Promise<CityIndex> | null = null;
 const shardCache = new Map<string, Promise<Row[]>>();
 
-function fetchJson<T>(url: string): Promise<T> {
-  return fetch(url).then((r) => {
-    if (!r.ok) throw new Error(`fetch ${url}: ${r.status}`);
-    return r.json() as Promise<T>;
-  });
+async function fetchJson<T>(url: string): Promise<T> {
+  const response = await fetch(url);
+  if (!response.ok) throw new Error(`fetch ${url}: ${response.status}`);
+  return response.json() as Promise<T>;
 }
 
 export function preloadIndex(): Promise<CityIndex> {

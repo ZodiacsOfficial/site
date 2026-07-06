@@ -5,6 +5,11 @@
  */
 import { EMPTY_PROFILE, MAX_CHARTS, PROFILE_KEY } from './schema';
 import type { Profile, SavedChart } from './schema';
+import { clearChartDeletion, recordChartDeletion } from './deletions';
+
+interface PersistOptions {
+  sync?: boolean;
+}
 
 export function loadProfile(): Profile {
   try {
@@ -20,14 +25,26 @@ export function loadProfile(): Profile {
   }
 }
 
-function persist(profile: Profile): boolean {
+function queueCloudSync() {
+  if (typeof window === 'undefined') return;
+  import('./sync')
+    .then(({ scheduleCloudSync }) => scheduleCloudSync())
+    .catch(() => {});
+}
+
+function persist(profile: Profile, options: PersistOptions = { sync: true }): boolean {
   try {
     localStorage.setItem(PROFILE_KEY, JSON.stringify(profile));
     window.dispatchEvent(new CustomEvent('zodiacs:profile', { detail: profile }));
+    if (options.sync !== false) queueCloudSync();
     return true;
   } catch {
     return false; // storage full / private mode — callers surface a notice
   }
+}
+
+export function replaceProfile(profile: Profile): boolean {
+  return persist(profile, { sync: false });
 }
 
 export function saveChart(chart: SavedChart): 'saved' | 'updated' | 'full' | 'error' {
@@ -35,17 +52,25 @@ export function saveChart(chart: SavedChart): 'saved' | 'updated' | 'full' | 'er
   const existing = profile.charts.findIndex((c) => c.id === chart.id);
   if (existing >= 0) {
     profile.charts[existing] = { ...chart, updatedAt: new Date().toISOString() };
-    return persist(profile) ? 'updated' : 'error';
+    if (!persist(profile)) return 'error';
+    clearChartDeletion(chart.id);
+    return 'updated';
   }
   if (profile.charts.length >= MAX_CHARTS) return 'full';
   profile.charts.unshift(chart);
-  return persist(profile) ? 'saved' : 'error';
+  if (!persist(profile)) return 'error';
+  clearChartDeletion(chart.id);
+  return 'saved';
 }
 
 export function deleteChart(id: string): boolean {
   const profile = loadProfile();
+  const existed = profile.charts.some((c) => c.id === id);
   profile.charts = profile.charts.filter((c) => c.id !== id);
-  return persist(profile);
+  const ok = persist(profile, { sync: false });
+  if (ok && existed) recordChartDeletion(id);
+  if (ok && existed) queueCloudSync();
+  return ok;
 }
 
 export function renameChart(id: string, name: string): boolean {

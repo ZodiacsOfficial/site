@@ -18,11 +18,11 @@ const faq = [
   },
   {
     q: 'What happens to my birth data?',
-    a: 'It never leaves your device. The calculation runs entirely in your browser. There is no upload, no account, and no server that sees your birth details. Saving a chart stores it in your own browser only.',
+    a: 'The calculation runs entirely in your browser. Saving a chart stores it on this device first; if you choose account sync, your saved charts upload to your Supabase account so they can follow you across devices.',
   },
   {
     q: 'What is Astrofolio?',
-    a: 'Astrofolio is where the charts you calculate are kept: your saved charts, the relationships you follow, your cosmic profile. It starts on this device, free and without an account. Syncing across devices comes next.',
+    a: 'Astrofolio is where the charts you calculate are kept: your saved charts, the relationships you follow, your cosmic profile. It starts on this device, free and without an account, with optional account sync when you want it.',
   },
   {
     q: 'What is the Registry?',
@@ -283,6 +283,7 @@ const tools = [
   /* ── Hero — the rounded cinematic frame ── */
   .hero {
     /* main already clears the fixed nav (96px) — the frame owns the rest. */
+    width: min(100% - 32px, 1440px);
     padding-block: 0 clamp(14px, 2vw, 22px);
   }
   .hero__frame {
@@ -291,7 +292,7 @@ const tools = [
     border-radius: clamp(18px, 2.6vw, 30px);
     /* Viewport minus the nav clearance and a guaranteed ticker peek —
        the next section is always visibly waiting below the frame. */
-    min-height: clamp(470px, calc(100svh - 172px), 720px);
+    min-height: clamp(600px, calc(100svh - 128px), 900px);
     background: var(--void-1);
     /* A hairline ring keeps the frame editorial rather than app-like. */
     box-shadow:
@@ -306,6 +307,8 @@ const tools = [
     height: 100%;
     object-fit: cover;
     object-position: center 42%;
+    transform: scale(1.035);
+    transform-origin: center;
   }
   .hero__scrim {
     position: absolute;
@@ -409,6 +412,8 @@ const tools = [
   }
 
   @media (max-width: 640px) {
+    .hero { width: min(100% - 20px, 1440px); }
+    .hero__frame { min-height: clamp(540px, calc(100svh - 180px), 700px); }
     .hero__content { padding: 20px 18px 22px; }
     .hero__ctas .btn { flex: 1 1 auto; justify-content: center; }
   }

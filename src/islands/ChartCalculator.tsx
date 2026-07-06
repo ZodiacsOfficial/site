@@ -12,7 +12,7 @@ import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import PlaceSearch from './PlaceSearch';
 import SignChip from './SignChip';
 import Wheel from '../lib/wheel/Wheel';
-import { SIGNS, degreeInSign, formatLongitude, signBySlug, signForLongitude } from '../lib/signs';
+import { formatLongitude, signForLongitude } from '../lib/signs';
 import { bigThree } from '../lib/interpretations';
 import { resolveLocalToUtc } from '../lib/time/localToUtc';
 import { houseOf } from '../lib/engine/houses';
@@ -304,7 +304,7 @@ export default function ChartCalculator({ mode }: Props) {
             </span>
             <span class="orb">↗</span>
           </button>
-          <p class="calc__privacy">Computed on your device — your birth data never leaves it.</p>
+          <p class="calc__privacy">Computed on your device. Saved charts sync only if you turn on account sync.</p>
           {error && <p class="calc__error" role="alert">{error}</p>}
         </div>
       </form>
@@ -462,7 +462,7 @@ export default function ChartCalculator({ mode }: Props) {
           {saved === 'saved' && <p class="sr-only" role="status">Chart saved on this device.</p>}
           {saved === 'full' && <p class="calc__error" role="alert">Your profile holds 20 charts — remove one on the profile page first.</p>}
           {saved === 'error' && <p class="calc__error" role="alert">Couldn’t save — your browser may be blocking local storage.</p>}
-          {saved === 'saved' && <p class="calc__saved">Saved to your cosmic profile. It stays on this device — <a href="/profile/">see it here</a>.</p>}
+          {saved === 'saved' && <p class="calc__saved">Saved to your cosmic profile. Manage device storage and optional sync <a href="/profile/">here</a>.</p>}
 
           {/* Share: the link carries the data; no server involved */}
           {mode === 'full' && shareInput && (

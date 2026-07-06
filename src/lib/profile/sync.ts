@@ -1,0 +1,179 @@
+import type { Session } from '@supabase/supabase-js';
+import { getSupabaseClient, isSupabaseConfigured } from '../supabase/client';
+import { loadChartDeletions, recordChartDeletion, replaceChartDeletions } from './deletions';
+import { mergeSyncState } from './merge';
+import { loadProfile, replaceProfile } from './store';
+import type { RemoteChartSnapshot, RemoteDeletionSnapshot } from './merge';
+
+interface RemoteChartDbRow {
+  id: string;
+  payload: unknown;
+  updated_at: string | null;
+}
+
+interface RemoteDeletionDbRow {
+  id: string;
+  deleted_at: string | null;
+}
+
+let timer: number | undefined;
+let inFlight: Promise<boolean> | null = null;
+
+export { isSupabaseConfigured };
+
+export async function getSyncSession(): Promise<Session | null> {
+  const client = getSupabaseClient();
+  if (!client) return null;
+  const { data } = await client.auth.getSession();
+  return data.session ?? null;
+}
+
+export function onSyncAuthChange(callback: (session: Session | null) => void): () => void {
+  const client = getSupabaseClient();
+  if (!client) return () => {};
+  const { data } = client.auth.onAuthStateChange((_event, session) => {
+    callback(session);
+    if (session) scheduleCloudSync(0);
+  });
+  return () => data.subscription.unsubscribe();
+}
+
+export async function sendMagicLink(email: string): Promise<{ ok: true } | { ok: false; message: string }> {
+  const client = getSupabaseClient();
+  if (!client) return { ok: false, message: 'Profile sync is not configured yet.' };
+  const redirectTo = `${window.location.origin}/profile/`;
+  const { error } = await client.auth.signInWithOtp({
+    email,
+    options: {
+      emailRedirectTo: redirectTo,
+      shouldCreateUser: true,
+    },
+  });
+  if (error) return { ok: false, message: error.message };
+  return { ok: true };
+}
+
+export async function signOutOfSync(): Promise<void> {
+  const client = getSupabaseClient();
+  if (!client) return;
+  await client.auth.signOut();
+}
+
+export function scheduleCloudSync(delay = 500): void {
+  if (!isSupabaseConfigured() || typeof window === 'undefined') return;
+  window.clearTimeout(timer);
+  timer = window.setTimeout(() => {
+    void syncNow().catch(() => {});
+  }, delay);
+}
+
+export async function deleteRemoteChart(id: string): Promise<void> {
+  if (!recordChartDeletion(id)) return;
+  await syncNow();
+}
+
+export async function syncNow(): Promise<boolean> {
+  if (inFlight) return inFlight;
+  inFlight = syncProfile().finally(() => {
+    inFlight = null;
+  });
+  return inFlight;
+}
+
+async function syncProfile(): Promise<boolean> {
+  const client = getSupabaseClient();
+  if (!client) return false;
+
+  const { data: userData, error: userError } = await client.auth.getUser();
+  if (userError || !userData.user) return false;
+
+  const local = loadProfile();
+  const localDeletions = loadChartDeletions();
+  const { data: remoteProfile, error: profileError } = await client
+    .from('profiles')
+    .select('settings')
+    .eq('user_id', userData.user.id)
+    .maybeSingle();
+  if (profileError) throw profileError;
+
+  const { data: remoteCharts, error: chartsError } = await client
+    .from('charts')
+    .select('id,payload,updated_at')
+    .eq('user_id', userData.user.id);
+  if (chartsError) throw chartsError;
+
+  const { data: remoteDeletions, error: deletionsError } = await client
+    .from('chart_deletions')
+    .select('id,deleted_at')
+    .eq('user_id', userData.user.id);
+  if (deletionsError) throw deletionsError;
+
+  const merged = mergeSyncState({
+    localProfile: local,
+    remoteSettings: remoteProfile?.settings,
+    remoteCharts: (remoteCharts ?? []).map(toRemoteChartSnapshot),
+    localDeletions,
+    remoteDeletions: (remoteDeletions ?? []).map(toRemoteDeletionSnapshot),
+  });
+  replaceProfile(merged.profile);
+  replaceChartDeletions(merged.deletions);
+
+  const now = new Date().toISOString();
+  const { error: upsertProfileError } = await client
+    .from('profiles')
+    .upsert({
+      user_id: userData.user.id,
+      settings: merged.profile.settings,
+      updated_at: now,
+    }, { onConflict: 'user_id' });
+  if (upsertProfileError) throw upsertProfileError;
+
+  if (merged.profile.charts.length > 0) {
+    const { error: upsertChartsError } = await client
+      .from('charts')
+      .upsert(merged.profile.charts.map((chart) => ({
+        id: chart.id,
+        user_id: userData.user.id,
+        payload: chart,
+        updated_at: chart.updatedAt,
+      })), { onConflict: 'id' });
+    if (upsertChartsError) throw upsertChartsError;
+  }
+
+  if (merged.deletions.length > 0) {
+    const { error: upsertDeletionsError } = await client
+      .from('chart_deletions')
+      .upsert(merged.deletions.map((deletion) => ({
+        id: deletion.id,
+        user_id: userData.user.id,
+        deleted_at: deletion.deletedAt,
+      })), { onConflict: 'user_id,id' });
+    if (upsertDeletionsError) throw upsertDeletionsError;
+  }
+
+  if (merged.deletedChartIds.length > 0) {
+    const { error: deleteChartsError } = await client
+      .from('charts')
+      .delete()
+      .eq('user_id', userData.user.id)
+      .in('id', merged.deletedChartIds);
+    if (deleteChartsError) throw deleteChartsError;
+  }
+
+  return true;
+}
+
+function toRemoteChartSnapshot(row: RemoteChartDbRow): RemoteChartSnapshot {
+  return {
+    id: row.id,
+    payload: row.payload,
+    updatedAt: row.updated_at,
+  };
+}
+
+function toRemoteDeletionSnapshot(row: RemoteDeletionDbRow): RemoteDeletionSnapshot {
+  return {
+    id: row.id,
+    deletedAt: row.deleted_at,
+  };
+}

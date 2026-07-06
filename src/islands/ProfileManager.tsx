@@ -1,16 +1,22 @@
 /**
  * Your cosmic profile — the local-first Astrofolio surface. Renders
  * saved charts from localStorage, supports rename/delete, and frames
- * the on-device model honestly. Accounts and sync are the Phase-2
- * upgrade this schema was designed for.
+ * the local-first sync model honestly.
  */
 import { useEffect, useState } from 'preact/hooks';
+import { EMPTY_PROFILE } from '../lib/profile/schema';
 import { loadProfile, deleteChart, renameChart } from '../lib/profile/store';
 import type { Profile, SavedChart } from '../lib/profile/schema';
 import { signForLongitude, formatLongitude } from '../lib/signs';
+import type { Session } from '@supabase/supabase-js';
+import type * as Sync from '../lib/profile/sync';
 
 /** "Cancer Sun · 1907-07-06" → "Cancer Sun" for compact CTAs. */
 const handle = (name: string) => name.split('·')[0].trim() || name;
+const HAS_PROFILE_SYNC = Boolean(
+  import.meta.env.PUBLIC_SUPABASE_URL &&
+  (import.meta.env.PUBLIC_SUPABASE_PUBLISHABLE_KEY || import.meta.env.PUBLIC_SUPABASE_ANON_KEY)
+);
 
 function ChipRow({ chart }: { chart: SavedChart }) {
   const find = (name: string) => chart.summary.bodies.find((b) => b.body === name);
@@ -45,9 +51,14 @@ function ChipRow({ chart }: { chart: SavedChart }) {
 }
 
 export default function ProfileManager() {
-  const [profile, setProfile] = useState<Profile | null>(null);
+  const [profile, setProfile] = useState<Profile>(EMPTY_PROFILE);
   const [editing, setEditing] = useState<string | null>(null);
   const [draft, setDraft] = useState('');
+  const [syncApi, setSyncApi] = useState<typeof Sync | null>(null);
+  const [session, setSession] = useState<Session | null>(null);
+  const [email, setEmail] = useState('');
+  const [syncState, setSyncState] = useState<'idle' | 'sending' | 'sent' | 'syncing' | 'synced' | 'error'>('idle');
+  const [syncMessage, setSyncMessage] = useState('');
 
   useEffect(() => {
     setProfile(loadProfile());
@@ -56,21 +67,126 @@ export default function ProfileManager() {
     return () => window.removeEventListener('zodiacs:profile', sync);
   }, []);
 
-  if (!profile) return <p class="pf-loading mono">Reading this device…</p>;
+  useEffect(() => {
+    let unsubscribe = () => {};
+    if (!HAS_PROFILE_SYNC) return () => unsubscribe();
+    import('../lib/profile/sync')
+      .then(async (api) => {
+        if (!api.isSupabaseConfigured()) return;
+        setSyncApi(api);
+        const current = await api.getSyncSession();
+        setSession(current);
+        if (current) {
+          setSyncState('syncing');
+          await api.syncNow();
+          setProfile(loadProfile());
+          setSyncState('synced');
+        }
+        unsubscribe = api.onSyncAuthChange(async (next) => {
+          setSession(next);
+          if (!next) return;
+          setSyncState('syncing');
+          await api.syncNow();
+          setProfile(loadProfile());
+          setSyncState('synced');
+        });
+      })
+      .catch(() => {});
+    return () => unsubscribe();
+  }, []);
+
+  async function onSendLink(e: Event) {
+    e.preventDefault();
+    if (!syncApi || !email.trim()) return;
+    setSyncState('sending');
+    setSyncMessage('');
+    const result = await syncApi.sendMagicLink(email.trim());
+    if (result.ok) {
+      setSyncState('sent');
+      setSyncMessage('Check your email for a sign-in link. This page will sync after you return.');
+    } else {
+      setSyncState('error');
+      setSyncMessage(result.message);
+    }
+  }
+
+  async function onSyncNow() {
+    if (!syncApi) return;
+    setSyncState('syncing');
+    try {
+      await syncApi.syncNow();
+      setProfile(loadProfile());
+      setSyncState('synced');
+    } catch (err) {
+      setSyncState('error');
+      setSyncMessage(err instanceof Error ? err.message : 'Sync failed. Please try again.');
+    }
+  }
+
+  async function onSignOut() {
+    if (!syncApi) return;
+    await syncApi.signOutOfSync();
+    setSession(null);
+    setSyncState('idle');
+  }
+
+  const syncPanel = HAS_PROFILE_SYNC && (
+    <aside class="pf-sync shell">
+      <div class="core pf-sync__core">
+        <div>
+          <strong>{session ? 'Sync is on' : 'Keep this on every device'}</strong>
+          <p>
+            {session
+              ? `Signed in${session.user.email ? ` as ${session.user.email}` : ''}. Saved charts and removals merge across devices by chart ID.`
+              : 'Optional account sync uploads saved charts and removals after you sign in. Local saves keep working without it.'}
+          </p>
+          {syncMessage && <p class={`pf-sync__message pf-sync__message--${syncState}`}>{syncMessage}</p>}
+        </div>
+        {session ? (
+          <div class="pf-sync__actions">
+            <button class="pf-chart__action" type="button" onClick={onSyncNow} disabled={syncState === 'syncing'}>
+              {syncState === 'syncing' ? 'Syncing…' : syncState === 'synced' ? 'Synced' : 'Sync now'}
+            </button>
+            <button class="pf-chart__action" type="button" onClick={onSignOut}>Sign out</button>
+          </div>
+        ) : (
+          <form class="pf-sync__form" onSubmit={onSendLink}>
+            <input
+              class="field__input"
+              type="email"
+              inputMode="email"
+              autocomplete="email"
+              placeholder="you@example.com"
+              value={email}
+              onInput={(e) => setEmail((e.target as HTMLInputElement).value)}
+              aria-label="Email for profile sync"
+              required
+            />
+            <button class="btn btn--primary" type="submit" disabled={!syncApi || syncState === 'sending'}>
+              <span>{syncState === 'sending' ? 'Sending…' : 'Send sign-in link'}</span><span class="orb">↗</span>
+            </button>
+          </form>
+        )}
+      </div>
+    </aside>
+  );
 
   if (profile.charts.length === 0) {
     return (
-      <div class="pf-empty shell">
-        <div class="core pf-empty__core">
-          <h2>Nothing saved yet.</h2>
-          <p>
-            Charts you save will live here, on your device, not ours. Run a
-            chart and tap <strong>Save this chart</strong> to start your
-            cosmic profile.
-          </p>
-          <a class="btn btn--primary" href="/birth-chart/">
-            <span>Get your free birth chart</span><span class="orb">↗</span>
-          </a>
+      <div class="pf">
+        {syncPanel}
+        <div class="pf-empty shell">
+          <div class="core pf-empty__core">
+            <h2>Nothing saved yet.</h2>
+            <p>
+              Charts you save will live here, on your device first. Run a
+              chart and tap <strong>Save this chart</strong> to start your
+              cosmic profile.
+            </p>
+            <a class="btn btn--primary" href="/birth-chart/">
+              <span>Get your free birth chart</span><span class="orb">↗</span>
+            </a>
+          </div>
         </div>
       </div>
     );
@@ -78,8 +194,9 @@ export default function ProfileManager() {
 
   return (
     <div class="pf">
+      {syncPanel}
       <p class="pf-count mono">
-        {profile.charts.length} saved {profile.charts.length === 1 ? 'chart' : 'charts'} · stored in this browser only
+        {profile.charts.length} saved {profile.charts.length === 1 ? 'chart' : 'charts'} · {session ? 'synced when signed in' : 'stored in this browser'}
       </p>
 
       <div class="pf-list">
