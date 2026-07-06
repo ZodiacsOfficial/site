@@ -8,6 +8,7 @@ import type { APIRoute } from 'astro';
 import { getCollection } from 'astro:content';
 import { LEGACY_URLS } from '../lib/legacy/urls';
 import { LOCALIZED_PATHS, alternatePaths } from '../lib/i18n';
+import daily from '../data/daily.json';
 
 const SITE = 'https://zodiacs.org';
 
@@ -32,7 +33,7 @@ export const GET: APIRoute = async () => {
     { loc: '/full-moon-calendar/', priority: 0.85 },
     { loc: '/retrogrades/', priority: 0.8 },
     { loc: '/learn/', priority: 0.85 },
-    { loc: '/horoscopes/', priority: 0.8 },
+    { loc: '/horoscopes/', priority: 0.8, lastmod: daily.date },
     { loc: '/tools/', priority: 0.8 },
     { loc: '/profile/', priority: 0.75 },
     { loc: '/learn/planets/', priority: 0.7 },
@@ -50,7 +51,8 @@ export const GET: APIRoute = async () => {
       .map((h) => ({
         loc: `/horoscopes/${h.data.sign}/`,
         priority: 0.7,
-        lastmod: h.data.updated.toISOString().slice(0, 10),
+        // The daily block refreshes these pages every morning.
+        lastmod: daily.date,
       })),
     ...pairs.map((p) => ({
       loc: `/compatibility/${p.id}/`,

@@ -2,8 +2,12 @@
 import { getCollection, render } from 'astro:content';
 import Base from '../../../layouts/Base.astro';
 import SignIcon from '../../../components/SignIcon.astro';
+import DailyForYou from '../../../islands/DailyForYou';
 import { SIGNS, SIGN_SLUGS, signBySlug } from '../../../lib/signs';
 import { dayLabel, eventList, monthLabel } from '../../../lib/horoscopes';
+import { dailyReading } from '../../../lib/daily';
+import type { Daily } from '../../../lib/daily';
+import dailyData from '../../../data/daily.json';
 
 export async function getStaticPaths() {
   const all = await getCollection('horoscopes', ({ data }) => !data.draft);
@@ -23,6 +27,14 @@ const label = monthLabel(entry.data.month);
 const events = eventList(entry.data.month);
 const { Content } = await render(entry);
 
+const daily = dailyData as Daily;
+const today = dailyReading(sign.slug, daily);
+const todayLabel = dayLabel(`${daily.date}T12:00:00.000Z`);
+// The daily block updates this page every morning; say so honestly.
+const modified = daily.date > entry.data.updated.toISOString().slice(0, 10)
+  ? new Date(`${daily.date}T00:15:00.000Z`)
+  : entry.data.updated;
+
 const others = SIGNS.filter((s) => s.slug !== sign.slug);
 
 const jsonLd = [
@@ -31,7 +43,7 @@ const jsonLd = [
     headline: `${sign.name} horoscope — ${label}`,
     description: `${sign.name} in ${label}: a monthly horoscope grounded in the real dates of the moon phases, retrogrades, and major transits.`,
     url: `https://zodiacs.org/horoscopes/${sign.slug}/`,
-    dateModified: entry.data.updated.toISOString(),
+    dateModified: modified.toISOString(),
     author: { '@type': 'Organization', name: 'Zodiacs.org', url: 'https://zodiacs.org/' },
     image: `https://zodiacs.org/assets/og/v2/horoscope/${sign.slug}.png`,
     about: { '@type': 'Thing', name: `${sign.name} (astrology)` },
@@ -64,6 +76,27 @@ const jsonLd = [
         <p class="horo__dates mono">{sign.dates}</p>
       </div>
     </header>
+
+    <section class="horo__today reveal" aria-label={`${sign.name} today`}>
+      <div class="horo__today-head">
+        <h2>Today, computed</h2>
+        <span class="mono horo__today-stamp">{todayLabel} · positions at 12:00 UTC · {daily.moon.phase}</span>
+      </div>
+      <ul class="horo__today-lines">
+        {today.lines.map((l) => (
+          <li>
+            <p>{l.text}</p>
+            <span class="mono horo__today-receipt">{l.receipt}</span>
+          </li>
+        ))}
+      </ul>
+      <p class="horo__today-note">
+        Solar houses — your sign as the first house, today's planets placed
+        from there. The monthly read below goes deeper.
+      </p>
+    </section>
+
+    <DailyForYou client:load sign={sign.slug} />
 
     <div class="prose reveal">
       <Content />
@@ -119,6 +152,26 @@ const jsonLd = [
   }
   .horo__hero h1 { margin: 10px 0 8px; font-size: clamp(2.4rem, 1.7rem + 3.6vw, 4rem); line-height: 0.98; }
   .horo__dates { margin: 0; font-size: 11px; color: var(--faint); letter-spacing: 0.06em; }
+
+  .horo__today { display: grid; gap: 14px; padding: clamp(18px, 3vw, 26px); border: 1px solid var(--hair-2); border-radius: var(--r-md); background: rgba(198, 204, 218, 0.02); }
+  .horo__today-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 16px; }
+  .horo__today-head h2 { margin: 0; font-size: var(--text-xl); font-weight: 620; letter-spacing: -0.02em; }
+  .horo__today-stamp { font-size: 11px; color: var(--faint); letter-spacing: 0.05em; }
+  .horo__today-lines { margin: 0; padding: 0; list-style: none; display: grid; gap: 12px; }
+  .horo__today-lines p { margin: 0 0 3px; font-size: var(--text-base); color: var(--text); line-height: 1.55; }
+  .horo__today-receipt { font-size: 11px; color: var(--muted); letter-spacing: 0.04em; }
+  .horo__today-note { margin: 2px 0 0; font-size: 12.5px; color: var(--faint); max-width: 56ch; }
+
+  /* DailyForYou island (renders only when a saved chart exists) */
+  :global(.dfy) { display: grid; gap: 12px; padding: clamp(16px, 3vw, 22px); border: 1px solid color-mix(in oklab, var(--sign) 30%, transparent); border-radius: var(--r-md); background: color-mix(in oklab, var(--sign) 4%, transparent); }
+  :global(.dfy__head) { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 16px; }
+  :global(.dfy__head h2) { margin: 0; font-size: var(--text-lg); font-weight: 620; letter-spacing: -0.01em; }
+  :global(.dfy__stamp) { font-size: 11px; color: var(--faint); letter-spacing: 0.05em; }
+  :global(.dfy__lines) { margin: 0; padding: 0; list-style: none; display: grid; gap: 11px; }
+  :global(.dfy__lines p) { margin: 0 0 3px; font-size: var(--text-sm); color: var(--text-2); line-height: 1.55; }
+  :global(.dfy__receipt) { font-size: 11px; color: var(--muted); letter-spacing: 0.04em; }
+  :global(.dfy__more) { font-size: var(--text-sm); color: var(--text-2); text-decoration: none; justify-self: start; }
+  :global(.dfy__more:hover) { color: var(--text); }
 
   .horo__receipts h2 { margin: 0 0 8px; font-size: var(--text-xl); font-weight: 620; letter-spacing: -0.02em; }
   .horo__receipts-note { margin: 0 0 16px; font-size: var(--text-sm); color: var(--muted); max-width: 56ch; }

@@ -189,3 +189,97 @@ Ship each track as its own PR with the gates green:
 `npm run build && npm run check && npm test`,
 `node scripts/check-dist.mjs`, `node scripts/report-bundles.mjs`.
 ```
+
+---
+
+# Prompt 2 — provision accounts, then the weekly digest
+
+Status notes before pasting: Track 1 (sync code) SHIPPED in PR #4;
+Track 2 (Spanish) SHIPPED in PR #5 — skip both in the prompt above.
+Track 3 (horoscope generation) is still yours per the prompt above.
+This second prompt adds the operational half of accounts plus the
+first re-engagement channel. Paste the block below into Codex.
+
+```
+Two backend tracks for zodiacs.org. You have Vercel and Supabase
+access. Track A can run immediately and needs no repo code; Track B
+needs Track A live first. Read CLAUDE.md and docs/HANDOFF-CODEX.md's
+four CI invariants before touching the repo.
+
+## Track A — provision Supabase and activate account sync (no code)
+
+The sync client is already shipped and dark: it activates when two env
+vars exist at build time.
+
+1. Create a Supabase project for zodiacs.org (closest region to the
+   main audience; note the project ref).
+2. Run the two committed migrations IN ORDER against it:
+   supabase/migrations/20260706000000_profile_sync.sql
+   supabase/migrations/20260706130517_chart_deletions.sql
+   Confirm RLS shows ENABLED on profiles, charts, chart_deletions.
+3. Enable email (magic link) auth. Set the site URL to
+   https://zodiacs.org and add it to the redirect allowlist.
+4. In Vercel project settings add, for Production AND Preview:
+   PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY. Redeploy main.
+5. Verify on production, and write down what you saw:
+   - /profile/ shows the sign-in affordance signed out; the free
+     calculators still never mention accounts.
+   - Magic-link sign-in round-trips on a real mailbox.
+   - Save a chart on device A signed in; it appears on device B after
+     sign-in. Delete on B; it disappears on A (tombstones sync).
+   - Negative RLS probe: with only the anon key and no session, select
+     from charts → zero rows, and an insert with a forged user_id is
+     rejected. Paste the exact queries + results into the doc.
+   - Signed-out behavior is byte-identical to before (no sync chunk
+     fetched — check the network panel on a calculator page).
+6. Commit docs/SUPABASE.md: project ref, region, which keys live
+   where, how to rotate the anon key, and the verification transcript.
+   NEVER commit the service-role key anywhere; it belongs only in
+   GitHub Actions secrets (Track B) and the Supabase dashboard.
+
+## Track B — weekly email digest (after A is live and verified)
+
+One plain, honest email per week per opted-in account: the coming
+week's top transits against their saved charts. Text-first, house
+voice (read CLAUDE.md's banned list; it applies to email), every claim
+carrying its dated receipt, one-click unsubscribe. This is the first
+server-side compute in the project — keep it inside a GitHub Actions
+cron, not a runtime server.
+
+1. Migration: add digest_opt_in boolean not null default false to
+   public.profiles (plus updated_at touch). RLS policies already
+   scope the row to its owner; confirm the new column rides them.
+2. /profile/ UI: an unchecked-by-default checkbox for signed-in users
+   ("One email a week: the sky against your saved charts. Unsubscribe
+   any time."). Wire through the existing profile sync layer — do not
+   invent a second settings path. Localize the string in BOTH catalog
+   locales (src/lib/i18n).
+3. Email infra: Resend. Domain-authenticate zodiacs.org (SPF + DKIM),
+   set RESEND_API_KEY and SUPABASE_SERVICE_ROLE_KEY as repo secrets.
+   List-Unsubscribe header + a signed one-click unsubscribe endpoint
+   (a tiny Vercel function is acceptable here; it only flips
+   digest_opt_in false for a token it can verify).
+4. Weekly cron (.github/workflows/weekly-digest.yml, Mondays ~06:00
+   UTC): a Node script that
+   - pulls opted-in users + their charts via the service-role key,
+   - computes the week's transits per chart by importing the SAME
+     engine modules the build scripts use (scripts/build-transits.mjs
+     shows the pattern; src/lib/engine + synastry's findInterAspects
+     do the aspect math) — never reimplement the math,
+   - renders one text-first email per user (subject like "Your sky,
+     Jul 13–19"), top 3 transits per saved chart, each with its
+     receipt line, a link to /transits/, and the unsubscribe link,
+   - sends via Resend with per-run and per-user caps, logs counts.
+5. Failure honesty: if the run fails, it fails visibly in Actions —
+   no silent catch. If a user has no transits within orb that week,
+   say exactly that in one sentence; never pad.
+6. Gates before the PR: npm run build && npm run check && npm test,
+   node scripts/check-dist.mjs, node scripts/report-bundles.mjs (the
+   digest code must add ZERO client-side bytes outside /profile/),
+   plus a dry-run mode for the cron script that prints instead of
+   sending (commit it; CI can smoke it).
+
+Boundaries: do not touch src/lib/daily.ts, scripts/build-daily.mjs,
+or the horoscope page templates (a retention-layer PR owns those
+files right now). Branch from latest main. One PR per track.
+```

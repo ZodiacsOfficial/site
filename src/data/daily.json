@@ -1,0 +1,92 @@
+{
+  "date": "2026-07-06",
+  "bodies": [
+    {
+      "body": "Moon",
+      "lon": 358.31,
+      "sign": "pisces",
+      "degree": 28.3,
+      "retrograde": false
+    },
+    {
+      "body": "Sun",
+      "lon": 104.45,
+      "sign": "cancer",
+      "degree": 14.4,
+      "retrograde": false
+    },
+    {
+      "body": "Mercury",
+      "lon": 114.58,
+      "sign": "cancer",
+      "degree": 24.6,
+      "retrograde": true
+    },
+    {
+      "body": "Venus",
+      "lon": 146.4,
+      "sign": "leo",
+      "degree": 26.4,
+      "retrograde": false
+    },
+    {
+      "body": "Mars",
+      "lon": 65.45,
+      "sign": "gemini",
+      "degree": 5.5,
+      "retrograde": false
+    },
+    {
+      "body": "Jupiter",
+      "lon": 121.35,
+      "sign": "leo",
+      "degree": 1.3,
+      "retrograde": false
+    },
+    {
+      "body": "Saturn",
+      "lon": 14.4,
+      "sign": "aries",
+      "degree": 14.4,
+      "retrograde": false
+    },
+    {
+      "body": "Uranus",
+      "lon": 63.98,
+      "sign": "gemini",
+      "degree": 4,
+      "retrograde": false
+    },
+    {
+      "body": "Neptune",
+      "lon": 4.42,
+      "sign": "aries",
+      "degree": 4.4,
+      "retrograde": false
+    },
+    {
+      "body": "Pluto",
+      "lon": 304.76,
+      "sign": "aquarius",
+      "degree": 4.8,
+      "retrograde": true
+    }
+  ],
+  "moon": {
+    "phase": "Last Quarter",
+    "illumination": 0.64
+  },
+  "events": [
+    {
+      "kind": "aspect",
+      "a": "Sun",
+      "b": "Saturn",
+      "type": "square",
+      "at": "2026-07-06T10:43:43.479Z",
+      "aSign": "cancer",
+      "aDegree": 14.4,
+      "bSign": "aries",
+      "bDegree": 14.4
+    }
+  ]
+}
