@@ -4,7 +4,9 @@
  * from frontmatter — the wall clock never decides what displays, so a
  * stale month renders honestly instead of failing the deploy.
  */
-import { signBySlug } from './signs';
+import { signBySlug, signName } from './signs';
+import type { Locale } from './i18n';
+import { formatDate } from './i18n/dates';
 
 export interface TransitEvent {
   at: string;
@@ -38,42 +40,48 @@ export function latestTransitMonth(): string | null {
   return months.at(-1) ?? null;
 }
 
-const sn = (slug: string) => signBySlug(slug).name;
+const sn = (slug: string, locale: Locale = 'en') => signName(signBySlug(slug), locale);
 
 /** The month's events as one chronological, human-readable list. */
-export function eventList(month: string): TransitEvent[] {
+export function eventList(month: string, locale: Locale = 'en'): TransitEvent[] {
   const t = transitsFor(month);
   if (!t) return [];
   const events: TransitEvent[] = [
     ...t.ingresses.map((e) => ({
       at: e.at,
-      label: `${e.planet} enters ${sn(e.sign)}${e.retrograde ? ', retrograde' : ''}`,
+      label: locale === 'es'
+        ? `${e.planet} entra en ${sn(e.sign, locale)}${e.retrograde ? ', retrógrado' : ''}`
+        : `${e.planet} enters ${sn(e.sign)}${e.retrograde ? ', retrograde' : ''}`,
     })),
     ...t.lunations.map((e) => ({
       at: e.at,
-      label: `${e.type === 'new' ? 'New moon' : 'Full moon'} at ${Math.round(e.degree)}° ${sn(e.sign)}`,
+      label: locale === 'es'
+        ? `${e.type === 'new' ? 'Luna nueva' : 'Luna llena'} a ${Math.round(e.degree)}° ${sn(e.sign, locale)}`
+        : `${e.type === 'new' ? 'New moon' : 'Full moon'} at ${Math.round(e.degree)}° ${sn(e.sign)}`,
     })),
     ...t.stations.map((e) => ({
       at: e.at,
-      label: `${e.planet} stations ${e.type} at ${Math.round(e.degree)}° ${sn(e.sign)}`,
+      label: locale === 'es'
+        ? `${e.planet} estaciona ${e.type} a ${Math.round(e.degree)}° ${sn(e.sign, locale)}`
+        : `${e.planet} stations ${e.type} at ${Math.round(e.degree)}° ${sn(e.sign)}`,
     })),
     ...t.aspects.map((e) => ({
       at: e.at,
-      label: `${e.a} ${e.type} ${e.b} (${sn(e.aSign)}–${sn(e.bSign)})`,
+      label: `${e.a} ${e.type} ${e.b} (${sn(e.aSign, locale)}–${sn(e.bSign, locale)})`,
     })),
   ];
   return events.sort((a, b) => a.at.localeCompare(b.at));
 }
 
-export function monthLabel(month: string): string {
+export function monthLabel(month: string, locale: Locale = 'en'): string {
   const [y, m] = month.split('-').map(Number);
-  return new Date(Date.UTC(y, m - 1, 1)).toLocaleDateString('en-US', {
+  return formatDate(locale, new Date(Date.UTC(y, m - 1, 1)), {
     month: 'long', year: 'numeric', timeZone: 'UTC',
   });
 }
 
-export function dayLabel(iso: string): string {
-  return new Date(iso).toLocaleDateString('en-US', {
+export function dayLabel(iso: string, locale: Locale = 'en'): string {
+  return formatDate(locale, new Date(iso), {
     month: 'short', day: 'numeric', timeZone: 'UTC',
   });
 }

@@ -1,0 +1,27 @@
+---
+import Base from '../../../layouts/Base.astro';
+import MoonPhaseTool from '../../../islands/MoonPhaseTool';
+import '../../../styles/calculator.css';
+---
+<Base
+  title="Fase lunar de hoy y de tu cumpleaños | Zodiacs.org"
+  description="Consulta la fase lunar de hoy y la Luna de cualquier fecha: fase, iluminación y signo lunar, gratis y en tu dispositivo."
+  path="/es/moon-phase/"
+  locale="es"
+  image="/assets/og/v2/tool/moon-phase.png"
+  imageAlt="Fase lunar de hoy y de cualquier fecha — Zodiacs.org"
+>
+  <section class="section--tight container">
+    <div class="tool-hero">
+      <h1 class="display">La Luna, hoy y cualquier noche.</h1>
+      <p>La fase de esta noche, calculada en vivo. Debajo, una búsqueda para la Luna bajo la que naciste o cualquier fecha importante.</p>
+    </div>
+    <MoonPhaseTool locale="es" client:load />
+  </section>
+</Base>
+
+<style>
+  .tool-hero { max-width: 62ch; margin-bottom: clamp(28px, 5vw, 44px); }
+  .tool-hero h1 { margin: 0 0 16px; font-size: var(--text-2xl); line-height: 1.04; }
+  .tool-hero p { margin: 0; color: var(--muted); font-size: var(--text-lg); text-wrap: pretty; }
+</style>

@@ -2,14 +2,17 @@
 import { useEffect, useRef, useState } from 'preact/hooks';
 import { preloadIndex, searchCities } from '../lib/geo/search';
 import type { City } from '../lib/geo/search';
+import { normalizeLocale, t, type Locale } from '../lib/i18n';
 
 interface Props {
   onSelect: (city: City | null) => void;
   selected: City | null;
   id?: string;
+  locale?: Locale;
 }
 
-export default function PlaceSearch({ onSelect, selected, id = 'place' }: Props) {
+export default function PlaceSearch({ onSelect, selected, id = 'place', locale: rawLocale = 'en' }: Props) {
+  const locale = normalizeLocale(rawLocale);
   const [query, setQuery] = useState('');
   const [results, setResults] = useState<City[]>([]);
   const [open, setOpen] = useState(false);
@@ -67,7 +70,7 @@ export default function PlaceSearch({ onSelect, selected, id = 'place' }: Props)
       <div class="place place--selected">
         <span class="place__chip">
           <input id={id} class="place__chip-value" type="text" readOnly value={chipValue} />
-          <button type="button" class="place__clear" aria-label="Change birthplace" onClick={() => onSelect(null)}>×</button>
+          <button type="button" class="place__clear" aria-label={t(locale, 'placeChange')} onClick={() => onSelect(null)}>×</button>
         </span>
       </div>
     );
@@ -84,14 +87,14 @@ export default function PlaceSearch({ onSelect, selected, id = 'place' }: Props)
         aria-autocomplete="list"
         aria-controls={`${id}-list`}
         aria-activedescendant={open && results[active] ? `${id}-opt-${active}` : undefined}
-        placeholder="Start typing a city…"
+        placeholder={t(locale, 'placePlaceholder')}
         autocomplete="off"
         value={query}
         onFocus={() => { preloadIndex().catch(() => setError(true)); }}
         onInput={(e) => onInput((e.target as HTMLInputElement).value)}
         onKeyDown={onKeyDown}
       />
-      {error && <p class="place__error" role="alert">Couldn’t load the place index — check your connection and try again.</p>}
+      {error && <p class="place__error" role="alert">{t(locale, 'placeError')}</p>}
       {open && (
         <ul class="place__list" id={`${id}-list`} role="listbox">
           {results.map((c, i) => (

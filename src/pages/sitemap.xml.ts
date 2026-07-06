@@ -7,6 +7,7 @@
 import type { APIRoute } from 'astro';
 import { getCollection } from 'astro:content';
 import { LEGACY_URLS } from '../lib/legacy/urls';
+import { LOCALIZED_PATHS, alternatePaths } from '../lib/i18n';
 
 const SITE = 'https://zodiacs.org';
 
@@ -73,14 +74,25 @@ export const GET: APIRoute = async () => {
     ...LEGACY_URLS.map((u) => ({ loc: u.path, priority: u.priority })),
   ];
 
+  const localizedUrls = urls
+    .filter((u) => LOCALIZED_PATHS.has(u.loc) && u.loc !== '/404.html')
+    .map((u) => ({ ...u, loc: alternatePaths(u.loc)!.es }));
+  const allUrls = [...urls, ...localizedUrls];
+
   const body = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${urls
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+${allUrls
   .map(
-    (u) => `  <url>
-    <loc>${SITE}${u.loc}</loc>${u.lastmod ? `\n    <lastmod>${u.lastmod}</lastmod>` : ''}
+    (u) => {
+      const alternates = alternatePaths(u.loc);
+      return `  <url>
+    <loc>${SITE}${u.loc}</loc>${alternates ? `
+    <xhtml:link rel="alternate" hreflang="en" href="${SITE}${alternates.en}" />
+    <xhtml:link rel="alternate" hreflang="es" href="${SITE}${alternates.es}" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="${SITE}${alternates.en}" />` : ''}${u.lastmod ? `\n    <lastmod>${u.lastmod}</lastmod>` : ''}
     <priority>${u.priority.toFixed(2)}</priority>
-  </url>`
+  </url>`;
+    }
   )
   .join('\n')}
 </urlset>

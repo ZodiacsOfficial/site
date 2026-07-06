@@ -18,6 +18,19 @@ Free tools:
 - Eclipse dates 2026–2028 (solar and lunar, exact peaks and signs): https://zodiacs.org/eclipses/
 - All tools: https://zodiacs.org/tools/
 
+Spanish core pages:
+- Inicio en español: https://zodiacs.org/es/
+- Herramientas gratis de astrología: https://zodiacs.org/es/tools/
+- Carta natal gratis: https://zodiacs.org/es/birth-chart/
+- Signo lunar: https://zodiacs.org/es/moon-sign/
+- Ascendente: https://zodiacs.org/es/rising-sign/
+- Compatibilidad: https://zodiacs.org/es/compatibility/
+- Fase lunar: https://zodiacs.org/es/moon-phase/
+- Retorno de Saturno: https://zodiacs.org/es/saturn-return/
+- Tránsitos: https://zodiacs.org/es/transits/
+- Cartas guardadas: https://zodiacs.org/es/profile/
+- Guías de los doce signos en español: https://zodiacs.org/es/aries/ https://zodiacs.org/es/taurus/ https://zodiacs.org/es/gemini/ https://zodiacs.org/es/cancer/ https://zodiacs.org/es/leo/ https://zodiacs.org/es/virgo/ https://zodiacs.org/es/libra/ https://zodiacs.org/es/scorpio/ https://zodiacs.org/es/sagittarius/ https://zodiacs.org/es/capricorn/ https://zodiacs.org/es/aquarius/ https://zodiacs.org/es/pisces/
+
 Sign guides (dates, personality, love and compatibility, myth and history, sun/moon/rising meanings):
 https://zodiacs.org/aries/ https://zodiacs.org/taurus/ https://zodiacs.org/gemini/ https://zodiacs.org/cancer/ https://zodiacs.org/leo/ https://zodiacs.org/virgo/ https://zodiacs.org/libra/ https://zodiacs.org/scorpio/ https://zodiacs.org/sagittarius/ https://zodiacs.org/capricorn/ https://zodiacs.org/aquarius/ https://zodiacs.org/pisces/
 Learn hub (big three, zodiac dates table): https://zodiacs.org/learn/
@@ -27,7 +40,7 @@ Compatibility pairings (all 78 sun-sign combinations, e.g. /compatibility/aries-
 Monthly horoscopes (transit-grounded, dated claims, per-sign at /horoscopes/{sign}/): https://zodiacs.org/horoscopes/
 
 Astrofolio relationship:
-Astrofolio is the optional save/keep layer behind the free tools — charts a visitor saves live in their own browser as a local cosmic profile — and a related consumer experience around personal Zodiac shelves at https://astrofolio.xyz/. Zodiacs.org remains the official registry and SDK source of truth.
+Astrofolio is the optional save/keep layer behind the free tools — charts a visitor saves live in their own browser first, with optional account sync for saved charts — and a related consumer experience around personal Zodiac shelves at https://astrofolio.xyz/. Zodiacs.org remains the official registry and SDK source of truth.
 
 The collector's wing (the registry):
 - The Registry — the Twelve as canonical records, with address verifier: https://zodiacs.org/collect/

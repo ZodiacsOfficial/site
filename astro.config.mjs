@@ -8,6 +8,13 @@ import mdx from '@astrojs/mdx';
 export default defineConfig({
   site: 'https://zodiacs.org',
   trailingSlash: 'ignore',
+  i18n: {
+    locales: ['en', 'es'],
+    defaultLocale: 'en',
+    routing: {
+      prefixDefaultLocale: false,
+    },
+  },
   integrations: [preact(), mdx()],
   build: {
     format: 'directory',

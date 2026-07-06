@@ -1,0 +1,28 @@
+---
+import Base from '../../../layouts/Base.astro';
+---
+<Base
+  title="Cómo calculamos tu carta — metodología y privacidad | Zodiacs.org"
+  description="La astronomía detrás de cada carta: efemérides, casas, zonas horarias históricas, pruebas de precisión y privacidad local."
+  path="/es/methodology/"
+  locale="es"
+>
+  <section class="section container container--narrow">
+    <em class="kicker">Metodología</em>
+    <h1 class="method-title display">Cómo calculamos tu carta.</h1>
+    <div class="prose">
+      <p>Las cartas se calculan en tu navegador con posiciones planetarias aparentes, geocéntricas y tropicales, el marco estándar de la astrología occidental.</p>
+      <p>El motor se prueba contra datos de referencia de NASA JPL Horizons. También verificamos el cielo contra sí mismo: por ejemplo, al amanecer el ascendente debe coincidir con la posición del Sol.</p>
+      <h2>Zonas horarias</h2>
+      <p>Convertimos tu hora local usando la historia completa de la zona horaria de tu lugar de nacimiento, incluyendo horario de verano, cambios de guerra y hora media local antes de la estandarización.</p>
+      <h2>Privacidad</h2>
+      <p>La carta se calcula en tu dispositivo. No hay una API del servidor que reciba tus datos de nacimiento. Si guardas una carta, vive primero en el almacenamiento local; la sincronización con cuenta es opcional.</p>
+      <h2>Límites honestos</h2>
+      <p>Los años admitidos son 1800–2199. Si no sabes tu hora de nacimiento, calculamos al mediodía: los planetas son útiles para el día, pero ascendente y casas necesitan la hora.</p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .method-title { margin: 14px 0 24px; font-size: var(--text-2xl); line-height: 1.04; }
+</style>

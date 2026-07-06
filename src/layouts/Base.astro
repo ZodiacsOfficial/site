@@ -5,6 +5,7 @@ import '../styles/prose.css';
 import SEO from '../components/SEO.astro';
 import SiteNav from '../components/SiteNav.astro';
 import SiteFooter from '../components/SiteFooter.astro';
+import { normalizeLocale, t, type Locale } from '../lib/i18n';
 
 interface Props {
   title: string;
@@ -15,15 +16,17 @@ interface Props {
   type?: 'website' | 'article';
   noindex?: boolean;
   jsonLd?: Record<string, unknown>[];
+  locale?: Locale;
 }
 
 const props = Astro.props;
+const locale = normalizeLocale(props.locale);
 
 // The zodiac wheel as a favicon: twelve pastel dots on the void.
 const FAVICON = "data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23060709'/%3E%3Cg%3E%3Ccircle cx='32' cy='10' r='3.4' fill='%23DE8E79'/%3E%3Ccircle cx='43' cy='12.9' r='3.4' fill='%23B9D4BE'/%3E%3Ccircle cx='51.1' cy='21' r='3.4' fill='%23B29DD0'/%3E%3Ccircle cx='54' cy='32' r='3.4' fill='%23B6D4E4'/%3E%3Ccircle cx='51.1' cy='43' r='3.4' fill='%23E0A9B4'/%3E%3Ccircle cx='43' cy='51.1' r='3.4' fill='%23B7D9B0'/%3E%3Ccircle cx='32' cy='54' r='3.4' fill='%23D3A9DE'/%3E%3Ccircle cx='21' cy='51.1' r='3.4' fill='%23B9DCE8'/%3E%3Ccircle cx='12.9' cy='43' r='3.4' fill='%23E0B080'/%3E%3Ccircle cx='10' cy='32' r='3.4' fill='%23C0DEA8'/%3E%3Ccircle cx='12.9' cy='21' r='3.4' fill='%23AE8FC9'/%3E%3Ccircle cx='21' cy='12.9' r='3.4' fill='%23A9D4C4'/%3E%3C/g%3E%3C/svg%3E";
 ---
 <!doctype html>
-<html lang="en">
+<html lang={locale}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
@@ -57,17 +60,17 @@ const FAVICON = "data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/sv
     <slot name="head" />
   </head>
   <body>
-    <a href="#main" class="skip">Skip to content</a>
+    <a href="#main" class="skip">{t(locale, 'skipContent')}</a>
     <div class="orbs" aria-hidden="true"></div>
     <div class="dust" aria-hidden="true"></div>
 
-    <SiteNav />
+    <SiteNav locale={locale} />
 
     <main id="main">
       <slot />
     </main>
 
-    <SiteFooter />
+    <SiteFooter locale={locale} />
 
     <script>
       // Scroll reveal — heavy fade-up on viewport entry, once.

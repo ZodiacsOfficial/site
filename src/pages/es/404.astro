@@ -1,0 +1,38 @@
+---
+import Base from '../../layouts/Base.astro';
+import SignIcon from '../../components/SignIcon.astro';
+import { SIGNS, signName } from '../../lib/signs';
+---
+<Base
+  title="Página no encontrada — Zodiacs.org"
+  description="Esta página no existe. Prueba una guía de signo o calcula tu carta natal gratis."
+  path="/es/404.html"
+  locale="es"
+  noindex
+>
+  <section class="section container nf">
+    <em class="kicker">Error 404</em>
+    <h1 class="display">Esta página no existe.</h1>
+    <p>Lo que buscabas se movió, o nunca existió. Los doce signos siguen aquí:</p>
+    <div class="nf__signs">
+      {SIGNS.map((s) => (
+        <a href={`/es/${s.slug}/`} aria-label={signName(s, 'es')} style={`--sign:${s.hue}`}>
+          <SignIcon sign={s.slug} size={40} />
+        </a>
+      ))}
+    </div>
+    <div class="nf__ctas">
+      <a class="btn btn--primary" href="/es/"><span>Volver al inicio</span><span class="orb">→</span></a>
+      <a class="btn btn--ghost" href="/es/birth-chart/"><span>Obtén tu carta natal gratis</span></a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .nf { text-align: center; display: grid; justify-items: center; gap: 18px; }
+  .nf h1 { margin: 6px 0 0; font-size: var(--text-2xl); max-width: 16ch; }
+  .nf p { margin: 0; max-width: 44ch; color: var(--muted); }
+  .nf__signs { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin: 10px 0; max-width: 560px; }
+  .nf__signs a { display: grid; place-items: center; padding: 6px; border-radius: 50%; border: 1px solid transparent; }
+  .nf__ctas { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+</style>

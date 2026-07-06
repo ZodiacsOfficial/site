@@ -4,6 +4,7 @@ import sky from '../../data/sky.json';
 import { bodyLongitude } from '../../lib/engine/full';
 import type { BodyName } from '../../lib/engine/types';
 import { formatLongitude } from '../../lib/signs';
+import { formatShortDate } from '../../lib/i18n/dates';
 
 // All computed at build time from the committed sky data — receipts,
 // no client ephemeris.
@@ -22,8 +23,7 @@ const RHYTHM: Record<string, string> = {
   Pluto: 'yearly, five to six months',
 };
 
-const fmt = (d: Date) =>
-  d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
+const fmt = (d: Date) => formatShortDate('en', d);
 
 const windows = (sky.retrogrades as { planet: BodyName; from: string; to: string | null }[]).map((r) => {
   const from = new Date(r.from);
@@ -51,7 +51,7 @@ const byPlanet = PLANET_ORDER.map((planet) => ({
 }));
 
 const retroToday = byPlanet.filter((p) => p.active).map((p) => p.planet);
-const asOf = buildNow.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
+const asOf = formatShortDate('en', buildNow);
 
 const listJoin = (xs: string[]) =>
   xs.length <= 2 ? xs.join(' and ') : `${xs.slice(0, -1).join(', ')}, and ${xs.at(-1)}`;

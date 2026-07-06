@@ -17,6 +17,7 @@ import { formatLongitude } from '../lib/signs';
 import { resolveLocalToUtc } from '../lib/time/localToUtc';
 import { ENGINE_VERSION } from '../lib/engine/types';
 import type { City } from '../lib/geo/search';
+import { localizePath, normalizeLocale, t, type Locale } from '../lib/i18n';
 
 const GLYPHS: Record<string, string> = {
   Sun: '☉', Moon: '☽', Mercury: '☿', Venus: '♀', Mars: '♂',
@@ -103,7 +104,8 @@ async function resolveForm(slot: SlotState): Promise<Natal> {
   };
 }
 
-export default function TransitTracker() {
+export default function TransitTracker({ locale: rawLocale = 'en' }: { locale?: Locale }) {
+  const locale = normalizeLocale(rawLocale);
   // Starts as the empty profile so the form server-renders; the mount
   // effect swaps in the device's real profile (the dropdown appears then).
   const [profile, setProfile] = useState<Profile>(EMPTY_PROFILE);
@@ -164,7 +166,7 @@ export default function TransitTracker() {
       const hits = findInterAspects(transiting, natal.bodies).filter((h) => h.orb <= TRANSIT_ORB);
       setResult({ whenLabel, sky, natal, hits });
     } catch (err) {
-      setError('Something went wrong computing the transits. Please try again.');
+      setError(t(locale, 'transitError'));
       console.error(err);
     } finally {
       setBusy(false);
@@ -177,11 +179,11 @@ export default function TransitTracker() {
         <div class="core calc__core">
           <div class="trans__grid">
             <div class="trans__side">
-              <span class="mono--label">Your chart</span>
+              <span class="mono--label">{t(locale, 'yourChart')}</span>
 
               {charts.length > 0 && (
                 <div class="field">
-                  <label class="field__label" for="trans-source">Chart</label>
+                  <label class="field__label" for="trans-source">{t(locale, 'chart')}</label>
                   <select
                     id="trans-source" class="field__input"
                     value={slot.source === 'saved' ? slot.savedId : ''}
@@ -192,7 +194,7 @@ export default function TransitTracker() {
                         : { ...s, source: 'saved', savedId: v }));
                     }}
                   >
-                    <option value="">Enter birth details…</option>
+                    <option value="">{t(locale, 'enterBirthDetails')}</option>
                     {charts.map((c) => <option value={c.id}>{c.name}</option>)}
                   </select>
                 </div>
@@ -201,7 +203,7 @@ export default function TransitTracker() {
               {slot.source === 'form' && (
                 <>
                   <div class="field">
-                    <label class="field__label" for="trans-date">Birth date</label>
+                    <label class="field__label" for="trans-date">{t(locale, 'birthDate')}</label>
                     <input
                       id="trans-date" class="field__input" type="date" required
                       min="1800-01-01" max="2199-12-31" value={slot.date}
@@ -210,13 +212,13 @@ export default function TransitTracker() {
                   </div>
                   <div class="field">
                     <div class="field__labelrow">
-                      <label class="field__label" for="trans-time">Birth time</label>
+                      <label class="field__label" for="trans-time">{t(locale, 'birthTime')}</label>
                       <label class="field__toggle">
                         <input
                           type="checkbox" checked={!slot.timeKnown}
                           onChange={(e) => { const v = !(e.target as HTMLInputElement).checked; setSlot((s) => ({ ...s, timeKnown: v })); }}
                         />
-                        Not known
+                        {t(locale, 'notKnown')}
                       </label>
                     </div>
                     <input
@@ -227,18 +229,18 @@ export default function TransitTracker() {
                     />
                   </div>
                   <div class="field">
-                    <label class="field__label" for="trans-place">Birthplace</label>
-                    <PlaceSearch id="trans-place" selected={slot.city} onSelect={(c) => setSlot((s) => ({ ...s, city: c }))} />
+                    <label class="field__label" for="trans-place">{t(locale, 'birthplace')}</label>
+                    <PlaceSearch id="trans-place" selected={slot.city} onSelect={(c) => setSlot((s) => ({ ...s, city: c }))} locale={locale} />
                   </div>
                 </>
               )}
             </div>
 
             <div class="trans__side">
-              <span class="mono--label">The sky</span>
+              <span class="mono--label">{t(locale, 'theSky')}</span>
               <div class="field">
                 <label class="field__label" for="trans-when">
-                  Date <span class="field__optional">leave empty for right now</span>
+                  {t(locale, 'date')} <span class="field__optional">{t(locale, 'leaveEmptyNow')}</span>
                 </label>
                 <input
                   id="trans-when" class="field__input" type="date"
@@ -251,14 +253,15 @@ export default function TransitTracker() {
           </div>
 
           <button class="btn btn--primary calc__submit" type="submit" disabled={!ready || busy}>
-            <span>{busy ? 'Checking…' : 'Check my transits'}</span>
+            <span>{busy ? t(locale, 'checking') : t(locale, 'checkTransits')}</span>
             <span class="orb">↗</span>
           </button>
-          <p class="calc__privacy">Computed on your device — birth data never leaves it.</p>
+          <p class="calc__privacy">{t(locale, 'privacyDeviceShort')}</p>
           {charts.length === 0 && (
             <p class="field__help">
-              Charts you <a href="/birth-chart/">calculate and save</a> appear here as
-              one-tap choices, so the next check skips the typing.
+              {locale === 'es' ? 'Las cartas que ' : 'Charts you '}
+              <a href={localizePath(locale, '/birth-chart/')}>{locale === 'es' ? 'calcules y guardes' : 'calculate and save'}</a>
+              {locale === 'es' ? ' aparecerán aquí como opciones de un toque, para que la próxima revisión sea más rápida.' : ' appear here as one-tap choices, so the next check skips the typing.'}
             </p>
           )}
           {error && <p class="calc__error" role="alert">{error}</p>}
@@ -269,33 +272,29 @@ export default function TransitTracker() {
         <div class="calc__result">
           {!result.natal.timeKnown && (
             <p class="notice" role="status">
-              No birth time on this chart, so its Moon is a midday estimate —
-              it can sit up to six degrees off, and a transit to the Moon near
-              the edge of its orb may come or go with the real time.
+              {t(locale, 'noTransitTimeNotice')}
             </p>
           )}
 
-          <p class="trans__when mono">Sky at {result.whenLabel}</p>
+          <p class="trans__when mono">{t(locale, 'skyAt')} {result.whenLabel}</p>
           <div class="trans__sky">
             {result.sky.map((b) => (
               <span class="trans__pos mono" key={b.body}>
-                {GLYPHS[b.body]} {formatLongitude(b.lon)}{b.retrograde ? ' ℞' : ''}
+                {GLYPHS[b.body]} {formatLongitude(b.lon, locale)}{b.retrograde ? ' ℞' : ''}
               </span>
             ))}
           </div>
 
           <p class="syn__tally mono">
             {result.hits.length === 0
-              ? `No transits within ${TRANSIT_ORB}° of exact`
-              : `${result.hits.length} active ${result.hits.length === 1 ? 'transit' : 'transits'} within ${TRANSIT_ORB}° of exact`}
-            {' '}· transiting Moon left out — it crosses the whole chart every month
+              ? `${t(locale, 'noTransitsWithin')} ${TRANSIT_ORB}° ${t(locale, 'ofExact')}`
+              : `${result.hits.length} ${result.hits.length === 1 ? t(locale, 'activeTransitWithin') : t(locale, 'activeTransitsWithin')} ${TRANSIT_ORB}° ${t(locale, 'ofExact')}`}
+            {' '}· {t(locale, 'transitMoonOmitted')}
           </p>
 
           {result.hits.length === 0 && (
             <p class="trans__quiet">
-              A quiet sky by the tight orb this page uses. Nothing pressing —
-              check back in a few days, or widen your reading to the month's
-              events below.
+              {t(locale, 'quietSky')}
             </p>
           )}
 
@@ -316,7 +315,7 @@ export default function TransitTracker() {
               .filter((b) => b.body === 'Sun' || b.body === 'Moon')
               .map((b) => (
                 <span class="syn__placement" key={b.body}>
-                  <span class="mono--label">Natal {b.body}</span> <SignChip lon={b.lon} />
+                  <span class="mono--label">{t(locale, 'natal')} {b.body}</span> <SignChip lon={b.lon} locale={locale} />
                 </span>
               ))}
           </div>

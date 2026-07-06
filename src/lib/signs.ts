@@ -45,6 +45,52 @@ export const SIGNS: readonly Sign[] = [
 ] as const;
 
 export const SIGN_SLUGS = SIGNS.map((s) => s.slug);
+export type DisplayLocale = 'en' | 'es';
+
+const SIGN_NAME_ES: Record<string, string> = {
+  aries: 'Aries',
+  taurus: 'Tauro',
+  gemini: 'Géminis',
+  cancer: 'Cáncer',
+  leo: 'Leo',
+  virgo: 'Virgo',
+  libra: 'Libra',
+  scorpio: 'Escorpio',
+  sagittarius: 'Sagitario',
+  capricorn: 'Capricornio',
+  aquarius: 'Acuario',
+  pisces: 'Piscis',
+};
+
+const SIGN_DATES_ES: Record<string, string> = {
+  aries: '21 mar – 19 abr',
+  taurus: '20 abr – 20 may',
+  gemini: '21 may – 20 jun',
+  cancer: '21 jun – 22 jul',
+  leo: '23 jul – 22 ago',
+  virgo: '23 ago – 22 sep',
+  libra: '23 sep – 22 oct',
+  scorpio: '23 oct – 21 nov',
+  sagittarius: '22 nov – 21 dic',
+  capricorn: '22 dic – 19 ene',
+  aquarius: '20 ene – 18 feb',
+  pisces: '19 feb – 20 mar',
+};
+
+const SIGN_ESSENCE_ES: Record<string, string> = {
+  aries: 'Impulso, valentía y ganas de empezar.',
+  taurus: 'Calma, placer y una lealtad que se construye con tiempo.',
+  gemini: 'Curiosidad, conversación y una mente siempre en movimiento.',
+  cancer: 'Sensibilidad, memoria y cuidado para lo que ama.',
+  leo: 'Calidez, presencia y una forma natural de brillar.',
+  virgo: 'Precisión, ayuda práctica y atención a lo que mejora la vida.',
+  libra: 'Encanto, equilibrio y un radar fino para la justicia.',
+  scorpio: 'Intensidad, intuición y una verdad que no se queda en la superficie.',
+  sagittarius: 'Honestidad, horizonte y ganas de encontrar sentido.',
+  capricorn: 'Paciencia, ambición y la fuerza de construir algo real.',
+  aquarius: 'Independencia, ideas propias y amor por el futuro.',
+  pisces: 'Imaginación, empatía y sensibilidad para lo que no se dice.',
+};
 
 export function signBySlug(slug: string): Sign {
   const sign = SIGNS.find((s) => s.slug === slug);
@@ -61,18 +107,34 @@ export function signForLongitude(lon: number): Sign {
   return SIGNS[signIndexForLongitude(lon)];
 }
 
+export function signName(sign: Sign | string, locale: DisplayLocale = 'en'): string {
+  const slug = typeof sign === 'string' ? sign : sign.slug;
+  if (locale === 'es') return SIGN_NAME_ES[slug] ?? (typeof sign === 'string' ? sign : sign.name);
+  return typeof sign === 'string' ? signBySlug(sign).name : sign.name;
+}
+
+export function signDates(sign: Sign | string, locale: DisplayLocale = 'en'): string {
+  const s = typeof sign === 'string' ? signBySlug(sign) : sign;
+  return locale === 'es' ? SIGN_DATES_ES[s.slug] ?? s.dates : s.dates;
+}
+
+export function signEssence(sign: Sign | string, locale: DisplayLocale = 'en'): string {
+  const s = typeof sign === 'string' ? signBySlug(sign) : sign;
+  return locale === 'es' ? SIGN_ESSENCE_ES[s.slug] ?? s.essence : s.essence;
+}
+
 /** Degree within the sign (0–29.999…) for an ecliptic longitude. */
 export function degreeInSign(lon: number): number {
   return (((lon % 360) + 360) % 360) % 30;
 }
 
 /** Format 123.456 → "3°27′ Leo" style label. */
-export function formatLongitude(lon: number): string {
+export function formatLongitude(lon: number, locale: DisplayLocale = 'en'): string {
   const sign = signForLongitude(lon);
   const deg = degreeInSign(lon);
   const d = Math.floor(deg);
   const m = Math.floor((deg - d) * 60);
-  return `${d}°${String(m).padStart(2, '0')}′ ${sign.name}`;
+  return `${d}°${String(m).padStart(2, '0')}′ ${signName(sign, locale)}`;
 }
 
 export const ELEMENT_LABEL: Record<Element, string> = {
@@ -81,6 +143,20 @@ export const ELEMENT_LABEL: Record<Element, string> = {
 export const MODALITY_LABEL: Record<Modality, string> = {
   cardinal: 'Cardinal', fixed: 'Fixed', mutable: 'Mutable',
 };
+
+export function elementLabel(element: Element, locale: DisplayLocale = 'en'): string {
+  if (locale === 'es') {
+    return ({ fire: 'Fuego', earth: 'Tierra', air: 'Aire', water: 'Agua' } as const)[element];
+  }
+  return ELEMENT_LABEL[element];
+}
+
+export function modalityLabel(modality: Modality, locale: DisplayLocale = 'en'): string {
+  if (locale === 'es') {
+    return ({ cardinal: 'Cardinal', fixed: 'Fijo', mutable: 'Mutable' } as const)[modality];
+  }
+  return MODALITY_LABEL[modality];
+}
 
 /** The sun sign whose season contains the given month/day (tropical). */
 export function seasonSign(month: number, day: number): Sign {

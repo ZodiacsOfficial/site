@@ -7,9 +7,10 @@ import { useEffect, useState } from 'preact/hooks';
 import { EMPTY_PROFILE } from '../lib/profile/schema';
 import { loadProfile, deleteChart, renameChart } from '../lib/profile/store';
 import type { Profile, SavedChart } from '../lib/profile/schema';
-import { signForLongitude, formatLongitude } from '../lib/signs';
+import { signForLongitude, formatLongitude, signName } from '../lib/signs';
 import type { Session } from '@supabase/supabase-js';
 import type * as Sync from '../lib/profile/sync';
+import { localizePath, normalizeLocale, t, type Locale, type UiKey } from '../lib/i18n';
 
 /** "Cancer Sun · 1907-07-06" → "Cancer Sun" for compact CTAs. */
 const handle = (name: string) => name.split('·')[0].trim() || name;
@@ -18,12 +19,12 @@ const HAS_PROFILE_SYNC = Boolean(
   (import.meta.env.PUBLIC_SUPABASE_PUBLISHABLE_KEY || import.meta.env.PUBLIC_SUPABASE_ANON_KEY)
 );
 
-function ChipRow({ chart }: { chart: SavedChart }) {
+function ChipRow({ chart, locale }: { chart: SavedChart; locale: Locale }) {
   const find = (name: string) => chart.summary.bodies.find((b) => b.body === name);
-  const entries: { label: string; lon: number | null }[] = [
-    { label: 'Sun', lon: find('Sun')?.lon ?? null },
-    { label: 'Moon', lon: find('Moon')?.lon ?? null },
-    { label: 'Rising', lon: chart.summary.angles?.asc ?? null },
+  const entries: { label: UiKey; lon: number | null }[] = [
+    { label: 'sun', lon: find('Sun')?.lon ?? null },
+    { label: 'moon', lon: find('Moon')?.lon ?? null },
+    { label: 'rising', lon: chart.summary.angles?.asc ?? null },
   ];
   return (
     <div class="pf-chart__three">
@@ -31,18 +32,18 @@ function ChipRow({ chart }: { chart: SavedChart }) {
         if (lon === null) {
           return (
             <span class="pf-chip pf-chip--empty" key={label}>
-              <span class="pf-chip__label">{label}</span> needs a time
+              <span class="pf-chip__label">{t(locale, label)}</span> {t(locale, 'needsTime')}
             </span>
           );
         }
         const s = signForLongitude(lon);
         return (
-          <a class="pf-chip" href={`/${s.slug}/`} style={`--sign:${s.hue}`} key={label} title={formatLongitude(lon)}>
+          <a class="pf-chip" href={localizePath(locale, `/${s.slug}/`)} style={`--sign:${s.hue}`} key={label} title={formatLongitude(lon, locale)}>
             <picture class="pf-chip__icon">
               <source srcset={`/assets/zodiac-icons/48/${s.slug}.avif`} type="image/avif" />
               <img src={`/assets/zodiac-icons/48/${s.slug}.webp`} width="16" height="16" alt="" loading="lazy" decoding="async" />
             </picture>
-            <span class="pf-chip__label">{label}</span> {s.name}
+            <span class="pf-chip__label">{t(locale, label)}</span> {signName(s, locale)}
           </a>
         );
       })}
@@ -50,7 +51,8 @@ function ChipRow({ chart }: { chart: SavedChart }) {
   );
 }
 
-export default function ProfileManager() {
+export default function ProfileManager({ locale: rawLocale = 'en' }: { locale?: Locale }) {
+  const locale = normalizeLocale(rawLocale);
   const [profile, setProfile] = useState<Profile>(EMPTY_PROFILE);
   const [editing, setEditing] = useState<string | null>(null);
   const [draft, setDraft] = useState('');
@@ -103,7 +105,7 @@ export default function ProfileManager() {
     const result = await syncApi.sendMagicLink(email.trim());
     if (result.ok) {
       setSyncState('sent');
-      setSyncMessage('Check your email for a sign-in link. This page will sync after you return.');
+      setSyncMessage(t(locale, 'checkEmail'));
     } else {
       setSyncState('error');
       setSyncMessage(result.message);
@@ -119,7 +121,7 @@ export default function ProfileManager() {
       setSyncState('synced');
     } catch (err) {
       setSyncState('error');
-      setSyncMessage(err instanceof Error ? err.message : 'Sync failed. Please try again.');
+      setSyncMessage(err instanceof Error ? err.message : t(locale, 'syncFailed'));
     }
   }
 
@@ -134,20 +136,20 @@ export default function ProfileManager() {
     <aside class="pf-sync shell">
       <div class="core pf-sync__core">
         <div>
-          <strong>{session ? 'Sync is on' : 'Keep charts on every device'}</strong>
+          <strong>{session ? t(locale, 'syncOn') : t(locale, 'keepEveryDevice')}</strong>
           <p>
             {session
-              ? `Signed in${session.user.email ? ` as ${session.user.email}` : ''}. Saved charts and removals sync across devices.`
-              : 'Save charts on this device. Sign in when you want them on every device.'}
+              ? `${t(locale, 'signedIn')}${session.user.email ? (locale === 'es' ? ` como ${session.user.email}` : ` as ${session.user.email}`) : ''}. ${t(locale, 'syncCopyOn')}`
+              : t(locale, 'syncCopyOff')}
           </p>
           {syncMessage && <p class={`pf-sync__message pf-sync__message--${syncState}`}>{syncMessage}</p>}
         </div>
         {session ? (
           <div class="pf-sync__actions">
             <button class="pf-chart__action" type="button" onClick={onSyncNow} disabled={syncState === 'syncing'}>
-              {syncState === 'syncing' ? 'Syncing…' : syncState === 'synced' ? 'Synced' : 'Sync now'}
+              {syncState === 'syncing' ? t(locale, 'syncing') : syncState === 'synced' ? t(locale, 'synced') : t(locale, 'syncNow')}
             </button>
-            <button class="pf-chart__action" type="button" onClick={onSignOut}>Sign out</button>
+            <button class="pf-chart__action" type="button" onClick={onSignOut}>{t(locale, 'signOut')}</button>
           </div>
         ) : (
           <form class="pf-sync__form" onSubmit={onSendLink}>
@@ -159,11 +161,11 @@ export default function ProfileManager() {
               placeholder="you@example.com"
               value={email}
               onInput={(e) => setEmail((e.target as HTMLInputElement).value)}
-              aria-label="Email for profile sync"
+              aria-label={t(locale, 'emailSyncAria')}
               required
             />
             <button class="btn btn--primary" type="submit" disabled={!syncApi || syncState === 'sending'}>
-              <span>{syncState === 'sending' ? 'Sending…' : 'Send sign-in link'}</span><span class="orb">↗</span>
+              <span>{syncState === 'sending' ? t(locale, 'sending') : t(locale, 'sendSignIn')}</span><span class="orb">↗</span>
             </button>
           </form>
         )}
@@ -177,14 +179,12 @@ export default function ProfileManager() {
         {syncPanel}
         <div class="pf-empty shell">
           <div class="core pf-empty__core">
-            <h2>Nothing saved yet.</h2>
+            <h2>{t(locale, 'nothingSaved')}</h2>
             <p>
-              Charts you save will live here, on your device first. Run a
-              chart and tap <strong>Save this chart</strong> to start your
-              saved charts.
+              {t(locale, 'emptyProfile')}
             </p>
-            <a class="btn btn--primary" href="/birth-chart/">
-              <span>Get your free birth chart</span><span class="orb">↗</span>
+            <a class="btn btn--primary" href={localizePath(locale, '/birth-chart/')}>
+              <span>{t(locale, 'getBirthChart')}</span><span class="orb">↗</span>
             </a>
           </div>
         </div>
@@ -196,7 +196,7 @@ export default function ProfileManager() {
     <div class="pf">
       {syncPanel}
       <p class="pf-count mono">
-        {profile.charts.length} saved {profile.charts.length === 1 ? 'chart' : 'charts'} · {session ? 'synced when signed in' : 'stored in this browser'}
+        {profile.charts.length} {t(locale, 'saved')} {profile.charts.length === 1 ? t(locale, 'chartSingular') : t(locale, 'chartPlural')} · {session ? t(locale, 'syncedWhenSignedIn') : t(locale, 'storedBrowser')}
       </p>
 
       <div class="pf-list">
@@ -217,9 +217,9 @@ export default function ProfileManager() {
                       class="field__input"
                       value={draft}
                       onInput={(e) => setDraft((e.target as HTMLInputElement).value)}
-                      aria-label="Chart name"
+                      aria-label={t(locale, 'chartName')}
                     />
-                    <button class="pf-chart__action" type="submit">Save</button>
+                    <button class="pf-chart__action" type="submit">{t(locale, 'save')}</button>
                   </form>
                 ) : (
                   <h2>{chart.name}</h2>
@@ -230,27 +230,27 @@ export default function ProfileManager() {
                     type="button"
                     onClick={() => { setEditing(chart.id); setDraft(chart.name); }}
                   >
-                    Rename
+                    {t(locale, 'rename')}
                   </button>
                   <button
                     class="pf-chart__action pf-chart__action--danger"
                     type="button"
                     onClick={() => {
-                      if (confirm(`Remove “${chart.name}” from this device?`)) deleteChart(chart.id);
+                      if (confirm(locale === 'es' ? `Eliminar "${chart.name}" de este dispositivo?` : `Remove "${chart.name}" from this device?`)) deleteChart(chart.id);
                     }}
                   >
-                    Remove
+                    {t(locale, 'remove')}
                   </button>
                 </div>
               </header>
 
               <p class="pf-chart__birth mono">
                 {chart.birth.date}
-                {chart.birth.time ? ` · ${chart.birth.time}` : ' · time unknown'}
+                {chart.birth.time ? ` · ${chart.birth.time}` : ` · ${t(locale, 'timeUnknown')}`}
                 {chart.birth.place ? ` · ${chart.birth.place.name}, ${chart.birth.place.country}` : ''}
               </p>
 
-              <ChipRow chart={chart} />
+              <ChipRow chart={chart} locale={locale} />
             </div>
           </article>
         ))}
@@ -260,24 +260,25 @@ export default function ProfileManager() {
         <div class="pf-next shell tinted" style="--sign:var(--sign-libra)">
           <div class="core tinted pf-next__core">
             <strong>
-              Compare {handle(profile.charts[0].name)} &amp; {handle(profile.charts[1].name)}
+              {locale === 'es' ? 'Comparar' : 'Compare'} {handle(profile.charts[0].name)} &amp; {handle(profile.charts[1].name)}
             </strong>
             <p>
-              Two charts saved is a comparison waiting to happen: every
-              cross-chart aspect, read honestly, computed on this device.
+              {locale === 'es'
+                ? 'Dos cartas guardadas ya pueden compararse: cada aspecto entre cartas, leido con claridad y calculado en este dispositivo.'
+                : 'Two charts saved is a comparison waiting to happen: every cross-chart aspect, read honestly, computed on this device.'}
             </p>
             <a
               class="btn btn--primary pf-next__cta"
-              href={`/compatibility/?a=${profile.charts[0].id}&b=${profile.charts[1].id}`}
+              href={`${localizePath(locale, '/compatibility/')}?a=${profile.charts[0].id}&b=${profile.charts[1].id}`}
             >
-              <span>Compare these two charts</span><span class="orb">↗</span>
+              <span>{t(locale, 'compareThese')}</span><span class="orb">↗</span>
             </a>
           </div>
         </div>
       )}
 
       <div class="pf-foot">
-        <a class="btn btn--ghost" href="/birth-chart/"><span>Add another chart</span><span class="orb">+</span></a>
+        <a class="btn btn--ghost" href={localizePath(locale, '/birth-chart/')}><span>{t(locale, 'addAnotherChart')}</span><span class="orb">+</span></a>
       </div>
     </div>
   );

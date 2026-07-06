@@ -10,9 +10,10 @@ import {
   moonIllumination, moonLongitude, moonPhaseAngle, moonPhaseName,
 } from '../lib/engine/lite';
 import type { MoonPhaseName } from '../lib/engine/lite';
-import { formatLongitude, signForLongitude } from '../lib/signs';
+import { formatLongitude, signForLongitude, signName } from '../lib/signs';
 import { resolveLocalToUtc } from '../lib/time/localToUtc';
 import type { City } from '../lib/geo/search';
+import { localizePath, normalizeLocale, t, type Locale } from '../lib/i18n';
 
 let enginePromise: Promise<typeof import('../lib/engine/full')> | null = null;
 const loadEngine = () => (enginePromise ??= import('../lib/engine/full'));
@@ -53,7 +54,8 @@ interface Lookup {
   caption: string;
 }
 
-export default function MoonPhaseTool() {
+export default function MoonPhaseTool({ locale: rawLocale = 'en' }: { locale?: Locale }) {
+  const locale = normalizeLocale(rawLocale);
   const [now, setNow] = useState<Date | null>(null);
   const [date, setDate] = useState('');
   const [time, setTime] = useState('');
@@ -100,10 +102,10 @@ export default function MoonPhaseTool() {
       const caption = city && hasTime
         ? ''
         : city
-          ? 'Read at midday local time — adding the clock time pins the degree exactly.'
+          ? t(locale, 'middayLocalCaption')
           : hasTime
-            ? 'The time is read as universal time — add a birthplace to convert your local clock.'
-            : 'Read at midday universal time — a time and place pin the degree exactly.';
+            ? t(locale, 'utcTimeCaption')
+            : t(locale, 'middayUtcCaption');
 
       setResult({
         phase: moonPhaseName(utc),
@@ -114,7 +116,7 @@ export default function MoonPhaseTool() {
         caption,
       });
     } catch (err) {
-      setError('Something went wrong computing that moon. Please try again.');
+      setError(t(locale, 'moonError'));
       console.error(err);
     } finally {
       setBusy(false);
@@ -128,11 +130,11 @@ export default function MoonPhaseTool() {
         <div class="core mp__tonight-core">
           <PhaseDisc angle={now ? moonPhaseAngle(now) : 0} />
           <div class="mp__tonight-facts">
-            <em class="kicker">Right now</em>
-            <strong class="mp__phase">{now ? moonPhaseName(now) : 'Reading the sky…'}</strong>
+            <em class="kicker">{t(locale, 'rightNow')}</em>
+            <strong class="mp__phase">{now ? moonPhaseName(now) : t(locale, 'moonReadingSky')}</strong>
             <span class="mono mp__meta">
               {now
-                ? `${Math.round(moonIllumination(now) * 100)}% illuminated · Moon in ${signForLongitude(moonLongitude(now)).name}`
+                ? `${Math.round(moonIllumination(now) * 100)}% ${t(locale, 'illuminated')} · ${t(locale, 'moonIn')} ${signName(signForLongitude(moonLongitude(now)), locale)}`
                 : '—'}
             </span>
             <span class="mono mp__meta mp__meta--faint">
@@ -146,31 +148,31 @@ export default function MoonPhaseTool() {
         <div class="core calc__core">
           <div class="calc__fields">
             <div class="field">
-              <label class="field__label" for="mp-date">Date</label>
+              <label class="field__label" for="mp-date">{t(locale, 'date')}</label>
               <input
                 id="mp-date" class="field__input" type="date" required
                 min="1800-01-01" max="2199-12-31" value={date}
                 onFocus={() => loadEngine()}
                 onInput={(e) => setDate((e.target as HTMLInputElement).value)}
               />
-              <p class="field__help">A birthday, an anniversary, any date at all.</p>
+              <p class="field__help">{t(locale, 'dateHelp')}</p>
             </div>
             <div class="field">
-              <label class="field__label" for="mp-time">Time <span class="field__optional">optional</span></label>
+              <label class="field__label" for="mp-time">{t(locale, 'time')} <span class="field__optional">{t(locale, 'optional')}</span></label>
               <input
                 id="mp-time" class="field__input" type="time" value={time}
                 onInput={(e) => setTime((e.target as HTMLInputElement).value)}
               />
             </div>
             <div class="field">
-              <label class="field__label" for="mp-place">Place <span class="field__optional">optional</span></label>
-              <PlaceSearch id="mp-place" selected={city} onSelect={setCity} />
-              <p class="field__help">Sharpens the clock conversion; the phase barely needs it.</p>
+              <label class="field__label" for="mp-place">{t(locale, 'place')} <span class="field__optional">{t(locale, 'optional')}</span></label>
+              <PlaceSearch id="mp-place" selected={city} onSelect={setCity} locale={locale} />
+              <p class="field__help">{t(locale, 'placeHelpMoon')}</p>
             </div>
           </div>
 
           <button class="btn btn--primary calc__submit" type="submit" disabled={!date || busy}>
-            <span>{busy ? 'Computing…' : 'Find that moon'}</span>
+            <span>{busy ? t(locale, 'computing') : t(locale, 'findThatMoon')}</span>
             <span class="orb">↗</span>
           </button>
           {error && <p class="calc__error" role="alert">{error}</p>}
@@ -184,30 +186,28 @@ export default function MoonPhaseTool() {
               <PhaseDisc angle={result.angle} />
               <div class="mp__tonight-facts">
                 <strong class="mp__phase">{result.phase}</strong>
-                <span class="mono mp__meta">{Math.round(result.illum * 100)}% illuminated</span>
+                <span class="mono mp__meta">{Math.round(result.illum * 100)}% {t(locale, 'illuminated')}</span>
                 <span class="mp__signline">
-                  Moon in <SignChip lon={result.lon} />
+                  {t(locale, 'moonIn')} <SignChip lon={result.lon} locale={locale} />
                   {result.altLon !== null && (
-                    <> or <SignChip lon={result.altLon} /></>
+                    <> {locale === 'es' ? 'o' : 'or'} <SignChip lon={result.altLon} locale={locale} /></>
                   )}
                 </span>
-                <span class="mono mp__meta mp__meta--faint">{formatLongitude(result.lon)}</span>
+                <span class="mono mp__meta mp__meta--faint">{formatLongitude(result.lon, locale)}</span>
               </div>
             </div>
           </div>
           {result.altLon !== null && (
             <p class="notice" role="status">
-              The Moon changed signs that day, and without a time we can’t say
-              which side of the line you were born on. The phase is unaffected —
-              it moves too slowly for hours to matter.
+              {t(locale, 'moonChangedNotice')}
             </p>
           )}
           {result.caption !== '' && result.altLon === null && (
             <p class="field__help">{result.caption}</p>
           )}
           <div class="calc__actions">
-            <a class="btn btn--ghost" href="/birth-chart/">
-              <span>Get the birth chart for this date</span><span class="orb">↗</span>
+            <a class="btn btn--ghost" href={localizePath(locale, '/birth-chart/')}>
+              <span>{t(locale, 'birthChartForDate')}</span><span class="orb">↗</span>
             </a>
           </div>
         </div>

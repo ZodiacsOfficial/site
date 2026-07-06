@@ -7,6 +7,7 @@
  * future-versioned token rather than throwing into an island.
  */
 import type { HouseSystem } from './engine/types';
+import { TECHNICAL_OFFSET_LOCALE } from './i18n/dates';
 
 export interface ShareChartInput {
   date: string;            // YYYY-MM-DD
@@ -87,7 +88,7 @@ const TIME_RE = /^([01]\d|2[0-3]):[0-5]\d$/;
 function validTz(tz: string): boolean {
   if (typeof tz !== 'string' || tz.length === 0 || tz.length > 64) return false;
   try {
-    new Intl.DateTimeFormat('en-US', { timeZone: tz });
+    new Intl.DateTimeFormat(TECHNICAL_OFFSET_LOCALE, { timeZone: tz });
     return true;
   } catch {
     return false;

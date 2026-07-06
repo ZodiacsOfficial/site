@@ -13,12 +13,13 @@ import type { Profile, SavedChart } from '../lib/profile/schema';
 import { summarizePair } from '../lib/engine/synastry';
 import type { MinimalBody, PairSummary } from '../lib/engine/synastry';
 import { synastryLine, pairSlug } from '../lib/compat';
-import { ELEMENT_LABEL, signForLongitude } from '../lib/signs';
+import { elementLabel, signForLongitude, signName } from '../lib/signs';
 import { resolveLocalToUtc } from '../lib/time/localToUtc';
 import { decodeChartLink, encodeChartLink } from '../lib/share';
 import type { ShareChartInput } from '../lib/share';
 import { ENGINE_VERSION } from '../lib/engine/types';
 import type { City } from '../lib/geo/search';
+import { localizePath, normalizeLocale, t, type Locale } from '../lib/i18n';
 
 const GLYPHS: Record<string, string> = {
   Sun: '☉', Moon: '☽', Mercury: '☿', Venus: '♀', Mars: '♂',
@@ -136,31 +137,32 @@ async function resolveForm(slot: SlotState, fallbackLabel: string): Promise<Pers
 }
 
 function SlotForm({
-  slot, setSlot, charts, idPrefix, fallbackLabel,
+  slot, setSlot, charts, idPrefix, fallbackLabel, locale,
 }: {
   slot: SlotState;
   setSlot: (updater: (s: SlotState) => SlotState) => void;
   charts: SavedChart[];
   idPrefix: string;
   fallbackLabel: string;
+  locale: Locale;
 }) {
   if (slot.source === 'link' && slot.link) {
     return (
       <div class="syn__slot">
         <span class="mono--label">{fallbackLabel}</span>
         <div class="field">
-          <label class="field__label" for={`${idPrefix}-linked`}>Chart</label>
+          <label class="field__label" for={`${idPrefix}-linked`}>{t(locale, 'chart')}</label>
           <span class="place__chip">
             <input
               id={`${idPrefix}-linked`} class="place__chip-value" type="text" readOnly
-              value={`${slot.link.label} · shared with you`}
+              value={`${slot.link.label} · ${t(locale, 'sharedWithYou')}`}
             />
             <button
-              type="button" class="place__clear" aria-label="Remove the shared chart"
+              type="button" class="place__clear" aria-label={t(locale, 'removeSharedChart')}
               onClick={() => setSlot(() => emptySlot())}
             >×</button>
           </span>
-          <p class="field__help">This side arrived in the link — clear it to enter someone else.</p>
+          <p class="field__help">{t(locale, 'sharedSideHelp')}</p>
         </div>
       </div>
     );
@@ -172,7 +174,7 @@ function SlotForm({
 
       {charts.length > 0 && (
         <div class="field">
-          <label class="field__label" for={`${idPrefix}-source`}>Chart</label>
+          <label class="field__label" for={`${idPrefix}-source`}>{t(locale, 'chart')}</label>
           <select
             id={`${idPrefix}-source`} class="field__input"
             value={slot.source === 'saved' ? slot.savedId : ''}
@@ -183,7 +185,7 @@ function SlotForm({
                 : { ...s, source: 'saved', savedId: v }));
             }}
           >
-            <option value="">Enter birth details…</option>
+            <option value="">{t(locale, 'enterBirthDetails')}</option>
             {charts.map((c) => <option value={c.id}>{c.name}</option>)}
           </select>
         </div>
@@ -192,7 +194,7 @@ function SlotForm({
       {slot.source === 'form' && (
         <>
           <div class="field">
-            <label class="field__label" for={`${idPrefix}-name`}>Name <span class="field__optional">optional</span></label>
+            <label class="field__label" for={`${idPrefix}-name`}>{t(locale, 'name')} <span class="field__optional">{t(locale, 'optional')}</span></label>
             <input
               id={`${idPrefix}-name`} class="field__input" type="text" maxLength={24}
               placeholder={fallbackLabel} value={slot.name}
@@ -200,7 +202,7 @@ function SlotForm({
             />
           </div>
           <div class="field">
-            <label class="field__label" for={`${idPrefix}-date`}>Birth date</label>
+            <label class="field__label" for={`${idPrefix}-date`}>{t(locale, 'birthDate')}</label>
             <input
               id={`${idPrefix}-date`} class="field__input" type="date" required
               min="1800-01-01" max="2199-12-31" value={slot.date}
@@ -209,13 +211,13 @@ function SlotForm({
           </div>
           <div class="field">
             <div class="field__labelrow">
-              <label class="field__label" for={`${idPrefix}-time`}>Birth time</label>
+              <label class="field__label" for={`${idPrefix}-time`}>{t(locale, 'birthTime')}</label>
               <label class="field__toggle">
                 <input
                   type="checkbox" checked={!slot.timeKnown}
                   onChange={(e) => { const v = !(e.target as HTMLInputElement).checked; setSlot((s) => ({ ...s, timeKnown: v })); }}
                 />
-                Not known
+                {t(locale, 'notKnown')}
               </label>
             </div>
             <input
@@ -226,8 +228,8 @@ function SlotForm({
             />
           </div>
           <div class="field">
-            <label class="field__label" for={`${idPrefix}-place`}>Birthplace</label>
-            <PlaceSearch id={`${idPrefix}-place`} selected={slot.city} onSelect={(c) => setSlot((s) => ({ ...s, city: c }))} />
+            <label class="field__label" for={`${idPrefix}-place`}>{t(locale, 'birthplace')}</label>
+            <PlaceSearch id={`${idPrefix}-place`} selected={slot.city} onSelect={(c) => setSlot((s) => ({ ...s, city: c }))} locale={locale} />
           </div>
         </>
       )}
@@ -235,7 +237,7 @@ function SlotForm({
   );
 }
 
-function PersonCard({ person }: { person: Person }) {
+function PersonCard({ person, locale }: { person: Person; locale: Locale }) {
   const find = (name: string) => person.bodies.find((b) => b.body === name);
   const sun = find('Sun');
   const moon = find('Moon');
@@ -243,21 +245,21 @@ function PersonCard({ person }: { person: Person }) {
     <div class="syn__person">
       <strong>{person.label}</strong>
       <div class="syn__three">
-        {sun && <span class="syn__placement"><span class="mono--label">Sun</span> <SignChip lon={sun.lon} /></span>}
-        {moon && <span class="syn__placement"><span class="mono--label">Moon</span> <SignChip lon={moon.lon} /></span>}
-        {person.asc !== null && <span class="syn__placement"><span class="mono--label">Rising</span> <SignChip lon={person.asc} /></span>}
+        {sun && <span class="syn__placement"><span class="mono--label">{t(locale, 'sun')}</span> <SignChip lon={sun.lon} locale={locale} /></span>}
+        {moon && <span class="syn__placement"><span class="mono--label">{t(locale, 'moon')}</span> <SignChip lon={moon.lon} locale={locale} /></span>}
+        {person.asc !== null && <span class="syn__placement"><span class="mono--label">{t(locale, 'rising')}</span> <SignChip lon={person.asc} locale={locale} /></span>}
       </div>
     </div>
   );
 }
 
-function BalanceBars({ person, balance }: { person: string; balance: Record<string, number> }) {
+function BalanceBars({ person, balance, locale }: { person: string; balance: Record<string, number>; locale: Locale }) {
   return (
     <div class="syn__balance">
       <span class="syn__balance-name">{person}</span>
       {(['fire', 'earth', 'air', 'water'] as const).map((el) => (
         <div class="syn__bar" key={el}>
-          <span class="syn__bar-label mono--label">{ELEMENT_LABEL[el]}</span>
+          <span class="syn__bar-label mono--label">{elementLabel(el, locale)}</span>
           <span class="syn__bar-track"><span class="syn__bar-fill" style={`width:${balance[el] * 10}%`} /></span>
           <span class="syn__bar-n mono">{balance[el]}</span>
         </div>
@@ -266,7 +268,8 @@ function BalanceBars({ person, balance }: { person: string; balance: Record<stri
   );
 }
 
-export default function SynastryCalculator() {
+export default function SynastryCalculator({ locale: rawLocale = 'en' }: { locale?: Locale }) {
+  const locale = normalizeLocale(rawLocale);
   // Starts as the empty profile so the form server-renders; the mount
   // effect swaps in the device's real profile (dropdowns appear then).
   const [profile, setProfile] = useState<Profile>(EMPTY_PROFILE);
@@ -306,7 +309,7 @@ export default function SynastryCalculator() {
         setSlotA({
           ...emptySlot(),
           source: 'link',
-          link: { input: decoded, label: decoded.name ?? 'Shared chart' },
+          link: { input: decoded, label: decoded.name ?? t(locale, 'sharedChart') },
         });
         history.replaceState(null, '', window.location.pathname + window.location.search);
       }
@@ -364,7 +367,7 @@ export default function SynastryCalculator() {
   }
 
   const inviteUrl = () =>
-    `${window.location.origin}/compatibility/#a=${encodeChartLink(invite!)}`;
+    `${window.location.origin}${localizePath(locale, '/compatibility/')}#a=${encodeChartLink(invite!)}`;
 
   async function onInvite() {
     if (!invite) return;
@@ -386,13 +389,13 @@ export default function SynastryCalculator() {
         slot.source === 'saved' ? resolveSaved(charts.find((c) => c.id === slot.savedId)!)
           : slot.source === 'link' ? resolveLink(slot.link!)
           : resolveForm(slot, fallback);
-      const [a, b] = await Promise.all([resolve(slotA, 'Person A'), resolve(slotB, 'Person B')]);
+      const [a, b] = await Promise.all([resolve(slotA, t(locale, 'personA')), resolve(slotB, t(locale, 'personB'))]);
       const summary = summarizePair(a.bodies, b.bodies, 8);
       setResult({ a, b, summary });
       setInvite(inviteFromSlot(slotA));
       setInviteState('idle');
     } catch (err) {
-      setError('Something went wrong comparing the charts. Please try again.');
+      setError(t(locale, 'compareError'));
       console.error(err);
     } finally {
       setBusy(false);
@@ -413,30 +416,31 @@ export default function SynastryCalculator() {
     if (!sunA || !sunB) return null;
     const sa = signForLongitude(sunA.lon);
     const sb = signForLongitude(sunB.lon);
-    return { href: `/compatibility/${pairSlug(sa.slug, sb.slug)}/`, a: sa.name, b: sb.name };
-  }, [result]);
+    return { href: `/compatibility/${pairSlug(sa.slug, sb.slug)}/`, a: signName(sa, locale), b: signName(sb, locale) };
+  }, [result, locale]);
 
   return (
     <div class="calc">
       <form class="calc__form shell" onSubmit={compare}>
         <div class="core calc__core">
           <div class="syn__slots">
-            <SlotForm slot={slotA} setSlot={(u) => setSlotA(u)} charts={charts} idPrefix="syn-a" fallbackLabel="Person A" />
-            <SlotForm slot={slotB} setSlot={(u) => setSlotB(u)} charts={charts} idPrefix="syn-b" fallbackLabel="Person B" />
+            <SlotForm slot={slotA} setSlot={(u) => setSlotA(u)} charts={charts} idPrefix="syn-a" fallbackLabel={t(locale, 'personA')} locale={locale} />
+            <SlotForm slot={slotB} setSlot={(u) => setSlotB(u)} charts={charts} idPrefix="syn-b" fallbackLabel={t(locale, 'personB')} locale={locale} />
           </div>
 
           <button class="btn btn--primary calc__submit" type="submit" disabled={!canCompare}>
-            <span>{busy ? 'Comparing…' : 'Compare the charts'}</span>
+            <span>{busy ? t(locale, 'comparing') : t(locale, 'compareCharts')}</span>
             <span class="orb">↗</span>
           </button>
-          <p class="calc__privacy">Computed on your device — birth data never leaves it.</p>
+          <p class="calc__privacy">{t(locale, 'privacyDeviceShort')}</p>
           {sameSaved && (
-            <p class="field__help">That’s the same chart twice — pick two different ones to compare.</p>
+            <p class="field__help">{t(locale, 'sameChart')}</p>
           )}
           {charts.length < 2 && (
             <p class="field__help">
-              Charts you <a href="/birth-chart/">calculate and save</a> appear here as
-              one-tap choices, so the second comparison is faster than the first.
+              {locale === 'es' ? 'Las cartas que ' : 'Charts you '}
+              <a href={localizePath(locale, '/birth-chart/')}>{locale === 'es' ? 'calcules y guardes' : 'calculate and save'}</a>
+              {locale === 'es' ? ' aparecerán aquí como opciones de un toque, así la segunda comparación será más rápida que la primera.' : ' appear here as one-tap choices, so the second comparison is faster than the first.'}
             </p>
           )}
           {error && <p class="calc__error" role="alert">{error}</p>}
@@ -447,22 +451,20 @@ export default function SynastryCalculator() {
         <div class="calc__result">
           {(!result.a.timeKnown || !result.b.timeKnown) && (
             <p class="notice" role="status">
-              No birth time for {[result.a, result.b].filter((p) => !p.timeKnown).map((p) => p.label).join(' and ')},
-              so that Moon is a midday estimate — it can sit up to six degrees
-              off, and a Moon aspect near the edge of its orb may come or go
-              with the real time.
+              {t(locale, 'compareNoTimeNotice')} {[result.a, result.b].filter((p) => !p.timeKnown).map((p) => p.label).join(locale === 'es' ? ' y ' : ' and ')},
+              {' '}{t(locale, 'moonMiddayEstimate')}
             </p>
           )}
           <div class="syn__people">
-            <PersonCard person={result.a} />
+            <PersonCard person={result.a} locale={locale} />
             <span class="syn__vs mono">×</span>
-            <PersonCard person={result.b} />
+            <PersonCard person={result.b} locale={locale} />
           </div>
 
           <p class="syn__tally mono">
-            {result.summary.aspects.length} cross-chart aspects ·
-            {' '}{result.summary.easeful} easeful (trine/sextile) ·
-            {' '}{result.summary.charged} charged (square/opposition)
+            {result.summary.aspects.length} {t(locale, 'crossChartAspects')} ·
+            {' '}{result.summary.easeful} {t(locale, 'easeful')} (trine/sextile) ·
+            {' '}{result.summary.charged} {t(locale, 'charged')} (square/opposition)
           </p>
 
           <div class="syn__aspects">
@@ -479,14 +481,14 @@ export default function SynastryCalculator() {
           </div>
 
           <div class="syn__balances">
-            <BalanceBars person={result.a.label} balance={result.summary.elements.a} />
-            <BalanceBars person={result.b.label} balance={result.summary.elements.b} />
+            <BalanceBars person={result.a.label} balance={result.summary.elements.a} locale={locale} />
+            <BalanceBars person={result.b.label} balance={result.summary.elements.b} locale={locale} />
           </div>
 
           {pairHref && (
             <div class="calc__actions">
               <a class="btn btn--ghost" href={pairHref.href}>
-                <span>Read the {pairHref.a} and {pairHref.b} pairing</span><span class="orb">→</span>
+                <span>{locale === 'es' ? `Leer ${pairHref.a} y ${pairHref.b}` : `Read the ${pairHref.a} and ${pairHref.b} pairing`}</span><span class="orb">→</span>
               </a>
             </div>
           )}
@@ -496,24 +498,24 @@ export default function SynastryCalculator() {
             <div class="calc__share">
               <div class="calc__actions">
                 <button class="btn btn--ghost" type="button" onClick={onInvite} data-invite-link>
-                  <span>{inviteState === 'copied' ? 'Link copied' : `Invite someone to compare with ${result.a.label}`}</span>
+                  <span>{inviteState === 'copied' ? t(locale, 'linkCopied') : `${t(locale, 'inviteCompare')} ${locale === 'es' ? 'con' : 'with'} ${result.a.label}`}</span>
                   <span class="orb">{inviteState === 'copied' ? '✓' : '⧉'}</span>
                 </button>
               </div>
               {inviteState === 'manual' && (
                 <input
                   class="field__input calc__share-url" type="text" readOnly value={inviteUrl()}
-                  aria-label="Invite link"
+                  aria-label={t(locale, 'inviteLink')}
                   onFocus={(e) => (e.target as HTMLInputElement).select()}
                 />
               )}
               <p class="calc__share-note">
-                The link carries {result.a.label}’s birth details and opens this
-                page with that side filled in — nothing is sent to us. Worth
-                their okay if that isn’t you.
+                {locale === 'es'
+                  ? `El enlace incluye los datos de nacimiento de ${result.a.label} y abre esta página con ese lado lleno; no se nos envía nada. Conviene tener su permiso si no eres tú.`
+                  : `The link carries ${result.a.label}'s birth details and opens this page with that side filled in - nothing is sent to us. Worth their okay if that isn't you.`}
               </p>
               {inviteState === 'copied' && (
-                <p class="sr-only" role="status">Invite link copied to your clipboard.</p>
+                <p class="sr-only" role="status">{t(locale, 'inviteCopied')}</p>
               )}
             </div>
           )}

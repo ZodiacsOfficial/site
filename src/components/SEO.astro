@@ -3,6 +3,8 @@
  * Per-page head metadata. `path` is the site-relative canonical path
  * (with trailing slash); JSON-LD nodes are passed pre-built.
  */
+import { alternatePaths, normalizeLocale, type Locale } from '../lib/i18n';
+
 interface Props {
   title: string;
   description: string;
@@ -12,6 +14,7 @@ interface Props {
   type?: 'website' | 'article';
   noindex?: boolean;
   jsonLd?: Record<string, unknown>[];
+  locale?: Locale;
 }
 
 const {
@@ -23,11 +26,16 @@ const {
   type = 'website',
   noindex = false,
   jsonLd = [],
+  locale: rawLocale = 'en',
 } = Astro.props;
 
 const site = 'https://zodiacs.org';
+const locale = normalizeLocale(rawLocale);
 const canonical = site + path;
 const imageUrl = image.startsWith('http') ? image : site + image;
+const alternates = alternatePaths(path);
+const ogLocale = locale === 'es' ? 'es_ES' : 'en_US';
+const ogLocaleAlternate = locale === 'es' ? 'en_US' : 'es_ES';
 const graph = jsonLd.length
   ? JSON.stringify({ '@context': 'https://schema.org', '@graph': jsonLd })
   : null;
@@ -35,7 +43,14 @@ const graph = jsonLd.length
 <title>{title}</title>
 <meta name="description" content={description} />
 <link rel="canonical" href={canonical} />
-{noindex && <meta name="robots" content="noindex, nofollow" />}
+{alternates && (
+  <>
+    <link rel="alternate" hreflang="en" href={site + alternates.en} />
+    <link rel="alternate" hreflang="es" href={site + alternates.es} />
+    <link rel="alternate" hreflang="x-default" href={site + alternates.en} />
+  </>
+)}
+{noindex && <meta name="robots" content="noindex, follow" />}
 
 <meta property="og:site_name" content="Zodiacs.org" />
 <meta property="og:title" content={title} />
@@ -46,7 +61,8 @@ const graph = jsonLd.length
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 <meta property="og:image:alt" content={imageAlt} />
-<meta property="og:locale" content="en_US" />
+<meta property="og:locale" content={ogLocale} />
+{alternates && <meta property="og:locale:alternate" content={ogLocaleAlternate} />}
 
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content={title} />
