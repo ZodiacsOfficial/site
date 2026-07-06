@@ -22,6 +22,7 @@
     "data:transits": "node scripts/build-transits.mjs",
     "data:og": "node --experimental-strip-types scripts/build-og-void.mjs",
     "data:ingresses": "node scripts/build-ingresses.mjs",
+    "data:eclipses": "node scripts/build-eclipses.mjs",
     "report:bundles": "node scripts/report-bundles.mjs"
   },
   "dependencies": {

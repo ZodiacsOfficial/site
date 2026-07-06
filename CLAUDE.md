@@ -39,6 +39,8 @@ original token registry preserved as the "Collect" wing. Strategy:
 - `src/data/sky.json` ← `node scripts/build-sky.mjs`
 - `src/data/ingresses.json` ← `node scripts/build-ingresses.mjs` (refresh
   yearly with sky.json)
+- `src/data/eclipses.json` ← `node scripts/build-eclipses.mjs` (refresh
+  yearly with sky.json)
 - `src/data/transits-YYYY-MM.json` ← `node scripts/build-transits.mjs`
   (monthly cron: transits-monthly.yml)
 - `public/assets/og/v2/` ← `node --experimental-strip-types
