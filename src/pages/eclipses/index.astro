@@ -1,0 +1,255 @@
+---
+import Base from '../../layouts/Base.astro';
+import eclipseData from '../../data/eclipses.json';
+import { signBySlug } from '../../lib/signs';
+
+// Every eclipse 2026–2028 from the committed data — receipts, no
+// client ephemeris.
+const buildNow = new Date();
+
+interface EclipseEntry {
+  type: 'solar' | 'lunar';
+  kind: string;
+  peak: string;
+  sign: string;
+  obscuration?: number;
+  totalMinutes?: number;
+}
+
+const eclipses = (eclipseData.eclipses as EclipseEntry[]).map((e) => {
+  const at = new Date(e.peak);
+  const pct = typeof e.obscuration === 'number' ? Math.round(e.obscuration * 100) : null;
+  let detail = '';
+  if (e.type === 'solar') {
+    detail = e.kind === 'total'
+      ? 'totality — the Sun fully covered along the track'
+      : e.kind === 'annular'
+        ? `ring eclipse — ${pct}% of the Sun covered at maximum`
+        : 'partial only';
+  } else {
+    detail = e.kind === 'total'
+      ? `totality lasts about ${e.totalMinutes} minutes`
+      : e.kind === 'partial'
+        ? `${pct}% of the Moon in shadow at maximum`
+        : 'penumbral — a subtle shading, easy to miss';
+  }
+  return {
+    ...e,
+    at,
+    sign: signBySlug(e.sign),
+    detail,
+    label: `${e.kind === 'annular' ? 'Annular' : e.kind[0].toUpperCase() + e.kind.slice(1)} ${e.type}`,
+    past: at < buildNow,
+  };
+});
+
+const next = eclipses.find((e) => !e.past);
+const nextSolar = eclipses.find((e) => !e.past && e.type === 'solar');
+const nextLunar = eclipses.find((e) => !e.past && e.type === 'lunar');
+
+const fmtDay = (d: Date) =>
+  d.toLocaleDateString('en-US', { weekday: 'short', month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
+const fmtTime = (d: Date) =>
+  d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'UTC' });
+
+const status = next
+  ? `The next eclipse is a ${next.label.toLowerCase()} eclipse on ${fmtDay(next.at)}, in ${next.sign.name}.`
+  : 'The committed data window has run out — refresh the eclipse data.';
+
+const asOf = buildNow.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
+
+const faq = [
+  {
+    q: 'When is the next solar eclipse?',
+    a: nextSolar
+      ? `A ${nextSolar.kind} solar eclipse peaks on ${fmtDay(nextSolar.at)}, with the Sun in ${nextSolar.sign.name}. Solar eclipses are only visible from a limited track — for the August 12, 2026 total eclipse, totality crosses Greenland, western Iceland, and northern Spain.`
+      : 'The committed data window has run out.',
+  },
+  {
+    q: 'When is the next lunar eclipse?',
+    a: nextLunar
+      ? `A ${nextLunar.kind} lunar eclipse peaks on ${fmtDay(nextLunar.at)}, with the Moon in ${nextLunar.sign.name}. Unlike solar eclipses, a lunar eclipse is visible from the entire night side of Earth at once.`
+      : 'The committed data window has run out.',
+  },
+  {
+    q: 'What is the difference between a solar and a lunar eclipse?',
+    a: 'A solar eclipse is the Moon passing in front of the Sun at a new moon — visible only along a narrow track, in daylight. A lunar eclipse is the Moon passing through Earth’s shadow at a full moon — visible from anywhere the Moon is up, and safe to watch with bare eyes. Solar eclipses need eye protection at every stage short of totality.',
+  },
+  {
+    q: 'Why do eclipses come in pairs?',
+    a: 'The Moon’s orbit is tilted about five degrees, so most new and full moons miss the alignment. Twice a year the geometry lines up for a few weeks — an eclipse season — and inside each season you usually get one solar and one lunar eclipse about two weeks apart. The table shows the rhythm: February–March and August in 2026.',
+  },
+  {
+    q: 'What do eclipses mean in astrology?',
+    a: 'Astrologers read eclipses as amplified lunations: a new or full moon that lands close to the Moon’s nodes, the points astrology associates with direction and change. The tradition treats them as accelerants — beginnings and endings arriving faster than usual — in whichever part of your chart holds the eclipse’s degree. Finding that part takes your birth chart.',
+  },
+];
+
+const jsonLd = [
+  {
+    '@type': 'WebPage',
+    name: 'Eclipse dates 2026–2028',
+    url: 'https://zodiacs.org/eclipses/',
+    description:
+      'Every solar and lunar eclipse from 2026 through 2028: exact peak times, type, and zodiac sign, computed from the real geometry.',
+  },
+  {
+    '@type': 'FAQPage',
+    mainEntity: faq.map(({ q, a }) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: { '@type': 'Answer', text: a },
+    })),
+  },
+];
+---
+<Base
+  title="Eclipse Dates 2026–2028 — Solar & Lunar, Exact | Zodiacs.org"
+  description="Every solar and lunar eclipse through 2028 with exact peak times and zodiac signs — including the August 12, 2026 total solar eclipse over Iceland and Spain."
+  path="/eclipses/"
+  image="/assets/og/v2/tool/eclipses.png"
+  imageAlt="Eclipse dates — Zodiacs.org"
+  jsonLd={jsonLd}
+>
+  <section class="section--tight container container--narrow">
+    <div class="tool-hero reveal">
+      <h1 class="display">Eclipses, dated.</h1>
+      <p>
+        Every solar and lunar eclipse through 2028, computed from the
+        real geometry &mdash; peak instants in universal time, with the sign
+        each one lands in.
+      </p>
+    </div>
+
+    <div class="rx-now shell tinted reveal" style="--sign:var(--sign-leo)">
+      <div class="core tinted rx-now__core">
+        <span class="mono--label">As of {asOf}</span>
+        <strong class="rx-now__line">{status}</strong>
+        <span class="rx-now__all mono">
+          Eclipse seasons run twice a year — solar and lunar arrive about two weeks apart
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section--tight container container--narrow">
+    <div class="section-head reveal">
+      <h2>The eclipses, 2026&ndash;2028</h2>
+      <p>Peak times in universal time. Solar eclipses are visible along a limited track; lunar eclipses from the whole night side of Earth.</p>
+    </div>
+    <div class="table-wrap reveal">
+      <table class="rx-table">
+        <thead>
+          <tr><th>Peak</th><th>UTC</th><th>Eclipse</th><th>In</th><th>Detail</th></tr>
+        </thead>
+        <tbody>
+          {eclipses.map((e) => (
+            <tr class={e.past ? 'rx-table__past' : ''}>
+              <td>{fmtDay(e.at)}</td>
+              <td class="mono">{fmtTime(e.at)}</td>
+              <td>{e.label}</td>
+              <td>{e.sign.name}</td>
+              <td class="ecl-detail">{e.detail}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section--tight container container--narrow">
+    <div class="prose reveal">
+      <h2>What an eclipse is</h2>
+      <p>
+        Every eclipse is a new or full moon with better aim than usual. The
+        Moon&rsquo;s orbit tilts about five degrees against the Sun&rsquo;s path, so
+        most months its shadow misses us and Earth&rsquo;s shadow misses it.
+        Twice a year the crossing points &mdash; the nodes &mdash; line up with the
+        Sun, and for a few weeks any lunation lands square in the geometry:
+        a new moon blocks the Sun somewhere on Earth, a full moon slides
+        into Earth&rsquo;s shadow. That is the whole machinery, and it is why the
+        table above clusters into seasons.
+      </p>
+      <p>
+        The one worth planning around is <strong>August 12, 2026</strong> &mdash; the
+        first total solar eclipse over mainland Europe since 1999. Totality
+        crosses Greenland, western Iceland, and northern Spain in the late
+        afternoon; most of Europe sees a deep partial. A lunar eclipse
+        needs no travel: the <strong>March 3, 2026</strong> total lunar eclipse, with
+        the Moon in <a href="/virgo/">Virgo</a>, is visible from the entire
+        night side, totality lasting about an hour.
+      </p>
+      <p>
+        Astrology reads eclipses as lunations with the volume turned up,
+        because they happen on the nodal axis the tradition associates with
+        direction &mdash; where you&rsquo;re headed and what you&rsquo;re leaving. The
+        working advice is unglamorous: watch what surfaces in the
+        <a href="/full-moon-calendar/">lunation cycle</a> those weeks, and
+        read the sign pairing against
+        <a href="/birth-chart/">your own chart</a> rather than the
+        headlines. The <a href="/horoscopes/">monthly horoscopes</a> date
+        each one as it arrives.
+      </p>
+    </div>
+  </section>
+
+  <section class="section--tight container container--narrow">
+    <div class="section-head reveal"><h2>Questions, answered</h2></div>
+    <div class="faq reveal">
+      {faq.map(({ q, a }) => (
+        <details class="faq__item">
+          <summary>{q}</summary>
+          <p>{a}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+</Base>
+
+<style>
+  .tool-hero { max-width: 62ch; margin-bottom: clamp(24px, 4vw, 36px); }
+  .tool-hero h1 {
+    margin: 0 0 16px;
+    font-family: var(--font-serif);
+    font-size: var(--text-2xl);
+    font-weight: 500;
+    letter-spacing: -0.005em;
+    line-height: 1.04;
+    font-variant-numeric: oldstyle-figures;
+    text-wrap: balance;
+  }
+  .tool-hero p { margin: 0; color: var(--muted); font-size: var(--text-lg); text-wrap: pretty; }
+
+  .rx-now__core { padding: clamp(20px, 4vw, 28px); display: grid; gap: 10px; }
+  .rx-now__line { font-size: var(--text-lg); letter-spacing: -0.01em; max-width: 56ch; }
+  .rx-now__all { font-size: 11.5px; color: var(--faint); letter-spacing: 0.05em; }
+
+  .table-wrap { overflow-x: auto; }
+  .rx-table { width: 100%; border-collapse: collapse; font-size: var(--text-sm); }
+  .rx-table th {
+    text-align: left;
+    padding: 10px 16px 10px 0;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: var(--faint);
+    border-bottom: 1px solid var(--hair-2);
+  }
+  .rx-table td { padding: 11px 16px 11px 0; border-bottom: 1px solid var(--hair-1); color: var(--text-2); white-space: nowrap; }
+  .rx-table td:first-child { color: var(--text); font-weight: 550; }
+  .rx-table td.ecl-detail { white-space: normal; min-width: 200px; }
+  .rx-table__past td { color: var(--faint); }
+  .rx-table__past td:first-child { color: var(--muted); font-weight: 500; }
+
+  .faq { display: grid; gap: 8px; }
+  .faq__item {
+    border: 1px solid var(--hair-1);
+    border-radius: var(--r-md);
+    background: var(--void-1);
+    padding: 4px 18px;
+  }
+  .faq__item summary { cursor: pointer; padding: 12px 0; font-weight: 550; color: var(--text); }
+  .faq__item p { margin: 2px 0 16px; color: var(--text-2); font-size: var(--text-sm); line-height: 1.65; }
+</style>

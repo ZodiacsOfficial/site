@@ -1,0 +1,281 @@
+---
+import Base from '../../layouts/Base.astro';
+import sky from '../../data/sky.json';
+import { bodyLongitude } from '../../lib/engine/full';
+import { formatLongitude } from '../../lib/signs';
+
+// All computed at build time from the committed sky data — receipts,
+// no client ephemeris.
+const buildNow = new Date();
+const skyFrom = sky.from as string;
+
+const PLANET_ORDER = ['Mercury', 'Venus', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto'];
+const RHYTHM: Record<string, string> = {
+  Mercury: 'three or four times a year, about three weeks each',
+  Venus: 'every 19 months, about six weeks — the rarest',
+  Mars: 'every 26 months, two to three months',
+  Jupiter: 'yearly, about four months',
+  Saturn: 'yearly, about four and a half months',
+  Uranus: 'yearly, about five months',
+  Neptune: 'yearly, about five months',
+  Pluto: 'yearly, five to six months',
+};
+
+const fmt = (d: Date) =>
+  d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
+
+const windows = (sky.retrogrades as { planet: string; from: string; to: string | null }[]).map((r) => {
+  const from = new Date(r.from);
+  const to = r.to ? new Date(r.to) : null;
+  // A window that opens exactly at the data horizon was clamped, not
+  // stationed — no honest station position exists for it.
+  const clamped = r.from === skyFrom;
+  return {
+    planet: r.planet,
+    from,
+    to,
+    clamped,
+    label: `${clamped ? 'already retrograde as 2026 opened' : fmt(from)} – ${to ? fmt(to) : 'past the data horizon'}`,
+    stationRx: clamped ? null : formatLongitude(bodyLongitude(r.planet, from)),
+    stationDirect: to ? formatLongitude(bodyLongitude(r.planet, to)) : null,
+    state: to && to < buildNow ? 'past' : from > buildNow ? 'upcoming' : 'active',
+  };
+});
+
+const byPlanet = PLANET_ORDER.map((planet) => ({
+  planet,
+  rhythm: RHYTHM[planet],
+  windows: windows.filter((w) => w.planet === planet),
+  active: windows.some((w) => w.planet === planet && w.state === 'active'),
+}));
+
+const retroToday = byPlanet.filter((p) => p.active).map((p) => p.planet);
+const asOf = buildNow.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
+
+const listJoin = (xs: string[]) =>
+  xs.length <= 2 ? xs.join(' and ') : `${xs.slice(0, -1).join(', ')}, and ${xs.at(-1)}`;
+
+const status = retroToday.length
+  ? `Retrograde right now: ${listJoin(retroToday)}. Everything else is direct.`
+  : 'Every planet is direct right now — it never lasts long.';
+
+const faq = [
+  {
+    q: 'Which planets are retrograde right now?',
+    a: `${status} The tables above list every window for 2026 and 2027, station to station, refined to the hour.`,
+  },
+  {
+    q: 'Can the Sun or Moon be retrograde?',
+    a: 'No. Retrograde motion is a line-of-sight effect between planets orbiting the Sun at different speeds. The Moon orbits Earth directly and the Sun’s apparent motion is Earth’s own orbit reflected back, so neither ever appears to reverse.',
+  },
+  {
+    q: 'Are outer-planet retrogrades a big deal?',
+    a: 'Mostly no. Jupiter through Pluto spend four to six months of every year retrograde — it is their normal rhythm, and roughly half of everyone alive has at least one outer planet retrograde in their birth chart. Astrologers read them as quieter, more internal phases of a planet’s theme, nothing like the scheduling folklore around Mercury.',
+  },
+  {
+    q: 'What is a station?',
+    a: 'The turnaround. A planet slows, hangs at one degree for days, then reverses — first at the retrograde station, later at the direct station. The positions in the tables mark those standstills, and astrologers treat a station degree as the sensitive point of the whole window.',
+  },
+  {
+    q: 'Why does Mercury get all the attention?',
+    a: 'Frequency and territory. Mercury flips three or four times a year — the only planet that retrogrades more often than annually — and astrology assigns it the daily-life file: messages, travel, contracts. Venus and Mars retrogrades are rarer and read as deeper reviews of attachment and drive. The full Mercury story has its own page.',
+  },
+];
+
+const jsonLd = [
+  {
+    '@type': 'WebPage',
+    name: 'Retrograde planets 2026–2027, dated',
+    url: 'https://zodiacs.org/retrogrades/',
+    description:
+      'Every planetary retrograde for 2026 and 2027 — Mercury through Pluto — with exact station dates and positions, computed from real motion.',
+  },
+  {
+    '@type': 'FAQPage',
+    mainEntity: faq.map(({ q, a }) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: { '@type': 'Answer', text: a },
+    })),
+  },
+];
+---
+<Base
+  title="Retrograde Planets 2026 & 2027 — Every Window, Dated | Zodiacs.org"
+  description="Which planets are retrograde right now, and when the next windows run: Mercury through Pluto for 2026–2027, station dates and positions computed exactly."
+  path="/retrogrades/"
+  image="/assets/og/v2/tool/retrogrades.png"
+  imageAlt="Retrograde planets — Zodiacs.org"
+  jsonLd={jsonLd}
+>
+  <section class="section--tight container container--narrow">
+    <div class="tool-hero reveal">
+      <h1 class="display">Every retrograde, dated.</h1>
+      <p>
+        All eight planets that do it, 2026 through 2027 &mdash; each window
+        computed station to station from real motion, with the degree
+        where each turnaround happens.
+      </p>
+    </div>
+
+    <div class="rx-now shell tinted reveal" style="--sign:var(--sign-gemini)">
+      <div class="core tinted rx-now__core">
+        <span class="mono--label">As of {asOf}</span>
+        <strong class="rx-now__line">{status}</strong>
+        <span class="rx-now__all mono">
+          The Sun and Moon never go retrograde · Mercury's windows have <a href="/mercury-retrograde/">a page of their own</a>
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section--tight container container--narrow">
+    <div class="planets reveal">
+      {byPlanet.map((p) => (
+        <div class="planet">
+          <div class="planet__head">
+            <h2 class="planet__name">
+              {p.planet}
+              {p.active && <span class="planet__now mono">retrograde now</span>}
+            </h2>
+            <span class="planet__rhythm">{p.rhythm}</span>
+          </div>
+          <div class="table-wrap">
+            <table class="rx-table">
+              <thead>
+                <tr><th>Window</th><th>Stations retrograde at</th><th>Stations direct at</th><th></th></tr>
+              </thead>
+              <tbody>
+                {p.windows.map((w) => (
+                  <tr class={w.state === 'past' ? 'rx-table__past' : ''}>
+                    <td class="planet__window">{w.label}</td>
+                    <td class="mono">{w.stationRx ?? '—'}</td>
+                    <td class="mono">{w.stationDirect ?? '—'}</td>
+                    <td class="mono rx-table__state">{w.state === 'active' ? 'now' : w.state === 'upcoming' ? 'ahead' : ''}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="section--tight container container--narrow">
+    <div class="prose reveal">
+      <h2>How to read this calmly</h2>
+      <p>
+        Retrograde motion is perspective, not reversal: planets overtaking
+        each other on different orbits, the same illusion as a slower train
+        seeming to roll backward. What the tables make plain is how
+        ordinary it is. The outer planets spend a third to half of every
+        year retrograde &mdash; on any given day the sky usually has one or two,
+        and today is no exception.
+      </p>
+      <p>
+        The tradition scales its readings to the rhythm.
+        <a href="/mercury-retrograde/">Mercury&rsquo;s</a> three-week flips are
+        review season for plans and paperwork. A
+        <a href="/learn/planets/venus/">Venus</a> retrograde &mdash; the rarest,
+        every 19 months &mdash; gets read as a reassessment of what you want and
+        whom; <a href="/learn/planets/mars/">Mars</a>, every 26 months, as
+        an engine rebuild for drive itself. The yearly outer-planet spans
+        pass mostly unremarked, felt only where they cross something exact
+        in your own chart &mdash; which is what the
+        <a href="/transits/">transit tracker</a> checks.
+      </p>
+      <p>
+        Born during a retrograde? Common and unalarming &mdash; roughly one
+        person in five has natal Mercury retrograde. Your
+        <a href="/birth-chart/">birth chart</a> marks every planet that was
+        moving backward when you arrived, with an ℞.
+      </p>
+    </div>
+  </section>
+
+  <section class="section--tight container container--narrow">
+    <div class="section-head reveal"><h2>Questions, answered</h2></div>
+    <div class="faq reveal">
+      {faq.map(({ q, a }) => (
+        <details class="faq__item">
+          <summary>{q}</summary>
+          <p>{a}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+</Base>
+
+<style>
+  .tool-hero { max-width: 62ch; margin-bottom: clamp(24px, 4vw, 36px); }
+  .tool-hero h1 {
+    margin: 0 0 16px;
+    font-family: var(--font-serif);
+    font-size: var(--text-2xl);
+    font-weight: 500;
+    letter-spacing: -0.005em;
+    line-height: 1.04;
+    font-variant-numeric: oldstyle-figures;
+    text-wrap: balance;
+  }
+  .tool-hero p { margin: 0; color: var(--muted); font-size: var(--text-lg); text-wrap: pretty; }
+
+  .rx-now__core { padding: clamp(20px, 4vw, 28px); display: grid; gap: 10px; }
+  .rx-now__line { font-size: var(--text-lg); letter-spacing: -0.01em; max-width: 56ch; }
+  .rx-now__all { font-size: 11.5px; color: var(--faint); letter-spacing: 0.05em; }
+  .rx-now__all a { color: var(--muted); }
+  .rx-now__all a:hover { color: var(--text); }
+
+  .planets { display: grid; gap: clamp(34px, 5vw, 52px); }
+  .planet__head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 18px; margin-bottom: 6px; }
+  .planet__name {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: var(--text-xl);
+    font-weight: 500;
+    letter-spacing: 0.002em;
+  }
+  .planet__now {
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    border: 1px solid var(--hair-2);
+    border-radius: 99px;
+    padding: 3px 10px;
+    vertical-align: middle;
+    margin-left: 10px;
+  }
+  .planet__rhythm { font-size: var(--text-sm); color: var(--faint); }
+  .planet__window { white-space: normal; min-width: 210px; }
+
+  .table-wrap { overflow-x: auto; }
+  .rx-table { width: 100%; border-collapse: collapse; font-size: var(--text-sm); }
+  .rx-table th {
+    text-align: left;
+    padding: 10px 16px 10px 0;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: var(--faint);
+    border-bottom: 1px solid var(--hair-2);
+  }
+  .rx-table td { padding: 11px 16px 11px 0; border-bottom: 1px solid var(--hair-1); color: var(--text-2); white-space: nowrap; }
+  .rx-table td:first-child { color: var(--text); font-weight: 550; }
+  .rx-table__past td { color: var(--faint); }
+  .rx-table__past td:first-child { color: var(--muted); font-weight: 500; }
+  .rx-table__state { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+
+  .faq { display: grid; gap: 8px; }
+  .faq__item {
+    border: 1px solid var(--hair-1);
+    border-radius: var(--r-md);
+    background: var(--void-1);
+    padding: 4px 18px;
+  }
+  .faq__item summary { cursor: pointer; padding: 12px 0; font-weight: 550; color: var(--text); }
+  .faq__item p { margin: 2px 0 16px; color: var(--text-2); font-size: var(--text-sm); line-height: 1.65; }
+</style>

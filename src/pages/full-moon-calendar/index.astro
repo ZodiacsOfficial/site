@@ -1,0 +1,241 @@
+---
+import Base from '../../layouts/Base.astro';
+import sky from '../../data/sky.json';
+import { bodyLongitude } from '../../lib/engine/full';
+import { formatLongitude, signForLongitude } from '../../lib/signs';
+
+// Every full moon 2026–2027 from the committed sky data, with the
+// Moon's sign computed at each instant — receipts, no client ephemeris.
+const buildNow = new Date();
+
+// North American almanac tradition, keyed by month. The second full
+// moon in one calendar month takes "Blue moon" instead.
+const MONTH_NAMES = [
+  'Wolf', 'Snow', 'Worm', 'Pink', 'Flower', 'Strawberry',
+  'Buck', 'Sturgeon', 'Corn', 'Hunter’s', 'Beaver', 'Cold',
+];
+
+const seen = new Set<string>();
+const fulls = (sky.moons as { type: string; at: string }[])
+  .filter((m) => m.type === 'full')
+  .map(({ at }) => {
+    const date = new Date(at);
+    const monthKey = at.slice(0, 7);
+    const second = seen.has(monthKey);
+    seen.add(monthKey);
+    const lon = bodyLongitude('Moon', date);
+    return {
+      at: date,
+      year: date.getUTCFullYear(),
+      name: second ? 'Blue' : MONTH_NAMES[date.getUTCMonth()],
+      position: formatLongitude(lon),
+      sign: signForLongitude(lon),
+      past: date < buildNow,
+    };
+  });
+
+const years = [...new Set(fulls.map((f) => f.year))];
+const next = fulls.find((f) => !f.past);
+
+const fmtDay = (d: Date) =>
+  d.toLocaleDateString('en-US', { weekday: 'short', month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
+const fmtTime = (d: Date) =>
+  d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'UTC' });
+
+const status = next
+  ? `The next full moon is the ${next.name} Moon on ${fmtDay(next.at)}, at ${next.position}.`
+  : 'The committed data window has run out — refresh the sky data.';
+
+const asOf = buildNow.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
+
+const faq = [
+  {
+    q: 'When is the next full moon?',
+    a: `${status} Every date on this page is computed from the Moon's actual opposition to the Sun, exact to the minute, in universal time.`,
+  },
+  {
+    q: 'Why does the full moon date sometimes differ by a day?',
+    a: 'The full moon is one instant — the moment the Moon stands exactly opposite the Sun — and this page lists that instant in universal time. If it lands at 2 a.m. UTC, it is still the previous evening in the Americas, so a local calendar can honestly print the neighboring date. The Moon looks full to the eye for a night on either side regardless.',
+  },
+  {
+    q: 'What is a blue moon?',
+    a: 'The common modern meaning is the second full moon inside one calendar month, which happens every two to three years because lunar months run about 29.5 days. The next one is on May 31, 2026. The older almanac meaning — a fourth full moon in one season — survives mostly in trivia contests. Neither kind looks blue.',
+  },
+  {
+    q: 'Where do full moon names come from?',
+    a: 'The Wolf, Snow, Worm sequence comes from North American almanac tradition, which drew on Algonquian and colonial seasonal names. They describe the farming and hunting year, not astrology — the astrological content of a full moon is its zodiac sign and degree, which is why the table lists both.',
+  },
+  {
+    q: 'What does a full moon mean in astrology?',
+    a: 'A full moon is the Sun and Moon in exact opposition, so it always pairs two opposite signs — a Capricorn full moon happens in Cancer season. Astrologers read it as a culmination or a coming-to-light in the part of your chart holding the Moon’s sign. Which part that is takes your birth chart.',
+  },
+];
+
+const jsonLd = [
+  {
+    '@type': 'WebPage',
+    name: 'Full moon calendar 2026 & 2027',
+    url: 'https://zodiacs.org/full-moon-calendar/',
+    description:
+      'Every full moon in 2026 and 2027 with exact universal time, zodiac sign and degree, and its traditional name — computed from the Moon’s real motion.',
+  },
+  {
+    '@type': 'FAQPage',
+    mainEntity: faq.map(({ q, a }) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: { '@type': 'Answer', text: a },
+    })),
+  },
+];
+---
+<Base
+  title="Full Moon Calendar 2026 & 2027 — Dates, Signs, Names | Zodiacs.org"
+  description="Every full moon in 2026 and 2027: exact date and universal time, the Moon's zodiac sign and degree, and the traditional name — Wolf to Cold, blue moon included."
+  path="/full-moon-calendar/"
+  image="/assets/og/v2/tool/full-moon-calendar.png"
+  imageAlt="Full moon calendar — Zodiacs.org"
+  jsonLd={jsonLd}
+>
+  <section class="section--tight container container--narrow">
+    <div class="tool-hero reveal">
+      <h1 class="display">Every full moon, dated.</h1>
+      <p>
+        Each row below is the exact instant the Moon stands opposite the
+        Sun &mdash; computed to the minute through the end of 2027, with the
+        sign it happens in and the name the almanacs gave it.
+      </p>
+    </div>
+
+    <div class="rx-now shell tinted reveal" style="--sign:var(--sign-cancer)">
+      <div class="core tinted rx-now__core">
+        <span class="mono--label">As of {asOf}</span>
+        <strong class="rx-now__line">{status}</strong>
+        <span class="rx-now__all mono">
+          Tonight's phase, any date's moon: <a href="/moon-phase/">the moon phase tool</a>
+        </span>
+      </div>
+    </div>
+  </section>
+
+  {years.map((year) => (
+    <section class="section--tight container container--narrow">
+      <div class="section-head reveal">
+        <h2>Full moons of {year}</h2>
+        {year === years[0] && (
+          <p>Times are universal time — in the Americas the instant often falls the evening before.</p>
+        )}
+      </div>
+      <div class="table-wrap reveal">
+        <table class="rx-table">
+          <thead>
+            <tr><th>Date</th><th>Time UTC</th><th>Moon stands at</th><th>Name</th></tr>
+          </thead>
+          <tbody>
+            {fulls.filter((f) => f.year === year).map((f) => (
+              <tr class={f.past ? 'rx-table__past' : ''}>
+                <td>{fmtDay(f.at)}</td>
+                <td class="mono">{fmtTime(f.at)}</td>
+                <td class="mono">{f.position}</td>
+                <td>{f.name === 'Blue' ? 'Blue moon' : `${f.name} Moon`}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  ))}
+
+  <section class="section--tight container container--narrow">
+    <div class="prose reveal">
+      <h2>What a full moon is</h2>
+      <p>
+        Once every 29.5 days the Moon swings around to stand exactly
+        opposite the Sun, its whole face lit from our side. That opposition
+        is a single computable instant &mdash; the times above &mdash; though the Moon
+        looks essentially full for a night before and after. Because it is
+        an opposition, the pairing of signs is fixed: a full moon in
+        <a href="/capricorn/">Capricorn</a> can only happen while the Sun is
+        in <a href="/cancer/">Cancer</a>, and so on around the wheel.
+      </p>
+      <p>
+        The names are older than the astrology columns that borrowed them.
+        North American almanacs, drawing on Algonquian and colonial
+        seasonal tradition, tied each month&rsquo;s moon to the working year:
+        wolves in the January cold, sap worms in March, the buck&rsquo;s new
+        antlers in July. They are calendar poetry, not sky data &mdash; the
+        computed column is the sign and degree, which is what an astrologer
+        actually reads. Where that degree lands in <em>your</em> chart takes a
+        <a href="/birth-chart/">birth chart</a>; the monthly
+        <a href="/horoscopes/">horoscopes</a> track each lunation as it
+        comes.
+      </p>
+      <p>
+        Twice a year or so, a full moon lines up closely enough with the
+        Moon&rsquo;s orbital nodes to pass through Earth&rsquo;s shadow &mdash; a lunar
+        eclipse. Those get <a href="/eclipses/">their own dated page</a>.
+      </p>
+    </div>
+  </section>
+
+  <section class="section--tight container container--narrow">
+    <div class="section-head reveal"><h2>Questions, answered</h2></div>
+    <div class="faq reveal">
+      {faq.map(({ q, a }) => (
+        <details class="faq__item">
+          <summary>{q}</summary>
+          <p>{a}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+</Base>
+
+<style>
+  .tool-hero { max-width: 62ch; margin-bottom: clamp(24px, 4vw, 36px); }
+  .tool-hero h1 {
+    margin: 0 0 16px;
+    font-family: var(--font-serif);
+    font-size: var(--text-2xl);
+    font-weight: 500;
+    letter-spacing: -0.005em;
+    line-height: 1.04;
+    font-variant-numeric: oldstyle-figures;
+    text-wrap: balance;
+  }
+  .tool-hero p { margin: 0; color: var(--muted); font-size: var(--text-lg); text-wrap: pretty; }
+
+  .rx-now__core { padding: clamp(20px, 4vw, 28px); display: grid; gap: 10px; }
+  .rx-now__line { font-size: var(--text-lg); letter-spacing: -0.01em; max-width: 56ch; }
+  .rx-now__all { font-size: 11.5px; color: var(--faint); letter-spacing: 0.05em; }
+  .rx-now__all a { color: var(--muted); }
+  .rx-now__all a:hover { color: var(--text); }
+
+  .table-wrap { overflow-x: auto; }
+  .rx-table { width: 100%; border-collapse: collapse; font-size: var(--text-sm); }
+  .rx-table th {
+    text-align: left;
+    padding: 10px 16px 10px 0;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: var(--faint);
+    border-bottom: 1px solid var(--hair-2);
+  }
+  .rx-table td { padding: 11px 16px 11px 0; border-bottom: 1px solid var(--hair-1); color: var(--text-2); white-space: nowrap; }
+  .rx-table td:first-child { color: var(--text); font-weight: 550; }
+  .rx-table__past td { color: var(--faint); }
+  .rx-table__past td:first-child { color: var(--muted); font-weight: 500; }
+
+  .faq { display: grid; gap: 8px; }
+  .faq__item {
+    border: 1px solid var(--hair-1);
+    border-radius: var(--r-md);
+    background: var(--void-1);
+    padding: 4px 18px;
+  }
+  .faq__item summary { cursor: pointer; padding: 12px 0; font-weight: 550; color: var(--text); }
+  .faq__item p { margin: 2px 0 16px; color: var(--text-2); font-size: var(--text-sm); line-height: 1.65; }
+</style>
