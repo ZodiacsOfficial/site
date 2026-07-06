@@ -1,0 +1,227 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Faq from '../../components/Faq.astro';
+import SignIcon from '../../components/SignIcon.astro';
+import ChartCalculator from '../../islands/ChartCalculator.tsx';
+import { SIGNS, signBySlug, formatLongitude } from '../../lib/signs';
+import { bodyLongitude } from '../../lib/engine/full';
+import type { BodyName } from '../../lib/engine/types';
+import '../../styles/calculator.css';
+
+export async function getStaticPaths() {
+  const entries = await getCollection(
+    'learn',
+    (e) => e.data.kind === 'rising' && !e.data.draft,
+  );
+  // Coverage assert: one profile per sign, filenames true to their
+  // frontmatter — a missing sign names itself in the error.
+  const seen = new Set<string>();
+  for (const entry of entries) {
+    if (entry.data.kind !== 'rising') continue;
+    if (seen.has(entry.data.sign)) throw new Error(`Duplicate rising profile: ${entry.data.sign}`);
+    seen.add(entry.data.sign);
+    if (entry.id !== `rising/${entry.data.sign}`) {
+      throw new Error(`Rising file ${entry.id}.mdx declares ${entry.data.sign} — expected rising/${entry.data.sign}.mdx`);
+    }
+  }
+  for (const s of SIGNS) {
+    if (!seen.has(s.slug)) throw new Error(`Missing rising profile: ${s.slug}`);
+  }
+  if (entries.length !== 12) {
+    throw new Error(`Expected 12 rising profiles, found ${entries.length}`);
+  }
+  return entries.map((entry) => ({
+    params: { sign: entry.id.split('/')[1] },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+if (entry.data.kind !== 'rising') throw new Error('Not a rising entry');
+const sign = signBySlug(entry.data.sign);
+const { Content } = await render(entry);
+
+// The rising-sign pages read rulerships traditionally, matching the
+// calculator lander's FAQ; the modern ruler gets named where it differs.
+const chartRuler = sign.classicRuler ?? sign.ruler;
+const modernNote = sign.classicRuler ? ` (modern astrologers add ${sign.ruler})` : '';
+
+// Build-time position of the chart ruler — skipped for the Moon, which
+// moves a sign every two and a half days and would stale immediately.
+const buildNow = new Date();
+const rulerNow = chartRuler === 'Moon'
+  ? null
+  : formatLongitude(bodyLongitude(chartRuler as BodyName, buildNow));
+const asOf = buildNow.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
+
+const signIdx = SIGNS.findIndex((s) => s.slug === sign.slug);
+const prevSign = SIGNS[(signIdx + 11) % 12];
+const nextSign = SIGNS[(signIdx + 1) % 12];
+const others = SIGNS.filter((s) => s.slug !== sign.slug);
+
+const jsonLd = [
+  {
+    '@type': 'Article',
+    headline: entry.data.title,
+    description: entry.data.description,
+    url: `https://zodiacs.org/rising-sign/${sign.slug}/`,
+    dateModified: entry.data.updated.toISOString(),
+    author: { '@type': 'Organization', name: 'Zodiacs.org', url: 'https://zodiacs.org/' },
+    image: `https://zodiacs.org/assets/og/v2/rising/${sign.slug}.png`,
+    about: { '@type': 'Thing', name: `${sign.name} rising (ascendant)` },
+  },
+  {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Zodiacs.org', item: 'https://zodiacs.org/' },
+      { '@type': 'ListItem', position: 2, name: 'Rising sign', item: 'https://zodiacs.org/rising-sign/' },
+      { '@type': 'ListItem', position: 3, name: `${sign.name} rising`, item: `https://zodiacs.org/rising-sign/${sign.slug}/` },
+    ],
+  },
+  {
+    '@type': 'FAQPage',
+    mainEntity: entry.data.faq.map(({ q, a }) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: { '@type': 'Answer', text: a },
+    })),
+  },
+];
+---
+<Base
+  title={entry.data.title}
+  description={entry.data.description}
+  path={`/rising-sign/${sign.slug}/`}
+  image={`/assets/og/v2/rising/${sign.slug}.png`}
+  imageAlt={`${sign.name} rising — Zodiacs.org`}
+  type="article"
+  jsonLd={jsonLd}
+>
+  <article class="container container--narrow learn-detail" style={`--sign:${sign.hue}`}>
+    <header class="learn-detail__hero reveal">
+      <em class="kicker">Rising signs</em>
+      <div class="plc-lockup">
+        <SignIcon sign={sign.slug} size={64} class="plc-disc" loading="eager" />
+        <h1 class="display">{sign.name} rising</h1>
+      </div>
+
+      <dl class="plc-panel mono">
+        <div class="plc-panel__row">
+          <dt>Chart ruler</dt>
+          <dd><strong>{chartRuler}</strong> — the planet that steers this chart{modernNote}</dd>
+        </div>
+        {rulerNow ? (
+          <div class="plc-panel__row">
+            <dt>{chartRuler} as of {asOf}</dt>
+            <dd>{rulerNow}</dd>
+          </div>
+        ) : (
+          <div class="plc-panel__row">
+            <dt>The Moon's pace</dt>
+            <dd>a sign every two and a half days — your natal Moon is the steady anchor</dd>
+          </div>
+        )}
+        <div class="plc-panel__row">
+          <dt>Element · Modality</dt>
+          <dd>{sign.element} · {sign.modality}</dd>
+        </div>
+        <div class="plc-panel__row">
+          <dt>The turnover</dt>
+          <dd>the ascendant changes sign about every two hours — twelve risings every day</dd>
+        </div>
+      </dl>
+    </header>
+
+    <div class="prose reveal">
+      <Content />
+    </div>
+
+    <section class="rising-calc reveal">
+      <div class="section-head">
+        <h2>Find your rising sign</h2>
+        <p>
+          Birth date, time, and place — the ascendant needs all three.
+          Computed on your device; nothing is sent anywhere.
+        </p>
+      </div>
+      <ChartCalculator mode="rising" client:visible />
+    </section>
+
+    <section class="reveal">
+      <Faq items={entry.data.faq} heading="Asked and answered" />
+    </section>
+
+    <nav class="plc-more reveal" aria-label="Related pages">
+      <div class="plc-more__col">
+        <span class="plc-more__head">Keep reading</span>
+        <div class="plc-more__chips">
+          <a class="plc-chip" href={`/${sign.slug}/`}>The {sign.name} guide</a>
+          <a class="plc-chip" href="/learn/">Sun, moon, rising</a>
+          <a class="plc-chip" href="/birth-chart/">Your whole chart</a>
+        </div>
+      </div>
+      <div class="plc-more__col">
+        <span class="plc-more__head">Other risings</span>
+        <div class="plc-more__chips">
+          <a class="plc-chip" href={`/rising-sign/${prevSign.slug}/`}>← {prevSign.name}</a>
+          {others.filter((s) => s.slug !== prevSign.slug && s.slug !== nextSign.slug).map((s) => (
+            <a class="plc-chip" href={`/rising-sign/${s.slug}/`}>{s.name}</a>
+          ))}
+          <a class="plc-chip" href={`/rising-sign/${nextSign.slug}/`}>{nextSign.name} →</a>
+        </div>
+      </div>
+    </nav>
+  </article>
+</Base>
+
+<style>
+  .learn-detail { display: grid; gap: clamp(28px, 5vw, 44px); padding-block: clamp(24px, 5vw, 56px) clamp(36px, 6vw, 72px); }
+  .learn-detail__hero { display: grid; gap: 18px; justify-items: start; }
+
+  .plc-lockup { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+  .plc-lockup :global(.plc-disc) { border-radius: 50%; }
+  .plc-lockup h1 {
+    margin: 0;
+    font-size: clamp(2.1rem, 1.4rem + 3.4vw, 3.6rem);
+    line-height: 1.02;
+  }
+
+  .plc-panel { margin: 0; display: grid; width: 100%; max-width: 640px; }
+  .plc-panel__row {
+    display: grid;
+    gap: 2px 20px;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--hair-1);
+    font-size: 11.5px;
+    letter-spacing: 0.05em;
+  }
+  .plc-panel__row:first-child { border-top: 1px solid var(--hair-1); }
+  @media (min-width: 560px) { .plc-panel__row { grid-template-columns: 170px 1fr; } }
+  .plc-panel__row dt { color: var(--faint); text-transform: uppercase; font-size: 10px; letter-spacing: 0.14em; align-self: baseline; }
+  .plc-panel__row dd { margin: 0; color: var(--text-2); }
+  .plc-panel__row strong { color: var(--text); font-weight: 600; }
+
+  .rising-calc { display: grid; gap: 18px; }
+
+  .plc-more {
+    display: grid;
+    gap: 20px;
+    padding-top: 18px;
+    border-top: 1px solid var(--hair-1);
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 700px) { .plc-more { grid-template-columns: auto 1fr; gap: 20px 48px; } }
+  .plc-more__col { display: grid; gap: 10px; align-content: start; }
+  .plc-more__head { font-weight: 600; font-size: var(--text-sm); color: var(--text); }
+  .plc-more__chips { display: flex; flex-wrap: wrap; gap: 4px 2px; }
+  .plc-chip {
+    padding: 4px 9px;
+    border-radius: var(--r-full);
+    font-size: 12.5px;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color var(--dur-1) var(--ease), background var(--dur-1) var(--ease);
+  }
+  .plc-chip:hover { color: var(--text); background: color-mix(in oklab, var(--sign) 12%, transparent); }
+</style>

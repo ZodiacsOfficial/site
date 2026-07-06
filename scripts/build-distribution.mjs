@@ -27,7 +27,7 @@ import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-const outPath = resolve(root, 'assets/distribution.json');
+const outPath = resolve(root, 'public/assets/distribution.json');
 
 const ENDPOINTS = [
   process.env.RPC_URL,
@@ -36,7 +36,7 @@ const ENDPOINTS = [
 ].filter(Boolean);
 
 const registry = JSON.parse(
-  await readFile(resolve(root, 'registry/zodiacs.registry.json'), 'utf8')
+  await readFile(resolve(root, 'public/registry/zodiacs.registry.json'), 'utf8')
 );
 
 const MINTS = registry.assets.map((asset) => {

@@ -1,0 +1,231 @@
+---
+import Base from '../../layouts/Base.astro';
+import sky from '../../data/sky.json';
+import { bodyLongitude } from '../../lib/engine/full';
+import { formatLongitude } from '../../lib/signs';
+
+// All computed at build time from the committed sky data — the page
+// ships as receipts, no client ephemeris.
+const buildNow = new Date();
+const windows = (sky.retrogrades as { planet: string; from: string; to: string | null }[])
+  .filter((r) => r.planet === 'Mercury')
+  .map((r) => {
+    const from = new Date(r.from);
+    const to = r.to ? new Date(r.to) : null;
+    const fmt = (d: Date) =>
+      d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
+    return {
+      from,
+      to,
+      label: `${fmt(from)} – ${to ? fmt(to) : 'ongoing'}`,
+      stationRx: formatLongitude(bodyLongitude('Mercury', from)),
+      stationDirect: to ? formatLongitude(bodyLongitude('Mercury', to)) : null,
+      state: to && to < buildNow ? 'past' : from > buildNow ? 'upcoming' : 'active',
+    };
+  });
+
+const active = windows.find((w) => w.state === 'active');
+const next = windows.find((w) => w.state === 'upcoming');
+const fmtShort = (d: Date) =>
+  d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', timeZone: 'UTC' });
+
+const status = active
+  ? `Mercury is retrograde right now — it stations direct on ${fmtShort(active.to!)}.`
+  : next
+    ? `Mercury is direct right now — the next retrograde runs ${fmtShort(next.from)} to ${fmtShort(next.to!)}, ${next.to!.getUTCFullYear()}.`
+    : 'Mercury is direct right now.';
+
+const retroToday = (sky.retrogrades as { planet: string; from: string; to: string | null }[])
+  .filter((r) => new Date(r.from) <= buildNow && (!r.to || new Date(r.to) >= buildNow))
+  .map((r) => r.planet);
+
+const asOf = buildNow.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
+
+const faq = [
+  {
+    q: 'When is the next Mercury retrograde?',
+    a: `${status} The full table above lists every window through ${windows.at(-1)?.to?.getUTCFullYear() ?? '2027'}, computed from Mercury's actual motion and refined to the hour.`,
+  },
+  {
+    q: 'What is Mercury retrograde, actually?',
+    a: 'An optical effect. Mercury laps the Sun faster than Earth does, and three or four times a year it overtakes us on the inside — from our moving viewpoint it appears to slow, stop, and slide backward through the zodiac for about three weeks. Nothing changes direction in space; the appearance is real enough to compute to the minute.',
+  },
+  {
+    q: 'How long does Mercury retrograde last?',
+    a: 'About three weeks, three or four times a year. Astrologers also watch the "shadow" — the week or two on either side while Mercury crosses the same degrees at normal speed — but the dated windows here are the retrograde proper, station to station.',
+  },
+  {
+    q: 'What does Mercury retrograde mean in astrology?',
+    a: 'Mercury is the planet astrologers assign to communication, travel, and information, so its retrograde picked up a reputation for garbled messages, travel snags, and technology mutiny. The working advice is more boring than the memes: build in margin, confirm the details, and treat the window as review season — finish, revise, and double-check rather than launch.',
+  },
+  {
+    q: 'Do other planets go retrograde?',
+    a: 'All of them except the Sun and Moon. The outer planets spend months retrograde every year and astrologers barely blink; Mercury gets the headlines because its retrogrades are frequent, short, and tied to daily-life territory.',
+  },
+];
+
+const jsonLd = [
+  {
+    '@type': 'WebPage',
+    name: 'Mercury retrograde dates, 2026–2027',
+    url: 'https://zodiacs.org/mercury-retrograde/',
+    description: 'Exact Mercury retrograde dates for 2026 and 2027, computed from the planet’s real motion, with station positions.',
+  },
+  {
+    '@type': 'FAQPage',
+    mainEntity: faq.map(({ q, a }) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: { '@type': 'Answer', text: a },
+    })),
+  },
+];
+---
+<Base
+  title="Mercury Retrograde Dates 2026 & 2027 — Exact, Computed | Zodiacs.org"
+  description="Every Mercury retrograde through 2027, computed from the planet's real motion: exact dates, station positions, and what the window actually asks of you."
+  path="/mercury-retrograde/"
+  image="/assets/og/v2/tool/mercury-retrograde.png"
+  imageAlt="Mercury retrograde dates — Zodiacs.org"
+  jsonLd={jsonLd}
+>
+  <section class="section--tight container container--narrow">
+    <div class="tool-hero reveal">
+      <h1 class="display">Mercury retrograde, dated.</h1>
+      <p>
+        Every window below is computed from Mercury’s actual motion,
+        station to station, refined to the hour, through the end of 2027.
+      </p>
+    </div>
+
+    <div class="rx-now shell tinted reveal" style="--sign:var(--sign-gemini)">
+      <div class="core tinted rx-now__core">
+        <span class="mono--label">As of {asOf}</span>
+        <strong class="rx-now__line">{status}</strong>
+        <span class="rx-now__all mono">
+          Retrograde today: {retroToday.length ? retroToday.join(', ') : 'nothing'} ·
+          every planet's windows are on <a href="/retrogrades/">the retrograde page</a>
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section--tight container container--narrow">
+    <div class="section-head reveal">
+      <h2>The windows, 2026–2027</h2>
+      <p>Dates in universal time. The position shown is where Mercury stands still each time — the stations.</p>
+    </div>
+    <div class="table-wrap reveal">
+      <table class="rx-table">
+        <thead>
+          <tr><th>Window</th><th>Stations retrograde at</th><th>Stations direct at</th><th></th></tr>
+        </thead>
+        <tbody>
+          {windows.map((w) => (
+            <tr class={w.state === 'past' ? 'rx-table__past' : ''}>
+              <td>{w.label}</td>
+              <td class="mono">{w.stationRx}</td>
+              <td class="mono">{w.stationDirect ?? '—'}</td>
+              <td class="mono rx-table__state">{w.state === 'active' ? 'now' : w.state === 'upcoming' ? 'ahead' : ''}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section--tight container container--narrow">
+    <div class="prose reveal">
+      <h2>What is actually happening up there</h2>
+      <p>
+        Nothing slows down and nothing reverses. Mercury orbits the Sun in 88
+        days to our 365, and a few times a year it passes us on the inside
+        lane. Watched from a moving Earth, the planet seems to brake, hang
+        motionless for a day or two, and drift backward through the zodiac
+        before resuming course — the same illusion you get when a slower
+        train out the window appears to roll backward. The dates above are
+        that illusion, computed precisely.
+      </p>
+      <p>
+        Astrology reads <a href="/learn/planets/mercury/">Mercury</a> as the
+        planet of communication, transit, and paperwork, which is how three
+        weeks of apparent backward motion became shorthand for lost emails
+        and missed trains. The tradition’s actual advice is calmer: treat the
+        window as review season. Finish what’s open, reread before sending,
+        confirm the booking, and hold big launches and signatures for the
+        other forty-five weeks of the year if you can. Not because the sky
+        forbids them — because a scheduled excuse to double-check is
+        genuinely useful.
+      </p>
+      <p>
+        Where a retrograde lands in <em>your</em> chart decides which corner
+        of life does the reviewing — that takes your
+        <a href="/birth-chart/">birth chart</a>. And if you were born with
+        Mercury retrograde (roughly one person in five), astrologers read it
+        as an inward-processing style, not a defect.
+      </p>
+    </div>
+  </section>
+
+  <section class="section--tight container container--narrow">
+    <div class="section-head reveal"><h2>Questions, answered</h2></div>
+    <div class="faq reveal">
+      {faq.map(({ q, a }) => (
+        <details class="faq__item">
+          <summary>{q}</summary>
+          <p>{a}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+</Base>
+
+<style>
+  .tool-hero { max-width: 62ch; margin-bottom: clamp(24px, 4vw, 36px); }
+  .tool-hero h1 {
+    margin: 0 0 16px;
+    font-family: var(--font-serif);
+    font-size: var(--text-2xl);
+    font-weight: 500;
+    letter-spacing: -0.005em;
+    line-height: 1.04;
+    font-variant-numeric: oldstyle-figures;
+    text-wrap: balance;
+  }
+  .tool-hero p { margin: 0; color: var(--muted); font-size: var(--text-lg); text-wrap: pretty; }
+
+  .rx-now__core { padding: clamp(20px, 4vw, 28px); display: grid; gap: 10px; }
+  .rx-now__line { font-size: var(--text-lg); letter-spacing: -0.01em; max-width: 56ch; }
+  .rx-now__all { font-size: 11.5px; color: var(--faint); letter-spacing: 0.05em; }
+  .rx-now__all a { color: var(--muted); }
+  .rx-now__all a:hover { color: var(--text); }
+
+  .table-wrap { overflow-x: auto; }
+  .rx-table { width: 100%; border-collapse: collapse; font-size: var(--text-sm); }
+  .rx-table th {
+    text-align: left;
+    padding: 10px 16px 10px 0;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: var(--faint);
+    border-bottom: 1px solid var(--hair-2);
+  }
+  .rx-table td { padding: 11px 16px 11px 0; border-bottom: 1px solid var(--hair-1); color: var(--text-2); white-space: nowrap; }
+  .rx-table td:first-child { color: var(--text); font-weight: 550; }
+  .rx-table__past td { color: var(--faint); }
+  .rx-table__past td:first-child { color: var(--muted); font-weight: 500; }
+  .rx-table__state { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+
+  .faq { display: grid; gap: 8px; }
+  .faq__item {
+    border: 1px solid var(--hair-1);
+    border-radius: var(--r-md);
+    background: var(--void-1);
+    padding: 4px 18px;
+  }
+  .faq__item summary { cursor: pointer; padding: 12px 0; font-weight: 550; color: var(--text); }
+  .faq__item p { margin: 2px 0 16px; color: var(--text-2); font-size: var(--text-sm); line-height: 1.65; }
+</style>

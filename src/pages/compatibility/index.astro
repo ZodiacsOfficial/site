@@ -1,0 +1,147 @@
+---
+import Base from '../../layouts/Base.astro';
+import SignIcon from '../../components/SignIcon.astro';
+import SynastryCalculator from '../../islands/SynastryCalculator';
+import { SIGNS } from '../../lib/signs';
+import { pairSlug } from '../../lib/compat';
+import '../../styles/calculator.css';
+
+const jsonLd = [
+  {
+    '@type': 'WebApplication',
+    name: 'Compatibility calculator',
+    url: 'https://zodiacs.org/compatibility/',
+    applicationCategory: 'LifestyleApplication',
+    operatingSystem: 'Any',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    description:
+      'Free synastry calculator: compare two birth charts on your device — cross-chart aspects, element balance, and plain-language readings.',
+  },
+  {
+    '@type': 'FAQPage',
+    mainEntity: [
+      {
+        '@type': 'Question',
+        name: 'How does astrological compatibility work?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Astrologers compare two birth charts by measuring the angles between one person’s planets and the other’s — a practice called synastry. Trines and sextiles between charts read as ease; squares and oppositions read as productive friction. Sun-sign compatibility is the one-line summary of a much longer comparison.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Is sun-sign compatibility real?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'It is the shallowest useful layer. Two people are more than their sun signs — the Moon, Venus, and Mars often matter more in practice. The sun-sign pairing pages here are honest starting points, and the calculator compares whole charts when you have birth details.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Do I need exact birth times for a compatibility reading?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Times help but are not required. Without one, the planets are still exact to the day — only rising signs and houses drop out. The Moon moves about 13 degrees a day, so a missing time occasionally blurs a Moon aspect.',
+        },
+      },
+    ],
+  },
+];
+---
+<Base
+  title="Compatibility Calculator — Compare Two Birth Charts | Zodiacs.org"
+  description="Free synastry calculator: compare two whole birth charts on your device. Cross-chart aspects, element balance, and honest readings — plus guides to all 78 sign pairings."
+  path="/compatibility/"
+  image="/assets/og/v2/tool/compatibility.png"
+  imageAlt="Compatibility calculator — Zodiacs.org"
+  jsonLd={jsonLd}
+>
+  <section class="section--tight container container--narrow">
+    <div class="compat-hero">
+      <em class="kicker">Two charts, honestly compared</em>
+      <h1 class="display">Compatibility</h1>
+      <p>
+        Sun signs are the first sentence of a much longer story. This
+        calculator reads the whole thing: every angle between your planets
+        and theirs, computed on your device, translated into sentences you
+        can actually use.
+      </p>
+    </div>
+
+    <SynastryCalculator client:load />
+  </section>
+
+  <section class="section container">
+    <div class="section-head">
+      <h2>The seventy-eight pairings</h2>
+      <p>
+        Every sun-sign combination, written as a real dynamic rather than a
+        score: how it runs, where it grinds, what makes it last.
+      </p>
+    </div>
+
+    <div class="compat-index">
+      {SIGNS.map((a) => (
+        <div class="compat-row" style={`--sign:${a.hue}`}>
+          <a class="compat-row__sign" href={`/${a.slug}/`}>
+            <SignIcon sign={a.slug} size={34} class="compat-row__icon" />
+            <span>{a.name}</span>
+          </a>
+          <div class="compat-row__pairs">
+            {SIGNS.map((b) => (
+              <a class="compat-row__pair" href={`/compatibility/${pairSlug(a.slug, b.slug)}/`}>
+                {b.name}
+              </a>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+</Base>
+
+<style>
+  .compat-hero { max-width: 58ch; margin-bottom: clamp(26px, 5vw, 42px); }
+  .compat-hero h1 {
+    margin: 14px 0 14px;
+    font-size: var(--text-2xl);
+    line-height: 1.04;
+  }
+  .compat-hero p { margin: 0; color: var(--muted); font-size: var(--text-lg); text-wrap: pretty; }
+
+  .compat-index { display: grid; }
+  .compat-row {
+    display: grid;
+    gap: 10px 26px;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--hair-1);
+    grid-template-columns: 1fr;
+  }
+  .compat-row:first-child { border-top: 1px solid var(--hair-1); }
+  @media (min-width: 760px) {
+    .compat-row { grid-template-columns: 170px minmax(0, 1fr); align-items: center; }
+  }
+  .compat-row__sign {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 600;
+    color: var(--text);
+    text-decoration: none;
+    font-size: var(--text-md, 15px);
+  }
+  .compat-row__sign :global(img) { border-radius: 50%; }
+  .compat-row__pairs { display: flex; flex-wrap: wrap; gap: 4px 2px; }
+  .compat-row__pair {
+    padding: 4px 9px;
+    border-radius: var(--r-full);
+    font-size: 12.5px;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color var(--dur-1) var(--ease), background var(--dur-1) var(--ease);
+  }
+  .compat-row__pair:hover {
+    color: var(--text);
+    background: color-mix(in oklab, var(--sign) 12%, transparent);
+  }
+</style>

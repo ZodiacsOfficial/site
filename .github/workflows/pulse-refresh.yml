@@ -1,6 +1,6 @@
 name: Pulse Refresh
 
-# Refreshes assets/pulse.json (Wikipedia pageviews + Google Trends
+# Refreshes public/assets/pulse.json (Wikipedia pageviews + Google Trends
 # snapshot for The Pulse). Trends is best-effort — when Google rate-limits
 # the runner, the previous snapshot is kept and only Wikipedia updates.
 
@@ -24,12 +24,12 @@ jobs:
 
       - name: Commit if changed
         run: |
-          if git diff --quiet assets/pulse.json; then
+          if git diff --quiet public/assets/pulse.json; then
             echo "pulse.json unchanged"
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add assets/pulse.json
+          git add public/assets/pulse.json
           git commit -m "Refresh pulse data"
           git push

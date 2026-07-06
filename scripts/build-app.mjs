@@ -17,7 +17,7 @@ import { dirname, resolve } from 'node:path';
 const here = dirname(fileURLToPath(import.meta.url));
 const root = resolve(here, '..');
 const SRC = resolve(root, 'src/app.jsx');
-const OUT = resolve(root, 'assets/app.js');
+const OUT = resolve(root, 'public/assets/app.js');
 
 const BABEL_VERSION = '7.26.4';
 const BABEL_URL = `https://unpkg.com/@babel/standalone@${BABEL_VERSION}/babel.min.js`;

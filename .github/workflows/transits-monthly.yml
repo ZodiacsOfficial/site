@@ -1,0 +1,90 @@
+name: Monthly Transits
+
+# On the 25th, computes NEXT month's transit events (ingresses,
+# lunations, stations, exact aspects) into src/data/transits-YYYY-MM.json
+# and opens an issue reminding whoever writes the horoscopes that twelve
+# entries are due. The horoscope pages themselves always render the
+# latest month present and warn (never fail) when stale — this workflow
+# keeps the treadmill visible, it does not write prose.
+
+on:
+  schedule:
+    - cron: "41 5 25 * *" # 25th monthly, 05:41 UTC
+  workflow_dispatch:
+
+jobs:
+  transits:
+    name: Compute next month's transits
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Compute next month
+        id: month
+        run: |
+          MONTH=$(date -u -d "$(date -u +%Y-%m-01) +1 month" +%Y-%m)
+          echo "month=$MONTH" >> "$GITHUB_OUTPUT"
+          node scripts/build-transits.mjs "$MONTH"
+
+      - name: Commit if new
+        id: commit
+        run: |
+          FILE="src/data/transits-${{ steps.month.outputs.month }}.json"
+          if git diff --quiet -- "$FILE" && [ -z "$(git status --porcelain "$FILE")" ]; then
+            echo "$FILE unchanged"
+            echo "committed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "$FILE"
+          git commit -m "Compute ${{ steps.month.outputs.month }} transit events"
+          git push
+          echo "committed=true" >> "$GITHUB_OUTPUT"
+
+      - name: Open the horoscope reminder issue
+        if: steps.commit.outputs.committed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          MONTH: ${{ steps.month.outputs.month }}
+          ISSUE_BODY: |
+            The computed sky for __LABEL__ is committed at `src/data/transits-__MONTH__.json`.
+
+            Twelve entries are due before the 1st, one per sign, at `src/content/horoscopes/__MONTH__-{sign}.mdx`:
+
+            - [ ] aries
+            - [ ] taurus
+            - [ ] gemini
+            - [ ] cancer
+            - [ ] leo
+            - [ ] virgo
+            - [ ] libra
+            - [ ] scorpio
+            - [ ] sagittarius
+            - [ ] capricorn
+            - [ ] aquarius
+            - [ ] pisces
+
+            House rules: every claim cites a dated event from the JSON, solar-houses framing stated once, 250–400 words, no headings. Match the exemplar at `src/content/horoscopes/2026-07-aries.mdx` and the voice rules in `CLAUDE.md`. The pages render the latest complete month automatically.
+        run: |
+          LABEL=$(date -u -d "${MONTH}-01" "+%B %Y")
+          if [ "$(gh issue list --search "in:title \"Write the ${LABEL} horoscopes\"" --json number --jq length)" != "0" ]; then
+            echo "Issue already open"
+            exit 0
+          fi
+          BODY=${ISSUE_BODY//__MONTH__/$MONTH}
+          BODY=${BODY//__LABEL__/$LABEL}
+          gh issue create --title "Write the ${LABEL} horoscopes" --body "$BODY"

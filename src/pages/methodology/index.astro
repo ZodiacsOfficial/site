@@ -1,0 +1,120 @@
+---
+import Base from '../../layouts/Base.astro';
+
+const jsonLd = [
+  {
+    '@type': 'Article',
+    headline: 'How zodiacs.org computes your chart',
+    url: 'https://zodiacs.org/methodology/',
+    author: { '@type': 'Organization', name: 'Zodiacs.org' },
+    about: 'Astronomical methodology, timezone handling, and privacy model of the zodiacs.org chart engine.',
+  },
+];
+---
+<Base
+  title="How We Compute Your Chart — Methodology & Privacy | Zodiacs.org"
+  description="The exact astronomy behind every chart on zodiacs.org: the ephemeris, house systems, historical timezone handling, accuracy testing against NASA JPL data, and why your birth data never leaves your device."
+  path="/methodology/"
+  jsonLd={jsonLd}
+>
+  <section class="section container container--narrow">
+    <em class="kicker">Methodology</em>
+    <h1 class="method-title display">How we calculate your chart.</h1>
+
+    <div class="prose">
+      <p>
+        Most astrology sites never explain their math. This one does. Here is
+        everything a chart on zodiacs.org claims, and exactly how it is
+        calculated.
+      </p>
+
+      <h2>The ephemeris</h2>
+      <p>
+        Planetary positions come from <a href="https://github.com/cosinekitty/astronomy" rel="noopener noreferrer">Astronomy Engine</a>,
+        an open-source astronomical library accurate to about one arcminute
+        (a sixtieth of a degree). We compute <strong>apparent geocentric
+        tropical longitudes of date</strong> — the standard frame of Western
+        astrology — including light-time, aberration, and nutation. The Moon
+        uses a dedicated high-accuracy lunar model; the lunar node is the
+        <em>true node</em>, derived from the Moon's instantaneous orbit.
+      </p>
+      <p>
+        Every change to the engine must pass an automated accuracy gate
+        before it ships: positions are compared against
+        <strong>NASA JPL Horizons</strong> reference data at multiple epochs
+        (including a 1907 chart), with tolerances of a few hundredths of a
+        degree for planets. The test suite also checks the sky against itself:
+        at sunrise the computed ascendant must match the Sun's position; at
+        solar noon the midheaven must.
+      </p>
+
+      <h2>Angles and houses</h2>
+      <p>
+        The ascendant and midheaven are computed from Greenwich apparent
+        sidereal time, your birthplace coordinates, and the obliquity of the
+        ecliptic (IAU 2006). We offer <strong>whole sign</strong> houses (the
+        oldest system — each house is one complete sign) and
+        <strong>Placidus</strong> (the most common modern system, computed by
+        iterative semi-arc division). Placidus is mathematically undefined
+        near the poles; above 66° latitude we fall back to whole sign and say
+        so on the chart.
+      </p>
+
+      <h2>Time zones</h2>
+      <p>
+        A birth chart is only as good as its clock conversion. We resolve your
+        birth time against the <strong>complete IANA time zone history</strong>
+        of your birthplace: daylight saving in all its regional weirdness,
+        wartime clock changes, and pre-standardization <em>local mean time</em>
+        — including offsets with seconds, like Mexico City's −6:36:36 before
+        1922.
+      </p>
+      <ul>
+        <li><strong>Skipped times</strong> (spring-forward gaps) shift forward across the gap — the standard convention — and the chart says so.</li>
+        <li><strong>Repeated times</strong> (fall-back folds) use the earlier pass, flagged on the chart.</li>
+        <li><strong>Very old dates</strong> use the local mean time of your birthplace's reference zone, the same convention professional software applies. For births before civil time standardization, a chart can differ by a few clock minutes from tools that use the exact town meridian — we flag these charts too.</li>
+      </ul>
+      <p>
+        Every result lists its computed UTC instant, so the conversion is
+        yours to check.
+      </p>
+
+      <h2>Birthplace search</h2>
+      <p>
+        Place lookup runs against a bundled index of ~34,000 cities from
+        <a href="https://www.geonames.org/" rel="noopener noreferrer">GeoNames</a>
+        (CC BY 4.0), each carrying its IANA time zone. Coordinates are stored
+        to ~1 km precision — far finer than a birth chart needs.
+      </p>
+
+      <h2>Privacy</h2>
+      <p>
+        The entire calculation happens in your browser. Your birth date, time,
+        and place are never transmitted anywhere — there is no server-side
+        chart API, no account requirement, and no analytics attached to birth
+        data. Charts you save live in your browser's local storage, on your
+        device, deletable by you at any time.
+      </p>
+
+      <h2>Honest limits</h2>
+      <ul>
+        <li>Chiron and the asteroids aren't included yet (the engine's remit is major bodies); they're planned via public-domain JPL data.</li>
+        <li>Unknown birth times get a noon chart: planets are exact to the day, but rising sign and houses genuinely require the clock, and we won't pretend otherwise.</li>
+        <li>Supported birth years: 1800–2199.</li>
+      </ul>
+
+      <p>
+        Found a discrepancy? We treat accuracy reports as bugs. The sky is
+        checkable, and so is our arithmetic.
+      </p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .method-title {
+    margin: 14px 0 24px;
+    font-size: var(--text-2xl);
+    line-height: 1.04;
+  }
+</style>

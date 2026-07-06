@@ -1,0 +1,46 @@
+---
+/**
+ * The Zodiacs mark: twelve dots in a ring, one per sign hue — the same
+ * mark as the favicon, drawn inline so it costs no request. Pass `size`
+ * in px.
+ */
+import { SIGNS } from '../lib/signs';
+
+interface Props {
+  size?: number;
+  class?: string;
+}
+const { size = 18, class: className } = Astro.props;
+
+const C = 12;           // viewBox center
+const R = 9;            // ring radius
+const DOT = 1.9;        // dot radius
+const dots = SIGNS.map((s, i) => {
+  const a = (i / 12) * 2 * Math.PI - Math.PI / 2;
+  return {
+    cx: +(C + R * Math.cos(a)).toFixed(3),
+    cy: +(C + R * Math.sin(a)).toFixed(3),
+    hue: s.hue,
+  };
+});
+---
+<svg
+  class:list={['brandmark', className]}
+  width={size}
+  height={size}
+  viewBox="0 0 24 24"
+  fill="none"
+  aria-hidden="true"
+>
+  {dots.map((d) => <circle cx={d.cx} cy={d.cy} r={DOT} fill={d.hue} />)}
+</svg>
+
+<style>
+  .brandmark { display: block; flex-shrink: 0; }
+  /* One slow revolution on hover of the parent link — the sky turns. */
+  :global(a:hover) > .brandmark { animation: brandmark-turn 14s linear infinite; }
+  @media (prefers-reduced-motion: reduce) {
+    :global(a:hover) > .brandmark { animation: none; }
+  }
+  @keyframes brandmark-turn { to { transform: rotate(360deg); } }
+</style>

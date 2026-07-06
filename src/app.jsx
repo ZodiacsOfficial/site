@@ -1105,12 +1105,12 @@
       const media = useMemo(() => (
         window.matchMedia('(orientation: portrait)').matches
           ? {
-              src: 'assets/art/registry-loop-portrait.mp4',
-              poster: 'assets/art/registry-loop-poster-portrait.jpg'
+              src: '/assets/art/registry-loop-portrait.mp4',
+              poster: '/assets/art/registry-loop-poster-portrait.jpg'
             }
           : {
-              src: 'assets/art/registry-loop.mp4',
-              poster: 'assets/art/registry-loop-poster.jpg'
+              src: '/assets/art/registry-loop.mp4',
+              poster: '/assets/art/registry-loop-poster.jpg'
             }
       ), []);
       useEffect(() => {
@@ -1232,13 +1232,13 @@
             <div className="glyph-stage">
               <a
                 className="nugget-link"
-                href={`/${sign.asset.sign}/`}
+                href={`/collect/${sign.asset.sign}/`}
                 aria-label={`Open the ${sign.name} catalogue entry`}
               >
                 <img
                   className="nugget fade-key"
                   key={animKey + '-glyph'}
-                  src={`assets/nuggets/${sign.name.toLowerCase()}.png`}
+                  src={`/assets/nuggets/${sign.name.toLowerCase()}.png`}
                   alt={`${sign.name} sculptural figure`}
                   fetchpriority="high"
                   decoding="async"
@@ -1425,7 +1425,7 @@
                   title={s.name}
                 >
                   <img
-                    src={`assets/icons/${s.name.toLowerCase()}.png`}
+                    src={`/assets/icons/${s.name.toLowerCase()}.png`}
                     alt=""
                     loading="lazy"
                     decoding="async"
@@ -1601,7 +1601,7 @@
           <div className="vrf__result-sign">
             <img
               className="vrf__result-icon"
-              src={`assets/icons/${sign.name.toLowerCase()}.png`}
+              src={`/assets/icons/${sign.name.toLowerCase()}.png`}
               alt=""
               decoding="async"
             />
@@ -1763,13 +1763,13 @@
           <article className="detail fade-key" key={animKey + '-detail'}>
             <a
               className="detail__symbol-link"
-              href={`/${sign.asset.sign}/`}
+              href={`/collect/${sign.asset.sign}/`}
               aria-label={`${sign.name} — open catalogue entry`}
               title="Open catalogue entry"
             >
               <img
                 className="detail__symbol"
-                src={`assets/icons/${sign.name.toLowerCase()}.png`}
+                src={`/assets/icons/${sign.name.toLowerCase()}.png`}
                 alt=""
                 decoding="async"
               />
@@ -1837,7 +1837,7 @@
 
             <MarketContext sign={sign} />
 
-            <a className="detail__entry" href={`/${sign.asset.sign}/`}>
+            <a className="detail__entry" href={`/collect/${sign.asset.sign}/`}>
               <span>Full catalogue entry — lore, provenance &amp; acquisition</span>
               <span className="detail__entry-arr" aria-hidden="true">→</span>
             </a>
@@ -2305,9 +2305,9 @@
                               {row.marketCap !== null ? String(i + 1).padStart(2, '0') : '—'}
                             </td>
                             <td className="standings__lot">
-                              <a href={`/${slug}/`}>
+                              <a href={`/collect/${slug}/`}>
                                 <img
-                                  src={`assets/icons/${slug}.png`}
+                                  src={`/assets/icons/${slug}.png`}
                                   alt=""
                                   loading="lazy"
                                   decoding="async"
@@ -2572,10 +2572,10 @@
                     <a
                       className="shelf__sign"
                       key={h.sign.name}
-                      href={`/${h.sign.name.toLowerCase()}/`}
+                      href={`/collect/${h.sign.name.toLowerCase()}/`}
                     >
                       <img
-                        src={`assets/icons/${h.sign.name.toLowerCase()}.png`}
+                        src={`/assets/icons/${h.sign.name.toLowerCase()}.png`}
                         alt=""
                         loading="lazy"
                         width="26"
@@ -2911,11 +2911,11 @@
                 </div>
                 <a
                   className="cat__sym cat__sym--button"
-                  href={`/${s.asset.sign}/`}
+                  href={`/collect/${s.asset.sign}/`}
                   aria-label={`Open the ${s.name} catalogue entry`}
                 >
                   <img
-                    src={`assets/nuggets/thumb/${s.name.toLowerCase()}.png`}
+                    src={`/assets/nuggets/thumb/${s.name.toLowerCase()}.png`}
                     alt={`${s.name} figure`}
                     loading="lazy"
                     decoding="async"
@@ -2931,7 +2931,7 @@
                     display={truncateAddress(s.representations.base.address, 5, 4)}
                   />
                 </div>
-                <a className="cat__entry" href={`/${s.asset.sign}/`}>
+                <a className="cat__entry" href={`/collect/${s.asset.sign}/`}>
                   <span>Catalogue entry</span>
                   <span className="cat__entry-arr" aria-hidden="true">→</span>
                 </a>
@@ -2944,12 +2944,12 @@
               <a
                 key={s.ticker}
                 className="cat__lot"
-                href={`/${s.asset.sign}/`}
+                href={`/collect/${s.asset.sign}/`}
                 title={`${s.name} — catalogue entry`}
                 aria-label={`${s.name} — catalogue entry`}
               >
                 <img
-                  src={`assets/icons/${s.name.toLowerCase()}.png`}
+                  src={`/assets/icons/${s.name.toLowerCase()}.png`}
                   alt=""
                   loading="lazy"
                   decoding="async"
@@ -3031,12 +3031,12 @@
               <a
                 key={s.ticker}
                 className="sdk__icons-item"
-                href={`/${s.asset.sign}/`}
+                href={`/collect/${s.asset.sign}/`}
                 title={`${s.name} — catalogue entry`}
                 aria-label={`${s.name} — catalogue entry`}
               >
                 <img
-                  src={`assets/sdk/zodiac-icons/circle/${s.asset.sign}.png`}
+                  src={`/assets/sdk/zodiac-icons/circle/${s.asset.sign}.png`}
                   alt=""
                   loading="lazy"
                   decoding="async"

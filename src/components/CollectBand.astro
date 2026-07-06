@@ -1,0 +1,51 @@
+---
+/**
+ * The one sanctioned cross-link from a guide into the collector's wing.
+ * Quiet, museum-toned, near the top so visitors arriving from external
+ * listings find the record in one click. No market language here.
+ */
+interface Props {
+  signName: string;
+  slug: string;
+}
+const { signName, slug } = Astro.props;
+---
+<aside class="collect-band">
+  <span class="collect-band__label mono">Collector’s wing</span>
+  <span class="collect-band__text">
+    {signName} also exists as one of the Twelve — a canonical record in the registry.
+  </span>
+  <a class="collect-band__link" href={`/collect/${slug}/`}>View the record →</a>
+</aside>
+
+<style>
+  .collect-band {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 16px;
+    padding: 12px 18px;
+    border: 1px solid var(--hair-1);
+    border-radius: var(--r-md);
+    background: linear-gradient(90deg, rgba(210, 167, 78, 0.05), transparent 60%);
+  }
+  .collect-band__label {
+    font-size: 9.5px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #B99B5E;
+  }
+  .collect-band__text {
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .collect-band__link {
+    margin-left: auto;
+    font-size: 13px;
+    font-weight: 550;
+    color: var(--text-2);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .collect-band__link:hover { color: var(--text); }
+</style>

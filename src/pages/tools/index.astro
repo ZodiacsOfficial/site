@@ -1,0 +1,182 @@
+---
+import Base from '../../layouts/Base.astro';
+
+const tools = [
+  {
+    href: '/birth-chart/',
+    title: 'Birth chart calculator',
+    promise: 'The whole map: Sun, Moon, rising, every planet, houses, aspects.',
+    hue: 'var(--sign-cancer)',
+    glyph: '☉',
+  },
+  {
+    href: '/compatibility/',
+    title: 'Compatibility',
+    promise: 'Two charts, honestly compared: every cross-chart aspect, translated.',
+    hue: 'var(--sign-libra)',
+    glyph: '☌',
+  },
+  {
+    href: '/moon-sign/',
+    title: 'Moon sign calculator',
+    promise: 'How you feel, and what settles you.',
+    hue: 'var(--sign-pisces)',
+    glyph: '☽',
+  },
+  {
+    href: '/rising-sign/',
+    title: 'Rising sign calculator',
+    promise: 'How people first read you. Needs your birth time.',
+    hue: 'var(--sign-gemini)',
+    glyph: 'ASC',
+  },
+  {
+    href: '/moon-phase/',
+    title: 'Moon phase',
+    promise: 'Tonight’s moon, and the moon of any date you care about.',
+    hue: 'var(--sign-cancer)',
+    glyph: '☾',
+  },
+  {
+    href: '/saturn-return/',
+    title: 'Saturn return',
+    promise: 'When yours hits, exactly, and what it tends to ask.',
+    hue: 'var(--sign-capricorn)',
+    glyph: '♄',
+  },
+  {
+    href: '/transits/',
+    title: 'Transit tracker',
+    promise: 'Today’s sky against your chart, within 3° of exact.',
+    hue: 'var(--sign-aries)',
+    glyph: '↻',
+  },
+  {
+    href: '/full-moon-calendar/',
+    title: 'Full moon calendar',
+    promise: 'Every full moon through 2027: date, sign, and name.',
+    hue: 'var(--sign-taurus)',
+    glyph: '○',
+  },
+  {
+    href: '/eclipses/',
+    title: 'Eclipses',
+    promise: 'Solar and lunar through 2028, with exact peak times.',
+    hue: 'var(--sign-leo)',
+    glyph: '◑',
+  },
+  {
+    href: '/retrogrades/',
+    title: 'Retrogrades',
+    promise: 'All eight planets’ windows, computed station to station.',
+    hue: 'var(--sign-virgo)',
+    glyph: '℞',
+  },
+];
+
+const jsonLd = [
+  {
+    '@type': 'CollectionPage',
+    name: 'Free astrology tools',
+    url: 'https://zodiacs.org/tools/',
+    description: 'Free astrology calculators computed on your device: birth chart, compatibility, moon sign, rising sign, transits, and the sky calendars.',
+  },
+];
+---
+<Base
+  title="Free Astrology Tools & Calculators | Zodiacs.org"
+  description="Free astrology calculators, no signup: birth chart, compatibility, moon sign, rising sign, transits, eclipses, and more — computed on your device with astronomical accuracy."
+  path="/tools/"
+  image="/assets/og/v2/tool/tools.png"
+  imageAlt="Free astrology tools — Zodiacs.org"
+  jsonLd={jsonLd}
+>
+  <section class="section container">
+    <div class="section-head">
+      <h2>The calculators</h2>
+      <p>
+        Each one runs on your device with a tested astronomical engine. Your
+        birth data never leaves the browser.
+      </p>
+    </div>
+
+    <div class="tools-grid">
+      {tools.map((t) => (
+        <a class="shell tinted" href={t.href} style={`--sign:${t.hue}`}>
+          <div class="core tinted tool-card">
+            <span class="tool-card__glyph mono">{t.glyph}</span>
+            <h3>{t.title}</h3>
+            <p>{t.promise}</p>
+            <span class="tool-card__go">Open →</span>
+          </div>
+        </a>
+      ))}
+    </div>
+
+    <div class="tools-upcoming">
+      <em class="kicker">And for the month ahead</em>
+      <ul>
+        <li>
+          <strong>Horoscopes.</strong> Monthly, for every sign, written against
+          the computed sky — <a href="/horoscopes/">read this month’s</a>.
+        </li>
+        <li>
+          <strong>Mercury retrograde.</strong> The famous one gets its own
+          page, every window through 2027 —
+          <a href="/mercury-retrograde/">see the dates</a>.
+        </li>
+      </ul>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .tools-grid {
+    display: grid;
+    gap: 14px;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 700px) { .tools-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1000px) { .tools-grid { grid-template-columns: repeat(3, 1fr); } }
+  .tool-card {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 26px 22px;
+    min-height: 210px;
+  }
+  .tool-card__glyph {
+    font-size: 24px;
+    color: var(--sign);
+    letter-spacing: 0.06em;
+  }
+  .tool-card h3 {
+    margin: 4px 0 0;
+    font-size: var(--text-lg);
+    font-weight: 620;
+    letter-spacing: -0.02em;
+    color: var(--text);
+  }
+  .tool-card p { margin: 0; font-size: var(--text-sm); color: var(--text-2); line-height: 1.6; }
+  .tool-card__go {
+    margin-top: auto;
+    font-size: 13px;
+    font-weight: 550;
+    color: var(--text);
+  }
+  .tools-upcoming {
+    margin-top: clamp(28px, 5vw, 44px);
+    padding-top: 24px;
+    border-top: 1px solid var(--hair-1);
+  }
+  .tools-upcoming ul {
+    margin: 12px 0 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 8px;
+  }
+  .tools-upcoming li { font-size: var(--text-sm); color: var(--muted); }
+  .tools-upcoming strong { color: var(--text-2); font-weight: 600; }
+  .tools-upcoming a { color: var(--text); }
+</style>

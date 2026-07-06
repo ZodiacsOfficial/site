@@ -1,6 +1,6 @@
 name: Distribution Refresh
 
-# Refreshes assets/distribution.json (the on-chain ownership-spread
+# Refreshes public/assets/distribution.json (the on-chain ownership-spread
 # snapshot behind The Standings). Best-effort: when the public RPC
 # rate-limits the runner, previous per-sign values are kept.
 
@@ -24,12 +24,12 @@ jobs:
 
       - name: Commit if changed
         run: |
-          if git diff --quiet assets/distribution.json; then
+          if git diff --quiet public/assets/distribution.json; then
             echo "distribution.json unchanged"
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add assets/distribution.json
+          git add public/assets/distribution.json
           git commit -m "Refresh distribution data"
           git push

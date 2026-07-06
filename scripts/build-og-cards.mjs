@@ -22,8 +22,8 @@ import { SIGN_ORDER } from './sign-data.mjs';
 const { chromium } = await import(process.env.PLAYWRIGHT_MODULE ?? 'playwright');
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-const registry = JSON.parse(await readFile(resolve(root, 'registry/zodiacs.registry.json'), 'utf8'));
-const manifestPath = resolve(root, 'assets/manifest.json');
+const registry = JSON.parse(await readFile(resolve(root, 'public/registry/zodiacs.registry.json'), 'utf8'));
+const manifestPath = resolve(root, 'public/assets/manifest.json');
 const manifest = JSON.parse(await readFile(manifestPath, 'utf8'));
 
 const ROMAN = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII'];
@@ -191,7 +191,7 @@ try {
     await page.setContent(cardHtml(asset, PORT), { waitUntil: 'networkidle' });
     await page.evaluate(() => document.fonts.ready);
     await page.waitForTimeout(250);
-    const out = resolve(root, `assets/og/${slug}.png`);
+    const out = resolve(root, `public/assets/og/${slug}.png`);
     await page.screenshot({ path: out });
     const bytes = (await readFile(out)).byteLength;
     ogSigns[slug] = { path: `assets/og/${slug}.png`, width: 1200, height: 630, bytes };

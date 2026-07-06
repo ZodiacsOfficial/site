@@ -1,0 +1,103 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import SignIcon from '../../components/SignIcon.astro';
+import { SIGNS } from '../../lib/signs';
+import { monthLabel, warnIfStale } from '../../lib/horoscopes';
+
+const all = await getCollection('horoscopes', ({ data }) => !data.draft);
+const latestMonth = all.map((e) => e.data.month).sort().at(-1);
+if (!latestMonth) throw new Error('Horoscopes collection is empty.');
+warnIfStale(latestMonth);
+
+const current = all.filter((e) => e.data.month === latestMonth);
+if (current.length !== 12) {
+  throw new Error(`Latest horoscope month ${latestMonth} covers ${current.length}/12 signs.`);
+}
+const label = monthLabel(latestMonth);
+
+const jsonLd = [
+  {
+    '@type': 'CollectionPage',
+    name: `Monthly horoscopes — ${label}`,
+    url: 'https://zodiacs.org/horoscopes/',
+    description: `Monthly horoscopes for all twelve signs, written against the month's computed sky: every claim carries a date you can check.`,
+  },
+  {
+    '@type': 'ItemList',
+    numberOfItems: 12,
+    itemListElement: SIGNS.map((s, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: `${s.name} horoscope`,
+      url: `https://zodiacs.org/horoscopes/${s.slug}/`,
+    })),
+  },
+];
+---
+<Base
+  title={`Monthly Horoscopes — ${label}, All 12 Signs | Zodiacs.org`}
+  description={`${label} horoscopes for every sign, grounded in the computed sky: real transit dates for the month's new moon, full moon, stations, and ingresses.`}
+  path="/horoscopes/"
+  image="/assets/og/v2/tool/horoscopes.png"
+  imageAlt="Monthly horoscopes for all twelve signs — Zodiacs.org"
+  jsonLd={jsonLd}
+>
+  <section class="section--tight container container--narrow">
+    <div class="horo-hero reveal">
+      <em class="kicker">{label}</em>
+      <h1 class="display">Horoscopes</h1>
+      <p>
+        Written against the month’s actual sky: the ingresses, lunations,
+        and stations our engine computes, so every claim carries a date you
+        can check. Each page prints the month’s event list beneath the
+        reading.
+      </p>
+    </div>
+
+    <div class="horo-grid reveal">
+      {SIGNS.map((s) => (
+        <a class="tile horo-card" href={`/horoscopes/${s.slug}/`} style={`--sign:${s.hue}`}>
+          <SignIcon sign={s.slug} size={44} class="horo-card__icon" />
+          <span class="horo-card__name">{s.name}</span>
+          <span class="horo-card__dates mono">{s.dates}</span>
+        </a>
+      ))}
+    </div>
+
+    <p class="horo-note reveal">
+      Horoscopes read the sky against your sun sign; your whole chart says
+      more. <a href="/birth-chart/">Compute it free</a> — or read
+      <a href="/methodology/">how the sky data is calculated</a>.
+    </p>
+  </section>
+</Base>
+
+<style>
+  .horo-hero { max-width: 58ch; margin-bottom: clamp(26px, 5vw, 42px); }
+  .horo-hero h1 { margin: 14px 0 14px; font-size: var(--text-2xl); line-height: 1.04; }
+  .horo-hero p { margin: 0; color: var(--muted); font-size: var(--text-lg); text-wrap: pretty; }
+
+  .horo-grid {
+    display: grid;
+    gap: 10px;
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @media (min-width: 640px) { .horo-grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (min-width: 900px) { .horo-grid { grid-template-columns: repeat(4, 1fr); } }
+  .horo-card {
+    display: grid;
+    justify-items: center;
+    gap: 8px;
+    padding: 22px 14px 18px;
+    text-decoration: none;
+    color: var(--text);
+    text-align: center;
+  }
+  .horo-card :global(img) { border-radius: 50%; }
+  .horo-card__name { font-weight: 600; letter-spacing: -0.01em; }
+  .horo-card__dates { font-size: 10px; color: var(--faint); letter-spacing: 0.06em; }
+
+  .horo-note { margin-top: clamp(22px, 4vw, 34px); font-size: var(--text-sm); color: var(--muted); }
+  .horo-note a { color: var(--text); }
+</style>

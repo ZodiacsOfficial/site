@@ -1,0 +1,115 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../../layouts/Base.astro';
+import SignIcon from '../../../components/SignIcon.astro';
+import { SIGNS } from '../../../lib/signs';
+
+const PLANET_ORDER = ['Sun', 'Moon', 'Mercury', 'Venus', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto'];
+const GLYPHS: Record<string, string> = {
+  Sun: '☉', Moon: '☽', Mercury: '☿', Venus: '♀', Mars: '♂',
+  Jupiter: '♃', Saturn: '♄', Uranus: '♅', Neptune: '♆', Pluto: '♇',
+};
+
+// Planet role lines from the planet pages themselves — single source.
+const planetEntries = await getCollection('learn', (e) => e.data.kind === 'planet' && !e.data.draft);
+const roleOf = (name: string) => {
+  const entry = planetEntries.find((e) => e.data.kind === 'planet' && e.data.planet === name);
+  return entry && entry.data.kind === 'planet' ? entry.data.role : '';
+};
+
+const placementCount = (await getCollection('learn', (e) => e.data.kind === 'placement' && !e.data.draft)).length;
+
+const jsonLd = [
+  {
+    '@type': 'CollectionPage',
+    name: 'Placements: every planet in every sign',
+    url: 'https://zodiacs.org/learn/placements/',
+    description: 'What each planet means in each zodiac sign — plain-language guides to all 120 placements, with computed transit windows and classical dignities.',
+  },
+  {
+    '@type': 'ItemList',
+    numberOfItems: PLANET_ORDER.length,
+    itemListElement: PLANET_ORDER.map((p, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: `${p} through the signs`,
+      url: `https://zodiacs.org/learn/placements/${p.toLowerCase()}-in-aries/`,
+    })),
+  },
+];
+---
+<Base
+  title="Placements — Every Planet in Every Sign | Zodiacs.org"
+  description="All 120 planet-in-sign placements explained plainly: how each planet behaves in each sign, with computed transit windows and the classical dignities as data."
+  path="/learn/placements/"
+  image="/assets/og/v2/tool/learn.png"
+  imageAlt="Placements, every planet in every sign — Zodiacs.org"
+  jsonLd={jsonLd}
+>
+  <section class="section--tight container container--narrow">
+    <div class="cluster-hero reveal">
+      <em class="kicker">Learn</em>
+      <h1 class="display">The placements</h1>
+      <p>
+        A chart is ten planets wearing twelve possible costumes — {placementCount}
+        combinations, each with its own manner. Find yours below, or
+        <a href="/birth-chart/">compute the whole chart</a> and read every
+        placement you actually have.
+      </p>
+    </div>
+
+    <div class="plc-index">
+      {PLANET_ORDER.map((p) => (
+        <section class="plc-index__group reveal">
+          <header class="plc-index__head">
+            <span class="plc-index__glyph mono">{GLYPHS[p]}</span>
+            <a class="plc-index__name" href={`/learn/planets/${p.toLowerCase()}/`}>{p}</a>
+            <span class="plc-index__role">{roleOf(p)}</span>
+          </header>
+          <div class="plc-index__chips">
+            {SIGNS.map((s) => (
+              <a class="plc-index__chip" href={`/learn/placements/${p.toLowerCase()}-in-${s.slug}/`} style={`--sign:${s.hue}`}>
+                <SignIcon sign={s.slug} size={16} class="plc-index__icon" /> {s.name}
+              </a>
+            ))}
+          </div>
+        </section>
+      ))}
+    </div>
+  </section>
+</Base>
+
+<style>
+  .cluster-hero { max-width: 58ch; margin-bottom: clamp(26px, 5vw, 42px); }
+  .cluster-hero h1 { margin: 14px 0 14px; font-size: var(--text-2xl); line-height: 1.04; }
+  .cluster-hero p { margin: 0; color: var(--muted); font-size: var(--text-lg); text-wrap: pretty; }
+  .cluster-hero a { color: var(--text); }
+
+  .plc-index { display: grid; }
+  .plc-index__group {
+    padding: 18px 0;
+    border-bottom: 1px solid var(--hair-1);
+    display: grid;
+    gap: 12px;
+  }
+  .plc-index__group:first-child { border-top: 1px solid var(--hair-1); }
+  .plc-index__head { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+  .plc-index__glyph { color: var(--muted); font-size: 16px; }
+  .plc-index__name { font-weight: 620; font-size: var(--text-lg); letter-spacing: -0.015em; color: var(--text); text-decoration: none; }
+  .plc-index__name:hover { text-decoration: underline; text-underline-offset: 3px; }
+  .plc-index__role { color: var(--faint); font-size: var(--text-sm); }
+  .plc-index__chips { display: flex; flex-wrap: wrap; gap: 4px 2px; }
+  .plc-index__chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px 4px 5px;
+    border-radius: var(--r-full);
+    font-size: 12.5px;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color var(--dur-1) var(--ease), background var(--dur-1) var(--ease);
+  }
+  .plc-index__chip:hover { color: var(--text); background: color-mix(in oklab, var(--sign) 12%, transparent); }
+  .plc-index__chip :global(img) { border-radius: 50%; }
+</style>

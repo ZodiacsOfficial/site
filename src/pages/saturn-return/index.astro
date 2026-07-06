@@ -1,0 +1,132 @@
+---
+import Base from '../../layouts/Base.astro';
+import SaturnReturnCalculator from '../../islands/SaturnReturnCalculator';
+import '../../styles/calculator.css';
+
+const faq = [
+  {
+    q: 'What is a Saturn return?',
+    a: 'The moment transiting Saturn comes back to the exact degree it held when you were born. Saturn takes about 29.4 years to lap the zodiac, so the first return lands near age 29, the second near 58, the third near 88. Astrologers read it as an audit: whatever in your life runs on momentum rather than choice comes up for review.',
+  },
+  {
+    q: 'When is my Saturn return?',
+    a: 'Enter your birth date above — the calculator scans Saturn’s actual motion and returns the exact dates, including retrograde passes. Most first returns begin between ages 28 and 30; the common "it ruined my 29th year" folklore usually describes the season’s middle stretch.',
+  },
+  {
+    q: 'Why does my Saturn return have three dates?',
+    a: 'Saturn retrogrades for about four and a half months every year. When that backward loop crosses your natal degree, the planet hits it three times: once moving forward, once backing over it, once sealing it on the way out. The whole span — often eight to twelve months — is the return.',
+  },
+  {
+    q: 'How long does a Saturn return last?',
+    a: 'The exact crossings span a few days to about a year, depending on whether the retrograde loop is involved. The felt experience is wider: astrologers usually count the whole transit of Saturn through your natal Saturn’s sign, roughly two and a half years.',
+  },
+  {
+    q: 'Is the Saturn return bad?',
+    a: 'It has the reputation of a demolition and the mechanics of an inspection. Careers, relationships, and living situations that fit get certified and strengthened; the ones held together by habit get billed. People tend to rate it terrible at 29 and formative at 35.',
+  },
+];
+
+const jsonLd = [
+  {
+    '@type': 'WebApplication',
+    name: 'Saturn Return Calculator',
+    url: 'https://zodiacs.org/saturn-return/',
+    applicationCategory: 'LifestyleApplication',
+    operatingSystem: 'Web',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+  },
+  {
+    '@type': 'FAQPage',
+    mainEntity: faq.map(({ q, a }) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: { '@type': 'Answer', text: a },
+    })),
+  },
+];
+---
+<Base
+  title="Saturn Return Calculator — When Is Yours? | Zodiacs.org"
+  description="Find your exact Saturn return dates free: every crossing, retrograde passes included, computed from Saturn's real motion on your device. Just needs your birth date."
+  path="/saturn-return/"
+  image="/assets/og/v2/tool/saturn-return.png"
+  imageAlt="Free Saturn return calculator — Zodiacs.org"
+  jsonLd={jsonLd}
+>
+  <section class="section--tight container">
+    <div class="tool-hero">
+      <h1 class="display">Your Saturn return, dated.</h1>
+      <p>
+        Around age 29, Saturn finishes its first lap of your chart and comes
+        home. This calculator finds the exact dates, every pass and
+        retrograde loop included, from your birth date alone.
+      </p>
+    </div>
+
+    <SaturnReturnCalculator client:load />
+  </section>
+
+  <section class="section--tight container container--narrow">
+    <div class="prose">
+      <h2>What the return actually is</h2>
+      <p>
+        Saturn moves slowly — about two and a half years to a sign, 29.4 years
+        to the full circle. Your Saturn return is the stretch when the moving
+        planet stands where it stood at your birth: the end of one complete
+        Saturn cycle and the opening of the next.
+      </p>
+      <p>
+        The folklore says everything falls apart at 29. The more accurate
+        version: whatever you built between 0 and 29 gets load-tested, and
+        only the parts that were holding real weight pass. Jobs kept out of
+        fear, relationships running on inertia, cities you never chose — the
+        return has a way of invoicing all of them in the same year. What
+        survives it tends to survive for decades.
+      </p>
+      <p>
+        Where Saturn sits in your chart says what the audit examines —
+        the sign colors the style, the house names the arena. The calculator
+        reads your natal sign above; for the house, you’ll want your
+        <a href="/birth-chart/">full birth chart</a> with a birth time. And
+        for the planet itself, read <a href="/learn/planets/saturn/">what
+        Saturn means in a chart</a>.
+      </p>
+    </div>
+  </section>
+
+  <section class="section--tight container container--narrow">
+    <div class="section-head"><h2>Questions, answered</h2></div>
+    <div class="faq">
+      {faq.map(({ q, a }) => (
+        <details class="faq__item">
+          <summary>{q}</summary>
+          <p>{a}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+</Base>
+
+<style>
+  .tool-hero { max-width: 62ch; margin-bottom: clamp(28px, 5vw, 44px); }
+  .tool-hero h1 {
+    margin: 0 0 16px;
+    font-family: var(--font-serif);
+    font-size: var(--text-2xl);
+    font-weight: 500;
+    letter-spacing: -0.005em;
+    line-height: 1.04;
+    font-variant-numeric: oldstyle-figures;
+    text-wrap: balance;
+  }
+  .tool-hero p { margin: 0; color: var(--muted); font-size: var(--text-lg); text-wrap: pretty; }
+  .faq { display: grid; gap: 8px; }
+  .faq__item {
+    border: 1px solid var(--hair-1);
+    border-radius: var(--r-md);
+    background: var(--void-1);
+    padding: 4px 18px;
+  }
+  .faq__item summary { cursor: pointer; padding: 12px 0; font-weight: 550; color: var(--text); }
+  .faq__item p { margin: 2px 0 16px; color: var(--text-2); font-size: var(--text-sm); line-height: 1.65; }
+</style>

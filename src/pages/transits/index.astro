@@ -1,0 +1,140 @@
+---
+import Base from '../../layouts/Base.astro';
+import TransitTracker from '../../islands/TransitTracker.tsx';
+import { dayLabel, eventList, latestTransitMonth, monthLabel } from '../../lib/horoscopes';
+import '../../styles/calculator.css';
+
+// The month's receipts render statically from the committed transit
+// JSON — the island handles the personal part.
+const month = latestTransitMonth();
+const events = month ? eventList(month) : [];
+const label = month ? monthLabel(month) : null;
+
+const faq = [
+  {
+    q: 'What is a transit?',
+    a: 'The planets kept moving after you were born. A transit is the current position of a planet measured against a position in your birth chart — transiting Saturn square your natal Moon means Saturn, today, stands ninety degrees from where your Moon was at birth. Transits are the main tool astrologers use to time things.',
+  },
+  {
+    q: 'Which transits does this page show?',
+    a: 'Aspects from the ten planets in today’s sky to the ten planets of your birth chart, within 3 degrees of exact — the tight window where a transit is generally read as active. The transiting Moon is left out of the list because it crosses your whole chart every month; its current position shows in the sky strip.',
+  },
+  {
+    q: 'Why do slow transits matter more?',
+    a: 'Speed sets duration. The Sun crosses a natal point in about two days, Mars in a week or two, but Saturn can sit inside three degrees of one point for months and Pluto for a couple of years — and retrograde loops mean the slow planets often make three passes. The long visits are the ones astrologers treat as chapters rather than weather.',
+  },
+  {
+    q: 'Do I need my exact birth time?',
+    a: 'Not for most of it. Planet-to-planet transits work from your birth date and place alone. The exception is the Moon: without a time it is computed for midday and can sit up to six degrees off, so Moon transits near the edge of the orb are uncertain — the tool says so when that applies.',
+  },
+];
+
+const jsonLd = [
+  {
+    '@type': 'WebPage',
+    name: 'Transit tracker — the sky against your chart',
+    url: 'https://zodiacs.org/transits/',
+    description:
+      'See which transits are active for your birth chart right now: today’s computed sky aspected to your natal planets, within 3 degrees of exact.',
+  },
+  {
+    '@type': 'FAQPage',
+    mainEntity: faq.map(({ q, a }) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: { '@type': 'Answer', text: a },
+    })),
+  },
+];
+---
+<Base
+  title="Transit Tracker — Today's Sky Against Your Birth Chart | Zodiacs.org"
+  description="Which transits are hitting your chart right now? Today's computed planetary positions aspected to your natal planets, within 3° of exact — free, on your device."
+  path="/transits/"
+  image="/assets/og/v2/tool/transits.png"
+  imageAlt="Transit tracker — Zodiacs.org"
+  jsonLd={jsonLd}
+>
+  <section class="section--tight container container--narrow">
+    <div class="tool-hero reveal">
+      <h1 class="display">The sky, against your chart.</h1>
+      <p>
+        Today&rsquo;s planets aspected to your natal ones, within 3&deg; of
+        exact &mdash; the transits astrologers would call active for you
+        right now. Pick a saved chart or enter birth details; nothing
+        leaves your device.
+      </p>
+    </div>
+    <TransitTracker client:load />
+  </section>
+
+  {month && (
+    <section class="section--tight container container--narrow">
+      <div class="section-head reveal">
+        <h2>The sky in {label}</h2>
+        <p>
+          The month&rsquo;s events as our engine computed them &mdash;
+          ingresses, lunations, stations, and exact aspects. Times are
+          universal time. These are the same receipts the
+          <a href="/horoscopes/">monthly horoscopes</a> are written against.
+        </p>
+      </div>
+      <ul class="trn-events reveal">
+        {events.map((e) => (
+          <li>
+            <span class="trn-events__date mono">{dayLabel(e.at)}</span>
+            <span class="trn-events__label">{e.label}</span>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )}
+
+  <section class="section--tight container container--narrow">
+    <div class="section-head reveal"><h2>Questions, answered</h2></div>
+    <div class="faq reveal">
+      {faq.map(({ q, a }) => (
+        <details class="faq__item">
+          <summary>{q}</summary>
+          <p>{a}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+</Base>
+
+<style>
+  .tool-hero { max-width: 62ch; margin-bottom: clamp(24px, 4vw, 36px); }
+  .tool-hero h1 {
+    margin: 0 0 16px;
+    font-family: var(--font-serif);
+    font-size: var(--text-2xl);
+    font-weight: 500;
+    letter-spacing: -0.005em;
+    line-height: 1.04;
+    font-variant-numeric: oldstyle-figures;
+    text-wrap: balance;
+  }
+  .tool-hero p { margin: 0; color: var(--muted); font-size: var(--text-lg); text-wrap: pretty; }
+
+  .trn-events { margin: 0; padding: 0; list-style: none; display: grid; gap: 7px; }
+  .trn-events li {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    padding-bottom: 7px;
+    border-bottom: 1px solid var(--hair-1);
+  }
+  .trn-events__date { flex-shrink: 0; width: 58px; font-size: 11px; color: var(--faint); letter-spacing: 0.05em; }
+  .trn-events__label { font-size: var(--text-sm); color: var(--text-2); }
+
+  .faq { display: grid; gap: 8px; }
+  .faq__item {
+    border: 1px solid var(--hair-1);
+    border-radius: var(--r-md);
+    background: var(--void-1);
+    padding: 4px 18px;
+  }
+  .faq__item summary { cursor: pointer; padding: 12px 0; font-weight: 550; color: var(--text); }
+  .faq__item p { margin: 2px 0 16px; color: var(--text-2); font-size: var(--text-sm); line-height: 1.65; }
+</style>

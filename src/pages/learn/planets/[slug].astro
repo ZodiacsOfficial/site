@@ -1,0 +1,182 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../../layouts/Base.astro';
+import Faq from '../../../components/Faq.astro';
+import SignIcon from '../../../components/SignIcon.astro';
+import { SIGNS, signForLongitude } from '../../../lib/signs';
+import { bodyLongitude } from '../../../lib/engine/full';
+import type { BodyName } from '../../../lib/engine/types';
+
+const PLANET_ORDER = [
+  'Sun', 'Moon', 'Mercury', 'Venus', 'Mars',
+  'Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto',
+] as const;
+
+const PLANET_GLYPHS: Record<string, string> = {
+  Sun: '☉', Moon: '☽', Mercury: '☿', Venus: '♀', Mars: '♂',
+  Jupiter: '♃', Saturn: '♄', Uranus: '♅', Neptune: '♆', Pluto: '♇',
+};
+
+export async function getStaticPaths() {
+  const entries = await getCollection(
+    'learn',
+    (e) => e.data.kind === 'planet' && !e.data.draft,
+  );
+  if (entries.length !== 10) {
+    throw new Error(`Expected 10 planet pages, found ${entries.length}`);
+  }
+  return entries.map((entry) => ({
+    params: { slug: entry.id.split('/')[1] },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+if (entry.data.kind !== 'planet') throw new Error('Not a planet entry');
+const planet = entry.data.planet;
+const slug = entry.id.split('/')[1];
+const { Content } = await render(entry);
+
+const rules = SIGNS.filter((s) => s.ruler === planet);
+const classicRules = SIGNS.filter((s) => s.classicRuler === planet);
+
+// Build-time position — the Moon moves too fast for a static stamp.
+const buildDate = new Date();
+const current = planet === 'Moon' ? null : signForLongitude(bodyLongitude(planet as BodyName, buildDate));
+const asOf = buildDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
+
+const idx = PLANET_ORDER.indexOf(planet);
+const prev = idx > 0 ? PLANET_ORDER[idx - 1] : null;
+const next = idx < PLANET_ORDER.length - 1 ? PLANET_ORDER[idx + 1] : null;
+
+const jsonLd = [
+  {
+    '@type': 'Article',
+    headline: entry.data.title,
+    description: entry.data.description,
+    url: `https://zodiacs.org/learn/planets/${slug}/`,
+    dateModified: entry.data.updated.toISOString(),
+    author: { '@type': 'Organization', name: 'Zodiacs.org', url: 'https://zodiacs.org/' },
+    about: { '@type': 'Thing', name: `${planet} (astrology)` },
+  },
+  {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Zodiacs.org', item: 'https://zodiacs.org/' },
+      { '@type': 'ListItem', position: 2, name: 'Learn', item: 'https://zodiacs.org/learn/' },
+      { '@type': 'ListItem', position: 3, name: 'The planets', item: 'https://zodiacs.org/learn/planets/' },
+      { '@type': 'ListItem', position: 4, name: planet, item: `https://zodiacs.org/learn/planets/${slug}/` },
+    ],
+  },
+  {
+    '@type': 'FAQPage',
+    mainEntity: entry.data.faq.map(({ q, a }) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: { '@type': 'Answer', text: a },
+    })),
+  },
+];
+---
+<Base
+  title={entry.data.title}
+  description={entry.data.description}
+  path={`/learn/planets/${slug}/`}
+  type="article"
+  jsonLd={jsonLd}
+>
+  <article class="container container--narrow learn-detail">
+    <header class="learn-detail__hero reveal">
+      <em class="kicker">The planets</em>
+      <h1 class="display"><span class="learn-detail__glyph">{PLANET_GLYPHS[planet]}</span> {planet}</h1>
+      <p class="learn-detail__role">{entry.data.role}</p>
+      <p class="learn-detail__facts mono">
+        {rules.length > 0 && `Rules ${rules.map((s) => s.name).join(' and ')}`}
+        {classicRules.length > 0 && ` · traditional ruler of ${classicRules.map((s) => s.name).join(' and ')}`}
+        {current && ` · in ${current.name} as of ${asOf}`}
+      </p>
+    </header>
+
+    <div class="prose reveal">
+      <Content />
+    </div>
+
+    <section class="reveal">
+      <Faq items={entry.data.faq} heading={`${planet}, asked and answered`} />
+    </section>
+
+    <div class="learn-detail__cta shell tinted reveal">
+      <div class="core tinted learn-detail__cta-core">
+        <strong>Where is {planet} in your chart?</strong>
+        <p>Sign, house, and aspects — computed from your birth moment, on your device.</p>
+        <a class="btn btn--primary" href="/birth-chart/"><span>Get your free birth chart</span><span class="orb">↗</span></a>
+      </div>
+    </div>
+
+    <nav class="planet-signs reveal" aria-label={`${planet} through the signs`}>
+      <span class="planet-signs__head">{planet} through the signs</span>
+      <div class="planet-signs__chips">
+        {SIGNS.map((s) => (
+          <a class="planet-signs__chip" href={`/learn/placements/${planet.toLowerCase()}-in-${s.slug}/`} style={`--sign:${s.hue}`}>
+            <SignIcon sign={s.slug} size={16} class="planet-signs__icon" /> {s.name}
+          </a>
+        ))}
+      </div>
+    </nav>
+
+    <nav class="learn-detail__nav reveal" aria-label="More planets">
+      {prev ? (
+        <a href={`/learn/planets/${prev.toLowerCase()}/`}>← {PLANET_GLYPHS[prev]} {prev}</a>
+      ) : <span />}
+      <a href="/learn/planets/">All planets</a>
+      {next ? (
+        <a href={`/learn/planets/${next.toLowerCase()}/`}>{PLANET_GLYPHS[next]} {next} →</a>
+      ) : <span />}
+    </nav>
+  </article>
+</Base>
+
+<style>
+  .learn-detail { display: grid; gap: clamp(28px, 5vw, 44px); padding-block: clamp(24px, 5vw, 56px) clamp(36px, 6vw, 72px); }
+  .learn-detail__hero { display: grid; gap: 12px; justify-items: start; }
+  .learn-detail__hero h1 {
+    margin: 4px 0 0;
+    font-size: clamp(2.4rem, 1.6rem + 4vw, 4.2rem);
+    line-height: 1;
+  }
+  .learn-detail__glyph { color: var(--muted); font-weight: 400; margin-right: 4px; }
+  .learn-detail__role { margin: 0; font-size: var(--text-lg); color: var(--muted); max-width: 52ch; text-wrap: pretty; }
+  .learn-detail__facts { margin: 2px 0 0; font-size: 11px; color: var(--faint); letter-spacing: 0.06em; }
+
+  .learn-detail__cta-core { padding: clamp(22px, 4vw, 32px); display: grid; gap: 10px; justify-items: start; }
+  .learn-detail__cta-core strong { font-size: var(--text-lg); letter-spacing: -0.01em; }
+  .learn-detail__cta-core p { margin: 0; font-size: var(--text-sm); color: var(--text-2); }
+
+  .learn-detail__nav {
+    display: flex;
+    justify-content: space-between;
+    gap: 14px;
+    padding-top: 18px;
+    border-top: 1px solid var(--hair-1);
+    font-size: var(--text-sm);
+  }
+  .learn-detail__nav a { color: var(--text-2); text-decoration: none; }
+  .learn-detail__nav a:hover { color: var(--text); }
+
+  .planet-signs { display: grid; gap: 10px; padding-top: 18px; border-top: 1px solid var(--hair-1); }
+  .planet-signs__head { font-weight: 600; font-size: var(--text-sm); color: var(--text); }
+  .planet-signs__chips { display: flex; flex-wrap: wrap; gap: 4px 2px; }
+  .planet-signs__chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px 4px 5px;
+    border-radius: var(--r-full);
+    font-size: 12.5px;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color var(--dur-1) var(--ease), background var(--dur-1) var(--ease);
+  }
+  .planet-signs__chip:hover { color: var(--text); background: color-mix(in oklab, var(--sign) 12%, transparent); }
+  .planet-signs__chip :global(img) { border-radius: 50%; }
+</style>

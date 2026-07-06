@@ -1,0 +1,150 @@
+---
+import Base from '../../layouts/Base.astro';
+import ChartCalculator from '../../islands/ChartCalculator';
+import '../../styles/calculator.css';
+
+const faq = [
+  {
+    q: 'What is a moon sign?',
+    a: 'Your moon sign is the zodiac sign the Moon occupied at your birth. Where your sun sign describes your core identity, the moon sign describes your emotional life: how you feel, what soothes you, and what you need to feel safe. Many people recognize themselves more in their moon than their sun.',
+  },
+  {
+    q: 'Do I need my birth time to find my moon sign?',
+    a: 'Usually not — the Moon spends about two and a half days in each sign, so most days it only occupies one. But it changes signs roughly every 60 hours, so on boundary days the time matters. This calculator tells you honestly when your birthday is one of those days.',
+  },
+  {
+    q: 'Why is my moon sign different from what another site said?',
+    a: 'Almost always a time-zone problem: careless calculators convert your birth time incorrectly, especially for older dates or places with historical clock changes. We resolve the full history of your birthplace’s time zone — including pre-standardization local time — and show you the computed UTC instant so you can check the work.',
+  },
+  {
+    q: 'Sun, moon, and rising — what’s the difference?',
+    a: 'The classic shorthand: the Sun is who you are, the Moon is how you feel, the Rising is how people first read you. Together they’re called the big three, and they’re the fastest useful summary of a birth chart.',
+  },
+];
+
+const jsonLd = [
+  {
+    '@type': 'WebApplication',
+    name: 'Moon Sign Calculator',
+    url: 'https://zodiacs.org/moon-sign/',
+    applicationCategory: 'LifestyleApplication',
+    operatingSystem: 'Web',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+  },
+  {
+    '@type': 'FAQPage',
+    mainEntity: faq.map(({ q, a }) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: { '@type': 'Answer', text: a },
+    })),
+  },
+];
+---
+<Base
+  title="Moon Sign Calculator — What Is My Moon Sign? | Zodiacs.org"
+  description="Find your moon sign free, in seconds — how you feel, what soothes you, what you need. Computed on your device with astronomical accuracy, no signup."
+  path="/moon-sign/"
+  image="/assets/og/v2/tool/moon-sign.png"
+  imageAlt="Free moon sign calculator — Zodiacs.org"
+  jsonLd={jsonLd}
+>
+  <section class="section--tight container">
+    <div class="tool-hero">
+      <h1 class="display">Find your moon sign.</h1>
+      <p>
+        The Moon rules how you feel: your inner weather, your comforts, the
+        way you settle yourself. Here is how to find yours.
+      </p>
+    </div>
+
+    <ChartCalculator mode="moon" client:load />
+  </section>
+
+  <section class="section--tight container container--narrow">
+    <div class="prose">
+      <h2>What your moon sign describes</h2>
+      <p>
+        Most people meet astrology through their sun sign and shrug. The moon
+        sign is where it tends to get uncomfortably accurate — because the Moon
+        describes the private layer: what you're like at 2 a.m., mid-argument,
+        or three days into needing a hug you haven't asked for.
+      </p>
+      <p>
+        The Moon moves fast — about 13° a day, a full sign every two and a half
+        days — which is why it splits people born in the same week into
+        genuinely different emotional temperaments, and why a sloppy time-zone
+        conversion can put you a whole sign off. We compute yours from the
+        actual instant, against the full history of your birthplace's clocks.
+      </p>
+      <p>
+        Once you know your moon sign, read its guide — every sign's guide has
+        a section on what that placement means for the Moon specifically. Then
+        <a href="/birth-chart/">run the whole chart</a>: sun, moon, and rising
+        together are the real summary of you.
+      </p>
+    </div>
+  </section>
+
+  <section class="section--tight container container--narrow">
+    <div class="section-head">
+      <h2>The twelve moons, read closely</h2>
+      <p>A full page on each Moon placement — how it feels, what it needs, where it grows.</p>
+    </div>
+    <div class="moon-placements">
+      {['aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo', 'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces'].map((slug) => (
+        <a class="moon-placements__chip" href={`/learn/placements/moon-in-${slug}/`}>
+          Moon in {slug.charAt(0).toUpperCase() + slug.slice(1)}
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="section--tight container container--narrow">
+    <div class="section-head"><h2>Questions, answered</h2></div>
+    <div class="faq">
+      {faq.map(({ q, a }) => (
+        <details class="faq__item">
+          <summary>{q}</summary>
+          <p>{a}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+</Base>
+
+<style>
+  .tool-hero { max-width: 62ch; margin-bottom: clamp(28px, 5vw, 44px); }
+  .tool-hero h1 {
+    margin: 0 0 16px;
+    font-family: var(--font-serif);
+    font-size: var(--text-2xl);
+    font-weight: 500;
+    letter-spacing: -0.005em;
+    line-height: 1.04;
+    font-variant-numeric: oldstyle-figures;
+    text-wrap: balance;
+  }
+  .tool-hero p { margin: 0; color: var(--muted); font-size: var(--text-lg); text-wrap: pretty; }
+  .moon-placements { display: flex; flex-wrap: wrap; gap: 6px 4px; }
+  .moon-placements__chip {
+    padding: 5px 12px;
+    border-radius: var(--r-full);
+    border: 1px solid var(--hair-1);
+    font-size: 13px;
+    color: var(--text-2);
+    text-decoration: none;
+    transition: color var(--dur-1) var(--ease), border-color var(--dur-1) var(--ease);
+  }
+  .moon-placements__chip:hover { color: var(--text); border-color: var(--hair-3); }
+
+  .faq { display: grid; gap: 8px; }
+  .faq__item {
+    border: 1px solid var(--hair-1);
+    border-radius: var(--r-md);
+    background: var(--void-1);
+    padding: 4px 18px;
+  }
+  .faq__item summary { cursor: pointer; padding: 12px 0; font-weight: 550; color: var(--text); }
+  .faq__item p { margin: 2px 0 16px; color: var(--text-2); font-size: var(--text-sm); line-height: 1.65; }
+</style>

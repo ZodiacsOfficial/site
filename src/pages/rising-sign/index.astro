@@ -1,0 +1,170 @@
+---
+import Base from '../../layouts/Base.astro';
+import ChartCalculator from '../../islands/ChartCalculator';
+import SignIcon from '../../components/SignIcon.astro';
+import { SIGNS } from '../../lib/signs';
+import '../../styles/calculator.css';
+
+const faq = [
+  {
+    q: 'What is a rising sign?',
+    a: 'Your rising sign — the ascendant — is the zodiac sign that was coming up over the eastern horizon at the moment you were born. It shapes first impressions: how strangers read you, the vibe you give off before anyone knows your sun sign. It also sets the layout of your entire chart’s houses.',
+  },
+  {
+    q: 'Why do I need my exact birth time?',
+    a: 'The ascendant moves through all twelve signs every 24 hours — a new sign roughly every two hours, sometimes faster. Even 15 minutes can matter near a boundary. Birth certificates are the gold standard; hospital records and family memory are next best.',
+  },
+  {
+    q: 'What if my birth time is rounded, like exactly 7:00?',
+    a: 'Rounded times are common on birth records. If your computed rising sits within the first or last degree or two of a sign, treat the neighboring sign as a live possibility and read both — the one that describes how strangers see you is usually yours.',
+  },
+  {
+    q: 'What is a chart ruler?',
+    a: 'The planet that rules your rising sign is called your chart ruler, and astrologers treat its sign and house as a major theme of your life. This calculator names yours automatically — using the traditional rulerships for consistency.',
+  },
+  {
+    q: 'Is the rising sign really that important?',
+    a: 'In chart reading, arguably the most important single point: it anchors the houses, so it decides which parts of life every other planet lands in. It’s also why two people with identical birthdays can have very differently shaped lives.',
+  },
+];
+
+const jsonLd = [
+  {
+    '@type': 'WebApplication',
+    name: 'Rising Sign Calculator',
+    url: 'https://zodiacs.org/rising-sign/',
+    applicationCategory: 'LifestyleApplication',
+    operatingSystem: 'Web',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+  },
+  {
+    '@type': 'FAQPage',
+    mainEntity: faq.map(({ q, a }) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: { '@type': 'Answer', text: a },
+    })),
+  },
+];
+---
+<Base
+  title="Rising Sign Calculator — What Is My Rising Sign? | Zodiacs.org"
+  description="Calculate your rising sign (ascendant) free with your birth time and place — how people first read you, plus your chart ruler. Computed on your device, no signup."
+  path="/rising-sign/"
+  image="/assets/og/v2/tool/rising-sign.png"
+  imageAlt="Free rising sign calculator — Zodiacs.org"
+  jsonLd={jsonLd}
+>
+  <section class="section--tight container">
+    <div class="tool-hero">
+      <h1 class="display">Find your rising sign.</h1>
+      <p>
+        The ascendant is how the world first meets you: the sign climbing the
+        eastern horizon the moment you were born. It needs your birth time, and
+        it repays the precision.
+      </p>
+    </div>
+
+    <ChartCalculator mode="rising" client:load />
+  </section>
+
+  <section class="section--tight container container--narrow">
+    <div class="prose">
+      <h2>Why the clock matters this much</h2>
+      <p>
+        The Earth turns through the whole zodiac every day, so the ascendant
+        sweeps all twelve signs in 24 hours — around two hours per sign, and
+        quicker than that for some signs at some latitudes. That's why the
+        rising sign is the first thing serious astrologers ask your birth time
+        for, and why we won't guess it without one.
+      </p>
+      <p>
+        We compute yours from the actual rotation of the Earth at your birth
+        instant and birthplace — sidereal time, the obliquity of the ecliptic,
+        the real spherical trigonometry — and test that math against the sky
+        itself: at sunrise, a correct ascendant matches the Sun's position.
+        <a href="/methodology/">Details here.</a>
+      </p>
+      <p>
+        Your rising sign also chooses your <em>chart ruler</em> — the planet
+        that rules that sign — whose own placement becomes a headline of your
+        chart. The calculator names it for you; the full picture lives in
+        <a href="/birth-chart/">your complete birth chart</a>.
+      </p>
+    </div>
+  </section>
+
+  <section class="section--tight container container--narrow">
+    <div class="section-head">
+      <h2>The twelve risings</h2>
+      <p>
+        Once the calculator names yours, read what it does to a chart —
+        the manner, the chart ruler, the whole cast of the houses.
+      </p>
+    </div>
+    <div class="risings">
+      {SIGNS.map((s) => (
+        <a class="risings__chip" href={`/rising-sign/${s.slug}/`} style={`--sign:${s.hue}`}>
+          <SignIcon sign={s.slug} size={26} class="risings__disc" />
+          <span>{s.name} rising</span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="section--tight container container--narrow">
+    <div class="section-head"><h2>Questions, answered</h2></div>
+    <div class="faq">
+      {faq.map(({ q, a }) => (
+        <details class="faq__item">
+          <summary>{q}</summary>
+          <p>{a}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+</Base>
+
+<style>
+  .tool-hero { max-width: 62ch; margin-bottom: clamp(28px, 5vw, 44px); }
+  .tool-hero h1 {
+    margin: 0 0 16px;
+    font-family: var(--font-serif);
+    font-size: var(--text-2xl);
+    font-weight: 500;
+    letter-spacing: -0.005em;
+    line-height: 1.04;
+    font-variant-numeric: oldstyle-figures;
+    text-wrap: balance;
+  }
+  .tool-hero p { margin: 0; color: var(--muted); font-size: var(--text-lg); text-wrap: pretty; }
+  .faq { display: grid; gap: 8px; }
+  .faq__item {
+    border: 1px solid var(--hair-1);
+    border-radius: var(--r-md);
+    background: var(--void-1);
+    padding: 4px 18px;
+  }
+  .faq__item summary { cursor: pointer; padding: 12px 0; font-weight: 550; color: var(--text); }
+  .faq__item p { margin: 2px 0 16px; color: var(--text-2); font-size: var(--text-sm); line-height: 1.65; }
+
+  .risings { display: flex; flex-wrap: wrap; gap: 8px; }
+  .risings__chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 7px 14px 7px 8px;
+    border: 1px solid var(--hair-1);
+    border-radius: var(--r-full);
+    font-size: var(--text-sm);
+    color: var(--text-2);
+    text-decoration: none;
+    transition: color var(--dur-1) var(--ease), border-color var(--dur-1) var(--ease), background var(--dur-1) var(--ease);
+  }
+  .risings__chip :global(.risings__disc) { border-radius: 50%; }
+  .risings__chip:hover {
+    color: var(--text);
+    border-color: color-mix(in oklab, var(--sign) 45%, transparent);
+    background: color-mix(in oklab, var(--sign) 8%, transparent);
+  }
+</style>

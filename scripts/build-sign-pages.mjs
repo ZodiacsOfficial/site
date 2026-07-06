@@ -1,10 +1,12 @@
-// Generates the twelve sign catalogue pages (/{sign}/index.html).
+// Generates the twelve sign catalogue pages (/collect/{sign}/index.html) —
+// the collector's wing of the site. The top-level /{sign}/ URLs belong to
+// the astrology guides rendered by Astro.
 //
 //   node scripts/build-sign-pages.mjs
 //
 // Content comes from two sources:
-//   - registry/zodiacs.registry.json  (addresses, metadata — source of truth)
-//   - scripts/sign-data.mjs           (catalogue essays, provenance, stars)
+//   - public/registry/zodiacs.registry.json (addresses, metadata — source of truth)
+//   - scripts/sign-data.mjs                 (catalogue essays, provenance, stars)
 //
 // The output is committed static HTML, consistent with how this site ships
 // (no runtime build). Pages share the main site's design language: dark
@@ -20,8 +22,13 @@ import {
 const here = dirname(fileURLToPath(import.meta.url));
 const root = resolve(here, '..');
 
+// The catalogue lives under the collector's wing.
+const BASE = '/collect';
+const signPath = (slug) => `${BASE}/${slug}/`;
+const signUrl = (slug) => `https://zodiacs.org${signPath(slug)}`;
+
 const registry = JSON.parse(
-  await readFile(resolve(root, 'registry/zodiacs.registry.json'), 'utf8')
+  await readFile(resolve(root, 'public/registry/zodiacs.registry.json'), 'utf8')
 );
 
 const titleCase = (s) => (s ? s.charAt(0).toUpperCase() + s.slice(1) : s);
@@ -89,14 +96,14 @@ function jsonLd(m) {
         '@type': 'BreadcrumbList',
         itemListElement: [
           { '@type': 'ListItem', position: 1, name: 'Zodiacs.org', item: 'https://zodiacs.org/' },
-          { '@type': 'ListItem', position: 2, name: 'The Twelve', item: 'https://zodiacs.org/#official-twelve' },
-          { '@type': 'ListItem', position: 3, name: m.name, item: `https://zodiacs.org/${m.slug}/` }
+          { '@type': 'ListItem', position: 2, name: 'The Registry', item: 'https://zodiacs.org/collect/' },
+          { '@type': 'ListItem', position: 3, name: m.name, item: signUrl(m.slug) }
         ]
       },
       {
         '@type': 'WebPage',
-        '@id': `https://zodiacs.org/${m.slug}/#page`,
-        url: `https://zodiacs.org/${m.slug}/`,
+        '@id': `${signUrl(m.slug)}#page`,
+        url: signUrl(m.slug),
         name: `${m.name} — Lot ${m.page.lot} of XII · The Official ${m.ticker} Record`,
         description: `${m.page.epithet} Lore, provenance, the official Solana mint and Base representation, live market context, and acquisition routes for the ${m.name} Zodiac.`,
         inLanguage: 'en',
@@ -144,13 +151,13 @@ function render(m) {
   <meta name="color-scheme" content="dark" />
   <title>${esc(m.name)} — Lot ${p.lot} of XII · Official ${esc(m.ticker)} Record | Zodiacs.org</title>
   <meta name="description" content="${esc(`${p.epithet} The official ${m.name} record: lore and provenance of the sign, native Solana mint, official Base representation, live market context, and acquisition.`)}" />
-  <link rel="canonical" href="https://zodiacs.org/${m.slug}/" />
+  <link rel="canonical" href="${signUrl(m.slug)}" />
 
   <meta property="og:site_name" content="Zodiacs" />
   <meta property="og:title" content="${esc(m.name)} · Lot ${p.lot} of XII — Zodiacs" />
   <meta property="og:description" content="${esc(`${p.epithet} Provenance from Babylon to the onchain record.`)}" />
   <meta property="og:type" content="article" />
-  <meta property="og:url" content="https://zodiacs.org/${m.slug}/" />
+  <meta property="og:url" content="${signUrl(m.slug)}" />
   <meta property="og:image" content="https://zodiacs.org/assets/og/${m.slug}.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
@@ -639,9 +646,9 @@ ${JSON.stringify(jsonLd(m), null, 2)}
 
   <div class="hdr-wrap">
     <header class="hdr" role="banner">
-      <a class="hdr__mark" href="/"><span>Zodiacs</span><span class="sep">·</span><span class="dim">org</span></a>
-      <a class="hdr__nav" href="/#official-twelve"><span>The Twelve</span><span class="chip">↗</span></a>
-      <a class="hdr__nav" href="/${m.next.slug}/" aria-label="Next lot: ${esc(m.next.name)}"><span>Lot ${m.next.lot}</span><span class="chip">→</span></a>
+      <a class="hdr__mark" href="/collect/"><span>Zodiacs</span><span class="sep">·</span><span class="dim">org</span></a>
+      <a class="hdr__nav" href="/collect/#official-twelve"><span>The Twelve</span><span class="chip">↗</span></a>
+      <a class="hdr__nav" href="${signPath(m.next.slug)}" aria-label="Next lot: ${esc(m.next.name)}"><span>Lot ${m.next.lot}</span><span class="chip">→</span></a>
     </header>
   </div>
 
@@ -723,7 +730,7 @@ ${beats.map((b) => `        <div class="prov__item">
           <a class="rec__link" href="https://solscan.io/token/${esc(m.solana.address)}" rel="noopener noreferrer">Solscan ↗</a>
           <a class="rec__link" href="https://basescan.org/token/${esc(m.base.address)}" rel="noopener noreferrer">BaseScan ↗</a>
           <a class="rec__link" href="/registry/zodiacs.registry.json">Registry JSON</a>
-          <a class="rec__link" href="/#verify">Verify an address</a>
+          <a class="rec__link" href="/collect/#verify">Verify an address</a>
         </div>
       </div>
     </section>
@@ -772,19 +779,19 @@ ${beats.map((b) => `        <div class="prov__item">
     <section class="sec reveal" aria-label="Continue the catalogue">
       <div class="sec__head"><h2 class="sec__title">The catalogue</h2><span class="line"></span></div>
       <nav class="nextlot" aria-label="Adjacent lots">
-        <a href="/${m.prev.slug}/">
+        <a href="${signPath(m.prev.slug)}">
           <span class="dir">← Previous</span>
           <span class="nm">${esc(m.prev.name)}</span>
           <span class="lt">Lot ${m.prev.lot}</span>
         </a>
-        <a href="/${m.next.slug}/">
+        <a href="${signPath(m.next.slug)}">
           <span class="dir">Next →</span>
           <span class="nm">${esc(m.next.name)}</span>
           <span class="lt">Lot ${m.next.lot}</span>
         </a>
       </nav>
       <nav class="strip" aria-label="All twelve signs">
-${SIGN_ORDER.map((s) => `        <a href="/${s}/"${s === m.slug ? ' class="is-current" aria-current="page"' : ''} aria-label="${esc(assetFor(s).displayName)}"><img src="/assets/icons/${s}.png" alt="" loading="lazy" decoding="async" /></a>`).join('\n')}
+${SIGN_ORDER.map((s) => `        <a href="${signPath(s)}"${s === m.slug ? ' class="is-current" aria-current="page"' : ''} aria-label="${esc(assetFor(s).displayName)}"><img src="/assets/icons/${s}.png" alt="" loading="lazy" decoding="async" /></a>`).join('\n')}
       </nav>
     </section>
 
@@ -795,8 +802,8 @@ ${SIGN_ORDER.map((s) => `        <a href="/${s}/"${s === m.slug ? ' class="is-cu
       </div>
       <div class="ftr__row">
         <div class="ftr__links">
-          <a href="/#registry">Registry</a>
-          <a href="/#verify">Verify</a>
+          <a href="/collect/#registry">Registry</a>
+          <a href="/collect/#verify">Verify</a>
           <a href="/thesis/">Thesis</a>
           <a href="/sdk/">SDK</a>
           <a href="/registry/zodiacs.registry.json">Record</a>
@@ -944,9 +951,9 @@ ${CHANNELS.map((c) => `          <a href="${c.url}" rel="noopener noreferrer">${
 for (const slug of SIGN_ORDER) {
   const m = pageModel(slug);
   const html = render(m);
-  const dir = resolve(root, slug);
+  const dir = resolve(root, 'public', 'collect', slug);
   await mkdir(dir, { recursive: true });
   await writeFile(resolve(dir, 'index.html'), html, 'utf8');
-  console.log(`Wrote /${slug}/index.html (${html.length} bytes)`);
+  console.log(`Wrote /collect/${slug}/index.html (${html.length} bytes)`);
 }
 console.log('Done — 12 catalogue pages.');
