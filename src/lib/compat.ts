@@ -147,7 +147,7 @@ export function pairFacts(slugA: string, slugB: string): PairFacts {
 
 // ── Synastry phrasing ─────────────────────────────────────────────────
 
-const BODY_ROLE: Record<string, string> = {
+export const BODY_ROLE: Record<string, string> = {
   Sun: 'sense of self',
   Moon: 'emotional life',
   Mercury: 'way of thinking',
