@@ -1,7 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
 import SignIcon from '../components/SignIcon.astro';
-import ZodiacWheelHero from '../islands/ZodiacWheelHero';
 import SkyTicker from '../islands/SkyTicker';
 import DemoChart from '../islands/DemoChart';
 import { SIGNS } from '../lib/signs';
@@ -88,22 +87,47 @@ const tools = [
     })();
   </script>
 
-  <!-- 01 · Hero -->
+  <!-- 01 · Hero — one rounded cinematic frame, headline over the footage. -->
   <section class="hero container">
-    <div class="hero__copy">
-      <h1 class="display hero__title reveal">Your whole chart, not just your sign.</h1>
-      <p class="hero__sub reveal" style="--reveal-delay:90ms">
-        Enter your birth date, time, and place, and see every planet, house,
-        and aspect. Calculated exactly, and kept entirely on your device.
-      </p>
-      <div class="hero__ctas reveal" style="--reveal-delay:150ms">
-        <a class="btn btn--primary" href="/birth-chart/"><span>Calculate my chart</span><span class="orb">↗</span></a>
-        <a class="btn btn--ghost" href="/learn/"><span>Read the twelve signs</span></a>
+    <div class="hero__frame reveal">
+      <video
+        class="hero__video"
+        src="/assets/hero/zodiacs-hero.mp4"
+        poster="/assets/hero/zodiacs-hero-poster.jpg"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="metadata"
+        disablepictureinpicture
+        aria-hidden="true"
+        tabindex="-1"
+        data-hero-video
+      ></video>
+      <div class="hero__scrim" aria-hidden="true"></div>
+      <div class="hero__content">
+        <h1 class="hero__title">Your whole chart, not&nbsp;just your&nbsp;sign.</h1>
+        <p class="hero__sub">
+          Enter your birth date, time, and place, and see every planet, house,
+          and aspect. Calculated exactly, and kept entirely on your device.
+        </p>
+        <div class="hero__ctas">
+          <a class="btn btn--primary" href="/birth-chart/"><span>Calculate my chart</span><span class="orb">↗</span></a>
+          <a class="btn btn--ghost hero__ghost" href="/learn/"><span>Read the twelve signs</span></a>
+        </div>
       </div>
     </div>
-    <div class="hero__wheel reveal" style="--reveal-delay:120ms">
-      <ZodiacWheelHero client:load />
-    </div>
+    <script is:inline>
+      // Reduced-motion visitors keep the poster; the footage never forces itself.
+      (function () {
+        var v = document.querySelector('[data-hero-video]');
+        if (v && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          v.removeAttribute('autoplay');
+          v.preload = 'none';
+          try { v.pause(); v.currentTime = 0; } catch (e) { /* not yet loaded — poster stays */ }
+        }
+      })();
+    </script>
   </section>
 
   <!-- 02 · The sky, right now -->
@@ -233,96 +257,94 @@ const tools = [
 </Base>
 
 <style>
-  /* ── Hero ── */
+  /* ── Hero — the rounded cinematic frame ── */
   .hero {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: clamp(40px, 6vw, 72px);
-    align-items: center;
-    padding-block: clamp(40px, 7vw, 108px);
+    /* main already clears the fixed nav (96px) — the frame owns the rest. */
+    padding-block: 0 clamp(14px, 2vw, 22px);
   }
-  @media (min-width: 900px) { .hero { grid-template-columns: 1.05fr 0.95fr; } }
+  .hero__frame {
+    position: relative;
+    overflow: hidden;
+    border-radius: clamp(18px, 2.6vw, 30px);
+    /* Viewport minus the nav clearance and a guaranteed ticker peek —
+       the next section is always visibly waiting below the frame. */
+    min-height: clamp(470px, calc(100svh - 172px), 720px);
+    background: var(--void-1);
+    /* A hairline ring keeps the frame editorial rather than app-like. */
+    box-shadow:
+      inset 0 0 0 1px rgba(198, 204, 218, 0.10),
+      0 30px 80px -40px rgba(0, 0, 0, 0.8);
+    isolation: isolate;
+  }
+  .hero__video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 42%;
+  }
+  .hero__scrim {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background:
+      linear-gradient(180deg,
+        rgba(6, 7, 9, 0.34) 0%,
+        rgba(6, 7, 9, 0.10) 32%,
+        rgba(6, 7, 9, 0.16) 55%,
+        rgba(6, 7, 9, 0.78) 86%,
+        rgba(6, 7, 9, 0.90) 100%);
+  }
+  .hero__content {
+    position: relative;
+    z-index: 2;
+    height: 100%;
+    min-height: inherit;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 0;
+    padding: clamp(22px, 4vw, 56px);
+  }
   .hero__title {
-    margin: 0 0 24px;
-    font-size: var(--text-hero);
-    line-height: 0.98;
-    max-width: 15ch;
+    margin: 0 0 clamp(14px, 2vw, 20px);
+    font-family: var(--font-sans);
+    font-weight: 640;
+    font-size: clamp(2.05rem, 0.9rem + 5.4vw, 5rem);
+    line-height: 1.0;
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+    max-width: 17ch;
+    color: var(--ink-0, #EEF1F7);
+    text-wrap: balance;
+    text-shadow: 0 2px 28px rgba(6, 7, 9, 0.55);
   }
   .hero__sub {
-    margin: 0 0 32px;
-    max-width: 48ch;
-    color: var(--muted);
-    font-size: var(--text-lg);
-    line-height: 1.62;
+    margin: 0 0 clamp(20px, 3vw, 28px);
+    max-width: 52ch;
+    color: var(--ink-1, #C6CCDA);
+    font-size: clamp(0.95rem, 0.85rem + 0.5vw, 1.125rem);
+    line-height: 1.6;
     text-wrap: pretty;
+    text-shadow: 0 1px 18px rgba(6, 7, 9, 0.6);
   }
   .hero__ctas { display: flex; flex-wrap: wrap; gap: 12px; }
-  .hero__wheel { display: grid; place-items: center; }
+  /* Ghost button needs its own footing on live footage. */
+  .hero__ghost {
+    background: rgba(10, 12, 17, 0.42);
+    backdrop-filter: blur(10px) saturate(130%);
+    -webkit-backdrop-filter: blur(10px) saturate(130%);
+    border-color: rgba(198, 204, 218, 0.28);
+  }
+  .hero__ghost:hover { background: rgba(10, 12, 17, 0.6); }
 
-  /* Wheel hero (island styles are global by necessity) */
-  :global(.wheelhero) {
-    position: relative;
-    width: min(78vw, 440px);
-    aspect-ratio: 1;
-    display: grid;
-    place-items: center;
+  @media (max-width: 640px) {
+    .hero__content { padding: 20px 18px 22px; }
+    .hero__ctas .btn { flex: 1 1 auto; justify-content: center; }
   }
-  :global(.wheelhero__halo) {
-    position: absolute;
-    inset: 6%;
-    border-radius: 50%;
-    border: 1px solid var(--hair-1);
-    background:
-      radial-gradient(48% 48% at 50% 50%, rgba(198, 204, 218, 0.05), transparent 70%);
-  }
-  :global(.wheelhero__ring) { position: absolute; inset: 0; animation: orbit 120s linear infinite; }
-  :global(.wheelhero__spoke) { position: absolute; inset: 0; transform: rotate(var(--a)); }
-  :global(.wheelhero__arm) {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%) translateY(calc(min(78vw, 440px) / -2 + 9%));
-  }
-  :global(.wheelhero__counter) { transform: rotate(var(--na)); animation: orbit 120s linear infinite reverse; }
-  :global(.wheelhero__icon) { position: relative; display: block; line-height: 0; }
-  :global(.wheelhero__icon img) {
-    border-radius: 50%;
-    width: clamp(36px, 9vw, 52px);
-    height: auto;
-    transition: transform var(--dur-2) var(--ease);
-    filter: drop-shadow(0 6px 18px rgba(0, 0, 0, 0.45));
-  }
-  :global(.wheelhero__icon:hover img) { transform: scale(1.12); }
-  :global(.wheelhero__tip) {
-    position: absolute;
-    left: 50%;
-    top: calc(100% + 6px);
-    transform: translateX(-50%);
-    font-family: var(--font-mono);
-    font-size: 9.5px;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--ink-1);
-    opacity: 0;
-    transition: opacity var(--dur-2) var(--ease);
-    pointer-events: none;
-    white-space: nowrap;
-  }
-  :global(.wheelhero__icon:hover .wheelhero__tip) { opacity: 1; }
-  :global(.wheelhero:hover .wheelhero__ring),
-  :global(.wheelhero:hover .wheelhero__counter) { animation-play-state: paused; }
-  :global(.wheelhero__core) {
-    position: relative;
-    display: grid;
-    justify-items: center;
-    gap: 4px;
-    z-index: 2;
-  }
-  :global(.wheelhero__phase) { font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-2); }
-  :global(.wheelhero__moonsign) { font-size: 10px; color: var(--faint); letter-spacing: 0.08em; }
-  @keyframes orbit { to { transform: rotate(360deg); } }
   @media (prefers-reduced-motion: reduce) {
-    :global(.wheelhero__ring), :global(.wheelhero__counter) { animation: none !important; }
+    .hero__frame { box-shadow: inset 0 0 0 1px rgba(198, 204, 218, 0.10); }
   }
 
   /* ── Ticker ── */
@@ -354,11 +376,36 @@ const tools = [
   /* ── Tools ── */
   .home-tools { display: grid; gap: 14px; grid-template-columns: 1fr 1fr; }
   @media (min-width: 900px) { .home-tools { grid-template-columns: repeat(4, 1fr); } }
-  .home-tool { display: flex; flex-direction: column; gap: 8px; padding: 24px 20px; min-height: 176px; }
-  .home-tool__glyph { font-size: 21px; color: var(--sign); }
+  .home-tool {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    padding: 26px 22px 22px;
+    min-height: 196px;
+  }
+  .home-tool__glyph {
+    display: inline-grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    margin-bottom: 6px;
+    border-radius: 50%;
+    border: 1px solid color-mix(in oklab, var(--sign) 40%, transparent);
+    background: color-mix(in oklab, var(--sign) 8%, transparent);
+    font-size: 18px;
+    color: var(--sign);
+  }
   .home-tool h3 { margin: 2px 0 0; font-size: var(--text-base); font-weight: 620; letter-spacing: -0.01em; color: var(--text); }
   .home-tool p { margin: 0; font-size: 13px; color: var(--text-2); line-height: 1.55; }
-  .home-tool__go { margin-top: auto; font-size: 12.5px; font-weight: 550; color: var(--text); }
+  .home-tool__go {
+    margin-top: auto;
+    padding-top: 12px;
+    font-size: 12.5px;
+    font-weight: 550;
+    color: var(--muted);
+    transition: color var(--dur-1) var(--ease);
+  }
+  .tile:hover .home-tool__go { color: var(--text); }
 
   /* ── Demo ── */
   :global(.demo) { display: grid; gap: 22px; grid-template-columns: 1fr; align-items: start; }
