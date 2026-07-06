@@ -170,8 +170,8 @@ export default function ChartCalculator({ mode }: Props) {
             </div>
 
             <div class="field">
-              <label class="field__label" for="birth-time">
-                Birth time
+              <div class="field__labelrow">
+                <label class="field__label" for="birth-time">Birth time</label>
                 {mode !== 'rising' && (
                   <label class="field__toggle">
                     <input
@@ -182,7 +182,7 @@ export default function ChartCalculator({ mode }: Props) {
                     I don’t know it
                   </label>
                 )}
-              </label>
+              </div>
               <input
                 id="birth-time" class="field__input" type="time"
                 disabled={!timeKnown} required={timeKnown} value={time}
@@ -235,19 +235,19 @@ export default function ChartCalculator({ mode }: Props) {
         <div class="calc__result" ref={resultRef}>
           {/* Notices */}
           {chart.flags.includes('dst-gap') && (
-            <p class="notice">That clock time fell inside a daylight-saving jump, so it never quite existed — we shifted forward across the gap, the standard convention.</p>
+            <p class="notice" role="status">That clock time fell inside a daylight-saving jump, so it never quite existed — we shifted forward across the gap, the standard convention.</p>
           )}
           {chart.flags.includes('dst-fold') && (
-            <p class="notice">Clocks repeated that hour where you were born; we used the earlier pass. If you know it was the later one, your chart barely changes — the Moon moves about half a degree an hour.</p>
+            <p class="notice" role="status">Clocks repeated that hour where you were born; we used the earlier pass. If you know it was the later one, your chart barely changes — the Moon moves about half a degree an hour.</p>
           )}
           {chart.flags.includes('lmt') && (
-            <p class="notice">Born before standardized time zones — we used local mean time for that era ({city?.tz}), the same convention professional software uses. <a href="/methodology/">How we compute</a>.</p>
+            <p class="notice" role="status">Born before standardized time zones — we used local mean time for that era ({city?.tz}), the same convention professional software uses. <a href="/methodology/">How we compute</a>.</p>
           )}
           {chart.flags.includes('polar-fallback') && (
-            <p class="notice">Placidus houses aren’t defined that close to the pole, so this chart uses whole sign houses instead.</p>
+            <p class="notice" role="status">Placidus houses aren’t defined that close to the pole, so this chart uses whole sign houses instead.</p>
           )}
           {chart.flags.includes('no-time') && (
-            <p class="notice">
+            <p class="notice" role="status">
               Without a birth time we compute for noon: planets are exact to the day, but rising sign and houses need the clock.
               {moonAmbiguous && ' The Moon also changed signs that day — reading both neighbors is fair until you find the time.'}
             </p>
@@ -375,8 +375,9 @@ export default function ChartCalculator({ mode }: Props) {
               <a class="btn btn--ghost" href="/profile/"><span>Your cosmic profile</span><span class="orb">→</span></a>
             )}
           </div>
-          {saved === 'full' && <p class="calc__error">Your profile holds 20 charts — remove one on the profile page first.</p>}
-          {saved === 'error' && <p class="calc__error">Couldn’t save — your browser may be blocking local storage.</p>}
+          {saved === 'saved' && <p class="sr-only" role="status">Chart saved on this device.</p>}
+          {saved === 'full' && <p class="calc__error" role="alert">Your profile holds 20 charts — remove one on the profile page first.</p>}
+          {saved === 'error' && <p class="calc__error" role="alert">Couldn’t save — your browser may be blocking local storage.</p>}
           {saved === 'saved' && <p class="calc__saved">Saved to your cosmic profile. It stays on this device — <a href="/profile/">see it here</a>.</p>}
         </div>
       )}

@@ -378,3 +378,29 @@
 .trans__pos { font-size: 12px; color: var(--muted); letter-spacing: 0.03em; white-space: nowrap; }
 .trans__quiet { margin: 0 0 18px; max-width: 56ch; font-size: var(--text-sm); color: var(--text-2); line-height: 1.65; }
 .trans__three { display: flex; flex-wrap: wrap; gap: 12px 26px; margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--hair-2); }
+
+/* Selected-place chip: the read-only input keeps the label association. */
+.place__chip-value {
+  flex: 1;
+  min-width: 0;
+  background: none;
+  border: 0;
+  padding: 0;
+  color: var(--text);
+  font: inherit;
+  font-size: var(--text-sm);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.place__chip-value:focus { outline: none; }
+
+/* Label row: field label left, "not known" toggle right — siblings, not
+   nested labels. */
+.field__labelrow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.field__labelrow .field__label { flex: 1; }

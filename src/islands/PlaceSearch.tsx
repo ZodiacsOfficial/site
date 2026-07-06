@@ -58,11 +58,15 @@ export default function PlaceSearch({ onSelect, selected, id = 'place' }: Props)
   }
 
   if (selected) {
+    // A real (read-only) input keeps the page's <label for> association
+    // alive in the selected state and gives the value back to AT.
+    const chipValue = [selected.name, [selected.admin1, selected.country].filter(Boolean).join(', ')]
+      .filter(Boolean)
+      .join(' · ');
     return (
       <div class="place place--selected">
         <span class="place__chip">
-          <span class="place__name">{selected.name}</span>
-          <span class="place__meta">{[selected.admin1, selected.country].filter(Boolean).join(', ')}</span>
+          <input id={id} class="place__chip-value" type="text" readOnly value={chipValue} />
           <button type="button" class="place__clear" aria-label="Change birthplace" onClick={() => onSelect(null)}>×</button>
         </span>
       </div>
@@ -79,6 +83,7 @@ export default function PlaceSearch({ onSelect, selected, id = 'place' }: Props)
         aria-expanded={open}
         aria-autocomplete="list"
         aria-controls={`${id}-list`}
+        aria-activedescendant={open && results[active] ? `${id}-opt-${active}` : undefined}
         placeholder="Start typing a city…"
         autocomplete="off"
         value={query}
@@ -86,13 +91,17 @@ export default function PlaceSearch({ onSelect, selected, id = 'place' }: Props)
         onInput={(e) => onInput((e.target as HTMLInputElement).value)}
         onKeyDown={onKeyDown}
       />
-      {error && <p class="place__error">Couldn’t load the place index — check your connection and try again.</p>}
+      {error && <p class="place__error" role="alert">Couldn’t load the place index — check your connection and try again.</p>}
       {open && (
         <ul class="place__list" id={`${id}-list`} role="listbox">
           {results.map((c, i) => (
-            <li key={`${c.name}${c.lat}${c.lon}`} role="option" aria-selected={i === active}>
+            <li key={`${c.name}${c.lat}${c.lon}`} role="none">
               <button
                 type="button"
+                id={`${id}-opt-${i}`}
+                role="option"
+                aria-selected={i === active}
+                tabIndex={-1}
                 class={i === active ? 'place__option is-active' : 'place__option'}
                 onMouseEnter={() => setActive(i)}
                 onClick={() => choose(c)}

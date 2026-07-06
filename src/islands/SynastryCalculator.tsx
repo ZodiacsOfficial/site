@@ -158,8 +158,8 @@ function SlotForm({
             />
           </div>
           <div class="field">
-            <label class="field__label" for={`${idPrefix}-time`}>
-              Birth time
+            <div class="field__labelrow">
+              <label class="field__label" for={`${idPrefix}-time`}>Birth time</label>
               <label class="field__toggle">
                 <input
                   type="checkbox" checked={!slot.timeKnown}
@@ -167,7 +167,7 @@ function SlotForm({
                 />
                 Not known
               </label>
-            </label>
+            </div>
             <input
               id={`${idPrefix}-time`} class="field__input" type="time"
               disabled={!slot.timeKnown} value={slot.time}
@@ -330,7 +330,7 @@ export default function SynastryCalculator() {
       {result && (
         <div class="calc__result">
           {(!result.a.timeKnown || !result.b.timeKnown) && (
-            <p class="notice">
+            <p class="notice" role="status">
               No birth time for {[result.a, result.b].filter((p) => !p.timeKnown).map((p) => p.label).join(' and ')},
               so that Moon is a midday estimate — it can sit up to six degrees
               off, and a Moon aspect near the edge of its orb may come or go

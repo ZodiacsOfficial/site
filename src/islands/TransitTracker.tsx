@@ -209,8 +209,8 @@ export default function TransitTracker() {
                     />
                   </div>
                   <div class="field">
-                    <label class="field__label" for="trans-time">
-                      Birth time
+                    <div class="field__labelrow">
+                      <label class="field__label" for="trans-time">Birth time</label>
                       <label class="field__toggle">
                         <input
                           type="checkbox" checked={!slot.timeKnown}
@@ -218,7 +218,7 @@ export default function TransitTracker() {
                         />
                         Not known
                       </label>
-                    </label>
+                    </div>
                     <input
                       id="trans-time" class="field__input" type="time"
                       disabled={!slot.timeKnown} value={slot.time}
@@ -268,7 +268,7 @@ export default function TransitTracker() {
       {result && (
         <div class="calc__result">
           {!result.natal.timeKnown && (
-            <p class="notice">
+            <p class="notice" role="status">
               No birth time on this chart, so its Moon is a midday estimate —
               it can sit up to six degrees off, and a transit to the Moon near
               the edge of its orb may come or go with the real time.

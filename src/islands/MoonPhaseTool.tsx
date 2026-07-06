@@ -196,7 +196,7 @@ export default function MoonPhaseTool() {
             </div>
           </div>
           {result.altLon !== null && (
-            <p class="notice">
+            <p class="notice" role="status">
               The Moon changed signs that day, and without a time we can’t say
               which side of the line you were born on. The phase is unaffected —
               it moves too slowly for hours to matter.

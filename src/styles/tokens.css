@@ -64,7 +64,9 @@
   --ink-0: #EEF1F7;
   --ink-1: #C6CCDA;
   --ink-2: #8E96AB;
-  --ink-3: #5F6779;
+  /* ink-3 must hold 4.5:1 on void-0 through void-3 — the small mono
+     labels render in it (WCAG AA). */
+  --ink-3: #7A8397;
 
   /* ── Hairlines ── */
   --hair-1: rgba(198, 204, 218, 0.08);
