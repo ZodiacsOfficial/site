@@ -48,13 +48,16 @@ One mark, one nameplate, everywhere the brand speaks:
 Plain, calm, warm, and specific.
 
 Use:
-- "Calculate my chart"
-- "Read the twelve signs"
-- "computed on your device"
+- "Get your free birth chart"
+- "See your forecasts"
+- "private in your browser"
 - "birth date, time, and place"
-- "planet, house, and aspect"
+- "what it means"
 
 Avoid:
+- "whole chart" as the emotional lead
+- technical sky phrasing on consumer pages
+- insider profile terminology in visible product copy
 - crypto or market language outside `/collect/`
 - hype, urgency, scarcity, financial framing
 - "vibes", "mush", "like a human", "done properly", "shows its work"
@@ -67,11 +70,11 @@ Preserve the approved top hero structure:
 1. Fixed nav pill above the hero.
 2. Large rounded video frame using `/assets/hero/zodiacs-hero.mp4`.
 3. Poster fallback at `/assets/hero/zodiacs-hero-poster.jpg`.
-4. H1: "Your whole chart, not just your sign."
-5. Caption: "Enter your birth date, time, and place, and see every planet,
-   house, and aspect. Calculated exactly, and kept entirely on your device."
+4. H1: "Explore the stars behind your story."
+5. Caption: "Free birth charts, moon signs, compatibility, and horoscopes —
+   accurate, private, and easy to understand."
 6. Primary button to `/birth-chart/`.
-7. Secondary button to `/learn/`.
+7. Secondary button to `/horoscopes/`.
 8. The sky ticker remains visible immediately after the hero.
 
 Polish may refine spacing, type scale, contrast, crop, responsive rhythm,

@@ -22,7 +22,7 @@ const faq = [
   },
   {
     q: 'What is Astrofolio?',
-    a: 'Astrofolio is where the charts you calculate are kept: your saved charts, the relationships you follow, your cosmic profile. It starts on this device, free and without an account, with optional account sync when you want it.',
+    a: 'Astrofolio is where your saved charts live. It starts on this device, free and without an account, with optional account sync when you want your charts on every device.',
   },
   {
     q: 'What is the Registry?',
@@ -52,7 +52,7 @@ const jsonLd = [
     '@id': 'https://zodiacs.org/#site',
     url: 'https://zodiacs.org/',
     name: 'Zodiacs.org',
-    description: 'Free birth charts, sign guides, and astrology tools — computed on your device.',
+    description: 'Free birth charts, moon signs, compatibility, horoscopes, and sign guides — private in your browser.',
     publisher: { '@id': 'https://zodiacs.org/#org' },
     inLanguage: 'en',
   },
@@ -67,15 +67,15 @@ const jsonLd = [
 ];
 
 const tools = [
-  { href: '/birth-chart/', title: 'Birth chart', promise: 'The whole map — planets, houses, aspects.', hue: 'var(--sign-cancer)', glyph: '☉' },
-  { href: '/moon-sign/', title: 'Moon sign', promise: 'How you feel — found in twenty seconds.', hue: 'var(--sign-pisces)', glyph: '☽' },
-  { href: '/rising-sign/', title: 'Rising sign', promise: 'How people first read you.', hue: 'var(--sign-libra)', glyph: 'ASC' },
-  { href: '/compatibility/', title: 'Compatibility', promise: 'Two charts, honestly compared.', hue: 'var(--sign-leo)', glyph: '☌' },
+  { href: '/birth-chart/', title: 'Birth chart', promise: 'Your sun, moon, rising, planets, houses, and what they mean.', hue: 'var(--sign-cancer)', glyph: '☉' },
+  { href: '/moon-sign/', title: 'Moon sign', promise: 'How you feel — and what helps you feel at home.', hue: 'var(--sign-pisces)', glyph: '☽' },
+  { href: '/rising-sign/', title: 'Rising sign', promise: 'How people first meet you.', hue: 'var(--sign-libra)', glyph: 'ASC' },
+  { href: '/compatibility/', title: 'Compatibility', promise: 'See how two charts connect.', hue: 'var(--sign-leo)', glyph: '☌' },
 ];
 ---
 <Base
   title="Zodiacs.org — Free Birth Charts, Sign Guides & Astrology Tools"
-  description="Your whole chart, not just your sign. Calculate a free birth chart, moon sign, and rising sign, computed precisely on your device and explained clearly."
+  description="Free birth charts, moon signs, compatibility, horoscopes, and sign guides — accurate, private, and easy to understand."
   path="/"
   jsonLd={jsonLd}
 >
@@ -108,14 +108,14 @@ const tools = [
       ></video>
       <div class="hero__scrim" aria-hidden="true"></div>
       <div class="hero__content">
-        <h1 class="hero__title">Your whole chart, <em>not&nbsp;just your&nbsp;sign.</em></h1>
+        <h1 class="hero__title">Explore the stars behind your story.</h1>
         <p class="hero__sub">
-          Enter your birth date, time, and place, and see every planet, house,
-          and aspect. Calculated exactly, and kept entirely on your device.
+          Free birth charts, moon signs, compatibility, and horoscopes —
+          accurate, private, and easy to understand.
         </p>
         <div class="hero__ctas">
-          <a class="btn btn--primary" href="/birth-chart/"><span>Calculate my chart</span><span class="orb">↗</span></a>
-          <a class="btn btn--ghost hero__ghost" href="/learn/"><span>Read the twelve signs</span></a>
+          <a class="btn btn--primary" href="/birth-chart/"><span>Get your free birth chart</span><span class="orb">↗</span></a>
+          <a class="btn btn--ghost hero__ghost" href="/horoscopes/"><span>See your forecasts</span></a>
         </div>
       </div>
     </div>
@@ -161,8 +161,8 @@ const tools = [
   <!-- 03 · Tools -->
   <section class="section container">
     <div class="section-head reveal">
-      <h2>The calculators</h2>
-      <p>Each one computes from the real position of the sky at your birth. Free, and private by default.</p>
+      <h2>Start with your chart</h2>
+      <p>Find your birth chart, moon sign, rising sign, compatibility, and what the sky is doing now.</p>
     </div>
     <div class="home-tools">
       {tools.map((t, i) => (
@@ -181,8 +181,8 @@ const tools = [
   <!-- 04 · Demo chart -->
   <section class="section container">
     <div class="section-head reveal">
-      <h2>A worked example</h2>
-      <p>Frida Kahlo's chart, calculated from the 1907 sky and read back in plain terms.</p>
+      <h2>What a chart can show you</h2>
+      <p>Frida Kahlo's chart, calculated from the 1907 sky and read in plain terms.</p>
     </div>
     <div class="reveal">
       <DemoChart client:visible />
@@ -211,27 +211,27 @@ const tools = [
   <!-- 06 · Three pillars -->
   <section class="section container">
     <div class="section-head reveal">
-      <h2>Learn, calculate, keep</h2>
+      <h2>Learn your signs. Save what matters.</h2>
       <p>Three parts to the site, and you can start anywhere.</p>
     </div>
     <div class="pillars">
       <div class="pillar reveal">
         <em class="kicker">Learn</em>
         <h3>A guide to every sign</h3>
-        <p>Twelve sign guides, the big three explained, and how to read a chart, with the jargon translated as it comes up.</p>
+        <p>Twelve sign guides, the big three explained, and plain-language help for reading your chart.</p>
         <a href="/learn/">Start here →</a>
       </div>
       <div class="pillar reveal" style="--reveal-delay:80ms">
         <em class="kicker">Calculate</em>
-        <h3>Calculators for your real sky</h3>
-        <p>Birth chart, moon, and rising, with astronomical accuracy and historical time zones. Every result is checkable.</p>
+        <h3>Free astrology tools</h3>
+        <p>Birth chart, moon, rising, compatibility, and transits, calculated privately in your browser.</p>
         <a href="/tools/">Open the tools →</a>
       </div>
       <div class="pillar reveal" style="--reveal-delay:160ms">
         <em class="kicker">Keep</em>
-        <h3>A place to keep your charts</h3>
-        <p>Save a chart, return to it, and gather the people you care about. It lives on your device. Optional, and free.</p>
-        <a href="/profile/">Your profile →</a>
+        <h3>Saved charts</h3>
+        <p>Save a chart, return to it, and keep the people you care about close. Sign in only when you want sync.</p>
+        <a href="/profile/">Saved charts →</a>
       </div>
     </div>
   </section>
@@ -246,8 +246,8 @@ const tools = [
       </a>
       <a class="door reveal" href="/birth-chart/" style="--reveal-delay:70ms">
         <em class="kicker">Know your way around a chart</em>
-        <span class="door__title">The full chart, your house system</span>
-        <span class="door__sub">Whole sign or Placidus, with every aspect.</span>
+        <span class="door__title">Choose your house system</span>
+        <span class="door__sub">Whole sign or Placidus, with details when you want them.</span>
       </a>
       <a class="door door--collect reveal" href="/collect/" style="--reveal-delay:140ms">
         <em class="kicker">A collector</em>
@@ -272,9 +272,9 @@ const tools = [
 
   <!-- 09 · Close -->
   <section class="section container close">
-    <h2 class="display reveal">Begin with your own chart.</h2>
+    <h2 class="display reveal">Start with your birth chart.</h2>
     <div class="reveal" style="--reveal-delay:120ms">
-      <a class="btn btn--primary" href="/birth-chart/"><span>Calculate my chart</span><span class="orb">↗</span></a>
+      <a class="btn btn--primary" href="/birth-chart/"><span>Get your free birth chart</span><span class="orb">↗</span></a>
     </div>
   </section>
 </Base>
@@ -316,11 +316,11 @@ const tools = [
     z-index: 1;
     background:
       linear-gradient(180deg,
-        rgba(6, 7, 9, 0.34) 0%,
-        rgba(6, 7, 9, 0.10) 32%,
-        rgba(6, 7, 9, 0.16) 55%,
-        rgba(6, 7, 9, 0.78) 86%,
-        rgba(6, 7, 9, 0.90) 100%);
+        rgba(6, 7, 9, 0.58) 0%,
+        rgba(6, 7, 9, 0.34) 30%,
+        rgba(6, 7, 9, 0.22) 56%,
+        rgba(6, 7, 9, 0.70) 88%,
+        rgba(6, 7, 9, 0.88) 100%);
   }
   .hero__content {
     position: relative;
@@ -329,19 +329,21 @@ const tools = [
     min-height: inherit;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
+    align-items: center;
+    justify-content: flex-start;
     gap: 0;
-    padding: clamp(22px, 4vw, 56px);
+    padding: clamp(88px, 12svh, 124px) clamp(22px, 4vw, 56px) clamp(28px, 5vw, 64px);
+    text-align: center;
   }
   .hero__title {
     margin: 0 0 clamp(14px, 2vw, 20px);
     font-family: var(--font-sans);
     font-weight: 690;
-    font-size: clamp(2.05rem, 0.85rem + 5.8vw, 5.5rem);
-    line-height: 0.98;
+    font-size: clamp(2.4rem, 0.95rem + 5.9vw, 6rem);
+    line-height: 0.94;
     letter-spacing: 0.002em;
     text-transform: uppercase;
-    max-width: 17ch;
+    max-width: 14ch;
     color: var(--ink-0, #EEF1F7);
     text-wrap: balance;
     text-shadow: 0 2px 28px rgba(6, 7, 9, 0.55);
@@ -353,14 +355,19 @@ const tools = [
   }
   .hero__sub {
     margin: 0 0 clamp(20px, 3vw, 28px);
-    max-width: 52ch;
+    max-width: 48ch;
     color: var(--ink-1, #C6CCDA);
     font-size: clamp(0.95rem, 0.85rem + 0.5vw, 1.125rem);
     line-height: 1.6;
     text-wrap: pretty;
     text-shadow: 0 1px 18px rgba(6, 7, 9, 0.6);
   }
-  .hero__ctas { display: flex; flex-wrap: wrap; gap: 12px; }
+  .hero__ctas {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+  }
   /* Ghost button needs its own footing on live footage. */
   .hero__ghost {
     background: rgba(10, 12, 17, 0.42);
@@ -414,7 +421,17 @@ const tools = [
   @media (max-width: 640px) {
     .hero { width: min(100% - 20px, 1440px); }
     .hero__frame { min-height: clamp(540px, calc(100svh - 180px), 700px); }
-    .hero__content { padding: 20px 18px 22px; }
+    .hero__content { padding: clamp(86px, 14svh, 112px) 18px 22px; }
+    .hero__title {
+      max-width: 11ch;
+      font-size: clamp(2.25rem, 11.5vw, 3.55rem);
+      line-height: 0.95;
+    }
+    .hero__sub {
+      max-width: 31ch;
+      font-size: 0.98rem;
+      line-height: 1.52;
+    }
     .hero__ctas .btn { flex: 1 1 auto; justify-content: center; }
   }
   @media (prefers-reduced-motion: reduce) {

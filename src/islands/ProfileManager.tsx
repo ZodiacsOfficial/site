@@ -1,5 +1,5 @@
 /**
- * Your cosmic profile — the local-first Astrofolio surface. Renders
+ * Saved charts — the local-first Astrofolio surface. Renders
  * saved charts from localStorage, supports rename/delete, and frames
  * the local-first sync model honestly.
  */
@@ -134,11 +134,11 @@ export default function ProfileManager() {
     <aside class="pf-sync shell">
       <div class="core pf-sync__core">
         <div>
-          <strong>{session ? 'Sync is on' : 'Keep this on every device'}</strong>
+          <strong>{session ? 'Sync is on' : 'Keep charts on every device'}</strong>
           <p>
             {session
-              ? `Signed in${session.user.email ? ` as ${session.user.email}` : ''}. Saved charts and removals merge across devices by chart ID.`
-              : 'Optional account sync uploads saved charts and removals after you sign in. Local saves keep working without it.'}
+              ? `Signed in${session.user.email ? ` as ${session.user.email}` : ''}. Saved charts and removals sync across devices.`
+              : 'Save charts on this device. Sign in when you want them on every device.'}
           </p>
           {syncMessage && <p class={`pf-sync__message pf-sync__message--${syncState}`}>{syncMessage}</p>}
         </div>
@@ -181,7 +181,7 @@ export default function ProfileManager() {
             <p>
               Charts you save will live here, on your device first. Run a
               chart and tap <strong>Save this chart</strong> to start your
-              cosmic profile.
+              saved charts.
             </p>
             <a class="btn btn--primary" href="/birth-chart/">
               <span>Get your free birth chart</span><span class="orb">↗</span>

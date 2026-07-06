@@ -1,5 +1,5 @@
 /**
- * The proof strip: live computed sky facts, one quiet mono line.
+ * The proof strip: live sky facts, one quiet mono line.
  * Sun/Moon from the lite math; retrogrades + next lunation from the
  * build-time sky data — the ephemeris never loads here.
  */

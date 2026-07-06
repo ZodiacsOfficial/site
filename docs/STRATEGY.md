@@ -18,9 +18,9 @@ This document is the operating strategy for the Learn / Explore / Collect restru
 **What's weak or dangerous — stated plainly:**
 
 1. **The crypto elephant.** The Collect layer is tradeable tokens. The mass astrology audience is the audience most allergic to token-shilling, and search engines treat crypto as YMYL. If token language leaks into Learn/Explore surfaces it poisons both trust and SEO. The fix is hard separation: crypto exists *only* inside `/collect/`, framed as a collector's wing, keeping its read-only/no-advice discipline. For 99% of visitors, "Astrofolio" must mean *saving charts* — the tokens are the deep end for the 1%.
-2. **The Astrofolio promise gap.** "Build your cosmic profile" CTAs need somewhere real to land. That's why the MVP ships a local-first profile on zodiacs.org itself; accounts come only when sync is a real need.
+2. **The Astrofolio promise gap.** "Saved charts" CTAs need somewhere real to land. That's why the MVP ships local-first saved charts on zodiacs.org itself; accounts come only when sync is a real need.
 3. **SEO is a 6–18 month compounding game** from near-zero consumer authority. Expect quiet months. The counter is correct cluster architecture from day one plus AEO/AI-answer citation, where this repo already has real infrastructure.
-4. **Horoscopes are a treadmill.** Daily × 12 is the classic content mill. Only do it with the transit-grounded pipeline (Phase 2) — computed sky data in, structured editorial out — or not at all.
+4. **Horoscopes are a treadmill.** Daily × 12 is the classic content mill. Only do it with the transit-grounded pipeline (Phase 2) — real sky dates in, structured editorial out — or not at all.
 5. **Ploy.ai is a loaded gun.** Programmatic AI content at scale is exactly what scaled-content-abuse policies target. Use it as a research/draft/monitoring engine gated by human review and an embedded-tool quality bar. Never as an autopublisher.
 
 **Never do:** token CTAs outside `/collect/` · thin 200-word SEO pages · fake urgency · gating basic results behind signup (the anti-Co-Star move is the differentiator) · mystical clip-art · letting any tool autopublish to the domain.
@@ -47,7 +47,7 @@ This document is the operating strategy for the Learn / Explore / Collect restru
 /synastry/ /moon-phase/ /saturn-return/ /transits/    Phase 2–3
 /horoscopes/{sign}/        Phase 2: weekly + monthly first; daily in Phase 3
 /compatibility/{a}-{b}/    Phase 2/3: 78 pair pages, only after the synastry tool exists
-/profile/                  Your Cosmic Profile (local-first; the Astrofolio surface)
+/profile/                  Saved charts (local-first; the Astrofolio surface)
 /collect/                  Collect wing landing (the registry experience, preserved)
   /collect/{sign}/           token catalogue pages (moved from /{sign}/)
 /thesis/ /archive/ /sdk/   Unchanged URLs (collector/builder wing)
@@ -61,15 +61,15 @@ This document is the operating strategy for the Learn / Explore / Collect restru
 
 Conversion arc (layout rhythm inspired by ploy.ai; execution fully zodiac-native): sparse commanding hero → light-density live proof → tool cards → capability demonstration → full catalog → three pillars → persona doors → FAQ → minimal close.
 
-1. **Hero** — H1 **"See the sky you were born under."** · sub: "Free birth charts, moon signs, and compatibility — accurate, private, computed on your device, explained in plain language." · CTAs **"Get your free birth chart"** / **"Explore the twelve signs"** · signature asset: the **Zodiac Wheel** — the 12 pastel icons in a slow orbital ring around a live computed moon-phase core.
+1. **Hero** — H1 **"Explore the stars behind your story."** · sub: "Free birth charts, moon signs, compatibility, and horoscopes — accurate, private, and easy to understand." · CTAs **"Get your free birth chart"** / **"See your forecasts"** · signature asset: the rounded zodiac video surface.
 2. **Live sky ticker** — "Right now · Sun 13°41′ Cancer · Moon in Scorpio · Mercury direct · Full moon in 5 days." Real computation as credibility.
-3. **Tool cards** — Birth Chart ("The whole map") · Moon Sign ("How you feel") · Rising Sign ("How people first read you") · Sign Guides. Only live features get cards.
+3. **Tool cards** — Birth Chart ("what it means") · Moon Sign ("how you feel") · Rising Sign ("how people first meet you") · Compatibility. Only live features get cards.
 4. **Demo chart** — a real annotated chart (Frida Kahlo, public birth data), three plain-language callouts, "Yours takes about 20 seconds."
 5. **The Twelve** — pastel icon grid → guides (the internal-link hub).
-6. **Three pillars** — Learn · Tools · **Keep (Astrofolio)**: "Save charts, track relationships, build a cosmic profile that's yours."
+6. **Three pillars** — Learn · Tools · **Saved charts (Astrofolio)**: "Learn your signs. Save what matters."
 7. **Persona doors** — New here? → Big Three · Chart-literate? → full calculator · A collector? → the Registry wing.
 8. **FAQ** (free? accurate? what happens to my birth data? what is Astrofolio? what is the registry?) with FAQPage schema.
-9. **Close** — "The sky's already moving. See where it started for you."
+9. **Close** — "Start with your birth chart."
 
 ## 3. Navigation
 
@@ -77,9 +77,9 @@ Conversion arc (layout rhythm inspired by ploy.ai; execution fully zodiac-native
 
 ## 4. Voice & microcopy
 
-Plain language first; jargon translated inline ("Rising sign — how people first read you"). Confident and warm; never woo-woo, never salesy. Computed facts stated as facts with degrees and timestamps — the site shows its work.
+Plain language first; jargon translated inline ("Rising sign — how people first meet you"). Confident and warm; never woo-woo, never salesy. Technical facts stay available where they build trust.
 
-Canonical labels: "Get your free birth chart" · "Save this chart" → "Saved · on this device" · "Add to my profile" · "Find your moon sign" / "Find your rising sign" · "Read your sign" · "Enter the collector's wing" · profile empty state: "Nothing saved yet. Charts you save will live here — on your device, not ours." · Astrofolio one-liner: "Astrofolio is where what you discover gets kept — charts, relationships, your cosmic profile. Optional, free."
+Canonical labels: "Get your free birth chart" · "Save this chart" → "Saved · on this device" · "Saved charts" · "Find your moon sign" / "Find your rising sign" · "Read your sign" · "Enter the collector's wing" · profile empty state: "Nothing saved yet. Charts you save will live here, on your device first." · Astrofolio one-liner: "Save charts on this device. Sign in when you want them on every device."
 
 ## 5. MVP feature set (shipped in this restructure)
 
@@ -88,7 +88,7 @@ Canonical labels: "Get your free birth chart" · "Save this chart" → "Saved ·
 3. Birth chart calculator — fully client-side: offline city index → historical timezone → Sun–Pluto + True Node + ASC/MC + Whole Sign/Placidus houses + aspects → interactive SVG wheel + placements + big-three readings + Save.
 4. Moon sign + rising sign calculators (same engine, dedicated SEO landers).
 5. 12 sign guides (personality, love, strengths, myth/heritage, big-three variants, FAQ).
-6. `/profile/` local cosmic profile.
+6. `/profile/` local saved charts.
 7. `/collect/` wing: the prior registry homepage preserved intact; catalogue at `/collect/{sign}/`.
 8. SEO base: per-page meta/OG, JSON-LD, composed sitemap, rewritten llms.txt, methodology page.
 

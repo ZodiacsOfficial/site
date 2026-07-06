@@ -453,16 +453,16 @@ export default function ChartCalculator({ mode }: Props) {
               <span class="orb">{saved === 'saved' ? '✓' : '+'}</span>
             </button>
             {mode !== 'full' && (
-              <a class="btn btn--ghost" href="/birth-chart/"><span>Get the whole chart</span><span class="orb">↗</span></a>
+              <a class="btn btn--ghost" href="/birth-chart/"><span>Get your birth chart</span><span class="orb">↗</span></a>
             )}
             {mode === 'full' && (
-              <a class="btn btn--ghost" href="/profile/"><span>Your cosmic profile</span><span class="orb">→</span></a>
+              <a class="btn btn--ghost" href="/profile/"><span>Saved charts</span><span class="orb">→</span></a>
             )}
           </div>
           {saved === 'saved' && <p class="sr-only" role="status">Chart saved on this device.</p>}
-          {saved === 'full' && <p class="calc__error" role="alert">Your profile holds 20 charts — remove one on the profile page first.</p>}
+          {saved === 'full' && <p class="calc__error" role="alert">You can save up to 20 charts — remove one first.</p>}
           {saved === 'error' && <p class="calc__error" role="alert">Couldn’t save — your browser may be blocking local storage.</p>}
-          {saved === 'saved' && <p class="calc__saved">Saved to your cosmic profile. Manage device storage and optional sync <a href="/profile/">here</a>.</p>}
+          {saved === 'saved' && <p class="calc__saved">Saved to your charts. Sign in <a href="/profile/">here</a> when you want them on every device.</p>}
 
           {/* Share: the link carries the data; no server involved */}
           {mode === 'full' && shareInput && (

@@ -1,5 +1,5 @@
 /**
- * The local-first cosmic profile. Birth input is the source of truth
+ * The local-first saved-charts profile. Birth input is the source of truth
  * (lossless recompute forever); `summary` is a render cache stamped with
  * the engine version. UUID ids make the Phase-2 Supabase sync an
  * idempotent bulk upsert — do not change shapes casually.

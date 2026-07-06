@@ -17,11 +17,11 @@ Open Design reference:
 The homepage top is approved by the owner:
 
 - Large rounded video hero.
-- Headline over video: "Your whole chart, not just your sign."
+- Headline over video: "Explore the stars behind your story."
 - Caption below headline inside the same video frame.
 - Two buttons:
-  - "Calculate my chart" -> `/birth-chart/`
-  - "Read the twelve signs" -> `/learn/`
+  - "Get your free birth chart" -> `/birth-chart/`
+  - "See your forecasts" -> `/horoscopes/`
 - The sky ticker remains immediately after the hero.
 
 Changed files/assets from the Codex pass:
