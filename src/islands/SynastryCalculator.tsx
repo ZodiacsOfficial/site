@@ -15,6 +15,8 @@ import type { MinimalBody, PairSummary } from '../lib/engine/synastry';
 import { synastryLine, pairSlug } from '../lib/compat';
 import { ELEMENT_LABEL, signForLongitude } from '../lib/signs';
 import { resolveLocalToUtc } from '../lib/time/localToUtc';
+import { decodeChartLink, encodeChartLink } from '../lib/share';
+import type { ShareChartInput } from '../lib/share';
 import { ENGINE_VERSION } from '../lib/engine/types';
 import type { City } from '../lib/geo/search';
 
@@ -27,13 +29,15 @@ let enginePromise: Promise<typeof import('../lib/engine/full')> | null = null;
 const loadEngine = () => (enginePromise ??= import('../lib/engine/full'));
 
 interface SlotState {
-  source: 'saved' | 'form';
+  source: 'saved' | 'form' | 'link';
   savedId: string;
   name: string;
   date: string;
   time: string;
   timeKnown: boolean;
   city: City | null;
+  /** Chart that arrived in the URL fragment — locked, clearable. */
+  link: { input: ShareChartInput; label: string } | null;
 }
 
 interface Person {
@@ -45,7 +49,7 @@ interface Person {
 }
 
 const emptySlot = (): SlotState => ({
-  source: 'form', savedId: '', name: '', date: '', time: '', timeKnown: true, city: null,
+  source: 'form', savedId: '', name: '', date: '', time: '', timeKnown: true, city: null, link: null,
 });
 
 /** Short handle for sentences: chart names like "Cancer Sun · 1990-02-01" trim to "Cancer Sun". */
@@ -87,6 +91,30 @@ async function resolveSaved(chart: SavedChart): Promise<Person> {
   }
 }
 
+async function resolveLink(link: { input: ShareChartInput; label: string }): Promise<Person> {
+  const engine = await loadEngine();
+  const { input } = link;
+  const resolved = resolveLocalToUtc(
+    input.date,
+    input.timeKnown && input.time ? input.time : '12:00',
+    input.tz,
+  );
+  const result = engine.computeChart({
+    utc: resolved.utc,
+    latitude: input.lat,
+    longitude: input.lon,
+    houseSystem: 'whole',
+    timeKnown: input.timeKnown,
+    flags: resolved.flags,
+  });
+  return {
+    label: link.label,
+    bodies: result.bodies.map(({ body, lon }) => ({ body, lon })),
+    asc: result.angles?.asc ?? null,
+    timeKnown: input.timeKnown,
+  };
+}
+
 async function resolveForm(slot: SlotState, fallbackLabel: string): Promise<Person> {
   const engine = await loadEngine();
   const timeKnown = slot.timeKnown && slot.time !== '';
@@ -116,6 +144,28 @@ function SlotForm({
   idPrefix: string;
   fallbackLabel: string;
 }) {
+  if (slot.source === 'link' && slot.link) {
+    return (
+      <div class="syn__slot">
+        <span class="mono--label">{fallbackLabel}</span>
+        <div class="field">
+          <label class="field__label" for={`${idPrefix}-linked`}>Chart</label>
+          <span class="place__chip">
+            <input
+              id={`${idPrefix}-linked`} class="place__chip-value" type="text" readOnly
+              value={`${slot.link.label} · shared with you`}
+            />
+            <button
+              type="button" class="place__clear" aria-label="Remove the shared chart"
+              onClick={() => setSlot(() => emptySlot())}
+            >×</button>
+          </span>
+          <p class="field__help">This side arrived in the link — clear it to enter someone else.</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div class="syn__slot">
       <span class="mono--label">{fallbackLabel}</span>
@@ -226,6 +276,8 @@ export default function SynastryCalculator() {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
   const [autoRan, setAutoRan] = useState(false);
+  const [invite, setInvite] = useState<ShareChartInput | null>(null);
+  const [inviteState, setInviteState] = useState<'idle' | 'copied' | 'manual'>('idle');
 
   useEffect(() => {
     const p = loadProfile();
@@ -244,6 +296,21 @@ export default function SynastryCalculator() {
       linked += 1;
     }
     if (linked === 2) setAutoRan(true);
+    // #a= fragment: a chart shared from another device rides in the URL
+    // itself. It fills Person A; the fragment is then stripped so the
+    // birth details don't linger in the bar.
+    const token = new URLSearchParams(window.location.hash.slice(1)).get('a');
+    if (token) {
+      const decoded = decodeChartLink(token);
+      if (decoded) {
+        setSlotA({
+          ...emptySlot(),
+          source: 'link',
+          link: { input: decoded, label: decoded.name ?? 'Shared chart' },
+        });
+        history.replaceState(null, '', window.location.pathname + window.location.search);
+      }
+    }
     const sync = () => setProfile(loadProfile());
     window.addEventListener('zodiacs:profile', sync);
     return () => window.removeEventListener('zodiacs:profile', sync);
@@ -252,8 +319,8 @@ export default function SynastryCalculator() {
   const charts = profile.charts;
 
   const slotReady = (slot: SlotState) =>
-    slot.source === 'saved'
-      ? charts.some((c) => c.id === slot.savedId)
+    slot.source === 'saved' ? charts.some((c) => c.id === slot.savedId)
+      : slot.source === 'link' ? slot.link !== null
       : slot.date !== '' && slot.city !== null;
 
   const sameSaved =
@@ -262,6 +329,53 @@ export default function SynastryCalculator() {
 
   const canCompare = slotReady(slotA) && slotReady(slotB) && !sameSaved && !busy;
 
+  // Only the inviter's own side rides in an invite link — a chart that
+  // itself arrived by link is someone else's data and never re-shared.
+  function inviteFromSlot(slot: SlotState): ShareChartInput | null {
+    if (slot.source === 'link') return null;
+    if (slot.source === 'saved') {
+      const c = charts.find((x) => x.id === slot.savedId);
+      if (!c || !c.birth.place) return null;
+      return {
+        date: c.birth.date,
+        time: c.birth.time,
+        timeKnown: c.birth.timeKnown,
+        lat: c.birth.place.lat,
+        lon: c.birth.place.lon,
+        tz: c.birth.place.tz,
+        name: handleOf(c.name),
+        place: c.birth.place.name,
+        houseSystem: 'whole',
+      };
+    }
+    if (slot.date === '' || slot.city === null) return null;
+    const timeKnown = slot.timeKnown && slot.time !== '';
+    return {
+      date: slot.date,
+      time: timeKnown ? slot.time : null,
+      timeKnown,
+      lat: slot.city.lat,
+      lon: slot.city.lon,
+      tz: slot.city.tz,
+      name: slot.name.trim() || undefined,
+      place: slot.city.name,
+      houseSystem: 'whole',
+    };
+  }
+
+  const inviteUrl = () =>
+    `${window.location.origin}/compatibility/#a=${encodeChartLink(invite!)}`;
+
+  async function onInvite() {
+    if (!invite) return;
+    try {
+      await navigator.clipboard.writeText(inviteUrl());
+      setInviteState('copied');
+    } catch {
+      setInviteState('manual');
+    }
+  }
+
   async function compare(e?: Event) {
     e?.preventDefault();
     if (!slotReady(slotA) || !slotReady(slotB) || sameSaved) return;
@@ -269,12 +383,14 @@ export default function SynastryCalculator() {
     setError('');
     try {
       const resolve = (slot: SlotState, fallback: string) =>
-        slot.source === 'saved'
-          ? resolveSaved(charts.find((c) => c.id === slot.savedId)!)
+        slot.source === 'saved' ? resolveSaved(charts.find((c) => c.id === slot.savedId)!)
+          : slot.source === 'link' ? resolveLink(slot.link!)
           : resolveForm(slot, fallback);
       const [a, b] = await Promise.all([resolve(slotA, 'Person A'), resolve(slotB, 'Person B')]);
       const summary = summarizePair(a.bodies, b.bodies, 8);
       setResult({ a, b, summary });
+      setInvite(inviteFromSlot(slotA));
+      setInviteState('idle');
     } catch (err) {
       setError('Something went wrong comparing the charts. Please try again.');
       console.error(err);
@@ -372,6 +488,33 @@ export default function SynastryCalculator() {
               <a class="btn btn--ghost" href={pairHref.href}>
                 <span>Read the {pairHref.a} and {pairHref.b} pairing</span><span class="orb">→</span>
               </a>
+            </div>
+          )}
+
+          {/* Invite: A's side rides in the link; B fills their own */}
+          {invite && (
+            <div class="calc__share">
+              <div class="calc__actions">
+                <button class="btn btn--ghost" type="button" onClick={onInvite} data-invite-link>
+                  <span>{inviteState === 'copied' ? 'Link copied' : `Invite someone to compare with ${result.a.label}`}</span>
+                  <span class="orb">{inviteState === 'copied' ? '✓' : '⧉'}</span>
+                </button>
+              </div>
+              {inviteState === 'manual' && (
+                <input
+                  class="field__input calc__share-url" type="text" readOnly value={inviteUrl()}
+                  aria-label="Invite link"
+                  onFocus={(e) => (e.target as HTMLInputElement).select()}
+                />
+              )}
+              <p class="calc__share-note">
+                The link carries {result.a.label}’s birth details and opens this
+                page with that side filled in — nothing is sent to us. Worth
+                their okay if that isn’t you.
+              </p>
+              {inviteState === 'copied' && (
+                <p class="sr-only" role="status">Invite link copied to your clipboard.</p>
+              )}
             </div>
           )}
         </div>

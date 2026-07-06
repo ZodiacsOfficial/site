@@ -26,19 +26,20 @@
     "report:bundles": "node scripts/report-bundles.mjs"
   },
   "dependencies": {
-    "@astrojs/mdx": "^4.3.0",
-    "@astrojs/preact": "^4.1.0",
-    "astro": "^5.10.0",
+    "@astrojs/mdx": "^7.0.2",
+    "@astrojs/preact": "^6.0.1",
+    "@supabase/supabase-js": "^2.110.0",
+    "astro": "^7.0.6",
     "astronomy-engine": "^2.1.19",
     "preact": "^10.26.0"
   },
   "devDependencies": {
-    "@astrojs/check": "^0.9.4",
+    "@astrojs/check": "^0.9.9",
     "@babel/standalone": "7.26.4",
     "@fontsource-variable/instrument-sans": "^5.2.0",
     "@fontsource-variable/jetbrains-mono": "^5.2.0",
     "@fontsource/eb-garamond": "^5.2.7",
-    "@types/node": "^26.1.0",
+    "@types/node": "^22.20.0",
     "playwright-core": "^1.61.1",
     "sharp": "^0.34.0",
     "typescript": "^5.8.0",

@@ -12,7 +12,7 @@
  * Mercury tops out near 2.2°/day against 30° signs, so nothing hides):
  *   Sun, Mercury, Venus, Mars     2026-01-01 → 2029-07-01
  *   Jupiter                       2014-01-01 → 2046-01-01
- *   Saturn                        1980-01-01 → 2046-01-01
+ *   Saturn                        1980-01-01 → 2080-01-01
  *   Uranus, Neptune, Pluto        1900-01-01 → 2100-01-01
  * The Moon is excluded — a 2.5-day rhythm reads better as copy than as
  * a table. Retrograde re-entries appear as separate honest windows.
@@ -39,7 +39,7 @@ const DAY = 86400_000;
 const GROUPS = [
   { planets: ['Sun', 'Mercury', 'Venus', 'Mars'], from: Date.UTC(2026, 0, 1), to: Date.UTC(2029, 6, 1) },
   { planets: ['Jupiter'], from: Date.UTC(2014, 0, 1), to: Date.UTC(2046, 0, 1) },
-  { planets: ['Saturn'], from: Date.UTC(1980, 0, 1), to: Date.UTC(2046, 0, 1) },
+  { planets: ['Saturn'], from: Date.UTC(1980, 0, 1), to: Date.UTC(2080, 0, 1) },
   { planets: ['Uranus', 'Neptune', 'Pluto'], from: Date.UTC(1900, 0, 1), to: Date.UTC(2100, 0, 1) },
 ];
 

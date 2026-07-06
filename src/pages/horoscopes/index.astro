@@ -21,7 +21,7 @@ const jsonLd = [
     '@type': 'CollectionPage',
     name: `Monthly horoscopes — ${label}`,
     url: 'https://zodiacs.org/horoscopes/',
-    description: `Monthly horoscopes for all twelve signs, written against the month's computed sky: every claim carries a date you can check.`,
+    description: `Monthly horoscopes for all twelve signs, grounded in the real dates of the moon phases, retrogrades, and major transits.`,
   },
   {
     '@type': 'ItemList',
@@ -37,7 +37,7 @@ const jsonLd = [
 ---
 <Base
   title={`Monthly Horoscopes — ${label}, All 12 Signs | Zodiacs.org`}
-  description={`${label} horoscopes for every sign, grounded in the computed sky: real transit dates for the month's new moon, full moon, stations, and ingresses.`}
+  description={`${label} horoscopes for every sign, grounded in the real dates of the moon phases, retrogrades, and major transits.`}
   path="/horoscopes/"
   image="/assets/og/v2/tool/horoscopes.png"
   imageAlt="Monthly horoscopes for all twelve signs — Zodiacs.org"
@@ -46,12 +46,10 @@ const jsonLd = [
   <section class="section--tight container container--narrow">
     <div class="horo-hero reveal">
       <em class="kicker">{label}</em>
-      <h1 class="display">Horoscopes</h1>
+      <h1 class="display">Monthly horoscopes</h1>
       <p>
-        Written against the month’s actual sky: the ingresses, lunations,
-        and stations our engine computes, so every claim carries a date you
-        can check. Each page prints the month’s event list beneath the
-        reading.
+        Read this month’s horoscope for your sign, grounded in the real dates
+        of the moon phases, retrogrades, and major transits.
       </p>
     </div>
 
@@ -66,8 +64,8 @@ const jsonLd = [
     </div>
 
     <p class="horo-note reveal">
-      Horoscopes read the sky against your sun sign; your whole chart says
-      more. <a href="/birth-chart/">Compute it free</a> — or read
+      Horoscopes read the sky against your sun sign; your birth chart says
+      more. <a href="/birth-chart/">Get your free birth chart</a> — or read
       <a href="/methodology/">how the sky data is calculated</a>.
     </p>
   </section>

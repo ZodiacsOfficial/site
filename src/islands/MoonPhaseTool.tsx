@@ -207,7 +207,7 @@ export default function MoonPhaseTool() {
           )}
           <div class="calc__actions">
             <a class="btn btn--ghost" href="/birth-chart/">
-              <span>Get the whole chart for this date</span><span class="orb">↗</span>
+              <span>Get the birth chart for this date</span><span class="orb">↗</span>
             </a>
           </div>
         </div>

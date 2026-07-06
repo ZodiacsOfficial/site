@@ -170,7 +170,7 @@ export default function SaturnReturnCalculator() {
 
           <div class="calc__actions">
             <a class="btn btn--ghost" href="/birth-chart/">
-              <span>See Saturn in your whole chart</span><span class="orb">↗</span>
+              <span>See Saturn in your birth chart</span><span class="orb">↗</span>
             </a>
             <a class="btn btn--ghost" href="/learn/planets/saturn/">
               <span>What Saturn means</span><span class="orb">→</span>

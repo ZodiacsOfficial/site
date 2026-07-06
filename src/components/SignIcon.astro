@@ -19,7 +19,7 @@ const { sign, size = 24, alt = '', loading = 'lazy', class: className } = Astro.
 const s = signBySlug(sign);
 const tier = size <= 24 ? 48 : size <= 64 ? 128 : 400;
 ---
-<picture class:list={['sign-icon', className]} style={`--sign:${s.hue}`}>
+<picture class:list={['sign-icon', className]} style={`--sign:${s.hue};--sign-size:${size}px`}>
   <source srcset={`/assets/zodiac-icons/${tier}/${sign}.avif`} type="image/avif" />
   <img
     src={`/assets/zodiac-icons/${tier}/${sign}.webp`}
@@ -32,6 +32,6 @@ const tier = size <= 24 ? 48 : size <= 64 ? 128 : 400;
 </picture>
 
 <style>
-  .sign-icon { display: inline-block; line-height: 0; }
+  .sign-icon { display: inline-block; flex: 0 0 auto; width: var(--sign-size); max-width: 100%; line-height: 0; }
   .sign-icon img { width: 100%; height: auto; border-radius: 50%; }
 </style>

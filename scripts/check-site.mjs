@@ -1,11 +1,11 @@
 /*
- * Static integrity checks for the site. Zero dependencies; run from the
- * repo root (CI runs it on every push):
+ * Static integrity checks for the committed legacy wing in public/.
+ * Zero dependencies; run from the repo root:
  *
  *   node scripts/check-site.mjs
  *
  * Checks:
- *   1. registry/zodiacs.registry.json — 12 assets, solana + base
+ *   1. public/registry/zodiacs.registry.json — 12 assets, solana + base
  *      representation (with address) on each.
  *   2. archive/feed.json — JSON Feed 1.1 shape, non-empty, dated items.
  *   3. archive/rss.xml — XML declaration, balanced tags, item count
@@ -14,13 +14,14 @@
  *   5. Every href/src in committed *.html — site-relative and relative
  *      paths must resolve to a file; internal fragment links must point
  *      at an existing id.
- *   6. sitemap.xml — well-formed, every loc resolves to a committed file.
+ * The Astro-built dist/ has its own checker: scripts/check-dist.mjs.
  */
 import { readFile, readdir, stat } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve, join, relative } from 'node:path';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
+const publicRoot = resolve(root, 'public');
 const failures = [];
 const fail = (msg) => { failures.push(msg); };
 
@@ -29,7 +30,7 @@ async function exists(path) {
 }
 
 // ---- 1. Registry ----------------------------------------------------------
-const registry = JSON.parse(await readFile(resolve(root, 'registry/zodiacs.registry.json'), 'utf8'));
+const registry = JSON.parse(await readFile(resolve(publicRoot, 'registry/zodiacs.registry.json'), 'utf8'));
 if (!Array.isArray(registry.assets) || registry.assets.length !== 12) {
   fail(`registry: expected 12 assets, found ${registry.assets?.length}`);
 }
@@ -41,7 +42,7 @@ for (const asset of registry.assets ?? []) {
 }
 
 // ---- 2. JSON Feed ----------------------------------------------------------
-const feed = JSON.parse(await readFile(resolve(root, 'archive/feed.json'), 'utf8'));
+const feed = JSON.parse(await readFile(resolve(publicRoot, 'archive/feed.json'), 'utf8'));
 if (!String(feed.version || '').includes('jsonfeed.org/version/1.1')) {
   fail(`feed.json: unexpected version ${feed.version}`);
 }
@@ -55,7 +56,7 @@ for (const item of feed.items ?? []) {
 }
 
 // ---- 3. RSS ----------------------------------------------------------------
-const rss = await readFile(resolve(root, 'archive/rss.xml'), 'utf8');
+const rss = await readFile(resolve(publicRoot, 'archive/rss.xml'), 'utf8');
 if (!rss.startsWith('<?xml')) fail('rss.xml: missing XML declaration');
 {
   const stack = [];
@@ -79,10 +80,10 @@ if (!rss.startsWith('<?xml')) fail('rss.xml: missing XML declaration');
 }
 
 // ---- 4. Data snapshots ------------------------------------------------------
-const pulse = JSON.parse(await readFile(resolve(root, 'assets/pulse.json'), 'utf8'));
+const pulse = JSON.parse(await readFile(resolve(publicRoot, 'assets/pulse.json'), 'utf8'));
 if (!pulse.capturedAt) fail('pulse.json: missing capturedAt');
-if (await exists(resolve(root, 'assets/distribution.json'))) {
-  const dist = JSON.parse(await readFile(resolve(root, 'assets/distribution.json'), 'utf8'));
+if (await exists(resolve(publicRoot, 'assets/distribution.json'))) {
+  const dist = JSON.parse(await readFile(resolve(publicRoot, 'assets/distribution.json'), 'utf8'));
   if (!dist.capturedAt) fail('distribution.json: missing capturedAt');
   if (!dist.signs || typeof dist.signs !== 'object') fail('distribution.json: missing signs');
   for (const [sign, d] of Object.entries(dist.signs ?? {})) {
@@ -110,7 +111,8 @@ async function htmlFiles(dir) {
 function targetPath(urlPath) {
   const clean = urlPath.split(/[?#]/)[0];
   if (!clean) return null;
-  const abs = resolve(root, clean.replace(/^\//, ''));
+  if (clean === '/') return null;
+  const abs = resolve(publicRoot, clean.replace(/^\//, ''));
   return clean.endsWith('/') ? join(abs, 'index.html') : abs;
 }
 
@@ -121,10 +123,10 @@ async function hasId(filePath, id) {
   }
   const html = idCache.get(filePath);
   if (html.includes(`id="${id}"`) || html.includes(`id='${id}'`)) return true;
-  // The homepage renders its sections client-side; ids live in the
+  // The legacy collect index renders some sections client-side; ids live in the
   // compiled bundle (JSX id="x" compiles to id: "x").
-  if (filePath === resolve(root, 'index.html')) {
-    const bundlePath = resolve(root, 'assets/app.js');
+  if (filePath === resolve(publicRoot, 'collect/index.html')) {
+    const bundlePath = resolve(publicRoot, 'assets/app.js');
     if (!idCache.has(bundlePath)) {
       idCache.set(bundlePath, await readFile(bundlePath, 'utf8'));
     }
@@ -134,7 +136,7 @@ async function hasId(filePath, id) {
   return false;
 }
 
-const files = await htmlFiles(root);
+const files = await htmlFiles(publicRoot);
 const refRe = /(?:href|src)="([^"]+)"/g;
 for (const file of files) {
   const html = await readFile(file, 'utf8');
@@ -149,8 +151,9 @@ for (const file of files) {
       target = targetPath(value);
     } else {
       const abs = resolve(dirname(file), value.split(/[?#]/)[0]);
-      if (!abs.startsWith(root)) { fail(`${rel}: reference escapes repo — ${value}`); continue; }
-      target = value.split(/[?#]/)[0].endsWith('/') || abs === root ? join(abs, 'index.html') : abs;
+      if (!abs.startsWith(publicRoot)) { fail(`${rel}: reference escapes public/ — ${value}`); continue; }
+      if (abs === publicRoot) continue;
+      target = value.split(/[?#]/)[0].endsWith('/') ? join(abs, 'index.html') : abs;
     }
     if (!target) continue;
     if (!(await exists(target))) {
@@ -164,23 +167,10 @@ for (const file of files) {
   }
 }
 
-// ---- 6. Sitemap --------------------------------------------------------------
-const sitemap = await readFile(resolve(root, 'sitemap.xml'), 'utf8');
-if (!sitemap.startsWith('<?xml')) fail('sitemap.xml: missing XML declaration');
-for (const m of sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)) {
-  const url = new URL(m[1]);
-  if (url.origin !== 'https://zodiacs.org') {
-    fail(`sitemap.xml: unexpected origin ${m[1]}`);
-    continue;
-  }
-  const target = targetPath(url.pathname);
-  if (!(await exists(target))) fail(`sitemap.xml: loc has no file — ${m[1]}`);
-}
-
 // ---- Report ------------------------------------------------------------------
 if (failures.length) {
   console.error(`check-site: ${failures.length} failure(s)`);
   for (const f of failures) console.error(`  ✗ ${f}`);
   process.exit(1);
 }
-console.log(`check-site: OK — ${files.length} HTML files, ${feed.items.length} feed items, registry intact.`);
+console.log(`check-site: OK — ${files.length} committed HTML files, ${feed.items.length} feed items, registry intact.`);
