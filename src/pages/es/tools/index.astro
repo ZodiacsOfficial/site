@@ -1,0 +1,66 @@
+---
+import Base from '../../../layouts/Base.astro';
+import { localizePath } from '../../../lib/i18n';
+
+const tools = [
+  { href: '/birth-chart/', title: 'Calculadora de carta natal', promise: 'Ve tu Sol, Luna, ascendente, planetas, casas y lo que significan.', hue: 'var(--sign-cancer)', glyph: '☉' },
+  { href: '/compatibility/', title: 'Compatibilidad', promise: 'Compara dos cartas y mira dónde conectan, chocan y crecen.', hue: 'var(--sign-libra)', glyph: '☌' },
+  { href: '/moon-sign/', title: 'Calculadora de signo lunar', promise: 'Cómo sientes y qué te ayuda a volver a ti.', hue: 'var(--sign-pisces)', glyph: '☽' },
+  { href: '/rising-sign/', title: 'Calculadora de ascendente', promise: 'Encuentra la energía que otros notan primero.', hue: 'var(--sign-gemini)', glyph: 'ASC' },
+  { href: '/moon-phase/', title: 'Fase lunar', promise: 'La Luna de hoy y la Luna de cualquier fecha importante.', hue: 'var(--sign-cancer)', glyph: '☾' },
+  { href: '/saturn-return/', title: 'Retorno de Saturno', promise: 'Cuándo llega el tuyo y qué suele pedir.', hue: 'var(--sign-capricorn)', glyph: '♄' },
+  { href: '/transits/', title: 'Tránsitos', promise: 'El cielo de hoy comparado con tu carta.', hue: 'var(--sign-aries)', glyph: '↻' },
+];
+---
+<Base
+  title="Herramientas gratis de astrología | Zodiacs.org"
+  description="Calculadoras gratis de astrología: carta natal, compatibilidad, signo lunar, ascendente, fase lunar, retorno de Saturno y tránsitos, privadas en tu navegador."
+  path="/es/tools/"
+  locale="es"
+  image="/assets/og/v2/tool/tools.png"
+  imageAlt="Herramientas gratis de astrología — Zodiacs.org"
+>
+  <section class="section container">
+    <div class="section-head">
+      <h2>Herramientas gratis de astrología</h2>
+      <p>Encuentra tu carta natal, signo lunar, ascendente, compatibilidad y lo que está pasando en el cielo ahora. Tus datos se calculan en tu navegador.</p>
+    </div>
+
+    <div class="tools-grid">
+      {tools.map((tool) => (
+        <a class="shell tinted" href={localizePath('es', tool.href)} style={`--sign:${tool.hue}`}>
+          <div class="core tinted tool-card">
+            <span class="tool-card__glyph mono">{tool.glyph}</span>
+            <h3>{tool.title}</h3>
+            <p>{tool.promise}</p>
+            <span class="tool-card__go">Abrir →</span>
+          </div>
+        </a>
+      ))}
+    </div>
+
+    <div class="tools-upcoming">
+      <em class="kicker">También disponible en inglés</em>
+      <ul>
+        <li><strong>Horóscopos.</strong> Mensuales para cada signo, escritos con fechas reales del cielo: <a href="/horoscopes/">leer este mes</a>.</li>
+        <li><strong>Mercurio retrógrado.</strong> Ventanas exactas hasta 2027: <a href="/mercury-retrograde/">ver fechas</a>.</li>
+      </ul>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .tools-grid { display: grid; gap: 14px; grid-template-columns: 1fr; }
+  @media (min-width: 700px) { .tools-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1000px) { .tools-grid { grid-template-columns: repeat(3, 1fr); } }
+  .tool-card { display: flex; flex-direction: column; gap: 10px; padding: 26px 22px; min-height: 210px; }
+  .tool-card__glyph { font-size: 24px; color: var(--sign); letter-spacing: 0.06em; }
+  .tool-card h3 { margin: 4px 0 0; font-size: var(--text-lg); font-weight: 620; color: var(--text); }
+  .tool-card p { margin: 0; font-size: var(--text-sm); color: var(--text-2); line-height: 1.6; }
+  .tool-card__go { margin-top: auto; font-size: 13px; font-weight: 550; color: var(--text); }
+  .tools-upcoming { margin-top: clamp(28px, 5vw, 44px); padding-top: 24px; border-top: 1px solid var(--hair-1); }
+  .tools-upcoming ul { margin: 12px 0 0; padding: 0; list-style: none; display: grid; gap: 8px; }
+  .tools-upcoming li { font-size: var(--text-sm); color: var(--muted); }
+  .tools-upcoming strong { color: var(--text-2); font-weight: 600; }
+  .tools-upcoming a { color: var(--text); }
+</style>

@@ -1,0 +1,27 @@
+---
+import Base from '../../../layouts/Base.astro';
+import ChartCalculator from '../../../islands/ChartCalculator';
+import '../../../styles/calculator.css';
+---
+<Base
+  title="Calculadora de signo lunar gratis | Zodiacs.org"
+  description="Encuentra tu signo lunar gratis: cómo sientes, qué te calma y qué necesitas. Calculado en tu dispositivo, sin cuenta."
+  path="/es/moon-sign/"
+  locale="es"
+  image="/assets/og/v2/tool/moon-sign.png"
+  imageAlt="Calculadora de signo lunar — Zodiacs.org"
+>
+  <section class="section--tight container">
+    <div class="tool-hero">
+      <h1 class="display">Encuentra tu signo lunar.</h1>
+      <p>La Luna describe tu mundo emocional: lo que te calma, lo que necesitas y cómo vuelves a sentirte en casa.</p>
+    </div>
+    <ChartCalculator mode="moon" locale="es" client:load />
+  </section>
+</Base>
+
+<style>
+  .tool-hero { max-width: 62ch; margin-bottom: clamp(28px, 5vw, 44px); }
+  .tool-hero h1 { margin: 0 0 16px; font-size: var(--text-2xl); line-height: 1.04; }
+  .tool-hero p { margin: 0; color: var(--muted); font-size: var(--text-lg); text-wrap: pretty; }
+</style>

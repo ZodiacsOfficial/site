@@ -8,8 +8,10 @@ import { useEffect, useState } from 'preact/hooks';
 import SignChip from './SignChip';
 import { loadProfile } from '../lib/profile/store';
 import type { SavedChart } from '../lib/profile/schema';
+import { localizePath, normalizeLocale, t, type Locale } from '../lib/i18n';
 
-export default function WelcomeBack() {
+export default function WelcomeBack({ locale: rawLocale = 'en' }: { locale?: Locale }) {
+  const locale = normalizeLocale(rawLocale);
   const [chart, setChart] = useState<SavedChart | null>(null);
   const [count, setCount] = useState(0);
 
@@ -34,17 +36,17 @@ export default function WelcomeBack() {
   const asc = chart.summary.angles?.asc ?? null;
 
   return (
-    <section class="container" aria-label="Your saved chart">
+    <section class="container" aria-label={t(locale, 'savedChartAria')}>
       <div class="wb">
-        <p class="wb__lead">Welcome back.</p>
+        <p class="wb__lead">{t(locale, 'welcomeBack')}</p>
         <div class="wb__chips">
-          {sun && <span class="wb__chip"><span class="mono--label">Sun</span><SignChip lon={sun.lon} /></span>}
-          {moon && <span class="wb__chip"><span class="mono--label">Moon</span><SignChip lon={moon.lon} /></span>}
-          {asc !== null && <span class="wb__chip"><span class="mono--label">Rising</span><SignChip lon={asc} /></span>}
+          {sun && <span class="wb__chip"><span class="mono--label">{t(locale, 'sun')}</span><SignChip lon={sun.lon} locale={locale} /></span>}
+          {moon && <span class="wb__chip"><span class="mono--label">{t(locale, 'moon')}</span><SignChip lon={moon.lon} locale={locale} /></span>}
+          {asc !== null && <span class="wb__chip"><span class="mono--label">{t(locale, 'rising')}</span><SignChip lon={asc} locale={locale} /></span>}
         </div>
         <div class="wb__links">
-          <a href="/transits/">Today against your chart →</a>
-          <a href="/profile/">{count > 1 ? `Your ${count} charts →` : 'Your profile →'}</a>
+          <a href={localizePath(locale, '/transits/')}>{t(locale, 'todayAgainstChart')} →</a>
+          <a href={localizePath(locale, '/profile/')}>{count > 1 ? `${t(locale, 'yourCharts')} (${count}) →` : `${t(locale, 'profile')} →`}</a>
         </div>
       </div>
     </section>

@@ -2,6 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import eclipseData from '../../data/eclipses.json';
 import { signBySlug } from '../../lib/signs';
+import { formatDate, formatShortDate, formatTime } from '../../lib/i18n/dates';
 
 // Every eclipse 2026–2028 from the committed data — receipts, no
 // client ephemeris.
@@ -48,15 +49,15 @@ const nextSolar = eclipses.find((e) => !e.past && e.type === 'solar');
 const nextLunar = eclipses.find((e) => !e.past && e.type === 'lunar');
 
 const fmtDay = (d: Date) =>
-  d.toLocaleDateString('en-US', { weekday: 'short', month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
+  formatDate('en', d, { weekday: 'short', month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
 const fmtTime = (d: Date) =>
-  d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'UTC' });
+  formatTime('en', d, { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'UTC' });
 
 const status = next
   ? `The next eclipse is a ${next.label.toLowerCase()} eclipse on ${fmtDay(next.at)}, in ${next.sign.name}.`
   : 'The committed data window has run out — refresh the eclipse data.';
 
-const asOf = buildNow.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
+const asOf = formatShortDate('en', buildNow);
 
 const faq = [
   {

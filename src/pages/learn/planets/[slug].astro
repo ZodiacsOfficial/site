@@ -6,6 +6,7 @@ import SignIcon from '../../../components/SignIcon.astro';
 import { SIGNS, signForLongitude } from '../../../lib/signs';
 import { bodyLongitude } from '../../../lib/engine/full';
 import type { BodyName } from '../../../lib/engine/types';
+import { formatShortDate } from '../../../lib/i18n/dates';
 
 const PLANET_ORDER = [
   'Sun', 'Moon', 'Mercury', 'Venus', 'Mars',
@@ -43,7 +44,7 @@ const classicRules = SIGNS.filter((s) => s.classicRuler === planet);
 // Build-time position — the Moon moves too fast for a static stamp.
 const buildDate = new Date();
 const current = planet === 'Moon' ? null : signForLongitude(bodyLongitude(planet as BodyName, buildDate));
-const asOf = buildDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
+const asOf = formatShortDate('en', buildDate);
 
 const idx = PLANET_ORDER.indexOf(planet);
 const prev = idx > 0 ? PLANET_ORDER[idx - 1] : null;

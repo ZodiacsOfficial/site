@@ -3,6 +3,7 @@ import Base from '../../layouts/Base.astro';
 import sky from '../../data/sky.json';
 import { bodyLongitude } from '../../lib/engine/full';
 import { formatLongitude, signForLongitude } from '../../lib/signs';
+import { formatDate, formatShortDate, formatTime } from '../../lib/i18n/dates';
 
 // Every full moon 2026–2027 from the committed sky data, with the
 // Moon's sign computed at each instant — receipts, no client ephemeris.
@@ -38,15 +39,15 @@ const years = [...new Set(fulls.map((f) => f.year))];
 const next = fulls.find((f) => !f.past);
 
 const fmtDay = (d: Date) =>
-  d.toLocaleDateString('en-US', { weekday: 'short', month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
+  formatDate('en', d, { weekday: 'short', month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
 const fmtTime = (d: Date) =>
-  d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'UTC' });
+  formatTime('en', d, { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'UTC' });
 
 const status = next
   ? `The next full moon is the ${next.name} Moon on ${fmtDay(next.at)}, at ${next.position}.`
   : 'The committed data window has run out — refresh the sky data.';
 
-const asOf = buildNow.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
+const asOf = formatShortDate('en', buildNow);
 
 const faq = [
   {

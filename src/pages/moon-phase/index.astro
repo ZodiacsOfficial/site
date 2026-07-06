@@ -4,6 +4,7 @@ import MoonPhaseTool from '../../islands/MoonPhaseTool';
 import sky from '../../data/sky.json';
 import { bodyLongitude } from '../../lib/engine/full';
 import { formatLongitude } from '../../lib/signs';
+import { formatShortDate } from '../../lib/i18n/dates';
 import '../../styles/calculator.css';
 
 // Build-time: the next lunations from the committed sky data, with the
@@ -16,7 +17,7 @@ const upcoming = (sky.moons as { type: string; at: string }[])
     const at = new Date(m.at);
     return {
       type: m.type === 'new' ? 'New moon' : 'Full moon',
-      when: at.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' }),
+      when: formatShortDate('en', at),
       where: formatLongitude(bodyLongitude('Moon', at)),
     };
   });

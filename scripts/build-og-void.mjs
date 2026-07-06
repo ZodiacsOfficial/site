@@ -153,7 +153,7 @@ function shareCard() {
   <div class="stage" style="flex-direction: column; justify-content: center; gap: 40px;">
     ${wheelMark(160, 15)}
     <div>
-      <div class="display" style="font-size: 68px; max-width: 900px;">Your whole chart, not just your sign.</div>
+      <div class="display" style="font-size: 68px; max-width: 900px;">Explore the stars behind your story.</div>
       <div class="sub" style="font-size: 26px; color: ${MUTED};">Free birth charts, sign guides, and astrology tools.</div>
     </div>
   </div>`;
@@ -235,7 +235,7 @@ function horoscopeCard(s) {
     <div class="left">
       <span class="kicker">Monthly horoscope</span>
       <div class="display" style="font-size: ${nameSize(s.name)}px;">${s.name}</div>
-      <div class="sub" style="font-size: 26px; color: ${MUTED};">Grounded in the computed sky — real transit dates every month.</div>
+      <div class="sub" style="font-size: 26px; color: ${MUTED};">Monthly horoscopes grounded in real moon phases, retrogrades, and major transits.</div>
       <div class="data">${s.dates}</div>
     </div>
     <img class="disc" src="${DISCS[s.slug]}" width="340" height="340"
@@ -267,7 +267,7 @@ const TOOLS = [
   { key: 'saturn-return', path: '/saturn-return/', kicker: 'Free calculator', title: 'Your Saturn return', sub: 'The exact dates, every pass and retrograde loop included.' },
   { key: 'mercury-retrograde', path: '/mercury-retrograde/', kicker: 'The calendar', title: 'Mercury retrograde', sub: 'Every window through 2027, computed from the planet’s real motion.' },
   { key: 'compatibility', path: '/compatibility/', kicker: 'Compatibility', title: 'Two charts, compared', sub: 'Whole-chart synastry — plus guides to all 78 sign pairings.' },
-  { key: 'horoscopes', path: '/horoscopes/', kicker: 'Monthly horoscopes', title: 'All twelve signs', sub: 'Written against the computed sky, with the month’s real transit dates.' },
+  { key: 'horoscopes', path: '/horoscopes/', kicker: 'Monthly horoscopes', title: 'All twelve signs', sub: 'Grounded in real moon phases, retrogrades, and major transits.' },
   { key: 'learn', path: '/learn/', kicker: 'Learn astrology', title: 'Read your chart', sub: 'The signs, the planets, the houses, and the aspects, in plain language.' },
   { key: 'tools', path: '/tools/', kicker: 'Free astrology tools', title: 'Calculators, no signup', sub: 'Birth chart, compatibility, moon sign, and more — computed on your device.' },
   { key: 'transits', path: '/transits/', kicker: 'Free tracker', title: 'Your transits, today', sub: 'The current sky aspected to your birth chart, within 3° of exact.' },

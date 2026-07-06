@@ -11,15 +11,11 @@ import { formatLongitude, signForLongitude } from '../lib/signs';
 import { resolveLocalToUtc } from '../lib/time/localToUtc';
 import type { City } from '../lib/geo/search';
 import type { ReturnSeason, SaturnReturnResult } from '../lib/engine/returns';
+import { localizePath, normalizeLocale, t, type Locale } from '../lib/i18n';
+import { formatShortDate } from '../lib/i18n/dates';
 
 let modsPromise: Promise<typeof import('../lib/engine/returns')> | null = null;
 const loadReturns = () => (modsPromise ??= import('../lib/engine/returns'));
-
-const ORDINAL = ['First', 'Second', 'Third', 'Fourth'];
-const AGE_HINT = ['around age 29', 'around age 58', 'around age 88', ''];
-
-const fmt = (d: Date) =>
-  d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
 
 function seasonStatus(season: ReturnSeason, now: Date): 'past' | 'active' | 'upcoming' {
   if (season.last.getTime() < now.getTime()) return 'past';
@@ -27,9 +23,12 @@ function seasonStatus(season: ReturnSeason, now: Date): 'past' | 'active' | 'upc
   return 'active';
 }
 
-const STATUS_LABEL = { past: 'Complete', active: 'Underway now', upcoming: 'Ahead of you' } as const;
-
-export default function SaturnReturnCalculator() {
+export default function SaturnReturnCalculator({ locale: rawLocale = 'en' }: { locale?: Locale }) {
+  const locale = normalizeLocale(rawLocale);
+  const ordinal = [t(locale, 'first'), t(locale, 'second'), t(locale, 'third'), t(locale, 'fourth')];
+  const ageHint = [t(locale, 'aroundAge29'), t(locale, 'aroundAge58'), t(locale, 'aroundAge88'), ''];
+  const statusLabel = { past: t(locale, 'complete'), active: t(locale, 'underwayNow'), upcoming: t(locale, 'aheadOfYou') } as const;
+  const fmt = (d: Date) => formatShortDate(locale, d);
   const [date, setDate] = useState('');
   const [time, setTime] = useState('');
   const [city, setCity] = useState<City | null>(null);
@@ -52,7 +51,7 @@ export default function SaturnReturnCalculator() {
         : new Date(`${date}T12:00:00Z`);
       setResult(returns.saturnReturns(utc));
     } catch (err) {
-      setError('Something went wrong computing the return. Please try again.');
+      setError(t(locale, 'returnError'));
       console.error(err);
     } finally {
       setBusy(false);
@@ -68,7 +67,7 @@ export default function SaturnReturnCalculator() {
         <div class="core calc__core">
           <div class="calc__fields">
             <div class="field">
-              <label class="field__label" for="sr-date">Birth date</label>
+              <label class="field__label" for="sr-date">{t(locale, 'birthDate')}</label>
               <input
                 id="sr-date" class="field__input" type="date" required
                 min="1800-01-01" max="2199-12-31" value={date}
@@ -76,37 +75,38 @@ export default function SaturnReturnCalculator() {
                 onInput={(e) => setDate((e.target as HTMLInputElement).value)}
               />
               <p class="field__help">
-                The date alone pins your return years. Time and place sharpen
-                the dates by a few days, never the year.
+                {locale === 'es'
+                  ? 'La fecha sola ubica los años de tu retorno. Hora y lugar afinan las fechas por unos días, nunca el año.'
+                  : 'The date alone pins your return years. Time and place sharpen the dates by a few days, never the year.'}
               </p>
             </div>
           </div>
 
           {!showDetail ? (
             <button class="sr__more" type="button" onClick={() => setShowDetail(true)}>
-              Add birth time and place (optional)
+              {t(locale, 'addBirthDetails')}
             </button>
           ) : (
             <div class="calc__fields">
               <div class="field">
-                <label class="field__label" for="sr-time">Birth time</label>
+                <label class="field__label" for="sr-time">{t(locale, 'birthTime')}</label>
                 <input
                   id="sr-time" class="field__input" type="time" value={time}
                   onInput={(e) => setTime((e.target as HTMLInputElement).value)}
                 />
               </div>
               <div class="field">
-                <label class="field__label" for="sr-place">Birthplace</label>
-                <PlaceSearch id="sr-place" selected={city} onSelect={setCity} />
+                <label class="field__label" for="sr-place">{t(locale, 'birthplace')}</label>
+                <PlaceSearch id="sr-place" selected={city} onSelect={setCity} locale={locale} />
               </div>
             </div>
           )}
 
           <button class="btn btn--primary calc__submit" type="submit" disabled={!date || busy}>
-            <span>{busy ? 'Computing…' : 'Find my Saturn return'}</span>
+            <span>{busy ? t(locale, 'computing') : t(locale, 'findSaturnReturn')}</span>
             <span class="orb">↗</span>
           </button>
-          <p class="calc__privacy">Computed on your device — your birth data never leaves it.</p>
+          <p class="calc__privacy">{t(locale, 'privacyDeviceShort')}</p>
           {error && <p class="calc__error" role="alert">{error}</p>}
         </div>
       </form>
@@ -115,11 +115,11 @@ export default function SaturnReturnCalculator() {
         <div class="calc__result">
           <div class="sr__natal shell tinted" style={`--sign:${natalSign.hue}`}>
             <div class="core tinted sr__natal-core">
-              <span class="mono--label">Your natal Saturn</span>
+              <span class="mono--label">{t(locale, 'natalSaturn')}</span>
               <span class="sr__natal-sign">
-                <SignChip lon={result.natalLon} />
+                <SignChip lon={result.natalLon} locale={locale} />
                 <span class="mono sr__natal-deg">
-                  {formatLongitude(result.natalLon)}{result.natalRetrograde ? ' · Rx' : ''}
+                  {formatLongitude(result.natalLon, locale)}{result.natalRetrograde ? ' · Rx' : ''}
                 </span>
               </span>
               <p class="sr__reading">{SATURN_RETURN[natalSign.slug]}</p>
@@ -128,8 +128,7 @@ export default function SaturnReturnCalculator() {
 
           {approximate && (
             <p class="field__help">
-              Dates computed from a noon reading — with a birth time and place
-              they can shift by a few days either way.
+              {t(locale, 'returnApprox')}
             </p>
           )}
 
@@ -140,26 +139,24 @@ export default function SaturnReturnCalculator() {
                 <div class={`sr__season shell ${status === 'active' ? 'tinted' : ''}`} style={status === 'active' ? `--sign:${natalSign.hue}` : ''}>
                   <div class={`core sr__season-core ${status === 'active' ? 'tinted' : ''}`}>
                     <div class="sr__season-head">
-                      <strong>{ORDINAL[i] ?? `${i + 1}th`} return</strong>
-                      <span class="mono sr__season-status">{STATUS_LABEL[status]}</span>
+                      <strong>{ordinal[i] ?? `${i + 1}th`} {locale === 'es' ? 'retorno' : 'return'}</strong>
+                      <span class="mono sr__season-status">{statusLabel[status]}</span>
                     </div>
                     <p class="sr__season-span mono">
                       {fmt(season.first)}
                       {season.crossings.length > 1 ? ` – ${fmt(season.last)}` : ''}
-                      {AGE_HINT[i] ? ` · ${AGE_HINT[i]}` : ''}
+                      {ageHint[i] ? ` · ${ageHint[i]}` : ''}
                     </p>
                     <ul class="sr__crossings">
                       {season.crossings.map((c) => (
                         <li class="mono">
-                          {fmt(c.at)}{c.retrograde ? ' · retrograde pass' : ''}
+                          {fmt(c.at)}{c.retrograde ? ` · ${t(locale, 'retrogradePass')}` : ''}
                         </li>
                       ))}
                     </ul>
                     {season.crossings.length === 3 && (
                       <p class="sr__season-note">
-                        Three exact passes: Saturn crosses your degree, backs
-                        over it in retrograde, then seals it on the way out.
-                        The whole span is the return.
+                        {t(locale, 'threePasses')}
                       </p>
                     )}
                   </div>
@@ -169,11 +166,11 @@ export default function SaturnReturnCalculator() {
           </div>
 
           <div class="calc__actions">
-            <a class="btn btn--ghost" href="/birth-chart/">
-              <span>See Saturn in your birth chart</span><span class="orb">↗</span>
+            <a class="btn btn--ghost" href={localizePath(locale, '/birth-chart/')}>
+              <span>{t(locale, 'seeSaturnChart')}</span><span class="orb">↗</span>
             </a>
             <a class="btn btn--ghost" href="/learn/planets/saturn/">
-              <span>What Saturn means</span><span class="orb">→</span>
+              <span>{t(locale, 'whatSaturnMeans')}</span><span class="orb">→</span>
             </a>
           </div>
         </div>

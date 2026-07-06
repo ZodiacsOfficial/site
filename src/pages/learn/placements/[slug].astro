@@ -6,6 +6,7 @@ import SignIcon from '../../../components/SignIcon.astro';
 import { SIGNS, signBySlug } from '../../../lib/signs';
 import { dignityFor, DIGNITY_GLOSS, hasClassicalDignities } from '../../../lib/dignities';
 import ingresses from '../../../data/ingresses.json';
+import { formatShortDate } from '../../../lib/i18n/dates';
 
 const PLANET_GLYPHS: Record<string, string> = {
   Sun: '☉', Moon: '☽', Mercury: '☿', Venus: '♀', Mars: '♂',
@@ -71,8 +72,7 @@ const { Content } = await render(entry);
 // ── Computed panel: dignity + real transit windows ────────────────────
 const dignity = dignityFor(planet, sign.slug);
 const buildNow = new Date();
-const fmt = (iso: string) =>
-  new Date(iso).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
+const fmt = (iso: string) => formatShortDate('en', iso);
 
 // The ingress table holds closed windows only (the generator drops
 // horizon-clamped edges), so from/to are always real boundaries.

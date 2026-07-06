@@ -1,0 +1,63 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+
+export async function getStaticPaths() {
+  const pairs = await getCollection('pairs', ({ data }) => !data.draft);
+  const learn = await getCollection('learn', ({ data }) => !data.draft);
+  const horoscopes = await getCollection('horoscopes', ({ data }) => !data.draft);
+  const latestMonth = horoscopes.map((h) => h.data.month).sort().at(-1);
+  const currentHoroscopes = horoscopes.filter((h) => h.data.month === latestMonth);
+
+  const staticSlugs = [
+    ['learn'],
+    ['learn', 'planets'],
+    ['learn', 'houses'],
+    ['learn', 'aspects'],
+    ['learn', 'placements'],
+    ['horoscopes'],
+    ['mercury-retrograde'],
+    ['retrogrades'],
+    ['eclipses'],
+    ['full-moon-calendar'],
+  ];
+
+  const dynamicSlugs = [
+    ...pairs.map((p) => ['compatibility', p.id]),
+    ...learn.map((l) => (
+      l.data.kind === 'rising'
+        ? ['rising-sign', l.data.sign]
+        : ['learn', ...l.id.split('/')]
+    )),
+    ...currentHoroscopes.map((h) => ['horoscopes', h.data.sign]),
+  ];
+
+  return [...staticSlugs, ...dynamicSlugs].map((slug) => ({ params: { slug: slug.join('/') } }));
+}
+
+const slug = Astro.params.slug ?? '';
+const englishPath = `/${slug}/`;
+---
+<Base
+  title="Contenido en inglés — Zodiacs.org"
+  description="Esta página todavía no está traducida al español. Puedes leer la versión completa en inglés."
+  path={`/es/${slug}/`}
+  locale="es"
+  noindex
+>
+  <section class="section container container--narrow fallback-es">
+    <em class="kicker">Disponible en inglés</em>
+    <h1 class="display">Esta página todavía no está traducida.</h1>
+    <p>
+      La versión completa sigue disponible en inglés mientras traducimos el
+      resto del sitio.
+    </p>
+    <a class="btn btn--primary" href={englishPath}><span>Leer en inglés</span><span class="orb">→</span></a>
+  </section>
+</Base>
+
+<style>
+  .fallback-es { display: grid; gap: 18px; justify-items: start; }
+  .fallback-es h1 { margin: 4px 0 0; font-size: var(--text-2xl); line-height: 1.04; }
+  .fallback-es p { margin: 0; max-width: 52ch; color: var(--muted); font-size: var(--text-lg); line-height: 1.6; }
+</style>

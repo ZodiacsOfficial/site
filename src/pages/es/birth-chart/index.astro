@@ -1,0 +1,36 @@
+---
+import Base from '../../../layouts/Base.astro';
+import ChartCalculator from '../../../islands/ChartCalculator';
+import '../../../styles/calculator.css';
+---
+<Base
+  title="Carta natal gratis — Sol, Luna y ascendente | Zodiacs.org"
+  description="Calcula tu carta natal gratis: Sol, Luna, ascendente, planetas, casas y qué significan. Privado en tu navegador y explicado con claridad."
+  path="/es/birth-chart/"
+  locale="es"
+  image="/assets/og/v2/tool/birth-chart.png"
+  imageAlt="Calculadora de carta natal gratis — Zodiacs.org"
+>
+  <section class="section--tight container">
+    <div class="tool-hero">
+      <h1 class="display">Obtén tu carta natal gratis.</h1>
+      <p>Ingresa tu fecha, hora y lugar de nacimiento para ver tu Sol, Luna, ascendente, planetas, casas y lo que significan.</p>
+    </div>
+    <ChartCalculator mode="full" locale="es" client:load />
+  </section>
+
+  <section class="section--tight container container--narrow">
+    <div class="prose">
+      <h2>Qué estás viendo</h2>
+      <p>Una carta natal es una foto del cielo desde el lugar donde naciste, en el momento en que naciste. Muestra los signos, las casas y los planetas a grados exactos.</p>
+      <p>Para empezar, mira tu Sol, Luna y ascendente: identidad, vida emocional y primera impresión. Después puedes guardar la carta y volver a ella cuando quieras.</p>
+      <p>La metodología completa está en <a href="/es/methodology/">cómo calculamos</a>.</p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .tool-hero { max-width: 62ch; margin-bottom: clamp(28px, 5vw, 44px); }
+  .tool-hero h1 { margin: 0 0 16px; font-size: var(--text-2xl); line-height: 1.04; }
+  .tool-hero p { margin: 0; color: var(--muted); font-size: var(--text-lg); text-wrap: pretty; }
+</style>

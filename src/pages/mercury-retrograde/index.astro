@@ -3,6 +3,7 @@ import Base from '../../layouts/Base.astro';
 import sky from '../../data/sky.json';
 import { bodyLongitude } from '../../lib/engine/full';
 import { formatLongitude } from '../../lib/signs';
+import { formatDate, formatShortDate } from '../../lib/i18n/dates';
 
 // All computed at build time from the committed sky data — the page
 // ships as receipts, no client ephemeris.
@@ -12,8 +13,7 @@ const windows = (sky.retrogrades as { planet: string; from: string; to: string |
   .map((r) => {
     const from = new Date(r.from);
     const to = r.to ? new Date(r.to) : null;
-    const fmt = (d: Date) =>
-      d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
+    const fmt = (d: Date) => formatShortDate('en', d);
     return {
       from,
       to,
@@ -27,7 +27,7 @@ const windows = (sky.retrogrades as { planet: string; from: string; to: string |
 const active = windows.find((w) => w.state === 'active');
 const next = windows.find((w) => w.state === 'upcoming');
 const fmtShort = (d: Date) =>
-  d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', timeZone: 'UTC' });
+  formatDate('en', d, { month: 'long', day: 'numeric', timeZone: 'UTC' });
 
 const status = active
   ? `Mercury is retrograde right now — it stations direct on ${fmtShort(active.to!)}.`
@@ -39,7 +39,7 @@ const retroToday = (sky.retrogrades as { planet: string; from: string; to: strin
   .filter((r) => new Date(r.from) <= buildNow && (!r.to || new Date(r.to) >= buildNow))
   .map((r) => r.planet);
 
-const asOf = buildNow.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
+const asOf = formatShortDate('en', buildNow);
 
 const faq = [
   {

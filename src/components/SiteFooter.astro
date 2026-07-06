@@ -1,62 +1,64 @@
 ---
-import { SIGNS } from '../lib/signs';
+import { SIGNS, signName } from '../lib/signs';
 import BrandMark from './BrandMark.astro';
+import { alternatePaths, localizePath, normalizeLocale, t, type Locale } from '../lib/i18n';
 
 const year = new Date().getFullYear();
+interface Props { locale?: Locale }
+const locale = normalizeLocale(Astro.props.locale);
+// The other language's twin of this page when one exists; otherwise its home.
+const twin = alternatePaths(Astro.url.pathname);
+const otherHref = locale === 'es' ? (twin?.en ?? '/') : (twin?.es ?? '/es/');
+const otherLabel = locale === 'es' ? 'English' : 'Español';
+const otherLang = locale === 'es' ? 'en' : 'es';
 ---
 <footer class="footer">
   <div class="container">
     <div class="footer__grid">
       <div class="footer__brand">
-        <a class="footer__mark" href="/">
+        <a class="footer__mark" href={localizePath(locale, '/')}>
           <BrandMark size={19} />
           <span class="footer__name">Zodiacs</span><span class="footer__tld">.org</span>
         </a>
-        <p class="footer__tag">
-          Free astrology tools and sign guides, with charts calculated
-          privately in your browser.
-        </p>
+        <p class="footer__tag">{t(locale, 'footerTag')}</p>
       </div>
 
-      <nav class="footer__col" aria-label="Tools">
-        <span class="footer__label">Tools</span>
-        <a href="/birth-chart/">Birth chart</a>
-        <a href="/compatibility/">Compatibility</a>
-        <a href="/moon-sign/">Moon sign</a>
-        <a href="/rising-sign/">Rising sign</a>
-        <a href="/moon-phase/">Moon phase</a>
-        <a href="/saturn-return/">Saturn return</a>
-        <a href="/transits/">Transits</a>
-        <a href="/retrogrades/">Retrogrades</a>
+      <nav class="footer__col" aria-label={t(locale, 'navTools')}>
+        <span class="footer__label">{t(locale, 'navTools')}</span>
+        <a href={localizePath(locale, '/birth-chart/')}>{t(locale, 'birthChart')}</a>
+        <a href={localizePath(locale, '/compatibility/')}>{t(locale, 'compatibility')}</a>
+        <a href={localizePath(locale, '/moon-sign/')}>{t(locale, 'moonSign')}</a>
+        <a href={localizePath(locale, '/rising-sign/')}>{t(locale, 'risingSign')}</a>
+        <a href={localizePath(locale, '/moon-phase/')}>{t(locale, 'moonPhase')}</a>
+        <a href={localizePath(locale, '/saturn-return/')}>{t(locale, 'saturnReturn')}</a>
+        <a href={localizePath(locale, '/transits/')}>{t(locale, 'transits')}</a>
+        <a href="/retrogrades/">{t(locale, 'retrogrades')}</a>
       </nav>
 
-      <nav class="footer__col" aria-label="Learn">
-        <span class="footer__label">Learn</span>
-        <a href="/learn/">Start here</a>
-        <a href="/horoscopes/">Horoscopes</a>
-        <a href="/learn/planets/">The planets</a>
-        <a href="/learn/houses/">The houses</a>
-        <a href="/methodology/">How we compute</a>
-        <a href="/profile/">Saved charts</a>
+      <nav class="footer__col" aria-label={t(locale, 'navLearn')}>
+        <span class="footer__label">{t(locale, 'navLearn')}</span>
+        <a href="/learn/">{t(locale, 'footerStartHere')}</a>
+        <a href="/horoscopes/">{t(locale, 'navHoroscopes')}</a>
+        <a href="/learn/planets/">{t(locale, 'footerPlanets')}</a>
+        <a href="/learn/houses/">{t(locale, 'footerHouses')}</a>
+        <a href={localizePath(locale, '/methodology/')}>{t(locale, 'footerCompute')}</a>
+        <a href={localizePath(locale, '/profile/')}>{t(locale, 'navSavedCharts')}</a>
       </nav>
 
-      <nav class="footer__col footer__col--signs" aria-label="Sign guides">
-        <span class="footer__label">The twelve</span>
+      <nav class="footer__col footer__col--signs" aria-label={t(locale, 'navSigns')}>
+        <span class="footer__label">{t(locale, 'navTwelve')}</span>
         <div class="footer__signs">
-          {SIGNS.map((s) => <a href={`/${s.slug}/`}>{s.name}</a>)}
+          {SIGNS.map((s) => <a href={localizePath(locale, `/${s.slug}/`)}>{signName(s, locale)}</a>)}
         </div>
       </nav>
 
-      <nav class="footer__col" aria-label="Collect">
-        <span class="footer__label">Collect</span>
-        <a href="/collect/">The Registry</a>
-        <a href="/thesis/">Thesis</a>
-        <a href="/archive/">Archive</a>
-        <a href="/sdk/">SDK</a>
-        <span class="footer__note">
-          The collector's wing is read-only: no custody, no signing, no
-          transactions. Nothing there is financial advice.
-        </span>
+      <nav class="footer__col" aria-label={t(locale, 'navCollect')}>
+        <span class="footer__label">{t(locale, 'navCollect')}</span>
+        <a href="/collect/">{t(locale, 'footerRegistry')}</a>
+        <a href="/thesis/">{t(locale, 'footerThesis')}</a>
+        <a href="/archive/">{t(locale, 'footerArchive')}</a>
+        <a href="/sdk/">{t(locale, 'footerSdk')}</a>
+        <span class="footer__note">{t(locale, 'footerCollectNote')}</span>
       </nav>
     </div>
 
@@ -65,11 +67,13 @@ const year = new Date().getFullYear();
     <div class="footer__base">
       <span>© {year} Zodiacs.org</span>
       <span class="footer__base-links">
-        <a href="/methodology/">Methodology</a>
+        <a href={localizePath(locale, '/methodology/')}>{t(locale, 'footerMethodology')}</a>
         <span aria-hidden="true">·</span>
-        <span>Place data: <a href="https://www.geonames.org/" rel="noopener noreferrer">GeoNames</a> (CC BY 4.0)</span>
+        <span>{t(locale, 'footerPlaceData')}: <a href="https://www.geonames.org/" rel="noopener noreferrer">GeoNames</a> (CC BY 4.0)</span>
         <span aria-hidden="true">·</span>
-        <span>Fonts under <a href="/fonts/OFL-instrument-sans.txt">SIL OFL</a></span>
+        <span>{t(locale, 'footerFonts')} <a href="/fonts/OFL-instrument-sans.txt">SIL OFL</a></span>
+        <span aria-hidden="true">·</span>
+        <a href={otherHref} hreflang={otherLang} lang={otherLang}>{otherLabel}</a>
       </span>
     </div>
   </div>

@@ -31,7 +31,7 @@ Rising-sign profiles — all twelve ascendants at https://zodiacs.org/rising-sig
 
 Monthly horoscopes — one per sign at https://zodiacs.org/horoscopes/{sign}/, written against the month's computed transit events (ingresses, lunations, stations, exact aspects), every claim dated, with the event list printed on the page.
 
-Astrofolio is the optional keep layer behind the tools: saved charts live in the visitor's own browser as a local cosmic profile at https://zodiacs.org/profile/. The related consumer experience around personal Zodiac shelves is https://astrofolio.xyz/.
+Astrofolio is the optional keep layer behind the tools: saved charts live in the visitor's own browser first, with optional account sync at https://zodiacs.org/profile/. The related consumer experience around personal Zodiac shelves is https://astrofolio.xyz/.
 
 The collector's wing — the original registry experience — lives at https://zodiacs.org/collect/ with the twelve catalogue records at https://zodiacs.org/collect/{sign}/, the thesis at https://zodiacs.org/thesis/, and the archive at https://zodiacs.org/archive/.
 

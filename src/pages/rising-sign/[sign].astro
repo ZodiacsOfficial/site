@@ -7,6 +7,7 @@ import ChartCalculator from '../../islands/ChartCalculator.tsx';
 import { SIGNS, signBySlug, formatLongitude } from '../../lib/signs';
 import { bodyLongitude } from '../../lib/engine/full';
 import type { BodyName } from '../../lib/engine/types';
+import { formatShortDate } from '../../lib/i18n/dates';
 import '../../styles/calculator.css';
 
 export async function getStaticPaths() {
@@ -53,7 +54,7 @@ const buildNow = new Date();
 const rulerNow = chartRuler === 'Moon'
   ? null
   : formatLongitude(bodyLongitude(chartRuler as BodyName, buildNow));
-const asOf = buildNow.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
+const asOf = formatShortDate('en', buildNow);
 
 const signIdx = SIGNS.findIndex((s) => s.slug === sign.slug);
 const prevSign = SIGNS[(signIdx + 11) % 12];

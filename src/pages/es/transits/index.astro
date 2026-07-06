@@ -1,0 +1,50 @@
+---
+import Base from '../../../layouts/Base.astro';
+import TransitTracker from '../../../islands/TransitTracker';
+import { dayLabel, eventList, latestTransitMonth, monthLabel } from '../../../lib/horoscopes';
+import '../../../styles/calculator.css';
+
+const month = latestTransitMonth();
+const events = month ? eventList(month, 'es') : [];
+const label = month ? monthLabel(month, 'es') : null;
+---
+<Base
+  title="Tránsitos de hoy sobre tu carta natal | Zodiacs.org"
+  description="Ve qué tránsitos están tocando tu carta ahora: el cielo de hoy comparado con tus planetas natales, gratis y en tu dispositivo."
+  path="/es/transits/"
+  locale="es"
+  image="/assets/og/v2/tool/transits.png"
+  imageAlt="Rastreador de tránsitos — Zodiacs.org"
+>
+  <section class="section--tight container container--narrow">
+    <div class="tool-hero reveal">
+      <h1 class="display">El cielo, sobre tu carta.</h1>
+      <p>Los planetas de hoy comparados con los tuyos, dentro de 3° de exactitud. Elige una carta guardada o ingresa tus datos; nada sale de tu dispositivo.</p>
+    </div>
+    <TransitTracker locale="es" client:load />
+  </section>
+
+  {month && (
+    <section class="section--tight container container--narrow">
+      <div class="section-head reveal">
+        <h2>El cielo en {label}</h2>
+        <p>Eventos del mes calculados por el motor: ingresos, lunaciones, estaciones y aspectos exactos. Las horas están en tiempo universal.</p>
+      </div>
+      <ul class="trn-events reveal">
+        {events.map((event) => (
+          <li><span class="trn-events__date mono">{dayLabel(event.at, 'es')}</span><span class="trn-events__label">{event.label}</span></li>
+        ))}
+      </ul>
+    </section>
+  )}
+</Base>
+
+<style>
+  .tool-hero { max-width: 62ch; margin-bottom: clamp(24px, 4vw, 36px); }
+  .tool-hero h1 { margin: 0 0 16px; font-size: var(--text-2xl); line-height: 1.04; }
+  .tool-hero p { margin: 0; color: var(--muted); font-size: var(--text-lg); text-wrap: pretty; }
+  .trn-events { margin: 0; padding: 0; list-style: none; display: grid; gap: 7px; }
+  .trn-events li { display: flex; align-items: baseline; gap: 16px; padding-bottom: 7px; border-bottom: 1px solid var(--hair-1); }
+  .trn-events__date { flex-shrink: 0; width: 58px; font-size: 11px; color: var(--faint); letter-spacing: 0.05em; }
+  .trn-events__label { font-size: var(--text-sm); color: var(--text-2); }
+</style>

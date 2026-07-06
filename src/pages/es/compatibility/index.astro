@@ -1,0 +1,62 @@
+---
+import Base from '../../../layouts/Base.astro';
+import SignIcon from '../../../components/SignIcon.astro';
+import SynastryCalculator from '../../../islands/SynastryCalculator';
+import { SIGNS, signName } from '../../../lib/signs';
+import { pairSlug } from '../../../lib/compat';
+import '../../../styles/calculator.css';
+---
+<Base
+  title="Calculadora de compatibilidad astrológica | Zodiacs.org"
+  description="Compara dos cartas natales gratis y de forma privada en tu navegador, con lecturas claras y guías para las 78 combinaciones de signos."
+  path="/es/compatibility/"
+  locale="es"
+  image="/assets/og/v2/tool/compatibility.png"
+  imageAlt="Calculadora de compatibilidad — Zodiacs.org"
+>
+  <section class="section--tight container container--narrow">
+    <div class="compat-hero">
+      <em class="kicker">Dos cartas, comparadas con claridad</em>
+      <h1 class="display">Revisa tu compatibilidad astrológica.</h1>
+      <p>Los signos solares son el comienzo. Compara dos cartas natales en tu navegador y obtén una lectura que puedas usar.</p>
+    </div>
+    <SynastryCalculator locale="es" client:load />
+  </section>
+
+  <section class="section container">
+    <div class="section-head">
+      <h2>Las 78 combinaciones</h2>
+      <p>Las guías completas siguen en inglés por ahora, pero puedes explorar cada pareja como punto de partida.</p>
+    </div>
+    <div class="compat-index">
+      {SIGNS.map((a) => (
+        <div class="compat-row" style={`--sign:${a.hue}`}>
+          <a class="compat-row__sign" href={`/es/${a.slug}/`}>
+            <SignIcon sign={a.slug} size={34} class="compat-row__icon" />
+            <span>{signName(a, 'es')}</span>
+          </a>
+          <div class="compat-row__pairs">
+            {SIGNS.map((b) => (
+              <a class="compat-row__pair" href={`/compatibility/${pairSlug(a.slug, b.slug)}/`}>
+                {signName(b, 'es')}
+              </a>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+</Base>
+
+<style>
+  .compat-hero { max-width: 58ch; margin-bottom: clamp(26px, 5vw, 42px); }
+  .compat-hero h1 { margin: 14px 0; font-size: var(--text-2xl); line-height: 1.04; }
+  .compat-hero p { margin: 0; color: var(--muted); font-size: var(--text-lg); text-wrap: pretty; }
+  .compat-index { display: grid; }
+  .compat-row { display: grid; gap: 10px 26px; padding: 16px 0; border-bottom: 1px solid var(--hair-1); grid-template-columns: 1fr; }
+  .compat-row:first-child { border-top: 1px solid var(--hair-1); }
+  @media (min-width: 760px) { .compat-row { grid-template-columns: 190px 1fr; align-items: start; } }
+  .compat-row__sign { display: inline-flex; align-items: center; gap: 10px; color: var(--text); text-decoration: none; font-weight: 600; }
+  .compat-row__pairs { display: flex; flex-wrap: wrap; gap: 7px; }
+  .compat-row__pair { padding: 5px 10px; border: 1px solid var(--hair-1); border-radius: var(--r-full); color: var(--text-2); text-decoration: none; font-size: 13px; }
+</style>

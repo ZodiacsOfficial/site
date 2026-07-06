@@ -6,6 +6,7 @@
  * The browser/Node ICU data carries the complete tzdb history, exposed
  * through Intl. Never hand-roll offsets.
  */
+import { TECHNICAL_OFFSET_LOCALE, TECHNICAL_WALL_LOCALE } from '../i18n/dates';
 
 export interface LocalTimeResolution {
   utc: Date;
@@ -20,7 +21,7 @@ const wallFormatters = new Map<string, Intl.DateTimeFormat>();
 function offsetFormatter(tz: string): Intl.DateTimeFormat {
   let f = offsetFormatters.get(tz);
   if (!f) {
-    f = new Intl.DateTimeFormat('en-US', { timeZone: tz, timeZoneName: 'longOffset' });
+    f = new Intl.DateTimeFormat(TECHNICAL_OFFSET_LOCALE, { timeZone: tz, timeZoneName: 'longOffset' });
     offsetFormatters.set(tz, f);
   }
   return f;
@@ -29,7 +30,7 @@ function offsetFormatter(tz: string): Intl.DateTimeFormat {
 function wallFormatter(tz: string): Intl.DateTimeFormat {
   let f = wallFormatters.get(tz);
   if (!f) {
-    f = new Intl.DateTimeFormat('en-CA', {
+    f = new Intl.DateTimeFormat(TECHNICAL_WALL_LOCALE, {
       timeZone: tz,
       year: 'numeric', month: '2-digit', day: '2-digit',
       hour: '2-digit', minute: '2-digit', hourCycle: 'h23',
@@ -54,7 +55,7 @@ export function offsetAt(tz: string, utcMs: number): number {
 }
 
 function wallStringAt(tz: string, utcMs: number): string {
-  // en-CA yields "YYYY-MM-DD, HH:mm"
+  // TECHNICAL_WALL_LOCALE yields "YYYY-MM-DD, HH:mm"
   return wallFormatter(tz).format(utcMs).replace(', ', 'T');
 }
 
