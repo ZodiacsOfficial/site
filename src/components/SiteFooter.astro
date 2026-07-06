@@ -1,11 +1,16 @@
 ---
 import { SIGNS, signName } from '../lib/signs';
 import BrandMark from './BrandMark.astro';
-import { localizePath, normalizeLocale, t, type Locale } from '../lib/i18n';
+import { alternatePaths, localizePath, normalizeLocale, t, type Locale } from '../lib/i18n';
 
 const year = new Date().getFullYear();
 interface Props { locale?: Locale }
 const locale = normalizeLocale(Astro.props.locale);
+// The other language's twin of this page when one exists; otherwise its home.
+const twin = alternatePaths(Astro.url.pathname);
+const otherHref = locale === 'es' ? (twin?.en ?? '/') : (twin?.es ?? '/es/');
+const otherLabel = locale === 'es' ? 'English' : 'Español';
+const otherLang = locale === 'es' ? 'en' : 'es';
 ---
 <footer class="footer">
   <div class="container">
@@ -67,6 +72,8 @@ const locale = normalizeLocale(Astro.props.locale);
         <span>{t(locale, 'footerPlaceData')}: <a href="https://www.geonames.org/" rel="noopener noreferrer">GeoNames</a> (CC BY 4.0)</span>
         <span aria-hidden="true">·</span>
         <span>{t(locale, 'footerFonts')} <a href="/fonts/OFL-instrument-sans.txt">SIL OFL</a></span>
+        <span aria-hidden="true">·</span>
+        <a href={otherHref} hreflang={otherLang} lang={otherLang}>{otherLabel}</a>
       </span>
     </div>
   </div>

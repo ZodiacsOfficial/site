@@ -46,6 +46,7 @@ const jsonLd = [
         disablepictureinpicture
         aria-hidden="true"
         tabindex="-1"
+        data-hero-video-es
       ></video>
       <div class="hero-es__scrim" aria-hidden="true"></div>
       <div class="hero-es__content">
@@ -57,6 +58,17 @@ const jsonLd = [
         </div>
       </div>
     </div>
+    <script is:inline>
+      // Reduced-motion visitors keep the poster; the footage never forces itself.
+      (function () {
+        var v = document.querySelector('[data-hero-video-es]');
+        if (v && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          v.removeAttribute('autoplay');
+          v.preload = 'none';
+          try { v.pause(); v.currentTime = 0; } catch (e) { /* not yet loaded — poster stays */ }
+        }
+      })();
+    </script>
   </section>
 
   <WelcomeBack client:load locale="es" />
