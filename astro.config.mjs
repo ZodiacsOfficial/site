@@ -13,4 +13,13 @@ export default defineConfig({
     format: 'directory',
     inlineStylesheets: 'auto',
   },
+  vite: {
+    build: {
+      // The default CSS minifier collapses standard + -webkit- property
+      // pairs down to the -webkit- spelling, which current Chromium no
+      // longer aliases — that silently kills every backdrop-filter
+      // (nav blur, glass chrome). esbuild minifies without merging.
+      cssMinify: 'esbuild',
+    },
+  },
 });

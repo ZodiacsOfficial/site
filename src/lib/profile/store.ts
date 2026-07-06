@@ -27,6 +27,9 @@ export function loadProfile(): Profile {
 
 function queueCloudSync() {
   if (typeof window === 'undefined') return;
+  // Build-time gate: without Supabase env the sync chunk (and the
+  // supabase-js dependency inside it) is never even fetched.
+  if (!import.meta.env.PUBLIC_SUPABASE_URL) return;
   import('./sync')
     .then(({ scheduleCloudSync }) => scheduleCloudSync())
     .catch(() => {});
