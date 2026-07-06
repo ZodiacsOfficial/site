@@ -18,6 +18,8 @@ import { resolveLocalToUtc } from '../lib/time/localToUtc';
 import { houseOf } from '../lib/engine/houses';
 import { moonPhaseName } from '../lib/engine/lite';
 import { saveChart } from '../lib/profile/store';
+import { decodeChartLink, encodeChartLink } from '../lib/share';
+import type { ShareChartInput } from '../lib/share';
 import { ENGINE_VERSION } from '../lib/engine/types';
 import type { Chart, HouseSystem } from '../lib/engine/types';
 import type { City } from '../lib/geo/search';
@@ -46,6 +48,10 @@ export default function ChartCalculator({ mode }: Props) {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
   const [saved, setSaved] = useState<'idle' | 'saved' | 'full' | 'error'>('idle');
+  const [shareInput, setShareInput] = useState<ShareChartInput | null>(null);
+  const [share, setShare] = useState<'idle' | 'copied' | 'manual'>('idle');
+  const [card, setCard] = useState<'idle' | 'busy' | 'saved' | 'error'>('idle');
+  const [fromLink, setFromLink] = useState(false);
   const resultRef = useRef<HTMLDivElement>(null);
 
   // Warm the ephemeris while the visitor types.
@@ -55,34 +61,74 @@ export default function ChartCalculator({ mode }: Props) {
     idle(warm);
   }, []);
 
+  // A shared chart arrives in the fragment (#c=…) — parse, prefill,
+  // compute, then strip the token from the bar so screenshots and
+  // copied URLs don't carry someone's birth data further than intended.
+  useEffect(() => {
+    if (mode !== 'full') return;
+    const token = new URLSearchParams(window.location.hash.slice(1)).get('c');
+    if (!token) return;
+    const decoded = decodeChartLink(token);
+    if (!decoded) return;
+    const linkCity: City = {
+      name: decoded.place ?? 'Shared birthplace', admin1: '', country: '',
+      lat: decoded.lat, lon: decoded.lon, tz: decoded.tz, pop: 0,
+    };
+    setDate(decoded.date);
+    setTime(decoded.time ?? '');
+    setTimeKnown(decoded.timeKnown);
+    setCity(linkCity);
+    setHouseSystem(decoded.houseSystem);
+    setFromLink(true);
+    history.replaceState(null, '', window.location.pathname + window.location.search);
+    runChart({
+      date: decoded.date, time: decoded.time ?? '', timeKnown: decoded.timeKnown,
+      city: linkCity, houseSystem: decoded.houseSystem,
+    });
+  }, []);
+
   const canCompute = date !== '' && city !== null && (!timeKnown || time !== '')
     && !(mode === 'rising' && !timeKnown);
 
-  async function compute(e: Event) {
-    e.preventDefault();
-    if (!canCompute || !city) return;
+  interface RunInput {
+    date: string; time: string; timeKnown: boolean; city: City; houseSystem: HouseSystem;
+  }
+
+  async function runChart(input: RunInput) {
     setBusy(true);
     setError('');
     setSaved('idle');
+    setShare('idle');
+    setCard('idle');
     setMoonAmbiguous(false);
     try {
       const engine = await loadEngine();
-      const effectiveTime = timeKnown ? time : '12:00';
-      const resolved = resolveLocalToUtc(date, effectiveTime, city.tz);
+      const effectiveTime = input.timeKnown ? input.time : '12:00';
+      const resolved = resolveLocalToUtc(input.date, effectiveTime, input.city.tz);
       const result = engine.computeChart({
         utc: resolved.utc,
-        latitude: city.lat,
-        longitude: city.lon,
-        houseSystem,
-        timeKnown,
+        latitude: input.city.lat,
+        longitude: input.city.lon,
+        houseSystem: input.houseSystem,
+        timeKnown: input.timeKnown,
         flags: resolved.flags,
       });
       setChart(result);
+      setShareInput({
+        date: input.date,
+        time: input.timeKnown ? input.time : null,
+        timeKnown: input.timeKnown,
+        lat: input.city.lat,
+        lon: input.city.lon,
+        tz: input.city.tz,
+        place: input.city.name || undefined,
+        houseSystem: input.houseSystem,
+      });
 
-      if (!timeKnown) {
+      if (!input.timeKnown) {
         // Does the Moon change signs across this civil day?
-        const early = resolveLocalToUtc(date, '00:00', city.tz);
-        const late = resolveLocalToUtc(date, '23:59', city.tz);
+        const early = resolveLocalToUtc(input.date, '00:00', input.city.tz);
+        const late = resolveLocalToUtc(input.date, '23:59', input.city.tz);
         const moonEarly = signForLongitude(engine.computeBodies(early.utc).find((b) => b.body === 'Moon')!.lon);
         const moonLate = signForLongitude(engine.computeBodies(late.utc).find((b) => b.body === 'Moon')!.lon);
         setMoonAmbiguous(moonEarly.slug !== moonLate.slug);
@@ -95,6 +141,12 @@ export default function ChartCalculator({ mode }: Props) {
     } finally {
       setBusy(false);
     }
+  }
+
+  function compute(e: Event) {
+    e.preventDefault();
+    if (!canCompute || !city) return;
+    runChart({ date, time, timeKnown, city, houseSystem });
   }
 
   function onSave() {
@@ -125,6 +177,32 @@ export default function ChartCalculator({ mode }: Props) {
       },
     });
     setSaved(status === 'updated' ? 'saved' : status);
+  }
+
+  const shareUrl = () =>
+    `${window.location.origin}/birth-chart/#c=${encodeChartLink(shareInput!)}`;
+
+  async function onCopyLink() {
+    if (!shareInput) return;
+    try {
+      await navigator.clipboard.writeText(shareUrl());
+      setShare('copied');
+    } catch {
+      setShare('manual');
+    }
+  }
+
+  async function onCard() {
+    if (!chart || !shareInput) return;
+    setCard('busy');
+    try {
+      const { saveChartCard } = await import('../lib/share-card');
+      const outcome = await saveChartCard(chart, shareInput);
+      setCard(outcome === 'cancelled' ? 'idle' : 'saved');
+    } catch (err) {
+      console.error(err);
+      setCard('error');
+    }
   }
 
   const placements = useMemo(() => {
@@ -250,6 +328,12 @@ export default function ChartCalculator({ mode }: Props) {
             <p class="notice" role="status">
               Without a birth time we compute for noon: planets are exact to the day, but rising sign and houses need the clock.
               {moonAmbiguous && ' The Moon also changed signs that day — reading both neighbors is fair until you find the time.'}
+            </p>
+          )}
+          {fromLink && (
+            <p class="notice" role="status">
+              Opened from a shared link — the birth details came in the link
+              itself, and the chart was computed on your device just now.
             </p>
           )}
 
@@ -379,6 +463,44 @@ export default function ChartCalculator({ mode }: Props) {
           {saved === 'full' && <p class="calc__error" role="alert">Your profile holds 20 charts — remove one on the profile page first.</p>}
           {saved === 'error' && <p class="calc__error" role="alert">Couldn’t save — your browser may be blocking local storage.</p>}
           {saved === 'saved' && <p class="calc__saved">Saved to your cosmic profile. It stays on this device — <a href="/profile/">see it here</a>.</p>}
+
+          {/* Share: the link carries the data; no server involved */}
+          {mode === 'full' && shareInput && (
+            <div class="calc__share">
+              <div class="calc__actions">
+                <button class="btn btn--ghost" type="button" onClick={onCopyLink} data-share-link>
+                  <span>{share === 'copied' ? 'Link copied' : 'Copy a link to this chart'}</span>
+                  <span class="orb">{share === 'copied' ? '✓' : '⧉'}</span>
+                </button>
+                <button class="btn btn--ghost" type="button" onClick={onCard} disabled={card === 'busy'} data-share-card>
+                  <span>{card === 'busy' ? 'Rendering…' : card === 'saved' ? 'Card saved' : 'Save a chart card'}</span>
+                  <span class="orb">{card === 'saved' ? '✓' : '↓'}</span>
+                </button>
+              </div>
+              {share === 'manual' && (
+                <input
+                  class="field__input calc__share-url" type="text" readOnly value={shareUrl()}
+                  aria-label="Link to this chart"
+                  onFocus={(e) => (e.target as HTMLInputElement).select()}
+                />
+              )}
+              <p class="calc__share-note">
+                The link carries the birth details you entered — nothing is sent
+                to us, so only people you hand it to can open it. The card is a
+                1080×1350 image drawn on your device.
+              </p>
+              {(share === 'copied' || card === 'saved') && (
+                <p class="sr-only" role="status">
+                  {share === 'copied' ? 'Chart link copied to your clipboard.' : 'Chart card saved.'}
+                </p>
+              )}
+              {card === 'error' && (
+                <p class="calc__error" role="alert">
+                  Couldn’t draw the card in this browser — the wheel above will screenshot just as well.
+                </p>
+              )}
+            </div>
+          )}
         </div>
       )}
     </div>

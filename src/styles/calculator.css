@@ -247,6 +247,22 @@
 
 .calc__actions { display: flex; flex-wrap: wrap; gap: 12px; }
 
+/* Share block — quiet, sits under the save actions */
+.calc__share {
+  display: grid;
+  gap: 10px;
+  margin-top: 18px;
+  padding-top: 18px;
+  border-top: 1px solid var(--hair-2);
+}
+.calc__share-url { font-family: var(--font-mono); font-size: 12px; }
+.calc__share-note {
+  margin: 0;
+  font-size: 12.5px;
+  color: var(--faint);
+  max-width: 52ch;
+}
+
 .calc__result { display: grid; gap: clamp(18px, 3vw, 28px); }
 
 /* ── Synastry ─────────────────────────────────────────────────────── */

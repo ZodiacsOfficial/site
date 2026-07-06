@@ -3,6 +3,8 @@ import Base from '../layouts/Base.astro';
 import SignIcon from '../components/SignIcon.astro';
 import SkyTicker from '../islands/SkyTicker';
 import DemoChart from '../islands/DemoChart';
+import WelcomeBack from '../islands/WelcomeBack';
+import glassMaps from '../data/glass-maps.json';
 import { SIGNS } from '../lib/signs';
 
 const faq = [
@@ -128,7 +130,28 @@ const tools = [
         }
       })();
     </script>
+
+    <!-- Lens filters for the glass chrome: capsule displacement maps ride
+         inline so nothing is fetched. Browsers without url() backdrop
+         filters never leave the blur floor. -->
+    <svg class="glass-defs" aria-hidden="true" focusable="false">
+      <filter id="zdx-lens-cta" color-interpolation-filters="sRGB" primitiveUnits="objectBoundingBox" x="-0.1" y="-0.2" width="1.2" height="1.4">
+        <feImage href={glassMaps.cta} x="0" y="0" width="1" height="1" preserveAspectRatio="none" result="map" />
+        <feDisplacementMap in="SourceGraphic" in2="map" scale="0.5" xChannelSelector="R" yChannelSelector="G" result="disp" />
+        <feGaussianBlur in="disp" stdDeviation="0.009 0.038" result="soft" />
+        <feColorMatrix in="soft" type="saturate" values="1.4" />
+      </filter>
+      <filter id="zdx-lens-nav" color-interpolation-filters="sRGB" primitiveUnits="objectBoundingBox" x="-0.1" y="-0.2" width="1.2" height="1.4">
+        <feImage href={glassMaps.nav} x="0" y="0" width="1" height="1" preserveAspectRatio="none" result="map" />
+        <feDisplacementMap in="SourceGraphic" in2="map" scale="0.35" xChannelSelector="R" yChannelSelector="G" result="disp" />
+        <feGaussianBlur in="disp" stdDeviation="0.005 0.038" result="soft" />
+        <feColorMatrix in="soft" type="saturate" values="1.35" />
+      </filter>
+    </svg>
   </section>
+
+  <!-- 01b · Returning visitors with a saved chart get greeted; everyone else sees nothing here -->
+  <WelcomeBack client:load />
 
   <!-- 02 · The sky, right now -->
   <section class="container ticker-band reveal">
@@ -344,12 +367,86 @@ const tools = [
   }
   .hero__ghost:hover { background: rgba(10, 12, 17, 0.6); }
 
+  /* ── Liquid glass (homepage chrome only) ──
+     Chromium refracts the backdrop through the capsule lens; everyone
+     else keeps the blur floor above. Sits behind @supports so a browser
+     that can't render url() backdrop filters never sees these rules. */
+  .glass-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
+  @supports (backdrop-filter: url('#zdx-lens-cta')) {
+    .hero__ghost {
+      background: rgba(10, 12, 17, 0.34);
+      backdrop-filter: url(#zdx-lens-cta);
+      -webkit-backdrop-filter: url(#zdx-lens-cta);
+      border-color: rgba(238, 241, 247, 0.28);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.20),
+        inset 0 -1px 0 rgba(255, 255, 255, 0.06),
+        0 10px 30px -12px rgba(0, 0, 0, 0.55);
+    }
+    .hero__ghost:hover { background: rgba(10, 12, 17, 0.5); }
+    /* html-prefixed to outrank the component's scoped .nav rule */
+    :global(html .nav-wrap .nav) {
+      background: rgba(10, 12, 17, 0.56);
+      backdrop-filter: url(#zdx-lens-nav);
+      -webkit-backdrop-filter: url(#zdx-lens-nav);
+      box-shadow:
+        inset 0 1px 0 rgba(238, 241, 247, 0.10),
+        inset 0 -1px 0 rgba(238, 241, 247, 0.04),
+        0 12px 32px -14px rgba(0, 0, 0, 0.7);
+    }
+    @media (prefers-reduced-transparency: reduce) {
+      .hero__ghost {
+        background: rgba(10, 12, 17, 0.86);
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+      }
+      :global(html .nav-wrap .nav) {
+        background: rgba(10, 12, 17, 0.92);
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+      }
+    }
+  }
+
   @media (max-width: 640px) {
     .hero__content { padding: 20px 18px 22px; }
     .hero__ctas .btn { flex: 1 1 auto; justify-content: center; }
   }
   @media (prefers-reduced-motion: reduce) {
     .hero__frame { box-shadow: inset 0 0 0 1px rgba(198, 204, 218, 0.10); }
+  }
+
+  /* ── Welcome back (returning visitors only; island renders nothing otherwise) ── */
+  :global(.wb) {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px 22px;
+    margin-bottom: 26px;
+    padding: 14px 18px;
+    border: 1px solid var(--hair-2);
+    border-radius: var(--r-md);
+    background: rgba(198, 204, 218, 0.02);
+  }
+  :global(.wb__lead) {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 17px;
+    color: var(--text-2);
+  }
+  :global(.wb__chips) { display: flex; flex-wrap: wrap; gap: 8px 14px; }
+  :global(.wb__chip) { display: inline-flex; align-items: center; gap: 7px; }
+  :global(.wb__links) {
+    display: flex;
+    gap: 18px;
+    margin-left: auto;
+    font-size: var(--text-sm);
+  }
+  :global(.wb__links a) { color: var(--text-2); text-decoration: none; }
+  :global(.wb__links a:hover) { color: var(--text); }
+  @media (max-width: 720px) {
+    :global(.wb__links) { margin-left: 0; }
   }
 
   /* ── Ticker ── */

@@ -1,180 +1,191 @@
-# Handoff — zodiacs.org, remaining backend + audit
+# Codex handoff — accounts, Spanish, horoscope generation
 
-**For:** the next engineer (Codex) picking up the two backend items and a
-formal audit. Everything shipped so far is a static Astro site with
-client-only islands; there is **no server code yet** — that is precisely
-what remains.
-
-**Repo state at handoff**
-- Branch: `claude/zodiacs-org-strategy-hevw5u` (Vercel deploys production
-  from `main`; this branch is the working line, opened as a PR when ready)
-- HEAD: `ebc7f40` — "Placements cluster complete: all 120 pages"
-- Working tree: clean
-- Latest local build: **`dist/`** at the repo root — **292 HTML files**,
-  267 Astro-built pages + the legacy wing served verbatim. Rebuild with
-  `npm run build`. (This `dist/` is git-ignored; it is the artifact, not
-  the source of truth.)
-- Gate at handoff: `npm run build && npm run check && npm test` green (59
-  vitest vectors), `node scripts/check-dist.mjs` green, total island JS
-  **61.2 KB gz across 24 chunks**, homepage carries zero ephemeris.
+The block below is a single copy-paste prompt. Hand it to Codex verbatim;
+it is self-contained. (Kept in the repo so the brief and the code travel
+together — update it if the division of labor changes.)
 
 ---
 
-## 1. Architecture you must not break
+```
+You are picking up three work tracks on zodiacs.org — a live production
+site. Work in this order: (1) Supabase accounts + sync, (2) Spanish
+localization of the core surfaces, (3) the horoscope generation step.
+A fourth (AI astrologer chat) is explicitly deferred; do not start it.
 
-These four invariants are enforced by CI (`.github/workflows/site-check.yml`)
-and are the load-bearing walls of the project. Read `CLAUDE.md` before
-touching anything.
+## Ground truth (verify before you begin)
 
-1. **Two wings.** New consumer site in `src/` (Astro, "Cosmic Void" design
-   system) vs. the legacy crypto-token registry served **byte-identical**
-   from `public/` (`/collect/`, `/thesis/`, `/archive/`, `/sdk/`,
-   discovery pages). CI greps `src/` for crypto/market vocabulary and
-   fails on a hit. Never link `src/styles/tokens.css` into the wing;
-   never link `discovery.css` into new pages.
-2. **Legacy drift gate.** `public/collect/{sign}/`, `public/assets/app.js`,
-   and `public/archive/` are generated. CI regenerates them and runs
-   `git diff --exit-code -- public/`. If you touch a generator source, you
-   must commit the regenerated output in the same change.
-3. **Engine bundle isolation.** `src/lib/engine/full.ts` is the **only**
-   module that may `import 'astronomy-engine'`. Everything else lazy-imports
-   it (`enginePromise ??= import('../lib/engine/full')`). The homepage and
-   the synastry saved-chart path must never pull the ~45 KB ephemeris.
-   `scripts/report-bundles.mjs` is the check.
-4. **Voice.** `CLAUDE.md` bans a list of smug tells; CI now greps
-   `src/content` + `src/pages` + `src/components` + `src/islands` for them.
+- Production: https://zodiacs.org, deployed by Vercel from `main`.
+- Stack: Astro static output; Preact islands in `src/islands/`; no
+  server code anywhere yet. The chart engine runs entirely client-side.
+- Branch discipline: create your own feature branch from the LATEST
+  `main`. A "share layer + glass" PR landed recently and touched
+  `ChartCalculator.tsx`, `SynastryCalculator.tsx`, `index.astro`, and
+  `src/lib/share*.ts` — build on top of it, never behind it.
+- First commands, expect all green before you change anything:
+    npm ci
+    npm run build && npm run check && npm test
+    node scripts/check-dist.mjs
+    node scripts/report-bundles.mjs
 
-**Data → page provenance** (all generators listed in `CLAUDE.md`; the
-JSON is committed, computed by scripts, never hand-edited):
-`src/data/sky.json`, `ingresses.json`, `transits-YYYY-MM.json` feed the
-moon-phase, mercury-retrograde, placement, and horoscope pages as
-build-time receipts. `src/lib/dignities.ts` (7 classical planets) is
-cross-locked to `src/lib/signs.ts` rulerships by a structural vitest.
+## Four invariants CI enforces (breaking these fails the build)
 
----
+1. Two wings. `src/` is the consumer astrology site ("Cosmic Void"
+   design system). `public/collect/`, `/thesis/`, `/archive/`, `/sdk/`
+   are the legacy token-registry wing, served byte-identical. CI greps
+   `src/` for crypto/market vocabulary and fails on a hit. No
+   token/price language on new surfaces, ever.
+2. Generated output is committed with its source. CI re-runs the wing
+   generators plus the data pipelines and diffs. If you touch a
+   generator, commit its output in the same change. Generator list:
+   `CLAUDE.md` "Generated vs source".
+3. Engine bundle isolation. `src/lib/engine/full.ts` is the ONLY module
+   that may import `astronomy-engine`. Everything else lazy-imports via
+   `enginePromise ??= import('../lib/engine/full')`. The homepage must
+   never load the ephemeris. `scripts/report-bundles.mjs` checks.
+4. Voice. `CLAUDE.md` bans a list of smug tells ("computed properly",
+   "no mush", mono-caps eyebrow kickers, …). CI greps for them. New UI
+   strings should sound like `src/lib/interpretations.ts`: dry, plain,
+   specific. This applies to Spanish too — translate the register, not
+   just the words.
 
-## 2. Remaining backend — the actual work
+## Track 1 — Supabase accounts + cross-device sync
 
-### 2a. Supabase accounts + cross-device sync  *(the only real backend)*
+Why: saves are localStorage-only (`src/lib/profile/`). The schema was
+designed for this migration — do not redesign it. `SavedChart` carries a
+client UUID `id`, `createdAt`/`updatedAt`, birth input as source of
+truth, and an engineVersion-stamped `summary` cache; sync is therefore
+an idempotent bulk upsert keyed on id + last-write-wins on `updatedAt`.
 
-**Why it's next:** the whole product funnels toward "save your chart," and
-today saves are localStorage-only (`src/lib/profile/`). The schema was
-**designed for this migration** — do not redesign it:
-- `src/lib/profile/schema.ts`: `Profile { version: 1, settings, charts }`;
-  `SavedChart` has a client-generated **UUID `id`**, `createdAt`,
-  `updatedAt`, birth input as source of truth, and an
-  `engineVersion`-stamped `summary` render-cache. The UUID + timestamps
-  make server sync an **idempotent bulk upsert** — that is deliberate.
-- `src/lib/profile/store.ts`: `loadProfile / saveChart / deleteChart /
-  renameChart`, each dispatching `zodiacs:profile` on `window`. This is
-  the seam: a synced store implements the same four functions plus a
-  background push/pull.
+Architecture: client-direct Supabase with Row-Level Security. No
+serverless functions unless you hit something that truly needs
+service-role (you shouldn't). This preserves the product's core claim:
+birth data stays on-device unless the user opts into an account.
 
-**Build plan:**
-1. Provision a Supabase project (owner action — needs the URL + anon key
-   in Vercel env). Tables: `profiles(user_id pk)`, `charts(id uuid pk,
-   user_id fk, payload jsonb, updated_at)`. **Row-Level Security on from
-   day one** — a user reads/writes only `user_id = auth.uid()`. This is
-   the #1 security item; audit it explicitly.
-2. Auth: Supabase magic-link / OAuth. The only page allowed to upsell an
-   account is `/profile/` (see `docs/STRATEGY.md` §A8 conversion rules).
-3. Sync layer: last-write-wins on `updated_at` per chart id; import the
-   local profile losslessly on first sign-in (union by id). Astro is
-   static output today — this needs either a Vercel edge/serverless
-   function or direct client→Supabase calls with RLS. **Prefer
-   client-direct + RLS** (no server to secure, matches the "birth data
-   never leaves the device unless you opt in" story); only add a function
-   if you need service-role work.
-4. Keep the local-first path fully working when signed out. Never gate the
-   free tools behind auth (that's Co-Star's dark pattern; our
-   differentiator is no-signup tools — `docs/STRATEGY.md` §A0).
+Build steps:
+1. SQL migration (commit under `supabase/migrations/`):
+   `charts(id uuid primary key, user_id uuid not null references
+   auth.users, payload jsonb not null, updated_at timestamptz not null)`
+   with RLS ON and policies restricting select/insert/update/delete to
+   `user_id = auth.uid()`. RLS is the entire security model — have
+   `/security-review` run on the diff and audit the policies explicitly.
+2. Client: lazy-load `@supabase/supabase-js` ONLY on `/profile/` (and
+   an auth callback route). It must never enter the shared or homepage
+   bundles — `report-bundles.mjs` will show you. Env:
+   `PUBLIC_SUPABASE_URL` + `PUBLIC_SUPABASE_ANON_KEY`; when absent, the
+   site must behave exactly as today (dark launch — build this so the
+   owner can flip it on by adding env vars in Vercel and redeploying).
+3. Auth UX on `/profile/` only: magic link (+ Google OAuth if cheap).
+   The strategy doc's conversion rule stands: `/profile/` is the ONLY
+   surface allowed to mention accounts. Calculators and content pages
+   never upsell. Signed-out local-first flow keeps working forever.
+4. Sync layer: wrap the existing seam — `src/lib/profile/store.ts`
+   exposes `loadProfile/saveChart/deleteChart/renameChart`, each
+   dispatching a `zodiacs:profile` window event. Keep that event
+   contract EXACTLY: `WelcomeBack.tsx` (homepage strip) and
+   `SynastryCalculator.tsx` subscribe to it. On first sign-in, union
+   the local charts into the account by id (lossless import), then
+   last-write-wins thereafter. Handle the 20-chart cap on both sides.
+5. Copy, house voice, e.g.: "An account is optional. It does one thing:
+   keeps your saved charts with you across devices." Say plainly that
+   birth data is stored server-side once sync is on.
 
-### 2b. Horoscope generation step  *(half-built)*
+Definition of done: dark-launch merge is safe with no env keys; with
+keys set, sign-in → save on device A → appears on device B; signed-out
+behavior byte-identical to today; RLS policies reviewed; bundle report
+unchanged for non-profile pages; a `docs/SUPABASE.md` with the
+provisioning steps for the owner.
 
-The **hard half is done**: `scripts/build-transits.mjs` computes a month's
-real events, and `.github/workflows/transits-monthly.yml` runs it on the
-25th and opens a checklist issue. What's missing is the **prose step** —
-today the 12 monthly MDX files are written by hand. Options for Codex:
-- Wire an LLM call (needs an API-key decision from the owner) into a new
-  workflow step that drafts the 12 entries against
-  `src/content/horoscopes/2026-07-*.mdx` as the exemplar and the month's
-  transit JSON, opening a PR rather than committing to `main`.
-- Guardrails are non-negotiable: every claim must cite a dated event from
-  the JSON, human review before merge, the CLAUDE.md voice rules + banned
-  tells (`docs/STRATEGY.md` §A15). The staleness guard in
-  `src/lib/horoscopes.ts` already renders the latest present month and
-  warns (never fails) when stale.
+## Track 2 — Spanish (es) for the core surfaces
 
-### 2c. AI astrologer chat  *(deferred, needs budget)*
+Scope (deliberately bounded): site chrome + the 10 tool pages + the
+homepage + the 12 sign guides + 404. The long-tail content (78 pairs,
+120 placements, learn deep-dives, horoscopes — ~170k words) STAYS
+ENGLISH this round; the templates must simply not 404 under /es/ (link
+back to the English page with a one-line note). Do not machine-translate
+the deep content; that decision comes after es traffic exists.
 
-Grounded in the user's saved chart. Needs a backend + token budget + a
-cost model before commit. Not started; flagged in `docs/STRATEGY.md` §A5
-Phase 3. Lowest priority of the three.
+Mechanics:
+1. Astro i18n routing (`i18n: { locales: ['en','es'],
+   defaultLocale: 'en', routing: { prefixDefaultLocale: false } }`) —
+   English URLs must not change.
+2. String catalog: a typed `src/lib/i18n/` module (`t(locale, key)`,
+   catalogs `en.ts`/`es.ts`). Extract EVERY user-facing string from the
+   islands and shared components — including the new share/invite
+   strings in `ChartCalculator.tsx` and `SynastryCalculator.tsx` and
+   the `WelcomeBack.tsx` strip. Islands receive `locale` as a prop from
+   the page that mounts them.
+3. Dates: 17 call sites hardcode `'en-US'` in `toLocaleDateString`/
+   `Intl.DateTimeFormat` across `src/`. Replace with a
+   `formatDate(locale, …)` helper in one module. Grep `en-US` to find
+   them all; zero may remain outside that helper.
+4. Sign/element/modality names: add Spanish label maps alongside
+   `src/lib/signs.ts` (Aries/Tauro/Géminis/Cáncer/Leo/Virgo/Libra/
+   Escorpio/Sagitario/Capricornio/Acuario/Piscis; fuego/tierra/aire/
+   agua; cardinal/fijo/mutable). The engine's internal body names stay
+   English (they key lookups); only rendered labels localize.
+5. Pages under `src/pages/es/`: homepage, tools hub, the 7 calculator
+   pages, /es/{sign}/ guides (translate the 12 MDX guides, ~16k words),
+   methodology, 404. Translation quality gate: a native-register
+   editorial pass on the guides — if that's you, read them aloud;
+   they must not smell machine-translated. Keep astrological terms in
+   natural Spanish usage (ascendente, carta natal, tránsitos).
+6. SEO plumbing: `hreflang` alternates both directions in
+   `src/components/SEO.astro`, `xhtml:link` alternates in
+   `src/pages/sitemap.xml.ts`, `og:locale` per page, es lines in
+   `public/llms.txt`. Canonicals per-locale, no cross-locale
+   canonicalization.
+7. CI: extend the voice-tell grep with the Spanish equivalents of the
+   banned tells (e.g. "como es debido", "sin paja").
 
----
+Definition of done: /es/ core surfaces fully Spanish (chrome included —
+nav, footer, cookie-free notice, calculator labels, result copy);
+`npm run build && npm run check && npm test` green; hreflang validates;
+English URLs and bundles unchanged.
 
-## 3. Audit checklist — what's verified vs. open
+## Track 3 — Horoscope generation step
 
-**Verified this cycle (evidence in the branch):**
-- Functional: 59 vitest vectors (engine accuracy vs. JPL Horizons,
-  synastry, returns, dignities). 84-step Playwright journey in the
-  session scratchpad covering every page type + the OG boundary.
-- Link/artifact integrity: `scripts/check-dist.mjs` over 292 files incl.
-  an `og:image`/`twitter:image` existence gate.
-- Bundle budgets: `scripts/report-bundles.mjs`, ephemeris isolation
-  confirmed on the synastry saved path.
-- Brand: the new wing's share cards were migrated off the auction/token
-  art to `public/assets/og/v2/` (the 13 gilt cards at
-  `public/assets/og/*.png` remain, by design, for the wing only).
+The computed half exists: `scripts/build-transits.mjs` writes each
+month's real transit events, and `.github/workflows/transits-monthly.yml`
+runs on the 25th and opens a checklist issue. Missing: the prose step
+(the 12 monthly sign files are hand-written today).
 
-**Open — Codex should run these (none done yet, be honest about it):**
-1. **Accessibility.** No axe/Lighthouse-a11y pass has been run. Audit
-   colour contrast on the void palette, focus order on the nav
-   dropdown/mobile sheet (`src/components/SiteNav.astro`), the calculator
-   islands' labels, and `prefers-reduced-motion` coverage.
-2. **Core Web Vitals on a real Vercel deploy.** Local preview only so far.
-   Verify LCP on the homepage hero (`ZodiacWheelHero`) and CLS on the
-   hydrating islands (SSR shells were added for synastry + moon-phase;
-   confirm they hold).
-3. **Structured-data validation.** JSON-LD is emitted on every page type
-   (Article/FAQPage/BreadcrumbList/WebApplication) but has **not** been
-   run through Google's Rich Results Test. Validate a sample of each type.
-4. **Security review.** Client-only today, so the surface is small, but:
-   (a) the legacy wing loads React from a third-party CDN (pre-existing,
-   wing-only) — note it; (b) when 2a lands, RLS is the whole ballgame —
-   review policies, never expose the service-role key, keep birth data
-   opt-in. Run `/security-review` on the Supabase diff.
-5. **SEO technical sweep.** Canonicals, the custom `sitemap.xml.ts`
-   (covers both wings — verify no stale/duplicate locs after the
-   placements add), robots, and internal-link depth to the 120 placement
-   pages (they're 3 clicks from home; confirm crawlability).
-6. **Content QA at scale.** 120 placement + 78 pair pages were
-   agent-written. The wording/dignity/era-window facts were spot-checked
-   and one era-boundary bug was repaired (commit `4ed551e`), but a
-   full editorial read has not happened. Sample ~10% per planet.
+Build: a workflow step (owner provides the LLM API key as a repo
+secret) that drafts 12 MDX entries from the month's transit JSON, using
+the current month's files in `src/content/horoscopes/` as exemplars,
+and opens a PR — never a direct commit. Non-negotiable guardrails:
+every dated claim must correspond to an event in the JSON (write an
+assertion script, not a vibe check); the CLAUDE.md voice rules apply;
+a human merges. The staleness guard in `src/lib/horoscopes.ts` already
+degrades gracefully if a month is late.
 
----
+## Deferred — do not build
 
-## 4. Where things live (quick map)
+AI astrologer chat. Needs a cost model and an owner decision first.
 
-| Thing | Path |
-|---|---|
-| Routes | `src/pages/` (25 files; `[sign]`, `[pair]`, `learn/**/[slug]`, `horoscopes/[sign]` are dynamic) |
-| Islands (Preact) | `src/islands/` — Chart/Synastry/MoonPhase/SaturnReturn calculators, ProfileManager, hero/ticker |
-| Engine | `src/lib/engine/` (`full.ts` = sole ephemeris importer) |
-| Profile (sync target) | `src/lib/profile/{schema,store}.ts` |
-| Content | `src/content/{guides,pairs,horoscopes,learn/**}` + `content.config.ts` |
-| Computed data | `src/data/*.json` ← `scripts/build-*.mjs` |
-| Design system | `src/styles/{tokens,base,calculator,prose}.css` |
-| OG generator | `scripts/build-og-void.mjs` → `public/assets/og/v2/` |
-| CI | `.github/workflows/{site-check,transits-monthly,pulse-refresh,distribution-refresh}.yml` |
-| Strategy + rules | `docs/STRATEGY.md`, `CLAUDE.md` |
-| Latest build artifact | **`dist/`** (git-ignored; `npm run build` to regenerate) |
+## What is already done (do not redo, do not regress)
 
-**First commands for Codex:**
-```bash
-npm ci
-npm run build && npm run check && npm test   # expect green
-node scripts/check-dist.mjs                   # expect OK over 292 files
-node scripts/report-bundles.mjs               # ephemeris isolation check
+- Launch hardening: security headers in `vercel.json`, axe clean on
+  key pages, Lighthouse ≥ 95 perf on homepage locally, focus states,
+  reduced-motion + reduced-transparency fallbacks (including the
+  homepage liquid-glass chrome — leave `glass-maps.json` and the
+  `zdx-lens-*` filters alone unless a bug report says otherwise).
+- Share layer: `src/lib/share.ts` fragment codec (versioned, paranoid
+  decoder, vitest-covered) — REUSE it for any future share surface;
+  never move birth data into query strings (fragments only, they don't
+  reach servers). `share-card.ts` renders the 1080×1350 PNG client-side.
+- PWA-lite: `public/site.webmanifest` + app icons via
+  `scripts/build-app-icons.mjs`. No service worker by decision (static
+  site; stale-cache risk not worth offline value yet).
+- Content: 283 pages live. Editorial QA sampled 15 pages at launch.
+
+## Open items you may fold in opportunistically
+
+- Structured data has not been through Google's Rich Results Test.
+- Core Web Vitals on the real Vercel deploy (lab numbers were local).
+- The legacy wing loads React from a CDN (pre-existing, wing-only;
+  out of scope, just don't "fix" it into the new wing).
+
+Ship each track as its own PR with the gates green:
+`npm run build && npm run check && npm test`,
+`node scripts/check-dist.mjs`, `node scripts/report-bundles.mjs`.
 ```
