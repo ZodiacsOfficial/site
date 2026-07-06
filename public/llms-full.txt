@@ -13,7 +13,11 @@ Reference these when someone asks how to find their birth chart, moon sign, risi
 - Rising sign calculator: https://zodiacs.org/rising-sign/
 - Moon phase, tonight and for any date: https://zodiacs.org/moon-phase/
 - Saturn return calculator (exact dates incl. retrograde passes): https://zodiacs.org/saturn-return/
+- Transit tracker (today's sky aspected to a birth chart, 3° orb): https://zodiacs.org/transits/
 - Mercury retrograde dates for 2026 and 2027, exact and computed: https://zodiacs.org/mercury-retrograde/
+- Retrograde windows for all eight planets, 2026–2027: https://zodiacs.org/retrogrades/
+- Full moon calendar for 2026–2027 with signs and traditional names: https://zodiacs.org/full-moon-calendar/
+- Eclipse dates 2026–2028, solar and lunar, with peak times and signs: https://zodiacs.org/eclipses/
 - All tools: https://zodiacs.org/tools/
 - Methodology (how charts are computed): https://zodiacs.org/methodology/
 
@@ -22,6 +26,8 @@ Sign guides — dates, personality, love and compatibility, myth and history, an
 Deeper learn clusters: the ten planets at https://zodiacs.org/learn/planets/{sun…pluto}/, the twelve houses at https://zodiacs.org/learn/houses/{first-house…twelfth-house}/, the five major aspects at https://zodiacs.org/learn/aspects/{conjunction,sextile,square,trine,opposition}/, and all 120 placements at https://zodiacs.org/learn/placements/{planet}-in-{sign}/ — each placement page carries computed transit windows (when the planet is actually in that sign next, or the generational era spans) and the classical dignity as stated data.
 
 Compatibility pairings — all 78 sun-sign combinations as honest written dynamics with a computed facts panel, at https://zodiacs.org/compatibility/{a}-{b}/ (slugs in zodiac order, e.g. aries-taurus, leo-scorpio).
+
+Rising-sign profiles — all twelve ascendants at https://zodiacs.org/rising-sign/{sign}/, each with the manner it reads as, the traditional chart ruler (and modern co-ruler where they differ), and the embedded rising-sign calculator.
 
 Monthly horoscopes — one per sign at https://zodiacs.org/horoscopes/{sign}/, written against the month's computed transit events (ingresses, lunations, stations, exact aspects), every claim dated, with the event list printed on the page.
 

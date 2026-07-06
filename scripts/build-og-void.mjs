@@ -8,6 +8,7 @@
  *   pair/{a}-{b}.png       all 78 compatibility pairings
  *   horoscope/{slug}.png   the 12 horoscope pages (month-free, evergreen)
  *   placements/{planet}.png  one per planet, shared by its 12 placement pages
+ *   rising/{slug}.png      the 12 rising-sign profiles
  *
  * The legacy gilt cards at assets/og/*.png stay byte-identical — the
  * collector's wing still references them. This script never touches
@@ -243,6 +244,21 @@ function horoscopeCard(s) {
   return shell(body, `zodiacs.org/horoscopes/${s.slug}/`);
 }
 
+function risingCard(s) {
+  const body = `
+  <div class="stage">
+    <div class="left">
+      <span class="kicker">Rising signs</span>
+      <div class="display" style="font-size: 84px; line-height: 1.06;">${s.name}<br/>rising</div>
+      <div class="sub" style="font-size: 26px; color: ${MUTED};">How the world first meets you — and the planet that steers your chart.</div>
+      <div class="data">the ascendant changes sign about every two hours</div>
+    </div>
+    <img class="disc" src="${DISCS[s.slug]}" width="340" height="340"
+         style="box-shadow: 0 30px 90px ${s.hue}40;" />
+  </div>`;
+  return shell(body, `zodiacs.org/rising-sign/${s.slug}/`);
+}
+
 const TOOLS = [
   { key: 'birth-chart', path: '/birth-chart/', kicker: 'Free calculator', title: 'Your birth chart', sub: 'Sun, moon, rising, houses, and aspects — computed on your device.' },
   { key: 'moon-sign', path: '/moon-sign/', kicker: 'Free calculator', title: 'Your moon sign', sub: 'How you feel and what soothes you — from your date, time, and place of birth.' },
@@ -254,10 +270,14 @@ const TOOLS = [
   { key: 'horoscopes', path: '/horoscopes/', kicker: 'Monthly horoscopes', title: 'All twelve signs', sub: 'Written against the computed sky, with the month’s real transit dates.' },
   { key: 'learn', path: '/learn/', kicker: 'Learn astrology', title: 'Read your chart', sub: 'The signs, the planets, the houses, and the aspects, in plain language.' },
   { key: 'tools', path: '/tools/', kicker: 'Free astrology tools', title: 'Calculators, no signup', sub: 'Birth chart, compatibility, moon sign, and more — computed on your device.' },
+  { key: 'transits', path: '/transits/', kicker: 'Free tracker', title: 'Your transits, today', sub: 'The current sky aspected to your birth chart, within 3° of exact.' },
+  { key: 'eclipses', path: '/eclipses/', kicker: 'The calendar', title: 'Eclipses, dated', sub: 'Every solar and lunar eclipse through 2028, with exact peak times and signs.' },
+  { key: 'full-moon-calendar', path: '/full-moon-calendar/', kicker: 'The calendar', title: 'Every full moon', sub: 'Exact instants through 2027, with each moon’s sign, degree, and name.' },
+  { key: 'retrogrades', path: '/retrogrades/', kicker: 'The calendar', title: 'Every retrograde', sub: 'All eight planets, 2026–2027, computed station to station.' },
 ];
 
 // ── Render loop ───────────────────────────────────────────────────────
-for (const dir of ['', 'sign', 'tool', 'pair', 'horoscope', 'placements']) {
+for (const dir of ['', 'sign', 'tool', 'pair', 'horoscope', 'placements', 'rising']) {
   await mkdir(resolve(OUT, dir), { recursive: true });
 }
 
@@ -289,6 +309,7 @@ for (let i = 0; i < SIGNS.length; i += 1) {
   }
 }
 for (const s of SIGNS) await shoot(horoscopeCard(s), `horoscope/${s.slug}.png`);
+for (const s of SIGNS) await shoot(risingCard(s), `rising/${s.slug}.png`);
 const PLANET_GLYPHS = {
   Sun: '☉', Moon: '☽', Mercury: '☿', Venus: '♀', Mars: '♂',
   Jupiter: '♃', Saturn: '♄', Uranus: '♅', Neptune: '♆', Pluto: '♇',
