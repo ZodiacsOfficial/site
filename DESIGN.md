@@ -30,6 +30,19 @@ short caption, and two clear buttons.
 - Imagery: real zodiac/celestial artifacts, chart surfaces, sign icons, and
   computed-result previews. No vague stock mysticism.
 
+## Brand Nameplate
+
+One mark, one nameplate, everywhere the brand speaks:
+
+- The mark: twelve dots in a ring, one per sign hue, drawn inline
+  (`src/components/BrandMark.astro`) — the same mark as the favicon and
+  the share cards. On hover of its parent link it makes one slow
+  revolution; reduced motion stills it.
+- The nameplate: "Zodiacs" set in EB Garamond 500 (the masthead voice),
+  with ".org" as a small JetBrains Mono tag seated on the baseline.
+- Used identically in the nav pill and the footer. Never a plain sans
+  wordmark; never a new logo per surface.
+
 ## Voice
 
 Plain, calm, warm, and specific.

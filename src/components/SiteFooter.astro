@@ -1,5 +1,6 @@
 ---
 import { SIGNS } from '../lib/signs';
+import BrandMark from './BrandMark.astro';
 
 const year = new Date().getFullYear();
 ---
@@ -7,7 +8,10 @@ const year = new Date().getFullYear();
   <div class="container">
     <div class="footer__grid">
       <div class="footer__brand">
-        <a class="footer__mark" href="/">Zodiacs<span>.org</span></a>
+        <a class="footer__mark" href="/">
+          <BrandMark size={19} />
+          <span class="footer__name">Zodiacs</span><span class="footer__tld">.org</span>
+        </a>
         <p class="footer__tag">
           Birth charts and sign guides, calculated precisely and kept
           private. Your details are computed in the browser and never leave
@@ -90,12 +94,27 @@ const year = new Date().getFullYear();
   .footer__brand { grid-column: 1 / -1; }
   @media (min-width: 900px) { .footer__brand { grid-column: auto; } }
   .footer__mark {
-    font-weight: 650;
-    font-size: 17px;
-    letter-spacing: -0.02em;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
     text-decoration: none;
   }
-  .footer__mark span { color: var(--faint); font-weight: 500; }
+  .footer__name {
+    font-family: var(--font-serif);
+    font-weight: 500;
+    font-size: 21px;
+    letter-spacing: 0.01em;
+    line-height: 1;
+    color: var(--text);
+  }
+  .footer__tld {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.12em;
+    color: var(--faint);
+    align-self: end;
+    margin-bottom: 1px;
+  }
   .footer__tag {
     margin: 12px 0 0;
     max-width: 26ch;

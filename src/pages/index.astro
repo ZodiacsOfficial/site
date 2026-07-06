@@ -106,7 +106,7 @@ const tools = [
       ></video>
       <div class="hero__scrim" aria-hidden="true"></div>
       <div class="hero__content">
-        <h1 class="hero__title">Your whole chart, not&nbsp;just your&nbsp;sign.</h1>
+        <h1 class="hero__title">Your whole chart, <em>not&nbsp;just your&nbsp;sign.</em></h1>
         <p class="hero__sub">
           Enter your birth date, time, and place, and see every planet, house,
           and aspect. Calculated exactly, and kept entirely on your device.
@@ -310,15 +310,20 @@ const tools = [
   .hero__title {
     margin: 0 0 clamp(14px, 2vw, 20px);
     font-family: var(--font-sans);
-    font-weight: 640;
-    font-size: clamp(2.05rem, 0.9rem + 5.4vw, 5rem);
-    line-height: 1.0;
-    letter-spacing: 0.01em;
+    font-weight: 690;
+    font-size: clamp(2.05rem, 0.85rem + 5.8vw, 5.5rem);
+    line-height: 0.98;
+    letter-spacing: 0.002em;
     text-transform: uppercase;
     max-width: 17ch;
     color: var(--ink-0, #EEF1F7);
     text-wrap: balance;
     text-shadow: 0 2px 28px rgba(6, 7, 9, 0.55);
+  }
+  /* The second thought lands a register lower — hierarchy inside one voice. */
+  .hero__title em {
+    font-style: normal;
+    color: var(--ink-1, #C6CCDA);
   }
   .hero__sub {
     margin: 0 0 clamp(20px, 3vw, 28px);
