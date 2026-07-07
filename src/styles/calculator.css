@@ -420,3 +420,36 @@
   gap: 12px;
 }
 .field__labelrow .field__label { flex: 1; }
+
+/* Guided reading: the ordered walkthrough under the tables. Serif title
+   like every section head; steps carry mono numerals via counter. */
+.calc__read { margin-top: 34px; padding-top: 26px; border-top: 1px solid var(--hair-2); }
+.calc__read-title {
+  margin: 0 0 6px;
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: clamp(1.45rem, 1.2rem + 1vw, 1.9rem);
+  letter-spacing: 0.01em;
+}
+.calc__read-intro { margin: 0 0 22px; max-width: 56ch; font-size: var(--text-sm); color: var(--text-2); line-height: 1.65; }
+.calc__read-steps { margin: 0; padding: 0; list-style: none; counter-reset: read-step; display: grid; gap: 24px; }
+.calc__read-step { counter-increment: read-step; }
+.calc__read-step > h3 {
+  margin: 0 0 10px;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+.calc__read-step > h3::before {
+  content: counter(read-step) ' · ';
+  font-family: var(--font-mono);
+  font-weight: 400;
+  color: var(--faint);
+}
+.calc__read-step > p { margin: 0; max-width: 60ch; font-size: var(--text-sm); color: var(--text-2); line-height: 1.65; }
+.calc__read-note { margin: 0 0 10px; max-width: 60ch; font-size: 12px; color: var(--muted); line-height: 1.6; }
+.calc__read-list { margin: 0; padding: 0; list-style: none; display: grid; gap: 12px; }
+.calc__read-list p { margin: 0; max-width: 62ch; font-size: var(--text-sm); color: var(--text-2); line-height: 1.62; }
+.calc__read-dignity { font-size: 11px; color: var(--faint); letter-spacing: 0.04em; }
+.calc__read-more { display: inline-block; margin-top: 2px; font-size: 12px; color: var(--muted); text-decoration: none; border-bottom: 1px solid var(--hair-2); }
+.calc__read-more:hover { color: var(--text); border-bottom-color: var(--muted); }

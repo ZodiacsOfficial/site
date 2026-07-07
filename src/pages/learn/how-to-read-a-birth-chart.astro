@@ -1,0 +1,193 @@
+---
+import Base from '../../layouts/Base.astro';
+
+const faq = [
+  {
+    q: 'Do I need my exact birth time?',
+    a: 'For the rising sign and the houses, yes — the ascendant moves through a new sign roughly every two hours, and the houses are set by it. Without a time you still get your Sun, your planets, and most aspects. The Moon is the one to watch: it changes sign about every two and a half days, so around two birthdays in five sit on a boundary where the hour decides.',
+  },
+  {
+    q: 'What order should I read a birth chart in?',
+    a: 'Big three first (Sun, Moon, rising), then each planet by the house it occupies, then the tightest aspects, then the whole-chart pattern — element balance, stelliums, retrogrades. Every section of this page is one of those steps.',
+  },
+  {
+    q: 'What is the most important thing in a birth chart?',
+    a: 'No single placement runs the chart. The big three organize the most, and an aspect within a degree or two of exact — especially one involving the Sun or Moon — usually describes something you would recognize instantly. Start there and let the rest be commentary.',
+  },
+  {
+    q: 'Why does my chart look different on different sites?',
+    a: 'Usually the house system (whole sign versus Placidus moves house boundaries, not planets) or timezone handling for older birth dates. Our methodology page lists exactly how this site computes both, so you can check any chart against it.',
+  },
+];
+
+const jsonLd = [
+  {
+    '@type': 'Article',
+    headline: 'How to read a birth chart, step by step',
+    url: 'https://zodiacs.org/learn/how-to-read-a-birth-chart/',
+    author: { '@type': 'Organization', name: 'Zodiacs.org' },
+    about: 'A four-step method for reading a natal chart: the big three, planets by house, major aspects, and whole-chart patterns.',
+  },
+  {
+    '@type': 'FAQPage',
+    mainEntity: faq.map(({ q, a }) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: { '@type': 'Answer', text: a },
+    })),
+  },
+];
+---
+<Base
+  title="How to Read a Birth Chart, Step by Step | Zodiacs.org"
+  description="A four-step method for reading any natal chart: the big three, planets room by room, the aspects doing the most work, and the whole-chart weather — in plain language."
+  path="/learn/how-to-read-a-birth-chart/"
+  image="/assets/og/v2/tool/how-to-read-a-birth-chart.png"
+  imageAlt="How to read a birth chart — Zodiacs.org"
+  jsonLd={jsonLd}
+>
+  <section class="section container container--narrow">
+    <em class="kicker">Learn astrology</em>
+    <h1 class="method-title display">How to read a birth chart.</h1>
+
+    <div class="prose">
+      <p>
+        A birth chart is a snapshot of the sky from where and when you were
+        born: ten planets placed around a twelve-sign wheel, divided into
+        twelve houses, connected by a handful of geometric angles. Every
+        symbol on it is doing a specific job, which means it can be read in a
+        specific order — and the order is the whole trick. Read it top-down
+        and the chart is a story; read it at random and it's a pile of
+        trivia.
+      </p>
+      <p>
+        You need three facts: birth date, birth time, and birthplace.
+        <a href="/birth-chart/">The calculator here</a> computes the chart in
+        your browser and then walks these same four steps under the tables.
+        This page is the method on its own, with each step linking deeper
+        when you want more than one paragraph.
+      </p>
+
+      <h2>Step 1 — Start with the big three</h2>
+      <p>
+        The Sun, the Moon, and the rising sign organize more of the chart
+        than everything else combined, and they divide cleanly:
+      </p>
+      <ul>
+        <li>
+          <strong>The Sun</strong> is identity — the thing being built across
+          a lifetime. It's the sign you already know, and the one the
+          <a href="/learn/">twelve sign guides</a> describe.
+        </li>
+        <li>
+          <strong>The Moon</strong> is instinct — how you feel, what you
+          need, what actually soothes you. People often recognize their
+          <a href="/moon-sign/">moon sign</a> faster than their sun.
+        </li>
+        <li>
+          <strong>The rising sign</strong> (or ascendant) is the entrance —
+          the first read people get, and, structurally, the start of the
+          house wheel. It's why the <a href="/rising-sign/">birth time</a> matters:
+          it shifts sign about every two hours.
+        </li>
+      </ul>
+      <p>
+        If the three agree in temperament, the person reads as
+        all-of-a-piece. When they differ — a Capricorn sun behind a Leo
+        rising with a Pisces moon underneath — the differences are the
+        story, and most of what feels contradictory about a person is just
+        the big three taking turns.
+      </p>
+
+      <h2>Step 2 — Planets, room by room</h2>
+      <p>
+        Every planet answers three questions: <em>what</em> function it is,
+        <em>how</em> it goes about it, and <em>where</em> in life it does
+        most of its work. The planet is the what — Mercury thinks, Venus
+        wants, Mars pushes, Saturn limits. The sign is the how; Mars in
+        Cancer and Mars in Capricorn pursue the same goals with completely
+        different manners. The house is the where: twelve arenas, from money
+        to partners to reputation.
+      </p>
+      <p>
+        So a placement reads as one sentence: <strong>function, in a style,
+        in an arena.</strong> Venus in Scorpio in the tenth house wants
+        deeply, privately, and at work. There are 120 planet-in-sign
+        combinations and <a href="/learn/placements/">each has its own
+        page</a>; the <a href="/learn/houses/">twelve houses</a> have theirs.
+        Go planet by planet in traditional order — Sun through Pluto — and
+        resist conclusions until you've seen all ten.
+      </p>
+      <p>
+        No birth time means no houses — the arena layer goes dark, but
+        function-in-style still reads. That's most of the meaning, and it's
+        why a date-only chart is still worth running.
+      </p>
+
+      <h2>Step 3 — The aspects doing the most work</h2>
+      <p>
+        Aspects are the angles between planets, and they're where a chart
+        stops being a list and starts being a system: two functions wired
+        together, cooperating or interfering, for life. Five angles carry
+        almost everything — the
+        <a href="/learn/aspects/conjunction/">conjunction</a> (0°, fused),
+        the <a href="/learn/aspects/sextile/">sextile</a> (60°, cooperative),
+        the <a href="/learn/aspects/square/">square</a> (90°, friction),
+        the <a href="/learn/aspects/trine/">trine</a> (120°, effortless), and
+        the <a href="/learn/aspects/opposition/">opposition</a> (180°, a
+        seesaw).
+      </p>
+      <p>
+        Don't read them all. Sort by <strong>orb</strong> — the distance
+        from geometrically exact — and read the tightest three or four,
+        giving extra weight to anything touching the Sun or Moon. An exact
+        square explains more about a life than six loose trines. A square,
+        for the record, is not bad news; it's friction, and friction is
+        where most people's proudest skills come from.
+      </p>
+
+      <h2>Step 4 — The chart's weather</h2>
+      <p>
+        Last, zoom all the way out and count. How are the ten planets spread
+        across the four elements? A chart heavy in fire runs hot; a chart
+        with nothing in water feels its feelings on a delay. Are three or
+        more planets sharing one sign or house? That's a stellium — one
+        agenda with several votes. How many planets were retrograde? These
+        whole-chart patterns explain the temperament that no single
+        placement accounts for.
+      </p>
+      <p>
+        Then stop. A first reading that covers the big three, ten
+        placements, four aspects, and the weather is a complete reading —
+        more thorough than most people ever get. Depth comes from returning
+        to one piece at a time, not from swallowing all of it at once.
+      </p>
+
+      <h2>Do it with a real chart</h2>
+      <p>
+        Method sticks better with your own data.
+        <a href="/birth-chart/">Compute your chart</a> — it runs on your
+        device, shows every position to the degree with the exact UTC
+        instant it used, and walks these four steps with your placements
+        filled in. If the numbers matter to you, the
+        <a href="/methodology/">methodology page</a> shows where every one
+        of them comes from.
+      </p>
+
+      <h2>Common questions</h2>
+      {faq.map(({ q, a }) => (
+        <details class="faq">
+          <summary>{q}</summary>
+          <p>{a}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+</Base>
+
+<style>
+  .method-title { margin: 6px 0 18px; }
+  .faq { margin-top: 12px; }
+  .faq summary { cursor: pointer; font-weight: 600; color: var(--text); }
+  .faq p { margin: 8px 0 4px; }
+</style>

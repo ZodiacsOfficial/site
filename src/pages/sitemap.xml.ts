@@ -36,6 +36,7 @@ export const GET: APIRoute = async () => {
     { loc: '/horoscopes/', priority: 0.8, lastmod: daily.date },
     { loc: '/tools/', priority: 0.8 },
     { loc: '/profile/', priority: 0.75 },
+    { loc: '/learn/how-to-read-a-birth-chart/', priority: 0.8 },
     { loc: '/learn/planets/', priority: 0.7 },
     { loc: '/learn/houses/', priority: 0.7 },
     { loc: '/learn/aspects/', priority: 0.7 },

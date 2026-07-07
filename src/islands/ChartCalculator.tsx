@@ -14,6 +14,8 @@ import SignChip from './SignChip';
 import Wheel from '../lib/wheel/Wheel';
 import { formatLongitude, signForLongitude, signName } from '../lib/signs';
 import { bigThree } from '../lib/interpretations';
+import { chartWeather, natalAspectLine, planetInHouseLine, topAspects } from '../lib/natal';
+import { dignityFor, type Dignity } from '../lib/dignities';
 import { resolveLocalToUtc } from '../lib/time/localToUtc';
 import { houseOf } from '../lib/engine/houses';
 import { moonPhaseName } from '../lib/engine/lite';
@@ -33,6 +35,13 @@ const GLYPHS: Record<string, string> = {
   Sun: '☉', Moon: '☽', Mercury: '☿', Venus: '♀', Mars: '♂',
   Jupiter: '♃', Saturn: '♄', Uranus: '♅', Neptune: '♆', Pluto: '♇',
   'North Node': '☊', 'South Node': '☋',
+};
+
+const DIGNITY_KEY: Record<Dignity, string> = {
+  domicile: 'dignityDomicile',
+  exaltation: 'dignityExaltation',
+  detriment: 'dignityDetriment',
+  fall: 'dignityFall',
 };
 
 let enginePromise: Promise<typeof import('../lib/engine/full')> | null = null;
@@ -219,6 +228,35 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   const sun = chart?.bodies.find((b) => b.body === 'Sun');
   const moon = chart?.bodies.find((b) => b.body === 'Moon');
   const asc = chart?.angles?.asc ?? null;
+
+  // The guided reading: planets only (nodes stay in the table), each with
+  // sign + dignity resolved once; aspects ranked; whole-chart weather.
+  const reading = useMemo(() => {
+    if (!chart || mode !== 'full') return null;
+    const seenHouses = new Set<number>();
+    const ps = placements
+      .filter((p) => !p.body.includes('Node'))
+      .map((p) => {
+        const sign = signForLongitude(p.lon);
+        const firstInHouse = p.house != null && !seenHouses.has(p.house);
+        if (p.house != null) seenHouses.add(p.house);
+        return {
+          ...p,
+          signSlug: sign.slug,
+          signLabel: signName(sign, locale),
+          dignity: dignityFor(p.body, sign.slug),
+          firstInHouse,
+        };
+      });
+    return {
+      ps,
+      top: topAspects(chart.aspects, 4),
+      weather: chartWeather(
+        ps.map((p) => ({ body: p.body, lon: p.lon, retrograde: p.retrograde, sign: p.signSlug })),
+        chart.houses ? (b) => ps.find((x) => x.body === b)?.house ?? null : undefined,
+      ),
+    };
+  }, [chart, placements, mode, locale]);
 
   const heroCards = useMemo(() => {
     if (!chart || !sun || !moon) return [];
@@ -443,6 +481,65 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                     ))}
                   </ul>
                 </details>
+              )}
+
+              {/* Guided reading — the tables above are the data; this is the order. */}
+              {reading && (
+                <section class="calc__read" aria-labelledby="calc-read-title">
+                  <h2 id="calc-read-title" class="calc__read-title">{t(locale, 'readInOrder')}</h2>
+                  <p class="calc__read-intro">{t(locale, 'readIntro')}</p>
+                  <ol class="calc__read-steps">
+                    <li class="calc__read-step">
+                      <h3>{t(locale, 'readBigThree')}</h3>
+                      <p>{t(locale, 'readBigThreeBody')}</p>
+                    </li>
+                    <li class="calc__read-step">
+                      <h3>{t(locale, 'readRooms')}</h3>
+                      {!chart.houses && <p class="calc__read-note">{t(locale, 'readNoHouses')}</p>}
+                      <ul class="calc__read-list">
+                        {reading.ps.map((p) => (
+                          <li key={p.body}>
+                            <p>
+                              <span class="calc__glyph" aria-hidden="true">{GLYPHS[p.body]}</span>{' '}
+                              {chart.houses && p.house
+                                ? planetInHouseLine(p.body, p.house, { withTheme: p.firstInHouse })
+                                : `${p.body} — ${p.signLabel}.`}
+                              {p.dignity && (
+                                <span class="calc__read-dignity mono"> · {t(locale, DIGNITY_KEY[p.dignity])}</span>
+                              )}
+                            </p>
+                            <a class="calc__read-more" href={`/learn/placements/${p.body.toLowerCase()}-in-${p.signSlug}/`}>
+                              {p.body} {t(locale, 'readIn')} {p.signLabel} →
+                            </a>
+                          </li>
+                        ))}
+                      </ul>
+                    </li>
+                    {reading.top.length > 0 && (
+                      <li class="calc__read-step">
+                        <h3>{t(locale, 'readAspects')}</h3>
+                        <ul class="calc__read-list">
+                          {reading.top.map((a) => (
+                            <li key={`${a.a}${a.b}${a.type}`}>
+                              <p>{natalAspectLine(a.a, a.type, a.b)}</p>
+                              <a class="calc__read-more" href={`/learn/aspects/${a.type}/`}>
+                                {a.type} · {a.orb.toFixed(1)}° →
+                              </a>
+                            </li>
+                          ))}
+                        </ul>
+                      </li>
+                    )}
+                    <li class="calc__read-step">
+                      <h3>{t(locale, 'readWeather')}</h3>
+                      <ul class="calc__read-list">
+                        {reading.weather.lines.map((l) => (
+                          <li key={l}><p>{l}</p></li>
+                        ))}
+                      </ul>
+                    </li>
+                  </ol>
+                </section>
               )}
             </>
           )}
