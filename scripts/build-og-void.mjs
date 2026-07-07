@@ -275,6 +275,8 @@ const TOOLS = [
   { key: 'eclipses', path: '/eclipses/', kicker: 'The calendar', title: 'Eclipses, dated', sub: 'Every solar and lunar eclipse through 2028, with exact peak times and signs.' },
   { key: 'full-moon-calendar', path: '/full-moon-calendar/', kicker: 'The calendar', title: 'Every full moon', sub: 'Exact instants through 2027, with each moon’s sign, degree, and name.' },
   { key: 'retrogrades', path: '/retrogrades/', kicker: 'The calendar', title: 'Every retrograde', sub: 'All eight planets, 2026–2027, computed station to station.' },
+  { key: 'baby-zodiac', path: '/baby-zodiac/', kicker: 'Free calculator', title: 'What sign will the baby be?', sub: 'The due date’s near-certain Sun, the week’s possible Moons, and what waits for the clock.' },
+  { key: 'birthday', path: '/birthday/', kicker: 'Birthday astrology', title: 'Every date, computed', sub: 'Sun sign checked across ninety-one years, degree spans, decans, and cusp tables.' },
 ];
 
 // ── Render loop ───────────────────────────────────────────────────────

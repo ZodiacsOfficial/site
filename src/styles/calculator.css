@@ -472,3 +472,13 @@
 .pfd__empty { justify-items: start; }
 .pfd__empty h2 { margin: 0; font-size: var(--text-xl); font-weight: 620; }
 .pfd__empty p { margin: 0; max-width: 46ch; color: var(--text-2); }
+
+/* Baby zodiac: due-date sky blocks. */
+.baby-block { display: grid; gap: 6px; padding: 16px 0; border-bottom: 1px solid var(--hair-1); }
+.baby-block:first-child { padding-top: 0; }
+.baby-block h3 { margin: 0; font-size: var(--text-md); font-weight: 620; letter-spacing: -0.01em; }
+.baby-block p { margin: 0; max-width: 62ch; font-size: var(--text-sm); color: var(--text-2); line-height: 1.6; }
+.baby-receipt { font-size: 10.5px; color: var(--faint); letter-spacing: 0.05em; }
+.baby-spans { margin: 4px 0 0; padding: 0; list-style: none; display: grid; gap: 6px; }
+.baby-spans li { display: flex; align-items: baseline; gap: 14px; font-size: var(--text-sm); color: var(--text-2); }
+.baby-spans .baby-receipt { flex-shrink: 0; min-width: 110px; }
