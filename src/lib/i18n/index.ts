@@ -267,6 +267,11 @@ export const UI = {
     signedIn: 'Signed in',
     syncCopyOn: 'Saved charts and removals sync across devices.',
     syncCopyOff: 'Save charts on this device. Sign in when you want them on every device.',
+    weeklyDigestTitle: 'Weekly sky email',
+    weeklyDigestCopy: 'One email a week: the sky against your saved charts. Unsubscribe any time.',
+    weeklyDigestAria: 'Weekly digest opt-in',
+    digestSaved: 'Digest preference saved.',
+    digestFailed: "Couldn't update digest preference. Please try again.",
     checkEmail: 'Check your email for a sign-in link. This page will sync after you return.',
     syncFailed: 'Sync failed. Please try again.',
     syncing: 'Syncing…',
@@ -504,6 +509,11 @@ export const UI = {
     signedIn: 'Sesión iniciada',
     syncCopyOn: 'Las cartas guardadas y eliminadas se sincronizan entre dispositivos.',
     syncCopyOff: 'Guarda cartas en este dispositivo. Inicia sesión cuando quieras tenerlas en todos tus dispositivos.',
+    weeklyDigestTitle: 'Email semanal del cielo',
+    weeklyDigestCopy: 'Un email por semana: el cielo sobre tus cartas guardadas. Puedes darte de baja cuando quieras.',
+    weeklyDigestAria: 'Activar email semanal',
+    digestSaved: 'Preferencia del resumen guardada.',
+    digestFailed: 'No se pudo actualizar la preferencia del resumen. Inténtalo otra vez.',
     checkEmail: 'Revisa tu email para entrar. Esta página se sincronizará cuando vuelvas.',
     syncFailed: 'La sincronización falló. Inténtalo otra vez.',
     syncing: 'Sincronizando…',
@@ -533,7 +543,6 @@ export type UiKey = keyof typeof UI.en;
 export function t(locale: Locale, key: UiKey): string {
   return UI[locale][key];
 }
-
 
 
 

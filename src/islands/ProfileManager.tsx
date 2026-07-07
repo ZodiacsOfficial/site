@@ -62,6 +62,8 @@ export default function ProfileManager({ locale: rawLocale = 'en' }: { locale?: 
   const [email, setEmail] = useState('');
   const [syncState, setSyncState] = useState<'idle' | 'sending' | 'sent' | 'syncing' | 'synced' | 'error'>('idle');
   const [syncMessage, setSyncMessage] = useState('');
+  const [digestOptIn, setDigestOptInState] = useState(false);
+  const [digestBusy, setDigestBusy] = useState(false);
 
   useEffect(() => {
     setProfile(loadProfile());
@@ -83,14 +85,19 @@ export default function ProfileManager({ locale: rawLocale = 'en' }: { locale?: 
           setSyncState('syncing');
           await api.syncNow();
           setProfile(loadProfile());
+          setDigestOptInState(await api.getDigestOptIn());
           setSyncState('synced');
         }
         unsubscribe = api.onSyncAuthChange(async (next) => {
           setSession(next);
-          if (!next) return;
+          if (!next) {
+            setDigestOptInState(false);
+            return;
+          }
           setSyncState('syncing');
           await api.syncNow();
           setProfile(loadProfile());
+          setDigestOptInState(await api.getDigestOptIn());
           setSyncState('synced');
         });
       })
@@ -130,7 +137,29 @@ export default function ProfileManager({ locale: rawLocale = 'en' }: { locale?: 
     if (!syncApi) return;
     await syncApi.signOutOfSync();
     setSession(null);
+    setDigestOptInState(false);
     setSyncState('idle');
+  }
+
+  async function onDigestChange(e: Event) {
+    if (!syncApi || !session) return;
+    const checked = (e.currentTarget as HTMLInputElement).checked;
+    const previous = digestOptIn;
+    setDigestOptInState(checked);
+    setDigestBusy(true);
+    setSyncMessage('');
+    try {
+      const saved = await syncApi.setDigestOptIn(checked);
+      if (!saved) throw new Error(t(locale, 'digestFailed'));
+      setSyncState('synced');
+      setSyncMessage(t(locale, 'digestSaved'));
+    } catch {
+      setDigestOptInState(previous);
+      setSyncState('error');
+      setSyncMessage(t(locale, 'digestFailed'));
+    } finally {
+      setDigestBusy(false);
+    }
   }
 
   const syncPanel = HAS_PROFILE_SYNC && (
@@ -144,6 +173,21 @@ export default function ProfileManager({ locale: rawLocale = 'en' }: { locale?: 
               : t(locale, 'syncCopyOff')}
           </p>
           {syncMessage && <p class={`pf-sync__message pf-sync__message--${syncState}`}>{syncMessage}</p>}
+          {session && (
+            <label class="pf-digest">
+              <input
+                type="checkbox"
+                checked={digestOptIn}
+                disabled={digestBusy}
+                onChange={onDigestChange}
+                aria-label={t(locale, 'weeklyDigestAria')}
+              />
+              <span>
+                <strong>{t(locale, 'weeklyDigestTitle')}</strong>
+                <small>{t(locale, 'weeklyDigestCopy')}</small>
+              </span>
+            </label>
+          )}
         </div>
         {session ? (
           <div class="pf-sync__actions">
