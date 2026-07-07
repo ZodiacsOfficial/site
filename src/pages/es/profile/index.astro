@@ -1,5 +1,6 @@
 ---
 import Base from '../../../layouts/Base.astro';
+import ProfileDashboard from '../../../islands/ProfileDashboard';
 import ProfileManager from '../../../islands/ProfileManager';
 import '../../../styles/calculator.css';
 ---
@@ -15,6 +16,7 @@ import '../../../styles/calculator.css';
       <h1 class="display">Cartas guardadas.</h1>
       <p>Guarda cartas en este dispositivo. Inicia sesión cuando quieras tenerlas en todos tus dispositivos.</p>
     </div>
+    <ProfileDashboard locale="es" client:load />
     <ProfileManager locale="es" client:load />
     <aside class="pf-note">
       <p class="mono">Si borras los datos del navegador, se borran las cartas solo locales. Inicia sesión para sincronizar cartas guardadas y eliminaciones entre dispositivos.</p>

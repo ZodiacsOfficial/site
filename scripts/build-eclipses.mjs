@@ -56,11 +56,14 @@ const eclipses = [];
 // ── Solar (geocentric "global" circumstances) ────────────────────────
 let solar = SearchGlobalSolarEclipse(MakeTime(FROM));
 for (let i = 0; i < 40 && solar && solar.peak.date < TO; i += 1) {
+  const solarLon = lonAt('Sun', solar.peak.date);
   const entry = {
     type: 'solar',
     kind: solar.kind,
     peak: solar.peak.date.toISOString(),
     sign: signAt('Sun', solar.peak.date),
+    lon: +solarLon.toFixed(2),
+    degree: +(solarLon % 30).toFixed(1),
   };
   // Undefined for partial eclipses — omit rather than fake it.
   if (typeof solar.obscuration === 'number') {
@@ -73,11 +76,14 @@ for (let i = 0; i < 40 && solar && solar.peak.date < TO; i += 1) {
 // ── Lunar ─────────────────────────────────────────────────────────────
 let lunar = SearchLunarEclipse(MakeTime(FROM));
 for (let i = 0; i < 40 && lunar && lunar.peak.date < TO; i += 1) {
+  const lunarLon = lonAt('Moon', lunar.peak.date);
   const entry = {
     type: 'lunar',
     kind: lunar.kind,
     peak: lunar.peak.date.toISOString(),
     sign: signAt('Moon', lunar.peak.date),
+    lon: +lunarLon.toFixed(2),
+    degree: +(lunarLon % 30).toFixed(1),
     obscuration: +lunar.obscuration.toFixed(3),
   };
   if (lunar.kind === 'total' && lunar.sd_total > 0) {
@@ -99,6 +105,8 @@ for (let i = 1; i < eclipses.length; i += 1) {
 const KINDS = { solar: ['partial', 'annular', 'total'], lunar: ['penumbral', 'partial', 'total'] };
 for (const e of eclipses) {
   if (!SIGN_SLUGS.includes(e.sign)) problems.push(`bad sign ${e.sign} at ${e.peak}`);
+  if (typeof e.lon !== 'number' || e.lon < 0 || e.lon >= 360) problems.push(`bad lon at ${e.peak}`);
+  if (SIGN_SLUGS[Math.floor(e.lon / 30) % 12] !== e.sign) problems.push(`lon/sign mismatch at ${e.peak}`);
   if (!KINDS[e.type]?.includes(e.kind)) problems.push(`bad kind ${e.type}/${e.kind} at ${e.peak}`);
   if (e.type === 'solar' && e.kind !== 'partial' && typeof e.obscuration !== 'number') {
     problems.push(`missing obscuration for ${e.kind} solar at ${e.peak}`);

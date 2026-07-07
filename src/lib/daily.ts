@@ -44,7 +44,7 @@ export interface DailyReading {
   lines: DailyLine[];
 }
 
-const ORDINAL = [
+export const ORDINAL = [
   '', 'first', 'second', 'third', 'fourth', 'fifth', 'sixth',
   'seventh', 'eighth', 'ninth', 'tenth', 'eleventh', 'twelfth',
 ];
@@ -57,10 +57,21 @@ export function solarHouse(planetSign: string, sunSign: string): number {
 }
 
 /**
+ * Whole-sign NATAL house of a planet for a given rising sign — the same
+ * arithmetic anchored to the ascendant instead of the sun. Valid only
+ * when the birth time is known (the asc sets house one).
+ */
+export function wholeSignHouseFromAsc(planetSign: string, ascSign: string): number {
+  const p = SIGN_SLUGS.indexOf(planetSign);
+  const a = SIGN_SLUGS.indexOf(ascSign);
+  return ((p - a + 12) % 12) + 1;
+}
+
+/**
  * One line per planet-in-house — dry, specific, second person. The
  * houses read as life areas, not fortunes; the verbs stay observational.
  */
-const HOUSE_THEME: Record<number, string> = {
+export const HOUSE_THEME: Record<number, string> = {
   1: 'how you look, start, and come across',
   2: 'money, possessions, and what steadies you',
   3: 'errands, siblings, messages, and the near neighborhood',
@@ -88,7 +99,7 @@ const PLANET_VERB: Record<string, string> = {
   Pluto: 'Pluto is slowly rewiring',
 };
 
-function houseLine(body: DailyBody, house: number): DailyLine {
+export function houseLine(body: DailyBody, house: number): DailyLine {
   const rx = body.retrograde ? ', retrograde' : '';
   return {
     text: `${PLANET_VERB[body.body] ?? `${body.body} is in`} your ${ORDINAL[house]} house — ${HOUSE_THEME[house]}.`,

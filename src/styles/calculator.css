@@ -453,3 +453,22 @@
 .calc__read-dignity { font-size: 11px; color: var(--faint); letter-spacing: 0.04em; }
 .calc__read-more { display: inline-block; margin-top: 2px; font-size: 12px; color: var(--muted); text-decoration: none; border-bottom: 1px solid var(--hair-2); }
 .calc__read-more:hover { color: var(--text); border-bottom-color: var(--muted); }
+
+/* Profile dashboard: the daily layer above the chart shelf. */
+.pfd { display: grid; gap: 16px; margin-bottom: clamp(22px, 4vw, 34px); }
+.pfd__core { padding: 20px; display: grid; gap: 14px; }
+.pfd__head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px; }
+.pfd__head h2 { margin: 0; font-size: var(--text-lg); font-weight: 620; letter-spacing: -0.015em; }
+.pfd__stamp { font-size: 10.5px; letter-spacing: 0.08em; color: var(--faint); text-transform: uppercase; }
+.pfd__pick { display: flex; align-items: center; gap: 10px; }
+.pfd__pick .mono { font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+.pfd__pick .field__input { height: 38px; max-width: 320px; }
+.pfd__lines { margin: 0; padding: 0; list-style: none; display: grid; gap: 12px; }
+.pfd__lines p { margin: 0 0 3px; max-width: 62ch; font-size: var(--text-sm); color: var(--text-2); line-height: 1.6; }
+.pfd__receipt { font-size: 10.5px; color: var(--faint); letter-spacing: 0.05em; }
+.pfd__quiet { margin: 0; font-size: var(--text-sm); color: var(--muted); }
+.pfd__more { font-size: 12.5px; color: var(--muted); text-decoration: none; border-bottom: 1px solid var(--hair-2); justify-self: start; }
+.pfd__more:hover { color: var(--text); border-bottom-color: var(--muted); }
+.pfd__empty { justify-items: start; }
+.pfd__empty h2 { margin: 0; font-size: var(--text-xl); font-weight: 620; }
+.pfd__empty p { margin: 0; max-width: 46ch; color: var(--text-2); }
