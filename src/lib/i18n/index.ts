@@ -119,7 +119,7 @@ export const UI = {
     read: 'Read',
     rightNow: 'Right now',
     enterBirthDetails: 'Enter birth details…',
-    privacyDevice: 'Computed on your device. Saved charts sync only if you turn on account sync.',
+    privacyDevice: 'Computed on your device. You can save charts to this browser.',
     privacyDeviceShort: 'Computed on your device — birth data never leaves it.',
     placePlaceholder: 'Start typing a city…',
     placeChange: 'Change birthplace',
@@ -138,7 +138,7 @@ export const UI = {
     chartSavedStatus: 'Chart saved on this device.',
     chartSaveFull: 'You can save up to 20 charts — remove one first.',
     chartSaveError: "Couldn't save — your browser may be blocking local storage.",
-    chartSavedMessage: 'Saved to your charts. Sign in here when you want them on every device.',
+    chartSavedMessage: 'Saved to your charts on this device.',
     linkCopied: 'Link copied',
     copyChartLink: 'Copy a link to this chart',
     rendering: 'Rendering…',
@@ -356,7 +356,7 @@ export const UI = {
     read: 'Leer',
     rightNow: 'Ahora mismo',
     enterBirthDetails: 'Ingresa los datos de nacimiento…',
-    privacyDevice: 'Se calcula en tu dispositivo. Las cartas guardadas solo se sincronizan si activas la cuenta.',
+    privacyDevice: 'Se calcula en tu dispositivo. Puedes guardar cartas en este navegador.',
     privacyDeviceShort: 'Se calcula en tu dispositivo — tus datos de nacimiento no salen de ahí.',
     placePlaceholder: 'Empieza a escribir una ciudad…',
     placeChange: 'Cambiar lugar de nacimiento',
@@ -375,7 +375,7 @@ export const UI = {
     chartSavedStatus: 'Carta guardada en este dispositivo.',
     chartSaveFull: 'Puedes guardar hasta 20 cartas — elimina una primero.',
     chartSaveError: 'No se pudo guardar — tu navegador puede estar bloqueando el almacenamiento local.',
-    chartSavedMessage: 'Guardada en tus cartas. Inicia sesión aquí cuando quieras tenerlas en todos tus dispositivos.',
+    chartSavedMessage: 'Guardada en tus cartas en este dispositivo.',
     linkCopied: 'Enlace copiado',
     copyChartLink: 'Copiar enlace a esta carta',
     rendering: 'Creando…',
@@ -533,7 +533,6 @@ export type UiKey = keyof typeof UI.en;
 export function t(locale: Locale, key: UiKey): string {
   return UI[locale][key];
 }
-
 
 
 
