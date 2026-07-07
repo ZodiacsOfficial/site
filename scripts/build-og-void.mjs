@@ -278,7 +278,7 @@ const TOOLS = [
 ];
 
 // ── Render loop ───────────────────────────────────────────────────────
-for (const dir of ['', 'sign', 'tool', 'pair', 'horoscope', 'placements', 'rising']) {
+for (const dir of ['', 'sign', 'tool', 'pair', 'horoscope', 'placements', 'rising', 'pin']) {
   await mkdir(resolve(OUT, dir), { recursive: true });
 }
 
@@ -318,6 +318,85 @@ const PLANET_GLYPHS = {
 for (const [planet, glyph] of Object.entries(PLANET_GLYPHS)) {
   await shoot(placementCard(planet, glyph), `placements/${planet.toLowerCase()}.png`);
 }
+
+// ── Pinterest pins — 1000×1500, the 2:3 ratio pins want ──────────────
+function pinShell(body, footer) {
+  return `<!doctype html>
+<html><head><meta charset="utf-8"><style>
+  @font-face { font-family: 'EB Garamond'; font-weight: 500; src: url(${FONTS.serif500}) format('woff2'); }
+  @font-face { font-family: 'EB Garamond'; font-weight: 400; font-style: italic; src: url(${FONTS.serifItalic}) format('woff2'); }
+  @font-face { font-family: 'Instrument Sans'; font-weight: 100 900; src: url(${FONTS.sans}) format('woff2'); }
+  @font-face { font-family: 'JetBrains Mono'; font-weight: 100 800; src: url(${FONTS.mono}) format('woff2'); }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1000px; height: 1500px; }
+  body { background: ${VOID}; font-family: 'Instrument Sans', sans-serif; color: ${INK}; position: relative; overflow: hidden; }
+  .pstage { position: absolute; inset: 110px 84px 150px; display: flex; flex-direction: column; align-items: center; text-align: center; justify-content: center; gap: 44px; }
+  .prule { position: absolute; left: 84px; right: 84px; bottom: 128px; height: 1px; background: ${HAIR}; }
+  .pfooter { position: absolute; left: 84px; right: 84px; bottom: 68px; font-family: 'JetBrains Mono', monospace; font-size: 22px; letter-spacing: 0.06em; color: ${MUTED}; text-align: center; }
+  .kicker { font-family: 'EB Garamond', serif; font-style: italic; font-weight: 400; font-size: 36px; color: ${INK2}; display: block; margin-bottom: 6px; }
+  .display { font-family: 'EB Garamond', serif; font-weight: 500; line-height: 1.02; letter-spacing: -0.005em; font-variant-numeric: oldstyle-figures; }
+  .sub { font-size: 32px; color: ${INK2}; line-height: 1.5; max-width: 720px; }
+  .data { font-family: 'JetBrains Mono', monospace; font-size: 24px; letter-spacing: 0.05em; color: ${MUTED}; }
+  .disc { border-radius: 50%; display: block; }
+</style></head>
+<body>
+  ${body}
+  <div class="prule"></div>
+  <div class="pfooter">${footer}</div>
+</body></html>`;
+}
+
+function pinSign(s) {
+  const body = `
+  <div class="pstage">
+    <span class="kicker">Sign guide</span>
+    <img class="disc" src="${DISCS[s.slug]}" width="440" height="440" style="box-shadow: 0 44px 130px ${s.hue}45;" />
+    <div>
+      <div class="display" style="font-size: ${nameSize(s.name) + 22}px;">${s.name}</div>
+      <div class="data" style="margin-top: 20px;">${s.dates} · ${ELEMENT_LABEL[s.element]} · ${MODALITY_LABEL[s.modality]}</div>
+    </div>
+    <div class="sub">${s.essence}</div>
+  </div>`;
+  return pinShell(body, `zodiacs.org/${s.slug}/`);
+}
+
+function pinHoroscope(s) {
+  const body = `
+  <div class="pstage">
+    <span class="kicker">Monthly horoscope</span>
+    <img class="disc" src="${DISCS[s.slug]}" width="400" height="400" style="box-shadow: 0 44px 130px ${s.hue}45;" />
+    <div>
+      <div class="display" style="font-size: ${nameSize(s.name) + 8}px;">${s.name}, this month</div>
+      <div class="data" style="margin-top: 20px;">${s.dates}</div>
+    </div>
+    <div class="sub">Grounded in the real sky: moon phases, retrogrades, and major transits, each with its date.</div>
+  </div>`;
+  return pinShell(body, `zodiacs.org/horoscopes/${s.slug}/`);
+}
+
+function pinHowTo() {
+  const steps = [
+    '1 · The big three',
+    '2 · Planets, room by room',
+    '3 · The working aspects',
+    '4 · The chart’s weather',
+  ]
+    .map((t) => `<div class="data" style="font-size: 28px; color: ${INK2};">${t}</div>`)
+    .join('');
+  const body = `
+  <div class="pstage" style="gap: 52px;">
+    <span class="kicker">Learn astrology</span>
+    ${wheelMark(300, 26)}
+    <div class="display" style="font-size: 96px; max-width: 800px;">How to read a birth chart.</div>
+    <div style="display: grid; gap: 18px;">${steps}</div>
+  </div>`;
+  return pinShell(body, 'zodiacs.org/learn/how-to-read-a-birth-chart/');
+}
+
+await page.setViewportSize({ width: 1000, height: 1500 });
+for (const s of SIGNS) await shoot(pinSign(s), `pin/${s.slug}.png`);
+for (const s of SIGNS) await shoot(pinHoroscope(s), `pin/horoscope-${s.slug}.png`);
+await shoot(pinHowTo(), 'pin/how-to-read-a-birth-chart.png');
 
 await browser.close();
 

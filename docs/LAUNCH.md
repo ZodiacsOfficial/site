@@ -111,3 +111,22 @@ sign guides with a CollectBand link, so nothing 404s while queues drain.
 Accounts (Supabase), LLM horoscope generation, and the AI astrologer are
 specified in `docs/HANDOFF-CODEX.md` and blocked on owner decisions
 (project provisioning, API keys, budget) — none block launch.
+
+## Distribution assets (Part O)
+
+- **Feeds** — `https://zodiacs.org/feeds/horoscopes.xml` (12 items,
+  refreshes monthly with the transit cron) and
+  `https://zodiacs.org/feeds/daily-sky.xml` (one item per day, refreshed
+  by the Daily Sky cron). Autodiscovery is wired on /, /transits/, and
+  the horoscope pages. Submit to feed directories at will.
+- **Embeddable widget** — `https://zodiacs.org/widgets/` has copy-paste
+  iframe snippets (dark + light). Offer it to astrology blogs and
+  newsletters: it costs their page nothing (zero JS, one request) and
+  each embed carries a zodiacs.org backlink. `/embed/*` alone permits
+  framing; the rest of the site still sends frame-ancestors 'none'.
+- **Pinterest pins** — 25 ready-made 1000×1500 pins under
+  `https://zodiacs.org/assets/og/v2/pin/`: `{sign}.png` for the twelve
+  guides, `horoscope-{sign}.png` for the twelve horoscope pages, and
+  `how-to-read-a-birth-chart.png`. Pin manually with the matching page
+  URL until automation exists; astrology is one of Pinterest's largest
+  verticals.

@@ -1,0 +1,81 @@
+---
+import Base from '../../layouts/Base.astro';
+
+const SNIPPET_DARK = `<iframe src="https://zodiacs.org/embed/sky/" title="The sky right now — zodiacs.org" width="360" height="230" style="border:0;border-radius:12px;overflow:hidden" loading="lazy"></iframe>`;
+const SNIPPET_LIGHT = `<iframe src="https://zodiacs.org/embed/sky/light/" title="The sky right now — zodiacs.org" width="360" height="230" style="border:0;border-radius:12px;overflow:hidden" loading="lazy"></iframe>`;
+
+const jsonLd = [
+  {
+    '@type': 'WebPage',
+    name: 'Free astrology widgets',
+    url: 'https://zodiacs.org/widgets/',
+    description: 'Embeddable current-sky widget: live planetary positions, moon phase, and retrogrades for any site.',
+  },
+];
+---
+<Base
+  title="Free Astrology Widgets — Embed the Current Sky | Zodiacs.org"
+  description="Drop today's sky into your own site: planetary positions, moon phase, and active retrogrades, updated daily. Free with the link intact."
+  path="/widgets/"
+  jsonLd={jsonLd}
+>
+  <section class="section container container--narrow">
+    <em class="kicker">Widgets</em>
+    <h1 class="display wdg-title">The sky, on your site.</h1>
+    <div class="prose">
+      <p>
+        A small card with today's planetary positions, moon phase, and
+        active retrogrades — recomputed every day at 12:00 UTC by the same
+        engine that runs the <a href="/birth-chart/">calculators here</a>.
+        Paste the snippet and you're done: no script, no cookies, no
+        requests beyond the card itself. Free for any site that keeps the
+        zodiacs.org link intact.
+      </p>
+    </div>
+
+    <div class="wdg-grid">
+      <div class="wdg-cell">
+        <h2>Dark</h2>
+        <iframe src="/embed/sky/" title="The sky right now — dark" width="360" height="230" style="border:0;border-radius:12px;" loading="lazy"></iframe>
+        <textarea class="field__input wdg-snip" readonly rows="4" aria-label="Embed code, dark theme">{SNIPPET_DARK}</textarea>
+        <button class="btn btn--ghost wdg-copy" type="button" data-copy><span>Copy embed code</span><span class="orb">⧉</span></button>
+      </div>
+      <div class="wdg-cell">
+        <h2>Light</h2>
+        <iframe src="/embed/sky/light/" title="The sky right now — light" width="360" height="230" style="border:0;border-radius:12px;" loading="lazy"></iframe>
+        <textarea class="field__input wdg-snip" readonly rows="4" aria-label="Embed code, light theme">{SNIPPET_LIGHT}</textarea>
+        <button class="btn btn--ghost wdg-copy" type="button" data-copy><span>Copy embed code</span><span class="orb">⧉</span></button>
+      </div>
+    </div>
+
+    <p class="wdg-note mono">
+      The card is 360×230 by default; any width from 300px up works. It
+      updates itself — your page never needs touching. Prefer the data raw?
+      There are feeds: <a href="/feeds/horoscopes.xml">monthly horoscopes</a>
+      and <a href="/feeds/daily-sky.xml">the daily sky</a>.
+    </p>
+  </section>
+
+  <script is:inline>
+    document.querySelectorAll('[data-copy]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var ta = btn.parentElement.querySelector('textarea');
+        ta.select();
+        navigator.clipboard.writeText(ta.value).then(function () {
+          btn.querySelector('span').textContent = 'Copied';
+          setTimeout(function () { btn.querySelector('span').textContent = 'Copy embed code'; }, 1600);
+        });
+      });
+    });
+  </script>
+</Base>
+
+<style>
+  .wdg-title { margin: 6px 0 18px; }
+  .wdg-grid { display: grid; gap: 26px; margin-top: 26px; }
+  @media (min-width: 820px) { .wdg-grid { grid-template-columns: 1fr 1fr; } }
+  .wdg-cell { display: grid; gap: 12px; justify-items: start; }
+  .wdg-cell h2 { margin: 0; font-size: var(--text-lg); font-weight: 620; }
+  .wdg-snip { width: 100%; font-family: var(--font-mono); font-size: 11px; line-height: 1.5; resize: none; }
+  .wdg-note { margin-top: 26px; font-size: 12px; line-height: 1.7; color: var(--muted); letter-spacing: 0.03em; max-width: 64ch; }
+</style>
