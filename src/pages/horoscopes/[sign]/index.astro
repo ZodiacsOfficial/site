@@ -67,6 +67,7 @@ const jsonLd = [
   type="article"
   jsonLd={jsonLd}
 >
+  <link slot="head" rel="alternate" type="application/rss+xml" title="Zodiacs.org monthly horoscopes" href="/feeds/horoscopes.xml" />
   <article class="container container--narrow horo" style={`--sign:${sign.hue}`}>
     <header class="horo__hero reveal">
       <SignIcon sign={sign.slug} size={88} loading="eager" class="horo__icon" />

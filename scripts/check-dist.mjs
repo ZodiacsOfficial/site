@@ -85,6 +85,29 @@ if (!rss.startsWith('<?xml')) fail('rss.xml: missing XML declaration');
   }
 }
 
+// ---- 3b. New-wing RSS feeds --------------------------------------------------
+for (const { file, minItems } of [
+  { file: 'feeds/horoscopes.xml', minItems: 12 },
+  { file: 'feeds/daily-sky.xml', minItems: 1 },
+]) {
+  const path = resolve(root, file);
+  if (!(await exists(path))) {
+    fail(`${file}: missing`);
+    continue;
+  }
+  const xml = await readFile(path, 'utf8');
+  if (!xml.startsWith('<?xml')) fail(`${file}: no XML declaration`);
+  if (!xml.includes('<rss version="2.0"')) fail(`${file}: not RSS 2.0`);
+  const items = (xml.match(/<item>/g) || []).length;
+  if (items < minItems) fail(`${file}: ${items} items, expected >= ${minItems}`);
+  for (const m of xml.matchAll(/<link>([^<]+)<\/link>/g)) {
+    if (!m[1].startsWith('https://zodiacs.org/')) fail(`${file}: non-absolute link ${m[1]}`);
+  }
+  for (const m of xml.matchAll(/<pubDate>([^<]+)<\/pubDate>/g)) {
+    if (Number.isNaN(Date.parse(m[1]))) fail(`${file}: bad pubDate ${m[1]}`);
+  }
+}
+
 // ---- 4. Data snapshots ------------------------------------------------------
 const pulse = JSON.parse(await readFile(resolve(root, 'assets/pulse.json'), 'utf8'));
 if (!pulse.capturedAt) fail('pulse.json: missing capturedAt');

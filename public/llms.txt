@@ -39,6 +39,8 @@ Learn clusters: the planets https://zodiacs.org/learn/planets/ · the houses htt
 Rising-sign profiles (all twelve ascendants with chart rulers, at /rising-sign/{sign}/, e.g. /rising-sign/aries/): https://zodiacs.org/rising-sign/
 Compatibility pairings (all 78 sun-sign combinations, e.g. /compatibility/aries-taurus/): https://zodiacs.org/compatibility/
 Monthly horoscopes (transit-grounded, dated claims, per-sign at /horoscopes/{sign}/): https://zodiacs.org/horoscopes/
+Feeds: monthly horoscopes RSS https://zodiacs.org/feeds/horoscopes.xml · daily sky RSS https://zodiacs.org/feeds/daily-sky.xml
+Embeddable current-sky widget (iframe, free with the backlink intact): https://zodiacs.org/widgets/
 
 Astrofolio relationship:
 Astrofolio is the optional save/keep layer behind the free tools — charts a visitor saves live in their own browser first, with optional account sync for saved charts — and a related consumer experience around personal Zodiac shelves at https://astrofolio.xyz/. Zodiacs.org remains the official registry and SDK source of truth.
