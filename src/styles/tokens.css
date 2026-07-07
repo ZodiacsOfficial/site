@@ -52,6 +52,52 @@
   font-display: swap;
 }
 
+/* Metric-matched local fallbacks so the swap when a webfont arrives doesn't
+   rewrap text that's already on screen (overrides = target metric ÷
+   size-adjust, one face per fallback family à la capsize/fontaine).
+   Instrument Sans: upem 1000, ascent 970, descent 250, xWidthAvg 458. */
+@font-face {
+  font-family: 'Instrument Sans Fallback';
+  src: local('Arial'), local('Liberation Sans');
+  ascent-override: 97%;
+  descent-override: 25%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: 'Instrument Sans Fallback Android';
+  src: local('Roboto');
+  ascent-override: 97%;
+  descent-override: 25%;
+  line-gap-override: 0%;
+}
+
+/* EB Garamond (display serif): upem 1000, ascent 1007, descent 298,
+   xWidthAvg 399. */
+@font-face {
+  font-family: 'EB Garamond Fallback';
+  src: local('Georgia');
+  size-adjust: 76.8%;
+  ascent-override: 131.12%;
+  descent-override: 38.8%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: 'EB Garamond Fallback Android';
+  src: local('Noto Serif');
+  size-adjust: 79.64%;
+  ascent-override: 126.44%;
+  descent-override: 37.42%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: 'EB Garamond Fallback Times';
+  src: local('Times New Roman'), local('Liberation Serif');
+  size-adjust: 87.49%;
+  ascent-override: 115.1%;
+  descent-override: 34.06%;
+  line-gap-override: 0%;
+}
+
 :root {
   /* ── Void scale — cool near-blacks, page bg → raised surfaces ── */
   --void-0: #060709;
@@ -109,8 +155,8 @@
   --accent: var(--ink-1);
 
   /* ── Type ── */
-  --font-serif: 'EB Garamond', 'Iowan Old Style', Georgia, serif;
-  --font-sans: 'Instrument Sans', system-ui, -apple-system, sans-serif;
+  --font-serif: 'EB Garamond', 'EB Garamond Fallback', 'EB Garamond Fallback Android', 'EB Garamond Fallback Times', 'Iowan Old Style', Georgia, serif;
+  --font-sans: 'Instrument Sans', 'Instrument Sans Fallback', 'Instrument Sans Fallback Android', system-ui, -apple-system, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, Menlo, Consolas, monospace;
   --text-xs: 0.75rem;
   --text-sm: 0.875rem;

@@ -79,6 +79,13 @@ const tools = [
   path="/"
   jsonLd={jsonLd}
 >
+  <link
+    slot="head"
+    rel="preload"
+    as="image"
+    href="/assets/hero/zodiacs-hero-poster.avif"
+    fetchpriority="high"
+  />
   <!-- Legacy hash deep-links (the registry SPA lived here) → the wing. -->
   <script is:inline>
     (function () {
@@ -94,13 +101,12 @@ const tools = [
     <div class="hero__frame reveal">
       <video
         class="hero__video"
-        src="/assets/hero/zodiacs-hero.mp4"
-        poster="/assets/hero/zodiacs-hero-poster.jpg"
-        autoplay
+        data-src="/assets/hero/zodiacs-hero.mp4"
+        poster="/assets/hero/zodiacs-hero-poster.avif"
         muted
         loop
         playsinline
-        preload="metadata"
+        preload="none"
         disablepictureinpicture
         aria-hidden="true"
         tabindex="-1"
@@ -120,13 +126,22 @@ const tools = [
       </div>
     </div>
     <script is:inline>
-      // Reduced-motion visitors keep the poster; the footage never forces itself.
+      // The footage (3.3MB) only loads on wide, motion-friendly screens;
+      // phones and reduced-motion visitors keep the poster.
       (function () {
         var v = document.querySelector('[data-hero-video]');
-        if (v && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-          v.removeAttribute('autoplay');
-          v.preload = 'none';
-          try { v.pause(); v.currentTime = 0; } catch (e) { /* not yet loaded — poster stays */ }
+        if (!v) return;
+        var play = function () {
+          if (!v.src) { v.src = v.dataset.src; v.preload = 'auto'; }
+          var p = v.play();
+          if (p && p.catch) p.catch(function () {});
+        };
+        if (
+          window.matchMedia('(min-width: 720px)').matches &&
+          !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+        ) {
+          play();
+          window.addEventListener('pageshow', function (e) { if (e.persisted) play(); });
         }
       })();
     </script>
@@ -343,7 +358,7 @@ const tools = [
     line-height: 0.94;
     letter-spacing: 0.002em;
     text-transform: uppercase;
-    max-width: 14ch;
+    max-width: 9.53em; /* 14ch of Instrument — font-independent so fallback text can't resize the box */
     color: var(--ink-0, #EEF1F7);
     text-wrap: balance;
     text-shadow: 0 2px 28px rgba(6, 7, 9, 0.55);
@@ -355,7 +370,7 @@ const tools = [
   }
   .hero__sub {
     margin: 0 0 clamp(20px, 3vw, 28px);
-    max-width: 48ch;
+    max-width: 31.97em; /* 48ch of Instrument */
     color: var(--ink-1, #C6CCDA);
     font-size: clamp(0.95rem, 0.85rem + 0.5vw, 1.125rem);
     line-height: 1.6;
@@ -423,12 +438,12 @@ const tools = [
     .hero__frame { min-height: clamp(540px, calc(100svh - 180px), 700px); }
     .hero__content { padding: clamp(86px, 14svh, 112px) 18px 22px; }
     .hero__title {
-      max-width: 11ch;
+      max-width: 7.49em; /* 11ch of Instrument */
       font-size: clamp(2.25rem, 11.5vw, 3.55rem);
       line-height: 0.95;
     }
     .hero__sub {
-      max-width: 31ch;
+      max-width: 20.65em; /* 31ch of Instrument */
       font-size: 0.98rem;
       line-height: 1.52;
     }
