@@ -159,6 +159,7 @@ const jsonLd = [
           <div class="core guide-side__core">
             <span class="mono--label">The essentials</span>
             <FactTable sign={sign} star={lore.principalStar} babylonianRecord={lore.babylonianRecord} />
+            <a class="guide-side__bdays" href="/birthday/">Look up your exact birthday →</a>
           </div>
         </div>
         <div class="guide-side__cta shell tinted">
@@ -282,6 +283,8 @@ const jsonLd = [
 
   .guide-side { display: grid; gap: 14px; }
   .guide-side__core { padding: 20px; display: grid; gap: 12px; }
+  .guide-side__bdays { justify-self: start; font-size: 12.5px; color: var(--muted); text-decoration: none; border-bottom: 1px solid var(--hair-2); }
+  .guide-side__bdays:hover { color: var(--text); border-bottom-color: var(--sign); }
   .guide-side__cta-core { padding: 22px 20px; display: grid; gap: 10px; }
   .guide-side__cta-core strong { font-size: var(--text-lg); letter-spacing: -0.01em; }
   .guide-side__cta-core p { margin: 0; font-size: var(--text-sm); color: var(--text-2); }
