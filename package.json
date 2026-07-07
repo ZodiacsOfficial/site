@@ -23,6 +23,7 @@
     "data:og": "node --experimental-strip-types scripts/build-og-void.mjs",
     "data:ingresses": "node scripts/build-ingresses.mjs",
     "data:eclipses": "node scripts/build-eclipses.mjs",
+    "data:birthdays": "node scripts/build-birthdays.mjs",
     "digest:weekly": "vite-node scripts/send-weekly-digest.ts",
     "report:bundles": "node scripts/report-bundles.mjs"
   },

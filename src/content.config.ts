@@ -111,6 +111,24 @@ const learn = defineCollection({
 });
 
 /**
+ * Birthday pages, one per calendar date (366 with Feb 29). Filename IS the
+ * slug ({month}-{day}, e.g. july-7.mdx); the route asserts it matches the
+ * month/day frontmatter. Prose only — sign, cusp tables, degree spans, and
+ * decans are computed from src/data/birthdays.json and rendered by the page.
+ */
+const birthdays = defineCollection({
+  loader: glob({ pattern: '*.mdx', base: './src/content/birthdays' }),
+  schema: z.object({
+    month: z.number().int().min(1).max(12),
+    day: z.number().int().min(1).max(31),
+    title: z.string(),
+    description: z.string().max(170),
+    updated: z.coerce.date(),
+    draft: z.boolean().default(false),
+  }),
+});
+
+/**
  * Monthly horoscopes. Files accumulate as YYYY-MM-{sign}.mdx; the route
  * renders the latest month present and labels it from frontmatter — the
  * wall clock never decides what displays.
@@ -125,4 +143,4 @@ const horoscopes = defineCollection({
   }),
 });
 
-export const collections = { guides, pairs, learn, horoscopes };
+export const collections = { guides, pairs, learn, horoscopes, birthdays };

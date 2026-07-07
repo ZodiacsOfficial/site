@@ -1,0 +1,54 @@
+---
+import Base from '../../../layouts/Base.astro';
+import BabyZodiac from '../../../islands/BabyZodiac';
+import '../../../styles/calculator.css';
+---
+<Base
+  title="¿Qué signo será mi bebé? Calculadora por fecha de parto | Zodiacs.org"
+  description="Ingresa la fecha probable de parto: el signo solar casi seguro (con avisos de cúspide calculados), los signos lunares posibles de la semana y lo que espera al minuto del nacimiento."
+  path="/es/baby-zodiac/"
+  locale="es"
+  image="/assets/og/v2/tool/baby-zodiac.png"
+  imageAlt="Calculadora del zodiaco del bebé — Zodiacs.org"
+>
+  <section class="section--tight container container--narrow">
+    <div class="tool-hero reveal">
+      <h1 class="display">¿Qué signo será el bebé?</h1>
+      <p>
+        Ingresa la fecha probable de parto y recibe la versión honesta: el
+        signo solar es casi seguro, el lunar es una lista corta que el día
+        del nacimiento decide, y el ascendente tiene que esperar al reloj.
+        Calculado en tu dispositivo.
+      </p>
+    </div>
+    <BabyZodiac locale="es" client:load />
+  </section>
+
+  <section class="section--tight container container--narrow">
+    <div class="prose reveal">
+      <p>
+        El Sol pasa un mes en cada signo, así que la fecha probable lo fija
+        con mucha confianza; las excepciones — fechas en el borde de un
+        signo o bebés que se adelantan — se calculan arriba en lugar de
+        adivinarse. La Luna cambia de signo cada dos o tres días, y el
+        ascendente cambia cada dos horas: ese pertenece al minuto del
+        nacimiento. Después del parto, la
+        <a href="/es/birth-chart/">carta completa</a> lo calcula todo.
+      </p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .tool-hero { max-width: 62ch; margin-bottom: clamp(24px, 4vw, 36px); }
+  .tool-hero h1 {
+    margin: 0 0 16px;
+    font-family: var(--font-serif);
+    font-size: var(--text-2xl);
+    font-weight: 500;
+    letter-spacing: -0.005em;
+    line-height: 1.04;
+    text-wrap: balance;
+  }
+  .tool-hero p { margin: 0; color: var(--muted); font-size: var(--text-lg); text-wrap: pretty; }
+</style>

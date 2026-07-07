@@ -1,0 +1,149 @@
+---
+import Base from '../../layouts/Base.astro';
+import SignIcon from '../../components/SignIcon.astro';
+import { SIGNS, signBySlug } from '../../lib/signs';
+import { MONTH_NAMES, MONTH_SLUGS, DAYS_IN_MONTH, birthdaySlug, type BirthdayEntry } from '../../lib/birthdays';
+import birthdays from '../../data/birthdays.json';
+
+const days = birthdays.days as Record<string, BirthdayEntry>;
+const [yearFrom, yearTo] = birthdays.yearRange as [number, number];
+
+// Per month: the signs it passes through and which days sit on the boundary.
+const months = MONTH_NAMES.map((name, i) => {
+  const m = i + 1;
+  const list = Array.from({ length: DAYS_IN_MONTH[i] }, (_, d) => {
+    const slug = birthdaySlug(m, d + 1);
+    const entry = days[slug];
+    return {
+      day: d + 1,
+      slug,
+      sign: entry.sign ?? null,
+      cusp: !!entry.cusp,
+      hue: entry.sign ? signBySlug(entry.sign).hue : 'var(--faint)',
+    };
+  });
+  const signs = [...new Set(list.filter((d) => d.sign).map((d) => d.sign as string))];
+  return { name, m, list, signs: signs.map((s) => signBySlug(s)) };
+});
+
+const cuspCount = Object.values(days).filter((d) => d.cusp).length;
+
+const jsonLd = [
+  {
+    '@type': 'CollectionPage',
+    name: 'Birthday astrology, date by date',
+    description: 'A page for every calendar date: the sun sign checked across ninety-one years, degree spans, decans, and per-year cusp tables where the sign boundary lands.',
+    url: 'https://zodiacs.org/birthday/',
+    hasPart: SIGNS.map((s) => ({ '@type': 'Thing', name: `${s.name} birthdays` })),
+  },
+  {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Zodiacs.org', item: 'https://zodiacs.org/' },
+      { '@type': 'ListItem', position: 2, name: 'Birthdays', item: 'https://zodiacs.org/birthday/' },
+    ],
+  },
+];
+---
+<Base
+  title="Birthday astrology: every date, computed"
+  description="Pick your birthday and get the receipts: sun sign verified across 1940–2030, exact degree spans, decans with traditional rulers, and year-by-year cusp tables."
+  path="/birthday/"
+  image="/assets/og/v2/tool/birthday.png"
+  imageAlt="Birthday astrology — Zodiacs.org"
+  jsonLd={jsonLd}
+>
+  <div class="container bday-hub">
+    <header class="bday-hub__hero reveal">
+      <em class="kicker">Birthdays</em>
+      <h1 class="display">Every date in the calendar, computed.</h1>
+      <p class="bday-hub__lede">
+        A page for each of the 366 dates: the sun sign checked against every year
+        from {yearFrom} to {yearTo}, the Sun's exact degree span, the decan and its
+        traditional ruler, and — on the {cuspCount} dates where a sign boundary can
+        land — a year-by-year table of when the Sun actually crossed. If you were
+        born near a cusp, your year and birth time decide; the tables show both.
+      </p>
+    </header>
+
+    {months.map(({ name, m, list, signs }) => (
+      <section class="bday-hub__month reveal" aria-labelledby={`m-${MONTH_SLUGS[m - 1]}`}>
+        <div class="bday-hub__month-head">
+          <h2 id={`m-${MONTH_SLUGS[m - 1]}`}>{name}</h2>
+          <span class="bday-hub__signs">
+            {signs.map((s, i) => (
+              <>
+                {i > 0 && <span class="bday-hub__arrow" aria-hidden="true">→</span>}
+                <a class="bday-hub__sign" href={`/${s.slug}/`}>
+                  <SignIcon sign={s.slug} size={20} />
+                  {s.name}
+                </a>
+              </>
+            ))}
+          </span>
+        </div>
+        <div class="bday-hub__grid" role="list">
+          {list.map((d) => (
+            <a
+              class={`bday-day mono${d.cusp ? ' bday-day--cusp' : ''}`}
+              href={`/birthday/${d.slug}/`}
+              style={`--dot:${d.hue}`}
+              role="listitem"
+              title={d.cusp ? `${name} ${d.day} — cusp date` : `${name} ${d.day}`}
+            >
+              <span class="bday-day__dot" aria-hidden="true"></span>
+              {d.day}
+            </a>
+          ))}
+        </div>
+      </section>
+    ))}
+
+    <p class="bday-hub__note mono reveal">
+      Cusp dates are marked with a hollow dot — the Sun can change signs during those days,
+      and their pages carry the full year table. Positions computed with the same engine as
+      the <a href="/birth-chart/">birth chart calculator</a>.
+    </p>
+  </div>
+</Base>
+
+<style>
+  .bday-hub { display: grid; gap: clamp(28px, 5vw, 44px); padding-block: clamp(24px, 5vw, 56px) clamp(36px, 6vw, 72px); }
+  .bday-hub__hero { display: grid; gap: 14px; max-width: 760px; }
+  .bday-hub__hero h1 { margin: 0; font-size: clamp(2.2rem, 1.5rem + 3.6vw, 3.8rem); line-height: 1.02; }
+  .bday-hub__lede { margin: 0; color: var(--text-2); font-size: var(--text-md); line-height: 1.6; }
+
+  .bday-hub__month { display: grid; gap: 14px; }
+  .bday-hub__month-head { display: flex; align-items: baseline; gap: 18px; flex-wrap: wrap; }
+  .bday-hub__month-head h2 { margin: 0; font-family: var(--font-serif); font-weight: 500; font-size: clamp(1.4rem, 1.1rem + 1.4vw, 1.9rem); }
+  .bday-hub__signs { display: inline-flex; align-items: center; gap: 8px; font-size: 12.5px; color: var(--muted); }
+  .bday-hub__sign { display: inline-flex; align-items: center; gap: 6px; color: var(--muted); text-decoration: none; }
+  .bday-hub__sign:hover { color: var(--text); }
+  .bday-hub__sign :global(img) { border-radius: 50%; }
+  .bday-hub__arrow { color: var(--faint); }
+
+  .bday-hub__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(52px, 1fr));
+    gap: 4px;
+  }
+  .bday-day {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 8px 4px;
+    border: 1px solid var(--hair-1);
+    border-radius: var(--r-sm);
+    color: var(--text-2);
+    font-size: 12.5px;
+    text-decoration: none;
+    transition: border-color var(--dur-1) var(--ease), color var(--dur-1) var(--ease), background var(--dur-1) var(--ease);
+  }
+  .bday-day:hover { color: var(--text); border-color: var(--hair-2); background: var(--void-1); }
+  .bday-day__dot { width: 6px; height: 6px; border-radius: 50%; background: var(--dot); opacity: 0.85; }
+  .bday-day--cusp .bday-day__dot { background: transparent; border: 1px solid var(--faint); }
+
+  .bday-hub__note { margin: 0; max-width: 640px; font-size: 11.5px; color: var(--faint); line-height: 1.6; }
+  .bday-hub__note a { color: var(--muted); }
+</style>
