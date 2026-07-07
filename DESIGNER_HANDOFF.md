@@ -1,5 +1,10 @@
 # Zodiacs.org Designer Handoff
 
+> **Part Q note:** Warm Gilt is retired — the wing now wears Cosmic Void
+> (same tokens, EB Garamond, self-hosted fonts). Gilt references below are
+> historical.
+
+
 > **Scope note (July 2026):** this handoff now governs only the legacy
 > collector's wing — the registry experience served from `public/` at
 > `/collect/`, `/collect/{sign}/`, `/thesis/`, `/archive/`, `/sdk/`.

@@ -1,14 +1,42 @@
+/* Discovery pages — Cosmic Void skin (shared by the SDK/discovery set).
+   Same layout system as before; the palette and type now match the main
+   site: void surfaces, EB Garamond display, Instrument Sans body,
+   JetBrains Mono labels. Fonts are self-hosted (no third-party requests). */
+
+@font-face {
+  font-family: 'EB Garamond';
+  src: url('/fonts/eb-garamond-latin-500-normal.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Instrument Sans';
+  src: url('/fonts/instrument-sans-latin-wght-normal.woff2') format('woff2-variations');
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('/fonts/jetbrains-mono-latin-wght-normal.woff2') format('woff2-variations');
+  font-weight: 300 600;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
-  --bg: #0C0906;
-  --surface: #140E08;
-  --ink: #F4EBD2;
-  --ink-2: rgba(244,235,210,0.76);
-  --ink-dim: rgba(244,235,210,0.54);
-  --gold: #D2A74E;
-  --gold-bright: #E9C766;
-  --hair: rgba(210,167,78,0.18);
-  --serif: Georgia, "Times New Roman", serif;
-  --mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+  --bg: #060709;
+  --surface: #0F121A;
+  --ink: #EEF1F7;
+  --ink-2: #C6CCDA;
+  --ink-dim: #8E96AB;
+  --gold: #C6CCDA;          /* legacy var names kept; values are void now */
+  --gold-bright: #EEF1F7;
+  --hair: rgba(198, 204, 218, 0.16);
+  --serif: 'EB Garamond', Georgia, "Times New Roman", serif;
+  --sans: 'Instrument Sans', system-ui, -apple-system, sans-serif;
+  --mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 
 * { box-sizing: border-box; }
@@ -22,10 +50,8 @@ html {
 body {
   margin: 0;
   min-height: 100vh;
-  font-family: var(--serif);
-  background:
-    radial-gradient(100% 60% at 50% -10%, rgba(210,167,78,0.13), transparent 58%),
-    linear-gradient(180deg, #0A0805 0%, #110D08 100%);
+  font-family: var(--sans);
+  background: linear-gradient(180deg, #060709 0%, #0A0C11 100%);
   color: var(--ink);
   line-height: 1.55;
 }
@@ -72,17 +98,23 @@ footer {
 
 .eyebrow {
   font-size: 12px;
-  color: var(--gold);
+  color: var(--ink-dim);
   text-transform: uppercase;
   letter-spacing: 0.14em;
   margin-bottom: 18px;
 }
 
+h1,
+h2,
+h3 {
+  font-family: var(--serif);
+  font-weight: 500;
+  letter-spacing: -0.005em;
+}
+
 h1 {
   font-size: clamp(44px, 9vw, 88px);
-  line-height: 0.94;
-  font-weight: 400;
-  letter-spacing: 0;
+  line-height: 0.98;
   margin: 0 0 22px;
   max-width: 790px;
 }
@@ -96,16 +128,13 @@ h1 {
 
 h2 {
   font-size: clamp(31px, 5vw, 48px);
-  line-height: 1;
-  font-weight: 400;
-  letter-spacing: 0;
+  line-height: 1.04;
   margin: 64px 0 18px;
 }
 
 h3 {
   font-size: 22px;
   line-height: 1.1;
-  font-weight: 400;
   margin: 0 0 10px;
 }
 
@@ -133,7 +162,7 @@ li { margin: 9px 0; }
 .link,
 .demo {
   border: 1px solid var(--hair);
-  background: rgba(21,15,9,0.74);
+  background: rgba(15, 18, 26, 0.74);
   border-radius: 8px;
 }
 
@@ -146,7 +175,7 @@ li { margin: 9px 0; }
 
 .k {
   display: block;
-  color: var(--gold);
+  color: var(--ink-dim);
   font-size: 11px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -166,7 +195,7 @@ pre {
   border: 1px solid var(--hair);
   border-radius: 8px;
   padding: 18px;
-  background: rgba(0,0,0,0.28);
+  background: rgba(0, 0, 0, 0.28);
   color: var(--ink);
 }
 
@@ -214,7 +243,7 @@ textarea {
   width: 100%;
   border: 1px solid var(--hair);
   border-radius: 8px;
-  background: rgba(0,0,0,0.25);
+  background: rgba(0, 0, 0, 0.25);
   color: var(--ink);
   padding: 12px;
   font-size: 14px;
