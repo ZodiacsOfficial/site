@@ -8,6 +8,7 @@ import { EMPTY_PROFILE } from '../lib/profile/schema';
 import { loadProfile, deleteChart, renameChart } from '../lib/profile/store';
 import type { Profile, SavedChart } from '../lib/profile/schema';
 import { signForLongitude, formatLongitude, signName } from '../lib/signs';
+import { encodeChartLink } from '../lib/share';
 import type { Session } from '@supabase/supabase-js';
 import type * as Sync from '../lib/profile/sync';
 import { localizePath, normalizeLocale, t, type Locale, type UiKey } from '../lib/i18n';
@@ -225,6 +226,24 @@ export default function ProfileManager({ locale: rawLocale = 'en' }: { locale?: 
                   <h2>{chart.name}</h2>
                 )}
                 <div class="pf-chart__actions">
+                  {chart.birth.place && (
+                    <a
+                      class="pf-chart__action"
+                      href={`${localizePath(locale, '/birth-chart/')}#c=${encodeChartLink({
+                        date: chart.birth.date,
+                        time: chart.birth.time,
+                        timeKnown: chart.birth.timeKnown,
+                        lat: chart.birth.place.lat,
+                        lon: chart.birth.place.lon,
+                        tz: chart.birth.place.tz,
+                        name: chart.name,
+                        place: chart.birth.place.name,
+                        houseSystem: chart.summary.houseSystem,
+                      })}`}
+                    >
+                      {t(locale, 'openChart')}
+                    </a>
+                  )}
                   <button
                     class="pf-chart__action"
                     type="button"

@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import ProfileDashboard from '../../islands/ProfileDashboard';
 import ProfileManager from '../../islands/ProfileManager';
 import '../../styles/calculator.css';
 ---
@@ -17,6 +18,8 @@ import '../../styles/calculator.css';
         device.
       </p>
     </div>
+
+    <ProfileDashboard client:load />
 
     <ProfileManager client:load />
 
