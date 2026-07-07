@@ -37,12 +37,12 @@ const GLYPHS: Record<string, string> = {
   'North Node': '☊', 'South Node': '☋',
 };
 
-const DIGNITY_KEY: Record<Dignity, string> = {
+const DIGNITY_KEY = {
   domicile: 'dignityDomicile',
   exaltation: 'dignityExaltation',
   detriment: 'dignityDetriment',
   fall: 'dignityFall',
-};
+} as const satisfies Record<Dignity, string>;
 
 let enginePromise: Promise<typeof import('../lib/engine/full')> | null = null;
 const loadEngine = () => (enginePromise ??= import('../lib/engine/full'));
