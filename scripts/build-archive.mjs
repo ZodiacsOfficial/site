@@ -9,7 +9,8 @@
 //
 // The output is committed static HTML, consistent with how this site ships
 // (no runtime build). The page shares the catalogue design language: dark
-// museum surface, Cormorant Garamond, gold hairlines, quiet mono labels.
+// museum register in the Cosmic Void system: void surfaces, EB Garamond,
+// ink hairlines, quiet mono labels.
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
@@ -210,7 +211,7 @@ function renderPage() {
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="theme-color" content="#0D0A07" />
+  <meta name="theme-color" content="#060709" />
   <meta name="color-scheme" content="dark" />
   <title>The Archive · Zodiacs.org</title>
   <meta name="description" content="${escAttr(ARCHIVE_META.description)}" />
@@ -223,20 +224,24 @@ function renderPage() {
   <meta property="og:description" content="${escAttr(ARCHIVE_META.description)}" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="${ARCHIVE_META.url}" />
-  <meta property="og:image" content="https://zodiacs.org/assets/og/share.png" />
+  <meta property="og:image" content="https://zodiacs.org/assets/og/v2/share.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta property="og:image:alt" content="Zodiacs — twelve sculptural gold figures, native on Solana and bridged to Base." />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="The Archive — Zodiacs" />
   <meta name="twitter:description" content="${escAttr(ARCHIVE_META.description)}" />
-  <meta name="twitter:image" content="https://zodiacs.org/assets/og/share.png" />
+  <meta name="twitter:image" content="https://zodiacs.org/assets/og/v2/share.png" />
 
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%230D0A07'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' font-family='Cormorant Garamond, Georgia, serif' font-style='italic' font-size='42' fill='%23E9C766'%3EZ%3C/text%3E%3C/svg%3E" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23060709'/%3E%3Cg%3E%3Ccircle cx='32' cy='10' r='3.4' fill='%23DE8E79'/%3E%3Ccircle cx='43' cy='12.9' r='3.4' fill='%23B9D4BE'/%3E%3Ccircle cx='51.1' cy='21' r='3.4' fill='%23B29DD0'/%3E%3Ccircle cx='54' cy='32' r='3.4' fill='%23B6D4E4'/%3E%3Ccircle cx='51.1' cy='43' r='3.4' fill='%23E0A9B4'/%3E%3Ccircle cx='43' cy='51.1' r='3.4' fill='%23B7D9B0'/%3E%3Ccircle cx='32' cy='54' r='3.4' fill='%23D3A9DE'/%3E%3Ccircle cx='21' cy='51.1' r='3.4' fill='%23B9DCE8'/%3E%3Ccircle cx='12.9' cy='43' r='3.4' fill='%23E0B080'/%3E%3Ccircle cx='10' cy='32' r='3.4' fill='%23C0DEA8'/%3E%3Ccircle cx='12.9' cy='21' r='3.4' fill='%23AE8FC9'/%3E%3Ccircle cx='21' cy='12.9' r='3.4' fill='%23A9D4C4'/%3E%3C/g%3E%3C/svg%3E" />
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    /* Self-hosted faces — same files the rest of the site uses. */
+    @font-face { font-family: 'EB Garamond'; src: url('/fonts/eb-garamond-latin-400-normal.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'EB Garamond'; src: url('/fonts/eb-garamond-latin-500-normal.woff2') format('woff2'); font-weight: 500; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'EB Garamond'; src: url('/fonts/eb-garamond-latin-400-italic.woff2') format('woff2'); font-weight: 400; font-style: italic; font-display: swap; }
+    @font-face { font-family: 'JetBrains Mono'; src: url('/fonts/jetbrains-mono-latin-wght-normal.woff2') format('woff2-variations'); font-weight: 300 600; font-style: normal; font-display: swap; }
+  </style>
 
   <script type="application/ld+json">
 ${JSON.stringify(jsonLd(), null, 2)}
@@ -244,15 +249,15 @@ ${JSON.stringify(jsonLd(), null, 2)}
 
   <style>
     :root {
-      --bg: #0A0705; --bg-2: #0E0A07;
-      --surface: #171109; --surface-2: #1E160C;
-      --hair: rgba(210,167,78,0.10); --hair-2: rgba(210,167,78,0.22); --hair-3: rgba(210,167,78,0.42);
-      --gold: #D2A74E; --gold-bright: #E9C766; --gold-deep: #9A7733;
-      --live: #5FA08C;
-      --ink: #E8DEC4; --ink-2: #C9BDA1; --ink-dim: #988A6E; --ink-mute: #968860;
-      --serif: 'Cormorant Garamond', 'EB Garamond', Georgia, Cambria, serif;
+      --bg: #060709; --bg-2: #0A0C11;
+      --surface: #0F121A; --surface-2: #151925;
+      --hair: rgba(198,204,218,0.10); --hair-2: rgba(198,204,218,0.22); --hair-3: rgba(198,204,218,0.42);
+      --gold: #C6CCDA; --gold-bright: #EEF1F7; --gold-deep: #8E96AB;
+      --live: #C6CCDA;
+      --ink: #EEF1F7; --ink-2: #C6CCDA; --ink-dim: #8E96AB; --ink-mute: #7A8397;
+      --serif: 'EB Garamond', Georgia, Cambria, serif;
       --mono: 'JetBrains Mono', ui-monospace, Menlo, Consolas, monospace;
-      --display: 'Cinzel', 'Cormorant Garamond', Georgia, serif;
+      --display: 'EB Garamond', Georgia, serif;
       --ease: cubic-bezier(0.32, 0.72, 0, 1);
       --z-grain: 1; --z-base: 10; --z-nav: 40;
     }
@@ -264,13 +269,13 @@ ${JSON.stringify(jsonLd(), null, 2)}
       -webkit-text-size-adjust: 100%; text-size-adjust: 100%;
       -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
     }
-    html { scroll-behavior: smooth; scrollbar-color: rgba(210,167,78,0.14) #0A0705; scrollbar-width: thin; }
+    html { scroll-behavior: smooth; scrollbar-color: rgba(198,204,218,0.14) #060709; scrollbar-width: thin; }
     @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
     body {
       min-height: 100dvh;
       background:
-        radial-gradient(120% 60% at 50% -10%, rgba(210,167,78,0.05), transparent 62%),
-        radial-gradient(120% 80% at 50% 110%, rgba(210,167,78,0.02), transparent 62%),
+        radial-gradient(120% 60% at 50% -10%, rgba(198,204,218,0.05), transparent 62%),
+        radial-gradient(120% 80% at 50% 110%, rgba(198,204,218,0.02), transparent 62%),
         var(--bg);
     }
     [id] { scroll-margin-top: 96px; }
@@ -279,7 +284,7 @@ ${JSON.stringify(jsonLd(), null, 2)}
     button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
     :focus-visible {
       outline: 1px solid var(--gold); outline-offset: 3px;
-      box-shadow: 0 0 0 4px rgba(210,167,78,0.12);
+      box-shadow: 0 0 0 4px rgba(198,204,218,0.12);
     }
     :focus:not(:focus-visible) { outline: 0; }
     .skip {
@@ -304,12 +309,12 @@ ${JSON.stringify(jsonLd(), null, 2)}
       position: fixed; inset: 0; pointer-events: none; z-index: var(--z-grain);
       opacity: 0.34; mix-blend-mode: screen;
       background-image:
-        radial-gradient(1px 1px at 8% 12%, rgba(232,222,196,0.7), transparent 60%),
-        radial-gradient(1px 1px at 22% 38%, rgba(210,167,78,0.6), transparent 60%),
-        radial-gradient(1px 1px at 71% 8%, rgba(232,222,196,0.45), transparent 60%),
-        radial-gradient(1px 1px at 88% 24%, rgba(210,167,78,0.55), transparent 60%),
-        radial-gradient(1px 1px at 44% 62%, rgba(232,222,196,0.4), transparent 60%),
-        radial-gradient(1px 1px at 92% 71%, rgba(232,222,196,0.5), transparent 60%);
+        radial-gradient(1px 1px at 8% 12%, rgba(238,241,247,0.7), transparent 60%),
+        radial-gradient(1px 1px at 22% 38%, rgba(198,204,218,0.6), transparent 60%),
+        radial-gradient(1px 1px at 71% 8%, rgba(238,241,247,0.45), transparent 60%),
+        radial-gradient(1px 1px at 88% 24%, rgba(198,204,218,0.55), transparent 60%),
+        radial-gradient(1px 1px at 44% 62%, rgba(238,241,247,0.4), transparent 60%),
+        radial-gradient(1px 1px at 92% 71%, rgba(238,241,247,0.5), transparent 60%);
       background-attachment: fixed;
     }
 
@@ -354,7 +359,7 @@ ${JSON.stringify(jsonLd(), null, 2)}
     .hdr__nav:hover { color: var(--gold-bright); }
     .hdr__nav .chip {
       display: inline-grid; place-items: center; width: 26px; height: 26px;
-      border: 1px solid var(--hair-2); background: rgba(210,167,78,0.05);
+      border: 1px solid var(--hair-2); background: rgba(198,204,218,0.05);
       color: var(--gold); font-size: 11px;
       transition: transform 420ms var(--ease), border-color 320ms var(--ease);
     }
@@ -377,7 +382,7 @@ ${JSON.stringify(jsonLd(), null, 2)}
     .lead__eyebrow {
       display: inline-flex; align-items: center; gap: 10px;
       margin-bottom: 26px; padding: 6px 14px 6px 10px;
-      background: rgba(210,167,78,0.05);
+      background: rgba(198,204,218,0.05);
       border: 1px solid var(--hair-2); border-radius: 999px;
       font-family: var(--mono); font-size: 9.5px;
       letter-spacing: 0.26em; text-transform: uppercase; color: var(--gold);
@@ -403,7 +408,7 @@ ${JSON.stringify(jsonLd(), null, 2)}
     }
     .lead__meta a {
       color: var(--gold); text-decoration: none;
-      border-bottom: 1px solid rgba(210,167,78,0.32); padding-bottom: 2px;
+      border-bottom: 1px solid rgba(198,204,218,0.32); padding-bottom: 2px;
       transition: color 280ms var(--ease), border-bottom-color 280ms var(--ease);
     }
     .lead__meta a:hover { color: var(--gold-bright); border-bottom-color: var(--gold); }
@@ -481,7 +486,7 @@ ${JSON.stringify(jsonLd(), null, 2)}
     }
     .arc__quote-src {
       margin-left: 10px; color: var(--gold); text-decoration: none;
-      border-bottom: 1px solid rgba(210,167,78,0.32); padding-bottom: 1px;
+      border-bottom: 1px solid rgba(198,204,218,0.32); padding-bottom: 1px;
       transition: color 280ms var(--ease), border-bottom-color 280ms var(--ease);
     }
     .arc__quote-src:hover { color: var(--gold-bright); border-bottom-color: var(--gold); }
@@ -491,7 +496,7 @@ ${JSON.stringify(jsonLd(), null, 2)}
       color: var(--ink-dim);
     }
     .arc__mint {
-      background: rgba(210,167,78,0.12);
+      background: rgba(198,204,218,0.12);
       color: var(--gold-bright);
       font-family: var(--mono); font-style: normal;
       font-size: 0.72em; letter-spacing: 0.02em;
@@ -505,9 +510,9 @@ ${JSON.stringify(jsonLd(), null, 2)}
       display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px;
       margin: 16px 0;
       padding: 13px 16px;
-      border: 1px solid rgba(210,167,78,0.42);
+      border: 1px solid rgba(198,204,218,0.42);
       background:
-        linear-gradient(180deg, rgba(210,167,78,0.05), transparent 70%),
+        linear-gradient(180deg, rgba(198,204,218,0.05), transparent 70%),
         var(--surface);
     }
     .arc__tick {
@@ -523,7 +528,7 @@ ${JSON.stringify(jsonLd(), null, 2)}
     .arc__proof-link {
       font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.18em;
       text-transform: uppercase; color: var(--gold); text-decoration: none;
-      border-bottom: 1px solid rgba(210,167,78,0.32); padding-bottom: 2px;
+      border-bottom: 1px solid rgba(198,204,218,0.32); padding-bottom: 2px;
       transition: color 280ms var(--ease), border-bottom-color 280ms var(--ease);
     }
     .arc__proof-link:hover { color: var(--gold-bright); border-bottom-color: var(--gold); }
@@ -568,7 +573,7 @@ ${JSON.stringify(jsonLd(), null, 2)}
     .rec__link {
       font-family: var(--mono); font-size: 10px; letter-spacing: 0.14em;
       text-transform: uppercase; color: var(--gold); text-decoration: none;
-      border-bottom: 1px solid rgba(210,167,78,0.32); padding-bottom: 2px;
+      border-bottom: 1px solid rgba(198,204,218,0.32); padding-bottom: 2px;
       line-height: 1.8;
       transition: color 280ms var(--ease), border-bottom-color 280ms var(--ease);
     }
@@ -602,11 +607,11 @@ ${JSON.stringify(jsonLd(), null, 2)}
     .btn--primary:hover::before { border-color: var(--hair-2); }
     .btn .arr {
       display: inline-grid; place-items: center; width: 40px; height: 40px;
-      background: rgba(210,167,78,0.06); border: 1px solid var(--hair-2);
+      background: rgba(198,204,218,0.06); border: 1px solid var(--hair-2);
       color: var(--gold); font-size: 13px;
       transition: transform 420ms var(--ease), background 320ms var(--ease), border-color 320ms var(--ease);
     }
-    .btn:hover .arr { transform: translate(3px, -1px); background: rgba(210,167,78,0.14); border-color: var(--gold); }
+    .btn:hover .arr { transform: translate(3px, -1px); background: rgba(198,204,218,0.14); border-color: var(--gold); }
 
     /* ── Footer ── */
     .ftr {

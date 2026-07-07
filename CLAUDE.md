@@ -12,18 +12,29 @@ original token registry preserved as the "Collect" wing. Strategy:
 }
 ```
 
-## The two wings — hard boundaries
+## One design system, two content registers
 
-1. **New site** (Astro): everything in `src/` renders the consumer astrology
-   experience — homepage, sign guides, calculators, learn pages, profile.
-   Dark "Cosmic Void" design system (`src/styles/tokens.css`), Instrument Sans
-   + JetBrains Mono, the 12 pastel sign icons as the core visual language.
-   **No token/market/crypto language or links on these surfaces** — the only
-   sanctioned cross-link is the CollectBand component on sign guides.
-2. **Legacy wing** (`public/collect/`, `public/thesis/`, `public/archive/`,
-   `public/sdk/`, discovery pages): the registry experience, served verbatim.
-   Keeps its own Warm Gilt inline styles and museum voice. Never link
-   `src/styles/tokens.css` into it; never link `discovery.css` into new pages.
+Since the Part-Q retheme (owner-directed), the WHOLE site — Astro pages in
+`src/` AND the registry wing (`public/collect/`, `public/thesis/`,
+`public/archive/`, `public/sdk/`, discovery pages) — wears the dark
+"Cosmic Void" system: void surfaces, EB Garamond display, Instrument Sans
+body (wing pages may use EB Garamond body — museum register), JetBrains
+Mono data, self-hosted fonts only (no Google Fonts anywhere), the 12
+pastel sign hues as the only chroma. Warm Gilt is retired; do not
+reintroduce gold accents anywhere.
+
+The CONTENT boundary survives the visual merge:
+
+1. **New surfaces** (`src/`): consumer astrology. **No token/market/crypto
+   language or links** — the only sanctioned cross-link is the CollectBand
+   component on sign guides.
+2. **Wing** (`public/…` above): the registry catalogue keeps its museum
+   voice, token content, and acquisition links — that register stays in
+   the wing. Wing pages style themselves (inline blocks or
+   `public/assets/discovery.css`); they still never link the hashed Astro
+   bundle of `src/styles/tokens.css` (public HTML can't reference hashed
+   assets) — they inline the same token VALUES instead. Don't link
+   `discovery.css` into `src/` pages.
 
 ## Generated vs source (do not hand-edit generated output)
 
@@ -44,8 +55,10 @@ original token registry preserved as the "Collect" wing. Strategy:
 - `src/data/transits-YYYY-MM.json` ← `node scripts/build-transits.mjs`
   (monthly cron: transits-monthly.yml)
 - `public/assets/og/v2/` ← `node --experimental-strip-types
-  scripts/build-og-void.mjs` (new-wing share cards; the 13 gilt cards at
-  `public/assets/og/*.png` are wing-owned — never regenerate them)
+  scripts/build-og-void.mjs` (ALL share cards sitewide since Part Q — wing
+  pages reference `v2/sign/{slug}.png` + `v2/share.png`; the 13 legacy gilt
+  cards at `public/assets/og/*.png` are frozen and unreferenced — leave
+  the files alone, don't regenerate or re-reference them)
 - `public/assets/pulse.json` / `distribution.json` ← weekly cron workflows
 
 CI re-runs the wing generators and fails on drift — always commit regenerated
@@ -67,8 +80,8 @@ specific, calm. Canonical labels live in `docs/STRATEGY.md` §4.
 "Cosmic Void": near-monochrome cool void + the twelve pastel disc hues as the
 ONLY chroma. Display headlines are EB Garamond (`--font-serif`, the `.display`
 utility / `.section-head h2`); body/UI is Instrument Sans; data is JetBrains
-Mono. No decorative status dots, no gradient/aurora backgrounds, no gold on
-cool surfaces (gilt lives only in the wing). Reserve `.shell`/`.core` bezels
+Mono. No decorative status dots, no gradient/aurora backgrounds, no gold
+anywhere (Warm Gilt is retired sitewide). Reserve `.shell`/`.core` bezels
 for elevated moments; grids of equal items use the light `.tile`. Kickers are
 sentence-case serif-italic (`.kicker`), not mono-caps eyebrows.
 
