@@ -32,17 +32,23 @@ const jsonLd = [
   locale="es"
   jsonLd={jsonLd}
 >
+  <link
+    slot="head"
+    rel="preload"
+    as="image"
+    href="/assets/hero/zodiacs-hero-poster.avif"
+    fetchpriority="high"
+  />
   <section class="hero-es container">
     <div class="hero-es__frame reveal">
       <video
         class="hero-es__video"
-        src="/assets/hero/zodiacs-hero.mp4"
-        poster="/assets/hero/zodiacs-hero-poster.jpg"
-        autoplay
+        data-src="/assets/hero/zodiacs-hero.mp4"
+        poster="/assets/hero/zodiacs-hero-poster.avif"
         muted
         loop
         playsinline
-        preload="metadata"
+        preload="none"
         disablepictureinpicture
         aria-hidden="true"
         tabindex="-1"
@@ -59,13 +65,22 @@ const jsonLd = [
       </div>
     </div>
     <script is:inline>
-      // Reduced-motion visitors keep the poster; the footage never forces itself.
+      // The footage (3.3MB) only loads on wide, motion-friendly screens;
+      // phones and reduced-motion visitors keep the poster.
       (function () {
         var v = document.querySelector('[data-hero-video-es]');
-        if (v && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-          v.removeAttribute('autoplay');
-          v.preload = 'none';
-          try { v.pause(); v.currentTime = 0; } catch (e) { /* not yet loaded — poster stays */ }
+        if (!v) return;
+        var play = function () {
+          if (!v.src) { v.src = v.dataset.src; v.preload = 'auto'; }
+          var p = v.play();
+          if (p && p.catch) p.catch(function () {});
+        };
+        if (
+          window.matchMedia('(min-width: 720px)').matches &&
+          !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+        ) {
+          play();
+          window.addEventListener('pageshow', function (e) { if (e.persisted) play(); });
         }
       })();
     </script>
@@ -164,7 +179,7 @@ const jsonLd = [
   }
   .hero-es h1 {
     margin: 0 0 clamp(14px, 2vw, 20px);
-    max-width: 14ch;
+    max-width: 9.53em; /* 14ch of Instrument — font-independent so fallback text can't resize the box */
     font-family: var(--font-sans);
     font-size: clamp(2.35rem, 0.95rem + 5.8vw, 5.9rem);
     line-height: 0.95;
@@ -176,7 +191,7 @@ const jsonLd = [
   }
   .hero-es p {
     margin: 0 0 clamp(20px, 3vw, 28px);
-    max-width: 50ch;
+    max-width: 33.3em; /* 50ch of Instrument */
     color: var(--ink-1, #C6CCDA);
     font-size: clamp(0.95rem, 0.85rem + 0.5vw, 1.125rem);
     line-height: 1.6;
@@ -217,8 +232,8 @@ const jsonLd = [
     .hero-es { width: min(100% - 20px, 1440px); }
     .hero-es__frame { min-height: clamp(520px, calc(100svh - 180px), 700px); }
     .hero-es__content { padding: clamp(86px, 14svh, 112px) 18px 22px; }
-    .hero-es h1 { max-width: 11ch; font-size: clamp(2.2rem, 11vw, 3.45rem); }
-    .hero-es p { max-width: 31ch; font-size: 0.98rem; line-height: 1.52; }
+    .hero-es h1 { max-width: 7.49em; font-size: clamp(2.2rem, 11vw, 3.45rem); }
+    .hero-es p { max-width: 20.65em; font-size: 0.98rem; line-height: 1.52; }
     .hero-es__ctas .btn { flex: 1 1 auto; justify-content: center; }
   }
 </style>
