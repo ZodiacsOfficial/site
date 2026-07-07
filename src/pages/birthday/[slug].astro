@@ -23,10 +23,9 @@ export async function getStaticPaths() {
     if (seen.has(entry.id)) throw new Error(`Duplicate birthday: ${entry.id}`);
     seen.add(entry.id);
   }
-  // Count guard stays ≥3 while the content agents fill the calendar;
-  // flipped to exactly 366 at integration.
-  if (entries.length < 3) {
-    throw new Error(`Expected at least 3 birthday pages, found ${entries.length}`);
+  // Every calendar date, exactly once — a missing or extra file fails the build.
+  if (entries.length !== 366) {
+    throw new Error(`Expected 366 birthday pages, found ${entries.length}`);
   }
   return entries.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
 }
