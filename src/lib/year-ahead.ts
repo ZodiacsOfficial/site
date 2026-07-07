@@ -64,7 +64,7 @@ function aspectReceipt(e: ScanAspectEvent): string {
     ? monthDay(e.from)
     : `${monthDay(e.from)} – ${monthDay(e.to)}`;
   const passes = e.passes > 1 ? ` · ${e.passes} exact passes` : '';
-  return `${e.body} ${e.aspect} natal ${e.natal} · ${when}${passes}`;
+  return `${e.body} ${e.aspect} Natal ${e.natal} · ${when}${passes}`;
 }
 
 // ── event builders ─────────────────────────────────────────────────────

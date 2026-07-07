@@ -35,11 +35,11 @@ describe('event builders', () => {
 
   it('aspect events phrase planets via the transit register and ASC via its own lines', () => {
     const events = aspectEvents(scan);
-    const saturnSun = events.find((e) => e.receipt.startsWith('Saturn square natal Sun'));
+    const saturnSun = events.find((e) => e.receipt.startsWith('Saturn square Natal Sun'));
     expect(saturnSun?.line).toContain('Saturn');
     expect(saturnSun?.receipt).toContain('3 exact passes');
     expect(saturnSun?.endAt).toBe('2027-04-02T00:00:00.000Z');
-    const jupAsc = events.find((e) => e.receipt.startsWith('Jupiter conjunction natal ASC'));
+    const jupAsc = events.find((e) => e.receipt.startsWith('Jupiter conjunction Natal ASC'));
     expect(jupAsc?.line).toContain('rising degree');
     expect(jupAsc?.endAt).toBeUndefined();
   });
