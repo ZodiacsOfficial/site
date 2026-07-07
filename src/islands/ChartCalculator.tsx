@@ -557,6 +557,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
               <a class="btn btn--ghost" href={localizePath(locale, '/profile/')}><span>{t(locale, 'savedCharts')}</span><span class="orb">→</span></a>
             )}
           </div>
+          {mode === 'full' && saved !== 'saved' && <p class="calc__saved">{t(locale, 'saveYearAheadNote')}</p>}
           {saved === 'saved' && <p class="sr-only" role="status">{t(locale, 'chartSavedStatus')}</p>}
           {saved === 'full' && <p class="calc__error" role="alert">{t(locale, 'chartSaveFull')}</p>}
           {saved === 'error' && <p class="calc__error" role="alert">{t(locale, 'chartSaveError')}</p>}
