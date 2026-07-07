@@ -87,14 +87,15 @@ export async function setDigestOptIn(digestOptIn: boolean): Promise<boolean> {
   const { data: userData, error: userError } = await client.auth.getUser();
   if (userError || !userData.user) return false;
 
-  const local = loadProfile();
+  // Write only the digest column. On conflict this leaves `settings`
+  // untouched (the main sync path owns it); a stale local profile can no
+  // longer clobber the synced settings. On insert, `settings` takes its
+  // column default and the trigger stamps updated_at.
   const { error } = await client
     .from('profiles')
     .upsert({
       user_id: userData.user.id,
-      settings: local.settings,
       digest_opt_in: digestOptIn,
-      updated_at: new Date().toISOString(),
     }, { onConflict: 'user_id' });
   if (error) throw error;
 

@@ -40,7 +40,12 @@ jobs:
       - name: Smoke dry run
         run: npm run digest:weekly -- --dry-run --fixture --week-start 2026-07-13 --limit 1
 
+      # The scheduled Monday run is gated behind DIGEST_ENABLED so real
+      # sends stay off until the owner has run a manual dry-run and set the
+      # variable. Manual workflow_dispatch (dry-run or real) always runs and
+      # honors its own dry_run input.
       - name: Run weekly digest
+        if: github.event_name != 'schedule' || vars.DIGEST_ENABLED == 'true'
         env:
           PUBLIC_SUPABASE_URL: ${{ vars.PUBLIC_SUPABASE_URL }}
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}

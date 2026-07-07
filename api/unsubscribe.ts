@@ -15,6 +15,34 @@ function html(res: any, status: number, body: string): void {
   res.end(body);
 }
 
+function attr(value: string): string {
+  return value.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+const PAGE_STYLE = 'font-family:system-ui,-apple-system,sans-serif;padding:2rem;background:#0b0d12;color:#f3f0e8;line-height:1.5';
+
+/**
+ * Confirmation page shown on GET — no state change. A GET can be issued
+ * by a mail scanner or link-preview bot prefetching the URL, so the
+ * actual unsubscribe only happens on POST (the button below, or the
+ * RFC 8058 one-click List-Unsubscribe-Post from the mail client).
+ */
+function confirmPage(action: string): string {
+  return `<!doctype html><meta charset="utf-8"><meta name="robots" content="noindex"><title>Unsubscribe</title>` +
+    `<body style="${PAGE_STYLE}">` +
+    `<h1>Turn off the weekly digest?</h1>` +
+    `<p>You'll stop receiving the weekly Zodiacs.org sky email for your saved charts.</p>` +
+    `<form method="POST" action="${attr(action)}">` +
+    `<button type="submit" style="font:inherit;padding:0.6rem 1.1rem;border-radius:999px;border:1px solid #f3f0e8;background:#f3f0e8;color:#0b0d12;cursor:pointer">Confirm unsubscribe</button>` +
+    `</form></body>`;
+}
+
+function donePage(): string {
+  return `<!doctype html><meta charset="utf-8"><meta name="robots" content="noindex"><title>Unsubscribed</title>` +
+    `<body style="${PAGE_STYLE}"><h1>You are unsubscribed.</h1>` +
+    `<p>Your weekly Zodiacs.org digest is off. You can turn it back on any time from your profile.</p></body>`;
+}
+
 export default async function handler(req: any, res: any): Promise<void> {
   if (req.method !== 'GET' && req.method !== 'POST') {
     res.setHeader('Allow', 'GET, POST');
@@ -38,6 +66,13 @@ export default async function handler(req: any, res: any): Promise<void> {
     return;
   }
 
+  // GET never mutates — render a confirm page whose button POSTs back.
+  if (req.method === 'GET') {
+    const action = `/api/unsubscribe?u=${encodeURIComponent(userId)}&sig=${encodeURIComponent(signature)}`;
+    html(res, 200, confirmPage(action));
+    return;
+  }
+
   const supabase = createClient(url, serviceKey, {
     auth: { autoRefreshToken: false, persistSession: false },
   });
@@ -51,10 +86,5 @@ export default async function handler(req: any, res: any): Promise<void> {
     return;
   }
 
-  if (req.method === 'POST') {
-    text(res, 200, '');
-    return;
-  }
-
-  html(res, 200, '<!doctype html><meta charset="utf-8"><title>Unsubscribed</title><body style="font-family:system-ui,sans-serif;padding:2rem;background:#0b0d12;color:#f3f0e8"><h1>You are unsubscribed.</h1><p>Your weekly Zodiacs.org digest is off.</p></body>');
+  html(res, 200, donePage());
 }

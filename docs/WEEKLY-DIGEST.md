@@ -11,7 +11,13 @@ charts, and sends one plain text-first email through Resend.
   users: one weekly email for saved charts.
 - The preference is stored on `public.profiles.digest_opt_in`.
 - Every email includes a signed one-click unsubscribe URL at
-  `/api/unsubscribe`, and the endpoint flips `digest_opt_in` back to `false`.
+  `/api/unsubscribe`. The RFC 8058 one-click header (`List-Unsubscribe-Post`)
+  POSTs to it and unsubscribes immediately; opening the in-body link in a
+  browser (a GET) shows a confirm-button page that POSTs, so mail scanners
+  that prefetch links cannot unsubscribe anyone by accident.
+- The email body is English-only for now. The profile carries no locale, so a
+  reader who opted in from the Spanish `/profile/` still receives the English
+  digest — consistent with the site's current Spanish-copy deferral.
 
 ## Required setup
 
@@ -35,6 +41,10 @@ GitHub repository settings:
 - Secret: `SUPABASE_SERVICE_ROLE_KEY`
 - Secret: `DIGEST_UNSUBSCRIBE_SECRET`
 - Variable: `PUBLIC_SUPABASE_URL`
+- Variable: `DIGEST_ENABLED` — the scheduled Monday send is skipped unless this
+  is `true`. Leave it unset until a manual dry-run and a live unsubscribe-link
+  check pass; manual `workflow_dispatch` runs ignore it and honor their own
+  `dry_run` input.
 - Optional variable: `DIGEST_FROM_EMAIL`
 - Optional variable: `DIGEST_BASE_URL`
 

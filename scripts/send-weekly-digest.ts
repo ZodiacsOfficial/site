@@ -10,6 +10,9 @@ const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', '
 const DIGEST_ORB = 3;
 const DEFAULT_LIMIT = 200;
 const DEFAULT_CHARTS_PER_USER = 5;
+const SEND_INTERVAL_MS = 500;
+
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 const TRANSIT_BODIES = new Set(['Sun', 'Mercury', 'Venus', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto']);
 
 interface CliOptions {
@@ -371,6 +374,7 @@ async function run(): Promise<void> {
   console.log(`weekly-digest: ${recipients.length} recipient(s), week ${rangeLabel(weekStart)}, dryRun=${options.dryRun}`);
 
   let sent = 0;
+  let failed = 0;
   for (const recipient of recipients) {
     const rendered = renderDigest(recipient, weekStart, secret, maxCharts);
     const to = options.to ?? recipient.email;
@@ -380,12 +384,20 @@ async function run(): Promise<void> {
       continue;
     }
 
-    await sendEmail(resendKey!, to, rendered.subject, rendered.text, rendered.unsubscribe);
-    sent += 1;
-    console.log(`weekly-digest: sent ${sent}/${recipients.length} to ${maskEmail(to)}`);
+    // One bad address or a Resend 429 must not sink the rest of the batch.
+    try {
+      await sendEmail(resendKey!, to, rendered.subject, rendered.text, rendered.unsubscribe);
+      sent += 1;
+      console.log(`weekly-digest: sent ${sent}/${recipients.length} to ${maskEmail(to)}`);
+    } catch (error) {
+      failed += 1;
+      console.error(`weekly-digest: failed for ${maskEmail(to)}: ${error instanceof Error ? error.message : error}`);
+    }
+    await sleep(SEND_INTERVAL_MS); // gentle pace for Resend's rate limit
   }
 
-  console.log(`weekly-digest: done, sent=${sent}, dryRun=${options.dryRun}`);
+  console.log(`weekly-digest: done, sent=${sent}, failed=${failed}, dryRun=${options.dryRun}`);
+  if (failed > 0) throw new Error(`weekly-digest: ${failed} of ${recipients.length} send(s) failed`);
 }
 
 run().catch((error) => {
