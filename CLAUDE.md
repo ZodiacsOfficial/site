@@ -52,6 +52,8 @@ The CONTENT boundary survives the visual merge:
   yearly with sky.json)
 - `src/data/eclipses.json` ← `node scripts/build-eclipses.mjs` (refresh
   yearly with sky.json)
+- `src/data/birthdays.json` ← `node scripts/build-birthdays.mjs` (the
+  `now` receipt year — refresh yearly with sky.json)
 - `src/data/transits-YYYY-MM.json` ← `node scripts/build-transits.mjs`
   (monthly cron: transits-monthly.yml)
 - `public/assets/og/v2/` ← `node --experimental-strip-types

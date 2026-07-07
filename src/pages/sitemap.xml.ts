@@ -17,6 +17,7 @@ export const GET: APIRoute = async () => {
   const pairs = await getCollection('pairs', ({ data }) => !data.draft);
   const learn = await getCollection('learn', ({ data }) => !data.draft);
   const horoscopes = await getCollection('horoscopes', ({ data }) => !data.draft);
+  const birthdays = await getCollection('birthdays', ({ data }) => !data.draft);
   const latestMonth = horoscopes.map((h) => h.data.month).sort().at(-1);
 
   const urls: { loc: string; priority: number; lastmod?: string }[] = [
@@ -41,6 +42,7 @@ export const GET: APIRoute = async () => {
     { loc: '/learn/houses/', priority: 0.7 },
     { loc: '/learn/aspects/', priority: 0.7 },
     { loc: '/learn/placements/', priority: 0.7 },
+    { loc: '/birthday/', priority: 0.7 },
     { loc: '/widgets/', priority: 0.6 },
     { loc: '/methodology/', priority: 0.6 },
     ...guides.map((g) => ({
@@ -75,6 +77,11 @@ export const GET: APIRoute = async () => {
             priority: 0.65,
             lastmod: l.data.updated.toISOString().slice(0, 10),
           }]),
+    ...birthdays.map((b) => ({
+      loc: `/birthday/${b.id}/`,
+      priority: 0.65,
+      lastmod: b.data.updated.toISOString().slice(0, 10),
+    })),
     ...LEGACY_URLS.map((u) => ({ loc: u.path, priority: u.priority })),
   ];
 
