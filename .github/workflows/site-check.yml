@@ -54,6 +54,9 @@ jobs:
       - name: Engine accuracy vectors
         run: npm test
 
+      - name: Weekly digest smoke
+        run: npm run digest:weekly -- --dry-run --fixture --week-start 2026-07-13 --limit 1
+
       - name: Link & artifact integrity over dist
         run: node scripts/check-dist.mjs
 
