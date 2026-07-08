@@ -11,6 +11,10 @@ import { formatDate } from './i18n/dates';
 export interface TransitEvent {
   at: string;
   label: string;
+  /** The event's primary body, for a leading glyph (locale-independent). */
+  body: string;
+  /** The relevant sign's disc hue, tinting that glyph. */
+  hue: string;
 }
 
 interface TransitFile {
@@ -52,22 +56,30 @@ export function eventList(month: string, locale: Locale = 'en'): TransitEvent[] 
       label: locale === 'es'
         ? `${e.planet} entra en ${sn(e.sign, locale)}${e.retrograde ? ', retrógrado' : ''}`
         : `${e.planet} enters ${sn(e.sign)}${e.retrograde ? ', retrograde' : ''}`,
+      body: e.planet,
+      hue: signBySlug(e.sign).hue,
     })),
     ...t.lunations.map((e) => ({
       at: e.at,
       label: locale === 'es'
         ? `${e.type === 'new' ? 'Luna nueva' : 'Luna llena'} a ${Math.round(e.degree)}° ${sn(e.sign, locale)}`
         : `${e.type === 'new' ? 'New moon' : 'Full moon'} at ${Math.round(e.degree)}° ${sn(e.sign)}`,
+      body: 'Moon',
+      hue: signBySlug(e.sign).hue,
     })),
     ...t.stations.map((e) => ({
       at: e.at,
       label: locale === 'es'
         ? `${e.planet} estaciona ${e.type} a ${Math.round(e.degree)}° ${sn(e.sign, locale)}`
         : `${e.planet} stations ${e.type} at ${Math.round(e.degree)}° ${sn(e.sign)}`,
+      body: e.planet,
+      hue: signBySlug(e.sign).hue,
     })),
     ...t.aspects.map((e) => ({
       at: e.at,
       label: `${e.a} ${e.type} ${e.b} (${sn(e.aSign, locale)}–${sn(e.bSign, locale)})`,
+      body: e.a,
+      hue: signBySlug(e.aSign).hue,
     })),
   ];
   return events.sort((a, b) => a.at.localeCompare(b.at));

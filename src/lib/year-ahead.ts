@@ -17,6 +17,8 @@ export interface YearAheadEvent {
   line: string;
   receipt: string;
   kind: 'solar-return' | 'aspect' | 'ingress' | 'eclipse' | 'saturn-return';
+  /** The event's primary body, for the leading receipt glyph. */
+  body: string;
 }
 
 /** Cached year scan, one per chart id. */
@@ -77,6 +79,7 @@ export function solarReturnEvents(scan: YearScanResult): YearAheadEvent[] {
     return {
       at,
       kind: 'solar-return' as const,
+      body: 'Sun',
       line: 'Your solar return — the Sun back on its natal degree, the moment your birthday actually lands. The year resets here.',
       receipt: `solar return · ${monthDay(at)}, ${hh}:${mm} UTC`,
     };
@@ -88,6 +91,7 @@ export function aspectEvents(scan: YearScanResult): YearAheadEvent[] {
     at: e.from,
     ...(e.to !== e.from ? { endAt: e.to } : {}),
     kind: 'aspect' as const,
+    body: e.body,
     line: aspectLine(e),
     receipt: aspectReceipt(e),
   }));
@@ -131,6 +135,7 @@ export function ingressEvents(
     out.push({
       at: w.from,
       kind: 'ingress',
+      body: w.planet,
       line: `${w.planet} enters ${cap(w.sign)} on ${monthDay(w.from)} — ${tone}.${yours}`,
       receipt: `${w.planet} → ${cap(w.sign)} · ${monthDay(w.from)}`,
     });
@@ -150,6 +155,7 @@ export function eclipseEvents(
     .map((h) => ({
       at: h.eclipse.peak,
       kind: 'eclipse' as const,
+      body: h.eclipse.type === 'solar' ? 'Sun' : 'Moon',
       line: eclipseHitLine(h),
       receipt: `${h.eclipse.type} eclipse · ${monthDay(h.eclipse.peak)} · orb ${h.orb.toFixed(1)}°`,
     }));
@@ -172,6 +178,7 @@ export function saturnSeasonEvents(
         at: s.from,
         ...(oneDay ? {} : { endAt: s.to }),
         kind: 'saturn-return' as const,
+        body: 'Saturn',
         line: oneDay
           ? `Your ${label} Saturn return lands around ${monthDay(s.from)} — the long audit of what you have built, in one clean pass.`
           : `Your ${label} Saturn return runs ${monthDay(s.from)} – ${monthDay(s.to)} — the long audit of what you have built, arriving in passes.`,

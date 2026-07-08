@@ -2,6 +2,7 @@
 import { getCollection, render } from 'astro:content';
 import Base from '../../../layouts/Base.astro';
 import SignIcon from '../../../components/SignIcon.astro';
+import PlanetGlyph from '../../../components/PlanetGlyph';
 import DailyForYou from '../../../islands/DailyForYou';
 import { SIGNS, SIGN_SLUGS, signBySlug } from '../../../lib/signs';
 import { dayLabel, eventList, monthLabel } from '../../../lib/horoscopes';
@@ -87,7 +88,10 @@ const jsonLd = [
         {today.lines.map((l) => (
           <li>
             <p>{l.text}</p>
-            <span class="mono horo__today-receipt">{l.receipt}</span>
+            <span class="mono horo__today-receipt">
+              {l.body && <PlanetGlyph body={l.body} hue={l.hue} size={13} class="rcpt-glyph" />}
+              {l.receipt}
+            </span>
           </li>
         ))}
       </ul>
@@ -113,7 +117,9 @@ const jsonLd = [
         {events.map((e) => (
           <li>
             <span class="horo__event-date mono">{dayLabel(e.at)}</span>
-            <span class="horo__event-label">{e.label}</span>
+            <span class="horo__event-label">
+              <PlanetGlyph body={e.body} hue={e.hue} size={14} class="rcpt-glyph" />{e.label}
+            </span>
           </li>
         ))}
       </ul>

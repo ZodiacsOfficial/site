@@ -1,6 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import TransitTracker from '../../islands/TransitTracker.tsx';
+import PlanetGlyph from '../../components/PlanetGlyph';
 import { dayLabel, eventList, latestTransitMonth, monthLabel } from '../../lib/horoscopes';
 import '../../styles/calculator.css';
 
@@ -84,7 +85,9 @@ const jsonLd = [
         {events.map((e) => (
           <li>
             <span class="trn-events__date mono">{dayLabel(e.at)}</span>
-            <span class="trn-events__label">{e.label}</span>
+            <span class="trn-events__label">
+              <PlanetGlyph body={e.body} hue={e.hue} size={14} class="rcpt-glyph" />{e.label}
+            </span>
           </li>
         ))}
       </ul>

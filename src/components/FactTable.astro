@@ -30,9 +30,12 @@ const rows: [string, string][] = [
 </dl>
 
 <style>
+  /* The panel carries the sign's own hue: a firm accent rule at the head and
+     a faint tint threaded through each row's hairline — the pastel disc
+     language, no decorative dots. */
   .facts {
     margin: 0;
-    border-top: 1px solid var(--hair-2);
+    border-top: 2px solid color-mix(in oklab, var(--sign, var(--accent)) 52%, var(--hair-2));
   }
   .facts__row {
     display: flex;
@@ -40,15 +43,27 @@ const rows: [string, string][] = [
     align-items: baseline;
     gap: 18px;
     padding: 11px 0;
-    border-bottom: 1px solid var(--hair-1);
+    border-bottom: 1px solid color-mix(in oklab, var(--sign, var(--accent)) 10%, var(--hair-1));
   }
   dt {
     flex: 0 0 auto;
+    display: inline-flex;
+    align-items: baseline;
+    gap: 8px;
     font-family: var(--font-mono);
     font-size: 10px;
     letter-spacing: 0.2em;
     text-transform: uppercase;
     color: var(--faint);
+  }
+  /* A short hue tick indexing each key — reads as structure, not a status dot. */
+  dt::before {
+    content: '';
+    align-self: center;
+    width: 6px;
+    height: 2px;
+    border-radius: 1px;
+    background: color-mix(in oklab, var(--sign, var(--accent)) 60%, transparent);
   }
   dd {
     margin: 0;

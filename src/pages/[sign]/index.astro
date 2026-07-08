@@ -102,30 +102,32 @@ const jsonLd = [
 
         <section class="guide-compat reveal">
           <h2>{sign.name} compatibility, at a glance</h2>
-          <div class="guide-compat__row">
-            <span class="mono--label">Easeful with</span>
-            <div class="guide-compat__chips">
-              {guide.data.compat.easeful.map((slug) => {
-                const s = signBySlug(slug);
-                return (
-                  <a class="chip" href={`/compatibility/${pairSlug(sign.slug, s.slug)}/`} style={`--sign:${s.hue}`}>
-                    <SignIcon sign={s.slug} size={18} class="chip__icon" /> {sign.name} &amp; {s.name}
-                  </a>
-                );
-              })}
+          <div class="guide-compat__rows">
+            <div class="guide-compat__row">
+              <span class="mono--label">Easeful with</span>
+              <div class="guide-compat__chips">
+                {guide.data.compat.easeful.map((slug) => {
+                  const s = signBySlug(slug);
+                  return (
+                    <a class="chip" href={`/compatibility/${pairSlug(sign.slug, s.slug)}/`} style={`--sign:${s.hue}`}>
+                      <SignIcon sign={s.slug} size={18} class="chip__icon" /> {sign.name} &amp; {s.name}
+                    </a>
+                  );
+                })}
+              </div>
             </div>
-          </div>
-          <div class="guide-compat__row">
-            <span class="mono--label">Charged with</span>
-            <div class="guide-compat__chips">
-              {guide.data.compat.charged.map((slug) => {
-                const s = signBySlug(slug);
-                return (
-                  <a class="chip" href={`/compatibility/${pairSlug(sign.slug, s.slug)}/`} style={`--sign:${s.hue}`}>
-                    <SignIcon sign={s.slug} size={18} class="chip__icon" /> {sign.name} &amp; {s.name}
-                  </a>
-                );
-              })}
+            <div class="guide-compat__row">
+              <span class="mono--label">Charged with</span>
+              <div class="guide-compat__chips">
+                {guide.data.compat.charged.map((slug) => {
+                  const s = signBySlug(slug);
+                  return (
+                    <a class="chip" href={`/compatibility/${pairSlug(sign.slug, s.slug)}/`} style={`--sign:${s.hue}`}>
+                      <SignIcon sign={s.slug} size={18} class="chip__icon" /> {sign.name} &amp; {s.name}
+                    </a>
+                  );
+                })}
+              </div>
             </div>
           </div>
           <p class="guide-compat__note">
@@ -262,13 +264,17 @@ const jsonLd = [
   }
   .guide-heritage :global(.timeline) { margin-top: 22px; }
 
-  .guide-compat__row {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 10px 16px;
-    padding: 10px 0;
+  /* Label → chips as an aligned two-column set: both labels share one column
+     so the two rows line up, chips flow in the second column (the wb__three
+     treatment). display:contents lets each row's parts join the shared grid. */
+  .guide-compat__rows {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    align-items: baseline;
+    gap: 12px 16px;
+    padding: 6px 0;
   }
+  .guide-compat__row { display: contents; }
   .guide-compat__chips { display: flex; flex-wrap: wrap; gap: 8px; }
   .guide-compat__note { margin: 8px 0 0; font-size: var(--text-sm); color: var(--faint); }
 

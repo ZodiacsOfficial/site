@@ -252,6 +252,10 @@ input, select { font: inherit; }
 .pglyph svg, .aglyph svg { display: block; }
 /* A glyph sitting inline within a text/mono line — nudge it onto the baseline. */
 .pglyph.pg-inline, .aglyph.pg-inline { vertical-align: -0.18em; }
+/* A crafted glyph leading a computed-receipt line — tinted to the body's own
+   sign (the ticker treatment), falling back to muted ink. Nudged onto the
+   mono baseline; a hair of trailing space before the data. */
+.rcpt-glyph { color: var(--sign, var(--muted)); vertical-align: -0.16em; margin-right: 4px; }
 .pglyph--disc,
 .house-badge {
   display: inline-grid;

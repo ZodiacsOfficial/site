@@ -1,6 +1,7 @@
 ---
 import Base from '../../../layouts/Base.astro';
 import TransitTracker from '../../../islands/TransitTracker';
+import PlanetGlyph from '../../../components/PlanetGlyph';
 import { dayLabel, eventList, latestTransitMonth, monthLabel } from '../../../lib/horoscopes';
 import '../../../styles/calculator.css';
 
@@ -32,7 +33,7 @@ const label = month ? monthLabel(month, 'es') : null;
       </div>
       <ul class="trn-events reveal">
         {events.map((event) => (
-          <li><span class="trn-events__date mono">{dayLabel(event.at, 'es')}</span><span class="trn-events__label">{event.label}</span></li>
+          <li><span class="trn-events__date mono">{dayLabel(event.at, 'es')}</span><span class="trn-events__label"><PlanetGlyph body={event.body} hue={event.hue} size={14} class="rcpt-glyph" />{event.label}</span></li>
         ))}
       </ul>
     </section>
