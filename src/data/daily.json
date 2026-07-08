@@ -1,60 +1,60 @@
 {
-  "date": "2026-07-07",
+  "date": "2026-07-08",
   "bodies": [
     {
       "body": "Moon",
-      "lon": 11.51,
+      "lon": 25.09,
       "sign": "aries",
-      "degree": 11.5,
+      "degree": 25.1,
       "retrograde": false
     },
     {
       "body": "Sun",
-      "lon": 105.4,
+      "lon": 106.35,
       "sign": "cancer",
-      "degree": 15.4,
+      "degree": 16.4,
       "retrograde": false
     },
     {
       "body": "Mercury",
-      "lon": 114.08,
+      "lon": 113.54,
       "sign": "cancer",
-      "degree": 24.1,
+      "degree": 23.5,
       "retrograde": true
     },
     {
       "body": "Venus",
-      "lon": 147.52,
+      "lon": 148.63,
       "sign": "leo",
-      "degree": 27.5,
+      "degree": 28.6,
       "retrograde": false
     },
     {
       "body": "Mars",
-      "lon": 66.16,
+      "lon": 66.86,
       "sign": "gemini",
-      "degree": 6.2,
+      "degree": 6.9,
       "retrograde": false
     },
     {
       "body": "Jupiter",
-      "lon": 121.56,
+      "lon": 121.78,
       "sign": "leo",
-      "degree": 1.6,
+      "degree": 1.8,
       "retrograde": false
     },
     {
       "body": "Saturn",
-      "lon": 14.43,
+      "lon": 14.46,
       "sign": "aries",
-      "degree": 14.4,
+      "degree": 14.5,
       "retrograde": false
     },
     {
       "body": "Uranus",
-      "lon": 64.02,
+      "lon": 64.07,
       "sign": "gemini",
-      "degree": 4,
+      "degree": 4.1,
       "retrograde": false
     },
     {
@@ -66,7 +66,7 @@
     },
     {
       "body": "Pluto",
-      "lon": 304.74,
+      "lon": 304.72,
       "sign": "aquarius",
       "degree": 4.7,
       "retrograde": true
@@ -74,16 +74,7 @@
   ],
   "moon": {
     "phase": "Last Quarter",
-    "illumination": 0.535
+    "illumination": 0.426
   },
-  "events": [
-    {
-      "kind": "station",
-      "planet": "Neptune",
-      "at": "2026-07-07T11:21:04.854Z",
-      "type": "retrograde",
-      "sign": "aries",
-      "degree": 4.4
-    }
-  ]
+  "events": []
 }
