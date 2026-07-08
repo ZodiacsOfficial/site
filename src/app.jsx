@@ -1102,17 +1102,13 @@
     // horizontal overflow, and this act must run edge to edge.
     function CineHero() {
       const videoRef = useRef(null);
-      const media = useMemo(() => (
-        window.matchMedia('(orientation: portrait)').matches
-          ? {
-              src: '/assets/art/registry-loop-portrait.mp4',
-              poster: '/assets/art/registry-loop-poster-portrait.jpg'
-            }
-          : {
-              src: '/assets/art/registry-loop.mp4',
-              poster: '/assets/art/registry-loop-poster.jpg'
-            }
-      ), []);
+      // Shares the main site's hero footage so the wing opens on the same
+      // image as zodiacs.org — one master serves every orientation (there is
+      // no portrait crop of it, and the frame is composed to hold centre).
+      const media = useMemo(() => ({
+        src: '/assets/hero/zodiacs-hero.mp4',
+        poster: '/assets/hero/zodiacs-hero-poster.avif'
+      }), []);
       useEffect(() => {
         const video = videoRef.current;
         if (!video) return undefined;

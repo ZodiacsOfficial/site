@@ -291,10 +291,10 @@
       position: absolute; inset: 0;
       background:
         linear-gradient(180deg,
-          rgba(10,7,5,0.50) 0%,
-          rgba(10,7,5,0.04) 26%,
-          rgba(10,7,5,0.04) 52%,
-          rgba(10,7,5,0.86) 100%);
+          rgba(6,7,9,0.50) 0%,
+          rgba(6,7,9,0.04) 26%,
+          rgba(6,7,9,0.04) 52%,
+          rgba(6,7,9,0.88) 100%);
       pointer-events: none;
     }
     .cine__content {
@@ -417,17 +417,41 @@
       gap: 18px;
       height: 48px;
       padding: 0 6px 0 18px;
-      background: rgba(18,13,9, 0.72);
+      background: rgba(10, 12, 17, 0.72);
       backdrop-filter: saturate(160%) blur(18px);
       -webkit-backdrop-filter: saturate(160%) blur(18px);
       border: 1px solid var(--hair-2);
       box-shadow:
-        inset 0 1px 0 rgba(233,199,102,0.10),
+        inset 0 1px 0 rgba(238,241,247,0.10),
         inset 0 -1px 0 rgba(0,0,0,0.4),
         0 8px 28px -12px rgba(0,0,0,0.6),
         0 0 0 1px rgba(0,0,0,0.35);
       transition: border-color 420ms var(--ease), background 420ms var(--ease);
       min-width: min(360px, 92vw);
+    }
+
+    /* ── Liquid glass — the registry nav pill refracts the footage/app
+       behind it on Chromium, exactly as the main site's nav does; every
+       other browser keeps the blur floor above. ── */
+    .glass-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
+    @supports (backdrop-filter: url('#zdx-lens-nav')) {
+      .hdr {
+        background: rgba(10, 12, 17, 0.56);
+        backdrop-filter: url(#zdx-lens-nav);
+        -webkit-backdrop-filter: url(#zdx-lens-nav);
+        box-shadow:
+          inset 0 1px 0 rgba(238,241,247,0.12),
+          inset 0 -1px 0 rgba(238,241,247,0.04),
+          0 12px 32px -14px rgba(0,0,0,0.7),
+          0 0 0 1px rgba(0,0,0,0.35);
+      }
+      @media (prefers-reduced-transparency: reduce) {
+        .hdr {
+          background: rgba(10, 12, 17, 0.92);
+          backdrop-filter: none;
+          -webkit-backdrop-filter: none;
+        }
+      }
     }
     .hdr__mark {
       font-family: var(--display);
@@ -3370,6 +3394,18 @@
       </footer>
     </main>
   </div>
+
+  <!-- Lens filter for the glass nav pill: capsule displacement map rides
+       inline (nothing fetched); mirrors the main site chrome. Browsers
+       without url() backdrop filters never leave the blur floor above. -->
+  <svg class="glass-defs" aria-hidden="true" focusable="false">
+    <filter id="zdx-lens-nav" color-interpolation-filters="sRGB" primitiveUnits="objectBoundingBox" x="-0.1" y="-0.2" width="1.2" height="1.4">
+      <feImage href="data:image/png;base64,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" x="0" y="0" width="1" height="1" preserveAspectRatio="none" result="map" />
+      <feDisplacementMap in="SourceGraphic" in2="map" scale="0.35" xChannelSelector="R" yChannelSelector="G" result="disp" />
+      <feGaussianBlur in="disp" stdDeviation="0.005 0.038" result="soft" />
+      <feColorMatrix in="soft" type="saturate" values="1.35" />
+    </filter>
+  </svg>
 
   <!-- React stays on the CDN, pinned with Subresource Integrity. The app
        itself is precompiled from src/app.jsx to assets/app.js by
