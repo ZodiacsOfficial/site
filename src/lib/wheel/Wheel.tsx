@@ -5,6 +5,7 @@
  * angles it renders 0° Aries on the left with no house spokes.
  */
 import { SIGNS } from '../signs';
+import { PLANET_GLYPH } from '../glyphs/paths';
 
 export interface WheelBody {
   body: string;
@@ -23,11 +24,6 @@ export interface WheelProps {
   animate?: boolean;
 }
 
-const GLYPHS: Record<string, string> = {
-  Sun: '☉', Moon: '☽', Mercury: '☿', Venus: '♀', Mars: '♂',
-  Jupiter: '♃', Saturn: '♄', Uranus: '♅', Neptune: '♆', Pluto: '♇',
-  'North Node': '☊', 'South Node': '☋',
-};
 
 const ASPECT_COLOR: Record<string, string> = {
   conjunction: 'rgba(238,241,247,0.5)',
@@ -201,9 +197,16 @@ export default function Wheel({
           <g key={b.body} class="wheel__body">
             <line x1={tick1.x} y1={tick1.y} x2={tick2.x} y2={tick2.y} stroke={sign.hue} stroke-width="1.4" />
             <circle cx={p.x} cy={p.y} r={size * 0.033} fill="rgba(15,18,26,0.92)" stroke={sign.hue} stroke-opacity="0.55" stroke-width="1" />
-            <text x={p.x} y={p.y + size * 0.002} text-anchor="middle" dominant-baseline="central" font-size={size * 0.036} fill="#EEF1F7">
-              {GLYPHS[b.body] ?? '•'}
-            </text>
+            <g
+              transform={`translate(${p.x} ${p.y}) scale(${(size * 0.05) / 24}) translate(-12 -12)`}
+              fill="none"
+              stroke="#EEF1F7"
+              stroke-width={1.4 * 24 / (size * 0.05)}
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              style="color:#EEF1F7"
+              dangerouslySetInnerHTML={{ __html: PLANET_GLYPH[b.body] ?? '' }}
+            />
             {b.retrograde && (
               <text x={p.x + size * 0.032} y={p.y + size * 0.028} text-anchor="middle" font-size={size * 0.017} fill="rgba(224,176,128,0.9)" font-family="var(--font-mono)">Rx</text>
             )}

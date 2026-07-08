@@ -1,6 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import SignIcon from '../../components/SignIcon.astro';
+import ToolGlyph from '../../components/ToolGlyph.astro';
 import { SIGNS, ELEMENT_LABEL, MODALITY_LABEL } from '../../lib/signs';
 
 const jsonLd = [
@@ -45,16 +46,16 @@ const jsonLd = [
     <div class="bigthree reveal">
       <h2>The big three, in sixty seconds</h2>
       <div class="bigthree__grid">
-        <div class="bigthree__item">
-          <span class="mono--label">Sun ☉</span>
+        <div class="bigthree__item" style="--sign:var(--sign-leo)">
+          <span class="bigthree__head"><ToolGlyph kind="sun" /><span class="mono--label">Sun</span></span>
           <p><strong>Who you are.</strong> Your core identity and engine — the sign everyone already asks about. Set by your birth <em>date</em>.</p>
         </div>
-        <div class="bigthree__item">
-          <span class="mono--label">Moon ☽</span>
+        <div class="bigthree__item" style="--sign:var(--sign-cancer)">
+          <span class="bigthree__head"><ToolGlyph kind="moon" /><span class="mono--label">Moon</span></span>
           <p><strong>How you feel.</strong> Your emotional weather, comforts, and needs. Changes sign every ~2.5 days — <a href="/moon-sign/">find yours</a>.</p>
         </div>
-        <div class="bigthree__item">
-          <span class="mono--label">Rising ASC</span>
+        <div class="bigthree__item" style="--sign:var(--sign-libra)">
+          <span class="bigthree__head"><ToolGlyph kind="rising" /><span class="mono--label">Rising</span></span>
           <p><strong>How people first read you.</strong> The sign on the eastern horizon at your birth — needs your birth time. <a href="/rising-sign/">Calculate it</a>.</p>
         </div>
       </div>
@@ -157,7 +158,10 @@ const jsonLd = [
   .bigthree h2 { margin: 0 0 20px; font-size: var(--text-xl); font-weight: 620; letter-spacing: -0.02em; }
   .bigthree__grid { display: grid; gap: 18px; grid-template-columns: 1fr; margin-bottom: 24px; }
   @media (min-width: 760px) { .bigthree__grid { grid-template-columns: repeat(3, 1fr); } }
-  .bigthree__item p { margin: 8px 0 0; font-size: var(--text-sm); color: var(--text-2); line-height: 1.6; }
+  .bigthree__head { display: inline-flex; align-items: center; gap: 11px; }
+  .bigthree__head .mono--label { color: var(--text-2); }
+  .bigthree__head :global(.tool-glyph) { width: 40px; height: 40px; }
+  .bigthree__item p { margin: 10px 0 0; font-size: var(--text-sm); color: var(--text-2); line-height: 1.6; }
   .bigthree__item strong { color: var(--text); }
   .bigthree__item a { color: var(--text); }
 

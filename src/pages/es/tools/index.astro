@@ -1,15 +1,16 @@
 ---
 import Base from '../../../layouts/Base.astro';
+import ToolGlyph from '../../../components/ToolGlyph.astro';
 import { localizePath } from '../../../lib/i18n';
 
 const tools = [
-  { href: '/birth-chart/', title: 'Calculadora de carta natal', promise: 'Ve tu Sol, Luna, ascendente, planetas, casas y lo que significan.', hue: 'var(--sign-cancer)', glyph: '☉' },
-  { href: '/compatibility/', title: 'Compatibilidad', promise: 'Compara dos cartas y mira dónde conectan, chocan y crecen.', hue: 'var(--sign-libra)', glyph: '☌' },
-  { href: '/moon-sign/', title: 'Calculadora de signo lunar', promise: 'Cómo sientes y qué te ayuda a volver a ti.', hue: 'var(--sign-pisces)', glyph: '☽' },
-  { href: '/rising-sign/', title: 'Calculadora de ascendente', promise: 'Encuentra la energía que otros notan primero.', hue: 'var(--sign-gemini)', glyph: 'ASC' },
-  { href: '/moon-phase/', title: 'Fase lunar', promise: 'La Luna de hoy y la Luna de cualquier fecha importante.', hue: 'var(--sign-cancer)', glyph: '☾' },
-  { href: '/saturn-return/', title: 'Retorno de Saturno', promise: 'Cuándo llega el tuyo y qué suele pedir.', hue: 'var(--sign-capricorn)', glyph: '♄' },
-  { href: '/transits/', title: 'Tránsitos', promise: 'El cielo de hoy comparado con tu carta.', hue: 'var(--sign-aries)', glyph: '↻' },
+  { href: '/birth-chart/', title: 'Calculadora de carta natal', promise: 'Ve tu Sol, Luna, ascendente, planetas, casas y lo que significan.', hue: 'var(--sign-cancer)', kind: 'birth' as const },
+  { href: '/compatibility/', title: 'Compatibilidad', promise: 'Compara dos cartas y mira dónde conectan, chocan y crecen.', hue: 'var(--sign-libra)', kind: 'compat' as const },
+  { href: '/moon-sign/', title: 'Calculadora de signo lunar', promise: 'Cómo sientes y qué te ayuda a volver a ti.', hue: 'var(--sign-pisces)', kind: 'moon' as const },
+  { href: '/rising-sign/', title: 'Calculadora de ascendente', promise: 'Encuentra la energía que otros notan primero.', hue: 'var(--sign-gemini)', kind: 'rising' as const },
+  { href: '/moon-phase/', title: 'Fase lunar', promise: 'La Luna de hoy y la Luna de cualquier fecha importante.', hue: 'var(--sign-cancer)', kind: 'moonphase' as const },
+  { href: '/saturn-return/', title: 'Retorno de Saturno', promise: 'Cuándo llega el tuyo y qué suele pedir.', hue: 'var(--sign-capricorn)', kind: 'saturn' as const },
+  { href: '/transits/', title: 'Tránsitos', promise: 'El cielo de hoy comparado con tu carta.', hue: 'var(--sign-aries)', kind: 'transit' as const },
 ];
 ---
 <Base
@@ -30,7 +31,7 @@ const tools = [
       {tools.map((tool) => (
         <a class="shell tinted" href={localizePath('es', tool.href)} style={`--sign:${tool.hue}`}>
           <div class="core tinted tool-card">
-            <span class="tool-card__glyph mono">{tool.glyph}</span>
+            <ToolGlyph kind={tool.kind} />
             <h3>{tool.title}</h3>
             <p>{tool.promise}</p>
             <span class="tool-card__go">Abrir →</span>
@@ -54,7 +55,7 @@ const tools = [
   @media (min-width: 700px) { .tools-grid { grid-template-columns: repeat(2, 1fr); } }
   @media (min-width: 1000px) { .tools-grid { grid-template-columns: repeat(3, 1fr); } }
   .tool-card { display: flex; flex-direction: column; gap: 10px; padding: 26px 22px; min-height: 210px; }
-  .tool-card__glyph { font-size: 24px; color: var(--sign); letter-spacing: 0.06em; }
+  /* Tool-card icon disc lives in ToolGlyph.astro. */
   .tool-card h3 { margin: 4px 0 0; font-size: var(--text-lg); font-weight: 620; color: var(--text); }
   .tool-card p { margin: 0; font-size: var(--text-sm); color: var(--text-2); line-height: 1.6; }
   .tool-card__go { margin-top: auto; font-size: 13px; font-weight: 550; color: var(--text); }
