@@ -1,5 +1,6 @@
 /**
- * The proof strip: live sky facts, one quiet mono line.
+ * The proof strip: live sky facts, one quiet mono line — now with a small
+ * celestial glyph per fact so it reads as an almanac row, not flat text.
  * Sun/Moon from the lite math; retrogrades + next lunation from the
  * build-time sky data — the ephemeris never loads here.
  */
@@ -9,37 +10,91 @@ import { moonLongitude, sunLongitude } from '../lib/engine/lite';
 import sky from '../data/sky.json';
 import { normalizeLocale, t, type Locale } from '../lib/i18n';
 
+type IconKind = 'sun' | 'moon' | 'retro' | 'direct' | 'newMoon' | 'fullMoon';
+interface Item { kind: IconKind; text: string; hue?: string }
+
+/** Small line-art sky glyphs, drawn at ~13px. Stroke presentation is set in
+ * CSS (.skyticker__icon svg); the two filled glyphs flip to fill via style. */
+const FILLED = 'fill:currentColor;stroke:none';
+function TickerIcon({ kind }: { kind: IconKind }) {
+  switch (kind) {
+    case 'sun':
+      return (
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="12" cy="12" r="3.9" />
+          <path d="M12 2.2v2.1M12 19.7v2.1M4.3 4.3l1.5 1.5M18.2 18.2l1.5 1.5M2.2 12h2.1M19.7 12h2.1M4.3 19.7l1.5-1.5M18.2 5.8l1.5-1.5" />
+        </svg>
+      );
+    case 'moon':
+      return (
+        <svg viewBox="0 0 24 24" aria-hidden="true" style={FILLED}>
+          <path d="M20.5 14.3A8.6 8.6 0 1 1 9.7 3.5a6.7 6.7 0 0 0 10.8 10.8Z" />
+        </svg>
+      );
+    case 'retro': // apparent backward motion — a counter-clockwise turn
+      return (
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M3 12a9 9 0 1 0 2.6-6.3L3 8" />
+          <path d="M3 3v5h5" />
+        </svg>
+      );
+    case 'direct':
+      return (
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M21 12a9 9 0 1 1-2.6-6.3L21 8" />
+          <path d="M21 3v5h-5" />
+        </svg>
+      );
+    case 'newMoon':
+      return (
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="12" cy="12" r="8.2" />
+        </svg>
+      );
+    case 'fullMoon':
+      return (
+        <svg viewBox="0 0 24 24" aria-hidden="true" style={FILLED}>
+          <circle cx="12" cy="12" r="8.2" />
+        </svg>
+      );
+  }
+}
+
 export default function SkyTicker({ locale: rawLocale = 'en' }: { locale?: Locale }) {
   const locale = normalizeLocale(rawLocale);
-  const items = useMemo(() => {
+  const items = useMemo<Item[]>(() => {
     const now = new Date();
     const nowIso = now.toISOString();
-    const out: string[] = [];
+    const out: Item[] = [];
 
-    out.push(`${t(locale, 'sun')} ${formatLongitude(sunLongitude(now), locale)}`);
-    out.push(`${t(locale, 'moonIn')} ${signName(signForLongitude(moonLongitude(now)), locale)}`);
+    const sunLon = sunLongitude(now);
+    const moonSign = signForLongitude(moonLongitude(now));
+    out.push({ kind: 'sun', text: `${t(locale, 'sun')} ${formatLongitude(sunLon, locale)}`, hue: signForLongitude(sunLon).hue });
+    out.push({ kind: 'moon', text: `${t(locale, 'moonIn')} ${signName(moonSign, locale)}`, hue: moonSign.hue });
 
     const active = (sky.retrogrades as { planet: string; from: string; to: string | null }[])
       .filter((r) => r.from <= nowIso && (r.to === null || r.to > nowIso))
       .map((r) => r.planet);
     out.push(active.includes('Mercury')
-      ? (locale === 'es' ? 'Mercurio retrógrado' : 'Mercury retrograde')
-      : (locale === 'es' ? 'Mercurio directo' : 'Mercury direct'));
+      ? { kind: 'retro', text: locale === 'es' ? 'Mercurio retrógrado' : 'Mercury retrograde' }
+      : { kind: 'direct', text: locale === 'es' ? 'Mercurio directo' : 'Mercury direct' });
     for (const planet of active) {
-      if (planet !== 'Mercury') out.push(locale === 'es' ? `${planet} retrógrado` : `${planet} retrograde`);
+      if (planet !== 'Mercury') out.push({ kind: 'retro', text: locale === 'es' ? `${planet} retrógrado` : `${planet} retrograde` });
     }
 
     const nextMoon = (sky.moons as { type: string; at: string }[]).find((m) => m.at > nowIso);
     if (nextMoon) {
       const days = Math.round((new Date(nextMoon.at).getTime() - now.getTime()) / 86400_000);
-      const label = nextMoon.type === 'full'
+      const full = nextMoon.type === 'full';
+      const label = full
         ? (locale === 'es' ? 'Luna llena' : 'Full moon')
         : (locale === 'es' ? 'Luna nueva' : 'New moon');
-      out.push(days <= 0
+      const text = days <= 0
         ? (locale === 'es' ? `${label} esta noche` : `${label} tonight`)
         : days === 1
           ? (locale === 'es' ? `${label} mañana` : `${label} tomorrow`)
-          : (locale === 'es' ? `${label} en ${days} días` : `${label} in ${days} days`));
+          : (locale === 'es' ? `${label} en ${days} días` : `${label} in ${days} days`);
+      out.push({ kind: full ? 'fullMoon' : 'newMoon', text });
     }
 
     return out;
@@ -48,10 +103,12 @@ export default function SkyTicker({ locale: rawLocale = 'en' }: { locale?: Local
   return (
     <p class="skyticker mono" aria-label={locale === 'es' ? 'Condiciones actuales del cielo, calculadas en vivo' : 'Current sky conditions, computed live'}>
       <span class="skyticker__label">{t(locale, 'rightNow')}</span>
-      {items.map((item, i) => (
-        <span key={item}>
-          {i > 0 && <span class="skyticker__sep" aria-hidden="true">·</span>}
-          <span class="skyticker__item">{item}</span>
+      {items.map((item) => (
+        <span class="skyticker__item" key={item.text}>
+          <span class="skyticker__icon" style={item.hue ? `color:${item.hue}` : undefined}>
+            <TickerIcon kind={item.kind} />
+          </span>
+          <span>{item.text}</span>
         </span>
       ))}
     </p>
