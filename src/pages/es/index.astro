@@ -6,6 +6,7 @@ import TodayBySign from '../../islands/TodayBySign';
 import WelcomeBack from '../../islands/WelcomeBack';
 import { SIGNS, signDates, signName } from '../../lib/signs';
 import { localizePath } from '../../lib/i18n';
+import glassMaps from '../../data/glass-maps.json';
 import '../../styles/today.css';
 
 const tools = [
@@ -86,6 +87,24 @@ const jsonLd = [
         }
       })();
     </script>
+
+    <!-- Lens filters for the glass chrome: capsule displacement maps ride
+         inline so nothing is fetched. Browsers without url() backdrop
+         filters never leave the blur floor. -->
+    <svg class="glass-defs" aria-hidden="true" focusable="false">
+      <filter id="zdx-lens-cta" color-interpolation-filters="sRGB" primitiveUnits="objectBoundingBox" x="-0.1" y="-0.2" width="1.2" height="1.4">
+        <feImage href={glassMaps.cta} x="0" y="0" width="1" height="1" preserveAspectRatio="none" result="map" />
+        <feDisplacementMap in="SourceGraphic" in2="map" scale="0.5" xChannelSelector="R" yChannelSelector="G" result="disp" />
+        <feGaussianBlur in="disp" stdDeviation="0.009 0.038" result="soft" />
+        <feColorMatrix in="soft" type="saturate" values="1.4" />
+      </filter>
+      <filter id="zdx-lens-nav" color-interpolation-filters="sRGB" primitiveUnits="objectBoundingBox" x="-0.1" y="-0.2" width="1.2" height="1.4">
+        <feImage href={glassMaps.nav} x="0" y="0" width="1" height="1" preserveAspectRatio="none" result="map" />
+        <feDisplacementMap in="SourceGraphic" in2="map" scale="0.35" xChannelSelector="R" yChannelSelector="G" result="disp" />
+        <feGaussianBlur in="disp" stdDeviation="0.005 0.038" result="soft" />
+        <feColorMatrix in="soft" type="saturate" values="1.35" />
+      </filter>
+    </svg>
   </section>
 
   <WelcomeBack client:load locale="es" />
@@ -145,6 +164,9 @@ const jsonLd = [
 
 <style>
   .hero-es {
+    /* Rise behind the fixed nav so the glass refracts the footage on
+       first paint (matches the English homepage). */
+    margin-top: calc(-1 * var(--nav-space, 96px));
     width: min(100% - 32px, 1440px);
     padding-block: 0 clamp(14px, 2vw, 22px);
   }
@@ -152,7 +174,7 @@ const jsonLd = [
     position: relative;
     overflow: hidden;
     border-radius: clamp(18px, 2.6vw, 30px);
-    min-height: clamp(560px, calc(100svh - 128px), 860px);
+    min-height: clamp(560px, calc(100svh - 40px), 900px);
     background: var(--void-1);
     box-shadow: inset 0 0 0 1px rgba(198, 204, 218, 0.10), 0 30px 80px -40px rgba(0, 0, 0, 0.8);
     isolation: isolate;
@@ -180,7 +202,7 @@ const jsonLd = [
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    padding: clamp(88px, 12svh, 124px) clamp(22px, 4vw, 56px) clamp(28px, 5vw, 64px);
+    padding: calc(clamp(100px, 13svh, 132px) + env(safe-area-inset-top)) clamp(22px, 4vw, 56px) clamp(28px, 5vw, 64px);
     text-align: center;
   }
   .hero-es h1 {
@@ -210,6 +232,45 @@ const jsonLd = [
     -webkit-backdrop-filter: blur(10px) saturate(130%);
     border-color: rgba(198, 204, 218, 0.28);
   }
+  .hero-es__ghost:hover { background: rgba(10, 12, 17, 0.6); }
+
+  /* ── Liquid glass (homepage chrome only) — matches the English hero. ── */
+  .glass-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
+  @supports (backdrop-filter: url('#zdx-lens-cta')) {
+    .hero-es__ghost {
+      background: rgba(10, 12, 17, 0.34);
+      backdrop-filter: url(#zdx-lens-cta);
+      -webkit-backdrop-filter: url(#zdx-lens-cta);
+      border-color: rgba(238, 241, 247, 0.28);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.20),
+        inset 0 -1px 0 rgba(255, 255, 255, 0.06),
+        0 10px 30px -12px rgba(0, 0, 0, 0.55);
+    }
+    .hero-es__ghost:hover { background: rgba(10, 12, 17, 0.5); }
+    :global(html .nav-wrap .nav) {
+      background: rgba(10, 12, 17, 0.56);
+      backdrop-filter: url(#zdx-lens-nav);
+      -webkit-backdrop-filter: url(#zdx-lens-nav);
+      box-shadow:
+        inset 0 1px 0 rgba(238, 241, 247, 0.10),
+        inset 0 -1px 0 rgba(238, 241, 247, 0.04),
+        0 12px 32px -14px rgba(0, 0, 0, 0.7);
+    }
+    @media (prefers-reduced-transparency: reduce) {
+      .hero-es__ghost {
+        background: rgba(10, 12, 17, 0.86);
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+      }
+      :global(html .nav-wrap .nav) {
+        background: rgba(10, 12, 17, 0.92);
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+      }
+    }
+  }
+
   .ticker-band { border-block: 1px solid var(--hair-1); padding-block: 14px; }
   .home-tools-es { display: grid; gap: 14px; grid-template-columns: 1fr 1fr; }
   @media (min-width: 900px) { .home-tools-es { grid-template-columns: repeat(4, 1fr); } }
@@ -236,8 +297,8 @@ const jsonLd = [
   .close-es h2 { margin: 0 0 30px; font-size: var(--text-2xl); }
   @media (max-width: 640px) {
     .hero-es { width: min(100% - 20px, 1440px); }
-    .hero-es__frame { min-height: clamp(520px, calc(100svh - 180px), 700px); }
-    .hero-es__content { padding: clamp(86px, 14svh, 112px) 18px 22px; }
+    .hero-es__frame { min-height: clamp(520px, calc(100svh - 56px), 760px); }
+    .hero-es__content { padding: calc(clamp(96px, 15svh, 120px) + env(safe-area-inset-top)) 18px 22px; }
     .hero-es h1 { max-width: 7.49em; font-size: clamp(2.2rem, 11vw, 3.45rem); }
     .hero-es p { max-width: 20.65em; font-size: 0.98rem; line-height: 1.52; }
     .hero-es__ctas .btn { flex: 1 1 auto; justify-content: center; }
