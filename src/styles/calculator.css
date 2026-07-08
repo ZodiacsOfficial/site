@@ -8,14 +8,19 @@
 .calc__fields {
   display: grid;
   gap: 20px;
-  grid-template-columns: 1fr;
+  /* minmax(0, …) so a native iOS date/time input's intrinsic min-width can't
+     blow the track wider than the card. */
+  grid-template-columns: minmax(0, 1fr);
   margin-bottom: 24px;
 }
 @media (min-width: 720px) {
-  .calc__fields { grid-template-columns: 1fr 1fr; }
+  .calc__fields { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
 }
 
-.field { display: flex; flex-direction: column; gap: 8px; }
+/* min-width:0 overrides the grid/flex item's default auto (min-content) floor
+   — without it, iOS Safari's native date & time controls force the whole
+   calculator card past the viewport edge. */
+.field { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
 .field__label {
   display: flex;
   align-items: center;
@@ -49,6 +54,8 @@
   font-size: 15px;
   transition: border-color var(--dur-1) var(--ease), background var(--dur-1) var(--ease);
   width: 100%;
+  min-width: 0;
+  max-width: 100%;
   color-scheme: dark;
 }
 .field__input:hover { border-color: var(--hair-3); }
@@ -272,10 +279,10 @@
 .syn__slots {
   display: grid;
   gap: clamp(20px, 4vw, 32px);
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(0, 1fr);
 }
-@media (min-width: 760px) { .syn__slots { grid-template-columns: 1fr 1fr; } }
-.syn__slot { display: grid; gap: 14px; align-content: start; }
+@media (min-width: 760px) { .syn__slots { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
+.syn__slot { display: grid; gap: 14px; align-content: start; min-width: 0; }
 .field__optional {
   font-size: 10px;
   letter-spacing: 0.08em;
@@ -383,8 +390,8 @@
 
 /* ── Transit tracker ──────────────────────────────────────────────── */
 .trans__grid { display: grid; gap: clamp(20px, 4vw, 34px); }
-@media (min-width: 720px) { .trans__grid { grid-template-columns: 1.4fr 1fr; } }
-.trans__side { display: grid; gap: 14px; align-content: start; }
+@media (min-width: 720px) { .trans__grid { grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); } }
+.trans__side { display: grid; gap: 14px; align-content: start; min-width: 0; }
 .trans__when { margin: 0 0 10px; font-size: 11px; letter-spacing: 0.08em; color: var(--faint); text-transform: uppercase; }
 .trans__sky {
   display: flex;
