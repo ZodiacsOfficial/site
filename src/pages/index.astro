@@ -131,8 +131,9 @@ const tools = [
       </div>
     </div>
     <script is:inline>
-      // The footage (3.3MB) only loads on wide, motion-friendly screens;
-      // phones and reduced-motion visitors keep the poster.
+      // The footage animates on every screen unless the visitor prefers
+      // reduced motion. On phones the poster stays the LCP: the video
+      // only attaches after load, so it never competes with first paint.
       (function () {
         var v = document.querySelector('[data-hero-video]');
         if (!v) return;
@@ -141,11 +142,14 @@ const tools = [
           var p = v.play();
           if (p && p.catch) p.catch(function () {});
         };
-        if (
-          window.matchMedia('(min-width: 720px)').matches &&
-          !window.matchMedia('(prefers-reduced-motion: reduce)').matches
-        ) {
-          play();
+        if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          if (window.matchMedia('(min-width: 720px)').matches) {
+            play();
+          } else if (document.readyState === 'complete') {
+            play();
+          } else {
+            window.addEventListener('load', play, { once: true });
+          }
           window.addEventListener('pageshow', function (e) { if (e.persisted) play(); });
         }
       })();
@@ -417,6 +421,27 @@ const tools = [
   }
   .hero__ghost:hover { background: rgba(10, 12, 17, 0.6); }
 
+  /* Primary CTA wears the same lens as the nav — a translucent capsule over
+     the footage rather than a solid slab — but its arrow disc stays a solid
+     white token so the call to action still reads as the bright anchor. */
+  .hero__ctas .btn--primary {
+    background: rgba(10, 12, 17, 0.42);
+    backdrop-filter: blur(10px) saturate(130%);
+    -webkit-backdrop-filter: blur(10px) saturate(130%);
+    border-color: rgba(238, 241, 247, 0.30);
+    color: var(--ink-0, #EEF1F7);
+  }
+  .hero__ctas .btn--primary:hover {
+    background: rgba(10, 12, 17, 0.6);
+    border-color: rgba(238, 241, 247, 0.42);
+  }
+  .hero__ctas .btn--primary .orb {
+    background: var(--ink-0, #EEF1F7);
+    border-color: rgba(238, 241, 247, 0.5);
+    color: var(--void-0, #060709);
+  }
+  .hero__ctas .btn--primary:hover .orb { background: #ffffff; }
+
   /* ── Liquid glass (homepage chrome only) ──
      Chromium refracts the backdrop through the capsule lens; everyone
      else keeps the blur floor above. Sits behind @supports so a browser
@@ -434,6 +459,17 @@ const tools = [
         0 10px 30px -12px rgba(0, 0, 0, 0.55);
     }
     .hero__ghost:hover { background: rgba(10, 12, 17, 0.5); }
+    .hero__ctas .btn--primary {
+      background: rgba(10, 12, 17, 0.34);
+      backdrop-filter: url(#zdx-lens-cta);
+      -webkit-backdrop-filter: url(#zdx-lens-cta);
+      border-color: rgba(238, 241, 247, 0.30);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.20),
+        inset 0 -1px 0 rgba(255, 255, 255, 0.06),
+        0 10px 30px -12px rgba(0, 0, 0, 0.55);
+    }
+    .hero__ctas .btn--primary:hover { background: rgba(10, 12, 17, 0.5); }
     /* html-prefixed to outrank the component's scoped .nav rule */
     :global(html .nav-wrap .nav) {
       background: rgba(10, 12, 17, 0.56);
@@ -446,6 +482,11 @@ const tools = [
     }
     @media (prefers-reduced-transparency: reduce) {
       .hero__ghost {
+        background: rgba(10, 12, 17, 0.86);
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+      }
+      .hero__ctas .btn--primary {
         background: rgba(10, 12, 17, 0.86);
         backdrop-filter: none;
         -webkit-backdrop-filter: none;

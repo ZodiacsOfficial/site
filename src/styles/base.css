@@ -171,8 +171,11 @@ input, select { font: inherit; }
 .btn {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 12px;
-  padding: 10px 10px 10px 22px;
+  /* Symmetric by default so text-only buttons (e.g. the ghost CTA) centre;
+     buttons carrying an orb tighten the trailing edge to seat the circle. */
+  padding: 10px 22px;
   border-radius: var(--r-full);
   font-weight: 550;
   font-size: var(--text-base);
@@ -183,6 +186,7 @@ input, select { font: inherit; }
   background: rgba(198, 204, 218, 0.05);
   transition: border-color var(--dur-2) var(--ease), background var(--dur-2) var(--ease), transform var(--dur-1) var(--ease);
 }
+.btn:has(.orb) { padding-right: 10px; }
 .btn:hover { border-color: var(--hair-3); background: rgba(198, 204, 218, 0.09); }
 .btn:active { transform: scale(0.98); }
 .btn .orb {

@@ -46,6 +46,7 @@ const path = Astro.url.pathname;
     <button class="nav__burger" type="button" data-menu-toggle aria-expanded="false" aria-controls="mobile-menu" aria-label={t(locale, 'navMenu')}>
       <span class="nav__burger-line"></span>
       <span class="nav__burger-line"></span>
+      <span class="nav__burger-line"></span>
     </button>
   </nav>
 
@@ -170,7 +171,7 @@ const path = Astro.url.pathname;
   .nav__burger {
     display: inline-grid;
     place-items: center;
-    gap: 5px;
+    gap: 4px;
     width: 34px;
     height: 34px;
     border-radius: 50%;
@@ -179,14 +180,17 @@ const path = Astro.url.pathname;
   @media (min-width: 760px) { .nav__burger { display: none; } }
   .nav__burger-line {
     display: block;
-    width: 14px;
+    width: 15px;
     height: 1.5px;
     border-radius: 2px;
     background: var(--text-2);
-    transition: transform var(--dur-2) var(--ease);
+    transition: transform var(--dur-2) var(--ease), opacity var(--dur-1) var(--ease);
   }
-  .nav__burger[aria-expanded='true'] .nav__burger-line:first-child { transform: translateY(3.25px) rotate(45deg); }
-  .nav__burger[aria-expanded='true'] .nav__burger-line:last-child { transform: translateY(-3.25px) rotate(-45deg); }
+  /* Three bars collapse into an X: top and bottom cross at the centre,
+     the middle bar fades out. */
+  .nav__burger[aria-expanded='true'] .nav__burger-line:first-child { transform: translateY(5.5px) rotate(45deg); }
+  .nav__burger[aria-expanded='true'] .nav__burger-line:nth-child(2) { opacity: 0; transform: scaleX(0.4); }
+  .nav__burger[aria-expanded='true'] .nav__burger-line:last-child { transform: translateY(-5.5px) rotate(-45deg); }
 
   /* ── Signs dropdown ── */
   .signs-menu {
