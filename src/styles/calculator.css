@@ -236,6 +236,9 @@
 }
 .calc__table td:first-child { color: var(--text); font-weight: 500; }
 .calc__glyph { display: inline-flex; width: 20px; justify-content: center; vertical-align: -3px; color: var(--text-2); }
+/* Inline planet/aspect glyph inside a text line (ruler line, aspects list,
+   the reading walkthrough). */
+.calc__pg { vertical-align: -0.18em; color: var(--text-2); }
 .calc__retro { color: var(--muted); }
 
 /* .chip / .chip__icon live in base.css (global) — SignChip is used on the

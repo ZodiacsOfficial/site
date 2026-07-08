@@ -249,7 +249,9 @@ input, select { font: inherit; }
    inherits currentColor — tint it via the row's --sign); .pglyph--disc seats
    it on a filled pastel disc like the sign icons. */
 .pglyph, .aglyph { display: inline-flex; line-height: 0; flex-shrink: 0; }
-.pglyph svg, svg.aglyph { display: block; }
+.pglyph svg, .aglyph svg { display: block; }
+/* A glyph sitting inline within a text/mono line — nudge it onto the baseline. */
+.pglyph.pg-inline, .aglyph.pg-inline { vertical-align: -0.18em; }
 .pglyph--disc {
   display: inline-grid;
   place-items: center;

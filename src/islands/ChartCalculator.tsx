@@ -12,6 +12,7 @@ import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import PlaceSearch from './PlaceSearch';
 import SignChip from './SignChip';
 import PlanetGlyph from '../components/PlanetGlyph';
+import AspectGlyph from '../components/AspectGlyph';
 import Wheel from '../lib/wheel/Wheel';
 import { formatLongitude, signForLongitude, signName } from '../lib/signs';
 import { bigThree } from '../lib/interpretations';
@@ -31,12 +32,6 @@ import { localizePath, normalizeLocale, t, type Locale } from '../lib/i18n';
 type Mode = 'full' | 'moon' | 'rising';
 
 interface Props { mode: Mode; locale?: Locale }
-
-const GLYPHS: Record<string, string> = {
-  Sun: '☉', Moon: '☽', Mercury: '☿', Venus: '♀', Mars: '♂',
-  Jupiter: '♃', Saturn: '♄', Uranus: '♅', Neptune: '♆', Pluto: '♇',
-  'North Node': '☊', 'South Node': '☋',
-};
 
 const DIGNITY_KEY = {
   domicile: 'dignityDomicile',
@@ -425,7 +420,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
             const ruler = chart.bodies.find((b) => b.body === rulerName);
             return ruler ? (
               <p class="calc__phase mono">
-                {t(locale, 'chartRuler')}: {rulerName} {GLYPHS[rulerName]} in {signName(signForLongitude(ruler.lon), locale)} - {t(locale, 'planetSteering')}
+                {t(locale, 'chartRuler')}: {rulerName} <PlanetGlyph body={rulerName} size={13} class="calc__pg" /> in {signName(signForLongitude(ruler.lon), locale)} - {t(locale, 'planetSteering')}
               </p>
             ) : null;
           })()}
@@ -477,7 +472,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                   <ul>
                     {chart.aspects.map((a) => (
                       <li key={`${a.a}${a.b}${a.type}`} class="mono">
-                        {GLYPHS[a.a]} {a.a} {a.type} {GLYPHS[a.b]} {a.b} · orb {a.orb.toFixed(1)}° {a.applying ? `· ${t(locale, 'applying')}` : ''}
+                        <PlanetGlyph body={a.a} size={13} class="calc__pg" /> {a.a} <AspectGlyph type={a.type} size={13} class="calc__pg" /> {a.type} <PlanetGlyph body={a.b} size={13} class="calc__pg" /> {a.b} · orb {a.orb.toFixed(1)}° {a.applying ? `· ${t(locale, 'applying')}` : ''}
                       </li>
                     ))}
                   </ul>
@@ -501,7 +496,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                         {reading.ps.map((p) => (
                           <li key={p.body}>
                             <p>
-                              <span class="calc__glyph" aria-hidden="true">{GLYPHS[p.body]}</span>{' '}
+                              <PlanetGlyph body={p.body} size={14} class="calc__pg" />{' '}
                               {chart.houses && p.house
                                 ? planetInHouseLine(p.body, p.house, { withTheme: p.firstInHouse })
                                 : `${p.body} — ${p.signLabel}.`}

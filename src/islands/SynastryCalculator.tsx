@@ -7,6 +7,8 @@
 import { useEffect, useMemo, useState } from 'preact/hooks';
 import PlaceSearch from './PlaceSearch';
 import SignChip from './SignChip';
+import PlanetGlyph from '../components/PlanetGlyph';
+import AspectGlyph from '../components/AspectGlyph';
 import { loadProfile } from '../lib/profile/store';
 import { EMPTY_PROFILE } from '../lib/profile/schema';
 import type { Profile, SavedChart } from '../lib/profile/schema';
@@ -21,10 +23,6 @@ import { ENGINE_VERSION } from '../lib/engine/types';
 import type { City } from '../lib/geo/search';
 import { localizePath, normalizeLocale, t, type Locale } from '../lib/i18n';
 
-const GLYPHS: Record<string, string> = {
-  Sun: '☉', Moon: '☽', Mercury: '☿', Venus: '♀', Mars: '♂',
-  Jupiter: '♃', Saturn: '♄', Uranus: '♅', Neptune: '♆', Pluto: '♇',
-};
 
 let enginePromise: Promise<typeof import('../lib/engine/full')> | null = null;
 const loadEngine = () => (enginePromise ??= import('../lib/engine/full'));
@@ -471,7 +469,7 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
             {result.summary.top.map((asp) => (
               <div class="syn__aspect" key={`${asp.a}-${asp.b}-${asp.type}`}>
                 <span class="syn__aspect-receipt mono">
-                  {GLYPHS[asp.a]} {result.a.label}’s {asp.a} {asp.type} {GLYPHS[asp.b]} {result.b.label}’s {asp.b} · orb {asp.orb.toFixed(1)}°
+                  <PlanetGlyph body={asp.a} size={13} class="pg-inline" /> {result.a.label}’s {asp.a} <AspectGlyph type={asp.type} size={13} class="pg-inline" /> {asp.type} <PlanetGlyph body={asp.b} size={13} class="pg-inline" /> {result.b.label}’s {asp.b} · orb {asp.orb.toFixed(1)}°
                 </span>
                 <p class="syn__aspect-read">
                   {synastryLine(result.a.label, asp.a, result.b.label, asp.b, asp.type)}

@@ -7,6 +7,8 @@
 import { useEffect, useState } from 'preact/hooks';
 import PlaceSearch from './PlaceSearch';
 import SignChip from './SignChip';
+import PlanetGlyph from '../components/PlanetGlyph';
+import AspectGlyph from '../components/AspectGlyph';
 import { loadProfile } from '../lib/profile/store';
 import { EMPTY_PROFILE } from '../lib/profile/schema';
 import type { Profile, SavedChart } from '../lib/profile/schema';
@@ -19,10 +21,9 @@ import { ENGINE_VERSION } from '../lib/engine/types';
 import type { City } from '../lib/geo/search';
 import { localizePath, normalizeLocale, t, type Locale } from '../lib/i18n';
 
-const GLYPHS: Record<string, string> = {
-  Sun: '☉', Moon: '☽', Mercury: '☿', Venus: '♀', Mars: '♂',
-  Jupiter: '♃', Saturn: '♄', Uranus: '♅', Neptune: '♆', Pluto: '♇',
-};
+// The transiting bodies shown in the sky strip (planets only — nodes excluded,
+// as before). Glyphs come from the shared PlanetGlyph.
+const TRANSIT_BODIES = new Set(['Sun', 'Moon', 'Mercury', 'Venus', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto']);
 
 let enginePromise: Promise<typeof import('../lib/engine/full')> | null = null;
 const loadEngine = () => (enginePromise ??= import('../lib/engine/full'));
@@ -156,7 +157,7 @@ export default function TransitTracker({ locale: rawLocale = 'en' }: { locale?: 
         ? `${when.toISOString().slice(0, 16).replace('T', ' ')} UTC`
         : `${dateStr} · midday UTC`;
       const sky = engine.computeBodies(when)
-        .filter((b) => b.body in GLYPHS)
+        .filter((b) => TRANSIT_BODIES.has(b.body))
         .map(({ body, lon, retrograde }) => ({ body, lon, retrograde }));
       // The Moon crosses the whole chart every month — the list would be
       // all Moon. It stays in the sky strip; the aspects leave it out.
@@ -280,7 +281,7 @@ export default function TransitTracker({ locale: rawLocale = 'en' }: { locale?: 
           <div class="trans__sky">
             {result.sky.map((b) => (
               <span class="trans__pos mono" key={b.body}>
-                {GLYPHS[b.body]} {formatLongitude(b.lon, locale)}{b.retrograde ? ' ℞' : ''}
+                <PlanetGlyph body={b.body} size={13} class="pg-inline" /> {formatLongitude(b.lon, locale)}{b.retrograde ? ' ℞' : ''}
               </span>
             ))}
           </div>
@@ -302,7 +303,7 @@ export default function TransitTracker({ locale: rawLocale = 'en' }: { locale?: 
             {result.hits.map((h) => (
               <div class="syn__aspect" key={`${h.a}-${h.b}-${h.type}`}>
                 <span class="syn__aspect-receipt mono">
-                  {GLYPHS[h.a]} {h.a} {h.type} natal {GLYPHS[h.b]} {h.b} · orb {h.orb.toFixed(1)}°
+                  <PlanetGlyph body={h.a} size={13} class="pg-inline" /> {h.a} <AspectGlyph type={h.type} size={13} class="pg-inline" /> {h.type} natal <PlanetGlyph body={h.b} size={13} class="pg-inline" /> {h.b} · orb {h.orb.toFixed(1)}°
                   {h.type === 'conjunction' && h.a === h.b ? ` · a ${h.a} return` : ''}
                 </span>
                 <p class="syn__aspect-read">{transitLine(h.a, h.type, h.b)}</p>
