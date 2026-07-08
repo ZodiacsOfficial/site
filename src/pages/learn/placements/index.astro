@@ -2,13 +2,10 @@
 import { getCollection } from 'astro:content';
 import Base from '../../../layouts/Base.astro';
 import SignIcon from '../../../components/SignIcon.astro';
+import PlanetGlyph from '../../../components/PlanetGlyph';
 import { SIGNS } from '../../../lib/signs';
 
 const PLANET_ORDER = ['Sun', 'Moon', 'Mercury', 'Venus', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto'];
-const GLYPHS: Record<string, string> = {
-  Sun: '☉', Moon: '☽', Mercury: '☿', Venus: '♀', Mars: '♂',
-  Jupiter: '♃', Saturn: '♄', Uranus: '♅', Neptune: '♆', Pluto: '♇',
-};
 
 // Planet role lines from the planet pages themselves — single source.
 const planetEntries = await getCollection('learn', (e) => e.data.kind === 'planet' && !e.data.draft);
@@ -62,7 +59,7 @@ const jsonLd = [
       {PLANET_ORDER.map((p) => (
         <section class="plc-index__group reveal">
           <header class="plc-index__head">
-            <span class="plc-index__glyph mono">{GLYPHS[p]}</span>
+            <span class="plc-index__glyph"><PlanetGlyph body={p} size={19} /></span>
             <a class="plc-index__name" href={`/learn/planets/${p.toLowerCase()}/`}>{p}</a>
             <span class="plc-index__role">{roleOf(p)}</span>
           </header>
@@ -94,7 +91,7 @@ const jsonLd = [
   }
   .plc-index__group:first-child { border-top: 1px solid var(--hair-1); }
   .plc-index__head { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
-  .plc-index__glyph { color: var(--muted); font-size: 16px; }
+  .plc-index__glyph { color: var(--text-2); display: inline-flex; align-items: center; }
   .plc-index__name { font-weight: 620; font-size: var(--text-lg); letter-spacing: -0.015em; color: var(--text); text-decoration: none; }
   .plc-index__name:hover { text-decoration: underline; text-underline-offset: 3px; }
   .plc-index__role { color: var(--faint); font-size: var(--text-sm); }

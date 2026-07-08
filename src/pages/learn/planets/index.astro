@@ -1,15 +1,13 @@
 ---
 import { getCollection } from 'astro:content';
 import Base from '../../../layouts/Base.astro';
+import PlanetGlyph from '../../../components/PlanetGlyph';
+import '../../../styles/cluster.css';
 
 const PLANET_ORDER = [
   'Sun', 'Moon', 'Mercury', 'Venus', 'Mars',
   'Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto',
 ];
-const GLYPHS: Record<string, string> = {
-  Sun: '☉', Moon: '☽', Mercury: '☿', Venus: '♀', Mars: '♂',
-  Jupiter: '♃', Saturn: '♄', Uranus: '♅', Neptune: '♆', Pluto: '♇',
-};
 
 const entries = await getCollection('learn', (e) => e.data.kind === 'planet' && !e.data.draft);
 const planets = PLANET_ORDER.map((name) => {
@@ -58,7 +56,7 @@ const jsonLd = [
       {planets.map((p) => (
         <li>
           <a class="cluster-row" href={`/learn/planets/${p.slug}/`}>
-            <span class="cluster-row__glyph mono">{GLYPHS[p.name]}</span>
+            <span class="cluster-row__glyph"><PlanetGlyph body={p.name} size={18} /></span>
             <span class="cluster-row__name">{p.name}</span>
             <span class="cluster-row__role">{p.role}</span>
             <span class="cluster-row__go">→</span>
@@ -76,35 +74,3 @@ const jsonLd = [
   </section>
 </Base>
 
-<style is:global>
-  .cluster-hero { max-width: 58ch; margin-bottom: clamp(26px, 5vw, 42px); }
-  .cluster-hero h1 { margin: 14px 0 14px; font-size: var(--text-2xl); line-height: 1.04; }
-  .cluster-hero p { margin: 0; color: var(--muted); font-size: var(--text-lg); text-wrap: pretty; }
-
-  .cluster-list { margin: 0; padding: 0; list-style: none; display: grid; }
-  .cluster-row {
-    display: grid;
-    grid-template-columns: 34px minmax(90px, 150px) 1fr 20px;
-    gap: 12px;
-    align-items: baseline;
-    padding: 15px 0;
-    border-bottom: 1px solid var(--hair-1);
-    text-decoration: none;
-    color: var(--text);
-    transition: background var(--dur-1) var(--ease);
-  }
-  li:first-child .cluster-row { border-top: 1px solid var(--hair-1); }
-  .cluster-row__glyph { color: var(--muted); font-size: 15px; }
-  .cluster-row__num { color: var(--faint); font-size: 11px; letter-spacing: 0.06em; }
-  .cluster-row__name { font-weight: 600; letter-spacing: -0.01em; }
-  .cluster-row__role { color: var(--muted); font-size: var(--text-sm); line-height: 1.5; }
-  .cluster-row__go { color: var(--faint); transition: color var(--dur-1) var(--ease), transform var(--dur-1) var(--ease); }
-  .cluster-row:hover .cluster-row__go { color: var(--text); transform: translateX(3px); }
-  @media (max-width: 560px) {
-    .cluster-row { grid-template-columns: 30px 1fr 20px; }
-    .cluster-row__role { grid-column: 2 / span 2; grid-row: 2; }
-  }
-
-  .cluster-note { margin-top: clamp(22px, 4vw, 34px); font-size: var(--text-sm); color: var(--muted); }
-  .cluster-note a { color: var(--text); }
-</style>

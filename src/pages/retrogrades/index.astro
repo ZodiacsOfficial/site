@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import '../../styles/rx-table.css';
 import sky from '../../data/sky.json';
 import { bodyLongitude } from '../../lib/engine/full';
 import type { BodyName } from '../../lib/engine/types';
@@ -149,10 +150,10 @@ const jsonLd = [
               <tbody>
                 {p.windows.map((w) => (
                   <tr class={w.state === 'past' ? 'rx-table__past' : ''}>
-                    <td class="planet__window">{w.label}</td>
-                    <td class="mono">{w.stationRx ?? '—'}</td>
-                    <td class="mono">{w.stationDirect ?? '—'}</td>
-                    <td class="mono rx-table__state">{w.state === 'active' ? 'now' : w.state === 'upcoming' ? 'ahead' : ''}</td>
+                    <td class="planet__window" data-label="Window">{w.label}</td>
+                    <td class="mono" data-label="Stations retrograde at">{w.stationRx ?? '—'}</td>
+                    <td class="mono" data-label="Stations direct at">{w.stationDirect ?? '—'}</td>
+                    <td class="mono rx-table__state" data-label="Status">{w.state === 'active' ? 'now' : w.state === 'upcoming' ? 'ahead' : ''}</td>
                   </tr>
                 ))}
               </tbody>
@@ -250,25 +251,10 @@ const jsonLd = [
   }
   .planet__rhythm { font-size: var(--text-sm); color: var(--faint); }
   .planet__window { white-space: normal; min-width: 210px; }
+  @media (max-width: 560px) { .planet__window { min-width: 0; } }
 
-  .table-wrap { overflow-x: auto; }
-  .rx-table { width: 100%; border-collapse: collapse; font-size: var(--text-sm); }
-  .rx-table th {
-    text-align: left;
-    padding: 10px 16px 10px 0;
-    font-family: var(--font-mono);
-    font-size: 10px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    font-weight: 500;
-    color: var(--faint);
-    border-bottom: 1px solid var(--hair-2);
-  }
-  .rx-table td { padding: 11px 16px 11px 0; border-bottom: 1px solid var(--hair-1); color: var(--text-2); white-space: nowrap; }
-  .rx-table td:first-child { color: var(--text); font-weight: 550; }
-  .rx-table__past td { color: var(--faint); }
-  .rx-table__past td:first-child { color: var(--muted); font-weight: 500; }
-  .rx-table__state { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+  /* .table-wrap + .rx-table (desktop + mobile stacking) live in
+     ../../styles/rx-table.css (shared). */
 
   .faq { display: grid; gap: 8px; }
   .faq__item {
