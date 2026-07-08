@@ -27,7 +27,11 @@ html, body {
   text-rendering: optimizeLegibility;
 }
 
-body { min-height: 100dvh; }
+/* overflow-x: clip (not hidden — keeps the fixed nav and sticky headers, and
+   doesn't create a scroll container) stops the page from swinging sideways on
+   touch if any child ever runs a hair past the viewport. Intentional horizontal
+   scrollers (the placements table) keep their own overflow-x: auto. */
+body { min-height: 100dvh; overflow-x: clip; }
 
 /* A single faint cool depth wash — no SaaS aurora, no chroma. Depth
    comes from one near-black vignette; the only color on the site is the

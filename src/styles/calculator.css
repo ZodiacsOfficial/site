@@ -175,7 +175,7 @@
   font-weight: 620;
   letter-spacing: -0.02em;
 }
-.three-card__icon { line-height: 0; }
+.three-card__icon { line-height: 0; flex-shrink: 0; }
 .three-card__icon img { border-radius: 50%; }
 .three-card__deg { color: var(--faint); font-size: 12px; }
 .three-card__read { margin: 2px 0 0; font-size: var(--text-sm); line-height: 1.6; color: var(--text-2); }
@@ -251,8 +251,10 @@
   color: var(--text);
   text-decoration: none;
 }
-.chip__icon { line-height: 0; }
-.chip__icon img { border-radius: 50%; }
+/* flex-shrink:0 — otherwise a long sign name ("Sagittarius", "Capricorn") in a
+   nowrap table cell squeezes the flex icon to a sliver or to nothing on Safari. */
+.chip__icon { line-height: 0; flex-shrink: 0; }
+.chip__icon img { border-radius: 50%; width: 18px; height: 18px; }
 
 /* Aspects */
 .calc__aspects summary {
