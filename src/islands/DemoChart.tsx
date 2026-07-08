@@ -51,7 +51,7 @@ export default function DemoChart() {
           A real chart, computed from the 1907 sky down to the local mean time
           of the era. <strong>Yours takes about twenty seconds.</strong>
         </p>
-        <a class="btn btn--primary" href="/birth-chart/">
+        <a class="btn btn--primary demo__cta" href="/birth-chart/">
           <span>Get your free birth chart</span><span class="orb">↗</span>
         </a>
       </div>

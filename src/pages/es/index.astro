@@ -1,6 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import SignIcon from '../../components/SignIcon.astro';
+import ToolGlyph from '../../components/ToolGlyph.astro';
 import SkyTicker from '../../islands/SkyTicker';
 import TodayBySign from '../../islands/TodayBySign';
 import WelcomeBack from '../../islands/WelcomeBack';
@@ -10,10 +11,10 @@ import glassMaps from '../../data/glass-maps.json';
 import '../../styles/today.css';
 
 const tools = [
-  { href: '/birth-chart/', title: 'Carta natal', promise: 'Tu Sol, Luna, ascendente, planetas, casas y lo que significan.', hue: 'var(--sign-cancer)', glyph: '☉' },
-  { href: '/moon-sign/', title: 'Signo lunar', promise: 'Cómo sientes, qué te calma y qué necesitas para sentirte en casa.', hue: 'var(--sign-pisces)', glyph: '☽' },
-  { href: '/rising-sign/', title: 'Ascendente', promise: 'La primera impresión que das y cómo se ordena tu carta.', hue: 'var(--sign-libra)', glyph: 'ASC' },
-  { href: '/compatibility/', title: 'Compatibilidad', promise: 'Compara dos cartas y mira dónde conectan, chocan y crecen.', hue: 'var(--sign-leo)', glyph: '☌' },
+  { href: '/birth-chart/', title: 'Carta natal', promise: 'Tu Sol, Luna, ascendente, planetas, casas y lo que significan.', hue: 'var(--sign-cancer)', kind: 'birth' as const },
+  { href: '/moon-sign/', title: 'Signo lunar', promise: 'Cómo sientes, qué te calma y qué necesitas para sentirte en casa.', hue: 'var(--sign-pisces)', kind: 'moon' as const },
+  { href: '/rising-sign/', title: 'Ascendente', promise: 'La primera impresión que das y cómo se ordena tu carta.', hue: 'var(--sign-libra)', kind: 'rising' as const },
+  { href: '/compatibility/', title: 'Compatibilidad', promise: 'Compara dos cartas y mira dónde conectan, chocan y crecen.', hue: 'var(--sign-leo)', kind: 'compat' as const },
 ];
 
 const jsonLd = [
@@ -132,7 +133,7 @@ const jsonLd = [
       {tools.map((tool, i) => (
         <a class="tile reveal" href={localizePath('es', tool.href)} style={`--sign:${tool.hue};--reveal-delay:${i * 60}ms`}>
           <div class="home-tool-es">
-            <span class="home-tool-es__glyph mono">{tool.glyph}</span>
+            <ToolGlyph kind={tool.kind} />
             <h3>{tool.title}</h3>
             <p>{tool.promise}</p>
             <span class="home-tool-es__go">Abrir →</span>
@@ -329,19 +330,11 @@ const jsonLd = [
     }
   }
 
-  .ticker-band { border-block: 1px solid var(--hair-1); padding-block: 14px; }
+  /* .ticker-band + .wb + .skyticker styles live in ../../styles/today.css. */
   .home-tools-es { display: grid; gap: 14px; grid-template-columns: 1fr 1fr; }
   @media (min-width: 900px) { .home-tools-es { grid-template-columns: repeat(4, 1fr); } }
   .home-tool-es { display: flex; flex-direction: column; gap: 9px; padding: 26px 22px 22px; min-height: 196px; }
-  .home-tool-es__glyph {
-    display: inline-grid;
-    place-items: center;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    border: 1px solid color-mix(in oklab, var(--sign) 40%, transparent);
-    color: var(--sign);
-  }
+  /* Tool-card icon disc lives in ToolGlyph.astro (shared with the EN home). */
   .home-tool-es h3 { margin: 2px 0 0; font-size: var(--text-base); font-weight: 620; color: var(--text); }
   .home-tool-es p { margin: 0; font-size: 13px; color: var(--text-2); line-height: 1.55; }
   .home-tool-es__go { margin-top: auto; padding-top: 12px; font-size: 12.5px; color: var(--muted); }

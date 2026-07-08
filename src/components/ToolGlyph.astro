@@ -1,0 +1,81 @@
+---
+/**
+ * Tool-card icon: a crafted celestial glyph on a filled pastel disc, so the
+ * calculators sit in the same visual language as the twelve sign icons
+ * (pastel disc + dark line-art) rather than a thin mono symbol. The disc hue
+ * comes from --sign, set on the enclosing tile.
+ *
+ * kinds: birth (natal wheel) · moon (crescent) · rising (horizon sun) ·
+ * compat (two charts). Each drawing is dark ink on the pastel disc.
+ */
+interface Props {
+  kind: 'birth' | 'moon' | 'rising' | 'compat';
+  label?: string;
+}
+const { kind, label } = Astro.props;
+---
+<span class="tool-glyph" role="img" aria-label={label ?? undefined} aria-hidden={label ? undefined : 'true'}>
+  {kind === 'birth' && (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round">
+      <circle cx="12" cy="12" r="8.25" />
+      <circle cx="12" cy="12" r="3.25" />
+      <path d="M12 3.75v3M12 17.25v3M3.75 12h3M17.25 12h3" />
+      <circle cx="12" cy="12" r="0.65" fill="currentColor" stroke="none" />
+    </svg>
+  )}
+  {kind === 'moon' && (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4">
+      <path
+        d="M15.6 4.3a8.2 8.2 0 1 0 4.2 9.2 6.7 6.7 0 0 1-4.2-9.2Z"
+        fill="currentColor"
+        stroke="none"
+      />
+    </svg>
+  )}
+  {kind === 'rising' && (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round">
+      <path d="M2.75 17h18.5" />
+      <path d="M7.5 17a4.5 4.5 0 0 1 9 0" fill="none" />
+      <path d="M12 5.4v2.3M6.2 8.2l1.5 1.5M17.8 8.2l-1.5 1.5" />
+    </svg>
+  )}
+  {kind === 'compat' && (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4">
+      <circle cx="9" cy="12" r="5.3" />
+      <circle cx="15" cy="12" r="5.3" />
+    </svg>
+  )}
+</span>
+
+<style>
+  /* Filled pastel disc with a soft top catch-light and a hue-matched drop
+     shadow — the same dimensional treatment as the sign-icon discs, so the
+     tool cards read as crafted, not a thin mono glyph in a hairline ring. */
+  .tool-glyph {
+    display: inline-grid;
+    place-items: center;
+    width: 46px;
+    height: 46px;
+    margin-bottom: 4px;
+    border-radius: 50%;
+    background:
+      radial-gradient(118% 118% at 30% 22%, color-mix(in oklab, var(--sign) 82%, #ffffff 18%), var(--sign) 68%);
+    color: var(--void-0, #060709);
+    box-shadow:
+      0 5px 16px -7px color-mix(in oklab, var(--sign) 60%, transparent),
+      inset 0 1px 0 rgba(255, 255, 255, 0.4),
+      inset 0 -6px 12px -8px rgba(6, 7, 9, 0.28);
+  }
+  .tool-glyph svg {
+    width: 24px;
+    height: 24px;
+    display: block;
+  }
+  /* The disc lifts a touch on card hover (the tile sets no transform on us). */
+  :global(.tile:hover) .tool-glyph {
+    box-shadow:
+      0 8px 22px -8px color-mix(in oklab, var(--sign) 68%, transparent),
+      inset 0 1px 0 rgba(255, 255, 255, 0.45),
+      inset 0 -6px 12px -8px rgba(6, 7, 9, 0.28);
+  }
+</style>

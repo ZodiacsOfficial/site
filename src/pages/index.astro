@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import SignIcon from '../components/SignIcon.astro';
+import ToolGlyph from '../components/ToolGlyph.astro';
 import SkyTicker from '../islands/SkyTicker';
 import TodayBySign from '../islands/TodayBySign';
 import DemoChart from '../islands/DemoChart';
@@ -69,10 +70,10 @@ const jsonLd = [
 ];
 
 const tools = [
-  { href: '/birth-chart/', title: 'Birth chart', promise: 'Your sun, moon, rising, planets, houses, and what they mean.', hue: 'var(--sign-cancer)', glyph: '☉' },
-  { href: '/moon-sign/', title: 'Moon sign', promise: 'How you feel — and what helps you feel at home.', hue: 'var(--sign-pisces)', glyph: '☽' },
-  { href: '/rising-sign/', title: 'Rising sign', promise: 'How people first meet you.', hue: 'var(--sign-libra)', glyph: 'ASC' },
-  { href: '/compatibility/', title: 'Compatibility', promise: 'See how two charts connect.', hue: 'var(--sign-leo)', glyph: '☌' },
+  { href: '/birth-chart/', title: 'Birth chart', promise: 'Your sun, moon, rising, planets, houses, and what they mean.', hue: 'var(--sign-cancer)', kind: 'birth' as const },
+  { href: '/moon-sign/', title: 'Moon sign', promise: 'How you feel — and what helps you feel at home.', hue: 'var(--sign-pisces)', kind: 'moon' as const },
+  { href: '/rising-sign/', title: 'Rising sign', promise: 'How people first meet you.', hue: 'var(--sign-libra)', kind: 'rising' as const },
+  { href: '/compatibility/', title: 'Compatibility', promise: 'See how two charts connect.', hue: 'var(--sign-leo)', kind: 'compat' as const },
 ];
 ---
 <Base
@@ -197,7 +198,7 @@ const tools = [
       {tools.map((t, i) => (
         <a class="tile reveal" href={t.href} style={`--sign:${t.hue};--reveal-delay:${i * 60}ms`}>
           <div class="home-tool">
-            <span class="home-tool__glyph mono">{t.glyph}</span>
+            <ToolGlyph kind={t.kind} />
             <h3>{t.title}</h3>
             <p>{t.promise}</p>
             <span class="home-tool__go">Open →</span>
@@ -533,73 +534,8 @@ const tools = [
     .hero__frame { box-shadow: inset 0 0 0 1px rgba(198, 204, 218, 0.10); }
   }
 
-  /* ── Welcome back (returning visitors only; island renders nothing otherwise) ── */
-  :global(.wb) {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 12px 22px;
-    margin-bottom: 26px;
-    padding: 14px 18px;
-    border: 1px solid var(--hair-2);
-    border-radius: var(--r-md);
-    background: rgba(198, 204, 218, 0.02);
-  }
-  :global(.wb__lead) {
-    margin: 0;
-    font-family: var(--font-serif);
-    font-style: italic;
-    font-size: 17px;
-    color: var(--text-2);
-  }
-  :global(.wb__chips) { display: flex; flex-wrap: wrap; gap: 8px 14px; }
-  :global(.wb__chip) { display: inline-flex; align-items: center; gap: 7px; }
-  :global(.wb__links) {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 12px 18px;
-    margin-left: auto;
-    font-size: var(--text-sm);
-  }
-  :global(.wb__links a) { color: var(--text-2); text-decoration: none; }
-  :global(.wb__links a:hover) { color: var(--text); }
-  /* The "open your chart" pill is the primary way back to a saved chart —
-     keep its own colours, not the muted link colour. */
-  :global(.wb__links a.wb__open) { font-size: 13px; padding: 8px 8px 8px 16px; color: var(--void-0); }
-  :global(.wb__links a.wb__open:hover) { color: var(--void-0); }
-  @media (max-width: 720px) {
-    :global(.wb__links) { margin-left: 0; }
-    :global(.wb__open) { order: -1; }
-  }
-
-  /* ── Ticker ── */
-  .ticker-band {
-    border-block: 1px solid var(--hair-1);
-    padding-block: 14px;
-  }
-  :global(.skyticker) {
-    margin: 0;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 6px 10px;
-    font-size: 12px;
-    letter-spacing: 0.05em;
-    color: var(--text-2);
-  }
-
-  /* Today-by-sign styles live in ../styles/today.css (shared with /es/). */
-  :global(.skyticker__label) {
-    font-style: italic;
-    font-family: var(--font-serif);
-    font-size: 14px;
-    letter-spacing: 0;
-    text-transform: none;
-    color: var(--muted);
-    margin-right: 10px;
-  }
-  :global(.skyticker__sep) { color: var(--faint); margin-right: 10px; }
+  /* Welcome-back strip + sky ticker styles live in ../styles/today.css
+     (shared with /es/, which renders the same islands). */
 
   /* ── Tools ── */
   .home-tools { display: grid; gap: 14px; grid-template-columns: 1fr 1fr; }
@@ -611,18 +547,7 @@ const tools = [
     padding: 26px 22px 22px;
     min-height: 196px;
   }
-  .home-tool__glyph {
-    display: inline-grid;
-    place-items: center;
-    width: 40px;
-    height: 40px;
-    margin-bottom: 6px;
-    border-radius: 50%;
-    border: 1px solid color-mix(in oklab, var(--sign) 40%, transparent);
-    background: color-mix(in oklab, var(--sign) 8%, transparent);
-    font-size: 18px;
-    color: var(--sign);
-  }
+  /* Tool-card icon disc lives in ToolGlyph.astro (shared with /es/). */
   .home-tool h3 { margin: 2px 0 0; font-size: var(--text-base); font-weight: 620; letter-spacing: -0.01em; color: var(--text); }
   .home-tool p { margin: 0; font-size: 13px; color: var(--text-2); line-height: 1.55; }
   .home-tool__go {
@@ -653,6 +578,52 @@ const tools = [
   :global(.demo__callout p) { margin: 0; font-size: var(--text-sm); color: var(--text-2); line-height: 1.55; }
   :global(.demo__cta-line) { margin: 8px 0 2px; font-size: var(--text-sm); color: var(--muted); line-height: 1.6; }
   :global(.demo__cta-line strong) { color: var(--text); }
+
+  /* The demo CTA wears the same liquid-glass capsule as the hero primary.
+     It sits over the void rather than footage, so the frosted floor leans on
+     its rim light and top sheen to read as glass; the arrow disc stays a
+     solid white token as the bright anchor. */
+  :global(.demo__cta.btn--primary) {
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0) 48%),
+      rgba(22, 26, 36, 0.55);
+    backdrop-filter: blur(12px) saturate(140%) brightness(1.16);
+    -webkit-backdrop-filter: blur(12px) saturate(140%) brightness(1.16);
+    border-color: rgba(238, 241, 247, 0.40);
+    color: var(--ink-0, #EEF1F7);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.34),
+      inset 0 -12px 22px -14px rgba(255, 255, 255, 0.08),
+      0 8px 26px -12px rgba(0, 0, 0, 0.5);
+  }
+  :global(.demo__cta.btn--primary:hover) {
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0) 48%),
+      rgba(30, 35, 47, 0.62);
+    border-color: rgba(238, 241, 247, 0.5);
+  }
+  :global(.demo__cta.btn--primary) .orb {
+    background: var(--ink-0, #EEF1F7);
+    border-color: rgba(238, 241, 247, 0.5);
+    color: var(--void-0, #060709);
+  }
+  :global(.demo__cta.btn--primary:hover) .orb { background: #ffffff; }
+  /* Chromium additionally refracts the void/dust through the capsule lens. */
+  :global(html.zdx-lens .demo__cta.btn--primary) {
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0) 48%),
+      rgba(22, 26, 36, 0.42);
+    backdrop-filter: url(#zdx-lens-cta);
+    -webkit-backdrop-filter: url(#zdx-lens-cta);
+    border-color: rgba(238, 241, 247, 0.32);
+  }
+  @media (prefers-reduced-transparency: reduce) {
+    :global(.demo__cta.btn--primary) {
+      background: rgba(24, 28, 39, 0.92);
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+    }
+  }
 
   /* ── The Twelve ── */
   .twelve { display: grid; gap: 12px; grid-template-columns: repeat(2, 1fr); }

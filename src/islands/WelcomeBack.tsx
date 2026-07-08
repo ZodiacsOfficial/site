@@ -56,15 +56,17 @@ export default function WelcomeBack({ locale: rawLocale = 'en' }: { locale?: Loc
     <section class="container" aria-label={t(locale, 'savedChartAria')}>
       <div class="wb">
         <p class="wb__lead">{t(locale, 'welcomeBack')}</p>
-        <div class="wb__chips">
-          {sun && <span class="wb__chip"><span class="mono--label">{t(locale, 'sun')}</span><SignChip lon={sun.lon} locale={locale} /></span>}
-          {moon && <span class="wb__chip"><span class="mono--label">{t(locale, 'moon')}</span><SignChip lon={moon.lon} locale={locale} /></span>}
-          {asc !== null && <span class="wb__chip"><span class="mono--label">{t(locale, 'rising')}</span><SignChip lon={asc} locale={locale} /></span>}
-        </div>
+        <dl class="wb__three">
+          {sun && <><dt class="mono--label">{t(locale, 'sun')}</dt><dd><SignChip lon={sun.lon} locale={locale} /></dd></>}
+          {moon && <><dt class="mono--label">{t(locale, 'moon')}</dt><dd><SignChip lon={moon.lon} locale={locale} /></dd></>}
+          {asc !== null && <><dt class="mono--label">{t(locale, 'rising')}</dt><dd><SignChip lon={asc} locale={locale} /></dd></>}
+        </dl>
         <div class="wb__links">
           <a class="wb__open btn btn--primary" href={openHref}><span>{t(locale, 'openChart')}</span><span class="orb">↗</span></a>
-          <a href={localizePath(locale, '/transits/')}>{t(locale, 'todayAgainstChart')} →</a>
-          <a href={localizePath(locale, '/profile/')}>{count > 1 ? `${t(locale, 'yourCharts')} (${count}) →` : `${t(locale, 'profile')} →`}</a>
+          <div class="wb__sublinks">
+            <a href={localizePath(locale, '/transits/')}>{t(locale, 'todayAgainstChart')} →</a>
+            <a href={localizePath(locale, '/profile/')}>{count > 1 ? `${t(locale, 'yourCharts')} (${count}) →` : `${t(locale, 'profile')} →`}</a>
+          </div>
         </div>
       </div>
     </section>
