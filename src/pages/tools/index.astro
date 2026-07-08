@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import ToolGlyph from '../../components/ToolGlyph.astro';
 
 const tools = [
   {
@@ -7,77 +8,77 @@ const tools = [
     title: 'Birth chart calculator',
     promise: 'See your sun, moon, rising, planets, houses, and what they mean.',
     hue: 'var(--sign-cancer)',
-    glyph: '☉',
+    kind: 'birth' as const,
   },
   {
     href: '/compatibility/',
     title: 'Compatibility',
     promise: 'Compare two charts and see where they click, clash, and grow.',
     hue: 'var(--sign-libra)',
-    glyph: '☌',
+    kind: 'compat' as const,
   },
   {
     href: '/moon-sign/',
     title: 'Moon sign calculator',
     promise: 'How you feel, and what settles you.',
     hue: 'var(--sign-pisces)',
-    glyph: '☽',
+    kind: 'moon' as const,
   },
   {
     href: '/rising-sign/',
     title: 'Rising sign calculator',
     promise: 'Find the sign people meet first. Birth time helps.',
     hue: 'var(--sign-gemini)',
-    glyph: 'ASC',
+    kind: 'rising' as const,
   },
   {
     href: '/moon-phase/',
     title: 'Moon phase',
     promise: 'Tonight’s moon, and the moon of any date you care about.',
     hue: 'var(--sign-cancer)',
-    glyph: '☾',
+    kind: 'moonphase' as const,
   },
   {
     href: '/saturn-return/',
     title: 'Saturn return',
     promise: 'When yours hits, exactly, and what it tends to ask.',
     hue: 'var(--sign-capricorn)',
-    glyph: '♄',
+    kind: 'saturn' as const,
   },
   {
     href: '/transits/',
     title: 'Transit tracker',
     promise: "See today's sky next to your chart.",
     hue: 'var(--sign-aries)',
-    glyph: '↻',
+    kind: 'transit' as const,
   },
   {
     href: '/baby-zodiac/',
     title: 'Baby zodiac',
     promise: 'What sign a due date makes likely, and what has to wait.',
     hue: 'var(--sign-cancer)',
-    glyph: '☽',
+    kind: 'baby' as const,
   },
   {
     href: '/full-moon-calendar/',
     title: 'Full moon calendar',
     promise: 'Every full moon through 2027: date, sign, and name.',
     hue: 'var(--sign-taurus)',
-    glyph: '○',
+    kind: 'fullmoon' as const,
   },
   {
     href: '/eclipses/',
     title: 'Eclipses',
     promise: 'Solar and lunar through 2028, with exact peak times.',
     hue: 'var(--sign-leo)',
-    glyph: '◑',
+    kind: 'eclipse' as const,
   },
   {
     href: '/retrogrades/',
     title: 'Retrogrades',
     promise: "See each planet's retrograde dates at a glance.",
     hue: 'var(--sign-virgo)',
-    glyph: '℞',
+    kind: 'retrograde' as const,
   },
 ];
 
@@ -111,7 +112,7 @@ const jsonLd = [
       {tools.map((t) => (
         <a class="shell tinted" href={t.href} style={`--sign:${t.hue}`}>
           <div class="core tinted tool-card">
-            <span class="tool-card__glyph mono">{t.glyph}</span>
+            <ToolGlyph kind={t.kind} />
             <h3>{t.title}</h3>
             <p>{t.promise}</p>
             <span class="tool-card__go">Open →</span>
@@ -153,11 +154,7 @@ const jsonLd = [
     padding: 26px 22px;
     min-height: 210px;
   }
-  .tool-card__glyph {
-    font-size: 24px;
-    color: var(--sign);
-    letter-spacing: 0.06em;
-  }
+  /* Tool-card icon disc lives in ToolGlyph.astro. */
   .tool-card h3 {
     margin: 4px 0 0;
     font-size: var(--text-lg);

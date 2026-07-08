@@ -235,7 +235,7 @@
   white-space: nowrap;
 }
 .calc__table td:first-child { color: var(--text); font-weight: 500; }
-.calc__glyph { display: inline-block; width: 20px; color: var(--muted); }
+.calc__glyph { display: inline-flex; width: 20px; justify-content: center; vertical-align: -3px; color: var(--text-2); }
 .calc__retro { color: var(--muted); }
 
 /* .chip / .chip__icon live in base.css (global) — SignChip is used on the

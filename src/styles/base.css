@@ -244,6 +244,25 @@ input, select { font: inherit; }
 .chip__icon { line-height: 0; flex-shrink: 0; }
 .chip__icon img { border-radius: 50%; width: 18px; height: 18px; }
 
+/* ── Crafted planet / aspect glyphs (src/lib/glyphs/paths.ts) ────── */
+/* Line-art counterparts to the pastel sign discs. Bare by default (the glyph
+   inherits currentColor — tint it via the row's --sign); .pglyph--disc seats
+   it on a filled pastel disc like the sign icons. */
+.pglyph, .aglyph { display: inline-flex; line-height: 0; flex-shrink: 0; }
+.pglyph svg, svg.aglyph { display: block; }
+.pglyph--disc {
+  display: inline-grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: radial-gradient(118% 118% at 30% 22%, color-mix(in oklab, var(--sign, var(--accent)) 82%, #ffffff 18%), var(--sign, var(--accent)) 68%);
+  color: var(--void-0);
+  box-shadow:
+    0 4px 12px -6px color-mix(in oklab, var(--sign, var(--accent)) 55%, transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
 /* ── Double-bezel card: outer shell + inner core ───────────────── */
 .shell {
   background: rgba(198, 204, 218, 0.035);

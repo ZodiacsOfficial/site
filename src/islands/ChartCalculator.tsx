@@ -11,6 +11,7 @@
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import PlaceSearch from './PlaceSearch';
 import SignChip from './SignChip';
+import PlanetGlyph from '../components/PlanetGlyph';
 import Wheel from '../lib/wheel/Wheel';
 import { formatLongitude, signForLongitude, signName } from '../lib/signs';
 import { bigThree } from '../lib/interpretations';
@@ -459,7 +460,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                   <tbody>
                     {placements.map((p) => (
                       <tr key={p.body}>
-                        <td><span class="calc__glyph">{GLYPHS[p.body]}</span> {p.body}</td>
+                        <td><span class="calc__glyph"><PlanetGlyph body={p.body} size={15} /></span> {p.body}</td>
                         <td class="mono">{p.label.split(' ')[0]}</td>
                         <td><SignChip lon={p.lon} locale={locale} /></td>
                         {chart.houses && <td class="mono">{p.house}</td>}
