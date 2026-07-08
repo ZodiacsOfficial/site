@@ -412,23 +412,25 @@ const tools = [
     justify-content: center;
     gap: 12px;
   }
-  /* Ghost button needs its own footing on live footage. */
+  /* Ghost button needs its own footing on live footage. The frosted floor
+     (background + -webkit-backdrop-filter blur) is what Safari/iOS renders — a
+     little heavier so it reads as glass, not a see-through outline. */
   .hero__ghost {
-    background: rgba(10, 12, 17, 0.42);
-    backdrop-filter: blur(10px) saturate(130%);
-    -webkit-backdrop-filter: blur(10px) saturate(130%);
-    border-color: rgba(198, 204, 218, 0.28);
+    background: rgba(10, 12, 17, 0.5);
+    backdrop-filter: blur(16px) saturate(140%);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
+    border-color: rgba(198, 204, 218, 0.3);
   }
-  .hero__ghost:hover { background: rgba(10, 12, 17, 0.6); }
+  .hero__ghost:hover { background: rgba(10, 12, 17, 0.64); }
 
   /* Primary CTA wears the same lens as the nav — a translucent capsule over
      the footage rather than a solid slab — but its arrow disc stays a solid
      white token so the call to action still reads as the bright anchor. */
   .hero__ctas .btn--primary {
-    background: rgba(10, 12, 17, 0.42);
-    backdrop-filter: blur(10px) saturate(130%);
-    -webkit-backdrop-filter: blur(10px) saturate(130%);
-    border-color: rgba(238, 241, 247, 0.30);
+    background: rgba(10, 12, 17, 0.5);
+    backdrop-filter: blur(16px) saturate(140%);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
+    border-color: rgba(238, 241, 247, 0.34);
     color: var(--ink-0, #EEF1F7);
   }
   .hero__ctas .btn--primary:hover {
@@ -442,60 +444,58 @@ const tools = [
   }
   .hero__ctas .btn--primary:hover .orb { background: #ffffff; }
 
-  /* ── Liquid glass (homepage chrome only) ──
-     Chromium refracts the backdrop through the capsule lens; everyone
-     else keeps the blur floor above. Sits behind @supports so a browser
-     that can't render url() backdrop filters never sees these rules. */
+  /* ── Liquid glass (homepage chrome) ──
+     Everyone gets the frosted blur floor above — it renders on Safari/iOS via
+     -webkit-backdrop-filter, so the buttons and nav read as real glass there.
+     Chromium additionally refracts the backdrop through the SVG capsule lens,
+     gated by the .zdx-lens class (added by a tiny inline script only on
+     Chromium): Safari reports support for url() backdrop filters but paints
+     nothing, which would otherwise leave these controls flat and transparent. */
   .glass-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
-  @supports (backdrop-filter: url('#zdx-lens-cta')) {
-    .hero__ghost {
-      background: rgba(10, 12, 17, 0.34);
-      backdrop-filter: url(#zdx-lens-cta);
-      -webkit-backdrop-filter: url(#zdx-lens-cta);
-      border-color: rgba(238, 241, 247, 0.28);
-      box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.20),
-        inset 0 -1px 0 rgba(255, 255, 255, 0.06),
-        0 10px 30px -12px rgba(0, 0, 0, 0.55);
-    }
-    .hero__ghost:hover { background: rgba(10, 12, 17, 0.5); }
+  :global(html.zdx-lens) .hero__ghost {
+    background: rgba(10, 12, 17, 0.34);
+    backdrop-filter: url(#zdx-lens-cta);
+    -webkit-backdrop-filter: url(#zdx-lens-cta);
+    border-color: rgba(238, 241, 247, 0.28);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.20),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.06),
+      0 10px 30px -12px rgba(0, 0, 0, 0.55);
+  }
+  :global(html.zdx-lens) .hero__ghost:hover { background: rgba(10, 12, 17, 0.5); }
+  :global(html.zdx-lens) .hero__ctas .btn--primary {
+    background: rgba(10, 12, 17, 0.34);
+    backdrop-filter: url(#zdx-lens-cta);
+    -webkit-backdrop-filter: url(#zdx-lens-cta);
+    border-color: rgba(238, 241, 247, 0.30);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.20),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.06),
+      0 10px 30px -12px rgba(0, 0, 0, 0.55);
+  }
+  :global(html.zdx-lens) .hero__ctas .btn--primary:hover { background: rgba(10, 12, 17, 0.5); }
+  :global(html.zdx-lens .nav-wrap .nav) {
+    background: rgba(10, 12, 17, 0.56);
+    backdrop-filter: url(#zdx-lens-nav);
+    -webkit-backdrop-filter: url(#zdx-lens-nav);
+    box-shadow:
+      inset 0 1px 0 rgba(238, 241, 247, 0.10),
+      inset 0 -1px 0 rgba(238, 241, 247, 0.04),
+      0 12px 32px -14px rgba(0, 0, 0, 0.7);
+  }
+  /* Reduced transparency: solid, no blur — applies to the frosted floor and
+     the Chromium lens alike. */
+  @media (prefers-reduced-transparency: reduce) {
+    .hero__ghost,
     .hero__ctas .btn--primary {
-      background: rgba(10, 12, 17, 0.34);
-      backdrop-filter: url(#zdx-lens-cta);
-      -webkit-backdrop-filter: url(#zdx-lens-cta);
-      border-color: rgba(238, 241, 247, 0.30);
-      box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.20),
-        inset 0 -1px 0 rgba(255, 255, 255, 0.06),
-        0 10px 30px -12px rgba(0, 0, 0, 0.55);
+      background: rgba(10, 12, 17, 0.86);
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
     }
-    .hero__ctas .btn--primary:hover { background: rgba(10, 12, 17, 0.5); }
-    /* html-prefixed to outrank the component's scoped .nav rule */
     :global(html .nav-wrap .nav) {
-      background: rgba(10, 12, 17, 0.56);
-      backdrop-filter: url(#zdx-lens-nav);
-      -webkit-backdrop-filter: url(#zdx-lens-nav);
-      box-shadow:
-        inset 0 1px 0 rgba(238, 241, 247, 0.10),
-        inset 0 -1px 0 rgba(238, 241, 247, 0.04),
-        0 12px 32px -14px rgba(0, 0, 0, 0.7);
-    }
-    @media (prefers-reduced-transparency: reduce) {
-      .hero__ghost {
-        background: rgba(10, 12, 17, 0.86);
-        backdrop-filter: none;
-        -webkit-backdrop-filter: none;
-      }
-      .hero__ctas .btn--primary {
-        background: rgba(10, 12, 17, 0.86);
-        backdrop-filter: none;
-        -webkit-backdrop-filter: none;
-      }
-      :global(html .nav-wrap .nav) {
-        background: rgba(10, 12, 17, 0.92);
-        backdrop-filter: none;
-        -webkit-backdrop-filter: none;
-      }
+      background: rgba(10, 12, 17, 0.92);
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
     }
   }
 
@@ -542,14 +542,21 @@ const tools = [
   :global(.wb__chip) { display: inline-flex; align-items: center; gap: 7px; }
   :global(.wb__links) {
     display: flex;
-    gap: 18px;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px 18px;
     margin-left: auto;
     font-size: var(--text-sm);
   }
   :global(.wb__links a) { color: var(--text-2); text-decoration: none; }
   :global(.wb__links a:hover) { color: var(--text); }
+  /* The "open your chart" pill is the primary way back to a saved chart —
+     keep its own colours, not the muted link colour. */
+  :global(.wb__links a.wb__open) { font-size: 13px; padding: 8px 8px 8px 16px; color: var(--void-0); }
+  :global(.wb__links a.wb__open:hover) { color: var(--void-0); }
   @media (max-width: 720px) {
     :global(.wb__links) { margin-left: 0; }
+    :global(.wb__open) { order: -1; }
   }
 
   /* ── Ticker ── */

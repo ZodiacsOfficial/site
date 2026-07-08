@@ -7,6 +7,7 @@
 import { useEffect, useState } from 'preact/hooks';
 import SignChip from './SignChip';
 import { loadProfile } from '../lib/profile/store';
+import { encodeChartLink } from '../lib/share';
 import type { SavedChart } from '../lib/profile/schema';
 import { localizePath, normalizeLocale, t, type Locale } from '../lib/i18n';
 
@@ -35,6 +36,22 @@ export default function WelcomeBack({ locale: rawLocale = 'en' }: { locale?: Loc
   const moon = find('Moon');
   const asc = chart.summary.angles?.asc ?? null;
 
+  // Reopen the saved chart straight in the calculator (needs coordinates to
+  // reconstruct; charts saved without a place fall back to the profile list).
+  const openHref = chart.birth.place
+    ? `${localizePath(locale, '/birth-chart/')}#c=${encodeChartLink({
+        date: chart.birth.date,
+        time: chart.birth.time,
+        timeKnown: chart.birth.timeKnown,
+        lat: chart.birth.place.lat,
+        lon: chart.birth.place.lon,
+        tz: chart.birth.place.tz,
+        name: chart.name,
+        place: chart.birth.place.name,
+        houseSystem: chart.summary.houseSystem,
+      })}`
+    : localizePath(locale, '/profile/');
+
   return (
     <section class="container" aria-label={t(locale, 'savedChartAria')}>
       <div class="wb">
@@ -45,6 +62,7 @@ export default function WelcomeBack({ locale: rawLocale = 'en' }: { locale?: Loc
           {asc !== null && <span class="wb__chip"><span class="mono--label">{t(locale, 'rising')}</span><SignChip lon={asc} locale={locale} /></span>}
         </div>
         <div class="wb__links">
+          <a class="wb__open btn btn--primary" href={openHref}><span>{t(locale, 'openChart')}</span><span class="orb">↗</span></a>
           <a href={localizePath(locale, '/transits/')}>{t(locale, 'todayAgainstChart')} →</a>
           <a href={localizePath(locale, '/profile/')}>{count > 1 ? `${t(locale, 'yourCharts')} (${count}) →` : `${t(locale, 'profile')} →`}</a>
         </div>
