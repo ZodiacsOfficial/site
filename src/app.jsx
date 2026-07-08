@@ -1129,30 +1129,45 @@
       }, []);
       return (
         <section className="cine" aria-label="Zodiacs.org — the official registry of the Twelve">
-          <video
-            ref={videoRef}
-            className="cine__media"
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="metadata"
-            poster={media.poster}
-            aria-hidden="true"
-            tabIndex={-1}
-          >
-            <source src={media.src} type="video/mp4" />
-          </video>
-          <div className="cine__scrim" aria-hidden="true" />
-          <div className="cine__content">
-            <span className="cine__eyebrow">The Official Registry · Est. MMXXIV</span>
-            <p className="cine__mark">Zodiacs<span className="g">·</span>org</p>
-            <p className="cine__line">Belief is the oldest asset.</p>
+          <div className="cine__frame">
+            <video
+              ref={videoRef}
+              className="cine__media"
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
+              poster={media.poster}
+              aria-hidden="true"
+              tabIndex={-1}
+            >
+              <source src={media.src} type="video/mp4" />
+            </video>
+            <div className="cine__scrim" aria-hidden="true" />
+            <div className="cine__content">
+              <span className="cine__eyebrow">The Official Registry · Est. MMXXIV</span>
+              <h1 className="cine__title">
+                Twelve signs.<br/>
+                <span className="it">One register.</span>
+              </h1>
+              <div className="cine__foot">
+                <p className="cine__line">
+                  Belief is the oldest asset.
+                </p>
+                <div className="cine__cta">
+                  <a className="btn btn--primary" href="#official-twelve">
+                    <span>Browse the Twelve</span>
+                    <span className="arr">→</span>
+                  </a>
+                  <a className="btn" href="#verify">
+                    <span>Verify an address</span>
+                    <span className="arr">↗</span>
+                  </a>
+                </div>
+              </div>
+            </div>
           </div>
-          <a className="cine__cue" href="#main" aria-label="Enter the registry">
-            <span>Enter the registry</span>
-            <span className="cine__cue-line" aria-hidden="true" />
-          </a>
         </section>
       );
     }
@@ -1174,14 +1189,9 @@
             </div>
           )}
 
-          <h1 className="hero__headline">
-            Twelve signs.<br/>
-            <span className="it">One register.</span>
-          </h1>
-
           <p className="hero__sub">
-            One official record for the twelve signs. Verify what belongs,
-            where it lives, and how public ownership becomes symbolic context.
+            One record for the twelve signs. Verify what belongs, where it
+            lives, and how public ownership becomes symbolic context.
           </p>
 
           <Selector active={active} setActive={setActive} />
@@ -1191,20 +1201,6 @@
       );
     }
 
-    function HeroActions() {
-      return (
-        <div className="hero__cta hero__cta--below">
-          <a className="btn btn--primary" href="#official-twelve">
-            <span>Browse the Twelve</span>
-            <span className="arr">→</span>
-          </a>
-          <a className="btn btn--ghost" href="#verify">
-            <span>Verify an address</span>
-            <span className="arr" style={{ width: 28, height: 28, background: 'transparent', border: 0, color: 'var(--ink-dim)' }}>↗</span>
-          </a>
-        </div>
-      );
-    }
 
     function FeaturedCard({ sign, animKey }) {
       const reveal = useReveal();
@@ -3280,7 +3276,6 @@
               active={activeTicker}
               setActive={setActiveTicker}
             />
-            <HeroActions />
             <RegistrySection />
             <VerifierSection />
             <DetailPanel sign={sign} animKey={activeTicker} />
