@@ -99,18 +99,22 @@ export default function Wheel({
       <circle cx={cx} cy={cy} r={rSignsIn} fill="none" stroke="rgba(198,204,218,0.16)" stroke-width="1" />
       <circle cx={cx} cy={cy} r={rAspects} fill="none" stroke="rgba(198,204,218,0.08)" stroke-width="1" />
 
-      {/* Sign ring: pastel arcs + glyphs */}
+      {/* Sign ring: pastel arcs + the pastel disc icons (the same icon set
+          as the homepage wheel). The disc <image> refs stay external for the
+          live wheel; the share-card renderer inlines them as data URIs before
+          rasterizing, so the serialized SVG is self-contained. */}
       {SIGNS.map((s, i) => {
         const from = i * 30;
         const mid = from + 15;
-        const label = pt(mid, (rSigns + rSignsIn) / 2);
+        const c = pt(mid, (rSigns + rSignsIn) / 2);
+        const disc = size * 0.068;
         return (
           <g key={s.slug}>
             <path
               d={arcPath(from + 1.5, from + 28.5, (rSigns + rSignsIn) / 2)}
               fill="none"
               stroke={s.hue}
-              stroke-opacity="0.15"
+              stroke-opacity="0.12"
               stroke-width={rSigns - rSignsIn - 6}
             />
             <path
@@ -121,16 +125,15 @@ export default function Wheel({
               stroke-width="2"
               stroke-linecap="round"
             />
-            <text
-              x={label.x}
-              y={label.y}
-              text-anchor="middle"
-              dominant-baseline="central"
-              font-size={size * 0.037}
-              fill={s.hue}
+            <image
+              href={`/assets/zodiac-icons/128/${s.slug}.webp`}
+              x={(c.x - disc / 2).toFixed(2)}
+              y={(c.y - disc / 2).toFixed(2)}
+              width={disc.toFixed(2)}
+              height={disc.toFixed(2)}
             >
-              {s.glyph}
-            </text>
+              <title>{s.name}</title>
+            </image>
           </g>
         );
       })}

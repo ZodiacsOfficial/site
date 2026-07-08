@@ -31,7 +31,20 @@ const WHEEL_SIZE = 780;
 const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July',
   'August', 'September', 'October', 'November', 'December'];
 
-function wheelSvgString(chart: Chart): string {
+/** Read a same-origin asset as a data: URI (null on any failure). */
+function fetchAsDataUri(url: string): Promise<string | null> {
+  return fetch(url)
+    .then((res) => (res.ok ? res.blob() : null))
+    .then((blob) => (blob ? new Promise<string | null>((resolve) => {
+      const fr = new FileReader();
+      fr.onload = () => resolve(typeof fr.result === 'string' ? fr.result : null);
+      fr.onerror = () => resolve(null);
+      fr.readAsDataURL(blob);
+    }) : null))
+    .catch(() => null);
+}
+
+async function wheelSvgString(chart: Chart): Promise<string> {
   const host = document.createElement('div');
   render(h(Wheel, {
     bodies: chart.bodies.filter((b) => b.body !== 'South Node'),
@@ -49,6 +62,16 @@ function wheelSvgString(chart: Chart): string {
   svg.querySelectorAll('text').forEach((t) => {
     t.setAttribute('font-family', 'ui-monospace, Menlo, Consolas, monospace');
   });
+  // An SVG rasterized through <img> can't fetch external subresources, so the
+  // sign-disc <image> hrefs must be inlined as data URIs. Drop any that fail
+  // rather than let a broken ref abort the raster.
+  await Promise.all(Array.from(svg.querySelectorAll('image')).map(async (img) => {
+    const href = img.getAttribute('href') ?? img.getAttribute('xlink:href');
+    if (!href || href.startsWith('data:')) return;
+    const uri = await fetchAsDataUri(href);
+    if (uri) img.setAttribute('href', uri);
+    else img.remove();
+  }));
   const xml = new XMLSerializer().serializeToString(svg);
   render(null, host);
   return xml;
@@ -118,7 +141,7 @@ async function drawCard(chart: Chart, input: ShareChartInput): Promise<Blob> {
   ]).catch(() => { /* system fallbacks still draw */ });
 
   const [wheelImg, discs] = await Promise.all([
-    loadSvg(wheelSvgString(chart)),
+    wheelSvgString(chart).then(loadSvg),
     Promise.all(trio.map((t) => loadDisc(t.slug))),
   ]);
 
