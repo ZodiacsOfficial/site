@@ -238,23 +238,8 @@
 .calc__glyph { display: inline-block; width: 20px; color: var(--muted); }
 .calc__retro { color: var(--muted); }
 
-.chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  padding: 3px 10px 3px 4px;
-  border-radius: var(--r-full);
-  border: 1px solid color-mix(in oklab, var(--sign, var(--accent)) 35%, transparent);
-  background: color-mix(in oklab, var(--sign, var(--accent)) 9%, transparent);
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--text);
-  text-decoration: none;
-}
-/* flex-shrink:0 — otherwise a long sign name ("Sagittarius", "Capricorn") in a
-   nowrap table cell squeezes the flex icon to a sliver or to nothing on Safari. */
-.chip__icon { line-height: 0; flex-shrink: 0; }
-.chip__icon img { border-radius: 50%; width: 18px; height: 18px; }
+/* .chip / .chip__icon live in base.css (global) — SignChip is used on the
+   homepage WelcomeBack strip too, which doesn't load this calculator sheet. */
 
 /* Aspects */
 .calc__aspects summary {

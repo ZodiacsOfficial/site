@@ -196,9 +196,14 @@ async function drawCard(chart: Chart, input: ShareChartInput): Promise<Blob> {
   ctx.font = `400 26px ${MONO}`;
   ctx.fillText(formatDateLine(input), W / 2, 1218);
 
-  ctx.fillStyle = INK_3;
-  ctx.font = `400 24px ${MONO}`;
-  ctx.fillText('zodiacs.org', W / 2, 1292);
+  // Wordmark — the display serif set as spaced small caps, an old-almanac /
+  // inscriptional register rather than the techy monospace.
+  ctx.fillStyle = INK_2;
+  ctx.font = `500 34px ${SERIF}`;
+  try { ctx.letterSpacing = '8px'; } catch { /* older canvases ignore it */ }
+  // letterSpacing pads a trailing gap; nudge right by half a step to re-centre.
+  ctx.fillText('ZODIACS · ORG', W / 2 + 4, 1294);
+  try { ctx.letterSpacing = '0px'; } catch { /* no-op */ }
 
   const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, 'image/png'));
   if (!blob) throw new Error('png encode failed');

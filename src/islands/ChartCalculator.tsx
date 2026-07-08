@@ -544,12 +544,18 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
             </>
           )}
 
-          {/* Save + next steps */}
+          {/* Save + share + next steps */}
           <div class="calc__actions">
             <button class="btn btn--primary" type="button" onClick={onSave} disabled={saved === 'saved'}>
               <span>{saved === 'saved' ? t(locale, 'chartSavedDevice') : t(locale, 'saveThisChart')}</span>
               <span class="orb">{saved === 'saved' ? '✓' : '+'}</span>
             </button>
+            {mode === 'full' && shareInput && (
+              <button class="btn btn--ghost" type="button" onClick={onCard} disabled={card === 'busy'} data-share-card>
+                <span>{card === 'busy' ? t(locale, 'rendering') : card === 'saved' ? t(locale, 'cardSaved') : t(locale, 'shareChart')}</span>
+                <span class="orb">{card === 'saved' ? '✓' : '↗'}</span>
+              </button>
+            )}
             {mode !== 'full' && (
               <a class="btn btn--ghost" href={localizePath(locale, '/birth-chart/')}><span>{t(locale, 'getBirthChart')}</span><span class="orb">↗</span></a>
             )}
@@ -570,10 +576,6 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                 <button class="btn btn--ghost" type="button" onClick={onCopyLink} data-share-link>
                   <span>{share === 'copied' ? t(locale, 'linkCopied') : t(locale, 'copyChartLink')}</span>
                   <span class="orb">{share === 'copied' ? '✓' : '⧉'}</span>
-                </button>
-                <button class="btn btn--ghost" type="button" onClick={onCard} disabled={card === 'busy'} data-share-card>
-                  <span>{card === 'busy' ? t(locale, 'rendering') : card === 'saved' ? t(locale, 'cardSaved') : t(locale, 'saveChartCard')}</span>
-                  <span class="orb">{card === 'saved' ? '✓' : '↓'}</span>
                 </button>
               </div>
               {share === 'manual' && (
