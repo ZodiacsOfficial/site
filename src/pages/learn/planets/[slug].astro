@@ -3,6 +3,7 @@ import { getCollection, render } from 'astro:content';
 import Base from '../../../layouts/Base.astro';
 import Faq from '../../../components/Faq.astro';
 import SignIcon from '../../../components/SignIcon.astro';
+import PlanetGlyph from '../../../components/PlanetGlyph';
 import { SIGNS, signForLongitude } from '../../../lib/signs';
 import { bodyLongitude } from '../../../lib/engine/full';
 import type { BodyName } from '../../../lib/engine/types';
@@ -12,11 +13,6 @@ const PLANET_ORDER = [
   'Sun', 'Moon', 'Mercury', 'Venus', 'Mars',
   'Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto',
 ] as const;
-
-const PLANET_GLYPHS: Record<string, string> = {
-  Sun: '☉', Moon: '☽', Mercury: '☿', Venus: '♀', Mars: '♂',
-  Jupiter: '♃', Saturn: '♄', Uranus: '♅', Neptune: '♆', Pluto: '♇',
-};
 
 export async function getStaticPaths() {
   const entries = await getCollection(
@@ -88,8 +84,9 @@ const jsonLd = [
 >
   <article class="container container--narrow learn-detail">
     <header class="learn-detail__hero reveal">
+      <PlanetGlyph body={planet} size={34} disc hue={rules[0]?.hue ?? classicRules[0]?.hue} class="learn-hero-glyph" />
       <em class="kicker">The planets</em>
-      <h1 class="display"><span class="learn-detail__glyph">{PLANET_GLYPHS[planet]}</span> {planet}</h1>
+      <h1 class="display">{planet}</h1>
       <p class="learn-detail__role">{entry.data.role}</p>
       <p class="learn-detail__facts mono">
         {rules.length > 0 && `Rules ${rules.map((s) => s.name).join(' and ')}`}
@@ -127,11 +124,11 @@ const jsonLd = [
 
     <nav class="learn-detail__nav reveal" aria-label="More planets">
       {prev ? (
-        <a href={`/learn/planets/${prev.toLowerCase()}/`}>← {PLANET_GLYPHS[prev]} {prev}</a>
+        <a href={`/learn/planets/${prev.toLowerCase()}/`}>← <PlanetGlyph body={prev} size={14} class="pg-inline" /> {prev}</a>
       ) : <span />}
       <a href="/learn/planets/">All planets</a>
       {next ? (
-        <a href={`/learn/planets/${next.toLowerCase()}/`}>{PLANET_GLYPHS[next]} {next} →</a>
+        <a href={`/learn/planets/${next.toLowerCase()}/`}><PlanetGlyph body={next} size={14} class="pg-inline" /> {next} →</a>
       ) : <span />}
     </nav>
   </article>

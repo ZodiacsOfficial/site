@@ -2,6 +2,7 @@
 import { getCollection, render } from 'astro:content';
 import Base from '../../../layouts/Base.astro';
 import Faq from '../../../components/Faq.astro';
+import AspectGlyph from '../../../components/AspectGlyph';
 import { ASPECTS } from '../../../lib/engine/aspects';
 
 const ASPECT_ORDER = ['conjunction', 'sextile', 'square', 'trine', 'opposition'] as const;
@@ -73,6 +74,7 @@ const jsonLd = [
 >
   <article class="container container--narrow learn-detail">
     <header class="learn-detail__hero reveal">
+      <AspectGlyph type={type} size={46} class="learn-hero-glyph" />
       <em class="kicker">The aspects</em>
       <h1 class="display">The {type}</h1>
       <p class="learn-detail__role">{entry.data.theme}</p>

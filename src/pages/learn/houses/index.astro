@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import Base from '../../../layouts/Base.astro';
+import { SIGNS } from '../../../lib/signs';
 import '../../../styles/cluster.css';
 
 const ORDINALS = [
@@ -60,7 +61,7 @@ const jsonLd = [
       {houses.map((h) => (
         <li>
           <a class="cluster-row" href={`/learn/houses/${h.slug}/`}>
-            <span class="cluster-row__num mono">{h.n}</span>
+            <span class="cluster-row__num house-badge" style={`--sign:${SIGNS[h.n - 1].hue}`}>{h.n}</span>
             <span class="cluster-row__name">{ORDINALS[h.n - 1]} house</span>
             <span class="cluster-row__role">{h.theme}</span>
             <span class="cluster-row__go">→</span>

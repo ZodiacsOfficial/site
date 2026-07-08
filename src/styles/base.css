@@ -252,7 +252,8 @@ input, select { font: inherit; }
 .pglyph svg, .aglyph svg { display: block; }
 /* A glyph sitting inline within a text/mono line — nudge it onto the baseline. */
 .pglyph.pg-inline, .aglyph.pg-inline { vertical-align: -0.18em; }
-.pglyph--disc {
+.pglyph--disc,
+.house-badge {
   display: inline-grid;
   place-items: center;
   width: 30px;
@@ -264,6 +265,15 @@ input, select { font: inherit; }
     0 4px 12px -6px color-mix(in oklab, var(--sign, var(--accent)) 55%, transparent),
     inset 0 1px 0 rgba(255, 255, 255, 0.4);
 }
+
+/* Learn detail-page hero badge — the planet/house disc or aspect glyph that
+   sits above the title, echoing the big sign-icon on the guide heroes. */
+.learn-hero-glyph { margin-bottom: 14px; }
+.learn-hero-glyph.pglyph--disc,
+.learn-hero-glyph.house-badge { width: 60px; height: 60px; }
+.house-badge { font-family: var(--font-serif); font-size: 26px; font-variant-numeric: oldstyle-figures; line-height: 1; }
+.learn-hero-glyph.aglyph { color: var(--text-2); }
+.cluster-row__num.house-badge { width: 28px; height: 28px; font-size: 14px; box-shadow: none; }
 
 /* ── Double-bezel card: outer shell + inner core ───────────────── */
 .shell {
