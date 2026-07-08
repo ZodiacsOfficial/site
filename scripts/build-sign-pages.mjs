@@ -239,7 +239,7 @@ ${JSON.stringify(jsonLd(m), null, 2)}
     .grain {
       position: fixed; inset: 0; pointer-events: none; z-index: var(--z-grain);
       opacity: 0.035; mix-blend-mode: overlay;
-      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.93  0 0 0 0 0.80  0 0 0 0 0.42  0 0 0 0.85 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.88  0 0 0 0 0.90  0 0 0 0 0.96  0 0 0 0.85 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
     }
     .stars {
       position: fixed; inset: 0; pointer-events: none; z-index: var(--z-grain);
@@ -275,7 +275,7 @@ ${JSON.stringify(jsonLd(m), null, 2)}
       -webkit-backdrop-filter: saturate(160%) blur(18px);
       border: 1px solid var(--hair-2);
       box-shadow:
-        inset 0 1px 0 rgba(233,199,102,0.10), inset 0 -1px 0 rgba(0,0,0,0.4),
+        inset 0 1px 0 rgba(238,241,247,0.10), inset 0 -1px 0 rgba(0,0,0,0.4),
         0 8px 28px -12px rgba(0,0,0,0.6), 0 0 0 1px rgba(0,0,0,0.35);
     }
     .hdr a { text-decoration: none; }
@@ -352,10 +352,10 @@ ${JSON.stringify(jsonLd(m), null, 2)}
       position: relative;
       background:
         radial-gradient(120% 60% at 50% 0%, rgba(198,204,218,0.06), transparent 55%),
-        linear-gradient(180deg, #1D150C 0%, #100B06 100%);
+        linear-gradient(180deg, var(--surface-2) 0%, var(--surface) 100%);
       border: 1px solid var(--hair-3);
       box-shadow:
-        inset 0 1px 0 rgba(233,199,102,0.14), inset 0 -1px 0 rgba(0,0,0,0.5),
+        inset 0 1px 0 rgba(238,241,247,0.14), inset 0 -1px 0 rgba(0,0,0,0.5),
         0 18px 40px -22px rgba(0,0,0,0.7), 0 0 0 1px rgba(0,0,0,0.4);
     }
     .card__inner { padding: 18px; border: 1px solid var(--hair); margin: 8px; }
@@ -550,7 +550,7 @@ ${JSON.stringify(jsonLd(m), null, 2)}
       font-family: var(--mono); font-size: 11px; letter-spacing: 0.26em;
       text-transform: uppercase; color: var(--ink);
       border: 1px solid var(--hair-3); text-decoration: none;
-      box-shadow: inset 0 1px 0 rgba(233,199,102,0.12), inset 0 -1px 0 rgba(0,0,0,0.5);
+      box-shadow: inset 0 1px 0 rgba(238,241,247,0.12), inset 0 -1px 0 rgba(0,0,0,0.5);
       transition: border-color 420ms var(--ease), color 420ms var(--ease), transform 220ms var(--ease);
     }
     .btn:hover { border-color: var(--gold); color: var(--gold-bright); }
