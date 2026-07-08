@@ -118,13 +118,15 @@ const tools = [
       <div class="hero__scrim" aria-hidden="true"></div>
       <div class="hero__content">
         <h1 class="hero__title">Explore the stars behind your story.</h1>
-        <p class="hero__sub">
-          Free birth charts, moon signs, compatibility, and horoscopes —
-          accurate, private, and easy to understand.
-        </p>
-        <div class="hero__ctas">
-          <a class="btn btn--primary" href="/birth-chart/"><span>Get your free birth chart</span><span class="orb">↗</span></a>
-          <a class="btn btn--ghost hero__ghost" href="/horoscopes/"><span>See your forecasts</span></a>
+        <div class="hero__foot">
+          <p class="hero__sub">
+            Free birth charts, moon signs, compatibility, and horoscopes —
+            accurate, private, and easy to understand.
+          </p>
+          <div class="hero__ctas">
+            <a class="btn btn--primary" href="/birth-chart/"><span>Get your free birth chart</span><span class="orb">↗</span></a>
+            <a class="btn btn--ghost hero__ghost" href="/horoscopes/"><span>See your forecasts</span></a>
+          </div>
         </div>
       </div>
     </div>
@@ -382,8 +384,17 @@ const tools = [
     font-style: normal;
     color: var(--ink-1, #C6CCDA);
   }
+  /* Headline pins to the top; the caption and buttons sink to the base
+     of the frame over the footage. */
+  .hero__foot {
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(20px, 3vw, 28px);
+  }
   .hero__sub {
-    margin: 0 0 clamp(20px, 3vw, 28px);
+    margin: 0;
     max-width: 31.97em; /* 48ch of Instrument */
     color: var(--ink-1, #C6CCDA);
     font-size: clamp(0.95rem, 0.85rem + 0.5vw, 1.125rem);

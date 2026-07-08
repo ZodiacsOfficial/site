@@ -60,10 +60,12 @@ const jsonLd = [
       <div class="hero-es__scrim" aria-hidden="true"></div>
       <div class="hero-es__content">
         <h1>Explora las estrellas detrás de tu historia.</h1>
-        <p>Cartas natales, signo lunar, compatibilidad y horóscopos gratis: precisos, privados y fáciles de entender.</p>
-        <div class="hero-es__ctas">
-          <a class="btn btn--primary" href={localizePath('es', '/birth-chart/')}><span>Obtén tu carta natal gratis</span><span class="orb">↗</span></a>
-          <a class="btn btn--ghost hero-es__ghost" href="/horoscopes/"><span>Ver pronósticos</span></a>
+        <div class="hero-es__foot">
+          <p>Cartas natales, signo lunar, compatibilidad y horóscopos gratis: precisos, privados y fáciles de entender.</p>
+          <div class="hero-es__ctas">
+            <a class="btn btn--primary" href={localizePath('es', '/birth-chart/')}><span>Obtén tu carta natal gratis</span><span class="orb">↗</span></a>
+            <a class="btn btn--ghost hero-es__ghost" href="/horoscopes/"><span>Ver pronósticos</span></a>
+          </div>
         </div>
       </div>
     </div>
@@ -217,8 +219,17 @@ const jsonLd = [
     text-wrap: balance;
     text-shadow: 0 2px 28px rgba(6, 7, 9, 0.55);
   }
+  /* Caption and buttons sink to the base of the frame; the headline
+     stays pinned at the top. */
+  .hero-es__foot {
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(20px, 3vw, 28px);
+  }
   .hero-es p {
-    margin: 0 0 clamp(20px, 3vw, 28px);
+    margin: 0;
     max-width: 33.3em; /* 50ch of Instrument */
     color: var(--ink-1, #C6CCDA);
     font-size: clamp(0.95rem, 0.85rem + 0.5vw, 1.125rem);

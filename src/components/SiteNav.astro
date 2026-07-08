@@ -23,7 +23,7 @@ const path = Astro.url.pathname;
   <nav class="nav" aria-label={t(locale, 'navPrimary')} data-nav>
     <a class="nav__mark" href={localizePath(locale, '/')}>
       <BrandMark size={17} />
-      <span class="nav__name">Zodiacs</span><span class="nav__tld">.org</span>
+      <span class="nav__name">Zodiacs</span>
     </a>
 
     <div class="nav__links">
@@ -129,15 +129,6 @@ const path = Astro.url.pathname;
     letter-spacing: 0.01em;
     line-height: 1;
     color: var(--text);
-  }
-  .nav__tld {
-    font-family: var(--font-mono);
-    font-size: 10px;
-    font-weight: 500;
-    letter-spacing: 0.12em;
-    color: var(--faint);
-    align-self: end;
-    margin-bottom: 1px;
   }
 
   .nav__links { display: none; align-items: center; gap: 2px; }
