@@ -5,7 +5,7 @@
  * fall. Everything here is a pure function of the committed JSON, and
  * every rendered line carries its receipt.
  */
-import { SIGN_SLUGS } from './signs';
+import { SIGN_SLUGS, signBySlug } from './signs';
 
 export interface DailyBody {
   body: string;
@@ -37,6 +37,10 @@ export interface Daily {
 export interface DailyLine {
   text: string;
   receipt: string;
+  /** The line's primary body, for the leading receipt glyph. */
+  body?: string;
+  /** The relevant sign's hue, tinting that glyph (ticker treatment). */
+  hue?: string;
 }
 
 export interface DailyReading {
@@ -104,10 +108,21 @@ export function houseLine(body: DailyBody, house: number): DailyLine {
   return {
     text: `${PLANET_VERB[body.body] ?? `${body.body} is in`} your ${ORDINAL[house]} house — ${HOUSE_THEME[house]}.`,
     receipt: `${body.body} ${body.degree.toFixed(1)}° ${cap(body.sign)}${rx} · house ${house}`,
+    body: body.body,
+    hue: hueForSign(body.sign),
   };
 }
 
 const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
+
+/** A sign slug's disc hue, for tinting the leading receipt glyph. */
+const hueForSign = (slug: string): string | undefined => {
+  try {
+    return signBySlug(slug).hue;
+  } catch {
+    return undefined;
+  }
+};
 
 const utcTime = (at: string) => `${at.slice(11, 16)} UTC`;
 
@@ -117,6 +132,8 @@ function eventLine(e: DailyEvent, sunSign: string): DailyLine | null {
     return {
       text: `${e.planet} enters your ${ORDINAL[house]} house today — ${HOUSE_THEME[house]} picks up ${e.planet === 'Saturn' || e.planet === 'Pluto' ? 'a long-term tenant' : 'new weather'}.`,
       receipt: `${e.planet} → 0° ${cap(e.sign)} · ${utcTime(e.at)}`,
+      body: e.planet,
+      hue: hueForSign(e.sign),
     };
   }
   if (e.kind === 'lunation' && e.sign) {
@@ -125,6 +142,8 @@ function eventLine(e: DailyEvent, sunSign: string): DailyLine | null {
     return {
       text: `${name} in your ${ORDINAL[house]} house — ${e.type === 'new' ? 'a clean line to start something in' : 'something comes due in'} ${HOUSE_THEME[house]}.`,
       receipt: `${name} ${e.degree}° ${cap(e.sign)} · ${utcTime(e.at)}`,
+      body: 'Moon',
+      hue: hueForSign(e.sign),
     };
   }
   if (e.kind === 'station' && e.planet && e.sign) {
@@ -133,12 +152,15 @@ function eventLine(e: DailyEvent, sunSign: string): DailyLine | null {
     return {
       text: `${e.planet} ${dir} in your ${ORDINAL[house]} house — ${e.type === 'retrograde' ? 'expect revisions in' : 'forward motion returns to'} ${HOUSE_THEME[house]}.`,
       receipt: `${e.planet} ${dir} ${e.degree}° ${cap(e.sign)} · ${utcTime(e.at)}`,
+      body: e.planet,
+      hue: hueForSign(e.sign),
     };
   }
   if (e.kind === 'aspect' && e.a && e.b && e.type) {
     return {
       text: `${e.a} ${e.type} ${e.b} is exact today — sky-wide weather, worth knowing the hour.`,
       receipt: `${e.a} ${e.type} ${e.b} · exact ${utcTime(e.at)}`,
+      body: e.a,
     };
   }
   return null;

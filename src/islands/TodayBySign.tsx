@@ -6,6 +6,7 @@
  */
 import { useState } from 'preact/hooks';
 import { SIGNS } from '../lib/signs';
+import PlanetGlyph from '../components/PlanetGlyph';
 import { dailyReading, type Daily } from '../lib/daily';
 import { localizePath, normalizeLocale, t, type Locale } from '../lib/i18n';
 import daily from '../data/daily.json';
@@ -55,7 +56,10 @@ export default function TodayBySign({ locale: rawLocale = 'en' }: Props) {
             {reading.lines.map((l) => (
               <li key={l.receipt}>
                 <p>{l.text}</p>
-                <span class="mono tbs__receipt">{l.receipt}</span>
+                <span class="mono tbs__receipt">
+                  {l.body && <PlanetGlyph body={l.body} hue={l.hue} size={13} class="rcpt-glyph" />}
+                  {l.receipt}
+                </span>
               </li>
             ))}
           </ul>

@@ -10,8 +10,15 @@ import { loadProfile } from '../lib/profile/store';
 import type { SavedChart } from '../lib/profile/schema';
 import { findInterAspects } from '../lib/engine/synastry';
 import { TRANSIT_ORB, transitLine } from '../lib/transits';
+import PlanetGlyph from '../components/PlanetGlyph';
+import { signBySlug } from '../lib/signs';
 import { localizePath, normalizeLocale, t, type Locale } from '../lib/i18n';
 import daily from '../data/daily.json';
+
+/** Each transiting body's current-sign hue, for the leading receipt glyph. */
+const SKY_HUE: Record<string, string> = Object.fromEntries(
+  daily.bodies.map((b) => [b.body, signBySlug(b.sign).hue]),
+);
 
 interface Props { sign?: string; locale?: Locale }
 
@@ -59,6 +66,7 @@ export default function DailyForYou({ locale: rawLocale = 'en' }: Props) {
           <li key={`${a.a}-${a.b}-${a.type}`}>
             <p>{transitLine(a.a, a.type, a.b)}</p>
             <span class="mono dfy__receipt">
+              <PlanetGlyph body={a.a} hue={SKY_HUE[a.a]} size={13} class="rcpt-glyph" />
               {a.a} {a.type} {t(locale, 'natal')} {a.b} · {t(locale, 'orb')} {a.orb.toFixed(1)}°
             </span>
           </li>

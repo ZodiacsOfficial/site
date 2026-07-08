@@ -11,6 +11,7 @@ import { loadProfile } from '../lib/profile/store';
 import type { SavedChart } from '../lib/profile/schema';
 import { findInterAspects } from '../lib/engine/synastry';
 import { TRANSIT_ORB, transitLine } from '../lib/transits';
+import PlanetGlyph from '../components/PlanetGlyph';
 import { houseLine, wholeSignHouseFromAsc, type DailyBody } from '../lib/daily';
 import { type EclipseRecord } from '../lib/upcoming';
 import {
@@ -25,9 +26,14 @@ import {
   type IngressWindow,
   type YearScanCache,
 } from '../lib/year-ahead';
-import { signForLongitude } from '../lib/signs';
+import { signBySlug, signForLongitude } from '../lib/signs';
 import { localizePath, normalizeLocale, t, type Locale } from '../lib/i18n';
 import daily from '../data/daily.json';
+
+/** Each transiting body's current-sign hue, for the leading receipt glyph. */
+const SKY_HUE: Record<string, string> = Object.fromEntries(
+  daily.bodies.map((b) => [b.body, signBySlug(b.sign).hue]),
+);
 import eclipsesData from '../data/eclipses.json';
 import ingressesData from '../data/ingresses.json';
 
@@ -210,7 +216,10 @@ export default function ProfileDashboard({ locale: rawLocale = 'en' }: Props) {
               {today.houseLines.map((l) => (
                 <li key={l.receipt}>
                   <p>{l.text}</p>
-                  <span class="mono pfd__receipt">{l.receipt}</span>
+                  <span class="mono pfd__receipt">
+                    {l.body && <PlanetGlyph body={l.body} hue={l.hue} size={13} class="rcpt-glyph" />}
+                    {l.receipt}
+                  </span>
                 </li>
               ))}
             </ul>
@@ -221,6 +230,7 @@ export default function ProfileDashboard({ locale: rawLocale = 'en' }: Props) {
                 <li key={`${a.a}-${a.b}-${a.type}`}>
                   <p>{transitLine(a.a, a.type, a.b)}</p>
                   <span class="mono pfd__receipt">
+                    <PlanetGlyph body={a.a} hue={SKY_HUE[a.a]} size={13} class="rcpt-glyph" />
                     {a.a} {a.type} {t(locale, 'natal')} {a.b} · {t(locale, 'orb')} {a.orb.toFixed(1)}°
                   </span>
                 </li>
@@ -244,7 +254,10 @@ export default function ProfileDashboard({ locale: rawLocale = 'en' }: Props) {
               {timeline.map((ev) => (
                 <li key={`${ev.kind}-${ev.at}-${ev.receipt}`}>
                   <p>{ev.line}</p>
-                  <span class="mono pfd__receipt">{ev.receipt}</span>
+                  <span class="mono pfd__receipt">
+                    {ev.body && <PlanetGlyph body={ev.body} size={13} class="rcpt-glyph" />}
+                    {ev.receipt}
+                  </span>
                 </li>
               ))}
             </ul>
