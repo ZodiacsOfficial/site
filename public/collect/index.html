@@ -106,7 +106,7 @@
       --bg-2:          #0A0C11;
       --surface:       #0F121A;
       --surface-2:     #151925;
-      --surface-3:     #251B10;
+      --surface-3:     #1C2130;
 
       --hair:          rgba(198,204,218, 0.10);
       --hair-2:        rgba(198,204,218, 0.22);
@@ -130,7 +130,7 @@
       --ink-dim:       #8E96AB;
       --ink-mute:      #7A8397;
 
-      --stone:         #322B22;
+      --stone:         #2A3040;
       --celestial:     #3E6378;
       --celestial-dim: #2A4350;
 
@@ -254,7 +254,7 @@
       z-index: var(--z-grain);
       opacity: 0.035;
       mix-blend-mode: overlay;
-      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.93  0 0 0 0 0.80  0 0 0 0 0.42  0 0 0 0.85 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.88  0 0 0 0 0.90  0 0 0 0 0.96  0 0 0 0.85 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
     }
 
     /* Constellation pinpoints — fixed, restrained, museum-not-cosmic. Below content. */
@@ -276,37 +276,54 @@
 
     /* ── Cinematic opening — full-bleed ambient film ───────────── */
 
+    /* ── Cinematic opening — one rounded framed hero: the registry headline
+       and glass CTAs sit over the shared footage, mirroring the main site's
+       hero. Museum type (EB Garamond caps) and registry copy are retained. ── */
     .cine {
       position: relative;
-      height: 100vh;
-      height: 100svh;
-      min-height: 540px;
-      overflow: hidden;
+      width: min(100% - 28px, 1200px);
+      margin: 0 auto;
+      padding: clamp(14px, 3vh, 30px) 0 clamp(8px, 2vh, 16px);
       background: var(--bg);
       z-index: var(--z-base);
+    }
+    .cine__frame {
+      position: relative;
+      overflow: hidden;
+      border-radius: clamp(18px, 2.6vw, 30px);
+      min-height: clamp(560px, calc(100svh - 46px), 880px);
+      background: var(--bg-2);
+      /* A hairline ring keeps the frame editorial rather than app-like. */
+      box-shadow:
+        inset 0 0 0 1px rgba(198,204,218,0.10),
+        0 30px 80px -40px rgba(0,0,0,0.8);
+      isolation: isolate;
     }
     .cine__media {
       position: absolute; inset: 0;
       width: 100%; height: 100%;
       object-fit: cover;
-      object-position: center;
+      object-position: center 42%;
       filter: saturate(0.94) brightness(0.92);
     }
     .cine__scrim {
-      position: absolute; inset: 0;
+      position: absolute; inset: 0; z-index: 1;
       background:
         linear-gradient(180deg,
-          rgba(6,7,9,0.50) 0%,
-          rgba(6,7,9,0.04) 26%,
-          rgba(6,7,9,0.04) 52%,
-          rgba(6,7,9,0.88) 100%);
+          rgba(6,7,9,0.52) 0%,
+          rgba(6,7,9,0.20) 30%,
+          rgba(6,7,9,0.14) 54%,
+          rgba(6,7,9,0.74) 86%,
+          rgba(6,7,9,0.90) 100%);
       pointer-events: none;
     }
     .cine__content {
-      position: absolute; left: 0; right: 0; bottom: 17vh;
+      position: relative; z-index: 2;
+      height: 100%; min-height: inherit;
       display: flex; flex-direction: column; align-items: center;
+      justify-content: flex-start;
       text-align: center;
-      padding: 0 24px;
+      padding: clamp(46px, 9vh, 96px) clamp(22px, 4vw, 56px) clamp(28px, 5vw, 56px);
       animation: cineIn 1500ms var(--ease) 200ms both;
     }
     @keyframes cineIn {
@@ -317,52 +334,80 @@
       font-family: var(--display); font-weight: 500; font-size: 8.5px;
       letter-spacing: 0.24em; text-transform: uppercase;
       color: var(--gold);
-      margin-bottom: 18px;
+      margin-bottom: clamp(16px, 2.4vw, 22px);
       text-shadow: 0 1px 12px rgba(0,0,0,0.8);
     }
-    .cine__mark {
+    .cine__title {
       margin: 0;
       font-family: var(--display); font-weight: 400;
-      font-size: clamp(32px, 8.2vw, 74px);
-      letter-spacing: 0.08em; text-transform: uppercase;
-      line-height: 1;
+      font-size: clamp(40px, 7.4vw, 82px);
+      letter-spacing: 0.05em; text-transform: uppercase;
+      line-height: 0.98;
       color: #EEF1F7;
-      text-shadow: 0 2px 30px rgba(0,0,0,0.7);
-      white-space: nowrap;
-    }
-    .cine__mark .g { color: var(--gold-bright); }
-    .cine__line {
-      margin: 16px 0 0;
-      font-family: var(--serif); font-style: italic;
-      font-size: clamp(15px, 2.6vw, 20px);
-      color: var(--ink-2);
-      text-shadow: 0 1px 16px rgba(0,0,0,0.75);
+      text-shadow: 0 2px 30px rgba(0,0,0,0.65);
       text-wrap: balance;
     }
-    .cine__cue {
-      position: absolute; left: 50%; transform: translateX(-50%);
-      bottom: max(26px, env(safe-area-inset-bottom));
-      display: flex; flex-direction: column; align-items: center; gap: 10px;
-      text-decoration: none;
-      font-family: var(--mono); font-size: 8.5px;
-      letter-spacing: 0.3em; text-transform: uppercase;
-      color: var(--ink-dim);
-      transition: color 320ms var(--ease);
+    /* The second thought lands italic — hierarchy inside one voice. */
+    .cine__title .it {
+      font-style: italic; text-transform: none;
+      letter-spacing: 0.01em;
+      color: var(--gold-bright);
     }
-    .cine__cue:hover { color: var(--gold-bright); }
-    .cine__cue-line {
-      width: 1px; height: 34px;
-      background: linear-gradient(180deg, var(--gold), transparent);
-      transform-origin: top;
-      animation: cineCue 2.8s var(--ease) infinite;
+    /* Caption + CTAs sink to the base of the frame over the footage. */
+    .cine__foot {
+      margin-top: auto;
+      display: flex; flex-direction: column; align-items: center;
+      gap: clamp(18px, 3vw, 26px);
+      padding-top: clamp(24px, 5vh, 48px);
     }
-    @keyframes cineCue {
-      0%, 100% { transform: scaleY(0.5); opacity: 0.45; }
-      50% { transform: scaleY(1); opacity: 1; }
+    .cine__line {
+      margin: 0;
+      max-width: 44ch;
+      font-family: var(--serif); font-style: italic;
+      font-size: clamp(15px, 2.4vw, 20px);
+      line-height: 1.5;
+      color: var(--ink-2);
+      text-shadow: 0 1px 16px rgba(0,0,0,0.7);
+      text-wrap: pretty;
     }
+    .cine__cta {
+      display: flex; flex-wrap: wrap; justify-content: center; gap: 12px;
+    }
+    /* Hero CTAs wear the lens over the footage — a frosted floor (rendered on
+       Safari/iOS via -webkit-backdrop-filter) that the Chromium refraction lens
+       below upgrades. The square museum button form is kept; only the surface
+       becomes glass. */
+    .cine__cta .btn {
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0) 46%),
+        rgba(10,12,17,0.46);
+      backdrop-filter: blur(14px) saturate(150%) brightness(1.12);
+      -webkit-backdrop-filter: blur(14px) saturate(150%) brightness(1.12);
+      border-color: rgba(238,241,247,0.42);
+      color: var(--ink);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.30),
+        inset 0 -12px 22px -14px rgba(255,255,255,0.08),
+        0 8px 26px -12px rgba(0,0,0,0.5);
+    }
+    .cine__cta .btn:hover {
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0) 46%),
+        rgba(10,12,17,0.60);
+      border-color: rgba(238,241,247,0.50);
+      color: var(--gold-bright);
+    }
+    .cine__cta .btn--primary { color: var(--gold-bright); border-color: rgba(238,241,247,0.46); }
+    /* The arrow disc stays a solid bright token so the primary reads as the
+       anchor — the wing's square analogue of the main site's white orb. */
+    .cine__cta .btn--primary .arr {
+      background: var(--gold-bright);
+      border-color: rgba(238,241,247,0.5);
+      color: var(--bg);
+    }
+    .cine__cta .btn--primary:hover .arr { background: #fff; }
     @media (prefers-reduced-motion: reduce) {
       .cine__content { animation: none; }
-      .cine__cue-line { animation: none; }
     }
 
     /* ── App shell ─────────────────────────────────────────────── */
@@ -451,9 +496,30 @@
         0 12px 32px -14px rgba(0,0,0,0.7),
         0 0 0 1px rgba(0,0,0,0.35);
     }
+    /* Chromium refracts the hero CTAs through the capsule lens too; every
+       other browser keeps the frosted floor above. */
+    html.zdx-lens .cine__cta .btn {
+      background: rgba(10, 12, 17, 0.34);
+      backdrop-filter: url(#zdx-lens-cta);
+      -webkit-backdrop-filter: url(#zdx-lens-cta);
+      border-color: rgba(238,241,247,0.30);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.20),
+        inset 0 -1px 0 rgba(255,255,255,0.06),
+        0 10px 30px -12px rgba(0,0,0,0.55);
+    }
+    html.zdx-lens .cine__cta .btn:hover { background: rgba(10, 12, 17, 0.50); }
+    html.zdx-lens .cine__cta .btn--primary { border-color: rgba(238,241,247,0.34); }
+    /* Reduced transparency: solid, no blur — the frosted floor and the lens
+       alike fall back to an opaque capsule. */
     @media (prefers-reduced-transparency: reduce) {
       .hdr {
         background: rgba(10, 12, 17, 0.92);
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+      }
+      .cine__cta .btn {
+        background: rgba(10, 12, 17, 0.86);
         backdrop-filter: none;
         -webkit-backdrop-filter: none;
       }
@@ -621,7 +687,7 @@
       border: 1px solid var(--hair-3);
       text-decoration: none;
       box-shadow:
-        inset 0 1px 0 rgba(233,199,102, 0.12),
+        inset 0 1px 0 rgba(238,241,247, 0.12),
         inset 0 -1px 0 rgba(0, 0, 0, 0.5);
       transition:
         border-color 420ms var(--ease),
@@ -688,10 +754,10 @@
       background:
         radial-gradient(120% 60% at 50% 0%, rgba(198,204,218,0.06), transparent 55%),
         radial-gradient(120% 100% at 50% 100%, rgba(62,99,120,0.04), transparent 60%),
-        linear-gradient(180deg, #1D150C 0%, #100B06 100%);
+        linear-gradient(180deg, var(--surface-2) 0%, var(--surface) 100%);
       border: 1px solid var(--hair-3);
       box-shadow:
-        inset 0 1px 0 rgba(233,199,102,0.14),
+        inset 0 1px 0 rgba(238,241,247,0.14),
         inset 0 -1px 0 rgba(0,0,0,0.5),
         0 18px 40px -22px rgba(0,0,0,0.7),
         0 0 0 1px rgba(0,0,0,0.4);
@@ -2227,7 +2293,7 @@
         radial-gradient(120% 80% at 50% 0%, rgba(198,204,218,0.04), transparent 60%),
         var(--surface);
       padding: 16px 16px 18px;
-      box-shadow: inset 0 1px 0 rgba(233,199,102,0.08), inset 0 -1px 0 rgba(0,0,0,0.4);
+      box-shadow: inset 0 1px 0 rgba(238,241,247,0.08), inset 0 -1px 0 rgba(0,0,0,0.4);
     }
     .pulse__head {
       display: flex; justify-content: space-between; align-items: baseline; gap: 10px;
@@ -3409,6 +3475,12 @@
       <feDisplacementMap in="SourceGraphic" in2="map" scale="0.35" xChannelSelector="R" yChannelSelector="G" result="disp" />
       <feGaussianBlur in="disp" stdDeviation="0.005 0.038" result="soft" />
       <feColorMatrix in="soft" type="saturate" values="1.35" />
+    </filter>
+    <filter id="zdx-lens-cta" color-interpolation-filters="sRGB" primitiveUnits="objectBoundingBox" x="-0.1" y="-0.2" width="1.2" height="1.4">
+      <feImage href="data:image/png;base64,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" x="0" y="0" width="1" height="1" preserveAspectRatio="none" result="map" />
+      <feDisplacementMap in="SourceGraphic" in2="map" scale="0.5" xChannelSelector="R" yChannelSelector="G" result="disp" />
+      <feGaussianBlur in="disp" stdDeviation="0.009 0.038" result="soft" />
+      <feColorMatrix in="soft" type="saturate" values="1.4" />
     </filter>
   </svg>
 
