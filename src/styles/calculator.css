@@ -263,7 +263,10 @@
   max-width: 52ch;
 }
 
-.calc__result { display: grid; gap: clamp(18px, 3vw, 28px); }
+/* The result is scrolled into view after compute; clear the fixed nav
+   pill (top:14px + 52px height + safe-area) so the first line and the
+   shared-link notice never slide under it. */
+.calc__result { display: grid; gap: clamp(18px, 3vw, 28px); scroll-margin-top: calc(80px + env(safe-area-inset-top)); }
 
 /* ── Synastry ─────────────────────────────────────────────────────── */
 .syn__slots {

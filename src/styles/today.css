@@ -1,0 +1,50 @@
+/* Today-by-sign: the homepage zero-input value strip (shared en/es). */
+.tbs { display: grid; gap: 20px; }
+.tbs__head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 16px; }
+.tbs__head h2 { margin: 0; font-family: var(--font-serif); font-weight: 500; font-size: clamp(1.5rem, 1.2rem + 1.6vw, 2.1rem); letter-spacing: -0.005em; }
+.tbs__stamp { font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint); }
+.tbs__signs { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 8px; }
+@media (max-width: 680px) { .tbs__signs { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+@media (max-width: 400px) { .tbs__signs { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.tbs__sign {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+  padding: 12px 6px;
+  border: 1px solid var(--hair-1);
+  border-radius: var(--r-md);
+  background: transparent;
+  color: var(--text-2);
+  cursor: pointer;
+  font: inherit;
+  transition: border-color var(--dur-1) var(--ease), background var(--dur-1) var(--ease), color var(--dur-1) var(--ease);
+}
+.tbs__sign:hover { border-color: var(--hair-2); color: var(--text); }
+.tbs__sign--on {
+  border-color: color-mix(in oklab, var(--sign) 55%, var(--hair-2));
+  background: color-mix(in oklab, var(--sign) 12%, transparent);
+  color: var(--text);
+}
+.tbs__sign:focus-visible { outline: 2px solid var(--sign); outline-offset: 2px; }
+.tbs__icon img { border-radius: 50%; display: block; }
+.tbs__name { font-size: 12px; letter-spacing: 0.01em; }
+
+.tbs__prompt { margin: 0; font-size: var(--text-sm); color: var(--muted); max-width: 54ch; }
+
+.tbs__read {
+  display: grid;
+  gap: 14px;
+  padding: clamp(20px, 3vw, 26px);
+  border: 1px solid var(--hair-1);
+  border-radius: var(--r-lg);
+  background: color-mix(in oklab, var(--sign) 5%, var(--void-1));
+}
+.tbs__read-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 14px; }
+.tbs__read-head strong { font-size: var(--text-lg); font-weight: 620; letter-spacing: -0.01em; }
+.tbs__read-stamp { font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--faint); }
+.tbs__lines { margin: 0; padding: 0; list-style: none; display: grid; gap: 12px; }
+.tbs__lines p { margin: 0 0 3px; font-size: var(--text-sm); color: var(--text-2); line-height: 1.6; max-width: 64ch; }
+.tbs__receipt { font-size: 10.5px; color: var(--faint); letter-spacing: 0.05em; }
+.tbs__more { justify-self: start; font-size: 12.5px; color: var(--muted); text-decoration: none; border-bottom: 1px solid var(--hair-2); }
+.tbs__more:hover { color: var(--text); border-bottom-color: var(--sign); }
