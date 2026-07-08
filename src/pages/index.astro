@@ -305,7 +305,11 @@ const tools = [
 <style>
   /* ── Hero — the rounded cinematic frame ── */
   .hero {
-    /* main already clears the fixed nav (96px) — the frame owns the rest. */
+    /* Cancel main's nav clearance so the frame rises behind the fixed
+       nav pill — the liquid-glass capsule then refracts the footage from
+       the first paint instead of empty void. The headline keeps clear of
+       the nav via the content padding below. */
+    margin-top: calc(-1 * var(--nav-space, 96px));
     width: min(100% - 32px, 1440px);
     padding-block: 0 clamp(14px, 2vw, 22px);
   }
@@ -313,9 +317,9 @@ const tools = [
     position: relative;
     overflow: hidden;
     border-radius: clamp(18px, 2.6vw, 30px);
-    /* Viewport minus the nav clearance and a guaranteed ticker peek —
-       the next section is always visibly waiting below the frame. */
-    min-height: clamp(600px, calc(100svh - 128px), 900px);
+    /* Frame now starts at the top of the viewport; fill it, leaving a
+       small peek of the ticker waiting below. */
+    min-height: clamp(600px, calc(100svh - 40px), 900px);
     background: var(--void-1);
     /* A hairline ring keeps the frame editorial rather than app-like. */
     box-shadow:
@@ -355,7 +359,9 @@ const tools = [
     align-items: center;
     justify-content: flex-start;
     gap: 0;
-    padding: clamp(88px, 12svh, 124px) clamp(22px, 4vw, 56px) clamp(28px, 5vw, 64px);
+    /* Top padding clears the fixed nav (now overlapping the frame) plus
+       any notch inset; sides and bottom unchanged. */
+    padding: calc(clamp(100px, 13svh, 132px) + env(safe-area-inset-top)) clamp(22px, 4vw, 56px) clamp(28px, 5vw, 64px);
     text-align: center;
   }
   .hero__title {
@@ -443,8 +449,8 @@ const tools = [
 
   @media (max-width: 640px) {
     .hero { width: min(100% - 20px, 1440px); }
-    .hero__frame { min-height: clamp(540px, calc(100svh - 180px), 700px); }
-    .hero__content { padding: clamp(86px, 14svh, 112px) 18px 22px; }
+    .hero__frame { min-height: clamp(540px, calc(100svh - 56px), 760px); }
+    .hero__content { padding: calc(clamp(96px, 15svh, 120px) + env(safe-area-inset-top)) 18px 22px; }
     .hero__title {
       max-width: 7.49em; /* 11ch of Instrument */
       font-size: clamp(2.25rem, 11.5vw, 3.55rem);

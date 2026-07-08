@@ -100,5 +100,6 @@ const FAVICON = "data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/sv
 </html>
 
 <style is:global>
-  main { position: relative; z-index: var(--z-base); padding-top: 96px; }
+  :root { --nav-space: 96px; }
+  main { position: relative; z-index: var(--z-base); padding-top: var(--nav-space); }
 </style>
