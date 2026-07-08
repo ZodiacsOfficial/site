@@ -220,6 +220,30 @@ input, select { font: inherit; }
 
 .btn--ghost { background: transparent; }
 
+/* ── Sign chip (SignChip island) ────────────────────────────────── */
+/* Global — used in the placements/synastry tables AND the homepage
+   WelcomeBack strip, which does not load calculator.css. Sizes to content and
+   never shrinks so long names (Sagittarius, Capricorn) can't clip; the icon
+   holds at 18px. */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  width: max-content;
+  max-width: none;
+  flex-shrink: 0;
+  padding: 3px 10px 3px 4px;
+  border-radius: var(--r-full);
+  border: 1px solid color-mix(in oklab, var(--sign, var(--accent)) 35%, transparent);
+  background: color-mix(in oklab, var(--sign, var(--accent)) 9%, transparent);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text);
+  text-decoration: none;
+}
+.chip__icon { line-height: 0; flex-shrink: 0; }
+.chip__icon img { border-radius: 50%; width: 18px; height: 18px; }
+
 /* ── Double-bezel card: outer shell + inner core ───────────────── */
 .shell {
   background: rgba(198, 204, 218, 0.035);
