@@ -2,10 +2,12 @@
 import Base from '../layouts/Base.astro';
 import SignIcon from '../components/SignIcon.astro';
 import SkyTicker from '../islands/SkyTicker';
+import TodayBySign from '../islands/TodayBySign';
 import DemoChart from '../islands/DemoChart';
 import WelcomeBack from '../islands/WelcomeBack';
 import glassMaps from '../data/glass-maps.json';
 import { SIGNS } from '../lib/signs';
+import '../styles/today.css';
 
 const faq = [
   {
@@ -172,6 +174,11 @@ const tools = [
   <!-- 02 · The sky, right now -->
   <section class="container ticker-band reveal">
     <SkyTicker client:load />
+  </section>
+
+  <!-- 02b · Zero-input value: tap your sign, see today -->
+  <section class="section container reveal">
+    <TodayBySign client:load />
   </section>
 
   <!-- 03 · Tools -->
@@ -502,6 +509,8 @@ const tools = [
     letter-spacing: 0.05em;
     color: var(--text-2);
   }
+
+  /* Today-by-sign styles live in ../styles/today.css (shared with /es/). */
   :global(.skyticker__label) {
     font-style: italic;
     font-family: var(--font-serif);

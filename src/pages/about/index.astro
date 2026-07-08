@@ -1,0 +1,114 @@
+---
+import Base from '../../layouts/Base.astro';
+
+const jsonLd = [
+  {
+    '@type': 'AboutPage',
+    name: 'About Zodiacs.org',
+    url: 'https://zodiacs.org/about/',
+    description:
+      'Who runs Zodiacs.org and why: a free astrology reference where charts are computed accurately, explained plainly, and kept private on your device.',
+  },
+  {
+    '@type': 'Organization',
+    name: 'Zodiacs.org',
+    url: 'https://zodiacs.org/',
+    email: 'hello@zodiacs.org',
+    description: 'A free astrology platform with an on-device chart engine and a collector’s registry wing.',
+  },
+];
+---
+<Base
+  title="About Zodiacs.org — Accurate, Plain, Private Astrology"
+  description="Who runs Zodiacs.org and why: a free astrology reference where charts are computed accurately from real astronomy, explained in plain language, and kept private on your device."
+  path="/about/"
+  jsonLd={jsonLd}
+>
+  <section class="section container container--narrow">
+    <em class="kicker">About</em>
+    <h1 class="method-title display">A straight answer about the sky.</h1>
+
+    <div class="prose">
+      <p class="lede">
+        Zodiacs.org is a free astrology reference built on one idea: the
+        astronomy can be exact even when the interpretation is a tradition. Every
+        chart here is computed from the real positions of the planets, explained
+        in plain language, and kept on your own device.
+      </p>
+
+      <h2>Why it exists</h2>
+      <p>
+        Most astrology sites are either beautiful and vague or accurate and
+        unreadable. The calculators that get the math right tend to look like tax
+        software; the ones that feel good tend to hand-wave the numbers. We
+        wanted a third option — a place where you can get your full birth chart
+        in about twenty seconds, see the exact degrees behind every claim, and
+        read what they mean in ordinary words.
+      </p>
+      <p>
+        So nothing is asserted without its receipt: a horoscope line comes with
+        the transit and the time it is exact; a sign on a cusp date comes with
+        the year it actually changed. You never have to take a number on faith,
+        because the number is printed next to the sentence.
+      </p>
+
+      <h2>How the charts are computed</h2>
+      <p>
+        Positions come from an open-source astronomical engine accurate to about
+        an arcminute, and every change to it must pass an automated accuracy
+        gate against NASA JPL reference data before it ships. The whole method —
+        the ephemeris, the house systems, how historical time zones are handled —
+        is written out on the <a href="/methodology/">methodology page</a>. If
+        you want to check us, you can.
+      </p>
+
+      <h2>Your data stays yours</h2>
+      <p>
+        The engine runs in your browser, so the birth date, time, and place you
+        enter are never sent to us. Charts you save live on your device unless
+        you choose to sync them with a free account. There are no ads and no
+        cross-site tracking. The full detail is on the
+        <a href="/privacy/">privacy page</a>.
+      </p>
+
+      <h2>Two registers under one roof</h2>
+      <p>
+        Most of the site is the astrology reference — guides, calculators,
+        horoscopes, and the birthday pages. Alongside it lives the
+        <a href="/collect/">collector's wing</a>: the original Zodiacs registry,
+        a museum-toned catalogue of the twelve as a set of records, kept in its
+        own voice. The two share one design but keep their own registers; the
+        astrology surfaces stay free of any market language, by design.
+      </p>
+
+      <h2>Who runs it</h2>
+      <p>
+        Zodiacs.org is an independent project, not a venture-backed company or a
+        content mill. It is maintained by a small team who care about getting
+        the astronomy right and the writing honest. There is no upsell here and
+        no premium tier gating the basics — the calculators are free because the
+        cost of running them, once the math is on your device, is close to
+        nothing.
+      </p>
+
+      <h2>Get in touch</h2>
+      <p id="contact">
+        Corrections, questions, press, or a request about your data — write to
+        <a href="mailto:hello@zodiacs.org">hello@zodiacs.org</a>. If you have
+        spotted an astrological or astronomical error on a page, tell us which
+        page; accuracy reports are the ones we answer first.
+      </p>
+
+      <div class="about-cta">
+        <a class="btn btn--primary" href="/birth-chart/"><span>Get your free birth chart</span><span class="orb">↗</span></a>
+        <a class="btn btn--ghost" href="/methodology/"><span>How we compute it</span></a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .method-title { margin: 6px 0 8px; }
+  .prose .lede { font-size: var(--text-lg); color: var(--text); }
+  .about-cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 36px; }
+</style>

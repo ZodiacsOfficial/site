@@ -1,0 +1,128 @@
+---
+import Base from '../../layouts/Base.astro';
+
+const updated = '8 July 2026';
+
+const jsonLd = [
+  {
+    '@type': 'WebPage',
+    name: 'Terms of use — Zodiacs.org',
+    url: 'https://zodiacs.org/terms/',
+    description:
+      'The terms for using zodiacs.org: a free astrology reference offered for interest and self-reflection, provided as is, with an optional account.',
+  },
+];
+---
+<Base
+  title="Terms of Use | Zodiacs.org"
+  description="The terms for using zodiacs.org: a free astrology reference offered for interest and reflection, provided as is, with optional accounts. Plain language, no surprises."
+  path="/terms/"
+  jsonLd={jsonLd}
+>
+  <section class="section container container--narrow">
+    <em class="kicker">Terms</em>
+    <h1 class="method-title display">Terms of use.</h1>
+
+    <div class="prose">
+      <p class="lede">
+        Zodiacs.org is a free astrology reference. Using it means you agree to
+        these terms. We have tried to keep them short and readable.
+      </p>
+
+      <h2>What this site is</h2>
+      <p>
+        Zodiacs.org computes astronomical positions and presents astrological
+        interpretations, guides, and tools. Astrology is offered here for
+        interest, reflection, and entertainment. It is not a substitute for
+        professional advice — medical, psychological, legal, or financial — and
+        nothing on the site should be treated as a prediction of future events
+        or as a basis for important decisions. The astronomy is computed
+        carefully (see the <a href="/methodology/">methodology page</a>); the
+        interpretation of it remains a tradition, not a science.
+      </p>
+
+      <h2>Free use</h2>
+      <p>
+        The calculators, guides, and reading tools are free to use for your own
+        personal, non-commercial purposes. You may share links to pages freely.
+        The embeddable sky widget may be used under the short terms stated on
+        the <a href="/widgets/">widgets page</a>.
+      </p>
+
+      <h2>Accounts</h2>
+      <p>
+        An account is optional. If you create one, you are responsible for the
+        email address you use and for the charts you choose to save and sync.
+        Keep access to your email secure, since sign-in happens through it. You
+        may delete your account at any time by emailing
+        <a href="mailto:hello@zodiacs.org">hello@zodiacs.org</a>. We may suspend
+        accounts used to abuse the service or others.
+      </p>
+
+      <h2>Acceptable use</h2>
+      <p>
+        Please do not attempt to break, overload, scrape at scale, or misuse the
+        site or its infrastructure, and do not use it to harass others or to
+        break the law. The registry wing and developer SDK have their own
+        read-only, no-advice character, described within those pages.
+      </p>
+
+      <h2>Accuracy and availability</h2>
+      <p>
+        We work to compute positions accurately and test them against reference
+        data, but the site is provided <strong>as is</strong> and
+        <strong>as available</strong>, without warranties of any kind. We do not
+        guarantee that it will be uninterrupted, error-free, or fit for a
+        particular purpose. Sky data covers a bounded range of years and is
+        refreshed periodically.
+      </p>
+
+      <h2>Limitation of liability</h2>
+      <p>
+        To the fullest extent the law allows, Zodiacs.org and the people who run
+        it are not liable for any indirect, incidental, or consequential loss
+        arising from your use of the site, or from decisions made in reliance on
+        it. Because the service is free and interpretive, you use it at your own
+        discretion.
+      </p>
+
+      <h2>Content and intellectual property</h2>
+      <p>
+        The site's original text, design, and code belong to the operator of
+        Zodiacs.org unless noted otherwise. City data is from
+        <a href="https://www.geonames.org/" rel="noopener noreferrer">GeoNames</a>
+        under CC BY 4.0, and the fonts are used under the SIL Open Font License;
+        both are credited in the footer. You are welcome to quote and link to
+        pages with attribution.
+      </p>
+
+      <h2>Changes</h2>
+      <p>
+        We may update these terms as the site evolves. When we do, we will
+        change the date below. Continuing to use the site after a change means
+        you accept the updated terms.
+      </p>
+
+      <h2>Governing law</h2>
+      <p>
+        These terms are governed by the laws of the jurisdiction in which the
+        operator of Zodiacs.org is established, without regard to conflict-of-law
+        rules.
+      </p>
+
+      <h2>Contact</h2>
+      <p>
+        Questions about these terms go to
+        <a href="mailto:hello@zodiacs.org">hello@zodiacs.org</a>.
+      </p>
+
+      <p class="method-updated mono">Last updated: {updated}</p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .method-title { margin: 6px 0 8px; }
+  .prose .lede { font-size: var(--text-lg); color: var(--text); }
+  .method-updated { margin-top: 40px; color: var(--faint); font-size: 12px; letter-spacing: 0.04em; }
+</style>

@@ -67,6 +67,12 @@ const otherLang = locale === 'es' ? 'en' : 'es';
     <div class="footer__base">
       <span>© {year} Zodiacs.org</span>
       <span class="footer__base-links">
+        <a href="/about/">{t(locale, 'footerAbout')}</a>
+        <span aria-hidden="true">·</span>
+        <a href="/privacy/">{t(locale, 'footerPrivacy')}</a>
+        <span aria-hidden="true">·</span>
+        <a href="/terms/">{t(locale, 'footerTerms')}</a>
+        <span aria-hidden="true">·</span>
         <a href={localizePath(locale, '/methodology/')}>{t(locale, 'footerMethodology')}</a>
         <span aria-hidden="true">·</span>
         <span>{t(locale, 'footerPlaceData')}: <a href="https://www.geonames.org/" rel="noopener noreferrer">GeoNames</a> (CC BY 4.0)</span>
