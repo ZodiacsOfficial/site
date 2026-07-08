@@ -58,6 +58,19 @@
   max-width: 100%;
   color-scheme: dark;
 }
+/* iOS Safari gives native date & time controls an intrinsic width that ignores
+   width:100% (it behaves like a min-width, so it also beats max-width) and
+   pushes the field past the card's right edge. appearance:none drops that
+   intrinsic sizing so the control fills its field instead; the native picker
+   still opens on tap, and desktop Chrome keeps its placeholder + calendar/clock
+   indicator — so only the iOS overflow changes. box-sizing keeps the padding
+   inside the 100% width. */
+.field__input[type='date'],
+.field__input[type='time'] {
+  -webkit-appearance: none;
+  appearance: none;
+  box-sizing: border-box;
+}
 .field__input:hover { border-color: var(--hair-3); }
 .field__input:focus { border-color: color-mix(in oklab, var(--accent) 60%, transparent); outline: none; }
 .field__input:disabled { opacity: 0.45; }
