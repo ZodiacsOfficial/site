@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import '../../styles/rx-table.css';
 import eclipseData from '../../data/eclipses.json';
 import { signBySlug } from '../../lib/signs';
 import { formatDate, formatShortDate, formatTime } from '../../lib/i18n/dates';
@@ -146,11 +147,11 @@ const jsonLd = [
         <tbody>
           {eclipses.map((e) => (
             <tr class={e.past ? 'rx-table__past' : ''}>
-              <td>{fmtDay(e.at)}</td>
-              <td class="mono">{fmtTime(e.at)}</td>
-              <td>{e.label}</td>
-              <td>{e.sign.name}</td>
-              <td class="ecl-detail">{e.detail}</td>
+              <td data-label="Peak">{fmtDay(e.at)}</td>
+              <td class="mono" data-label="UTC">{fmtTime(e.at)}</td>
+              <td data-label="Eclipse">{e.label}</td>
+              <td data-label="In" style={`color:${e.sign.hue}`}>{e.sign.name}</td>
+              <td class="ecl-detail" data-label="Detail">{e.detail}</td>
             </tr>
           ))}
         </tbody>
@@ -225,24 +226,10 @@ const jsonLd = [
   .rx-now__line { font-size: var(--text-lg); letter-spacing: -0.01em; max-width: 56ch; }
   .rx-now__all { font-size: 11.5px; color: var(--faint); letter-spacing: 0.05em; }
 
-  .table-wrap { overflow-x: auto; }
-  .rx-table { width: 100%; border-collapse: collapse; font-size: var(--text-sm); }
-  .rx-table th {
-    text-align: left;
-    padding: 10px 16px 10px 0;
-    font-family: var(--font-mono);
-    font-size: 10px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    font-weight: 500;
-    color: var(--faint);
-    border-bottom: 1px solid var(--hair-2);
-  }
-  .rx-table td { padding: 11px 16px 11px 0; border-bottom: 1px solid var(--hair-1); color: var(--text-2); white-space: nowrap; }
-  .rx-table td:first-child { color: var(--text); font-weight: 550; }
+  /* .table-wrap + .rx-table (desktop + mobile stacking) live in
+     ../../styles/rx-table.css (shared). */
   .rx-table td.ecl-detail { white-space: normal; min-width: 200px; }
-  .rx-table__past td { color: var(--faint); }
-  .rx-table__past td:first-child { color: var(--muted); font-weight: 500; }
+  @media (max-width: 560px) { .rx-table td.ecl-detail { min-width: 0; } }
 
   .faq { display: grid; gap: 8px; }
   .faq__item {

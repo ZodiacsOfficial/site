@@ -131,7 +131,7 @@ const jsonLd = [
         <tbody>
           {SIGNS.map((s) => (
             <tr style={`--sign:${s.hue}`}>
-              <td><a href={`/${s.slug}/`}><SignIcon sign={s.slug} size={20} /> {s.name} {s.glyph}</a></td>
+              <td><a href={`/${s.slug}/`}><SignIcon sign={s.slug} size={20} /> {s.name}</a></td>
               <td class="mono">{s.dates}</td>
               <td>{ELEMENT_LABEL[s.element]}</td>
               <td>{MODALITY_LABEL[s.modality]}</td>

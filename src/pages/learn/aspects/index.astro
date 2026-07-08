@@ -1,7 +1,9 @@
 ---
 import { getCollection } from 'astro:content';
 import Base from '../../../layouts/Base.astro';
+import AspectGlyph from '../../../components/AspectGlyph';
 import { ASPECTS } from '../../../lib/engine/aspects';
+import '../../../styles/cluster.css';
 
 const ASPECT_ORDER = ['conjunction', 'sextile', 'square', 'trine', 'opposition'];
 
@@ -60,7 +62,7 @@ const jsonLd = [
       {aspects.map((a) => (
         <li>
           <a class="cluster-row" href={`/learn/aspects/${a.slug}/`}>
-            <span class="cluster-row__num mono">{a.angle}°</span>
+            <span class="cluster-row__num mono"><AspectGlyph type={a.type} size={16} class="pg-inline" /> {a.angle}°</span>
             <span class="cluster-row__name">{a.name}</span>
             <span class="cluster-row__role">{a.theme}</span>
             <span class="cluster-row__go">→</span>

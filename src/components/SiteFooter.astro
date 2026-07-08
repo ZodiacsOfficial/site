@@ -68,21 +68,13 @@ const otherLang = locale === 'es' ? 'en' : 'es';
       <span>© {year} Zodiacs.org</span>
       <span class="footer__base-links">
         <a href="/about/">{t(locale, 'footerAbout')}</a>
-        <span aria-hidden="true">·</span>
         <a href="/privacy/">{t(locale, 'footerPrivacy')}</a>
-        <span aria-hidden="true">·</span>
         <a href="/terms/">{t(locale, 'footerTerms')}</a>
-        <span aria-hidden="true">·</span>
         <a href={localizePath(locale, '/methodology/')}>{t(locale, 'footerMethodology')}</a>
-        <span aria-hidden="true">·</span>
         <span>{t(locale, 'footerPlaceData')}: <a href="https://www.geonames.org/" rel="noopener noreferrer">GeoNames</a> (CC BY 4.0)</span>
-        <span aria-hidden="true">·</span>
         <span>{t(locale, 'footerFonts')} <a href="/fonts/OFL-instrument-sans.txt">SIL OFL</a></span>
-        <span aria-hidden="true">·</span>
         <a href="/widgets/">Widgets</a>
-        <span aria-hidden="true">·</span>
         <a href="/feeds/horoscopes.xml">RSS</a>
-        <span aria-hidden="true">·</span>
         <a href={otherHref} hreflang={otherLang} lang={otherLang}>{otherLabel}</a>
       </span>
     </div>
@@ -178,7 +170,10 @@ const otherLang = locale === 'es' ? 'en' : 'es';
     letter-spacing: 0.04em;
     color: var(--faint);
   }
-  .footer__base-links { display: inline-flex; flex-wrap: wrap; gap: 8px 10px; align-items: center; }
+  /* Middots ride as attached ::after separators so they never strand at the
+     start of a wrapped line on mobile. */
+  .footer__base-links { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 0; }
+  .footer__base-links > *:not(:last-child)::after { content: '·'; margin: 0 10px; color: var(--faint); }
   .footer__base a { color: var(--muted); text-decoration: none; }
   .footer__base a:hover { color: var(--text); }
 </style>
