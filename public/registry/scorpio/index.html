@@ -208,6 +208,65 @@
     }
     .hdr__nav:hover .chip { transform: translate(2px, -1px); border-color: var(--gold); }
 
+    /* ── Mobile menu — burger + overlay (≤700px) ──
+       The header chips crowd a phone; below 700px they fold into a burger
+       overlay that also surfaces the wider wing (Registry · The Twelve ·
+       Verify · Thesis · Archive · SDK). Parity with the hub, museum register. */
+    .hdr__burger {
+      display: none;
+      width: 34px; height: 34px; margin-left: 2px; padding: 0;
+      gap: 4px; place-content: center; place-items: center;
+      border: 1px solid var(--hair-2); border-radius: 999px;
+      background: rgba(198,204,218,0.05); cursor: pointer;
+    }
+    .hdr__burger-line {
+      display: block; width: 15px; height: 1.5px; border-radius: 2px;
+      background: var(--ink-2);
+      transition: transform 320ms var(--ease), opacity 240ms var(--ease);
+    }
+    .hdr__burger[aria-expanded='true'] .hdr__burger-line:first-child { transform: translateY(5.5px) rotate(45deg); }
+    .hdr__burger[aria-expanded='true'] .hdr__burger-line:nth-child(2) { opacity: 0; transform: scaleX(0.4); }
+    .hdr__burger[aria-expanded='true'] .hdr__burger-line:last-child { transform: translateY(-5.5px) rotate(-45deg); }
+    .hdr__menu {
+      position: fixed; inset: 0; z-index: calc(var(--z-nav) - 1);
+      pointer-events: auto;
+      background: rgba(6,7,9,0.90);
+      backdrop-filter: blur(26px) saturate(140%);
+      -webkit-backdrop-filter: blur(26px) saturate(140%);
+      padding: calc(92px + env(safe-area-inset-top)) clamp(24px, 7vw, 40px) 40px;
+      overflow-y: auto;
+    }
+    .hdr__menu[hidden] { display: none; }
+    .hdr__menu-inner { display: flex; flex-direction: column; max-width: 520px; margin: 0 auto; }
+    .hdr__menu-label {
+      margin-bottom: 18px;
+      font-family: var(--mono); font-size: 10px; letter-spacing: 0.24em;
+      text-transform: uppercase; color: var(--ink-mute);
+    }
+    .hdr__menu-inner a {
+      padding: 13px 0;
+      font-family: var(--serif); font-weight: 400;
+      font-size: clamp(26px, 8vw, 34px); letter-spacing: 0.01em; line-height: 1.05;
+      color: var(--ink); text-decoration: none;
+      border-bottom: 1px solid var(--hair);
+      transition: color 320ms var(--ease);
+    }
+    .hdr__menu-inner a:last-child { border-bottom: 0; }
+    .hdr__menu-inner a:hover { color: var(--gold-bright); }
+    .hdr__menu.is-open a, .hdr__menu.is-open .hdr__menu-label {
+      animation: hdrMenuIn 520ms var(--ease) both;
+      animation-delay: calc(40ms * var(--i, 0));
+    }
+    @keyframes hdrMenuIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+    @media (max-width: 700px) {
+      .hdr__nav { display: none; }
+      .hdr__burger { display: inline-grid; }
+    }
+    @media (min-width: 701px) { .hdr__menu { display: none; } }
+    @media (prefers-reduced-motion: reduce) {
+      .hdr__menu.is-open a, .hdr__menu.is-open .hdr__menu-label { animation: none; }
+    }
+
     /* ── Page shell ── */
     .pg {
       max-width: 1140px; margin: 0 auto; position: relative; z-index: var(--z-base);
@@ -560,7 +619,21 @@
       <a class="hdr__mark" href="/"><span>Zodiacs</span><span class="sep">·</span><span class="dim">org</span></a>
       <a class="hdr__nav" href="/registry/#official-twelve"><span>The Twelve</span><span class="chip">↗</span></a>
       <a class="hdr__nav" href="/registry/sagittarius/" aria-label="Next lot: Sagittarius"><span>Lot IX</span><span class="chip">→</span></a>
+      <button type="button" class="hdr__burger" data-menu-toggle aria-expanded="false" aria-controls="hdr-menu" aria-label="Open menu">
+        <span class="hdr__burger-line"></span><span class="hdr__burger-line"></span><span class="hdr__burger-line"></span>
+      </button>
     </header>
+  </div>
+  <div id="hdr-menu" class="hdr__menu" data-menu hidden>
+    <nav class="hdr__menu-inner" aria-label="Registry sections">
+      <span class="hdr__menu-label">The Registry</span>
+      <a href="/registry/" style="--i:1">Registry</a>
+      <a href="/registry/#official-twelve" style="--i:2">The Twelve</a>
+      <a href="/registry/#verify" style="--i:3">Verify</a>
+      <a href="/thesis/" style="--i:4">Thesis</a>
+      <a href="/archive/" style="--i:5">Archive</a>
+      <a href="/sdk/" style="--i:6">SDK</a>
+    </nav>
   </div>
 
   <main class="pg" id="main">
@@ -796,6 +869,29 @@
       reveals.forEach(function (el) { io.observe(el); });
     } else {
       reveals.forEach(function (el) { el.classList.add('is-in'); });
+    }
+
+    // Mobile menu — burger overlay (parity with the hub / main site). Below
+    // 700px the header chips fold into this; it also surfaces the wider wing.
+    var burger = document.querySelector('[data-menu-toggle]');
+    var menu = document.querySelector('[data-menu]');
+    if (burger && menu) {
+      var setMenu = function (open) {
+        burger.setAttribute('aria-expanded', String(open));
+        burger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+        menu.hidden = !open;
+        menu.classList.toggle('is-open', open);
+        document.documentElement.style.overflow = open ? 'hidden' : '';
+      };
+      burger.addEventListener('click', function () {
+        setMenu(burger.getAttribute('aria-expanded') !== 'true');
+      });
+      menu.addEventListener('click', function (e) {
+        if (e.target.closest('a')) setMenu(false);
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') setMenu(false);
+      });
     }
 
     // Copy chips

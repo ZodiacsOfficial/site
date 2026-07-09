@@ -242,6 +242,68 @@
       background: rgba(198,204,218,0.05);
     }
 
+    /* ── Mobile menu — burger + overlay (≤700px) ──
+       Below 700px the nav link folds into a burger overlay that surfaces
+       the wider wing (Registry · The Twelve · Verify · Thesis · Archive ·
+       SDK). Parity with the hub, museum register. The overlay lives inside
+       .nav (z-index 2 over main's z-index 1); .nav__inner is lifted above it
+       so the burger/X stays tappable. */
+    .nav__inner { position: relative; z-index: 1; }
+    .nav__burger {
+      display: none;
+      width: 34px; height: 34px; margin-left: 2px; padding: 0;
+      gap: 4px; place-content: center; place-items: center;
+      border: 1px solid var(--hair-2); border-radius: 999px;
+      background: rgba(198,204,218,0.05); cursor: pointer;
+    }
+    .nav__burger-line {
+      display: block; width: 15px; height: 1.5px; border-radius: 2px;
+      background: var(--ink-2);
+      transition: transform 320ms var(--ease), opacity 240ms var(--ease);
+    }
+    .nav__burger[aria-expanded='true'] .nav__burger-line:first-child { transform: translateY(5.5px) rotate(45deg); }
+    .nav__burger[aria-expanded='true'] .nav__burger-line:nth-child(2) { opacity: 0; transform: scaleX(0.4); }
+    .nav__burger[aria-expanded='true'] .nav__burger-line:last-child { transform: translateY(-5.5px) rotate(-45deg); }
+    .nav__menu {
+      position: fixed; inset: 0; z-index: 0;
+      pointer-events: auto;
+      background: rgba(6,7,9,0.90);
+      backdrop-filter: blur(26px) saturate(140%);
+      -webkit-backdrop-filter: blur(26px) saturate(140%);
+      padding: calc(92px + env(safe-area-inset-top)) clamp(24px, 7vw, 40px) 40px;
+      overflow-y: auto;
+    }
+    .nav__menu[hidden] { display: none; }
+    .nav__menu-inner { display: flex; flex-direction: column; max-width: 520px; margin: 0 auto; }
+    .nav__menu-label {
+      margin-bottom: 18px;
+      font-family: var(--mono); font-size: 10px; letter-spacing: 0.24em;
+      text-transform: uppercase; color: var(--ink-mute);
+    }
+    .nav__menu-inner a {
+      padding: 13px 0;
+      font-family: var(--serif); font-weight: 400;
+      font-size: clamp(26px, 8vw, 34px); letter-spacing: 0.01em; line-height: 1.05;
+      color: var(--ink); text-decoration: none;
+      border-bottom: 1px solid var(--hair);
+      transition: color 320ms var(--ease);
+    }
+    .nav__menu-inner a:last-child { border-bottom: 0; }
+    .nav__menu-inner a:hover, .nav__menu-inner a[aria-current='page'] { color: var(--gold-bright); }
+    .nav__menu.is-open a, .nav__menu.is-open .nav__menu-label {
+      animation: navMenuIn 520ms var(--ease) both;
+      animation-delay: calc(40ms * var(--i, 0));
+    }
+    @keyframes navMenuIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+    @media (max-width: 700px) {
+      .nav__link { display: none; }
+      .nav__burger { display: inline-grid; }
+    }
+    @media (min-width: 701px) { .nav__menu { display: none; } }
+    @media (prefers-reduced-motion: reduce) {
+      .nav__menu.is-open a, .nav__menu.is-open .nav__menu-label { animation: none; }
+    }
+
       main {
       position: relative;
       z-index: 1;
@@ -1630,6 +1692,20 @@
           <span>Registry</span>
           <span class="nav__chip">↗</span>
         </a>
+        <button type="button" class="nav__burger" data-menu-toggle aria-expanded="false" aria-controls="nav-menu" aria-label="Open menu">
+          <span class="nav__burger-line"></span><span class="nav__burger-line"></span><span class="nav__burger-line"></span>
+        </button>
+      </div>
+      <div id="nav-menu" class="nav__menu" data-menu hidden>
+        <div class="nav__menu-inner">
+          <span class="nav__menu-label">The Registry</span>
+          <a href="/registry/" style="--i:1">Registry</a>
+          <a href="/registry/#official-twelve" style="--i:2">The Twelve</a>
+          <a href="/registry/#verify" style="--i:3">Verify</a>
+          <a href="/thesis/" style="--i:4">Thesis</a>
+          <a href="/archive/" style="--i:5">Archive</a>
+          <a href="/sdk/" style="--i:6" aria-current="page">SDK</a>
+        </div>
       </div>
     </nav>
 
@@ -2328,6 +2404,29 @@ console.log(receipt.wheelCoverage);</code></pre>
     </main>
   </div>
   <script>
+    // Mobile menu — burger overlay (parity with the hub / main site).
+    (function () {
+      var burger = document.querySelector('[data-menu-toggle]');
+      var menu = document.querySelector('[data-menu]');
+      if (!burger || !menu) return;
+      var setMenu = function (open) {
+        burger.setAttribute('aria-expanded', String(open));
+        burger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+        menu.hidden = !open;
+        menu.classList.toggle('is-open', open);
+        document.documentElement.style.overflow = open ? 'hidden' : '';
+      };
+      burger.addEventListener('click', function () {
+        setMenu(burger.getAttribute('aria-expanded') !== 'true');
+      });
+      menu.addEventListener('click', function (e) {
+        if (e.target.closest('a')) setMenu(false);
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') setMenu(false);
+      });
+    })();
+
     const escapeHtml = (value) => value
       .replace(/&/g, "&amp;")
       .replace(/</g, "&lt;")
