@@ -273,6 +273,35 @@
   max-width: 52ch;
 }
 
+/* Records bridge — mirrors CollectBand.astro. The sun sign's canonical
+   record, one quiet click into the collector's wing. No market language. */
+.calc__record {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 16px;
+  padding: 12px 18px;
+  border: 1px solid var(--hair-1);
+  border-radius: var(--r-md);
+  background: linear-gradient(90deg, rgba(198, 204, 218, 0.04), transparent 60%);
+}
+.calc__record-label {
+  font-size: 9.5px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+.calc__record-text { font-size: 13px; color: var(--muted); }
+.calc__record-link {
+  margin-left: auto;
+  font-size: 13px;
+  font-weight: 550;
+  color: var(--text-2);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.calc__record-link:hover { color: var(--text); }
+
 /* The result is scrolled into view after compute; clear the fixed nav
    pill (top:14px + 52px height + safe-area) so the first line and the
    shared-link notice never slide under it. */

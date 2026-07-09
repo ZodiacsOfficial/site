@@ -45,7 +45,7 @@ Feeds: monthly horoscopes RSS https://zodiacs.org/feeds/horoscopes.xml · daily 
 Embeddable current-sky widget (iframe, free with the backlink intact): https://zodiacs.org/widgets/
 
 Astrofolio relationship:
-Astrofolio is the optional save/keep layer behind the free tools — charts a visitor saves live in their own browser first, with optional account sync for saved charts — and a related consumer experience around personal Zodiac shelves at https://astrofolio.xyz/. Zodiacs.org remains the official registry and SDK source of truth.
+Astrofolio is the optional companion app the free tools feed into — charts a visitor saves live in their own browser first, with optional account sync, and the signs they care about become a cosmic identity they keep (personal Zodiac shelves, share cards, a profile) at https://astrofolio.xyz/. Zodiacs.org remains the free astrology reference and the official registry and SDK source of truth.
 
 The collector's wing (the registry):
 - The Registry — the Twelve as canonical records, with address verifier: https://zodiacs.org/collect/

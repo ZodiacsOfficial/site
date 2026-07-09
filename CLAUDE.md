@@ -26,8 +26,12 @@ reintroduce gold accents anywhere.
 The CONTENT boundary survives the visual merge:
 
 1. **New surfaces** (`src/`): consumer astrology. **No token/market/crypto
-   language or links** — the only sanctioned cross-link is the CollectBand
-   component on sign guides.
+   language or links.** The sanctioned cross-links into the wing are the
+   CollectBand on sign guides (EN + ES) and the records line on the
+   birth-chart result (`ChartCalculator`, full mode) — both in the records
+   register ("a canonical record in the registry → View the record"), never
+   market language. The wing's nav/footer label is "Registry" (ES
+   "Registro"); the URL path stays `/collect/`.
 2. **Wing** (`public/…` above): the registry catalogue keeps its museum
    voice, token content, and acquisition links — that register stays in
    the wing. Wing pages style themselves (inline blocks or

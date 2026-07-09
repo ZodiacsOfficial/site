@@ -224,6 +224,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   const sun = chart?.bodies.find((b) => b.body === 'Sun');
   const moon = chart?.bodies.find((b) => b.body === 'Moon');
   const asc = chart?.angles?.asc ?? null;
+  const sunSign = sun ? signForLongitude(sun.lon) : null;
 
   // The guided reading: planets only (nodes stay in the table), each with
   // sign + dignity resolved once; aspects ranked; whole-chart weather.
@@ -595,6 +596,17 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                 </p>
               )}
             </div>
+          )}
+
+          {/* The one sanctioned records bridge on a tool page: the sun
+              sign's canonical record, one quiet click into the collector's
+              wing. Records register — no market language (mirrors CollectBand). */}
+          {mode === 'full' && sunSign && (
+            <aside class="calc__record">
+              <span class="calc__record-label mono">{t(locale, 'recordLabel')}</span>
+              <span class="calc__record-text">{signName(sunSign, locale)} {t(locale, 'recordOneOfTwelve')}</span>
+              <a class="calc__record-link" href={`/collect/${sunSign.slug}/`}>{t(locale, 'recordViewLink')}</a>
+            </aside>
           )}
         </div>
       )}
