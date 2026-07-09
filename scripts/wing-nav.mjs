@@ -47,21 +47,21 @@ export function brandMarkSvg(size = 17) {
 export function wingNavHtml() {
   const signGrid = NAV_SIGNS.map((s) => (
     `<a class="wnav-signs__item" href="/${s.slug}/" style="--sign:${s.hue}">` +
-      `<span class="wnav-disc" aria-hidden="true">${s.glyph}</span>` +
+      `<picture class="wnav-disc"><source srcset="/assets/zodiac-icons/128/${s.slug}.avif" type="image/avif"/><img src="/assets/zodiac-icons/128/${s.slug}.webp" width="32" height="32" alt="" loading="lazy" decoding="async"/></picture>` +
       `<span class="wnav-signs__name">${s.name}</span>` +
       `<span class="wnav-signs__dates">${s.dates}</span>` +
     `</a>`
   )).join('');
   const mobileSigns = NAV_SIGNS.map((s, i) => (
     `<a class="wnav-menu__sign" style="--i:${4 + i};--sign:${s.hue}" href="/${s.slug}/" aria-label="${s.name}">` +
-      `<span class="wnav-disc wnav-disc--lg" aria-hidden="true">${s.glyph}</span>` +
+      `<picture class="wnav-disc wnav-disc--lg"><source srcset="/assets/zodiac-icons/128/${s.slug}.avif" type="image/avif"/><img src="/assets/zodiac-icons/128/${s.slug}.webp" width="40" height="40" alt="" loading="lazy" decoding="async"/></picture>` +
       `<span>${s.name}</span>` +
     `</a>`
   )).join('');
   return `
   <div class="wnav-wrap">
     <nav class="wnav" aria-label="Primary" data-wnav>
-      <a class="wnav__mark" href="/">${brandMarkSvg(17)}<span class="wnav__name">Zodiacs</span></a>
+      <a class="wnav__mark" href="/"><span class="wnav__name">Zodiacs<span class="wnav__sep">·</span><span class="wnav__dim">org</span></span></a>
       <div class="wnav__links">
         <button class="wnav__link wnav__signs-btn" type="button" data-wnav-signs aria-expanded="false" aria-controls="wnav-signs">Signs<svg width="8" height="5" viewBox="0 0 8 5" fill="none" aria-hidden="true"><path d="M1 1l3 3 3-3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
         <a class="wnav__link" href="/tools/">Tools</a>
@@ -69,7 +69,7 @@ export function wingNavHtml() {
         <a class="wnav__link" href="/horoscopes/">Horoscopes</a>
         <a class="wnav__link" href="/profile/">Saved charts</a>
       </div>
-      <a class="wnav__chip" href="/registry/" aria-current="page"><span>Registry</span><span class="wnav__chip-arr" aria-hidden="true">↗</span></a>
+      <a class="wnav__chip" href="/registry/" aria-current="page">Registry</a>
       <button class="wnav__burger" type="button" data-wnav-burger aria-expanded="false" aria-controls="wnav-menu" aria-label="Menu">
         <span class="wnav__burger-line"></span><span class="wnav__burger-line"></span><span class="wnav__burger-line"></span>
       </button>
@@ -136,7 +136,9 @@ export function wingNavCss() {
   .wnav__mark { display: inline-flex; align-items: center; gap: 9px; text-decoration: none; white-space: nowrap; }
   .wnav__brand { display: block; flex-shrink: 0; }
   .wnav__mark:hover .wnav__brand { animation: wnav-turn 14s linear infinite; }
-  .wnav__name { font-family: var(--serif, 'EB Garamond', Georgia, serif); font-weight: 500; font-size: 19px; letter-spacing: 0.01em; line-height: 1; color: var(--ink, #EEF1F7); }
+  .wnav__name { font-family: var(--serif, 'EB Garamond', Georgia, serif); font-weight: 400; font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; line-height: 1; color: var(--ink, #EEF1F7); white-space: nowrap; }
+  .wnav__sep { color: var(--ink-mute, #8A93A6); margin: 0 4px; }
+  .wnav__dim { color: var(--ink-2, #C6CCDA); font-weight: 500; }
   .wnav__links { display: none; align-items: center; gap: 2px; }
   @media (min-width: 760px) { .wnav__links { display: inline-flex; } }
   .wnav__link { display: inline-flex; align-items: center; gap: 6px; padding: 7px 13px; border-radius: 999px; font-family: 'Instrument Sans', system-ui, -apple-system, 'Segoe UI', sans-serif; font-size: 14px; font-weight: 500; letter-spacing: -0.005em; text-transform: none; white-space: nowrap; color: var(--ink-2, #C6CCDA); text-decoration: none; background: none; border: 0; cursor: pointer; transition: color 200ms var(--ease, cubic-bezier(0.4,0,0.2,1)), background 260ms var(--ease, cubic-bezier(0.4,0,0.2,1)); }
@@ -144,18 +146,19 @@ export function wingNavCss() {
   .wnav__link[aria-current='page'] { color: var(--ink, #EEF1F7); }
   .wnav__signs-btn svg { transition: transform 260ms var(--ease, cubic-bezier(0.4,0,0.2,1)); }
   .wnav__signs-btn[aria-expanded='true'] svg { transform: rotate(180deg); }
-  .wnav__chip { display: inline-flex; align-items: center; gap: 9px; padding: 4px 5px 4px 15px; border-radius: 999px; border: 1px solid var(--hair-2, rgba(198,204,218,0.16)); background: rgba(198,204,218,0.05); font-family: 'Instrument Sans', system-ui, sans-serif; font-size: 14px; font-weight: 550; color: var(--ink, #EEF1F7); text-decoration: none; white-space: nowrap; transition: border-color 260ms var(--ease, cubic-bezier(0.4,0,0.2,1)), background 260ms var(--ease, cubic-bezier(0.4,0,0.2,1)); }
-  .wnav__chip:hover { border-color: var(--hair-3, rgba(198,204,218,0.28)); background: rgba(198,204,218,0.09); }
-  .wnav__chip-arr { display: inline-grid; place-items: center; width: 25px; height: 25px; border-radius: 50%; border: 1px solid var(--hair-2, rgba(198,204,218,0.16)); font-size: 12px; color: var(--ink-2, #C6CCDA); transition: transform 200ms var(--ease, cubic-bezier(0.4,0,0.2,1)); }
-  .wnav__chip:hover .wnav__chip-arr { transform: translate(1px,-1px); color: var(--ink, #EEF1F7); }
+  .wnav__chip { display: inline-flex; align-items: center; height: 34px; padding: 0 2px 0 16px; border-left: 1px solid var(--hair-2, rgba(198,204,218,0.16)); font-family: var(--serif, 'EB Garamond', Georgia, serif); font-size: 13px; font-weight: 400; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-2, #C6CCDA); text-decoration: none; white-space: nowrap; transition: color 260ms var(--ease, cubic-bezier(0.4,0,0.2,1)); }
+  .wnav__chip:hover { color: var(--ink, #EEF1F7); }
+  
+  
   .wnav__burger { display: inline-grid; place-items: center; gap: 4px; width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--hair-2, rgba(198,204,218,0.16)); background: none; cursor: pointer; }
   @media (min-width: 760px) { .wnav__burger { display: none; } }
   .wnav__burger-line { display: block; width: 15px; height: 1.5px; border-radius: 2px; background: var(--ink-2, #C6CCDA); transition: transform 260ms var(--ease, cubic-bezier(0.4,0,0.2,1)), opacity 200ms var(--ease, cubic-bezier(0.4,0,0.2,1)); }
   .wnav__burger[aria-expanded='true'] .wnav__burger-line:first-child { transform: translateY(5.5px) rotate(45deg); }
   .wnav__burger[aria-expanded='true'] .wnav__burger-line:nth-child(2) { opacity: 0; transform: scaleX(0.4); }
   .wnav__burger[aria-expanded='true'] .wnav__burger-line:last-child { transform: translateY(-5.5px) rotate(-45deg); }
-  .wnav-disc { display: inline-grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; background: var(--sign, #C6CCDA); color: #0b0e14; font-size: 16px; line-height: 1; }
-  .wnav-disc--lg { width: 40px; height: 40px; font-size: 20px; }
+  .wnav-disc { display: inline-block; width: 32px; height: 32px; line-height: 0; flex: 0 0 auto; }
+  .wnav-disc img { width: 100%; height: 100%; border-radius: 50%; display: block; }
+  .wnav-disc--lg { width: 40px; height: 40px; }
   .wnav-signs { pointer-events: auto; margin-top: 10px; width: min(100% - 32px, 620px); border-radius: 20px; background: rgba(10,12,17,0.82); backdrop-filter: saturate(150%) blur(22px); -webkit-backdrop-filter: saturate(150%) blur(22px); border: 1px solid var(--hair-2, rgba(198,204,218,0.16)); box-shadow: 0 24px 60px -24px rgba(0,0,0,0.8); padding: 10px; opacity: 0; transform: translateY(-6px) scale(0.99); transition: opacity 260ms var(--ease, cubic-bezier(0.4,0,0.2,1)), transform 260ms var(--ease, cubic-bezier(0.4,0,0.2,1)); }
   .wnav-signs[hidden] { display: none; }
   .wnav-signs.is-open { opacity: 1; transform: none; }

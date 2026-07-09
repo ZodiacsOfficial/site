@@ -1103,19 +1103,12 @@
         { slug: 'aquarius', name: 'Aquarius', glyph: '♒', dates: 'Jan 20 – Feb 18', hue: '#AE8FC9' },
         { slug: 'pisces', name: 'Pisces', glyph: '♓', dates: 'Feb 19 – Mar 20', hue: '#A9D4C4' },
       ];
-      const brandDots = NAV_SIGNS.map((s, i) => {
-        const a = (i / 12) * 2 * Math.PI - Math.PI / 2;
-        return { cx: +(12 + 9 * Math.cos(a)).toFixed(3), cy: +(12 + 9 * Math.sin(a)).toFixed(3), hue: s.hue };
-      });
       return (
         <>
           <div className="wnav-wrap">
             <nav className="wnav" aria-label="Primary">
               <a className="wnav__mark" href="/">
-                <svg className="wnav__brand" width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                  {brandDots.map((d, i) => <circle key={i} cx={d.cx} cy={d.cy} r="1.9" fill={d.hue} />)}
-                </svg>
-                <span className="wnav__name">Zodiacs</span>
+                <span className="wnav__name">Zodiacs<span className="wnav__sep">·</span><span className="wnav__dim">org</span></span>
               </a>
               <div className="wnav__links">
                 <button className="wnav__link wnav__signs-btn" type="button" aria-expanded={signsOpen} aria-controls="wnav-signs" onClick={() => setSignsOpen((v) => !v)}>Signs<svg width="8" height="5" viewBox="0 0 8 5" fill="none" aria-hidden="true"><path d="M1 1l3 3 3-3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/></svg></button>
@@ -1124,7 +1117,7 @@
                 <a className="wnav__link" href="/horoscopes/">Horoscopes</a>
                 <a className="wnav__link" href="/profile/">Saved charts</a>
               </div>
-              <a className="wnav__chip" href="/registry/" aria-current="page"><span>Registry</span><span className="wnav__chip-arr" aria-hidden="true">↗</span></a>
+              <a className="wnav__chip" href="/registry/" aria-current="page">Registry</a>
               <button type="button" className="wnav__burger" aria-expanded={menuOpen} aria-controls="wnav-menu" aria-label={menuOpen ? 'Close menu' : 'Open menu'} onClick={() => setMenuOpen((v) => !v)}>
                 <span className="wnav__burger-line" /><span className="wnav__burger-line" /><span className="wnav__burger-line" />
               </button>
@@ -1133,7 +1126,7 @@
               <div className="wnav-signs__grid">
                 {NAV_SIGNS.map((s) => (
                   <a className="wnav-signs__item" key={s.slug} href={`/${s.slug}/`} style={{ '--sign': s.hue }} onClick={() => setSignsOpen(false)}>
-                    <span className="wnav-disc" aria-hidden="true">{s.glyph}</span>
+                    <picture className="wnav-disc"><source srcSet={`/assets/zodiac-icons/128/${s.slug}.avif`} type="image/avif" /><img src={`/assets/zodiac-icons/128/${s.slug}.webp`} width="32" height="32" alt="" loading="lazy" decoding="async" /></picture>
                     <span className="wnav-signs__name">{s.name}</span>
                     <span className="wnav-signs__dates">{s.dates}</span>
                   </a>
@@ -1155,7 +1148,7 @@
                 <div className="wnav-menu__signs">
                   {NAV_SIGNS.map((s, i) => (
                     <a className="wnav-menu__sign" key={s.slug} style={{ '--i': 4 + i, '--sign': s.hue }} href={`/${s.slug}/`} aria-label={s.name}>
-                      <span className="wnav-disc wnav-disc--lg" aria-hidden="true">{s.glyph}</span>
+                      <picture className="wnav-disc wnav-disc--lg"><source srcSet={`/assets/zodiac-icons/128/${s.slug}.avif`} type="image/avif" /><img src={`/assets/zodiac-icons/128/${s.slug}.webp`} width="40" height="40" alt="" loading="lazy" decoding="async" /></picture>
                       <span>{s.name}</span>
                     </a>
                   ))}
