@@ -173,9 +173,10 @@
       pointer-events: auto;
       display: inline-flex; align-items: center; gap: 16px;
       height: 48px; padding: 0 6px 0 18px;
-      background: rgba(18,13,9,0.72);
-      backdrop-filter: saturate(160%) blur(18px);
-      -webkit-backdrop-filter: saturate(160%) blur(18px);
+      border-radius: 999px;
+      background: rgba(10,12,17,0.66);
+      backdrop-filter: saturate(150%) blur(18px);
+      -webkit-backdrop-filter: saturate(150%) blur(18px);
       border: 1px solid var(--hair-2);
       box-shadow:
         inset 0 1px 0 rgba(238,241,247,0.10), inset 0 -1px 0 rgba(0,0,0,0.4),
@@ -185,7 +186,9 @@
     .hdr__mark {
       font-family: var(--display); font-weight: 400; font-size: 13px; letter-spacing: 0.14em;
       text-transform: uppercase; color: var(--ink); white-space: nowrap;
+      transition: color 320ms var(--ease);
     }
+    .hdr__mark:hover, .hdr__mark:hover .dim { color: var(--gold-bright); }
     .hdr__mark .dim { color: var(--gold); font-weight: 500; }
     .hdr__mark .sep { color: var(--ink-mute); margin: 0 4px; }
     .hdr__nav {
@@ -554,7 +557,7 @@
 
   <div class="hdr-wrap">
     <header class="hdr" role="banner">
-      <a class="hdr__mark" href="/collect/"><span>Zodiacs</span><span class="sep">·</span><span class="dim">org</span></a>
+      <a class="hdr__mark" href="/"><span>Zodiacs</span><span class="sep">·</span><span class="dim">org</span></a>
       <a class="hdr__nav" href="/collect/#official-twelve"><span>The Twelve</span><span class="chip">↗</span></a>
       <a class="hdr__nav" href="/collect/pisces/" aria-label="Next lot: Pisces"><span>Lot XII</span><span class="chip">→</span></a>
     </header>
