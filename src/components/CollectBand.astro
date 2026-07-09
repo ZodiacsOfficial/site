@@ -7,15 +7,28 @@
 interface Props {
   signName: string;
   slug: string;
+  locale?: 'en' | 'es';
 }
-const { signName, slug } = Astro.props;
+const { signName, slug, locale = 'en' } = Astro.props;
+const copy = {
+  en: {
+    label: 'Collector’s wing',
+    text: `${signName} also exists as one of the Twelve — a canonical record in the registry.`,
+    link: 'View the record →',
+  },
+  es: {
+    label: 'Zona de colección',
+    text: `${signName} también es uno de los Doce — un registro canónico en el registro.`,
+    link: 'Ver el registro →',
+  },
+}[locale];
 ---
 <aside class="collect-band">
-  <span class="collect-band__label mono">Collector’s wing</span>
+  <span class="collect-band__label mono">{copy.label}</span>
   <span class="collect-band__text">
-    {signName} also exists as one of the Twelve — a canonical record in the registry.
+    {copy.text}
   </span>
-  <a class="collect-band__link" href={`/collect/${slug}/`}>View the record →</a>
+  <a class="collect-band__link" href={`/collect/${slug}/`}>{copy.link}</a>
 </aside>
 
 <style>

@@ -2,6 +2,7 @@
 import Base from '../../../layouts/Base.astro';
 import SignIcon from '../../../components/SignIcon.astro';
 import Faq from '../../../components/Faq.astro';
+import CollectBand from '../../../components/CollectBand.astro';
 import { SIGNS, SIGN_SLUGS, elementLabel, signBySlug, signDates, signName } from '../../../lib/signs';
 import { localizePath } from '../../../lib/i18n';
 import { spanishGuideFor } from '../../../data/es-guides';
@@ -77,6 +78,10 @@ const jsonLd = [
     </header>
 
     <div class="container container--narrow guide-es-body">
+      <div class="reveal">
+        <CollectBand signName={signName(sign, 'es')} slug={sign.slug} locale="es" />
+      </div>
+
       <div class="prose reveal">
         {guide.intro.slice(1).map((p) => <p>{p}</p>)}
         {guide.sections.map((section) => (

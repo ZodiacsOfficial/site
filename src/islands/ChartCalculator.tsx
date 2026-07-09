@@ -224,6 +224,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   const sun = chart?.bodies.find((b) => b.body === 'Sun');
   const moon = chart?.bodies.find((b) => b.body === 'Moon');
   const asc = chart?.angles?.asc ?? null;
+  const sunSign = sun ? signForLongitude(sun.lon) : null;
 
   // The guided reading: planets only (nodes stay in the table), each with
   // sign + dignity resolved once; aspects ranked; whole-chart weather.
@@ -447,6 +448,15 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                 </div>
               </div>
 
+              {shareInput && (
+                <div class="calc__chart-share">
+                  <button class="btn calc__glass-btn" type="button" onClick={onCard} disabled={card === 'busy'} data-share-card>
+                    <span>{card === 'busy' ? t(locale, 'rendering') : card === 'saved' ? t(locale, 'cardSaved') : t(locale, 'shareChart')}</span>
+                    <span class="orb">{card === 'saved' ? '✓' : '↗'}</span>
+                  </button>
+                </div>
+              )}
+
               <div class="calc__table-wrap">
                 <table class="calc__table">
                   <thead>
@@ -546,12 +556,6 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
               <span>{saved === 'saved' ? t(locale, 'chartSavedDevice') : t(locale, 'saveThisChart')}</span>
               <span class="orb">{saved === 'saved' ? '✓' : '+'}</span>
             </button>
-            {mode === 'full' && shareInput && (
-              <button class="btn btn--ghost" type="button" onClick={onCard} disabled={card === 'busy'} data-share-card>
-                <span>{card === 'busy' ? t(locale, 'rendering') : card === 'saved' ? t(locale, 'cardSaved') : t(locale, 'shareChart')}</span>
-                <span class="orb">{card === 'saved' ? '✓' : '↗'}</span>
-              </button>
-            )}
             {mode !== 'full' && (
               <a class="btn btn--ghost" href={localizePath(locale, '/birth-chart/')}><span>{t(locale, 'getBirthChart')}</span><span class="orb">↗</span></a>
             )}
@@ -595,6 +599,17 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                 </p>
               )}
             </div>
+          )}
+
+          {/* The one sanctioned records bridge on a tool page: the sun
+              sign's canonical record, one quiet click into the collector's
+              wing. Records register — no market language (mirrors CollectBand). */}
+          {mode === 'full' && sunSign && (
+            <aside class="calc__record">
+              <span class="calc__record-label mono">{t(locale, 'recordLabel')}</span>
+              <span class="calc__record-text">{signName(sunSign, locale)} {t(locale, 'recordOneOfTwelve')}</span>
+              <a class="calc__record-link" href={`/collect/${sunSign.slug}/`}>{t(locale, 'recordViewLink')}</a>
+            </aside>
           )}
         </div>
       )}

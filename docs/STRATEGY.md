@@ -79,7 +79,7 @@ Conversion arc (layout rhythm inspired by ploy.ai; execution fully zodiac-native
 
 Plain language first; jargon translated inline ("Rising sign — how people first meet you"). Confident and warm; never woo-woo, never salesy. Technical facts stay available where they build trust.
 
-Canonical labels: "Get your free birth chart" · "Save this chart" → "Saved · on this device" · "Saved charts" · "Find your moon sign" / "Find your rising sign" · "Read your sign" · "Enter the collector's wing" · profile empty state: "Nothing saved yet. Charts you save will live here, on your device first." · Astrofolio one-liner: "Save charts on this device. Sign in when you want them on every device."
+Canonical labels: "Get your free birth chart" · "Save this chart" → "Saved · on this device" · "Saved charts" · "Find your moon sign" / "Find your rising sign" · "Read your sign" · nav wing label: "Registry" / ES "Registro" (the collector's wing; the URL stays `/collect/`) · "the Twelve" = the twelve signs as canonical records in the registry · records bridge (sign guides EN+ES + the birth-chart result): "{sign} also exists as one of the Twelve — a canonical record in the registry" → "View the record →" (records register, never market language) · profile empty state: "Nothing saved yet. Charts you save will live here, on your device first." · Astrofolio one-liner: "The optional companion app the free tools feed into — your saved charts and the signs you care about become a cosmic identity you keep."
 
 ## 5. MVP feature set (shipped in this restructure)
 
