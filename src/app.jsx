@@ -1158,11 +1158,10 @@
                 <div className="cine__cta">
                   <a className="btn btn--primary" href="#official-twelve">
                     <span>Browse the Twelve</span>
-                    <span className="arr">→</span>
+                    <span className="arr">↗</span>
                   </a>
                   <a className="btn" href="#verify">
                     <span>Verify an address</span>
-                    <span className="arr">↗</span>
                   </a>
                 </div>
               </div>
@@ -3267,9 +3266,9 @@
           <a href="#main" className="skip">Skip to content</a>
           <div className="stars" aria-hidden="true" />
           <div className="grain" aria-hidden="true" />
+          <Header />
           <CineHero />
           <div className="zd">
-            <Header />
             <Hero
               sign={sign}
               animKey={activeTicker}
