@@ -105,7 +105,7 @@ function renderProof(entry) {
   return `        <div class="arc__proof">
           <span class="arc__tick" aria-hidden="true">✓</span>
           <span class="arc__proof-text">Matches the official record</span>
-          <a class="arc__proof-link" href="/collect/${entry.mintProof.sign}/">${esc(sign.displayName)} ↗</a>
+          <a class="arc__proof-link" href="/registry/${entry.mintProof.sign}/">${esc(sign.displayName)} ↗</a>
           <a class="arc__proof-link" href="/registry/zodiacs.registry.json">Registry entry</a>
         </div>`;
 }
@@ -113,7 +113,7 @@ function renderProof(entry) {
 function renderSigns(entry) {
   if (!entry.signs || !entry.signs.length) return '';
   const links = entry.signs.map((slug) =>
-    `<a href="/collect/${slug}/" aria-label="${escAttr(assetFor(slug).displayName)}"><img src="/assets/icons/${slug}.png" alt="" loading="lazy" decoding="async" /></a>`
+    `<a href="/registry/${slug}/" aria-label="${escAttr(assetFor(slug).displayName)}"><img src="/assets/icons/${slug}.png" alt="" loading="lazy" decoding="async" /></a>`
   ).join('');
   return `        <div class="arc__signs">${links}</div>`;
 }
@@ -666,7 +666,7 @@ ${JSON.stringify(jsonLd(), null, 2)}
   <div class="hdr-wrap">
     <header class="hdr" role="banner">
       <a class="hdr__mark" href="/"><span>Zodiacs</span><span class="sep">·</span><span class="dim">org</span></a>
-      <a class="hdr__nav" href="/collect/#official-twelve"><span>The Twelve</span><span class="chip">↗</span></a>
+      <a class="hdr__nav" href="/registry/#official-twelve"><span>The Twelve</span><span class="chip">↗</span></a>
       <a class="hdr__nav" href="/thesis/"><span>Thesis</span><span class="chip">→</span></a>
     </header>
   </div>
@@ -701,7 +701,7 @@ ${renderPressKit()}
     </section>
 
     <nav class="back" aria-label="Return">
-      <a class="btn btn--primary" href="/collect/">
+      <a class="btn btn--primary" href="/registry/">
         <span>The Registry</span><span class="arr">→</span>
       </a>
       <a class="btn" href="/thesis/">
@@ -716,8 +716,8 @@ ${renderPressKit()}
       </div>
       <div class="ftr__row">
         <div class="ftr__links">
-          <a href="/collect/#registry">Registry</a>
-          <a href="/collect/#verify">Verify</a>
+          <a href="/registry/#registry">Registry</a>
+          <a href="/registry/#verify">Verify</a>
           <a href="/thesis/">Thesis</a>
           <a href="/sdk/">SDK</a>
           <a href="/registry/zodiacs.registry.json">Record</a>

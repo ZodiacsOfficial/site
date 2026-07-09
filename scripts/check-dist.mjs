@@ -151,9 +151,9 @@ async function hasId(filePath, id) {
   }
   const html = idCache.get(filePath);
   if (html.includes(`id="${id}"`) || html.includes(`id='${id}'`)) return true;
-  // The collect wing landing renders its sections client-side; ids live in
+  // The registry wing landing renders its sections client-side; ids live in
   // the compiled bundle (JSX id="x" compiles to id: "x").
-  if (filePath === resolve(root, 'collect/index.html')) {
+  if (filePath === resolve(root, 'registry/index.html')) {
     const bundlePath = resolve(root, 'assets/app.js');
     if (!idCache.has(bundlePath)) {
       idCache.set(bundlePath, await readFile(bundlePath, 'utf8'));
@@ -245,7 +245,7 @@ for (const artifact of [
   'archive/feed.json',
   'archive/rss.xml',
   '404.html',
-  'collect/index.html',
+  'registry/index.html',
   'thesis/index.html',
   'sdk/index.html',
 ]) {

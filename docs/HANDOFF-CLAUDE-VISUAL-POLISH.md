@@ -71,7 +71,7 @@ Read `CLAUDE.md` before editing.
 The two wings are separate:
 
 - New Astro site: `src/`, `src/styles/`, `src/pages/`, `src/islands/`.
-- Legacy Collect wing: `public/collect/`, `public/thesis/`, `public/archive/`,
+- Legacy Collect wing: `public/registry/`, `public/thesis/`, `public/archive/`,
   `public/sdk/`, discovery pages.
 
 Do not mix their design systems. No crypto, market, token, or registry language

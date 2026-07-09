@@ -16,8 +16,8 @@ Production deploys from the `main` branch through Vercel (Astro static build).
   system, Instrument Sans + JetBrains Mono, the pastel SDK sign icons as the
   core visual language. No token/market language on these surfaces.
 - **Legacy wing (`public/`)** — the registry experience, served verbatim at
-  its historical URLs: `/collect/` (the original registry landing),
-  `/collect/{sign}/` (catalogue pages), `/thesis/`, `/archive/`, `/sdk/`, and
+  its historical URLs: `/registry/` (the original registry landing),
+  `/registry/{sign}/` (catalogue pages), `/thesis/`, `/archive/`, `/sdk/`, and
   the discovery ring. Warm Gilt museum aesthetic, unchanged.
 
 ## Repository structure
@@ -27,7 +27,7 @@ Production deploys from the `main` branch through Vercel (Astro static build).
   houses/aspects; `engine/full.ts` is the only module importing the ephemeris)
 - `src/content/guides/` — the 12 sign guides (MDX, zod-validated)
 - `src/styles/tokens.css` — the Cosmic Void design tokens
-- `src/app.jsx` — source for the legacy registry SPA served at `/collect/`
+- `src/app.jsx` — source for the legacy registry SPA served at `/registry/`
 - `public/` — the legacy wing + root artifacts, shipped byte-verbatim
 - `scripts/` — wing generators + data pipelines (see below)
 - `docs/STRATEGY.md` — product/UX/SEO/technical strategy
@@ -36,7 +36,7 @@ Production deploys from the `main` branch through Vercel (Astro static build).
 
 | Output | Generator | Source |
 | --- | --- | --- |
-| `public/collect/{sign}/index.html` | `npm run legacy:signs` | `scripts/sign-data.mjs` + registry JSON |
+| `public/registry/{sign}/index.html` | `npm run legacy:signs` | `scripts/sign-data.mjs` + registry JSON |
 | `public/archive/` + feeds | `npm run legacy:archive` | `scripts/archive-data.mjs` |
 | `public/assets/app.js` | `npm run legacy:app` | `src/app.jsx` |
 | `public/assets/og/*.png` | `npm run legacy:og` | registry + artwork (Playwright) |

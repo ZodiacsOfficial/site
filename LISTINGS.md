@@ -46,10 +46,10 @@ Long description:
 
 Official links (use everywhere, consistently):
 
-- Website: `https://zodiacs.org/` · per-sign token page: `https://zodiacs.org/collect/{sign}/`
+- Website: `https://zodiacs.org/` · per-sign token page: `https://zodiacs.org/registry/{sign}/`
   (the catalogue moved under the collector's wing in 2026 — top-level
   `/{sign}/` URLs are now the astrology guides, which link the record
-  prominently; update older listings to the `/collect/` form when touched)
+  prominently; update older listings to the `/registry/` form when touched)
 - Registry JSON: `https://zodiacs.org/registry/zodiacs.registry.json`
 - X / Twitter: `https://x.com/astrofoliosol`
 - Instagram: `https://www.instagram.com/astrofolioonsol/`
@@ -67,7 +67,7 @@ Where traders already look. For each of the twelve tokens:
 1. Open `https://dexscreener.com/solana/{pairId}` and use **Update token
    info** (Dex Screener's Enhanced Token Info is a paid, per-token
    service ordered through marketplace.dexscreener.com).
-2. Submit: website (`https://zodiacs.org/collect/{sign}/`), the social links above,
+2. Submit: website (`https://zodiacs.org/registry/{sign}/`), the social links above,
    the icon, and the per-sign OG image as the header image.
 3. The watchlist of the official pairs already exists:
    `https://dexscreener.com/watchlist/p2GfMO2bnsxdOCEwYTCD` — keep it in bios.
@@ -127,7 +127,7 @@ Base representation — link the bridge record from the registry.
   ```sh
   curl -s -X POST https://api.indexnow.org/indexnow \
     -H 'Content-Type: application/json; charset=utf-8' \
-    -d '{"host":"zodiacs.org","key":"<key>","keyLocation":"https://zodiacs.org/<key>.txt","urlList":["https://zodiacs.org/","https://zodiacs.org/aries/","https://zodiacs.org/collect/aries/", "…"]}'
+    -d '{"host":"zodiacs.org","key":"<key>","keyLocation":"https://zodiacs.org/<key>.txt","urlList":["https://zodiacs.org/","https://zodiacs.org/aries/","https://zodiacs.org/registry/aries/", "…"]}'
   ```
 
 - Google Search Console and Bing Webmaster Tools: verify the domain

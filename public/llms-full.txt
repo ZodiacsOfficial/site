@@ -33,7 +33,7 @@ Monthly horoscopes — one per sign at https://zodiacs.org/horoscopes/{sign}/, w
 
 Astrofolio is the optional keep layer behind the tools: saved charts live in the visitor's own browser first, with optional account sync at https://zodiacs.org/profile/. The related consumer experience around personal Zodiac shelves is https://astrofolio.xyz/.
 
-The collector's wing — the original registry experience — lives at https://zodiacs.org/collect/ with the twelve catalogue records at https://zodiacs.org/collect/{sign}/, the thesis at https://zodiacs.org/thesis/, and the archive at https://zodiacs.org/archive/.
+The collector's wing — the original registry experience — lives at https://zodiacs.org/registry/ with the twelve catalogue records at https://zodiacs.org/registry/{sign}/, the thesis at https://zodiacs.org/thesis/, and the archive at https://zodiacs.org/archive/.
 
 # Zodiacs SDK AI Context
 

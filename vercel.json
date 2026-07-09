@@ -1,4 +1,8 @@
 {
+  "redirects": [
+    { "source": "/collect", "destination": "/registry/", "permanent": true },
+    { "source": "/collect/:path*", "destination": "/registry/:path*", "permanent": true }
+  ],
   "headers": [
     {
       "source": "/(.*)",

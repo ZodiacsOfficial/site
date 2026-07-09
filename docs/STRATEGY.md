@@ -17,13 +17,13 @@ This document is the operating strategy for the Learn / Explore / Collect restru
 
 **What's weak or dangerous — stated plainly:**
 
-1. **The crypto elephant.** The Collect layer is tradeable tokens. The mass astrology audience is the audience most allergic to token-shilling, and search engines treat crypto as YMYL. If token language leaks into Learn/Explore surfaces it poisons both trust and SEO. The fix is hard separation: crypto exists *only* inside `/collect/`, framed as a collector's wing, keeping its read-only/no-advice discipline. For 99% of visitors, "Astrofolio" must mean *saving charts* — the tokens are the deep end for the 1%.
+1. **The crypto elephant.** The Collect layer is tradeable tokens. The mass astrology audience is the audience most allergic to token-shilling, and search engines treat crypto as YMYL. If token language leaks into Learn/Explore surfaces it poisons both trust and SEO. The fix is hard separation: crypto exists *only* inside `/registry/`, framed as a collector's wing, keeping its read-only/no-advice discipline. For 99% of visitors, "Astrofolio" must mean *saving charts* — the tokens are the deep end for the 1%.
 2. **The Astrofolio promise gap.** "Saved charts" CTAs need somewhere real to land. That's why the MVP ships local-first saved charts on zodiacs.org itself; accounts come only when sync is a real need.
 3. **SEO is a 6–18 month compounding game** from near-zero consumer authority. Expect quiet months. The counter is correct cluster architecture from day one plus AEO/AI-answer citation, where this repo already has real infrastructure.
 4. **Horoscopes are a treadmill.** Daily × 12 is the classic content mill. Only do it with the transit-grounded pipeline (Phase 2) — real sky dates in, structured editorial out — or not at all.
 5. **Ploy.ai is a loaded gun.** Programmatic AI content at scale is exactly what scaled-content-abuse policies target. Use it as a research/draft/monitoring engine gated by human review and an embedded-tool quality bar. Never as an autopublisher.
 
-**Never do:** token CTAs outside `/collect/` · thin 200-word SEO pages · fake urgency · gating basic results behind signup (the anti-Co-Star move is the differentiator) · mystical clip-art · letting any tool autopublish to the domain.
+**Never do:** token CTAs outside `/registry/` · thin 200-word SEO pages · fake urgency · gating basic results behind signup (the anti-Co-Star move is the differentiator) · mystical clip-art · letting any tool autopublish to the domain.
 
 ---
 
@@ -48,14 +48,14 @@ This document is the operating strategy for the Learn / Explore / Collect restru
 /horoscopes/{sign}/        Phase 2: weekly + monthly first; daily in Phase 3
 /compatibility/{a}-{b}/    Phase 2/3: 78 pair pages, only after the synastry tool exists
 /profile/                  Saved charts (local-first; the Astrofolio surface)
-/collect/                  Collect wing landing (the registry experience, preserved)
-  /collect/{sign}/           token catalogue pages (moved from /{sign}/)
+/registry/                  Collect wing landing (the registry experience, preserved)
+  /registry/{sign}/           token catalogue pages (moved from /{sign}/)
 /thesis/ /archive/ /sdk/   Unchanged URLs (collector/builder wing)
 /registry/zodiacs.registry.json    Unchanged (external consumers)
 /methodology/              How charts are computed (E-E-A-T + privacy)
 ```
 
-**The `/{sign}/` decision:** sign-name URLs carry astrology intent, not token intent — they became the guides. The token catalogue lives at `/collect/{sign}/`, linked prominently from each guide's Collect band so external token listings that still point at `/{sign}/` remain one click from the record while listings are updated.
+**The `/{sign}/` decision:** sign-name URLs carry astrology intent, not token intent — they became the guides. The token catalogue lives at `/registry/{sign}/`, linked prominently from each guide's Collect band so external token listings that still point at `/{sign}/` remain one click from the record while listings are updated.
 
 ## 2. Homepage
 
@@ -79,7 +79,7 @@ Conversion arc (layout rhythm inspired by ploy.ai; execution fully zodiac-native
 
 Plain language first; jargon translated inline ("Rising sign — how people first meet you"). Confident and warm; never woo-woo, never salesy. Technical facts stay available where they build trust.
 
-Canonical labels: "Get your free birth chart" · "Save this chart" → "Saved · on this device" · "Saved charts" · "Find your moon sign" / "Find your rising sign" · "Read your sign" · nav wing label: "Registry" / ES "Registro" (the collector's wing; the URL stays `/collect/`) · "the Twelve" = the twelve signs as canonical records in the registry · records bridge (sign guides EN+ES + the birth-chart result): "{sign} also exists as one of the Twelve — a canonical record in the registry" → "View the record →" (records register, never market language) · profile empty state: "Nothing saved yet. Charts you save will live here, on your device first." · Astrofolio one-liner: "The optional companion app the free tools feed into — your saved charts and the signs you care about become a cosmic identity you keep."
+Canonical labels: "Get your free birth chart" · "Save this chart" → "Saved · on this device" · "Saved charts" · "Find your moon sign" / "Find your rising sign" · "Read your sign" · nav wing label: "Registry" / ES "Registro" (the collector's wing; the URL stays `/registry/`) · "the Twelve" = the twelve signs as canonical records in the registry · records bridge (sign guides EN+ES + the birth-chart result): "{sign} also exists as one of the Twelve — a canonical record in the registry" → "View the record →" (records register, never market language) · profile empty state: "Nothing saved yet. Charts you save will live here, on your device first." · Astrofolio one-liner: "The optional companion app the free tools feed into — your saved charts and the signs you care about become a cosmic identity you keep."
 
 ## 5. MVP feature set (shipped in this restructure)
 
@@ -89,7 +89,7 @@ Canonical labels: "Get your free birth chart" · "Save this chart" → "Saved ·
 4. Moon sign + rising sign calculators (same engine, dedicated SEO landers).
 5. 12 sign guides (personality, love, strengths, myth/heritage, big-three variants, FAQ).
 6. `/profile/` local saved charts.
-7. `/collect/` wing: the prior registry homepage preserved intact; catalogue at `/collect/{sign}/`.
+7. `/registry/` wing: the prior registry homepage preserved intact; catalogue at `/registry/{sign}/`.
 8. SEO base: per-page meta/OG, JSON-LD, composed sitemap, rewritten llms.txt, methodology page.
 
 ## 6. Roadmap
@@ -135,13 +135,13 @@ Canonical labels: "Get your free birth chart" · "Save this chart" → "Saved ·
 - Guide footer → "Is {Sign} your sun sign? Add it to your profile."
 - Horoscopes (P2) → "Get this for *your* placements."
 - `/profile/` is the only surface that upsells accounts (P2): "Keep this on every device."
-- **Collecting is the last rung, never the first** — inside `/collect/` and the profile's Collection tab only.
+- **Collecting is the last rung, never the first** — inside `/registry/` and the profile's Collection tab only.
 
 Funnel: anonymous tool use → local save (zero friction) → accumulation → account at a real sync-need moment → (optional deep end) the registry.
 
 ## 10. The registry's place
 
-The registry is **the collector's wing**: the prior homepage experience lives intact at `/collect/` (film hero, verifier, Pulse, Standings, shelf viewer, FAQ); catalogue pages at `/collect/{sign}/`; thesis/archive/sdk unchanged. Museum voice and Warm Gilt aesthetic are preserved inside the wing. Market data never renders outside it. The wing keeps its anti-hype/read-only discipline — that discipline is why this coexistence works.
+The registry is **the collector's wing**: the prior homepage experience lives intact at `/registry/` (film hero, verifier, Pulse, Standings, shelf viewer, FAQ); catalogue pages at `/registry/{sign}/`; thesis/archive/sdk unchanged. Museum voice and Warm Gilt aesthetic are preserved inside the wing. Market data never renders outside it. The wing keeps its anti-hype/read-only discipline — that discipline is why this coexistence works.
 
 ## 11. Calculations & APIs (own the math, client-side)
 

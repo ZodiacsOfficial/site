@@ -1223,7 +1223,7 @@
             <div className="glyph-stage">
               <a
                 className="nugget-link"
-                href={`/collect/${sign.asset.sign}/`}
+                href={`/registry/${sign.asset.sign}/`}
                 aria-label={`Open the ${sign.name} catalogue entry`}
               >
                 <img
@@ -1754,7 +1754,7 @@
           <article className="detail fade-key" key={animKey + '-detail'}>
             <a
               className="detail__symbol-link"
-              href={`/collect/${sign.asset.sign}/`}
+              href={`/registry/${sign.asset.sign}/`}
               aria-label={`${sign.name} — open catalogue entry`}
               title="Open catalogue entry"
             >
@@ -1828,7 +1828,7 @@
 
             <MarketContext sign={sign} />
 
-            <a className="detail__entry" href={`/collect/${sign.asset.sign}/`}>
+            <a className="detail__entry" href={`/registry/${sign.asset.sign}/`}>
               <span>Full catalogue entry — lore, provenance &amp; acquisition</span>
               <span className="detail__entry-arr" aria-hidden="true">→</span>
             </a>
@@ -2296,7 +2296,7 @@
                               {row.marketCap !== null ? String(i + 1).padStart(2, '0') : '—'}
                             </td>
                             <td className="standings__lot">
-                              <a href={`/collect/${slug}/`}>
+                              <a href={`/registry/${slug}/`}>
                                 <img
                                   src={`/assets/icons/${slug}.png`}
                                   alt=""
@@ -2563,7 +2563,7 @@
                     <a
                       className="shelf__sign"
                       key={h.sign.name}
-                      href={`/collect/${h.sign.name.toLowerCase()}/`}
+                      href={`/registry/${h.sign.name.toLowerCase()}/`}
                     >
                       <img
                         src={`/assets/icons/${h.sign.name.toLowerCase()}.png`}
@@ -2902,7 +2902,7 @@
                 </div>
                 <a
                   className="cat__sym cat__sym--button"
-                  href={`/collect/${s.asset.sign}/`}
+                  href={`/registry/${s.asset.sign}/`}
                   aria-label={`Open the ${s.name} catalogue entry`}
                 >
                   <img
@@ -2922,7 +2922,7 @@
                     display={truncateAddress(s.representations.base.address, 5, 4)}
                   />
                 </div>
-                <a className="cat__entry" href={`/collect/${s.asset.sign}/`}>
+                <a className="cat__entry" href={`/registry/${s.asset.sign}/`}>
                   <span>Catalogue entry</span>
                   <span className="cat__entry-arr" aria-hidden="true">→</span>
                 </a>
@@ -2935,7 +2935,7 @@
               <a
                 key={s.ticker}
                 className="cat__lot"
-                href={`/collect/${s.asset.sign}/`}
+                href={`/registry/${s.asset.sign}/`}
                 title={`${s.name} — catalogue entry`}
                 aria-label={`${s.name} — catalogue entry`}
               >
@@ -3022,7 +3022,7 @@
               <a
                 key={s.ticker}
                 className="sdk__icons-item"
-                href={`/collect/${s.asset.sign}/`}
+                href={`/registry/${s.asset.sign}/`}
                 title={`${s.name} — catalogue entry`}
                 aria-label={`${s.name} — catalogue entry`}
               >

@@ -7,7 +7,7 @@
 
 > **Scope note (July 2026):** this handoff now governs only the legacy
 > collector's wing — the registry experience served from `public/` at
-> `/collect/`, `/collect/{sign}/`, `/thesis/`, `/archive/`, `/sdk/`.
+> `/registry/`, `/registry/{sign}/`, `/thesis/`, `/archive/`, `/sdk/`.
 > Everything else (homepage, guides, calculators, learn, profile) is the
 > new Astro site under the "Cosmic Void" system: see `docs/STRATEGY.md`
 > §13 and `src/styles/tokens.css`. Inside the wing, everything below

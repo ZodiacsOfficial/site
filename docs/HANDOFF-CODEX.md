@@ -30,7 +30,7 @@ A fourth (AI astrologer chat) is explicitly deferred; do not start it.
 ## Four invariants CI enforces (breaking these fails the build)
 
 1. Two wings. `src/` is the consumer astrology site ("Cosmic Void"
-   design system). `public/collect/`, `/thesis/`, `/archive/`, `/sdk/`
+   design system). `public/registry/`, `/thesis/`, `/archive/`, `/sdk/`
    are the legacy token-registry wing, served byte-identical. CI greps
    `src/` for crypto/market vocabulary and fails on a hit. No
    token/price language on new surfaces, ever.
