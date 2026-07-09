@@ -1071,65 +1071,96 @@
     // ──────────────────────────────────────────────────────────────
 
     function Header() {
-      // Below 1020px the anchor nav (.hdr__links) hides, so the phone header
-      // is just wordmark + SDK. This burger opens an overlay with the same
-      // sections — parity with the main site's SiteNav, in the museum register.
       const [menuOpen, setMenuOpen] = useState(false);
+      const [signsOpen, setSignsOpen] = useState(false);
       useEffect(() => {
         if (!menuOpen) return undefined;
         const onKey = (e) => { if (e.key === 'Escape') setMenuOpen(false); };
         document.addEventListener('keydown', onKey);
         const prev = document.documentElement.style.overflow;
         document.documentElement.style.overflow = 'hidden';
-        return () => {
-          document.removeEventListener('keydown', onKey);
-          document.documentElement.style.overflow = prev;
-        };
+        return () => { document.removeEventListener('keydown', onKey); document.documentElement.style.overflow = prev; };
       }, [menuOpen]);
+      useEffect(() => {
+        if (!signsOpen) return undefined;
+        const onDoc = (e) => { if (!e.target.closest('.wnav-wrap')) setSignsOpen(false); };
+        const onKey = (e) => { if (e.key === 'Escape') setSignsOpen(false); };
+        document.addEventListener('click', onDoc);
+        document.addEventListener('keydown', onKey);
+        return () => { document.removeEventListener('click', onDoc); document.removeEventListener('keydown', onKey); };
+      }, [signsOpen]);
+      const NAV_SIGNS = [
+        { slug: 'aries', name: 'Aries', glyph: '♈', dates: 'Mar 21 – Apr 19', hue: '#DE8E79' },
+        { slug: 'taurus', name: 'Taurus', glyph: '♉', dates: 'Apr 20 – May 20', hue: '#B9D4BE' },
+        { slug: 'gemini', name: 'Gemini', glyph: '♊', dates: 'May 21 – Jun 20', hue: '#B29DD0' },
+        { slug: 'cancer', name: 'Cancer', glyph: '♋', dates: 'Jun 21 – Jul 22', hue: '#B6D4E4' },
+        { slug: 'leo', name: 'Leo', glyph: '♌', dates: 'Jul 23 – Aug 22', hue: '#E0A9B4' },
+        { slug: 'virgo', name: 'Virgo', glyph: '♍', dates: 'Aug 23 – Sep 22', hue: '#B7D9B0' },
+        { slug: 'libra', name: 'Libra', glyph: '♎', dates: 'Sep 23 – Oct 22', hue: '#D3A9DE' },
+        { slug: 'scorpio', name: 'Scorpio', glyph: '♏', dates: 'Oct 23 – Nov 21', hue: '#B9DCE8' },
+        { slug: 'sagittarius', name: 'Sagittarius', glyph: '♐', dates: 'Nov 22 – Dec 21', hue: '#E0B080' },
+        { slug: 'capricorn', name: 'Capricorn', glyph: '♑', dates: 'Dec 22 – Jan 19', hue: '#C0DEA8' },
+        { slug: 'aquarius', name: 'Aquarius', glyph: '♒', dates: 'Jan 20 – Feb 18', hue: '#AE8FC9' },
+        { slug: 'pisces', name: 'Pisces', glyph: '♓', dates: 'Feb 19 – Mar 20', hue: '#A9D4C4' },
+      ];
+      const brandDots = NAV_SIGNS.map((s, i) => {
+        const a = (i / 12) * 2 * Math.PI - Math.PI / 2;
+        return { cx: +(12 + 9 * Math.cos(a)).toFixed(3), cy: +(12 + 9 * Math.sin(a)).toFixed(3), hue: s.hue };
+      });
       return (
         <>
-          <div className="hdr-wrap">
-            <header className="hdr" role="banner">
-              <a className="hdr__mark" href="/">
-                <span>Zodiacs</span><span className="sep">·</span><span className="dim">org</span>
+          <div className="wnav-wrap">
+            <nav className="wnav" aria-label="Primary">
+              <a className="wnav__mark" href="/">
+                <svg className="wnav__brand" width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  {brandDots.map((d, i) => <circle key={i} cx={d.cx} cy={d.cy} r="1.9" fill={d.hue} />)}
+                </svg>
+                <span className="wnav__name">Zodiacs</span>
               </a>
-              <nav className="hdr__links" aria-label="Sections">
-                <a href="#registry">Registry</a>
-                <a href="#verify">Verify</a>
-                <a href="#official-twelve">The Twelve</a>
-                <a href="/thesis/">Thesis</a>
-              </nav>
-              <a className="hdr__nav" href="/sdk/">
-                <span>SDK</span>
-                <span className="chip">↗</span>
-              </a>
-              <button
-                type="button"
-                className="hdr__burger"
-                aria-expanded={menuOpen}
-                aria-controls="hdr-menu"
-                aria-label={menuOpen ? 'Close menu' : 'Open menu'}
-                onClick={() => setMenuOpen((v) => !v)}
-              >
-                <span className="hdr__burger-line" />
-                <span className="hdr__burger-line" />
-                <span className="hdr__burger-line" />
+              <div className="wnav__links">
+                <button className="wnav__link wnav__signs-btn" type="button" aria-expanded={signsOpen} aria-controls="wnav-signs" onClick={() => setSignsOpen((v) => !v)}>Signs<svg width="8" height="5" viewBox="0 0 8 5" fill="none" aria-hidden="true"><path d="M1 1l3 3 3-3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/></svg></button>
+                <a className="wnav__link" href="/tools/">Tools</a>
+                <a className="wnav__link" href="/learn/">Learn</a>
+                <a className="wnav__link" href="/horoscopes/">Horoscopes</a>
+                <a className="wnav__link" href="/profile/">Saved charts</a>
+              </div>
+              <a className="wnav__chip" href="/registry/" aria-current="page"><span>Registry</span><span className="wnav__chip-arr" aria-hidden="true">↗</span></a>
+              <button type="button" className="wnav__burger" aria-expanded={menuOpen} aria-controls="wnav-menu" aria-label={menuOpen ? 'Close menu' : 'Open menu'} onClick={() => setMenuOpen((v) => !v)}>
+                <span className="wnav__burger-line" /><span className="wnav__burger-line" /><span className="wnav__burger-line" />
               </button>
-            </header>
+            </nav>
+            <div className={signsOpen ? 'wnav-signs is-open' : 'wnav-signs'} id="wnav-signs" hidden={!signsOpen}>
+              <div className="wnav-signs__grid">
+                {NAV_SIGNS.map((s) => (
+                  <a className="wnav-signs__item" key={s.slug} href={`/${s.slug}/`} style={{ '--sign': s.hue }} onClick={() => setSignsOpen(false)}>
+                    <span className="wnav-disc" aria-hidden="true">{s.glyph}</span>
+                    <span className="wnav-signs__name">{s.name}</span>
+                    <span className="wnav-signs__dates">{s.dates}</span>
+                  </a>
+                ))}
+              </div>
+            </div>
           </div>
-          <div
-            id="hdr-menu"
-            className={menuOpen ? 'hdr__menu is-open' : 'hdr__menu'}
-            hidden={!menuOpen}
-            onClick={(e) => { if (e.target.closest('a')) setMenuOpen(false); }}
-          >
-            <nav className="hdr__menu-inner" aria-label="Registry sections">
-              <span className="hdr__menu-label">The Registry</span>
-              <a href="#registry" style={{ '--i': 1 }}>Registry</a>
-              <a href="#verify" style={{ '--i': 2 }}>Verify</a>
-              <a href="#official-twelve" style={{ '--i': 3 }}>The Twelve</a>
-              <a href="/thesis/" style={{ '--i': 4 }}>Thesis</a>
-              <a href="/sdk/" style={{ '--i': 5 }}>SDK</a>
+          <div id="wnav-menu" className={menuOpen ? 'wnav-menu is-open' : 'wnav-menu'} hidden={!menuOpen} onClick={(e) => { if (e.target.closest('a')) setMenuOpen(false); }}>
+            <nav aria-label="Mobile">
+              <div className="wnav-menu__group">
+                <span className="wnav-menu__label">The site</span>
+                <a className="wnav-menu__link" style={{ '--i': 0 }} href="/tools/">Tools</a>
+                <a className="wnav-menu__link" style={{ '--i': 1 }} href="/learn/">Learn</a>
+                <a className="wnav-menu__link" style={{ '--i': 2 }} href="/horoscopes/">Horoscopes</a>
+                <a className="wnav-menu__link" style={{ '--i': 3 }} href="/profile/">Saved charts</a>
+              </div>
+              <div className="wnav-menu__group">
+                <span className="wnav-menu__label">The twelve</span>
+                <div className="wnav-menu__signs">
+                  {NAV_SIGNS.map((s, i) => (
+                    <a className="wnav-menu__sign" key={s.slug} style={{ '--i': 4 + i, '--sign': s.hue }} href={`/${s.slug}/`} aria-label={s.name}>
+                      <span className="wnav-disc wnav-disc--lg" aria-hidden="true">{s.glyph}</span>
+                      <span>{s.name}</span>
+                    </a>
+                  ))}
+                </div>
+              </div>
             </nav>
           </div>
         </>

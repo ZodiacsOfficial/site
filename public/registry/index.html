@@ -497,55 +497,61 @@
       margin: 0 8px 2px; opacity: 0.7;
     }
 
-    /* ── Header — floating island pill (no edge-to-edge sticky) ── */
+    /* ── Header — unified nav (Part AA · shared scripts/wing-nav.mjs) ── */
+  @font-face { font-family: 'Instrument Sans'; src: url('/fonts/instrument-sans-latin-wght-normal.woff2') format('woff2-variations'); font-weight: 400 600; font-style: normal; font-display: swap; }
+  .wnav-wrap { position: fixed; top: 14px; left: 0; right: 0; z-index: 60; display: flex; justify-content: center; pointer-events: none; padding: env(safe-area-inset-top) 16px 0; }
+  .wnav { pointer-events: auto; display: inline-flex; align-items: center; gap: 18px; height: 52px; padding: 0 10px 0 20px; border-radius: 999px; background: rgba(10,12,17,0.66); backdrop-filter: saturate(150%) blur(18px); -webkit-backdrop-filter: saturate(150%) blur(18px); border: 1px solid var(--hair-2, rgba(198,204,218,0.16)); box-shadow: inset 0 1px 0 rgba(238,241,247,0.06), 0 12px 32px -14px rgba(0,0,0,0.7); }
+  .wnav__mark { display: inline-flex; align-items: center; gap: 9px; text-decoration: none; white-space: nowrap; }
+  .wnav__brand { display: block; flex-shrink: 0; }
+  .wnav__mark:hover .wnav__brand { animation: wnav-turn 14s linear infinite; }
+  .wnav__name { font-family: var(--serif, 'EB Garamond', Georgia, serif); font-weight: 500; font-size: 19px; letter-spacing: 0.01em; line-height: 1; color: var(--ink, #EEF1F7); }
+  .wnav__links { display: none; align-items: center; gap: 2px; }
+  @media (min-width: 760px) { .wnav__links { display: inline-flex; } }
+  .wnav__link { display: inline-flex; align-items: center; gap: 6px; padding: 7px 13px; border-radius: 999px; font-family: 'Instrument Sans', system-ui, -apple-system, 'Segoe UI', sans-serif; font-size: 14px; font-weight: 500; letter-spacing: -0.005em; text-transform: none; color: var(--ink-2, #C6CCDA); text-decoration: none; background: none; border: 0; cursor: pointer; transition: color 200ms var(--ease, cubic-bezier(0.4,0,0.2,1)), background 260ms var(--ease, cubic-bezier(0.4,0,0.2,1)); }
+  .wnav__link:hover { color: var(--ink, #EEF1F7); background: rgba(198,204,218,0.07); }
+  .wnav__link[aria-current='page'] { color: var(--ink, #EEF1F7); }
+  .wnav__signs-btn svg { transition: transform 260ms var(--ease, cubic-bezier(0.4,0,0.2,1)); }
+  .wnav__signs-btn[aria-expanded='true'] svg { transform: rotate(180deg); }
+  .wnav__chip { display: inline-flex; align-items: center; gap: 9px; padding: 4px 5px 4px 15px; border-radius: 999px; border: 1px solid var(--hair-2, rgba(198,204,218,0.16)); background: rgba(198,204,218,0.05); font-family: 'Instrument Sans', system-ui, sans-serif; font-size: 14px; font-weight: 550; color: var(--ink, #EEF1F7); text-decoration: none; white-space: nowrap; transition: border-color 260ms var(--ease, cubic-bezier(0.4,0,0.2,1)), background 260ms var(--ease, cubic-bezier(0.4,0,0.2,1)); }
+  .wnav__chip:hover { border-color: var(--hair-3, rgba(198,204,218,0.28)); background: rgba(198,204,218,0.09); }
+  .wnav__chip-arr { display: inline-grid; place-items: center; width: 25px; height: 25px; border-radius: 50%; border: 1px solid var(--hair-2, rgba(198,204,218,0.16)); font-size: 12px; color: var(--ink-2, #C6CCDA); transition: transform 200ms var(--ease, cubic-bezier(0.4,0,0.2,1)); }
+  .wnav__chip:hover .wnav__chip-arr { transform: translate(1px,-1px); color: var(--ink, #EEF1F7); }
+  .wnav__burger { display: inline-grid; place-items: center; gap: 4px; width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--hair-2, rgba(198,204,218,0.16)); background: none; cursor: pointer; }
+  @media (min-width: 760px) { .wnav__burger { display: none; } }
+  .wnav__burger-line { display: block; width: 15px; height: 1.5px; border-radius: 2px; background: var(--ink-2, #C6CCDA); transition: transform 260ms var(--ease, cubic-bezier(0.4,0,0.2,1)), opacity 200ms var(--ease, cubic-bezier(0.4,0,0.2,1)); }
+  .wnav__burger[aria-expanded='true'] .wnav__burger-line:first-child { transform: translateY(5.5px) rotate(45deg); }
+  .wnav__burger[aria-expanded='true'] .wnav__burger-line:nth-child(2) { opacity: 0; transform: scaleX(0.4); }
+  .wnav__burger[aria-expanded='true'] .wnav__burger-line:last-child { transform: translateY(-5.5px) rotate(-45deg); }
+  .wnav-disc { display: inline-grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; background: var(--sign, #C6CCDA); color: #0b0e14; font-size: 16px; line-height: 1; }
+  .wnav-disc--lg { width: 40px; height: 40px; font-size: 20px; }
+  .wnav-signs { pointer-events: auto; margin-top: 10px; width: min(100% - 32px, 620px); border-radius: 20px; background: rgba(10,12,17,0.82); backdrop-filter: saturate(150%) blur(22px); -webkit-backdrop-filter: saturate(150%) blur(22px); border: 1px solid var(--hair-2, rgba(198,204,218,0.16)); box-shadow: 0 24px 60px -24px rgba(0,0,0,0.8); padding: 10px; opacity: 0; transform: translateY(-6px) scale(0.99); transition: opacity 260ms var(--ease, cubic-bezier(0.4,0,0.2,1)), transform 260ms var(--ease, cubic-bezier(0.4,0,0.2,1)); }
+  .wnav-signs[hidden] { display: none; }
+  .wnav-signs.is-open { opacity: 1; transform: none; }
+  .wnav-signs__grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px; }
+  @media (min-width: 640px) { .wnav-signs__grid { grid-template-columns: repeat(3, 1fr); } }
+  .wnav-signs__item { display: grid; grid-template-columns: 32px 1fr; grid-template-rows: auto auto; column-gap: 12px; align-items: center; padding: 10px 12px; border-radius: 14px; text-decoration: none; transition: background 200ms var(--ease, cubic-bezier(0.4,0,0.2,1)); }
+  .wnav-signs__item:hover { background: color-mix(in oklab, var(--sign) 12%, transparent); }
+  .wnav-signs__item .wnav-disc { grid-row: span 2; }
+  .wnav-signs__name { font-family: 'Instrument Sans', system-ui, sans-serif; font-size: 14px; font-weight: 550; color: var(--ink, #EEF1F7); line-height: 1.25; }
+  .wnav-signs__dates { font-family: var(--mono, 'JetBrains Mono', monospace); font-size: 10px; letter-spacing: 0.06em; color: var(--ink-mute, #8A93A6); }
+  .wnav-menu { position: fixed; inset: 0; z-index: 59; pointer-events: auto; background: rgba(6,7,9,0.90); backdrop-filter: blur(26px) saturate(140%); -webkit-backdrop-filter: blur(26px) saturate(140%); padding: calc(92px + env(safe-area-inset-top)) clamp(24px,7vw,40px) 40px; overflow-y: auto; }
+  .wnav-menu[hidden] { display: none; }
+  .wnav-menu > nav { max-width: 520px; margin: 0 auto; }
+  .wnav-menu__group + .wnav-menu__group { margin-top: 34px; }
+  .wnav-menu__label { display: block; margin-bottom: 14px; font-family: var(--mono, 'JetBrains Mono', monospace); font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--ink-mute, #8A93A6); }
+  .wnav-menu__link { display: block; padding: 10px 0; font-family: 'Instrument Sans', system-ui, sans-serif; font-size: 28px; font-weight: 600; letter-spacing: -0.02em; text-decoration: none; color: var(--ink, #EEF1F7); }
+  .wnav-menu__signs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px 10px; }
+  .wnav-menu__sign { display: flex; flex-direction: column; align-items: center; gap: 8px; text-decoration: none; font-family: 'Instrument Sans', system-ui, sans-serif; font-size: 12.5px; font-weight: 500; color: var(--ink-2, #C6CCDA); }
+  .wnav-menu.is-open .wnav-menu__link, .wnav-menu.is-open .wnav-menu__sign, .wnav-menu.is-open .wnav-menu__label { animation: wnav-in 640ms var(--ease, cubic-bezier(0.4,0,0.2,1)) both; animation-delay: calc(40ms * var(--i, 0)); }
+  @keyframes wnav-in { from { opacity: 0; transform: translateY(14px); filter: blur(4px); } to { opacity: 1; transform: none; filter: none; } }
+  @keyframes wnav-turn { to { transform: rotate(360deg); } }
+  @media (prefers-reduced-motion: reduce) { .wnav-menu.is-open .wnav-menu__link, .wnav-menu.is-open .wnav-menu__sign, .wnav-menu.is-open .wnav-menu__label { animation: none; } .wnav-signs { transition: none; } .wnav__mark:hover .wnav__brand { animation: none; } }
 
-    .hdr-wrap {
-      /* Pinned on top like the main site's nav (SiteNav.astro): a fixed pill
-         floating over the film from the first paint, not a sticky bar reached
-         only after scrolling past the hero. */
-      position: fixed; top: 14px; left: 0; right: 0; z-index: var(--z-nav);
-      display: flex; justify-content: center;
-      pointer-events: none;
-      padding: max(0px, env(safe-area-inset-top)) 16px 0;
-    }
-    .hdr {
-      pointer-events: auto;
-      display: inline-flex; align-items: center; justify-content: space-between;
-      gap: 18px;
-      height: 48px;
-      padding: 0 6px 0 18px;
-      border-radius: 999px;
-      background: rgba(10, 12, 17, 0.66);
-      backdrop-filter: saturate(150%) blur(18px);
-      -webkit-backdrop-filter: saturate(150%) blur(18px);
-      border: 1px solid var(--hair-2);
-      box-shadow:
-        inset 0 1px 0 rgba(238,241,247,0.10),
-        inset 0 -1px 0 rgba(0,0,0,0.4),
-        0 8px 28px -12px rgba(0,0,0,0.6),
-        0 0 0 1px rgba(0,0,0,0.35);
-      transition: border-color 420ms var(--ease), background 420ms var(--ease);
-      min-width: min(360px, 92vw);
-    }
-
-    /* ── Liquid glass — the registry nav pill refracts the footage/app
-       behind it on Chromium, exactly as the main site's nav does; every
-       other browser keeps the blur floor above. ── */
+    /* ── Liquid glass — SVG filter defs container. On Chromium the hero
+       CTAs refract the footage behind them (.zdx-lens is set by the inline
+       <head> script); every other browser keeps the frosted floor. The
+       unified nav pill uses its own plain blur floor, not the SVG lens. ── */
     .glass-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
-    /* Chromium-only refraction lens (.zdx-lens set by the inline script in
-       <head>); Safari/iOS keep the frosted blur floor on .hdr above. */
-    html.zdx-lens .hdr {
-      background: rgba(10, 12, 17, 0.56);
-      backdrop-filter: url(#zdx-lens-nav);
-      -webkit-backdrop-filter: url(#zdx-lens-nav);
-      box-shadow:
-        inset 0 1px 0 rgba(238,241,247,0.12),
-        inset 0 -1px 0 rgba(238,241,247,0.04),
-        0 12px 32px -14px rgba(0,0,0,0.7),
-        0 0 0 1px rgba(0,0,0,0.35);
-    }
-    /* Chromium refracts the hero CTAs through the capsule lens too; every
-       other browser keeps the frosted floor above. */
     html.zdx-lens .cine__cta .btn {
       background: rgba(10, 12, 17, 0.34);
       backdrop-filter: url(#zdx-lens-cta);
@@ -558,153 +564,13 @@
     }
     html.zdx-lens .cine__cta .btn:hover { background: rgba(10, 12, 17, 0.50); }
     html.zdx-lens .cine__cta .btn--primary { border-color: rgba(238,241,247,0.34); }
-    /* Reduced transparency: solid, no blur — the frosted floor and the lens
-       alike fall back to an opaque capsule. */
+    /* Reduced transparency: the CTA capsule falls back to an opaque fill. */
     @media (prefers-reduced-transparency: reduce) {
-      .hdr {
-        background: rgba(10, 12, 17, 0.92);
-        backdrop-filter: none;
-        -webkit-backdrop-filter: none;
-      }
       .cine__cta .btn {
         background: rgba(10, 12, 17, 0.86);
         backdrop-filter: none;
         -webkit-backdrop-filter: none;
       }
-    }
-    .hdr__mark {
-      font-family: var(--display);
-      font-weight: 400;
-      font-size: 13px;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--ink);
-      white-space: nowrap;
-      text-decoration: none;
-      transition: color 320ms var(--ease);
-    }
-    .hdr__mark:hover { color: var(--gold-bright); }
-    .hdr__mark:hover .dim { color: var(--gold-bright); }
-    .hdr__mark .dim { color: var(--gold); font-weight: 500; }
-    .hdr__mark .sep { color: var(--ink-mute); margin: 0 4px; }
-
-    /* Button-in-button: collection chip with nested arrow bezel */
-    .hdr__nav {
-      display: inline-flex; align-items: center; gap: 8px;
-      font-family: var(--mono);
-      font-size: 10px;
-      letter-spacing: 0.24em;
-      text-transform: uppercase;
-      color: var(--ink-2);
-      height: 36px;
-      padding: 0 6px 0 14px;
-      border-left: 1px solid var(--hair-2);
-      text-decoration: none;
-      transition: color 320ms var(--ease);
-    }
-    .hdr__nav:hover { color: var(--gold-bright); }
-    .hdr__nav .chip {
-      display: inline-grid; place-items: center;
-      width: 26px; height: 26px;
-      border: 1px solid var(--hair-2);
-      background: rgba(198,204,218,0.05);
-      color: var(--gold);
-      font-size: 11px;
-      transition: transform 420ms var(--ease), border-color 320ms var(--ease), background 320ms var(--ease);
-    }
-    .hdr__nav:hover .chip {
-      transform: translate(2px, -1px);
-      border-color: var(--gold);
-      background: rgba(198,204,218,0.10);
-    }
-
-    /* Anchor nav — desktop only; revealed in the wide-layout media query */
-    .hdr__links {
-      display: none;
-      align-items: center;
-      gap: 20px;
-      font-family: var(--mono);
-      font-size: 10px;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-    }
-    .hdr__links a {
-      color: var(--ink-dim);
-      text-decoration: none;
-      padding: 4px 1px;
-      transition: color 320ms var(--ease);
-    }
-    .hdr__links a:hover { color: var(--gold-bright); }
-
-    /* ── Mobile menu — burger + overlay ────────────────────────────
-       The anchor nav (.hdr__links) hides below 1020px, which left the
-       phone header as just wordmark + SDK. This burger exposes the same
-       sections behind an overlay — parity with the main site's SiteNav,
-       rendered in the wing's museum register (EB Garamond links, mono
-       label, gold hover). Revealed only below 1020px. */
-    .hdr__burger {
-      display: inline-grid; align-content: center; justify-items: center;
-      gap: 4px;
-      width: 34px; height: 34px;
-      margin-left: 2px;
-      border: 1px solid var(--hair-2);
-      border-radius: 999px;
-      background: rgba(198,204,218,0.05);
-      cursor: pointer;
-      transition: border-color 320ms var(--ease), background 320ms var(--ease);
-    }
-    .hdr__burger:hover { border-color: var(--hair-3); background: rgba(198,204,218,0.09); }
-    .hdr__burger-line {
-      display: block; width: 15px; height: 1.5px; border-radius: 2px;
-      background: var(--ink-2);
-      transition: transform 320ms var(--ease), opacity 240ms var(--ease);
-    }
-    /* Three bars fold into an X while open. */
-    .hdr__burger[aria-expanded='true'] .hdr__burger-line:first-child { transform: translateY(5.5px) rotate(45deg); }
-    .hdr__burger[aria-expanded='true'] .hdr__burger-line:nth-child(2) { opacity: 0; transform: scaleX(0.4); }
-    .hdr__burger[aria-expanded='true'] .hdr__burger-line:last-child { transform: translateY(-5.5px) rotate(-45deg); }
-    @media (min-width: 1020px) { .hdr__burger { display: none; } }
-
-    .hdr__menu {
-      position: fixed; inset: 0; z-index: calc(var(--z-nav) - 1);
-      pointer-events: auto;
-      background: rgba(6,7,9,0.90);
-      backdrop-filter: blur(26px) saturate(140%);
-      -webkit-backdrop-filter: blur(26px) saturate(140%);
-      padding: calc(92px + env(safe-area-inset-top)) clamp(24px, 7vw, 40px) 40px;
-      overflow-y: auto;
-    }
-    .hdr__menu[hidden] { display: none; }
-    .hdr__menu-inner { display: flex; flex-direction: column; max-width: 520px; margin: 0 auto; }
-    .hdr__menu-label {
-      margin-bottom: 18px;
-      font-family: var(--mono); font-size: 10px;
-      letter-spacing: 0.24em; text-transform: uppercase;
-      color: var(--ink-mute);
-    }
-    .hdr__menu-inner a {
-      padding: 13px 0;
-      font-family: var(--serif); font-weight: 400;
-      font-size: clamp(26px, 8vw, 34px); letter-spacing: 0.01em; line-height: 1.05;
-      color: var(--ink); text-decoration: none;
-      border-bottom: 1px solid var(--hair);
-      transition: color 320ms var(--ease);
-    }
-    .hdr__menu-inner a:last-child { border-bottom: 0; }
-    .hdr__menu-inner a:hover { color: var(--gold-bright); }
-    .hdr__menu.is-open a,
-    .hdr__menu.is-open .hdr__menu-label {
-      animation: hdrMenuIn 520ms var(--ease) both;
-      animation-delay: calc(40ms * var(--i, 0));
-    }
-    @keyframes hdrMenuIn {
-      from { opacity: 0; transform: translateY(12px); }
-      to { opacity: 1; transform: none; }
-    }
-    @media (min-width: 1020px) { .hdr__menu { display: none; } }
-    @media (prefers-reduced-motion: reduce) {
-      .hdr__menu.is-open a,
-      .hdr__menu.is-open .hdr__menu-label { animation: none; }
     }
 
     /* ── Hero ──────────────────────────────────────────────────── */
@@ -3288,9 +3154,6 @@
         box-shadow: 0 0 0 1px var(--hair) inset;
       }
 
-      .hdr { min-width: 0; gap: 22px; }
-      .hdr__links { display: inline-flex; }
-
       /* Hero — words left, artifact right */
       .hero {
         display: grid;
@@ -3452,11 +3315,7 @@
     </script>
     <main class="static-site">
       <nav class="static-site__nav" aria-label="Primary">
-        <a href="/">Zodiacs.org</a>
-        <a href="/thesis/">Thesis</a>
-        <a href="/archive/">Archive</a>
-        <a href="/registry/zodiacs.registry.json">Registry JSON</a>
-        <a href="/sdk/">SDK</a>
+        <a href="/">Zodiacs.org</a> <a href="/tools/">Tools</a> <a href="/learn/">Learn</a> <a href="/horoscopes/">Horoscopes</a> <a href="/profile/">Saved charts</a> <a href="/registry/">Registry</a>
       </nav>
 
       <section class="static-site__section" id="registry">
