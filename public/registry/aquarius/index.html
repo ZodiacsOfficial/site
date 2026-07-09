@@ -163,109 +163,56 @@
     }
     .label--gold { color: var(--gold); }
 
-    /* ── Floating pill header ── */
-    .hdr-wrap {
-      position: sticky; top: 12px; z-index: var(--z-nav);
-      display: flex; justify-content: center; pointer-events: none;
-      padding: max(0px, env(safe-area-inset-top)) 16px 0; margin-top: 14px;
-    }
-    .hdr {
-      pointer-events: auto;
-      display: inline-flex; align-items: center; gap: 16px;
-      height: 48px; padding: 0 6px 0 18px;
-      border-radius: 999px;
-      background: rgba(10,12,17,0.66);
-      backdrop-filter: saturate(150%) blur(18px);
-      -webkit-backdrop-filter: saturate(150%) blur(18px);
-      border: 1px solid var(--hair-2);
-      box-shadow:
-        inset 0 1px 0 rgba(238,241,247,0.10), inset 0 -1px 0 rgba(0,0,0,0.4),
-        0 8px 28px -12px rgba(0,0,0,0.6), 0 0 0 1px rgba(0,0,0,0.35);
-    }
-    .hdr a { text-decoration: none; }
-    .hdr__mark {
-      font-family: var(--display); font-weight: 400; font-size: 13px; letter-spacing: 0.14em;
-      text-transform: uppercase; color: var(--ink); white-space: nowrap;
-      transition: color 320ms var(--ease);
-    }
-    .hdr__mark:hover, .hdr__mark:hover .dim { color: var(--gold-bright); }
-    .hdr__mark .dim { color: var(--gold); font-weight: 500; }
-    .hdr__mark .sep { color: var(--ink-mute); margin: 0 4px; }
-    .hdr__nav {
-      display: inline-flex; align-items: center; gap: 8px;
-      font-family: var(--mono); font-size: 10px; letter-spacing: 0.24em;
-      text-transform: uppercase; color: var(--ink-2);
-      height: 36px; padding: 0 6px 0 14px;
-      border-left: 1px solid var(--hair-2);
-      transition: color 320ms var(--ease);
-    }
-    .hdr__nav:hover { color: var(--gold-bright); }
-    .hdr__nav .chip {
-      display: inline-grid; place-items: center; width: 26px; height: 26px;
-      border: 1px solid var(--hair-2); background: rgba(198,204,218,0.05);
-      color: var(--gold); font-size: 11px;
-      transition: transform 420ms var(--ease), border-color 320ms var(--ease);
-    }
-    .hdr__nav:hover .chip { transform: translate(2px, -1px); border-color: var(--gold); }
-
-    /* ── Mobile menu — burger + overlay (≤700px) ──
-       The header chips crowd a phone; below 700px they fold into a burger
-       overlay that also surfaces the wider wing (Registry · The Twelve ·
-       Verify · Thesis · Archive · SDK). Parity with the hub, museum register. */
-    .hdr__burger {
-      display: none;
-      width: 34px; height: 34px; margin-left: 2px; padding: 0;
-      gap: 4px; place-content: center; place-items: center;
-      border: 1px solid var(--hair-2); border-radius: 999px;
-      background: rgba(198,204,218,0.05); cursor: pointer;
-    }
-    .hdr__burger-line {
-      display: block; width: 15px; height: 1.5px; border-radius: 2px;
-      background: var(--ink-2);
-      transition: transform 320ms var(--ease), opacity 240ms var(--ease);
-    }
-    .hdr__burger[aria-expanded='true'] .hdr__burger-line:first-child { transform: translateY(5.5px) rotate(45deg); }
-    .hdr__burger[aria-expanded='true'] .hdr__burger-line:nth-child(2) { opacity: 0; transform: scaleX(0.4); }
-    .hdr__burger[aria-expanded='true'] .hdr__burger-line:last-child { transform: translateY(-5.5px) rotate(-45deg); }
-    .hdr__menu {
-      position: fixed; inset: 0; z-index: calc(var(--z-nav) - 1);
-      pointer-events: auto;
-      background: rgba(6,7,9,0.90);
-      backdrop-filter: blur(26px) saturate(140%);
-      -webkit-backdrop-filter: blur(26px) saturate(140%);
-      padding: calc(92px + env(safe-area-inset-top)) clamp(24px, 7vw, 40px) 40px;
-      overflow-y: auto;
-    }
-    .hdr__menu[hidden] { display: none; }
-    .hdr__menu-inner { display: flex; flex-direction: column; max-width: 520px; margin: 0 auto; }
-    .hdr__menu-label {
-      margin-bottom: 18px;
-      font-family: var(--mono); font-size: 10px; letter-spacing: 0.24em;
-      text-transform: uppercase; color: var(--ink-mute);
-    }
-    .hdr__menu-inner a {
-      padding: 13px 0;
-      font-family: var(--serif); font-weight: 400;
-      font-size: clamp(26px, 8vw, 34px); letter-spacing: 0.01em; line-height: 1.05;
-      color: var(--ink); text-decoration: none;
-      border-bottom: 1px solid var(--hair);
-      transition: color 320ms var(--ease);
-    }
-    .hdr__menu-inner a:last-child { border-bottom: 0; }
-    .hdr__menu-inner a:hover { color: var(--gold-bright); }
-    .hdr__menu.is-open a, .hdr__menu.is-open .hdr__menu-label {
-      animation: hdrMenuIn 520ms var(--ease) both;
-      animation-delay: calc(40ms * var(--i, 0));
-    }
-    @keyframes hdrMenuIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
-    @media (max-width: 700px) {
-      .hdr__nav { display: none; }
-      .hdr__burger { display: inline-grid; }
-    }
-    @media (min-width: 701px) { .hdr__menu { display: none; } }
-    @media (prefers-reduced-motion: reduce) {
-      .hdr__menu.is-open a, .hdr__menu.is-open .hdr__menu-label { animation: none; }
-    }
+    /* ── Unified site nav (Part AA) — shared wing nav module (wing-nav.mjs) ── */
+    
+  @font-face { font-family: 'Instrument Sans'; src: url('/fonts/instrument-sans-latin-wght-normal.woff2') format('woff2-variations'); font-weight: 400 600; font-style: normal; font-display: swap; }
+  .wnav-wrap { position: fixed; top: 14px; left: 0; right: 0; z-index: 60; display: flex; justify-content: center; pointer-events: none; padding: env(safe-area-inset-top) 16px 0; }
+  .wnav { pointer-events: auto; display: inline-flex; align-items: center; gap: 18px; height: 52px; padding: 0 10px 0 20px; border-radius: 999px; background: rgba(10,12,17,0.66); backdrop-filter: saturate(150%) blur(18px); -webkit-backdrop-filter: saturate(150%) blur(18px); border: 1px solid var(--hair-2, rgba(198,204,218,0.16)); box-shadow: inset 0 1px 0 rgba(238,241,247,0.06), 0 12px 32px -14px rgba(0,0,0,0.7); }
+  .wnav__mark { display: inline-flex; align-items: center; gap: 9px; text-decoration: none; white-space: nowrap; }
+  .wnav__brand { display: block; flex-shrink: 0; }
+  .wnav__mark:hover .wnav__brand { animation: wnav-turn 14s linear infinite; }
+  .wnav__name { font-family: var(--serif, 'EB Garamond', Georgia, serif); font-weight: 500; font-size: 19px; letter-spacing: 0.01em; line-height: 1; color: var(--ink, #EEF1F7); }
+  .wnav__links { display: none; align-items: center; gap: 2px; }
+  @media (min-width: 760px) { .wnav__links { display: inline-flex; } }
+  .wnav__link { display: inline-flex; align-items: center; gap: 6px; padding: 7px 13px; border-radius: 999px; font-family: 'Instrument Sans', system-ui, -apple-system, 'Segoe UI', sans-serif; font-size: 14px; font-weight: 500; letter-spacing: -0.005em; text-transform: none; color: var(--ink-2, #C6CCDA); text-decoration: none; background: none; border: 0; cursor: pointer; transition: color 200ms var(--ease, cubic-bezier(0.4,0,0.2,1)), background 260ms var(--ease, cubic-bezier(0.4,0,0.2,1)); }
+  .wnav__link:hover { color: var(--ink, #EEF1F7); background: rgba(198,204,218,0.07); }
+  .wnav__link[aria-current='page'] { color: var(--ink, #EEF1F7); }
+  .wnav__signs-btn svg { transition: transform 260ms var(--ease, cubic-bezier(0.4,0,0.2,1)); }
+  .wnav__signs-btn[aria-expanded='true'] svg { transform: rotate(180deg); }
+  .wnav__chip { display: inline-flex; align-items: center; gap: 9px; padding: 4px 5px 4px 15px; border-radius: 999px; border: 1px solid var(--hair-2, rgba(198,204,218,0.16)); background: rgba(198,204,218,0.05); font-family: 'Instrument Sans', system-ui, sans-serif; font-size: 14px; font-weight: 550; color: var(--ink, #EEF1F7); text-decoration: none; white-space: nowrap; transition: border-color 260ms var(--ease, cubic-bezier(0.4,0,0.2,1)), background 260ms var(--ease, cubic-bezier(0.4,0,0.2,1)); }
+  .wnav__chip:hover { border-color: var(--hair-3, rgba(198,204,218,0.28)); background: rgba(198,204,218,0.09); }
+  .wnav__chip-arr { display: inline-grid; place-items: center; width: 25px; height: 25px; border-radius: 50%; border: 1px solid var(--hair-2, rgba(198,204,218,0.16)); font-size: 12px; color: var(--ink-2, #C6CCDA); transition: transform 200ms var(--ease, cubic-bezier(0.4,0,0.2,1)); }
+  .wnav__chip:hover .wnav__chip-arr { transform: translate(1px,-1px); color: var(--ink, #EEF1F7); }
+  .wnav__burger { display: inline-grid; place-items: center; gap: 4px; width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--hair-2, rgba(198,204,218,0.16)); background: none; cursor: pointer; }
+  @media (min-width: 760px) { .wnav__burger { display: none; } }
+  .wnav__burger-line { display: block; width: 15px; height: 1.5px; border-radius: 2px; background: var(--ink-2, #C6CCDA); transition: transform 260ms var(--ease, cubic-bezier(0.4,0,0.2,1)), opacity 200ms var(--ease, cubic-bezier(0.4,0,0.2,1)); }
+  .wnav__burger[aria-expanded='true'] .wnav__burger-line:first-child { transform: translateY(5.5px) rotate(45deg); }
+  .wnav__burger[aria-expanded='true'] .wnav__burger-line:nth-child(2) { opacity: 0; transform: scaleX(0.4); }
+  .wnav__burger[aria-expanded='true'] .wnav__burger-line:last-child { transform: translateY(-5.5px) rotate(-45deg); }
+  .wnav-disc { display: inline-grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; background: var(--sign, #C6CCDA); color: #0b0e14; font-size: 16px; line-height: 1; }
+  .wnav-disc--lg { width: 40px; height: 40px; font-size: 20px; }
+  .wnav-signs { pointer-events: auto; margin-top: 10px; width: min(100% - 32px, 620px); border-radius: 20px; background: rgba(10,12,17,0.82); backdrop-filter: saturate(150%) blur(22px); -webkit-backdrop-filter: saturate(150%) blur(22px); border: 1px solid var(--hair-2, rgba(198,204,218,0.16)); box-shadow: 0 24px 60px -24px rgba(0,0,0,0.8); padding: 10px; opacity: 0; transform: translateY(-6px) scale(0.99); transition: opacity 260ms var(--ease, cubic-bezier(0.4,0,0.2,1)), transform 260ms var(--ease, cubic-bezier(0.4,0,0.2,1)); }
+  .wnav-signs[hidden] { display: none; }
+  .wnav-signs.is-open { opacity: 1; transform: none; }
+  .wnav-signs__grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px; }
+  @media (min-width: 640px) { .wnav-signs__grid { grid-template-columns: repeat(3, 1fr); } }
+  .wnav-signs__item { display: grid; grid-template-columns: 32px 1fr; grid-template-rows: auto auto; column-gap: 12px; align-items: center; padding: 10px 12px; border-radius: 14px; text-decoration: none; transition: background 200ms var(--ease, cubic-bezier(0.4,0,0.2,1)); }
+  .wnav-signs__item:hover { background: color-mix(in oklab, var(--sign) 12%, transparent); }
+  .wnav-signs__item .wnav-disc { grid-row: span 2; }
+  .wnav-signs__name { font-family: 'Instrument Sans', system-ui, sans-serif; font-size: 14px; font-weight: 550; color: var(--ink, #EEF1F7); line-height: 1.25; }
+  .wnav-signs__dates { font-family: var(--mono, 'JetBrains Mono', monospace); font-size: 10px; letter-spacing: 0.06em; color: var(--ink-mute, #8A93A6); }
+  .wnav-menu { position: fixed; inset: 0; z-index: 59; pointer-events: auto; background: rgba(6,7,9,0.90); backdrop-filter: blur(26px) saturate(140%); -webkit-backdrop-filter: blur(26px) saturate(140%); padding: calc(92px + env(safe-area-inset-top)) clamp(24px,7vw,40px) 40px; overflow-y: auto; }
+  .wnav-menu[hidden] { display: none; }
+  .wnav-menu > nav { max-width: 520px; margin: 0 auto; }
+  .wnav-menu__group + .wnav-menu__group { margin-top: 34px; }
+  .wnav-menu__label { display: block; margin-bottom: 14px; font-family: var(--mono, 'JetBrains Mono', monospace); font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--ink-mute, #8A93A6); }
+  .wnav-menu__link { display: block; padding: 10px 0; font-family: 'Instrument Sans', system-ui, sans-serif; font-size: 28px; font-weight: 600; letter-spacing: -0.02em; text-decoration: none; color: var(--ink, #EEF1F7); }
+  .wnav-menu__signs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px 10px; }
+  .wnav-menu__sign { display: flex; flex-direction: column; align-items: center; gap: 8px; text-decoration: none; font-family: 'Instrument Sans', system-ui, sans-serif; font-size: 12.5px; font-weight: 500; color: var(--ink-2, #C6CCDA); }
+  .wnav-menu.is-open .wnav-menu__link, .wnav-menu.is-open .wnav-menu__sign, .wnav-menu.is-open .wnav-menu__label { animation: wnav-in 640ms var(--ease, cubic-bezier(0.4,0,0.2,1)) both; animation-delay: calc(40ms * var(--i, 0)); }
+  @keyframes wnav-in { from { opacity: 0; transform: translateY(14px); filter: blur(4px); } to { opacity: 1; transform: none; filter: none; } }
+  @keyframes wnav-turn { to { transform: rotate(360deg); } }
+  @media (prefers-reduced-motion: reduce) { .wnav-menu.is-open .wnav-menu__link, .wnav-menu.is-open .wnav-menu__sign, .wnav-menu.is-open .wnav-menu__label { animation: none; } .wnav-signs { transition: none; } .wnav__mark:hover .wnav__brand { animation: none; } }
 
     /* ── Page shell ── */
     .pg {
@@ -614,25 +561,39 @@
   <div class="stars" aria-hidden="true"></div>
   <div class="grain" aria-hidden="true"></div>
 
-  <div class="hdr-wrap">
-    <header class="hdr" role="banner">
-      <a class="hdr__mark" href="/"><span>Zodiacs</span><span class="sep">·</span><span class="dim">org</span></a>
-      <a class="hdr__nav" href="/registry/#official-twelve"><span>The Twelve</span><span class="chip">↗</span></a>
-      <a class="hdr__nav" href="/registry/pisces/" aria-label="Next lot: Pisces"><span>Lot XII</span><span class="chip">→</span></a>
-      <button type="button" class="hdr__burger" data-menu-toggle aria-expanded="false" aria-controls="hdr-menu" aria-label="Open menu">
-        <span class="hdr__burger-line"></span><span class="hdr__burger-line"></span><span class="hdr__burger-line"></span>
+  
+  <div class="wnav-wrap">
+    <nav class="wnav" aria-label="Primary" data-wnav>
+      <a class="wnav__mark" href="/"><svg class="wnav__brand" width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="3" r="1.9" fill="#DE8E79"/><circle cx="16.5" cy="4.206" r="1.9" fill="#B9D4BE"/><circle cx="19.794" cy="7.5" r="1.9" fill="#B29DD0"/><circle cx="21" cy="12" r="1.9" fill="#B6D4E4"/><circle cx="19.794" cy="16.5" r="1.9" fill="#E0A9B4"/><circle cx="16.5" cy="19.794" r="1.9" fill="#B7D9B0"/><circle cx="12" cy="21" r="1.9" fill="#D3A9DE"/><circle cx="7.5" cy="19.794" r="1.9" fill="#B9DCE8"/><circle cx="4.206" cy="16.5" r="1.9" fill="#E0B080"/><circle cx="3" cy="12" r="1.9" fill="#C0DEA8"/><circle cx="4.206" cy="7.5" r="1.9" fill="#AE8FC9"/><circle cx="7.5" cy="4.206" r="1.9" fill="#A9D4C4"/></svg><span class="wnav__name">Zodiacs</span></a>
+      <div class="wnav__links">
+        <button class="wnav__link wnav__signs-btn" type="button" data-wnav-signs aria-expanded="false" aria-controls="wnav-signs">Signs<svg width="8" height="5" viewBox="0 0 8 5" fill="none" aria-hidden="true"><path d="M1 1l3 3 3-3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <a class="wnav__link" href="/tools/">Tools</a>
+        <a class="wnav__link" href="/learn/">Learn</a>
+        <a class="wnav__link" href="/horoscopes/">Horoscopes</a>
+        <a class="wnav__link" href="/profile/">Saved charts</a>
+      </div>
+      <a class="wnav__chip" href="/registry/" aria-current="page"><span>Registry</span><span class="wnav__chip-arr" aria-hidden="true">↗</span></a>
+      <button class="wnav__burger" type="button" data-wnav-burger aria-expanded="false" aria-controls="wnav-menu" aria-label="Menu">
+        <span class="wnav__burger-line"></span><span class="wnav__burger-line"></span><span class="wnav__burger-line"></span>
       </button>
-    </header>
+    </nav>
+    <div class="wnav-signs" id="wnav-signs" data-wnav-signs-menu hidden>
+      <div class="wnav-signs__grid"><a class="wnav-signs__item" href="/aries/" style="--sign:#DE8E79"><span class="wnav-disc" aria-hidden="true">♈</span><span class="wnav-signs__name">Aries</span><span class="wnav-signs__dates">Mar 21 – Apr 19</span></a><a class="wnav-signs__item" href="/taurus/" style="--sign:#B9D4BE"><span class="wnav-disc" aria-hidden="true">♉</span><span class="wnav-signs__name">Taurus</span><span class="wnav-signs__dates">Apr 20 – May 20</span></a><a class="wnav-signs__item" href="/gemini/" style="--sign:#B29DD0"><span class="wnav-disc" aria-hidden="true">♊</span><span class="wnav-signs__name">Gemini</span><span class="wnav-signs__dates">May 21 – Jun 20</span></a><a class="wnav-signs__item" href="/cancer/" style="--sign:#B6D4E4"><span class="wnav-disc" aria-hidden="true">♋</span><span class="wnav-signs__name">Cancer</span><span class="wnav-signs__dates">Jun 21 – Jul 22</span></a><a class="wnav-signs__item" href="/leo/" style="--sign:#E0A9B4"><span class="wnav-disc" aria-hidden="true">♌</span><span class="wnav-signs__name">Leo</span><span class="wnav-signs__dates">Jul 23 – Aug 22</span></a><a class="wnav-signs__item" href="/virgo/" style="--sign:#B7D9B0"><span class="wnav-disc" aria-hidden="true">♍</span><span class="wnav-signs__name">Virgo</span><span class="wnav-signs__dates">Aug 23 – Sep 22</span></a><a class="wnav-signs__item" href="/libra/" style="--sign:#D3A9DE"><span class="wnav-disc" aria-hidden="true">♎</span><span class="wnav-signs__name">Libra</span><span class="wnav-signs__dates">Sep 23 – Oct 22</span></a><a class="wnav-signs__item" href="/scorpio/" style="--sign:#B9DCE8"><span class="wnav-disc" aria-hidden="true">♏</span><span class="wnav-signs__name">Scorpio</span><span class="wnav-signs__dates">Oct 23 – Nov 21</span></a><a class="wnav-signs__item" href="/sagittarius/" style="--sign:#E0B080"><span class="wnav-disc" aria-hidden="true">♐</span><span class="wnav-signs__name">Sagittarius</span><span class="wnav-signs__dates">Nov 22 – Dec 21</span></a><a class="wnav-signs__item" href="/capricorn/" style="--sign:#C0DEA8"><span class="wnav-disc" aria-hidden="true">♑</span><span class="wnav-signs__name">Capricorn</span><span class="wnav-signs__dates">Dec 22 – Jan 19</span></a><a class="wnav-signs__item" href="/aquarius/" style="--sign:#AE8FC9"><span class="wnav-disc" aria-hidden="true">♒</span><span class="wnav-signs__name">Aquarius</span><span class="wnav-signs__dates">Jan 20 – Feb 18</span></a><a class="wnav-signs__item" href="/pisces/" style="--sign:#A9D4C4"><span class="wnav-disc" aria-hidden="true">♓</span><span class="wnav-signs__name">Pisces</span><span class="wnav-signs__dates">Feb 19 – Mar 20</span></a></div>
+    </div>
   </div>
-  <div id="hdr-menu" class="hdr__menu" data-menu hidden>
-    <nav class="hdr__menu-inner" aria-label="Registry sections">
-      <span class="hdr__menu-label">The Registry</span>
-      <a href="/registry/" style="--i:1">Registry</a>
-      <a href="/registry/#official-twelve" style="--i:2">The Twelve</a>
-      <a href="/registry/#verify" style="--i:3">Verify</a>
-      <a href="/thesis/" style="--i:4">Thesis</a>
-      <a href="/archive/" style="--i:5">Archive</a>
-      <a href="/sdk/" style="--i:6">SDK</a>
+  <div class="wnav-menu" id="wnav-menu" data-wnav-mobile hidden>
+    <nav aria-label="Mobile">
+      <div class="wnav-menu__group">
+        <span class="wnav-menu__label">The site</span>
+        <a class="wnav-menu__link" style="--i:0" href="/tools/">Tools</a>
+        <a class="wnav-menu__link" style="--i:1" href="/learn/">Learn</a>
+        <a class="wnav-menu__link" style="--i:2" href="/horoscopes/">Horoscopes</a>
+        <a class="wnav-menu__link" style="--i:3" href="/profile/">Saved charts</a>
+      </div>
+      <div class="wnav-menu__group">
+        <span class="wnav-menu__label">The twelve</span>
+        <div class="wnav-menu__signs"><a class="wnav-menu__sign" style="--i:4;--sign:#DE8E79" href="/aries/" aria-label="Aries"><span class="wnav-disc wnav-disc--lg" aria-hidden="true">♈</span><span>Aries</span></a><a class="wnav-menu__sign" style="--i:5;--sign:#B9D4BE" href="/taurus/" aria-label="Taurus"><span class="wnav-disc wnav-disc--lg" aria-hidden="true">♉</span><span>Taurus</span></a><a class="wnav-menu__sign" style="--i:6;--sign:#B29DD0" href="/gemini/" aria-label="Gemini"><span class="wnav-disc wnav-disc--lg" aria-hidden="true">♊</span><span>Gemini</span></a><a class="wnav-menu__sign" style="--i:7;--sign:#B6D4E4" href="/cancer/" aria-label="Cancer"><span class="wnav-disc wnav-disc--lg" aria-hidden="true">♋</span><span>Cancer</span></a><a class="wnav-menu__sign" style="--i:8;--sign:#E0A9B4" href="/leo/" aria-label="Leo"><span class="wnav-disc wnav-disc--lg" aria-hidden="true">♌</span><span>Leo</span></a><a class="wnav-menu__sign" style="--i:9;--sign:#B7D9B0" href="/virgo/" aria-label="Virgo"><span class="wnav-disc wnav-disc--lg" aria-hidden="true">♍</span><span>Virgo</span></a><a class="wnav-menu__sign" style="--i:10;--sign:#D3A9DE" href="/libra/" aria-label="Libra"><span class="wnav-disc wnav-disc--lg" aria-hidden="true">♎</span><span>Libra</span></a><a class="wnav-menu__sign" style="--i:11;--sign:#B9DCE8" href="/scorpio/" aria-label="Scorpio"><span class="wnav-disc wnav-disc--lg" aria-hidden="true">♏</span><span>Scorpio</span></a><a class="wnav-menu__sign" style="--i:12;--sign:#E0B080" href="/sagittarius/" aria-label="Sagittarius"><span class="wnav-disc wnav-disc--lg" aria-hidden="true">♐</span><span>Sagittarius</span></a><a class="wnav-menu__sign" style="--i:13;--sign:#C0DEA8" href="/capricorn/" aria-label="Capricorn"><span class="wnav-disc wnav-disc--lg" aria-hidden="true">♑</span><span>Capricorn</span></a><a class="wnav-menu__sign" style="--i:14;--sign:#AE8FC9" href="/aquarius/" aria-label="Aquarius"><span class="wnav-disc wnav-disc--lg" aria-hidden="true">♒</span><span>Aquarius</span></a><a class="wnav-menu__sign" style="--i:15;--sign:#A9D4C4" href="/pisces/" aria-label="Pisces"><span class="wnav-disc wnav-disc--lg" aria-hidden="true">♓</span><span>Pisces</span></a></div>
+      </div>
     </nav>
   </div>
 
@@ -871,28 +832,33 @@
       reveals.forEach(function (el) { el.classList.add('is-in'); });
     }
 
-    // Mobile menu — burger overlay (parity with the hub / main site). Below
-    // 700px the header chips fold into this; it also surfaces the wider wing.
-    var burger = document.querySelector('[data-menu-toggle]');
-    var menu = document.querySelector('[data-menu]');
-    if (burger && menu) {
-      var setMenu = function (open) {
-        burger.setAttribute('aria-expanded', String(open));
-        burger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
-        menu.hidden = !open;
-        menu.classList.toggle('is-open', open);
-        document.documentElement.style.overflow = open ? 'hidden' : '';
-      };
-      burger.addEventListener('click', function () {
-        setMenu(burger.getAttribute('aria-expanded') !== 'true');
-      });
-      menu.addEventListener('click', function (e) {
-        if (e.target.closest('a')) setMenu(false);
-      });
-      document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape') setMenu(false);
-      });
+    // Unified site nav (Part AA) — Signs dropdown + mobile burger (wing-nav.mjs)
+    
+  (function(){
+    var wrap = document.querySelector('[data-wnav]') ? document.querySelector('[data-wnav]').parentElement : null;
+    var signsBtn = document.querySelector('[data-wnav-signs]');
+    var signsMenu = document.querySelector('[data-wnav-signs-menu]');
+    var burger = document.querySelector('[data-wnav-burger]');
+    var mobile = document.querySelector('[data-wnav-mobile]');
+    function setSigns(open){
+      if(!signsBtn||!signsMenu) return;
+      signsBtn.setAttribute('aria-expanded', String(open));
+      if(open){ signsMenu.hidden = false; requestAnimationFrame(function(){ signsMenu.classList.add('is-open'); }); }
+      else { signsMenu.classList.remove('is-open'); setTimeout(function(){ signsMenu.hidden = true; }, 240); }
     }
+    function setMobile(open){
+      if(!burger||!mobile) return;
+      burger.setAttribute('aria-expanded', String(open));
+      mobile.hidden = !open;
+      mobile.classList.toggle('is-open', open);
+      document.documentElement.style.overflow = open ? 'hidden' : '';
+    }
+    if(signsBtn) signsBtn.addEventListener('click', function(){ setSigns(signsBtn.getAttribute('aria-expanded') !== 'true'); });
+    document.addEventListener('click', function(e){ if(wrap && !wrap.contains(e.target)) setSigns(false); });
+    if(burger) burger.addEventListener('click', function(){ setMobile(burger.getAttribute('aria-expanded') !== 'true'); });
+    if(mobile) mobile.addEventListener('click', function(e){ if(e.target.closest('a')) setMobile(false); });
+    document.addEventListener('keydown', function(e){ if(e.key === 'Escape'){ setSigns(false); setMobile(false); } });
+  })();
 
     // Copy chips
     document.querySelectorAll('.copychip[data-copy]').forEach(function (chip) {
