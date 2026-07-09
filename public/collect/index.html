@@ -26,14 +26,14 @@
   <meta property="og:image" content="https://zodiacs.org/assets/og/v2/share.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content="Zodiacs — twelve sculptural gold figures, native on Solana and bridged to Base." />
+  <meta property="og:image:alt" content="Zodiacs — the official registry of the Twelve, on Solana and Base." />
   <meta property="og:locale" content="en_US" />
 
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="The Registry · The Twelve — Zodiacs" />
   <meta name="twitter:description" content="Twelve signs, one official record. Verify official assets across Solana and Base, then build symbolic identity context from public ownership." />
   <meta name="twitter:image" content="https://zodiacs.org/assets/og/v2/share.png" />
-  <meta name="twitter:image:alt" content="Zodiacs — twelve sculptural gold figures." />
+  <meta name="twitter:image:alt" content="Zodiacs — the official registry of the Twelve." />
 
   <title>The Registry · The Twelve — Zodiacs.org</title>
 
@@ -86,12 +86,18 @@
   </script>
 
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23060709'/%3E%3Cg%3E%3Ccircle cx='32' cy='10' r='3.4' fill='%23DE8E79'/%3E%3Ccircle cx='43' cy='12.9' r='3.4' fill='%23B9D4BE'/%3E%3Ccircle cx='51.1' cy='21' r='3.4' fill='%23B29DD0'/%3E%3Ccircle cx='54' cy='32' r='3.4' fill='%23B6D4E4'/%3E%3Ccircle cx='51.1' cy='43' r='3.4' fill='%23E0A9B4'/%3E%3Ccircle cx='43' cy='51.1' r='3.4' fill='%23B7D9B0'/%3E%3Ccircle cx='32' cy='54' r='3.4' fill='%23D3A9DE'/%3E%3Ccircle cx='21' cy='51.1' r='3.4' fill='%23B9DCE8'/%3E%3Ccircle cx='12.9' cy='43' r='3.4' fill='%23E0B080'/%3E%3Ccircle cx='10' cy='32' r='3.4' fill='%23C0DEA8'/%3E%3Ccircle cx='12.9' cy='21' r='3.4' fill='%23AE8FC9'/%3E%3Ccircle cx='21' cy='12.9' r='3.4' fill='%23A9D4C4'/%3E%3C/g%3E%3C/svg%3E" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
 
   <style>
     @font-face { font-family: 'EB Garamond'; src: url('/fonts/eb-garamond-latin-400-normal.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
     @font-face { font-family: 'EB Garamond'; src: url('/fonts/eb-garamond-latin-500-normal.woff2') format('woff2'); font-weight: 500; font-style: normal; font-display: swap; }
     @font-face { font-family: 'EB Garamond'; src: url('/fonts/eb-garamond-latin-400-italic.woff2') format('woff2'); font-weight: 400; font-style: italic; font-display: swap; }
     @font-face { font-family: 'JetBrains Mono'; src: url('/fonts/jetbrains-mono-latin-wght-normal.woff2') format('woff2-variations'); font-weight: 300 600; font-style: normal; font-display: swap; }
+    /* Instrument Sans — used only by the two hero CTAs so they read as the
+       main site's sentence-case buttons (the museum mono/serif is retained
+       everywhere else in the wing). */
+    @font-face { font-family: 'Instrument Sans'; src: url('/fonts/instrument-sans-latin-wght-normal.woff2') format('woff2-variations'); font-weight: 400 600; font-style: normal; font-display: swap; }
   </style>
 
   <style>
@@ -281,9 +287,11 @@
        hero. Museum type (EB Garamond caps) and registry copy are retained. ── */
     .cine {
       position: relative;
-      width: min(100% - 28px, 1200px);
+      /* Same footprint as the main site's hero frame (index.astro .hero):
+         wider max and flush to the top so the film reads at the same scale. */
+      width: min(100% - 32px, 1440px);
       margin: 0 auto;
-      padding: clamp(14px, 3vh, 30px) 0 clamp(8px, 2vh, 16px);
+      padding: 0 0 clamp(14px, 2vw, 22px);
       background: var(--bg);
       z-index: var(--z-base);
     }
@@ -291,7 +299,7 @@
       position: relative;
       overflow: hidden;
       border-radius: clamp(18px, 2.6vw, 30px);
-      min-height: clamp(560px, calc(100svh - 46px), 880px);
+      min-height: clamp(600px, calc(100svh - 40px), 900px);
       background: var(--bg-2);
       /* A hairline ring keeps the frame editorial rather than app-like. */
       box-shadow:
@@ -304,6 +312,9 @@
       width: 100%; height: 100%;
       object-fit: cover;
       object-position: center 42%;
+      /* Match the main hero's slight overscan so the framing reads identically. */
+      transform: scale(1.035);
+      transform-origin: center;
       filter: saturate(0.94) brightness(0.92);
     }
     .cine__scrim {
@@ -323,7 +334,9 @@
       display: flex; flex-direction: column; align-items: center;
       justify-content: flex-start;
       text-align: center;
-      padding: clamp(46px, 9vh, 96px) clamp(22px, 4vw, 56px) clamp(28px, 5vw, 56px);
+      /* Top padding clears the fixed nav pill (now overlapping the frame) plus
+         any notch inset — same treatment as the main hero (index.astro). */
+      padding: calc(clamp(96px, 13svh, 132px) + env(safe-area-inset-top)) clamp(22px, 4vw, 56px) clamp(28px, 5vw, 56px);
       animation: cineIn 1500ms var(--ease) 200ms both;
     }
     @keyframes cineIn {
@@ -379,10 +392,17 @@
        becomes glass. */
     .cine__cta .btn {
       /* Part X: rounded liquid-glass pill to match the main site's hero CTAs
-         (the museum square form is dropped for these two hero buttons only). */
+         (the museum square form is dropped for these two hero buttons only).
+         Part Y: the museum mono-caps are dropped too — these read as the main
+         site's sentence-case Instrument Sans buttons (base.css .btn). */
       border-radius: 999px;
       height: 48px;
       padding: 0 8px 0 22px;
+      font-family: 'Instrument Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+      font-size: 15px;
+      font-weight: 550;
+      letter-spacing: -0.01em;
+      text-transform: none;
       background:
         linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0) 46%),
         rgba(10,12,17,0.46);
@@ -415,6 +435,9 @@
        square inner frame — these two CTAs now read as the main site's pills. */
     .cine__cta .btn .arr { width: 32px; height: 32px; border-radius: 50%; }
     .cine__cta .btn--primary::before { display: none; }
+    /* Part Y: the secondary CTA drops its orb to read as the main site's
+       text-only ghost button — centre the label and balance the padding. */
+    .cine__cta .btn:not(.btn--primary) { justify-content: center; padding: 0 22px; }
     @media (prefers-reduced-motion: reduce) {
       .cine__content { animation: none; }
     }
@@ -464,11 +487,13 @@
     /* ── Header — floating island pill (no edge-to-edge sticky) ── */
 
     .hdr-wrap {
-      position: sticky; top: 12px; z-index: var(--z-nav);
+      /* Pinned on top like the main site's nav (SiteNav.astro): a fixed pill
+         floating over the film from the first paint, not a sticky bar reached
+         only after scrolling past the hero. */
+      position: fixed; top: 14px; left: 0; right: 0; z-index: var(--z-nav);
       display: flex; justify-content: center;
       pointer-events: none;
       padding: max(0px, env(safe-area-inset-top)) 16px 0;
-      margin-top: 14px;
     }
     .hdr {
       pointer-events: auto;
