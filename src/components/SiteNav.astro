@@ -13,7 +13,6 @@ const links = [
   { href: '/tools/', label: 'navTools' },
   { href: '/learn/', label: 'navLearn' },
   { href: '/horoscopes/', label: 'navHoroscopes' },
-  { href: '/registry/', label: 'navCollect' },
 ] as const;
 interface Props { locale?: Locale }
 const locale = normalizeLocale(Astro.props.locale);
@@ -34,13 +33,12 @@ const path = Astro.url.pathname;
       {links.map((l) => (
         <a class="nav__link" href={localizePath(locale, l.href)} aria-current={path.startsWith(localizePath(locale, l.href)) ? 'page' : undefined}>{t(locale, l.label)}</a>
       ))}
+      <a class="nav__link nav__saved" href={localizePath(locale, '/profile/')} aria-current={path.startsWith(localizePath(locale, '/profile/')) ? 'page' : undefined} data-profile-glyph>{t(locale, 'navSavedCharts')}</a>
     </div>
 
-    <a class="nav__profile" href={localizePath(locale, '/profile/')} aria-label={t(locale, 'navSavedCharts')} data-profile-glyph>
-      <svg width="17" height="17" viewBox="0 0 17 17" fill="none" aria-hidden="true">
-        <circle cx="8.5" cy="8.5" r="6.9" stroke="currentColor" stroke-width="1.3" />
-        <circle class="nav__profile-core" cx="8.5" cy="8.5" r="2.6" fill="currentColor" />
-      </svg>
+    <a class="nav__chip" href={localizePath(locale, '/registry/')} aria-current={path.startsWith(localizePath(locale, '/registry/')) ? 'page' : undefined}>
+      <span>{t(locale, 'navCollect')}</span>
+      <span class="nav__chip-arr" aria-hidden="true">↗</span>
     </a>
 
     <button class="nav__burger" type="button" data-menu-toggle aria-expanded="false" aria-controls="mobile-menu" aria-label={t(locale, 'navMenu')}>
@@ -71,13 +69,12 @@ const path = Astro.url.pathname;
       <a class="mobile-menu__link" style="--i:1" href={localizePath(locale, '/learn/')}>{t(locale, 'navLearn')}</a>
       <a class="mobile-menu__link" style="--i:2" href={localizePath(locale, '/horoscopes/')}>{t(locale, 'navHoroscopes')}</a>
       <a class="mobile-menu__link" style="--i:3" href={localizePath(locale, '/profile/')}>{t(locale, 'navSavedCharts')}</a>
-      <a class="mobile-menu__link" style="--i:4" href={localizePath(locale, '/registry/')}>{t(locale, 'navCollect')}</a>
     </div>
     <div class="mobile-menu__group">
       <span class="mobile-menu__label">{t(locale, 'navTwelve')}</span>
       <div class="mobile-menu__signs">
         {SIGNS.map((s, i) => (
-          <a class="mobile-menu__sign" style={`--i:${5 + i}`} href={localizePath(locale, `/${s.slug}/`)} aria-label={signName(s, locale)}>
+          <a class="mobile-menu__sign" style={`--i:${4 + i}`} href={localizePath(locale, `/${s.slug}/`)} aria-label={signName(s, locale)}>
             <SignIcon sign={s.slug} size={40} />
             <span>{signName(s, locale)}</span>
           </a>
@@ -152,21 +149,39 @@ const path = Astro.url.pathname;
   .nav__signs-btn svg { transition: transform var(--dur-2) var(--ease); }
   .nav__signs-btn[aria-expanded='true'] svg { transform: rotate(180deg); }
 
-  .nav__profile {
+  /* Saved-charts link tints to accent once this device has saved a chart. */
+  .nav__saved.has-saves { color: var(--accent); }
+  .nav__saved.has-saves:hover { color: var(--accent); }
+
+  /* Registry chip — the one sanctioned entry point into the wing, right-aligned. */
+  .nav__chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 4px 5px 4px 15px;
+    border-radius: var(--r-full);
+    border: 1px solid var(--hair-2);
+    background: rgba(198, 204, 218, 0.05);
+    font-size: 14px;
+    font-weight: 550;
+    color: var(--text);
+    text-decoration: none;
+    white-space: nowrap;
+    transition: border-color var(--dur-2) var(--ease), background var(--dur-2) var(--ease);
+  }
+  .nav__chip:hover { border-color: var(--hair-3); background: rgba(198, 204, 218, 0.09); }
+  .nav__chip-arr {
     display: inline-grid;
     place-items: center;
-    width: 34px;
-    height: 34px;
+    width: 25px;
+    height: 25px;
     border-radius: 50%;
     border: 1px solid var(--hair-2);
-    color: var(--muted);
-    transition: color var(--dur-2) var(--ease), border-color var(--dur-2) var(--ease), transform var(--dur-1) var(--ease);
+    font-size: 12px;
+    color: var(--text-2);
+    transition: transform var(--dur-1) var(--ease);
   }
-  .nav__profile:hover { color: var(--text); border-color: var(--hair-3); }
-  .nav__profile:active { transform: scale(0.94); }
-  .nav__profile-core { opacity: 0; transition: opacity var(--dur-2) var(--ease); }
-  .nav__profile.has-saves { color: var(--accent); border-color: color-mix(in oklab, var(--accent) 45%, transparent); }
-  .nav__profile.has-saves .nav__profile-core { opacity: 1; }
+  .nav__chip:hover .nav__chip-arr { transform: translate(1px, -1px); color: var(--text); }
 
   .nav__burger {
     display: inline-grid;
