@@ -58,7 +58,7 @@ Avoid:
 - "whole chart" as the emotional lead
 - technical sky phrasing on consumer pages
 - insider profile terminology in visible product copy
-- crypto or market language outside `/collect/`
+- crypto or market language outside `/registry/`
 - hype, urgency, scarcity, financial framing
 - "vibes", "mush", "like a human", "done properly", "shows its work"
 - decorative mono-caps eyebrow labels on every section

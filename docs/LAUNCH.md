@@ -14,7 +14,7 @@ snapshot — git's rename detection maps main's old `assets/` path onto
 1. Open the PR from `claude/zodiacs-org-strategy-hevw5u` to `main` and
    confirm the Vercel preview build passes.
 2. Click through the preview: `/`, `/birth-chart/` (run a chart),
-   `/aries/`, `/collect/`, `/collect/aries/`, `/thesis/`, `/sdk/`,
+   `/aries/`, `/registry/`, `/registry/aries/`, `/thesis/`, `/sdk/`,
    `/sitemap.xml`, `/robots.txt`, `/registry/zodiacs.registry.json`.
 3. Merge. A merge commit or squash both produce the same tree.
 
@@ -27,9 +27,9 @@ month for the next month's horoscopes.
 
 - `https://zodiacs.org/` renders the new homepage; the hero video plays;
   the ticker shows today's sky.
-- Old token URLs still serve: `https://zodiacs.org/collect/aries/` and
+- Old token URLs still serve: `https://zodiacs.org/registry/aries/` and
   the eleven others (external listings point here).
-- `https://zodiacs.org/#verify` forwards into `/collect/#verify`.
+- `https://zodiacs.org/#verify` forwards into `/registry/#verify`.
 - Registry JSON byte-identical:
   `curl -s https://zodiacs.org/registry/zodiacs.registry.json | shasum`
   matches the repo copy.
@@ -69,13 +69,13 @@ curl -s -X POST https://api.indexnow.org/indexnow \
       "https://zodiacs.org/libra/", "https://zodiacs.org/scorpio/",
       "https://zodiacs.org/sagittarius/", "https://zodiacs.org/capricorn/",
       "https://zodiacs.org/aquarius/", "https://zodiacs.org/pisces/",
-      "https://zodiacs.org/collect/", "https://zodiacs.org/collect/aries/",
-      "https://zodiacs.org/collect/taurus/", "https://zodiacs.org/collect/gemini/",
-      "https://zodiacs.org/collect/cancer/", "https://zodiacs.org/collect/leo/",
-      "https://zodiacs.org/collect/virgo/", "https://zodiacs.org/collect/libra/",
-      "https://zodiacs.org/collect/scorpio/", "https://zodiacs.org/collect/sagittarius/",
-      "https://zodiacs.org/collect/capricorn/", "https://zodiacs.org/collect/aquarius/",
-      "https://zodiacs.org/collect/pisces/"
+      "https://zodiacs.org/registry/", "https://zodiacs.org/registry/aries/",
+      "https://zodiacs.org/registry/taurus/", "https://zodiacs.org/registry/gemini/",
+      "https://zodiacs.org/registry/cancer/", "https://zodiacs.org/registry/leo/",
+      "https://zodiacs.org/registry/virgo/", "https://zodiacs.org/registry/libra/",
+      "https://zodiacs.org/registry/scorpio/", "https://zodiacs.org/registry/sagittarius/",
+      "https://zodiacs.org/registry/capricorn/", "https://zodiacs.org/registry/aquarius/",
+      "https://zodiacs.org/registry/pisces/"
     ]
   }'
 ```
@@ -89,7 +89,7 @@ curl -s -X POST https://api.indexnow.org/indexnow \
 ## 4. External listings
 
 Work through `LISTINGS.md` §5: the canonical per-sign token URL is now
-`https://zodiacs.org/collect/{sign}/`. Update Dex Screener, Jupiter,
+`https://zodiacs.org/registry/{sign}/`. Update Dex Screener, Jupiter,
 CoinGecko et al. as each queue allows; the old top-level URLs serve the
 sign guides with a CollectBand link, so nothing 404s while queues drain.
 

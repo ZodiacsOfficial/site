@@ -608,7 +608,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
             <aside class="calc__record">
               <span class="calc__record-label mono">{t(locale, 'recordLabel')}</span>
               <span class="calc__record-text">{signName(sunSign, locale)} {t(locale, 'recordOneOfTwelve')}</span>
-              <a class="calc__record-link" href={`/collect/${sunSign.slug}/`}>{t(locale, 'recordViewLink')}</a>
+              <a class="calc__record-link" href={`/registry/${sunSign.slug}/`}>{t(locale, 'recordViewLink')}</a>
             </aside>
           )}
         </div>

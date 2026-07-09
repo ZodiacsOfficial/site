@@ -1,4 +1,4 @@
-// Generates the twelve sign catalogue pages (/collect/{sign}/index.html) —
+// Generates the twelve sign catalogue pages (/registry/{sign}/index.html) —
 // the collector's wing of the site. The top-level /{sign}/ URLs belong to
 // the astrology guides rendered by Astro.
 //
@@ -23,8 +23,9 @@ import {
 const here = dirname(fileURLToPath(import.meta.url));
 const root = resolve(here, '..');
 
-// The catalogue lives under the collector's wing.
-const BASE = '/collect';
+// The catalogue lives under the collector's wing (URL path /registry/,
+// 301 from the old /collect/ via vercel.json).
+const BASE = '/registry';
 const signPath = (slug) => `${BASE}/${slug}/`;
 const signUrl = (slug) => `https://zodiacs.org${signPath(slug)}`;
 
@@ -97,7 +98,7 @@ function jsonLd(m) {
         '@type': 'BreadcrumbList',
         itemListElement: [
           { '@type': 'ListItem', position: 1, name: 'Zodiacs.org', item: 'https://zodiacs.org/' },
-          { '@type': 'ListItem', position: 2, name: 'The Registry', item: 'https://zodiacs.org/collect/' },
+          { '@type': 'ListItem', position: 2, name: 'The Registry', item: 'https://zodiacs.org/registry/' },
           { '@type': 'ListItem', position: 3, name: m.name, item: signUrl(m.slug) }
         ]
       },
@@ -655,7 +656,7 @@ ${JSON.stringify(jsonLd(m), null, 2)}
   <div class="hdr-wrap">
     <header class="hdr" role="banner">
       <a class="hdr__mark" href="/"><span>Zodiacs</span><span class="sep">·</span><span class="dim">org</span></a>
-      <a class="hdr__nav" href="/collect/#official-twelve"><span>The Twelve</span><span class="chip">↗</span></a>
+      <a class="hdr__nav" href="/registry/#official-twelve"><span>The Twelve</span><span class="chip">↗</span></a>
       <a class="hdr__nav" href="${signPath(m.next.slug)}" aria-label="Next lot: ${esc(m.next.name)}"><span>Lot ${m.next.lot}</span><span class="chip">→</span></a>
     </header>
   </div>
@@ -738,7 +739,7 @@ ${beats.map((b) => `        <div class="prov__item">
           <a class="rec__link" href="https://solscan.io/token/${esc(m.solana.address)}" rel="noopener noreferrer">Solscan ↗</a>
           <a class="rec__link" href="https://basescan.org/token/${esc(m.base.address)}" rel="noopener noreferrer">BaseScan ↗</a>
           <a class="rec__link" href="/registry/zodiacs.registry.json">Registry JSON</a>
-          <a class="rec__link" href="/collect/#verify">Verify an address</a>
+          <a class="rec__link" href="/registry/#verify">Verify an address</a>
         </div>
       </div>
     </section>
@@ -810,8 +811,8 @@ ${SIGN_ORDER.map((s) => `        <a href="${signPath(s)}"${s === m.slug ? ' clas
       </div>
       <div class="ftr__row">
         <div class="ftr__links">
-          <a href="/collect/#registry">Registry</a>
-          <a href="/collect/#verify">Verify</a>
+          <a href="/registry/#registry">Registry</a>
+          <a href="/registry/#verify">Verify</a>
           <a href="/thesis/">Thesis</a>
           <a href="/sdk/">SDK</a>
           <a href="/registry/zodiacs.registry.json">Record</a>
@@ -959,9 +960,9 @@ ${CHANNELS.map((c) => `          <a href="${c.url}" rel="noopener noreferrer">${
 for (const slug of SIGN_ORDER) {
   const m = pageModel(slug);
   const html = render(m);
-  const dir = resolve(root, 'public', 'collect', slug);
+  const dir = resolve(root, 'public', 'registry', slug);
   await mkdir(dir, { recursive: true });
   await writeFile(resolve(dir, 'index.html'), html, 'utf8');
-  console.log(`Wrote /collect/${slug}/index.html (${html.length} bytes)`);
+  console.log(`Wrote /registry/${slug}/index.html (${html.length} bytes)`);
 }
 console.log('Done — 12 catalogue pages.');

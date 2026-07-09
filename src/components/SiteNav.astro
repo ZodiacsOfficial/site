@@ -13,7 +13,7 @@ const links = [
   { href: '/tools/', label: 'navTools' },
   { href: '/learn/', label: 'navLearn' },
   { href: '/horoscopes/', label: 'navHoroscopes' },
-  { href: '/collect/', label: 'navCollect' },
+  { href: '/registry/', label: 'navCollect' },
 ] as const;
 interface Props { locale?: Locale }
 const locale = normalizeLocale(Astro.props.locale);
@@ -71,7 +71,7 @@ const path = Astro.url.pathname;
       <a class="mobile-menu__link" style="--i:1" href={localizePath(locale, '/learn/')}>{t(locale, 'navLearn')}</a>
       <a class="mobile-menu__link" style="--i:2" href={localizePath(locale, '/horoscopes/')}>{t(locale, 'navHoroscopes')}</a>
       <a class="mobile-menu__link" style="--i:3" href={localizePath(locale, '/profile/')}>{t(locale, 'navSavedCharts')}</a>
-      <a class="mobile-menu__link" style="--i:4" href={localizePath(locale, '/collect/')}>{t(locale, 'navCollect')}</a>
+      <a class="mobile-menu__link" style="--i:4" href={localizePath(locale, '/registry/')}>{t(locale, 'navCollect')}</a>
     </div>
     <div class="mobile-menu__group">
       <span class="mobile-menu__label">{t(locale, 'navTwelve')}</span>

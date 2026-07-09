@@ -31,7 +31,7 @@ jobs:
 
       - name: Check for stale repo or bridge wording
         run: |
-          ! grep -RInE 'Symbiosis|ZodiacS(DK)|diasmal[[:digit:]]{3}|zodiacs-org/sdk' public/collect/index.html public/sdk public/registry README.md CLAUDE.md DESIGNER_HANDOFF.md
+          ! grep -RInE 'Symbiosis|ZodiacS(DK)|diasmal[[:digit:]]{3}|zodiacs-org/sdk' public/sdk public/registry README.md CLAUDE.md DESIGNER_HANDOFF.md
 
       - name: Wing language stays in the wing
         # Crypto/market vocabulary must never appear on the new consumer

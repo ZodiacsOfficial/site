@@ -15,7 +15,7 @@ original token registry preserved as the "Collect" wing. Strategy:
 ## One design system, two content registers
 
 Since the Part-Q retheme (owner-directed), the WHOLE site — Astro pages in
-`src/` AND the registry wing (`public/collect/`, `public/thesis/`,
+`src/` AND the registry wing (`public/registry/`, `public/thesis/`,
 `public/archive/`, `public/sdk/`, discovery pages) — wears the dark
 "Cosmic Void" system: void surfaces, EB Garamond display, Instrument Sans
 body (wing pages may use EB Garamond body — museum register), JetBrains
@@ -31,7 +31,8 @@ The CONTENT boundary survives the visual merge:
    birth-chart result (`ChartCalculator`, full mode) — both in the records
    register ("a canonical record in the registry → View the record"), never
    market language. The wing's nav/footer label is "Registry" (ES
-   "Registro"); the URL path stays `/collect/`.
+   "Registro"); the URL path is `/registry/` (permanently 301-redirected
+   from the old `/collect/` in `vercel.json`).
 2. **Wing** (`public/…` above): the registry catalogue keeps its museum
    voice, token content, and acquisition links — that register stays in
    the wing. Wing pages style themselves (inline blocks or
@@ -42,7 +43,7 @@ The CONTENT boundary survives the visual merge:
 
 ## Generated vs source (do not hand-edit generated output)
 
-- `public/collect/{sign}/index.html` ← `node scripts/build-sign-pages.mjs`
+- `public/registry/{sign}/index.html` ← `node scripts/build-sign-pages.mjs`
   (data: `scripts/sign-data.mjs` + `public/registry/zodiacs.registry.json`)
 - `public/archive/` (+ feeds) ← `node scripts/build-archive.mjs`
 - `public/assets/app.js` ← `node scripts/build-app.mjs` (source `src/app.jsx`)

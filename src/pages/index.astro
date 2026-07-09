@@ -95,7 +95,7 @@ const tools = [
     (function () {
       var h = location.hash;
       if (['#verify', '#registry', '#official-twelve', '#sdk', '#market', '#faq-registry', '#identity', '#pulse', '#standings'].indexOf(h) !== -1) {
-        location.replace('/collect/' + h);
+        location.replace('/registry/' + h);
       }
     })();
   </script>
@@ -279,7 +279,7 @@ const tools = [
         <span class="door__title">Choose your house system</span>
         <span class="door__sub">Whole sign or Placidus, with details when you want them.</span>
       </a>
-      <a class="door door--collect reveal" href="/collect/" style="--reveal-delay:140ms">
+      <a class="door door--collect reveal" href="/registry/" style="--reveal-delay:140ms">
         <em class="kicker">A collector</em>
         <span class="door__title">The collector's wing</span>
         <span class="door__sub">The Registry, a museum of the Twelve.</span>
