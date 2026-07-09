@@ -1071,24 +1071,68 @@
     // ──────────────────────────────────────────────────────────────
 
     function Header() {
+      // Below 1020px the anchor nav (.hdr__links) hides, so the phone header
+      // is just wordmark + SDK. This burger opens an overlay with the same
+      // sections — parity with the main site's SiteNav, in the museum register.
+      const [menuOpen, setMenuOpen] = useState(false);
+      useEffect(() => {
+        if (!menuOpen) return undefined;
+        const onKey = (e) => { if (e.key === 'Escape') setMenuOpen(false); };
+        document.addEventListener('keydown', onKey);
+        const prev = document.documentElement.style.overflow;
+        document.documentElement.style.overflow = 'hidden';
+        return () => {
+          document.removeEventListener('keydown', onKey);
+          document.documentElement.style.overflow = prev;
+        };
+      }, [menuOpen]);
       return (
-        <div className="hdr-wrap">
-          <header className="hdr" role="banner">
-            <a className="hdr__mark" href="/">
-              <span>Zodiacs</span><span className="sep">·</span><span className="dim">org</span>
-            </a>
-            <nav className="hdr__links" aria-label="Sections">
-              <a href="#registry">Registry</a>
-              <a href="#verify">Verify</a>
-              <a href="#official-twelve">The Twelve</a>
-              <a href="/thesis/">Thesis</a>
+        <>
+          <div className="hdr-wrap">
+            <header className="hdr" role="banner">
+              <a className="hdr__mark" href="/">
+                <span>Zodiacs</span><span className="sep">·</span><span className="dim">org</span>
+              </a>
+              <nav className="hdr__links" aria-label="Sections">
+                <a href="#registry">Registry</a>
+                <a href="#verify">Verify</a>
+                <a href="#official-twelve">The Twelve</a>
+                <a href="/thesis/">Thesis</a>
+              </nav>
+              <a className="hdr__nav" href="/sdk/">
+                <span>SDK</span>
+                <span className="chip">↗</span>
+              </a>
+              <button
+                type="button"
+                className="hdr__burger"
+                aria-expanded={menuOpen}
+                aria-controls="hdr-menu"
+                aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+                onClick={() => setMenuOpen((v) => !v)}
+              >
+                <span className="hdr__burger-line" />
+                <span className="hdr__burger-line" />
+                <span className="hdr__burger-line" />
+              </button>
+            </header>
+          </div>
+          <div
+            id="hdr-menu"
+            className={menuOpen ? 'hdr__menu is-open' : 'hdr__menu'}
+            hidden={!menuOpen}
+            onClick={(e) => { if (e.target.closest('a')) setMenuOpen(false); }}
+          >
+            <nav className="hdr__menu-inner" aria-label="Registry sections">
+              <span className="hdr__menu-label">The Registry</span>
+              <a href="#registry" style={{ '--i': 1 }}>Registry</a>
+              <a href="#verify" style={{ '--i': 2 }}>Verify</a>
+              <a href="#official-twelve" style={{ '--i': 3 }}>The Twelve</a>
+              <a href="/thesis/" style={{ '--i': 4 }}>Thesis</a>
+              <a href="/sdk/" style={{ '--i': 5 }}>SDK</a>
             </nav>
-            <a className="hdr__nav" href="/sdk/">
-              <span>SDK</span>
-              <span className="chip">↗</span>
-            </a>
-          </header>
-        </div>
+          </div>
+        </>
       );
     }
 
@@ -1112,38 +1156,52 @@
       useEffect(() => {
         const video = videoRef.current;
         if (!video) return undefined;
-        const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
-        const saveData = !!(navigator.connection && navigator.connection.saveData);
-        if (reduce.matches || saveData) {
-          video.removeAttribute('autoplay');
-          try { video.pause(); } catch { /* the poster stands in */ }
-          return undefined;
+        // Poster stands in for reduced-motion — never attach or play the film.
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
+        // Mirror the main site's hero (index.astro): an explicit muted play()
+        // rather than the `autoplay` attribute — mobile Safari / Low-Power /
+        // Data-Saver routinely ignore autoplay but honour a scripted play on a
+        // muted, inline video. The film only attaches on first play so the
+        // poster wins first paint; no `saveData` stand-down (the poster is
+        // already the light path, and the owner wants the film to animate).
+        const play = () => {
+          if (!video.isConnected) return;
+          if (!video.src) { video.src = media.src; video.preload = 'auto'; }
+          const p = video.play();
+          if (p && p.catch) p.catch(() => {});
+        };
+        // The observer fires on mount (the hero opens on screen), so it both
+        // starts the opening playback and pauses the full-bleed film when it
+        // scrolls away — resuming when it returns.
+        let io;
+        if ('IntersectionObserver' in window) {
+          io = new IntersectionObserver(([entry]) => {
+            if (entry.isIntersecting) play();
+            else { try { video.pause(); } catch { /* poster stands in */ } }
+          }, { threshold: 0.05 });
+          io.observe(video);
+        } else {
+          play();
         }
-        if (!('IntersectionObserver' in window)) return undefined;
-        const io = new IntersectionObserver(([entry]) => {
-          if (entry.isIntersecting) video.play().catch(() => {});
-          else video.pause();
-        }, { threshold: 0.05 });
-        io.observe(video);
-        return () => io.disconnect();
-      }, []);
+        // Restore playback after a bfcache back/forward (pageshow.persisted).
+        const onShow = (e) => { if (e.persisted) play(); };
+        window.addEventListener('pageshow', onShow);
+        return () => { window.removeEventListener('pageshow', onShow); if (io) io.disconnect(); };
+      }, [media.src]);
       return (
         <section className="cine" aria-label="Zodiacs.org — the official registry of the Twelve">
           <div className="cine__frame">
             <video
               ref={videoRef}
               className="cine__media"
-              autoPlay
               muted
               loop
               playsInline
-              preload="metadata"
+              preload="none"
               poster={media.poster}
               aria-hidden="true"
               tabIndex={-1}
-            >
-              <source src={media.src} type="video/mp4" />
-            </video>
+            />
             <div className="cine__scrim" aria-hidden="true" />
             <div className="cine__content">
               <span className="cine__eyebrow">The Official Registry · Est. MMXXIV</span>

@@ -441,6 +441,19 @@
     @media (prefers-reduced-motion: reduce) {
       .cine__content { animation: none; }
     }
+    /* Phones: match the main site's hero tune (index.astro) — flush to the
+       edges, a shorter frame that fits one screen, tighter content padding,
+       and full-width stacked CTAs. Without this the frame stayed desktop-tall
+       (≤900px) on a phone and ran well past the fold. */
+    @media (max-width: 640px) {
+      .cine { width: min(100% - 20px, 1440px); }
+      .cine__frame { min-height: clamp(540px, calc(100svh - 56px), 760px); }
+      .cine__content {
+        padding: calc(clamp(96px, 15svh, 120px) + env(safe-area-inset-top)) 18px 22px;
+      }
+      .cine__cta { width: 100%; }
+      .cine__cta .btn { flex: 1 1 auto; justify-content: center; }
+    }
 
     /* ── App shell ─────────────────────────────────────────────── */
 
@@ -622,6 +635,77 @@
       transition: color 320ms var(--ease);
     }
     .hdr__links a:hover { color: var(--gold-bright); }
+
+    /* ── Mobile menu — burger + overlay ────────────────────────────
+       The anchor nav (.hdr__links) hides below 1020px, which left the
+       phone header as just wordmark + SDK. This burger exposes the same
+       sections behind an overlay — parity with the main site's SiteNav,
+       rendered in the wing's museum register (EB Garamond links, mono
+       label, gold hover). Revealed only below 1020px. */
+    .hdr__burger {
+      display: inline-grid; align-content: center; justify-items: center;
+      gap: 4px;
+      width: 34px; height: 34px;
+      margin-left: 2px;
+      border: 1px solid var(--hair-2);
+      border-radius: 999px;
+      background: rgba(198,204,218,0.05);
+      cursor: pointer;
+      transition: border-color 320ms var(--ease), background 320ms var(--ease);
+    }
+    .hdr__burger:hover { border-color: var(--hair-3); background: rgba(198,204,218,0.09); }
+    .hdr__burger-line {
+      display: block; width: 15px; height: 1.5px; border-radius: 2px;
+      background: var(--ink-2);
+      transition: transform 320ms var(--ease), opacity 240ms var(--ease);
+    }
+    /* Three bars fold into an X while open. */
+    .hdr__burger[aria-expanded='true'] .hdr__burger-line:first-child { transform: translateY(5.5px) rotate(45deg); }
+    .hdr__burger[aria-expanded='true'] .hdr__burger-line:nth-child(2) { opacity: 0; transform: scaleX(0.4); }
+    .hdr__burger[aria-expanded='true'] .hdr__burger-line:last-child { transform: translateY(-5.5px) rotate(-45deg); }
+    @media (min-width: 1020px) { .hdr__burger { display: none; } }
+
+    .hdr__menu {
+      position: fixed; inset: 0; z-index: calc(var(--z-nav) - 1);
+      pointer-events: auto;
+      background: rgba(6,7,9,0.90);
+      backdrop-filter: blur(26px) saturate(140%);
+      -webkit-backdrop-filter: blur(26px) saturate(140%);
+      padding: calc(92px + env(safe-area-inset-top)) clamp(24px, 7vw, 40px) 40px;
+      overflow-y: auto;
+    }
+    .hdr__menu[hidden] { display: none; }
+    .hdr__menu-inner { display: flex; flex-direction: column; max-width: 520px; margin: 0 auto; }
+    .hdr__menu-label {
+      margin-bottom: 18px;
+      font-family: var(--mono); font-size: 10px;
+      letter-spacing: 0.24em; text-transform: uppercase;
+      color: var(--ink-mute);
+    }
+    .hdr__menu-inner a {
+      padding: 13px 0;
+      font-family: var(--serif); font-weight: 400;
+      font-size: clamp(26px, 8vw, 34px); letter-spacing: 0.01em; line-height: 1.05;
+      color: var(--ink); text-decoration: none;
+      border-bottom: 1px solid var(--hair);
+      transition: color 320ms var(--ease);
+    }
+    .hdr__menu-inner a:last-child { border-bottom: 0; }
+    .hdr__menu-inner a:hover { color: var(--gold-bright); }
+    .hdr__menu.is-open a,
+    .hdr__menu.is-open .hdr__menu-label {
+      animation: hdrMenuIn 520ms var(--ease) both;
+      animation-delay: calc(40ms * var(--i, 0));
+    }
+    @keyframes hdrMenuIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: none; }
+    }
+    @media (min-width: 1020px) { .hdr__menu { display: none; } }
+    @media (prefers-reduced-motion: reduce) {
+      .hdr__menu.is-open a,
+      .hdr__menu.is-open .hdr__menu-label { animation: none; }
+    }
 
     /* ── Hero ──────────────────────────────────────────────────── */
 
@@ -3305,6 +3389,67 @@
 </head>
 <body>
   <div id="root">
+    <!-- Server-rendered cinematic hero. Mirrors the mounted <CineHero/> (see
+         src/app.jsx) so the framed film, headline, and glass CTAs paint before
+         — or entirely without — the React bundle: on a slow, throttled, or
+         script-blocked phone the visitor sees THIS, not a text-only fallback.
+         React replaces #root on mount with the same .cine structure, so the
+         swap is seamless. The zero-dep script below starts playback (poster
+         stays the LCP; the film only attaches after load). -->
+    <section class="cine" aria-label="Zodiacs.org — the official registry of the Twelve">
+      <div class="cine__frame">
+        <video
+          class="cine__media"
+          data-src="/assets/hero/zodiacs-hero.mp4"
+          poster="/assets/hero/zodiacs-hero-poster.avif"
+          muted
+          loop
+          playsinline
+          preload="none"
+          aria-hidden="true"
+          tabindex="-1"
+          data-cine-video
+        ></video>
+        <div class="cine__scrim" aria-hidden="true"></div>
+        <div class="cine__content">
+          <span class="cine__eyebrow">The Official Registry · Est. MMXXIV</span>
+          <h1 class="cine__title">Twelve signs.<br><span class="it">One register.</span></h1>
+          <div class="cine__foot">
+            <p class="cine__line">Belief is the oldest asset.</p>
+            <div class="cine__cta">
+              <a class="btn btn--primary" href="#official-twelve"><span>Browse the Twelve</span><span class="arr">↗</span></a>
+              <a class="btn" href="#verify"><span>Verify an address</span></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <script>
+      // The footage animates on every screen unless the visitor prefers
+      // reduced motion. The poster stays the LCP: the film only attaches
+      // after load, so it never competes with first paint. Zero-dependency
+      // and inline so it runs even if the React/unpkg bundle never arrives.
+      (function () {
+        var v = document.querySelector('[data-cine-video]');
+        if (!v) return;
+        var play = function () {
+          if (!v.isConnected) return;
+          if (!v.src) { v.src = v.getAttribute('data-src'); v.preload = 'auto'; }
+          var p = v.play();
+          if (p && p.catch) p.catch(function () {});
+        };
+        if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          if (window.matchMedia('(min-width: 720px)').matches) {
+            play();
+          } else if (document.readyState === 'complete') {
+            play();
+          } else {
+            window.addEventListener('load', play, { once: true });
+          }
+          window.addEventListener('pageshow', function (e) { if (e.persisted) play(); });
+        }
+      })();
+    </script>
     <main class="static-site">
       <nav class="static-site__nav" aria-label="Primary">
         <a href="/">Zodiacs.org</a>
@@ -3313,16 +3458,6 @@
         <a href="/registry/zodiacs.registry.json">Registry JSON</a>
         <a href="/sdk/">SDK</a>
       </nav>
-
-      <section class="static-site__hero" aria-labelledby="static-title">
-        <span class="static-site__eyebrow">The Registry</span>
-        <h1 id="static-title">Twelve signs. <em>One register.</em></h1>
-        <p class="static-site__lede">
-          Zodiacs.org is the official source of truth for the twelve Zodiacs:
-          one canonical registry, native Solana SPL assets, and official
-          bridged Base ERC-20 representations.
-        </p>
-      </section>
 
       <section class="static-site__section" id="registry">
         <h2>Official Registry</h2>
