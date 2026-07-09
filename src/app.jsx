@@ -1074,9 +1074,9 @@
       return (
         <div className="hdr-wrap">
           <header className="hdr" role="banner">
-            <div className="hdr__mark">
+            <a className="hdr__mark" href="/">
               <span>Zodiacs</span><span className="sep">·</span><span className="dim">org</span>
-            </div>
+            </a>
             <nav className="hdr__links" aria-label="Sections">
               <a href="#registry">Registry</a>
               <a href="#verify">Verify</a>
