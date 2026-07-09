@@ -6,14 +6,12 @@
  */
 import { SIGNS, signDates, signName } from '../lib/signs';
 import SignIcon from './SignIcon.astro';
-import BrandMark from './BrandMark.astro';
 import { localizePath, normalizeLocale, t, type Locale } from '../lib/i18n';
 
 const links = [
   { href: '/tools/', label: 'navTools' },
   { href: '/learn/', label: 'navLearn' },
   { href: '/horoscopes/', label: 'navHoroscopes' },
-  { href: '/registry/', label: 'navCollect' },
 ] as const;
 interface Props { locale?: Locale }
 const locale = normalizeLocale(Astro.props.locale);
@@ -22,8 +20,7 @@ const path = Astro.url.pathname;
 <div class="nav-wrap">
   <nav class="nav" aria-label={t(locale, 'navPrimary')} data-nav>
     <a class="nav__mark" href={localizePath(locale, '/')}>
-      <BrandMark size={17} />
-      <span class="nav__name">Zodiacs</span>
+      <span class="nav__name">Zodiacs<span class="nav__sep">·</span><span class="nav__dim">org</span></span>
     </a>
 
     <div class="nav__links">
@@ -34,14 +31,10 @@ const path = Astro.url.pathname;
       {links.map((l) => (
         <a class="nav__link" href={localizePath(locale, l.href)} aria-current={path.startsWith(localizePath(locale, l.href)) ? 'page' : undefined}>{t(locale, l.label)}</a>
       ))}
+      <a class="nav__link nav__saved" href={localizePath(locale, '/profile/')} aria-current={path.startsWith(localizePath(locale, '/profile/')) ? 'page' : undefined} data-profile-glyph>{t(locale, 'navSavedCharts')}</a>
     </div>
 
-    <a class="nav__profile" href={localizePath(locale, '/profile/')} aria-label={t(locale, 'navSavedCharts')} data-profile-glyph>
-      <svg width="17" height="17" viewBox="0 0 17 17" fill="none" aria-hidden="true">
-        <circle cx="8.5" cy="8.5" r="6.9" stroke="currentColor" stroke-width="1.3" />
-        <circle class="nav__profile-core" cx="8.5" cy="8.5" r="2.6" fill="currentColor" />
-      </svg>
-    </a>
+    <a class="nav__chip" href={localizePath(locale, '/registry/')} aria-current={path.startsWith(localizePath(locale, '/registry/')) ? 'page' : undefined}>{t(locale, 'navCollect')}</a>
 
     <button class="nav__burger" type="button" data-menu-toggle aria-expanded="false" aria-controls="mobile-menu" aria-label={t(locale, 'navMenu')}>
       <span class="nav__burger-line"></span>
@@ -71,13 +64,12 @@ const path = Astro.url.pathname;
       <a class="mobile-menu__link" style="--i:1" href={localizePath(locale, '/learn/')}>{t(locale, 'navLearn')}</a>
       <a class="mobile-menu__link" style="--i:2" href={localizePath(locale, '/horoscopes/')}>{t(locale, 'navHoroscopes')}</a>
       <a class="mobile-menu__link" style="--i:3" href={localizePath(locale, '/profile/')}>{t(locale, 'navSavedCharts')}</a>
-      <a class="mobile-menu__link" style="--i:4" href={localizePath(locale, '/registry/')}>{t(locale, 'navCollect')}</a>
     </div>
     <div class="mobile-menu__group">
       <span class="mobile-menu__label">{t(locale, 'navTwelve')}</span>
       <div class="mobile-menu__signs">
         {SIGNS.map((s, i) => (
-          <a class="mobile-menu__sign" style={`--i:${5 + i}`} href={localizePath(locale, `/${s.slug}/`)} aria-label={signName(s, locale)}>
+          <a class="mobile-menu__sign" style={`--i:${4 + i}`} href={localizePath(locale, `/${s.slug}/`)} aria-label={signName(s, locale)}>
             <SignIcon sign={s.slug} size={40} />
             <span>{signName(s, locale)}</span>
           </a>
@@ -125,12 +117,16 @@ const path = Astro.url.pathname;
   }
   .nav__name {
     font-family: var(--font-serif);
-    font-weight: 500;
-    font-size: 19px;
-    letter-spacing: 0.01em;
+    font-weight: 400;
+    font-size: 13px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
     line-height: 1;
     color: var(--text);
+    white-space: nowrap;
   }
+  .nav__sep { color: var(--muted); margin: 0 4px; }
+  .nav__dim { color: var(--text-2); font-weight: 500; }
 
   .nav__links { display: none; align-items: center; gap: 2px; }
   @media (min-width: 760px) { .nav__links { display: inline-flex; } }
@@ -152,21 +148,28 @@ const path = Astro.url.pathname;
   .nav__signs-btn svg { transition: transform var(--dur-2) var(--ease); }
   .nav__signs-btn[aria-expanded='true'] svg { transform: rotate(180deg); }
 
-  .nav__profile {
-    display: inline-grid;
-    place-items: center;
-    width: 34px;
+  /* Saved-charts link tints to accent once this device has saved a chart. */
+  .nav__saved.has-saves { color: var(--accent); }
+  .nav__saved.has-saves:hover { color: var(--accent); }
+
+  /* Registry chip — the one sanctioned entry point into the wing, right-aligned. */
+  .nav__chip {
+    display: inline-flex;
+    align-items: center;
     height: 34px;
-    border-radius: 50%;
-    border: 1px solid var(--hair-2);
-    color: var(--muted);
-    transition: color var(--dur-2) var(--ease), border-color var(--dur-2) var(--ease), transform var(--dur-1) var(--ease);
+    padding: 0 2px 0 16px;
+    border-left: 1px solid var(--hair-2);
+    font-family: var(--font-serif);
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-2);
+    text-decoration: none;
+    white-space: nowrap;
+    transition: color var(--dur-2) var(--ease);
   }
-  .nav__profile:hover { color: var(--text); border-color: var(--hair-3); }
-  .nav__profile:active { transform: scale(0.94); }
-  .nav__profile-core { opacity: 0; transition: opacity var(--dur-2) var(--ease); }
-  .nav__profile.has-saves { color: var(--accent); border-color: color-mix(in oklab, var(--accent) 45%, transparent); }
-  .nav__profile.has-saves .nav__profile-core { opacity: 1; }
+  .nav__chip:hover { color: var(--text); }
 
   .nav__burger {
     display: inline-grid;
