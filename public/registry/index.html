@@ -3667,6 +3667,9 @@
   <script defer crossorigin="anonymous" referrerpolicy="no-referrer"
     src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"
     integrity="sha384-gTGxhz21lVGYNMcdJOyq01Edg0jhn/c22nsx0kyqP0TxaV5WVdsSH1fSDUf5YJj1"></script>
-  <script defer src="/assets/app.js"></script>
+  <!-- ?v= evicts browsers still holding a prior immutable-cached /assets/app.js;
+       the bundle now revalidates (see vercel.json). Bump if a future build must
+       reach clients before the next revalidation. -->
+  <script defer src="/assets/app.js?v=z2"></script>
 </body>
 </html>
