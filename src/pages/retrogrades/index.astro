@@ -11,6 +11,13 @@ import { formatShortDate } from '../../lib/i18n/dates';
 // no client ephemeris.
 const buildNow = new Date();
 const skyFrom = sky.from as string;
+const eventHorizon = new Date(buildNow);
+eventHorizon.setUTCFullYear(eventHorizon.getUTCFullYear() + 1);
+
+const sources = [
+  { label: 'Astronomy Engine', href: 'https://github.com/cosinekitty/astronomy' },
+  { label: 'IANA Time Zone Database', href: 'https://www.iana.org/time-zones' },
+];
 
 const PLANET_ORDER = ['Mercury', 'Venus', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto'];
 const RHYTHM: Record<string, string> = {
@@ -50,6 +57,8 @@ const byPlanet = PLANET_ORDER.map((planet) => ({
   windows: windows.filter((w) => w.planet === planet),
   active: windows.some((w) => w.planet === planet && w.state === 'active'),
 }));
+const upcomingWindows = windows.filter((window) =>
+  window.from <= eventHorizon && (!window.to || window.to >= buildNow));
 
 const retroToday = byPlanet.filter((p) => p.active).map((p) => p.planet);
 const asOf = formatShortDate('en', buildNow);
@@ -84,6 +93,38 @@ const faq = [
   },
 ];
 
+const eventNodes = upcomingWindows.map((window) => {
+  const from = window.from.toISOString();
+  const to = window.to?.toISOString();
+  const id = `retrograde-${window.planet.toLowerCase()}-${from.slice(0, 10)}`;
+  return {
+    '@type': 'Event',
+    '@id': `https://zodiacs.org/retrogrades/#${id}`,
+    name: `${window.planet} retrograde`,
+    description: `${window.planet} appears retrograde from ${from} to ${to ?? 'the end of the committed data window'}; station positions ${window.stationRx ?? 'not available at the clamped horizon'} and ${window.stationDirect ?? 'not yet available'}.`,
+    startDate: from,
+    ...(to ? { endDate: to } : {}),
+    eventStatus: 'https://schema.org/EventScheduled',
+    url: `https://zodiacs.org/retrogrades/#${id}`,
+  };
+});
+
+const dataset = {
+  '@type': 'Dataset',
+  '@id': 'https://zodiacs.org/retrogrades/#dataset',
+  name: 'Planetary retrograde windows, 2026–2027',
+  description: 'Computed retrograde and direct station instants and tropical zodiac positions for Mercury through Pluto.',
+  url: 'https://zodiacs.org/retrogrades/',
+  creator: { '@id': 'https://zodiacs.org/#org' },
+  publisher: { '@id': 'https://zodiacs.org/#org' },
+  dateModified: sky.generatedAt,
+  temporalCoverage: `${sky.from}/${sky.to}`,
+  spatialCoverage: 'Earth',
+  variableMeasured: ['planet', 'retrograde station instant', 'direct station instant', 'station longitude'],
+  citation: sources.map((source) => ({ '@type': 'CreativeWork', name: source.label, url: source.href })),
+  hasPart: eventNodes.map((event) => ({ '@id': event['@id'] })),
+};
+
 const jsonLd = [
   {
     '@type': 'WebPage',
@@ -100,6 +141,8 @@ const jsonLd = [
       acceptedAnswer: { '@type': 'Answer', text: a },
     })),
   },
+  dataset,
+  ...eventNodes,
 ];
 ---
 <Base
@@ -109,10 +152,11 @@ const jsonLd = [
   image="/assets/og/v2/tool/retrogrades.png"
   imageAlt="Retrograde planets — Zodiacs.org"
   jsonLd={jsonLd}
+  sources={sources}
 >
   <section class="section--tight container container--narrow">
     <div class="tool-hero reveal">
-      <h1 class="display">Every retrograde, dated.</h1>
+      <h1 class="display">See every retrograde through 2027.</h1>
       <p>
         All eight planets that do it, 2026 through 2027 &mdash; each window
         computed station to station from real motion, with the degree
@@ -149,7 +193,7 @@ const jsonLd = [
               </thead>
               <tbody>
                 {p.windows.map((w) => (
-                  <tr class={w.state === 'past' ? 'rx-table__past' : ''}>
+                  <tr id={`retrograde-${p.planet.toLowerCase()}-${w.from.toISOString().slice(0, 10)}`} class={w.state === 'past' ? 'rx-table__past' : ''}>
                     <td class="planet__window" data-label="Window">{w.label}</td>
                     <td class="mono" data-label="Stations retrograde at">{w.stationRx ?? '—'}</td>
                     <td class="mono" data-label="Stations direct at">{w.stationDirect ?? '—'}</td>

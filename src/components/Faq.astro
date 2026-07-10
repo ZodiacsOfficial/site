@@ -4,8 +4,14 @@ interface Props {
   heading?: string;
 }
 const { items, heading = 'Questions, answered' } = Astro.props;
+const headingId = heading
+  .normalize('NFKD')
+  .replace(/[\u0300-\u036f]/g, '')
+  .toLowerCase()
+  .replace(/[^a-z0-9]+/g, '-')
+  .replace(/^-|-$/g, '');
 ---
-<div class="section-head"><h2>{heading}</h2></div>
+<div class="section-head"><h2 id={headingId}>{heading}</h2></div>
 <div class="faq">
   {items.map(({ q, a }) => (
     <details class="faq__item">

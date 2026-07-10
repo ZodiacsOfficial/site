@@ -1,0 +1,44 @@
+---
+export interface SourceLink {
+  label: string;
+  href?: string;
+}
+
+interface Props {
+  sources?: SourceLink[];
+}
+
+const sources = Astro.props.sources ?? [];
+---
+{sources.length > 0 && (
+  <aside class="sources-line container container--narrow" aria-label="Sources">
+    <strong>Sources</strong>
+    <span>
+      {sources.map((source, index) => (
+        <>
+          {index > 0 && <span aria-hidden="true"> · </span>}
+          {source.href
+            ? <a href={source.href} rel="noopener noreferrer">{source.label}</a>
+            : source.label}
+        </>
+      ))}
+    </span>
+  </aside>
+)}
+
+<style>
+  .sources-line {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 10px;
+    margin-top: clamp(44px, 7vw, 76px);
+    color: var(--faint);
+    font-size: var(--text-xs);
+    line-height: 1.6;
+  }
+  .sources-line strong {
+    color: var(--muted);
+    font-weight: 600;
+  }
+  .sources-line a { color: var(--muted); }
+</style>

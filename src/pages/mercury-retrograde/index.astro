@@ -9,6 +9,12 @@ import { formatDate, formatShortDate } from '../../lib/i18n/dates';
 // All computed at build time from the committed sky data — the page
 // ships as receipts, no client ephemeris.
 const buildNow = new Date();
+const eventHorizon = new Date(buildNow);
+eventHorizon.setUTCFullYear(eventHorizon.getUTCFullYear() + 1);
+const sources = [
+  { label: 'Astronomy Engine', href: 'https://github.com/cosinekitty/astronomy' },
+  { label: 'IANA Time Zone Database', href: 'https://www.iana.org/time-zones' },
+];
 const windows = (sky.retrogrades as { planet: string; from: string; to: string | null }[])
   .filter((r) => r.planet === 'Mercury')
   .map((r) => {
@@ -24,6 +30,8 @@ const windows = (sky.retrogrades as { planet: string; from: string; to: string |
       state: to && to < buildNow ? 'past' : from > buildNow ? 'upcoming' : 'active',
     };
   });
+const upcomingWindows = windows.filter((window) =>
+  window.from <= eventHorizon && (!window.to || window.to >= buildNow));
 
 const active = windows.find((w) => w.state === 'active');
 const next = windows.find((w) => w.state === 'upcoming');
@@ -65,6 +73,38 @@ const faq = [
   },
 ];
 
+const eventNodes = upcomingWindows.map((window) => {
+  const from = window.from.toISOString();
+  const to = window.to?.toISOString();
+  const id = `mercury-retrograde-${from.slice(0, 10)}`;
+  return {
+    '@type': 'Event',
+    '@id': `https://zodiacs.org/mercury-retrograde/#${id}`,
+    name: 'Mercury retrograde',
+    description: `Mercury appears retrograde from ${from} to ${to ?? 'the end of the committed data window'}, stationing at ${window.stationRx} and ${window.stationDirect ?? 'a position beyond the current horizon'}.`,
+    startDate: from,
+    ...(to ? { endDate: to } : {}),
+    eventStatus: 'https://schema.org/EventScheduled',
+    url: `https://zodiacs.org/mercury-retrograde/#${id}`,
+  };
+});
+
+const dataset = {
+  '@type': 'Dataset',
+  '@id': 'https://zodiacs.org/mercury-retrograde/#dataset',
+  name: 'Mercury retrograde windows, 2026–2027',
+  description: 'Computed Mercury retrograde and direct station instants and tropical zodiac positions for 2026 and 2027.',
+  url: 'https://zodiacs.org/mercury-retrograde/',
+  creator: { '@id': 'https://zodiacs.org/#org' },
+  publisher: { '@id': 'https://zodiacs.org/#org' },
+  dateModified: sky.generatedAt,
+  temporalCoverage: `${sky.from}/${sky.to}`,
+  spatialCoverage: 'Earth',
+  variableMeasured: ['retrograde station instant', 'direct station instant', 'station longitude'],
+  citation: sources.map((source) => ({ '@type': 'CreativeWork', name: source.label, url: source.href })),
+  hasPart: eventNodes.map((event) => ({ '@id': event['@id'] })),
+};
+
 const jsonLd = [
   {
     '@type': 'WebPage',
@@ -80,6 +120,8 @@ const jsonLd = [
       acceptedAnswer: { '@type': 'Answer', text: a },
     })),
   },
+  dataset,
+  ...eventNodes,
 ];
 ---
 <Base
@@ -89,10 +131,11 @@ const jsonLd = [
   image="/assets/og/v2/tool/mercury-retrograde.png"
   imageAlt="Mercury retrograde dates — Zodiacs.org"
   jsonLd={jsonLd}
+  sources={sources}
 >
   <section class="section--tight container container--narrow">
     <div class="tool-hero reveal">
-      <h1 class="display">Mercury retrograde, dated.</h1>
+      <h1 class="display">See when Mercury turns retrograde.</h1>
       <p>
         Every window below is computed from Mercury’s actual motion,
         station to station, refined to the hour, through the end of 2027.
@@ -123,7 +166,7 @@ const jsonLd = [
         </thead>
         <tbody>
           {windows.map((w) => (
-            <tr class={w.state === 'past' ? 'rx-table__past' : ''}>
+            <tr id={`mercury-retrograde-${w.from.toISOString().slice(0, 10)}`} class={w.state === 'past' ? 'rx-table__past' : ''}>
               <td data-label="Window">{w.label}</td>
               <td class="mono" data-label="Stations retrograde at">{w.stationRx}</td>
               <td class="mono" data-label="Stations direct at">{w.stationDirect ?? '—'}</td>

@@ -47,9 +47,16 @@ const jsonLd = [
     headline: entry.data.title,
     description: entry.data.description,
     url: `https://zodiacs.org/learn/houses/${slug}/`,
+    datePublished: entry.data.published.toISOString(),
     dateModified: entry.data.updated.toISOString(),
     author: { '@type': 'Organization', name: 'Zodiacs.org', url: 'https://zodiacs.org/' },
+    publisher: { '@id': 'https://zodiacs.org/#org' },
+    mainEntityOfPage: { '@type': 'WebPage', '@id': `https://zodiacs.org/learn/houses/${slug}/` },
+    inLanguage: 'en',
     about: { '@type': 'Thing', name: `${ORDINALS[n - 1]} house (astrology)` },
+    citation: entry.data.sources.map((source) => source.href
+      ? { '@type': 'CreativeWork', name: source.label, url: source.href }
+      : source.label),
   },
   {
     '@type': 'BreadcrumbList',
@@ -76,12 +83,13 @@ const jsonLd = [
   path={`/learn/houses/${slug}/`}
   type="article"
   jsonLd={jsonLd}
+  sources={entry.data.sources}
 >
   <article class="container container--narrow learn-detail">
     <header class="learn-detail__hero reveal">
       <span class="learn-hero-glyph house-badge" style={`--sign:${naturalSign.hue}`} aria-hidden="true">{n}</span>
       <em class="kicker">The houses</em>
-      <h1 class="display">The {ORDINALS[n - 1]} house</h1>
+      <h1 id={slug} class="display">The {ORDINALS[n - 1]} house</h1>
       <p class="learn-detail__role">{entry.data.theme}</p>
       <p class="learn-detail__facts mono">
         House {n} of 12 · natural affinity

@@ -9,6 +9,7 @@ interface Props {
   title: string;
   description: string;
   path: string;
+  canonicalPath?: string;
   image?: string;
   imageAlt?: string;
   type?: 'website' | 'article';
@@ -21,6 +22,7 @@ const {
   title,
   description,
   path,
+  canonicalPath = path,
   image = '/assets/og/v2/share.png',
   imageAlt = 'Zodiacs.org — free birth charts, sign guides, and astrology tools.',
   type = 'website',
@@ -31,13 +33,30 @@ const {
 
 const site = 'https://zodiacs.org';
 const locale = normalizeLocale(rawLocale);
-const canonical = site + path;
+const canonical = site + canonicalPath;
 const imageUrl = image.startsWith('http') ? image : site + image;
-const alternates = alternatePaths(path);
+const alternates = noindex ? null : alternatePaths(path);
 const ogLocale = locale === 'es' ? 'es_ES' : 'en_US';
 const ogLocaleAlternate = locale === 'es' ? 'en_US' : 'es_ES';
-const graph = jsonLd.length
-  ? JSON.stringify({ '@context': 'https://schema.org', '@graph': jsonLd })
+const organization = {
+  '@type': 'Organization',
+  '@id': 'https://zodiacs.org/#org',
+  name: 'Zodiacs',
+  alternateName: 'Zodiacs.org',
+  url: 'https://zodiacs.org/',
+  logo: {
+    '@type': 'ImageObject',
+    url: 'https://zodiacs.org/assets/app-icons/icon-512.png',
+    width: 512,
+    height: 512,
+  },
+};
+const graphNodes = [
+  ...(jsonLd.some((node) => node['@id'] === organization['@id']) ? [] : [organization]),
+  ...jsonLd,
+];
+const graph = graphNodes.length
+  ? JSON.stringify({ '@context': 'https://schema.org', '@graph': graphNodes })
   : null;
 ---
 <title>{title}</title>
@@ -50,7 +69,7 @@ const graph = jsonLd.length
     <link rel="alternate" hreflang="x-default" href={site + alternates.en} />
   </>
 )}
-{noindex && <meta name="robots" content="noindex, follow" />}
+<meta name="robots" content={noindex ? 'noindex, follow, max-image-preview:large' : 'max-image-preview:large'} />
 
 <meta property="og:site_name" content="Zodiacs.org" />
 <meta property="og:title" content={title} />
@@ -68,5 +87,6 @@ const graph = jsonLd.length
 <meta name="twitter:title" content={title} />
 <meta name="twitter:description" content={description} />
 <meta name="twitter:image" content={imageUrl} />
+<meta name="twitter:image:alt" content={imageAlt} />
 
 {graph && <script is:inline type="application/ld+json" set:html={graph} />}

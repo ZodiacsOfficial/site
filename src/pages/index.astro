@@ -40,7 +40,12 @@ const jsonLd = [
     name: 'Zodiacs',
     alternateName: 'Zodiacs.org',
     url: 'https://zodiacs.org/',
-    logo: 'https://zodiacs.org/assets/og/v2/share.png',
+    logo: {
+      '@type': 'ImageObject',
+      url: 'https://zodiacs.org/assets/app-icons/icon-512.png',
+      width: 512,
+      height: 512,
+    },
     sameAs: [
       'https://x.com/astrofoliosol',
       'https://www.instagram.com/astrofolioonsol/',
@@ -82,7 +87,6 @@ const tools = [
   path="/"
   jsonLd={jsonLd}
 >
-  <link slot="head" rel="alternate" type="application/rss+xml" title="Zodiacs.org — the sky, daily" href="/feeds/daily-sky.xml" />
   <link
     slot="head"
     rel="preload"

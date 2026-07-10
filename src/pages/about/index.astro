@@ -11,8 +11,16 @@ const jsonLd = [
   },
   {
     '@type': 'Organization',
-    name: 'Zodiacs.org',
+    '@id': 'https://zodiacs.org/#org',
+    name: 'Zodiacs',
+    alternateName: 'Zodiacs.org',
     url: 'https://zodiacs.org/',
+    logo: {
+      '@type': 'ImageObject',
+      url: 'https://zodiacs.org/assets/app-icons/icon-512.png',
+      width: 512,
+      height: 512,
+    },
     email: 'hello@zodiacs.org',
     description: 'A free astrology platform with an on-device chart engine and a collector’s registry wing.',
   },
