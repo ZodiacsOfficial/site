@@ -6,6 +6,7 @@ import SynastryCalculator from '../../../islands/SynastryCalculator';
 import { SIGNS, ELEMENT_LABEL, MODALITY_LABEL } from '../../../lib/signs';
 import { pairFacts, pairSlug } from '../../../lib/compat';
 import '../../../styles/calculator.css';
+import { EDITOR_AUTHOR } from '../../../lib/editorial';
 
 export async function getStaticPaths() {
   const pairs = await getCollection('pairs', ({ data }) => !data.draft);
@@ -37,7 +38,7 @@ const jsonLd = [
     url: `https://zodiacs.org/compatibility/${facts.slug}/`,
     datePublished: entry.data.published.toISOString(),
     dateModified: entry.data.updated.toISOString(),
-    author: { '@type': 'Organization', name: 'Zodiacs.org', url: 'https://zodiacs.org/' },
+    author: EDITOR_AUTHOR,
     publisher: { '@id': 'https://zodiacs.org/#org' },
     mainEntityOfPage: { '@type': 'WebPage', '@id': `https://zodiacs.org/compatibility/${facts.slug}/` },
     inLanguage: 'en',

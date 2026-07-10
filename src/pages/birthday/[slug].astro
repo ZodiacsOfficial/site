@@ -10,6 +10,7 @@ import {
   type BirthdayEntry,
 } from '../../lib/birthdays';
 import birthdays from '../../data/birthdays.json';
+import { EDITOR_AUTHOR } from '../../lib/editorial';
 
 export async function getStaticPaths() {
   const entries = await getCollection('birthdays', (e) => !e.data.draft);
@@ -116,7 +117,7 @@ const jsonLd = [
     url: `https://zodiacs.org/birthday/${slug}/`,
     datePublished: entry.data.published.toISOString(),
     dateModified: entry.data.updated.toISOString(),
-    author: { '@type': 'Organization', name: 'Zodiacs.org', url: 'https://zodiacs.org/' },
+    author: EDITOR_AUTHOR,
     publisher: { '@id': 'https://zodiacs.org/#org' },
     mainEntityOfPage: { '@type': 'WebPage', '@id': `https://zodiacs.org/birthday/${slug}/` },
     inLanguage: 'en',

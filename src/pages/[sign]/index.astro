@@ -9,6 +9,7 @@ import Faq from '../../components/Faq.astro';
 import { SIGNS, SIGN_SLUGS, signBySlug, ELEMENT_LABEL } from '../../lib/signs';
 import { pairSlug } from '../../lib/compat';
 import { heritage } from '../../lib/legacy/sign-lore';
+import { EDITOR_AUTHOR } from '../../lib/editorial';
 
 export async function getStaticPaths() {
   const guides = await getCollection('guides', ({ data }) => !data.draft);
@@ -37,7 +38,7 @@ const jsonLd = [
     url: `https://zodiacs.org/${sign.slug}/`,
     datePublished: guide.data.published.toISOString(),
     dateModified: guide.data.updated.toISOString(),
-    author: { '@type': 'Organization', name: 'Zodiacs.org', url: 'https://zodiacs.org/' },
+    author: EDITOR_AUTHOR,
     publisher: { '@id': 'https://zodiacs.org/#org' },
     mainEntityOfPage: { '@type': 'WebPage', '@id': `https://zodiacs.org/${sign.slug}/` },
     inLanguage: 'en',

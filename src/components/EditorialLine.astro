@@ -1,0 +1,37 @@
+---
+/**
+ * The editorial byline — one quiet line above the sources/footer on every
+ * article page: who edited it, and where the method lives. Rendered by
+ * Base whenever a page declares `type="article"`, so templates never wire
+ * it individually. The name links to the editor bio (/about/#editor); the
+ * method link goes to /methodology/.
+ */
+import { EDITOR_NAME } from '../lib/editorial';
+import { localizePath, t, type Locale } from '../lib/i18n';
+
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+---
+<aside class="editorial-line container container--narrow">
+  <span>
+    {t(locale, 'editedBy')}
+    <a href="/about/#editor">{EDITOR_NAME}</a>
+    <span aria-hidden="true"> · </span>
+    <a href={localizePath(locale, '/methodology/')}>{t(locale, 'editorialHow')}</a>
+  </span>
+</aside>
+
+<style>
+  .editorial-line {
+    margin-top: clamp(36px, 6vw, 60px);
+    color: var(--faint);
+    font-size: var(--text-xs);
+    line-height: 1.6;
+  }
+  .editorial-line a {
+    color: var(--muted);
+    text-decoration: none;
+    border-bottom: 1px solid var(--hair-2);
+  }
+  .editorial-line a:hover { color: var(--text); }
+</style>

@@ -853,7 +853,7 @@ skip to C5/C6 and return.
 | D5 | Consumer footer wing column trimmed to Registry + SDK + disclaimer |
 | D6 | Solid ink stays the one primary CTA per page; glass is the secondary/contextual standard |
 | D7 | Horoscopes stay replace-in-place; no archives |
-| D8 | Pen-name editorial persona; owner approves the name before anything ships |
+| D8 | Pen-name editorial persona — owner delegated the choice; **Rowan Vale** chosen and shipped (`src/lib/editorial.ts`) |
 | D9 | **Amendment:** ES freezes after quality fixes — C5 is quality-only and Gate 5's ES cluster growth is cut until English proves out |
 | D10 | Hero video: AV1 tier + data-saver guard approved |
 

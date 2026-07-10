@@ -8,6 +8,7 @@ import { SIGNS, signForLongitude } from '../../../lib/signs';
 import { bodyLongitude } from '../../../lib/engine/full';
 import type { BodyName } from '../../../lib/engine/types';
 import { formatShortDate } from '../../../lib/i18n/dates';
+import { EDITOR_AUTHOR } from '../../../lib/editorial';
 
 const PLANET_ORDER = [
   'Sun', 'Moon', 'Mercury', 'Venus', 'Mars',
@@ -54,7 +55,7 @@ const jsonLd = [
     url: `https://zodiacs.org/learn/planets/${slug}/`,
     datePublished: entry.data.published.toISOString(),
     dateModified: entry.data.updated.toISOString(),
-    author: { '@type': 'Organization', name: 'Zodiacs.org', url: 'https://zodiacs.org/' },
+    author: EDITOR_AUTHOR,
     publisher: { '@id': 'https://zodiacs.org/#org' },
     mainEntityOfPage: { '@type': 'WebPage', '@id': `https://zodiacs.org/learn/planets/${slug}/` },
     inLanguage: 'en',

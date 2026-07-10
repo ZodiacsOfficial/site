@@ -4,6 +4,7 @@ import Base from '../../../layouts/Base.astro';
 import Faq from '../../../components/Faq.astro';
 import AspectGlyph from '../../../components/AspectGlyph';
 import { ASPECTS } from '../../../lib/engine/aspects';
+import { EDITOR_AUTHOR } from '../../../lib/editorial';
 
 const ASPECT_ORDER = ['conjunction', 'sextile', 'square', 'trine', 'opposition'] as const;
 
@@ -44,7 +45,7 @@ const jsonLd = [
     url: `https://zodiacs.org/learn/aspects/${slug}/`,
     datePublished: entry.data.published.toISOString(),
     dateModified: entry.data.updated.toISOString(),
-    author: { '@type': 'Organization', name: 'Zodiacs.org', url: 'https://zodiacs.org/' },
+    author: EDITOR_AUTHOR,
     publisher: { '@id': 'https://zodiacs.org/#org' },
     mainEntityOfPage: { '@type': 'WebPage', '@id': `https://zodiacs.org/learn/aspects/${slug}/` },
     inLanguage: 'en',

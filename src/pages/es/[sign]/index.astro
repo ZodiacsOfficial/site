@@ -7,6 +7,7 @@ import { SIGNS, SIGN_SLUGS, elementLabel, signBySlug, signDates, signName } from
 import { localizePath } from '../../../lib/i18n';
 import { spanishGuideFor } from '../../../data/es-guides';
 import { pairSlug } from '../../../lib/compat';
+import { EDITOR_AUTHOR } from '../../../lib/editorial';
 
 export function getStaticPaths() {
   return SIGN_SLUGS.map((sign) => ({ params: { sign } }));
@@ -40,7 +41,7 @@ const jsonLd = [
     url: `https://zodiacs.org/es/${sign.slug}/`,
     datePublished: '2026-07-07T03:45:11+07:00',
     dateModified: '2026-07-07T03:45:11+07:00',
-    author: { '@type': 'Organization', name: 'Zodiacs.org', url: 'https://zodiacs.org/' },
+    author: EDITOR_AUTHOR,
     publisher: { '@id': 'https://zodiacs.org/#org' },
     mainEntityOfPage: { '@type': 'WebPage', '@id': `https://zodiacs.org/es/${sign.slug}/` },
     image: `https://zodiacs.org/assets/og/v2/sign/${sign.slug}.png`,

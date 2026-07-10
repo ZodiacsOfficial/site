@@ -9,6 +9,7 @@ import { dayLabel, eventList, monthLabel } from '../../../lib/horoscopes';
 import { dailyReading } from '../../../lib/daily';
 import type { Daily } from '../../../lib/daily';
 import dailyData from '../../../data/daily.json';
+import { EDITOR_AUTHOR } from '../../../lib/editorial';
 
 export async function getStaticPaths() {
   const all = await getCollection('horoscopes', ({ data }) => !data.draft);
@@ -46,7 +47,7 @@ const jsonLd = [
     url: `https://zodiacs.org/horoscopes/${sign.slug}/`,
     datePublished: entry.data.published.toISOString(),
     dateModified: modified.toISOString(),
-    author: { '@type': 'Organization', name: 'Zodiacs.org', url: 'https://zodiacs.org/' },
+    author: EDITOR_AUTHOR,
     publisher: { '@id': 'https://zodiacs.org/#org' },
     mainEntityOfPage: { '@type': 'WebPage', '@id': `https://zodiacs.org/horoscopes/${sign.slug}/` },
     inLanguage: 'en',

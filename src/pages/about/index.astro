@@ -1,7 +1,9 @@
 ---
 import Base from '../../layouts/Base.astro';
+import { EDITOR_PERSON } from '../../lib/editorial';
 
 const jsonLd = [
+  EDITOR_PERSON as unknown as Record<string, unknown>,
   {
     '@type': 'AboutPage',
     name: 'About Zodiacs.org',
@@ -107,6 +109,18 @@ const jsonLd = [
         no premium tier gating the basics — the calculators are free because the
         cost of running them, once the math is on your device, is close to
         nothing.
+      </p>
+
+      <h2 id="editor">The editor</h2>
+      <p>
+        The site's pages are edited under one name, <strong>Rowan Vale</strong> —
+        the byline you'll see at the foot of every guide and article. It is an
+        editorial identity rather than a public figure, and it makes one
+        promise instead of claiming credentials: every computed figure is
+        checked against NASA JPL reference data before it ships, sources are
+        cited, and interpretive claims are labeled as tradition, not fact.
+        When a page is wrong, <a href="#contact">say so</a> — corrections
+        outrank everything else in the queue.
       </p>
 
       <h2>Get in touch</h2>
