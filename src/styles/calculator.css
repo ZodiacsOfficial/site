@@ -279,6 +279,83 @@
   max-width: 52ch;
 }
 
+/* T-17 share choices are mounted only after the existing chart-share button
+   is used, so the ordinary result keeps its exact structure and weight. */
+.calc-share-dialog {
+  width: min(560px, calc(100vw - 32px));
+  max-width: none;
+  max-height: min(720px, calc(100dvh - 32px));
+  margin: auto;
+  padding: var(--bezel);
+  color: var(--text);
+  overflow: auto;
+}
+.calc-share-dialog::backdrop {
+  background: rgba(3, 4, 7, 0.78);
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+}
+@media (prefers-reduced-transparency: reduce) {
+  .calc-share-dialog::backdrop {
+    background: rgba(3, 4, 7, 0.94);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+}
+.calc-share-dialog__core { display: grid; gap: 18px; padding: clamp(20px, 4vw, 30px); }
+.calc-share-dialog__head { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.calc-share-dialog__head h2 {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: clamp(1.45rem, 1.25rem + 0.7vw, 1.8rem);
+  font-weight: 500;
+}
+.calc-share-dialog__close {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  flex: 0 0 auto;
+  border: 1px solid var(--hair-2);
+  border-radius: 50%;
+  color: var(--muted);
+  font-size: 22px;
+  line-height: 1;
+}
+.calc-share-dialog__close:hover { color: var(--text); border-color: var(--hair-3); }
+.calc-share-dialog__toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: fit-content;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  cursor: pointer;
+}
+.calc-share-dialog__toggle input { width: 17px; height: 17px; accent-color: var(--accent); }
+.calc-share-dialog__note,
+.calc__positions-privacy {
+  margin: 0;
+  max-width: 60ch;
+  color: var(--faint);
+  font-size: 12.5px;
+  line-height: 1.6;
+}
+.calc-share-dialog__card { justify-content: space-between; }
+
+/* A received v2 token is a static positions receipt, never a reconstructed
+   natal chart: no house spokes, motion column, aspects, save controls, or
+   interactive inspector are present. */
+.calc__positions-title {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: clamp(1.65rem, 1.35rem + 1vw, 2.2rem);
+  font-weight: 500;
+  scroll-margin-top: calc(80px + env(safe-area-inset-top));
+}
+.calc__positions-title:focus { outline: none; }
+.calc__positions-title:focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; }
+
 /* Records bridge — mirrors CollectBand.astro. The sun sign's canonical
    record, one quiet click into the collector's wing. No market language. */
 .calc__record {
