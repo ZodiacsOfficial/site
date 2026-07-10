@@ -1,15 +1,60 @@
 ---
 import Base from '../../../layouts/Base.astro';
+import Faq from '../../../components/Faq.astro';
 import BabyZodiac from '../../../islands/BabyZodiac';
 import '../../../styles/calculator.css';
+
+const faq = [
+  {
+    q: '¿Qué signo del zodiaco tendrá mi bebé?',
+    a: 'Ingresa la fecha probable de parto. El signo del Sol en esa fecha es casi seguro, porque el Sol permanece cerca de un mes en cada signo. Las excepciones honestas están en los límites: una fecha cercana al cambio de signo o un nacimiento un par de semanas antes o después puede cambiar la respuesta. La herramienta calcula ambos casos en lugar de adivinarlos.',
+  },
+  {
+    q: '¿Puedo saber el signo lunar antes del nacimiento?',
+    a: 'Solo como una lista corta. La Luna cambia de signo cada dos o tres días, así que la semana probable de parto suele abarcar dos o tres signos lunares. La herramienta muestra los intervalos de esa semana con sus fechas; el día y la hora del nacimiento determinan cuál corresponde.',
+  },
+  {
+    q: '¿Y el ascendente?',
+    a: 'No se puede predecir. El ascendente cambia aproximadamente cada dos horas durante todo el día, por lo que depende por completo del minuto y el lugar del nacimiento. Por eso el certificado de nacimiento es importante para la astrología.',
+  },
+  {
+    q: '¿Un planeta retrógrado al nacer significa algo malo?',
+    a: 'No. Los retrógrados son normales: Mercurio está retrógrado aproximadamente una quinta parte del tiempo, y todo el mundo nace con algún planeta en algún estado. En una carta natal, un planeta retrógrado suele interpretarse como una energía más interior de lo habitual; es un matiz, no un defecto.',
+  },
+  {
+    q: '¿Cuándo debo calcular la carta real?',
+    a: 'Cuando tengas la hora de nacimiento por escrito. La fecha, la hora exacta y el lugar permiten calcular la carta completa: la Luna fijada en su signo, el ascendente, las casas y los aspectos. La calculadora lo hace en tu dispositivo y tarda unos veinte segundos.',
+  },
+];
+
+const jsonLd = [
+  {
+    '@type': 'WebPage',
+    name: 'Zodiaco del bebé: ¿qué signo tendrá?',
+    url: 'https://zodiacs.org/es/baby-zodiac/',
+    description: 'Ingresa una fecha probable de parto para ver el signo solar casi seguro, los signos lunares posibles de la semana y qué información no puede saberse hasta conocer el minuto del nacimiento.',
+    inLanguage: 'es',
+    isPartOf: { '@id': 'https://zodiacs.org/#site' },
+  },
+  {
+    '@type': 'FAQPage',
+    inLanguage: 'es',
+    mainEntity: faq.map(({ q, a }) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: { '@type': 'Answer', text: a },
+    })),
+  },
+];
 ---
 <Base
   title="¿Qué signo será mi bebé? Calculadora por fecha de parto | Zodiacs.org"
-  description="Ingresa la fecha probable de parto: el signo solar casi seguro (con avisos de cúspide calculados), los signos lunares posibles de la semana y lo que espera al minuto del nacimiento."
+  description="Ingresa la fecha probable de parto: el signo solar casi seguro (con avisos de cúspide calculados), los signos lunares posibles de la semana y qué información no puede saberse hasta conocer el minuto del nacimiento."
   path="/es/baby-zodiac/"
   locale="es"
   image="/assets/og/v2/tool/baby-zodiac.png"
   imageAlt="Calculadora del zodiaco del bebé — Zodiacs.org"
+  jsonLd={jsonLd}
 >
   <section class="section--tight container container--narrow">
     <div class="tool-hero reveal">
@@ -39,6 +84,10 @@ import '../../../styles/calculator.css';
         <a href="/es/birth-chart/">carta completa</a> lo calcula todo.
       </p>
     </div>
+  </section>
+
+  <section class="section--tight container container--narrow">
+    <Faq items={faq} heading="Preguntas sobre el zodiaco del bebé" />
   </section>
 </Base>
 

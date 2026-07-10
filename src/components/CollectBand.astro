@@ -4,6 +4,8 @@
  * Quiet, museum-toned, near the top so visitors arriving from external
  * listings find the record in one click. No market language here.
  */
+import { t } from '../lib/i18n';
+
 interface Props {
   signName: string;
   slug: string;
@@ -11,17 +13,10 @@ interface Props {
 }
 const { signName, slug, locale = 'en' } = Astro.props;
 const copy = {
-  en: {
-    label: 'Collector’s wing',
-    text: `${signName} also exists as one of the Twelve — a canonical record in the registry.`,
-    link: 'View the record →',
-  },
-  es: {
-    label: 'Zona de colección',
-    text: `${signName} también es uno de los Doce — un registro canónico en el registro.`,
-    link: 'Ver el registro →',
-  },
-}[locale];
+  label: t(locale, 'recordLabel'),
+  text: `${signName} ${t(locale, 'recordOneOfTwelve')}`,
+  link: t(locale, 'recordViewLink'),
+};
 ---
 <aside class="collect-band">
   <span class="collect-band__label mono">{copy.label}</span>

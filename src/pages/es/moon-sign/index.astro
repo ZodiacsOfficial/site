@@ -1,7 +1,49 @@
 ---
 import Base from '../../../layouts/Base.astro';
+import Faq from '../../../components/Faq.astro';
 import ChartCalculator from '../../../islands/ChartCalculator';
 import '../../../styles/calculator.css';
+
+const faq = [
+  {
+    q: '¿Qué es el signo lunar?',
+    a: 'Tu signo lunar es el signo del zodiaco que ocupaba la Luna cuando naciste. Mientras que el signo solar describe tu identidad central, el signo lunar habla de tu vida emocional: cómo sientes, qué te calma y qué necesitas para sentirte a salvo. Muchas personas se reconocen más en su Luna que en su Sol.',
+  },
+  {
+    q: '¿Necesito mi hora de nacimiento para saber mi signo lunar?',
+    a: 'Normalmente no: la Luna permanece unos dos días y medio en cada signo, así que la mayoría de los días solo ocupa uno. Sin embargo, cambia de signo aproximadamente cada 60 horas, por lo que la hora sí importa en los días de transición. La calculadora te avisa con claridad si tu fecha es una de esas.',
+  },
+  {
+    q: '¿Por qué otra página me dio un signo lunar diferente?',
+    a: 'Casi siempre se debe a un problema de zona horaria: algunas calculadoras convierten mal la hora de nacimiento, sobre todo en fechas antiguas o lugares con cambios históricos de reloj. Aquí resolvemos el historial completo de la zona horaria de tu lugar, incluido el tiempo local anterior a la estandarización, y mostramos el instante UTC calculado para que puedas comprobarlo.',
+  },
+  {
+    q: 'Sol, Luna y ascendente: ¿cuál es la diferencia?',
+    a: 'El resumen clásico es este: el Sol describe quién eres, la Luna cómo sientes y el ascendente cómo te perciben al conocerte. Juntos forman los tres grandes y son el resumen útil más rápido de una carta natal.',
+  },
+];
+
+const jsonLd = [
+  {
+    '@type': 'WebApplication',
+    name: 'Calculadora de signo lunar',
+    url: 'https://zodiacs.org/es/moon-sign/',
+    applicationCategory: 'LifestyleApplication',
+    operatingSystem: 'Web',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    inLanguage: 'es',
+    isPartOf: { '@id': 'https://zodiacs.org/#site' },
+  },
+  {
+    '@type': 'FAQPage',
+    inLanguage: 'es',
+    mainEntity: faq.map(({ q, a }) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: { '@type': 'Answer', text: a },
+    })),
+  },
+];
 ---
 <Base
   title="Calculadora de signo lunar gratis | Zodiacs.org"
@@ -10,6 +52,7 @@ import '../../../styles/calculator.css';
   locale="es"
   image="/assets/og/v2/tool/moon-sign.png"
   imageAlt="Calculadora de signo lunar — Zodiacs.org"
+  jsonLd={jsonLd}
 >
   <section class="section--tight container">
     <div class="tool-hero">
@@ -20,6 +63,10 @@ import '../../../styles/calculator.css';
     <noscript>
       <p>Esta calculadora del signo lunar necesita JavaScript. Activa JavaScript y recarga la página para calcular tu signo lunar a partir de tus datos de nacimiento.</p>
     </noscript>
+  </section>
+
+  <section class="section--tight container container--narrow">
+    <Faq items={faq} heading="Preguntas sobre el signo lunar" />
   </section>
 </Base>
 

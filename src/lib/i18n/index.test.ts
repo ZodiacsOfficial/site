@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { alternatePaths, localizePath, stripLocale, UI } from './index';
+import { alternatePaths, localizePath, stripLocale, tf, UI } from './index';
 
 describe('i18n helpers', () => {
   it('keeps the Spanish catalog aligned with English keys', () => {
@@ -22,5 +22,11 @@ describe('i18n helpers', () => {
   it('returns alternates for translated pages', () => {
     expect(alternatePaths('/es/tools/')).toEqual({ en: '/tools/', es: '/es/tools/' });
     expect(alternatePaths('/learn/placements/venus-in-scorpio/')).toBeNull();
+  });
+
+  it('interpolates localized messages without changing unsupported paths', () => {
+    expect(tf('es', 'skyPlanetRetrograde', { planet: 'Plutón' })).toBe('Plutón retrógrado');
+    expect(tf('es', 'pairingCta', { a: 'Aries', b: 'Tauro' })).toBe('Leer la combinación de Aries y Tauro');
+    expect(localizePath('es', '/horoscopes/aries/')).toBe('/horoscopes/aries/');
   });
 });

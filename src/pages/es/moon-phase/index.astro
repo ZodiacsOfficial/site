@@ -1,7 +1,49 @@
 ---
 import Base from '../../../layouts/Base.astro';
+import Faq from '../../../components/Faq.astro';
 import MoonPhaseTool from '../../../islands/MoonPhaseTool';
 import '../../../styles/calculator.css';
+
+const faq = [
+  {
+    q: '¿En qué fase está la Luna esta noche?',
+    a: 'El indicador al principio de esta página la calcula en vivo en tu dispositivo: muestra el nombre de la fase actual, el porcentaje iluminado y el signo que ocupa la Luna ahora mismo, con la hora en tiempo universal.',
+  },
+  {
+    q: '¿Cuál era la fase lunar el día de mi cumpleaños?',
+    a: 'Ingresa tu fecha de nacimiento en el buscador. La fase puede calcularse con precisión a partir de la fecha, porque la Luna tarda unos 29,5 días en completar su ciclo. La astrología interpreta la fase natal como una nota de temperamento: se dice que quienes nacen con Luna nueva inician cosas y quienes nacen con Luna llena viven de forma más pública.',
+  },
+  {
+    q: '¿Cada cuánto hay Luna llena?',
+    a: 'Cada 29,5 días en promedio: ese periodo se llama mes sinódico. Su desfase con el calendario hace que la Luna llena cambie de fecha cada mes y que, en ocasiones, caiga una segunda Luna llena dentro del mismo mes calendario: la llamada Luna azul.',
+  },
+  {
+    q: '¿La fase lunar afecta a mi signo lunar?',
+    a: 'Son dos medidas distintas. La fase compara la Luna con el Sol; el signo lunar indica dónde estaba la Luna dentro del zodiaco. Puede haber Luna llena en cualquiera de los doce signos. El signo lunar es el que la astrología interpreta como una descripción del temperamento emocional.',
+  },
+];
+
+const jsonLd = [
+  {
+    '@type': 'WebApplication',
+    name: 'Herramienta de fases lunares',
+    url: 'https://zodiacs.org/es/moon-phase/',
+    applicationCategory: 'LifestyleApplication',
+    operatingSystem: 'Web',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    inLanguage: 'es',
+    isPartOf: { '@id': 'https://zodiacs.org/#site' },
+  },
+  {
+    '@type': 'FAQPage',
+    inLanguage: 'es',
+    mainEntity: faq.map(({ q, a }) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: { '@type': 'Answer', text: a },
+    })),
+  },
+];
 ---
 <Base
   title="Fase lunar de hoy y de tu cumpleaños | Zodiacs.org"
@@ -10,6 +52,7 @@ import '../../../styles/calculator.css';
   locale="es"
   image="/assets/og/v2/tool/moon-phase.png"
   imageAlt="Fase lunar de hoy y de cualquier fecha — Zodiacs.org"
+  jsonLd={jsonLd}
 >
   <section class="section--tight container">
     <div class="tool-hero">
@@ -20,6 +63,10 @@ import '../../../styles/calculator.css';
     <noscript>
       <p>Esta calculadora de fases lunares necesita JavaScript. Activa JavaScript y recarga la página para ver la fase de esta noche o consultar la de otra fecha.</p>
     </noscript>
+  </section>
+
+  <section class="section--tight container container--narrow">
+    <Faq items={faq} heading="Preguntas sobre las fases lunares" />
   </section>
 </Base>
 

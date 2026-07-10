@@ -11,7 +11,8 @@ import { signForLongitude, formatLongitude, signName } from '../lib/signs';
 import { encodeChartLink } from '../lib/share';
 import type { Session } from '@supabase/supabase-js';
 import type * as Sync from '../lib/profile/sync';
-import { localizePath, normalizeLocale, t, type Locale, type UiKey } from '../lib/i18n';
+import { localizePath, normalizeLocale, t, tf, type Locale, type UiKey } from '../lib/i18n';
+import { formatDate } from '../lib/i18n/dates';
 
 /** "Cancer Sun · 1907-07-06" → "Cancer Sun" for compact CTAs. */
 const handle = (name: string) => name.split('·')[0].trim() || name;
@@ -169,7 +170,7 @@ export default function ProfileManager({ locale: rawLocale = 'en' }: { locale?: 
           <strong>{session ? t(locale, 'syncOn') : t(locale, 'keepEveryDevice')}</strong>
           <p>
             {session
-              ? `${t(locale, 'signedIn')}${session.user.email ? (locale === 'es' ? ` como ${session.user.email}` : ` as ${session.user.email}`) : ''}. ${t(locale, 'syncCopyOn')}`
+              ? `${session.user.email ? tf(locale, 'signedInAs', { email: session.user.email }) : t(locale, 'signedIn')}. ${t(locale, 'syncCopyOn')}`
               : t(locale, 'syncCopyOff')}
           </p>
           {syncMessage && <p class={`pf-sync__message pf-sync__message--${syncState}`}>{syncMessage}</p>}
@@ -241,7 +242,7 @@ export default function ProfileManager({ locale: rawLocale = 'en' }: { locale?: 
     <div class="pf">
       {syncPanel}
       <p class="pf-count mono">
-        {profile.charts.length} {t(locale, 'saved')} {profile.charts.length === 1 ? t(locale, 'chartSingular') : t(locale, 'chartPlural')} · {session ? t(locale, 'syncedWhenSignedIn') : t(locale, 'storedBrowser')}
+        {profile.charts.length} {profile.charts.length === 1 ? t(locale, 'savedChartSingular') : t(locale, 'savedChartPlural')} · {session ? t(locale, 'syncedWhenSignedIn') : t(locale, 'storedBrowser')}
       </p>
 
       <div class="pf-list">
@@ -299,7 +300,7 @@ export default function ProfileManager({ locale: rawLocale = 'en' }: { locale?: 
                     class="pf-chart__action pf-chart__action--danger"
                     type="button"
                     onClick={() => {
-                      if (confirm(locale === 'es' ? `Eliminar "${chart.name}" de este dispositivo?` : `Remove "${chart.name}" from this device?`)) deleteChart(chart.id);
+                      if (confirm(tf(locale, 'removeChartConfirm', { name: chart.name }))) deleteChart(chart.id);
                     }}
                   >
                     {t(locale, 'remove')}
@@ -308,7 +309,9 @@ export default function ProfileManager({ locale: rawLocale = 'en' }: { locale?: 
               </header>
 
               <p class="pf-chart__birth mono">
-                {chart.birth.date}
+                {formatDate(locale, `${chart.birth.date}T12:00:00Z`, {
+                  year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC',
+                })}
                 {chart.birth.time ? ` · ${chart.birth.time}` : ` · ${t(locale, 'timeUnknown')}`}
                 {chart.birth.place ? ` · ${chart.birth.place.name}, ${chart.birth.place.country}` : ''}
               </p>
@@ -323,12 +326,12 @@ export default function ProfileManager({ locale: rawLocale = 'en' }: { locale?: 
         <div class="pf-next shell tinted" style="--sign:var(--sign-libra)">
           <div class="core tinted pf-next__core">
             <strong>
-              {locale === 'es' ? 'Comparar' : 'Compare'} {handle(profile.charts[0].name)} &amp; {handle(profile.charts[1].name)}
+              {tf(locale, 'compareSavedHeading', {
+                a: handle(profile.charts[0].name), b: handle(profile.charts[1].name),
+              })}
             </strong>
             <p>
-              {locale === 'es'
-                ? 'Dos cartas guardadas ya pueden compararse: cada aspecto entre cartas, leido con claridad y calculado en este dispositivo.'
-                : 'Two charts saved is a comparison waiting to happen: every cross-chart aspect, read honestly, computed on this device.'}
+              {t(locale, 'compareSavedPitch')}
             </p>
             <a
               class="btn btn--primary pf-next__cta"

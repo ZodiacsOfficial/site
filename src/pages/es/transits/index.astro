@@ -1,5 +1,6 @@
 ---
 import Base from '../../../layouts/Base.astro';
+import Faq from '../../../components/Faq.astro';
 import TransitTracker from '../../../islands/TransitTracker';
 import PlanetGlyph from '../../../components/PlanetGlyph';
 import { dayLabel, eventList, latestTransitMonth, monthLabel } from '../../../lib/horoscopes';
@@ -8,6 +9,45 @@ import '../../../styles/calculator.css';
 const month = latestTransitMonth();
 const events = month ? eventList(month, 'es') : [];
 const label = month ? monthLabel(month, 'es') : null;
+
+const faq = [
+  {
+    q: '¿Qué es un tránsito?',
+    a: 'Los planetas siguieron moviéndose después de tu nacimiento. Un tránsito es la posición actual de un planeta comparada con una posición de tu carta natal. Por ejemplo, Saturno en tránsito en cuadratura con tu Luna natal significa que hoy Saturno está a noventa grados de la posición que ocupaba la Luna cuando naciste. Los tránsitos son la principal herramienta astrológica para estudiar los tiempos.',
+  },
+  {
+    q: '¿Qué tránsitos muestra esta página?',
+    a: 'Muestra los aspectos de los diez planetas del cielo de hoy con los diez planetas de tu carta natal cuando tienen un orbe de 3 grados o menos, el margen estrecho en el que suele considerarse activo un tránsito. La Luna en tránsito no aparece en la lista porque recorre toda tu carta cada mes; su posición actual se muestra en la franja del cielo.',
+  },
+  {
+    q: '¿Por qué importan más los tránsitos lentos?',
+    a: 'La velocidad determina la duración. El Sol cruza un punto natal en unos dos días y Marte en una o dos semanas, pero Saturno puede permanecer durante meses a menos de tres grados de un punto, y Plutón durante un par de años. Además, los bucles retrógrados hacen que los planetas lentos suelan pasar tres veces. La astrología interpreta esas visitas largas como capítulos, no como un estado pasajero.',
+  },
+  {
+    q: '¿Necesito mi hora exacta de nacimiento?',
+    a: 'Para la mayoría de los tránsitos, no. Los aspectos entre planetas funcionan con la fecha y el lugar de nacimiento. La excepción es la Luna: sin hora se calcula al mediodía y puede quedar hasta seis grados desplazada, así que los tránsitos lunares cerca del límite del orbe son inciertos. La herramienta te avisa cuando ocurre.',
+  },
+];
+
+const jsonLd = [
+  {
+    '@type': 'WebPage',
+    name: 'Rastreador de tránsitos: el cielo sobre tu carta',
+    url: 'https://zodiacs.org/es/transits/',
+    description: 'Consulta qué tránsitos están activos ahora en tu carta natal: el cielo de hoy comparado con tus planetas natales, con un orbe máximo de 3 grados.',
+    inLanguage: 'es',
+    isPartOf: { '@id': 'https://zodiacs.org/#site' },
+  },
+  {
+    '@type': 'FAQPage',
+    inLanguage: 'es',
+    mainEntity: faq.map(({ q, a }) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: { '@type': 'Answer', text: a },
+    })),
+  },
+];
 ---
 <Base
   title="Tránsitos de hoy sobre tu carta natal | Zodiacs.org"
@@ -16,11 +56,12 @@ const label = month ? monthLabel(month, 'es') : null;
   locale="es"
   image="/assets/og/v2/tool/transits.png"
   imageAlt="Rastreador de tránsitos — Zodiacs.org"
+  jsonLd={jsonLd}
 >
   <section class="section--tight container container--narrow">
     <div class="tool-hero reveal">
       <h1 class="display">El cielo, sobre tu carta.</h1>
-      <p>Los planetas de hoy comparados con los tuyos, dentro de 3° de exactitud. Elige una carta guardada o ingresa tus datos; nada sale de tu dispositivo.</p>
+      <p>Los planetas de hoy comparados con los tuyos, con un orbe máximo de 3°. Elige una carta guardada o ingresa tus datos; nada sale de tu dispositivo.</p>
     </div>
     <TransitTracker locale="es" client:load />
     <noscript>
@@ -41,6 +82,10 @@ const label = month ? monthLabel(month, 'es') : null;
       </ul>
     </section>
   )}
+
+  <section class="section--tight container container--narrow">
+    <Faq items={faq} heading="Preguntas sobre los tránsitos" />
+  </section>
 </Base>
 
 <style>

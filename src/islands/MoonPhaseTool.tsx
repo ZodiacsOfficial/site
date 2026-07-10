@@ -13,7 +13,9 @@ import type { MoonPhaseName } from '../lib/engine/lite';
 import { formatLongitude, signForLongitude, signName } from '../lib/signs';
 import { resolveLocalToUtc } from '../lib/time/localToUtc';
 import type { City } from '../lib/geo/search';
-import { localizePath, normalizeLocale, t, type Locale } from '../lib/i18n';
+import { localizePath, normalizeLocale, t, tf, type Locale } from '../lib/i18n';
+import { formatDateTime } from '../lib/i18n/dates';
+import { moonPhaseLabel } from '../lib/i18n/astrology';
 
 let enginePromise: Promise<typeof import('../lib/engine/full')> | null = null;
 const loadEngine = () => (enginePromise ??= import('../lib/engine/full'));
@@ -22,7 +24,9 @@ const loadEngine = () => (enginePromise ??= import('../lib/engine/full'));
  * The lit portion of the disc as one path: the limb on the bright side,
  * back along the terminator ellipse. Angle 0 = new, 180 = full.
  */
-function PhaseDisc({ angle, size = 120, ariaHidden = false }: { angle: number; size?: number; ariaHidden?: boolean }) {
+function PhaseDisc({
+  angle, locale, size = 120, ariaHidden = false,
+}: { angle: number; locale: Locale; size?: number; ariaHidden?: boolean }) {
   const r = 44;
   const cosA = Math.cos((angle * Math.PI) / 180);
   const waxing = angle < 180;
@@ -36,7 +40,9 @@ function PhaseDisc({ angle, size = 120, ariaHidden = false }: { angle: number; s
       class="mp__disc" viewBox="0 0 100 100" width={size} height={size}
       role={ariaHidden ? undefined : 'img'}
       aria-hidden={ariaHidden ? 'true' : undefined}
-      aria-label={ariaHidden ? undefined : `Moon, ${Math.round(moonIlluminationFromAngle(angle) * 100)}% illuminated`}
+      aria-label={ariaHidden ? undefined : tf(locale, 'moonDiscAria', {
+        percent: Math.round(moonIlluminationFromAngle(angle) * 100),
+      })}
     >
       <circle cx="50" cy="50" r={r} fill="var(--void-2)" stroke="var(--hair-2)" stroke-width="1" />
       {angle > 2 && angle < 358 && <path d={lit} fill="var(--ink-1, #E8EAF0)" opacity="0.92" />}
@@ -150,17 +156,20 @@ export default function MoonPhaseTool({ locale: rawLocale = 'en' }: { locale?: L
       {/* Same shell before hydration so the page doesn't jump. */}
       <div class="mp__tonight shell">
         <div class="core mp__tonight-core">
-          <PhaseDisc angle={now ? moonPhaseAngle(now) : 0} ariaHidden={now === null} />
+          <PhaseDisc angle={now ? moonPhaseAngle(now) : 0} locale={locale} ariaHidden={now === null} />
           <div class="mp__tonight-facts">
             <em class="kicker">{t(locale, 'rightNow')}</em>
-            <strong class="mp__phase">{now ? moonPhaseName(now) : t(locale, 'moonReadingSky')}</strong>
+            <strong class="mp__phase">{now ? moonPhaseLabel(locale, moonPhaseName(now)) : t(locale, 'moonReadingSky')}</strong>
             <span class="mono mp__meta">
               {now
                 ? `${Math.round(moonIllumination(now) * 100)}% ${t(locale, 'illuminated')} · ${t(locale, 'moonIn')} ${signName(signForLongitude(moonLongitude(now)), locale)}`
                 : '—'}
             </span>
             <span class="mono mp__meta mp__meta--faint">
-              {now ? `${now.toISOString().replace('T', ' · ').slice(0, 18)} UTC` : ' '}
+              {now ? `${formatDateTime(locale, now, {
+                year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit',
+                timeZone: 'UTC', hour12: false,
+              })} UTC` : ' '}
             </span>
           </div>
         </div>
@@ -207,14 +216,14 @@ export default function MoonPhaseTool({ locale: rawLocale = 'en' }: { locale?: L
           <h2 class="sr-only" tabIndex={-1} ref={resultHeadingRef}>{t(locale, 'moonPhase')}</h2>
           <div class="mp__lookup shell tinted" style={`--sign:${signForLongitude(result.lon).hue}`}>
             <div class="core tinted mp__tonight-core">
-              <PhaseDisc angle={result.angle} />
+              <PhaseDisc angle={result.angle} locale={locale} />
               <div class="mp__tonight-facts">
-                <strong class="mp__phase">{result.phase}</strong>
+                <strong class="mp__phase">{moonPhaseLabel(locale, result.phase)}</strong>
                 <span class="mono mp__meta">{Math.round(result.illum * 100)}% {t(locale, 'illuminated')}</span>
                 <span class="mp__signline">
                   {t(locale, 'moonIn')} <SignChip lon={result.lon} locale={locale} />
                   {result.altLon !== null && (
-                    <> {locale === 'es' ? 'o' : 'or'} <SignChip lon={result.altLon} locale={locale} /></>
+                    <> {t(locale, 'or')} <SignChip lon={result.altLon} locale={locale} /></>
                   )}
                 </span>
                 <span class="mono mp__meta mp__meta--faint">{formatLongitude(result.lon, locale)}</span>

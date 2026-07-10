@@ -8,7 +8,8 @@ import { useMemo } from 'preact/hooks';
 import { formatLongitude, signForLongitude, signName } from '../lib/signs';
 import { moonLongitude, sunLongitude } from '../lib/engine/lite';
 import sky from '../data/sky.json';
-import { normalizeLocale, t, type Locale } from '../lib/i18n';
+import { normalizeLocale, t, tf, type Locale } from '../lib/i18n';
+import { planetLabel } from '../lib/i18n/astrology';
 
 type IconKind = 'sun' | 'moon' | 'retro' | 'direct' | 'newMoon' | 'fullMoon';
 interface Item { kind: IconKind; text: string; hue?: string }
@@ -76,10 +77,15 @@ export default function SkyTicker({ locale: rawLocale = 'en' }: { locale?: Local
       .filter((r) => r.from <= nowIso && (r.to === null || r.to > nowIso))
       .map((r) => r.planet);
     out.push(active.includes('Mercury')
-      ? { kind: 'retro', text: locale === 'es' ? 'Mercurio retrógrado' : 'Mercury retrograde' }
-      : { kind: 'direct', text: locale === 'es' ? 'Mercurio directo' : 'Mercury direct' });
+      ? { kind: 'retro', text: t(locale, 'skyMercuryRetrograde') }
+      : { kind: 'direct', text: t(locale, 'skyMercuryDirect') });
     for (const planet of active) {
-      if (planet !== 'Mercury') out.push({ kind: 'retro', text: locale === 'es' ? `${planet} retrógrado` : `${planet} retrograde` });
+      if (planet !== 'Mercury') {
+        out.push({
+          kind: 'retro',
+          text: tf(locale, 'skyPlanetRetrograde', { planet: planetLabel(locale, planet) }),
+        });
+      }
     }
 
     const nextMoon = (sky.moons as { type: string; at: string }[]).find((m) => m.at > nowIso);
@@ -87,13 +93,13 @@ export default function SkyTicker({ locale: rawLocale = 'en' }: { locale?: Local
       const days = Math.round((new Date(nextMoon.at).getTime() - now.getTime()) / 86400_000);
       const full = nextMoon.type === 'full';
       const label = full
-        ? (locale === 'es' ? 'Luna llena' : 'Full moon')
-        : (locale === 'es' ? 'Luna nueva' : 'New moon');
+        ? t(locale, 'skyFullMoon')
+        : t(locale, 'skyNewMoon');
       const text = days <= 0
-        ? (locale === 'es' ? `${label} esta noche` : `${label} tonight`)
+        ? tf(locale, 'skyTonight', { event: label })
         : days === 1
-          ? (locale === 'es' ? `${label} mañana` : `${label} tomorrow`)
-          : (locale === 'es' ? `${label} en ${days} días` : `${label} in ${days} days`);
+          ? tf(locale, 'skyTomorrow', { event: label })
+          : tf(locale, 'skyInDays', { event: label, days });
       out.push({ kind: full ? 'fullMoon' : 'newMoon', text });
     }
 
@@ -101,7 +107,7 @@ export default function SkyTicker({ locale: rawLocale = 'en' }: { locale?: Local
   }, [locale]);
 
   return (
-    <p class="skyticker mono" aria-label={locale === 'es' ? 'Condiciones actuales del cielo, calculadas en vivo' : 'Current sky conditions, computed live'}>
+    <p class="skyticker mono" aria-label={t(locale, 'skyTickerAria')}>
       <span class="skyticker__label">{t(locale, 'rightNow')}</span>
       {items.map((item) => (
         <span class="skyticker__item" key={item.text}>

@@ -48,7 +48,16 @@ const jsonLd = [
     about: { '@type': 'Thing', name: `${signName(sign, 'es')} (astrología)` },
   },
   {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Zodiacs.org en español', item: 'https://zodiacs.org/es/' },
+      { '@type': 'ListItem', position: 2, name: 'Signos del zodiaco', item: 'https://zodiacs.org/es/#signos' },
+      { '@type': 'ListItem', position: 3, name: signName(sign, 'es'), item: `https://zodiacs.org/es/${sign.slug}/` },
+    ],
+  },
+  {
     '@type': 'FAQPage',
+    inLanguage: 'es',
     mainEntity: guide.faq.map(({ q, a }) => ({
       '@type': 'Question',
       name: q,

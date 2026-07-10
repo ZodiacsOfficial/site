@@ -1,11 +1,29 @@
 ---
 import Base from '../../../layouts/Base.astro';
+
+const jsonLd = [
+  {
+    '@type': 'Article',
+    headline: 'Cómo calculamos tu carta',
+    url: 'https://zodiacs.org/es/methodology/',
+    datePublished: '2026-07-07T03:45:11+07:00',
+    dateModified: '2026-07-07T03:45:11+07:00',
+    author: { '@type': 'Organization', name: 'Zodiacs.org', url: 'https://zodiacs.org/' },
+    publisher: { '@id': 'https://zodiacs.org/#org' },
+    mainEntityOfPage: { '@type': 'WebPage', '@id': 'https://zodiacs.org/es/methodology/' },
+    inLanguage: 'es',
+    about: 'Metodología astronómica, tratamiento de zonas horarias y modelo de privacidad del motor de cartas de Zodiacs.org.',
+    isPartOf: { '@id': 'https://zodiacs.org/#site' },
+  },
+];
 ---
 <Base
   title="Cómo calculamos tu carta — metodología y privacidad | Zodiacs.org"
   description="La astronomía detrás de cada carta: efemérides, casas, zonas horarias históricas, pruebas de precisión y privacidad local."
   path="/es/methodology/"
   locale="es"
+  type="article"
+  jsonLd={jsonLd}
 >
   <section class="section container container--narrow">
     <em class="kicker">Metodología</em>

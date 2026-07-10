@@ -11,7 +11,7 @@ import { formatLongitude, signForLongitude } from '../lib/signs';
 import { resolveLocalToUtc } from '../lib/time/localToUtc';
 import type { City } from '../lib/geo/search';
 import type { ReturnSeason, SaturnReturnResult } from '../lib/engine/returns';
-import { localizePath, normalizeLocale, t, type Locale } from '../lib/i18n';
+import { localizePath, normalizeLocale, t, tf, type Locale } from '../lib/i18n';
 import { formatShortDate } from '../lib/i18n/dates';
 
 let modsPromise: Promise<typeof import('../lib/engine/returns')> | null = null;
@@ -92,9 +92,7 @@ export default function SaturnReturnCalculator({ locale: rawLocale = 'en' }: { l
                 onInput={(e) => setDate((e.target as HTMLInputElement).value)}
               />
               <p class="field__help">
-                {locale === 'es'
-                  ? 'La fecha sola ubica los años de tu retorno. Hora y lugar afinan las fechas por unos días, nunca el año.'
-                  : 'The date alone pins your return years. Time and place sharpen the dates by a few days, never the year.'}
+                {t(locale, 'saturnDateHelp')}
               </p>
             </div>
           </div>
@@ -157,7 +155,7 @@ export default function SaturnReturnCalculator({ locale: rawLocale = 'en' }: { l
                 <div class={`sr__season shell ${status === 'active' ? 'tinted' : ''}`} style={status === 'active' ? `--sign:${natalSign.hue}` : ''}>
                   <div class={`core sr__season-core ${status === 'active' ? 'tinted' : ''}`}>
                     <div class="sr__season-head">
-                      <strong>{ordinal[i] ?? `${i + 1}th`} {locale === 'es' ? 'retorno' : 'return'}</strong>
+                      <strong>{tf(locale, 'saturnReturnHeading', { ordinal: ordinal[i] ?? String(i + 1) })}</strong>
                       <span class="mono sr__season-status">{statusLabel[status]}</span>
                     </div>
                     <p class="sr__season-span mono">

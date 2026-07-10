@@ -1,7 +1,62 @@
 ---
 import Base from '../../../layouts/Base.astro';
+import Faq from '../../../components/Faq.astro';
 import ChartCalculator from '../../../islands/ChartCalculator';
 import '../../../styles/calculator.css';
+
+const faq = [
+  {
+    q: '¿Qué es una carta natal?',
+    a: 'Una carta natal, o carta astral, es un mapa de la posición de cada planeta —vista desde la Tierra— en el momento y lugar exactos en que naciste. Registra tu Sol, Luna y ascendente, además de las posiciones de Mercurio a Plutón en las doce casas.',
+  },
+  {
+    q: '¿Necesito saber mi hora exacta de nacimiento?',
+    a: 'Para calcular el ascendente y las casas, sí: el ascendente cambia aproximadamente cada dos horas. Si no sabes la hora, calculamos los planetas al mediodía; tu Sol y, por lo general, tu Luna siguen siendo precisos para ese día. El certificado de nacimiento, el libro del bebé o tu familia suelen ser las mejores fuentes.',
+  },
+  {
+    q: '¿Qué tan precisa es esta calculadora?',
+    a: 'Las posiciones planetarias se calculan con un motor astronómico profesional y se comparan de forma continua con datos de referencia de NASA JPL, con un margen de unas centésimas de grado. Las zonas horarias históricas, incluida la hora media local anterior a 1922 y los cambios de horario en tiempos de guerra, se resuelven con la base completa de IANA.',
+  },
+  {
+    q: '¿Qué ocurre con mis datos de nacimiento?',
+    a: 'La carta completa se calcula en tu navegador; no existe una API del servidor para las cartas ni necesitas una cuenta. Si guardas una carta, primero permanece en este dispositivo. La sincronización opcional solo sube las cartas guardadas después de que inicias sesión.',
+  },
+  {
+    q: 'Casas por signo entero o Placidus: ¿cuál elijo?',
+    a: 'El sistema de casas por signo entero es el más antiguo y el más fácil de leer: cada casa ocupa un signo completo. Placidus es la opción moderna más habitual y divide las casas según el tiempo que tardan en ascender, por lo que su tamaño varía. Prueba ambos: tus planetas no se mueven; solo cambian los límites de las casas.',
+  },
+];
+
+const jsonLd = [
+  {
+    '@type': 'WebApplication',
+    name: 'Calculadora gratuita de carta natal',
+    url: 'https://zodiacs.org/es/birth-chart/',
+    applicationCategory: 'LifestyleApplication',
+    operatingSystem: 'Web',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    featureList: 'Sol, Luna, ascendente, planetas de Mercurio a Plutón, Nodo verdadero, casas por signo entero y Placidus, aspectos',
+    inLanguage: 'es',
+    isPartOf: { '@id': 'https://zodiacs.org/#site' },
+  },
+  {
+    '@type': 'FAQPage',
+    inLanguage: 'es',
+    mainEntity: faq.map(({ q, a }) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: { '@type': 'Answer', text: a },
+    })),
+  },
+  {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Zodiacs.org en español', item: 'https://zodiacs.org/es/' },
+      { '@type': 'ListItem', position: 2, name: 'Herramientas', item: 'https://zodiacs.org/es/tools/' },
+      { '@type': 'ListItem', position: 3, name: 'Calculadora de carta natal', item: 'https://zodiacs.org/es/birth-chart/' },
+    ],
+  },
+];
 ---
 <Base
   title="Carta natal gratis — Sol, Luna y ascendente | Zodiacs.org"
@@ -10,6 +65,7 @@ import '../../../styles/calculator.css';
   locale="es"
   image="/assets/og/v2/tool/birth-chart.png"
   imageAlt="Calculadora de carta natal gratis — Zodiacs.org"
+  jsonLd={jsonLd}
 >
   <section class="section--tight container">
     <div class="tool-hero">
@@ -29,6 +85,10 @@ import '../../../styles/calculator.css';
       <p>Para empezar, mira tu Sol, Luna y ascendente: identidad, vida emocional y primera impresión. Después puedes guardar la carta y volver a ella cuando quieras.</p>
       <p>La metodología completa está en <a href="/es/methodology/">cómo calculamos</a>.</p>
     </div>
+  </section>
+
+  <section class="section--tight container container--narrow">
+    <Faq items={faq} heading="Preguntas sobre la carta natal" />
   </section>
 </Base>
 

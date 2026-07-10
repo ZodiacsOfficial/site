@@ -21,7 +21,9 @@ import { decodeChartLink, encodeChartLink } from '../lib/share';
 import type { ShareChartInput } from '../lib/share';
 import { ENGINE_VERSION } from '../lib/engine/types';
 import type { City } from '../lib/geo/search';
-import { localizePath, normalizeLocale, t, type Locale } from '../lib/i18n';
+import { localizePath, normalizeLocale, t, tf, type Locale } from '../lib/i18n';
+import { intlLocale } from '../lib/i18n/dates';
+import { aspectLabel, planetLabel } from '../lib/i18n/astrology';
 
 
 let enginePromise: Promise<typeof import('../lib/engine/full')> | null = null;
@@ -453,9 +455,8 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
           )}
           {charts.length < 2 && (
             <p class="field__help">
-              {locale === 'es' ? 'Las cartas que ' : 'Charts you '}
-              <a href={localizePath(locale, '/birth-chart/')}>{locale === 'es' ? 'calcules y guardes' : 'calculate and save'}</a>
-              {locale === 'es' ? ' aparecerán aquí como opciones de un toque, así la segunda comparación será más rápida que la primera.' : ' appear here as one-tap choices, so the second comparison is faster than the first.'}
+              {t(locale, 'compareSavedHelp')}{' '}
+              <a href={localizePath(locale, '/birth-chart/')}>{t(locale, 'getBirthChart')} →</a>
             </p>
           )}
           {error && <p class="calc__error" role="alert" tabIndex={-1} ref={errorRef}>{error}</p>}
@@ -467,7 +468,9 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
           <h2 class="sr-only" tabIndex={-1} ref={resultHeadingRef}>{t(locale, 'compatibility')}</h2>
           {(!result.a.timeKnown || !result.b.timeKnown) && (
             <p class="notice" role="status">
-              {t(locale, 'compareNoTimeNotice')} {[result.a, result.b].filter((p) => !p.timeKnown).map((p) => p.label).join(locale === 'es' ? ' y ' : ' and ')},
+              {t(locale, 'compareNoTimeNotice')} {new Intl.ListFormat(intlLocale(locale), {
+                style: 'long', type: 'conjunction',
+              }).format([result.a, result.b].filter((p) => !p.timeKnown).map((p) => p.label))},
               {' '}{t(locale, 'moonMiddayEstimate')}
             </p>
           )}
@@ -479,15 +482,15 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
 
           <p class="syn__tally mono">
             {result.summary.aspects.length} {t(locale, 'crossChartAspects')} ·
-            {' '}{result.summary.easeful} {t(locale, 'easeful')} (trine/sextile) ·
-            {' '}{result.summary.charged} {t(locale, 'charged')} (square/opposition)
+            {' '}{result.summary.easeful} {t(locale, 'easeful')} ({aspectLabel(locale, 'trine')}/{aspectLabel(locale, 'sextile')}) ·
+            {' '}{result.summary.charged} {t(locale, 'charged')} ({aspectLabel(locale, 'square')}/{aspectLabel(locale, 'opposition')})
           </p>
 
           <div class="syn__aspects">
             {result.summary.top.map((asp) => (
               <div class="syn__aspect" key={`${asp.a}-${asp.b}-${asp.type}`}>
                 <span class="syn__aspect-receipt mono">
-                  <PlanetGlyph body={asp.a} size={13} class="pg-inline" /> {result.a.label}’s {asp.a} <AspectGlyph type={asp.type} size={13} class="pg-inline" /> {asp.type} <PlanetGlyph body={asp.b} size={13} class="pg-inline" /> {result.b.label}’s {asp.b} · orb {asp.orb.toFixed(1)}°
+                  <PlanetGlyph body={asp.a} size={13} class="pg-inline" /> {result.a.label}: {planetLabel(locale, asp.a)} <AspectGlyph type={asp.type} size={13} class="pg-inline" /> {aspectLabel(locale, asp.type)} <PlanetGlyph body={asp.b} size={13} class="pg-inline" /> {result.b.label}: {planetLabel(locale, asp.b)} · {t(locale, 'orb')} {asp.orb.toFixed(1)}°
                 </span>
                 <p class="syn__aspect-read">
                   {synastryLine(result.a.label, asp.a, result.b.label, asp.b, asp.type)}
@@ -504,7 +507,7 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
           {pairHref && (
             <div class="calc__actions">
               <a class="btn btn--ghost" href={pairHref.href}>
-                <span>{locale === 'es' ? `Leer ${pairHref.a} y ${pairHref.b}` : `Read the ${pairHref.a} and ${pairHref.b} pairing`}</span><span class="orb">→</span>
+                <span>{tf(locale, 'pairingCta', { a: pairHref.a, b: pairHref.b })}</span><span class="orb">→</span>
               </a>
             </div>
           )}
@@ -514,7 +517,7 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
             <div class="calc__share">
               <div class="calc__actions">
                 <button class="btn btn--ghost" type="button" onClick={onInvite} data-invite-link>
-                  <span>{inviteState === 'copied' ? t(locale, 'linkCopied') : `${t(locale, 'inviteCompare')} ${locale === 'es' ? 'con' : 'with'} ${result.a.label}`}</span>
+                  <span>{inviteState === 'copied' ? t(locale, 'linkCopied') : tf(locale, 'inviteWith', { name: result.a.label })}</span>
                   <span class="orb">{inviteState === 'copied' ? '✓' : '⧉'}</span>
                 </button>
               </div>
@@ -526,9 +529,7 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
                 />
               )}
               <p class="calc__share-note">
-                {locale === 'es'
-                  ? `El enlace incluye los datos de nacimiento de ${result.a.label} y abre esta página con ese lado lleno; no se nos envía nada. Conviene tener su permiso si no eres tú.`
-                  : `The link carries ${result.a.label}'s birth details and opens this page with that side filled in - nothing is sent to us. Worth their okay if that isn't you.`}
+                {tf(locale, 'inviteNamedNote', { name: result.a.label })}
               </p>
               {inviteState === 'copied' && (
                 <p class="sr-only" role="status">{t(locale, 'inviteCopied')}</p>

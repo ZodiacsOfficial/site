@@ -7,9 +7,11 @@
  * on first compute (bundle rule: only full.ts touches the ephemeris).
  */
 import { useEffect, useRef, useState } from 'preact/hooks';
-import { signBySlug, signForLongitude, type Sign } from '../lib/signs';
+import { signForLongitude, signName, type Sign } from '../lib/signs';
 import { birthdaySlug } from '../lib/birthdays';
 import { localizePath, normalizeLocale, t, type Locale } from '../lib/i18n';
+import { intlLocale } from '../lib/i18n/dates';
+import { planetLabel } from '../lib/i18n/astrology';
 import sky from '../data/sky.json';
 
 interface Props { locale?: Locale }
@@ -30,7 +32,7 @@ interface Reading {
 const DAY = 86400_000;
 
 function fmtDay(iso: string, locale: Locale): string {
-  return new Date(iso).toLocaleDateString(locale === 'es' ? 'es-ES' : 'en-US', {
+  return new Date(iso).toLocaleDateString(intlLocale(locale), {
     month: 'short', day: 'numeric', timeZone: 'UTC',
   });
 }
@@ -160,9 +162,9 @@ export default function BabyZodiac({ locale: rawLocale = 'en' }: Props) {
             {reading.sun.kind === 'single' ? (
               <>
                 <p>
-                  {t(locale, 'babySunSingle')} <strong>{reading.sun.sign.name}</strong>.
+                  {t(locale, 'babySunSingle')} <strong>{signName(reading.sun.sign, locale)}</strong>.
                   {reading.sun.nearEdge && (
-                    <> {t(locale, 'babySunNearEdge')} {reading.sun.nearEdge.name} {t(locale, 'babySunNearEdgeTail')}</>
+                    <> {t(locale, 'babySunNearEdge')} {signName(reading.sun.nearEdge, locale)} {t(locale, 'babySunNearEdgeTail')}</>
                   )}
                 </p>
                 <span class="mono baby-receipt">
@@ -172,11 +174,11 @@ export default function BabyZodiac({ locale: rawLocale = 'en' }: Props) {
             ) : (
               <>
                 <p>
-                  {t(locale, 'babySunSplitA')} <strong>{reading.sun.a.name}</strong> {t(locale, 'babySunSplitOr')}{' '}
-                  <strong>{reading.sun.b.name}</strong> {t(locale, 'babySunSplitTail')}
+                  {t(locale, 'babySunSplitA')} <strong>{signName(reading.sun.a, locale)}</strong> {t(locale, 'babySunSplitOr')}{' '}
+                  <strong>{signName(reading.sun.b, locale)}</strong> {t(locale, 'babySunSplitTail')}
                 </p>
                 <span class="mono baby-receipt">
-                  {fmtDay(reading.dueISO, locale)} · {reading.sun.a.name} → {reading.sun.b.name}
+                  {fmtDay(reading.dueISO, locale)} · {signName(reading.sun.a, locale)} → {signName(reading.sun.b, locale)}
                 </span>
               </>
             )}
@@ -192,7 +194,7 @@ export default function BabyZodiac({ locale: rawLocale = 'en' }: Props) {
                     {fmtDay(s.fromISO, locale)}
                     {s.toISO !== s.fromISO && <> – {fmtDay(s.toISO, locale)}</>}
                   </span>
-                  <span>{t(locale, 'moonIn')} {s.sign.name}</span>
+                  <span>{t(locale, 'moonIn')} {signName(s.sign, locale)}</span>
                 </li>
               ))}
             </ul>
@@ -202,7 +204,7 @@ export default function BabyZodiac({ locale: rawLocale = 'en' }: Props) {
             <div class="baby-block">
               <h3>{t(locale, 'babyRetroHead')}</h3>
               <p>
-                {reading.retro.join(' · ')} — {t(locale, 'babyRetroBody')}
+                {reading.retro.map((planet) => planetLabel(locale, planet)).join(' · ')} — {t(locale, 'babyRetroBody')}
               </p>
             </div>
           )}
