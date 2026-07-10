@@ -6,6 +6,7 @@ import SkyTicker from '../islands/SkyTicker';
 import TodayBySign from '../islands/TodayBySign';
 import DemoChart from '../islands/DemoChart';
 import WelcomeBack from '../islands/WelcomeBack';
+import ChartCalculator from '../islands/ChartCalculator';
 import glassMaps from '../data/glass-maps.json';
 import { SIGNS } from '../lib/signs';
 import '../styles/today.css';
@@ -326,6 +327,9 @@ const tools = [
       <a class="btn btn--primary" href="/birth-chart/"><span>Get your free birth chart</span><span class="orb">↗</span></a>
     </div>
   </section>
+
+  <!-- Deliberately hydrated only to prove the C3 page budget turns CI red. -->
+  <div hidden><ChartCalculator mode="full" client:load /></div>
 </Base>
 
 <style>
