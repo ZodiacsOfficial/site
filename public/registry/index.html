@@ -554,9 +554,9 @@
   @media (prefers-reduced-motion: reduce) { .wnav-menu.is-open .wnav-menu__link, .wnav-menu.is-open .wnav-menu__sign, .wnav-menu.is-open .wnav-menu__label { animation: none; } .wnav-signs { transition: none; } .wnav__mark:hover .wnav__brand { animation: none; } }
 
     /* ── Liquid glass — SVG filter defs container. On Chromium the hero
-       CTAs refract the footage behind them (.zdx-lens is set by the inline
-       <head> script); every other browser keeps the frosted floor. The
-       unified nav pill uses its own plain blur floor, not the SVG lens. ── */
+       CTAs AND the nav pill refract the footage behind them (.zdx-lens is
+       set by the inline <head> script); every other browser keeps the
+       frosted blur floor. ── */
     .glass-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
     html.zdx-lens .cine__cta .btn {
       background: rgba(10, 12, 17, 0.34);
@@ -570,10 +570,31 @@
     }
     html.zdx-lens .cine__cta .btn:hover { background: rgba(10, 12, 17, 0.50); }
     html.zdx-lens .cine__cta .btn--primary { border-color: rgba(238,241,247,0.34); }
-    /* Reduced transparency: the CTA capsule falls back to an opaque fill. */
+    /* The unified nav pill refracts the footage on Chromium too — parity with
+       the main site's nav (SiteNav.astro: html.zdx-lens .nav-wrap .nav). The
+       #zdx-lens-nav defs + the .zdx-lens gate live on this hub page only, so
+       the refraction applies here (over the film); the other wing pages have
+       no footage behind the nav and keep the plain blur floor. */
+    html.zdx-lens .wnav {
+      background: rgba(10, 12, 17, 0.56);
+      backdrop-filter: url(#zdx-lens-nav);
+      -webkit-backdrop-filter: url(#zdx-lens-nav);
+      box-shadow:
+        inset 0 1px 0 rgba(238,241,247,0.10),
+        inset 0 -1px 0 rgba(238,241,247,0.04),
+        0 12px 32px -14px rgba(0,0,0,0.7);
+    }
+    /* Reduced transparency: the CTA capsule + nav pill fall back to opaque
+       (the combined selector outweighs the lens rule above). */
     @media (prefers-reduced-transparency: reduce) {
       .cine__cta .btn {
         background: rgba(10, 12, 17, 0.86);
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+      }
+      html.zdx-lens .wnav,
+      .wnav {
+        background: rgba(10, 12, 17, 0.92);
         backdrop-filter: none;
         -webkit-backdrop-filter: none;
       }
