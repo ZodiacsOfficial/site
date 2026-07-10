@@ -174,9 +174,12 @@ export function wingNavCss() {
   .wnav-menu > nav { max-width: 520px; margin: 0 auto; }
   .wnav-menu__group + .wnav-menu__group { margin-top: 34px; }
   .wnav-menu__label { display: block; margin-bottom: 14px; font-family: var(--mono, 'JetBrains Mono', monospace); font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--ink-mute, #8A93A6); }
-  .wnav-menu__link { display: block; padding: 10px 0; font-family: 'Instrument Sans', system-ui, sans-serif; font-size: 28px; font-weight: 600; letter-spacing: -0.02em; text-decoration: none; color: var(--ink, #EEF1F7); }
-  .wnav-menu__signs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px 10px; }
-  .wnav-menu__sign { display: flex; flex-direction: column; align-items: center; gap: 8px; text-decoration: none; font-family: 'Instrument Sans', system-ui, sans-serif; font-size: 12.5px; font-weight: 500; color: var(--ink-2, #C6CCDA); }
+  .wnav-menu__link { display: block; padding: 13px 0; font-family: var(--serif, 'EB Garamond', Georgia, serif); font-size: clamp(24px, 7vw, 32px); font-weight: 400; letter-spacing: 0.01em; line-height: 1.05; text-decoration: none; color: var(--ink, #EEF1F7); border-bottom: 1px solid var(--hair, rgba(198,204,218,0.10)); }
+  .wnav-menu__link:last-child { border-bottom: 0; }
+  .wnav-menu__signs { display: flex; flex-direction: column; }
+  .wnav-menu__sign { display: flex; flex-direction: row; align-items: center; gap: 13px; padding: 10px 0; text-decoration: none; font-family: var(--serif, 'EB Garamond', Georgia, serif); font-size: clamp(20px, 5.5vw, 26px); font-weight: 400; color: var(--ink, #EEF1F7); border-bottom: 1px solid var(--hair, rgba(198,204,218,0.10)); }
+  .wnav-menu__sign:last-child { border-bottom: 0; }
+  .wnav-menu__sign .wnav-disc { width: 30px; height: 30px; }
   .wnav-menu.is-open .wnav-menu__link, .wnav-menu.is-open .wnav-menu__sign, .wnav-menu.is-open .wnav-menu__label { animation: wnav-in 640ms var(--ease, cubic-bezier(0.4,0,0.2,1)) both; animation-delay: calc(40ms * var(--i, 0)); }
   @keyframes wnav-in { from { opacity: 0; transform: translateY(14px); filter: blur(4px); } to { opacity: 1; transform: none; filter: none; } }
   @keyframes wnav-turn { to { transform: rotate(360deg); } }

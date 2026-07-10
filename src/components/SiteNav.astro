@@ -70,7 +70,7 @@ const path = Astro.url.pathname;
       <div class="mobile-menu__signs">
         {SIGNS.map((s, i) => (
           <a class="mobile-menu__sign" style={`--i:${4 + i}`} href={localizePath(locale, `/${s.slug}/`)} aria-label={signName(s, locale)}>
-            <SignIcon sign={s.slug} size={40} />
+            <SignIcon sign={s.slug} size={30} />
             <span>{signName(s, locale)}</span>
           </a>
         ))}
@@ -262,28 +262,35 @@ const path = Astro.url.pathname;
   }
   .mobile-menu__link {
     display: block;
-    padding: 10px 0;
-    font-size: 28px;
-    font-weight: 600;
-    letter-spacing: -0.02em;
+    padding: 13px 0;
+    font-family: var(--font-serif);
+    font-size: clamp(24px, 7vw, 32px);
+    font-weight: 400;
+    letter-spacing: 0.01em;
+    line-height: 1.05;
     text-decoration: none;
     color: var(--text);
+    border-bottom: 1px solid var(--hair);
   }
+  .mobile-menu__link:last-child { border-bottom: 0; }
   .mobile-menu__signs {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 14px 10px;
+    display: flex;
+    flex-direction: column;
   }
   .mobile-menu__sign {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
-    gap: 8px;
+    gap: 13px;
+    padding: 10px 0;
     text-decoration: none;
-    font-size: 12.5px;
-    font-weight: 500;
-    color: var(--text-2);
+    font-family: var(--font-serif);
+    font-size: clamp(20px, 5.5vw, 26px);
+    font-weight: 400;
+    color: var(--text);
+    border-bottom: 1px solid var(--hair);
   }
+  .mobile-menu__sign:last-child { border-bottom: 0; }
   .mobile-menu.is-open .mobile-menu__link,
   .mobile-menu.is-open .mobile-menu__sign,
   .mobile-menu.is-open .mobile-menu__label {
