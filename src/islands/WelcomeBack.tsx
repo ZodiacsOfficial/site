@@ -4,30 +4,17 @@
  * visitors get nothing at all: the section only exists after mount,
  * and only when a profile does.
  */
-import { useEffect, useState } from 'preact/hooks';
 import SignChip from './SignChip';
-import { loadProfile } from '../lib/profile/store';
+import { useProfile } from '../lib/hooks/useProfile';
 import { encodeChartLink } from '../lib/share';
-import type { SavedChart } from '../lib/profile/schema';
 import { localizePath, normalizeLocale, t, type Locale } from '../lib/i18n';
 
 export default function WelcomeBack({ locale: rawLocale = 'en' }: { locale?: Locale }) {
   const locale = normalizeLocale(rawLocale);
-  const [chart, setChart] = useState<SavedChart | null>(null);
-  const [count, setCount] = useState(0);
-
-  useEffect(() => {
-    const pick = () => {
-      const p = loadProfile();
-      const latest = [...p.charts]
-        .sort((a, b) => b.updatedAt.localeCompare(a.updatedAt))[0] ?? null;
-      setChart(latest);
-      setCount(p.charts.length);
-    };
-    pick();
-    window.addEventListener('zodiacs:profile', pick);
-    return () => window.removeEventListener('zodiacs:profile', pick);
-  }, []);
+  const { profile } = useProfile();
+  const chart = [...profile.charts]
+    .sort((a, b) => b.updatedAt.localeCompare(a.updatedAt))[0] ?? null;
+  const count = profile.charts.length;
 
   if (!chart) return null;
 

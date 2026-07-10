@@ -5,13 +5,13 @@
  * the engine the same way the chart calculator does.
  */
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
-import PlaceSearch from './PlaceSearch';
+import { BirthFields } from './BirthFields';
+import { CopyLinkButton, type CopyLinkState } from './CopyLinkButton';
 import SignChip from './SignChip';
 import PlanetGlyph from '../components/PlanetGlyph';
 import AspectGlyph from '../components/AspectGlyph';
-import { loadProfile } from '../lib/profile/store';
-import { EMPTY_PROFILE } from '../lib/profile/schema';
-import type { Profile, SavedChart } from '../lib/profile/schema';
+import { resolveSavedChart } from '../lib/profile/resolve';
+import type { SavedChart } from '../lib/profile/schema';
 import { summarizePair } from '../lib/engine/synastry';
 import type { MinimalBody, PairSummary } from '../lib/engine/synastry';
 import { synastryLine, pairSlug } from '../lib/compat';
@@ -19,15 +19,12 @@ import { elementLabel, signForLongitude, signName } from '../lib/signs';
 import { resolveLocalToUtc } from '../lib/time/localToUtc';
 import { decodeChartLink, encodeChartLink } from '../lib/share';
 import type { ShareChartInput } from '../lib/share';
-import { ENGINE_VERSION } from '../lib/engine/types';
 import type { City } from '../lib/geo/search';
 import { localizePath, normalizeLocale, t, tf, type Locale } from '../lib/i18n';
 import { intlLocale } from '../lib/i18n/dates';
 import { aspectLabel, planetLabel } from '../lib/i18n/astrology';
-
-
-let enginePromise: Promise<typeof import('../lib/engine/full')> | null = null;
-const loadEngine = () => (enginePromise ??= import('../lib/engine/full'));
+import { useEngine, type EngineLoader } from '../lib/hooks/useEngine';
+import { useProfile } from '../lib/hooks/useProfile';
 
 interface SlotState {
   source: 'saved' | 'form' | 'link';
@@ -56,43 +53,17 @@ const emptySlot = (): SlotState => ({
 /** Short handle for sentences: chart names like "Cancer Sun · 1990-02-01" trim to "Cancer Sun". */
 const handleOf = (name: string) => name.split('·')[0].trim() || name;
 
-async function resolveSaved(chart: SavedChart): Promise<Person> {
-  const stored: Person = {
+async function resolveSaved(chart: SavedChart, loadEngine: EngineLoader): Promise<Person> {
+  const resolved = await resolveSavedChart(chart, loadEngine);
+  return {
     label: handleOf(chart.name),
-    bodies: chart.summary.bodies.map(({ body, lon }) => ({ body, lon })),
-    asc: chart.summary.angles?.asc ?? null,
-    timeKnown: chart.birth.timeKnown,
+    bodies: resolved.bodies,
+    asc: resolved.asc,
+    timeKnown: resolved.timeKnown,
   };
-  // Stale engine? Recompute from birth input when we can; the stored
-  // summary stays the honest fallback.
-  if (chart.summary.engineVersion === ENGINE_VERSION || !chart.birth.place) return stored;
-  try {
-    const engine = await loadEngine();
-    const resolved = resolveLocalToUtc(
-      chart.birth.date,
-      chart.birth.timeKnown && chart.birth.time ? chart.birth.time : '12:00',
-      chart.birth.place.tz,
-    );
-    const result = engine.computeChart({
-      utc: resolved.utc,
-      latitude: chart.birth.place.lat,
-      longitude: chart.birth.place.lon,
-      houseSystem: chart.summary.houseSystem,
-      timeKnown: chart.birth.timeKnown,
-      flags: resolved.flags,
-    });
-    return {
-      label: stored.label,
-      bodies: result.bodies.map(({ body, lon }) => ({ body, lon })),
-      asc: result.angles?.asc ?? null,
-      timeKnown: chart.birth.timeKnown,
-    };
-  } catch {
-    return stored;
-  }
 }
 
-async function resolveLink(link: { input: ShareChartInput; label: string }): Promise<Person> {
+async function resolveLink(link: { input: ShareChartInput; label: string }, loadEngine: EngineLoader): Promise<Person> {
   const engine = await loadEngine();
   const { input } = link;
   const resolved = resolveLocalToUtc(
@@ -116,7 +87,7 @@ async function resolveLink(link: { input: ShareChartInput; label: string }): Pro
   };
 }
 
-async function resolveForm(slot: SlotState, fallbackLabel: string): Promise<Person> {
+async function resolveForm(slot: SlotState, fallbackLabel: string, loadEngine: EngineLoader): Promise<Person> {
   const engine = await loadEngine();
   const timeKnown = slot.timeKnown && slot.time !== '';
   const resolved = resolveLocalToUtc(slot.date, timeKnown ? slot.time : '12:00', slot.city!.tz);
@@ -137,7 +108,7 @@ async function resolveForm(slot: SlotState, fallbackLabel: string): Promise<Pers
 }
 
 function SlotForm({
-  slot, setSlot, charts, idPrefix, fallbackLabel, locale,
+  slot, setSlot, charts, idPrefix, fallbackLabel, locale, loadEngine,
 }: {
   slot: SlotState;
   setSlot: (updater: (s: SlotState) => SlotState) => void;
@@ -145,6 +116,7 @@ function SlotForm({
   idPrefix: string;
   fallbackLabel: string;
   locale: Locale;
+  loadEngine: EngineLoader;
 }) {
   if (slot.source === 'link' && slot.link) {
     return (
@@ -186,7 +158,7 @@ function SlotForm({
             }}
           >
             <option value="">{t(locale, 'enterBirthDetails')}</option>
-            {charts.map((c) => <option value={c.id}>{c.name}</option>)}
+            {charts.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
           </select>
         </div>
       )}
@@ -201,36 +173,21 @@ function SlotForm({
               onInput={(e) => { const v = (e.target as HTMLInputElement).value; setSlot((s) => ({ ...s, name: v })); }}
             />
           </div>
-          <div class="field">
-            <label class="field__label" for={`${idPrefix}-date`}>{t(locale, 'birthDate')}</label>
-            <input
-              id={`${idPrefix}-date`} class="field__input" type="date" required
-              min="1800-01-01" max="2199-12-31" value={slot.date}
-              onInput={(e) => { const v = (e.target as HTMLInputElement).value; setSlot((s) => ({ ...s, date: v })); }}
-            />
-          </div>
-          <div class="field">
-            <div class="field__labelrow">
-              <label class="field__label" for={`${idPrefix}-time`}>{t(locale, 'birthTime')}</label>
-              <label class="field__toggle">
-                <input
-                  type="checkbox" checked={!slot.timeKnown}
-                  onChange={(e) => { const v = !(e.target as HTMLInputElement).checked; setSlot((s) => ({ ...s, timeKnown: v })); }}
-                />
-                {t(locale, 'noBirthTime')}
-              </label>
-            </div>
-            <input
-              id={`${idPrefix}-time`} class="field__input" type="time"
-              disabled={!slot.timeKnown} value={slot.time}
-              onFocus={() => loadEngine()}
-              onInput={(e) => { const v = (e.target as HTMLInputElement).value; setSlot((s) => ({ ...s, time: v })); }}
-            />
-          </div>
-          <div class="field">
-            <label class="field__label" for={`${idPrefix}-place`}>{t(locale, 'birthplace')}</label>
-            <PlaceSearch id={`${idPrefix}-place`} selected={slot.city} onSelect={(c) => setSlot((s) => ({ ...s, city: c }))} locale={locale} />
-          </div>
+          <BirthFields
+            locale={locale}
+            dateId={`${idPrefix}-date`}
+            timeId={`${idPrefix}-time`}
+            placeId={`${idPrefix}-place`}
+            date={slot.date}
+            time={slot.time}
+            timeKnown={slot.timeKnown}
+            city={slot.city}
+            onDateChange={(date) => setSlot((s) => ({ ...s, date }))}
+            onTimeChange={(time) => setSlot((s) => ({ ...s, time }))}
+            onTimeKnownChange={(timeKnown) => setSlot((s) => ({ ...s, timeKnown }))}
+            onCityChange={(city) => setSlot((s) => ({ ...s, city }))}
+            onWarm={loadEngine}
+          />
         </>
       )}
     </div>
@@ -270,9 +227,8 @@ function BalanceBars({ person, balance, locale }: { person: string; balance: Rec
 
 export default function SynastryCalculator({ locale: rawLocale = 'en' }: { locale?: Locale }) {
   const locale = normalizeLocale(rawLocale);
-  // Starts as the empty profile so the form server-renders; the mount
-  // effect swaps in the device's real profile (dropdowns appear then).
-  const [profile, setProfile] = useState<Profile>(EMPTY_PROFILE);
+  const loadEngine = useEngine();
+  const { profile, ready: profileReady } = useProfile();
   const [slotA, setSlotA] = useState<SlotState>(emptySlot());
   const [slotB, setSlotB] = useState<SlotState>(emptySlot());
   const [result, setResult] = useState<{ a: Person; b: Person; summary: PairSummary } | null>(null);
@@ -280,24 +236,25 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
   const [error, setError] = useState('');
   const [autoRan, setAutoRan] = useState(false);
   const [invite, setInvite] = useState<ShareChartInput | null>(null);
-  const [inviteState, setInviteState] = useState<'idle' | 'copied' | 'manual'>('idle');
+  const [inviteState, setInviteState] = useState<CopyLinkState>('idle');
   const resultHeadingRef = useRef<HTMLHeadingElement>(null);
   const errorRef = useRef<HTMLParagraphElement>(null);
   const focusAfterComputeRef = useRef(false);
+  const profileLinksReadRef = useRef(false);
 
   useEffect(() => {
-    const p = loadProfile();
-    setProfile(p);
+    if (!profileReady || profileLinksReadRef.current) return;
+    profileLinksReadRef.current = true;
     // ?a=&b= deep link: preselect saved charts by their device-local ids.
     const params = new URLSearchParams(window.location.search);
     const idA = params.get('a');
     const idB = params.get('b');
     let linked = 0;
-    if (idA && p.charts.some((c) => c.id === idA)) {
+    if (idA && profile.charts.some((c) => c.id === idA)) {
       setSlotA((s) => ({ ...s, source: 'saved', savedId: idA }));
       linked += 1;
     }
-    if (idB && p.charts.some((c) => c.id === idB)) {
+    if (idB && profile.charts.some((c) => c.id === idB)) {
       setSlotB((s) => ({ ...s, source: 'saved', savedId: idB }));
       linked += 1;
     }
@@ -317,10 +274,7 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
         history.replaceState(null, '', window.location.pathname + window.location.search);
       }
     }
-    const sync = () => setProfile(loadProfile());
-    window.addEventListener('zodiacs:profile', sync);
-    return () => window.removeEventListener('zodiacs:profile', sync);
-  }, []);
+  }, [profileReady, profile, locale]);
 
   const charts = profile.charts;
 
@@ -372,16 +326,6 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
   const inviteUrl = () =>
     `${window.location.origin}${localizePath(locale, '/compatibility/')}#a=${encodeChartLink(invite!)}`;
 
-  async function onInvite() {
-    if (!invite) return;
-    try {
-      await navigator.clipboard.writeText(inviteUrl());
-      setInviteState('copied');
-    } catch {
-      setInviteState('manual');
-    }
-  }
-
   async function compare(e?: Event) {
     e?.preventDefault();
     if (!slotReady(slotA) || !slotReady(slotB) || sameSaved) return;
@@ -390,9 +334,9 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
     setError('');
     try {
       const resolve = (slot: SlotState, fallback: string) =>
-        slot.source === 'saved' ? resolveSaved(charts.find((c) => c.id === slot.savedId)!)
-          : slot.source === 'link' ? resolveLink(slot.link!)
-          : resolveForm(slot, fallback);
+        slot.source === 'saved' ? resolveSaved(charts.find((c) => c.id === slot.savedId)!, loadEngine)
+          : slot.source === 'link' ? resolveLink(slot.link!, loadEngine)
+          : resolveForm(slot, fallback, loadEngine);
       const [a, b] = await Promise.all([resolve(slotA, t(locale, 'personA')), resolve(slotB, t(locale, 'personB'))]);
       const summary = summarizePair(a.bodies, b.bodies, 8);
       setResult({ a, b, summary });
@@ -408,7 +352,7 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
 
   // Deep-linked pairs run themselves — the saved path is pure math.
   useEffect(() => {
-    if (autoRan && profile && slotReady(slotA) && slotReady(slotB) && !result && !busy) {
+    if (autoRan && slotReady(slotA) && slotReady(slotB) && !result && !busy) {
       compare();
     }
   }, [autoRan, profile, slotA, slotB]);
@@ -441,8 +385,8 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
       <form class="calc__form shell" onSubmit={compare} aria-busy={busy}>
         <div class="core calc__core">
           <div class="syn__slots">
-            <SlotForm slot={slotA} setSlot={(u) => setSlotA(u)} charts={charts} idPrefix="syn-a" fallbackLabel={t(locale, 'personA')} locale={locale} />
-            <SlotForm slot={slotB} setSlot={(u) => setSlotB(u)} charts={charts} idPrefix="syn-b" fallbackLabel={t(locale, 'personB')} locale={locale} />
+            <SlotForm slot={slotA} setSlot={(u) => setSlotA(u)} charts={charts} idPrefix="syn-a" fallbackLabel={t(locale, 'personA')} locale={locale} loadEngine={loadEngine} />
+            <SlotForm slot={slotB} setSlot={(u) => setSlotB(u)} charts={charts} idPrefix="syn-b" fallbackLabel={t(locale, 'personB')} locale={locale} loadEngine={loadEngine} />
           </div>
 
           <button class="btn btn--primary calc__submit" type="submit" disabled={!canCompare}>
@@ -515,25 +459,23 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
           {/* Invite: A's side rides in the link; B fills their own */}
           {invite && (
             <div class="calc__share">
-              <div class="calc__actions">
-                <button class="btn btn--ghost" type="button" onClick={onInvite} data-invite-link>
-                  <span>{inviteState === 'copied' ? t(locale, 'linkCopied') : tf(locale, 'inviteWith', { name: result.a.label })}</span>
-                  <span class="orb">{inviteState === 'copied' ? '✓' : '⧉'}</span>
-                </button>
-              </div>
-              {inviteState === 'manual' && (
-                <input
-                  class="field__input calc__share-url" type="text" readOnly value={inviteUrl()}
-                  aria-label={t(locale, 'inviteLink')}
-                  onFocus={(e) => (e.target as HTMLInputElement).select()}
-                />
-              )}
-              <p class="calc__share-note">
-                {tf(locale, 'inviteNamedNote', { name: result.a.label })}
-              </p>
-              {inviteState === 'copied' && (
-                <p class="sr-only" role="status">{t(locale, 'inviteCopied')}</p>
-              )}
+              <CopyLinkButton
+                url={inviteUrl()}
+                state={inviteState}
+                onStateChange={setInviteState}
+                idleLabel={tf(locale, 'inviteWith', { name: result.a.label })}
+                copiedLabel={t(locale, 'linkCopied')}
+                ariaLabel={t(locale, 'inviteLink')}
+                buttonClass="btn btn--ghost"
+                dataHook="invite"
+              >
+                <p class="calc__share-note">
+                  {tf(locale, 'inviteNamedNote', { name: result.a.label })}
+                </p>
+                {inviteState === 'copied' && (
+                  <p class="sr-only" role="status">{t(locale, 'inviteCopied')}</p>
+                )}
+              </CopyLinkButton>
             </div>
           )}
         </div>

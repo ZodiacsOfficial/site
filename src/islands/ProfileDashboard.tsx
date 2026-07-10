@@ -7,8 +7,7 @@
  * chart id + engine version, refreshed every two weeks.
  */
 import { useEffect, useMemo, useState } from 'preact/hooks';
-import { loadProfile } from '../lib/profile/store';
-import type { SavedChart } from '../lib/profile/schema';
+import { useProfile } from '../lib/hooks/useProfile';
 import { findInterAspects } from '../lib/engine/synastry';
 import { TRANSIT_ORB, transitLine } from '../lib/transits';
 import PlanetGlyph from '../components/PlanetGlyph';
@@ -56,20 +55,14 @@ const readYearCache = (): YearCacheFile => {
 
 export default function ProfileDashboard({ locale: rawLocale = 'en' }: Props) {
   const locale = normalizeLocale(rawLocale);
-  const [charts, setCharts] = useState<SavedChart[]>([]);
+  const { profile } = useProfile();
+  const charts = useMemo(
+    () => [...profile.charts].sort((a, b) => b.updatedAt.localeCompare(a.updatedAt)),
+    [profile.charts],
+  );
   const [sel, setSel] = useState<string | null>(null);
   const [year, setYear] = useState<YearScanCache | null>(null);
   const [yearBusy, setYearBusy] = useState(false);
-
-  useEffect(() => {
-    const pick = () => {
-      const p = loadProfile();
-      setCharts([...p.charts].sort((a, b) => b.updatedAt.localeCompare(a.updatedAt)));
-    };
-    pick();
-    window.addEventListener('zodiacs:profile', pick);
-    return () => window.removeEventListener('zodiacs:profile', pick);
-  }, []);
 
   const chart = charts.find((c) => c.id === sel) ?? charts[0] ?? null;
 

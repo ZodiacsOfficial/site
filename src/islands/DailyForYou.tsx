@@ -5,13 +5,11 @@
  * from the synastry math. The ephemeris never loads; visitors without a
  * saved chart see nothing at all.
  */
-import { useEffect, useState } from 'preact/hooks';
-import { loadProfile } from '../lib/profile/store';
-import type { SavedChart } from '../lib/profile/schema';
+import { useProfile } from '../lib/hooks/useProfile';
 import { findInterAspects } from '../lib/engine/synastry';
 import { TRANSIT_ORB, transitLine } from '../lib/transits';
 import PlanetGlyph from '../components/PlanetGlyph';
-import { signBySlug } from '../lib/signs';
+import { signBySlug, signForLongitude } from '../lib/signs';
 import { localizePath, normalizeLocale, t, type Locale } from '../lib/i18n';
 import daily from '../data/daily.json';
 
@@ -25,19 +23,16 @@ interface Props { sign?: string; locale?: Locale }
 /** The transit-worthy movers; the natal side keeps every stored body. */
 const MOVERS = new Set(['Sun', 'Mercury', 'Venus', 'Mars', 'Jupiter', 'Saturn']);
 
-export default function DailyForYou({ locale: rawLocale = 'en' }: Props) {
+export default function DailyForYou({ sign, locale: rawLocale = 'en' }: Props) {
   const locale = normalizeLocale(rawLocale);
-  const [chart, setChart] = useState<SavedChart | null>(null);
-
-  useEffect(() => {
-    const pick = () => {
-      const p = loadProfile();
-      setChart([...p.charts].sort((a, b) => b.updatedAt.localeCompare(a.updatedAt))[0] ?? null);
-    };
-    pick();
-    window.addEventListener('zodiacs:profile', pick);
-    return () => window.removeEventListener('zodiacs:profile', pick);
-  }, []);
+  const { profile } = useProfile();
+  const chart = [...profile.charts]
+    .sort((a, b) => b.updatedAt.localeCompare(a.updatedAt))
+    .find((candidate) => {
+      if (!sign) return true;
+      const sun = candidate.summary.bodies.find((body) => body.body === 'Sun');
+      return sun != null && signForLongitude(sun.lon).slug === sign;
+    }) ?? null;
 
   if (!chart) return null;
 

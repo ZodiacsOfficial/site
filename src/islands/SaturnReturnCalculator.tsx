@@ -152,7 +152,7 @@ export default function SaturnReturnCalculator({ locale: rawLocale = 'en' }: { l
             {result.seasons.map((season, i) => {
               const status = seasonStatus(season, now);
               return (
-                <div class={`sr__season shell ${status === 'active' ? 'tinted' : ''}`} style={status === 'active' ? `--sign:${natalSign.hue}` : ''}>
+                <div key={season.first.toISOString()} class={`sr__season shell ${status === 'active' ? 'tinted' : ''}`} style={status === 'active' ? `--sign:${natalSign.hue}` : ''}>
                   <div class={`core sr__season-core ${status === 'active' ? 'tinted' : ''}`}>
                     <div class="sr__season-head">
                       <strong>{tf(locale, 'saturnReturnHeading', { ordinal: ordinal[i] ?? String(i + 1) })}</strong>
@@ -165,7 +165,7 @@ export default function SaturnReturnCalculator({ locale: rawLocale = 'en' }: { l
                     </p>
                     <ul class="sr__crossings">
                       {season.crossings.map((c) => (
-                        <li class="mono">
+                        <li class="mono" key={`${c.at.toISOString()}-${c.retrograde ? 'rx' : 'direct'}`}>
                           {fmt(c.at)}{c.retrograde ? ` · ${t(locale, 'retrogradePass')}` : ''}
                         </li>
                       ))}

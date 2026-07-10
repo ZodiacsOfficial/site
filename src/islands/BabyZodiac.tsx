@@ -12,12 +12,10 @@ import { birthdaySlug } from '../lib/birthdays';
 import { localizePath, normalizeLocale, t, type Locale } from '../lib/i18n';
 import { intlLocale } from '../lib/i18n/dates';
 import { planetLabel } from '../lib/i18n/astrology';
+import { useEngine } from '../lib/hooks/useEngine';
 import sky from '../data/sky.json';
 
 interface Props { locale?: Locale }
-
-let enginePromise: Promise<typeof import('../lib/engine/full')> | null = null;
-const loadEngine = () => (enginePromise ??= import('../lib/engine/full'));
 
 interface MoonSpan { fromISO: string; toISO: string; sign: Sign }
 
@@ -39,6 +37,7 @@ function fmtDay(iso: string, locale: Locale): string {
 
 export default function BabyZodiac({ locale: rawLocale = 'en' }: Props) {
   const locale = normalizeLocale(rawLocale);
+  const loadEngine = useEngine();
   const [due, setDue] = useState('');
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);

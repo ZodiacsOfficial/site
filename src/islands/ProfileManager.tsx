@@ -4,9 +4,9 @@
  * the local-first sync model honestly.
  */
 import { useEffect, useState } from 'preact/hooks';
-import { EMPTY_PROFILE } from '../lib/profile/schema';
-import { loadProfile, deleteChart, renameChart } from '../lib/profile/store';
-import type { Profile, SavedChart } from '../lib/profile/schema';
+import { deleteChart, renameChart } from '../lib/profile/store';
+import type { SavedChart } from '../lib/profile/schema';
+import { useProfile } from '../lib/hooks/useProfile';
 import { signForLongitude, formatLongitude, signName } from '../lib/signs';
 import { encodeChartLink } from '../lib/share';
 import type { Session } from '@supabase/supabase-js';
@@ -55,7 +55,7 @@ function ChipRow({ chart, locale }: { chart: SavedChart; locale: Locale }) {
 
 export default function ProfileManager({ locale: rawLocale = 'en' }: { locale?: Locale }) {
   const locale = normalizeLocale(rawLocale);
-  const [profile, setProfile] = useState<Profile>(EMPTY_PROFILE);
+  const { profile } = useProfile();
   const [editing, setEditing] = useState<string | null>(null);
   const [draft, setDraft] = useState('');
   const [syncApi, setSyncApi] = useState<typeof Sync | null>(null);
@@ -65,13 +65,6 @@ export default function ProfileManager({ locale: rawLocale = 'en' }: { locale?: 
   const [syncMessage, setSyncMessage] = useState('');
   const [digestOptIn, setDigestOptInState] = useState(false);
   const [digestBusy, setDigestBusy] = useState(false);
-
-  useEffect(() => {
-    setProfile(loadProfile());
-    const sync = () => setProfile(loadProfile());
-    window.addEventListener('zodiacs:profile', sync);
-    return () => window.removeEventListener('zodiacs:profile', sync);
-  }, []);
 
   useEffect(() => {
     let unsubscribe = () => {};
@@ -85,7 +78,6 @@ export default function ProfileManager({ locale: rawLocale = 'en' }: { locale?: 
         if (current) {
           setSyncState('syncing');
           await api.syncNow();
-          setProfile(loadProfile());
           setDigestOptInState(await api.getDigestOptIn());
           setSyncState('synced');
         }
@@ -97,7 +89,6 @@ export default function ProfileManager({ locale: rawLocale = 'en' }: { locale?: 
           }
           setSyncState('syncing');
           await api.syncNow();
-          setProfile(loadProfile());
           setDigestOptInState(await api.getDigestOptIn());
           setSyncState('synced');
         });
@@ -126,7 +117,6 @@ export default function ProfileManager({ locale: rawLocale = 'en' }: { locale?: 
     setSyncState('syncing');
     try {
       await syncApi.syncNow();
-      setProfile(loadProfile());
       setSyncState('synced');
     } catch (err) {
       setSyncState('error');
