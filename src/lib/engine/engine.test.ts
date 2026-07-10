@@ -28,6 +28,87 @@ const angleDiff = (a: number, b: number) => {
   return d > 180 ? 360 - d : d;
 };
 
+/**
+ * Independent angle/house vectors generated 2026-07-10 with Astrodienst's
+ * Swiss Ephemeris 2.10.03 through the unmodified pyswisseph 2.10.3.2 wrapper.
+ * For each UTC instant below the reference call was:
+ *
+ *   jd = swe.julday(year, month, day, decimalUtcHour, swe.GREG_CAL)
+ *   cusps, ascmc = swe.houses_ex(jd, latitude, eastPositiveLongitude, b'P', 0)
+ *
+ * `b'P'` selects Placidus and flag 0 selects the tropical ecliptic of date;
+ * `ascmc[0]` is ASC and `ascmc[1]` is MC. Constants are direct returned
+ * degrees rounded to 9 decimal places, not output from this project's engine.
+ * API contract: https://www.astro.com/swisseph/swephprg.htm (section 13).
+ */
+const SWISS_HOUSE_VECTORS = [
+  {
+    name: 'NYC 1990',
+    utc: '1990-06-15T12:30:00Z',
+    latitude: 40.7128,
+    longitude: -74.0060,
+    asc: 122.577748878,
+    mc: 18.457835773,
+    cusps: [
+      122.577748878, 142.874013293, 167.446689884, 198.457835773,
+      235.135794644, 271.491695053, 302.577748878, 322.874013293,
+      347.446689884, 18.457835773, 55.135794644, 91.491695053,
+    ],
+  },
+  {
+    name: 'Tokyo 1985',
+    utc: '1985-03-21T04:15:00Z',
+    latitude: 35.6762,
+    longitude: 139.6503,
+    asc: 124.189836381,
+    mc: 23.798605462,
+    cusps: [
+      124.189836381, 146.057778606, 172.134943407, 203.798605462,
+      239.289316156, 273.753375166, 304.189836381, 326.057778606,
+      352.134943407, 23.798605462, 59.289316156, 93.753375166,
+    ],
+  },
+  {
+    name: 'Sydney 1970',
+    utc: '1970-09-23T18:45:00Z',
+    latitude: -33.8688,
+    longitude: 151.2093,
+    asc: 156.812448064,
+    mc: 75.871452802,
+    cusps: [
+      156.812448064, 199.630917386, 231.308710485, 255.871452802,
+      278.350303110, 303.221743887, 336.812448064, 19.630917386,
+      51.308710485, 75.871452802, 98.350303110, 123.221743887,
+    ],
+  },
+  {
+    name: 'Helsinki 2000',
+    utc: '2000-06-21T22:10:00Z',
+    latitude: 60.1699,
+    longitude: 24.9384,
+    asc: 350.431165002,
+    mc: 268.021716480,
+    cusps: [
+      350.431165002, 54.719871463, 74.620817722, 88.021716480,
+      100.981856435, 118.741378047, 170.431165002, 234.719871463,
+      254.620817722, 268.021716480, 280.981856435, 298.741378047,
+    ],
+  },
+  {
+    name: 'Quito 2010',
+    utc: '2010-12-21T05:55:00Z',
+    latitude: -0.1807,
+    longitude: -78.4678,
+    asc: 190.878598861,
+    mc: 99.177012595,
+    cusps: [
+      190.878598861, 222.464856523, 251.543940183, 279.177012595,
+      307.558439396, 338.328060538, 10.878598861, 42.464856523,
+      71.543940183, 99.177012595, 127.558439396, 158.328060538,
+    ],
+  },
+] as const;
+
 // ── 1. Modern vector: JPL Horizons, 2020-01-01 00:00 UTC ─────────────
 const HORIZONS_2020: Record<string, number> = {
   Sun: 280.0094920,
@@ -168,6 +249,29 @@ describe('houses', () => {
     expect(houseOf(35, cusps)).toBe(2);
     expect(houseOf(359, cusps)).toBe(12);
   });
+});
+
+describe('angles and Placidus houses vs Swiss Ephemeris', () => {
+  for (const reference of SWISS_HOUSE_VECTORS) {
+    it(`${reference.name} stays inside the external accuracy gate`, () => {
+      const chart = computeChart({
+        utc: new Date(reference.utc),
+        latitude: reference.latitude,
+        longitude: reference.longitude,
+        houseSystem: 'placidus',
+        timeKnown: true,
+      });
+
+      expect(chart.angles).not.toBeNull();
+      expect(chart.houses?.system).toBe('placidus');
+      expect(chart.houses?.cusps).toHaveLength(12);
+      expect(angleDiff(chart.angles!.asc, reference.asc)).toBeLessThanOrEqual(0.1);
+      expect(angleDiff(chart.angles!.mc, reference.mc)).toBeLessThanOrEqual(0.1);
+      reference.cusps.forEach((expected, index) => {
+        expect(angleDiff(chart.houses!.cusps[index], expected)).toBeLessThanOrEqual(0.2);
+      });
+    });
+  }
 });
 
 // ── 5. True node sanity vs Meeus mean node ───────────────────────────
