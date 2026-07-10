@@ -25,7 +25,10 @@
     "data:eclipses": "node scripts/build-eclipses.mjs",
     "data:birthdays": "node scripts/build-birthdays.mjs",
     "digest:weekly": "vite-node scripts/send-weekly-digest.ts",
-    "report:bundles": "node scripts/report-bundles.mjs"
+    "report:bundles": "node scripts/report-bundles.mjs",
+    "test:visual": "node tests/visual/visual-regression.mjs",
+    "test:visual:update": "node tests/visual/visual-regression.mjs --update",
+    "test:lighthouse": "node tests/visual/lighthouse.mjs"
   },
   "dependencies": {
     "@astrojs/mdx": "^7.0.2",
@@ -42,7 +45,11 @@
     "@fontsource-variable/jetbrains-mono": "^5.2.0",
     "@fontsource/eb-garamond": "^5.2.7",
     "@types/node": "^22.20.0",
+    "chrome-launcher": "^1.2.1",
+    "lighthouse": "^13.4.0",
+    "pixelmatch": "^7.2.0",
     "playwright-core": "^1.61.1",
+    "pngjs": "^7.0.0",
     "sharp": "^0.34.0",
     "typescript": "^5.8.0",
     "vite-node": "^3.2.4",

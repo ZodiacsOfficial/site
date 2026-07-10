@@ -17,6 +17,7 @@
  *   6. sitemap.xml — unique dated locs resolve, exclude noindex, and cover
  *      every indexable built page's same-origin canonical.
  *   7. Root artifacts the outside world depends on are present.
+ *   8. Source sky, transit, and daily snapshots cover the build date.
  */
 import { readFile, readdir, stat } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
@@ -311,6 +312,72 @@ for (const artifact of [
   'sdk/index.html',
 ]) {
   if (!(await exists(resolve(root, artifact)))) fail(`missing external-contract artifact: ${artifact}`);
+}
+
+// ---- 8. Source-data freshness -------------------------------------------------
+// These snapshots are baked into the static output, so checking dist alone cannot
+// tell us whether a successful build quietly shipped stale sky data.
+const buildNow = new Date();
+const buildDay = new Date(Date.UTC(
+  buildNow.getUTCFullYear(),
+  buildNow.getUTCMonth(),
+  buildNow.getUTCDate(),
+));
+const buildMonth = buildNow.toISOString().slice(0, 7);
+const dataRoot = resolve(repo, 'src/data');
+
+const sky = JSON.parse(await readFile(resolve(dataRoot, 'sky.json'), 'utf8'));
+const skyThrough = new Date(sky.to);
+const minimumSkyHorizon = new Date(buildNow);
+minimumSkyHorizon.setUTCDate(minimumSkyHorizon.getUTCDate() + 90);
+if (Number.isNaN(skyThrough.getTime())) {
+  fail(`sky.json: invalid horizon ${sky.to}`);
+} else if (skyThrough < minimumSkyHorizon) {
+  fail(`sky.json: horizon ${sky.to} is before build + 90 days (${minimumSkyHorizon.toISOString()})`);
+}
+
+const transitFiles = (await readdir(dataRoot))
+  .filter((name) => /^transits-\d{4}-\d{2}\.json$/.test(name))
+  .sort();
+const latestTransitFile = transitFiles.at(-1);
+const renderMonthTransitFile = `transits-${buildMonth}.json`;
+if (!latestTransitFile) {
+  fail('transits: no transits-YYYY-MM.json snapshot found');
+} else {
+  const latestTransitMonth = latestTransitFile.slice('transits-'.length, -'.json'.length);
+  const latestTransits = JSON.parse(await readFile(resolve(dataRoot, latestTransitFile), 'utf8'));
+  if (latestTransits.month !== latestTransitMonth) {
+    fail(`${latestTransitFile}: month field is ${latestTransits.month}, expected ${latestTransitMonth}`);
+  }
+  if (latestTransitMonth < buildMonth) {
+    fail(`${latestTransitFile}: latest transit month does not cover build month ${buildMonth}`);
+  }
+  if (!transitFiles.includes(renderMonthTransitFile)) {
+    fail(`transits: missing render-month snapshot ${renderMonthTransitFile}`);
+  } else if (latestTransitFile !== renderMonthTransitFile) {
+    const renderMonthTransits = JSON.parse(await readFile(resolve(dataRoot, renderMonthTransitFile), 'utf8'));
+    if (renderMonthTransits.month !== buildMonth) {
+      fail(`${renderMonthTransitFile}: month field is ${renderMonthTransits.month}, expected ${buildMonth}`);
+    }
+  }
+}
+
+const daily = JSON.parse(await readFile(resolve(dataRoot, 'daily.json'), 'utf8'));
+const dailyDay = new Date(`${daily.date}T00:00:00.000Z`);
+if (!/^\d{4}-\d{2}-\d{2}$/.test(daily.date ?? '') || Number.isNaN(dailyDay.getTime())) {
+  fail(`daily.json: invalid date ${daily.date}`);
+} else {
+  const ageDays = Math.floor((buildDay.getTime() - dailyDay.getTime()) / 86_400_000);
+  if (ageDays < 0) {
+    fail(`daily.json: date ${daily.date} is in the future`);
+  } else if (ageDays > 3) {
+    const staleOverride = process.env.CI === 'true' && process.env.ZODIACS_ALLOW_STALE_DAILY === '1';
+    if (staleOverride) {
+      console.warn(`check-dist: daily.json is ${ageDays} days old; CI-only ZODIACS_ALLOW_STALE_DAILY override accepted.`);
+    } else {
+      fail(`daily.json: ${daily.date} is ${ageDays} days old (maximum 3); CI may explicitly set ZODIACS_ALLOW_STALE_DAILY=1`);
+    }
+  }
 }
 
 // ---- Report ------------------------------------------------------------------

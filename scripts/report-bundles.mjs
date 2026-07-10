@@ -1,47 +1,260 @@
 /*
- * Prints gzip sizes of the built JS chunks in dist/_astro against the
- * page budgets from docs/STRATEGY.md. Warn-only for now: the report is
- * the enforcement mechanism until budgets have soaked.
+ * Reports and, with --fail, enforces gzip budgets for the built site's
+ * route-level JavaScript closures. Run after `npm run build`:
  *
- *   npm run build && node scripts/report-bundles.mjs
+ *   node scripts/report-bundles.mjs
+ *   node scripts/report-bundles.mjs --fail
+ *
+ * A route closure starts with module/preload and Astro-island references in
+ * its built HTML, then follows static ESM imports recursively. Dynamic imports
+ * intentionally stay outside the initial closure (notably engine/full.ts).
  */
 import { readFile, readdir } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
-import { dirname, resolve, join } from 'node:path';
+import { dirname, extname, join, relative, resolve, sep } from 'node:path';
 import { gzipSync } from 'node:zlib';
 
-const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-const dir = resolve(root, 'dist/_astro');
+const repo = resolve(dirname(fileURLToPath(import.meta.url)), '..');
+const dist = resolve(repo, 'dist');
+const chunkDir = resolve(dist, '_astro');
+const enforce = process.argv.includes('--fail');
+const failures = [];
+const fail = (message) => failures.push(message);
 
-// Budgets (gzip). The homepage must stay under ~25KB total JS and must
-// never pull astronomy-engine; the engine chunk itself may be ~45KB but
-// only loads on calculator pages, on demand.
-const WARN_CHUNK_KB = 60;
+function kb(bytes) {
+  return (bytes / 1024).toFixed(1);
+}
 
-let entries;
+function attr(tag, name) {
+  return tag.match(new RegExp(`\\b${name}=(?:"([^"]*)"|'([^']*)')`, 'i'))
+    ?.slice(1)
+    .find((value) => value !== undefined) ?? null;
+}
+
+async function walk(dir, accept) {
+  const out = [];
+  for (const entry of await readdir(dir, { withFileTypes: true })) {
+    if (entry.name.startsWith('.')) continue;
+    const path = join(dir, entry.name);
+    if (entry.isDirectory()) out.push(...await walk(path, accept));
+    else if (accept(path)) out.push(path);
+  }
+  return out;
+}
+
+function publicPath(path) {
+  return `/${relative(dist, path).split(sep).join('/')}`;
+}
+
+function localJsPath(specifier, basePath) {
+  let url;
+  try {
+    url = new URL(specifier, `https://zodiacs.org${basePath}`);
+  } catch {
+    return null;
+  }
+  if (url.origin !== 'https://zodiacs.org' || !url.pathname.endsWith('.js')) return null;
+  return url.pathname;
+}
+
+// Built Vite chunks put each static import/export at the start of the file or
+// immediately after a semicolon. The negative parenthesis class excludes
+// import(), including Vite's lazy dependency maps.
+function staticImportSpecifiers(source) {
+  const found = [];
+  const patterns = [
+    /(?:^|[;\n])\s*import(?!\s*\()(?:(?:[^"'();]*?)\bfrom\s*)?["']([^"']+)["']/gm,
+    /(?:^|[;\n])\s*export(?:[^"'();]*?)\bfrom\s*["']([^"']+)["']/gm,
+  ];
+  for (const pattern of patterns) {
+    for (const match of source.matchAll(pattern)) found.push(match[1]);
+  }
+  return found;
+}
+
+function htmlModuleRoots(html, route) {
+  const roots = new Set();
+  const add = (specifier) => {
+    const path = specifier && localJsPath(specifier, route);
+    if (path) roots.add(path);
+  };
+
+  for (const match of html.matchAll(/<script\b[^>]*>/gi)) {
+    const tag = match[0];
+    if ((attr(tag, 'type') ?? '').toLowerCase() === 'module') add(attr(tag, 'src'));
+  }
+
+  for (const match of html.matchAll(/<link\b[^>]*>/gi)) {
+    const tag = match[0];
+    const rels = (attr(tag, 'rel') ?? '').toLowerCase().split(/\s+/);
+    const isModulePreload = rels.includes('modulepreload');
+    const isScriptPreload = rels.includes('preload') && (attr(tag, 'as') ?? '').toLowerCase() === 'script';
+    if (isModulePreload || isScriptPreload) add(attr(tag, 'href'));
+  }
+
+  // Astro islands load these two module entrypoints from the inline hydration
+  // runtime, so they are initial route roots even though they are attributes.
+  for (const match of html.matchAll(/<astro-island\b[^>]*>/gi)) {
+    add(attr(match[0], 'component-url'));
+    add(attr(match[0], 'renderer-url'));
+  }
+
+  // Keep hand-authored inline modules measurable too.
+  for (const match of html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi)) {
+    const tag = `<script${match[1]}>`;
+    if ((attr(tag, 'type') ?? '').toLowerCase() !== 'module') continue;
+    for (const specifier of staticImportSpecifiers(match[2])) add(specifier);
+  }
+
+  return roots;
+}
+
+function routeHtmlPath(route) {
+  const url = new URL(route, 'https://zodiacs.org');
+  if (url.origin !== 'https://zodiacs.org' || !url.pathname.startsWith('/')) {
+    throw new Error(`invalid budget route: ${route}`);
+  }
+  if (url.pathname === '/') return resolve(dist, 'index.html');
+  const path = resolve(dist, url.pathname.replace(/^\//, ''));
+  if (!path.startsWith(dist)) throw new Error(`budget route escapes dist: ${route}`);
+  return url.pathname.endsWith('/') ? resolve(path, 'index.html') : path;
+}
+
+let budgets;
 try {
-  entries = (await readdir(dir)).filter((f) => f.endsWith('.js'));
+  budgets = JSON.parse(await readFile(resolve(repo, 'budgets.json'), 'utf8'));
+} catch (error) {
+  console.error(`report-bundles: cannot read budgets.json (${error.message})`);
+  process.exit(1);
+}
+
+const routeBudgets = Object.entries(budgets).filter(([key]) => key.startsWith('/'));
+for (const [key, value] of Object.entries(budgets)) {
+  if (typeof value !== 'number' || value < 0 || !Number.isFinite(value)) {
+    fail(`budgets.json: ${key} must be a finite, non-negative number`);
+  }
+}
+for (const required of ['/', '/birth-chart/', '/aries/', 'chunk-max', 'engine-chunk']) {
+  if (!(required in budgets)) fail(`budgets.json: missing ${required}`);
+}
+
+let chunkFiles;
+try {
+  chunkFiles = await walk(chunkDir, (path) => extname(path) === '.js');
 } catch {
-  console.log('report-bundles: no dist/_astro directory (no JS emitted?)');
-  process.exit(0);
+  console.error('report-bundles: no dist/_astro directory; run `npm run build` first.');
+  process.exit(enforce ? 1 : 0);
 }
 
-const rows = [];
-for (const f of entries) {
-  const buf = await readFile(join(dir, f));
-  const gz = gzipSync(buf, { level: 9 }).length;
-  rows.push({ file: f, raw: buf.length, gz });
+const chunks = new Map();
+for (const path of chunkFiles) {
+  const source = await readFile(path, 'utf8');
+  chunks.set(publicPath(path), {
+    source,
+    gzip: gzipSync(source, { level: 9 }).length,
+  });
 }
-rows.sort((a, b) => b.gz - a.gz);
 
-let warned = false;
-console.log('chunk gzip sizes (dist/_astro):');
-for (const { file, raw, gz } of rows) {
-  const kb = (gz / 1024).toFixed(1);
-  const flag = gz > WARN_CHUNK_KB * 1024 ? '  ⚠ over per-chunk warn threshold' : '';
-  if (flag) warned = true;
-  console.log(`  ${kb.padStart(7)} KB gz  (${(raw / 1024).toFixed(1)} KB raw)  ${file}${flag}`);
+function routeClosure(roots, route) {
+  const closure = new Set();
+  const visit = (path, importer = route) => {
+    if (closure.has(path)) return;
+    const chunk = chunks.get(path);
+    if (!chunk) {
+      fail(`${route}: ${importer} references missing local chunk ${path}`);
+      return;
+    }
+    closure.add(path);
+    for (const specifier of staticImportSpecifiers(chunk.source)) {
+      const dependency = localJsPath(specifier, path);
+      if (dependency) visit(dependency, path);
+    }
+  };
+  for (const root of roots) visit(root);
+  return closure;
 }
-const total = rows.reduce((s, r) => s + r.gz, 0);
-console.log(`  total: ${(total / 1024).toFixed(1)} KB gz across ${rows.length} chunks`);
-if (warned) console.log('report-bundles: warnings above (non-fatal).');
+
+const routeRows = [];
+for (const [route, limit] of routeBudgets) {
+  let html;
+  try {
+    html = await readFile(routeHtmlPath(route), 'utf8');
+  } catch {
+    fail(`${route}: built HTML not found`);
+    routeRows.push({ route, limit, gzip: 0, closure: new Set() });
+    continue;
+  }
+  const closure = routeClosure(htmlModuleRoots(html, route), route);
+  const gzip = [...closure].reduce((sum, path) => sum + chunks.get(path).gzip, 0);
+  routeRows.push({ route, limit, gzip, closure });
+  if (gzip > limit * 1024) {
+    fail(`${route}: ${kb(gzip)} KB gz exceeds ${limit} KB`);
+  }
+}
+
+const chunkRows = [...chunks.entries()]
+  .map(([path, data]) => ({ ...data, path }))
+  .sort((a, b) => b.gzip - a.gzip);
+const largestChunk = chunkRows[0];
+if (largestChunk && largestChunk.gzip > budgets['chunk-max'] * 1024) {
+  fail(`chunk-max: ${largestChunk.path} is ${kb(largestChunk.gzip)} KB gz (limit ${budgets['chunk-max']} KB)`);
+}
+
+const engineChunks = chunkRows.filter(({ path }) => /\/_astro\/full\.[^/]+\.js$/.test(path));
+const engineChunk = engineChunks[0];
+if (engineChunks.length !== 1) {
+  fail(`engine-chunk: expected one full.*.js chunk, found ${engineChunks.length}`);
+} else if (engineChunk.gzip > budgets['engine-chunk'] * 1024) {
+  fail(`engine-chunk: ${engineChunk.path} is ${kb(engineChunk.gzip)} KB gz (limit ${budgets['engine-chunk']} KB)`);
+}
+
+// Production source must keep the large vendor behind this single boundary.
+// Tests may import the vendor to construct independent reference vectors.
+const sourceFiles = await walk(resolve(repo, 'src'), (path) =>
+  ['.astro', '.js', '.mjs', '.ts', '.tsx'].includes(extname(path))
+  && !/\.(?:test|spec)\.[^.]+$/.test(path));
+const vendorImporters = [];
+for (const path of sourceFiles) {
+  const source = await readFile(path, 'utf8');
+  const hasEsmImport = staticImportSpecifiers(source).includes('astronomy-engine');
+  const hasRequire = /\brequire\(\s*["']astronomy-engine["']\s*\)/.test(source);
+  if (hasEsmImport || hasRequire) vendorImporters.push(relative(repo, path).split(sep).join('/'));
+}
+const allowedVendorImporter = 'src/lib/engine/full.ts';
+if (vendorImporters.length !== 1 || vendorImporters[0] !== allowedVendorImporter) {
+  fail(`engine source isolation: expected only ${allowedVendorImporter}; found ${vendorImporters.join(', ') || 'none'}`);
+}
+
+const homepage = routeRows.find(({ route }) => route === '/');
+const engineMarkers = ['Value is not boolean:', 'Light-travel time solver did not converge'];
+const homepageMarkerChunks = homepage
+  ? [...homepage.closure].filter((path) => engineMarkers.some((marker) => chunks.get(path).source.includes(marker)))
+  : [];
+if (homepageMarkerChunks.length) {
+  fail(`homepage engine isolation: engine marker found in ${homepageMarkerChunks.join(', ')}`);
+}
+if (engineChunk && !engineMarkers.every((marker) => engineChunk.source.includes(marker))) {
+  fail(`engine marker fingerprint missing from ${engineChunk.path}`);
+}
+
+console.log('route gzip sizes (initial transitive local JS):');
+for (const row of routeRows) {
+  console.log(`  ${row.route.padEnd(16)} ${kb(row.gzip).padStart(6)} KB / ${String(row.limit).padStart(4)} KB  (${row.closure.size} chunks)`);
+}
+console.log('chunk gates:');
+if (largestChunk) {
+  console.log(`  ${'chunk-max'.padEnd(16)} ${kb(largestChunk.gzip).padStart(6)} KB / ${String(budgets['chunk-max']).padStart(4)} KB  (${largestChunk.path})`);
+}
+if (engineChunk) {
+  console.log(`  ${'engine-chunk'.padEnd(16)} ${kb(engineChunk.gzip).padStart(6)} KB / ${String(budgets['engine-chunk']).padStart(4)} KB  (${engineChunk.path})`);
+}
+console.log(`engine isolation: source boundary ${vendorImporters.length === 1 && vendorImporters[0] === allowedVendorImporter ? 'clear' : 'failed'}; homepage markers ${homepageMarkerChunks.length ? 'found' : 'clear'}`);
+
+if (failures.length) {
+  const label = enforce ? 'failures' : 'warnings';
+  console.error(`report-bundles: ${failures.length} ${label}`);
+  for (const message of failures) console.error(`  - ${message}`);
+  if (enforce) process.exit(1);
+} else {
+  console.log(`report-bundles: ${enforce ? 'budgets pass' : 'within budgets'}`);
+}

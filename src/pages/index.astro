@@ -109,7 +109,6 @@ const tools = [
     <div class="hero__frame reveal">
       <video
         class="hero__video"
-        data-src="/assets/hero/zodiacs-hero.mp4"
         poster="/assets/hero/zodiacs-hero-poster.avif"
         muted
         loop
@@ -119,7 +118,10 @@ const tools = [
         aria-hidden="true"
         tabindex="-1"
         data-hero-video
-      ></video>
+      >
+        <source data-src="/assets/hero/zodiacs-hero-av1.mp4" type='video/mp4; codecs="av01.0.08M.08"' />
+        <source data-src="/assets/hero/zodiacs-hero.mp4" type="video/mp4" />
+      </video>
       <div class="hero__scrim" aria-hidden="true"></div>
       <div class="hero__content">
         <h1 class="hero__title">Your whole chart, <em>not just your sign.</em></h1>
@@ -136,14 +138,27 @@ const tools = [
       </div>
     </div>
     <script is:inline>
-      // The footage animates on every screen unless the visitor prefers
-      // reduced motion. On phones the poster stays the LCP: the video
-      // only attaches after load, so it never competes with first paint.
+      // The poster remains the experience for reduced-motion and constrained-
+      // data visitors. Otherwise sources attach only after first paint, with
+      // AV1 preferred and the original MP4 retained as a compatibility fallback.
       (function () {
         var v = document.querySelector('[data-hero-video]');
         if (!v) return;
+        var connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+        var constrained = connection && (
+          connection.saveData ||
+          ['slow-2g', '2g', '3g'].indexOf(connection.effectiveType) !== -1
+        );
         var play = function () {
-          if (!v.src) { v.src = v.dataset.src; v.preload = 'auto'; }
+          if (constrained) return;
+          if (!v.dataset.sourcesAttached) {
+            v.querySelectorAll('source[data-src]').forEach(function (source) {
+              source.src = source.dataset.src;
+            });
+            v.dataset.sourcesAttached = 'true';
+            v.preload = 'auto';
+            v.load();
+          }
           var p = v.play();
           if (p && p.catch) p.catch(function () {});
         };
@@ -180,7 +195,7 @@ const tools = [
   </section>
 
   <!-- 01b · Returning visitors with a saved chart get greeted; everyone else sees nothing here -->
-  <WelcomeBack client:load />
+  <WelcomeBack client:idle />
 
   <!-- 02 · The sky, right now -->
   <section class="container ticker-band reveal">
@@ -189,7 +204,7 @@ const tools = [
 
   <!-- 02b · Zero-input value: tap your sign, see today -->
   <section class="section container reveal">
-    <TodayBySign client:load />
+    <TodayBySign client:idle />
   </section>
 
   <!-- 03 · Tools -->
