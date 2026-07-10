@@ -842,6 +842,23 @@ skip to C5/C6 and return.
 
 ---
 
+### Decision log — resolved by the owner, 2026-07-10
+
+| # | Ruling |
+|---|---|
+| D1 | Rewrite the archive entry to claims verifiable in the live article |
+| D2 | Consumer `sameAs` → GitHub only; relationship disclosure on `/registry/` + `/about/` |
+| D3 | Plausible (shim until env vars supplied) |
+| D4 | Consolidate all 8 discovery pages into `/sdk/` with 301s; self-gist citations removed |
+| D5 | Consumer footer wing column trimmed to Registry + SDK + disclaimer |
+| D6 | Solid ink stays the one primary CTA per page; glass is the secondary/contextual standard |
+| D7 | Horoscopes stay replace-in-place; no archives |
+| D8 | Pen-name editorial persona; owner approves the name before anything ships |
+| D9 | **Amendment:** ES freezes after quality fixes — C5 is quality-only and Gate 5's ES cluster growth is cut until English proves out |
+| D10 | Hero video: AV1 tier + data-saver guard approved |
+
+Implementation state: D1/D2/D4/D5/D10 landed in Codex packets C1–C5 (PRs #47–#52); D3 shim landed in C1; D6 landed with the `.btn--glass` system (Fable Task 1); D8 persona pending owner's name choice. Explorer implementation deltas: `docs/EXPLORER-SPEC-DELTA.md`.
+
 ## Appendix C — Fable review prompt for Codex output
 
 > **FABLE REVIEW — Codex packet {N}**
