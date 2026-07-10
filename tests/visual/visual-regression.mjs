@@ -8,7 +8,10 @@ import { findChromium, STABLE_CHROMIUM_ARGS } from './browser.mjs';
 import { withPreview } from './preview-server.mjs';
 
 const visualRoot = dirname(fileURLToPath(import.meta.url));
-const baselineRoot = resolve(visualRoot, 'baselines');
+// Even with the same pinned Chromium, CoreText and FreeType produce different
+// glyph metrics and rasterization. Keep each supported platform strict against
+// its own committed pixels instead of weakening the 0.1% gate.
+const baselineRoot = resolve(visualRoot, 'baselines', process.platform);
 const artifactRoot = resolve(visualRoot, 'artifacts/visual');
 const update = process.argv.includes('--update') || process.env.UPDATE_VISUAL_BASELINES === '1';
 

@@ -23,3 +23,8 @@ Both commands start and stop a preferred fixed-port preview server, falling
 back to a free local port when another test already owns it. An already-running
 preview can be reused with `ZODIACS_TEST_BASE_URL`. CI should run the build
 first and install the Chromium revision pinned by `playwright-core`.
+
+Baselines live below `baselines/<process.platform>/`. The pinned Chromium is
+the same on macOS and Linux, but their font rasterizers and metrics are not;
+platform-specific pixels keep the regression threshold strict instead of
+masking real layout changes with a cross-platform tolerance.
