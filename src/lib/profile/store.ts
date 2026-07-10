@@ -7,6 +7,8 @@ import { EMPTY_PROFILE, MAX_CHARTS, PROFILE_KEY } from './schema';
 import type { Profile, SavedChart } from './schema';
 import { clearChartDeletion, recordChartDeletion } from './deletions';
 
+const YEAR_AHEAD_CACHE_KEY = 'zodiacs.yearahead.v1';
+
 interface PersistOptions {
   sync?: boolean;
 }
@@ -47,16 +49,40 @@ function persist(profile: Profile, options: PersistOptions = { sync: true }): bo
 }
 
 export function replaceProfile(profile: Profile): boolean {
-  return persist(profile, { sync: false });
+  const ok = persist(profile, { sync: false });
+  if (ok) pruneYearAheadCacheExcept(new Set(profile.charts.map((chart) => chart.id)));
+  return ok;
+}
+
+function sameStoredInput(a: SavedChart, b: SavedChart): boolean {
+  const aPlace = a.birth.place;
+  const bPlace = b.birth.place;
+  return a.birth.date === b.birth.date &&
+    a.birth.time === b.birth.time &&
+    aPlace !== null &&
+    bPlace !== null &&
+    aPlace.lat === bPlace.lat &&
+    aPlace.lon === bPlace.lon &&
+    a.summary.houseSystem === b.summary.houseSystem;
 }
 
 export function saveChart(chart: SavedChart): 'saved' | 'updated' | 'full' | 'error' {
   const profile = loadProfile();
-  const existing = profile.charts.findIndex((c) => c.id === chart.id);
+  let existing = profile.charts.findIndex((c) => c.id === chart.id);
+  if (existing < 0) {
+    existing = profile.charts.findIndex((candidate) => sameStoredInput(candidate, chart));
+  }
   if (existing >= 0) {
-    profile.charts[existing] = { ...chart, updatedAt: new Date().toISOString() };
+    const saved = profile.charts[existing];
+    const updated = {
+      ...chart,
+      id: saved.id,
+      createdAt: saved.createdAt,
+      updatedAt: new Date().toISOString(),
+    };
+    profile.charts[existing] = updated;
     if (!persist(profile)) return 'error';
-    clearChartDeletion(chart.id);
+    clearChartDeletion(updated.id);
     return 'updated';
   }
   if (profile.charts.length >= MAX_CHARTS) return 'full';
@@ -66,13 +92,43 @@ export function saveChart(chart: SavedChart): 'saved' | 'updated' | 'full' | 'er
   return 'saved';
 }
 
+function pruneYearAheadCacheEntries(shouldRemove: (id: string) => boolean): void {
+  try {
+    const raw = localStorage.getItem(YEAR_AHEAD_CACHE_KEY);
+    if (!raw) return;
+    const parsed: unknown = JSON.parse(raw);
+    if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) return;
+    const cache = parsed as Record<string, unknown>;
+    let changed = false;
+    for (const id of Object.keys(cache)) {
+      if (!shouldRemove(id)) continue;
+      delete cache[id];
+      changed = true;
+    }
+    if (changed) localStorage.setItem(YEAR_AHEAD_CACHE_KEY, JSON.stringify(cache));
+  } catch {
+    // The profile deletion is authoritative; this derived cache is best-effort.
+  }
+}
+
+function pruneYearAheadCache(id: string): void {
+  pruneYearAheadCacheEntries((candidate) => candidate === id);
+}
+
+function pruneYearAheadCacheExcept(chartIds: Set<string>): void {
+  pruneYearAheadCacheEntries((candidate) => !chartIds.has(candidate));
+}
+
 export function deleteChart(id: string): boolean {
   const profile = loadProfile();
   const existed = profile.charts.some((c) => c.id === id);
   profile.charts = profile.charts.filter((c) => c.id !== id);
   const ok = persist(profile, { sync: false });
-  if (ok && existed) recordChartDeletion(id);
-  if (ok && existed) queueCloudSync();
+  if (ok && existed) {
+    pruneYearAheadCache(id);
+    recordChartDeletion(id);
+    queueCloudSync();
+  }
   return ok;
 }
 

@@ -5,30 +5,27 @@
  * the chart calculator.
  */
 import { useEffect, useRef, useState } from 'preact/hooks';
-import PlaceSearch from './PlaceSearch';
+import { BirthFields } from './BirthFields';
 import SignChip from './SignChip';
 import PlanetGlyph from '../components/PlanetGlyph';
 import AspectGlyph from '../components/AspectGlyph';
-import { loadProfile } from '../lib/profile/store';
-import { EMPTY_PROFILE } from '../lib/profile/schema';
-import type { Profile, SavedChart } from '../lib/profile/schema';
+import { resolveSavedChart } from '../lib/profile/resolve';
+import type { SavedChart } from '../lib/profile/schema';
 import { findInterAspects } from '../lib/engine/synastry';
 import type { InterAspect, MinimalBody } from '../lib/engine/synastry';
 import { transitLine, TRANSIT_ORB } from '../lib/transits';
 import { formatLongitude } from '../lib/signs';
 import { resolveLocalToUtc } from '../lib/time/localToUtc';
-import { ENGINE_VERSION } from '../lib/engine/types';
 import type { City } from '../lib/geo/search';
 import { localizePath, normalizeLocale, t, tf, type Locale } from '../lib/i18n';
 import { formatDate, formatDateTime } from '../lib/i18n/dates';
 import { aspectLabel, planetLabel } from '../lib/i18n/astrology';
+import { useEngine, type EngineLoader } from '../lib/hooks/useEngine';
+import { useProfile } from '../lib/hooks/useProfile';
 
 // The transiting bodies shown in the sky strip (planets only — nodes excluded,
 // as before). Glyphs come from the shared PlanetGlyph.
 const TRANSIT_BODIES = new Set(['Sun', 'Moon', 'Mercury', 'Venus', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto']);
-
-let enginePromise: Promise<typeof import('../lib/engine/full')> | null = null;
-const loadEngine = () => (enginePromise ??= import('../lib/engine/full'));
 
 interface SlotState {
   source: 'saved' | 'form';
@@ -57,39 +54,12 @@ interface Result {
   hits: InterAspect[];
 }
 
-async function resolveSaved(chart: SavedChart): Promise<Natal> {
-  const stored: Natal = {
-    bodies: chart.summary.bodies.map(({ body, lon }) => ({ body, lon })),
-    timeKnown: chart.birth.timeKnown,
-  };
-  // Stale engine? Recompute from birth input when we can; the stored
-  // summary stays the honest fallback.
-  if (chart.summary.engineVersion === ENGINE_VERSION || !chart.birth.place) return stored;
-  try {
-    const engine = await loadEngine();
-    const resolved = resolveLocalToUtc(
-      chart.birth.date,
-      chart.birth.timeKnown && chart.birth.time ? chart.birth.time : '12:00',
-      chart.birth.place.tz,
-    );
-    const result = engine.computeChart({
-      utc: resolved.utc,
-      latitude: chart.birth.place.lat,
-      longitude: chart.birth.place.lon,
-      houseSystem: chart.summary.houseSystem,
-      timeKnown: chart.birth.timeKnown,
-      flags: resolved.flags,
-    });
-    return {
-      bodies: result.bodies.map(({ body, lon }) => ({ body, lon })),
-      timeKnown: chart.birth.timeKnown,
-    };
-  } catch {
-    return stored;
-  }
+async function resolveSaved(chart: SavedChart, loadEngine: EngineLoader): Promise<Natal> {
+  const resolved = await resolveSavedChart(chart, loadEngine);
+  return { bodies: resolved.bodies, timeKnown: resolved.timeKnown };
 }
 
-async function resolveForm(slot: SlotState): Promise<Natal> {
+async function resolveForm(slot: SlotState, loadEngine: EngineLoader): Promise<Natal> {
   const engine = await loadEngine();
   const timeKnown = slot.timeKnown && slot.time !== '';
   const resolved = resolveLocalToUtc(slot.date, timeKnown ? slot.time : '12:00', slot.city!.tz);
@@ -109,9 +79,8 @@ async function resolveForm(slot: SlotState): Promise<Natal> {
 
 export default function TransitTracker({ locale: rawLocale = 'en' }: { locale?: Locale }) {
   const locale = normalizeLocale(rawLocale);
-  // Starts as the empty profile so the form server-renders; the mount
-  // effect swaps in the device's real profile (the dropdown appears then).
-  const [profile, setProfile] = useState<Profile>(EMPTY_PROFILE);
+  const loadEngine = useEngine();
+  const { profile, ready: profileReady } = useProfile();
   const [slot, setSlot] = useState<SlotState>({
     source: 'form', savedId: '', date: '', time: '', timeKnown: true, city: null,
   });
@@ -122,24 +91,19 @@ export default function TransitTracker({ locale: rawLocale = 'en' }: { locale?: 
   const resultHeadingRef = useRef<HTMLHeadingElement>(null);
   const errorRef = useRef<HTMLParagraphElement>(null);
   const focusAfterComputeRef = useRef(false);
+  const initialProfileReadRef = useRef(false);
 
   useEffect(() => {
-    const load = () => {
-      const p = loadProfile();
-      setProfile(p);
-      // One saved chart and nothing picked yet? Preselect it — most
-      // devices hold exactly the owner's chart.
-      if (p.charts.length > 0) {
-        setSlot((s) => (s.source === 'form' && s.savedId === '' && s.date === ''
-          ? { ...s, source: 'saved', savedId: p.charts[0].id }
-          : s));
-      }
-    };
-    load();
-    const sync = () => setProfile(loadProfile());
-    window.addEventListener('zodiacs:profile', sync);
-    return () => window.removeEventListener('zodiacs:profile', sync);
-  }, []);
+    if (!profileReady || initialProfileReadRef.current) return;
+    initialProfileReadRef.current = true;
+    // One saved chart and nothing picked yet? Preselect it — most
+    // devices hold exactly the owner's chart.
+    if (profile.charts.length > 0) {
+      setSlot((s) => (s.source === 'form' && s.savedId === '' && s.date === ''
+        ? { ...s, source: 'saved', savedId: profile.charts[0].id }
+        : s));
+    }
+  }, [profileReady, profile]);
 
   const charts = profile.charts;
 
@@ -155,8 +119,8 @@ export default function TransitTracker({ locale: rawLocale = 'en' }: { locale?: 
     setError('');
     try {
       const natal = slot.source === 'saved'
-        ? await resolveSaved(charts.find((c) => c.id === slot.savedId)!)
-        : await resolveForm(slot);
+        ? await resolveSaved(charts.find((c) => c.id === slot.savedId)!, loadEngine)
+        : await resolveForm(slot, loadEngine);
       const engine = await loadEngine();
       const when = dateStr === '' ? new Date() : new Date(`${dateStr}T12:00:00Z`);
       const whenLabel = dateStr === ''
@@ -222,43 +186,28 @@ export default function TransitTracker({ locale: rawLocale = 'en' }: { locale?: 
                     }}
                   >
                     <option value="">{t(locale, 'enterBirthDetails')}</option>
-                    {charts.map((c) => <option value={c.id}>{c.name}</option>)}
+                    {charts.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
                   </select>
                 </div>
               )}
 
               {slot.source === 'form' && (
                 <>
-                  <div class="field">
-                    <label class="field__label" for="trans-date">{t(locale, 'birthDate')}</label>
-                    <input
-                      id="trans-date" class="field__input" type="date" required
-                      min="1800-01-01" max="2199-12-31" value={slot.date}
-                      onInput={(e) => { const v = (e.target as HTMLInputElement).value; setSlot((s) => ({ ...s, date: v })); }}
-                    />
-                  </div>
-                  <div class="field">
-                    <div class="field__labelrow">
-                      <label class="field__label" for="trans-time">{t(locale, 'birthTime')}</label>
-                      <label class="field__toggle">
-                        <input
-                          type="checkbox" checked={!slot.timeKnown}
-                          onChange={(e) => { const v = !(e.target as HTMLInputElement).checked; setSlot((s) => ({ ...s, timeKnown: v })); }}
-                        />
-                        {t(locale, 'noBirthTime')}
-                      </label>
-                    </div>
-                    <input
-                      id="trans-time" class="field__input" type="time"
-                      disabled={!slot.timeKnown} value={slot.time}
-                      onFocus={() => loadEngine()}
-                      onInput={(e) => { const v = (e.target as HTMLInputElement).value; setSlot((s) => ({ ...s, time: v })); }}
-                    />
-                  </div>
-                  <div class="field">
-                    <label class="field__label" for="trans-place">{t(locale, 'birthplace')}</label>
-                    <PlaceSearch id="trans-place" selected={slot.city} onSelect={(c) => setSlot((s) => ({ ...s, city: c }))} locale={locale} />
-                  </div>
+                  <BirthFields
+                    locale={locale}
+                    dateId="trans-date"
+                    timeId="trans-time"
+                    placeId="trans-place"
+                    date={slot.date}
+                    time={slot.time}
+                    timeKnown={slot.timeKnown}
+                    city={slot.city}
+                    onDateChange={(date) => setSlot((s) => ({ ...s, date }))}
+                    onTimeChange={(time) => setSlot((s) => ({ ...s, time }))}
+                    onTimeKnownChange={(timeKnown) => setSlot((s) => ({ ...s, timeKnown }))}
+                    onCityChange={(city) => setSlot((s) => ({ ...s, city }))}
+                    onWarm={loadEngine}
+                  />
                 </>
               )}
             </div>

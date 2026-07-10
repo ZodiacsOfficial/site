@@ -16,9 +16,7 @@ import type { City } from '../lib/geo/search';
 import { localizePath, normalizeLocale, t, tf, type Locale } from '../lib/i18n';
 import { formatDateTime } from '../lib/i18n/dates';
 import { moonPhaseLabel } from '../lib/i18n/astrology';
-
-let enginePromise: Promise<typeof import('../lib/engine/full')> | null = null;
-const loadEngine = () => (enginePromise ??= import('../lib/engine/full'));
+import { useEngine } from '../lib/hooks/useEngine';
 
 /**
  * The lit portion of the disc as one path: the limb on the bright side,
@@ -67,6 +65,7 @@ interface Lookup {
 
 export default function MoonPhaseTool({ locale: rawLocale = 'en' }: { locale?: Locale }) {
   const locale = normalizeLocale(rawLocale);
+  const loadEngine = useEngine();
   const [now, setNow] = useState<Date | null>(null);
   const [date, setDate] = useState('');
   const [time, setTime] = useState('');

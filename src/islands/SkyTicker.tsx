@@ -1,15 +1,16 @@
 /**
- * The proof strip: live sky facts, one quiet mono line — now with a small
- * celestial glyph per fact so it reads as an almanac row, not flat text.
- * Sun/Moon from the lite math; retrogrades + next lunation from the
- * build-time sky data — the ephemeris never loads here.
+ * The proof strip: one dated daily-sky receipt in a quiet mono line, with a
+ * small celestial glyph per fact so it reads as an almanac row, not flat
+ * text. Positions and retrograde state come from daily.json; the next
+ * lunation comes from build-time sky data. The ephemeris never loads here.
  */
 import { useMemo } from 'preact/hooks';
 import { formatLongitude, signForLongitude, signName } from '../lib/signs';
-import { moonLongitude, sunLongitude } from '../lib/engine/lite';
 import sky from '../data/sky.json';
+import daily from '../data/daily.json';
 import { normalizeLocale, t, tf, type Locale } from '../lib/i18n';
 import { planetLabel } from '../lib/i18n/astrology';
+import { formatDate, formatShortDate } from '../lib/i18n/dates';
 
 type IconKind = 'sun' | 'moon' | 'retro' | 'direct' | 'newMoon' | 'fullMoon';
 interface Item { kind: IconKind; text: string; hue?: string }
@@ -63,19 +64,23 @@ function TickerIcon({ kind }: { kind: IconKind }) {
 
 export default function SkyTicker({ locale: rawLocale = 'en' }: { locale?: Locale }) {
   const locale = normalizeLocale(rawLocale);
+  const receiptDate = formatShortDate(locale, `${daily.date}T12:00:00.000Z`);
+  const compactReceiptDate = formatDate(locale, `${daily.date}T12:00:00.000Z`, {
+    month: 'short', day: 'numeric', timeZone: 'UTC',
+  });
   const items = useMemo<Item[]>(() => {
-    const now = new Date();
-    const nowIso = now.toISOString();
+    // Use the committed daily receipt for both SSR and hydration. Live-clock
+    // math here used to make the server HTML stale before Preact attached.
+    const asOfIso = `${daily.date}T12:00:00.000Z`;
     const out: Item[] = [];
 
-    const sunLon = sunLongitude(now);
-    const moonSign = signForLongitude(moonLongitude(now));
+    const sunLon = daily.bodies.find((body) => body.body === 'Sun')!.lon;
+    const moonLon = daily.bodies.find((body) => body.body === 'Moon')!.lon;
+    const moonSign = signForLongitude(moonLon);
     out.push({ kind: 'sun', text: `${t(locale, 'sun')} ${formatLongitude(sunLon, locale)}`, hue: signForLongitude(sunLon).hue });
     out.push({ kind: 'moon', text: `${t(locale, 'moonIn')} ${signName(moonSign, locale)}`, hue: moonSign.hue });
 
-    const active = (sky.retrogrades as { planet: string; from: string; to: string | null }[])
-      .filter((r) => r.from <= nowIso && (r.to === null || r.to > nowIso))
-      .map((r) => r.planet);
+    const active = daily.bodies.filter((body) => body.retrograde).map((body) => body.body);
     out.push(active.includes('Mercury')
       ? { kind: 'retro', text: t(locale, 'skyMercuryRetrograde') }
       : { kind: 'direct', text: t(locale, 'skyMercuryDirect') });
@@ -88,18 +93,16 @@ export default function SkyTicker({ locale: rawLocale = 'en' }: { locale?: Local
       }
     }
 
-    const nextMoon = (sky.moons as { type: string; at: string }[]).find((m) => m.at > nowIso);
+    const nextMoon = (sky.moons as { type: string; at: string }[]).find((m) => m.at > asOfIso);
     if (nextMoon) {
-      const days = Math.round((new Date(nextMoon.at).getTime() - now.getTime()) / 86400_000);
       const full = nextMoon.type === 'full';
       const label = full
         ? t(locale, 'skyFullMoon')
         : t(locale, 'skyNewMoon');
-      const text = days <= 0
-        ? tf(locale, 'skyTonight', { event: label })
-        : days === 1
-          ? tf(locale, 'skyTomorrow', { event: label })
-          : tf(locale, 'skyInDays', { event: label, days });
+      const text = tf(locale, 'skyMoonOn', {
+        event: label,
+        date: formatDate(locale, nextMoon.at, { month: 'short', day: 'numeric', timeZone: 'UTC' }),
+      });
       out.push({ kind: full ? 'fullMoon' : 'newMoon', text });
     }
 
@@ -107,8 +110,8 @@ export default function SkyTicker({ locale: rawLocale = 'en' }: { locale?: Local
   }, [locale]);
 
   return (
-    <p class="skyticker mono" aria-label={t(locale, 'skyTickerAria')}>
-      <span class="skyticker__label">{t(locale, 'rightNow')}</span>
+    <p class="skyticker mono" aria-label={tf(locale, 'skyTickerAria', { date: receiptDate })}>
+      <span class="skyticker__label">{tf(locale, 'skyAsOf', { date: compactReceiptDate })}</span>
       {items.map((item) => (
         <span class="skyticker__item" key={item.text}>
           <span class="skyticker__icon" style={item.hue ? `color:${item.hue}` : undefined}>

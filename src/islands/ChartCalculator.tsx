@@ -9,7 +9,8 @@
  *   'rising' — rising-focused result view (time required)
  */
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
-import PlaceSearch from './PlaceSearch';
+import { BirthFields } from './BirthFields';
+import { CopyLinkButton, type CopyLinkState } from './CopyLinkButton';
 import SignChip from './SignChip';
 import PlanetGlyph from '../components/PlanetGlyph';
 import AspectGlyph from '../components/AspectGlyph';
@@ -37,6 +38,7 @@ import type { Chart, HouseSystem } from '../lib/engine/types';
 import type { City } from '../lib/geo/search';
 import { localizePath, normalizeLocale, t, type Locale } from '../lib/i18n';
 import { aspectLabel, moonPhaseLabel, planetLabel } from '../lib/i18n/astrology';
+import { useEngine } from '../lib/hooks/useEngine';
 import type { AspectType } from '../lib/engine/types';
 
 type Mode = 'full' | 'moon' | 'rising';
@@ -49,9 +51,6 @@ const DIGNITY_KEY = {
   detriment: 'dignityDetriment',
   fall: 'dignityFall',
 } as const satisfies Record<Dignity, string>;
-
-let enginePromise: Promise<typeof import('../lib/engine/full')> | null = null;
-const loadEngine = () => (enginePromise ??= import('../lib/engine/full'));
 
 /** Does the scene still contain the selected entity? (Recompute survival.) */
 function sceneHas(scene: ChartSceneModel, ref: EntityRef): boolean {
@@ -66,6 +65,7 @@ function sceneHas(scene: ChartSceneModel, ref: EntityRef): boolean {
 
 export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Props) {
   const locale = normalizeLocale(rawLocale);
+  const loadEngine = useEngine();
   const [date, setDate] = useState('');
   const [time, setTime] = useState('');
   const [timeKnown, setTimeKnown] = useState(true);
@@ -77,7 +77,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   const [error, setError] = useState('');
   const [saved, setSaved] = useState<'idle' | 'saved' | 'full' | 'error'>('idle');
   const [shareInput, setShareInput] = useState<ShareChartInput | null>(null);
-  const [share, setShare] = useState<'idle' | 'copied' | 'manual'>('idle');
+  const [share, setShare] = useState<CopyLinkState>('idle');
   const [card, setCard] = useState<'idle' | 'busy' | 'saved' | 'error'>('idle');
   const [fromLink, setFromLink] = useState(false);
   const resultRef = useRef<HTMLDivElement>(null);
@@ -205,7 +205,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
     const warm = () => { loadEngine(); };
     const idle = (window as any).requestIdleCallback ?? ((fn: () => void) => setTimeout(fn, 2500));
     idle(warm);
-  }, []);
+  }, [loadEngine]);
 
   // A shared chart arrives in the fragment (#c=…) — parse, prefill,
   // compute, then strip the token from the bar so screenshots and
@@ -342,16 +342,6 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   const shareUrl = () =>
     `${window.location.origin}${localizePath(locale, '/birth-chart/')}#c=${encodeChartLink(shareInput!)}`;
 
-  async function onCopyLink() {
-    if (!shareInput) return;
-    try {
-      await navigator.clipboard.writeText(shareUrl());
-      setShare('copied');
-    } catch {
-      setShare('manual');
-    }
-  }
-
   async function onCard() {
     if (!chart || !shareInput) return;
     setCard('busy');
@@ -428,47 +418,25 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
       <form class="calc__form shell" onSubmit={compute} aria-busy={busy}>
         <div class="core calc__core">
           <div class="calc__fields">
-            <div class="field">
-              <label class="field__label" for="birth-date">{t(locale, 'birthDate')}</label>
-              <input
-                id="birth-date" class="field__input" type="date" required
-                min="1800-01-01" max="2199-12-31" value={date}
-                onInput={(e) => setDate((e.target as HTMLInputElement).value)}
-              />
-            </div>
-
-            <div class="field">
-              <div class="field__labelrow">
-                <label class="field__label" for="birth-time">{t(locale, 'birthTime')}</label>
-                {mode !== 'rising' && (
-                  <label class="field__toggle">
-                    <input
-                      type="checkbox"
-                      checked={!timeKnown}
-                      onChange={(e) => setTimeKnown(!(e.target as HTMLInputElement).checked)}
-                    />
-                    {t(locale, 'noBirthTime')}
-                  </label>
-                )}
-              </div>
-              <input
-                id="birth-time" class="field__input" type="time"
-                disabled={!timeKnown} required={timeKnown} value={time}
-                onFocus={() => loadEngine()}
-                onInput={(e) => setTime((e.target as HTMLInputElement).value)}
-              />
-              <p class="field__help">
-                {mode === 'rising'
-                  ? t(locale, 'risingTimeHelp')
-                  : t(locale, 'chartTimeHelp')}
-              </p>
-            </div>
-
-            <div class="field">
-              <label class="field__label" for="place">{t(locale, 'birthplace')}</label>
-              <PlaceSearch selected={city} onSelect={setCity} locale={locale} />
-              <p class="field__help">{t(locale, 'searchGeo')}</p>
-            </div>
+            <BirthFields
+              locale={locale}
+              dateId="birth-date"
+              timeId="birth-time"
+              placeId="place"
+              date={date}
+              time={time}
+              timeKnown={timeKnown}
+              city={city}
+              onDateChange={setDate}
+              onTimeChange={setTime}
+              onTimeKnownChange={setTimeKnown}
+              onCityChange={setCity}
+              onWarm={loadEngine}
+              showUnknownTime={mode !== 'rising'}
+              requireKnownTime
+              timeHelp={mode === 'rising' ? t(locale, 'risingTimeHelp') : t(locale, 'chartTimeHelp')}
+              placeHelp={t(locale, 'searchGeo')}
+            />
 
             {mode === 'full' && (
               <div class="field">
@@ -808,32 +776,30 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
           {/* Share: the link carries the data; no server involved */}
           {mode === 'full' && shareInput && (
             <div class="calc__share">
-              <div class="calc__actions">
-                <button class="btn btn--glass" type="button" onClick={onCopyLink} data-share-link>
-                  <span>{share === 'copied' ? t(locale, 'linkCopied') : t(locale, 'copyChartLink')}</span>
-                  <span class="orb">{share === 'copied' ? '✓' : '⧉'}</span>
-                </button>
-              </div>
-              {share === 'manual' && (
-                <input
-                  class="field__input calc__share-url" type="text" readOnly value={shareUrl()}
-                  aria-label={t(locale, 'linkToChart')}
-                  onFocus={(e) => (e.target as HTMLInputElement).select()}
-                />
-              )}
-              <p class="calc__share-note">
-                {t(locale, 'shareNote')}
-              </p>
-              {(share === 'copied' || card === 'saved') && (
-                <p class="sr-only" role="status">
-                  {share === 'copied' ? t(locale, 'chartLinkCopied') : t(locale, 'chartCardSaved')}
+              <CopyLinkButton
+                url={shareUrl()}
+                state={share}
+                onStateChange={setShare}
+                idleLabel={t(locale, 'copyChartLink')}
+                copiedLabel={t(locale, 'linkCopied')}
+                ariaLabel={t(locale, 'linkToChart')}
+                buttonClass="btn btn--glass"
+                dataHook="share"
+              >
+                <p class="calc__share-note">
+                  {t(locale, 'shareNote')}
                 </p>
-              )}
-              {card === 'error' && (
-                <p class="calc__error" role="alert">
-                  {t(locale, 'cardError')}
-                </p>
-              )}
+                {(share === 'copied' || card === 'saved') && (
+                  <p class="sr-only" role="status">
+                    {share === 'copied' ? t(locale, 'chartLinkCopied') : t(locale, 'chartCardSaved')}
+                  </p>
+                )}
+                {card === 'error' && (
+                  <p class="calc__error" role="alert">
+                    {t(locale, 'cardError')}
+                  </p>
+                )}
+              </CopyLinkButton>
             </div>
           )}
 
