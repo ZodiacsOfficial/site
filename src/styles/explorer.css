@@ -1,0 +1,238 @@
+/* ────────────────────────────────────────────────────────────────────
+   Chart Explorer — the interactive wheel, its inspector, and the layer
+   chips. Loaded only by pages that mount the full calculator.
+   Desktop: wheel + docked inspector panel, two columns inside the shell.
+   Mobile:  wheel full-width; the inspector becomes a bottom sheet with
+            two detents (half / full) once something is selected.
+   ──────────────────────────────────────────────────────────────────── */
+
+/* ── The explorer grid inside the existing .calc__wheel shell ── */
+.xplr {
+  display: grid;
+  gap: 16px;
+}
+@media (min-width: 960px) {
+  .xplr {
+    grid-template-columns: minmax(0, 1fr) 300px;
+    align-items: start;
+  }
+}
+
+/* ── Wheel interactivity ── */
+.xplr__wheelbox { position: relative; min-width: 0; border-radius: var(--r-md); }
+.xplr__wheelbox:focus-visible { outline: 1.5px solid var(--accent); outline-offset: 4px; }
+
+/* The whole interactive wheel resolves clicks geometrically. */
+.wheel--interactive { cursor: pointer; }
+.wheel--interactive .wheel__hit { cursor: pointer; }
+/* Selection/emphasis changes breathe rather than snap … */
+.wheel--interactive g,
+.wheel--interactive text[data-entity] {
+  transition: opacity var(--dur-1) var(--ease);
+}
+/* … unless the visitor asked for stillness. */
+@media (prefers-reduced-motion: reduce) {
+  .wheel--interactive g,
+  .wheel--interactive text[data-entity] { transition: none; }
+}
+
+/* ── Layer chips ── */
+.xplr-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 12px;
+}
+.xplr-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 11px;
+  border-radius: var(--r-full);
+  border: 1px solid var(--hair-2);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  transition: color var(--dur-1) var(--ease), border-color var(--dur-1) var(--ease), background var(--dur-1) var(--ease);
+}
+.xplr-chip__glyph { opacity: 0.75; }
+.xplr-chip[aria-pressed='true'] {
+  color: var(--text);
+  border-color: var(--hair-3);
+  background: rgba(198, 204, 218, 0.07);
+}
+.xplr-chip[aria-pressed='false'] { opacity: 0.55; text-decoration: line-through; }
+
+/* ── Inspector card (shared bones) ── */
+.insp {
+  border: 1px solid var(--hair-1);
+  border-radius: var(--r-lg);
+  background: linear-gradient(180deg, var(--void-2) 0%, var(--void-1) 100%);
+  box-shadow: inset 0 1px 0 rgba(238, 241, 247, 0.05);
+}
+.insp--hint { padding: 18px; }
+.insp__hint { margin: 0; font-size: var(--text-sm); color: var(--faint); max-width: 30ch; }
+
+.insp__handle { display: none; }
+.insp__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 16px 16px 0;
+}
+.insp__title {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: var(--text-lg);
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+.insp__title:focus-visible { outline: 1.5px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+.insp__rx { color: rgba(224, 176, 128, 0.9); font-size: 12px; }
+.insp__close {
+  flex-shrink: 0;
+  width: 28px; height: 28px;
+  display: inline-grid; place-items: center;
+  border-radius: 50%;
+  border: 1px solid var(--hair-2);
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1;
+  transition: color var(--dur-1) var(--ease), border-color var(--dur-1) var(--ease);
+}
+.insp__close:hover { color: var(--text); border-color: var(--hair-3); }
+
+.insp__body { padding: 12px 16px 16px; display: grid; gap: 9px; }
+.insp__row {
+  display: grid;
+  grid-template-columns: 72px 1fr;
+  align-items: baseline;
+  gap: 10px;
+}
+.insp__val { color: var(--text-2); display: inline-flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.insp__disc { line-height: 0; display: inline-flex; }
+.insp__disc img { border-radius: 50%; }
+.insp__pg { vertical-align: -0.14em; }
+
+.insp__chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 9px 2px 5px;
+  border-radius: var(--r-full);
+  border: 1px solid color-mix(in oklab, var(--sign, var(--accent)) 35%, transparent);
+  background: color-mix(in oklab, var(--sign, var(--accent)) 8%, transparent);
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: var(--text-2);
+  transition: background var(--dur-1) var(--ease), color var(--dur-1) var(--ease);
+}
+.insp__chip:hover { color: var(--text); background: color-mix(in oklab, var(--sign, var(--accent)) 15%, transparent); }
+.insp__orb { color: var(--faint); }
+
+.insp__aspects { display: grid; gap: 6px; padding-top: 2px; }
+.insp__aspects ul { margin: 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 6px; }
+
+.insp__read {
+  margin: 4px 0 0;
+  font-size: var(--text-sm);
+  line-height: 1.55;
+  color: var(--text-2);
+  text-wrap: pretty;
+}
+.insp__more {
+  justify-self: start;
+  font-size: 12.5px;
+  color: var(--muted);
+  text-decoration: none;
+  border-bottom: 1px solid var(--hair-2);
+  transition: color var(--dur-1) var(--ease), border-color var(--dur-1) var(--ease);
+}
+.insp__more:hover { color: var(--text); border-bottom-color: var(--sign, var(--hair-3)); }
+
+/* Desktop panel sits sticky beside a tall wheel. */
+@media (min-width: 960px) {
+  .insp { position: sticky; top: calc(var(--nav-space, 96px) + 8px); }
+}
+
+/* ── Mobile: the inspector becomes a bottom sheet ── */
+@media (max-width: 959.5px) {
+  .insp--hint { display: none; } /* the wheel itself is the invitation */
+  .insp--card {
+    position: fixed;
+    left: 0; right: 0; bottom: 0;
+    z-index: var(--z-overlay, 50);
+    border-radius: var(--r-lg) var(--r-lg) 0 0;
+    border-bottom: 0;
+    /* Glass surface — the inspector is Explorer chrome (MASTER-PLAN §13.3). */
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0) 40%),
+      rgba(13, 16, 23, 0.82);
+    backdrop-filter: blur(18px) saturate(140%);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+    box-shadow: 0 -18px 48px -20px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(238, 241, 247, 0.1);
+    max-height: 46dvh;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding-bottom: env(safe-area-inset-bottom);
+    transition: max-height var(--dur-2) var(--ease);
+  }
+  .insp--full { max-height: 88dvh; }
+  .insp__handle {
+    display: block;
+    position: sticky;
+    top: 0;
+    padding: 10px 0 6px;
+    cursor: grab;
+    touch-action: none;
+  }
+  .insp__handle::before {
+    content: '';
+    display: block;
+    width: 40px; height: 4px;
+    margin-inline: auto;
+    border-radius: 999px;
+    background: var(--hair-3);
+  }
+  .insp__head { padding-top: 2px; }
+}
+@media (max-width: 959.5px) and (prefers-reduced-transparency: reduce) {
+  .insp--card {
+    background: rgba(13, 16, 23, 0.97);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .insp--card { transition: none; }
+}
+
+/* ── Selection sync in the placements table + guided reading ── */
+.calc__rowbtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+  text-align: left;
+  border-radius: 6px;
+  transition: color var(--dur-1) var(--ease);
+}
+.calc__rowbtn:hover { color: var(--text); }
+tr[data-selected='true'] td:first-child .calc__rowbtn { color: var(--text); }
+tr[data-selected='true'] td {
+  background: color-mix(in oklab, var(--sign, var(--accent)) 7%, transparent);
+}
+tr[data-selected='true'] td:first-child { border-radius: 8px 0 0 8px; }
+tr[data-selected='true'] td:last-child { border-radius: 0 8px 8px 0; }
+
+.calc__read-list li[data-selected='true'] {
+  background: color-mix(in oklab, var(--sign, var(--accent)) 6%, transparent);
+  border-radius: var(--r-sm);
+  margin-inline: -8px;
+  padding-inline: 8px;
+}

@@ -14,7 +14,15 @@ import SignChip from './SignChip';
 import PlanetGlyph from '../components/PlanetGlyph';
 import AspectGlyph from '../components/AspectGlyph';
 import Wheel from '../lib/wheel/Wheel';
-import { formatLongitude, signForLongitude, signName } from '../lib/signs';
+import Inspector from './explorer/Inspector';
+import LayerChips from './explorer/LayerChips';
+import { buildSceneModel } from '../lib/scene/build';
+import { emphasisFor } from '../lib/scene/emphasis';
+import {
+  ALL_ASPECT_TYPES, entityId, parseEntityId,
+  type ChartSceneModel, type EntityRef,
+} from '../lib/scene/types';
+import { formatLongitude, signBySlug, signForLongitude, signName } from '../lib/signs';
 import { bigThree } from '../lib/interpretations';
 import { chartWeather, natalAspectLine, planetInHouseLine, topAspects } from '../lib/natal';
 import { dignityFor, type Dignity } from '../lib/dignities';
@@ -29,6 +37,7 @@ import type { Chart, HouseSystem } from '../lib/engine/types';
 import type { City } from '../lib/geo/search';
 import { localizePath, normalizeLocale, t, type Locale } from '../lib/i18n';
 import { aspectLabel, moonPhaseLabel, planetLabel } from '../lib/i18n/astrology';
+import type { AspectType } from '../lib/engine/types';
 
 type Mode = 'full' | 'moon' | 'rising';
 
@@ -43,6 +52,17 @@ const DIGNITY_KEY = {
 
 let enginePromise: Promise<typeof import('../lib/engine/full')> | null = null;
 const loadEngine = () => (enginePromise ??= import('../lib/engine/full'));
+
+/** Does the scene still contain the selected entity? (Recompute survival.) */
+function sceneHas(scene: ChartSceneModel, ref: EntityRef): boolean {
+  switch (ref.kind) {
+    case 'body': return scene.bodies.some((b) => b.body === ref.body);
+    case 'sign': return true;
+    case 'house': return scene.houses != null && ref.house >= 1 && ref.house <= 12;
+    case 'aspect': return scene.aspects.some((a) => a.a === ref.a && a.b === ref.b && a.type === ref.type);
+    case 'angle': return scene.angles != null;
+  }
+}
 
 export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Props) {
   const locale = normalizeLocale(rawLocale);
@@ -64,6 +84,95 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   const resultHeadingRef = useRef<HTMLHeadingElement>(null);
   const errorRef = useRef<HTMLParagraphElement>(null);
   const focusAfterComputeRef = useRef(false);
+
+  // ── Chart Explorer state (full mode) ──
+  const [selection, setSelection] = useState<EntityRef | null>(null);
+  const [aspectTypes, setAspectTypes] = useState<AspectType[]>(ALL_ASPECT_TYPES);
+  const [showHouses, setShowHouses] = useState(true);
+  const [announce, setAnnounce] = useState('');
+  const selFromUrl = useRef(false);
+
+  const scene = useMemo(
+    () => (chart && mode === 'full' ? buildSceneModel(chart) : null),
+    [chart, mode],
+  );
+  const emphasis = useMemo(
+    () => (scene ? emphasisFor(scene, selection) : { highlight: new Set<string>(), soft: new Set<string>() }),
+    [scene, selection],
+  );
+
+  /** Spoken summary of a selection for the polite live region. */
+  function describeSelection(ref: EntityRef): string {
+    if (!scene) return '';
+    switch (ref.kind) {
+      case 'body': {
+        const b = scene.bodies.find((x) => x.body === ref.body);
+        if (!b) return '';
+        return [
+          planetLabel(locale, b.body),
+          formatLongitude(b.lon, locale),
+          b.house != null ? `${t(locale, 'house')} ${b.house}` : '',
+          b.retrograde ? 'Rx' : '',
+        ].filter(Boolean).join(', ');
+      }
+      case 'sign': return signName(signBySlug(ref.sign), locale);
+      case 'house': return `${t(locale, 'house')} ${ref.house}`;
+      case 'aspect': return `${planetLabel(locale, ref.a)} ${aspectLabel(locale, ref.type)} ${planetLabel(locale, ref.b)}`;
+      case 'angle': return ref.angle.toUpperCase();
+    }
+  }
+
+  /** The one selection entry point: state + URL + announcement. */
+  function applySelect(ref: EntityRef | null) {
+    setSelection(ref);
+    setAnnounce(ref ? describeSelection(ref) : '');
+    try {
+      const url = new URL(window.location.href);
+      if (ref) url.searchParams.set('sel', entityId(ref));
+      else url.searchParams.delete('sel');
+      history.replaceState(null, '', url.pathname + url.search + url.hash);
+    } catch { /* URL API unavailable — selection still works */ }
+  }
+
+  // A `?sel=` deep link applies once, after the first computed scene.
+  useEffect(() => {
+    if (!scene || selFromUrl.current) return;
+    selFromUrl.current = true;
+    const id = new URLSearchParams(window.location.search).get('sel');
+    const ref = id ? parseEntityId(id) : null;
+    if (ref && sceneHas(scene, ref)) setSelection(ref);
+  }, [scene]);
+
+  // Recompute: keep the selection when the entity survives, clear it when
+  // it doesn't (e.g. houses gone on a no-time chart).
+  useEffect(() => {
+    if (!scene || !selection) return;
+    if (!sceneHas(scene, selection)) applySelect(null);
+  }, [scene]);
+
+  // Hiding the house layer clears a house selection.
+  useEffect(() => {
+    if (!showHouses && selection?.kind === 'house') applySelect(null);
+  }, [showHouses]);
+
+  function onWheelKeyDown(e: KeyboardEvent) {
+    if (!scene) return;
+    if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+      e.preventDefault();
+      const ordered = [...scene.bodies].sort((a, b) => a.lon - b.lon);
+      const at = selection?.kind === 'body'
+        ? ordered.findIndex((b) => b.body === selection.body)
+        : -1;
+      const step = e.key === 'ArrowRight' ? 1 : -1;
+      const next = ordered[(at + step + ordered.length) % ordered.length];
+      applySelect({ kind: 'body', body: next.body });
+    } else if (e.key === 'Enter' && selection) {
+      e.preventDefault();
+      (document.querySelector('[data-inspector-heading]') as HTMLElement | null)?.focus();
+    } else if (e.key === 'Escape' && selection) {
+      applySelect(null);
+    }
+  }
 
   // Warm the ephemeris while the visitor types.
   useEffect(() => {
@@ -451,19 +560,51 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
             ) : null;
           })()}
 
-          {/* Wheel + placements (full mode) */}
-          {mode === 'full' && (
+          {/* Wheel + inspector + placements (full mode) — the Chart Explorer */}
+          {mode === 'full' && scene && (
             <>
               <div class="calc__wheel shell">
                 <div class="core calc__wheel-core">
-                  <Wheel
-                    bodies={chart.bodies.filter((b) => b.body !== 'South Node')}
-                    asc={asc}
-                    mc={chart.angles?.mc ?? null}
-                    cusps={chart.houses?.cusps ?? null}
-                    aspects={chart.aspects.filter((a) => a.orb < 6)}
-                    animate
-                  />
+                  <div class="xplr">
+                    <div
+                      class="xplr__wheelbox"
+                      tabIndex={0}
+                      role="group"
+                      aria-label={t(locale, 'explorerLabel')}
+                      onKeyDown={onWheelKeyDown}
+                    >
+                      <Wheel
+                        bodies={chart.bodies.filter((b) => b.body !== 'South Node')}
+                        asc={asc}
+                        mc={chart.angles?.mc ?? null}
+                        cusps={showHouses ? (chart.houses?.cusps ?? null) : null}
+                        aspects={chart.aspects.filter((a) => a.orb < 6 && aspectTypes.includes(a.type))}
+                        animate
+                        interactive={{
+                          scene,
+                          selection,
+                          emphasis,
+                          onSelect: applySelect,
+                          label: t(locale, 'explorerLabel'),
+                        }}
+                      />
+                      <LayerChips
+                        aspectTypes={aspectTypes}
+                        onAspectTypes={setAspectTypes}
+                        showHouses={showHouses}
+                        onShowHouses={setShowHouses}
+                        hasHouses={chart.houses != null}
+                        locale={locale}
+                      />
+                    </div>
+                    <Inspector
+                      scene={scene}
+                      selection={selection}
+                      onSelect={applySelect}
+                      locale={locale}
+                    />
+                  </div>
+                  <p class="sr-only" role="status">{announce}</p>
                   <p class="calc__receipt mono">
                     {chart.input.utc.toISOString().replace('T', ' · ').slice(0, 21)} UTC
                     {city ? ` · ${city.lat.toFixed(2)}°, ${city.lon.toFixed(2)}°` : ''}
@@ -475,7 +616,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
 
               {shareInput && (
                 <div class="calc__chart-share">
-                  <button class="btn calc__glass-btn" type="button" onClick={onCard} disabled={card === 'busy'} data-share-card>
+                  <button class="btn btn--glass" type="button" onClick={onCard} disabled={card === 'busy'} data-share-card>
                     <span>{card === 'busy' ? t(locale, 'rendering') : card === 'saved' ? t(locale, 'cardSaved') : t(locale, 'shareChart')}</span>
                     <span class="orb">{card === 'saved' ? '✓' : '↗'}</span>
                   </button>
@@ -488,15 +629,33 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                     <tr><th>{t(locale, 'body')}</th><th>{t(locale, 'position')}</th><th>{t(locale, 'sign')}</th>{chart.houses && <th>{t(locale, 'house')}</th>}<th><span class="sr-only">{t(locale, 'motion')}</span></th></tr>
                   </thead>
                   <tbody>
-                    {placements.map((p) => (
-                      <tr key={p.body}>
-                        <td><span class="calc__glyph"><PlanetGlyph body={p.body} size={15} /></span> {planetLabel(locale, p.body)}</td>
-                        <td class="mono">{p.label.split(' ')[0]}</td>
-                        <td><SignChip lon={p.lon} locale={locale} /></td>
-                        {chart.houses && <td class="mono">{p.house}</td>}
-                        <td class="mono calc__retro">{p.retrograde ? 'Rx' : ''}</td>
-                      </tr>
-                    ))}
+                    {placements.map((p) => {
+                      const inScene = scene.bodies.some((b) => b.body === p.body);
+                      const isSel = selection?.kind === 'body' && selection.body === p.body;
+                      const hue = signForLongitude(p.lon).hue;
+                      return (
+                        <tr key={p.body} data-selected={isSel ? 'true' : undefined} style={isSel ? `--sign:${hue}` : undefined}>
+                          <td>
+                            {inScene ? (
+                              <button
+                                class="calc__rowbtn"
+                                type="button"
+                                aria-pressed={isSel}
+                                onClick={() => applySelect(isSel ? null : { kind: 'body', body: p.body })}
+                              >
+                                <span class="calc__glyph"><PlanetGlyph body={p.body} size={15} /></span> {planetLabel(locale, p.body)}
+                              </button>
+                            ) : (
+                              <><span class="calc__glyph"><PlanetGlyph body={p.body} size={15} /></span> {planetLabel(locale, p.body)}</>
+                            )}
+                          </td>
+                          <td class="mono">{p.label.split(' ')[0]}</td>
+                          <td><SignChip lon={p.lon} locale={locale} /></td>
+                          {chart.houses && <td class="mono">{p.house}</td>}
+                          <td class="mono calc__retro">{p.retrograde ? 'Rx' : ''}</td>
+                        </tr>
+                      );
+                    })}
                   </tbody>
                 </table>
               </div>
@@ -505,11 +664,26 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                 <details class="calc__aspects">
                   <summary>{t(locale, 'aspectsFound')} - {chart.aspects.length} {t(locale, 'found')}</summary>
                   <ul>
-                    {chart.aspects.map((a) => (
-                      <li key={`${a.a}${a.b}${a.type}`} class="mono">
-                        <PlanetGlyph body={a.a} size={13} class="calc__pg" /> {planetLabel(locale, a.a)} <AspectGlyph type={a.type} size={13} class="calc__pg" /> {aspectLabel(locale, a.type)} <PlanetGlyph body={a.b} size={13} class="calc__pg" /> {planetLabel(locale, a.b)} · {t(locale, 'orb')} {a.orb.toFixed(1)}° {a.applying ? `· ${t(locale, 'applying')}` : ''}
-                      </li>
-                    ))}
+                    {chart.aspects.map((a) => {
+                      const ref: EntityRef = { kind: 'aspect', a: a.a, b: a.b, type: a.type };
+                      const inScene = scene.aspects.some((x) => x.a === a.a && x.b === a.b && x.type === a.type);
+                      const isSel = selection?.kind === 'aspect'
+                        && selection.a === a.a && selection.b === a.b && selection.type === a.type;
+                      const line = (
+                        <>
+                          <PlanetGlyph body={a.a} size={13} class="calc__pg" /> {planetLabel(locale, a.a)} <AspectGlyph type={a.type} size={13} class="calc__pg" /> {aspectLabel(locale, a.type)} <PlanetGlyph body={a.b} size={13} class="calc__pg" /> {planetLabel(locale, a.b)} · {t(locale, 'orb')} {a.orb.toFixed(1)}° {a.applying ? `· ${t(locale, 'applying')}` : ''}
+                        </>
+                      );
+                      return (
+                        <li key={`${a.a}${a.b}${a.type}`} class="mono" data-selected={isSel ? 'true' : undefined}>
+                          {inScene ? (
+                            <button class="calc__rowbtn" type="button" aria-pressed={isSel} onClick={() => applySelect(isSel ? null : ref)}>
+                              {line}
+                            </button>
+                          ) : line}
+                        </li>
+                      );
+                    })}
                   </ul>
                 </details>
               )}
@@ -529,7 +703,11 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                       {!chart.houses && <p class="calc__read-note">{t(locale, 'readNoHouses')}</p>}
                       <ul class="calc__read-list">
                         {reading.ps.map((p) => (
-                          <li key={p.body}>
+                          <li
+                            key={p.body}
+                            data-selected={selection?.kind === 'body' && selection.body === p.body ? 'true' : undefined}
+                            style={selection?.kind === 'body' && selection.body === p.body ? `--sign:${signBySlug(p.signSlug).hue}` : undefined}
+                          >
                             <p>
                               <PlanetGlyph body={p.body} size={14} class="calc__pg" />{' '}
                               {chart.houses && p.house
@@ -551,7 +729,10 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                         <h3>{t(locale, 'readAspects')}</h3>
                         <ul class="calc__read-list">
                           {reading.top.map((a) => (
-                            <li key={`${a.a}${a.b}${a.type}`}>
+                            <li
+                              key={`${a.a}${a.b}${a.type}`}
+                              data-selected={selection?.kind === 'aspect' && selection.a === a.a && selection.b === a.b && selection.type === a.type ? 'true' : undefined}
+                            >
                               <p>{natalAspectLine(a.a, a.type, a.b)}</p>
                               <a class="calc__read-more" href={`/learn/aspects/${a.type}/`}>
                                 {aspectLabel(locale, a.type)} · {a.orb.toFixed(1)}° →
@@ -598,7 +779,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
           {mode === 'full' && shareInput && (
             <div class="calc__share">
               <div class="calc__actions">
-                <button class="btn btn--ghost" type="button" onClick={onCopyLink} data-share-link>
+                <button class="btn btn--glass" type="button" onClick={onCopyLink} data-share-link>
                   <span>{share === 'copied' ? t(locale, 'linkCopied') : t(locale, 'copyChartLink')}</span>
                   <span class="orb">{share === 'copied' ? '✓' : '⧉'}</span>
                 </button>

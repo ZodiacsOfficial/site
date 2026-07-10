@@ -6,6 +6,7 @@ import SEO from '../components/SEO.astro';
 import SiteNav from '../components/SiteNav.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import SourcesLine, { type SourceLink } from '../components/SourcesLine.astro';
+import GlassDefs from '../components/GlassDefs.astro';
 import { normalizeLocale, t, type Locale } from '../lib/i18n';
 
 interface Props {
@@ -20,6 +21,8 @@ interface Props {
   jsonLd?: Record<string, unknown>[];
   locale?: Locale;
   sources?: SourceLink[];
+  /** Include the liquid-glass lens defs so `.btn--glass` refracts on Chromium. */
+  glass?: boolean;
 }
 
 const props = Astro.props;
@@ -131,6 +134,8 @@ const FAVICON = "data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/sv
     <div class="dust" aria-hidden="true"></div>
 
     <SiteNav locale={locale} />
+
+    {props.glass && <GlassDefs />}
 
     <main id="main">
       <slot />
