@@ -4,6 +4,7 @@ import Base from '../../../layouts/Base.astro';
 import Faq from '../../../components/Faq.astro';
 import SignIcon from '../../../components/SignIcon.astro';
 import { SIGNS } from '../../../lib/signs';
+import { EDITOR_AUTHOR } from '../../../lib/editorial';
 
 const HOUSE_SLUGS = [
   'first-house', 'second-house', 'third-house', 'fourth-house',
@@ -49,7 +50,7 @@ const jsonLd = [
     url: `https://zodiacs.org/learn/houses/${slug}/`,
     datePublished: entry.data.published.toISOString(),
     dateModified: entry.data.updated.toISOString(),
-    author: { '@type': 'Organization', name: 'Zodiacs.org', url: 'https://zodiacs.org/' },
+    author: EDITOR_AUTHOR,
     publisher: { '@id': 'https://zodiacs.org/#org' },
     mainEntityOfPage: { '@type': 'WebPage', '@id': `https://zodiacs.org/learn/houses/${slug}/` },
     inLanguage: 'en',

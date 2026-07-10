@@ -6,6 +6,7 @@ import SEO from '../components/SEO.astro';
 import SiteNav from '../components/SiteNav.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import SourcesLine, { type SourceLink } from '../components/SourcesLine.astro';
+import EditorialLine from '../components/EditorialLine.astro';
 import GlassDefs from '../components/GlassDefs.astro';
 import { normalizeLocale, t, type Locale } from '../lib/i18n';
 
@@ -141,6 +142,7 @@ const FAVICON = "data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/sv
       <slot />
     </main>
 
+    {props.type === 'article' && <EditorialLine locale={locale} />}
     <SourcesLine sources={props.sources} />
     <SiteFooter locale={locale} />
 
