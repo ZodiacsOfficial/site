@@ -34,8 +34,8 @@
       <a class="brand" href="/">Zodiacs.org</a>
       <nav class="nav" aria-label="Related links">
         <a href="/sdk/">SDK</a>
-        <a href="/build-ai-astrology-app/">AI astrology</a>
-        <a href="/simastry-zodiacs-sdk/">Proof pattern</a>
+        <a href="/sdk/#ai-astrology">AI astrology</a>
+        <a href="/sdk/#simastry">Integration pattern</a>
         <a href="/llms.txt">llms.txt</a>
       </nav>
     </header>
@@ -105,14 +105,12 @@
       <pre><code>import { getCrossChainZodiacsOwnership } from "@zodiacs/sdk";
 import { getZodiacIdentityContext } from "@zodiacs/sdk/identity";
 
-const ownership = await getCrossChainZodiacsOwnership({
-  solanaOwner,
-  baseOwner,
-  connection,
-  publicClient
+const ownershipByChain = await getCrossChainZodiacsOwnership({
+  solana: { ownerAddress: solanaOwner, connection },
+  base: { ownerAddress: baseOwner, publicClient }
 });
 
-const aura = getZodiacIdentityContext(ownership, {
+const aura = getZodiacIdentityContext(ownershipByChain, {
   sunSign: "leo"
 });
 
@@ -135,10 +133,10 @@ const aiAstrologistContext = {
 
     <section class="links" aria-label="Resources">
       <a class="link" href="/sdk/"><strong>Zodiacs SDK</strong><span>Install and APIs</span></a>
-      <a class="link" href="/simastry-zodiacs-sdk/"><strong>Simastry proof pattern</strong><span>Usage story</span></a>
-      <a class="link" href="/build-ai-astrology-app/"><strong>AI astrology app guide</strong><span>Context patterns</span></a>
-      <a class="link" href="/cosmic-receipt/"><strong>Cosmic Receipt</strong><span>Shareable identity facts</span></a>
-      <a class="link" href="/zodiac-ownership-api/"><strong>Ownership API</strong><span>Read-only SDK surface</span></a>
+      <a class="link" href="/sdk/#simastry"><strong>Simastry pattern</strong><span>Usage story</span></a>
+      <a class="link" href="/sdk/#ai-astrology"><strong>AI astrology guide</strong><span>Context patterns</span></a>
+      <a class="link" href="/sdk/#receipt-preview"><strong>Identity receipt</strong><span>Shareable ownership facts</span></a>
+      <a class="link" href="/sdk/#core-api"><strong>Ownership API</strong><span>Read-only SDK surface</span></a>
     </section>
 
     <footer>Official registry. Public reads. No custody. No signing. No transactions.</footer>

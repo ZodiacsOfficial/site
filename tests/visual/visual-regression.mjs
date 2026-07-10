@@ -114,6 +114,13 @@ async function capture(browser, baseURL, testCase) {
       configurable: true,
       value: () => Promise.resolve(),
     });
+    // Keep cinematic surfaces on their deterministic poster. A moving video
+    // frame is not a stable visual baseline, and Save-Data is already a real
+    // product path whose layout is identical to the animated tier.
+    Object.defineProperty(Navigator.prototype, 'connection', {
+      configurable: true,
+      get: () => ({ saveData: true, effectiveType: '4g' }),
+    });
   }, fixedNow);
 
   const fragment = testCase.result ? kahloFragment() : '';
