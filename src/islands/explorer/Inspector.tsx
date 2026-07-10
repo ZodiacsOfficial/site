@@ -40,6 +40,8 @@ interface Props {
   selection: EntityRef | null;
   onSelect: (e: EntityRef | null) => void;
   locale: Locale;
+  /** Optional slot above the heading — the tour's "Back to the tour" link. */
+  banner?: ComponentChildren;
 }
 
 /** Small pastel sign disc (the icon tiers rule: ≤24px → 48 tier). */
@@ -61,7 +63,7 @@ function Receipt({ label, children }: { label: string; children: ComponentChildr
   );
 }
 
-export default function Inspector({ scene, selection, onSelect, locale }: Props) {
+export default function Inspector({ scene, selection, onSelect, locale, banner }: Props) {
   const [detent, setDetent] = useState<'half' | 'full'>('half');
   const headingRef = useRef<HTMLHeadingElement>(null);
   const dragFrom = useRef<number | null>(null);
@@ -270,6 +272,7 @@ export default function Inspector({ scene, selection, onSelect, locale }: Props)
         onPointerUp={onHandlePointerUp}
         aria-hidden="true"
       />
+      {banner}
       <div class="insp__head">
         <h3 class="insp__title" tabIndex={-1} ref={headingRef} data-inspector-heading>{title}</h3>
         <button class="insp__close" type="button" onClick={() => onSelect(null)} aria-label={t(locale, 'inspectorClose')}>×</button>

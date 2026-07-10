@@ -34,6 +34,7 @@ import { saveChart } from '../lib/profile/store';
 import { decodeChartLink, encodeChartLink } from '../lib/share';
 import type { ShareChartInput } from '../lib/share';
 import type { PositionsShareChart } from '../lib/share-positions';
+import type { TourVisual } from '../lib/scene/chapters';
 import { ENGINE_VERSION } from '../lib/engine/types';
 import type { Chart, HouseSystem } from '../lib/engine/types';
 import type { City } from '../lib/geo/search';
@@ -47,6 +48,7 @@ type Mode = 'full' | 'moon' | 'rising';
 interface Props { mode: Mode; locale?: Locale }
 
 type ShareSurfaceModule = typeof import('./PositionsShareSurface');
+type TourModule = typeof import('./explorer/tour');
 
 const DIGNITY_KEY = {
   domicile: 'dignityDomicile',
@@ -99,6 +101,11 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   const selFromUrl = useRef(false);
   const wheelboxRef = useRef<HTMLDivElement>(null);
 
+  // ── Guided tour (lazy — the module never loads until asked for) ──
+  const [tourMod, setTourMod] = useState<TourModule | null>(null);
+  const [tourOpen, setTourOpen] = useState(false);
+  const [tourVisual, setTourVisual] = useState<TourVisual | null>(null);
+
   const scene = useMemo(
     () => (chart && mode === 'full' ? buildSceneModel(chart) : null),
     [chart, mode],
@@ -107,6 +114,40 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
     () => (scene ? emphasisFor(scene, selection) : { highlight: new Set<string>(), soft: new Set<string>() }),
     [scene, selection],
   );
+
+  // What the wheel actually renders: the tour's render-only overrides win
+  // while nothing is selected; a live selection always outranks the tour's
+  // lighting, and the user's houses toggle outranks the morph preview.
+  const viewScene = tourVisual?.scene ?? scene;
+  const viewEmphasis = selection ? emphasis : (tourVisual?.emphasis ?? emphasis);
+  const viewCusps = showHouses
+    ? (tourVisual?.cusps ?? chart?.houses?.cusps ?? null)
+    : null;
+
+  function track(name: string, props: Record<string, string>) {
+    (window as unknown as {
+      zodiacsAnalytics?: { track?: (n: string, p: Record<string, string>) => void };
+    }).zodiacsAnalytics?.track?.(name, props);
+  }
+
+  async function startTour() {
+    try {
+      const mod = tourMod ?? await import('./explorer/tour');
+      setTourMod(mod);
+      setTourOpen(true);
+      track('tour_start', { variant: 'v1' });
+      requestAnimationFrame(() => wheelboxRef.current?.scrollIntoView({
+        behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+        block: 'center',
+      }));
+    } catch {
+      setError(t(locale, 'chartError'));
+    }
+  }
+  function exitTour() {
+    setTourOpen(false);
+    setTourVisual(null);
+  }
 
   /** Spoken summary of a selection for the polite live region. */
   function describeSelection(ref: EntityRef): string {
@@ -201,8 +242,11 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
     } else if (e.key === 'Enter' && selection) {
       e.preventDefault();
       (document.querySelector('[data-inspector-heading]') as HTMLElement | null)?.focus();
-    } else if (e.key === 'Escape' && selection) {
-      applySelect(null);
+    } else if (e.key === 'Escape') {
+      // First Escape clears a selection; a second (or a bare one) ends the
+      // tour. The tour card handles its own Escape and stops propagation.
+      if (selection) applySelect(null);
+      else if (tourOpen) exitTour();
     }
   }
 
@@ -322,6 +366,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
         flags: resolved.flags,
       });
       setChart(result);
+      track('result_rendered', { mode });
       setShareInput({
         date: input.date,
         time: input.timeKnown ? input.time : null,
@@ -359,6 +404,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
 
   function onSave() {
     if (!chart || !city) return;
+    track('chart_save', { source: tourOpen ? 'tour' : 'free' });
     const sun = chart.bodies.find((b) => b.body === 'Sun')!;
     const defaultName = `${signName(signForLongitude(sun.lon), locale)} ${t(locale, 'sun')} · ${date}`;
     const status = saveChart({
@@ -628,13 +674,13 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                           bodies={chart.bodies.filter((b) => b.body !== 'South Node')}
                           asc={asc}
                           mc={chart.angles?.mc ?? null}
-                          cusps={showHouses ? (chart.houses?.cusps ?? null) : null}
+                          cusps={viewCusps}
                           aspects={chart.aspects.filter((a) => a.orb < 6 && aspectTypes.includes(a.type))}
                           animate
                           interactive={{
-                            scene,
+                            scene: viewScene ?? scene,
                             selection,
-                            emphasis,
+                            emphasis: viewEmphasis,
                             onSelect: applySelect,
                             label: t(locale, 'explorerLabel'),
                           }}
@@ -649,12 +695,45 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                         locale={locale}
                       />
                     </div>
-                    <Inspector
-                      scene={scene}
-                      selection={selection}
-                      onSelect={applySelect}
-                      locale={locale}
-                    />
+                    {tourOpen && tourMod ? (
+                      <tourMod.ChartTour
+                        scene={scene}
+                        chart={chart}
+                        locale={locale}
+                        selection={selection}
+                        loadEngine={loadEngine}
+                        buildScene={buildSceneModel}
+                        topAspects={topAspects}
+                        renderInspector={(inspScene, banner) => (
+                          <Inspector
+                            scene={inspScene}
+                            selection={selection}
+                            onSelect={applySelect}
+                            locale={locale}
+                            banner={banner}
+                          />
+                        )}
+                        onSelect={applySelect}
+                        onAnnounce={setAnnounce}
+                        onVisual={setTourVisual}
+                        onEnsure={({ houses, allAspects }) => {
+                          if (houses) setShowHouses(true);
+                          if (allAspects) setAspectTypes(ALL_ASPECT_TYPES);
+                        }}
+                        onTrack={track}
+                        onSave={onSave}
+                        onShare={openShareDialog}
+                        onExit={exitTour}
+                        returnFocus={() => wheelboxRef.current?.focus()}
+                      />
+                    ) : (
+                      <Inspector
+                        scene={scene}
+                        selection={selection}
+                        onSelect={applySelect}
+                        locale={locale}
+                      />
+                    )}
                   </div>
                   <p class="sr-only" role="status">{announce}</p>
                   <p class="calc__receipt mono">
@@ -744,7 +823,13 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
               {/* Guided reading — the tables above are the data; this is the order. */}
               {reading && (
                 <section class="calc__read" aria-labelledby="calc-read-title">
-                  <h2 id="calc-read-title" class="calc__read-title">{t(locale, 'readInOrder')}</h2>
+                  <div class="calc__read-head">
+                    <h2 id="calc-read-title" class="calc__read-title">{t(locale, 'readInOrder')}</h2>
+                    <button class="btn btn--glass calc__tour-start" type="button" onClick={startTour} data-tour-start>
+                      <span>{t(locale, 'tourStart')}</span>
+                      <span class="orb">→</span>
+                    </button>
+                  </div>
                   <p class="calc__read-intro">{t(locale, 'readIntro')}</p>
                   <ol class="calc__read-steps">
                     <li class="calc__read-step">
