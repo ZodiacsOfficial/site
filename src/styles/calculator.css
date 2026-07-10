@@ -121,6 +121,7 @@
 .place__option.is-active { background: rgba(198, 204, 218, 0.09); }
 .place__name { font-size: 14.5px; font-weight: 550; color: var(--text); }
 .place__meta { font-size: 12px; color: var(--faint); }
+.place__empty { padding: 9px 10px; font-size: 13px; color: var(--muted); }
 .place__chip {
   display: inline-flex;
   align-items: center;
@@ -506,7 +507,11 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.place__chip-value:focus { outline: none; }
+.place__chip-value:focus-visible {
+  outline: 2px solid color-mix(in oklab, var(--accent) 75%, white);
+  outline-offset: 3px;
+  border-radius: var(--r-xs);
+}
 
 /* Label row: field label left, "not known" toggle right — siblings, not
    nested labels. */

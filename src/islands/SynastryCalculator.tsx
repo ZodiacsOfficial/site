@@ -4,7 +4,7 @@
  * that path. Birth-detail entry (or a stale engine version) lazy-loads
  * the engine the same way the chart calculator does.
  */
-import { useEffect, useMemo, useState } from 'preact/hooks';
+import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import PlaceSearch from './PlaceSearch';
 import SignChip from './SignChip';
 import PlanetGlyph from '../components/PlanetGlyph';
@@ -215,7 +215,7 @@ function SlotForm({
                   type="checkbox" checked={!slot.timeKnown}
                   onChange={(e) => { const v = !(e.target as HTMLInputElement).checked; setSlot((s) => ({ ...s, timeKnown: v })); }}
                 />
-                {t(locale, 'notKnown')}
+                {t(locale, 'noBirthTime')}
               </label>
             </div>
             <input
@@ -279,6 +279,9 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
   const [autoRan, setAutoRan] = useState(false);
   const [invite, setInvite] = useState<ShareChartInput | null>(null);
   const [inviteState, setInviteState] = useState<'idle' | 'copied' | 'manual'>('idle');
+  const resultHeadingRef = useRef<HTMLHeadingElement>(null);
+  const errorRef = useRef<HTMLParagraphElement>(null);
+  const focusAfterComputeRef = useRef(false);
 
   useEffect(() => {
     const p = loadProfile();
@@ -380,6 +383,7 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
   async function compare(e?: Event) {
     e?.preventDefault();
     if (!slotReady(slotA) || !slotReady(slotB) || sameSaved) return;
+    focusAfterComputeRef.current = e !== undefined;
     setBusy(true);
     setError('');
     try {
@@ -407,6 +411,19 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
     }
   }, [autoRan, profile, slotA, slotB]);
 
+  useEffect(() => {
+    if (busy || !focusAfterComputeRef.current) return;
+    if (error) {
+      errorRef.current?.focus();
+      focusAfterComputeRef.current = false;
+      return;
+    }
+    if (result) {
+      resultHeadingRef.current?.focus();
+      focusAfterComputeRef.current = false;
+    }
+  }, [busy, error, result]);
+
   const pairHref = useMemo(() => {
     if (!result) return null;
     const sunA = result.a.bodies.find((b) => b.body === 'Sun');
@@ -419,7 +436,7 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
 
   return (
     <div class="calc">
-      <form class="calc__form shell" onSubmit={compare}>
+      <form class="calc__form shell" onSubmit={compare} aria-busy={busy}>
         <div class="core calc__core">
           <div class="syn__slots">
             <SlotForm slot={slotA} setSlot={(u) => setSlotA(u)} charts={charts} idPrefix="syn-a" fallbackLabel={t(locale, 'personA')} locale={locale} />
@@ -430,7 +447,7 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
             <span>{busy ? t(locale, 'comparing') : t(locale, 'compareCharts')}</span>
             <span class="orb">↗</span>
           </button>
-          <p class="calc__privacy">{t(locale, 'privacyDeviceShort')}</p>
+          <p class="calc__privacy">{t(locale, 'privacyDevice')}</p>
           {sameSaved && (
             <p class="field__help">{t(locale, 'sameChart')}</p>
           )}
@@ -441,12 +458,13 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
               {locale === 'es' ? ' aparecerán aquí como opciones de un toque, así la segunda comparación será más rápida que la primera.' : ' appear here as one-tap choices, so the second comparison is faster than the first.'}
             </p>
           )}
-          {error && <p class="calc__error" role="alert">{error}</p>}
+          {error && <p class="calc__error" role="alert" tabIndex={-1} ref={errorRef}>{error}</p>}
         </div>
       </form>
 
       {result && (
         <div class="calc__result">
+          <h2 class="sr-only" tabIndex={-1} ref={resultHeadingRef}>{t(locale, 'compatibility')}</h2>
           {(!result.a.timeKnown || !result.b.timeKnown) && (
             <p class="notice" role="status">
               {t(locale, 'compareNoTimeNotice')} {[result.a, result.b].filter((p) => !p.timeKnown).map((p) => p.label).join(locale === 'es' ? ' y ' : ' and ')},

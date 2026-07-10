@@ -43,6 +43,9 @@ The CONTENT boundary survives the visual merge:
 
 ## Generated vs source (do not hand-edit generated output)
 
+`public/sdk/index.html` is hand-authored source. Edit it directly; no generator
+owns that page.
+
 - `public/registry/{sign}/index.html` ← `node scripts/build-sign-pages.mjs`
   (data: `scripts/sign-data.mjs` + `public/registry/zodiacs.registry.json`)
 - `public/archive/` (+ feeds) ← `node scripts/build-archive.mjs`

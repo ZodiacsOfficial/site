@@ -6,7 +6,7 @@
  * is named as unknowable before the birth minute. Engine loads lazily
  * on first compute (bundle rule: only full.ts touches the ephemeris).
  */
-import { useState } from 'preact/hooks';
+import { useEffect, useRef, useState } from 'preact/hooks';
 import { signBySlug, signForLongitude, type Sign } from '../lib/signs';
 import { birthdaySlug } from '../lib/birthdays';
 import { localizePath, normalizeLocale, t, type Locale } from '../lib/i18n';
@@ -41,9 +41,13 @@ export default function BabyZodiac({ locale: rawLocale = 'en' }: Props) {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [reading, setReading] = useState<Reading | null>(null);
+  const resultHeadingRef = useRef<HTMLHeadingElement>(null);
+  const errorRef = useRef<HTMLParagraphElement>(null);
+  const focusAfterComputeRef = useRef(false);
 
   const compute = async (e: Event) => {
     e.preventDefault();
+    focusAfterComputeRef.current = true;
     setError(null);
     setReading(null);
     if (!due) {
@@ -108,9 +112,22 @@ export default function BabyZodiac({ locale: rawLocale = 'en' }: Props) {
     setBusy(false);
   };
 
+  useEffect(() => {
+    if (busy || !focusAfterComputeRef.current) return;
+    if (error) {
+      errorRef.current?.focus();
+      focusAfterComputeRef.current = false;
+      return;
+    }
+    if (reading) {
+      resultHeadingRef.current?.focus();
+      focusAfterComputeRef.current = false;
+    }
+  }, [busy, error, reading]);
+
   return (
     <div class="calc">
-      <form class="calc__form" onSubmit={compute}>
+      <form class="calc__form" onSubmit={compute} aria-busy={busy}>
         <div class="calc__grid">
           <label class="field">
             <span class="field__label mono">{t(locale, 'babyDueDate')}</span>
@@ -132,11 +149,12 @@ export default function BabyZodiac({ locale: rawLocale = 'en' }: Props) {
             <span class="orb">{busy ? '…' : '→'}</span>
           </button>
         </div>
-        {error && <p class="calc__error" role="alert">{error}</p>}
+        {error && <p class="calc__error" role="alert" tabIndex={-1} ref={errorRef}>{error}</p>}
       </form>
 
       {reading && (
-        <div class="calc__result" role="status">
+        <div class="calc__result">
+          <h2 class="sr-only" tabIndex={-1} ref={resultHeadingRef}>{t(locale, 'babyCompute')}</h2>
           <div class="baby-block">
             <h3>{t(locale, 'babySunHead')}</h3>
             {reading.sun.kind === 'single' ? (

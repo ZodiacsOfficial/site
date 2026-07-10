@@ -19,43 +19,68 @@ export default function PlaceSearch({ onSelect, selected, id = 'place', locale: 
   const [active, setActive] = useState(0);
   const [error, setError] = useState(false);
   const debounce = useRef<number>();
+  const requestToken = useRef(0);
   const rootRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const close = (e: MouseEvent) => {
-      if (!rootRef.current?.contains(e.target as Node)) setOpen(false);
+      if (!rootRef.current?.contains(e.target as Node)) {
+        window.clearTimeout(debounce.current);
+        requestToken.current += 1;
+        setOpen(false);
+      }
     };
     document.addEventListener('click', close);
-    return () => document.removeEventListener('click', close);
+    return () => {
+      document.removeEventListener('click', close);
+      window.clearTimeout(debounce.current);
+      requestToken.current += 1;
+    };
   }, []);
 
   function onInput(value: string) {
+    const token = ++requestToken.current;
+    const trimmed = value.trim();
     setQuery(value);
     onSelect(null);
     window.clearTimeout(debounce.current);
+    setResults([]);
+    setActive(0);
+    setOpen(false);
+    setError(false);
+
+    if (trimmed.length < 2) return;
+
     debounce.current = window.setTimeout(async () => {
       try {
-        setError(false);
-        const cities = await searchCities(value);
+        const cities = await searchCities(trimmed);
+        if (token !== requestToken.current) return;
         setResults(cities);
         setActive(0);
-        setOpen(cities.length > 0);
+        setOpen(true);
       } catch {
+        if (token !== requestToken.current) return;
+        setResults([]);
+        setOpen(false);
         setError(true);
       }
     }, 120);
   }
 
   function choose(city: City) {
+    requestToken.current += 1;
+    window.clearTimeout(debounce.current);
     onSelect(city);
     setQuery('');
+    setResults([]);
     setOpen(false);
+    setError(false);
   }
 
   function onKeyDown(e: KeyboardEvent) {
     if (!open) return;
-    if (e.key === 'ArrowDown') { e.preventDefault(); setActive((a) => Math.min(a + 1, results.length - 1)); }
-    else if (e.key === 'ArrowUp') { e.preventDefault(); setActive((a) => Math.max(a - 1, 0)); }
+    if (e.key === 'ArrowDown' && results.length > 0) { e.preventDefault(); setActive((a) => Math.min(a + 1, results.length - 1)); }
+    else if (e.key === 'ArrowUp' && results.length > 0) { e.preventDefault(); setActive((a) => Math.max(a - 1, 0)); }
     else if (e.key === 'Enter') { e.preventDefault(); if (results[active]) choose(results[active]); }
     else if (e.key === 'Escape') setOpen(false);
   }
@@ -97,23 +122,29 @@ export default function PlaceSearch({ onSelect, selected, id = 'place', locale: 
       {error && <p class="place__error" role="alert">{t(locale, 'placeError')}</p>}
       {open && (
         <ul class="place__list" id={`${id}-list`} role="listbox">
-          {results.map((c, i) => (
-            <li key={`${c.name}${c.lat}${c.lon}`} role="none">
-              <button
-                type="button"
-                id={`${id}-opt-${i}`}
-                role="option"
-                aria-selected={i === active}
-                tabIndex={-1}
-                class={i === active ? 'place__option is-active' : 'place__option'}
-                onMouseEnter={() => setActive(i)}
-                onClick={() => choose(c)}
-              >
-                <span class="place__name">{c.name}</span>
-                <span class="place__meta">{[c.admin1, c.country].filter(Boolean).join(', ')}</span>
-              </button>
+          {results.length > 0 ? (
+            results.map((c, i) => (
+              <li key={`${c.name}${c.lat}${c.lon}`} role="none">
+                <button
+                  type="button"
+                  id={`${id}-opt-${i}`}
+                  role="option"
+                  aria-selected={i === active}
+                  tabIndex={-1}
+                  class={i === active ? 'place__option is-active' : 'place__option'}
+                  onMouseEnter={() => setActive(i)}
+                  onClick={() => choose(c)}
+                >
+                  <span class="place__name">{c.name}</span>
+                  <span class="place__meta">{[c.admin1, c.country].filter(Boolean).join(', ')}</span>
+                </button>
+              </li>
+            ))
+          ) : (
+            <li class="place__empty" role="option" aria-disabled="true">
+              {t(locale, 'placeNoResults')}
             </li>
-          ))}
+          )}
         </ul>
       )}
     </div>
