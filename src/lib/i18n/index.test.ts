@@ -6,6 +6,13 @@ describe('i18n helpers', () => {
     expect(Object.keys(UI.es).sort()).toEqual(Object.keys(UI.en).sort());
   });
 
+  it('uses the canonical browser-only privacy disclosure', () => {
+    expect(UI.en.privacyDevice).toBe(
+      'The entire calculation happens in your browser; your birth date, time, and place are not sent to a chart API.',
+    );
+    expect(Object.keys(UI.en).filter((key) => key.startsWith('privacyDevice'))).toEqual(['privacyDevice']);
+  });
+
   it('localizes only supported core paths', () => {
     expect(localizePath('es', '/birth-chart/')).toBe('/es/birth-chart/');
     expect(localizePath('es', '/compatibility/aries-taurus/')).toBe('/compatibility/aries-taurus/');

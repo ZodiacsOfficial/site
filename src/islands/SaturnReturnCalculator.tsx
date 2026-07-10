@@ -3,7 +3,7 @@
  * engine and the return-scanner lazy-load together on submit; a date
  * alone is enough — time and place refine dates by days, never years.
  */
-import { useState } from 'preact/hooks';
+import { useEffect, useRef, useState } from 'preact/hooks';
 import PlaceSearch from './PlaceSearch';
 import SignChip from './SignChip';
 import { SATURN_RETURN } from '../lib/interpretations';
@@ -36,12 +36,16 @@ export default function SaturnReturnCalculator({ locale: rawLocale = 'en' }: { l
   const [result, setResult] = useState<SaturnReturnResult | null>(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
+  const resultHeadingRef = useRef<HTMLHeadingElement>(null);
+  const errorRef = useRef<HTMLParagraphElement>(null);
+  const focusAfterComputeRef = useRef(false);
 
   const approximate = !showDetail || time === '' || city === null;
 
   async function compute(e: Event) {
     e.preventDefault();
     if (!date) return;
+    focusAfterComputeRef.current = true;
     setBusy(true);
     setError('');
     try {
@@ -58,12 +62,25 @@ export default function SaturnReturnCalculator({ locale: rawLocale = 'en' }: { l
     }
   }
 
+  useEffect(() => {
+    if (busy || !focusAfterComputeRef.current) return;
+    if (error) {
+      errorRef.current?.focus();
+      focusAfterComputeRef.current = false;
+      return;
+    }
+    if (result) {
+      resultHeadingRef.current?.focus();
+      focusAfterComputeRef.current = false;
+    }
+  }, [busy, error, result]);
+
   const now = new Date();
   const natalSign = result ? signForLongitude(result.natalLon) : null;
 
   return (
     <div class="calc">
-      <form class="calc__form shell" onSubmit={compute}>
+      <form class="calc__form shell" onSubmit={compute} aria-busy={busy}>
         <div class="core calc__core">
           <div class="calc__fields">
             <div class="field">
@@ -106,13 +123,14 @@ export default function SaturnReturnCalculator({ locale: rawLocale = 'en' }: { l
             <span>{busy ? t(locale, 'computing') : t(locale, 'findSaturnReturn')}</span>
             <span class="orb">↗</span>
           </button>
-          <p class="calc__privacy">{t(locale, 'privacyDeviceShort')}</p>
-          {error && <p class="calc__error" role="alert">{error}</p>}
+          <p class="calc__privacy">{t(locale, 'privacyDevice')}</p>
+          {error && <p class="calc__error" role="alert" tabIndex={-1} ref={errorRef}>{error}</p>}
         </div>
       </form>
 
       {result && natalSign && (
         <div class="calc__result">
+          <h2 class="sr-only" tabIndex={-1} ref={resultHeadingRef}>{t(locale, 'saturnReturn')}</h2>
           <div class="sr__natal shell tinted" style={`--sign:${natalSign.hue}`}>
             <div class="core tinted sr__natal-core">
               <span class="mono--label">{t(locale, 'natalSaturn')}</span>

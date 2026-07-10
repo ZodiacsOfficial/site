@@ -23,6 +23,9 @@ const label = month ? monthLabel(month, 'es') : null;
       <p>Los planetas de hoy comparados con los tuyos, dentro de 3° de exactitud. Elige una carta guardada o ingresa tus datos; nada sale de tu dispositivo.</p>
     </div>
     <TransitTracker locale="es" client:load />
+    <noscript>
+      <p>Esta calculadora de tránsitos necesita JavaScript. Activa JavaScript y recarga la página para comparar el cielo actual con tu carta natal en tu navegador.</p>
+    </noscript>
   </section>
 
   {month && (

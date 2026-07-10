@@ -154,6 +154,29 @@
     a { color: inherit; text-decoration: none; }
     a:hover { color: var(--gold-bright); }
 
+    .skip-link {
+      position: fixed;
+      top: 12px;
+      left: 12px;
+      z-index: 1000;
+      padding: 10px 14px;
+      border: 1px solid var(--hair-2);
+      border-radius: 8px;
+      background: var(--ink);
+      color: var(--bg);
+      font-family: var(--mono);
+      font-size: 12px;
+      transform: translateY(calc(-100% - 24px));
+      transition: transform 160ms var(--ease);
+    }
+
+    .skip-link:focus {
+      color: var(--bg);
+      outline: 2px solid var(--ink);
+      outline-offset: 3px;
+      transform: translateY(0);
+    }
+
     .shell {
       width: min(100%, 460px);
       min-height: 100vh;
@@ -271,6 +294,7 @@
       100% { box-shadow: 0 0 0 0   rgba(95,160,140, 0.0),  0 0 4px 0 rgba(95,160,140, 0.0); }
     }
     @media (prefers-reduced-motion: reduce) {
+      .skip-link { transition: none; }
       .eyebrow::before { animation: none; box-shadow: 0 0 6px rgba(95,160,140, 0.55); }
     }
 
@@ -1598,6 +1622,7 @@
   </style>
 </head>
 <body>
+  <a class="skip-link" href="#main">Skip to main content</a>
   <div class="shell">
   <div class="wnav-wrap">
     <nav class="wnav" aria-label="Primary" data-wnav>
@@ -1634,7 +1659,7 @@
     </nav>
   </div>
 
-    <main>
+    <main id="main" tabindex="-1">
       <section class="hero" aria-labelledby="sdk-title">
         <div class="eyebrow">Official interface</div>
         <h1 id="sdk-title">Build astrology apps with verified Zodiac ownership.</h1>

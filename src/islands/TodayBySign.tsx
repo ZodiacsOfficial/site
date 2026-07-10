@@ -26,13 +26,13 @@ export default function TodayBySign({ locale: rawLocale = 'en' }: Props) {
         <span class="mono tbs__stamp">{daily.date} · {daily.moon.phase}</span>
       </div>
 
-      <div class="tbs__signs" role="tablist" aria-label={t(locale, 'todayBySignTitle')}>
+      <div class="tbs__signs" role="group" aria-label={t(locale, 'todayBySignTitle')}>
         {SIGNS.map((s) => (
           <button
             key={s.slug}
             type="button"
-            role="tab"
-            aria-selected={sel === s.slug}
+            aria-pressed={sel === s.slug}
+            aria-controls="today-by-sign-reading"
             class={`tbs__sign${sel === s.slug ? ' tbs__sign--on' : ''}`}
             style={`--sign:${s.hue}`}
             onClick={() => setSel((cur) => (cur === s.slug ? null : s.slug))}
@@ -46,30 +46,32 @@ export default function TodayBySign({ locale: rawLocale = 'en' }: Props) {
         ))}
       </div>
 
-      {reading && active ? (
-        <div class="tbs__read" style={`--sign:${active.hue}`} role="tabpanel" aria-live="polite">
-          <div class="tbs__read-head">
-            <strong>{active.name} · {t(locale, 'today')}</strong>
-            <span class="mono tbs__read-stamp">{t(locale, 'todaySolarNote')}</span>
+      <div id="today-by-sign-reading" aria-live="polite">
+        {reading && active ? (
+          <div class="tbs__read" style={`--sign:${active.hue}`}>
+            <div class="tbs__read-head">
+              <strong>{active.name} · {t(locale, 'today')}</strong>
+              <span class="mono tbs__read-stamp">{t(locale, 'todaySolarNote')}</span>
+            </div>
+            <ul class="tbs__lines">
+              {reading.lines.map((l) => (
+                <li key={l.receipt}>
+                  <p>{l.text}</p>
+                  <span class="mono tbs__receipt">
+                    {l.body && <PlanetGlyph body={l.body} hue={l.hue} size={13} class="rcpt-glyph" />}
+                    {l.receipt}
+                  </span>
+                </li>
+              ))}
+            </ul>
+            <a class="tbs__more" href={localizePath(locale, `/horoscopes/${active.slug}/`)}>
+              {active.name} {t(locale, 'todayHoroscopeLink')} →
+            </a>
           </div>
-          <ul class="tbs__lines">
-            {reading.lines.map((l) => (
-              <li key={l.receipt}>
-                <p>{l.text}</p>
-                <span class="mono tbs__receipt">
-                  {l.body && <PlanetGlyph body={l.body} hue={l.hue} size={13} class="rcpt-glyph" />}
-                  {l.receipt}
-                </span>
-              </li>
-            ))}
-          </ul>
-          <a class="tbs__more" href={localizePath(locale, `/horoscopes/${active.slug}/`)}>
-            {active.name} {t(locale, 'todayHoroscopeLink')} →
-          </a>
-        </div>
-      ) : (
-        <p class="tbs__prompt">{t(locale, 'todayBySignPrompt')}</p>
-      )}
+        ) : (
+          <p class="tbs__prompt">{t(locale, 'todayBySignPrompt')}</p>
+        )}
+      </div>
     </section>
   );
 }

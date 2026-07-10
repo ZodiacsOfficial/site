@@ -60,6 +60,9 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   const [card, setCard] = useState<'idle' | 'busy' | 'saved' | 'error'>('idle');
   const [fromLink, setFromLink] = useState(false);
   const resultRef = useRef<HTMLDivElement>(null);
+  const resultHeadingRef = useRef<HTMLHeadingElement>(null);
+  const errorRef = useRef<HTMLParagraphElement>(null);
+  const focusAfterComputeRef = useRef(false);
 
   // Warm the ephemeris while the visitor types.
   useEffect(() => {
@@ -91,8 +94,21 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
     runChart({
       date: decoded.date, time: decoded.time ?? '', timeKnown: decoded.timeKnown,
       city: linkCity, houseSystem: decoded.houseSystem,
-    });
+    }, false);
   }, []);
+
+  useEffect(() => {
+    if (busy || !focusAfterComputeRef.current) return;
+    if (error) {
+      errorRef.current?.focus();
+      focusAfterComputeRef.current = false;
+      return;
+    }
+    if (chart) {
+      resultHeadingRef.current?.focus();
+      focusAfterComputeRef.current = false;
+    }
+  }, [busy, error, chart]);
 
   const canCompute = date !== '' && city !== null && (!timeKnown || time !== '')
     && !(mode === 'rising' && !timeKnown);
@@ -101,7 +117,8 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
     date: string; time: string; timeKnown: boolean; city: City; houseSystem: HouseSystem;
   }
 
-  async function runChart(input: RunInput) {
+  async function runChart(input: RunInput, focusAfterCompute: boolean) {
+    focusAfterComputeRef.current = focusAfterCompute;
     setBusy(true);
     setError('');
     setSaved('idle');
@@ -153,7 +170,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   function compute(e: Event) {
     e.preventDefault();
     if (!canCompute || !city) return;
-    runChart({ date, time, timeKnown, city, houseSystem });
+    runChart({ date, time, timeKnown, city, houseSystem }, true);
   }
 
   function onSave() {
@@ -272,7 +289,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
 
   return (
     <div class="calc">
-      <form class="calc__form shell" onSubmit={compute}>
+      <form class="calc__form shell" onSubmit={compute} aria-busy={busy}>
         <div class="core calc__core">
           <div class="calc__fields">
             <div class="field">
@@ -342,12 +359,19 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
             <span class="orb">↗</span>
           </button>
           <p class="calc__privacy">{t(locale, 'privacyDevice')}</p>
-          {error && <p class="calc__error" role="alert">{error}</p>}
+          {error && <p class="calc__error" role="alert" tabIndex={-1} ref={errorRef}>{error}</p>}
         </div>
       </form>
 
       {chart && sun && moon && (
         <div class="calc__result" ref={resultRef}>
+          <h2 class="sr-only" tabIndex={-1} ref={resultHeadingRef}>
+            {mode === 'moon'
+              ? t(locale, 'yourMoonSign')
+              : mode === 'rising'
+                ? t(locale, 'yourRisingSign')
+                : t(locale, 'birthChart')}
+          </h2>
           {/* Notices */}
           {chart.flags.includes('dst-gap') && (
             <p class="notice" role="status">{t(locale, 'dstGapNotice')}</p>
@@ -460,7 +484,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
               <div class="calc__table-wrap">
                 <table class="calc__table">
                   <thead>
-                    <tr><th>{t(locale, 'body')}</th><th>{t(locale, 'position')}</th><th>{t(locale, 'sign')}</th>{chart.houses && <th>{t(locale, 'house')}</th>}<th></th></tr>
+                    <tr><th>{t(locale, 'body')}</th><th>{t(locale, 'position')}</th><th>{t(locale, 'sign')}</th>{chart.houses && <th>{t(locale, 'house')}</th>}<th><span class="sr-only">{t(locale, 'motion')}</span></th></tr>
                   </thead>
                   <tbody>
                     {placements.map((p) => (

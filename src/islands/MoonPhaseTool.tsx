@@ -3,7 +3,7 @@
  * and the moon of any date — a birthday, usually — via the lazy-loaded
  * full engine for a precise longitude.
  */
-import { useEffect, useState } from 'preact/hooks';
+import { useEffect, useRef, useState } from 'preact/hooks';
 import PlaceSearch from './PlaceSearch';
 import SignChip from './SignChip';
 import {
@@ -22,7 +22,7 @@ const loadEngine = () => (enginePromise ??= import('../lib/engine/full'));
  * The lit portion of the disc as one path: the limb on the bright side,
  * back along the terminator ellipse. Angle 0 = new, 180 = full.
  */
-function PhaseDisc({ angle, size = 120 }: { angle: number; size?: number }) {
+function PhaseDisc({ angle, size = 120, ariaHidden = false }: { angle: number; size?: number; ariaHidden?: boolean }) {
   const r = 44;
   const cosA = Math.cos((angle * Math.PI) / 180);
   const waxing = angle < 180;
@@ -32,7 +32,12 @@ function PhaseDisc({ angle, size = 120 }: { angle: number; size?: number }) {
   const termSweep = bowRight ? 0 : 1;
   const lit = `M 50 ${50 - r} A ${r} ${r} 0 0 ${limbSweep} 50 ${50 + r} A ${rx} ${r} 0 0 ${termSweep} 50 ${50 - r} Z`;
   return (
-    <svg class="mp__disc" viewBox="0 0 100 100" width={size} height={size} role="img" aria-label={`Moon, ${Math.round(moonIlluminationFromAngle(angle) * 100)}% illuminated`}>
+    <svg
+      class="mp__disc" viewBox="0 0 100 100" width={size} height={size}
+      role={ariaHidden ? undefined : 'img'}
+      aria-hidden={ariaHidden ? 'true' : undefined}
+      aria-label={ariaHidden ? undefined : `Moon, ${Math.round(moonIlluminationFromAngle(angle) * 100)}% illuminated`}
+    >
       <circle cx="50" cy="50" r={r} fill="var(--void-2)" stroke="var(--hair-2)" stroke-width="1" />
       {angle > 2 && angle < 358 && <path d={lit} fill="var(--ink-1, #E8EAF0)" opacity="0.92" />}
     </svg>
@@ -63,12 +68,16 @@ export default function MoonPhaseTool({ locale: rawLocale = 'en' }: { locale?: L
   const [result, setResult] = useState<Lookup | null>(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
+  const resultHeadingRef = useRef<HTMLHeadingElement>(null);
+  const errorRef = useRef<HTMLParagraphElement>(null);
+  const focusAfterComputeRef = useRef(false);
 
   useEffect(() => { setNow(new Date()); }, []);
 
   async function lookup(e: Event) {
     e.preventDefault();
     if (!date) return;
+    focusAfterComputeRef.current = true;
     setBusy(true);
     setError('');
     try {
@@ -123,12 +132,25 @@ export default function MoonPhaseTool({ locale: rawLocale = 'en' }: { locale?: L
     }
   }
 
+  useEffect(() => {
+    if (busy || !focusAfterComputeRef.current) return;
+    if (error) {
+      errorRef.current?.focus();
+      focusAfterComputeRef.current = false;
+      return;
+    }
+    if (result) {
+      resultHeadingRef.current?.focus();
+      focusAfterComputeRef.current = false;
+    }
+  }, [busy, error, result]);
+
   return (
     <div class="calc mp">
       {/* Same shell before hydration so the page doesn't jump. */}
       <div class="mp__tonight shell">
         <div class="core mp__tonight-core">
-          <PhaseDisc angle={now ? moonPhaseAngle(now) : 0} />
+          <PhaseDisc angle={now ? moonPhaseAngle(now) : 0} ariaHidden={now === null} />
           <div class="mp__tonight-facts">
             <em class="kicker">{t(locale, 'rightNow')}</em>
             <strong class="mp__phase">{now ? moonPhaseName(now) : t(locale, 'moonReadingSky')}</strong>
@@ -144,7 +166,7 @@ export default function MoonPhaseTool({ locale: rawLocale = 'en' }: { locale?: L
         </div>
       </div>
 
-      <form class="calc__form shell" onSubmit={lookup}>
+      <form class="calc__form shell" onSubmit={lookup} aria-busy={busy}>
         <div class="core calc__core">
           <div class="calc__fields">
             <div class="field">
@@ -175,12 +197,14 @@ export default function MoonPhaseTool({ locale: rawLocale = 'en' }: { locale?: L
             <span>{busy ? t(locale, 'computing') : t(locale, 'findThatMoon')}</span>
             <span class="orb">↗</span>
           </button>
-          {error && <p class="calc__error" role="alert">{error}</p>}
+          <p class="calc__privacy">{t(locale, 'privacyDevice')}</p>
+          {error && <p class="calc__error" role="alert" tabIndex={-1} ref={errorRef}>{error}</p>}
         </div>
       </form>
 
       {result && (
         <div class="calc__result">
+          <h2 class="sr-only" tabIndex={-1} ref={resultHeadingRef}>{t(locale, 'moonPhase')}</h2>
           <div class="mp__lookup shell tinted" style={`--sign:${signForLongitude(result.lon).hue}`}>
             <div class="core tinted mp__tonight-core">
               <PhaseDisc angle={result.angle} />

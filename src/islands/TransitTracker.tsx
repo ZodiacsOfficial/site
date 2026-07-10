@@ -4,7 +4,7 @@
  * live math, so the engine lazy-loads on every run — the same idiom as
  * the chart calculator.
  */
-import { useEffect, useState } from 'preact/hooks';
+import { useEffect, useRef, useState } from 'preact/hooks';
 import PlaceSearch from './PlaceSearch';
 import SignChip from './SignChip';
 import PlanetGlyph from '../components/PlanetGlyph';
@@ -117,6 +117,9 @@ export default function TransitTracker({ locale: rawLocale = 'en' }: { locale?: 
   const [result, setResult] = useState<Result | null>(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
+  const resultHeadingRef = useRef<HTMLHeadingElement>(null);
+  const errorRef = useRef<HTMLParagraphElement>(null);
+  const focusAfterComputeRef = useRef(false);
 
   useEffect(() => {
     const load = () => {
@@ -145,6 +148,7 @@ export default function TransitTracker({ locale: rawLocale = 'en' }: { locale?: 
   async function check(e?: Event) {
     e?.preventDefault();
     if (!ready || busy) return;
+    focusAfterComputeRef.current = e !== undefined;
     setBusy(true);
     setError('');
     try {
@@ -174,9 +178,22 @@ export default function TransitTracker({ locale: rawLocale = 'en' }: { locale?: 
     }
   }
 
+  useEffect(() => {
+    if (busy || !focusAfterComputeRef.current) return;
+    if (error) {
+      errorRef.current?.focus();
+      focusAfterComputeRef.current = false;
+      return;
+    }
+    if (result) {
+      resultHeadingRef.current?.focus();
+      focusAfterComputeRef.current = false;
+    }
+  }, [busy, error, result]);
+
   return (
     <div class="calc">
-      <form class="calc__form shell" onSubmit={check}>
+      <form class="calc__form shell" onSubmit={check} aria-busy={busy}>
         <div class="core calc__core">
           <div class="trans__grid">
             <div class="trans__side">
@@ -219,7 +236,7 @@ export default function TransitTracker({ locale: rawLocale = 'en' }: { locale?: 
                           type="checkbox" checked={!slot.timeKnown}
                           onChange={(e) => { const v = !(e.target as HTMLInputElement).checked; setSlot((s) => ({ ...s, timeKnown: v })); }}
                         />
-                        {t(locale, 'notKnown')}
+                        {t(locale, 'noBirthTime')}
                       </label>
                     </div>
                     <input
@@ -257,7 +274,7 @@ export default function TransitTracker({ locale: rawLocale = 'en' }: { locale?: 
             <span>{busy ? t(locale, 'checking') : t(locale, 'checkTransits')}</span>
             <span class="orb">↗</span>
           </button>
-          <p class="calc__privacy">{t(locale, 'privacyDeviceShort')}</p>
+          <p class="calc__privacy">{t(locale, 'privacyDevice')}</p>
           {charts.length === 0 && (
             <p class="field__help">
               {locale === 'es' ? 'Las cartas que ' : 'Charts you '}
@@ -265,12 +282,13 @@ export default function TransitTracker({ locale: rawLocale = 'en' }: { locale?: 
               {locale === 'es' ? ' aparecerán aquí como opciones de un toque, para que la próxima revisión sea más rápida.' : ' appear here as one-tap choices, so the next check skips the typing.'}
             </p>
           )}
-          {error && <p class="calc__error" role="alert">{error}</p>}
+          {error && <p class="calc__error" role="alert" tabIndex={-1} ref={errorRef}>{error}</p>}
         </div>
       </form>
 
       {result && (
         <div class="calc__result">
+          <h2 class="sr-only" tabIndex={-1} ref={resultHeadingRef}>{t(locale, 'transits')}</h2>
           {!result.natal.timeKnown && (
             <p class="notice" role="status">
               {t(locale, 'noTransitTimeNotice')}
