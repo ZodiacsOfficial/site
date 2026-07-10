@@ -559,16 +559,19 @@
        frosted blur floor. ── */
     .glass-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
     html.zdx-lens .cine__cta .btn {
-      background: rgba(10, 12, 17, 0.34);
-      backdrop-filter: url(#zdx-lens-cta);
-      -webkit-backdrop-filter: url(#zdx-lens-cta);
-      border-color: rgba(238,241,247,0.30);
+      background: rgba(10, 12, 17, 0.30);
+      /* brightness() lifts the dark bottom scrim behind the CTAs so the lens
+         reads as vivid glass here (the hub's footage is darker than the main
+         hero's wheel); the extra saturate deepens the refracted colour. */
+      backdrop-filter: url(#zdx-lens-cta) brightness(1.16) saturate(1.1);
+      -webkit-backdrop-filter: url(#zdx-lens-cta) brightness(1.16) saturate(1.1);
+      border-color: rgba(238,241,247,0.34);
       box-shadow:
-        inset 0 1px 0 rgba(255,255,255,0.20),
-        inset 0 -1px 0 rgba(255,255,255,0.06),
+        inset 0 1px 0 rgba(255,255,255,0.28),
+        inset 0 -10px 20px -14px rgba(255,255,255,0.06),
         0 10px 30px -12px rgba(0,0,0,0.55);
     }
-    html.zdx-lens .cine__cta .btn:hover { background: rgba(10, 12, 17, 0.50); }
+    html.zdx-lens .cine__cta .btn:hover { background: rgba(10, 12, 17, 0.46); }
     html.zdx-lens .cine__cta .btn--primary { border-color: rgba(238,241,247,0.34); }
     /* The unified nav pill refracts the footage on Chromium too — parity with
        the main site's nav (SiteNav.astro: html.zdx-lens .nav-wrap .nav). The
