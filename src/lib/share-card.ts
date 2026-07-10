@@ -17,6 +17,11 @@ import type { Chart } from './engine/types';
 
 export type CardOutcome = 'shared' | 'downloaded' | 'cancelled';
 
+export interface ShareCardOptions {
+  /** Replace the birth receipt and dated filename with positions-only metadata. */
+  hideBirthDetails?: boolean;
+}
+
 const W = 1080;
 const H = 1350;
 const BG = '#060709';
@@ -105,6 +110,27 @@ function formatDateLine(input: ShareChartInput): string {
   return parts.join(' · ');
 }
 
+/** Receipt rendered below the wheel. Kept pure so privacy can be regression-tested. */
+export function chartCardReceipt(
+  chart: Pick<Chart, 'engineVersion'>,
+  input: ShareChartInput,
+  options: ShareCardOptions = {},
+): string {
+  return options.hideBirthDetails
+    ? `Engine ${chart.engineVersion}`
+    : formatDateLine(input);
+}
+
+/** Download/share-sheet filename. Positions-only cards must not leak the input date. */
+export function chartCardFilename(
+  input: ShareChartInput,
+  options: ShareCardOptions = {},
+): string {
+  return options.hideBirthDetails
+    ? 'zodiacs-chart-positions.png'
+    : `zodiacs-chart-${input.date}.png`;
+}
+
 /** Shrink until the line fits — twelve-letter signs three times over is real. */
 function fitText(ctx: CanvasRenderingContext2D, text: string, maxWidth: number, startPx: number, minPx: number, weight: number, family: string): number {
   let px = startPx;
@@ -116,7 +142,11 @@ function fitText(ctx: CanvasRenderingContext2D, text: string, maxWidth: number, 
   return px;
 }
 
-async function drawCard(chart: Chart, input: ShareChartInput): Promise<Blob> {
+export async function drawCard(
+  chart: Chart,
+  input: ShareChartInput,
+  options: ShareCardOptions = {},
+): Promise<Blob> {
   const sun = chart.bodies.find((b) => b.body === 'Sun');
   const moon = chart.bodies.find((b) => b.body === 'Moon');
   if (!sun || !moon) throw new Error('chart missing luminaries');
@@ -194,7 +224,7 @@ async function drawCard(chart: Chart, input: ShareChartInput): Promise<Blob> {
   // Receipt + footer.
   ctx.fillStyle = INK_2;
   ctx.font = `400 26px ${MONO}`;
-  ctx.fillText(formatDateLine(input), W / 2, 1218);
+  ctx.fillText(chartCardReceipt(chart, input, options), W / 2, 1218);
 
   // Wordmark — the display serif set as spaced small caps, an old-almanac /
   // inscriptional register rather than the techy monospace.
@@ -210,9 +240,13 @@ async function drawCard(chart: Chart, input: ShareChartInput): Promise<Blob> {
   return blob;
 }
 
-export async function saveChartCard(chart: Chart, input: ShareChartInput): Promise<CardOutcome> {
-  const blob = await drawCard(chart, input);
-  const file = new File([blob], `zodiacs-chart-${input.date}.png`, { type: 'image/png' });
+export async function saveChartCard(
+  chart: Chart,
+  input: ShareChartInput,
+  options: ShareCardOptions = {},
+): Promise<CardOutcome> {
+  const blob = await drawCard(chart, input, options);
+  const file = new File([blob], chartCardFilename(input, options), { type: 'image/png' });
 
   if (navigator.canShare?.({ files: [file] })) {
     try {

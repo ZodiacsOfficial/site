@@ -33,6 +33,7 @@ import { moonPhaseName } from '../lib/engine/lite';
 import { saveChart } from '../lib/profile/store';
 import { decodeChartLink, encodeChartLink } from '../lib/share';
 import type { ShareChartInput } from '../lib/share';
+import type { PositionsShareChart } from '../lib/share-positions';
 import { ENGINE_VERSION } from '../lib/engine/types';
 import type { Chart, HouseSystem } from '../lib/engine/types';
 import type { City } from '../lib/geo/search';
@@ -44,6 +45,8 @@ import type { AspectType } from '../lib/engine/types';
 type Mode = 'full' | 'moon' | 'rising';
 
 interface Props { mode: Mode; locale?: Locale }
+
+type ShareSurfaceModule = typeof import('./PositionsShareSurface');
 
 const DIGNITY_KEY = {
   domicile: 'dignityDomicile',
@@ -80,6 +83,9 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   const [share, setShare] = useState<CopyLinkState>('idle');
   const [card, setCard] = useState<'idle' | 'busy' | 'saved' | 'error'>('idle');
   const [fromLink, setFromLink] = useState(false);
+  const [positionsOnly, setPositionsOnly] = useState<PositionsShareChart | null>(null);
+  const [shareSurface, setShareSurface] = useState<ShareSurfaceModule | null>(null);
+  const [shareDialogOpen, setShareDialogOpen] = useState(false);
   const resultRef = useRef<HTMLDivElement>(null);
   const resultHeadingRef = useRef<HTMLHeadingElement>(null);
   const errorRef = useRef<HTMLParagraphElement>(null);
@@ -207,12 +213,51 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
     idle(warm);
   }, [loadEngine]);
 
-  // A shared chart arrives in the fragment (#c=…) — parse, prefill,
-  // compute, then strip the token from the bar so screenshots and
-  // copied URLs don't carry someone's birth data further than intended.
+  // A shared chart arrives in the fragment. A v1 #c token carries birth
+  // input and computes as before; a v2 #p token is loaded into a deliberately
+  // reduced, read-only view. Never choose between two conflicting formats.
   useEffect(() => {
     if (mode !== 'full') return;
-    const token = new URLSearchParams(window.location.hash.slice(1)).get('c');
+    const params = new URLSearchParams(window.location.hash.slice(1));
+    const clearFragment = () => history.replaceState(null, '', window.location.pathname + window.location.search);
+
+    if (params.has('c') && params.has('p')) {
+      clearFragment();
+      let active = true;
+      import('./PositionsShareSurface')
+        .then((surface) => {
+          if (active) setError(surface.shareText(locale, 'shareLinkAmbiguous'));
+        })
+        .catch(() => {
+          if (active) setError(t(locale, 'chartError'));
+        });
+      return () => { active = false; };
+    }
+
+    if (params.has('p')) {
+      const token = params.get('p') ?? '';
+      let active = true;
+      import('./PositionsShareSurface')
+        .then((surface) => {
+          if (!active) return;
+          const decoded = surface.decodePositionsToken(token);
+          if (!decoded) {
+            setError(surface.shareText(locale, 'positionsLinkInvalid'));
+            return;
+          }
+          setChart(null);
+          setShareInput(null);
+          setPositionsOnly(decoded);
+          setShareSurface(surface);
+          clearFragment();
+        })
+        .catch(() => {
+          if (active) setError(t(locale, 'chartError'));
+        });
+      return () => { active = false; };
+    }
+
+    const token = params.get('c');
     if (!token) return;
     const decoded = decodeChartLink(token);
     if (!decoded) return;
@@ -226,7 +271,8 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
     setCity(linkCity);
     setHouseSystem(decoded.houseSystem);
     setFromLink(true);
-    history.replaceState(null, '', window.location.pathname + window.location.search);
+    setPositionsOnly(null);
+    clearFragment();
     runChart({
       date: decoded.date, time: decoded.time ?? '', timeKnown: decoded.timeKnown,
       city: linkCity, houseSystem: decoded.houseSystem,
@@ -260,6 +306,8 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
     setSaved('idle');
     setShare('idle');
     setCard('idle');
+    setPositionsOnly(null);
+    setShareDialogOpen(false);
     setMoonAmbiguous(false);
     try {
       const engine = await loadEngine();
@@ -342,13 +390,13 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   const shareUrl = () =>
     `${window.location.origin}${localizePath(locale, '/birth-chart/')}#c=${encodeChartLink(shareInput!)}`;
 
-  async function onCard() {
+  async function openShareDialog() {
     if (!chart || !shareInput) return;
-    setCard('busy');
+    setCard('idle');
     try {
-      const { saveChartCard } = await import('../lib/share-card');
-      const outcome = await saveChartCard(chart, shareInput);
-      setCard(outcome === 'cancelled' ? 'idle' : 'saved');
+      const surface = await import('./PositionsShareSurface');
+      setShareSurface(surface);
+      setShareDialogOpen(true);
     } catch (err) {
       console.error(err);
       setCard('error');
@@ -413,6 +461,9 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
     return cards;
   }, [chart, mode, sun, moon, asc, locale]);
 
+  const PositionsOnlyView = shareSurface?.PositionsOnlyResult;
+  const ShareDialog = shareSurface?.ChartShareDialog;
+
   return (
     <div class="calc">
       <form class="calc__form shell" onSubmit={compute} aria-busy={busy}>
@@ -466,6 +517,10 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
           {error && <p class="calc__error" role="alert" tabIndex={-1} ref={errorRef}>{error}</p>}
         </div>
       </form>
+
+      {positionsOnly && PositionsOnlyView && (
+        <PositionsOnlyView chart={positionsOnly} locale={locale} />
+      )}
 
       {chart && sun && moon && (
         <div class="calc__result" ref={resultRef}>
@@ -613,7 +668,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
 
               {shareInput && (
                 <div class="calc__chart-share">
-                  <button class="btn btn--glass" type="button" onClick={onCard} disabled={card === 'busy'} data-share-card>
+                  <button class="btn btn--glass" type="button" onClick={openShareDialog} disabled={card === 'busy'} data-share-card>
                     <span>{card === 'busy' ? t(locale, 'rendering') : card === 'saved' ? t(locale, 'cardSaved') : t(locale, 'shareChart')}</span>
                     <span class="orb">{card === 'saved' ? '✓' : '↗'}</span>
                   </button>
@@ -814,6 +869,18 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
             </aside>
           )}
         </div>
+      )}
+
+      {chart && shareInput && shareDialogOpen && ShareDialog && (
+        <ShareDialog
+          chart={chart}
+          input={shareInput}
+          locale={locale}
+          fullUrl={shareUrl()}
+          card={card}
+          onCardStateChange={setCard}
+          onClose={() => setShareDialogOpen(false)}
+        />
       )}
     </div>
   );
