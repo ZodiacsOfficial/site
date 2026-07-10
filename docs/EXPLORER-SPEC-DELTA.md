@@ -1,4 +1,4 @@
-# Chart Explorer — deltas from MASTER-PLAN.md §11 (Fable Task 1)
+# Chart Explorer — deltas from MASTER-PLAN.md §11 (Fable Tasks 1–2)
 
 Everything not listed here shipped as specified. Each delta states what
 changed and why; none weakens an invariant.
@@ -65,9 +65,69 @@ navigation for the whole region).
 Shipped 1.0 / 0.7 / 0.35 exactly as §11.6, via `emphasisFor`/`emphasisOpacity`
 so chapters and future renderers reuse the same lighting rule.
 
-## Budget actuals
+## Budget actuals (Task 1)
 
 `/birth-chart/` 48.0 KB gz of 50.3 budget (+5.4 over the pre-slice 42.6);
 homepage 40.1 of 42 (i18n dictionary growth shared across pages; the Wheel's
 scene imports were split into `scene/layout.ts` so the demo chart drags in no
 scene-builder dependencies). Zero new dependencies.
+
+---
+
+# Task 2 — the Guided Chart Tour (deltas from §11.5)
+
+## 9. Discrete chapters, no scroll-sync
+
+§11.5 offered scroll-synced prose as an option. Shipped: explicit prev/next,
+a dot rail (tablist, roving tabindex), keyboard, and horizontal swipe on the
+sheet handle. Scroll-sync fights the compute-scroll and sticky-inspector
+machinery and turns page scroll into an input with side effects; explicit
+navigation keeps the reader in charge and makes every transition announceable.
+
+## 10. Chapter-2 wheel tilt dropped
+
+The storyboard's playful tilt would put a CSS transform on the wheelbox,
+which corrupts the click-resolver's rect math (delta #1's geometric resolver
+maps client coordinates through the svg's bounding box). The anchor rotation
+to 0° Aries — a scene-level rebuild, not a CSS transform — carries the same
+teaching beat safely.
+
+## 11. URL chapter state deferred
+
+`?ch=` deep links into a chapter are postponed: the tour depends on a
+computed chart, so a cold deep link lands on a form, not a chapter. When
+saved-chart auto-restore lands, revisit.
+
+## 12. The house morph is a render-only preview
+
+§11.5's Whole↔Placidus toggle is shipped as a preview that recomputes the
+alternate system through the cached engine loader and hands the calculator a
+`TourVisual` override — it never calls `runChart` or `setHouseSystem`, so
+the auto-clear effects, the URL, and the form stay untouched. Leaving the
+chapter (or exiting) reverts it. The diff line ("N placements change house")
+comes from comparing the two scenes directly.
+
+## 13. Tour copy lives in the lazy module
+
+Chapter prose ships as module-local `TOUR_COPY` (en+es, key parity enforced
+by `satisfies`) inside the dynamically imported tour chunk, per the
+`SHARE_COPY` precedent. Only the entry-button label (`tourStart`) joins the
+shared i18n dictionary. This is what keeps the tour's ~9 chapters of prose
+out of every page's static closure.
+
+## 14. Bundling rule: the lazy chunk must not import shared modules
+
+Any static import from the tour chunk into a module the calculator already
+ships (scene/build, the Inspector, natal's ranking) makes Rolldown split that
+module into its own chunk, costing 0.5–1.5 KB of gzip context in the
+`/birth-chart/` static closure. Those three are injected as props instead
+(`buildScene`, `renderInspector`, `topAspects`). Modules that were already
+separate shared chunks (i18n, interpretations, glyphs, scene/types) are safe
+to import directly. Measured: closure identical chunk count to pre-tour (26).
+
+## Budget actuals (Task 2)
+
+`/birth-chart/` 50.8 KB gz of 51 budget (+0.6 for the entry button, view
+fallbacks, loader stub, and analytics emitters; §11.9's sanctioned ceiling is
+51.6). The tour chunk itself (7.8 KB gz) is dynamic-import-excluded and gated
+only by `chunk-max`. Homepage unchanged at 40.5 of 42. Zero new dependencies.
