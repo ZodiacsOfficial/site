@@ -102,7 +102,6 @@ const dataset = {
   spatialCoverage: 'Earth',
   variableMeasured: ['retrograde station instant', 'direct station instant', 'station longitude'],
   citation: sources.map((source) => ({ '@type': 'CreativeWork', name: source.label, url: source.href })),
-  hasPart: eventNodes.map((event) => ({ '@id': event['@id'] })),
 };
 
 const jsonLd = [

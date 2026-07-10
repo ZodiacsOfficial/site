@@ -109,7 +109,6 @@ const dataset = {
   spatialCoverage: 'Earth',
   variableMeasured: ['full moon instant', 'zodiac sign', 'zodiac longitude', 'traditional moon name'],
   citation: sources.map((source) => ({ '@type': 'CreativeWork', name: source.label, url: source.href })),
-  hasPart: eventNodes.map((event) => ({ '@id': event['@id'] })),
 };
 
 const jsonLd = [

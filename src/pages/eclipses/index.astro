@@ -123,7 +123,6 @@ const dataset = {
   spatialCoverage: 'Earth',
   variableMeasured: ['peak instant', 'eclipse type', 'zodiac sign', 'zodiac longitude', 'obscuration'],
   citation: sources.map((source) => ({ '@type': 'CreativeWork', name: source.label, url: source.href })),
-  hasPart: eventNodes.map((event) => ({ '@id': event['@id'] })),
 };
 
 const jsonLd = [
