@@ -57,7 +57,7 @@ const loadEngine = () => (enginePromise ??= import('../lib/engine/full'));
 function sceneHas(scene: ChartSceneModel, ref: EntityRef): boolean {
   switch (ref.kind) {
     case 'body': return scene.bodies.some((b) => b.body === ref.body);
-    case 'sign': return true;
+    case 'sign': return scene.signs.some((s) => s.slug === ref.sign);
     case 'house': return scene.houses != null && ref.house >= 1 && ref.house <= 12;
     case 'aspect': return scene.aspects.some((a) => a.a === ref.a && a.b === ref.b && a.type === ref.type);
     case 'angle': return scene.angles != null;
@@ -91,6 +91,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   const [showHouses, setShowHouses] = useState(true);
   const [announce, setAnnounce] = useState('');
   const selFromUrl = useRef(false);
+  const wheelboxRef = useRef<HTMLDivElement>(null);
 
   const scene = useMemo(
     () => (chart && mode === 'full' ? buildSceneModel(chart) : null),
@@ -122,16 +123,25 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
     }
   }
 
-  /** The one selection entry point: state + URL + announcement. */
+  /** The one selection entry point: state + URL + announcement + focus care. */
   function applySelect(ref: EntityRef | null) {
+    // Selecting a house someone can't see makes no sense — re-light the layer.
+    if (ref?.kind === 'house') setShowHouses(true);
     setSelection(ref);
-    setAnnounce(ref ? describeSelection(ref) : '');
+    setAnnounce(ref ? describeSelection(ref) : t(locale, 'selectionCleared'));
     try {
       const url = new URL(window.location.href);
       if (ref) url.searchParams.set('sel', entityId(ref));
       else url.searchParams.delete('sel');
       history.replaceState(null, '', url.pathname + url.search + url.hash);
     } catch { /* URL API unavailable — selection still works */ }
+    if (!ref) {
+      // Clearing may unmount the focused inspector (close button, Escape
+      // inside the card) — focus falls to <body> without this hand-back.
+      requestAnimationFrame(() => {
+        if (document.activeElement === document.body) wheelboxRef.current?.focus();
+      });
+    }
   }
 
   // A `?sel=` deep link applies once, after the first computed scene.
@@ -150,22 +160,38 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
     if (!sceneHas(scene, selection)) applySelect(null);
   }, [scene]);
 
-  // Hiding the house layer clears a house selection.
+  // Hiding the house layer clears a house selection; filtering an aspect
+  // type off clears a selected aspect of that type — never leave the wheel
+  // dimmed around a mark that is no longer rendered.
   useEffect(() => {
     if (!showHouses && selection?.kind === 'house') applySelect(null);
   }, [showHouses]);
+  useEffect(() => {
+    if (selection?.kind === 'aspect' && !aspectTypes.includes(selection.type)) applySelect(null);
+  }, [aspectTypes]);
 
   function onWheelKeyDown(e: KeyboardEvent) {
     if (!scene) return;
+    // Only keys pressed on the wheelbox itself — buttons inside the stage
+    // (layer chips) keep their native keyboard behavior.
+    if (e.target !== e.currentTarget) return;
     if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
       e.preventDefault();
-      const ordered = [...scene.bodies].sort((a, b) => a.lon - b.lon);
-      const at = selection?.kind === 'body'
-        ? ordered.findIndex((b) => b.body === selection.body)
-        : -1;
+      // Cycle order: bodies by longitude, then the marked angles — so the
+      // ASC/MC inspector notes are reachable without a pointer.
+      const cycle: EntityRef[] = [
+        ...[...scene.bodies].sort((a, b) => a.lon - b.lon)
+          .map((b): EntityRef => ({ kind: 'body', body: b.body })),
+        ...(scene.angles
+          ? [{ kind: 'angle', angle: 'asc' } as EntityRef, { kind: 'angle', angle: 'mc' } as EntityRef]
+          : []),
+      ];
+      const at = selection ? cycle.findIndex((c) => entityId(c) === entityId(selection)) : -1;
       const step = e.key === 'ArrowRight' ? 1 : -1;
-      const next = ordered[(at + step + ordered.length) % ordered.length];
-      applySelect({ kind: 'body', body: next.body });
+      const next = at === -1
+        ? (step === 1 ? cycle[0] : cycle[cycle.length - 1])
+        : cycle[(at + step + cycle.length) % cycle.length];
+      applySelect(next);
     } else if (e.key === 'Enter' && selection) {
       e.preventDefault();
       (document.querySelector('[data-inspector-heading]') as HTMLElement | null)?.focus();
@@ -566,28 +592,31 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
               <div class="calc__wheel shell">
                 <div class="core calc__wheel-core">
                   <div class="xplr">
-                    <div
-                      class="xplr__wheelbox"
-                      tabIndex={0}
-                      role="group"
-                      aria-label={t(locale, 'explorerLabel')}
-                      onKeyDown={onWheelKeyDown}
-                    >
-                      <Wheel
-                        bodies={chart.bodies.filter((b) => b.body !== 'South Node')}
-                        asc={asc}
-                        mc={chart.angles?.mc ?? null}
-                        cusps={showHouses ? (chart.houses?.cusps ?? null) : null}
-                        aspects={chart.aspects.filter((a) => a.orb < 6 && aspectTypes.includes(a.type))}
-                        animate
-                        interactive={{
-                          scene,
-                          selection,
-                          emphasis,
-                          onSelect: applySelect,
-                          label: t(locale, 'explorerLabel'),
-                        }}
-                      />
+                    <div class="xplr__stage">
+                      <div
+                        class="xplr__wheelbox"
+                        ref={wheelboxRef}
+                        tabIndex={0}
+                        role="group"
+                        aria-label={t(locale, 'explorerLabel')}
+                        onKeyDown={onWheelKeyDown}
+                      >
+                        <Wheel
+                          bodies={chart.bodies.filter((b) => b.body !== 'South Node')}
+                          asc={asc}
+                          mc={chart.angles?.mc ?? null}
+                          cusps={showHouses ? (chart.houses?.cusps ?? null) : null}
+                          aspects={chart.aspects.filter((a) => a.orb < 6 && aspectTypes.includes(a.type))}
+                          animate
+                          interactive={{
+                            scene,
+                            selection,
+                            emphasis,
+                            onSelect: applySelect,
+                            label: t(locale, 'explorerLabel'),
+                          }}
+                        />
+                      </div>
                       <LayerChips
                         aspectTypes={aspectTypes}
                         onAspectTypes={setAspectTypes}
@@ -666,7 +695,8 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                   <ul>
                     {chart.aspects.map((a) => {
                       const ref: EntityRef = { kind: 'aspect', a: a.a, b: a.b, type: a.type };
-                      const inScene = scene.aspects.some((x) => x.a === a.a && x.b === a.b && x.type === a.type);
+                      const inScene = aspectTypes.includes(a.type)
+                        && scene.aspects.some((x) => x.a === a.a && x.b === a.b && x.type === a.type);
                       const isSel = selection?.kind === 'aspect'
                         && selection.a === a.a && selection.b === a.b && selection.type === a.type;
                       const line = (

@@ -100,7 +100,7 @@ describe('entity ids', () => {
     }
   });
   it('rejects malformed ids instead of throwing', () => {
-    for (const bad of ['', 'body', 'house:13', 'house:x', 'aspect:Sun-vibes-Moon', 'angle:up', 'nope:1']) {
+    for (const bad of ['', 'body', 'house:13', 'house:x', 'sign:foobar', 'sign:ophiuchus', 'aspect:Sun-vibes-Moon', 'angle:up', 'nope:1']) {
       expect(parseEntityId(bad)).toBeNull();
     }
   });

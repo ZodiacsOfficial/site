@@ -17,6 +17,7 @@
     align-items: start;
   }
 }
+.xplr__stage { min-width: 0; }
 
 /* ── Wheel interactivity ── */
 .xplr__wheelbox { position: relative; min-width: 0; border-radius: var(--r-md); }
@@ -62,7 +63,14 @@
   border-color: var(--hair-3);
   background: rgba(198, 204, 218, 0.07);
 }
-.xplr-chip[aria-pressed='false'] { opacity: 0.55; text-decoration: line-through; }
+/* Off state stays AA-readable (--faint holds 4.5:1 on the void scale, per
+   tokens.css) — the strike-through and empty fill carry the "off". */
+.xplr-chip[aria-pressed='false'] {
+  color: var(--faint);
+  text-decoration: line-through;
+  border-color: var(--hair-1);
+}
+.xplr-chip[aria-pressed='false'] .xplr-chip__glyph { opacity: 0.5; }
 
 /* ── Inspector card (shared bones) ── */
 .insp {
@@ -94,7 +102,7 @@
   min-width: 0;
 }
 .insp__title:focus-visible { outline: 1.5px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
-.insp__rx { color: rgba(224, 176, 128, 0.9); font-size: 12px; }
+.insp__rx { color: var(--sign-sagittarius); font-size: 12px; }
 .insp__close {
   flex-shrink: 0;
   width: 28px; height: 28px;
@@ -211,6 +219,24 @@
 }
 @media (prefers-reduced-motion: reduce) {
   .insp--card { transition: none; }
+}
+
+/* While the sheet is up on mobile: (a) the result column reserves the
+   sheet's height so nothing can be focused fully behind it (WCAG 2.4.11),
+   and (b) the floating nav pill stands down — the inspection IS the page's
+   focus, and inside <main>'s stacking context the sheet could never paint
+   above the nav anyway. Browsers without :has() simply keep the old
+   behavior. */
+@media (max-width: 959.5px) {
+  body:has(.insp--card) .calc__result { padding-bottom: 48dvh; }
+  body:has(.insp--card) .nav-wrap {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--dur-1) var(--ease);
+  }
+}
+@media (max-width: 959.5px) and (prefers-reduced-motion: reduce) {
+  body:has(.insp--card) .nav-wrap { transition: none; }
 }
 
 /* ── Selection sync in the placements table + guided reading ── */

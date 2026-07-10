@@ -97,7 +97,10 @@ export function buildSceneModel(chart: Chart, opts: BuildOptions = {}): ChartSce
         midLon: norm(cuspLon + spanDeg / 2),
         occupants: bodies
           .filter((b) => b.house === i + 1)
-          .sort((a, b) => a.lon - b.lon)
+          // Zodiac order measured from the cusp, so a wedge crossing 0°
+          // Aries (possible under Placidus) still lists occupants in the
+          // order a reader walks the house.
+          .sort((a, b) => norm(a.lon - cuspLon) - norm(b.lon - cuspLon))
           .map((b) => b.body),
       };
     });

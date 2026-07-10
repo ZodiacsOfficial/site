@@ -182,8 +182,12 @@ export default function Wheel({
     <svg
       viewBox={`${-pad} ${-pad} ${size + pad * 2} ${size + pad * 2}`}
       width="100%"
-      role={ix ? 'group' : 'img'}
-      aria-label={ix ? ix.label : 'Birth chart wheel'}
+      // Interactive mode: the wrapping wheelbox carries the group role and
+      // label; hiding the SVG from AT avoids double-announcing it, and the
+      // placements table remains the canonical accessible structure.
+      role={ix ? undefined : 'img'}
+      aria-hidden={ix ? 'true' : undefined}
+      aria-label={ix ? undefined : 'Birth chart wheel'}
       class={[
         animate ? 'wheel wheel--animate' : 'wheel',
         ix ? 'wheel--interactive' : '',

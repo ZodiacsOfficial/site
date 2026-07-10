@@ -20,6 +20,14 @@ export type SignSlug =
   | 'aries' | 'taurus' | 'gemini' | 'cancer' | 'leo' | 'virgo'
   | 'libra' | 'scorpio' | 'sagittarius' | 'capricorn' | 'aquarius' | 'pisces';
 
+/** Runtime twin of SignSlug — this contract file stays import-free, so the
+ * twelve slugs are stated once more here for deep-link validation. */
+const SIGN_SLUGS: readonly SignSlug[] = [
+  'aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo',
+  'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces',
+];
+const SIGN_SLUG_SET: ReadonlySet<string> = new Set(SIGN_SLUGS);
+
 /** Anything selectable on a chart. */
 export type EntityRef =
   | { kind: 'body'; body: BodyName }
@@ -55,7 +63,7 @@ export function parseEntityId(id: string): EntityRef | null {
     case 'body':
       return rest.length > 0 && rest.length <= 24 ? { kind: 'body', body: rest as BodyName } : null;
     case 'sign':
-      return /^[a-z]{3,11}$/.test(rest) ? { kind: 'sign', sign: rest as SignSlug } : null;
+      return SIGN_SLUG_SET.has(rest) ? { kind: 'sign', sign: rest as SignSlug } : null;
     case 'house': {
       const n = Number(rest);
       return Number.isInteger(n) && n >= 1 && n <= 12 ? { kind: 'house', house: n } : null;

@@ -138,7 +138,10 @@ export default function Inspector({ scene, selection, onSelect, locale }: Props)
             </div>
           )}
           {sb.house != null && <p class="insp__read">{planetInHouseLine(sb.body, sb.house)}</p>}
-          {learn(`/learn/placements/${sb.body.toLowerCase().replace(' ', '-')}-in-${sb.sign}/`, `${planetLabel(locale, sb.body)} ${t(locale, 'readIn')} ${signName(sign, locale)}`)}
+          {/* Placement pages exist for the ten planets only — the nodes
+              have no learn page to link. */}
+          {!sb.body.includes('Node')
+            && learn(`/learn/placements/${sb.body.toLowerCase().replace(' ', '-')}-in-${sb.sign}/`, `${planetLabel(locale, sb.body)} ${t(locale, 'readIn')} ${signName(sign, locale)}`)}
         </>
       );
       break;
@@ -251,7 +254,15 @@ export default function Inspector({ scene, selection, onSelect, locale }: Props)
   };
 
   return (
-    <div class={`insp insp--card insp--${detent}`} data-explorer-inspector>
+    <div
+      class={`insp insp--card insp--${detent}`}
+      data-explorer-inspector
+      onKeyDown={(e: KeyboardEvent) => {
+        // Escape must work from inside the card too — the wheelbox handler
+        // can't hear keys once focus has moved here (Enter hand-off, chips).
+        if (e.key === 'Escape') { e.stopPropagation(); onSelect(null); }
+      }}
+    >
       {/* Sheet chrome exists in the DOM always; CSS shows it under 960px only. */}
       <div
         class="insp__handle"

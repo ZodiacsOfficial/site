@@ -27,15 +27,20 @@ import glassMaps from '../data/glass-maps.json';
 
 <style is:global>
   .glass-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
-  /* Chromium-only lens upgrade for glass buttons — scoped to pages that
-     actually carry the defs above. */
-  html.zdx-lens .btn--glass {
+  /* Chromium-only lens upgrade for glass buttons. Astro bundles global
+     styles by import graph, not render tree, so this rule ships to every
+     page — the `.glass-defs ~ main` combinator is what actually scopes it
+     to pages where the defs RENDER (GlassDefs sits immediately before
+     <main> in Base). Without the defs present, url(#zdx-lens-cta) paints
+     no backdrop at all, which is exactly the failure this prevents. */
+  html.zdx-lens .glass-defs ~ main .btn--glass {
     background: rgba(10, 12, 17, 0.34);
     backdrop-filter: url(#zdx-lens-cta);
     -webkit-backdrop-filter: url(#zdx-lens-cta);
   }
   @media (prefers-reduced-transparency: reduce) {
-    html.zdx-lens .btn--glass {
+    html.zdx-lens .glass-defs ~ main .btn--glass,
+    html.zdx-lens .glass-defs ~ main .btn--glass:hover {
       background: rgba(24, 28, 39, 0.92);
       backdrop-filter: none;
       -webkit-backdrop-filter: none;
