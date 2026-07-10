@@ -1549,6 +1549,10 @@
             its official Base counterpart points back to that origin. The
             registry is the source of truth for both.
           </p>
+          <p className="sec__disclosure">
+            Astrofolio is a related but separate consumer experience; Zodiacs.org
+            remains the astrology reference and the official Registry and SDK source.
+          </p>
 
           <div className="reg__facts">
             {facts.map((f, i) => (
@@ -3202,8 +3206,8 @@
             a: 'Through public onchain venues. Each sign’s catalogue page lists access routes, including Jupiter with the official Solana mint preloaded and the live market pair. Zodiacs.org itself never sells, swaps, or executes anything.' },
           { q: 'Do I need a special wallet?',
             a: 'Any wallet that holds SPL tokens on Solana or ERC-20 tokens on Base will do. The registry is wallet-neutral; the Onchain Access section lists familiar interfaces.' },
-          { q: 'Was there a presale or team allocation?',
-            a: 'No. The twelve were minted on Solana in 2024 and fully distributed. There was no presale, and the record has been public from the start.' }
+          { q: 'Does the registry prove presale or allocation history?',
+            a: 'No. The registry verifies official addresses and provenance; it does not independently establish presale, allocation, or trading-history claims.' }
         ]
       },
       {

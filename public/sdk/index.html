@@ -56,14 +56,6 @@
           { "@type": "SoftwareApplication", "name": "Simastry" }
         ],
         "isRelatedTo": [
-          { "@id": "https://zodiacs.org/astrofolio/#page" },
-          { "@id": "https://zodiacs.org/tools-for-building-astrology-apps/#article" },
-          { "@id": "https://zodiacs.org/astrology-sdk/#page" },
-          { "@id": "https://zodiacs.org/build-ai-astrology-app/#page" },
-          { "@id": "https://zodiacs.org/simastry-zodiacs-sdk/#page" },
-          { "@id": "https://zodiacs.org/zodiac-ownership-api/#page" },
-          { "@id": "https://zodiacs.org/cosmic-receipt/#page" },
-          { "@id": "https://zodiacs.org/astrofolio-sdk/#page" },
           { "@id": "https://zodiacs.org/sdk/examples/simastry-aura/#page" }
         ]
       },
@@ -1692,10 +1684,13 @@
         <nav class="jump-nav" aria-label="SDK page sections">
           <a href="#new-input">Context <span>↓</span></a>
           <a href="#use-cases">Build <span>↓</span></a>
-          <a href="#symbolic-resonance">Resonance <span>↓</span></a>
-          <a href="#icon-assets">Icons <span>↓</span></a>
+          <a href="#app-stack">App stack <span>↓</span></a>
           <a href="#quick-start">Quick start <span>↓</span></a>
           <a href="#core-api">API <span>↓</span></a>
+          <a href="#ai-astrology">AI context <span>↓</span></a>
+          <a href="#simastry">Simastry <span>↓</span></a>
+          <a href="#receipt-preview">Receipt <span>↓</span></a>
+          <a href="#astrofolio">Astrofolio <span>↓</span></a>
         </nav>
       </section>
 
@@ -1780,9 +1775,51 @@
         </div>
       </section>
 
-      <section class="section" id="symbolic-resonance" aria-labelledby="symbolic-resonance-title">
+      <section class="section" id="app-stack" aria-labelledby="app-stack-title">
         <div class="section__head">
           <span class="section__no">Nº 03</span>
+          <span class="section__title">App stack</span>
+        </div>
+        <h2 id="app-stack-title">Where the SDK fits.</h2>
+        <p class="lede">
+          A complete astrology product usually combines several layers. Use an
+          astronomical engine or chart service for natal positions, houses,
+          aspects, transits, and calendars. Add Zodiacs SDK only when the
+          product needs to recognize official Zodiacs and turn public ownership
+          into optional identity context.
+        </p>
+        <div class="grid grid--two">
+          <article class="card card--compact">
+            <span class="card__k">Calculation</span>
+            <h3 class="card__title">Birth chart engine</h3>
+            <p class="card__copy">Computes natal placements, houses, aspects, and chart geometry. This is separate from Zodiacs SDK.</p>
+          </article>
+          <article class="card card--compact">
+            <span class="card__k">Sky data</span>
+            <h3 class="card__title">Ephemeris layer</h3>
+            <p class="card__copy">Supplies planetary positions, transits, retrogrades, and dated calendars.</p>
+          </article>
+          <article class="card card--compact">
+            <span class="card__k">Verified context</span>
+            <h3 class="card__title">Zodiacs SDK</h3>
+            <p class="card__copy">Verifies official addresses, reads public ownership, computes identity facts, and supplies display assets.</p>
+          </article>
+          <article class="card card--compact">
+            <span class="card__k">Experience</span>
+            <h3 class="card__title">Product and AI surfaces</h3>
+            <p class="card__copy">Render readings, profiles, shelves, receipts, share cards, or conversations from structured inputs.</p>
+          </article>
+        </div>
+        <div class="note">
+          Zodiacs SDK complements chart and ephemeris tools; it does not replace
+          them. Its boundary is the official registry, public ownership, and
+          the identity context an app chooses to render from those facts.
+        </div>
+      </section>
+
+      <section class="section" id="symbolic-resonance" aria-labelledby="symbolic-resonance-title">
+        <div class="section__head">
+          <span class="section__no">Nº 04</span>
           <span class="section__title">Symbolic resonance</span>
         </div>
         <h2 id="symbolic-resonance-title">Facet copy for app surfaces.</h2>
@@ -1936,7 +1973,7 @@
 
       <section class="section" id="icon-assets" aria-labelledby="icon-assets-title">
         <div class="section__head">
-          <span class="section__no">Nº 04</span>
+          <span class="section__no">Nº 05</span>
           <span class="section__title">Brand kit</span>
         </div>
         <h2 id="icon-assets-title">Official Zodiac icons.</h2>
@@ -1979,7 +2016,7 @@ console.log(leo.packagePath);
 
       <section class="section" id="flow" aria-labelledby="flow-title">
         <div class="section__head">
-          <span class="section__no">Nº 05</span>
+          <span class="section__no">Nº 06</span>
           <span class="section__title">Flow</span>
         </div>
         <h2 id="flow-title">From public address to app surface.</h2>
@@ -2006,7 +2043,7 @@ console.log(leo.packagePath);
 
       <section class="section" id="quick-start" aria-labelledby="quick-start-title">
         <div class="section__head">
-          <span class="section__no">Nº 06</span>
+          <span class="section__no">Nº 07</span>
           <span class="section__title">Quick start</span>
         </div>
         <h2 id="quick-start-title">Install the SDK.</h2>
@@ -2049,7 +2086,7 @@ console.log(leo.packagePath);
 
       <section class="section" id="examples" aria-labelledby="examples-title">
         <div class="section__head">
-          <span class="section__no">Nº 07</span>
+          <span class="section__no">Nº 08</span>
           <span class="section__title">Examples</span>
         </div>
         <h2 id="examples-title">Integration paths.</h2>
@@ -2098,15 +2135,15 @@ console.log(representation?.kind);  // "bridged"</code></pre>
                   <button class="copy-code" type="button">Copy</button>
                 </div>
                 <pre><code>import { getCrossChainZodiacsOwnership } from "@zodiacs/sdk";
+import { mergeZodiacsOwnership } from "@zodiacs/sdk/identity";
 
 const ownership = await getCrossChainZodiacsOwnership({
-  solanaOwner,
-  baseOwner,
-  connection,
-  publicClient
+  solana: { ownerAddress: solanaOwner, connection },
+  base: { ownerAddress: baseOwner, publicClient }
 });
+const shelf = mergeZodiacsOwnership(ownership);
 
-console.log(ownership.heldSigns);</code></pre>
+console.log(shelf.heldSigns);</code></pre>
               </div>
             </details>
           </article>
@@ -2143,15 +2180,105 @@ console.log(receipt.wheelCoverage);</code></pre>
         </div>
       </section>
 
+      <section class="section" id="ai-astrology" aria-labelledby="ai-astrology-title">
+        <div class="section__head">
+          <span class="section__no">Nº 09</span>
+          <span class="section__title">AI astrology</span>
+        </div>
+        <h2 id="ai-astrology-title">Give a model facts, not folklore.</h2>
+        <p class="lede">
+          An astrology assistant can receive held signs, element and modality
+          composition, wheel coverage, confirmed absent signs, and the current
+          season match. Keep that ownership context separate from the birth
+          chart, include it only when the person opts in, and present it as a
+          symbolic layer rather than proof of character or compatibility.
+        </p>
+        <div class="grid grid--two">
+          <article class="card card--compact">
+            <span class="card__k">Structured input</span>
+            <h3 class="card__title">Known context</h3>
+            <p class="card__copy">Pass the verified held-sign array and derived composition directly. Do not ask a model to guess ownership from prose.</p>
+          </article>
+          <article class="card card--compact">
+            <span class="card__k">Product boundary</span>
+            <h3 class="card__title">Optional interpretation</h3>
+            <p class="card__copy">The app owns the prompt, disclosure, and interpretation. More holdings never imply a better or more accurate reading.</p>
+          </article>
+        </div>
+        <div class="code code--install" aria-label="AI astrology context example">
+          <div class="code__bar">
+            <div class="code__label">ai-context.ts</div>
+            <button class="copy-code" type="button">Copy</button>
+          </div>
+          <pre><code>import { getZodiacIdentityContext } from "@zodiacs/sdk/identity";
+
+const identity = getZodiacIdentityContext(ownership, {
+  sunSign: "leo"
+});
+
+const promptContext = {
+  heldSigns: identity.heldSigns,
+  elementComposition: identity.elementComposition,
+  currentSeasonHeld: identity.currentSeasonHeld,
+  framing: "Optional carried-sign context beside the birth chart"
+};</code></pre>
+        </div>
+      </section>
+
+      <section class="section" id="simastry" aria-labelledby="simastry-title">
+        <div class="section__head">
+          <span class="section__no">Nº 10</span>
+          <span class="section__title">Simastry example</span>
+        </div>
+        <h2 id="simastry-title">From verified signs to a shareable Aura.</h2>
+        <p class="lede">
+          The bundled Simastry Aura example shows one complete product path:
+          read public ownership, compute held-sign context, render it beside a
+          birth-chart sign, and prepare a transparent payload for a share page
+          or an opted-in AI astrologist conversation.
+        </p>
+        <div class="flow" aria-label="Simastry Aura integration flow">
+          <div class="flow__item">
+            <span class="flow__k">Read</span>
+            <span class="flow__v">Verified held signs</span>
+          </div>
+          <div class="flow__arrow">→</div>
+          <div class="flow__item">
+            <span class="flow__k">Compose</span>
+            <span class="flow__v">Aura context payload</span>
+          </div>
+          <div class="flow__arrow">→</div>
+          <div class="flow__item">
+            <span class="flow__k">Use</span>
+            <span class="flow__v">Share page or conversation</span>
+          </div>
+        </div>
+        <div class="resource">
+          <a href="/sdk/examples/simastry-aura/">
+            <strong>Example</strong>
+            <span>Try the interactive Aura payload</span>
+          </a>
+          <a href="https://github.com/ZodiacsOfficial/sdk/tree/main/examples/simastry-aura" rel="noopener noreferrer">
+            <strong>GitHub</strong>
+            <span>examples/simastry-aura</span>
+          </a>
+        </div>
+        <div class="trust-line">
+          Public reads only. No custody, signing, or transactions are part of the pattern.
+        </div>
+      </section>
+
       <section class="section" id="receipt-preview" aria-labelledby="receipt-title">
         <div class="section__head">
-          <span class="section__no">Nº 08</span>
+          <span class="section__no">Nº 11</span>
           <span class="section__title">Identity context</span>
         </div>
         <h2 id="receipt-title">Facts for identity surfaces.</h2>
         <p class="lede">
           The SDK computes symbolic context from verified public ownership. The
-          source data stays factual, repeatable, and ready to render.
+          source data stays factual, repeatable, and ready to render: held
+          signs, wheel coverage, element and modality composition, and whether
+          the current Zodiac season appears in the shelf.
         </p>
         <div class="receipt" aria-label="Sample identity context">
           <div class="receipt__chrome">
@@ -2250,7 +2377,7 @@ console.log(receipt.wheelCoverage);</code></pre>
 
       <section class="section" id="core-api" aria-labelledby="api-title">
         <div class="section__head">
-          <span class="section__no">Nº 09</span>
+          <span class="section__no">Nº 12</span>
           <span class="section__title">Core API</span>
         </div>
         <h2 id="api-title">Core SDK surfaces.</h2>
@@ -2321,9 +2448,54 @@ console.log(receipt.wheelCoverage);</code></pre>
         </div>
       </section>
 
+      <section class="section" id="astrofolio" aria-labelledby="astrofolio-title">
+        <div class="section__head">
+          <span class="section__no">Nº 13</span>
+          <span class="section__title">Astrofolio relationship</span>
+        </div>
+        <h2 id="astrofolio-title">One related experience, one neutral SDK.</h2>
+        <p class="lede">
+          Astrofolio is a related consumer project built around personal Zodiac
+          shelves, profiles, share cards, and astrology context. Zodiacs.org is
+          the official registry and SDK source of truth. The SDK remains
+          neutral infrastructure that any app can use for verified ownership,
+          public reads, identity facts, symbolic resonance, and icon assets.
+        </p>
+        <div class="grid grid--two">
+          <article class="card card--compact">
+            <span class="card__k">Consumer experience</span>
+            <h3 class="card__title">Astrofolio</h3>
+            <p class="card__copy">A related product surface for personal Zodiac shelves, profiles, and shareable identity context.</p>
+          </article>
+          <article class="card card--compact">
+            <span class="card__k">Developer source of truth</span>
+            <h3 class="card__title">Zodiacs.org and the SDK</h3>
+            <p class="card__copy">The registry defines official representations; the package supplies verification, ownership reads, context, and assets.</p>
+          </article>
+        </div>
+        <div class="resource">
+          <a href="https://astrofolio.xyz/" rel="noopener noreferrer">
+            <strong>Astrofolio</strong>
+            <span>Related consumer project</span>
+          </a>
+          <a href="/registry/">
+            <strong>The Twelve</strong>
+            <span>Official registry and catalogue</span>
+          </a>
+          <a href="https://github.com/ZodiacsOfficial/sdk" rel="noopener noreferrer">
+            <strong>GitHub</strong>
+            <span>ZodiacsOfficial/sdk</span>
+          </a>
+          <a href="https://www.npmjs.com/package/@zodiacs/sdk" rel="noopener noreferrer">
+            <strong>npm</strong>
+            <span>@zodiacs/sdk</span>
+          </a>
+        </div>
+      </section>
+
       <section class="section" aria-labelledby="posture">
         <div class="section__head">
-          <span class="section__no">Nº 10</span>
+          <span class="section__no">Nº 14</span>
           <span class="section__title">Posture</span>
         </div>
         <h2 id="posture">Read-only by design.</h2>
@@ -2343,7 +2515,7 @@ console.log(receipt.wheelCoverage);</code></pre>
         </div>
       </section>
 
-      <a class="button back-to-registry" href="/">
+      <a class="button back-to-registry" href="/registry/">
         <span>Back to the registry</span>
         <span>↗</span>
       </a>

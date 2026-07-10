@@ -73,17 +73,17 @@
       "id": "https://zodiacs.org/archive/#horoscopes-to-hodl",
       "url": "https://zodiacs.org/archive/#horoscopes-to-hodl",
       "title": "Horoscopes to HODL",
-      "content_html": "<p>Numinous Realm publishes a long-form profile: an interview with the founder on fair distribution, BRC-20 origins, and what makes a perfect Lindy meme.</p><p>The project began in January 2024, inspired by the BRC-20 zodiac inscriptions: twelve signs, minted fairly, no presale. The founder’s phrase for it: the perfect Lindy meme.</p><blockquote><p>Astrology enthusiasts, meme lovers, and crypto degens.</p><p>On the community · Numinous Realm</p></blockquote>",
-      "content_text": "Numinous Realm publishes a long-form profile: an interview with the founder on fair distribution, BRC-20 origins, and what makes a perfect Lindy meme.",
+      "content_html": "<p>Numinous Realm publishes Somya Desai’s long-form article on Astrofolio and the meeting of astrology and cryptocurrency.</p><p>The article describes an ecosystem of Sun sign-themed tokens and includes an interview with wantonwallet about astrology, cryptocurrency, decentralization, and the project’s launch.</p><blockquote><p>the depths to which you can go with astrology are beautifully endless.</p><p>wantonwallet, quoted by Somya Desai · Numinous Realm</p></blockquote>",
+      "content_text": "Numinous Realm publishes Somya Desai’s long-form article on Astrofolio and the meeting of astrology and cryptocurrency.",
       "date_published": "2024-08-29T12:00:00Z",
-      "external_url": "https://numinousrealm.com/news/horoscopes-to-hodl-building-your-astrofolio"
+      "external_url": "https://www.numinousrealm.com/news/horoscopes-to-hodl-building-your-astrofolio"
     },
     {
       "id": "https://zodiacs.org/archive/#origin",
       "url": "https://zodiacs.org/archive/#origin",
       "title": "Twelve mints, one register",
-      "content_html": "<p>The twelve Zodiacs are minted on Solana and fully distributed. No presale, no allocation, a public record from the first day.</p><p>Each sign is one canonical SPL asset. Official Base representations follow by Wormhole bridge, each pointing back to its Solana origin.</p><p>The community has since held through full market cycles. The register at zodiacs.org keeps the canonical addresses public and verifiable.</p>",
-      "content_text": "The twelve Zodiacs are minted on Solana and fully distributed. No presale, no allocation, a public record from the first day.",
+      "content_html": "<p>The public registry records twelve native Solana assets and their official Base representations.</p><p>Each sign has one canonical Solana SPL record. Its official Base representation points back to that origin through Wormhole.</p><p>The registry keeps the addresses, chain roles, and provenance public and machine-readable.</p>",
+      "content_text": "The public registry records twelve native Solana assets and their official Base representations.",
       "date_published": "2024-01-01T12:00:00Z"
     }
   ]

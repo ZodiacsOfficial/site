@@ -215,24 +215,23 @@ export const ARCHIVE_ENTRIES = [
     type: 'coverage',
     title: 'Horoscopes to HODL',
     lede:
-      'Numinous Realm publishes a long-form profile: an interview with the ' +
-      'founder on fair distribution, BRC-20 origins, and what makes a ' +
-      'perfect Lindy meme.',
+      'Numinous Realm publishes Somya Desai’s long-form article on Astrofolio ' +
+      'and the meeting of astrology and cryptocurrency.',
     body: [
-      'The project began in January 2024, inspired by the BRC-20 zodiac ' +
-      'inscriptions: twelve signs, minted fairly, no presale. The ' +
-      'founder’s phrase for it: the perfect Lindy meme.'
+      'The article describes an ecosystem of Sun sign-themed tokens and ' +
+      'includes an interview with wantonwallet about astrology, ' +
+      'cryptocurrency, decentralization, and the project’s launch.'
     ],
     quotes: [
       {
-        text: 'Astrology enthusiasts, meme lovers, and crypto degens.',
-        attribution: 'On the community · Numinous Realm',
-        sourceUrl: 'https://numinousrealm.com/news/horoscopes-to-hodl-building-your-astrofolio'
+        text: 'the depths to which you can go with astrology are beautifully endless.',
+        attribution: 'wantonwallet, quoted by Somya Desai · Numinous Realm',
+        sourceUrl: 'https://www.numinousrealm.com/news/horoscopes-to-hodl-building-your-astrofolio'
       }
     ],
     sources: [
-      { label: '“Horoscopes to HODL: Building your Astrofolio” · Somya Desai, Numinous Realm',
-        url: 'https://numinousrealm.com/news/horoscopes-to-hodl-building-your-astrofolio' }
+      { label: '“Horoscopes to Hodl: Building Your Astrofolio” · Somya Desai, Numinous Realm',
+        url: 'https://www.numinousrealm.com/news/horoscopes-to-hodl-building-your-astrofolio' }
     ],
     signs: []
   },
@@ -243,14 +242,13 @@ export const ARCHIVE_ENTRIES = [
     type: 'origin',
     title: 'Twelve mints, one register',
     lede:
-      'The twelve Zodiacs are minted on Solana and fully distributed. No ' +
-      'presale, no allocation, a public record from the first day.',
+      'The public registry records twelve native Solana assets and their ' +
+      'official Base representations.',
     body: [
-      'Each sign is one canonical SPL asset. Official Base representations ' +
-      'follow by Wormhole bridge, each pointing back to its Solana origin.',
-      'The community has since held through full market cycles. The ' +
-      'register at zodiacs.org keeps the canonical addresses public and ' +
-      'verifiable.'
+      'Each sign has one canonical Solana SPL record. Its official Base ' +
+      'representation points back to that origin through Wormhole.',
+      'The registry keeps the addresses, chain roles, and provenance public ' +
+      'and machine-readable.'
     ],
     quotes: [],
     sources: [
@@ -290,18 +288,17 @@ export const ARCHIVE_ENTRIES = [
 
 export const PRESS_KIT = {
   boilerplate:
-    'The Zodiacs are twelve onchain records of the zodiac signs: minted on ' +
-    'Solana in 2024, fully distributed with no presale, bridged to Base, ' +
-    'and registered at zodiacs.org. The registry is read-only and the ' +
-    'record is public.',
+    'The Zodiacs are twelve onchain records of the zodiac signs: one native ' +
+    'Solana asset and one official Base representation per sign, registered ' +
+    'at zodiacs.org. The registry is read-only and the record is public.',
   facts: [
     ['Origin', 'Minted on Solana, 2024'],
-    ['Distribution', 'Fully distributed · no presale'],
+    ['Registry', '12 signs · Solana + Base'],
     ['Representations', 'Native Solana SPL · official Base ERC-20 via Wormhole'],
     ['Edition', 'Twelve signs · one canonical record each']
   ],
   assets: [
-    { label: 'Share cards · 1200×630 · /assets/og/{sign}.png', url: '/assets/og/libra.png' },
+    { label: 'Share cards · 1200×630 · /assets/og/v2/sign/{sign}.png', url: '/assets/og/v2/sign/libra.png' },
     { label: 'Sign icons · /assets/icons/{sign}.png', url: '/assets/icons/libra.png' },
     { label: 'Sculptural figures · /assets/nuggets/{sign}.png', url: '/assets/nuggets/libra.png' },
     { label: 'Registry JSON · machine-readable', url: '/registry/zodiacs.registry.json' },
