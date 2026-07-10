@@ -587,15 +587,39 @@
         inset 0 -1px 0 rgba(238,241,247,0.04),
         0 12px 32px -14px rgba(0,0,0,0.7);
     }
+    /* Non-Chromium (iOS Safari, desktop Safari/Firefox) can't paint the SVG
+       refraction lens above, so enrich the frosted floor so the nav + CTAs
+       still read as premium liquid glass on mobile: extra vibrancy
+       (brightness + saturate) and a crisper specular catch-light. */
+    html:not(.zdx-lens) .wnav {
+      background: rgba(10, 12, 17, 0.58);
+      backdrop-filter: saturate(165%) blur(20px) brightness(1.1);
+      -webkit-backdrop-filter: saturate(165%) blur(20px) brightness(1.1);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.24),
+        inset 0 10px 22px -16px rgba(255,255,255,0.10),
+        0 14px 34px -14px rgba(0,0,0,0.72);
+    }
+    html:not(.zdx-lens) .cine__cta .btn {
+      backdrop-filter: blur(17px) saturate(165%) brightness(1.18);
+      -webkit-backdrop-filter: blur(17px) saturate(165%) brightness(1.18);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.36),
+        inset 0 10px 20px -14px rgba(255,255,255,0.10),
+        inset 0 -12px 22px -16px rgba(255,255,255,0.05),
+        0 10px 30px -12px rgba(0,0,0,0.55);
+    }
     /* Reduced transparency: the CTA capsule + nav pill fall back to opaque
-       (the combined selector outweighs the lens rule above). */
+       (these selectors outweigh both the lens and the enriched-frost rules). */
     @media (prefers-reduced-transparency: reduce) {
+      html:not(.zdx-lens) .cine__cta .btn,
       .cine__cta .btn {
         background: rgba(10, 12, 17, 0.86);
         backdrop-filter: none;
         -webkit-backdrop-filter: none;
       }
       html.zdx-lens .wnav,
+      html:not(.zdx-lens) .wnav,
       .wnav {
         background: rgba(10, 12, 17, 0.92);
         backdrop-filter: none;
