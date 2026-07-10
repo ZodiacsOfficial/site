@@ -2,8 +2,32 @@ import { defineCollection } from 'astro:content';
 import { z } from 'astro/zod';
 import { glob } from 'astro/loaders';
 import { SIGN_SLUGS } from './lib/signs';
+import { pairFacts } from './lib/compat';
 
 const signEnum = z.enum(SIGN_SLUGS as [string, ...string[]]);
+const faqSchema = z.array(z.object({ q: z.string(), a: z.string() }));
+const sourcesSchema = z.array(z.object({ label: z.string(), href: z.url().optional() })).default([]);
+
+function derivedPairFaq([slugA, slugB]: [string, string]) {
+  const facts = pairFacts(slugA, slugB);
+  const names = facts.same ? `two ${facts.a.name} people` : `${facts.a.name} and ${facts.b.name}`;
+  const subject = facts.same ? `Two ${facts.a.name} people` : `${facts.a.name} and ${facts.b.name}`;
+
+  return [
+    {
+      q: `How do ${names} work in a relationship?`,
+      a: `${facts.element.label} is the starting pattern: ${facts.element.note} The rest of both birth charts decides how that pattern is lived.`,
+    },
+    {
+      q: `Where do ${names} tend to clash?`,
+      a: `${facts.modality.label} describes how decisions and pacing meet: ${facts.modality.note}`,
+    },
+    {
+      q: `Are ${names} compatible?`,
+      a: `${subject} can be. Sun signs describe a baseline, not a verdict. ${facts.polarity} A full comparison also reads both Moons, Venuses, Marses, and the aspects between the charts.`,
+    },
+  ];
+}
 
 const guides = defineCollection({
   loader: glob({ pattern: '*.mdx', base: './src/content/guides' }),
@@ -16,8 +40,10 @@ const guides = defineCollection({
       easeful: z.array(signEnum).length(3),
       charged: z.array(signEnum).length(3),
     }),
-    faq: z.array(z.object({ q: z.string(), a: z.string() })).min(4),
+    faq: faqSchema.min(4),
+    published: z.coerce.date(),
     updated: z.coerce.date(),
+    sources: sourcesSchema,
     draft: z.boolean().default(false),
   }),
 });
@@ -39,9 +65,14 @@ const pairs = defineCollection({
       ),
     title: z.string(),
     description: z.string().max(170),
+    faq: faqSchema.min(3).optional(),
+    published: z.coerce.date(),
     updated: z.coerce.date(),
     draft: z.boolean().default(false),
-  }),
+  }).transform((data) => ({
+    ...data,
+    faq: data.faq ?? derivedPairFaq(data.signs),
+  })),
 });
 
 /**
@@ -59,8 +90,10 @@ const learn = defineCollection({
       description: z.string().max(170),
       /** One-line function of the planet, in the house voice. */
       role: z.string(),
-      faq: z.array(z.object({ q: z.string(), a: z.string() })).min(3),
+      faq: faqSchema.min(3),
+      published: z.coerce.date(),
       updated: z.coerce.date(),
+      sources: sourcesSchema,
       draft: z.boolean().default(false),
     }),
     z.object({
@@ -70,8 +103,10 @@ const learn = defineCollection({
       description: z.string().max(170),
       /** One-line territory of the house. */
       theme: z.string(),
-      faq: z.array(z.object({ q: z.string(), a: z.string() })).min(3),
+      faq: faqSchema.min(3),
+      published: z.coerce.date(),
       updated: z.coerce.date(),
+      sources: sourcesSchema,
       draft: z.boolean().default(false),
     }),
     z.object({
@@ -82,8 +117,10 @@ const learn = defineCollection({
       description: z.string().max(170),
       /** One-line character of the aspect. */
       theme: z.string(),
-      faq: z.array(z.object({ q: z.string(), a: z.string() })).min(3),
+      faq: faqSchema.min(3),
+      published: z.coerce.date(),
       updated: z.coerce.date(),
+      sources: sourcesSchema,
       draft: z.boolean().default(false),
     }),
     z.object({
@@ -92,8 +129,10 @@ const learn = defineCollection({
       sign: signEnum,
       title: z.string(),
       description: z.string().max(170),
-      faq: z.array(z.object({ q: z.string(), a: z.string() })).min(3),
+      faq: faqSchema.min(3),
+      published: z.coerce.date(),
       updated: z.coerce.date(),
+      sources: sourcesSchema,
       draft: z.boolean().default(false),
     }),
     // Rising-sign profiles route at /rising-sign/{sign}/, not /learn/ —
@@ -103,8 +142,10 @@ const learn = defineCollection({
       sign: signEnum,
       title: z.string(),
       description: z.string().max(170),
-      faq: z.array(z.object({ q: z.string(), a: z.string() })).min(3),
+      faq: faqSchema.min(3),
+      published: z.coerce.date(),
       updated: z.coerce.date(),
+      sources: sourcesSchema,
       draft: z.boolean().default(false),
     }),
   ]),
@@ -123,6 +164,7 @@ const birthdays = defineCollection({
     day: z.number().int().min(1).max(31),
     title: z.string(),
     description: z.string().max(170),
+    published: z.coerce.date(),
     updated: z.coerce.date(),
     draft: z.boolean().default(false),
   }),
@@ -138,6 +180,7 @@ const horoscopes = defineCollection({
   schema: z.object({
     sign: signEnum,
     month: z.string().regex(/^\d{4}-(0[1-9]|1[0-2])$/, 'month must be YYYY-MM'),
+    published: z.coerce.date(),
     updated: z.coerce.date(),
     draft: z.boolean().default(false),
   }),

@@ -11,6 +11,32 @@ import { LOCALIZED_PATHS, alternatePaths } from '../lib/i18n';
 import daily from '../data/daily.json';
 
 const SITE = 'https://zodiacs.org';
+// Keep these dates source-controlled: build environments may have shallow or
+// absent Git history. When an evergreen page's rendered source changes, update
+// its entry here in the same commit.
+const EVERGREEN_LASTMOD = new Map<string, string>([
+  ...[
+    '/', '/birth-chart/', '/compatibility/', '/moon-sign/', '/rising-sign/',
+    '/moon-phase/', '/saturn-return/', '/mercury-retrograde/', '/transits/',
+    '/eclipses/', '/full-moon-calendar/', '/retrogrades/', '/learn/', '/tools/',
+    '/profile/', '/learn/how-to-read-a-birth-chart/', '/learn/planets/',
+    '/learn/houses/', '/learn/aspects/', '/learn/placements/', '/birthday/',
+    '/baby-zodiac/', '/widgets/', '/methodology/', '/about/', '/privacy/',
+    '/terms/', '/feeds/',
+    '/es/', '/es/birth-chart/', '/es/compatibility/', '/es/moon-sign/',
+    '/es/rising-sign/', '/es/moon-phase/', '/es/saturn-return/', '/es/transits/',
+    '/es/tools/', '/es/profile/', '/es/baby-zodiac/', '/es/methodology/',
+  ].map((loc) => [loc, '2026-07-10'] as const),
+  ...LEGACY_URLS.map((url) => [url.path, '2026-07-10'] as const),
+]);
+
+function getLastmod(loc: string): string {
+  const date = EVERGREEN_LASTMOD.get(loc);
+  if (!date || !/^\d{4}-\d{2}-\d{2}$/.test(date)) {
+    throw new Error(`Missing evergreen lastmod for ${loc}`);
+  }
+  return date;
+}
 
 export const GET: APIRoute = async () => {
   const guides = await getCollection('guides', ({ data }) => !data.draft);
@@ -20,7 +46,7 @@ export const GET: APIRoute = async () => {
   const birthdays = await getCollection('birthdays', ({ data }) => !data.draft);
   const latestMonth = horoscopes.map((h) => h.data.month).sort().at(-1);
 
-  const urls: { loc: string; priority: number; lastmod?: string }[] = [
+  const evergreenUrls = [
     { loc: '/', priority: 1.0 },
     { loc: '/birth-chart/', priority: 0.95 },
     { loc: '/compatibility/', priority: 0.9 },
@@ -34,7 +60,6 @@ export const GET: APIRoute = async () => {
     { loc: '/full-moon-calendar/', priority: 0.85 },
     { loc: '/retrogrades/', priority: 0.8 },
     { loc: '/learn/', priority: 0.85 },
-    { loc: '/horoscopes/', priority: 0.8, lastmod: daily.date },
     { loc: '/tools/', priority: 0.8 },
     { loc: '/profile/', priority: 0.75 },
     { loc: '/learn/how-to-read-a-birth-chart/', priority: 0.8 },
@@ -49,6 +74,12 @@ export const GET: APIRoute = async () => {
     { loc: '/about/', priority: 0.55 },
     { loc: '/privacy/', priority: 0.4 },
     { loc: '/terms/', priority: 0.4 },
+    { loc: '/feeds/', priority: 0.55 },
+  ].map((url) => ({ ...url, lastmod: getLastmod(url.loc) }));
+
+  const urls: { loc: string; priority: number; lastmod?: string }[] = [
+    ...evergreenUrls,
+    { loc: '/horoscopes/', priority: 0.8, lastmod: daily.date },
     ...guides.map((g) => ({
       loc: `/${g.data.sign}/`,
       priority: 0.9,
@@ -86,12 +117,15 @@ export const GET: APIRoute = async () => {
       priority: 0.65,
       lastmod: b.data.updated.toISOString().slice(0, 10),
     })),
-    ...LEGACY_URLS.map((u) => ({ loc: u.path, priority: u.priority })),
+    ...LEGACY_URLS.map((u) => ({ loc: u.path, priority: u.priority, lastmod: getLastmod(u.path) })),
   ];
 
   const localizedUrls = urls
     .filter((u) => LOCALIZED_PATHS.has(u.loc) && u.loc !== '/404.html')
-    .map((u) => ({ ...u, loc: alternatePaths(u.loc)!.es }));
+    .map((u) => {
+      const loc = alternatePaths(u.loc)!.es;
+      return { ...u, loc, lastmod: EVERGREEN_LASTMOD.has(loc) ? getLastmod(loc) : u.lastmod };
+    });
   const allUrls = [...urls, ...localizedUrls];
 
   const body = `<?xml version="1.0" encoding="UTF-8"?>

@@ -35,10 +35,17 @@ const jsonLd = [
     headline: guide.data.title,
     description: guide.data.description,
     url: `https://zodiacs.org/${sign.slug}/`,
+    datePublished: guide.data.published.toISOString(),
     dateModified: guide.data.updated.toISOString(),
     author: { '@type': 'Organization', name: 'Zodiacs.org', url: 'https://zodiacs.org/' },
+    publisher: { '@id': 'https://zodiacs.org/#org' },
+    mainEntityOfPage: { '@type': 'WebPage', '@id': `https://zodiacs.org/${sign.slug}/` },
+    inLanguage: 'en',
     image: `https://zodiacs.org/assets/og/v2/sign/${sign.slug}.png`,
     about: { '@type': 'Thing', name: `${sign.name} (astrology)` },
+    citation: guide.data.sources.map((source) => source.href
+      ? { '@type': 'CreativeWork', name: source.label, url: source.href }
+      : source.label),
   },
   {
     '@type': 'BreadcrumbList',
@@ -66,6 +73,7 @@ const jsonLd = [
   imageAlt={`${sign.name} — sign guide on Zodiacs.org`}
   type="article"
   jsonLd={jsonLd}
+  sources={guide.data.sources}
 >
   <article style={`--sign:${sign.hue}`}>
     <header class="guide-hero container">

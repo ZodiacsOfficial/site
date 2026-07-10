@@ -25,7 +25,12 @@ const jsonLd = [
     '@type': 'Article',
     headline: 'How to read a birth chart, step by step',
     url: 'https://zodiacs.org/learn/how-to-read-a-birth-chart/',
+    datePublished: '2026-07-07T17:46:41+07:00',
+    dateModified: '2026-07-07T17:46:41+07:00',
     author: { '@type': 'Organization', name: 'Zodiacs.org' },
+    publisher: { '@id': 'https://zodiacs.org/#org' },
+    mainEntityOfPage: { '@type': 'WebPage', '@id': 'https://zodiacs.org/learn/how-to-read-a-birth-chart/' },
+    inLanguage: 'en',
     about: 'A four-step method for reading a natal chart: the big three, planets by house, major aspects, and whole-chart patterns.',
   },
   {
@@ -44,11 +49,12 @@ const jsonLd = [
   path="/learn/how-to-read-a-birth-chart/"
   image="/assets/og/v2/tool/how-to-read-a-birth-chart.png"
   imageAlt="How to read a birth chart — Zodiacs.org"
+  type="article"
   jsonLd={jsonLd}
 >
   <section class="section container container--narrow">
     <em class="kicker">Learn astrology</em>
-    <h1 class="method-title display">How to read a birth chart.</h1>
+    <h1 id="how-to-read-a-birth-chart" class="method-title display">How to read a birth chart.</h1>
 
     <div class="prose">
       <p>
@@ -68,7 +74,7 @@ const jsonLd = [
         when you want more than one paragraph.
       </p>
 
-      <h2>Step 1 — Start with the big three</h2>
+      <h2 id="step-1-start-with-the-big-three">Step 1 — Start with the big three</h2>
       <p>
         The Sun, the Moon, and the rising sign organize more of the chart
         than everything else combined, and they divide cleanly:
@@ -99,7 +105,7 @@ const jsonLd = [
         the big three taking turns.
       </p>
 
-      <h2>Step 2 — Planets, room by room</h2>
+      <h2 id="step-2-planets-room-by-room">Step 2 — Planets, room by room</h2>
       <p>
         Every planet answers three questions: <em>what</em> function it is,
         <em>how</em> it goes about it, and <em>where</em> in life it does
@@ -124,7 +130,7 @@ const jsonLd = [
         why a date-only chart is still worth running.
       </p>
 
-      <h2>Step 3 — The aspects doing the most work</h2>
+      <h2 id="step-3-the-aspects-doing-the-most-work">Step 3 — The aspects doing the most work</h2>
       <p>
         Aspects are the angles between planets, and they're where a chart
         stops being a list and starts being a system: two functions wired
@@ -146,7 +152,7 @@ const jsonLd = [
         where most people's proudest skills come from.
       </p>
 
-      <h2>Step 4 — The chart's weather</h2>
+      <h2 id="step-4-the-charts-weather">Step 4 — The chart's weather</h2>
       <p>
         Last, zoom all the way out and count. How are the ten planets spread
         across the four elements? A chart heavy in fire runs hot; a chart
@@ -163,7 +169,7 @@ const jsonLd = [
         to one piece at a time, not from swallowing all of it at once.
       </p>
 
-      <h2>Do it with a real chart</h2>
+      <h2 id="do-it-with-a-real-chart">Do it with a real chart</h2>
       <p>
         Method sticks better with your own data.
         <a href="/birth-chart/">Compute your chart</a> — it runs on your
@@ -174,7 +180,7 @@ const jsonLd = [
         of them comes from.
       </p>
 
-      <h2>Common questions</h2>
+      <h2 id="common-questions">Common questions</h2>
       {faq.map(({ q, a }) => (
         <details class="faq">
           <summary>{q}</summary>

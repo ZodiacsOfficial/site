@@ -42,9 +42,16 @@ const jsonLd = [
     headline: entry.data.title,
     description: entry.data.description,
     url: `https://zodiacs.org/learn/aspects/${slug}/`,
+    datePublished: entry.data.published.toISOString(),
     dateModified: entry.data.updated.toISOString(),
     author: { '@type': 'Organization', name: 'Zodiacs.org', url: 'https://zodiacs.org/' },
+    publisher: { '@id': 'https://zodiacs.org/#org' },
+    mainEntityOfPage: { '@type': 'WebPage', '@id': `https://zodiacs.org/learn/aspects/${slug}/` },
+    inLanguage: 'en',
     about: { '@type': 'Thing', name: `${name} (astrology)` },
+    citation: entry.data.sources.map((source) => source.href
+      ? { '@type': 'CreativeWork', name: source.label, url: source.href }
+      : source.label),
   },
   {
     '@type': 'BreadcrumbList',
@@ -71,12 +78,13 @@ const jsonLd = [
   path={`/learn/aspects/${slug}/`}
   type="article"
   jsonLd={jsonLd}
+  sources={entry.data.sources}
 >
   <article class="container container--narrow learn-detail">
     <header class="learn-detail__hero reveal">
       <AspectGlyph type={type} size={46} class="learn-hero-glyph" />
       <em class="kicker">The aspects</em>
-      <h1 class="display">The {type}</h1>
+      <h1 id={slug} class="display">The {type}</h1>
       <p class="learn-detail__role">{entry.data.theme}</p>
       <p class="learn-detail__facts mono">
         {def.angle}° · orb {def.orb}° · {def.orbLuminary}° with the Sun or Moon

@@ -104,10 +104,17 @@ const jsonLd = [
     headline: entry.data.title,
     description: entry.data.description,
     url: `https://zodiacs.org/learn/placements/${slug}/`,
+    datePublished: entry.data.published.toISOString(),
     dateModified: entry.data.updated.toISOString(),
     author: { '@type': 'Organization', name: 'Zodiacs.org', url: 'https://zodiacs.org/' },
+    publisher: { '@id': 'https://zodiacs.org/#org' },
+    mainEntityOfPage: { '@type': 'WebPage', '@id': `https://zodiacs.org/learn/placements/${slug}/` },
+    inLanguage: 'en',
     image: `https://zodiacs.org/assets/og/v2/placements/${pl}.png`,
     about: { '@type': 'Thing', name: `${planet} in ${sign.name} (astrology)` },
+    citation: entry.data.sources.map((source) => source.href
+      ? { '@type': 'CreativeWork', name: source.label, url: source.href }
+      : source.label),
   },
   {
     '@type': 'BreadcrumbList',
@@ -136,6 +143,7 @@ const jsonLd = [
   imageAlt={`${planet} in ${sign.name} — Zodiacs.org`}
   type="article"
   jsonLd={jsonLd}
+  sources={entry.data.sources}
 >
   <article class="container container--narrow learn-detail" style={`--sign:${sign.hue}`}>
     <header class="learn-detail__hero reveal">
@@ -143,7 +151,7 @@ const jsonLd = [
       <div class="plc-lockup">
         <span class="plc-glyph mono">{PLANET_GLYPHS[planet]}</span>
         <SignIcon sign={sign.slug} size={128} class="plc-disc" />
-        <h1 class="display">{planet} in {sign.name}</h1>
+        <h1 id={slug} class="display">{planet} in {sign.name}</h1>
       </div>
 
       <dl class="plc-panel mono">

@@ -52,9 +52,16 @@ const jsonLd = [
     headline: entry.data.title,
     description: entry.data.description,
     url: `https://zodiacs.org/learn/planets/${slug}/`,
+    datePublished: entry.data.published.toISOString(),
     dateModified: entry.data.updated.toISOString(),
     author: { '@type': 'Organization', name: 'Zodiacs.org', url: 'https://zodiacs.org/' },
+    publisher: { '@id': 'https://zodiacs.org/#org' },
+    mainEntityOfPage: { '@type': 'WebPage', '@id': `https://zodiacs.org/learn/planets/${slug}/` },
+    inLanguage: 'en',
     about: { '@type': 'Thing', name: `${planet} (astrology)` },
+    citation: entry.data.sources.map((source) => source.href
+      ? { '@type': 'CreativeWork', name: source.label, url: source.href }
+      : source.label),
   },
   {
     '@type': 'BreadcrumbList',
@@ -81,12 +88,13 @@ const jsonLd = [
   path={`/learn/planets/${slug}/`}
   type="article"
   jsonLd={jsonLd}
+  sources={entry.data.sources}
 >
   <article class="container container--narrow learn-detail">
     <header class="learn-detail__hero reveal">
       <PlanetGlyph body={planet} size={34} disc hue={rules[0]?.hue ?? classicRules[0]?.hue} class="learn-hero-glyph" />
       <em class="kicker">The planets</em>
-      <h1 class="display">{planet}</h1>
+      <h1 id={slug} class="display">{planet}</h1>
       <p class="learn-detail__role">{entry.data.role}</p>
       <p class="learn-detail__facts mono">
         {rules.length > 0 && `Rules ${rules.map((s) => s.name).join(' and ')}`}

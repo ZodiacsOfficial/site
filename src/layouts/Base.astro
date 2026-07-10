@@ -5,22 +5,28 @@ import '../styles/prose.css';
 import SEO from '../components/SEO.astro';
 import SiteNav from '../components/SiteNav.astro';
 import SiteFooter from '../components/SiteFooter.astro';
+import SourcesLine, { type SourceLink } from '../components/SourcesLine.astro';
 import { normalizeLocale, t, type Locale } from '../lib/i18n';
 
 interface Props {
   title: string;
   description: string;
   path: string;
+  canonicalPath?: string;
   image?: string;
   imageAlt?: string;
   type?: 'website' | 'article';
   noindex?: boolean;
   jsonLd?: Record<string, unknown>[];
   locale?: Locale;
+  sources?: SourceLink[];
 }
 
 const props = Astro.props;
 const locale = normalizeLocale(props.locale);
+const plausibleScriptUrl = import.meta.env.PUBLIC_PLAUSIBLE_SCRIPT_URL?.trim();
+const plausibleEndpoint = import.meta.env.PUBLIC_PLAUSIBLE_ENDPOINT?.trim() ?? '';
+const plausibleEnabled = Boolean(plausibleScriptUrl && !props.noindex);
 
 // The zodiac wheel as a favicon: twelve pastel dots on the void.
 const FAVICON = "data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23060709'/%3E%3Cg%3E%3Ccircle cx='32' cy='10' r='3.4' fill='%23DE8E79'/%3E%3Ccircle cx='43' cy='12.9' r='3.4' fill='%23B9D4BE'/%3E%3Ccircle cx='51.1' cy='21' r='3.4' fill='%23B29DD0'/%3E%3Ccircle cx='54' cy='32' r='3.4' fill='%23B6D4E4'/%3E%3Ccircle cx='51.1' cy='43' r='3.4' fill='%23E0A9B4'/%3E%3Ccircle cx='43' cy='51.1' r='3.4' fill='%23B7D9B0'/%3E%3Ccircle cx='32' cy='54' r='3.4' fill='%23D3A9DE'/%3E%3Ccircle cx='21' cy='51.1' r='3.4' fill='%23B9DCE8'/%3E%3Ccircle cx='12.9' cy='43' r='3.4' fill='%23E0B080'/%3E%3Ccircle cx='10' cy='32' r='3.4' fill='%23C0DEA8'/%3E%3Ccircle cx='12.9' cy='21' r='3.4' fill='%23AE8FC9'/%3E%3Ccircle cx='21' cy='12.9' r='3.4' fill='%23A9D4C4'/%3E%3C/g%3E%3C/svg%3E";
@@ -46,6 +52,8 @@ const FAVICON = "data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/sv
     <link rel="icon" type="image/svg+xml" href={FAVICON} />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
+    <link rel="alternate" type="application/rss+xml" title="Zodiacs.org — the sky, daily" href="/feeds/daily-sky.xml" />
+    <link rel="alternate" type="application/rss+xml" title="Zodiacs.org monthly horoscopes" href="/feeds/horoscopes.xml" />
     <link
       rel="preload"
       href="/fonts/instrument-sans-latin-wght-normal.woff2"
@@ -68,6 +76,53 @@ const FAVICON = "data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/sv
       crossorigin
     />
     <SEO {...props} />
+    <script is:inline>window.zodiacsAnalytics = window.zodiacsAnalytics || Object.freeze({ track: function () {} });</script>
+    {plausibleEnabled && (
+      <>
+        <script is:inline define:vars={{ plausibleEndpoint }}>
+          window.plausible = window.plausible || function () {
+            (window.plausible.q = window.plausible.q || []).push(arguments);
+          };
+          window.plausible.init = window.plausible.init || function (options) {
+            window.plausible.o = options || {};
+          };
+          var options = {
+            hashBasedRouting: false,
+            transformRequest: function (payload) {
+              var canonical = document.querySelector('link[rel="canonical"]');
+              payload.u = canonical ? canonical.href : location.origin + location.pathname;
+              if (payload.p && payload.p.url) delete payload.p.url;
+              return payload;
+            }
+          };
+          if (plausibleEndpoint) options.endpoint = plausibleEndpoint;
+          window.plausible.init(options);
+          var eventProps = Object.freeze({
+            result_rendered: ['mode'],
+            explorer_interaction: ['mode', 'source'],
+            tour_start: ['variant'],
+            tour_complete: ['variant'],
+            chart_save: ['source'],
+            chart_share: ['variant'],
+            wing_entry: ['source']
+          });
+          window.zodiacsAnalytics = Object.freeze({
+            track: function (name, props) {
+              var allowed = eventProps[name];
+              if (!allowed) return;
+              var safe = {};
+              allowed.forEach(function (key) {
+                var value = (props || {})[key];
+                if (typeof value === 'number' || typeof value === 'boolean' ||
+                    (typeof value === 'string' && value.length <= 32)) safe[key] = value;
+              });
+              window.plausible(name, { props: safe });
+            }
+          });
+        </script>
+        <script is:inline async src={plausibleScriptUrl}></script>
+      </>
+    )}
     <slot name="head" />
   </head>
   <body>
@@ -81,6 +136,7 @@ const FAVICON = "data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/sv
       <slot />
     </main>
 
+    <SourcesLine sources={props.sources} />
     <SiteFooter locale={locale} />
 
     <script>

@@ -14,7 +14,8 @@
  *   5. Every href/src in built *.html — site-relative and relative paths
  *      must resolve to a file; internal fragment links must point at an
  *      existing id.
- *   6. sitemap.xml — well-formed, every loc resolves to a built file.
+ *   6. sitemap.xml — unique dated locs resolve, exclude noindex, and cover
+ *      every indexable built page's same-origin canonical.
  *   7. Root artifacts the outside world depends on are present.
  */
 import { readFile, readdir, stat } from 'node:fs/promises';
@@ -225,14 +226,74 @@ for (const file of files) {
 // ---- 6. Sitemap --------------------------------------------------------------
 const sitemap = await readFile(resolve(root, 'sitemap.xml'), 'utf8');
 if (!sitemap.startsWith('<?xml')) fail('sitemap.xml: missing XML declaration');
+const sitemapLocs = new Set();
 for (const m of sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)) {
   const url = new URL(m[1]);
   if (url.origin !== 'https://zodiacs.org') {
     fail(`sitemap.xml: unexpected origin ${m[1]}`);
     continue;
   }
+  if (sitemapLocs.has(url.pathname)) fail(`sitemap.xml: duplicate loc ${url.pathname}`);
+  sitemapLocs.add(url.pathname);
   const target = targetPath(url.pathname);
-  if (!(await exists(target))) fail(`sitemap.xml: loc has no file — ${m[1]}`);
+  if (!(await exists(target))) {
+    fail(`sitemap.xml: loc has no file — ${m[1]}`);
+    continue;
+  }
+  if (target.endsWith('.html')) {
+    const html = idCache.get(target) ?? (await readFile(target, 'utf8'));
+    if (hasNoindex(html)) fail(`sitemap.xml: noindex page included — ${m[1]}`);
+  }
+}
+for (const block of sitemap.matchAll(/<url>([\s\S]*?)<\/url>/g)) {
+  const loc = block[1].match(/<loc>([^<]+)<\/loc>/)?.[1] ?? '?';
+  const lastmod = block[1].match(/<lastmod>([^<]+)<\/lastmod>/)?.[1];
+  if (!lastmod || !/^\d{4}-\d{2}-\d{2}$/.test(lastmod) || Number.isNaN(Date.parse(`${lastmod}T00:00:00Z`))) {
+    fail(`sitemap.xml: ${loc} has invalid or missing lastmod`);
+  }
+}
+
+function attr(tag, name) {
+  return tag.match(new RegExp(`\\b${name}=(?:"([^"]*)"|'([^']*)')`, 'i'))?.slice(1).find(Boolean) ?? null;
+}
+
+function hasNoindex(html) {
+  return [...html.matchAll(/<meta\b[^>]*>/gi)].some((match) =>
+    attr(match[0], 'name')?.toLowerCase() === 'robots' &&
+    attr(match[0], 'content')?.toLowerCase().split(/\s*,\s*/).includes('noindex'));
+}
+
+function canonicalHref(html) {
+  const tag = [...html.matchAll(/<link\b[^>]*>/gi)].find((match) =>
+    attr(match[0], 'rel')?.toLowerCase().split(/\s+/).includes('canonical'));
+  return tag ? attr(tag[0], 'href') : null;
+}
+
+// Reverse coverage: every indexable HTML page must declare a same-origin
+// canonical URL that appears in the sitemap.
+for (const file of files) {
+  const html = idCache.get(file) ?? (await readFile(file, 'utf8'));
+  if (hasNoindex(html)) continue;
+  const rel = relative(root, file);
+  const canonical = canonicalHref(html);
+  if (!canonical) {
+    fail(`${rel}: indexable page has no canonical URL`);
+    continue;
+  }
+  let url;
+  try {
+    url = new URL(canonical);
+  } catch {
+    fail(`${rel}: invalid canonical URL — ${canonical}`);
+    continue;
+  }
+  if (url.origin !== 'https://zodiacs.org') {
+    fail(`${rel}: canonical on unexpected origin — ${canonical}`);
+    continue;
+  }
+  if (!sitemapLocs.has(url.pathname)) {
+    fail(`${rel}: canonical missing from sitemap — ${url.pathname}`);
+  }
 }
 
 // ---- 7. External-contract artifacts ------------------------------------------

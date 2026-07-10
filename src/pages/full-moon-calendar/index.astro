@@ -9,6 +9,13 @@ import { formatDate, formatShortDate, formatTime } from '../../lib/i18n/dates';
 // Every full moon 2026–2027 from the committed sky data, with the
 // Moon's sign computed at each instant — receipts, no client ephemeris.
 const buildNow = new Date();
+const eventHorizon = new Date(buildNow);
+eventHorizon.setUTCFullYear(eventHorizon.getUTCFullYear() + 1);
+
+const sources = [
+  { label: 'Astronomy Engine', href: 'https://github.com/cosinekitty/astronomy' },
+  { label: 'IANA Time Zone Database', href: 'https://www.iana.org/time-zones' },
+];
 
 // North American almanac tradition, keyed by month. The second full
 // moon in one calendar month takes "Blue moon" instead.
@@ -38,6 +45,7 @@ const fulls = (sky.moons as { type: string; at: string }[])
 
 const years = [...new Set(fulls.map((f) => f.year))];
 const next = fulls.find((f) => !f.past);
+const upcomingEvents = fulls.filter((f) => f.at >= buildNow && f.at <= eventHorizon);
 
 const fmtDay = (d: Date) =>
   formatDate('en', d, { weekday: 'short', month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
@@ -73,6 +81,36 @@ const faq = [
   },
 ];
 
+const eventNodes = upcomingEvents.map((full) => {
+  const iso = full.at.toISOString();
+  const id = `full-moon-${iso.slice(0, 10)}`;
+  return {
+    '@type': 'Event',
+    '@id': `https://zodiacs.org/full-moon-calendar/#${id}`,
+    name: `${full.name === 'Blue' ? 'Blue moon' : `${full.name} Moon`} in ${full.sign.name}`,
+    description: `Full moon at ${full.position}; exact opposition of the Sun and Moon at ${iso}.`,
+    startDate: iso,
+    endDate: iso,
+    eventStatus: 'https://schema.org/EventScheduled',
+    url: `https://zodiacs.org/full-moon-calendar/#${id}`,
+  };
+});
+
+const dataset = {
+  '@type': 'Dataset',
+  '@id': 'https://zodiacs.org/full-moon-calendar/#dataset',
+  name: 'Full moon calendar, 2026–2027',
+  description: 'Exact universal-time instants, tropical zodiac positions, and traditional names for every full moon in 2026 and 2027.',
+  url: 'https://zodiacs.org/full-moon-calendar/',
+  creator: { '@id': 'https://zodiacs.org/#org' },
+  publisher: { '@id': 'https://zodiacs.org/#org' },
+  dateModified: sky.generatedAt,
+  temporalCoverage: `${sky.from}/${sky.to}`,
+  spatialCoverage: 'Earth',
+  variableMeasured: ['full moon instant', 'zodiac sign', 'zodiac longitude', 'traditional moon name'],
+  citation: sources.map((source) => ({ '@type': 'CreativeWork', name: source.label, url: source.href })),
+};
+
 const jsonLd = [
   {
     '@type': 'WebPage',
@@ -89,6 +127,8 @@ const jsonLd = [
       acceptedAnswer: { '@type': 'Answer', text: a },
     })),
   },
+  dataset,
+  ...eventNodes,
 ];
 ---
 <Base
@@ -98,10 +138,11 @@ const jsonLd = [
   image="/assets/og/v2/tool/full-moon-calendar.png"
   imageAlt="Full moon calendar — Zodiacs.org"
   jsonLd={jsonLd}
+  sources={sources}
 >
   <section class="section--tight container container--narrow">
     <div class="tool-hero reveal">
-      <h1 class="display">Every full moon, dated.</h1>
+      <h1 class="display">Find every full moon through 2027.</h1>
       <p>
         Each row below is the exact instant the Moon stands opposite the
         Sun &mdash; computed to the minute through the end of 2027, with the
@@ -135,7 +176,7 @@ const jsonLd = [
           </thead>
           <tbody>
             {fulls.filter((f) => f.year === year).map((f) => (
-              <tr class={f.past ? 'rx-table__past' : ''}>
+              <tr id={`full-moon-${f.at.toISOString().slice(0, 10)}`} class={f.past ? 'rx-table__past' : ''}>
                 <td data-label="Date">{fmtDay(f.at)}</td>
                 <td class="mono" data-label="Time UTC">{fmtTime(f.at)}</td>
                 <td class="mono" data-label="Moon stands at">{f.position}</td>

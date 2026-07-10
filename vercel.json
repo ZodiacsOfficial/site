@@ -1,8 +1,19 @@
 {
   "redirects": [
+    {
+      "source": "/:path(.*)",
+      "has": [{ "type": "host", "value": "^www\\.zodiacs\\.org$" }],
+      "destination": "https://zodiacs.org/:path",
+      "permanent": true
+    },
     { "source": "/collect", "destination": "/registry/", "permanent": true },
     { "source": "/collect/", "destination": "/registry/", "permanent": true },
-    { "source": "/collect/:path(.*)", "destination": "/registry/:path", "permanent": true }
+    { "source": "/collect/:path(.*)", "destination": "/registry/:path", "permanent": true },
+    {
+      "source": "/:path((?!api(?:/|$)|\\.well-known(?:/|$)|.*\\.[^/]+$).*[^/])",
+      "destination": "/:path/",
+      "permanent": true
+    }
   ],
   "headers": [
     {

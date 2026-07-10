@@ -1,10 +1,26 @@
 ---
 import Base from '../../layouts/Base.astro';
+import Faq from '../../components/Faq.astro';
 import SignIcon from '../../components/SignIcon.astro';
 import SynastryCalculator from '../../islands/SynastryCalculator';
 import { SIGNS } from '../../lib/signs';
 import { pairSlug } from '../../lib/compat';
 import '../../styles/calculator.css';
+
+const faq = [
+  {
+    q: 'How does astrological compatibility work?',
+    a: 'Astrologers compare two birth charts by measuring the angles between one person’s planets and the other’s — a practice called synastry. Trines and sextiles between charts read as ease; squares and oppositions read as productive friction. Sun-sign compatibility is the one-line summary of a much longer comparison.',
+  },
+  {
+    q: 'Is sun-sign compatibility real?',
+    a: 'It is the simplest useful layer. Two people are more than their sun signs — the Moon, Venus, and Mars often matter more in practice. The sun-sign pairing pages here are honest starting points, and the calculator compares two birth charts when you have birth details.',
+  },
+  {
+    q: 'Do I need exact birth times for a compatibility reading?',
+    a: 'Times help but are not required. Without one, the planets are still exact to the day — only rising signs and houses drop out. The Moon moves about 13 degrees a day, so a missing time occasionally blurs a Moon aspect.',
+  },
+];
 
 const jsonLd = [
   {
@@ -19,32 +35,11 @@ const jsonLd = [
   },
   {
     '@type': 'FAQPage',
-    mainEntity: [
-      {
-        '@type': 'Question',
-        name: 'How does astrological compatibility work?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'Astrologers compare two birth charts by measuring the angles between one person’s planets and the other’s — a practice called synastry. Trines and sextiles between charts read as ease; squares and oppositions read as productive friction. Sun-sign compatibility is the one-line summary of a much longer comparison.',
-        },
-      },
-      {
-        '@type': 'Question',
-        name: 'Is sun-sign compatibility real?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'It is the simplest useful layer. Two people are more than their sun signs — the Moon, Venus, and Mars often matter more in practice. The sun-sign pairing pages here are honest starting points, and the calculator compares two birth charts when you have birth details.',
-        },
-      },
-      {
-        '@type': 'Question',
-        name: 'Do I need exact birth times for a compatibility reading?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'Times help but are not required. Without one, the planets are still exact to the day — only rising signs and houses drop out. The Moon moves about 13 degrees a day, so a missing time occasionally blurs a Moon aspect.',
-        },
-      },
-    ],
+    mainEntity: faq.map(({ q, a }) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: { '@type': 'Answer', text: a },
+    })),
   },
 ];
 ---
@@ -96,6 +91,10 @@ const jsonLd = [
         </div>
       ))}
     </div>
+  </section>
+
+  <section class="section--tight container container--narrow">
+    <Faq items={faq} heading="Compatibility questions" />
   </section>
 </Base>
 

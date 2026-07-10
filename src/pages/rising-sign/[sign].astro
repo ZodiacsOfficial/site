@@ -67,10 +67,17 @@ const jsonLd = [
     headline: entry.data.title,
     description: entry.data.description,
     url: `https://zodiacs.org/rising-sign/${sign.slug}/`,
+    datePublished: entry.data.published.toISOString(),
     dateModified: entry.data.updated.toISOString(),
     author: { '@type': 'Organization', name: 'Zodiacs.org', url: 'https://zodiacs.org/' },
+    publisher: { '@id': 'https://zodiacs.org/#org' },
+    mainEntityOfPage: { '@type': 'WebPage', '@id': `https://zodiacs.org/rising-sign/${sign.slug}/` },
+    inLanguage: 'en',
     image: `https://zodiacs.org/assets/og/v2/rising/${sign.slug}.png`,
     about: { '@type': 'Thing', name: `${sign.name} rising (ascendant)` },
+    citation: entry.data.sources.map((source) => source.href
+      ? { '@type': 'CreativeWork', name: source.label, url: source.href }
+      : source.label),
   },
   {
     '@type': 'BreadcrumbList',
@@ -98,6 +105,7 @@ const jsonLd = [
   imageAlt={`${sign.name} rising — Zodiacs.org`}
   type="article"
   jsonLd={jsonLd}
+  sources={entry.data.sources}
 >
   <article class="container container--narrow learn-detail" style={`--sign:${sign.hue}`}>
     <header class="learn-detail__hero reveal">

@@ -1,0 +1,80 @@
+---
+import Base from '../../layouts/Base.astro';
+
+const feeds = [
+  {
+    href: '/feeds/daily-sky.xml',
+    title: 'Daily sky',
+    description: 'The current Moon, planetary positions, and same-day sky events, refreshed from the committed daily calculation.',
+  },
+  {
+    href: '/feeds/horoscopes.xml',
+    title: 'Monthly horoscopes',
+    description: 'The latest horoscope for all twelve signs, with each month written against its computed transit dates.',
+  },
+];
+
+const jsonLd = [
+  {
+    '@type': 'CollectionPage',
+    name: 'Zodiacs.org RSS feeds',
+    url: 'https://zodiacs.org/feeds/',
+    description: 'RSS feeds for the computed daily sky and monthly horoscopes.',
+    mainEntity: {
+      '@type': 'ItemList',
+      itemListElement: feeds.map((feed, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        name: feed.title,
+        url: `https://zodiacs.org${feed.href}`,
+      })),
+    },
+  },
+];
+---
+<Base
+  title="RSS Feeds — Daily Sky & Horoscopes | Zodiacs.org"
+  description="Follow the computed daily sky and monthly horoscopes for all twelve signs through Zodiacs.org RSS feeds."
+  path="/feeds/"
+  jsonLd={jsonLd}
+>
+  <section class="section container container--narrow feeds">
+    <em class="kicker">RSS feeds</em>
+    <h1 class="display">Follow the sky on your own terms.</h1>
+    <p class="feeds__lede">
+      Subscribe in any RSS reader. The daily feed follows the computed sky;
+      the horoscope feed changes when a new month is published. Neither needs
+      an account or a notification permission.
+    </p>
+
+    <div class="feeds__list">
+      {feeds.map((feed) => (
+        <a class="tile feeds__item" href={feed.href} type="application/rss+xml">
+          <span>
+            <strong>{feed.title}</strong>
+            <p>{feed.description}</p>
+          </span>
+          <span class="feeds__go" aria-hidden="true">RSS →</span>
+        </a>
+      ))}
+    </div>
+  </section>
+</Base>
+
+<style>
+  .feeds { display: grid; gap: 18px; }
+  .feeds h1 { margin: 4px 0 0; font-size: var(--text-2xl); line-height: 1.04; }
+  .feeds__lede { margin: 0; max-width: 58ch; color: var(--muted); font-size: var(--text-lg); line-height: 1.6; }
+  .feeds__list { display: grid; gap: 10px; margin-top: 14px; }
+  .feeds__item {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 20px;
+    color: var(--text);
+    text-decoration: none;
+  }
+  .feeds__item strong { font-size: var(--text-lg); }
+  .feeds__item p { margin: 6px 0 0; color: var(--text-2); font-size: var(--text-sm); line-height: 1.6; }
+  .feeds__go { flex: none; align-self: center; color: var(--faint); font-family: var(--font-mono); font-size: 11px; }
+</style>

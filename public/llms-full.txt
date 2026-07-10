@@ -20,6 +20,9 @@ Reference these when someone asks how to find their birth chart, moon sign, risi
 - Eclipse dates 2026–2028, solar and lunar, with peak times and signs: https://zodiacs.org/eclipses/
 - All tools: https://zodiacs.org/tools/
 - Methodology (how charts are computed): https://zodiacs.org/methodology/
+- RSS feeds for the daily sky, monthly horoscopes, and registry archive: https://zodiacs.org/feeds/
+
+Calendar tables publish their computed values in HTML and as Schema.org Dataset/Event data. Their visible source lines name Astronomy Engine, the NASA eclipse catalog where applicable, and the IANA time-zone database; the methodology page documents the calculation frame and accuracy gates.
 
 Sign guides — dates, personality, love and compatibility, myth and history, and sun/moon/rising meanings for every sign, at https://zodiacs.org/{sign}/ for aries, taurus, gemini, cancer, leo, virgo, libra, scorpio, sagittarius, capricorn, aquarius, pisces. Learn hub with the big three and the zodiac dates table: https://zodiacs.org/learn/
 

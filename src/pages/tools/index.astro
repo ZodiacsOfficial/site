@@ -101,7 +101,7 @@ const jsonLd = [
 >
   <section class="section container">
     <div class="section-head">
-      <h2>Free astrology tools</h2>
+      <h1 class="display tools-title">Free astrology tools</h1>
       <p>
         Find your birth chart, moon sign, rising sign, compatibility, and what
         the sky is doing now. Charts are calculated privately in your browser.
@@ -113,7 +113,7 @@ const jsonLd = [
         <a class="shell tinted" href={t.href} style={`--sign:${t.hue}`}>
           <div class="core tinted tool-card">
             <ToolGlyph kind={t.kind} />
-            <h3>{t.title}</h3>
+            <h2>{t.title}</h2>
             <p>{t.promise}</p>
             <span class="tool-card__go">Open →</span>
           </div>
@@ -140,6 +140,11 @@ const jsonLd = [
 </Base>
 
 <style>
+  .tools-title {
+    margin: 0;
+    font-size: var(--text-xl);
+    line-height: 1.1;
+  }
   .tools-grid {
     display: grid;
     gap: 14px;
@@ -155,7 +160,7 @@ const jsonLd = [
     min-height: 210px;
   }
   /* Tool-card icon disc lives in ToolGlyph.astro. */
-  .tool-card h3 {
+  .tool-card h2 {
     margin: 4px 0 0;
     font-size: var(--text-lg);
     font-weight: 620;
