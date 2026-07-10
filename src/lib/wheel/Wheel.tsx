@@ -1,16 +1,41 @@
 /**
- * The chart wheel — hand-built SVG, shared by the calculator and the
- * homepage demo chart. Standard orientation: the Ascendant sits at the
- * left (9 o'clock) and the zodiac runs counterclockwise. Without known
- * angles it renders 0° Aries on the left with no house spokes.
+ * The chart wheel — hand-built SVG, shared by the calculator, the homepage
+ * demo chart, and the share-card renderer. Standard orientation: the
+ * Ascendant sits at the left (9 o'clock) and the zodiac runs
+ * counterclockwise. Without known angles it renders 0° Aries on the left
+ * with no house spokes.
+ *
+ * Two personalities, one component:
+ *  - Legacy/static (share card, demo): pass bodies/asc/mc/cusps/aspects and
+ *    nothing else. The rendered markup is pinned byte-for-byte by
+ *    wheel-serialization.test.ts — every previously shared card depends on
+ *    it staying identical.
+ *  - Interactive (Chart Explorer): additionally pass `interactive` with the
+ *    scene model, selection, emphasis, and onSelect. Marks become hit
+ *    targets (data-entity), chords weight by orb and dash when separating,
+ *    and everything not selected dims to the emphasis floor.
  */
 import { SIGNS } from '../signs';
 import { PLANET_GLYPH } from '../glyphs/paths';
+import type { BodyName } from '../engine/types';
+import type { ChartSceneModel, EntityRef, SceneEmphasis, SignSlug } from '../scene/types';
+import { entityId } from '../scene/types';
+import { collisionNudge } from '../scene/layout';
+import { emphasisOpacity } from '../scene/emphasis';
 
 export interface WheelBody {
   body: string;
   lon: number;
   retrograde?: boolean;
+}
+
+export interface WheelInteraction {
+  scene: ChartSceneModel;
+  selection: EntityRef | null;
+  emphasis: SceneEmphasis;
+  onSelect: (e: EntityRef | null) => void;
+  /** Accessible name for the interactive group (localized by the caller). */
+  label: string;
 }
 
 export interface WheelProps {
@@ -22,6 +47,8 @@ export interface WheelProps {
   size?: number;
   /** Draw-in animation on mount (respects reduced motion via CSS). */
   animate?: boolean;
+  /** Chart Explorer mode — omit for the pinned static rendering. */
+  interactive?: WheelInteraction;
 }
 
 
@@ -33,8 +60,12 @@ const ASPECT_COLOR: Record<string, string> = {
   opposition: 'rgba(224,169,180,0.6)',
 };
 
+/** Orb-weight class → chord stroke width (interactive mode only). */
+const ASPECT_STROKE = [0.9, 1.3, 1.8] as const;
+
 export default function Wheel({
   bodies, asc = null, mc = null, cusps = null, aspects = [], size = 420, animate = false,
+  interactive,
 }: WheelProps) {
   const cx = size / 2;
   const cy = size / 2;
@@ -42,13 +73,83 @@ export default function Wheel({
   const rSignsIn = size * 0.395;    // inner edge of sign ring
   const rBodies = size * 0.31;      // planet markers
   const rAspects = size * 0.235;    // aspect hub
-  const anchor = asc ?? 0;
+  const anchor = interactive ? interactive.scene.anchor.lon : (asc ?? 0);
+
+  const ix = interactive ?? null;
+  const opacityOf = (id: string) => (ix ? emphasisOpacity(ix.emphasis, id) : 1);
+  const toggleSelect = (e: EntityRef) => {
+    ix?.onSelect(ix.selection && entityId(ix.selection) === entityId(e) ? null : e);
+  };
+  const select = (e: EntityRef) => (ev: Event) => {
+    ev.stopPropagation();
+    toggleSelect(e);
+  };
+  /** Test/styling marker for an entity's visible mark (interactive only). */
+  const mark = (e: EntityRef) => (ix ? {
+    'data-entity': entityId(e),
+    'data-selected': ix.selection && entityId(ix.selection) === entityId(e) ? 'true' : undefined,
+  } : {});
 
   /** Ecliptic longitude → SVG point at radius r. */
   const pt = (lon: number, r: number) => {
     const phi = ((180 + (lon - anchor)) * Math.PI) / 180;
     return { x: cx + r * Math.cos(phi), y: cy - r * Math.sin(phi) };
   };
+
+  /**
+   * One geometric hit test for the whole wheel (interactive mode). Marks on
+   * a fanned wheel sit closer together than any honest touch target, so
+   * per-mark invisible circles steal each other's taps; instead the svg
+   * resolves every click by radius band, then angle:
+   *   sign ring        → the sign segment
+   *   planet band      → the nearest body within 10° (else the house there)
+   *   inner wedge band → the house at that longitude
+   *   aspect hub       → the chords' own wide hit-strokes (they stopPropagation)
+   *   anywhere else    → clear
+   */
+  const resolveClick = ix ? (ev: MouseEvent) => {
+    const svg = ev.currentTarget as SVGSVGElement;
+    const rect = svg.getBoundingClientRect();
+    if (!rect.width) return;
+    const scale = (size + pad * 2) / rect.width;
+    const x = (ev.clientX - rect.left) * scale - pad;
+    const y = (ev.clientY - rect.top) * scale - pad;
+    const dx = x - cx;
+    const dy = y - cy;
+    const r = Math.hypot(dx, dy);
+    const phi = (Math.atan2(-dy, dx) * 180) / Math.PI;
+    const lon = ((anchor + phi - 180) % 360 + 360) % 360;
+
+    const houseAt = (l: number) => ix.scene.houses?.find((hs) => {
+      const into = ((l - hs.cuspLon) % 360 + 360) % 360;
+      return into < hs.spanDeg;
+    });
+
+    if (r >= rSignsIn && r <= rSigns + 2) {
+      toggleSelect({ kind: 'sign', sign: ix.scene.signs[Math.floor(lon / 30)].slug });
+      return;
+    }
+    if (Math.abs(r - rBodies) <= size * 0.055) {
+      let best: { body: BodyName; dist: number } | null = null;
+      for (const b of ix.scene.bodies) {
+        const d = Math.abs((((b.drawLon - lon) % 360) + 540) % 360 - 180);
+        if (!best || d < best.dist) best = { body: b.body, dist: d };
+      }
+      if (best && best.dist <= 10) {
+        toggleSelect({ kind: 'body', body: best.body });
+        return;
+      }
+      const hs = cusps ? houseAt(lon) : undefined;
+      if (hs) { toggleSelect({ kind: 'house', house: hs.index }); return; }
+      ix.onSelect(null);
+      return;
+    }
+    if (r > rAspects + 2 && r < rSignsIn && cusps) {
+      const hs = houseAt(lon);
+      if (hs) { toggleSelect({ kind: 'house', house: hs.index }); return; }
+    }
+    ix.onSelect(null);
+  } : undefined;
 
   const arcPath = (from: number, to: number, r: number) => {
     const a = pt(from, r);
@@ -59,36 +160,39 @@ export default function Wheel({
     return `M ${a.x.toFixed(2)} ${a.y.toFixed(2)} A ${r} ${r} 0 0 0 ${b.x.toFixed(2)} ${b.y.toFixed(2)}`;
   };
 
-  // Collision-nudge: bodies closer than 7° fan outward slightly.
-  const sorted = [...bodies].sort((x, y) => x.lon - y.lon);
-  const drawLon = new Map<string, number>();
-  for (const b of sorted) drawLon.set(b.body, b.lon);
-  for (let pass = 0; pass < 4; pass += 1) {
-    for (let i = 0; i < sorted.length; i += 1) {
-      const a = sorted[i];
-      const b = sorted[(i + 1) % sorted.length];
-      if (a === b) continue;
-      const la = drawLon.get(a.body)!;
-      const lb = drawLon.get(b.body)!;
-      let gap = ((lb - la) % 360 + 360) % 360;
-      if (gap < 7) {
-        const push = (7 - gap) / 2;
-        drawLon.set(a.body, la - push);
-        drawLon.set(b.body, lb + push);
-      }
-    }
-  }
+  // Collision layout is shared with the scene model so every renderer fans
+  // crowded bodies identically; in interactive mode the scene already
+  // carries the result.
+  const drawLon = ix
+    ? new Map(ix.scene.bodies.map((b) => [b.body, b.drawLon]))
+    : collisionNudge(bodies);
 
   // Padding keeps the ASC/MC labels inside the viewBox.
   const pad = size * 0.05;
+
+  // House-number placement: interactive mode fixes the wedge-midpoint defect
+  // (the number belongs at cusp + span/2 — under Placidus at high latitude a
+  // wedge can be far narrower than 30°, and the old cusp+15° put the numeral
+  // in the neighbouring house). The static path keeps the historical
+  // cusp+15° so pinned share-card output never shifts.
+  const houseMid = (lon: number, i: number) =>
+    ix?.scene.houses ? ix.scene.houses[i].midLon : lon + 15;
 
   return (
     <svg
       viewBox={`${-pad} ${-pad} ${size + pad * 2} ${size + pad * 2}`}
       width="100%"
-      role="img"
-      aria-label="Birth chart wheel"
-      class={animate ? 'wheel wheel--animate' : 'wheel'}
+      // Interactive mode: the wrapping wheelbox carries the group role and
+      // label; hiding the SVG from AT avoids double-announcing it, and the
+      // placements table remains the canonical accessible structure.
+      role={ix ? undefined : 'img'}
+      aria-hidden={ix ? 'true' : undefined}
+      aria-label={ix ? undefined : 'Birth chart wheel'}
+      class={[
+        animate ? 'wheel wheel--animate' : 'wheel',
+        ix ? 'wheel--interactive' : '',
+      ].filter(Boolean).join(' ')}
+      onClick={resolveClick}
     >
       {/* Ring backgrounds */}
       <circle cx={cx} cy={cy} r={rSigns} fill="none" stroke="rgba(198,204,218,0.16)" stroke-width="1" />
@@ -104,8 +208,9 @@ export default function Wheel({
         const mid = from + 15;
         const c = pt(mid, (rSigns + rSignsIn) / 2);
         const disc = size * 0.068;
+        const signRef: EntityRef = { kind: 'sign', sign: s.slug as SignSlug };
         return (
-          <g key={s.slug}>
+          <g key={s.slug} {...(ix ? { opacity: opacityOf(`sign:${s.slug}`), ...mark(signRef) } : {})}>
             <path
               d={arcPath(from + 1.5, from + 28.5, (rSigns + rSignsIn) / 2)}
               fill="none"
@@ -146,9 +251,10 @@ export default function Wheel({
         const a = pt(lon, rAspects);
         const b = pt(lon, rSignsIn);
         const isAngle = i === 0 || i === 3 || i === 6 || i === 9;
-        const num = pt(lon + 15, (rAspects + rBodies) / 2 - size * 0.02);
+        const num = pt(houseMid(lon, i), (rAspects + rBodies) / 2 - size * 0.02);
+        const houseRef: EntityRef = { kind: 'house', house: i + 1 };
         return (
-          <g key={i}>
+          <g key={i} {...(ix ? { opacity: opacityOf(`house:${i + 1}`), ...mark(houseRef) } : {})}>
             <line
               x1={a.x} y1={a.y} x2={b.x} y2={b.y}
               stroke={isAngle ? 'rgba(238,241,247,0.4)' : 'rgba(198,204,218,0.14)'}
@@ -163,10 +269,10 @@ export default function Wheel({
 
       {/* ASC / MC labels */}
       {asc !== null && (() => { const p = pt(asc, rSigns + size * 0.012); return (
-        <text x={p.x - size * 0.012} y={p.y} text-anchor="end" dominant-baseline="central" font-size={size * 0.026} fill="rgba(238,241,247,0.75)" font-family="var(--font-mono)">ASC</text>
+        <text x={p.x - size * 0.012} y={p.y} text-anchor="end" dominant-baseline="central" font-size={size * 0.026} fill="rgba(238,241,247,0.75)" font-family="var(--font-mono)" {...(ix ? { ...mark({ kind: 'angle', angle: 'asc' }), onClick: select({ kind: 'angle', angle: 'asc' }), class: 'wheel__hit', opacity: opacityOf('angle:asc') } : {})}>ASC</text>
       ); })()}
       {mc !== null && mc !== undefined && (() => { const p = pt(mc, rSigns + size * 0.028); return (
-        <text x={p.x} y={p.y} text-anchor="middle" dominant-baseline="central" font-size={size * 0.026} fill="rgba(238,241,247,0.6)" font-family="var(--font-mono)">MC</text>
+        <text x={p.x} y={p.y} text-anchor="middle" dominant-baseline="central" font-size={size * 0.026} fill="rgba(238,241,247,0.6)" font-family="var(--font-mono)" {...(ix ? { ...mark({ kind: 'angle', angle: 'mc' }), onClick: select({ kind: 'angle', angle: 'mc' }), class: 'wheel__hit', opacity: opacityOf('angle:mc') } : {})}>MC</text>
       ); })()}
 
       {/* Aspect lines */}
@@ -176,13 +282,38 @@ export default function Wheel({
         if (!A || !B) return null;
         const p1 = pt(A.lon, rAspects);
         const p2 = pt(B.lon, rAspects);
+        if (!ix) {
+          return (
+            <line
+              key={i}
+              x1={p1.x} y1={p1.y} x2={p2.x} y2={p2.y}
+              stroke={ASPECT_COLOR[a.type] ?? 'rgba(198,204,218,0.3)'}
+              stroke-width="1"
+            />
+          );
+        }
+        const sceneAspect = ix.scene.aspects.find((sa) => sa.a === a.a && sa.b === a.b && sa.type === a.type);
+        const aspectRef: EntityRef = { kind: 'aspect', a: a.a as any, b: a.b as any, type: a.type as any };
+        const id = entityId(aspectRef);
         return (
-          <line
-            key={i}
-            x1={p1.x} y1={p1.y} x2={p2.x} y2={p2.y}
-            stroke={ASPECT_COLOR[a.type] ?? 'rgba(198,204,218,0.3)'}
-            stroke-width="1"
-          />
+          <g key={i} opacity={opacityOf(id)}>
+            <line
+              x1={p1.x} y1={p1.y} x2={p2.x} y2={p2.y}
+              stroke={ASPECT_COLOR[a.type] ?? 'rgba(198,204,218,0.3)'}
+              stroke-width={ASPECT_STROKE[sceneAspect?.weight ?? 0]}
+              stroke-dasharray={sceneAspect && !sceneAspect.applying ? '3 3' : undefined}
+              pointer-events="none"
+            />
+            {/* Wide invisible twin makes the 1px chord tappable. */}
+            <line
+              x1={p1.x} y1={p1.y} x2={p2.x} y2={p2.y}
+              stroke="transparent"
+              stroke-width={size * 0.028}
+              {...mark(aspectRef)}
+              onClick={select(aspectRef)}
+              class="wheel__hit"
+            />
+          </g>
         );
       })}
 
@@ -193,9 +324,15 @@ export default function Wheel({
         const tick1 = pt(b.lon, rSignsIn);
         const tick2 = pt(b.lon, rSignsIn - size * 0.014);
         const sign = SIGNS[Math.floor(((b.lon % 360) + 360) % 360 / 30)];
+        const bodyRef: EntityRef = { kind: 'body', body: b.body as any };
+        const id = `body:${b.body}`;
+        const selected = ix?.selection && entityId(ix.selection) === id;
         return (
-          <g key={b.body} class="wheel__body">
+          <g key={b.body} class="wheel__body" {...(ix ? { opacity: opacityOf(id), ...mark(bodyRef) } : {})}>
             <line x1={tick1.x} y1={tick1.y} x2={tick2.x} y2={tick2.y} stroke={sign.hue} stroke-width="1.4" />
+            {selected && (
+              <circle cx={p.x} cy={p.y} r={size * 0.044} fill="none" stroke={sign.hue} stroke-width="1.6" class="wheel__sel-ring" />
+            )}
             <circle cx={p.x} cy={p.y} r={size * 0.033} fill="rgba(15,18,26,0.92)" stroke={sign.hue} stroke-opacity="0.55" stroke-width="1" />
             <g
               transform={`translate(${p.x} ${p.y}) scale(${(size * 0.05) / 24}) translate(-12 -12)`}
