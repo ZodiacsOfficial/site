@@ -1,7 +1,53 @@
 ---
 import Base from '../../../layouts/Base.astro';
+import Faq from '../../../components/Faq.astro';
 import SaturnReturnCalculator from '../../../islands/SaturnReturnCalculator';
 import '../../../styles/calculator.css';
+
+const faq = [
+  {
+    q: '¿Qué es un retorno de Saturno?',
+    a: 'Es el momento en que Saturno en tránsito vuelve al grado exacto que ocupaba cuando naciste. Saturno tarda unos 29,4 años en recorrer el zodiaco, así que el primer retorno llega cerca de los 29 años, el segundo cerca de los 58 y el tercero alrededor de los 88. La astrología lo interpreta como una revisión de aquello que funciona por inercia en vez de por elección.',
+  },
+  {
+    q: '¿Cuándo es mi retorno de Saturno?',
+    a: 'Ingresa tu fecha de nacimiento. La calculadora recorre el movimiento real de Saturno y devuelve las fechas exactas, incluidas las pasadas retrógradas. La mayoría de los primeros retornos empieza entre los 28 y los 30 años; la idea popular de que “arruinó mis 29” suele describir la parte central del periodo.',
+  },
+  {
+    q: '¿Por qué mi retorno de Saturno tiene tres fechas?',
+    a: 'Saturno retrograda unos cuatro meses y medio cada año. Cuando ese bucle hacia atrás cruza tu grado natal, el planeta puede tocarlo tres veces: una avanzando, otra retrocediendo y una última al salir. Todo el intervalo, que suele durar de ocho a doce meses, forma parte del retorno.',
+  },
+  {
+    q: '¿Cuánto dura un retorno de Saturno?',
+    a: 'Los cruces exactos pueden abarcar desde unos días hasta cerca de un año, según intervenga o no el bucle retrógrado. La experiencia se interpreta de forma más amplia: normalmente se considera todo el tránsito de Saturno por el signo de tu Saturno natal, unos dos años y medio.',
+  },
+  {
+    q: '¿Es malo el retorno de Saturno?',
+    a: 'Tiene fama de demolición, pero funciona más como una inspección. Las carreras, relaciones y formas de vida que encajan se consolidan; las que se sostienen solo por costumbre pasan factura. Muchas personas lo consideran terrible a los 29 y formativo al mirarlo desde los 35.',
+  },
+];
+
+const jsonLd = [
+  {
+    '@type': 'WebApplication',
+    name: 'Calculadora del retorno de Saturno',
+    url: 'https://zodiacs.org/es/saturn-return/',
+    applicationCategory: 'LifestyleApplication',
+    operatingSystem: 'Web',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    inLanguage: 'es',
+    isPartOf: { '@id': 'https://zodiacs.org/#site' },
+  },
+  {
+    '@type': 'FAQPage',
+    inLanguage: 'es',
+    mainEntity: faq.map(({ q, a }) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: { '@type': 'Answer', text: a },
+    })),
+  },
+];
 ---
 <Base
   title="Calculadora de retorno de Saturno | Zodiacs.org"
@@ -10,6 +56,7 @@ import '../../../styles/calculator.css';
   locale="es"
   image="/assets/og/v2/tool/saturn-return.png"
   imageAlt="Calculadora de retorno de Saturno — Zodiacs.org"
+  jsonLd={jsonLd}
 >
   <section class="section--tight container">
     <div class="tool-hero">
@@ -20,6 +67,10 @@ import '../../../styles/calculator.css';
     <noscript>
       <p>Esta calculadora del retorno de Saturno necesita JavaScript. Activa JavaScript y recarga la página para calcular las fechas de tus retornos a partir de tu fecha de nacimiento.</p>
     </noscript>
+  </section>
+
+  <section class="section--tight container container--narrow">
+    <Faq items={faq} heading="Preguntas sobre el retorno de Saturno" />
   </section>
 </Base>
 

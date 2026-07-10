@@ -5,10 +5,13 @@
  * JSON; the ephemeris never loads here (homepage bundle rule).
  */
 import { useState } from 'preact/hooks';
-import { SIGNS } from '../lib/signs';
+import { SIGNS, signName } from '../lib/signs';
 import PlanetGlyph from '../components/PlanetGlyph';
-import { dailyReading, type Daily } from '../lib/daily';
+import type { Daily } from '../lib/daily';
 import { localizePath, normalizeLocale, t, type Locale } from '../lib/i18n';
+import { formatDate } from '../lib/i18n/dates';
+import { moonPhaseLabel } from '../lib/i18n/astrology';
+import { dailyReadingForLocale } from '../lib/i18n/daily-reading';
 import daily from '../data/daily.json';
 
 interface Props { locale?: Locale }
@@ -16,14 +19,18 @@ interface Props { locale?: Locale }
 export default function TodayBySign({ locale: rawLocale = 'en' }: Props) {
   const locale = normalizeLocale(rawLocale);
   const [sel, setSel] = useState<string | null>(null);
-  const reading = sel ? dailyReading(sel, daily as Daily) : null;
+  const reading = sel ? dailyReadingForLocale(sel, daily as Daily, locale) : null;
   const active = sel ? SIGNS.find((s) => s.slug === sel)! : null;
 
   return (
     <section class="tbs" aria-label={t(locale, 'todayBySignTitle')}>
       <div class="tbs__head">
         <h2>{t(locale, 'todayBySignTitle')}</h2>
-        <span class="mono tbs__stamp">{daily.date} · {daily.moon.phase}</span>
+        <span class="mono tbs__stamp">
+          {formatDate(locale, `${daily.date}T12:00:00Z`, {
+            year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC',
+          })} · {moonPhaseLabel(locale, daily.moon.phase)}
+        </span>
       </div>
 
       <div class="tbs__signs" role="group" aria-label={t(locale, 'todayBySignTitle')}>
@@ -41,7 +48,7 @@ export default function TodayBySign({ locale: rawLocale = 'en' }: Props) {
               <source srcset={`/assets/zodiac-icons/48/${s.slug}.avif`} type="image/avif" />
               <img src={`/assets/zodiac-icons/48/${s.slug}.webp`} width="30" height="30" alt="" loading="lazy" decoding="async" />
             </picture>
-            <span class="tbs__name">{s.name}</span>
+            <span class="tbs__name">{signName(s, locale)}</span>
           </button>
         ))}
       </div>
@@ -50,7 +57,7 @@ export default function TodayBySign({ locale: rawLocale = 'en' }: Props) {
         {reading && active ? (
           <div class="tbs__read" style={`--sign:${active.hue}`}>
             <div class="tbs__read-head">
-              <strong>{active.name} · {t(locale, 'today')}</strong>
+              <strong>{signName(active, locale)} · {t(locale, 'today')}</strong>
               <span class="mono tbs__read-stamp">{t(locale, 'todaySolarNote')}</span>
             </div>
             <ul class="tbs__lines">
@@ -64,8 +71,8 @@ export default function TodayBySign({ locale: rawLocale = 'en' }: Props) {
                 </li>
               ))}
             </ul>
-            <a class="tbs__more" href={localizePath(locale, `/horoscopes/${active.slug}/`)}>
-              {active.name} {t(locale, 'todayHoroscopeLink')} →
+            <a class="tbs__more" href={localizePath(locale, `/horoscopes/${active.slug}/`)} hreflang="en">
+              {signName(active, locale)} {t(locale, 'todayHoroscopeLink')} →
             </a>
           </div>
         ) : (

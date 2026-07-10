@@ -12,6 +12,17 @@ const tools = [
   { href: '/saturn-return/', title: 'Retorno de Saturno', promise: 'Cuándo llega el tuyo y qué suele pedir.', hue: 'var(--sign-capricorn)', kind: 'saturn' as const },
   { href: '/transits/', title: 'Tránsitos', promise: 'El cielo de hoy comparado con tu carta.', hue: 'var(--sign-aries)', kind: 'transit' as const },
 ];
+
+const jsonLd = [
+  {
+    '@type': 'CollectionPage',
+    name: 'Herramientas gratis de astrología',
+    url: 'https://zodiacs.org/es/tools/',
+    description: 'Calculadoras gratis de astrología, calculadas de forma privada en tu navegador.',
+    inLanguage: 'es',
+    isPartOf: { '@id': 'https://zodiacs.org/#site' },
+  },
+];
 ---
 <Base
   title="Herramientas gratis de astrología | Zodiacs.org"
@@ -20,6 +31,7 @@ const tools = [
   locale="es"
   image="/assets/og/v2/tool/tools.png"
   imageAlt="Herramientas gratis de astrología — Zodiacs.org"
+  jsonLd={jsonLd}
 >
   <section class="section container">
     <div class="section-head">

@@ -152,7 +152,7 @@ export const ES_GUIDES: Record<string, SpanishGuide> = {
     ],
     faq: [
       { q: '¿Cuáles son las fechas de Cáncer?', a: `Aproximadamente del 21 de junio al 22 de julio. ${edgeCopy}` },
-      { q: '¿Cáncer es signo de agua?', a: 'Sí. Cáncer es agua cardinal: emoción que inicia cuidado.' },
+      { q: '¿Cáncer es signo de agua?', a: 'Sí. Cáncer es agua cardinal: emoción que inicia el cuidado.' },
       { q: '¿Qué planeta rige Cáncer?', a: 'La Luna, asociada con memoria, instinto, cuerpo emocional y necesidades de seguridad.' },
     ],
   },
@@ -205,7 +205,7 @@ export const ES_GUIDES: Record<string, SpanishGuide> = {
         heading: 'Personalidad de Virgo',
         body: [
           'Virgo suele ser observador, práctico y exigente consigo mismo. Ve detalles que otros pasan por alto y muchas veces expresa amor ayudando de forma concreta.',
-          'Su reto es permitir que algo sea suficientemente bueno. El mismo ojo que mejora proyectos puede volverse duro con la propia persona si no aprende descanso.',
+          'Su reto es permitir que algo sea suficientemente bueno. El mismo ojo que mejora proyectos puede volverse duro con la propia persona si no aprende a descansar.',
         ],
       },
       {
@@ -233,7 +233,7 @@ export const ES_GUIDES: Record<string, SpanishGuide> = {
     title: 'Libra: fechas, personalidad, compatibilidad y significado',
     description: `Libra explicado en español: fechas, personalidad, amor, compatibilidad y qué significa Libra en tu carta. ${edgeCopy}`,
     intro: [
-      'Libra empieza cerca del equinoccio de septiembre, cuando día y noche se equilibran. Su tema central es relación: proporción, belleza, justicia y elección mutua.',
+      'Libra empieza cerca del equinoccio de septiembre, cuando día y noche se equilibran. Su tema central es la relación: proporción, belleza, justicia y elección mutua.',
       'En una carta natal, Libra muestra dónde piensas mejor con otro espejo. También dónde necesitas armonía, pero no a costa de tu propia voz.',
     ],
     sections: [
@@ -355,7 +355,7 @@ export const ES_GUIDES: Record<string, SpanishGuide> = {
       {
         heading: 'Capricornio en el amor',
         body: [
-          'Capricornio ama con compromiso práctico. Puede tardar en abrirse, pero cuando lo hace suele pensar en largo plazo, cuidado real y decisiones sostenibles.',
+          'Capricornio ama con compromiso práctico. Puede tardar en abrirse, pero cuando lo hace suele pensar en el largo plazo, el cuidado real y las decisiones sostenibles.',
           'Fluye con Tauro, Virgo y Escorpio. Con Aries, Libra y Cáncer puede haber tensión entre velocidad, vínculo y vulnerabilidad.',
         ],
       },
@@ -602,7 +602,7 @@ const DEPTH: Record<string, GuideDepth> = {
     challenge: 'confundir valor con perfección o usar la crítica para no sentir incertidumbre',
     loveNeeds: 'confianza, cuidado cotidiano, palabras claras y una relación donde ayudar no sea obligación silenciosa',
     friendship: 'amistades honestas, planes prácticos y gente que respeta los detalles pequeños',
-    work: 'analizar, curar, escribir, investigar, cuidar salud, diseñar procesos y volver útil el conocimiento',
+    work: 'analizar, curar, escribir, investigar, cuidar la salud, diseñar procesos y volver útil el conocimiento',
     purpose: 'aprender que lo suficientemente bueno también puede ser bello y que el descanso es parte del método',
     sun: 'identidad construida a través de servicio, oficio, observación y mejora continua',
     moon: 'emoción que se regula con orden, rutina y una sensación de ser útil sin explotarse',
@@ -624,11 +624,11 @@ const DEPTH: Record<string, GuideDepth> = {
     temperament: 'diplomático, perceptivo y muy consciente de la atmósfera entre las personas',
     gift: 'encuentra proporción: embellece, media, escucha ambos lados y devuelve elegancia al conflicto',
     challenge: 'esperar una opción perfecta hasta que la vida decida por él',
-    loveNeeds: 'reciprocidad, conversación, belleza compartida y una relación donde elegir sea mutuo',
+    loveNeeds: 'reciprocidad, conversación, belleza compartida y una relación donde la elección sea mutua',
     friendship: 'amistades sociables, gusto compartido, debate amable y planes donde todos puedan estar cómodos',
-    work: 'negociar, diseñar, asesorar, escribir, defender justicia y crear experiencias equilibradas',
+    work: 'negociar, diseñar, asesorar, escribir, defender la justicia y crear experiencias equilibradas',
     purpose: 'aprender que la paz real a veces empieza con una frase incómoda dicha a tiempo',
-    sun: 'identidad que se descubre en espejo: relación, gusto, justicia y elección consciente',
+    sun: 'identidad que se descubre en el espejo de los demás: relación, gusto, justicia y elección consciente',
     moon: 'emoción que necesita armonía, compañía y espacios donde el conflicto no se vuelva amenaza',
     rising: 'presencia elegante y social; suele suavizar el ambiente antes de mostrar su propia intensidad',
     venus: 'amor en su terreno: encanto, cooperación, estética y deseo de un vínculo bien cuidado',
@@ -651,7 +651,7 @@ const DEPTH: Record<string, GuideDepth> = {
     loveNeeds: 'lealtad profunda, deseo honesto, confianza ganada y una relación capaz de hablar de lo difícil',
     friendship: 'amistades selectas, confidencias reales y gente que no traicione lo que se dijo en voz baja',
     work: 'investigar, sanar, analizar crisis, manejar recursos compartidos y trabajar con lo oculto',
-    purpose: 'aprender que poder no es control, y que confiar también puede ser una fuerza',
+    purpose: 'aprender que el poder no es control, y que confiar también puede ser una fuerza',
     sun: 'identidad que se forja atravesando intensidad; no se conforma con vivir en la superficie',
     moon: 'emoción profunda, privada y resistente; necesita tiempo para revelar lo que de verdad ocurre',
     rising: 'presencia magnética y observadora; puede hacer que otros se sientan leídos antes de hablar',
@@ -698,14 +698,14 @@ const DEPTH: Record<string, GuideDepth> = {
     challenge: 'confundir descanso con debilidad o creer que tiene que ganarse cada gesto de amor',
     loveNeeds: 'compromiso, respeto, paciencia, humor seco y demostraciones que sobrevivan al entusiasmo inicial',
     friendship: 'amistades leales, discretas y capaces de estar cuando la vida se vuelve adulta',
-    work: 'dirigir, planificar, administrar, construir instituciones, cuidar reputación y sostener metas largas',
+    work: 'dirigir, planificar, administrar, construir instituciones, cuidar la reputación y sostener metas largas',
     purpose: 'aprender que la ambición puede incluir una vida interior, no solo resultados visibles',
     sun: 'identidad que madura con tiempo, responsabilidad y una relación seria con lo que quiere lograr',
     moon: 'emoción contenida; necesita seguridad, competencia y permiso para ser vulnerable sin perder autoridad',
     rising: 'presencia reservada, competente y un poco inaccesible hasta que aparece la confianza',
     venus: 'amor cuidadoso y serio, con deseo de construir algo que tenga forma y futuro',
     mars: 'deseo disciplinado: trabaja por objetivos, calcula esfuerzos y suele ganar por constancia',
-    house: 'la zona donde tomas responsabilidad, haces estructura y aprendes el poder de la paciencia',
+    house: 'la zona donde tomas responsabilidad, creas estructura y aprendes el poder de la paciencia',
     growth: 'pedir apoyo antes de agotarte, celebrar avances y no aplazar la alegría hasta el final de la escalera',
     easeful: 'Tauro, Virgo y Escorpio suelen respetar su ritmo, su profundidad y su deseo de lealtad',
     charged: 'Aries, Libra y Cáncer pueden enseñarle velocidad, reciprocidad y cuidado emocional',
@@ -723,7 +723,7 @@ const DEPTH: Record<string, GuideDepth> = {
     loveNeeds: 'amistad, libertad mental, rareza compartida y una relación sin posesión',
     friendship: 'amistades elegidas, comunidades, conversaciones raras y gente que respete su diferencia',
     work: 'innovar, investigar, programar, organizar grupos, diseñar sistemas y defender futuros posibles',
-    purpose: 'aprender que ser diferente no exige estar solo, y que comunidad también puede tener intimidad',
+    purpose: 'aprender que ser diferente no exige estar solo, y que la comunidad también puede tener intimidad',
     sun: 'identidad que necesita pensar por cuenta propia y vivir de acuerdo con una visión',
     moon: 'emoción que se procesa con distancia, ideas y tiempo; sentir puede venir después de entender',
     rising: 'presencia singular, fresca y algo impredecible; otros perciben una distancia magnética',
@@ -744,8 +744,8 @@ const DEPTH: Record<string, GuideDepth> = {
     temperament: 'sensible, imaginativo, compasivo y permeable a lo que otros no dicen',
     gift: 'ablanda los bordes: imagina, perdona, sueña, crea y escucha el lenguaje de lo invisible',
     challenge: 'disolverse en necesidades ajenas o llamar destino a lo que pide límites',
-    loveNeeds: 'ternura, misterio, empatía, arte y una relación donde la sensibilidad no sea burla',
-    friendship: 'amistades suaves, creativas, espirituales o muy humanas, donde nadie tenga que actuar dureza',
+    loveNeeds: 'ternura, misterio, empatía, arte y una relación donde la sensibilidad no sea motivo de burla',
+    friendship: 'amistades suaves, creativas, espirituales o muy humanas, donde nadie tenga que fingir dureza',
     work: 'crear, sanar, acompañar, cuidar, interpretar símbolos, hacer música, escribir o trabajar entre mundos',
     purpose: 'aprender que compasión con límites sigue siendo compasión, y suele ser más duradera',
     sun: 'identidad que necesita inspiración, entrega y una relación viva con la imaginación',
@@ -767,7 +767,7 @@ function expandedSections(profile: GuideDepth): SpanishGuide['sections'] {
     {
       heading: `Cómo reconocer a ${profile.name}`,
       body: [
-        `${profile.name} suele tener un ritmo ${profile.temperament}. Eso no significa que todas las personas de este signo actúen igual; significa que, cuando la carta le da fuerza, la vida se organiza alrededor de ese pulso. ${profile.gift}.`,
+        `${profile.name} suele mostrarse ${profile.temperament}. Eso no significa que todas las personas de este signo actúen igual; significa que, cuando la carta le da fuerza, la vida se organiza alrededor de ese pulso. Su don es claro: ${profile.gift}.`,
         `El punto fino está en distinguir virtud de reflejo automático. El regalo de ${profile.name} se vuelve más claro cuando no tiene que demostrarlo todo el tiempo. Su sombra aparece al ${profile.challenge}.`,
         `Por eso conviene leer el signo como una herramienta, no como una sentencia. ${profile.name} describe una manera de responder a la vida: qué se nota primero, qué se protege, qué se desea y qué tipo de experiencia hace que una persona vuelva a sentirse en su eje.`,
       ],
@@ -776,14 +776,14 @@ function expandedSections(profile: GuideDepth): SpanishGuide['sections'] {
       heading: `${profile.name} en el amor, la amistad y la confianza`,
       body: [
         `En el amor, ${profile.name} necesita ${profile.loveNeeds}. Si eso falta, el vínculo puede sentirse correcto por fuera pero pobre por dentro. Este signo no se abre de verdad solo porque haya atracción; necesita sentir que el ritmo de la relación le permite seguir siendo sí mismo.`,
-        `En amistad busca ${profile.friendship}. A veces la compatibilidad más sana no es la más intensa, sino la que deja al signo respirar sin tener que traducirse todo el día. Cuando ${profile.name} se siente aceptado, su mejor cualidad aparece sin esfuerzo.`,
-        `La química fácil suele aparecer con ${profile.easeful}. Los signos más desafiantes, como ${profile.charged}, no tienen por qué ser mala idea: simplemente piden más conciencia. En pareja, la carta completa importa mucho más que el Sol. Luna, Venus, Marte, ascendente y casas muestran la historia real.`,
+        `En la amistad busca ${profile.friendship}. A veces la compatibilidad más sana no es la más intensa, sino la que deja al signo respirar sin tener que traducirse todo el día. Cuando ${profile.name} se siente aceptado, su mejor cualidad aparece sin esfuerzo.`,
+        `${profile.easeful}. Esa suele ser la química más fácil. ${profile.charged}. Esos vínculos no tienen por qué ser una mala idea: simplemente piden más conciencia. En pareja, la carta completa importa mucho más que el Sol. La Luna, Venus, Marte, el ascendente y las casas muestran la historia real.`,
       ],
     },
     {
-      heading: `${profile.name} en trabajo, dinero y propósito`,
+      heading: `${profile.name} en el trabajo, el dinero y el propósito`,
       body: [
-        `En trabajo, ${profile.name} destaca al ${profile.work}. No siempre se trata de una profesión literal; puede ser una forma de entrar a cualquier tarea. Donde otras personas ven un pendiente más, este signo ve una manera de ordenar su energía y probar qué sabe hacer.`,
+        `En el trabajo, ${profile.name} destaca al ${profile.work}. No siempre se trata de una profesión literal; puede ser una forma de abordar cualquier tarea. Donde otras personas ven un pendiente más, este signo ve una manera de ordenar su energía y demostrar lo que sabe hacer.`,
         `Su propósito no tiene que sonar grandioso. Muchas veces empieza con algo simple: ${profile.purpose}. Cuando una vida honra ese movimiento, el signo deja de actuar por defensa y empieza a actuar por elección.`,
         `Con dinero y recursos, ${profile.name} necesita mirar qué le da seguridad y qué le da vitalidad. Un presupuesto, una rutina o una meta sirven si sostienen vida real. Si se vuelven una jaula, el signo pierde contacto con su mejor inteligencia.`,
       ],
@@ -791,7 +791,7 @@ function expandedSections(profile: GuideDepth): SpanishGuide['sections'] {
     {
       heading: `${profile.name} en tu carta natal`,
       body: [
-        `Tu signo solar es solo una parte. Con el Sol en ${profile.name}, aparece una ${profile.sun}. Con la Luna en ${profile.name}, la historia se vuelve una ${profile.moon}. Con ascendente en ${profile.name}, el mundo suele encontrarse primero con una ${profile.rising}.`,
+        `Tu signo solar es solo una parte. Con el Sol en ${profile.name}, aparece una ${profile.sun}. Con la Luna en ${profile.name}, la historia se vuelve una ${profile.moon}. Con el ascendente en ${profile.name}, el mundo suele encontrarse primero con una ${profile.rising}.`,
         `Venus y Marte cambian el tono de las relaciones. Venus en ${profile.name} habla de ${profile.venus}. Marte en ${profile.name} muestra ${profile.mars}. Estas colocaciones pueden explicar por qué alguien no se identifica con la descripción típica de su signo solar.`,
         `También importa la casa donde cae ${profile.name}. Esa casa muestra ${profile.house}. Si no sabes en qué casa vive este signo en tu carta, calcula la carta natal completa con hora y lugar; ahí se ve si el tema aparece en identidad, pareja, trabajo, familia, creatividad o mundo interior.`,
         `La precisión importa sobre todo cerca de los cambios de signo. Las fechas de ${profile.name} suelen ser ${profile.dateRange}, pero el Sol no entra a la misma hora todos los años. Si naciste en el borde, la única respuesta fiable es una carta calculada con tus datos.`,
@@ -802,7 +802,7 @@ function expandedSections(profile: GuideDepth): SpanishGuide['sections'] {
       body: [
         `La sombra de ${profile.name} no es un defecto moral. Es una estrategia que alguna vez tuvo sentido y luego se volvió demasiado automática. El crecimiento empieza cuando el signo nota que ya no necesita responder siempre desde el mismo lugar.`,
         `Para este signo, la práctica central es ${profile.growth}. Esa frase puede sonar sencilla, pero suele tocar el punto exacto donde la carta se vuelve adulta: no negar el impulso, sino darle una forma más consciente.`,
-        `El cuerpo también cuenta. A ${profile.name} le ayuda ${profile.bodyCare}. La astrología es más útil cuando baja a decisiones pequeñas: cómo descansas, cómo pides, cómo sales de un ciclo y qué eliges repetir.`,
+        `El cuerpo también cuenta. A ${profile.name} le ayudan estas prácticas: ${profile.bodyCare}. La astrología es más útil cuando baja a decisiones pequeñas: cómo descansas, cómo pides, cómo sales de un ciclo y qué eliges repetir.`,
       ],
     },
     {
@@ -820,7 +820,7 @@ function expandedFaq(profile: GuideDepth): SpanishGuide['faq'] {
   return [
     {
       q: `¿Qué significa tener mucho ${profile.name} en la carta?`,
-      a: `Significa que varios planetas o puntos importantes hablan el idioma de ${profile.name}: ${profile.elementMode}, regido por ${profile.ruling}. Se nota en personalidad, vínculos y decisiones, pero la casa y los aspectos dicen dónde se expresa.`,
+      a: `Significa que varios planetas o puntos importantes hablan el idioma de ${profile.name}, un signo de ${profile.elementMode}. La guía toma esta regencia como referencia: ${profile.ruling}. Se nota en la personalidad, los vínculos y las decisiones, pero la casa y los aspectos dicen dónde se expresa.`,
     },
     {
       q: `¿Qué pasa si no me identifico con ${profile.name}?`,

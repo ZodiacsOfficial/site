@@ -19,7 +19,9 @@ import { formatLongitude } from '../lib/signs';
 import { resolveLocalToUtc } from '../lib/time/localToUtc';
 import { ENGINE_VERSION } from '../lib/engine/types';
 import type { City } from '../lib/geo/search';
-import { localizePath, normalizeLocale, t, type Locale } from '../lib/i18n';
+import { localizePath, normalizeLocale, t, tf, type Locale } from '../lib/i18n';
+import { formatDate, formatDateTime } from '../lib/i18n/dates';
+import { aspectLabel, planetLabel } from '../lib/i18n/astrology';
 
 // The transiting bodies shown in the sky strip (planets only — nodes excluded,
 // as before). Glyphs come from the shared PlanetGlyph.
@@ -158,8 +160,15 @@ export default function TransitTracker({ locale: rawLocale = 'en' }: { locale?: 
       const engine = await loadEngine();
       const when = dateStr === '' ? new Date() : new Date(`${dateStr}T12:00:00Z`);
       const whenLabel = dateStr === ''
-        ? `${when.toISOString().slice(0, 16).replace('T', ' ')} UTC`
-        : `${dateStr} · midday UTC`;
+        ? `${formatDateTime(locale, when, {
+            year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit',
+            timeZone: 'UTC', hour12: false,
+          })} UTC`
+        : tf(locale, 'transitMiddayUtc', {
+            date: formatDate(locale, when, {
+              year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC',
+            }),
+          });
       const sky = engine.computeBodies(when)
         .filter((b) => TRANSIT_BODIES.has(b.body))
         .map(({ body, lon, retrograde }) => ({ body, lon, retrograde }));
@@ -277,9 +286,8 @@ export default function TransitTracker({ locale: rawLocale = 'en' }: { locale?: 
           <p class="calc__privacy">{t(locale, 'privacyDevice')}</p>
           {charts.length === 0 && (
             <p class="field__help">
-              {locale === 'es' ? 'Las cartas que ' : 'Charts you '}
-              <a href={localizePath(locale, '/birth-chart/')}>{locale === 'es' ? 'calcules y guardes' : 'calculate and save'}</a>
-              {locale === 'es' ? ' aparecerán aquí como opciones de un toque, para que la próxima revisión sea más rápida.' : ' appear here as one-tap choices, so the next check skips the typing.'}
+              {t(locale, 'savedChartHelp')}{' '}
+              <a href={localizePath(locale, '/birth-chart/')}>{t(locale, 'getBirthChart')} →</a>
             </p>
           )}
           {error && <p class="calc__error" role="alert" tabIndex={-1} ref={errorRef}>{error}</p>}
@@ -321,8 +329,8 @@ export default function TransitTracker({ locale: rawLocale = 'en' }: { locale?: 
             {result.hits.map((h) => (
               <div class="syn__aspect" key={`${h.a}-${h.b}-${h.type}`}>
                 <span class="syn__aspect-receipt mono">
-                  <PlanetGlyph body={h.a} size={13} class="pg-inline" /> {h.a} <AspectGlyph type={h.type} size={13} class="pg-inline" /> {h.type} natal <PlanetGlyph body={h.b} size={13} class="pg-inline" /> {h.b} · orb {h.orb.toFixed(1)}°
-                  {h.type === 'conjunction' && h.a === h.b ? ` · a ${h.a} return` : ''}
+                  <PlanetGlyph body={h.a} size={13} class="pg-inline" /> {planetLabel(locale, h.a)} <AspectGlyph type={h.type} size={13} class="pg-inline" /> {aspectLabel(locale, h.type)} {t(locale, 'natal')} <PlanetGlyph body={h.b} size={13} class="pg-inline" /> {planetLabel(locale, h.b)} · {t(locale, 'orb')} {h.orb.toFixed(1)}°
+                  {h.type === 'conjunction' && h.a === h.b ? ` · ${tf(locale, 'planetReturn', { planet: planetLabel(locale, h.a) })}` : ''}
                 </span>
                 <p class="syn__aspect-read">{transitLine(h.a, h.type, h.b)}</p>
               </div>
@@ -334,7 +342,7 @@ export default function TransitTracker({ locale: rawLocale = 'en' }: { locale?: 
               .filter((b) => b.body === 'Sun' || b.body === 'Moon')
               .map((b) => (
                 <span class="syn__placement" key={b.body}>
-                  <span class="mono--label">{t(locale, 'natal')} {b.body}</span> <SignChip lon={b.lon} locale={locale} />
+                  <span class="mono--label">{tf(locale, 'natalPlanet', { planet: planetLabel(locale, b.body) })}</span> <SignChip lon={b.lon} locale={locale} />
                 </span>
               ))}
           </div>

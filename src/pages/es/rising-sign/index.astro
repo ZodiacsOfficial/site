@@ -1,9 +1,55 @@
 ---
 import Base from '../../../layouts/Base.astro';
+import Faq from '../../../components/Faq.astro';
 import ChartCalculator from '../../../islands/ChartCalculator';
 import SignIcon from '../../../components/SignIcon.astro';
 import { SIGNS, signName } from '../../../lib/signs';
 import '../../../styles/calculator.css';
+
+const faq = [
+  {
+    q: '¿Qué es el ascendente?',
+    a: 'Tu ascendente es el signo del zodiaco que aparecía sobre el horizonte oriental en el momento en que naciste. Da forma a las primeras impresiones: cómo te perciben las personas antes de conocer tu signo solar. También establece la distribución de todas las casas de tu carta.',
+  },
+  {
+    q: '¿Por qué necesito mi hora exacta de nacimiento?',
+    a: 'El ascendente recorre los doce signos cada 24 horas: cambia de signo aproximadamente cada dos horas y, a veces, incluso más rápido. Cerca de un límite, quince minutos pueden importar. El certificado de nacimiento es la mejor fuente; después vienen los registros del hospital y la memoria familiar.',
+  },
+  {
+    q: '¿Qué pasa si mi hora de nacimiento está redondeada, por ejemplo a las 7:00?',
+    a: 'Las horas redondeadas son comunes en los registros. Si tu ascendente calculado cae dentro de los primeros o últimos grados de un signo, unos minutos pueden cambiar el resultado. Revisa también el signo vecino y, si puedes, confirma la hora con otra fuente; identificarte con una descripción no sustituye un dato preciso.',
+  },
+  {
+    q: '¿Qué es el regente de la carta?',
+    a: 'El planeta que rige tu ascendente se llama regente de la carta. La astrología trata su signo y su casa como un tema importante de tu vida. La calculadora lo identifica automáticamente y usa las regencias tradicionales para mantener la coherencia.',
+  },
+  {
+    q: '¿De verdad es tan importante el ascendente?',
+    a: 'En la lectura de una carta es, posiblemente, el punto individual más importante: fija las casas y decide en qué ámbitos de la vida cae cada planeta. También explica por qué dos personas nacidas el mismo día pueden tener vidas organizadas de manera muy distinta.',
+  },
+];
+
+const jsonLd = [
+  {
+    '@type': 'WebApplication',
+    name: 'Calculadora de ascendente',
+    url: 'https://zodiacs.org/es/rising-sign/',
+    applicationCategory: 'LifestyleApplication',
+    operatingSystem: 'Web',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    inLanguage: 'es',
+    isPartOf: { '@id': 'https://zodiacs.org/#site' },
+  },
+  {
+    '@type': 'FAQPage',
+    inLanguage: 'es',
+    mainEntity: faq.map(({ q, a }) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: { '@type': 'Answer', text: a },
+    })),
+  },
+];
 ---
 <Base
   title="Calculadora de ascendente gratis | Zodiacs.org"
@@ -12,6 +58,7 @@ import '../../../styles/calculator.css';
   locale="es"
   image="/assets/og/v2/tool/rising-sign.png"
   imageAlt="Calculadora de ascendente — Zodiacs.org"
+  jsonLd={jsonLd}
 >
   <section class="section--tight container">
     <div class="tool-hero">
@@ -37,6 +84,10 @@ import '../../../styles/calculator.css';
         </a>
       ))}
     </div>
+  </section>
+
+  <section class="section--tight container container--narrow">
+    <Faq items={faq} heading="Preguntas sobre el ascendente" />
   </section>
 </Base>
 

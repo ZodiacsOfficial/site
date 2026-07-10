@@ -3,12 +3,24 @@ import Base from '../../../layouts/Base.astro';
 import ProfileDashboard from '../../../islands/ProfileDashboard';
 import ProfileManager from '../../../islands/ProfileManager';
 import '../../../styles/calculator.css';
+
+const jsonLd = [
+  {
+    '@type': 'WebPage',
+    name: 'Cartas guardadas',
+    url: 'https://zodiacs.org/es/profile/',
+    description: 'Guarda cartas en este dispositivo y sincronízalas con tu cuenta solo cuando tú lo decidas.',
+    inLanguage: 'es',
+    isPartOf: { '@id': 'https://zodiacs.org/#site' },
+  },
+];
 ---
 <Base
   title="Cartas guardadas | Zodiacs.org"
   description="Guarda cartas de forma privada en este dispositivo e inicia sesión cuando quieras tenerlas en todos tus dispositivos."
   path="/es/profile/"
   locale="es"
+  jsonLd={jsonLd}
 >
   <section class="section--tight container container--narrow">
     <div class="pf-hero">

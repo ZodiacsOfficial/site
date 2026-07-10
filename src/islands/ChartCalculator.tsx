@@ -28,6 +28,7 @@ import { ENGINE_VERSION } from '../lib/engine/types';
 import type { Chart, HouseSystem } from '../lib/engine/types';
 import type { City } from '../lib/geo/search';
 import { localizePath, normalizeLocale, t, type Locale } from '../lib/i18n';
+import { aspectLabel, moonPhaseLabel, planetLabel } from '../lib/i18n/astrology';
 
 type Mode = 'full' | 'moon' | 'rising';
 
@@ -433,7 +434,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
 
           {/* Moon-mode extra: phase at birth */}
           {mode === 'moon' && (
-            <p class="calc__phase mono">{t(locale, 'moonPhaseAtBirth')}: {moonPhaseName(chart.input.utc)}</p>
+            <p class="calc__phase mono">{t(locale, 'moonPhaseAtBirth')}: {moonPhaseLabel(locale, moonPhaseName(chart.input.utc))}</p>
           )}
 
           {/* Rising-mode extra: chart ruler */}
@@ -445,7 +446,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
             const ruler = chart.bodies.find((b) => b.body === rulerName);
             return ruler ? (
               <p class="calc__phase mono">
-                {t(locale, 'chartRuler')}: {rulerName} <PlanetGlyph body={rulerName} size={13} class="calc__pg" /> in {signName(signForLongitude(ruler.lon), locale)} - {t(locale, 'planetSteering')}
+                {t(locale, 'chartRuler')}: {planetLabel(locale, rulerName)} <PlanetGlyph body={rulerName} size={13} class="calc__pg" /> {t(locale, 'readIn')} {signName(signForLongitude(ruler.lon), locale)} - {t(locale, 'planetSteering')}
               </p>
             ) : null;
           })()}
@@ -489,7 +490,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                   <tbody>
                     {placements.map((p) => (
                       <tr key={p.body}>
-                        <td><span class="calc__glyph"><PlanetGlyph body={p.body} size={15} /></span> {p.body}</td>
+                        <td><span class="calc__glyph"><PlanetGlyph body={p.body} size={15} /></span> {planetLabel(locale, p.body)}</td>
                         <td class="mono">{p.label.split(' ')[0]}</td>
                         <td><SignChip lon={p.lon} locale={locale} /></td>
                         {chart.houses && <td class="mono">{p.house}</td>}
@@ -506,7 +507,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                   <ul>
                     {chart.aspects.map((a) => (
                       <li key={`${a.a}${a.b}${a.type}`} class="mono">
-                        <PlanetGlyph body={a.a} size={13} class="calc__pg" /> {a.a} <AspectGlyph type={a.type} size={13} class="calc__pg" /> {a.type} <PlanetGlyph body={a.b} size={13} class="calc__pg" /> {a.b} · orb {a.orb.toFixed(1)}° {a.applying ? `· ${t(locale, 'applying')}` : ''}
+                        <PlanetGlyph body={a.a} size={13} class="calc__pg" /> {planetLabel(locale, a.a)} <AspectGlyph type={a.type} size={13} class="calc__pg" /> {aspectLabel(locale, a.type)} <PlanetGlyph body={a.b} size={13} class="calc__pg" /> {planetLabel(locale, a.b)} · {t(locale, 'orb')} {a.orb.toFixed(1)}° {a.applying ? `· ${t(locale, 'applying')}` : ''}
                       </li>
                     ))}
                   </ul>
@@ -533,13 +534,13 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                               <PlanetGlyph body={p.body} size={14} class="calc__pg" />{' '}
                               {chart.houses && p.house
                                 ? planetInHouseLine(p.body, p.house, { withTheme: p.firstInHouse })
-                                : `${p.body} — ${p.signLabel}.`}
+                                : `${planetLabel(locale, p.body)} — ${p.signLabel}.`}
                               {p.dignity && (
                                 <span class="calc__read-dignity mono"> · {t(locale, DIGNITY_KEY[p.dignity])}</span>
                               )}
                             </p>
                             <a class="calc__read-more" href={`/learn/placements/${p.body.toLowerCase()}-in-${p.signSlug}/`}>
-                              {p.body} {t(locale, 'readIn')} {p.signLabel} →
+                              {planetLabel(locale, p.body)} {t(locale, 'readIn')} {p.signLabel} →
                             </a>
                           </li>
                         ))}
@@ -553,7 +554,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                             <li key={`${a.a}${a.b}${a.type}`}>
                               <p>{natalAspectLine(a.a, a.type, a.b)}</p>
                               <a class="calc__read-more" href={`/learn/aspects/${a.type}/`}>
-                                {a.type} · {a.orb.toFixed(1)}° →
+                                {aspectLabel(locale, a.type)} · {a.orb.toFixed(1)}° →
                               </a>
                             </li>
                           ))}
@@ -591,7 +592,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
           {saved === 'saved' && <p class="sr-only" role="status">{t(locale, 'chartSavedStatus')}</p>}
           {saved === 'full' && <p class="calc__error" role="alert">{t(locale, 'chartSaveFull')}</p>}
           {saved === 'error' && <p class="calc__error" role="alert">{t(locale, 'chartSaveError')}</p>}
-          {saved === 'saved' && <p class="calc__saved">{locale === 'es' ? 'Guardada en tus cartas. Inicia sesión ' : 'Saved to your charts. Sign in '}<a href={localizePath(locale, '/profile/')}>{locale === 'es' ? 'aquí' : 'here'}</a>{locale === 'es' ? ' cuando quieras tenerlas en todos tus dispositivos.' : ' when you want them on every device.'}</p>}
+          {saved === 'saved' && <p class="calc__saved">{t(locale, 'chartSavedBeforeLink')} <a href={localizePath(locale, '/profile/')}>{t(locale, 'chartSavedLink')}</a> {t(locale, 'chartSavedAfterLink')}</p>}
 
           {/* Share: the link carries the data; no server involved */}
           {mode === 'full' && shareInput && (
