@@ -15,6 +15,7 @@
  *    targets (data-entity), chords weight by orb and dash when separating,
  *    and everything not selected dims to the emphasis floor.
  */
+import type { ComponentChildren } from 'preact';
 import { SIGNS } from '../signs';
 import { PLANET_GLYPH } from '../glyphs/paths';
 import type { BodyName } from '../engine/types';
@@ -22,6 +23,28 @@ import type { ChartSceneModel, EntityRef, SceneEmphasis, SignSlug } from '../sce
 import { entityId } from '../scene/types';
 import { collisionNudge } from '../scene/layout';
 import { emphasisOpacity } from '../scene/emphasis';
+
+/**
+ * Geometry handed to an overlay slot so a second ring (transits, synastry)
+ * can position marks in the same frame as the natal wheel WITHOUT its
+ * rendering code landing in the shared Wheel chunk — the overlay renderer
+ * lives in the caller's (lazy) chunk and receives these primitives.
+ */
+export interface WheelGeometry {
+  cx: number;
+  cy: number;
+  size: number;
+  /** Rotation anchor longitude (matches the natal wheel). */
+  anchor: number;
+  rSigns: number;
+  rSignsIn: number;
+  rBodies: number;
+  rAspects: number;
+  rOuter: number;
+  rOuterSeat: number;
+  /** Ecliptic longitude → SVG point at radius r. */
+  pt: (lon: number, r: number) => { x: number; y: number };
+}
 
 export interface WheelBody {
   body: string;
@@ -49,6 +72,16 @@ export interface WheelProps {
   animate?: boolean;
   /** Chart Explorer mode — omit for the pinned static rendering. */
   interactive?: WheelInteraction;
+  /**
+   * A second, outer ring drawn around this (natal) wheel — the transiting
+   * sky (later, a synastry partner). Purely additive: when omitted, every
+   * pixel is identical to the pinned static/interactive rendering. When
+   * present the viewBox grows to seat the outer ring and this slot renders
+   * after the natal marks, given the wheel's geometry. The overlay's own
+   * rendering lives in the caller's chunk, so it never weighs on the shared
+   * Wheel bundle (the homepage demo, the share card, the birth chart).
+   */
+  renderOverlay?: (geo: WheelGeometry) => ComponentChildren;
 }
 
 
@@ -65,7 +98,7 @@ const ASPECT_STROKE = [0.9, 1.3, 1.8] as const;
 
 export default function Wheel({
   bodies, asc = null, mc = null, cusps = null, aspects = [], size = 420, animate = false,
-  interactive,
+  interactive, renderOverlay,
 }: WheelProps) {
   const cx = size / 2;
   const cy = size / 2;
@@ -167,8 +200,10 @@ export default function Wheel({
     ? new Map(ix.scene.bodies.map((b) => [b.body, b.drawLon]))
     : collisionNudge(bodies);
 
-  // Padding keeps the ASC/MC labels inside the viewBox.
-  const pad = size * 0.05;
+  // Padding keeps the ASC/MC labels inside the viewBox; with an overlay
+  // ring it grows to seat the outer ring. Non-overlay padding is unchanged,
+  // so the pinned share-card viewBox never shifts.
+  const pad = size * (renderOverlay ? 0.115 : 0.05);
 
   // House-number placement: interactive mode fixes the wedge-midpoint defect
   // (the number belongs at cusp + span/2 — under Placidus at high latitude a
@@ -349,6 +384,15 @@ export default function Wheel({
             )}
           </g>
         );
+      })}
+
+      {/* Overlay slot — the outer ring (transits / synastry). Additive: with
+          no renderOverlay the markup is byte-identical to the pinned wheel.
+          The renderer lives in the caller's chunk (given the geometry), so
+          none of its weight lands on the shared Wheel bundle. */}
+      {renderOverlay?.({
+        cx, cy, size, anchor, rSigns, rSignsIn, rBodies, rAspects,
+        rOuter: size * 0.55, rOuterSeat: size * 0.5, pt,
       })}
     </svg>
   );

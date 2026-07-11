@@ -140,6 +140,51 @@ export interface ChartSceneModel {
   houseSystem: HouseSystem;
 }
 
+/**
+ * A second, outer ring drawn around a natal wheel — the transiting sky (and,
+ * later, a synastry partner). Purely additive: `Wheel` renders it only when an
+ * `overlay` prop is present, so the single-chart share-card markup stays pinned
+ * byte-for-byte. The natal chart remains the `ChartSceneModel`; the overlay is
+ * its own lightweight model with its own mark namespace (`transit:{body}`).
+ */
+export interface OverlayBody {
+  body: BodyName;
+  /** True ecliptic longitude. */
+  lon: number;
+  /** Collision-nudged draw longitude for the outer ring. */
+  drawLon: number;
+  sign: SignSlug;
+  retrograde: boolean;
+}
+
+export interface OverlayAspect {
+  /** The outer-ring (transiting) body. */
+  outer: BodyName;
+  /** The inner-ring (natal) body it contacts. */
+  inner: BodyName;
+  type: AspectType;
+  orb: number;
+}
+
+export interface WheelOverlay {
+  /** Label for the outer ring, e.g. "the sky right now" (localized by caller). */
+  label: string;
+  bodies: OverlayBody[];
+  aspects: OverlayAspect[];
+  /** Highlighted transit contact (outer+inner+type key), or null. */
+  focus: string | null;
+}
+
+/** Stable id for an overlay body mark. */
+export function overlayBodyId(body: BodyName): string {
+  return `transit:${body}`;
+}
+
+/** Stable id for an overlay (transit→natal) aspect. */
+export function overlayAspectId(a: OverlayAspect): string {
+  return `${a.outer}-${a.type}-${a.inner}`;
+}
+
 /** Layer visibility — the Explorer's map-style toggles. */
 export interface LayerState {
   zodiac: boolean;

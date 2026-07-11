@@ -1,30 +1,26 @@
 /**
- * The current sky against a natal chart. The natal side flows from a
- * saved summary without loading the ephemeris; the transiting side is
- * live math, so the engine lazy-loads on every run — the same idiom as
- * the chart calculator.
+ * The transit page's island: birth input in, the animated Transit Ring out.
+ * The natal side resolves once (from a saved chart or the form); the ring
+ * itself — the bi-wheel + scrubber — is a lazy chunk loaded on the first
+ * "check", so /transits/ carries the wheel and its animation only when a
+ * chart exists to draw. The transiting side is live engine math.
  */
 import { useEffect, useRef, useState } from 'preact/hooks';
 import { BirthFields } from './BirthFields';
-import SignChip from './SignChip';
-import PlanetGlyph from '../components/PlanetGlyph';
-import AspectGlyph from '../components/AspectGlyph';
-import { resolveSavedChart } from '../lib/profile/resolve';
+import type { MinimalBody } from '../lib/engine/synastry';
+import type { Chart } from '../lib/engine/types';
 import type { SavedChart } from '../lib/profile/schema';
-import { findInterAspects } from '../lib/engine/synastry';
-import type { InterAspect, MinimalBody } from '../lib/engine/synastry';
-import { transitLine, TRANSIT_ORB } from '../lib/transits';
-import { formatLongitude } from '../lib/signs';
 import { resolveLocalToUtc } from '../lib/time/localToUtc';
 import type { City } from '../lib/geo/search';
-import { localizePath, normalizeLocale, t, tf, type Locale } from '../lib/i18n';
-import { formatDate, formatDateTime } from '../lib/i18n/dates';
-import { aspectLabel, planetLabel } from '../lib/i18n/astrology';
+import { localizePath, normalizeLocale, t, type Locale } from '../lib/i18n';
 import { useEngine, type EngineLoader } from '../lib/hooks/useEngine';
 import { useProfile } from '../lib/hooks/useProfile';
+import type { TransitSky } from './transit/TransitRing';
 
-// The transiting bodies shown in the sky strip (planets only — nodes excluded,
-// as before). Glyphs come from the shared PlanetGlyph.
+type RingModule = typeof import('./transit/TransitRing');
+
+// The transiting bodies drawn on the outer ring (planets + the Moon; the Moon
+// circles fast and is left out of the aspect list, but shown so you can watch it).
 const TRANSIT_BODIES = new Set(['Sun', 'Moon', 'Mercury', 'Venus', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto']);
 
 interface SlotState {
@@ -36,34 +32,38 @@ interface SlotState {
   city: City | null;
 }
 
-interface Natal {
-  bodies: MinimalBody[];
+interface NatalWheel {
+  bodies: { body: string; lon: number; retrograde?: boolean }[];
+  asc: number | null;
+  mc: number | null;
+  cusps: number[] | null;
+  minimal: MinimalBody[];
   timeKnown: boolean;
 }
 
-interface SkyBody {
-  body: string;
-  lon: number;
-  retrograde: boolean;
-}
-
 interface Result {
-  whenLabel: string;
-  sky: SkyBody[];
-  natal: Natal;
-  hits: InterAspect[];
+  natal: NatalWheel;
+  computeSky: (when: Date) => TransitSky[];
+  nowMs: number;
 }
 
-async function resolveSaved(chart: SavedChart, loadEngine: EngineLoader): Promise<Natal> {
-  const resolved = await resolveSavedChart(chart, loadEngine);
-  return { bodies: resolved.bodies, timeKnown: resolved.timeKnown };
+function wheelFromChart(r: Chart, timeKnown: boolean): NatalWheel {
+  return {
+    bodies: r.bodies.map(({ body, lon, retrograde }) => ({ body, lon, retrograde })),
+    asc: r.angles?.asc ?? null,
+    mc: r.angles?.mc ?? null,
+    cusps: timeKnown ? (r.houses?.cusps ?? null) : null,
+    minimal: r.bodies.map(({ body, lon }) => ({ body, lon })),
+    timeKnown,
+  };
 }
 
-async function resolveForm(slot: SlotState, loadEngine: EngineLoader): Promise<Natal> {
-  const engine = await loadEngine();
+type Engine = Awaited<ReturnType<EngineLoader>>;
+
+function natalFromForm(slot: SlotState, engine: Engine): NatalWheel {
   const timeKnown = slot.timeKnown && slot.time !== '';
   const resolved = resolveLocalToUtc(slot.date, timeKnown ? slot.time : '12:00', slot.city!.tz);
-  const result = engine.computeChart({
+  const r = engine.computeChart({
     utc: resolved.utc,
     latitude: slot.city!.lat,
     longitude: slot.city!.lon,
@@ -71,9 +71,35 @@ async function resolveForm(slot: SlotState, loadEngine: EngineLoader): Promise<N
     timeKnown,
     flags: resolved.flags,
   });
+  return wheelFromChart(r, timeKnown);
+}
+
+function natalFromSaved(chart: SavedChart, engine: Engine): NatalWheel {
+  if (chart.birth.place) {
+    const timeKnown = chart.birth.timeKnown && Boolean(chart.birth.time);
+    const resolved = resolveLocalToUtc(
+      chart.birth.date,
+      timeKnown && chart.birth.time ? chart.birth.time : '12:00',
+      chart.birth.place.tz,
+    );
+    const r = engine.computeChart({
+      utc: resolved.utc,
+      latitude: chart.birth.place.lat,
+      longitude: chart.birth.place.lon,
+      houseSystem: chart.summary.houseSystem,
+      timeKnown,
+      flags: resolved.flags,
+    });
+    return wheelFromChart(r, timeKnown);
+  }
+  // No stored place — draw from the summary (bodies + ascendant), no house ring.
   return {
-    bodies: result.bodies.map(({ body, lon }) => ({ body, lon })),
-    timeKnown,
+    bodies: chart.summary.bodies.map(({ body, lon }) => ({ body, lon })),
+    asc: chart.summary.angles?.asc ?? null,
+    mc: chart.summary.angles?.mc ?? null,
+    cusps: null,
+    minimal: chart.summary.bodies.map(({ body, lon }) => ({ body, lon })),
+    timeKnown: chart.birth.timeKnown,
   };
 }
 
@@ -84,8 +110,8 @@ export default function TransitTracker({ locale: rawLocale = 'en' }: { locale?: 
   const [slot, setSlot] = useState<SlotState>({
     source: 'form', savedId: '', date: '', time: '', timeKnown: true, city: null,
   });
-  const [dateStr, setDateStr] = useState('');
   const [result, setResult] = useState<Result | null>(null);
+  const [ringMod, setRingMod] = useState<RingModule | null>(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
   const resultHeadingRef = useRef<HTMLHeadingElement>(null);
@@ -96,8 +122,7 @@ export default function TransitTracker({ locale: rawLocale = 'en' }: { locale?: 
   useEffect(() => {
     if (!profileReady || initialProfileReadRef.current) return;
     initialProfileReadRef.current = true;
-    // One saved chart and nothing picked yet? Preselect it — most
-    // devices hold exactly the owner's chart.
+    // One saved chart and nothing picked yet? Preselect it.
     if (profile.charts.length > 0) {
       setSlot((s) => (s.source === 'form' && s.savedId === '' && s.date === ''
         ? { ...s, source: 'saved', savedId: profile.charts[0].id }
@@ -118,31 +143,19 @@ export default function TransitTracker({ locale: rawLocale = 'en' }: { locale?: 
     setBusy(true);
     setError('');
     try {
+      const [engine, mod] = await Promise.all([
+        loadEngine(),
+        ringMod ? Promise.resolve(ringMod) : import('./transit/TransitRing'),
+      ]);
       const natal = slot.source === 'saved'
-        ? await resolveSaved(charts.find((c) => c.id === slot.savedId)!, loadEngine)
-        : await resolveForm(slot, loadEngine);
-      const engine = await loadEngine();
-      const when = dateStr === '' ? new Date() : new Date(`${dateStr}T12:00:00Z`);
-      const whenLabel = dateStr === ''
-        ? `${formatDateTime(locale, when, {
-            year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit',
-            timeZone: 'UTC', hour12: false,
-          })} UTC`
-        : tf(locale, 'transitMiddayUtc', {
-            date: formatDate(locale, when, {
-              year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC',
-            }),
-          });
-      const sky = engine.computeBodies(when)
-        .filter((b) => TRANSIT_BODIES.has(b.body))
-        .map(({ body, lon, retrograde }) => ({ body, lon, retrograde }));
-      // The Moon crosses the whole chart every month — the list would be
-      // all Moon. It stays in the sky strip; the aspects leave it out.
-      const transiting: MinimalBody[] = sky
-        .filter((b) => b.body !== 'Moon')
-        .map(({ body, lon }) => ({ body, lon }));
-      const hits = findInterAspects(transiting, natal.bodies).filter((h) => h.orb <= TRANSIT_ORB);
-      setResult({ whenLabel, sky, natal, hits });
+        ? natalFromSaved(charts.find((c) => c.id === slot.savedId)!, engine)
+        : natalFromForm(slot, engine);
+      const computeSky = (when: Date): TransitSky[] =>
+        engine.computeBodies(when)
+          .filter((b) => TRANSIT_BODIES.has(b.body))
+          .map(({ body, lon, retrograde }) => ({ body, lon, retrograde }));
+      setRingMod(mod);
+      setResult({ natal, computeSky, nowMs: Date.now() });
     } catch (err) {
       setError(t(locale, 'transitError'));
       console.error(err);
@@ -163,6 +176,8 @@ export default function TransitTracker({ locale: rawLocale = 'en' }: { locale?: 
       focusAfterComputeRef.current = false;
     }
   }, [busy, error, result]);
+
+  const RingComponent = ringMod?.default;
 
   return (
     <div class="calc">
@@ -192,39 +207,27 @@ export default function TransitTracker({ locale: rawLocale = 'en' }: { locale?: 
               )}
 
               {slot.source === 'form' && (
-                <>
-                  <BirthFields
-                    locale={locale}
-                    dateId="trans-date"
-                    timeId="trans-time"
-                    placeId="trans-place"
-                    date={slot.date}
-                    time={slot.time}
-                    timeKnown={slot.timeKnown}
-                    city={slot.city}
-                    onDateChange={(date) => setSlot((s) => ({ ...s, date }))}
-                    onTimeChange={(time) => setSlot((s) => ({ ...s, time }))}
-                    onTimeKnownChange={(timeKnown) => setSlot((s) => ({ ...s, timeKnown }))}
-                    onCityChange={(city) => setSlot((s) => ({ ...s, city }))}
-                    onWarm={loadEngine}
-                  />
-                </>
+                <BirthFields
+                  locale={locale}
+                  dateId="trans-date"
+                  timeId="trans-time"
+                  placeId="trans-place"
+                  date={slot.date}
+                  time={slot.time}
+                  timeKnown={slot.timeKnown}
+                  city={slot.city}
+                  onDateChange={(date) => setSlot((s) => ({ ...s, date }))}
+                  onTimeChange={(time) => setSlot((s) => ({ ...s, time }))}
+                  onTimeKnownChange={(timeKnown) => setSlot((s) => ({ ...s, timeKnown }))}
+                  onCityChange={(city) => setSlot((s) => ({ ...s, city }))}
+                  onWarm={loadEngine}
+                />
               )}
             </div>
 
             <div class="trans__side">
               <span class="mono--label">{t(locale, 'theSky')}</span>
-              <div class="field">
-                <label class="field__label" for="trans-when">
-                  {t(locale, 'date')} <span class="field__optional">{t(locale, 'leaveEmptyNow')}</span>
-                </label>
-                <input
-                  id="trans-when" class="field__input" type="date"
-                  min="1900-01-01" max="2199-12-31" value={dateStr}
-                  onFocus={() => loadEngine()}
-                  onInput={(e) => setDateStr((e.target as HTMLInputElement).value)}
-                />
-              </div>
+              <p class="field__help">{t(locale, 'transitRingLede')}</p>
             </div>
           </div>
 
@@ -243,58 +246,18 @@ export default function TransitTracker({ locale: rawLocale = 'en' }: { locale?: 
         </div>
       </form>
 
-      {result && (
+      {result && RingComponent && (
         <div class="calc__result">
           <h2 class="sr-only" tabIndex={-1} ref={resultHeadingRef}>{t(locale, 'transits')}</h2>
           {!result.natal.timeKnown && (
-            <p class="notice" role="status">
-              {t(locale, 'noTransitTimeNotice')}
-            </p>
+            <p class="notice" role="status">{t(locale, 'noTransitTimeNotice')}</p>
           )}
-
-          <p class="trans__when mono">{t(locale, 'skyAt')} {result.whenLabel}</p>
-          <div class="trans__sky">
-            {result.sky.map((b) => (
-              <span class="trans__pos mono" key={b.body}>
-                <PlanetGlyph body={b.body} size={13} class="pg-inline" /> {formatLongitude(b.lon, locale)}{b.retrograde ? ' ℞' : ''}
-              </span>
-            ))}
-          </div>
-
-          <p class="syn__tally mono">
-            {result.hits.length === 0
-              ? `${t(locale, 'noTransitsWithin')} ${TRANSIT_ORB}° ${t(locale, 'ofExact')}`
-              : `${result.hits.length} ${result.hits.length === 1 ? t(locale, 'activeTransitWithin') : t(locale, 'activeTransitsWithin')} ${TRANSIT_ORB}° ${t(locale, 'ofExact')}`}
-            {' '}· {t(locale, 'transitMoonOmitted')}
-          </p>
-
-          {result.hits.length === 0 && (
-            <p class="trans__quiet">
-              {t(locale, 'quietSky')}
-            </p>
-          )}
-
-          <div class="syn__aspects">
-            {result.hits.map((h) => (
-              <div class="syn__aspect" key={`${h.a}-${h.b}-${h.type}`}>
-                <span class="syn__aspect-receipt mono">
-                  <PlanetGlyph body={h.a} size={13} class="pg-inline" /> {planetLabel(locale, h.a)} <AspectGlyph type={h.type} size={13} class="pg-inline" /> {aspectLabel(locale, h.type)} {t(locale, 'natal')} <PlanetGlyph body={h.b} size={13} class="pg-inline" /> {planetLabel(locale, h.b)} · {t(locale, 'orb')} {h.orb.toFixed(1)}°
-                  {h.type === 'conjunction' && h.a === h.b ? ` · ${tf(locale, 'planetReturn', { planet: planetLabel(locale, h.a) })}` : ''}
-                </span>
-                <p class="syn__aspect-read">{transitLine(h.a, h.type, h.b)}</p>
-              </div>
-            ))}
-          </div>
-
-          <div class="trans__three">
-            {result.natal.bodies
-              .filter((b) => b.body === 'Sun' || b.body === 'Moon')
-              .map((b) => (
-                <span class="syn__placement" key={b.body}>
-                  <span class="mono--label">{tf(locale, 'natalPlanet', { planet: planetLabel(locale, b.body) })}</span> <SignChip lon={b.lon} locale={locale} />
-                </span>
-              ))}
-          </div>
+          <RingComponent
+            locale={locale}
+            natal={result.natal}
+            computeSky={result.computeSky}
+            nowMs={result.nowMs}
+          />
         </div>
       )}
     </div>

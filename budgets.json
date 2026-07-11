@@ -1,6 +1,7 @@
 {
   "/": 42,
-  "/birth-chart/": 51,
+  "/birth-chart/": 51.5,
+  "/transits/": 30,
   "/aries/": 0,
   "chunk-max": 60,
   "engine-chunk": 25
