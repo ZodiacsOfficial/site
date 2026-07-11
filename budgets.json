@@ -2,6 +2,7 @@
   "/": 42,
   "/birth-chart/": 51.5,
   "/transits/": 30,
+  "/compatibility/": 35,
   "/aries/": 0,
   "chunk-max": 60,
   "engine-chunk": 25

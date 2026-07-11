@@ -8,21 +8,18 @@ import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import { BirthFields } from './BirthFields';
 import { CopyLinkButton, type CopyLinkState } from './CopyLinkButton';
 import SignChip from './SignChip';
-import PlanetGlyph from '../components/PlanetGlyph';
-import AspectGlyph from '../components/AspectGlyph';
 import { resolveSavedChart } from '../lib/profile/resolve';
 import type { SavedChart } from '../lib/profile/schema';
 import { summarizePair } from '../lib/engine/synastry';
 import type { MinimalBody, PairSummary } from '../lib/engine/synastry';
-import { synastryLine, pairSlug } from '../lib/compat';
-import { elementLabel, signForLongitude, signName } from '../lib/signs';
+import { pairSlug } from '../lib/compat';
+import { signForLongitude, signName } from '../lib/signs';
 import { resolveLocalToUtc } from '../lib/time/localToUtc';
 import { decodeChartLink, encodeChartLink } from '../lib/share';
 import type { ShareChartInput } from '../lib/share';
 import type { City } from '../lib/geo/search';
 import { localizePath, normalizeLocale, t, tf, type Locale } from '../lib/i18n';
 import { intlLocale } from '../lib/i18n/dates';
-import { aspectLabel, planetLabel } from '../lib/i18n/astrology';
 import { useEngine, type EngineLoader } from '../lib/hooks/useEngine';
 import { useProfile } from '../lib/hooks/useProfile';
 
@@ -44,7 +41,15 @@ interface Person {
   asc: number | null;
   /** False when the birth time was unknown — the Moon is a noon estimate. */
   timeKnown: boolean;
+  /** Ring-drawing extras (retrograde marks, MC, house cusps where known). */
+  wheel: {
+    bodies: { body: string; lon: number; retrograde?: boolean }[];
+    mc: number | null;
+    cusps: number[] | null;
+  };
 }
+
+type WheelModule = typeof import('./synastry/RelationshipWheel');
 
 const emptySlot = (): SlotState => ({
   source: 'form', savedId: '', name: '', date: '', time: '', timeKnown: true, city: null, link: null,
@@ -55,11 +60,19 @@ const handleOf = (name: string) => name.split('·')[0].trim() || name;
 
 async function resolveSaved(chart: SavedChart, loadEngine: EngineLoader): Promise<Person> {
   const resolved = await resolveSavedChart(chart, loadEngine);
+  // Retrograde marks come from the stored summary (best effort — a stale
+  // summary's flags may lag a recompute by a hair; cosmetic only).
+  const retro = new Map(chart.summary.bodies.map((b) => [b.body, b.retrograde]));
   return {
     label: handleOf(chart.name),
     bodies: resolved.bodies,
     asc: resolved.asc,
     timeKnown: resolved.timeKnown,
+    wheel: {
+      bodies: resolved.bodies.map(({ body, lon }) => ({ body, lon, retrograde: retro.get(body) })),
+      mc: chart.summary.angles?.mc ?? null,
+      cusps: null,
+    },
   };
 }
 
@@ -84,6 +97,11 @@ async function resolveLink(link: { input: ShareChartInput; label: string }, load
     bodies: result.bodies.map(({ body, lon }) => ({ body, lon })),
     asc: result.angles?.asc ?? null,
     timeKnown: input.timeKnown,
+    wheel: {
+      bodies: result.bodies.map(({ body, lon, retrograde }) => ({ body, lon, retrograde })),
+      mc: result.angles?.mc ?? null,
+      cusps: input.timeKnown ? (result.houses?.cusps ?? null) : null,
+    },
   };
 }
 
@@ -104,6 +122,11 @@ async function resolveForm(slot: SlotState, fallbackLabel: string, loadEngine: E
     bodies: result.bodies.map(({ body, lon }) => ({ body, lon })),
     asc: result.angles?.asc ?? null,
     timeKnown,
+    wheel: {
+      bodies: result.bodies.map(({ body, lon, retrograde }) => ({ body, lon, retrograde })),
+      mc: result.angles?.mc ?? null,
+      cusps: timeKnown ? (result.houses?.cusps ?? null) : null,
+    },
   };
 }
 
@@ -210,28 +233,14 @@ function PersonCard({ person, locale }: { person: Person; locale: Locale }) {
   );
 }
 
-function BalanceBars({ person, balance, locale }: { person: string; balance: Record<string, number>; locale: Locale }) {
-  return (
-    <div class="syn__balance">
-      <span class="syn__balance-name">{person}</span>
-      {(['fire', 'earth', 'air', 'water'] as const).map((el) => (
-        <div class="syn__bar" key={el}>
-          <span class="syn__bar-label mono--label">{elementLabel(el, locale)}</span>
-          <span class="syn__bar-track"><span class="syn__bar-fill" style={`width:${balance[el] * 10}%`} /></span>
-          <span class="syn__bar-n mono">{balance[el]}</span>
-        </div>
-      ))}
-    </div>
-  );
-}
-
 export default function SynastryCalculator({ locale: rawLocale = 'en' }: { locale?: Locale }) {
   const locale = normalizeLocale(rawLocale);
   const loadEngine = useEngine();
   const { profile, ready: profileReady } = useProfile();
   const [slotA, setSlotA] = useState<SlotState>(emptySlot());
   const [slotB, setSlotB] = useState<SlotState>(emptySlot());
-  const [result, setResult] = useState<{ a: Person; b: Person; summary: PairSummary } | null>(null);
+  const [result, setResult] = useState<{ a: Person; b: Person; summary: PairSummary; at: number } | null>(null);
+  const [wheelMod, setWheelMod] = useState<WheelModule | null>(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
   const [autoRan, setAutoRan] = useState(false);
@@ -337,9 +346,14 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
         slot.source === 'saved' ? resolveSaved(charts.find((c) => c.id === slot.savedId)!, loadEngine)
           : slot.source === 'link' ? resolveLink(slot.link!, loadEngine)
           : resolveForm(slot, fallback, loadEngine);
-      const [a, b] = await Promise.all([resolve(slotA, t(locale, 'personA')), resolve(slotB, t(locale, 'personB'))]);
+      const [a, b, mod] = await Promise.all([
+        resolve(slotA, t(locale, 'personA')),
+        resolve(slotB, t(locale, 'personB')),
+        wheelMod ? Promise.resolve(wheelMod) : import('./synastry/RelationshipWheel'),
+      ]);
       const summary = summarizePair(a.bodies, b.bodies, 8);
-      setResult({ a, b, summary });
+      setWheelMod(mod);
+      setResult({ a, b, summary, at: Date.now() });
       setInvite(inviteFromSlot(slotA));
       setInviteState('idle');
     } catch (err) {
@@ -424,29 +438,31 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
             <PersonCard person={result.b} locale={locale} />
           </div>
 
-          <p class="syn__tally mono">
-            {result.summary.aspects.length} {t(locale, 'crossChartAspects')} ·
-            {' '}{result.summary.easeful} {t(locale, 'easeful')} ({aspectLabel(locale, 'trine')}/{aspectLabel(locale, 'sextile')}) ·
-            {' '}{result.summary.charged} {t(locale, 'charged')} ({aspectLabel(locale, 'square')}/{aspectLabel(locale, 'opposition')})
-          </p>
-
-          <div class="syn__aspects">
-            {result.summary.top.map((asp) => (
-              <div class="syn__aspect" key={`${asp.a}-${asp.b}-${asp.type}`}>
-                <span class="syn__aspect-receipt mono">
-                  <PlanetGlyph body={asp.a} size={13} class="pg-inline" /> {result.a.label}: {planetLabel(locale, asp.a)} <AspectGlyph type={asp.type} size={13} class="pg-inline" /> {aspectLabel(locale, asp.type)} <PlanetGlyph body={asp.b} size={13} class="pg-inline" /> {result.b.label}: {planetLabel(locale, asp.b)} · {t(locale, 'orb')} {asp.orb.toFixed(1)}°
-                </span>
-                <p class="syn__aspect-read">
-                  {synastryLine(result.a.label, asp.a, result.b.label, asp.b, asp.type)}
-                </p>
-              </div>
-            ))}
-          </div>
-
-          <div class="syn__balances">
-            <BalanceBars person={result.a.label} balance={result.summary.elements.a} locale={locale} />
-            <BalanceBars person={result.b.label} balance={result.summary.elements.b} locale={locale} />
-          </div>
+          {wheelMod && (
+            /* Keyed per compare: a fresh pair resets the swap and any
+               focused contact — nothing stale carries over. */
+            <wheelMod.default
+              key={result.at}
+              locale={locale}
+              a={{
+                label: result.a.label,
+                bodies: result.a.wheel.bodies,
+                asc: result.a.asc,
+                mc: result.a.wheel.mc,
+                cusps: result.a.wheel.cusps,
+                timeKnown: result.a.timeKnown,
+              }}
+              b={{
+                label: result.b.label,
+                bodies: result.b.wheel.bodies,
+                asc: result.b.asc,
+                mc: result.b.wheel.mc,
+                cusps: result.b.wheel.cusps,
+                timeKnown: result.b.timeKnown,
+              }}
+              summary={result.summary}
+            />
+          )}
 
           {pairHref && (
             <div class="calc__actions">

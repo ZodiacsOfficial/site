@@ -1,8 +1,12 @@
 /**
- * Renders the transit outer ring into the Wheel's overlay slot. Lives in the
- * transit island's (lazy) chunk — it receives the wheel's geometry and returns
- * the marks, so none of this weighs on the shared Wheel bundle used by the
- * homepage demo, the share card, and the birth chart.
+ * Renders an outer ring into the Wheel's overlay slot — the transiting sky
+ * on /transits/, a partner's chart on /compatibility/. Lives in lazy island
+ * chunks — it receives the wheel's geometry and returns the marks, so none
+ * of this weighs on the shared Wheel bundle used by the homepage demo, the
+ * share card, and the birth chart.
+ *
+ * Visual grammar: dashed marks read as the moving sky (ephemeral); solid
+ * marks read as a fixed natal chart (a person). Callers choose.
  */
 import { SIGNS } from '../../lib/signs';
 import { PLANET_GLYPH } from '../../lib/glyphs/paths';
@@ -19,13 +23,15 @@ const ASPECT_COLOR: Record<string, string> = {
 
 export function renderTransitOverlay(
   overlay: WheelOverlay,
-  /** Natal body → its collision-fanned DRAW longitude (chords must land on
-   * the drawn marker, not the true longitude, or a stellium's chord points
+  /** Inner-ring body → its collision-fanned DRAW longitude (chords must land
+   * on the drawn marker, not the true longitude, or a stellium's chord points
    * at the neighbouring planet). */
   natalDrawLonOf: (name: string) => number | null,
   onSelect: (id: string | null) => void,
   geo: WheelGeometry,
+  opts: { dashedMarkers?: boolean } = {},
 ) {
+  const dashed = opts.dashedMarkers ?? true;
   const { size, cx, cy, rOuter, rOuterSeat, rSigns, rBodies, pt } = geo;
   const focus = overlay.focus;
   const focusOuter = focus ? overlay.aspects.find((a) => overlayAspectId(a) === focus)?.outer ?? null : null;
@@ -35,7 +41,7 @@ export function renderTransitOverlay(
   return (
     <g class="wheel__overlay" role="group" aria-label={overlay.label}>
       {/* Seat circle for the outer ring. */}
-      <circle cx={cx} cy={cy} r={rOuterSeat} fill="none" stroke="rgba(198,204,218,0.14)" stroke-width="1" stroke-dasharray="2 4" />
+      <circle cx={cx} cy={cy} r={rOuterSeat} fill="none" stroke="rgba(198,204,218,0.14)" stroke-width="1" stroke-dasharray={dashed ? '2 4' : undefined} />
 
       {/* Transit → natal contact chords, outer marker to natal planet. */}
       {overlay.aspects.map((a) => {
@@ -80,7 +86,7 @@ export function renderTransitOverlay(
             onClick={(ev: MouseEvent) => { ev.stopPropagation(); onSelect(focus === id ? null : id); }}
           >
             <line x1={tick1.x} y1={tick1.y} x2={tick2.x} y2={tick2.y} stroke={sign.hue} stroke-width="1.2" stroke-opacity="0.7" />
-            <circle cx={p.x} cy={p.y} r={size * 0.03} fill="rgba(9,11,16,0.94)" stroke={sign.hue} stroke-opacity="0.75" stroke-width="1.2" stroke-dasharray="1.5 1.5" />
+            <circle cx={p.x} cy={p.y} r={size * 0.03} fill="rgba(9,11,16,0.94)" stroke={sign.hue} stroke-opacity="0.75" stroke-width="1.2" stroke-dasharray={dashed ? '1.5 1.5' : undefined} />
             <g
               transform={`translate(${p.x} ${p.y}) scale(${(size * 0.044) / 24}) translate(-12 -12)`}
               fill="none" stroke={sign.hue} stroke-width={1.4 * 24 / (size * 0.044)}

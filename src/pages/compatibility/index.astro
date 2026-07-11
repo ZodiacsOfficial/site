@@ -31,7 +31,7 @@ const jsonLd = [
     operatingSystem: 'Any',
     offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
     description:
-      'Free synastry calculator: compare two birth charts on your device — cross-chart aspects, element balance, and plain-language readings.',
+      'Free synastry calculator: two birth charts overlaid on one wheel, computed on your device — cross-chart aspects, element balance, and plain-language readings.',
   },
   {
     '@type': 'FAQPage',
@@ -50,6 +50,7 @@ const jsonLd = [
   image="/assets/og/v2/tool/compatibility.png"
   imageAlt="Compatibility calculator — Zodiacs.org"
   jsonLd={jsonLd}
+  glass
 >
   <section class="section--tight container container--narrow">
     <div class="compat-hero">
@@ -57,8 +58,9 @@ const jsonLd = [
       <h1 class="display">Check your astrology compatibility.</h1>
       <p>
         Sun signs are the first sentence of a much longer story. Compare two
-        birth charts privately in your browser and get a reading you can
-        actually use.
+        birth charts privately in your browser: one chart inside the other on
+        a single wheel, the connections drawn between them, and a reading you
+        can actually use.
       </p>
     </div>
 
