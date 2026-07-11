@@ -281,6 +281,18 @@
       color: var(--gold-bright); letter-spacing: -0.01em;
     }
     .stats__v { margin-top: 8px; font-family: var(--mono); font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-dim); line-height: 1.6; }
+    /* Provenance — every figure names the kind of source it came from. */
+    .stats__tag {
+      display: inline-block; margin-top: 10px;
+      font-family: var(--mono); font-size: 7.5px; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--ink-mute);
+      border: 1px solid var(--hair); padding: 2px 6px;
+    }
+    .mov .stats__title {
+      margin: 34px 0 -26px; font-family: var(--mono); font-size: 10px;
+      letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-dim);
+    }
+    .mov .stats__title + .stats { margin-top: 38px; }
     /* Caption rules carry .mov so they outrank the essay's body-text
        sizing (.mov p) — without it these captions render at 17.5px. */
     .mov .stats__src {
@@ -654,10 +666,10 @@
             recurring mass behavior — and astrology is recurring mass behavior.
           </p>
           <div class="stats" role="list" aria-label="Reported figures">
-            <div class="stats__cell" role="listitem"><div class="stats__k">12</div><div class="stats__v">Signs · fixed for millennia</div></div>
-            <div class="stats__cell" role="listitem"><div class="stats__k">~90%</div><div class="stats__v">of Americans know their sign</div></div>
-            <div class="stats__cell" role="listitem"><div class="stats__k">43%</div><div class="stats__v">of women 18–49 say they believe · Pew</div></div>
-            <div class="stats__cell" role="listitem"><div class="stats__k">30M+</div><div class="stats__v">Co-Star users · reported</div></div>
+            <div class="stats__cell" role="listitem"><div class="stats__k">12</div><div class="stats__v">Signs · fixed for millennia</div><span class="stats__tag">REPORTED</span></div>
+            <div class="stats__cell" role="listitem"><div class="stats__k">~90%</div><div class="stats__v">of Americans know their sign</div><span class="stats__tag">SURVEYED</span></div>
+            <div class="stats__cell" role="listitem"><div class="stats__k">43%</div><div class="stats__v">of women 18–49 say they believe · Pew</div><span class="stats__tag">SURVEYED</span></div>
+            <div class="stats__cell" role="listitem"><div class="stats__k">30M+</div><div class="stats__v">Co-Star users · reported</div><span class="stats__tag">REPORTED</span></div>
           </div>
           <p class="stats__src">
             Sources:
@@ -781,10 +793,10 @@
             thousand years.
           </p>
           <div class="stats" role="list" aria-label="Market figures">
-            <div class="stats__cell" role="listitem"><div class="stats__k">$12.8B</div><div class="stats__v">global astrology market, 2021 · Allied</div></div>
-            <div class="stats__cell" role="listitem"><div class="stats__k">$22.8B</div><div class="stats__v">projected by 2031 · Allied</div></div>
-            <div class="stats__cell" role="listitem"><div class="stats__k">+64.7%</div><div class="stats__v">U.S. app revenue growth in one year · Sensor Tower</div></div>
-            <div class="stats__cell" role="listitem"><div class="stats__k">$21M</div><div class="stats__v">raised by a single horoscope app · Axios</div></div>
+            <div class="stats__cell" role="listitem"><div class="stats__k">$12.8B</div><div class="stats__v">global astrology market, 2021 · Allied</div><span class="stats__tag">REPORTED</span></div>
+            <div class="stats__cell" role="listitem"><div class="stats__k">$22.8B</div><div class="stats__v">projected by 2031 · Allied</div><span class="stats__tag">PROJECTED</span></div>
+            <div class="stats__cell" role="listitem"><div class="stats__k">+64.7%</div><div class="stats__v">U.S. app revenue growth in one year · Sensor Tower</div><span class="stats__tag">REPORTED</span></div>
+            <div class="stats__cell" role="listitem"><div class="stats__k">$21M</div><div class="stats__v">raised by a single horoscope app · Axios</div><span class="stats__tag">REPORTED</span></div>
           </div>
           <p class="stats__src">
             Sources:
@@ -958,11 +970,12 @@
             zodiac token, and the essay claims only the weaker thing: the
             demographic holding the symbols will, in time, hold the money.
           </p>
+          <p class="stats__title">Cohort statistics — overlap plausible, not proven</p>
           <div class="stats" role="list" aria-label="Cohort statistics — overlap plausible, not proven">
-            <div class="stats__cell" role="listitem"><div class="stats__k">51%</div><div class="stats__v">of Gen Z have owned crypto · Gemini</div></div>
-            <div class="stats__cell" role="listitem"><div class="stats__k">43%</div><div class="stats__v">of surveyed millennial traders trust crypto over the stock market · eToro</div></div>
-            <div class="stats__cell" role="listitem"><div class="stats__k">$124T</div><div class="stats__v">changing hands by 2048 · Cerulli</div></div>
-            <div class="stats__cell" role="listitem"><div class="stats__k">$45.6T</div><div class="stats__v">to millennials alone · Cerulli</div></div>
+            <div class="stats__cell" role="listitem"><div class="stats__k">51%</div><div class="stats__v">of Gen Z have owned crypto · Gemini</div><span class="stats__tag">SURVEYED</span></div>
+            <div class="stats__cell" role="listitem"><div class="stats__k">43%</div><div class="stats__v">of surveyed millennial traders trust crypto over the stock market · eToro</div><span class="stats__tag">SURVEYED</span></div>
+            <div class="stats__cell" role="listitem"><div class="stats__k">$124T</div><div class="stats__v">changing hands by 2048 · Cerulli</div><span class="stats__tag">PROJECTED</span></div>
+            <div class="stats__cell" role="listitem"><div class="stats__k">$45.6T</div><div class="stats__v">to millennials alone · Cerulli</div><span class="stats__tag">PROJECTED</span></div>
           </div>
           <p class="stats__src">
             Sources:
