@@ -49,7 +49,12 @@ interface Result {
 
 function wheelFromChart(r: Chart, timeKnown: boolean): NatalWheel {
   return {
-    bodies: r.bodies.map(({ body, lon, retrograde }) => ({ body, lon, retrograde })),
+    // South Node stays off the drawn wheel — the site-wide convention
+    // (share card, demo chart, calculator scene all hide it). `minimal`
+    // keeps every body; the aspect search filters by ASPECT_BODIES itself.
+    bodies: r.bodies
+      .filter((b) => b.body !== 'South Node')
+      .map(({ body, lon, retrograde }) => ({ body, lon, retrograde })),
     asc: r.angles?.asc ?? null,
     mc: r.angles?.mc ?? null,
     cusps: timeKnown ? (r.houses?.cusps ?? null) : null,
@@ -94,7 +99,9 @@ function natalFromSaved(chart: SavedChart, engine: Engine): NatalWheel {
   }
   // No stored place — draw from the summary (bodies + ascendant), no house ring.
   return {
-    bodies: chart.summary.bodies.map(({ body, lon }) => ({ body, lon })),
+    bodies: chart.summary.bodies
+      .filter((b) => b.body !== 'South Node')
+      .map(({ body, lon, retrograde }) => ({ body, lon, retrograde })),
     asc: chart.summary.angles?.asc ?? null,
     mc: chart.summary.angles?.mc ?? null,
     cusps: null,
@@ -252,7 +259,11 @@ export default function TransitTracker({ locale: rawLocale = 'en' }: { locale?: 
           {!result.natal.timeKnown && (
             <p class="notice" role="status">{t(locale, 'noTransitTimeNotice')}</p>
           )}
+          {/* Keyed on the compute instant: a fresh result remounts the ring,
+              so a stale scrub offset or focused contact never carries over
+              from a previous chart. */}
           <RingComponent
+            key={result.nowMs}
             locale={locale}
             natal={result.natal}
             computeSky={result.computeSky}

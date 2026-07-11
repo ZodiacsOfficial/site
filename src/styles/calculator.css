@@ -632,10 +632,13 @@
 
 /* ── The Transit Ring — the animated bi-wheel + time scrubber ── */
 .tring { display: grid; gap: 18px; }
+/* Diagram legend for the bi-wheel — the .calc__receipt register (quiet mono,
+   no uppercase), not a mono-caps label: it's two full sentences. */
 .tring__caption {
   text-align: center;
   color: var(--faint);
-  letter-spacing: 0.04em;
+  font-size: 11px;
+  letter-spacing: 0.05em;
 }
 .tring__wheelbox {
   max-width: 480px;
@@ -651,18 +654,19 @@
 }
 .tring__scrub-head {
   display: flex;
+  flex-wrap: wrap;
   align-items: baseline;
   justify-content: space-between;
-  gap: 12px;
+  gap: 4px 12px;
 }
 .tring__date {
   font-size: var(--text-sm);
-  color: var(--text-1);
+  color: var(--text);
   letter-spacing: 0.02em;
 }
 .tring__range {
   width: 100%;
-  accent-color: rgba(198, 204, 218, 0.85);
+  accent-color: var(--accent);
   cursor: ew-resize;
 }
 .tring__steps {
@@ -674,14 +678,14 @@
 .tring__step { flex: 0 0 auto; }
 .tring__focus {
   border: 1px solid var(--hair-2);
-  border-radius: 14px;
+  border-radius: var(--r-md);
   padding: 14px 16px;
   display: grid;
   gap: 6px;
-  background: color-mix(in oklab, var(--surface, #0d1017) 80%, transparent);
+  background: color-mix(in oklab, var(--surface) 80%, transparent);
 }
 .tring__focus-receipt { font-size: var(--text-sm); color: var(--text-2); display: flex; flex-wrap: wrap; align-items: center; gap: 4px; }
-.tring__focus-read { margin: 0; font-size: var(--text-sm); color: var(--text-1); line-height: 1.6; }
+.tring__focus-read { margin: 0; font-size: var(--text-sm); color: var(--text-2); line-height: 1.6; }
 
 /* The active-transit rows double as controls (tap to focus a contact). */
 .tring__row {
@@ -690,7 +694,7 @@
   width: 100%;
   text-align: left;
   border: 1px solid transparent;
-  border-radius: 12px;
+  border-radius: var(--r-md);
   padding: 8px 10px;
   background: none;
   color: inherit;
@@ -699,13 +703,77 @@
 }
 .tring__row:hover { border-color: var(--hair-2); }
 .tring__row.is-focus {
-  border-color: var(--hair);
-  background: color-mix(in oklab, var(--surface, #0d1017) 70%, transparent);
+  border-color: var(--hair-3);
+  background: color-mix(in oklab, var(--surface) 70%, transparent);
 }
 .tring__row:focus-visible {
-  outline: 2px solid rgba(198, 204, 218, 0.6);
+  outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
+
+/* Exact-date markers along the scrubber's timeline — each is a jump button. */
+.tring__marks {
+  position: relative;
+  height: 16px;
+  margin-top: -4px;
+}
+.tring__mark {
+  position: absolute;
+  top: 4px;
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: color-mix(in oklab, var(--accent) 55%, transparent);
+  transform: translateX(-50%);
+  cursor: pointer;
+  transition: background var(--dur-1) var(--ease);
+}
+.tring__mark:hover { background: var(--accent); }
+.tring__mark:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  background: var(--accent);
+}
+.tring__scan {
+  margin: 0;
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  color: var(--faint);
+}
+.tring__next {
+  margin: 0;
+  font-size: var(--text-sm);
+  color: var(--muted);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 8px;
+}
+.tring__next-link {
+  border: none;
+  background: none;
+  padding: 0;
+  color: var(--text-2);
+  font: inherit;
+  cursor: pointer;
+  text-decoration: underline;
+  text-decoration-color: var(--hair-3);
+  text-underline-offset: 3px;
+}
+.tring__next-link:hover { text-decoration-color: var(--accent); }
+.tring__next-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* The calendar hand-off, quiet under the readouts. */
+.tring__cal {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px 14px;
+}
+.tring__cal-note { font-size: 11px; letter-spacing: 0.05em; color: var(--faint); }
 
 /* The transit markers on the outer ring fade/settle with the same restraint
    as the inner wheel; motion is JS-driven (rAF) and already reduced-aware. */

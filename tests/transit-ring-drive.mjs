@@ -64,6 +64,13 @@ try {
   const dateBefore = await page.locator('.tring__date').textContent();
   await shot(page, 'transit-ring-now.png', { clip: { x: 0, y: 0, width: 1440, height: 1100 } });
 
+  // Revision regressions —
+  // The natal ring hides the South Node (11 natal bodies, not 12).
+  const natalMarks = await page.locator('.wheel__body:not(.wheel__transit)').count();
+  check('natal ring hides South Node (11 bodies)', natalMarks === 11, `${natalMarks} natal marks`);
+  // The transiting-positions strip is back (accessible text readout, 10 bodies).
+  check('positions strip renders all 10 transiting bodies', (await page.locator('.trans__pos').count()) === 10);
+
   // Capture one transit body's position, scrub +6 months, expect it to move.
   const posOf = async (sel) => {
     const b = await page.locator(sel).first().boundingBox();
@@ -97,9 +104,42 @@ try {
     check('tapping a contact opens its reading', await page.locator('.tring__focus').isVisible());
     check('the tapped row is marked focused', (await page.locator('.tring__row.is-focus').count()) === 1);
     await shot(page, 'transit-ring-focus.png', { clip: { x: 0, y: 0, width: 1440, height: 1100 } });
+
+    // Revision regression: scrubbing far past the focused contact's orb must
+    // dissolve the focus, not dim the whole ring against a dead highlight.
+    await page.locator('.tring__range').evaluate((el) => {
+      const set = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set;
+      set.call(el, '120');
+      el.dispatchEvent(new Event('input', { bubbles: true }));
+    });
+    await wait(300);
+    const sunOpacity = await page.locator('[data-transit="transit:Sun"]').getAttribute('opacity');
+    check('stale focus dissolves instead of ghosting the ring', sunOpacity === '1', `sun opacity ${sunOpacity}`);
+    await page.locator('.tring__step', { hasText: 'Now' }).click();
+    await wait(1000);
   } else {
     check('tapping a contact opens its reading', false, 'no contact rows (quiet sky?)');
   }
+
+  // Integration: exact slow-transit markers appear on the timeline.
+  await page.waitForSelector('[data-transit-mark]', { timeout: 30000 });
+  const markCount = await page.locator('[data-transit-mark]').count();
+  check('exact-date markers render on the timeline', markCount > 0, `${markCount} markers`);
+  const dateBeforeJump = await page.locator('.tring__date').textContent();
+  await page.locator('[data-transit-mark]').first().click();
+  await wait(1200);
+  check('clicking a marker jumps the sky to that date',
+    (await page.locator('.tring__date').textContent()) !== dateBeforeJump);
+  await shot(page, 'transit-ring-markers.png', { clip: { x: 0, y: 0, width: 1440, height: 1100 } });
+
+  // Integration: the calendar download produces a real .ics file.
+  const calBtn = page.locator('[data-transit-cal]');
+  check('calendar button renders once the scan lands', (await calBtn.count()) === 1);
+  const [download] = await Promise.all([
+    page.waitForEvent('download', { timeout: 10000 }),
+    calBtn.click(),
+  ]);
+  check('calendar downloads as zodiacs-transits.ics', download.suggestedFilename() === 'zodiacs-transits.ics');
   await page.close();
 
   // ── Mobile ──
@@ -116,6 +156,15 @@ try {
   await rm.locator('.tring__step', { hasText: '+1 month' }).click();
   await wait(80); // well under any tween
   check('reduced motion: stepper jumps instantly', (await rm.locator('.tring__date').textContent()) !== rmDate);
+
+  // Revision regression: steppers clamp to the ±365-day window (instant
+  // jumps under reduced motion make the arithmetic deterministic: 14 × 30
+  // = 420, clamped to 365).
+  for (let i = 0; i < 13; i += 1) {
+    await rm.locator('.tring__step', { hasText: '+1 month' }).click();
+    await wait(30);
+  }
+  check('steppers clamp to the one-year window', (await rm.locator('.tring__range').inputValue()) === '365');
   await rm.close();
 
   await browser.close();

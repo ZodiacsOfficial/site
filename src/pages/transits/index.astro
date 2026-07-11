@@ -18,7 +18,7 @@ const faq = [
   },
   {
     q: 'Which transits does this page show?',
-    a: 'Aspects from the ten planets in today’s sky to the ten planets of your birth chart, within 3 degrees of exact — the tight window where a transit is generally read as active. The transiting Moon is left out of the list because it crosses your whole chart every month; its current position shows in the sky strip.',
+    a: 'Aspects from the ten planets in the sky to the ten planets of your birth chart, within 3 degrees of exact — the tight window where a transit is generally read as active. The sky starts at today; the slider moves it up to a year forward or back. The transiting Moon is left out of the list because it crosses your whole chart every month, but it stays on the outer ring, so you can watch it circle.',
   },
   {
     q: 'Why do slow transits matter more?',
@@ -33,10 +33,10 @@ const faq = [
 const jsonLd = [
   {
     '@type': 'WebPage',
-    name: 'Transit tracker — the sky against your chart',
+    name: 'Transit tracker — the sky moving over your chart',
     url: 'https://zodiacs.org/transits/',
     description:
-      'See which transits are active for your birth chart right now: today’s sky compared with your natal planets, within 3 degrees of exact.',
+      'The sky moving over your birth chart: transits within 3 degrees of exact, at today’s date or any date up to a year forward or back.',
   },
   {
     '@type': 'FAQPage',
@@ -49,8 +49,8 @@ const jsonLd = [
 ];
 ---
 <Base
-  title="Transit Tracker — Today's Sky Against Your Birth Chart | Zodiacs.org"
-  description="Which transits are hitting your chart right now? Today's computed planetary positions aspected to your natal planets, within 3° of exact — free, on your device."
+  title="Transit Tracker — The Sky Moving Over Your Birth Chart | Zodiacs.org"
+  description="Today's transits to your natal planets, within 3° of exact — and a slider that moves the sky up to a year forward or back. Free, computed on your device."
   path="/transits/"
   image="/assets/og/v2/tool/transits.png"
   imageAlt="Transit tracker — Zodiacs.org"
@@ -62,14 +62,14 @@ const jsonLd = [
       <h1 class="display">The sky, against your chart.</h1>
       <p>
         Today&rsquo;s planets aspected to your natal ones, within 3&deg; of
-        exact &mdash; the transits astrologers would call active for you
-        right now. Pick a saved chart or enter birth details; nothing
-        leaves your device.
+        exact &mdash; and a slider that moves the sky up to a year forward
+        or back, so you can watch a transit form, peak, and separate. Pick
+        a saved chart or enter birth details; nothing leaves your device.
       </p>
     </div>
     <TransitTracker client:load />
     <noscript>
-      <p>This transit calculator needs JavaScript. Enable it and reload to compare the current sky with your birth chart in your browser.</p>
+      <p>This transit tracker needs JavaScript. Enable it and reload to watch the sky move over your birth chart in your browser.</p>
     </noscript>
   </section>
 

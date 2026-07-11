@@ -185,3 +185,28 @@ scrubber) is a 2.3 KB dynamic import excluded from that closure. `/transits/`
 gets no visual baseline — the outer ring is `Date.now()`-dependent, so it
 can't be snapshotted; the committed `tests/transit-ring-drive.mjs` covers it
 instead. Zero new dependencies.
+
+## 18. Revision pass + the exact-dates layer (post-adversarial-review)
+
+The merged ring got the same adversarial review Task 1 did (two independent
+passes), which confirmed and fixed: stale focus ghosting the ring after a
+scrub or chart switch (focus now derives outside the ephemeris memo and
+validates against the live contacts; the ring remounts per compute); chords
+ending on true rather than collision-fanned natal longitudes (wrong-planet
+chords in stelliums); steppers escaping the ±365-day window; a South Node
+mark that every other wheel hides; the lost transiting-positions text strip
+(a keyboard/AT regression vs the old page — restored); per-frame live-region
+chatter (announcements now wait for the scrub to settle); stale page prose
+describing the pre-ring tool on both locales; and CSS consuming undefined
+tokens (`--text-1`, `--hair`).
+
+The exact-dates layer consumes #61's `scanTransitContacts` per the plan: the
+scan is engine-bound, so it dynamic-imports inside the already-lazy ring
+chunk and runs one body at a time with yields (~0.5 s total for the slow
+set). Markers cover the SLOW set only (Jupiter→Pluto) — the FAQ's own framing
+("chapters rather than weather"); Sun-through-Mars contacts would put ~450
+dots on a 730-day rail. Each marker is a real button (jump + focus); the
+"next to go exact" line gives the same jumps as text. The .ics download
+serializes the same slow set client-side via the engine-free `ical.ts` —
+no birth data in the file. `applyingBefore` is not surfaced (constant-true
+as currently defined — flagged upstream for redefinition or removal).
