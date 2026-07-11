@@ -19,7 +19,7 @@ const EVERGREEN_LASTMOD = new Map<string, string>([
     '/', '/birth-chart/', '/compatibility/', '/moon-sign/', '/rising-sign/',
     '/moon-phase/', '/saturn-return/', '/mercury-retrograde/', '/transits/',
     '/eclipses/', '/full-moon-calendar/', '/retrogrades/', '/learn/', '/tools/',
-    '/profile/', '/learn/how-to-read-a-birth-chart/', '/learn/zodiac-dates/', '/learn/planets/',
+    '/profile/', '/learn/how-to-read-a-birth-chart/', '/learn/zodiac-dates/', '/learn/glossary/', '/learn/planets/',
     '/learn/houses/', '/learn/aspects/', '/learn/placements/', '/birthday/',
     '/baby-zodiac/', '/widgets/', '/methodology/', '/about/', '/privacy/',
     '/terms/', '/feeds/',
@@ -28,7 +28,7 @@ const EVERGREEN_LASTMOD = new Map<string, string>([
     '/es/tools/', '/es/profile/', '/es/baby-zodiac/', '/es/methodology/',
   ].map((loc) => [
     loc,
-    ['/', '/learn/', '/learn/zodiac-dates/'].includes(loc) ? '2026-07-11' : '2026-07-10',
+    ['/', '/learn/', '/learn/zodiac-dates/', '/learn/glossary/'].includes(loc) ? '2026-07-11' : '2026-07-10',
   ] as const),
   ...LEGACY_URLS.map((url) => [url.path, '2026-07-10'] as const),
 ]);
@@ -67,6 +67,7 @@ export const GET: APIRoute = async () => {
     { loc: '/profile/', priority: 0.75 },
     { loc: '/learn/how-to-read-a-birth-chart/', priority: 0.8 },
     { loc: '/learn/zodiac-dates/', priority: 0.8 },
+    { loc: '/learn/glossary/', priority: 0.8 },
     { loc: '/learn/planets/', priority: 0.7 },
     { loc: '/learn/houses/', priority: 0.7 },
     { loc: '/learn/aspects/', priority: 0.7 },

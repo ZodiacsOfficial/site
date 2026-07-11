@@ -3,6 +3,7 @@ import Base from '../../layouts/Base.astro';
 import SignIcon from '../../components/SignIcon.astro';
 import ToolGlyph from '../../components/ToolGlyph.astro';
 import { SIGNS, ELEMENT_LABEL, MODALITY_LABEL } from '../../lib/signs';
+import { GLOSSARY } from '../../data/glossary';
 
 const jsonLd = [
   {
@@ -119,6 +120,11 @@ const jsonLd = [
         <strong>The living correspondence chart</strong>
         <p>All twelve signs, exact longitude boundaries, and year-exact Sun ingress instants.</p>
         <span class="clusters__count mono">table + CSV →</span>
+      </a>
+      <a class="tile clusters__card" href="/learn/glossary/">
+        <strong>The astrology glossary</strong>
+        <p>The words used across the site, defined against the chart and timing calculations.</p>
+        <span class="clusters__count mono">{GLOSSARY.length} terms · A–Z →</span>
       </a>
     </div>
   </section>
