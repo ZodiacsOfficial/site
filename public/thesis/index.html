@@ -490,6 +490,44 @@
       letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-mute);
     }
 
+    /* Format timeline — Section I */
+    .tline-wrap { margin: 30px 0 0; }
+    .tline-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .tline { min-width: 560px; width: 100%; height: auto; display: block; }
+
+    /* Test commitment card — Section VII */
+    .tcard {
+      margin: 26px 0 0; max-width: 560px;
+      border: 1px solid var(--hair-2); background: var(--surface);
+      padding: 16px 18px 14px;
+    }
+    .tcard__head {
+      display: flex; justify-content: space-between; align-items: baseline;
+      gap: 10px; flex-wrap: wrap; margin-bottom: 12px;
+    }
+    .tcard__title { font-family: var(--serif); font-size: 17px; color: var(--ink); }
+    .tcard__row {
+      display: flex; justify-content: space-between; align-items: baseline;
+      gap: 12px; flex-wrap: wrap;
+      padding: 8px 0; border-top: 1px solid var(--hair);
+    }
+    .tcard__k { font-family: var(--mono); font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-dim); }
+    .tcard__v { font-family: var(--mono); font-size: 9px; color: var(--ink-2); }
+    .mov .tcard__note {
+      margin: 12px 0 0; font-family: var(--serif); font-style: italic;
+      font-size: 14.5px; color: var(--ink-2);
+    }
+
+    /* Objection reference chips — Section IX */
+    .chip-ref {
+      display: inline-block; margin-left: 10px; vertical-align: 2px;
+      font-family: var(--mono); font-size: 8px; letter-spacing: 0.16em;
+      color: var(--ink-dim); border: 1px solid var(--hair-2);
+      padding: 2px 7px; text-decoration: none; white-space: nowrap;
+    }
+    a.chip-ref { transition: color 320ms var(--ease), border-color 320ms var(--ease); }
+    a.chip-ref:hover { color: var(--gold-bright); border-color: var(--gold); }
+
     /* Sign-off */
     .sig {
       margin-top: 36px; padding-top: 16px; border-top: 1px solid var(--hair);
@@ -713,6 +751,27 @@
             by horoscopes, birthdays, seasons, and retrogrades, without anyone
             spending a cent to keep it alive.
           </p>
+          <figure class="tline-wrap">
+            <div class="tline-scroll" role="img" aria-label="The format timeline: star catalogue, print, newspaper column, hotline, app, record — from the fifth century BCE to 2024">
+              <svg class="tline" viewBox="0 0 720 84" aria-hidden="true" focusable="false">
+                <line x1="16" y1="30" x2="704" y2="30" stroke="var(--hair-3)" stroke-width="1"/>
+                <circle cx="16" cy="30" r="3" fill="var(--gold)"/>
+                <text x="16" y="54" text-anchor="start" fill="var(--ink-dim)" font-family="JetBrains Mono, monospace" font-size="9" letter-spacing="1">Star catalogue</text>
+                <text x="16" y="70" text-anchor="start" fill="var(--ink-mute)" font-family="JetBrains Mono, monospace" font-size="8" letter-spacing="1">~5th c. BCE</text>
+                <circle cx="153.6" cy="30" r="3" fill="var(--gold)"/>
+                <text x="153.6" y="54" text-anchor="middle" fill="var(--ink-dim)" font-family="JetBrains Mono, monospace" font-size="9" letter-spacing="1">Print</text>
+                <circle cx="291.2" cy="30" r="3" fill="var(--gold)"/>
+                <text x="291.2" y="54" text-anchor="middle" fill="var(--ink-dim)" font-family="JetBrains Mono, monospace" font-size="9" letter-spacing="1">Newspaper column</text>
+                <circle cx="428.8" cy="30" r="3" fill="var(--gold)"/>
+                <text x="428.8" y="54" text-anchor="middle" fill="var(--ink-dim)" font-family="JetBrains Mono, monospace" font-size="9" letter-spacing="1">Hotline</text>
+                <circle cx="566.4" cy="30" r="3" fill="var(--gold)"/>
+                <text x="566.4" y="54" text-anchor="middle" fill="var(--ink-dim)" font-family="JetBrains Mono, monospace" font-size="9" letter-spacing="1">App</text>
+                <circle cx="704" cy="30" r="3" fill="var(--gold)"/>
+                <text x="704" y="54" text-anchor="end" fill="var(--ink-dim)" font-family="JetBrains Mono, monospace" font-size="9" letter-spacing="1">Record</text>
+                <text x="704" y="70" text-anchor="end" fill="var(--ink-mute)" font-family="JetBrains Mono, monospace" font-size="8" letter-spacing="1">2024</text>
+              </svg>
+            </div>
+          </figure>
         </section>
 
         <section class="mov reveal" id="attention">
@@ -1099,6 +1158,16 @@
             and the result published either way. A thesis that cannot lose is
             not a thesis.
           </p>
+          <aside class="tcard" aria-label="The one-tap test — commitment card">
+            <div class="tcard__head">
+              <span class="tcard__title">The one-tap test</span>
+              <span class="pending-disclosure">PENDING — criteria not yet published</span>
+            </div>
+            <div class="tcard__row"><span class="tcard__k">Unique claimants</span><span class="tcard__v"><span class="pending-disclosure" data-field="criteria.uniqueClaimants">Pending disclosure</span></span></div>
+            <div class="tcard__row"><span class="tcard__k">90-day retention</span><span class="tcard__v"><span class="pending-disclosure" data-field="criteria.ninetyDayRetention">Pending disclosure</span></span></div>
+            <div class="tcard__row"><span class="tcard__k">Holder dispersion</span><span class="tcard__v"><span class="pending-disclosure" data-field="criteria.holderDispersion">Pending disclosure</span></span></div>
+            <p class="tcard__note">Result will be published either way.</p>
+          </aside>
         </section>
 
         <section class="mov reveal" id="why-solana-why-base">
@@ -1123,7 +1192,7 @@
             way a skeptic would state them.
           </p>
           <p>
-            <strong>"Belief in the sign is not demand for the record."</strong>
+            <strong>"Belief in the sign is not demand for the record."</strong> <span class="chip-ref">CONCEDED IN PART</span>
             Correct — and this is the actual bet, so here it is at full
             strength: nine in ten Americans know their sign, and approximately
             zero of them woke up today wanting a token. Section III's spending
@@ -1151,7 +1220,7 @@
             claiming at possible.
           </p>
           <p>
-            <strong>"If the audience wanted this, they would already have it."</strong>
+            <strong>"If the audience wanted this, they would already have it."</strong> <a class="chip-ref" href="#the-test">TESTABLE — §VII</a>
             Partly conceded above: the existing crypto-native astrology
             overlap is a partial test with a negative result so far, and it
             counts against the thesis rather than being suspended by it. What
@@ -1166,7 +1235,7 @@
             the registry will say so on this page.
           </p>
           <p>
-            <strong>"The registry appointed itself."</strong>
+            <strong>"The registry appointed itself."</strong> <a class="chip-ref" href="#the-candidacy">LOSS CONDITION DEFINED — §V</a>
             It did. There was no other way to begin — every canonical registry
             in history was self-appointed on day one and legitimate only in
             retrospect. Legitimacy here is earned the boring way: publish
@@ -1179,7 +1248,7 @@
             brand.
           </p>
           <p>
-            <strong>"This is a memecoin with a literature review."</strong>
+            <strong>"This is a memecoin with a literature review."</strong> <span class="chip-ref">CONCEDED IN PART</span>
             Half true, and the half that is true is embraced: the Twelve are
             memetic assets, priced by attention and belief, and dressing that
             up would be dishonest. The structural difference is narrower than
@@ -1194,7 +1263,7 @@
             bet that the belief coordinates onto these records.
           </p>
           <p>
-            <strong>"You have described the mythology and omitted the instrument."</strong>
+            <strong>"You have described the mythology and omitted the instrument."</strong> <a class="chip-ref" href="#the-instrument">ANSWERED BY DATA — §X</a>
             The sharpest objection of the five, and the only one prose cannot
             answer. Even if every cultural claim above is right, a buyer
             underwrites a specific instrument: a supply, a holder
@@ -1598,6 +1667,56 @@
         host.querySelector('[data-pulse-src]').textContent = 'Source: Wikimedia · live';
         host.classList.add('is-live');
       }).catch(function () { /* snapshot remains */ });
+    })();
+
+    /* ── Season clock — the hero names the current tropical season.
+       Boundaries are the engine's exact Sun-ingress instants (the same
+       table /learn/zodiac-dates/ prints), embedded through January 2028.
+       Outside the embedded range the element simply stays hidden. */
+    (function () {
+      var el = document.querySelector('[data-season-clock]');
+      if (!el) return;
+      var WINDOWS = [
+        ['aquarius', '2026-01-20T01:44:34.379Z'],
+        ['pisces', '2026-02-18T15:51:26.627Z'],
+        ['aries', '2026-03-20T14:45:34.021Z'],
+        ['taurus', '2026-04-20T01:39:12.143Z'],
+        ['gemini', '2026-05-21T00:37:22.918Z'],
+        ['cancer', '2026-06-21T08:25:08.400Z'],
+        ['leo', '2026-07-22T19:13:26.161Z'],
+        ['virgo', '2026-08-23T02:19:04.019Z'],
+        ['libra', '2026-09-23T00:05:40.402Z'],
+        ['scorpio', '2026-10-23T09:38:21.771Z'],
+        ['sagittarius', '2026-11-22T07:23:27.992Z'],
+        ['capricorn', '2026-12-21T20:50:14.049Z'],
+        ['aquarius', '2027-01-20T07:29:54.622Z'],
+        ['pisces', '2027-02-18T21:33:36.367Z'],
+        ['aries', '2027-03-20T20:24:41.375Z'],
+        ['taurus', '2027-04-20T07:17:24.887Z'],
+        ['gemini', '2027-05-21T06:18:00.373Z'],
+        ['cancer', '2027-06-21T14:10:41.847Z'],
+        ['leo', '2027-07-23T01:04:31.814Z'],
+        ['virgo', '2027-08-23T08:13:59.497Z'],
+        ['libra', '2027-09-23T06:01:20.130Z'],
+        ['scorpio', '2027-10-23T15:32:42.212Z'],
+        ['sagittarius', '2027-11-22T13:16:14.602Z'],
+        ['capricorn', '2027-12-22T02:42:10.520Z']
+      ];
+      var END = Date.parse('2028-01-20T13:21:47.878Z');
+      var now = Date.now();
+      if (!(now >= Date.parse(WINDOWS[0][1]) && now < END)) return;
+      for (var i = 0; i < WINDOWS.length; i++) {
+        var from = Date.parse(WINDOWS[i][1]);
+        var to = i + 1 < WINDOWS.length ? Date.parse(WINDOWS[i + 1][1]) : END;
+        if (now >= from && now < to) {
+          var sign = WINDOWS[i][0].charAt(0).toUpperCase() + WINDOWS[i][0].slice(1);
+          var day = Math.floor((now - from) / 86400000) + 1;
+          var total = Math.round((to - from) / 86400000);
+          el.textContent = sign + ' season · day ' + day + ' of ' + total;
+          el.hidden = false;
+          return;
+        }
+      }
     })();
 
     /* ── Disclosure surfaces — Sections V, VII, X ──
