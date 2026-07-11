@@ -465,6 +465,31 @@
       font-size: 15.5px; line-height: 1.55; color: var(--ink);
     }
 
+    /* Candidacy scoreboard — Section V */
+    .score { margin: 26px 0 0; border: 1px solid var(--hair); max-width: 720px; }
+    .score__row {
+      display: grid; grid-template-columns: minmax(0, 1fr);
+      gap: 4px 14px; padding: 11px 14px; border-top: 1px solid var(--hair);
+    }
+    .score__row:first-child { border-top: 0; }
+    .score__row--head { display: none; }
+    .score__k { font-family: var(--serif); font-size: 15px; color: var(--ink); }
+    .score__v { font-family: var(--mono); font-size: 9px; color: var(--ink-2); }
+    .score__d { font-family: var(--mono); font-size: 9px; letter-spacing: 0.08em; color: var(--ink-mute); }
+    @media (min-width: 720px) {
+      .score__row { grid-template-columns: 240px minmax(0, 1fr) 110px; align-items: center; }
+      .score__row--head {
+        display: grid; background: var(--surface);
+        font-family: var(--mono); font-size: 8px; letter-spacing: 0.16em;
+        text-transform: uppercase; color: var(--ink-dim);
+      }
+      .score__d { text-align: right; }
+    }
+    .mov .score__cap {
+      margin: 10px 0 0; font-family: var(--mono); font-size: 9.5px;
+      letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-mute);
+    }
+
     /* Sign-off */
     .sig {
       margin-top: 36px; padding-top: 16px; border-top: 1px solid var(--hair);
@@ -928,6 +953,37 @@
             stays continuous through adverse ones. Until those accumulate
             here, "canonical" names the objective, not the fact.
           </p>
+          <div class="score" role="table" aria-label="Candidacy scoreboard">
+            <div class="score__row score__row--head" role="row">
+              <span role="columnheader">Criterion</span><span role="columnheader">Current evidence</span><span role="columnheader">As of</span>
+            </div>
+            <div class="score__row" role="row">
+              <span class="score__k" role="rowheader">Independent integrations</span>
+              <span class="score__v" role="cell"><span class="pending-disclosure" data-field="criteria.independentIntegrations">Pending disclosure</span></span>
+              <span class="score__d" role="cell" data-asof-field="criteria.independentIntegrations">—</span>
+            </div>
+            <div class="score__row" role="row">
+              <span class="score__k" role="rowheader">Unprompted third-party citations</span>
+              <span class="score__v" role="cell"><span class="pending-disclosure" data-field="criteria.thirdPartyCitations">Pending disclosure</span></span>
+              <span class="score__d" role="cell" data-asof-field="criteria.thirdPartyCitations">—</span>
+            </div>
+            <div class="score__row" role="row">
+              <span class="score__k" role="rowheader">Holder dispersion</span>
+              <span class="score__v" role="cell"><span class="pending-disclosure" data-field="criteria.holderDispersion">Pending disclosure</span></span>
+              <span class="score__d" role="cell" data-asof-field="criteria.holderDispersion">—</span>
+            </div>
+            <div class="score__row" role="row">
+              <span class="score__k" role="rowheader">Liquidity persistence</span>
+              <span class="score__v" role="cell"><span class="pending-disclosure" data-field="criteria.liquidityPersistence">Pending disclosure</span></span>
+              <span class="score__d" role="cell" data-asof-field="criteria.liquidityPersistence">—</span>
+            </div>
+            <div class="score__row" role="row">
+              <span class="score__k" role="rowheader">Archive continuity</span>
+              <span class="score__v" role="cell"><span class="pending-disclosure" data-field="criteria.archiveContinuity">Pending disclosure</span></span>
+              <span class="score__d" role="cell" data-asof-field="criteria.archiveContinuity">—</span>
+            </div>
+          </div>
+          <p class="score__cap">The candidacy is judged on these. The same list defines the loss condition.</p>
           <p>
             The closed set helps in exactly one way, and it is worth keeping
             after all the concessions: coordination is cheaper on twelve
