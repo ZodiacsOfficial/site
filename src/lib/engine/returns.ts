@@ -34,7 +34,7 @@ export interface ReturnSeason {
 }
 
 /**
- * Every instant in [from, to) when `body` sits exactly on `targetLon`.
+ * Every instant in (from, to] when `body` sits exactly on `targetLon`.
  * Coarse scan at `stepDays`, then 24-iteration bisection per crossing.
  * The default 5-day step is safe for Saturn (≤0.13°/day → ≤0.65°/step
  * against a 360° lap; a triple pass spans months, never 5 days).
@@ -48,11 +48,14 @@ export function findLongitudeCrossings(
 ): Crossing[] {
   const out: Crossing[] = [];
   const step = stepDays * DAY;
+  if (!Number.isFinite(step) || step <= 0) throw new RangeError('stepDays must be positive.');
 
   let prevT = from.getTime();
   let prev = delta(targetLon, bodyLongitude(body, from));
+  const toT = to.getTime();
 
-  for (let t = prevT + step; t <= to.getTime(); t += step) {
+  while (prevT < toT) {
+    const t = Math.min(prevT + step, toT);
     const date = new Date(t);
     const cur = delta(targetLon, bodyLongitude(body, date));
 
