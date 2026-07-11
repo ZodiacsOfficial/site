@@ -88,16 +88,16 @@ describe('scanTransitContacts', () => {
       { transitBodies: ['Mars'] },
     );
 
-    expect(contacts.map(({ transitBody, natalPoint, aspect, applyingBefore }) => ({
-      transitBody, natalPoint, aspect, applyingBefore,
+    expect(contacts.map(({ transitBody, natalPoint, aspect, pass, passCount }) => ({
+      transitBody, natalPoint, aspect, pass, passCount,
     }))).toEqual([
-      { transitBody: 'Mars', natalPoint: 'Sun', aspect: 'conjunction', applyingBefore: true },
-      { transitBody: 'Mars', natalPoint: 'Moon', aspect: 'sextile', applyingBefore: true },
-      { transitBody: 'Mars', natalPoint: 'Mercury', aspect: 'square', applyingBefore: true },
-      { transitBody: 'Mars', natalPoint: 'Venus', aspect: 'trine', applyingBefore: true },
-      { transitBody: 'Mars', natalPoint: 'Mars', aspect: 'opposition', applyingBefore: true },
-      { transitBody: 'Mars', natalPoint: 'ASC', aspect: 'conjunction', applyingBefore: true },
-      { transitBody: 'Mars', natalPoint: 'MC', aspect: 'opposition', applyingBefore: true },
+      { transitBody: 'Mars', natalPoint: 'Sun', aspect: 'conjunction', pass: 1, passCount: 1 },
+      { transitBody: 'Mars', natalPoint: 'Moon', aspect: 'sextile', pass: 1, passCount: 1 },
+      { transitBody: 'Mars', natalPoint: 'Mercury', aspect: 'square', pass: 1, passCount: 1 },
+      { transitBody: 'Mars', natalPoint: 'Venus', aspect: 'trine', pass: 1, passCount: 1 },
+      { transitBody: 'Mars', natalPoint: 'Mars', aspect: 'opposition', pass: 1, passCount: 1 },
+      { transitBody: 'Mars', natalPoint: 'ASC', aspect: 'conjunction', pass: 1, passCount: 1 },
+      { transitBody: 'Mars', natalPoint: 'MC', aspect: 'opposition', pass: 1, passCount: 1 },
     ]);
     expect(new Set(contacts.map((contact) => contact.exactUtc.slice(0, 16)))).toEqual(
       new Set([exact.toISOString().slice(0, 16)]),
@@ -122,7 +122,8 @@ describe('scanTransitContacts', () => {
         natalPoint: 'Sun',
         aspect: 'conjunction',
         exactUtc: to.toISOString(),
-        applyingBefore: true,
+        pass: 1,
+        passCount: 1,
       },
     ]);
   });
@@ -162,7 +163,11 @@ describe('scanTransitContacts', () => {
       '2019-06-09T10:19',
       '2019-12-13T08:51',
     ]);
-    expect(contacts.map((contact) => contact.applyingBefore)).toEqual([true, true, true]);
+    expect(contacts.map(({ pass, passCount }) => ({ pass, passCount }))).toEqual([
+      { pass: 1, passCount: 3 },
+      { pass: 2, passCount: 3 },
+      { pass: 3, passCount: 3 },
+    ]);
     for (const contact of contacts) {
       const error = Math.abs(normalize(
         bodyLongitude('Saturn', new Date(contact.exactUtc)) - natal.bodies[0].lon + 180,
@@ -184,7 +189,11 @@ describe('scanTransitContacts', () => {
       '2026-02-26T09:26',
       '2026-04-09T11:40',
     ]);
-    expect(contacts.map((contact) => contact.applyingBefore)).toEqual([true, true, true]);
+    expect(contacts.map(({ pass, passCount }) => ({ pass, passCount }))).toEqual([
+      { pass: 1, passCount: 3 },
+      { pass: 2, passCount: 3 },
+      { pass: 3, passCount: 3 },
+    ]);
   });
 
   it('resolves two contacts only seconds apart at the true station extremum', () => {
@@ -204,7 +213,10 @@ describe('scanTransitContacts', () => {
     ]);
     expect(new Date(contacts[1].exactUtc).getTime() - new Date(contacts[0].exactUtc).getTime())
       .toBeGreaterThan(10_000);
-    expect(contacts.map((contact) => contact.applyingBefore)).toEqual([true, true]);
+    expect(contacts.map(({ pass, passCount }) => ({ pass, passCount }))).toEqual([
+      { pass: 1, passCount: 2 },
+      { pass: 2, passCount: 2 },
+    ]);
   });
 
   it('does not insert a synthetic station contact between two real roots', () => {

@@ -72,7 +72,10 @@ export function transitContactUid(contact: TransitContact): string {
 function exactDescription(contact: TransitContact): string {
   const iso = new Date(contact.exactUtc).toISOString();
   const utcMinute = `${iso.slice(0, 10)} ${iso.slice(11, 16)} UTC`;
-  return `Exact tropical transit contact. Time: ${utcMinute}. Applying immediately before exactness: ${contact.applyingBefore ? 'yes' : 'no'}.`;
+  const description = `Exact tropical transit contact. Time: ${utcMinute}.`;
+  return contact.passCount > 1
+    ? `${description} Pass ${contact.pass} of ${contact.passCount} (retrograde loop).`
+    : description;
 }
 
 function eventLines(contact: TransitContact, dtstamp: string): string[] {
