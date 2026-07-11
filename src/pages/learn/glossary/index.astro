@@ -127,9 +127,9 @@ const jsonLd = [
                   <dd>
                     <p>{entry.definition}</p>
                     {entry.receipt && <p class="glossary__receipt mono">{entry.receipt}</p>}
-                    {((entry.related?.length ?? 0) > 0 || entry.link) && (
+                    {((entry.related && entry.related.length > 0) || entry.link) && (
                       <div class="glossary__meta">
-                        {(entry.related?.length ?? 0) > 0 && (
+                        {entry.related && entry.related.length > 0 && (
                           <p>
                             <span class="glossary__meta-label mono">Related</span>
                             {entry.related.map((slug, index) => (
