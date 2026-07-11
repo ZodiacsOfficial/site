@@ -18,13 +18,15 @@ import PlanetGlyph from '../../components/PlanetGlyph';
 import AspectGlyph from '../../components/AspectGlyph';
 import { findInterAspects } from '../../lib/engine/synastry';
 import type { MinimalBody } from '../../lib/engine/synastry';
+import type { TransitContact } from '../../lib/engine/transit-scan';
+import type { BodyName } from '../../lib/engine/types';
 import { buildTransitOverlay } from '../../lib/scene/overlay';
 import { collisionNudge } from '../../lib/scene/layout';
 import { overlayAspectId, overlayBodyId } from '../../lib/scene/types';
 import { renderTransitOverlay } from './renderTransitOverlay';
 import { transitLine, TRANSIT_ORB } from '../../lib/transits';
 import { formatLongitude } from '../../lib/signs';
-import { formatDateTime } from '../../lib/i18n/dates';
+import { formatDate, formatDateTime } from '../../lib/i18n/dates';
 import { aspectLabel, planetLabel } from '../../lib/i18n/astrology';
 import { t, type Locale } from '../../lib/i18n';
 
@@ -72,6 +74,12 @@ const COPY = {
     ofExact: 'of exact',
     moonOmitted: 'the Moon moves too fast to list, but you can watch it circle',
     announce: 'Sky for',
+    scanning: 'Computing the exact dates of the slow transits…',
+    marksLabel: 'Exact slow-transit dates in this window',
+    nextUp: 'Next to go exact:',
+    noSlowExact: 'No slow transits go exact in this window.',
+    addToCalendar: 'Add these dates to your calendar',
+    calNote: 'dates · Jupiter through Pluto · UTC · no birth data in the file',
   },
   es: {
     skyRingLabel: 'el cielo en tránsito',
@@ -86,6 +94,12 @@ const COPY = {
     ofExact: 'de exactitud',
     moonOmitted: 'la Luna se mueve demasiado rápido para aparecer en la lista, pero puedes verla girar',
     announce: 'Cielo del',
+    scanning: 'Calculando las fechas exactas de los tránsitos lentos…',
+    marksLabel: 'Fechas exactas de tránsitos lentos en esta ventana',
+    nextUp: 'Próximos en llegar a exacto:',
+    noSlowExact: 'Ningún tránsito lento llega a exacto en esta ventana.',
+    addToCalendar: 'Añade estas fechas a tu calendario',
+    calNote: 'fechas · de Júpiter a Plutón · UTC · sin datos de nacimiento en el archivo',
   },
 } as const;
 
@@ -117,6 +131,74 @@ export default function TransitRing({ locale, natal, computeSky, nowMs }: Transi
   // at the neighbouring planet. Same algorithm and input as the Wheel's own
   // layout, so the endpoints land exactly on the drawn marks.
   const natalDraw = useMemo(() => collisionNudge(natal.bodies), [natal.bodies]);
+
+  // ── Exact dates: the slow transits (Jupiter–Pluto) across the window. ──
+  // The scanner is engine-bound and ~100 ms per body, so it loads lazily and
+  // runs one body at a time with a breath between each — the ring stays
+  // responsive while the timeline fills in. Null = still computing.
+  const [events, setEvents] = useState<TransitContact[] | null>(null);
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      try {
+        const scan = await import('../../lib/engine/transit-scan');
+        const from = new Date(nowMs - WINDOW_DAYS * DAY);
+        const to = new Date(nowMs + WINDOW_DAYS * DAY);
+        const chart = {
+          // MinimalBody carries `string`; these came from the engine, so the
+          // narrowing to BodyName is sound.
+          bodies: natal.minimal.map((b) => ({ body: b.body as BodyName, lon: b.lon })),
+          angles: natal.asc != null && natal.mc != null ? { asc: natal.asc, mc: natal.mc } : null,
+        };
+        const found: TransitContact[] = [];
+        for (const body of scan.SLOW_TRANSIT_BODIES) {
+          if (cancelled) return;
+          found.push(...scan.scanTransitContacts(chart, from, to, { transitBodies: [body] }));
+          await new Promise((r) => setTimeout(r, 0));
+        }
+        if (!cancelled) setEvents(found.sort((a, b) => a.exactUtc.localeCompare(b.exactUtc)));
+      } catch {
+        if (!cancelled) setEvents([]); // scan unavailable — the ring works without it
+      }
+    })();
+    return () => { cancelled = true; };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  /** Days from now to a contact's exact instant (fractional). */
+  const eventOffset = (e: TransitContact) => (Date.parse(e.exactUtc) - nowMs) / DAY;
+  const eventLabel = (e: TransitContact) => {
+    const point = e.natalPoint === 'ASC' || e.natalPoint === 'MC'
+      ? e.natalPoint : planetLabel(locale, e.natalPoint);
+    return `${planetLabel(locale, e.transitBody)} ${aspectLabel(locale, e.aspect)} ${t(locale, 'natal')} ${point}`;
+  };
+  const nextUp = events?.filter((e) => Date.parse(e.exactUtc) > when.getTime()).slice(0, 3) ?? [];
+
+  /** Jump the sky to a contact's exact date and, when it has a ring
+   * counterpart (a planet contact), focus its chord on arrival. */
+  function goToEvent(e: TransitContact) {
+    glideTo(eventOffset(e));
+    if (e.natalPoint !== 'ASC' && e.natalPoint !== 'MC') {
+      setSel(`${e.transitBody}-${e.aspect}-${e.natalPoint}`);
+    }
+  }
+
+  /** Build the .ics on demand — the serializer is its own tiny lazy import. */
+  async function downloadCalendar() {
+    if (!events || events.length === 0) return;
+    const { serializeTransitContacts } = await import('../../lib/ical');
+    const ics = serializeTransitContacts(events, {
+      generatedAt: new Date().toISOString(),
+      calendarName: locale === 'es' ? 'Tránsitos — Zodiacs.org' : 'Transits — Zodiacs.org',
+    });
+    const blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'zodiacs-transits.ics';
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(url), 5000);
+  }
 
   const whenLabel = formatDateTime(locale, when, {
     year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit',
@@ -204,6 +286,43 @@ export default function TransitRing({ locale, natal, computeSky, nowMs }: Transi
           onInput={(e) => { cancelTween(); setOffset(Number((e.target as HTMLInputElement).value)); }}
           aria-valuetext={whenLabel}
         />
+        {/* Exact slow-transit dates as jump markers along the same timeline. */}
+        {events === null && <p class="tring__scan mono">{c.scanning}</p>}
+        {events !== null && events.length > 0 && (
+          <div class="tring__marks" role="group" aria-label={c.marksLabel}>
+            {events.map((e) => {
+              const d = eventOffset(e);
+              const dateLabel = formatDate(locale, new Date(Date.parse(e.exactUtc)), {
+                year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC',
+              });
+              return (
+                <button
+                  key={`${e.exactUtc}-${e.transitBody}-${e.aspect}-${e.natalPoint}`}
+                  class="tring__mark"
+                  type="button"
+                  style={`left:${(((d + WINDOW_DAYS) / (WINDOW_DAYS * 2)) * 100).toFixed(2)}%`}
+                  aria-label={`${eventLabel(e)} — ${dateLabel}`}
+                  title={`${eventLabel(e)} — ${dateLabel}`}
+                  onClick={() => goToEvent(e)}
+                  data-transit-mark
+                />
+              );
+            })}
+          </div>
+        )}
+        {events !== null && events.length === 0 && (
+          <p class="tring__scan mono">{c.noSlowExact}</p>
+        )}
+        {nextUp.length > 0 && (
+          <p class="tring__next mono">
+            <span class="mono--label">{c.nextUp}</span>{' '}
+            {nextUp.map((e, i) => (
+              <button class="tring__next-link" type="button" key={e.exactUtc + e.transitBody} onClick={() => goToEvent(e)}>
+                {eventLabel(e)} · {formatDate(locale, new Date(Date.parse(e.exactUtc)), { month: 'short', day: 'numeric', timeZone: 'UTC' })}{i < nextUp.length - 1 ? ',' : ''}
+              </button>
+            ))}
+          </p>
+        )}
         <div class="tring__steps">
           <button class="btn btn--glass tring__step" type="button" onClick={() => glideTo(offset - 30)}>
             <span>{c.back1m}</span>
@@ -231,6 +350,17 @@ export default function TransitRing({ locale, natal, computeSky, nowMs }: Transi
 
       {/* Live announcement of the scrubbed instant, once it settles. */}
       <p class="sr-only" role="status">{announced}</p>
+
+      {/* Take the exact dates with you — no birth data leaves in the file. */}
+      {events !== null && events.length > 0 && (
+        <div class="tring__cal">
+          <button class="btn btn--glass tring__step" type="button" onClick={downloadCalendar} data-transit-cal>
+            <span>{c.addToCalendar}</span>
+            <span class="orb">↓</span>
+          </button>
+          <span class="tring__cal-note mono">{events.length} {c.calNote}</span>
+        </div>
+      )}
 
       {/* The selected transit, foregrounded. */}
       {(selectedAspect || selectedBody) && (
