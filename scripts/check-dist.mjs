@@ -23,7 +23,10 @@
 import { readFile, readdir, stat } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve, join, relative, sep } from 'node:path';
-import { searchIndexShapeFailures } from './search-index-lib.mjs';
+import {
+  extractPageMetadata, htmlFileToPath, isEnglishHtml,
+  searchIndexShapeFailures, shouldIndexPath,
+} from './search-index-lib.mjs';
 
 const repo = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const root = resolve(repo, 'dist');
@@ -289,6 +292,26 @@ if (!(await exists(searchIndexPath))) {
         }
         for (const id of glossaryTermIds) {
           if (!indexedTermFragments.has(id)) fail(`search-index: missing glossary term #${id}`);
+        }
+      }
+
+      // Reverse completeness: every indexable EN page in dist must be IN the
+      // index. Without this, a regression in the exclusion predicates could
+      // silently drop hundreds of pages and still pass the entry-count floor.
+      const indexedPaths = new Set(
+        searchIndex
+          .filter((entry) => typeof entry?.path === 'string' && !entry.path.includes('#'))
+          .map((entry) => entry.path),
+      );
+      for (const file of files) {
+        const rel = relative(root, file).split(sep).join('/');
+        const pagePath = htmlFileToPath(rel);
+        if (!pagePath || !shouldIndexPath(pagePath)) continue;
+        const html = idCache.get(file) ?? (await readFile(file, 'utf8'));
+        if (!isEnglishHtml(html)) continue;
+        if (extractPageMetadata(html).noindex) continue;
+        if (!indexedPaths.has(pagePath)) {
+          fail(`search-index: indexable page missing from the index — ${pagePath}`);
         }
       }
     }

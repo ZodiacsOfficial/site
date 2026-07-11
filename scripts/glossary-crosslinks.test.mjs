@@ -61,10 +61,20 @@ describe('glossary crosslinks', () => {
       linkCount += links.length;
       expect(path, 'Spanish source must stay untouched').not.toMatch(/(^|\/)es\//);
       expect(links.length, `${path} exceeds the per-page link cap`).toBeLessThanOrEqual(5);
+      // A page must never link its own topic back to the glossary — the
+      // glossary entry's CTA points right back here, a dead-end loop.
+      const own = path.match(
+        /^src\/content\/(?:guides|learn\/(?:aspects|houses|planets))\/([a-z0-9-]+)\.mdx$/,
+      )?.[1];
+      if (own) {
+        for (const match of links) {
+          expect(match[1], `${path} links its own topic to the glossary`).not.toBe(own);
+        }
+      }
       if (path.startsWith('src/content/guides/')) {
-        expect(links.length, `${path} should link three guide terms`).toBe(3);
+        expect(links.length, `${path} should link two guide terms`).toBe(2);
       } else if (path.startsWith('src/content/learn/')) {
-        expect(path).toMatch(/^src\/content\/learn\/(?:aspects|houses|placements|planets)\/[^/]+\.mdx$/);
+        expect(path).toMatch(/^src\/content\/learn\/placements\/[^/]+\.mdx$/);
         expect(links.length, `${path} should link one detail term`).toBe(1);
       } else {
         expect(ASTRO_LINK_COUNTS.has(path), `${path} is outside the approved page set`).toBe(true);
@@ -112,7 +122,7 @@ describe('glossary crosslinks', () => {
       }
     }
 
-    expect(linkedFiles).toHaveLength(179);
-    expect(linkCount).toBe(272);
+    expect(linkedFiles).toHaveLength(152);
+    expect(linkCount).toBe(233);
   });
 });

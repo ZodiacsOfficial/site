@@ -1,3 +1,13 @@
+/*
+ * Builds dist/search-index.json after `astro build` — every indexable EN
+ * page plus one entry per glossary term.
+ *
+ * MUST run under `vite-node --script` (see the build script in package.json,
+ * or `npm run data:search-index`): it imports src/data/glossary.ts, whose
+ * TypeScript import chain plain `node` cannot resolve. Do NOT "simplify" the
+ * wiring to `node scripts/build-search-index.mjs` — it crashes, and if the
+ * build script loses this step, production loses /search-index.json.
+ */
 import { gzipSync } from 'node:zlib';
 import { readFile, readdir, writeFile } from 'node:fs/promises';
 import { dirname, join, relative, resolve } from 'node:path';

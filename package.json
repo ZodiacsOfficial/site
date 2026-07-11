@@ -16,6 +16,7 @@
     "legacy:signs": "node scripts/build-sign-pages.mjs",
     "legacy:archive": "node scripts/build-archive.mjs",
     "legacy:og": "node scripts/build-og-cards.mjs",
+    "data:search-index": "vite-node --script scripts/build-search-index.mjs",
     "data:cities": "node scripts/build-cities.mjs",
     "data:icons": "node scripts/build-icons.mjs",
     "data:sky": "node scripts/build-sky.mjs",
