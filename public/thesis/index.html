@@ -422,6 +422,49 @@
       text-shadow: 0 1px 14px rgba(0,0,0,0.6);
     }
 
+    /* Disclosure table — the instrument, in the open. Horizontal scroll
+       on small screens; never wider than the viewport. */
+    .disc-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 26px 0 0; border: 1px solid var(--hair); }
+    .disc { border-collapse: collapse; width: 100%; min-width: 940px; }
+    .disc th, .disc td { border: 1px solid var(--hair); padding: 9px 10px; text-align: left; vertical-align: middle; }
+    .disc thead th {
+      font-family: var(--mono); font-size: 8px; letter-spacing: 0.16em;
+      text-transform: uppercase; color: var(--ink-dim); background: var(--surface);
+      white-space: nowrap;
+    }
+    .disc tbody th {
+      font-family: var(--serif); font-size: 14.5px; font-weight: 400;
+      color: var(--ink); white-space: nowrap; background: var(--bg);
+    }
+    .disc td { font-family: var(--mono); font-size: 9px; color: var(--ink-2); background: var(--bg); }
+    .disc tr.disc__agg th, .disc tr.disc__agg td { border-top: 1px solid var(--hair-3); background: var(--surface); }
+    .disc-val { color: var(--ink); }
+    .disc-asof { color: var(--ink-mute); letter-spacing: 0.06em; }
+    .disc-verify {
+      color: var(--ink-dim); text-decoration: none; white-space: nowrap;
+      border-bottom: 1px solid rgba(198,204,218,0.22); padding-bottom: 1px;
+    }
+    .disc-verify:hover { color: var(--gold-bright); border-bottom-color: var(--gold); }
+    .mov .disc-updated {
+      margin: 10px 0 0; font-family: var(--mono); font-size: 9.5px;
+      letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-mute);
+    }
+    .disc-legend { margin: 18px 0 0; padding: 0; list-style: none; max-width: 66ch; }
+    .disc-legend li {
+      font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.05em;
+      line-height: 1.9; color: var(--ink-mute);
+    }
+    .disc-legend li strong { color: var(--ink-dim); font-weight: 400; }
+    .ednote {
+      margin: 26px 0 0; padding: 18px 20px 16px; max-width: 60ch;
+      border-left: 1px solid rgba(224,176,128,0.55);
+      background: linear-gradient(90deg, rgba(224,176,128,0.05), transparent 70%);
+    }
+    .mov .ednote p {
+      margin: 0; font-family: var(--serif); font-style: italic;
+      font-size: 15.5px; line-height: 1.55; color: var(--ink);
+    }
+
     /* Sign-off */
     .sig {
       margin-top: 36px; padding-top: 16px; border-top: 1px solid var(--hair);
@@ -1120,6 +1163,42 @@
             <a href="https://zodiacs.org/sdk/" rel="noopener noreferrer">SDK</a>
             any builder can run independently.
           </p>
+          <div class="disc-scroll" role="region" aria-label="Disclosure table — the instrument, per sign" tabindex="0">
+            <table class="disc">
+              <thead>
+                <tr><th scope="col">Sign</th><th scope="col">Supply</th><th scope="col">Mint authority</th><th scope="col">Freeze authority</th><th scope="col">Top-10 holders</th><th scope="col">Liquidity</th><th scope="col">Bridge</th><th scope="col">Treasury / insider</th><th scope="col">Continuity</th></tr>
+              </thead>
+              <tbody>
+            <tr><th scope="row">Aries</th><td><span class="pending-disclosure" data-field="signs.aries.supply">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.aries.mintAuthority">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.aries.freezeAuthority">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.aries.topTenHolders">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.aries.liquidity">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.aries.bridge">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.aries.treasury">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.aries.continuity">Pending disclosure</span></td></tr>
+            <tr><th scope="row">Taurus</th><td><span class="pending-disclosure" data-field="signs.taurus.supply">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.taurus.mintAuthority">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.taurus.freezeAuthority">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.taurus.topTenHolders">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.taurus.liquidity">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.taurus.bridge">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.taurus.treasury">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.taurus.continuity">Pending disclosure</span></td></tr>
+            <tr><th scope="row">Gemini</th><td><span class="pending-disclosure" data-field="signs.gemini.supply">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.gemini.mintAuthority">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.gemini.freezeAuthority">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.gemini.topTenHolders">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.gemini.liquidity">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.gemini.bridge">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.gemini.treasury">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.gemini.continuity">Pending disclosure</span></td></tr>
+            <tr><th scope="row">Cancer</th><td><span class="pending-disclosure" data-field="signs.cancer.supply">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.cancer.mintAuthority">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.cancer.freezeAuthority">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.cancer.topTenHolders">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.cancer.liquidity">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.cancer.bridge">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.cancer.treasury">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.cancer.continuity">Pending disclosure</span></td></tr>
+            <tr><th scope="row">Leo</th><td><span class="pending-disclosure" data-field="signs.leo.supply">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.leo.mintAuthority">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.leo.freezeAuthority">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.leo.topTenHolders">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.leo.liquidity">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.leo.bridge">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.leo.treasury">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.leo.continuity">Pending disclosure</span></td></tr>
+            <tr><th scope="row">Virgo</th><td><span class="pending-disclosure" data-field="signs.virgo.supply">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.virgo.mintAuthority">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.virgo.freezeAuthority">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.virgo.topTenHolders">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.virgo.liquidity">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.virgo.bridge">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.virgo.treasury">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.virgo.continuity">Pending disclosure</span></td></tr>
+            <tr><th scope="row">Libra</th><td><span class="pending-disclosure" data-field="signs.libra.supply">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.libra.mintAuthority">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.libra.freezeAuthority">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.libra.topTenHolders">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.libra.liquidity">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.libra.bridge">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.libra.treasury">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.libra.continuity">Pending disclosure</span></td></tr>
+            <tr><th scope="row">Scorpio</th><td><span class="pending-disclosure" data-field="signs.scorpio.supply">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.scorpio.mintAuthority">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.scorpio.freezeAuthority">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.scorpio.topTenHolders">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.scorpio.liquidity">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.scorpio.bridge">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.scorpio.treasury">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.scorpio.continuity">Pending disclosure</span></td></tr>
+            <tr><th scope="row">Sagittarius</th><td><span class="pending-disclosure" data-field="signs.sagittarius.supply">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.sagittarius.mintAuthority">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.sagittarius.freezeAuthority">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.sagittarius.topTenHolders">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.sagittarius.liquidity">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.sagittarius.bridge">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.sagittarius.treasury">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.sagittarius.continuity">Pending disclosure</span></td></tr>
+            <tr><th scope="row">Capricorn</th><td><span class="pending-disclosure" data-field="signs.capricorn.supply">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.capricorn.mintAuthority">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.capricorn.freezeAuthority">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.capricorn.topTenHolders">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.capricorn.liquidity">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.capricorn.bridge">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.capricorn.treasury">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.capricorn.continuity">Pending disclosure</span></td></tr>
+            <tr><th scope="row">Aquarius</th><td><span class="pending-disclosure" data-field="signs.aquarius.supply">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.aquarius.mintAuthority">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.aquarius.freezeAuthority">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.aquarius.topTenHolders">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.aquarius.liquidity">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.aquarius.bridge">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.aquarius.treasury">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.aquarius.continuity">Pending disclosure</span></td></tr>
+            <tr><th scope="row">Pisces</th><td><span class="pending-disclosure" data-field="signs.pisces.supply">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.pisces.mintAuthority">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.pisces.freezeAuthority">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.pisces.topTenHolders">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.pisces.liquidity">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.pisces.bridge">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.pisces.treasury">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.pisces.continuity">Pending disclosure</span></td></tr>
+            <tr class="disc__agg"><th scope="row">All twelve · aggregate</th><td><span class="pending-disclosure" data-field="aggregate.supply">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="aggregate.mintAuthority">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="aggregate.freezeAuthority">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="aggregate.topTenHolders">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="aggregate.liquidity">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="aggregate.bridge">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="aggregate.treasury">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="aggregate.continuity">Pending disclosure</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="disc-updated" data-disclosure-updated>Last updated: no disclosures published yet</p>
+          <ul class="disc-legend">
+            <li><strong>Supply</strong> — total and circulating, per sign</li>
+            <li><strong>Mint authority</strong> — status per sign (retained / renounced), address if retained</li>
+            <li><strong>Freeze authority</strong> — status per sign</li>
+            <li><strong>Holder concentration</strong> — top-10 wallet share per sign, dated</li>
+            <li><strong>Liquidity</strong> — venue, pool addresses, LP ownership and any locks</li>
+            <li><strong>Bridge</strong> — mechanism for Base representations, custody model, what fails if the bridge fails</li>
+            <li><strong>Treasury and insider holdings</strong> — project-controlled wallets, amounts, any lockups or vesting, disposal policy</li>
+            <li><strong>Registry continuity</strong> — governance of the record itself; what survives if the operating entity disappears (static registry file, forkable SDK, mirrored archive)</li>
+          </ul>
+          <div class="ednote">
+            <p>Where a number above is unflattering — concentration usually is, early — it is published anyway, with the plan beside it. A registry that redacts its own instrument has already answered the fifth objection in the wrong direction.</p>
+          </div>
         </section>
 
         <section class="mov reveal" id="the-slower-bet">
@@ -1463,6 +1542,62 @@
         host.querySelector('[data-pulse-src]').textContent = 'Source: Wikimedia · live';
         host.classList.add('is-live');
       }).catch(function () { /* snapshot remains */ });
+    })();
+
+    /* ── Disclosure surfaces — Sections V, VII, X ──
+       The page ships every field in its honest default state: an amber
+       "Pending disclosure" chip. These JSON files are the single source
+       the maintainer edits; whatever they contain is rendered verbatim —
+       a filled field shows its value, its as-of date, and a Verify link
+       when one is given. Nothing here invents a number.
+       PHASE 2: hydrate from @zodiacs/sdk — write these JSON files from
+       the SDK at build time; this render contract is unchanged. */
+    (function () {
+      if (!window.fetch) return;
+      function esc(v) {
+        return String(v).replace(/[&<>"]/g, function (c) {
+          return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
+        });
+      }
+      function fieldAt(data, path) {
+        var f = data;
+        var parts = path.split('.');
+        for (var i = 0; i < parts.length && f; i++) f = f[parts[i]];
+        return f && typeof f === 'object' ? f : null;
+      }
+      function render(el, f) {
+        if (!f || f.status === 'pending' || f.value == null) return null; // pending chip stands
+        var html = '<span class="disc-val">' + esc(f.value) + '</span>';
+        if (f.asOf) html += ' <span class="disc-asof">as of ' + esc(f.asOf) + '</span>';
+        if (f.verifyUrl) html += ' <a class="disc-verify" href="' + esc(f.verifyUrl) + '" rel="noopener noreferrer">Verify ↗</a>';
+        var out = document.createElement('span');
+        out.innerHTML = html;
+        el.replaceWith(out);
+        return f.asOf || null;
+      }
+      function hydrate(url, rootId, updatedSel) {
+        var root = document.getElementById(rootId);
+        if (!root) return;
+        fetch(url)
+          .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+          .then(function (data) {
+            var latest = null;
+            root.querySelectorAll('[data-field]').forEach(function (el) {
+              var asOf = render(el, fieldAt(data, el.getAttribute('data-field')));
+              if (asOf && (!latest || asOf > latest)) latest = asOf;
+            });
+            root.querySelectorAll('[data-asof-field]').forEach(function (el) {
+              var f = fieldAt(data, el.getAttribute('data-asof-field'));
+              if (f && f.asOf) el.textContent = f.asOf;
+            });
+            var up = updatedSel && root.querySelector(updatedSel);
+            if (up) up.textContent = 'Last updated: ' + (latest || 'no disclosures published yet');
+          })
+          .catch(function () { /* the static pending state stands */ });
+      }
+      hydrate('/thesis/thesis-disclosure.json', 'the-instrument', '[data-disclosure-updated]');
+      hydrate('/thesis/thesis-candidacy.json', 'the-candidacy', null);
+      hydrate('/thesis/thesis-test.json', 'the-test', null);
     })();
   </script>
   <svg class="glass-defs" aria-hidden="true" focusable="false">
