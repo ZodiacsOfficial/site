@@ -1729,11 +1729,6 @@
        the SDK at build time; this render contract is unchanged. */
     (function () {
       if (!window.fetch) return;
-      function esc(v) {
-        return String(v).replace(/[&<>"]/g, function (c) {
-          return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
-        });
-      }
       function fieldAt(data, path) {
         var f = data;
         var parts = path.split('.');
@@ -1742,11 +1737,25 @@
       }
       function render(el, f) {
         if (!f || f.status === 'pending' || f.value == null) return null; // pending chip stands
-        var html = '<span class="disc-val">' + esc(f.value) + '</span>';
-        if (f.asOf) html += ' <span class="disc-asof">as of ' + esc(f.asOf) + '</span>';
-        if (f.verifyUrl) html += ' <a class="disc-verify" href="' + esc(f.verifyUrl) + '" rel="noopener noreferrer">Verify ↗</a>';
         var out = document.createElement('span');
-        out.innerHTML = html;
+        var val = document.createElement('span');
+        val.className = 'disc-val';
+        val.textContent = String(f.value);
+        out.appendChild(val);
+        if (f.asOf) {
+          var when = document.createElement('span');
+          when.className = 'disc-asof';
+          when.textContent = ' as of ' + f.asOf;
+          out.appendChild(when);
+        }
+        if (f.verifyUrl) {
+          var verify = document.createElement('a');
+          verify.className = 'disc-verify';
+          verify.href = String(f.verifyUrl);
+          verify.rel = 'noopener noreferrer';
+          verify.textContent = ' Verify \u2197';
+          out.appendChild(verify);
+        }
         el.replaceWith(out);
         return f.asOf || null;
       }
