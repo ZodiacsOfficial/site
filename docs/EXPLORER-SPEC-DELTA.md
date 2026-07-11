@@ -210,3 +210,41 @@ dots on a 730-day rail. Each marker is a real button (jump + focus); the
 serializes the same slow set client-side via the engine-free `ical.ts` —
 no birth data in the file. `applyingBefore` is not surfaced (constant-true
 as currently defined — flagged upstream for redefinition or removal).
+
+---
+
+# The Relationship Wheel — the synastry bi-wheel (T-28, `/compatibility/`)
+
+Two people's charts on one wheel: one person is the inner natal wheel, the
+other rides the outer ring, and the cross-chart aspects draw as chords
+between the rings. The second ring the Transit Ring built is reused whole.
+
+## 19. Decisions
+
+- **The overlay renderer is shared, parameterized by visual grammar.**
+  `renderTransitOverlay` gained `{dashedMarkers}` — dashed marks read as the
+  moving sky (ephemeral), solid marks read as a fixed natal chart (a person).
+  Both consumers are lazy chunks; the shared module costs the pages nothing.
+- **The module owns the result body.** Like TransitRing, the lazy
+  `RelationshipWheel` renders wheel + focus block + tally + contact rows +
+  element balances; the host keeps the forms, person cards, pairing CTA, and
+  invite link. Keyed per compare so swap/focus state never survives a new
+  pair.
+- **Swap-who's-inside** is render-level state: focus ids are canonical
+  (A-first) and reoriented for the overlay, so the swap costs one bool and a
+  map — no recompute.
+- **All chords draw** (orb-weighted, like the natal wheel's own aspects);
+  the top-8 rows and chord taps share one focus. The EN-only `synastryLine`
+  sentences are gated off ES surfaces (tour precedent, master-plan P10) —
+  receipts are fully localized.
+- **Saved charts without a stored place** draw without house spokes (their
+  summaries carry no cusps); retrograde marks come from the summary flags.
+- No visual baseline for `/compatibility/` (result depends on runtime input);
+  the committed `tests/relationship-wheel-drive.mjs` (11 assertions) covers
+  both rings, chords, focus, swap, and mobile.
+
+## Budget actuals (Relationship Wheel)
+
+`/compatibility/` 32.9 KB gz of a new 35 budget; the wheel module is a
+2.0 KB lazy chunk excluded from the closure. Flagship budgets untouched;
+wheel serialization untouched. Zero new dependencies.

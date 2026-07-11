@@ -775,6 +775,20 @@
 }
 .tring__cal-note { font-size: 11px; letter-spacing: 0.05em; color: var(--faint); }
 
+/* ── The Relationship Wheel — two charts, one bi-wheel (/compatibility/) ──
+   Reuses the transit ring's focus/row/caption grammar; only the swap row is
+   its own. */
+.rwheel { display: grid; gap: 16px; }
+.rwheel__controls {
+  display: flex;
+  justify-content: center;
+}
+.rwheel__hint {
+  text-align: center;
+  max-width: 52ch;
+  margin: 0 auto;
+}
+
 /* The transit markers on the outer ring fade/settle with the same restraint
    as the inner wheel; motion is JS-driven (rAF) and already reduced-aware. */
 @media (prefers-reduced-motion: reduce) {
