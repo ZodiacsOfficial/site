@@ -83,3 +83,9 @@ Aries rising-profile copy. The refresh also catches the Darwin baselines up
 to already-merged main behavior that they had not recorded: the dated
 SkyTicker receipt, Chart Explorer/tour controls, and the editorial line.
 No unrelated product code was changed for that catch-up.
+
+The first Linux CI run isolated six expected product diffs: the three
+homepage captures record the new eclipse and birthday links, and the three
+Aries captures record the direct rising-profile link. Those six baselines
+were refreshed from the uploaded CI actuals. All three Linux birth-chart
+captures already passed and were deliberately left untouched.
