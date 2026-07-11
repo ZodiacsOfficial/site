@@ -9,7 +9,7 @@ import { BirthFields } from './BirthFields';
 import { CopyLinkButton, type CopyLinkState } from './CopyLinkButton';
 import SignChip from './SignChip';
 import { resolveSavedChart } from '../lib/profile/resolve';
-import { MAX_PAIRS, deletePair, hasPair, loadPairs, prunePairs, savePair } from '../lib/profile/pairs';
+import { MAX_PAIRS, deletePair, hasPair, loadPairs, pairSideLabels, prunePairs, savePair } from '../lib/profile/pairs';
 import type { SavedPair, SavedPairSide } from '../lib/profile/pairs';
 import type { SavedChart } from '../lib/profile/schema';
 import { summarizePair } from '../lib/engine/synastry';
@@ -300,20 +300,28 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
   useEffect(() => {
     if (!profileReady || profileLinksReadRef.current) return;
     profileLinksReadRef.current = true;
-    // ?a=&b= deep link: preselect saved charts by their device-local ids.
     const params = new URLSearchParams(window.location.search);
-    const idA = params.get('a');
-    const idB = params.get('b');
-    let linked = 0;
-    if (idA && profile.charts.some((c) => c.id === idA)) {
-      setSlotA((s) => ({ ...s, source: 'saved', savedId: idA }));
-      linked += 1;
+    // ?pair= deep link (the profile page's saved-comparisons strip):
+    // restore the stored pair and compare. Same-device ids, like ?a=&b=.
+    const pairId = params.get('pair');
+    const storedPair = pairId ? loadPairs().find((p) => p.id === pairId) : undefined;
+    if (storedPair && sideRestorable(storedPair.a) && sideRestorable(storedPair.b)) {
+      restorePair(storedPair);
+    } else {
+      // ?a=&b= deep link: preselect saved charts by their device-local ids.
+      const idA = params.get('a');
+      const idB = params.get('b');
+      let linked = 0;
+      if (idA && profile.charts.some((c) => c.id === idA)) {
+        setSlotA((s) => ({ ...s, source: 'saved', savedId: idA }));
+        linked += 1;
+      }
+      if (idB && profile.charts.some((c) => c.id === idB)) {
+        setSlotB((s) => ({ ...s, source: 'saved', savedId: idB }));
+        linked += 1;
+      }
+      if (linked === 2) setAutoRan(true);
     }
-    if (idB && profile.charts.some((c) => c.id === idB)) {
-      setSlotB((s) => ({ ...s, source: 'saved', savedId: idB }));
-      linked += 1;
-    }
-    if (linked === 2) setAutoRan(true);
     // #a= fragment: a chart shared from another device rides in the URL
     // itself. It fills Person A; the fragment is then stripped so the
     // birth details don't linger in the bar.
@@ -513,17 +521,12 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
   const sideRestorable = (side: SavedPairSide) =>
     side.kind === 'input' || charts.some((c) => c.id === side.chartId);
   const visiblePairs = pairs.filter((pair) => sideRestorable(pair.a) && sideRestorable(pair.b));
-  const pairLabels = (pair: SavedPair) => [pair.a, pair.b].map((side) => (
-    side.kind === 'chart'
-      ? handleOf(charts.find((c) => c.id === side.chartId)?.name ?? side.label)
-      : side.label
-  ));
-  const pairName = (pair: SavedPair) => pairLabels(pair).join(' × ');
+  const pairName = (pair: SavedPair) => pairSideLabels(pair, charts).join(' × ');
   // Accessible names spell the glyph out: "Frida and Diego", not
   // "Frida multiplication sign Diego".
   const pairSpokenName = (pair: SavedPair) => new Intl.ListFormat(intlLocale(locale), {
     style: 'long', type: 'conjunction',
-  }).format(pairLabels(pair));
+  }).format(pairSideLabels(pair, charts));
 
   async function compare(e?: Event) {
     e?.preventDefault();

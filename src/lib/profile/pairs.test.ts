@@ -5,6 +5,7 @@ import {
   PAIRS_KEY,
   deletePair,
   loadPairs,
+  pairSideLabels,
   prunePairs,
   savePair,
 } from './pairs';
@@ -137,6 +138,14 @@ describe('prunePairs', () => {
     prunePairs(new Set(['diego']));
     expect(storage.getItem(PAIRS_KEY)).toBe(before);
     expect((window.dispatchEvent as ReturnType<typeof vi.fn>).mock.calls.length).toBe(dispatches);
+  });
+});
+
+describe('pairSideLabels', () => {
+  it('reads live chart names, trims handles, and falls back to stored labels', () => {
+    const p = pair('p', chartSide('frida', 'Old label'), inputSide({}, 'Guest'));
+    expect(pairSideLabels(p, [{ id: 'frida', name: 'Cancer Sun · 1907-07-06' }])).toEqual(['Cancer Sun', 'Guest']);
+    expect(pairSideLabels(p, [])).toEqual(['Old label', 'Guest']);
   });
 });
 
