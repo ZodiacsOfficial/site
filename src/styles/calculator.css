@@ -392,6 +392,68 @@
 .calc__result { display: grid; gap: clamp(18px, 3vw, 28px); scroll-margin-top: calc(80px + env(safe-area-inset-top)); }
 
 /* ── Synastry ─────────────────────────────────────────────────────── */
+/* minmax(0,1fr) columns (the .syn__slots trick): a nowrap chip must not
+   set the min-content of the whole form — long names ellipsize in place. */
+.syn__pairs {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 10px;
+  padding-bottom: 4px;
+  min-width: 0;
+}
+@media (min-width: 560px) {
+  .syn__pairs { grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 10px 14px; }
+}
+.syn__pairs-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  min-width: 0;
+  max-width: 100%;
+}
+.syn__pair {
+  display: inline-flex;
+  align-items: stretch;
+  border: 1px solid var(--hair-1);
+  border-radius: 999px;
+  overflow: hidden;
+  max-width: 100%;
+  min-width: 0;
+}
+/* Long names ellipsize inside the pill — never past the card edge
+   (the .place__chip-value recipe; renamed charts have no length cap). */
+.syn__pair-restore {
+  appearance: none;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-size: 13px;
+  color: var(--text-2);
+  padding: 7px 4px 7px 14px;
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
+.syn__pair-restore:hover { color: var(--text); }
+.syn__pair-remove {
+  appearance: none;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-size: 14px;
+  line-height: 1;
+  color: var(--faint);
+  padding: 7px 14px 7px 10px;
+  cursor: pointer;
+  flex: none;
+}
+.syn__pair-remove:hover { color: var(--text); }
+
 .syn__slots {
   display: grid;
   gap: clamp(20px, 4vw, 32px);

@@ -9,6 +9,8 @@ import { BirthFields } from './BirthFields';
 import { CopyLinkButton, type CopyLinkState } from './CopyLinkButton';
 import SignChip from './SignChip';
 import { resolveSavedChart } from '../lib/profile/resolve';
+import { MAX_PAIRS, deletePair, hasPair, loadPairs, prunePairs, savePair } from '../lib/profile/pairs';
+import type { SavedPair, SavedPairSide } from '../lib/profile/pairs';
 import type { SavedChart } from '../lib/profile/schema';
 import { summarizePair } from '../lib/engine/synastry';
 import type { MinimalBody, PairSummary } from '../lib/engine/synastry';
@@ -31,8 +33,10 @@ interface SlotState {
   time: string;
   timeKnown: boolean;
   city: City | null;
-  /** Chart that arrived in the URL fragment — locked, clearable. */
-  link: { input: ShareChartInput; label: string } | null;
+  /** Chart carried by value — locked, clearable. `received` means it
+   *  arrived in someone else's invite link (never re-shared); without it
+   *  the side was restored from a saved comparison. */
+  link: { input: ShareChartInput; label: string; received?: boolean } | null;
 }
 
 interface Person {
@@ -54,6 +58,39 @@ type WheelModule = typeof import('./synastry/RelationshipWheel');
 const emptySlot = (): SlotState => ({
   source: 'form', savedId: '', name: '', date: '', time: '', timeKnown: true, city: null, link: null,
 });
+
+// Saved-comparison strings stay module-local (the RelationshipWheel COPY
+// precedent): only this island uses them, and the central UI dictionary
+// rides in every island page's closure — the flagship shouldn't pay for
+// compatibility-only chrome.
+const PAIR_COPY_EN = {
+  savedPairs: 'Saved comparisons',
+  savePair: 'Save this comparison',
+  pairSaved: 'Comparison saved on this device.',
+  pairExists: 'Already saved.',
+  pairSaveFull: 'You can save up to {n} comparisons — remove one first.',
+  pairRemoved: 'Comparison removed.',
+  savedComparisonSide: 'from a saved comparison',
+  restoredSideHelp: 'This side came from a saved comparison — clear it to enter someone else.',
+} as const;
+
+const PAIR_COPY = {
+  en: PAIR_COPY_EN,
+  es: {
+    savedPairs: 'Comparaciones guardadas',
+    savePair: 'Guardar esta comparación',
+    pairSaved: 'Comparación guardada en este dispositivo.',
+    pairExists: 'Ya está guardada.',
+    pairSaveFull: 'Puedes guardar hasta {n} comparaciones — elimina una primero.',
+    pairRemoved: 'Comparación eliminada.',
+    savedComparisonSide: 'de una comparación guardada',
+    restoredSideHelp: 'Este lado viene de una comparación guardada — bórralo para ingresar a otra persona.',
+  },
+} as const satisfies Record<Locale, Record<keyof typeof PAIR_COPY_EN, string>>;
+
+const pc = (locale: Locale, key: keyof typeof PAIR_COPY_EN) => PAIR_COPY[locale][key];
+const pcf = (locale: Locale, key: keyof typeof PAIR_COPY_EN, values: Record<string, string | number>) =>
+  pc(locale, key).replace(/\{(\w+)\}/g, (_, k: string) => String(values[k] ?? ''));
 
 /** Short handle for sentences: chart names like "Cancer Sun · 1990-02-01" trim to "Cancer Sun". */
 const handleOf = (name: string) => name.split('·')[0].trim() || name;
@@ -142,6 +179,7 @@ function SlotForm({
   loadEngine: EngineLoader;
 }) {
   if (slot.source === 'link' && slot.link) {
+    const received = slot.link.received === true;
     return (
       <div class="syn__slot">
         <span class="mono--label">{fallbackLabel}</span>
@@ -150,14 +188,14 @@ function SlotForm({
           <span class="place__chip">
             <input
               id={`${idPrefix}-linked`} class="place__chip-value" type="text" readOnly
-              value={`${slot.link.label} · ${t(locale, 'sharedWithYou')}`}
+              value={`${slot.link.label} · ${received ? t(locale, 'sharedWithYou') : pc(locale, 'savedComparisonSide')}`}
             />
             <button
               type="button" class="place__clear" aria-label={t(locale, 'removeSharedChart')}
               onClick={() => setSlot(() => emptySlot())}
             >×</button>
           </span>
-          <p class="field__help">{t(locale, 'sharedSideHelp')}</p>
+          <p class="field__help">{received ? t(locale, 'sharedSideHelp') : pc(locale, 'restoredSideHelp')}</p>
         </div>
       </div>
     );
@@ -239,13 +277,21 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
   const { profile, ready: profileReady } = useProfile();
   const [slotA, setSlotA] = useState<SlotState>(emptySlot());
   const [slotB, setSlotB] = useState<SlotState>(emptySlot());
-  const [result, setResult] = useState<{ a: Person; b: Person; summary: PairSummary; at: number } | null>(null);
+  const [result, setResult] = useState<{
+    a: Person; b: Person; summary: PairSummary; at: number;
+    sides: [SavedPairSide | null, SavedPairSide | null];
+  } | null>(null);
   const [wheelMod, setWheelMod] = useState<WheelModule | null>(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
   const [autoRan, setAutoRan] = useState(false);
   const [invite, setInvite] = useState<ShareChartInput | null>(null);
   const [inviteState, setInviteState] = useState<CopyLinkState>('idle');
+  const [pairs, setPairs] = useState<SavedPair[]>([]);
+  const [pairSave, setPairSave] = useState<'idle' | 'saved' | 'exists' | 'full' | 'error'>('idle');
+  const [pairAnnounce, setPairAnnounce] = useState('');
+  const [restoreTick, setRestoreTick] = useState(0);
+  const compareInFlightRef = useRef(false);
   const resultHeadingRef = useRef<HTMLHeadingElement>(null);
   const errorRef = useRef<HTMLParagraphElement>(null);
   const focusAfterComputeRef = useRef(false);
@@ -278,12 +324,48 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
         setSlotA({
           ...emptySlot(),
           source: 'link',
-          link: { input: decoded, label: decoded.name ?? t(locale, 'sharedChart') },
+          link: { input: decoded, label: decoded.name ?? t(locale, 'sharedChart'), received: true },
         });
         history.replaceState(null, '', window.location.pathname + window.location.search);
       }
     }
   }, [profileReady, profile, locale]);
+
+  // Saved comparisons live beside the profile; every same-page write
+  // (save, remove, prune) re-arrives through the zodiacs:pairs event so
+  // one listener keeps the strip current.
+  useEffect(() => {
+    setPairs(loadPairs());
+    const onPairs = (e: Event) => setPairs((e as CustomEvent<SavedPair[]>).detail);
+    window.addEventListener('zodiacs:pairs', onPairs);
+    return () => window.removeEventListener('zodiacs:pairs', onPairs);
+  }, []);
+
+  // Pairs are only read here, so this is where orphans get cleaned up:
+  // once the chart list is live, drop pairs whose saved chart is gone
+  // (deleted on /profile/, or removed by a remote sync merge). A no-op
+  // prune writes and dispatches nothing. An EMPTY chart list is never
+  // pruned against — `ready` means "load attempted", and a corrupt or
+  // version-skewed profile key also reads as empty; orphans there stay
+  // hidden by the render filter instead of being destroyed.
+  useEffect(() => {
+    if (!profileReady || profile.charts.length === 0) return;
+    prunePairs(new Set(profile.charts.map((c) => c.id)));
+  }, [profileReady, profile]);
+
+  // The save state describes a stored pair; keep it honest when the
+  // store changes underneath it (the just-saved pair removed → the
+  // button must offer saving again; a slot freed → the full alert is
+  // stale).
+  useEffect(() => {
+    if (pairSave === 'idle' || pairSave === 'error') return;
+    if (pairSave === 'full') {
+      if (pairs.length < MAX_PAIRS) setPairSave('idle');
+      return;
+    }
+    const [a, b] = result?.sides ?? [null, null];
+    if (a && b && !hasPair(pairs, a, b)) setPairSave('idle');
+  }, [pairs]);
 
   const charts = profile.charts;
 
@@ -300,8 +382,11 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
 
   // Only the inviter's own side rides in an invite link — a chart that
   // itself arrived by link is someone else's data and never re-shared.
+  // A side restored from a saved comparison is this device's own data.
   function inviteFromSlot(slot: SlotState): ShareChartInput | null {
-    if (slot.source === 'link') return null;
+    if (slot.source === 'link') {
+      return slot.link && slot.link.received !== true ? slot.link.input : null;
+    }
     if (slot.source === 'saved') {
       const c = charts.find((x) => x.id === slot.savedId);
       if (!c || !c.birth.place) return null;
@@ -335,9 +420,118 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
   const inviteUrl = () =>
     `${window.location.origin}${localizePath(locale, '/compatibility/')}#a=${encodeChartLink(invite!)}`;
 
+  const track = (name: string, props: Record<string, string> = {}) => {
+    (window as unknown as {
+      zodiacsAnalytics?: { track?: (n: string, p: Record<string, string>) => void };
+    }).zodiacsAnalytics?.track?.(name, props);
+  };
+
+  /** Snapshot one slot as a storable pair side — a saved chart by
+   *  reference (renames flow through), everything else by value. */
+  function sideFromSlot(slot: SlotState, label: string): SavedPairSide | null {
+    if (slot.source === 'saved') {
+      const c = charts.find((x) => x.id === slot.savedId);
+      if (!c) return null;
+      // The birth key lets this person dedupe against a by-value save of
+      // the same birth data (e.g. they first arrived in an invite link).
+      const birthKey = c.birth.place
+        ? `${c.birth.date}|${c.birth.time ?? ''}|${c.birth.place.lat}|${c.birth.place.lon}`
+        : undefined;
+      return { kind: 'chart', chartId: c.id, label, ...(birthKey ? { birthKey } : {}) };
+    }
+    if (slot.source === 'link') {
+      return slot.link
+        ? { kind: 'input', input: slot.link.input, label, ...(slot.link.received ? { received: true } : {}) }
+        : null;
+    }
+    if (slot.date === '' || slot.city === null) return null;
+    const timeKnown = slot.timeKnown && slot.time !== '';
+    return {
+      kind: 'input',
+      input: {
+        date: slot.date,
+        time: timeKnown ? slot.time : null,
+        timeKnown,
+        lat: slot.city.lat,
+        lon: slot.city.lon,
+        tz: slot.city.tz,
+        name: slot.name.trim() || undefined,
+        place: slot.city.name,
+        houseSystem: 'whole',
+      },
+      label,
+    };
+  }
+
+  function onSavePair() {
+    if (!result || !result.sides[0] || !result.sides[1]) return;
+    const outcome = savePair({
+      id: crypto.randomUUID(),
+      createdAt: new Date().toISOString(),
+      a: result.sides[0],
+      b: result.sides[1],
+    });
+    setPairSave(outcome);
+    if (outcome === 'saved' || outcome === 'exists') {
+      setPairAnnounce(pc(locale, outcome === 'saved' ? 'pairSaved' : 'pairExists'));
+    }
+    if (outcome === 'saved') track('chart_save', { source: 'pair' });
+  }
+
+  function onRemovePair(pair: SavedPair, index: number) {
+    if (!deletePair(pair.id)) {
+      setPairAnnounce(t(locale, 'chartSaveError'));
+      return;
+    }
+    setPairAnnounce(pc(locale, 'pairRemoved'));
+    // The button under the pointer/cursor just unmounted — hand focus to
+    // the nearest surviving chip, else back into the form.
+    requestAnimationFrame(() => {
+      const chips = document.querySelectorAll<HTMLElement>('.syn__pair-restore');
+      const next = chips[Math.min(index, chips.length - 1)]
+        ?? document.getElementById('syn-a-source')
+        ?? document.getElementById('syn-a-name');
+      next?.focus();
+    });
+  }
+
+  function restorePair(pair: SavedPair) {
+    const toSlot = (side: SavedPairSide): SlotState => (side.kind === 'chart'
+      ? { ...emptySlot(), source: 'saved', savedId: side.chartId }
+      : {
+        ...emptySlot(),
+        source: 'link',
+        link: { input: side.input, label: side.label, received: side.received },
+      });
+    setSlotA(toSlot(pair.a));
+    setSlotB(toSlot(pair.b));
+    setRestoreTick((n) => n + 1);
+  }
+
+  // A pair is only offered when both sides can still resolve — a chart
+  // side whose saved chart is gone (mid-sync) would just error.
+  const sideRestorable = (side: SavedPairSide) =>
+    side.kind === 'input' || charts.some((c) => c.id === side.chartId);
+  const visiblePairs = pairs.filter((pair) => sideRestorable(pair.a) && sideRestorable(pair.b));
+  const pairLabels = (pair: SavedPair) => [pair.a, pair.b].map((side) => (
+    side.kind === 'chart'
+      ? handleOf(charts.find((c) => c.id === side.chartId)?.name ?? side.label)
+      : side.label
+  ));
+  const pairName = (pair: SavedPair) => pairLabels(pair).join(' × ');
+  // Accessible names spell the glyph out: "Frida and Diego", not
+  // "Frida multiplication sign Diego".
+  const pairSpokenName = (pair: SavedPair) => new Intl.ListFormat(intlLocale(locale), {
+    style: 'long', type: 'conjunction',
+  }).format(pairLabels(pair));
+
   async function compare(e?: Event) {
     e?.preventDefault();
+    // Ref, not state: two effects in one commit share the same stale
+    // `busy` closure, so state can't gate re-entry.
+    if (compareInFlightRef.current) return;
     if (!slotReady(slotA) || !slotReady(slotB) || sameSaved) return;
+    compareInFlightRef.current = true;
     focusAfterComputeRef.current = e !== undefined;
     setBusy(true);
     setError('');
@@ -353,13 +547,19 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
       ]);
       const summary = summarizePair(a.bodies, b.bodies, 8);
       setWheelMod(mod);
-      setResult({ a, b, summary, at: Date.now() });
+      setResult({
+        a, b, summary, at: Date.now(),
+        sides: [sideFromSlot(slotA, a.label), sideFromSlot(slotB, b.label)],
+      });
       setInvite(inviteFromSlot(slotA));
       setInviteState('idle');
+      setPairSave('idle');
+      setPairAnnounce(''); // same-text re-announcements need a mutation
     } catch (err) {
       setError(t(locale, 'compareError'));
       console.error(err);
     } finally {
+      compareInFlightRef.current = false;
       setBusy(false);
     }
   }
@@ -370,6 +570,19 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
       compare();
     }
   }, [autoRan, profile, slotA, slotB]);
+
+  // A restored comparison compares itself once the slots have settled.
+  // The synthetic event marks the compute user-initiated, so focus moves
+  // to the result like any pressed Compare. The tick is consumed on the
+  // first non-busy evaluation whether or not it fires — a restore whose
+  // slots were edited away must not ambush a later hand-filled form.
+  useEffect(() => {
+    if (restoreTick === 0 || busy) return;
+    setRestoreTick(0);
+    if (slotReady(slotA) && slotReady(slotB)) {
+      compare(new Event('zodiacs:restore'));
+    }
+  }, [restoreTick, slotA, slotB, busy]);
 
   useEffect(() => {
     if (busy || !focusAfterComputeRef.current) return;
@@ -398,6 +611,38 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
     <div class="calc">
       <form class="calc__form shell" onSubmit={compare} aria-busy={busy}>
         <div class="core calc__core">
+          {/* Always mounted: role=status nodes inserted together with
+              their text are routinely missed by VoiceOver — the region
+              must pre-exist (the ChartCalculator announcer pattern). */}
+          <p class="sr-only" role="status">{pairAnnounce}</p>
+          {visiblePairs.length > 0 && (
+            <div class="syn__pairs">
+              <span class="mono--label" id="syn-pairs-label">{pc(locale, 'savedPairs')}</span>
+              {/* Explicit role: list-style:none strips list semantics in
+                  Safari/VoiceOver. */}
+              <ul class="syn__pairs-list" role="list" aria-labelledby="syn-pairs-label">
+                {visiblePairs.map((pair, index) => {
+                  const spoken = pairSpokenName(pair);
+                  return (
+                    <li key={pair.id} class="syn__pair">
+                      <button
+                        type="button" class="syn__pair-restore"
+                        aria-label={`${t(locale, 'compareCharts')}: ${spoken}`}
+                        onClick={() => restorePair(pair)}
+                      >
+                        {pairName(pair)}
+                      </button>
+                      <button
+                        type="button" class="syn__pair-remove"
+                        aria-label={`${t(locale, 'remove')}: ${spoken}`}
+                        onClick={() => onRemovePair(pair, index)}
+                      >×</button>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          )}
           <div class="syn__slots">
             <SlotForm slot={slotA} setSlot={(u) => setSlotA(u)} charts={charts} idPrefix="syn-a" fallbackLabel={t(locale, 'personA')} locale={locale} loadEngine={loadEngine} />
             <SlotForm slot={slotB} setSlot={(u) => setSlotB(u)} charts={charts} idPrefix="syn-b" fallbackLabel={t(locale, 'personB')} locale={locale} loadEngine={loadEngine} />
@@ -464,12 +709,37 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
             />
           )}
 
-          {pairHref && (
+          {(pairHref || (result.sides[0] && result.sides[1])) && (
             <div class="calc__actions">
-              <a class="btn btn--ghost" href={pairHref.href}>
-                <span>{tf(locale, 'pairingCta', { a: pairHref.a, b: pairHref.b })}</span><span class="orb">→</span>
-              </a>
+              {pairHref && (
+                <a class="btn btn--ghost" href={pairHref.href}>
+                  <span>{tf(locale, 'pairingCta', { a: pairHref.a, b: pairHref.b })}</span><span class="orb">→</span>
+                </a>
+              )}
+              {result.sides[0] && result.sides[1] && (
+                <button
+                  type="button" class="btn btn--ghost" data-save-pair onClick={onSavePair}
+                  disabled={pairSave === 'saved' || pairSave === 'exists'}
+                >
+                  <span>
+                    {pairSave === 'saved' || pairSave === 'exists'
+                      ? t(locale, 'chartSavedDevice')
+                      : pc(locale, 'savePair')}
+                  </span>
+                  <span class="orb">{pairSave === 'saved' || pairSave === 'exists' ? '✓' : '+'}</span>
+                </button>
+              )}
             </div>
+          )}
+          {/* Announcement rides the persistent status node above; these
+              visible notes are for sighted users (alerts announce fine
+              on insertion). */}
+          {pairSave !== 'idle' && (
+            pairSave === 'saved' || pairSave === 'exists'
+              ? <p class="calc__share-note" data-pair-status>{pc(locale, pairSave === 'saved' ? 'pairSaved' : 'pairExists')}</p>
+              : pairSave === 'full'
+                ? <p class="calc__error" role="alert" data-pair-status>{pcf(locale, 'pairSaveFull', { n: MAX_PAIRS })}</p>
+                : <p class="calc__error" role="alert" data-pair-status>{t(locale, 'chartSaveError')}</p>
           )}
 
           {/* Invite: A's side rides in the link; B fills their own */}

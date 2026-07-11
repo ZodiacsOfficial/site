@@ -291,3 +291,84 @@ Zero closure impact anywhere: `/` 40.7/42, `/birth-chart/` 50.8/51.5,
 `/aries/` 0.0/0 all unchanged — the loader inlines, the dialog is a
 post-build bundle outside every closure. `search_open` / `search_go{kind}`
 join the analytics allowlist.
+
+---
+
+# Save a comparison — saved pairs on `/compatibility/`
+
+The relationship loop leaked: a comparison vanished on reload and had to be
+rebuilt from scratch. Now a computed comparison saves in one tap and comes
+back in one tap.
+
+## 21. Decisions
+
+- **A sibling store, not a `Profile` field.** `zodiacs.pairs.v1`
+  (`src/lib/profile/pairs.ts`, cap 12, newest first, `zodiacs:pairs`
+  event on write — the profile-store conventions). The schema header
+  warns against casual `Profile` shape changes, and the cloud sync
+  selects specific fields — a sibling key is non-breaking by
+  construction. Pairs are device-local; they don't ride the sync.
+- **A side is a reference where possible, a value where necessary.**
+  A saved chart is stored by id — renames flow through, and the pair
+  dies with the chart. Form-entered and link-received sides inline the
+  same `ShareChartInput` the invite links use. Dedupe is
+  order-insensitive (A×B is B×A) on chart ids / birth inputs, not labels.
+- **Pruning lives where pairs are read.** The first cut pruned orphaned
+  pairs from `deleteChart`/`replaceProfile` (the year-ahead-cache rule) —
+  and pushed `pairs.ts` into every page that touches the profile store
+  (`/birth-chart/` 51.6 over its 51.5). Pairs are only read on
+  `/compatibility/`, so the island prunes against the live chart list
+  once the profile is ready instead; the store never imports the module.
+- **Restore rides the existing machinery.** Chart sides restore as the
+  saved-chart select; inline sides restore as the locked chip the invite
+  links use, marked `received` only when the input actually arrived in
+  someone else's link — a received side is still never re-shared, but a
+  restored own side keeps its invite button, and the chip says "from a
+  saved comparison", not "shared with you". The compare re-runs through
+  a one-shot effect once the slots settle, synthetic-event-marked as
+  user-initiated so focus lands on the result.
+- **Strings are module-local** (`PAIR_COPY`, the RelationshipWheel
+  precedent): the central UI dictionary rides in every island page's
+  closure, and the flagship shouldn't pay for compatibility-only chrome.
+  Moving 7 keys out of the dictionary took `/birth-chart/` from 51.3
+  back to 51.1.
+- `chart_save{source:'pair'}` reuses the existing allowlisted event —
+  no Base.astro change.
+
+## 22. Review pass (two independent adversarial reads, pre-merge)
+
+Confirmed and fixed: long-name chips overflowing narrow screens (renamed
+charts have no length cap — the `.place__chip-value` ellipsis recipe,
+drive-asserted at 320px); a stranded restore tick that could fire an
+unrequested compare minutes later (the tick is now consumed on first
+non-busy evaluation, fire or not); no re-entry guard on `compare()` (two
+same-commit effects share one stale `busy` closure — a ref now gates);
+the same person saved once by reference and once by value escaping
+dedupe (chart sides carry a `birthKey`); pruning against a corrupt or
+version-skewed profile read (an empty chart list is never pruned
+against); one malformed stored pair crashing the island render
+(`loadPairs` validates every element — the decodeChartLink rule); the
+stale "saved" state after removing the just-saved pair (save state
+resets when the store changes underneath it, including a freed `full`
+alert); the conditionally-mounted `role="status"` announcement trap (a
+persistent sr-only announcer, the ChartCalculator pattern — removals
+announce too); focus dropped to `<body>` after removing a chip (hands to
+the nearest surviving chip, else the form); missing `role="list"`
+(Safari strips semantics on `list-style:none`); the disabled save
+button keeping its call-to-action label (swaps to the existing
+`chartSavedDevice`); gray focus rings (now the global accent ring); `×`
+read as "multiplication sign" (accessible names use `Intl.ListFormat`
+conjunctions with verbs). Known, accepted: true birth-twins dedupe to
+one pair; pairs referencing a deleted chart vanish without an
+explanatory notice (by design, §21).
+
+## Budget actuals (save a comparison)
+
+`/compatibility/` 34.9/35 (+2.0: store + strip + save UI + strings, all
+host-side — the strip must show before any compare, so it can't ride the
+lazy wheel chunk). `/birth-chart/` 51.1/51.5 and `/` 40.7/42 — the +0.3
+flagship drift is shared-chunk re-splitting, with zero pairs code in its
+closure (grep-verified against dist). All 9 visual baselines pass at
+0.0000% — the strip renders only when pairs exist. The committed drive
+grew 11 → 24 assertions (save, reload, one-tap restore, remove, inline
+restore, orphan prune, 320px long-name overflow, ES strip).
