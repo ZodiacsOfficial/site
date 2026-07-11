@@ -40,7 +40,7 @@ const jsonLd = [
     description: guide.description,
     url: `https://zodiacs.org/es/${sign.slug}/`,
     datePublished: '2026-07-07T03:45:11+07:00',
-    dateModified: '2026-07-07T03:45:11+07:00',
+    dateModified: '2026-07-11T00:00:00+07:00',
     author: EDITOR_AUTHOR,
     publisher: { '@id': 'https://zodiacs.org/#org' },
     mainEntityOfPage: { '@type': 'WebPage', '@id': `https://zodiacs.org/es/${sign.slug}/` },
@@ -102,6 +102,13 @@ const jsonLd = [
           <>
             <h2>{section.heading}</h2>
             {section.body.map((p) => <p>{p}</p>)}
+            {section.risingProfile && (
+              <p>
+                <a href={`/rising-sign/${sign.slug}/`} hreflang="en">
+                  Perfil completo de {signName(sign, 'es')} ascendente (en inglés) →
+                </a>
+              </p>
+            )}
           </>
         ))}
       </div>

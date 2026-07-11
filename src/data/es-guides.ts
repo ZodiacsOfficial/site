@@ -5,7 +5,7 @@ export interface SpanishGuide {
   title: string;
   description: string;
   intro: string[];
-  sections: { heading: string; body: string[] }[];
+  sections: { heading: string; body: string[]; risingProfile?: boolean }[];
   faq: { q: string; a: string }[];
 }
 
@@ -790,6 +790,7 @@ function expandedSections(profile: GuideDepth): SpanishGuide['sections'] {
     },
     {
       heading: `${profile.name} en tu carta natal`,
+      risingProfile: true,
       body: [
         `Tu signo solar es solo una parte. Con el Sol en ${profile.name}, aparece una ${profile.sun}. Con la Luna en ${profile.name}, la historia se vuelve una ${profile.moon}. Con el ascendente en ${profile.name}, el mundo suele encontrarse primero con una ${profile.rising}.`,
         `Venus y Marte cambian el tono de las relaciones. Venus en ${profile.name} habla de ${profile.venus}. Marte en ${profile.name} muestra ${profile.mars}. Estas colocaciones pueden explicar por qué alguien no se identifica con la descripción típica de su signo solar.`,
