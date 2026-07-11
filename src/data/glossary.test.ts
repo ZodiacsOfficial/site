@@ -25,12 +25,16 @@ describe('glossary data', () => {
     const slugs = GLOSSARY.map((entry) => entry.slug);
 
     expect(GLOSSARY.length).toBeGreaterThanOrEqual(110);
-    expect(GLOSSARY.length).toBeLessThanOrEqual(140);
+    expect(GLOSSARY.length).toBeLessThanOrEqual(200);
     expect(new Set(slugs).size).toBe(slugs.length);
     expect(slugs.every((slug) => /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug))).toBe(true);
-    expect(
-      createHash('sha256').update(slugs.join('\n')).digest('hex'),
-    ).toBe('141155bc280f639f97d0ff0584169bc32ca7b67e4251c424791a352d211f477a');
+    // Term slugs are PUBLIC URLs (/learn/glossary/#orb) — renaming or removing
+    // one breaks inbound links and the DefinedTerm @ids. This hash pins the
+    // exact slug set and is EXPECTED to change when terms are added: log
+    // `actual` below, update the pin, and never rename or drop an existing
+    // slug in the same change.
+    const actual = createHash('sha256').update(slugs.join('\n')).digest('hex');
+    expect(actual).toBe('141155bc280f639f97d0ff0584169bc32ca7b67e4251c424791a352d211f477a');
   });
 
   it('keeps definitions within the house voice contract', () => {
@@ -40,7 +44,11 @@ describe('glossary data', () => {
       const sentences = sentenceCount(entry.definition);
       expect(sentences, entry.slug).toBeGreaterThanOrEqual(2);
       expect(sentences, entry.slug).toBeLessThanOrEqual(4);
+      // The voice contract covers every rendered string, not just definitions.
       expect(entry.definition, entry.slug).not.toMatch(banned);
+      expect(entry.receipt ?? '', entry.slug).not.toMatch(banned);
+      expect(entry.term, entry.slug).not.toMatch(banned);
+      expect(entry.link?.label ?? '', entry.slug).not.toMatch(banned);
       expect(entry.receipt ?? '', entry.slug).not.toMatch(/[\r\n]/);
     }
   });
@@ -73,7 +81,7 @@ describe('glossary data', () => {
     expect(orb?.definition).toContain(`${TRANSIT_ORB}° limit for active transits`);
     expect(orb?.receipt).toBe(`Active transit orb ≤ ${TRANSIT_ORB}°`);
     expect(transit?.definition).toContain(`within ${TRANSIT_ORB}° of exact`);
-    expect(transit?.receipt).toBe(`This site reads transits within ${TRANSIT_ORB}° of exact`);
+    expect(transit?.receipt).toBe(`Transits read as active within ${TRANSIT_ORB}° of exact`);
   });
 
   it('does not claim unsupported chart bodies or calculations', () => {

@@ -88,25 +88,25 @@ const terms: GlossaryTerm[] = [
   {
     slug: 'fire',
     term: 'Fire',
-    definition: 'Fire is the element assigned to Aries, Leo, and Sagittarius. In this site’s interpretive register, it describes emphasis on initiative, expression, and conviction rather than a physical substance.',
+    definition: 'Fire is the element assigned to Aries, Leo, and Sagittarius. In this site’s readings, it describes emphasis on initiative, expression, and conviction rather than a physical substance.',
     related: ['aries', 'leo', 'sagittarius', 'element'],
   },
   {
     slug: 'earth',
     term: 'Earth',
-    definition: 'Earth is the element assigned to Taurus, Virgo, and Capricorn. In this site’s interpretive register, it describes emphasis on material conditions, maintenance, and practical results.',
+    definition: 'Earth is the element assigned to Taurus, Virgo, and Capricorn. In this site’s readings, it describes emphasis on material conditions, maintenance, and practical results.',
     related: ['taurus', 'virgo', 'capricorn', 'element'],
   },
   {
     slug: 'air',
     term: 'Air',
-    definition: 'Air is the element assigned to Gemini, Libra, and Aquarius. In this site’s interpretive register, it describes emphasis on language, exchange, and systems of thought.',
+    definition: 'Air is the element assigned to Gemini, Libra, and Aquarius. In this site’s readings, it describes emphasis on language, exchange, and systems of thought.',
     related: ['gemini', 'libra', 'aquarius', 'element'],
   },
   {
     slug: 'water',
     term: 'Water',
-    definition: 'Water is the element assigned to Cancer, Scorpio, and Pisces. In this site’s interpretive register, it describes emphasis on feeling, attachment, memory, and permeability.',
+    definition: 'Water is the element assigned to Cancer, Scorpio, and Pisces. In this site’s readings, it describes emphasis on feeling, attachment, memory, and permeability.',
     related: ['cancer', 'scorpio', 'pisces', 'element'],
   },
   {
@@ -852,7 +852,7 @@ const terms: GlossaryTerm[] = [
     slug: 'transit',
     term: 'Transit',
     definition: `A transit compares a moving sky position with a fixed point in a natal chart. This site counts an active transit when a major aspect is within ${TRANSIT_ORB}° of exact and can scan for the exact UTC contact.`,
-    receipt: `This site reads transits within ${TRANSIT_ORB}° of exact`,
+    receipt: `Transits read as active within ${TRANSIT_ORB}° of exact`,
     related: ['orb', 'exact-aspect', 'ingress', 'return'],
     link: { href: '/transits/', label: 'Track current transits' },
   },

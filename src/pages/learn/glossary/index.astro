@@ -92,8 +92,8 @@ const jsonLd = [
       <h1 class="display">{headline}.</h1>
       <p class="glossary__lede">
         The words this site uses, defined against what it computes. Signs,
-        chart anatomy, aspects, motion, timing, houses, planets, and synastry,
-        with the calculation boundary stated where it matters.
+        chart anatomy, aspects, motion, timing, houses, planets, and synastry
+        — and when something isn&rsquo;t computed here, the entry says so.
       </p>
       <p class="glossary__count mono">{GLOSSARY.length} terms · English</p>
     </header>
@@ -127,9 +127,9 @@ const jsonLd = [
                   <dd>
                     <p>{entry.definition}</p>
                     {entry.receipt && <p class="glossary__receipt mono">{entry.receipt}</p>}
-                    {(entry.related?.length || entry.link) && (
+                    {((entry.related?.length ?? 0) > 0 || entry.link) && (
                       <div class="glossary__meta">
-                        {entry.related?.length && (
+                        {(entry.related?.length ?? 0) > 0 && (
                           <p>
                             <span class="glossary__meta-label mono">Related</span>
                             {entry.related.map((slug, index) => (
