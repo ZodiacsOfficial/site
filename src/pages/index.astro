@@ -218,6 +218,15 @@ const tools = [
         </a>
       ))}
     </div>
+    <div class="tools-upcoming reveal">
+      <em class="kicker">And for the month ahead</em>
+      <ul>
+        <li>
+          <strong>Eclipses.</strong> Every solar and lunar eclipse through
+          2028, with peak times in UTC — <a href="/eclipses/">see the dates</a>.
+        </li>
+      </ul>
+    </div>
   </section>
 
   <!-- 04 · Demo chart -->
@@ -317,6 +326,7 @@ const tools = [
     <h2 class="display reveal">Start with your birth chart.</h2>
     <div class="reveal" style="--reveal-delay:120ms">
       <a class="btn btn--primary" href="/birth-chart/"><span>Get your free birth chart</span><span class="orb">↗</span></a>
+      <a class="close__birthday" href="/birthday/">Or look up your exact birthday →</a>
     </div>
   </section>
 </Base>
@@ -571,6 +581,21 @@ const tools = [
     transition: color var(--dur-1) var(--ease);
   }
   .tile:hover .home-tool__go { color: var(--text); }
+  .tools-upcoming {
+    margin-top: clamp(28px, 5vw, 44px);
+    padding-top: 24px;
+    border-top: 1px solid var(--hair-1);
+  }
+  .tools-upcoming ul {
+    margin: 12px 0 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 8px;
+  }
+  .tools-upcoming li { font-size: var(--text-sm); color: var(--muted); }
+  .tools-upcoming strong { color: var(--text-2); font-weight: 600; }
+  .tools-upcoming a { color: var(--text); }
 
   /* ── Demo ── */
   :global(.demo) { display: grid; gap: 22px; grid-template-columns: 1fr; align-items: start; }
@@ -702,4 +727,14 @@ const tools = [
     margin: 0 0 30px;
     font-size: var(--text-2xl);
   }
+  .close__birthday {
+    display: block;
+    width: fit-content;
+    margin: 14px auto 0;
+    color: var(--muted);
+    font-size: 13.5px;
+    text-decoration: none;
+    border-bottom: 1px solid var(--hair-2);
+  }
+  .close__birthday:hover { color: var(--text); border-bottom-color: var(--muted); }
 </style>

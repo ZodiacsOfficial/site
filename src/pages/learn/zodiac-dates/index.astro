@@ -1,0 +1,373 @@
+---
+import Base from '../../../layouts/Base.astro';
+import SignIcon from '../../../components/SignIcon.astro';
+import '../../../styles/rx-table.css';
+import { EDITOR_AUTHOR } from '../../../lib/editorial';
+import {
+  INGRESS_GENERATED_AT,
+  INGRESS_YEARS,
+  ZODIAC_DATE_ROWS,
+  ingressDisplayMinute,
+  ingressIsoMinute,
+  ordinalHouse,
+} from '../../../lib/zodiac-dates';
+
+const PAGE_URL = 'https://zodiacs.org/learn/zodiac-dates/';
+const CSV_URL = PAGE_URL + 'zodiac-dates.csv';
+const PAGE_DATE = '2026-07-11';
+const [currentYear, nextYear] = INGRESS_YEARS;
+const headline = 'The living correspondence chart';
+const description =
+  'The twelve tropical zodiac signs in one table: exact longitude ranges, correspondences, hemisphere seasons, and year-exact Sun ingress instants for '
+  + currentYear + ' and ' + nextYear + '.';
+
+const sources = [
+  { label: 'IANA Time Zone Database', href: 'https://www.iana.org/time-zones' },
+  { label: 'Astronomy Engine', href: 'https://github.com/cosinekitty/astronomy' },
+  { label: 'Calculation methodology', href: 'https://zodiacs.org/methodology/' },
+];
+
+const citations = sources.map((source) => ({
+  '@type': 'CreativeWork',
+  name: source.label,
+  url: source.href,
+}));
+
+const dataset = {
+  '@type': 'Dataset',
+  '@id': PAGE_URL + '#dataset',
+  name: 'Tropical zodiac correspondences and Sun ingress instants, ' + currentYear + '–' + nextYear,
+  description,
+  url: PAGE_URL,
+  creator: { '@id': 'https://zodiacs.org/#org' },
+  publisher: { '@id': 'https://zodiacs.org/#org' },
+  dateCreated: INGRESS_GENERATED_AT,
+  datePublished: PAGE_DATE,
+  dateModified: PAGE_DATE,
+  temporalCoverage: currentYear + '-01-01/' + nextYear + '-12-31',
+  spatialCoverage: 'Earth',
+  inLanguage: 'en',
+  isAccessibleForFree: true,
+  variableMeasured: [
+    'tropical longitude range',
+    'element',
+    'modality',
+    'polarity',
+    'modern ruler',
+    'classical ruler',
+    'natural house',
+    'Northern Hemisphere season',
+    'Southern Hemisphere season',
+    'Sun ingress instant in UTC',
+  ],
+  measurementTechnique:
+    'Sun ingress instants computed with Astronomy Engine and published at minute precision in UTC; tropical sign boundaries are twelve equal 30-degree divisions of ecliptic longitude.',
+  citation: citations,
+  distribution: {
+    '@type': 'DataDownload',
+    name: 'Download the table as CSV',
+    contentUrl: CSV_URL,
+    encodingFormat: 'text/csv',
+  },
+};
+
+const jsonLd = [
+  {
+    '@type': 'Article',
+    '@id': PAGE_URL + '#article',
+    headline,
+    description,
+    url: PAGE_URL,
+    datePublished: PAGE_DATE,
+    dateModified: PAGE_DATE,
+    author: EDITOR_AUTHOR,
+    publisher: { '@id': 'https://zodiacs.org/#org' },
+    mainEntityOfPage: { '@type': 'WebPage', '@id': PAGE_URL },
+    mainEntity: { '@id': PAGE_URL + '#dataset' },
+    inLanguage: 'en',
+    isAccessibleForFree: true,
+    citation: citations,
+  },
+  dataset,
+  {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Zodiacs.org', item: 'https://zodiacs.org/' },
+      { '@type': 'ListItem', position: 2, name: 'Learn', item: 'https://zodiacs.org/learn/' },
+      { '@type': 'ListItem', position: 3, name: headline, item: PAGE_URL },
+    ],
+  },
+];
+
+const generatedReceipt = INGRESS_GENERATED_AT.slice(0, 10)
+  + ' at ' + INGRESS_GENERATED_AT.slice(11, 16) + ' UTC';
+---
+<Base
+  title={'Zodiac Dates ' + currentYear + '–' + nextYear + ' — Exact Sun Ingress Times | Zodiacs.org'}
+  description={description}
+  path="/learn/zodiac-dates/"
+  type="article"
+  image="/assets/og/v2/tool/learn.png"
+  imageAlt="The living correspondence chart — Zodiacs.org"
+  jsonLd={jsonLd}
+  sources={sources}
+>
+  <article class="zodiac-dates">
+    <header class="dates-hero container container--narrow">
+      <em class="kicker">Zodiac dates, {currentYear}–{nextYear}</em>
+      <h1 class="display">{headline}.</h1>
+      <p class="dates-hero__lede">
+        {'Twelve tropical signs, their exact 30-degree boundaries and standard correspondences, plus the UTC minute when the Sun enters each sign in '
+          + currentYear + ' and ' + nextYear + '.'}
+      </p>
+      <div class="dates-hero__actions">
+        <a class="btn btn--primary" href="/learn/zodiac-dates/zodiac-dates.csv" download>
+          <span>Download the table</span><span class="orb" aria-hidden="true">↓</span>
+        </a>
+        <a class="dates-hero__method" href="/methodology/">How the dates are computed →</a>
+      </div>
+      <p class="dates-hero__receipt mono">Ingress source generated {generatedReceipt}</p>
+    </header>
+
+    <section class="section--tight container dates-table-section" aria-labelledby="correspondence-table">
+      <div class="section-head">
+        <h2 id="correspondence-table">The twelve signs, in one table</h2>
+        <p>
+          <strong>Convention: tropical zodiac; instants in UTC.</strong>
+          Longitude ranges include their first degree and exclude their last.
+          Seasons are listed for both hemispheres.
+        </p>
+      </div>
+
+      <div class="table-wrap">
+        <table class="rx-table correspondence-table">
+          <caption>
+            {'Zodiac sign correspondences and exact Sun ingress instants for '
+              + currentYear + ' and ' + nextYear}
+          </caption>
+          <thead>
+            <tr>
+              <th scope="col">Sign</th>
+              <th scope="col">Glyph</th>
+              <th scope="col">Unicode</th>
+              <th scope="col">Longitude</th>
+              <th scope="col">Element</th>
+              <th scope="col">Modality</th>
+              <th scope="col">Polarity</th>
+              <th scope="col">Rulers</th>
+              <th scope="col">Natural house</th>
+              <th scope="col">Seasons</th>
+              <th scope="col">{currentYear} ingress</th>
+              <th scope="col">{nextYear} ingress</th>
+            </tr>
+          </thead>
+          <tbody>
+            {ZODIAC_DATE_ROWS.map((row) => (
+              <tr id={row.sign.slug} style={'--sign:' + row.sign.hue}>
+                <th scope="row" data-label="Sign">
+                  <a class="sign-link" href={'/' + row.sign.slug + '/'}>
+                    <SignIcon sign={row.sign.slug} size={24} />
+                    <span>{row.sign.name}</span>
+                  </a>
+                </th>
+                <td data-label="Glyph">
+                  <span class="sign-glyph" aria-label={row.sign.name + ' glyph'}>{row.glyph}</span>
+                </td>
+                <td class="mono codepoint" data-label="Unicode">{row.unicode}</td>
+                <td class="mono longitude" data-label="Longitude">{row.longitudeRange}</td>
+                <td data-label="Element">{row.element}</td>
+                <td data-label="Modality">{row.modality}</td>
+                <td data-label="Polarity">{row.polarity}</td>
+                <td data-label="Rulers">
+                  <span class="cell-lines">
+                    <span><small>Modern</small> {row.modernRuler}</span>
+                    <span><small>Classical</small> {row.classicalRuler}</span>
+                  </span>
+                </td>
+                <td data-label="Natural house">{ordinalHouse(row.naturalHouse)}</td>
+                <td data-label="Seasons">
+                  <span class="cell-lines">
+                    <span><small>North</small> {row.northernSeason}</span>
+                    <span><small>South</small> {row.southernSeason}</span>
+                  </span>
+                </td>
+                <td class="ingress" data-label={currentYear + ' ingress'}>
+                  <time datetime={ingressIsoMinute(row.ingressUtc[currentYear])}>
+                    {ingressDisplayMinute(row.ingressUtc[currentYear])}
+                  </time>
+                </td>
+                <td class="ingress" data-label={nextYear + ' ingress'}>
+                  <time datetime={ingressIsoMinute(row.ingressUtc[nextYear])}>
+                    {ingressDisplayMinute(row.ingressUtc[nextYear])}
+                  </time>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section--tight container container--narrow">
+      <div class="prose">
+        <h2>What the exact dates mean</h2>
+        <p>
+          The tropical zodiac fixes Aries at 0 degrees of ecliptic longitude
+          and divides the full circle into twelve equal signs. Those longitude
+          boundaries do not change. The calendar date and clock time do,
+          because a tropical year does not contain a whole number of days.
+        </p>
+        <p>
+          Each ingress in the table is the instant the Sun crosses a sign
+          boundary, truncated to the minute in UTC. A local civil time depends
+          on place and historical time-zone rules. That is why a birthday near
+          a boundary should be checked from the actual birth date, time and
+          place rather than from a fixed date range.
+        </p>
+        <p>
+          The correspondence columns state common tropical-astrology
+          conventions. “Modern” and “classical” are both shown even when the
+          same planet appears in each column. Seasons reverse by hemisphere;
+          the sign and longitude do not.
+        </p>
+        <p>
+          To check one birth moment, <a href="/birth-chart/">calculate the full
+          chart</a>. The <a href="/methodology/">methodology page</a> documents
+          the astronomical engine, time-zone handling and verification tests.
+        </p>
+      </div>
+    </section>
+  </article>
+</Base>
+
+<style>
+  .zodiac-dates {
+    --table-edge: color-mix(in oklab, var(--hair-2) 72%, transparent);
+  }
+  .dates-hero {
+    display: grid;
+    gap: 18px;
+    padding-block: clamp(44px, 8vw, 92px) clamp(18px, 4vw, 38px);
+  }
+  .dates-hero h1 {
+    margin: 0;
+    max-width: 10ch;
+    font-size: clamp(2.8rem, 1.8rem + 4.8vw, 5.25rem);
+  }
+  .dates-hero__lede {
+    margin: 0;
+    max-width: 52ch;
+    color: var(--muted);
+    font-size: var(--text-lg);
+    line-height: 1.6;
+    text-wrap: pretty;
+  }
+  .dates-hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 14px 18px;
+    margin-top: 4px;
+  }
+  .dates-hero__method {
+    color: var(--muted);
+    font-size: var(--text-sm);
+    text-underline-offset: 4px;
+  }
+  .dates-hero__method:hover { color: var(--text); }
+  .dates-hero__receipt {
+    margin: 0;
+    color: var(--faint);
+    font-size: 10.5px;
+    letter-spacing: 0.05em;
+  }
+  .dates-table-section {
+    width: min(100% - 40px, 1440px);
+  }
+  .dates-table-section .section-head {
+    max-width: 56ch;
+    margin-bottom: clamp(24px, 4vw, 42px);
+  }
+  .dates-table-section .section-head p {
+    max-width: 58ch;
+    font-size: var(--text-base);
+    line-height: 1.65;
+  }
+  .dates-table-section .section-head strong {
+    color: var(--text);
+    font-weight: 600;
+  }
+  .table-wrap {
+    border-top: 1px solid var(--table-edge);
+    border-bottom: 1px solid var(--table-edge);
+  }
+  .correspondence-table {
+    min-width: 1220px;
+  }
+  .correspondence-table caption {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+  }
+  .correspondence-table th { padding-right: 16px; }
+  .correspondence-table td,
+  .correspondence-table tbody th {
+    padding-right: 16px;
+    vertical-align: top;
+  }
+  .correspondence-table tbody th { min-width: 112px; }
+  .sign-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    color: var(--text);
+    text-decoration: none;
+  }
+  .sign-link:hover span { text-decoration: underline; text-underline-offset: 3px; }
+  .sign-glyph {
+    color: var(--sign);
+    font-family: var(--font-serif);
+    font-size: 1.55rem;
+    line-height: 1;
+  }
+  .codepoint { color: var(--muted); font-size: 11px; }
+  .longitude { color: var(--text); font-size: 11px; }
+  .cell-lines {
+    display: grid;
+    gap: 3px;
+  }
+  .cell-lines small {
+    display: inline-block;
+    min-width: 48px;
+    color: var(--faint);
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .ingress {
+    min-width: 144px;
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: -0.015em;
+  }
+  @media (max-width: 560px) {
+    .dates-hero h1 { max-width: 9ch; }
+    .dates-hero__actions { align-items: flex-start; flex-direction: column; }
+    .dates-table-section { width: min(100% - 40px, 1440px); }
+    .table-wrap { border-bottom: 0; }
+    .correspondence-table { min-width: 0; }
+    .correspondence-table td,
+    .correspondence-table tbody th { padding-right: 0; }
+    .correspondence-table tbody th { min-width: 0; padding-bottom: 8px; }
+    .cell-lines { justify-items: end; }
+    .cell-lines small { min-width: 0; margin-right: 5px; }
+    .ingress { min-width: 0; }
+  }
+</style>
