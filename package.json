@@ -8,7 +8,7 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build && vite-node --script scripts/build-search-index.mjs",
+    "build": "astro build && vite-node --script scripts/build-search-index.mjs && node scripts/build-search-ui.mjs",
     "preview": "astro preview",
     "check": "astro check",
     "test": "vitest run",
@@ -29,7 +29,8 @@
     "report:bundles": "node scripts/report-bundles.mjs",
     "test:visual": "node tests/visual/visual-regression.mjs",
     "test:visual:update": "node tests/visual/visual-regression.mjs --update",
-    "test:lighthouse": "node tests/visual/lighthouse.mjs"
+    "test:lighthouse": "node tests/visual/lighthouse.mjs",
+    "data:search-ui": "node scripts/build-search-ui.mjs"
   },
   "dependencies": {
     "@astrojs/mdx": "^7.0.2",
@@ -47,6 +48,7 @@
     "@fontsource/eb-garamond": "^5.2.7",
     "@types/node": "^22.20.0",
     "chrome-launcher": "^1.2.1",
+    "esbuild": "^0.28.1",
     "lighthouse": "^13.4.0",
     "pixelmatch": "^7.2.0",
     "playwright-core": "^1.61.1",
