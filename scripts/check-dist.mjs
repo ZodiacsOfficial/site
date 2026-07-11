@@ -215,6 +215,19 @@ for (const file of files) {
 }
 
 // ---- 5b. Search index -------------------------------------------------------
+// The search dialog ships as a stable public URL (see build-search-ui.mjs);
+// the inline nav loader imports it at runtime, so a missing bundle would
+// fail silently in the wild.
+const searchUiPath = resolve(root, 'assets/search-ui.js');
+if (!(await exists(searchUiPath))) {
+  fail('search-ui: missing assets/search-ui.js');
+} else {
+  const searchUi = await readFile(searchUiPath, 'utf8');
+  if (!searchUi.includes('openSearch') || !searchUi.includes('zsearch')) {
+    fail('search-ui: assets/search-ui.js does not look like the search dialog bundle');
+  }
+}
+
 const searchIndexPath = resolve(root, 'search-index.json');
 if (!(await exists(searchIndexPath))) {
   fail('search-index: missing search-index.json');

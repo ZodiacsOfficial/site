@@ -34,6 +34,13 @@ const path = Astro.url.pathname;
       <a class="nav__link nav__saved" href={localizePath(locale, '/profile/')} aria-current={path.startsWith(localizePath(locale, '/profile/')) ? 'page' : undefined} data-profile-glyph>{t(locale, 'navSavedCharts')}</a>
     </div>
 
+    {locale === 'en' && (
+      <button class="nav__search" type="button" data-search-open aria-label="Search the site" aria-haspopup="dialog">
+        <svg width="14" height="14" viewBox="0 0 15 15" fill="none" aria-hidden="true"><circle cx="6.5" cy="6.5" r="4.75" stroke="currentColor" stroke-width="1.4"/><path d="M10.5 10.5L13.5 13.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+        <kbd class="nav__search-kbd mono" aria-hidden="true">/</kbd>
+      </button>
+    )}
+
     <a class="nav__chip" href={localizePath(locale, '/registry/')} aria-current={path.startsWith(localizePath(locale, '/registry/')) ? 'page' : undefined}>{t(locale, 'navCollect')}</a>
 
     <button class="nav__burger" type="button" data-menu-toggle aria-expanded="false" aria-controls="mobile-menu" aria-label={t(locale, 'navMenu')}>
@@ -145,6 +152,30 @@ const path = Astro.url.pathname;
   }
   .nav__link:hover { color: var(--text); background: rgba(198, 204, 218, 0.07); }
   .nav__link[aria-current='page'] { color: var(--text); }
+
+  .nav__search {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 8px 11px;
+    border: none;
+    border-radius: var(--r-full);
+    background: none;
+    color: var(--text-2);
+    cursor: pointer;
+    transition: color var(--dur-1) var(--ease), background var(--dur-2) var(--ease);
+  }
+  .nav__search:hover { color: var(--text); background: rgba(198, 204, 218, 0.07); }
+  .nav__search-kbd {
+    display: none;
+    font-size: 10px;
+    line-height: 1;
+    padding: 3px 5px;
+    border: 1px solid var(--hair-2);
+    border-radius: 4px;
+    color: var(--faint);
+  }
+  @media (min-width: 760px) { .nav__search-kbd { display: inline-block; } }
   .nav__signs-btn svg { transition: transform var(--dur-2) var(--ease); }
   .nav__signs-btn[aria-expanded='true'] svg { transform: rotate(180deg); }
 
@@ -359,4 +390,36 @@ const path = Astro.url.pathname;
       document.querySelector('[data-profile-glyph]')?.classList.add('has-saves');
     }
   } catch { /* private mode etc. — glyph stays empty */ }
+
 </script>
+
+{locale === 'en' && (
+  <script is:inline>
+    /* Site search loader — deliberately a CLASSIC inline script. The dialog,
+       index fetch, and ranking live in /assets/search-ui.js (built by
+       scripts/build-search-ui.mjs); dynamic import() works in classic
+       scripts, and keeping it out of the processed module graph is what
+       lets Astro inline the nav script — otherwise every page, including
+       the zero-JS sign pages, would carry an external nav chunk. */
+    (function () {
+      var btn = document.querySelector('[data-search-open]');
+      if (!btn) return;
+      function open(from) {
+        import('/assets/search-ui.js').then(function (mod) {
+          mod.openSearch(from || btn);
+        });
+      }
+      btn.addEventListener('click', function () { open(btn); });
+      document.addEventListener('keydown', function (e) {
+        var el = e.target;
+        var typing = el && (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA'
+          || el.tagName === 'SELECT' || el.isContentEditable);
+        if ((e.key === '/' && !typing && !e.metaKey && !e.ctrlKey && !e.altKey)
+          || ((e.key === 'k' || e.key === 'K') && (e.metaKey || e.ctrlKey))) {
+          e.preventDefault();
+          open(btn);
+        }
+      });
+    })();
+  </script>
+)}

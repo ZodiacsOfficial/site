@@ -248,3 +248,46 @@ between the rings. The second ring the Transit Ring built is reused whole.
 `/compatibility/` 32.9 KB gz of a new 35 budget; the wheel module is a
 2.0 KB lazy chunk excluded from the closure. Flagship budgets untouched;
 wheel serialization untouched. Zero new dependencies.
+
+---
+
+# Site search — the `/` dialog over the T-25 index
+
+A command-palette search across the 797-entry `/search-index.json` that #66
+built. Opens from a nav button, `/`, or Cmd/Ctrl+K; ranks client-side;
+nothing typed leaves the page.
+
+## 20. Decisions
+
+- **The dialog is plain DOM, not an island.** One 5.0 KB lazy bundle at a
+  STABLE url (`/assets/search-ui.js`, built by `scripts/build-search-ui.mjs`
+  after `astro build`), fetched on first open. No Preact, no i18n import —
+  the module ships only the scorer, the dialog, and its own label strings.
+- **The loader must be a classic `is:inline` script.** Astro inlines a page
+  `<script>` only when its built chunk has no module-graph edges; a dynamic
+  `import()` in the processed nav script — even `@vite-ignore` — externalizes
+  the whole nav chunk onto every page (+0.8 KB sitewide, and `/aries/` loses
+  its deliberate 0-budget). A classic inline script may still call
+  `import('/assets/search-ui.js')` at runtime; that pairing (classic loader +
+  post-build stable-URL bundle) is the escape hatch, and `check-dist` now
+  asserts the bundle exists and exports what the loader calls.
+- **EN-only v1** (index is EN-only by D9); ES pages render no button and the
+  shortcuts stay inert there. `/` defers to real inputs (INPUT/TEXTAREA/
+  SELECT/contentEditable) and modifier chords.
+- **Ranking is a pure module with vectors** (`src/lib/search/score.ts`):
+  every token must match, title beats description, exact beats prefix beats
+  substring, and kind boosts order tools/signs above guides above the long
+  pairing/horoscope tail. Birthday pages stay kind `tool` in v1 — the badge
+  reads a little broad there; revisit if search_go says visitors care.
+- **A race worth writing down:** the index fetch resolves after the visitor
+  has started typing; re-rendering with a fixed `''` wiped fast typers'
+  queries. The post-load render must rank the input's CURRENT value.
+- All nine visual baselines refreshed once, deliberately — the nav search
+  button is a sitewide visible change (diffs 0.04–0.10%).
+
+## Budget actuals (site search)
+
+Zero closure impact anywhere: `/` 40.7/42, `/birth-chart/` 50.8/51.5,
+`/aries/` 0.0/0 all unchanged — the loader inlines, the dialog is a
+post-build bundle outside every closure. `search_open` / `search_go{kind}`
+join the analytics allowlist.
