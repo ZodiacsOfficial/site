@@ -335,13 +335,40 @@ back in one tap.
 - `chart_save{source:'pair'}` reuses the existing allowlisted event —
   no Base.astro change.
 
+## 22. Review pass (two independent adversarial reads, pre-merge)
+
+Confirmed and fixed: long-name chips overflowing narrow screens (renamed
+charts have no length cap — the `.place__chip-value` ellipsis recipe,
+drive-asserted at 320px); a stranded restore tick that could fire an
+unrequested compare minutes later (the tick is now consumed on first
+non-busy evaluation, fire or not); no re-entry guard on `compare()` (two
+same-commit effects share one stale `busy` closure — a ref now gates);
+the same person saved once by reference and once by value escaping
+dedupe (chart sides carry a `birthKey`); pruning against a corrupt or
+version-skewed profile read (an empty chart list is never pruned
+against); one malformed stored pair crashing the island render
+(`loadPairs` validates every element — the decodeChartLink rule); the
+stale "saved" state after removing the just-saved pair (save state
+resets when the store changes underneath it, including a freed `full`
+alert); the conditionally-mounted `role="status"` announcement trap (a
+persistent sr-only announcer, the ChartCalculator pattern — removals
+announce too); focus dropped to `<body>` after removing a chip (hands to
+the nearest surviving chip, else the form); missing `role="list"`
+(Safari strips semantics on `list-style:none`); the disabled save
+button keeping its call-to-action label (swaps to the existing
+`chartSavedDevice`); gray focus rings (now the global accent ring); `×`
+read as "multiplication sign" (accessible names use `Intl.ListFormat`
+conjunctions with verbs). Known, accepted: true birth-twins dedupe to
+one pair; pairs referencing a deleted chart vanish without an
+explanatory notice (by design, §21).
+
 ## Budget actuals (save a comparison)
 
-`/compatibility/` 34.4/35 (+1.5: store + strip + save UI + strings, all
+`/compatibility/` 34.9/35 (+2.0: store + strip + save UI + strings, all
 host-side — the strip must show before any compare, so it can't ride the
 lazy wheel chunk). `/birth-chart/` 51.1/51.5 and `/` 40.7/42 — the +0.3
 flagship drift is shared-chunk re-splitting, with zero pairs code in its
 closure (grep-verified against dist). All 9 visual baselines pass at
 0.0000% — the strip renders only when pairs exist. The committed drive
-grew 11 → 23 assertions (save, reload, one-tap restore, remove, inline
-restore, orphan prune, ES strip).
+grew 11 → 24 assertions (save, reload, one-tap restore, remove, inline
+restore, orphan prune, 320px long-name overflow, ES strip).

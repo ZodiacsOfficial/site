@@ -18,7 +18,15 @@ export const PAIRS_KEY = 'zodiacs.pairs.v1';
 export const MAX_PAIRS = 12;
 
 export type SavedPairSide =
-  | { kind: 'chart'; chartId: string; label: string }
+  | {
+      kind: 'chart';
+      chartId: string;
+      label: string;
+      /** Birth-input identity (`date|time|lat|lon`) so the same person
+       *  saved once as a chart and once by value dedupes to one pair.
+       *  Absent for charts without stored coordinates. */
+      birthKey?: string;
+    }
   | {
       kind: 'input';
       input: ShareChartInput;
@@ -35,12 +43,32 @@ export interface SavedPair {
   b: SavedPairSide;
 }
 
+// Storage is user-writable — trust nothing (the decodeChartLink rule).
+// One malformed element must not take the island's render down with it.
+function isSide(value: unknown): value is SavedPairSide {
+  if (!value || typeof value !== 'object') return false;
+  const side = value as Record<string, unknown>;
+  if (typeof side.label !== 'string') return false;
+  if (side.kind === 'chart') return typeof side.chartId === 'string';
+  if (side.kind === 'input') {
+    return !!side.input && typeof side.input === 'object'
+      && typeof (side.input as Record<string, unknown>).date === 'string';
+  }
+  return false;
+}
+
+function isPair(value: unknown): value is SavedPair {
+  if (!value || typeof value !== 'object') return false;
+  const pair = value as Record<string, unknown>;
+  return typeof pair.id === 'string' && isSide(pair.a) && isSide(pair.b);
+}
+
 export function loadPairs(): SavedPair[] {
   try {
     const raw = localStorage.getItem(PAIRS_KEY);
     if (!raw) return [];
     const parsed = JSON.parse(raw);
-    return Array.isArray(parsed) ? (parsed as SavedPair[]) : [];
+    return Array.isArray(parsed) ? parsed.filter(isPair) : [];
   } catch {
     return [];
   }
@@ -56,9 +84,13 @@ function persist(pairs: SavedPair[]): boolean {
   }
 }
 
-/** Identity of one side, for order-insensitive dedupe. */
+/** Identity of one side, for order-insensitive dedupe. A chart side with
+ *  a birth key collides with an input side carrying the same birth data —
+ *  one person, one identity, however they were entered. */
 function sideKey(side: SavedPairSide): string {
-  if (side.kind === 'chart') return `chart:${side.chartId}`;
+  if (side.kind === 'chart') {
+    return side.birthKey ? `input:${side.birthKey}` : `chart:${side.chartId}`;
+  }
   const { date, time, lat, lon } = side.input;
   return `input:${date}|${time ?? ''}|${lat}|${lon}`;
 }
@@ -67,6 +99,12 @@ function samePair(a: SavedPair, b: SavedPair): boolean {
   const keysA = [sideKey(a.a), sideKey(a.b)].sort();
   const keysB = [sideKey(b.a), sideKey(b.b)].sort();
   return keysA[0] === keysB[0] && keysA[1] === keysB[1];
+}
+
+/** Whether a comparison with these two sides is already stored. */
+export function hasPair(pairs: SavedPair[], a: SavedPairSide, b: SavedPairSide): boolean {
+  const probe: SavedPair = { id: '', createdAt: '', a, b };
+  return pairs.some((existing) => samePair(existing, probe));
 }
 
 export function savePair(pair: SavedPair): 'saved' | 'exists' | 'full' | 'error' {

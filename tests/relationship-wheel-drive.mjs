@@ -156,10 +156,26 @@ try {
   check('ES strip renders translated', /Comparaciones guardadas/.test(await es.locator('.syn__pairs').textContent() ?? ''));
   await es.close();
 
-  // Mobile sanity.
-  const mob = await browser.newPage({ viewport: { width: 390, height: 900 }, deviceScaleFactor: 2, hasTouch: true });
-  await mob.addInitScript((prof) => localStorage.setItem('zodiacs.profile.v1', JSON.stringify(prof)), profile);
+  // Mobile sanity — with a saved pair of hostile-length names (renamed
+  // charts have no length cap; the chips must ellipsize, not overflow).
+  const longProfile = JSON.parse(JSON.stringify(profile));
+  longProfile.charts[0].name = 'Frida Kahlo de Rivera, painter of Coyoacán and La Casa Azul';
+  const mob = await browser.newPage({ viewport: { width: 320, height: 900 }, deviceScaleFactor: 2, hasTouch: true });
+  await mob.addInitScript((prof) => localStorage.setItem('zodiacs.profile.v1', JSON.stringify(prof)), longProfile);
+  await mob.addInitScript((pairs) => localStorage.setItem('zodiacs.pairs.v1', JSON.stringify(pairs)), [
+    {
+      id: 'long', createdAt: '2026-07-11T00:00:00Z',
+      a: { kind: 'chart', chartId: 'drive-frida', label: 'Frida' },
+      b: { kind: 'chart', chartId: 'drive-diego', label: 'Diego' },
+    },
+  ]);
   await mob.goto('http://127.0.0.1:4399/compatibility/', { waitUntil: 'networkidle' });
+  await mob.waitForSelector('.syn__pair-restore', { timeout: 10000 });
+  const overflow = await mob.evaluate(() => ({
+    doc: document.documentElement.scrollWidth, win: window.innerWidth,
+  }));
+  check('long-name chip never overflows a 320px screen', overflow.doc <= overflow.win, `${overflow.doc} vs ${overflow.win}`);
+  await shot(mob, 'rwheel-mobile-longname.png');
   await mob.locator('#syn-a-source').selectOption('drive-frida');
   await mob.locator('#syn-b-source').selectOption('drive-diego');
   await mob.locator('.calc__submit').click();
