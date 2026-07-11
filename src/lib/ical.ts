@@ -72,7 +72,13 @@ export function transitContactUid(contact: TransitContact): string {
 function exactDescription(contact: TransitContact): string {
   const iso = new Date(contact.exactUtc).toISOString();
   const utcMinute = `${iso.slice(0, 10)} ${iso.slice(11, 16)} UTC`;
-  return `Exact tropical transit contact. Time: ${utcMinute}. Applying immediately before exactness: ${contact.applyingBefore ? 'yes' : 'no'}.`;
+  const description = `Exact tropical transit contact. Time: ${utcMinute}.`;
+  // Multi-hit groups get their window-scoped pass number. The cause is
+  // deliberately not asserted: dual-target aspects can produce a second
+  // pass for a fast body with no retrograde loop involved.
+  return contact.passCount > 1
+    ? `${description} Pass ${contact.pass} of ${contact.passCount}.`
+    : description;
 }
 
 function eventLines(contact: TransitContact, dtstamp: string): string[] {

@@ -16,21 +16,24 @@ const SATURN_PASSES: TransitContact[] = [
     natalPoint: 'Saturn',
     aspect: 'conjunction',
     exactUtc: '2019-03-21T16:04:00.000Z',
-    applyingBefore: true,
+    pass: 1,
+    passCount: 3,
   },
   {
     transitBody: 'Saturn',
     natalPoint: 'Saturn',
     aspect: 'conjunction',
     exactUtc: '2019-06-09T10:19:00.000Z',
-    applyingBefore: true,
+    pass: 2,
+    passCount: 3,
   },
   {
     transitBody: 'Saturn',
     natalPoint: 'Saturn',
     aspect: 'conjunction',
     exactUtc: '2019-12-13T08:51:00.000Z',
-    applyingBefore: true,
+    pass: 3,
+    passCount: 3,
   },
 ];
 
@@ -51,8 +54,8 @@ describe('serializeTransitContacts', () => {
       'DURATION:PT1M',
       'TRANSP:TRANSPARENT',
       'SUMMARY:Transiting Saturn conjunction natal Saturn (exact)',
-      'DESCRIPTION:Exact tropical transit contact. Time: 2019-03-21 16:04 UTC. App',
-      ' lying immediately before exactness: yes.',
+      'DESCRIPTION:Exact tropical transit contact. Time: 2019-03-21 16:04 UTC. Pas',
+      ' s 1 of 3.',
       'END:VEVENT',
       'END:VCALENDAR',
       '',
@@ -71,9 +74,21 @@ describe('serializeTransitContacts', () => {
     expect(new Set(uids).size).toBe(3);
     expect(uids[0]).toBe('transit-20190321T160400Z-saturn-conjunction-saturn@zodiacs.org');
 
+    const sameContactInDifferentWindow = { ...SATURN_PASSES[0], pass: 2, passCount: 2 };
+    expect(transitContactUid(sameContactInDifferentWindow)).toBe(uids[0]);
+
     const closePass = { ...SATURN_PASSES[0], exactUtc: '2019-03-21T16:04:00.250Z' };
     expect(transitContactUid(closePass)).toContain('20190321T160400250Z');
     expect(transitContactUid(closePass)).not.toBe(transitContactUid(SATURN_PASSES[0]));
+  });
+
+  it('omits pass wording for a single-hit contact', () => {
+    const single = { ...SATURN_PASSES[0], pass: 1, passCount: 1 };
+    const calendar = serializeTransitContacts([single], OPTIONS);
+    expect(calendar).toContain(
+      `DESCRIPTION:Exact tropical transit contact. Time: 2019-03-21 16:04 UTC.${CRLF}`,
+    );
+    expect(calendar.replace(/\r\n[ \t]/g, '')).not.toContain('Pass ');
   });
 
   it('escapes TEXT and folds Unicode by UTF-8 octets', () => {
@@ -111,7 +126,7 @@ describe('serializeTransitContacts', () => {
 });
 
 describe('/transits/sample.ics', () => {
-  it('is prerendered with calendar headers and a byte-valid three-pass sample', async () => {
+  it('is prerendered with calendar headers and a byte-valid three-contact sample', async () => {
     const response = await getSampleCalendar({} as Parameters<typeof getSampleCalendar>[0]);
     const calendar = await response.text();
 
@@ -123,6 +138,11 @@ describe('/transits/sample.ics', () => {
     );
     expect(calendar.match(/BEGIN:VEVENT/g)).toHaveLength(3);
     expect(calendar.replace(/\r\n/g, '')).not.toMatch(/[\r\n]/);
+    const unfolded = calendar.replace(/\r\n[ \t]/g, '');
+    expect(unfolded).toContain('Pass 1 of 3.');
+    expect(unfolded).toContain('Pass 2 of 3.');
+    expect(unfolded).toContain('Pass 3 of 3.');
+    expect(unfolded).not.toContain('retrograde loop');
     for (const line of calendar.slice(0, -CRLF.length).split(CRLF)) {
       expect(new TextEncoder().encode(line).byteLength).toBeLessThanOrEqual(75);
     }

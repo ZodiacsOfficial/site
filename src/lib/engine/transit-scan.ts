@@ -32,9 +32,13 @@ export interface TransitContact {
   aspect: AspectType;
   /** Exact bisection result in UTC; consumers may display it to the minute. */
   exactUtc: string;
-  /** Whether the absolute orb was shrinking immediately before exactness. */
-  applyingBefore: boolean;
+  /** 1-based position of this exact hit among matching contacts in the scan window. */
+  pass: number;
+  /** Total exact hits for this body, natal point, and aspect in the scan window. */
+  passCount: number;
 }
+
+type UnnumberedTransitContact = Omit<TransitContact, 'pass' | 'passCount'> & { exactMs: number };
 
 export interface TransitScanOptions {
   /** The Moon is omitted unless this is true. */
@@ -145,15 +149,6 @@ export function natalTransitPoints(chart: NatalTransitChart): NatalTransitPoint[
 export function aspectTargetLongitudes(natalLon: number, aspect: AspectType): number[] {
   const lon = normalizeLongitude(natalLon);
   return ASPECT_TARGET_OFFSETS[aspect].map((offset) => normalizeLongitude(lon + offset));
-}
-
-/** Pure applying/separating check from two samples immediately before a hit. */
-export function isApplyingTowardTarget(
-  targetLon: number,
-  earlierTransitLon: number,
-  laterTransitLon: number,
-): boolean {
-  return angularError(targetLon, laterTransitLon) < angularError(targetLon, earlierTransitLon);
 }
 
 /** Convenience for callers that have an instant and already-computed angles. */
@@ -272,7 +267,7 @@ export function scanTransitContacts(
 
   const fromMs = from.getTime();
   const toMs = to.getTime();
-  const contacts = new Map<string, Array<TransitContact & { exactMs: number }>>();
+  const contacts = new Map<string, UnnumberedTransitContact[]>();
 
   for (const transitBody of bodies) {
     const stepDays = STEP_DAYS[transitBody];
@@ -315,14 +310,11 @@ export function scanTransitContacts(
             if (Math.abs(exactMs - toMs) <= BOUNDARY_EPSILON_MS) exactMs = toMs;
 
             const exact = new Date(exactMs);
-            const earlierLon = bodyLongitude(transitBody, new Date(exactMs - 2 * MINUTE));
-            const laterLon = bodyLongitude(transitBody, new Date(exactMs - MINUTE));
-            const contact: TransitContact = {
+            const contact = {
               transitBody,
               natalPoint: point.name,
               aspect,
               exactUtc: exact.toISOString(),
-              applyingBefore: isApplyingTowardTarget(targetLon, earlierLon, laterLon),
             };
             const key = `${contact.transitBody}|${contact.natalPoint}|${contact.aspect}`;
             const sameContact = contacts.get(key) ?? [];
@@ -330,8 +322,6 @@ export function scanTransitContacts(
             if (!duplicate) {
               sameContact.push({ ...contact, exactMs });
               contacts.set(key, sameContact);
-            } else if (contact.applyingBefore) {
-              duplicate.applyingBefore = true;
             }
           }
         }
@@ -339,7 +329,17 @@ export function scanTransitContacts(
     }
   }
 
-  return [...contacts.values()].flat().sort((a, b) =>
+  const numberedContacts = [...contacts.values()].flatMap((group) => {
+    const chronological = [...group].sort((a, b) => a.exactMs - b.exactMs);
+    const passCount = chronological.length;
+    return chronological.map((contact, index) => ({
+      ...contact,
+      pass: index + 1,
+      passCount,
+    }));
+  });
+
+  return numberedContacts.sort((a, b) =>
     a.exactUtc.localeCompare(b.exactUtc)
     || (BODY_INDEX.get(a.transitBody) ?? 0) - (BODY_INDEX.get(b.transitBody) ?? 0)
     || (NATAL_INDEX.get(a.natalPoint) ?? 0) - (NATAL_INDEX.get(b.natalPoint) ?? 0)
