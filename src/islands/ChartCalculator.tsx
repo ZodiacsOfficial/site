@@ -747,6 +747,12 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
 
               {shareInput && (
                 <div class="calc__chart-share">
+                  {reading && (
+                    <button class="btn btn--glass calc__tour-start" type="button" onClick={startTour} data-tour-start>
+                      <span>{t(locale, 'tourStart')}</span>
+                      <span class="orb">→</span>
+                    </button>
+                  )}
                   <button class="btn btn--glass" type="button" onClick={openShareDialog} disabled={card === 'busy'} data-share-card>
                     <span>{card === 'busy' ? t(locale, 'rendering') : card === 'saved' ? t(locale, 'cardSaved') : t(locale, 'shareChart')}</span>
                     <span class="orb">{card === 'saved' ? '✓' : '↗'}</span>
@@ -823,13 +829,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
               {/* Guided reading — the tables above are the data; this is the order. */}
               {reading && (
                 <section class="calc__read" aria-labelledby="calc-read-title">
-                  <div class="calc__read-head">
-                    <h2 id="calc-read-title" class="calc__read-title">{t(locale, 'readInOrder')}</h2>
-                    <button class="btn btn--glass calc__tour-start" type="button" onClick={startTour} data-tour-start>
-                      <span>{t(locale, 'tourStart')}</span>
-                      <span class="orb">→</span>
-                    </button>
-                  </div>
+                  <h2 id="calc-read-title" class="calc__read-title">{t(locale, 'readInOrder')}</h2>
                   <p class="calc__read-intro">{t(locale, 'readIntro')}</p>
                   <ol class="calc__read-steps">
                     <li class="calc__read-step">
