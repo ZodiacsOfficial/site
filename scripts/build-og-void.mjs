@@ -160,6 +160,20 @@ function shareCard() {
   return shell(body, 'zodiacs.org', { centered: true });
 }
 
+/** The thesis page's own card — reference-document register, no consumer
+ *  copy. Emitted alone via --only-thesis so the other cards stay put. */
+function thesisCard() {
+  const body = `
+  <div class="stage" style="flex-direction: column; justify-content: center; gap: 40px;">
+    ${wheelMark(160, 15)}
+    <div>
+      <span class="kicker">The Thesis</span>
+      <div class="display" style="font-size: 76px; max-width: 980px;">Belief is the oldest asset.</div>
+    </div>
+  </div>`;
+  return shell(body, 'zodiacs.org — The Registry · Revised July 2026', { centered: true });
+}
+
 function signCard(s) {
   const body = `
   <div class="stage">
@@ -303,6 +317,12 @@ async function shoot(html, outPath) {
 }
 
 console.log('Rendering Cosmic Void OG cards…');
+await shoot(thesisCard(), 'thesis.png');
+if (process.argv.includes('--only-thesis')) {
+  console.log(`Done: ${count} card(s), ${(total / 1024).toFixed(0)}KB.`);
+  await browser.close();
+  process.exit(0);
+}
 await shoot(shareCard(), 'share.png');
 for (const s of SIGNS) await shoot(signCard(s), `sign/${s.slug}.png`);
 for (const t of TOOLS) await shoot(toolCard(t), `tool/${t.key}.png`);
