@@ -1,0 +1,431 @@
+---
+import Base from '../../../layouts/Base.astro';
+import { GLOSSARY, type GlossaryTerm } from '../../../data/glossary';
+import { EDITOR_AUTHOR } from '../../../lib/editorial';
+
+const PAGE_URL = 'https://zodiacs.org/learn/glossary/';
+const PAGE_DATE = '2026-07-11';
+const headline = 'The astrology glossary';
+const description =
+  'The words Zodiacs.org uses, defined against what the site computes: signs, chart anatomy, aspects, motion, timing, houses, planets, and synastry.';
+const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+const termsByLetter = new Map<string, GlossaryTerm[]>();
+const termBySlug = new Map(GLOSSARY.map((entry) => [entry.slug, entry]));
+
+for (const entry of GLOSSARY) {
+  const letter = entry.term[0].toUpperCase();
+  const group = termsByLetter.get(letter) ?? [];
+  group.push(entry);
+  termsByLetter.set(letter, group);
+}
+
+const activeLetters = letters.filter((letter) => termsByLetter.has(letter));
+const sources = [
+  { label: 'Calculation methodology', href: 'https://zodiacs.org/methodology/' },
+  { label: 'Astronomy Engine', href: 'https://github.com/cosinekitty/astronomy' },
+];
+const citations = sources.map((source) => ({
+  '@type': 'CreativeWork',
+  name: source.label,
+  url: source.href,
+}));
+const termSetId = PAGE_URL + '#terms';
+
+const jsonLd = [
+  {
+    '@type': 'Article',
+    '@id': PAGE_URL + '#article',
+    headline,
+    description,
+    url: PAGE_URL,
+    datePublished: PAGE_DATE,
+    dateModified: PAGE_DATE,
+    author: EDITOR_AUTHOR,
+    publisher: { '@id': 'https://zodiacs.org/#org' },
+    mainEntityOfPage: { '@type': 'WebPage', '@id': PAGE_URL },
+    mainEntity: { '@id': termSetId },
+    inLanguage: 'en',
+    isAccessibleForFree: true,
+    citation: citations,
+  },
+  {
+    '@type': 'DefinedTermSet',
+    '@id': termSetId,
+    name: 'Zodiacs.org astrology glossary',
+    description,
+    url: PAGE_URL,
+    inLanguage: 'en',
+    creator: EDITOR_AUTHOR,
+    publisher: { '@id': 'https://zodiacs.org/#org' },
+    hasDefinedTerm: GLOSSARY.map((entry) => ({
+      '@type': 'DefinedTerm',
+      '@id': `${PAGE_URL}#${entry.slug}`,
+      name: entry.term,
+      description: entry.definition,
+      url: `${PAGE_URL}#${entry.slug}`,
+      inDefinedTermSet: { '@id': termSetId },
+    })),
+  },
+  {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Zodiacs.org', item: 'https://zodiacs.org/' },
+      { '@type': 'ListItem', position: 2, name: 'Learn', item: 'https://zodiacs.org/learn/' },
+      { '@type': 'ListItem', position: 3, name: 'Glossary', item: PAGE_URL },
+    ],
+  },
+];
+---
+<Base
+  title={`Astrology Glossary — ${GLOSSARY.length} Terms Defined | Zodiacs.org`}
+  description={description}
+  path="/learn/glossary/"
+  type="article"
+  image="/assets/og/v2/tool/learn.png"
+  imageAlt="The astrology glossary — Zodiacs.org"
+  jsonLd={jsonLd}
+  sources={sources}
+>
+  <article class="glossary">
+    <header class="section--tight container container--narrow glossary__hero">
+      <em class="kicker">A reference for this site</em>
+      <h1 class="display">{headline}.</h1>
+      <p class="glossary__lede">
+        The words this site uses, defined against what it computes. Signs,
+        chart anatomy, aspects, motion, timing, houses, planets, and synastry,
+        with the calculation boundary stated where it matters.
+      </p>
+      <p class="glossary__count mono">{GLOSSARY.length} terms · English</p>
+    </header>
+
+    <section class="section--tight container container--narrow glossary__reference" aria-labelledby="glossary-a-z">
+      <div class="glossary__jump-head">
+        <h2 id="glossary-a-z">A–Z</h2>
+        <p id="jump-instruction">Jump to a letter</p>
+      </div>
+      <div class="glossary__jump" role="group" aria-labelledby="jump-instruction">
+        {letters.map((letter) => (
+          termsByLetter.has(letter)
+            ? <a href={`#letter-${letter.toLowerCase()}`}>{letter}</a>
+            : <span aria-hidden="true">{letter}</span>
+        ))}
+      </div>
+
+      <div id="terms" class="glossary__terms">
+        {activeLetters.map((letter) => (
+          <section class="glossary__group" aria-labelledby={`letter-${letter.toLowerCase()}`}>
+            <h3 id={`letter-${letter.toLowerCase()}`}>{letter}</h3>
+            <dl>
+              {termsByLetter.get(letter)?.map((entry) => (
+                <>
+                  <dt id={entry.slug}>
+                    <a class="glossary__anchor" href={`#${entry.slug}`}>
+                      <span>{entry.term}</span>
+                      <span class="glossary__hash" aria-hidden="true">#</span>
+                    </a>
+                  </dt>
+                  <dd>
+                    <p>{entry.definition}</p>
+                    {entry.receipt && <p class="glossary__receipt mono">{entry.receipt}</p>}
+                    {(entry.related?.length || entry.link) && (
+                      <div class="glossary__meta">
+                        {entry.related?.length && (
+                          <p>
+                            <span class="glossary__meta-label mono">Related</span>
+                            {entry.related.map((slug, index) => (
+                              <>
+                                {index > 0 && <span aria-hidden="true"> · </span>}
+                                <a href={`#${slug}`}>{termBySlug.get(slug)?.term}</a>
+                              </>
+                            ))}
+                          </p>
+                        )}
+                        {entry.link && (
+                          <p>
+                            <a class="glossary__living-link" href={entry.link.href}>
+                              {entry.link.label} →
+                            </a>
+                          </p>
+                        )}
+                      </div>
+                    )}
+                  </dd>
+                </>
+              ))}
+            </dl>
+          </section>
+        ))}
+      </div>
+    </section>
+  </article>
+</Base>
+
+<style>
+  .glossary__hero {
+    padding-top: clamp(64px, 10vw, 116px);
+    padding-bottom: clamp(42px, 7vw, 72px);
+  }
+
+  .glossary__hero h1 {
+    margin: 12px 0 18px;
+    max-width: 13ch;
+  }
+
+  .glossary__lede {
+    max-width: 60ch;
+    margin: 0;
+    font-size: clamp(1.08rem, 1.5vw, 1.25rem);
+    line-height: 1.7;
+    color: var(--text-2);
+    text-wrap: pretty;
+  }
+
+  .glossary__count {
+    margin: 20px 0 0;
+    font-size: var(--text-xs);
+    color: var(--faint);
+  }
+
+  .glossary__reference {
+    padding-top: 0;
+  }
+
+  .glossary__jump-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--hair-1);
+  }
+
+  .glossary__jump-head h2 {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: clamp(1.75rem, 3vw, 2.35rem);
+    font-weight: 500;
+    color: var(--text);
+  }
+
+  .glossary__jump-head p {
+    margin: 0;
+    font-size: var(--text-sm);
+    color: var(--muted);
+  }
+
+  .glossary__jump {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 20px 0 8px;
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+  }
+
+  .glossary__jump a,
+  .glossary__jump span {
+    display: grid;
+    width: 30px;
+    height: 30px;
+    place-items: center;
+    border: 1px solid var(--hair-1);
+    color: var(--text-2);
+    text-decoration: none;
+  }
+
+  .glossary__jump a:hover,
+  .glossary__jump a:focus-visible {
+    border-color: var(--muted);
+    color: var(--text);
+  }
+
+  .glossary__jump span {
+    color: var(--faint);
+    opacity: 0.45;
+  }
+
+  .glossary__terms {
+    padding-top: clamp(28px, 5vw, 52px);
+  }
+
+  .glossary__group {
+    display: grid;
+    grid-template-columns: 64px minmax(0, 1fr);
+    gap: clamp(20px, 4vw, 48px);
+    padding: clamp(28px, 5vw, 54px) 0;
+    border-top: 1px solid var(--hair-1);
+  }
+
+  .glossary__group:first-child {
+    border-top: 0;
+  }
+
+  .glossary__group > h3 {
+    position: sticky;
+    top: 92px;
+    align-self: start;
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+    font-weight: 400;
+    line-height: 1;
+    color: var(--faint);
+    scroll-margin-top: 110px;
+  }
+
+  .glossary__group dl {
+    display: grid;
+    grid-template-columns: minmax(150px, 0.38fr) minmax(0, 1fr);
+    margin: 0;
+  }
+
+  .glossary__group dt,
+  .glossary__group dd {
+    padding: 24px 0;
+    border-top: 1px solid var(--hair-1);
+  }
+
+  .glossary__group dt:first-of-type,
+  .glossary__group dt:first-of-type + dd {
+    padding-top: 0;
+    border-top: 0;
+  }
+
+  .glossary__group dt {
+    padding-right: clamp(18px, 4vw, 42px);
+    scroll-margin-top: 110px;
+  }
+
+  .glossary__group dd {
+    margin: 0;
+  }
+
+  .glossary__anchor {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 8px;
+    font-family: var(--font-serif);
+    font-size: clamp(1.23rem, 2vw, 1.5rem);
+    font-weight: 500;
+    line-height: 1.25;
+    color: var(--text);
+    text-decoration: none;
+  }
+
+  .glossary__hash {
+    font-family: var(--font-mono);
+    font-size: 0.65em;
+    color: var(--faint);
+    opacity: 0;
+    transition: opacity var(--dur-1) var(--ease);
+  }
+
+  .glossary__anchor:hover .glossary__hash,
+  .glossary__anchor:focus-visible .glossary__hash {
+    opacity: 1;
+  }
+
+  .glossary__group dd > p {
+    max-width: 68ch;
+    margin: 0;
+    line-height: 1.72;
+    color: var(--text-2);
+    text-wrap: pretty;
+  }
+
+  .glossary__receipt {
+    margin-top: 10px !important;
+    font-size: var(--text-xs);
+    line-height: 1.55 !important;
+    color: var(--muted) !important;
+  }
+
+  .glossary__meta {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 8px 24px;
+    margin-top: 13px;
+  }
+
+  .glossary__meta p {
+    margin: 0;
+    font-size: var(--text-sm);
+    line-height: 1.55;
+    color: var(--muted);
+  }
+
+  .glossary__meta-label {
+    margin-right: 10px;
+    font-size: 0.72em;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--faint);
+  }
+
+  .glossary__meta a {
+    color: var(--text-2);
+    text-decoration-color: var(--faint);
+    text-underline-offset: 0.18em;
+  }
+
+  .glossary__living-link {
+    color: var(--text) !important;
+    text-decoration: none !important;
+  }
+
+  .glossary__living-link:hover,
+  .glossary__living-link:focus-visible {
+    text-decoration: underline !important;
+    text-decoration-color: var(--muted) !important;
+  }
+
+  @media (max-width: 680px) {
+    .glossary__jump-head {
+      display: block;
+    }
+
+    .glossary__jump-head p {
+      margin-top: 4px;
+    }
+
+    .glossary__jump {
+      gap: 6px;
+    }
+
+    .glossary__group {
+      display: block;
+    }
+
+    .glossary__group > h3 {
+      position: static;
+      margin-bottom: 22px;
+    }
+
+    .glossary__group dl {
+      display: block;
+    }
+
+    .glossary__group dt {
+      padding: 22px 0 6px;
+      border-top: 1px solid var(--hair-1);
+    }
+
+    .glossary__group dd {
+      padding: 0 0 22px;
+      border-top: 0;
+    }
+
+    .glossary__group dt:first-of-type {
+      padding-top: 0;
+    }
+
+    .glossary__meta {
+      display: block;
+    }
+
+    .glossary__meta p + p {
+      margin-top: 8px;
+    }
+  }
+</style>
