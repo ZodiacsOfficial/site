@@ -349,7 +349,7 @@ export default function ChartTour({
       );
       feature = (
         <div class="tour__feature">
-          <div class="tour__chips" role="group" aria-label={tourText(locale, 'dotsLabel')}>
+          <div class="tour__chips" role="group" aria-label={tourText(locale, 'aspectTypesLabel')}>
             <button class="xplr-chip" type="button" aria-pressed={aspectFocus === null} onClick={() => focusAspects(null)}>
               {tourText(locale, 'allTypes')}
             </button>
@@ -411,7 +411,10 @@ export default function ChartTour({
             <span class="mono tour__sub-receipt">
               {label} · {formatLongitude(lon, locale)} · {signName(sign, locale)}
             </span>
-            {' '}{bigThree(kind, sign.slug)}
+            {/* The reading sentence exists in English only (interpretations.ts
+                has no ES tables — master-plan P10). The receipt above is fully
+                localized; better no sentence than an English one mid-Spanish. */}
+            {locale === 'en' ? <>{' '}{bigThree(kind, sign.slug)}</> : null}
           </>,
         );
       }
