@@ -424,7 +424,8 @@
   min-width: 0;
 }
 /* Long names ellipsize inside the pill — never past the card edge
-   (the .place__chip-value recipe; renamed charts have no length cap). */
+   (the .place__chip-value recipe; renamed charts have no length cap).
+   A button on /compatibility/, an <a> on /profile/ — style both. */
 .syn__pair-restore {
   appearance: none;
   border: 0;
@@ -432,6 +433,7 @@
   font: inherit;
   font-size: 13px;
   color: var(--text-2);
+  text-decoration: none;
   padding: 7px 4px 7px 14px;
   cursor: pointer;
   white-space: nowrap;

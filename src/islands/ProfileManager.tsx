@@ -5,6 +5,8 @@
  */
 import { useEffect, useState } from 'preact/hooks';
 import { deleteChart, renameChart } from '../lib/profile/store';
+import { deletePair, loadPairs, pairSideLabels, prunePairs } from '../lib/profile/pairs';
+import type { SavedPair } from '../lib/profile/pairs';
 import type { SavedChart } from '../lib/profile/schema';
 import { useProfile } from '../lib/hooks/useProfile';
 import { signForLongitude, formatLongitude, signName } from '../lib/signs';
@@ -12,10 +14,17 @@ import { encodeChartLink } from '../lib/share';
 import type { Session } from '@supabase/supabase-js';
 import type * as Sync from '../lib/profile/sync';
 import { localizePath, normalizeLocale, t, tf, type Locale, type UiKey } from '../lib/i18n';
-import { formatDate } from '../lib/i18n/dates';
+import { formatDate, intlLocale } from '../lib/i18n/dates';
 
 /** "Cancer Sun · 1907-07-06" → "Cancer Sun" for compact CTAs. */
 const handle = (name: string) => name.split('·')[0].trim() || name;
+
+// Module-local like the compatibility island's PAIR_COPY — only this
+// page uses these two strings.
+const PF_PAIR_COPY = {
+  en: { savedPairs: 'Saved comparisons', pairRemoved: 'Comparison removed.' },
+  es: { savedPairs: 'Comparaciones guardadas', pairRemoved: 'Comparación eliminada.' },
+} as const satisfies Record<Locale, Record<'savedPairs' | 'pairRemoved', string>>;
 const HAS_PROFILE_SYNC = Boolean(
   import.meta.env.PUBLIC_SUPABASE_URL &&
   (import.meta.env.PUBLIC_SUPABASE_PUBLISHABLE_KEY || import.meta.env.PUBLIC_SUPABASE_ANON_KEY)
@@ -55,9 +64,11 @@ function ChipRow({ chart, locale }: { chart: SavedChart; locale: Locale }) {
 
 export default function ProfileManager({ locale: rawLocale = 'en' }: { locale?: Locale }) {
   const locale = normalizeLocale(rawLocale);
-  const { profile } = useProfile();
+  const { profile, ready: profileReady } = useProfile();
   const [editing, setEditing] = useState<string | null>(null);
   const [draft, setDraft] = useState('');
+  const [pairs, setPairs] = useState<SavedPair[]>([]);
+  const [pairAnnounce, setPairAnnounce] = useState('');
   const [syncApi, setSyncApi] = useState<typeof Sync | null>(null);
   const [session, setSession] = useState<Session | null>(null);
   const [email, setEmail] = useState('');
@@ -96,6 +107,70 @@ export default function ProfileManager({ locale: rawLocale = 'en' }: { locale?: 
       .catch(() => {});
     return () => unsubscribe();
   }, []);
+
+  useEffect(() => {
+    setPairs(loadPairs());
+    const onPairs = (e: Event) => setPairs((e as CustomEvent<SavedPair[]>).detail);
+    window.addEventListener('zodiacs:pairs', onPairs);
+    return () => window.removeEventListener('zodiacs:pairs', onPairs);
+  }, []);
+
+  // Same read-time cleanup the compatibility island does — this page is
+  // where charts get deleted, so orphaned pairs heal right here. Never
+  // pruned against an EMPTY chart list (a corrupt or version-skewed
+  // profile read also looks empty).
+  useEffect(() => {
+    if (!profileReady || profile.charts.length === 0) return;
+    prunePairs(new Set(profile.charts.map((c) => c.id)));
+  }, [profileReady, profile]);
+
+  const sideRestorable = (side: SavedPair['a']) =>
+    side.kind === 'input' || profile.charts.some((c) => c.id === side.chartId);
+  const visiblePairs = pairs.filter((pair) => sideRestorable(pair.a) && sideRestorable(pair.b));
+
+  function onRemovePair(pair: SavedPair, index: number) {
+    if (!deletePair(pair.id)) {
+      setPairAnnounce(t(locale, 'chartSaveError'));
+      return;
+    }
+    setPairAnnounce(PF_PAIR_COPY[locale].pairRemoved);
+    requestAnimationFrame(() => {
+      const chips = document.querySelectorAll<HTMLElement>('.pf-pairs .syn__pair-restore');
+      const next = chips[Math.min(index, chips.length - 1)]
+        ?? document.querySelector<HTMLElement>('.pf-foot .btn, .pf-empty .btn');
+      next?.focus();
+    });
+  }
+
+  const pairsBlock = visiblePairs.length > 0 && (
+    <div class="syn__pairs pf-pairs">
+      <span class="mono--label" id="pf-pairs-label">{PF_PAIR_COPY[locale].savedPairs}</span>
+      <ul class="syn__pairs-list" role="list" aria-labelledby="pf-pairs-label">
+        {visiblePairs.map((pair, index) => {
+          const labels = pairSideLabels(pair, profile.charts);
+          const spoken = new Intl.ListFormat(intlLocale(locale), {
+            style: 'long', type: 'conjunction',
+          }).format(labels);
+          return (
+            <li key={pair.id} class="syn__pair">
+              <a
+                class="syn__pair-restore"
+                href={`${localizePath(locale, '/compatibility/')}?pair=${pair.id}`}
+                aria-label={`${t(locale, 'compareCharts')}: ${spoken}`}
+              >
+                {labels.join(' × ')}
+              </a>
+              <button
+                type="button" class="syn__pair-remove"
+                aria-label={`${t(locale, 'remove')}: ${spoken}`}
+                onClick={() => onRemovePair(pair, index)}
+              >×</button>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  );
 
   async function onSendLink(e: Event) {
     e.preventDefault();
@@ -212,7 +287,10 @@ export default function ProfileManager({ locale: rawLocale = 'en' }: { locale?: 
   if (profile.charts.length === 0) {
     return (
       <div class="pf">
+        <p class="sr-only" role="status">{pairAnnounce}</p>
         {syncPanel}
+        {/* Inline-side pairs need no saved charts — still show them. */}
+        {pairsBlock}
         <div class="pf-empty shell">
           <div class="core pf-empty__core">
             <h2>{t(locale, 'nothingSaved')}</h2>
@@ -230,6 +308,7 @@ export default function ProfileManager({ locale: rawLocale = 'en' }: { locale?: 
 
   return (
     <div class="pf">
+      <p class="sr-only" role="status">{pairAnnounce}</p>
       {syncPanel}
       <p class="pf-count mono">
         {profile.charts.length} {profile.charts.length === 1 ? t(locale, 'savedChartSingular') : t(locale, 'savedChartPlural')} · {session ? t(locale, 'syncedWhenSignedIn') : t(locale, 'storedBrowser')}
@@ -311,6 +390,8 @@ export default function ProfileManager({ locale: rawLocale = 'en' }: { locale?: 
           </article>
         ))}
       </div>
+
+      {pairsBlock}
 
       {profile.charts.length >= 2 && (
         <div class="pf-next shell tinted" style="--sign:var(--sign-libra)">

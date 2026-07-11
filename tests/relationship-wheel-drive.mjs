@@ -156,6 +156,33 @@ try {
   check('ES strip renders translated', /Comparaciones guardadas/.test(await es.locator('.syn__pairs').textContent() ?? ''));
   await es.close();
 
+  // Profile page: saved comparisons live beside saved charts; the chip
+  // deep-links to /compatibility/?pair= which restores and compares.
+  const pf = await browser.newPage({ viewport: { width: 1440, height: 1200 } });
+  await pf.addInitScript((prof) => localStorage.setItem('zodiacs.profile.v1', JSON.stringify(prof)), profile);
+  await pf.addInitScript((pairs) => localStorage.setItem('zodiacs.pairs.v1', JSON.stringify(pairs)), [seededPairs[0]]);
+  await pf.goto('http://127.0.0.1:4399/profile/', { waitUntil: 'networkidle' });
+  await pf.waitForSelector('.pf-pairs .syn__pair-restore', { timeout: 10000 });
+  check('profile lists the saved comparison', /Frida × Diego/.test(await pf.locator('.pf-pairs').textContent() ?? ''));
+  await shot(pf, 'pf-pairs.png');
+  await pf.locator('.pf-pairs .syn__pair-restore').first().click();
+  await pf.waitForURL(/compatibility\/\?pair=/, { timeout: 10000 });
+  await pf.waitForSelector('.rwheel', { timeout: 20000 });
+  check('profile chip deep-links into a live comparison', (await pf.locator('.wheel__transit').count()) === 11);
+  await pf.close();
+
+  // Removing from the profile page empties storage.
+  const pf2 = await browser.newPage({ viewport: { width: 1440, height: 1200 } });
+  await pf2.addInitScript((prof) => localStorage.setItem('zodiacs.profile.v1', JSON.stringify(prof)), profile);
+  await pf2.addInitScript((pairs) => localStorage.setItem('zodiacs.pairs.v1', JSON.stringify(pairs)), [seededPairs[0]]);
+  await pf2.goto('http://127.0.0.1:4399/profile/', { waitUntil: 'networkidle' });
+  await pf2.waitForSelector('.pf-pairs .syn__pair-remove', { timeout: 10000 });
+  await pf2.locator('.pf-pairs .syn__pair-remove').first().click();
+  await wait(200);
+  const pfAfter = await pf2.evaluate(() => JSON.parse(localStorage.getItem('zodiacs.pairs.v1') ?? '[]'));
+  check('removing from profile clears the pair', pfAfter.length === 0 && (await pf2.locator('.pf-pairs').count()) === 0);
+  await pf2.close();
+
   // Mobile sanity — with a saved pair of hostile-length names (renamed
   // charts have no length cap; the chips must ellipsize, not overflow).
   const longProfile = JSON.parse(JSON.stringify(profile));

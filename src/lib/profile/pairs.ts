@@ -107,6 +107,20 @@ export function hasPair(pairs: SavedPair[], a: SavedPairSide, b: SavedPairSide):
   return pairs.some((existing) => samePair(existing, probe));
 }
 
+/** Display labels for a pair's two sides. Chart sides read the LIVE
+ *  chart name (renames flow through), trimmed to its handle the way
+ *  compact CTAs do ("Cancer Sun · 1990-02-01" → "Cancer Sun"). */
+export function pairSideLabels(
+  pair: SavedPair,
+  charts: readonly { id: string; name: string }[],
+): [string, string] {
+  const handleOf = (name: string) => name.split('·')[0].trim() || name;
+  const labelOf = (side: SavedPairSide) => (side.kind === 'chart'
+    ? handleOf(charts.find((c) => c.id === side.chartId)?.name ?? side.label)
+    : side.label);
+  return [labelOf(pair.a), labelOf(pair.b)];
+}
+
 export function savePair(pair: SavedPair): 'saved' | 'exists' | 'full' | 'error' {
   const pairs = loadPairs();
   if (pairs.some((existing) => samePair(existing, pair))) return 'exists';

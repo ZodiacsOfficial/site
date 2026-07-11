@@ -372,3 +372,16 @@ closure (grep-verified against dist). All 9 visual baselines pass at
 0.0000% — the strip renders only when pairs exist. The committed drive
 grew 11 → 24 assertions (save, reload, one-tap restore, remove, inline
 restore, orphan prune, 320px long-name overflow, ES strip).
+
+## 23. Saved comparisons on the profile page
+
+`/profile/` now lists saved comparisons beside saved charts — the same
+pill chips, linking to `/compatibility/?pair={id}`, which restores the
+pair and compares (device-local ids, the `?a=&b=` convention). The two
+label strings are module-local to ProfileManager; `pairSideLabels`
+moved into `pairs.ts` so both islands share one naming rule. Both
+readers now run the guarded orphan prune. Renegotiated:
+`/compatibility/` 35 → 35.5 (the deep-link handler is host-side by
+nature, and ProfileManager importing the store split `pairs.ts` into a
+shared chunk — actuals 35.2, the same explicit small-step pattern as
+the flagship's 50.3 → 50.8 → 51.5). Drive: 27 assertions.
