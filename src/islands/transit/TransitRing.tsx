@@ -1,0 +1,251 @@
+/**
+ * The Transit Ring — the animated bi-wheel. The natal chart is the fixed
+ * inner wheel (the Wheel's pinned static path); the transiting sky is an
+ * outer ring that moves as you scrub time. Lazy-loaded by TransitTracker
+ * after the first compute, so /transits/ pays for the wheel + engine only
+ * when a chart exists to draw.
+ *
+ * One compute path: the scrubber sets a day-offset from now; a memo turns
+ * that instant into the outer ring via the (already-loaded) engine. Dragging
+ * moves the planets continuously; the steppers and "Now" glide by tweening
+ * the offset (instant under reduced motion). The active-transit list under
+ * the wheel is the accessible, reduced-motion-safe structure and updates
+ * with the scrub; a live region announces the date.
+ */
+import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
+import Wheel from '../../lib/wheel/Wheel';
+import PlanetGlyph from '../../components/PlanetGlyph';
+import AspectGlyph from '../../components/AspectGlyph';
+import { findInterAspects } from '../../lib/engine/synastry';
+import type { MinimalBody } from '../../lib/engine/synastry';
+import { buildTransitOverlay } from '../../lib/scene/overlay';
+import { overlayAspectId, overlayBodyId } from '../../lib/scene/types';
+import { renderTransitOverlay } from './renderTransitOverlay';
+import { transitLine, TRANSIT_ORB } from '../../lib/transits';
+import { formatLongitude } from '../../lib/signs';
+import { formatDateTime } from '../../lib/i18n/dates';
+import { aspectLabel, planetLabel } from '../../lib/i18n/astrology';
+import { t, type Locale } from '../../lib/i18n';
+
+export interface TransitSky {
+  body: string;
+  lon: number;
+  retrograde: boolean;
+}
+
+export interface TransitRingProps {
+  locale: Locale;
+  natal: {
+    bodies: { body: string; lon: number; retrograde?: boolean }[];
+    asc: number | null;
+    mc: number | null;
+    cusps: number[] | null;
+    minimal: MinimalBody[];
+    timeKnown: boolean;
+  };
+  /** Positions of the transiting bodies at a UTC instant (engine-bound). */
+  computeSky: (when: Date) => TransitSky[];
+  /** Baseline "now" in epoch ms (captured once at compute). */
+  nowMs: number;
+}
+
+const DAY = 86_400_000;
+const WINDOW_DAYS = 365; // scrub one year either side — enough for the slow transits
+const reducedMotion = () =>
+  typeof matchMedia !== 'undefined' && matchMedia('(prefers-reduced-motion: reduce)').matches;
+const easeInOutCubic = (k: number) => (k < 0.5 ? 4 * k * k * k : 1 - ((-2 * k + 2) ** 3) / 2);
+
+// Ring-specific copy, module-local (EN + ES) — the lazy chunk keeps it out of
+// the /transits/ static closure. General labels reuse the shared dictionary.
+const COPY = {
+  en: {
+    skyRingLabel: 'the transiting sky',
+    scrubLabel: 'Move the date',
+    scrubHint: 'Drag to move the sky forward or back; the outer ring is where the planets are then.',
+    now: 'Now',
+    back1m: '−1 month',
+    fwd1m: '+1 month',
+    outerRing: 'Outer ring: the sky then. Inner wheel: your birth chart.',
+    tapHint: 'Tap a moving planet or a connecting line to read it.',
+    noContacts: 'No planet-to-planet transits within',
+    ofExact: 'of exact',
+    moonOmitted: 'the Moon moves too fast to list, but you can watch it circle',
+    announce: 'Sky for',
+  },
+  es: {
+    skyRingLabel: 'el cielo en tránsito',
+    scrubLabel: 'Mueve la fecha',
+    scrubHint: 'Arrastra para mover el cielo hacia adelante o atrás; el anillo exterior es dónde están los planetas entonces.',
+    now: 'Ahora',
+    back1m: '−1 mes',
+    fwd1m: '+1 mes',
+    outerRing: 'Anillo exterior: el cielo de entonces. Rueda interior: tu carta natal.',
+    tapHint: 'Toca un planeta en movimiento o una línea de conexión para leerla.',
+    noContacts: 'Sin tránsitos planeta a planeta dentro de',
+    ofExact: 'de exactitud',
+    moonOmitted: 'la Luna se mueve demasiado rápido para listarla, pero puedes verla girar',
+    announce: 'Cielo para',
+  },
+} as const;
+
+export default function TransitRing({ locale, natal, computeSky, nowMs }: TransitRingProps) {
+  const c = COPY[locale] ?? COPY.en;
+  const [offset, setOffset] = useState(0);          // days from now (may be fractional mid-tween)
+  const [sel, setSel] = useState<string | null>(null);
+  const rafRef = useRef<number | null>(null);
+
+  const when = useMemo(() => new Date(nowMs + offset * DAY), [nowMs, offset]);
+
+  // The outer ring: compute the sky at `when`, aspect it to the natal chart.
+  const overlay = useMemo(() => {
+    const sky = computeSky(when);
+    const transiting = sky.filter((b) => b.body !== 'Moon').map(({ body, lon }) => ({ body, lon }));
+    const hits = findInterAspects(transiting, natal.minimal).filter((h) => h.orb <= TRANSIT_ORB);
+    const focus = sel && sel.includes('-') ? sel : null; // aspect ids carry dashes; body ids don't
+    return buildTransitOverlay(c.skyRingLabel, sky, hits, focus);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [when, sel]);
+
+  const whenLabel = formatDateTime(locale, when, {
+    year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit',
+    timeZone: 'UTC', hour12: false,
+  }) + ' UTC';
+
+  const cancelTween = () => {
+    if (rafRef.current != null) cancelAnimationFrame(rafRef.current);
+    rafRef.current = null;
+  };
+  useEffect(() => cancelTween, []);
+
+  /** Glide the offset from its current value to a target (instant if reduced). */
+  function glideTo(target: number) {
+    cancelTween();
+    if (reducedMotion()) { setOffset(target); return; }
+    const from = offset;
+    const start = performance.now();
+    const dur = Math.min(700, 200 + Math.abs(target - from) * 4);
+    const step = (nowT: number) => {
+      const k = Math.min(1, (nowT - start) / dur);
+      setOffset(from + (target - from) * easeInOutCubic(k));
+      if (k < 1) rafRef.current = requestAnimationFrame(step);
+      else { rafRef.current = null; setOffset(target); }
+    };
+    rafRef.current = requestAnimationFrame(step);
+  }
+
+  // The selected transit's sentence (a chord, or a body's tightest contact).
+  const selectedAspect = sel
+    ? overlay.aspects.find((a) => overlayAspectId(a) === sel)
+      ?? overlay.aspects.find((a) => overlayBodyId(a.outer) === sel)
+    : null;
+
+  const selectedBody = sel && !sel.includes('-')
+    ? overlay.bodies.find((b) => overlayBodyId(b.body) === sel) ?? null
+    : null;
+
+  return (
+    <div class="tring">
+      <p class="tring__caption mono--label">{c.outerRing}</p>
+
+      <div class="tring__wheelbox">
+        <Wheel
+          bodies={natal.bodies}
+          asc={natal.asc}
+          mc={natal.mc}
+          cusps={natal.cusps}
+          aspects={[]}
+          renderOverlay={(geo) => renderTransitOverlay(
+            overlay,
+            (name) => natal.bodies.find((b) => b.body === name)?.lon ?? null,
+            (id) => setSel((prev) => (prev === id ? null : id)),
+            geo,
+          )}
+        />
+      </div>
+
+      {/* The scrubber. */}
+      <div class="tring__scrub">
+        <div class="tring__scrub-head">
+          <label class="field__label" for="tring-date">{c.scrubLabel}</label>
+          <output class="tring__date mono" for="tring-date">{whenLabel}</output>
+        </div>
+        <input
+          id="tring-date"
+          class="tring__range"
+          type="range"
+          min={-WINDOW_DAYS}
+          max={WINDOW_DAYS}
+          step={1}
+          value={Math.round(offset)}
+          onInput={(e) => { cancelTween(); setOffset(Number((e.target as HTMLInputElement).value)); }}
+          aria-valuetext={whenLabel}
+        />
+        <div class="tring__steps">
+          <button class="btn btn--glass tring__step" type="button" onClick={() => glideTo(offset - 30)}>
+            <span>{c.back1m}</span>
+          </button>
+          <button class="btn btn--glass tring__step" type="button" onClick={() => glideTo(0)} disabled={Math.round(offset) === 0}>
+            <span>{c.now}</span>
+          </button>
+          <button class="btn btn--glass tring__step" type="button" onClick={() => glideTo(offset + 30)}>
+            <span>{c.fwd1m}</span>
+          </button>
+        </div>
+        <p class="field__help">{c.scrubHint} {c.tapHint}</p>
+      </div>
+
+      {/* Live announcement of the scrubbed instant. */}
+      <p class="sr-only" role="status">{c.announce} {whenLabel}</p>
+
+      {/* The selected transit, foregrounded. */}
+      {(selectedAspect || selectedBody) && (
+        <div class="tring__focus" role="status">
+          {selectedAspect && (
+            <>
+              <span class="tring__focus-receipt mono">
+                <PlanetGlyph body={selectedAspect.outer} size={13} class="pg-inline" /> {planetLabel(locale, selectedAspect.outer)}
+                {' '}<AspectGlyph type={selectedAspect.type} size={13} class="pg-inline" /> {aspectLabel(locale, selectedAspect.type)}
+                {' '}{t(locale, 'natal')} <PlanetGlyph body={selectedAspect.inner} size={13} class="pg-inline" /> {planetLabel(locale, selectedAspect.inner)}
+                {' · '}{t(locale, 'orb')} {selectedAspect.orb.toFixed(1)}°
+              </span>
+              <p class="tring__focus-read">{transitLine(selectedAspect.outer, selectedAspect.type, selectedAspect.inner)}</p>
+            </>
+          )}
+          {!selectedAspect && selectedBody && (
+            <span class="tring__focus-receipt mono">
+              <PlanetGlyph body={selectedBody.body} size={13} class="pg-inline" /> {planetLabel(locale, selectedBody.body)}
+              {' · '}{formatLongitude(selectedBody.lon, locale)}{selectedBody.retrograde ? ' ℞' : ''}
+            </span>
+          )}
+        </div>
+      )}
+
+      {/* The active transits at `when` — the accessible, reduced-motion view. */}
+      <p class="syn__tally mono">
+        {overlay.aspects.length === 0
+          ? `${c.noContacts} ${TRANSIT_ORB}° ${c.ofExact}`
+          : `${overlay.aspects.length} ${overlay.aspects.length === 1 ? t(locale, 'activeTransitWithin') : t(locale, 'activeTransitsWithin')} ${TRANSIT_ORB}° ${c.ofExact}`}
+        {' · '}{c.moonOmitted}
+      </p>
+
+      <div class="syn__aspects">
+        {overlay.aspects.map((a) => {
+          const id = overlayAspectId(a);
+          return (
+            <button
+              class={`syn__aspect tring__row${sel === id ? ' is-focus' : ''}`}
+              type="button"
+              key={id}
+              onClick={() => setSel((prev) => (prev === id ? null : id))}
+            >
+              <span class="syn__aspect-receipt mono">
+                <PlanetGlyph body={a.outer} size={13} class="pg-inline" /> {planetLabel(locale, a.outer)} <AspectGlyph type={a.type} size={13} class="pg-inline" /> {aspectLabel(locale, a.type)} {t(locale, 'natal')} <PlanetGlyph body={a.inner} size={13} class="pg-inline" /> {planetLabel(locale, a.inner)} · {t(locale, 'orb')} {a.orb.toFixed(1)}°
+              </span>
+              <span class="syn__aspect-read">{transitLine(a.outer, a.type, a.inner)}</span>
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+}

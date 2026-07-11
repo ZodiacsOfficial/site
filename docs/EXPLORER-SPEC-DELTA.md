@@ -131,3 +131,57 @@ to import directly. Measured: closure identical chunk count to pre-tour (26).
 fallbacks, loader stub, and analytics emitters; §11.9's sanctioned ceiling is
 51.6). The tour chunk itself (7.8 KB gz) is dynamic-import-excluded and gated
 only by `chunk-max`. Homepage unchanged at 40.5 of 42. Zero new dependencies.
+
+---
+
+# The Transit Ring — the bi-wheel (T-28, `/transits/`)
+
+The animated "sky moving over your chart": the natal chart is the Wheel's
+pinned inner ring; the transiting sky is an outer ring that a time scrubber
+moves through ±1 year, with transit→natal contact chords that light as they
+form. This is the second-ring foundation the synastry Relationship Wheel
+reuses.
+
+## 15. The outer ring is an overlay SLOT, not baked into the Wheel
+
+The obvious approach — an `overlay` data prop that `Wheel` renders itself —
+was measured and rejected: the overlay's rendering (10 transit marks, glyphs,
+chords) landed in the shared `Wheel` chunk and pushed `/birth-chart/` from
+50.8 to 51.5 and the homepage up 0.6 KB, because the wheel is shared by the
+birth chart, the homepage demo, and the share card. Instead `Wheel` exposes
+`renderOverlay?(geo: WheelGeometry)` — a slot handed the wheel's geometry
+(`pt`, radii, anchor). The transit-specific rendering (`renderTransitOverlay`)
+lives in the lazy transit chunk and is passed in, so its weight never touches
+the shared bundle. `Wheel`'s only added cost is the slot call + a viewBox that
+grows **only** when a slot is present — the pinned static/interactive paths
+stay byte-identical (`wheel-serialization.test.ts` unchanged; a new test pins
+the slot contract and the byte-identical no-slot path). Net flagship cost:
+`/birth-chart/` 50.8 → 51.1 (the geometry-object construction), well under the
+51.6 ceiling; homepage 40.5 → 40.7.
+
+## 16. The natal ring reuses the Wheel's STATIC path — no scene model
+
+The inner ring is drawn from plain `bodies/asc/mc/cusps` (the share-card
+path), not a `ChartSceneModel`. So a saved chart without a full recompute
+still draws, and no `buildSceneModel` is pulled onto `/transits/`. Intra-natal
+aspects are hidden (`aspects={[]}`) so only the transit chords show — the
+story is the sky against the chart, not the chart's own geometry.
+
+## 17. One compute path; motion is the scrub, not a tween
+
+The scrubber sets a day-offset; a memo turns the instant into the outer ring
+via the already-loaded engine (`computeBodies`). Dragging moves the planets
+continuously (a compute per input, cheap for 10 bodies); the steppers and
+"Now" *glide* by rAF-tweening the offset, which drives the same compute path —
+instant under `prefers-reduced-motion`. The Moon rides the outer ring (you can
+watch it circle) but stays out of the contact list. The active-transit list is
+the accessible, reduced-motion-safe view and doubles as tap targets; a live
+region announces the scrubbed date.
+
+## Budget actuals (Transit Ring)
+
+`/transits/` 27.7 KB gz of a new 30 budget; the ring chunk (Wheel + overlay +
+scrubber) is a 2.3 KB dynamic import excluded from that closure. `/transits/`
+gets no visual baseline — the outer ring is `Date.now()`-dependent, so it
+can't be snapshotted; the committed `tests/transit-ring-drive.mjs` covers it
+instead. Zero new dependencies.

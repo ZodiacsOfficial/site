@@ -629,3 +629,86 @@
 .baby-spans .baby-receipt { flex-shrink: 0; min-width: 110px; }
 
 .calc__tour-start { flex-shrink: 0; }
+
+/* ── The Transit Ring — the animated bi-wheel + time scrubber ── */
+.tring { display: grid; gap: 18px; }
+.tring__caption {
+  text-align: center;
+  color: var(--faint);
+  letter-spacing: 0.04em;
+}
+.tring__wheelbox {
+  max-width: 480px;
+  width: 100%;
+  margin: 0 auto;
+}
+.tring__scrub {
+  max-width: 520px;
+  width: 100%;
+  margin: 0 auto;
+  display: grid;
+  gap: 10px;
+}
+.tring__scrub-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+.tring__date {
+  font-size: var(--text-sm);
+  color: var(--text-1);
+  letter-spacing: 0.02em;
+}
+.tring__range {
+  width: 100%;
+  accent-color: rgba(198, 204, 218, 0.85);
+  cursor: ew-resize;
+}
+.tring__steps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+.tring__step { flex: 0 0 auto; }
+.tring__focus {
+  border: 1px solid var(--hair-2);
+  border-radius: 14px;
+  padding: 14px 16px;
+  display: grid;
+  gap: 6px;
+  background: color-mix(in oklab, var(--surface, #0d1017) 80%, transparent);
+}
+.tring__focus-receipt { font-size: var(--text-sm); color: var(--text-2); display: flex; flex-wrap: wrap; align-items: center; gap: 4px; }
+.tring__focus-read { margin: 0; font-size: var(--text-sm); color: var(--text-1); line-height: 1.6; }
+
+/* The active-transit rows double as controls (tap to focus a contact). */
+.tring__row {
+  display: grid;
+  gap: 4px;
+  width: 100%;
+  text-align: left;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  padding: 8px 10px;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+  transition: border-color var(--dur-1) var(--ease), background var(--dur-1) var(--ease);
+}
+.tring__row:hover { border-color: var(--hair-2); }
+.tring__row.is-focus {
+  border-color: var(--hair);
+  background: color-mix(in oklab, var(--surface, #0d1017) 70%, transparent);
+}
+.tring__row:focus-visible {
+  outline: 2px solid rgba(198, 204, 218, 0.6);
+  outline-offset: 2px;
+}
+
+/* The transit markers on the outer ring fade/settle with the same restraint
+   as the inner wheel; motion is JS-driven (rAF) and already reduced-aware. */
+@media (prefers-reduced-motion: reduce) {
+  .tring__range { cursor: pointer; }
+}

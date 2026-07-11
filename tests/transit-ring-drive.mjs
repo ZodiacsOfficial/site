@@ -1,0 +1,132 @@
+/**
+ * End-to-end drive of the Transit Ring against `astro preview`: seed a saved
+ * natal chart, compute, and exercise the bi-wheel — the outer transit ring
+ * renders, the scrubber moves the sky, "Now" resets, tapping a contact
+ * focuses it. Captures evidence shots.
+ *
+ *   npm run build
+ *   OUT_DIR=/tmp/shots node tests/transit-ring-drive.mjs
+ */
+import { chromium } from 'playwright-core';
+import { spawn } from 'node:child_process';
+import { setTimeout as wait } from 'node:timers/promises';
+
+const OUT = process.env.OUT_DIR ?? null;
+const CHROMIUM = process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH ?? '/opt/pw-browsers/chromium';
+
+const profile = {
+  version: 1,
+  settings: { houseSystem: 'whole' },
+  charts: [{
+    id: 'drive-frida',
+    name: 'Frida',
+    createdAt: '2026-07-11T00:00:00Z',
+    updatedAt: '2026-07-11T00:00:00Z',
+    birth: {
+      date: '1907-07-06', time: '08:30', timeKnown: true,
+      place: { name: 'Coyoacán', admin1: 'CDMX', country: 'MX', lat: 19.35, lon: -99.16, tz: 'America/Mexico_City' },
+    },
+    summary: {
+      engineVersion: '0.0.0-stale', utcISO: '1907-07-06T14:30:00Z', houseSystem: 'whole',
+      bodies: [], angles: null, flags: [],
+    },
+  }],
+};
+
+const preview = spawn('npx', ['astro', 'preview', '--port', '4399'], { stdio: 'ignore' });
+await wait(2500);
+const results = [];
+const check = (name, ok, detail = '') => { results.push({ name, ok, detail }); };
+const shot = async (t, p, o = {}) => { if (OUT) await t.screenshot({ path: `${OUT}/${p}`, ...o }).catch(() => {}); };
+
+try {
+  const browser = await chromium.launch({ executablePath: CHROMIUM });
+
+  async function run(page) {
+    await page.addInitScript((prof) => {
+      localStorage.setItem('zodiacs.profile.v1', JSON.stringify(prof));
+    }, profile);
+    await page.goto('http://127.0.0.1:4399/transits/', { waitUntil: 'networkidle' });
+    // The saved chart preselects; compute.
+    await page.waitForSelector('.calc__submit', { timeout: 15000 });
+    await page.locator('.calc__submit').click();
+    await page.waitForSelector('.tring', { timeout: 15000 });
+    await page.waitForSelector('.wheel__transit', { timeout: 15000 });
+  }
+
+  // ── Desktop ──
+  const page = await browser.newPage({ viewport: { width: 1440, height: 1100 }, deviceScaleFactor: 1 });
+  await run(page);
+
+  const transitMarks = await page.locator('.wheel__transit').count();
+  check('outer transit ring renders (≥9 bodies)', transitMarks >= 9, `${transitMarks} marks`);
+  check('contact chords render', (await page.locator('[data-transit-aspect]').count()) > 0);
+  const dateBefore = await page.locator('.tring__date').textContent();
+  await shot(page, 'transit-ring-now.png', { clip: { x: 0, y: 0, width: 1440, height: 1100 } });
+
+  // Capture one transit body's position, scrub +6 months, expect it to move.
+  const posOf = async (sel) => {
+    const b = await page.locator(sel).first().boundingBox();
+    return b ? { x: Math.round(b.x), y: Math.round(b.y) } : null;
+  };
+  const sunSel = '[data-transit="transit:Sun"] circle';
+  const sunBefore = await posOf(sunSel);
+  await page.locator('.tring__range').evaluate((el) => {
+    const set = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set;
+    set.call(el, '180');
+    el.dispatchEvent(new Event('input', { bubbles: true }));
+  });
+  await wait(300);
+  const sunAfter = await posOf(sunSel);
+  const dateAfter = await page.locator('.tring__date').textContent();
+  check('scrubbing moves the outer ring', !!sunBefore && !!sunAfter
+    && (Math.abs(sunAfter.x - sunBefore.x) > 3 || Math.abs(sunAfter.y - sunBefore.y) > 3), `${JSON.stringify(sunBefore)}→${JSON.stringify(sunAfter)}`);
+  check('scrubbing changes the date label', dateAfter !== dateBefore, `${dateBefore} → ${dateAfter}`);
+  await shot(page, 'transit-ring-scrubbed.png', { clip: { x: 0, y: 0, width: 1440, height: 1100 } });
+
+  // "Now" resets — it glides back (~700 ms), so wait out the tween.
+  await page.locator('.tring__step', { hasText: 'Now' }).click();
+  await wait(1000);
+  check('Now resets the date', (await page.locator('.tring__date').textContent()) === dateBefore, await page.locator('.tring__date').textContent() ?? '');
+
+  // Tap a transit contact row → focus block appears.
+  const firstRow = page.locator('.tring__row').first();
+  if (await firstRow.count()) {
+    await firstRow.click();
+    await wait(150);
+    check('tapping a contact opens its reading', await page.locator('.tring__focus').isVisible());
+    check('the tapped row is marked focused', (await page.locator('.tring__row.is-focus').count()) === 1);
+    await shot(page, 'transit-ring-focus.png', { clip: { x: 0, y: 0, width: 1440, height: 1100 } });
+  } else {
+    check('tapping a contact opens its reading', false, 'no contact rows (quiet sky?)');
+  }
+  await page.close();
+
+  // ── Mobile ──
+  const mob = await browser.newPage({ viewport: { width: 390, height: 900 }, deviceScaleFactor: 2, hasTouch: true });
+  await run(mob);
+  check('mobile: transit ring renders', (await mob.locator('.wheel__transit').count()) >= 9);
+  await shot(mob, 'transit-ring-mobile.png');
+  await mob.close();
+
+  // ── Reduced motion: scrub still works, jump is instant ──
+  const rm = await browser.newPage({ viewport: { width: 1440, height: 1100 }, reducedMotion: 'reduce' });
+  await run(rm);
+  const rmDate = await rm.locator('.tring__date').textContent();
+  await rm.locator('.tring__step', { hasText: '+1 month' }).click();
+  await wait(80); // well under any tween
+  check('reduced motion: stepper jumps instantly', (await rm.locator('.tring__date').textContent()) !== rmDate);
+  await rm.close();
+
+  await browser.close();
+} finally {
+  preview.kill();
+}
+
+let failed = 0;
+for (const r of results) {
+  if (!r.ok) failed += 1;
+  console.log(`${r.ok ? 'PASS' : 'FAIL'}  ${r.name}${r.detail ? `  · ${r.detail.slice(0, 90)}` : ''}`);
+}
+console.log(failed ? `\n${failed} FAILURES` : '\nALL PASS');
+process.exit(failed ? 1 : 0);
