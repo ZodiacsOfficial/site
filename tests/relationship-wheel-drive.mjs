@@ -2,7 +2,9 @@
  * End-to-end drive of the Relationship Wheel against `astro preview`:
  * seed two saved charts, compare, and exercise the bi-wheel — both rings
  * render, cross-chart chords draw, tapping a row focuses its chord, and
- * the swap button puts the other person inside. Captures evidence shots.
+ * the swap button puts the other person inside. Also drives saved
+ * comparisons: save, reload, one-tap restore, remove, inline-side
+ * restore, orphan pruning, and the ES strip. Captures evidence shots.
  *
  *   npm run build
  *   OUT_DIR=/tmp/shots node tests/relationship-wheel-drive.mjs
@@ -78,7 +80,81 @@ try {
 
   // The invite + pairing blocks survive below the module.
   check('pairing CTA renders', (await page.locator('.calc__actions .btn--ghost').count()) >= 1);
+
+  // Save the comparison → it persists and the button settles.
+  await page.locator('[data-save-pair]').click();
+  await page.waitForSelector('[data-pair-status]', { timeout: 3000 });
+  const stored = await page.evaluate(() => JSON.parse(localStorage.getItem('zodiacs.pairs.v1') ?? '[]'));
+  check('saving stores one pair of chart references', stored.length === 1
+    && stored[0].a.kind === 'chart' && stored[0].b.kind === 'chart');
+  check('save button settles into its saved state', await page.locator('[data-save-pair]').isDisabled());
+  await shot(page, 'rwheel-saved.png', { clip: { x: 0, y: 0, width: 1440, height: 1200 } });
+
+  // Reload: the saved comparison offers itself back and restores on tap.
+  await page.reload({ waitUntil: 'networkidle' });
+  await page.waitForSelector('.syn__pair-restore', { timeout: 10000 });
+  const chipText = await page.locator('.syn__pair-restore').first().textContent();
+  check('saved strip lists the pair by name', /Frida × Diego/.test(chipText ?? ''), chipText ?? '');
+  await shot(page, 'rwheel-strip.png');
+  await page.locator('.syn__pair-restore').first().click();
+  await page.waitForSelector('.rwheel', { timeout: 20000 });
+  check('tapping the chip re-runs the comparison', (await page.locator('.wheel__transit').count()) === 11);
+
+  // Remove: the chip goes away and storage empties.
+  await page.locator('.syn__pair-remove').first().click();
+  await wait(200);
+  const afterRemove = await page.evaluate(() => JSON.parse(localStorage.getItem('zodiacs.pairs.v1') ?? '[]'));
+  check('removing clears the strip', (await page.locator('.syn__pair').count()) === 0);
+  check('removing empties storage', afterRemove.length === 0);
   await page.close();
+
+  // An inline (by-value) side restores as a locked chip and still
+  // compares; a pair referencing a missing chart prunes itself.
+  const seededPairs = [
+    {
+      id: 'seeded', createdAt: '2026-07-11T00:00:00Z',
+      a: { kind: 'chart', chartId: 'drive-frida', label: 'Frida' },
+      b: {
+        kind: 'input', label: 'Diego',
+        input: {
+          date: '1886-12-08', time: '20:00', timeKnown: true,
+          lat: 21.02, lon: -101.26, tz: 'America/Mexico_City',
+          name: 'Diego', place: 'Guanajuato', houseSystem: 'whole',
+        },
+      },
+    },
+    {
+      id: 'orphan', createdAt: '2026-07-11T00:00:00Z',
+      a: { kind: 'chart', chartId: 'drive-ghost', label: 'Ghost' },
+      b: { kind: 'chart', chartId: 'drive-frida', label: 'Frida' },
+    },
+  ];
+  const mixed = await browser.newPage({ viewport: { width: 1440, height: 1200 } });
+  await mixed.addInitScript((prof) => localStorage.setItem('zodiacs.profile.v1', JSON.stringify(prof)), profile);
+  await mixed.addInitScript((pairs) => localStorage.setItem('zodiacs.pairs.v1', JSON.stringify(pairs)), seededPairs);
+  await mixed.goto('http://127.0.0.1:4399/compatibility/', { waitUntil: 'networkidle' });
+  await mixed.waitForSelector('.syn__pair-restore', { timeout: 10000 });
+  await wait(400);
+  const pruned = await mixed.evaluate(() => JSON.parse(localStorage.getItem('zodiacs.pairs.v1') ?? '[]'));
+  check('a pair referencing a missing chart prunes itself', pruned.length === 1 && pruned[0].id === 'seeded');
+  check('only the restorable pair is offered', (await mixed.locator('.syn__pair').count()) === 1);
+  await mixed.locator('.syn__pair-restore').first().click();
+  await mixed.waitForSelector('.rwheel', { timeout: 20000 });
+  check('an inline side restores and compares', (await mixed.locator('.wheel__transit').count()) === 11);
+  check('the inline side shows as a saved-comparison chip',
+    /from a saved comparison/.test(await mixed.locator('#syn-b-linked').inputValue()));
+  check('a restored own side still offers the invite', (await mixed.locator('[data-invite-link]').count()) >= 1);
+  await shot(mixed, 'rwheel-restored-inline.png', { clip: { x: 0, y: 0, width: 1440, height: 1200 } });
+  await mixed.close();
+
+  // ES: the strip renders translated.
+  const es = await browser.newPage({ viewport: { width: 1440, height: 1200 } });
+  await es.addInitScript((prof) => localStorage.setItem('zodiacs.profile.v1', JSON.stringify(prof)), profile);
+  await es.addInitScript((pairs) => localStorage.setItem('zodiacs.pairs.v1', JSON.stringify(pairs)), [seededPairs[0]]);
+  await es.goto('http://127.0.0.1:4399/es/compatibility/', { waitUntil: 'networkidle' });
+  await es.waitForSelector('.syn__pair-restore', { timeout: 10000 });
+  check('ES strip renders translated', /Comparaciones guardadas/.test(await es.locator('.syn__pairs').textContent() ?? ''));
+  await es.close();
 
   // Mobile sanity.
   const mob = await browser.newPage({ viewport: { width: 390, height: 900 }, deviceScaleFactor: 2, hasTouch: true });

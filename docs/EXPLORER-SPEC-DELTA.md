@@ -291,3 +291,57 @@ Zero closure impact anywhere: `/` 40.7/42, `/birth-chart/` 50.8/51.5,
 `/aries/` 0.0/0 all unchanged — the loader inlines, the dialog is a
 post-build bundle outside every closure. `search_open` / `search_go{kind}`
 join the analytics allowlist.
+
+---
+
+# Save a comparison — saved pairs on `/compatibility/`
+
+The relationship loop leaked: a comparison vanished on reload and had to be
+rebuilt from scratch. Now a computed comparison saves in one tap and comes
+back in one tap.
+
+## 21. Decisions
+
+- **A sibling store, not a `Profile` field.** `zodiacs.pairs.v1`
+  (`src/lib/profile/pairs.ts`, cap 12, newest first, `zodiacs:pairs`
+  event on write — the profile-store conventions). The schema header
+  warns against casual `Profile` shape changes, and the cloud sync
+  selects specific fields — a sibling key is non-breaking by
+  construction. Pairs are device-local; they don't ride the sync.
+- **A side is a reference where possible, a value where necessary.**
+  A saved chart is stored by id — renames flow through, and the pair
+  dies with the chart. Form-entered and link-received sides inline the
+  same `ShareChartInput` the invite links use. Dedupe is
+  order-insensitive (A×B is B×A) on chart ids / birth inputs, not labels.
+- **Pruning lives where pairs are read.** The first cut pruned orphaned
+  pairs from `deleteChart`/`replaceProfile` (the year-ahead-cache rule) —
+  and pushed `pairs.ts` into every page that touches the profile store
+  (`/birth-chart/` 51.6 over its 51.5). Pairs are only read on
+  `/compatibility/`, so the island prunes against the live chart list
+  once the profile is ready instead; the store never imports the module.
+- **Restore rides the existing machinery.** Chart sides restore as the
+  saved-chart select; inline sides restore as the locked chip the invite
+  links use, marked `received` only when the input actually arrived in
+  someone else's link — a received side is still never re-shared, but a
+  restored own side keeps its invite button, and the chip says "from a
+  saved comparison", not "shared with you". The compare re-runs through
+  a one-shot effect once the slots settle, synthetic-event-marked as
+  user-initiated so focus lands on the result.
+- **Strings are module-local** (`PAIR_COPY`, the RelationshipWheel
+  precedent): the central UI dictionary rides in every island page's
+  closure, and the flagship shouldn't pay for compatibility-only chrome.
+  Moving 7 keys out of the dictionary took `/birth-chart/` from 51.3
+  back to 51.1.
+- `chart_save{source:'pair'}` reuses the existing allowlisted event —
+  no Base.astro change.
+
+## Budget actuals (save a comparison)
+
+`/compatibility/` 34.4/35 (+1.5: store + strip + save UI + strings, all
+host-side — the strip must show before any compare, so it can't ride the
+lazy wheel chunk). `/birth-chart/` 51.1/51.5 and `/` 40.7/42 — the +0.3
+flagship drift is shared-chunk re-splitting, with zero pairs code in its
+closure (grep-verified against dist). All 9 visual baselines pass at
+0.0000% — the strip renders only when pairs exist. The committed drive
+grew 11 → 23 assertions (save, reload, one-tap restore, remove, inline
+restore, orphan prune, ES strip).

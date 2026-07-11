@@ -392,6 +392,59 @@
 .calc__result { display: grid; gap: clamp(18px, 3vw, 28px); scroll-margin-top: calc(80px + env(safe-area-inset-top)); }
 
 /* ── Synastry ─────────────────────────────────────────────────────── */
+.syn__pairs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 14px;
+  padding-bottom: 4px;
+}
+.syn__pairs-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.syn__pair {
+  display: inline-flex;
+  align-items: stretch;
+  border: 1px solid var(--hair-1);
+  border-radius: 999px;
+  overflow: hidden;
+}
+.syn__pair-restore {
+  appearance: none;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-size: 13px;
+  color: var(--text-2);
+  padding: 7px 4px 7px 14px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.syn__pair-restore:hover { color: var(--text); }
+.syn__pair-remove {
+  appearance: none;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-size: 14px;
+  line-height: 1;
+  color: var(--faint);
+  padding: 7px 12px 7px 8px;
+  cursor: pointer;
+}
+.syn__pair-remove:hover { color: var(--text); }
+.syn__pair-restore:focus-visible,
+.syn__pair-remove:focus-visible {
+  outline: 2px solid var(--ink-2);
+  outline-offset: -2px;
+  border-radius: 999px;
+}
+
 .syn__slots {
   display: grid;
   gap: clamp(20px, 4vw, 32px);
