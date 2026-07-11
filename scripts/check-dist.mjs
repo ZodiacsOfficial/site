@@ -14,19 +14,22 @@
  *   5. Every href/src in built *.html — site-relative and relative paths
  *      must resolve to a file; internal fragment links must point at an
  *      existing id.
- *   6. sitemap.xml — unique dated locs resolve, exclude noindex, and cover
+ *   6. search-index.json — valid, populated, sorted, and every path resolves.
+ *   7. sitemap.xml — unique dated locs resolve, exclude noindex, and cover
  *      every indexable built page's same-origin canonical.
- *   7. Root artifacts the outside world depends on are present.
- *   8. Source sky, transit, and daily snapshots cover the build date.
+ *   8. Root artifacts the outside world depends on are present.
+ *   9. Source sky, transit, and daily snapshots cover the build date.
  */
 import { readFile, readdir, stat } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
-import { dirname, resolve, join, relative } from 'node:path';
+import { dirname, resolve, join, relative, sep } from 'node:path';
+import { searchIndexShapeFailures } from './search-index-lib.mjs';
 
 const repo = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const root = resolve(repo, 'dist');
 const failures = [];
 const fail = (msg) => { failures.push(msg); };
+let searchIndexCount = 0;
 
 async function exists(path) {
   try { await stat(path); return true; } catch { return false; }
@@ -146,6 +149,10 @@ function targetPath(urlPath) {
   return clean.endsWith('/') ? join(abs, 'index.html') : abs;
 }
 
+function isInsideDist(path) {
+  return path === root || path.startsWith(`${root}${sep}`);
+}
+
 const idCache = new Map();
 async function hasId(filePath, id) {
   if (!idCache.has(filePath)) {
@@ -164,6 +171,14 @@ async function hasId(filePath, id) {
     return bundle.includes(`id: "${id}"`) || bundle.includes(`id:"${id}"`) || bundle.includes(`id="${id}"`);
   }
   return false;
+}
+
+async function hasGlossaryTermId(filePath, id) {
+  if (!idCache.has(filePath)) {
+    idCache.set(filePath, await readFile(filePath, 'utf8'));
+  }
+  const html = idCache.get(filePath);
+  return html.includes(`<dt id="${id}"`) || html.includes(`<dt id='${id}'`);
 }
 
 const files = await htmlFiles(root);
@@ -196,7 +211,91 @@ for (const file of files) {
   }
 }
 
-// ---- 5b. Share-card images (og:image / twitter:image) -------------------------
+// ---- 5b. Search index -------------------------------------------------------
+const searchIndexPath = resolve(root, 'search-index.json');
+if (!(await exists(searchIndexPath))) {
+  fail('search-index: missing search-index.json');
+} else {
+  let searchIndex;
+  let searchIndexParsed = false;
+  try {
+    searchIndex = JSON.parse(await readFile(searchIndexPath, 'utf8'));
+    searchIndexParsed = true;
+  } catch (error) {
+    fail(`search-index: invalid JSON — ${error.message}`);
+  }
+
+  if (searchIndexParsed) {
+    searchIndexCount = Array.isArray(searchIndex) ? searchIndex.length : 0;
+    for (const message of searchIndexShapeFailures(searchIndex)) {
+      fail(`search-index: ${message}`);
+    }
+
+    if (Array.isArray(searchIndex)) {
+      const indexedTermFragments = new Set();
+      let indexedTermEntries = 0;
+      for (const [position, entry] of searchIndex.entries()) {
+        if (typeof entry?.path !== 'string' || !entry.path.startsWith('/')) continue;
+        const [pagePath, encodedFragment] = entry.path.split('#', 2);
+        const target = targetPath(pagePath);
+        if (!target || !isInsideDist(target)) {
+          fail(`search-index: entry ${position} escapes dist — ${entry.path}`);
+          continue;
+        }
+        if (!(await exists(target))) {
+          fail(`search-index: entry ${position} does not resolve — ${entry.path}`);
+          continue;
+        }
+
+        if (entry.kind === 'term' && (pagePath !== '/learn/glossary/' || !encodedFragment)) {
+          fail(`search-index: term entry ${position} is not a glossary fragment — ${entry.path}`);
+        }
+        if (encodedFragment) {
+          if (entry.kind !== 'term' || pagePath !== '/learn/glossary/') {
+            fail(`search-index: fragment entry ${position} is not a glossary term — ${entry.path}`);
+            continue;
+          }
+          let fragment;
+          try {
+            fragment = decodeURIComponent(encodedFragment);
+          } catch {
+            fail(`search-index: entry ${position} has invalid fragment encoding — ${entry.path}`);
+            continue;
+          }
+          indexedTermEntries += 1;
+          if (indexedTermFragments.has(fragment)) {
+            fail(`search-index: duplicate glossary term anchor #${fragment}`);
+          }
+          indexedTermFragments.add(fragment);
+          if (!target.endsWith('.html') || !(await hasGlossaryTermId(target, fragment))) {
+            fail(`search-index: entry ${position} has no glossary term anchor — ${entry.path}`);
+          }
+        }
+      }
+
+      const glossaryPath = resolve(root, 'learn/glossary/index.html');
+      if (await exists(glossaryPath)) {
+        if (!idCache.has(glossaryPath)) {
+          idCache.set(glossaryPath, await readFile(glossaryPath, 'utf8'));
+        }
+        const glossaryHtml = idCache.get(glossaryPath);
+        const glossaryTermIds = new Set(
+          [...glossaryHtml.matchAll(/<dt\b[^>]*\bid=(["'])([^"']+)\1/gi)].map((match) => match[2]),
+        );
+        if (indexedTermEntries !== glossaryTermIds.size) {
+          fail(
+            `search-index: ${indexedTermEntries} indexed terms vs ${glossaryTermIds.size} glossary anchors`,
+          );
+        }
+        for (const id of glossaryTermIds) {
+          if (!indexedTermFragments.has(id)) fail(`search-index: missing glossary term #${id}`);
+        }
+      }
+    }
+  }
+}
+
+// ---- 5c. Share-card images (og:image / twitter:image) -------------------------
 // These live in content="…" attributes as absolute URLs, so the href/src
 // pass above never sees them — yet a broken share card fails silently in
 // the wild. Every referenced card must exist in dist.
@@ -386,4 +485,7 @@ if (failures.length) {
   for (const f of failures) console.error(`  ✗ ${f}`);
   process.exit(1);
 }
-console.log(`check-dist: OK — ${files.length} HTML files, ${feed.items.length} feed items, registry intact.`);
+console.log(
+  `check-dist: OK — ${files.length} HTML files, ${searchIndexCount} search entries, `
+  + `${feed.items.length} feed items, registry intact.`,
+);
