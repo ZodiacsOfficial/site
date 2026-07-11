@@ -17,7 +17,7 @@ const faq = [
   },
   {
     q: '¿Qué tránsitos muestra esta página?',
-    a: 'Muestra los aspectos de los diez planetas del cielo de hoy con los diez planetas de tu carta natal cuando tienen un orbe de 3 grados o menos, el margen estrecho en el que suele considerarse activo un tránsito. La Luna en tránsito no aparece en la lista porque recorre toda tu carta cada mes; su posición actual se muestra en la franja del cielo.',
+    a: 'Muestra los aspectos de los diez planetas del cielo — el de hoy o el de la fecha a la que muevas el control — con los diez planetas de tu carta natal cuando tienen un orbe de 3 grados o menos, el margen estrecho en el que suele considerarse activo un tránsito. La Luna en tránsito no aparece en la lista porque recorre toda tu carta cada mes, pero sigue en el anillo exterior, donde puedes verla girar.',
   },
   {
     q: '¿Por qué importan más los tránsitos lentos?',
@@ -32,9 +32,9 @@ const faq = [
 const jsonLd = [
   {
     '@type': 'WebPage',
-    name: 'Rastreador de tránsitos: el cielo sobre tu carta',
+    name: 'Rastreador de tránsitos: el cielo en movimiento sobre tu carta',
     url: 'https://zodiacs.org/es/transits/',
-    description: 'Consulta qué tránsitos están activos ahora en tu carta natal: el cielo de hoy comparado con tus planetas natales, con un orbe máximo de 3 grados.',
+    description: 'El cielo en movimiento sobre tu carta natal: tránsitos con un orbe máximo de 3 grados, hoy o en cualquier fecha hasta un año hacia adelante o atrás.',
     inLanguage: 'es',
     isPartOf: { '@id': 'https://zodiacs.org/#site' },
   },
@@ -50,8 +50,8 @@ const jsonLd = [
 ];
 ---
 <Base
-  title="Tránsitos de hoy sobre tu carta natal | Zodiacs.org"
-  description="Ve qué tránsitos están tocando tu carta ahora: el cielo de hoy comparado con tus planetas natales, gratis y en tu dispositivo."
+  title="Tránsitos sobre tu carta natal — el cielo en movimiento | Zodiacs.org"
+  description="Los tránsitos de hoy sobre tus planetas natales, con un orbe máximo de 3°, y un control que mueve el cielo hasta un año hacia adelante o atrás. Gratis y en tu dispositivo."
   path="/es/transits/"
   locale="es"
   image="/assets/og/v2/tool/transits.png"
@@ -62,7 +62,7 @@ const jsonLd = [
   <section class="section--tight container container--narrow">
     <div class="tool-hero reveal">
       <h1 class="display">El cielo, sobre tu carta.</h1>
-      <p>Los planetas de hoy comparados con los tuyos, con un orbe máximo de 3°. Elige una carta guardada o ingresa tus datos; nada sale de tu dispositivo.</p>
+      <p>Los planetas de hoy comparados con los tuyos, con un orbe máximo de 3°, y un control que mueve el cielo hasta un año hacia adelante o atrás, para ver cómo un tránsito se forma, culmina y se separa. Elige una carta guardada o ingresa tus datos; nada sale de tu dispositivo.</p>
     </div>
     <TransitTracker locale="es" client:load />
     <noscript>

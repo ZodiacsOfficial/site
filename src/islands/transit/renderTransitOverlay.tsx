@@ -19,7 +19,10 @@ const ASPECT_COLOR: Record<string, string> = {
 
 export function renderTransitOverlay(
   overlay: WheelOverlay,
-  natalLonOf: (name: string) => number | null,
+  /** Natal body → its collision-fanned DRAW longitude (chords must land on
+   * the drawn marker, not the true longitude, or a stellium's chord points
+   * at the neighbouring planet). */
+  natalDrawLonOf: (name: string) => number | null,
   onSelect: (id: string | null) => void,
   geo: WheelGeometry,
 ) {
@@ -36,7 +39,7 @@ export function renderTransitOverlay(
 
       {/* Transit → natal contact chords, outer marker to natal planet. */}
       {overlay.aspects.map((a) => {
-        const nl = natalLonOf(a.inner);
+        const nl = natalDrawLonOf(a.inner);
         const b = overlay.bodies.find((x) => x.body === a.outer);
         if (nl === null || !b) return null;
         const p1 = pt(b.drawLon, rOuter - size * 0.03);
@@ -85,7 +88,7 @@ export function renderTransitOverlay(
               dangerouslySetInnerHTML={{ __html: PLANET_GLYPH[b.body] ?? '' }}
             />
             {b.retrograde && (
-              <text x={p.x + size * 0.03} y={p.y - size * 0.026} text-anchor="middle" font-size={size * 0.016} fill="rgba(224,176,128,0.9)" font-family="var(--font-mono)">℞</text>
+              <text x={p.x + size * 0.03} y={p.y - size * 0.026} text-anchor="middle" font-size={size * 0.016} fill="rgba(224,176,128,0.9)" font-family="var(--font-mono)">Rx</text>
             )}
           </g>
         );

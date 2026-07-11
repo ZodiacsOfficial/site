@@ -19,6 +19,7 @@ import AspectGlyph from '../../components/AspectGlyph';
 import { findInterAspects } from '../../lib/engine/synastry';
 import type { MinimalBody } from '../../lib/engine/synastry';
 import { buildTransitOverlay } from '../../lib/scene/overlay';
+import { collisionNudge } from '../../lib/scene/layout';
 import { overlayAspectId, overlayBodyId } from '../../lib/scene/types';
 import { renderTransitOverlay } from './renderTransitOverlay';
 import { transitLine, TRANSIT_ORB } from '../../lib/transits';
@@ -75,16 +76,16 @@ const COPY = {
   es: {
     skyRingLabel: 'el cielo en tránsito',
     scrubLabel: 'Mueve la fecha',
-    scrubHint: 'Arrastra para mover el cielo hacia adelante o atrás; el anillo exterior es dónde están los planetas entonces.',
+    scrubHint: 'Arrastra para mover el cielo hacia adelante o atrás; el anillo exterior muestra dónde están los planetas en ese momento.',
     now: 'Ahora',
     back1m: '−1 mes',
     fwd1m: '+1 mes',
     outerRing: 'Anillo exterior: el cielo de entonces. Rueda interior: tu carta natal.',
-    tapHint: 'Toca un planeta en movimiento o una línea de conexión para leerla.',
-    noContacts: 'Sin tránsitos planeta a planeta dentro de',
+    tapHint: 'Toca un planeta en movimiento o una línea de conexión para leer ese tránsito.',
+    noContacts: 'Sin tránsitos planeta a planeta a menos de',
     ofExact: 'de exactitud',
-    moonOmitted: 'la Luna se mueve demasiado rápido para listarla, pero puedes verla girar',
-    announce: 'Cielo para',
+    moonOmitted: 'la Luna se mueve demasiado rápido para aparecer en la lista, pero puedes verla girar',
+    announce: 'Cielo del',
   },
 } as const;
 
@@ -97,14 +98,25 @@ export default function TransitRing({ locale, natal, computeSky, nowMs }: Transi
   const when = useMemo(() => new Date(nowMs + offset * DAY), [nowMs, offset]);
 
   // The outer ring: compute the sky at `when`, aspect it to the natal chart.
-  const overlay = useMemo(() => {
+  // Focus is applied OUTSIDE the memo — a focus tap must not re-run the
+  // ephemeris, and a focused contact that has drifted out of orb at the
+  // scrubbed date must dissolve instead of dimming the whole ring against
+  // a highlight that no longer exists.
+  const overlayBase = useMemo(() => {
     const sky = computeSky(when);
     const transiting = sky.filter((b) => b.body !== 'Moon').map(({ body, lon }) => ({ body, lon }));
     const hits = findInterAspects(transiting, natal.minimal).filter((h) => h.orb <= TRANSIT_ORB);
-    const focus = sel && sel.includes('-') ? sel : null; // aspect ids carry dashes; body ids don't
-    return buildTransitOverlay(c.skyRingLabel, sky, hits, focus);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [when, sel]);
+    return buildTransitOverlay(c.skyRingLabel, sky, hits, null);
+  }, [when, natal.minimal, computeSky, c.skyRingLabel]);
+  const focus = sel && sel.includes('-') // aspect ids carry dashes; body ids don't
+    && overlayBase.aspects.some((a) => overlayAspectId(a) === sel) ? sel : null;
+  const overlay = focus ? { ...overlayBase, focus } : overlayBase;
+
+  // The natal wheel fans crowded bodies outward; contact chords must end on
+  // the fanned marker, not the true longitude, or a stellium's chord points
+  // at the neighbouring planet. Same algorithm and input as the Wheel's own
+  // layout, so the endpoints land exactly on the drawn marks.
+  const natalDraw = useMemo(() => collisionNudge(natal.bodies), [natal.bodies]);
 
   const whenLabel = formatDateTime(locale, when, {
     year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit',
@@ -117,8 +129,11 @@ export default function TransitRing({ locale, natal, computeSky, nowMs }: Transi
   };
   useEffect(() => cancelTween, []);
 
-  /** Glide the offset from its current value to a target (instant if reduced). */
-  function glideTo(target: number) {
+  /** Glide the offset from its current value to a target (instant if reduced).
+   * Targets clamp to the scrub window and land on whole days, so stepping
+   * can neither escape ±{WINDOW_DAYS} nor strand "Now" on a fraction. */
+  function glideTo(rawTarget: number) {
+    const target = Math.max(-WINDOW_DAYS, Math.min(WINDOW_DAYS, Math.round(rawTarget)));
     cancelTween();
     if (reducedMotion()) { setOffset(target); return; }
     const from = offset;
@@ -133,6 +148,15 @@ export default function TransitRing({ locale, natal, computeSky, nowMs }: Transi
     rafRef.current = requestAnimationFrame(step);
   }
 
+  // Announce the scrubbed instant only once it settles — updating the live
+  // region on every frame of a drag or glide chatters in screen readers.
+  const [announced, setAnnounced] = useState('');
+  useEffect(() => {
+    const id = setTimeout(() => setAnnounced(`${c.announce} ${whenLabel}`), 350);
+    return () => clearTimeout(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [whenLabel]);
+
   // The selected transit's sentence (a chord, or a body's tightest contact).
   const selectedAspect = sel
     ? overlay.aspects.find((a) => overlayAspectId(a) === sel)
@@ -145,7 +169,7 @@ export default function TransitRing({ locale, natal, computeSky, nowMs }: Transi
 
   return (
     <div class="tring">
-      <p class="tring__caption mono--label">{c.outerRing}</p>
+      <p class="tring__caption mono">{c.outerRing}</p>
 
       <div class="tring__wheelbox">
         <Wheel
@@ -156,7 +180,7 @@ export default function TransitRing({ locale, natal, computeSky, nowMs }: Transi
           aspects={[]}
           renderOverlay={(geo) => renderTransitOverlay(
             overlay,
-            (name) => natal.bodies.find((b) => b.body === name)?.lon ?? null,
+            (name) => natalDraw.get(name) ?? null,
             (id) => setSel((prev) => (prev === id ? null : id)),
             geo,
           )}
@@ -194,8 +218,19 @@ export default function TransitRing({ locale, natal, computeSky, nowMs }: Transi
         <p class="field__help">{c.scrubHint} {c.tapHint}</p>
       </div>
 
-      {/* Live announcement of the scrubbed instant. */}
-      <p class="sr-only" role="status">{c.announce} {whenLabel}</p>
+      {/* Every transiting body's position at the scrubbed instant — the
+          accessible, text-first readout (the ring's marks are pointer
+          extras). Includes the Moon. */}
+      <div class="trans__sky">
+        {overlay.bodies.map((b) => (
+          <span class="trans__pos mono" key={b.body}>
+            <PlanetGlyph body={b.body} size={13} class="pg-inline" /> {formatLongitude(b.lon, locale)}{b.retrograde ? ' ℞' : ''}
+          </span>
+        ))}
+      </div>
+
+      {/* Live announcement of the scrubbed instant, once it settles. */}
+      <p class="sr-only" role="status">{announced}</p>
 
       {/* The selected transit, foregrounded. */}
       {(selectedAspect || selectedBody) && (
