@@ -55,7 +55,7 @@ describe('serializeTransitContacts', () => {
       'TRANSP:TRANSPARENT',
       'SUMMARY:Transiting Saturn conjunction natal Saturn (exact)',
       'DESCRIPTION:Exact tropical transit contact. Time: 2019-03-21 16:04 UTC. Pas',
-      ' s 1 of 3 (retrograde loop).',
+      ' s 1 of 3.',
       'END:VEVENT',
       'END:VCALENDAR',
       '',
@@ -88,8 +88,7 @@ describe('serializeTransitContacts', () => {
     expect(calendar).toContain(
       `DESCRIPTION:Exact tropical transit contact. Time: 2019-03-21 16:04 UTC.${CRLF}`,
     );
-    expect(calendar).not.toContain('Pass ');
-    expect(calendar).not.toContain('retrograde loop');
+    expect(calendar.replace(/\r\n[ \t]/g, '')).not.toContain('Pass ');
   });
 
   it('escapes TEXT and folds Unicode by UTF-8 octets', () => {
@@ -139,8 +138,11 @@ describe('/transits/sample.ics', () => {
     );
     expect(calendar.match(/BEGIN:VEVENT/g)).toHaveLength(3);
     expect(calendar.replace(/\r\n/g, '')).not.toMatch(/[\r\n]/);
-    expect(calendar).not.toContain('Pass ');
-    expect(calendar).not.toContain('retrograde loop');
+    const unfolded = calendar.replace(/\r\n[ \t]/g, '');
+    expect(unfolded).toContain('Pass 1 of 3.');
+    expect(unfolded).toContain('Pass 2 of 3.');
+    expect(unfolded).toContain('Pass 3 of 3.');
+    expect(unfolded).not.toContain('retrograde loop');
     for (const line of calendar.slice(0, -CRLF.length).split(CRLF)) {
       expect(new TextEncoder().encode(line).byteLength).toBeLessThanOrEqual(75);
     }

@@ -11,23 +11,23 @@ const SAMPLE_CONTACTS: TransitContact[] = [
     aspect: 'conjunction',
     exactUtc: '2019-03-21T16:04:00.000Z',
     pass: 1,
-    passCount: 1,
+    passCount: 3,
   },
   {
     transitBody: 'Saturn',
     natalPoint: 'Saturn',
     aspect: 'conjunction',
     exactUtc: '2019-06-09T10:19:00.000Z',
-    pass: 1,
-    passCount: 1,
+    pass: 2,
+    passCount: 3,
   },
   {
     transitBody: 'Saturn',
     natalPoint: 'Saturn',
     aspect: 'conjunction',
     exactUtc: '2019-12-13T08:51:00.000Z',
-    pass: 1,
-    passCount: 1,
+    pass: 3,
+    passCount: 3,
   },
 ];
 

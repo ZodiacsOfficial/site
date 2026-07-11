@@ -208,8 +208,10 @@ set). Markers cover the SLOW set only (Jupiter→Pluto) — the FAQ's own framin
 dots on a 730-day rail. Each marker is a real button (jump + focus); the
 "next to go exact" line gives the same jumps as text. The .ics download
 serializes the same slow set client-side via the engine-free `ical.ts` —
-no birth data in the file. `applyingBefore` is not surfaced (constant-true
-as currently defined — flagged upstream for redefinition or removal).
+no birth data in the file. `applyingBefore` was since removed
+upstream in favor of window-scoped `pass`/`passCount`; multi-pass
+contacts are numbered in the .ics ("Pass 1 of 3"), with the cause
+deliberately unasserted.
 
 ---
 
