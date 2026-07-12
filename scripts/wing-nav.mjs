@@ -44,7 +44,8 @@ export function brandMarkSvg(size = 17) {
 
 // The full nav markup (bar + Signs dropdown + mobile overlay). The Registry chip
 // is marked aria-current on every wing page (we are always in the wing here).
-export function wingNavHtml() {
+export function wingNavHtml({ includeSearch = false } = {}) {
+  const mobileSignOffset = includeSearch ? 5 : 4;
   const signGrid = NAV_SIGNS.map((s) => (
     `<a class="wnav-signs__item" href="/${s.slug}/" style="--sign:${s.hue}">` +
       `<picture class="wnav-disc"><source srcset="/assets/zodiac-icons/128/${s.slug}.avif" type="image/avif"/><img src="/assets/zodiac-icons/128/${s.slug}.webp" width="32" height="32" alt="" loading="lazy" decoding="async"/></picture>` +
@@ -53,11 +54,17 @@ export function wingNavHtml() {
     `</a>`
   )).join('');
   const mobileSigns = NAV_SIGNS.map((s, i) => (
-    `<a class="wnav-menu__sign" style="--i:${4 + i};--sign:${s.hue}" href="/${s.slug}/" aria-label="${s.name}">` +
+    `<a class="wnav-menu__sign" style="--i:${mobileSignOffset + i};--sign:${s.hue}" href="/${s.slug}/" aria-label="${s.name}">` +
       `<picture class="wnav-disc wnav-disc--lg"><source srcset="/assets/zodiac-icons/128/${s.slug}.avif" type="image/avif"/><img src="/assets/zodiac-icons/128/${s.slug}.webp" width="40" height="40" alt="" loading="lazy" decoding="async"/></picture>` +
       `<span>${s.name}</span>` +
     `</a>`
   )).join('');
+  const desktopSearch = includeSearch
+    ? '\n        <a class="wnav__link" href="/?search=1">Search ↗</a>'
+    : '';
+  const mobileSearch = includeSearch
+    ? '\n        <a class="wnav-menu__link" style="--i:4" href="/?search=1">Search ↗</a>'
+    : '';
   return `
   <div class="wnav-wrap">
     <nav class="wnav" aria-label="Primary" data-wnav>
@@ -67,7 +74,7 @@ export function wingNavHtml() {
         <a class="wnav__link" href="/tools/">Tools</a>
         <a class="wnav__link" href="/learn/">Learn</a>
         <a class="wnav__link" href="/horoscopes/">Horoscopes</a>
-        <a class="wnav__link" href="/profile/">Saved charts</a>
+        <a class="wnav__link" href="/profile/">Saved charts</a>${desktopSearch}
       </div>
       <a class="wnav__chip" href="/registry/" aria-current="page">Registry</a>
       <button class="wnav__burger" type="button" data-wnav-burger aria-expanded="false" aria-controls="wnav-menu" aria-label="Menu">
@@ -85,7 +92,7 @@ export function wingNavHtml() {
         <a class="wnav-menu__link" style="--i:0" href="/tools/">Tools</a>
         <a class="wnav-menu__link" style="--i:1" href="/learn/">Learn</a>
         <a class="wnav-menu__link" style="--i:2" href="/horoscopes/">Horoscopes</a>
-        <a class="wnav-menu__link" style="--i:3" href="/profile/">Saved charts</a>
+        <a class="wnav-menu__link" style="--i:3" href="/profile/">Saved charts</a>${mobileSearch}
       </div>
       <div class="wnav-menu__group">
         <span class="wnav-menu__label">The twelve</span>

@@ -6,6 +6,7 @@ export const SEARCH_KINDS = Object.freeze([
   'pairing',
   'page',
   'term',
+  'registry',
 ]);
 
 const SEARCH_KIND_SET = new Set(SEARCH_KINDS);
@@ -13,6 +14,10 @@ const SIGNS = [
   'aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo',
   'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces',
 ];
+const SIGN_NAMES = Object.freeze([
+  'Aries', 'Taurus', 'Gemini', 'Cancer', 'Leo', 'Virgo',
+  'Libra', 'Scorpio', 'Sagittarius', 'Capricorn', 'Aquarius', 'Pisces',
+]);
 const SIGN_PATTERN = SIGNS.join('|');
 const TOOL_ROOTS = new Set([
   'baby-zodiac',
@@ -49,6 +54,48 @@ const NAMED_ENTITIES = Object.freeze({
   rdquo: '”',
   rsquo: '’',
 });
+
+function freezeCuratedEntry(entry) {
+  return Object.freeze({
+    ...entry,
+    keywords: Object.freeze([...entry.keywords]),
+  });
+}
+
+/**
+ * The wing remains outside the consumer-page crawl. These records-register
+ * entries are deliberately small, reviewable, and independent of wing copy.
+ */
+export const CURATED_WING_ENTRIES = Object.freeze([
+  freezeCuratedEntry({
+    path: '/registry/',
+    title: 'The Zodiacs Registry',
+    description: 'The registry of the twelve signs — canonical records, provenance, and the Astrofolio catalogue.',
+    kind: 'registry',
+    keywords: ['registry', 'astrofolio', 'record', 'records'],
+  }),
+  freezeCuratedEntry({
+    path: '/thesis/',
+    title: 'The Registry Thesis',
+    description: 'Why the twelve records exist — the essay of record, with published disclosures.',
+    kind: 'registry',
+    keywords: ['registry', 'thesis', 'record', 'disclosures'],
+  }),
+  freezeCuratedEntry({
+    path: '/sdk/',
+    title: 'Zodiacs SDK',
+    description: 'Open tools for building astrology apps — charts, icons, and the registry interface.',
+    kind: 'registry',
+    keywords: ['registry', 'sdk', 'record', 'tools'],
+  }),
+  ...SIGN_NAMES.map((sign) => freezeCuratedEntry({
+    path: `/registry/${sign.toLowerCase()}/`,
+    title: `${sign} — registry record`,
+    description: `The canonical record of ${sign} in the registry: provenance, description, and verification.`,
+    kind: 'registry',
+    keywords: ['registry', 'astrofolio', 'record', sign.toLowerCase()],
+  })),
+]);
 
 function collapseWhitespace(value) {
   return value.replace(/\s+/g, ' ').trim();
@@ -207,6 +254,13 @@ export function searchIndexShapeFailures(index, { minEntries = 400 } = {}) {
     }
     if (typeof entry.kind === 'string' && !SEARCH_KIND_SET.has(entry.kind)) {
       failures.push(`entry ${position} has unknown kind ${entry.kind}`);
+    }
+    if ('keywords' in entry && (
+      !Array.isArray(entry.keywords)
+      || entry.keywords.length === 0
+      || entry.keywords.some((keyword) => typeof keyword !== 'string' || !keyword.trim())
+    )) {
+      failures.push(`entry ${position} has invalid keywords`);
     }
     if (typeof entry.path === 'string' && typeof entry.kind === 'string') {
       if (entry.kind === 'term' && !/^\/learn\/glossary\/#(?:[a-z0-9]+-)*[a-z0-9]+$/.test(entry.path)) {

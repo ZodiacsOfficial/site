@@ -15,10 +15,12 @@ const KIND_LABEL: Record<string, string> = {
   pairing: 'Pairing',
   horoscope: 'Horoscope',
   page: 'Page',
+  registry: 'Registry',
 };
 
 let root: HTMLDivElement | null = null;
 let input: HTMLInputElement | null = null;
+let closeButton: HTMLButtonElement | null = null;
 let list: HTMLUListElement | null = null;
 let status: HTMLParagraphElement | null = null;
 let opener: HTMLElement | null = null;
@@ -148,13 +150,30 @@ function build() {
     if (e.key === 'ArrowDown') { e.preventDefault(); setActive(active + 1); }
     else if (e.key === 'ArrowUp') { e.preventDefault(); setActive(active - 1); }
     else if (e.key === 'Enter' && active >= 0 && results[active]) { e.preventDefault(); go(results[active]); }
-    else if (e.key === 'Tab') e.preventDefault(); // one focusable control; Esc leaves
+    else if (e.key === 'Tab') {
+      e.preventDefault();
+      closeButton?.focus();
+    }
   });
 
   const esc = document.createElement('kbd');
   esc.className = 'zsearch__esc mono';
   esc.textContent = 'esc';
-  head.append(input, esc);
+
+  closeButton = document.createElement('button');
+  closeButton.type = 'button';
+  closeButton.className = 'zsearch__x';
+  closeButton.setAttribute('aria-label', 'Close search');
+  closeButton.textContent = '✕';
+  closeButton.addEventListener('click', close);
+  closeButton.addEventListener('keydown', (e) => {
+    if (e.key === 'Tab') {
+      e.preventDefault();
+      input?.focus();
+    }
+  });
+
+  head.append(input, esc, closeButton);
 
   list = document.createElement('ul');
   list.className = 'zsearch__list';

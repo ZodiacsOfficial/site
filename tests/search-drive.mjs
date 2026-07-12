@@ -1,7 +1,8 @@
 /**
  * End-to-end drive of the site search against `astro preview`: open with
  * the nav button, `/`, and Cmd+K; type; arrow through results; Enter
- * navigates; Escape closes and restores focus; ES pages have no search.
+ * navigates; Escape closes and restores focus; the mobile close control
+ * supports touch and a two-control keyboard loop; ES pages have no search.
  *
  *   npm run build
  *   OUT_DIR=/tmp/shots node tests/search-drive.mjs
@@ -13,7 +14,7 @@ import { setTimeout as wait } from 'node:timers/promises';
 const OUT = process.env.OUT_DIR ?? null;
 const CHROMIUM = process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH ?? '/opt/pw-browsers/chromium';
 
-const preview = spawn('npx', ['astro', 'preview', '--port', '4399'], { stdio: 'ignore' });
+const preview = spawn('npx', ['astro', 'preview', '--host', '127.0.0.1', '--port', '4399'], { stdio: 'ignore' });
 await wait(2500);
 const results = [];
 const check = (name, ok, detail = '') => { results.push({ name, ok, detail }); };
@@ -53,7 +54,7 @@ try {
   check('slash opens the dialog', await page.locator('.zsearch__panel').isVisible());
   await page.keyboard.press('Escape');
   await wait(150);
-  check('Escape closes the dialog', (await page.locator('.zsearch:not([hidden])').count()) === 0);
+  check('Escape closes the dialog', !(await page.locator('.zsearch').isVisible()));
 
   // Cmd/Ctrl+K opens too.
   await page.keyboard.press('Control+k');
@@ -65,6 +66,45 @@ try {
   check('sign results carry the disc icon', (await page.locator('.zsearch__icon').count()) >= 1);
   await shot(page, 'search-sign.png');
   await page.keyboard.press('Escape');
+
+  // At phone width the visible close control has a 44px target, closes by
+  // touch/click, and loops focus with the input in both Tab directions.
+  const mobileContext = await browser.newContext({
+    viewport: { width: 375, height: 812 },
+    hasTouch: true,
+    isMobile: true,
+  });
+  const mobile = await mobileContext.newPage();
+  await mobile.goto('http://127.0.0.1:4399/learn/', { waitUntil: 'networkidle' });
+  await mobile.locator('[data-search-open]').click();
+  const closeButton = mobile.getByRole('button', { name: 'Close search' });
+  await closeButton.waitFor({ state: 'visible', timeout: 10000 });
+  const closeBox = await closeButton.boundingBox();
+  check('mobile close control has a 44px hit area', (closeBox?.width ?? 0) >= 44 && (closeBox?.height ?? 0) >= 44, JSON.stringify(closeBox));
+  await closeButton.tap();
+  check('mobile close control closes by tap', !(await mobile.locator('.zsearch').isVisible()));
+
+  await mobile.locator('[data-search-open]').click();
+  await mobile.locator('.zsearch__input').waitFor({ state: 'visible', timeout: 10000 });
+  await mobile.keyboard.press('Tab');
+  check('Tab moves from input to close', await closeButton.evaluate((el) => document.activeElement === el));
+  const focusRing = await closeButton.evaluate((el) => {
+    const style = getComputedStyle(el);
+    return { style: style.outlineStyle, width: style.outlineWidth, color: style.outlineColor };
+  });
+  check('close control exposes a focus-visible ring', focusRing.style !== 'none' && Number.parseFloat(focusRing.width) > 0, JSON.stringify(focusRing));
+  await shot(mobile, 'search-close-focus-375.png');
+  await mobile.keyboard.press('Tab');
+  check('Tab loops from close to input', await mobile.locator('.zsearch__input').evaluate((el) => document.activeElement === el));
+  await mobile.keyboard.press('Shift+Tab');
+  check('Shift+Tab loops from input to close', await closeButton.evaluate((el) => document.activeElement === el));
+  await mobile.keyboard.press('Enter');
+  check('mobile close control closes by keyboard', !(await mobile.locator('.zsearch').isVisible()));
+
+  await mobile.locator('[data-search-open]').click();
+  await mobile.locator('.zsearch').click({ position: { x: 5, y: 5 } });
+  check('backdrop still closes the dialog', !(await mobile.locator('.zsearch').isVisible()));
+  await mobileContext.close();
 
   // Typing `/` inside a real input must NOT open the dialog.
   await page.goto('http://127.0.0.1:4399/birth-chart/', { waitUntil: 'networkidle' });
