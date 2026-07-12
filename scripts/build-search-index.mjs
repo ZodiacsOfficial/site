@@ -14,6 +14,7 @@ import { dirname, join, relative, resolve } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { GLOSSARY } from '../src/data/glossary.ts';
 import {
+  CURATED_WING_ENTRIES,
   extractPageMetadata,
   glossarySearchEntries,
   htmlFileToPath,
@@ -62,6 +63,7 @@ export async function buildSearchIndex({ distRoot = DEFAULT_DIST, minEntries = 4
 
   let entries = sortSearchEntries([
     ...pageEntries,
+    ...CURATED_WING_ENTRIES,
     ...glossarySearchEntries(GLOSSARY),
   ]);
   let json = JSON.stringify(entries);
@@ -88,7 +90,8 @@ export async function buildSearchIndex({ distRoot = DEFAULT_DIST, minEntries = 4
 
   await writeFile(resolve(distRoot, 'search-index.json'), `${json}\n`, 'utf8');
   console.log(
-    `search-index: ${pageEntries.length} pages + ${GLOSSARY.length} terms = ${entries.length} entries`
+    `search-index: ${pageEntries.length} pages + ${CURATED_WING_ENTRIES.length} curated registry entries`
+    + ` + ${GLOSSARY.length} terms = ${entries.length} entries`
     + ` · ${Buffer.byteLength(json)} bytes raw · ${(gzipBytes / 1024).toFixed(1)} KB gzip`
     + (descriptionsTrimmed ? ' · descriptions trimmed to 160 characters' : ''),
   );

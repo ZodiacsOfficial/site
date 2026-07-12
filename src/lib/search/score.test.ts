@@ -22,6 +22,18 @@ describe('scoreEntry', () => {
     );
     expect(exact).toBeGreaterThan(substring);
   });
+  it('matches optional curated keywords without exposing them as copy', () => {
+    const registryEntry: SearchEntry = {
+      path: '/registry/aries/',
+      title: 'Aries — registry record',
+      description: 'The canonical record of Aries in the registry.',
+      kind: 'registry',
+      keywords: ['astrofolio'],
+    };
+    expect(scoreEntry(registryEntry, ['astrofolio'])).toBeGreaterThan(0);
+    expect(registryEntry.title).not.toContain('astrofolio');
+    expect(registryEntry.description).not.toContain('astrofolio');
+  });
 });
 
 describe('searchIndex', () => {

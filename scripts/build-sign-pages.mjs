@@ -612,7 +612,7 @@ ${JSON.stringify(jsonLd(m), null, 2)}
   <div class="stars" aria-hidden="true"></div>
   <div class="grain" aria-hidden="true"></div>
 
-  ${wingNavHtml()}
+  ${wingNavHtml({ includeSearch: true })}
 
   <main class="pg" id="main">
     <section class="lot" aria-labelledby="lot-title">

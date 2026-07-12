@@ -598,6 +598,16 @@ const path = Astro.url.pathname;
           open(btn);
         }
       });
+      var initialUrl = new URL(window.location.href);
+      if (initialUrl.searchParams.has('search')) {
+        initialUrl.searchParams.delete('search');
+        history.replaceState(
+          history.state,
+          '',
+          initialUrl.pathname + initialUrl.search + initialUrl.hash
+        );
+        open(btn);
+      }
     })();
   </script>
 )}

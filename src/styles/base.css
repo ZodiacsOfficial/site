@@ -449,6 +449,7 @@ a.shell:hover .core { border-color: color-mix(in oklab, var(--sign, var(--accent
   align-items: flex-start;
   padding: max(13vh, 72px) 16px 16px;
 }
+.zsearch[hidden] { display: none; }
 .zsearch__panel {
   width: 100%;
   max-width: 560px;
@@ -483,6 +484,22 @@ a.shell:hover .core { border-color: color-mix(in oklab, var(--sign, var(--accent
   border: 1px solid var(--hair-2);
   border-radius: 4px;
   color: var(--faint);
+}
+.zsearch__x {
+  display: grid;
+  place-items: center;
+  flex: 0 0 44px;
+  width: 44px;
+  height: 44px;
+  margin: -11px -10px -11px 0;
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1;
+}
+.zsearch__x:focus-visible {
+  outline: 1.5px solid var(--accent);
+  outline-offset: -4px;
+  border-radius: var(--r-md);
 }
 .zsearch__list {
   margin: 0;

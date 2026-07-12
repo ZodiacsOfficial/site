@@ -136,10 +136,9 @@ const tools = [
         var connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
         var constrained = connection && (
           connection.saveData ||
-          ['slow-2g', '2g', '3g'].indexOf(connection.effectiveType) !== -1
+          ['slow-2g', '2g'].indexOf(connection.effectiveType) !== -1
         );
-        var play = function () {
-          if (constrained) return;
+        var attachSources = function () {
           if (!v.dataset.sourcesAttached) {
             v.querySelectorAll('source[data-src]').forEach(function (source) {
               source.src = source.dataset.src;
@@ -148,9 +147,29 @@ const tools = [
             v.preload = 'auto';
             v.load();
           }
+        };
+        var tryPlay = function () {
           var p = v.play();
           if (p && p.catch) p.catch(function () {});
         };
+        var play = function () {
+          if (constrained) return;
+          attachSources();
+          tryPlay();
+        };
+        v.addEventListener('error', function () {
+          if (constrained || !v.dataset.sourcesAttached || v.dataset.sourceRetry === 'true') return;
+          v.dataset.sourceRetry = 'true';
+          v.querySelectorAll('source[data-src]').forEach(function (source) {
+            source.removeAttribute('src');
+          });
+          delete v.dataset.sourcesAttached;
+          v.load();
+          window.setTimeout(function () {
+            attachSources();
+            tryPlay();
+          }, 0);
+        });
         if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
           if (window.matchMedia('(min-width: 720px)').matches) {
             play();

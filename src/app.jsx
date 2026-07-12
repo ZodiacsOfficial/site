@@ -1116,6 +1116,7 @@
                 <a className="wnav__link" href="/learn/">Learn</a>
                 <a className="wnav__link" href="/horoscopes/">Horoscopes</a>
                 <a className="wnav__link" href="/profile/">Saved charts</a>
+                <a className="wnav__link" href="/?search=1">Search ↗</a>
               </div>
               <a className="wnav__chip" href="/registry/" aria-current="page">Registry</a>
               <button type="button" className="wnav__burger" aria-expanded={menuOpen} aria-controls="wnav-menu" aria-label={menuOpen ? 'Close menu' : 'Open menu'} onClick={() => setMenuOpen((v) => !v)}>
@@ -1142,12 +1143,13 @@
                 <a className="wnav-menu__link" style={{ '--i': 1 }} href="/learn/">Learn</a>
                 <a className="wnav-menu__link" style={{ '--i': 2 }} href="/horoscopes/">Horoscopes</a>
                 <a className="wnav-menu__link" style={{ '--i': 3 }} href="/profile/">Saved charts</a>
+                <a className="wnav-menu__link" style={{ '--i': 4 }} href="/?search=1">Search ↗</a>
               </div>
               <div className="wnav-menu__group">
                 <span className="wnav-menu__label">The twelve</span>
                 <div className="wnav-menu__signs">
                   {NAV_SIGNS.map((s, i) => (
-                    <a className="wnav-menu__sign" key={s.slug} style={{ '--i': 4 + i, '--sign': s.hue }} href={`/${s.slug}/`} aria-label={s.name}>
+                    <a className="wnav-menu__sign" key={s.slug} style={{ '--i': 5 + i, '--sign': s.hue }} href={`/${s.slug}/`} aria-label={s.name}>
                       <picture className="wnav-disc wnav-disc--lg"><source srcSet={`/assets/zodiac-icons/128/${s.slug}.avif`} type="image/avif" /><img src={`/assets/zodiac-icons/128/${s.slug}.webp`} width="40" height="40" alt="" loading="lazy" decoding="async" /></picture>
                       <span>{s.name}</span>
                     </a>
