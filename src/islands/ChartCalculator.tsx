@@ -49,6 +49,7 @@ interface Props { mode: Mode; locale?: Locale }
 
 type ShareSurfaceModule = typeof import('./PositionsShareSurface');
 type TourModule = typeof import('./explorer/tour');
+type A2hsHint = import('../lib/a2hs').A2hsHint;
 
 const DIGNITY_KEY = {
   domicile: 'dignityDomicile',
@@ -88,6 +89,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   const [positionsOnly, setPositionsOnly] = useState<PositionsShareChart | null>(null);
   const [shareSurface, setShareSurface] = useState<ShareSurfaceModule | null>(null);
   const [shareDialogOpen, setShareDialogOpen] = useState(false);
+  const [a2hsHint, setA2hsHint] = useState<A2hsHint | null>(null);
   const resultRef = useRef<HTMLDivElement>(null);
   const resultHeadingRef = useRef<HTMLHeadingElement>(null);
   const errorRef = useRef<HTMLParagraphElement>(null);
@@ -348,6 +350,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
     setBusy(true);
     setError('');
     setSaved('idle');
+    setA2hsHint(null);
     setShare('idle');
     setCard('idle');
     setPositionsOnly(null);
@@ -431,6 +434,12 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
       },
     });
     setSaved(status === 'updated' ? 'saved' : status);
+    if (status === 'saved' || status === 'updated') {
+      void import('../lib/a2hs').then(({ claimA2hsHint }) => {
+        const hint = claimA2hsHint(locale, navigator.userAgent, localStorage);
+        if (hint) setA2hsHint(hint);
+      }).catch(() => {});
+    }
   }
 
   const shareUrl = () =>
@@ -912,6 +921,17 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
           {saved === 'full' && <p class="calc__error" role="alert">{t(locale, 'chartSaveFull')}</p>}
           {saved === 'error' && <p class="calc__error" role="alert">{t(locale, 'chartSaveError')}</p>}
           {saved === 'saved' && <p class="calc__saved">{t(locale, 'chartSavedBeforeLink')} <a href={localizePath(locale, '/profile/')}>{t(locale, 'chartSavedLink')}</a> {t(locale, 'chartSavedAfterLink')}</p>}
+          {a2hsHint && (
+            <div class="notice calc__a2hs" role="status">
+              <span>{a2hsHint.message}</span>
+              <button
+                type="button"
+                class="place__clear"
+                aria-label={a2hsHint.dismissLabel}
+                onClick={() => setA2hsHint(null)}
+              >×</button>
+            </div>
+          )}
 
           {/* Share: the link carries the data; no server involved */}
           {mode === 'full' && shareInput && (

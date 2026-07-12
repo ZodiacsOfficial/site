@@ -158,6 +158,8 @@
 }
 .notice a { color: var(--text); }
 .notice + .notice { margin-top: 8px; }
+.calc__a2hs { display: flex; align-items: center; justify-content: space-between; gap: 14px; }
+.calc__a2hs .place__clear { flex: 0 0 auto; }
 
 /* Big three cards */
 .calc__three { display: grid; gap: 12px; grid-template-columns: 1fr; }
@@ -394,6 +396,36 @@
 /* ── Synastry ─────────────────────────────────────────────────────── */
 /* minmax(0,1fr) columns (the .syn__slots trick): a nowrap chip must not
    set the min-content of the whole form — long names ellipsize in place. */
+.syn__quick-fill {
+  display: inline-flex;
+  align-items: stretch;
+  width: fit-content;
+  max-width: 100%;
+  margin-bottom: 2px;
+  overflow: hidden;
+  border: 1px solid var(--hair-2);
+  border-radius: var(--r-full);
+  background: rgba(198, 204, 218, 0.045);
+}
+.syn__quick-use,
+.syn__quick-dismiss {
+  color: var(--text-2);
+  font-size: 12.5px;
+}
+.syn__quick-use {
+  min-width: 0;
+  padding: 7px 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.syn__quick-dismiss {
+  flex: 0 0 auto;
+  width: 32px;
+  border-left: 1px solid var(--hair-2);
+}
+.syn__quick-use:hover,
+.syn__quick-dismiss:hover { color: var(--text); background: rgba(198, 204, 218, 0.055); }
 .syn__pairs {
   display: grid;
   grid-template-columns: minmax(0, 1fr);

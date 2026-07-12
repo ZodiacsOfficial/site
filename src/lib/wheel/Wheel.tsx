@@ -70,6 +70,8 @@ export interface WheelProps {
   size?: number;
   /** Draw-in animation on mount (respects reduced motion via CSS). */
   animate?: boolean;
+  /** Server-rendered homepage layer hooks; omitted everywhere else. */
+  preview?: boolean;
   /** Chart Explorer mode — omit for the pinned static rendering. */
   interactive?: WheelInteraction;
   /**
@@ -98,7 +100,7 @@ const ASPECT_STROKE = [0.9, 1.3, 1.8] as const;
 
 export default function Wheel({
   bodies, asc = null, mc = null, cusps = null, aspects = [], size = 420, animate = false,
-  interactive, renderOverlay,
+  interactive, preview = false, renderOverlay,
 }: WheelProps) {
   const cx = size / 2;
   const cy = size / 2;
@@ -289,7 +291,7 @@ export default function Wheel({
         const num = pt(houseMid(lon, i), (rAspects + rBodies) / 2 - size * 0.02);
         const houseRef: EntityRef = { kind: 'house', house: i + 1 };
         return (
-          <g key={i} {...(ix ? { opacity: opacityOf(`house:${i + 1}`), ...mark(houseRef) } : {})}>
+          <g key={i} class={preview ? 'wheel__house' : undefined} {...(ix ? { opacity: opacityOf(`house:${i + 1}`), ...mark(houseRef) } : {})}>
             <line
               x1={a.x} y1={a.y} x2={b.x} y2={b.y}
               stroke={isAngle ? 'rgba(238,241,247,0.4)' : 'rgba(198,204,218,0.14)'}
@@ -324,6 +326,7 @@ export default function Wheel({
               x1={p1.x} y1={p1.y} x2={p2.x} y2={p2.y}
               stroke={ASPECT_COLOR[a.type] ?? 'rgba(198,204,218,0.3)'}
               stroke-width="1"
+              class={preview ? 'wheel__aspect' : undefined}
             />
           );
         }
@@ -363,7 +366,12 @@ export default function Wheel({
         const id = `body:${b.body}`;
         const selected = ix?.selection && entityId(ix.selection) === id;
         return (
-          <g key={b.body} class="wheel__body" {...(ix ? { opacity: opacityOf(id), ...mark(bodyRef) } : {})}>
+          <g
+            key={b.body}
+            class={preview ? 'wheel__body wheel__planet' : 'wheel__body'}
+            data-preview-body={preview ? b.body : undefined}
+            {...(ix ? { opacity: opacityOf(id), ...mark(bodyRef) } : {})}
+          >
             <line x1={tick1.x} y1={tick1.y} x2={tick2.x} y2={tick2.y} stroke={sign.hue} stroke-width="1.4" />
             {selected && (
               <circle cx={p.x} cy={p.y} r={size * 0.044} fill="none" stroke={sign.hue} stroke-width="1.6" class="wheel__sel-ring" />

@@ -7,9 +7,9 @@
 import { SIGNS, signDates, signName } from '../lib/signs';
 import SignIcon from './SignIcon.astro';
 import { localizePath, normalizeLocale, t, type Locale } from '../lib/i18n';
+import { NAV_TOOLS } from '../lib/nav-tools';
 
 const links = [
-  { href: '/tools/', label: 'navTools' },
   { href: '/learn/', label: 'navLearn' },
   { href: '/horoscopes/', label: 'navHoroscopes' },
 ] as const;
@@ -24,7 +24,11 @@ const path = Astro.url.pathname;
     </a>
 
     <div class="nav__links">
-      <button class="nav__link nav__signs-btn" type="button" data-signs-toggle aria-expanded="false" aria-controls="signs-menu">
+      <button class="nav__link nav__dropdown-btn" type="button" data-tools-toggle aria-expanded="false" aria-controls="tools-menu" aria-haspopup="true">
+        {t(locale, 'navTools')}
+        <svg width="8" height="5" viewBox="0 0 8 5" fill="none" aria-hidden="true"><path d="M1 1l3 3 3-3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <button class="nav__link nav__dropdown-btn" type="button" data-signs-toggle aria-expanded="false" aria-controls="signs-menu" aria-haspopup="true">
         {t(locale, 'navSigns')}
         <svg width="8" height="5" viewBox="0 0 8 5" fill="none" aria-hidden="true"><path d="M1 1l3 3 3-3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </button>
@@ -50,7 +54,18 @@ const path = Astro.url.pathname;
     </button>
   </nav>
 
-  <div class="signs-menu" id="signs-menu" data-signs-menu hidden>
+  <div class="nav-menu tools-menu" id="tools-menu" data-tools-menu hidden>
+    <div class="tools-menu__grid">
+      {NAV_TOOLS.map((tool) => (
+        <a class="tools-menu__item" href={localizePath(locale, tool.href)}>
+          <span class="tools-menu__name">{t(locale, tool.label)}</span>
+          <span class="tools-menu__desc">{tool.sublabel[locale]}</span>
+        </a>
+      ))}
+    </div>
+  </div>
+
+  <div class="nav-menu signs-menu" id="signs-menu" data-signs-menu hidden>
     <div class="signs-menu__grid">
       {SIGNS.map((s) => (
         <a class="signs-menu__item" href={localizePath(locale, `/${s.slug}/`)} style={`--sign:${s.hue}`}>
@@ -67,16 +82,26 @@ const path = Astro.url.pathname;
   <nav aria-label="Mobile">
     <div class="mobile-menu__group">
       <span class="mobile-menu__label">{t(locale, 'navSite')}</span>
-      <a class="mobile-menu__link" style="--i:0" href={localizePath(locale, '/tools/')}>{t(locale, 'navTools')}</a>
-      <a class="mobile-menu__link" style="--i:1" href={localizePath(locale, '/learn/')}>{t(locale, 'navLearn')}</a>
-      <a class="mobile-menu__link" style="--i:2" href={localizePath(locale, '/horoscopes/')}>{t(locale, 'navHoroscopes')}</a>
-      <a class="mobile-menu__link" style="--i:3" href={localizePath(locale, '/profile/')}>{t(locale, 'navSavedCharts')}</a>
+      <a class="mobile-menu__link" style="--i:0" href={localizePath(locale, '/learn/')}>{t(locale, 'navLearn')}</a>
+      <a class="mobile-menu__link" style="--i:1" href={localizePath(locale, '/horoscopes/')}>{t(locale, 'navHoroscopes')}</a>
+      <a class="mobile-menu__link" style="--i:2" href={localizePath(locale, '/profile/')}>{t(locale, 'navSavedCharts')}</a>
+    </div>
+    <div class="mobile-menu__group">
+      <span class="mobile-menu__label">{t(locale, 'navTools')}</span>
+      <div class="mobile-menu__tools">
+        {NAV_TOOLS.map((tool, i) => (
+          <a class="mobile-menu__tool" style={`--i:${i}`} href={localizePath(locale, tool.href)}>
+            <span>{t(locale, tool.label)}</span>
+            <span class="mobile-menu__tool-desc">{tool.sublabel[locale]}</span>
+          </a>
+        ))}
+      </div>
     </div>
     <div class="mobile-menu__group">
       <span class="mobile-menu__label">{t(locale, 'navTwelve')}</span>
       <div class="mobile-menu__signs">
         {SIGNS.map((s, i) => (
-          <a class="mobile-menu__sign" style={`--i:${4 + i}`} href={localizePath(locale, `/${s.slug}/`)} aria-label={signName(s, locale)}>
+          <a class="mobile-menu__sign" style={`--i:${i}`} href={localizePath(locale, `/${s.slug}/`)} aria-label={signName(s, locale)}>
             <SignIcon sign={s.slug} size={30} />
             <span>{signName(s, locale)}</span>
           </a>
@@ -136,7 +161,7 @@ const path = Astro.url.pathname;
   .nav__dim { color: var(--text-2); font-weight: 500; }
 
   .nav__links { display: none; align-items: center; gap: 2px; }
-  @media (min-width: 760px) { .nav__links { display: inline-flex; } }
+  @media (min-width: 820px) { .nav__links { display: inline-flex; } }
 
   .nav__link {
     display: inline-flex;
@@ -175,9 +200,9 @@ const path = Astro.url.pathname;
     border-radius: 4px;
     color: var(--faint);
   }
-  @media (min-width: 760px) { .nav__search-kbd { display: inline-block; } }
-  .nav__signs-btn svg { transition: transform var(--dur-2) var(--ease); }
-  .nav__signs-btn[aria-expanded='true'] svg { transform: rotate(180deg); }
+  @media (min-width: 820px) { .nav__search-kbd { display: inline-block; } }
+  .nav__dropdown-btn svg { transition: transform var(--dur-2) var(--ease); }
+  .nav__dropdown-btn[aria-expanded='true'] svg { transform: rotate(180deg); }
 
   /* Saved-charts link tints to accent once this device has saved a chart. */
   .nav__saved.has-saves { color: var(--accent); }
@@ -211,7 +236,7 @@ const path = Astro.url.pathname;
     border-radius: 50%;
     border: 1px solid var(--hair-2);
   }
-  @media (min-width: 760px) { .nav__burger { display: none; } }
+  @media (min-width: 820px) { .nav__burger { display: none; } }
   .nav__burger-line {
     display: block;
     width: 15px;
@@ -226,8 +251,8 @@ const path = Astro.url.pathname;
   .nav__burger[aria-expanded='true'] .nav__burger-line:nth-child(2) { opacity: 0; transform: scaleX(0.4); }
   .nav__burger[aria-expanded='true'] .nav__burger-line:last-child { transform: translateY(-5.5px) rotate(-45deg); }
 
-  /* ── Signs dropdown ── */
-  .signs-menu {
+  /* ── Tools / Signs dropdowns ── */
+  .nav-menu {
     pointer-events: auto;
     margin-top: 10px;
     width: min(100% - 32px, 620px);
@@ -242,7 +267,36 @@ const path = Astro.url.pathname;
     transform: translateY(-6px) scale(0.99);
     transition: opacity var(--dur-2) var(--ease), transform var(--dur-2) var(--ease);
   }
-  .signs-menu.is-open { opacity: 1; transform: none; }
+  .nav-menu.is-open { opacity: 1; transform: none; }
+  .tools-menu { width: min(100% - 32px, 720px); }
+  .tools-menu__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2px;
+  }
+  .tools-menu__item {
+    display: grid;
+    gap: 4px;
+    min-width: 0;
+    padding: 12px;
+    border-radius: var(--r-md);
+    color: var(--text);
+    text-decoration: none;
+    transition: background var(--dur-1) var(--ease);
+  }
+  .tools-menu__item:hover,
+  .tools-menu__item:focus-visible { background: rgba(198, 204, 218, 0.07); }
+  .tools-menu__name { font-size: 14px; font-weight: 550; line-height: 1.25; }
+  .tools-menu__desc {
+    overflow: hidden;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    line-height: 1.4;
+    letter-spacing: 0.025em;
+    color: var(--faint);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
   .signs-menu__grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -304,6 +358,32 @@ const path = Astro.url.pathname;
     border-bottom: 1px solid var(--hair);
   }
   .mobile-menu__link:last-child { border-bottom: 0; }
+  .mobile-menu__tools {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .mobile-menu__tool {
+    display: grid;
+    gap: 4px;
+    min-width: 0;
+    padding: 11px 0;
+    border-bottom: 1px solid var(--hair);
+    color: var(--text);
+    font-family: var(--font-serif);
+    font-size: clamp(18px, 5vw, 22px);
+    line-height: 1.05;
+    text-decoration: none;
+  }
+  .mobile-menu__tool-desc {
+    overflow: hidden;
+    color: var(--faint);
+    font-family: var(--font-mono);
+    font-size: 9px;
+    line-height: 1.35;
+    letter-spacing: 0.02em;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
   .mobile-menu__signs {
     display: flex;
     flex-direction: column;
@@ -323,6 +403,7 @@ const path = Astro.url.pathname;
   }
   .mobile-menu__sign:last-child { border-bottom: 0; }
   .mobile-menu.is-open .mobile-menu__link,
+  .mobile-menu.is-open .mobile-menu__tool,
   .mobile-menu.is-open .mobile-menu__sign,
   .mobile-menu.is-open .mobile-menu__label {
     animation: menu-in 640ms var(--ease) both;
@@ -334,43 +415,122 @@ const path = Astro.url.pathname;
   }
   @media (prefers-reduced-motion: reduce) {
     .mobile-menu.is-open .mobile-menu__link,
+    .mobile-menu.is-open .mobile-menu__tool,
     .mobile-menu.is-open .mobile-menu__sign,
     .mobile-menu.is-open .mobile-menu__label { animation: none; }
-    .signs-menu { transition: none; }
+    .nav-menu { transition: none; }
   }
 </style>
 
 <script>
   const navWrap = document.querySelector('[data-nav]')?.parentElement;
+  const toolsBtn = document.querySelector('[data-tools-toggle]') as HTMLButtonElement | null;
+  const toolsMenu = document.querySelector('[data-tools-menu]') as HTMLElement | null;
   const signsBtn = document.querySelector('[data-signs-toggle]') as HTMLButtonElement | null;
   const signsMenu = document.querySelector('[data-signs-menu]') as HTMLElement | null;
   const burger = document.querySelector('[data-menu-toggle]') as HTMLButtonElement | null;
   const mobileMenu = document.querySelector('[data-mobile-menu]') as HTMLElement | null;
 
-  function setSigns(open: boolean) {
-    if (!signsBtn || !signsMenu) return;
-    signsBtn.setAttribute('aria-expanded', String(open));
-    if (open) {
-      signsMenu.hidden = false;
-      requestAnimationFrame(() => signsMenu.classList.add('is-open'));
-    } else {
-      signsMenu.classList.remove('is-open');
-      window.setTimeout(() => { signsMenu.hidden = true; }, 240);
+  function dropdown(
+    button: HTMLButtonElement | null,
+    menu: HTMLElement | null,
+    columns: number,
+  ) {
+    if (!button || !menu) return null;
+    const toggle = button;
+    const panel = menu;
+    const items = [...panel.querySelectorAll<HTMLAnchorElement>('a')];
+    let active = 0;
+    let hideTimer: number | undefined;
+
+    function setActive(index: number, focus = false) {
+      active = (index + items.length) % items.length;
+      items.forEach((item, i) => { item.tabIndex = i === active ? 0 : -1; });
+      if (focus) items[active]?.focus();
     }
+
+    function setOpen(open: boolean, focusIndex?: number) {
+      window.clearTimeout(hideTimer);
+      toggle.setAttribute('aria-expanded', String(open));
+      if (open) {
+        panel.hidden = false;
+        if (focusIndex !== undefined) setActive(focusIndex, true);
+        requestAnimationFrame(() => panel.classList.add('is-open'));
+      } else {
+        panel.classList.remove('is-open');
+        hideTimer = window.setTimeout(() => { panel.hidden = true; }, 240);
+      }
+    }
+
+    toggle.addEventListener('keydown', (event) => {
+      if (event.key !== 'ArrowDown' && event.key !== 'ArrowUp') return;
+      event.preventDefault();
+      setOpen(true, event.key === 'ArrowDown' ? 0 : items.length - 1);
+    });
+
+    panel.addEventListener('keydown', (event) => {
+      const item = (event.target as HTMLElement).closest<HTMLAnchorElement>('a');
+      if (!item) return;
+      const index = items.indexOf(item);
+      const moves: Record<string, number> = {
+        ArrowRight: 1,
+        ArrowLeft: -1,
+        ArrowDown: columns,
+        ArrowUp: -columns,
+      };
+      if (event.key in moves) {
+        event.preventDefault();
+        setActive(index + moves[event.key], true);
+      } else if (event.key === 'Home' || event.key === 'End') {
+        event.preventDefault();
+        setActive(event.key === 'Home' ? 0 : items.length - 1, true);
+      } else if (event.key === 'Escape') {
+        event.preventDefault();
+        event.stopPropagation();
+        setOpen(false);
+        toggle.focus();
+      }
+    });
+
+    items.forEach((item, index) => {
+      item.addEventListener('focus', () => setActive(index));
+    });
+    setActive(0);
+
+    return {
+      button: toggle,
+      menu: panel,
+      isOpen: () => toggle.getAttribute('aria-expanded') === 'true',
+      setOpen,
+    };
   }
 
-  signsBtn?.addEventListener('click', () => {
-    setSigns(signsBtn.getAttribute('aria-expanded') !== 'true');
+  const toolsDropdown = dropdown(toolsBtn, toolsMenu, 2);
+  const signsDropdown = dropdown(signsBtn, signsMenu, 3);
+
+  toolsDropdown?.button.addEventListener('click', () => {
+    const open = !toolsDropdown.isOpen();
+    signsDropdown?.setOpen(false);
+    toolsDropdown.setOpen(open);
   });
-  document.addEventListener('click', (e) => {
-    if (!navWrap?.contains(e.target as Node)) setSigns(false);
+  toolsDropdown?.button.addEventListener('keydown', (event) => {
+    if (event.key === 'ArrowDown' || event.key === 'ArrowUp') signsDropdown?.setOpen(false);
   });
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') { setSigns(false); setMobile(false); }
+  signsDropdown?.button.addEventListener('click', () => {
+    const open = !signsDropdown.isOpen();
+    toolsDropdown?.setOpen(false);
+    signsDropdown.setOpen(open);
+  });
+  signsDropdown?.button.addEventListener('keydown', (event) => {
+    if (event.key === 'ArrowDown' || event.key === 'ArrowUp') toolsDropdown?.setOpen(false);
   });
 
   function setMobile(open: boolean) {
     if (!burger || !mobileMenu) return;
+    if (open) {
+      toolsDropdown?.setOpen(false);
+      signsDropdown?.setOpen(false);
+    }
     burger.setAttribute('aria-expanded', String(open));
     mobileMenu.hidden = !open;
     mobileMenu.classList.toggle('is-open', open);
@@ -381,6 +541,24 @@ const path = Astro.url.pathname;
   });
   mobileMenu?.addEventListener('click', (e) => {
     if ((e.target as HTMLElement).closest('a')) setMobile(false);
+  });
+  document.addEventListener('click', (event) => {
+    if (navWrap?.contains(event.target as Node)) return;
+    toolsDropdown?.setOpen(false);
+    signsDropdown?.setOpen(false);
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key !== 'Escape') return;
+    const focused = document.activeElement;
+    const restore = toolsDropdown?.menu.contains(focused)
+      ? toolsDropdown.button
+      : signsDropdown?.menu.contains(focused)
+        ? signsDropdown.button
+        : null;
+    toolsDropdown?.setOpen(false);
+    signsDropdown?.setOpen(false);
+    setMobile(false);
+    restore?.focus();
   });
 
   // Profile glyph fills once anything is saved on this device.

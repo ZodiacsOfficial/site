@@ -232,7 +232,31 @@ const tools = [
       <p>Frida Kahlo's chart, calculated from the 1907 sky and read in plain terms.</p>
     </div>
     <div class="reveal">
-      <DemoChart client:visible />
+      <DemoChart />
+      <script is:inline>
+        (function () {
+          var root = document.querySelector('[data-demo-preview]');
+          if (!root) return;
+          var caption = root.querySelector('[data-demo-caption]');
+          var buttons = root.querySelectorAll('[data-demo-layer]');
+          if (!caption || !buttons.length) return;
+          var initial = caption.textContent;
+          buttons.forEach(function (button) {
+            button.addEventListener('click', function () {
+              var clear = button.getAttribute('aria-pressed') === 'true';
+              buttons.forEach(function (item) { item.setAttribute('aria-pressed', 'false'); });
+              if (clear) {
+                delete root.dataset.activeLayer;
+                caption.textContent = initial;
+                return;
+              }
+              button.setAttribute('aria-pressed', 'true');
+              root.dataset.activeLayer = button.dataset.demoLayer;
+              caption.textContent = button.dataset.demoCopy;
+            });
+          });
+        })();
+      </script>
     </div>
   </section>
 
@@ -597,6 +621,87 @@ const tools = [
   :global(.demo) { display: grid; gap: 22px; grid-template-columns: 1fr; align-items: start; }
   @media (min-width: 960px) { :global(.demo) { grid-template-columns: 1.15fr 0.85fr; } }
   :global(.demo__wheel-core) { padding: clamp(14px, 2.5vw, 26px); }
+  :global(.demo__wheel-stage) { position: relative; }
+  :global(.demo__targets) { position: absolute; inset: 0; pointer-events: none; }
+  :global(.demo__target) {
+    position: absolute;
+    left: calc(var(--x) * 1%);
+    top: calc(var(--y) * 1%);
+    width: clamp(24px, 7.4%, 38px);
+    aspect-ratio: 1;
+    translate: -50% -50%;
+    padding: 0;
+    border: 1px solid transparent;
+    border-radius: 50%;
+    background: transparent;
+    pointer-events: auto;
+    cursor: pointer;
+  }
+  :global(.demo__target--planet) {
+    width: min(38px, calc(var(--hit) * 1%));
+    z-index: 3;
+  }
+  :global(.demo__target--planet::before) {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 28px;
+    aspect-ratio: 1;
+    translate: -50% -50%;
+    border: 1px solid transparent;
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  :global(.demo__target--house) { width: clamp(22px, 6.6%, 34px); z-index: 2; }
+  :global(.demo__target--aspect) { width: clamp(20px, 6%, 31px); z-index: 1; }
+  :global(.demo__target:hover),
+  :global(.demo__target[aria-pressed='true']) {
+    border-color: color-mix(in oklab, var(--sign, var(--text)) 55%, transparent);
+    background: color-mix(in oklab, var(--sign, var(--text)) 11%, transparent);
+  }
+  :global(.demo__target--planet:hover),
+  :global(.demo__target--planet[aria-pressed='true']) {
+    border-color: transparent;
+    background: transparent;
+  }
+  :global(.demo__target--planet:hover::before),
+  :global(.demo__target--planet[aria-pressed='true']::before) {
+    border-color: color-mix(in oklab, var(--sign) 55%, transparent);
+    background: color-mix(in oklab, var(--sign) 11%, transparent);
+  }
+  :global(.demo__target:focus-visible) {
+    outline: 2px solid var(--text);
+    outline-offset: 2px;
+  }
+  :global(.demo__target--planet:focus-visible) { outline-offset: 7px; }
+  :global(.demo__wheel-stage .wheel__body),
+  :global(.demo__wheel-stage .wheel__house),
+  :global(.demo__wheel-stage .wheel__aspect) {
+    transition: opacity var(--dur-1) var(--ease);
+  }
+  :global(.demo[data-active-layer='planets'] .wheel__house),
+  :global(.demo[data-active-layer='planets'] .wheel__aspect),
+  :global(.demo[data-active-layer='houses'] .wheel__body),
+  :global(.demo[data-active-layer='houses'] .wheel__aspect),
+  :global(.demo[data-active-layer='aspects'] .wheel__body),
+  :global(.demo[data-active-layer='aspects'] .wheel__house) { opacity: 0.16; }
+  :global(.demo__preview-hint) {
+    margin: 10px 0 0;
+    text-align: center;
+    color: var(--faint);
+    font-size: 10.5px;
+    letter-spacing: 0.04em;
+  }
+  :global(.demo__caption) {
+    margin: 7px auto 0;
+    max-width: 62ch;
+    min-height: 3.2em;
+    color: var(--text-2);
+    font-size: var(--text-sm);
+    line-height: 1.6;
+  }
+  :global(.demo__caption a) { color: var(--text); white-space: nowrap; }
   :global(.demo__receipt) { margin: 12px 0 0; text-align: center; font-size: 10.5px; letter-spacing: 0.06em; color: var(--faint); }
   :global(.demo__callouts) { display: grid; gap: 12px; align-content: start; }
   :global(.demo__callout) {
@@ -612,50 +717,10 @@ const tools = [
   :global(.demo__cta-line) { margin: 8px 0 2px; font-size: var(--text-sm); color: var(--muted); line-height: 1.6; }
   :global(.demo__cta-line strong) { color: var(--text); }
 
-  /* The demo CTA wears the same liquid-glass capsule as the hero primary.
-     It sits over the void rather than footage, so the frosted floor leans on
-     its rim light and top sheen to read as glass; the arrow disc stays a
-     solid white token as the bright anchor. */
-  :global(.demo__cta.btn--primary) {
-    background:
-      linear-gradient(180deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0) 48%),
-      rgba(22, 26, 36, 0.55);
-    backdrop-filter: blur(12px) saturate(140%) brightness(1.16);
-    -webkit-backdrop-filter: blur(12px) saturate(140%) brightness(1.16);
-    border-color: rgba(238, 241, 247, 0.40);
-    color: var(--ink-0, #EEF1F7);
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.34),
-      inset 0 -12px 22px -14px rgba(255, 255, 255, 0.08),
-      0 8px 26px -12px rgba(0, 0, 0, 0.5);
-  }
-  :global(.demo__cta.btn--primary:hover) {
-    background:
-      linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0) 48%),
-      rgba(30, 35, 47, 0.62);
-    border-color: rgba(238, 241, 247, 0.5);
-  }
-  :global(.demo__cta.btn--primary) .orb {
-    background: var(--ink-0, #EEF1F7);
-    border-color: rgba(238, 241, 247, 0.5);
-    color: var(--void-0, #060709);
-  }
-  :global(.demo__cta.btn--primary:hover) .orb { background: #ffffff; }
-  /* Chromium additionally refracts the void/dust through the capsule lens. */
-  :global(html.zdx-lens .demo__cta.btn--primary) {
-    background:
-      linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0) 48%),
-      rgba(22, 26, 36, 0.42);
-    backdrop-filter: url(#zdx-lens-cta);
-    -webkit-backdrop-filter: url(#zdx-lens-cta);
-    border-color: rgba(238, 241, 247, 0.32);
-  }
-  @media (prefers-reduced-transparency: reduce) {
-    :global(.demo__cta.btn--primary) {
-      background: rgba(24, 28, 39, 0.92);
-      backdrop-filter: none;
-      -webkit-backdrop-filter: none;
-    }
+  @media (prefers-reduced-motion: reduce) {
+    :global(.demo__wheel-stage .wheel__body),
+    :global(.demo__wheel-stage .wheel__house),
+    :global(.demo__wheel-stage .wheel__aspect) { transition: none; }
   }
 
   /* ── The Twelve ── */
