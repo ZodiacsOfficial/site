@@ -71,7 +71,7 @@ export const NAV_TOOLS = [
     href: '/birthday/',
     label: 'birthday',
     sublabel: {
-      en: 'Pick your birthday and get the receipts.',
+      en: 'Pick your birthday and get the receipts: sun sign verified across 1940–2030, exact degree spans, decans with traditional rulers, and year-by-year cusp tables.',
       es: 'Un cumpleaños, un aniversario, cualquier fecha.',
     },
   },

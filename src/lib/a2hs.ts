@@ -28,7 +28,8 @@ const COPY = {
 
 /** User-agent routing only chooses the instruction; it never changes behavior. */
 export function a2hsPlatform(userAgent: string): A2hsPlatform | null {
-  const iosSafari = /\b(?:iPhone|iPad|iPod)\b/.test(userAgent)
+  const iPadOsSafari = /\bMacintosh\b/.test(userAgent) && /\bMobile\//.test(userAgent);
+  const iosSafari = (/\b(?:iPhone|iPad|iPod)\b/.test(userAgent) || iPadOsSafari)
     && /Safari\//.test(userAgent)
     && !/(?:CriOS|FxiOS|EdgiOS|OPiOS)\//.test(userAgent);
   if (iosSafari) return 'ios';

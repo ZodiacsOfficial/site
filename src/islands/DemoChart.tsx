@@ -6,9 +6,10 @@
 import Wheel from '../lib/wheel/Wheel';
 import { formatLongitude, signForLongitude } from '../lib/signs';
 import { bigThree } from '../lib/interpretations';
+import { t } from '../lib/i18n';
 import { matchAspect } from '../lib/engine/aspects';
 import { houseOf, norm } from '../lib/engine/houses';
-import { NATAL_HOUSE_THEME, natalAspectLine, planetInHouseLine } from '../lib/natal';
+import { natalAspectLine, planetInHouseLine } from '../lib/natal';
 import { collisionNudge } from '../lib/scene/layout';
 import demo from '../data/demo-chart-frida.json';
 
@@ -18,8 +19,6 @@ const FRAME = SIZE + PAD * 2;
 const R_BODIES = SIZE * 0.31;
 const R_ASPECTS = SIZE * 0.235;
 const R_HOUSE_LABELS = (R_ASPECTS + R_BODIES) / 2 - SIZE * 0.02;
-const ORDINAL = ['first', 'second', 'third', 'fourth', 'fifth', 'sixth', 'seventh', 'eighth', 'ninth', 'tenth', 'eleventh', 'twelfth'];
-
 function point(lon: number, radius: number) {
   const phi = ((180 + (lon - demo.angles.asc)) * Math.PI) / 180;
   return {
@@ -66,7 +65,7 @@ export default function DemoChart() {
       label: `House ${house}`,
       caption: occupant
         ? planetInHouseLine(occupant.body, house)
-        : `The ${ORDINAL[index]} house covers ${NATAL_HOUSE_THEME[house]}.`,
+        : t('en', 'emptyHouseNote'),
       point: point(norm(cusp + 15), R_HOUSE_LABELS),
     };
   });
