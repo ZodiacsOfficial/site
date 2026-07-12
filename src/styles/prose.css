@@ -42,6 +42,20 @@
 }
 .prose a:hover { text-decoration-color: var(--sign, var(--accent)); }
 
+/* A button remains a button when it sits inside long-form prose. The prose
+   anchor rule is intentionally more specific than the base link styles; give
+   button variants their material colors back here instead of fixing each CTA
+   at the page level. */
+.prose .btn { text-decoration: none; }
+.prose .btn--primary,
+.prose .btn--primary > :not(.orb) { color: var(--void-0); }
+.prose .btn--ghost,
+.prose .btn--ghost > :not(.orb) { color: var(--text); }
+.prose .btn--glass,
+.prose .btn--glass > :not(.orb),
+.prose .btn--glass-media,
+.prose .btn--glass-media > :not(.orb) { color: var(--ink-0); }
+
 .prose ul, .prose ol { padding-left: 1.3em; margin: 0 0 1.05em; }
 .prose li { margin: 0.35em 0; }
 .prose li::marker { color: var(--faint); }
