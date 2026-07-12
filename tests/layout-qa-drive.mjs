@@ -183,17 +183,24 @@ async function inspectAboutCta(page, width) {
   await page.goto(`${BASE}/about/`, { waitUntil: 'networkidle' });
   const cta = await page.locator('.about-cta .btn--primary').evaluate((element) => {
     const style = getComputedStyle(element);
+    const label = element.querySelector(':scope > :not(.orb)');
+    const labelStyle = label ? getComputedStyle(label) : null;
     return {
       color: style.color,
       backgroundColor: style.backgroundColor,
+      labelColor: labelStyle?.color ?? null,
       textDecoration: style.textDecorationLine,
     };
   });
-  const ratio = contrast(cta.color, cta.backgroundColor);
-  check(`about ${width}px: primary CTA text meets contrast`, ratio >= 4.5,
-    `${ratio.toFixed(2)}:1 · ${cta.color} on ${cta.backgroundColor}`);
+  const buttonRatio = contrast(cta.color, cta.backgroundColor);
+  const labelRatio = cta.labelColor ? contrast(cta.labelColor, cta.backgroundColor) : 0;
+  check(`about ${width}px: primary CTA text meets contrast`, buttonRatio >= 4.5,
+    `${buttonRatio.toFixed(2)}:1 · ${cta.color} on ${cta.backgroundColor}`);
+  check(`about ${width}px: primary CTA label meets contrast`, labelRatio >= 4.5,
+    `${labelRatio.toFixed(2)}:1 · ${cta.labelColor ?? 'missing'} on ${cta.backgroundColor}`);
   check(`about ${width}px: CTA is not styled as a prose link`, cta.textDecoration === 'none', cta.textDecoration);
-  if (ratio < 4.5) recordFinding('about', width, 'cta-contrast', `${ratio.toFixed(2)}:1 · ${cta.color} on ${cta.backgroundColor}`);
+  if (buttonRatio < 4.5) recordFinding('about', width, 'cta-contrast', `${buttonRatio.toFixed(2)}:1 · ${cta.color} on ${cta.backgroundColor}`);
+  if (labelRatio < 4.5) recordFinding('about', width, 'cta-label-contrast', `${labelRatio.toFixed(2)}:1 · ${cta.labelColor ?? 'missing'} on ${cta.backgroundColor}`);
 }
 
 async function inspectAutocomplete(page, routeName, path, inputSelector, listSelector, flowSelector, width) {

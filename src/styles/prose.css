@@ -47,10 +47,14 @@
    button variants their material colors back here instead of fixing each CTA
    at the page level. */
 .prose .btn { text-decoration: none; }
-.prose .btn--primary { color: var(--void-0); }
-.prose .btn--ghost { color: var(--text); }
+.prose .btn--primary,
+.prose .btn--primary > :not(.orb) { color: var(--void-0); }
+.prose .btn--ghost,
+.prose .btn--ghost > :not(.orb) { color: var(--text); }
 .prose .btn--glass,
-.prose .btn--glass-media { color: var(--ink-0); }
+.prose .btn--glass > :not(.orb),
+.prose .btn--glass-media,
+.prose .btn--glass-media > :not(.orb) { color: var(--ink-0); }
 
 .prose ul, .prose ol { padding-left: 1.3em; margin: 0 0 1.05em; }
 .prose li { margin: 0.35em 0; }
