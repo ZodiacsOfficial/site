@@ -2,7 +2,6 @@
 import { getCollection } from 'astro:content';
 import Base from '../../../layouts/Base.astro';
 import PlanetGlyph from '../../../components/PlanetGlyph';
-import { signBySlug } from '../../../lib/signs';
 import '../../../styles/cluster.css';
 
 const PLANET_ORDER = [
@@ -31,7 +30,7 @@ const planets = PLANET_ORDER.map((name) => {
     name,
     slug: entry.id.split('/')[1],
     role: entry.data.kind === 'planet' ? entry.data.role : '',
-    hue: signBySlug(RULER_SIGN[name]).hue,
+    hue: `var(--sign-${RULER_SIGN[name]})`,
   };
 });
 

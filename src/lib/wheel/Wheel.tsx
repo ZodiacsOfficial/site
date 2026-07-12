@@ -366,7 +366,12 @@ export default function Wheel({
         const id = `body:${b.body}`;
         const selected = ix?.selection && entityId(ix.selection) === id;
         return (
-          <g key={b.body} class={preview ? 'wheel__body wheel__planet' : 'wheel__body'} {...(ix ? { opacity: opacityOf(id), ...mark(bodyRef) } : {})}>
+          <g
+            key={b.body}
+            class={preview ? 'wheel__body wheel__planet' : 'wheel__body'}
+            data-preview-body={preview ? b.body : undefined}
+            {...(ix ? { opacity: opacityOf(id), ...mark(bodyRef) } : {})}
+          >
             <line x1={tick1.x} y1={tick1.y} x2={tick2.x} y2={tick2.y} stroke={sign.hue} stroke-width="1.4" />
             {selected && (
               <circle cx={p.x} cy={p.y} r={size * 0.044} fill="none" stroke={sign.hue} stroke-width="1.6" class="wheel__sel-ring" />

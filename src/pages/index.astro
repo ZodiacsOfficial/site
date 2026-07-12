@@ -637,17 +637,44 @@ const tools = [
     pointer-events: auto;
     cursor: pointer;
   }
-  :global(.demo__target--house) { width: clamp(22px, 6.6%, 34px); }
-  :global(.demo__target--aspect) { width: clamp(20px, 6%, 31px); }
+  :global(.demo__target--planet) {
+    width: min(38px, calc(var(--hit) * 1%));
+    z-index: 3;
+  }
+  :global(.demo__target--planet::before) {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 28px;
+    aspect-ratio: 1;
+    translate: -50% -50%;
+    border: 1px solid transparent;
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  :global(.demo__target--house) { width: clamp(22px, 6.6%, 34px); z-index: 2; }
+  :global(.demo__target--aspect) { width: clamp(20px, 6%, 31px); z-index: 1; }
   :global(.demo__target:hover),
   :global(.demo__target[aria-pressed='true']) {
     border-color: color-mix(in oklab, var(--sign, var(--text)) 55%, transparent);
     background: color-mix(in oklab, var(--sign, var(--text)) 11%, transparent);
   }
+  :global(.demo__target--planet:hover),
+  :global(.demo__target--planet[aria-pressed='true']) {
+    border-color: transparent;
+    background: transparent;
+  }
+  :global(.demo__target--planet:hover::before),
+  :global(.demo__target--planet[aria-pressed='true']::before) {
+    border-color: color-mix(in oklab, var(--sign) 55%, transparent);
+    background: color-mix(in oklab, var(--sign) 11%, transparent);
+  }
   :global(.demo__target:focus-visible) {
     outline: 2px solid var(--text);
     outline-offset: 2px;
   }
+  :global(.demo__target--planet:focus-visible) { outline-offset: 7px; }
   :global(.demo__wheel-stage .wheel__body),
   :global(.demo__wheel-stage .wheel__house),
   :global(.demo__wheel-stage .wheel__aspect) {

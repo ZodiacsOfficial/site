@@ -19,6 +19,8 @@ const FRAME = SIZE + PAD * 2;
 const R_BODIES = SIZE * 0.31;
 const R_ASPECTS = SIZE * 0.235;
 const R_HOUSE_LABELS = (R_ASPECTS + R_BODIES) / 2 - SIZE * 0.02;
+type Point = { x: number; y: number };
+
 function point(lon: number, radius: number) {
   const phi = ((180 + (lon - demo.angles.asc)) * Math.PI) / 180;
   return {
@@ -27,8 +29,20 @@ function point(lon: number, radius: number) {
   };
 }
 
-const position = ({ x, y }: { x: number; y: number }, sign?: string) =>
-  `--x:${x.toFixed(3)};--y:${y.toFixed(3)}${sign ? `;--sign:${sign}` : ''}`;
+const position = ({ x, y }: Point, sign?: string, hit?: number) =>
+  `--x:${x.toFixed(3)};--y:${y.toFixed(3)}${sign ? `;--sign:${sign}` : ''}${hit ? `;--hit:${hit.toFixed(3)}` : ''}`;
+
+/** Keep the natal register's wording, changing only its point of view. */
+const aboutHer = (line: string) => line
+  .replace(/\bYour\b/g, 'Her')
+  .replace(/\byour\b/g, 'her')
+  .replace(/\byou arrive\b/g, 'she arrives')
+  .replace(/\byou point\b/g, 'she points')
+  .replace(/\byou seat\b/g, 'she seats')
+  .replace(/\byou remember\b/g, 'she remembers')
+  .replace(/\byou\b/g, 'she');
+
+const distance = (a: Point, b: Point) => Math.hypot(a.x - b.x, a.y - b.y);
 
 export default function DemoChart() {
   const bodies = demo.bodies.filter((b) => b.body !== 'South Node');
@@ -47,13 +61,25 @@ export default function DemoChart() {
     return match ? [{ a: a.body, b: b.body, type: match.def.type, orb: match.orb }] : [];
   })).sort((a, b) => a.orb - b.orb).slice(0, 6);
   const drawLongitude = collisionNudge(bodies);
-  const planetTargets = bodies.map((body) => {
+  const markerPoints = bodies.map((body) => ({
+    body,
+    drawLon: drawLongitude.get(body.body) ?? body.lon,
+    point: point(drawLongitude.get(body.body) ?? body.lon, R_BODIES),
+  }));
+  const planetTargets = markerPoints.map(({ body, drawLon, point: markerPoint }, index) => {
     const house = houseOf(body.lon, demo.houses.cusps);
+    const nearest = Math.min(
+      ...markerPoints.filter((_, other) => other !== index).map(({ point: other }) => distance(markerPoint, other)),
+    );
     return {
       key: body.body,
       label: `${body.body}, house ${house}`,
-      caption: planetInHouseLine(body.body, house),
-      point: point(drawLongitude.get(body.body) ?? body.lon, R_BODIES),
+      caption: aboutHer(planetInHouseLine(body.body, house)),
+      drawLon,
+      point: markerPoint,
+      // A button stays inside its nearest-neighbour gap. Crowded markers
+      // therefore remain individually clickable at every rendered width.
+      hit: Math.min(6.4, nearest * 0.82),
       hue: signForLongitude(body.lon).hue,
     };
   });
@@ -64,7 +90,7 @@ export default function DemoChart() {
       key: house,
       label: `House ${house}`,
       caption: occupant
-        ? planetInHouseLine(occupant.body, house)
+        ? aboutHer(planetInHouseLine(occupant.body, house))
         : t('en', 'emptyHouseNote'),
       point: point(norm(cusp + 15), R_HOUSE_LABELS),
     };
@@ -78,11 +104,11 @@ export default function DemoChart() {
     return {
       ...aspect,
       label: `${aspect.a} ${aspect.type} ${aspect.b}`,
-      caption: natalAspectLine(aspect.a, aspect.type, aspect.b),
+      caption: aboutHer(natalAspectLine(aspect.a, aspect.type, aspect.b)),
       point: { x: p1.x + (p2.x - p1.x) * along, y: p1.y + (p2.y - p1.y) * along },
     };
   });
-  const defaultCaption = planetInHouseLine('Sun', houseOf(sun.lon, demo.houses.cusps));
+  const defaultCaption = aboutHer(planetInHouseLine('Sun', houseOf(sun.lon, demo.houses.cusps)));
 
   return (
     <div class="demo" data-demo-preview>
@@ -103,10 +129,12 @@ export default function DemoChart() {
                 <button
                   type="button"
                   class="demo__target demo__target--planet"
-                  style={position(target.point, target.hue)}
+                  style={position(target.point, target.hue, target.hit)}
                   aria-label={target.label}
                   aria-pressed="false"
                   data-demo-layer="planets"
+                  data-demo-body={target.key}
+                  data-demo-draw-lon={target.drawLon.toFixed(6)}
                   data-demo-copy={target.caption}
                 />
               ))}
