@@ -2,18 +2,37 @@
 import { getCollection } from 'astro:content';
 import Base from '../../../layouts/Base.astro';
 import PlanetGlyph from '../../../components/PlanetGlyph';
+import { signBySlug } from '../../../lib/signs';
 import '../../../styles/cluster.css';
 
 const PLANET_ORDER = [
   'Sun', 'Moon', 'Mercury', 'Venus', 'Mars',
   'Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto',
-];
+] as const;
+
+const RULER_SIGN = {
+  Sun: 'leo',
+  Moon: 'cancer',
+  Mercury: 'gemini',
+  Venus: 'taurus',
+  Mars: 'aries',
+  Jupiter: 'sagittarius',
+  Saturn: 'capricorn',
+  Uranus: 'aquarius',
+  Neptune: 'pisces',
+  Pluto: 'scorpio',
+} as const satisfies Record<(typeof PLANET_ORDER)[number], string>;
 
 const entries = await getCollection('learn', (e) => e.data.kind === 'planet' && !e.data.draft);
 const planets = PLANET_ORDER.map((name) => {
   const entry = entries.find((e) => e.data.kind === 'planet' && e.data.planet === name);
   if (!entry) throw new Error(`Missing planet page: ${name}`);
-  return { name, slug: entry.id.split('/')[1], role: entry.data.kind === 'planet' ? entry.data.role : '' };
+  return {
+    name,
+    slug: entry.id.split('/')[1],
+    role: entry.data.kind === 'planet' ? entry.data.role : '',
+    hue: signBySlug(RULER_SIGN[name]).hue,
+  };
 });
 
 const jsonLd = [
@@ -67,7 +86,7 @@ const jsonLd = [
       {planets.map((p) => (
         <li>
           <a class="cluster-row" href={`/learn/planets/${p.slug}/`}>
-            <span class="cluster-row__glyph"><PlanetGlyph body={p.name} size={18} /></span>
+            <span class="cluster-row__glyph"><PlanetGlyph body={p.name} size={18} disc hue={p.hue} /></span>
             <span class="cluster-row__name">{p.name}</span>
             <span class="cluster-row__role">{p.role}</span>
             <span class="cluster-row__go">→</span>

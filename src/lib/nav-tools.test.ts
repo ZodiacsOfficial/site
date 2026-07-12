@@ -1,0 +1,31 @@
+import { describe, expect, it } from 'vitest';
+import { localizePath, t } from './i18n';
+import { NAV_TOOLS } from './nav-tools';
+
+describe('NAV_TOOLS', () => {
+  it('keeps the requested eight tools in stable order', () => {
+    expect(NAV_TOOLS.map((tool) => tool.href)).toEqual([
+      '/birth-chart/',
+      '/compatibility/',
+      '/transits/',
+      '/moon-sign/',
+      '/rising-sign/',
+      '/moon-phase/',
+      '/saturn-return/',
+      '/birthday/',
+    ]);
+  });
+
+  it('resolves labels, one-line sublabels, and existing localized paths', () => {
+    for (const locale of ['en', 'es'] as const) {
+      for (const tool of NAV_TOOLS) {
+        expect(t(locale, tool.label).trim()).not.toBe('');
+        expect(tool.sublabel[locale]).not.toMatch(/[\r\n]/);
+        expect(localizePath(locale, tool.href)).toMatch(/^\//);
+      }
+    }
+
+    expect(localizePath('es', '/transits/')).toBe('/es/transits/');
+    expect(localizePath('es', '/birthday/')).toBe('/birthday/');
+  });
+});

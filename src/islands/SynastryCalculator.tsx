@@ -65,6 +65,8 @@ const emptySlot = (): SlotState => ({
 // compatibility-only chrome.
 const PAIR_COPY_EN = {
   savedPairs: 'Saved comparisons',
+  useMyChart: 'Use my chart — {handle}',
+  dismissMyChart: 'Dismiss saved-chart suggestion',
   savePair: 'Save this comparison',
   pairSaved: 'Comparison saved on this device.',
   pairExists: 'Already saved.',
@@ -78,6 +80,8 @@ const PAIR_COPY = {
   en: PAIR_COPY_EN,
   es: {
     savedPairs: 'Comparaciones guardadas',
+    useMyChart: 'Usar mi carta — {handle}',
+    dismissMyChart: 'Descartar sugerencia de carta guardada',
     savePair: 'Guardar esta comparación',
     pairSaved: 'Comparación guardada en este dispositivo.',
     pairExists: 'Ya está guardada.',
@@ -168,7 +172,7 @@ async function resolveForm(slot: SlotState, fallbackLabel: string, loadEngine: E
 }
 
 function SlotForm({
-  slot, setSlot, charts, idPrefix, fallbackLabel, locale, loadEngine,
+  slot, setSlot, charts, idPrefix, fallbackLabel, locale, loadEngine, quickFill,
 }: {
   slot: SlotState;
   setSlot: (updater: (s: SlotState) => SlotState) => void;
@@ -177,6 +181,12 @@ function SlotForm({
   fallbackLabel: string;
   locale: Locale;
   loadEngine: EngineLoader;
+  quickFill?: {
+    label: string;
+    dismissLabel: string;
+    onUse: () => void;
+    onDismiss: () => void;
+  };
 }) {
   if (slot.source === 'link' && slot.link) {
     const received = slot.link.received === true;
@@ -203,6 +213,19 @@ function SlotForm({
 
   return (
     <div class="syn__slot">
+      {quickFill && (
+        <div class="syn__quick-fill">
+          <button type="button" class="syn__quick-use" onClick={quickFill.onUse}>
+            {quickFill.label}
+          </button>
+          <button
+            type="button"
+            class="syn__quick-dismiss"
+            aria-label={quickFill.dismissLabel}
+            onClick={quickFill.onDismiss}
+          >×</button>
+        </div>
+      )}
       <span class="mono--label">{fallbackLabel}</span>
 
       {charts.length > 0 && (
@@ -291,6 +314,7 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
   const [pairSave, setPairSave] = useState<'idle' | 'saved' | 'exists' | 'full' | 'error'>('idle');
   const [pairAnnounce, setPairAnnounce] = useState('');
   const [restoreTick, setRestoreTick] = useState(0);
+  const [quickFillDismissed, setQuickFillDismissed] = useState(false);
   const compareInFlightRef = useRef(false);
   const resultHeadingRef = useRef<HTMLHeadingElement>(null);
   const errorRef = useRef<HTMLParagraphElement>(null);
@@ -376,6 +400,17 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
   }, [pairs]);
 
   const charts = profile.charts;
+  const latestChart = useMemo(
+    () => charts.reduce<SavedChart | null>((latest, chart) => (
+      !latest || chart.updatedAt > latest.updatedAt ? chart : latest
+    ), null),
+    [charts],
+  );
+  const slotAIsUntouched = slotA.source === 'form'
+    && slotA.name === '' && slotA.date === '' && slotA.time === ''
+    && slotA.timeKnown && slotA.city === null && slotA.link === null;
+  const showQuickFill = profileReady && latestChart !== null
+    && slotAIsUntouched && !quickFillDismissed;
 
   const slotReady = (slot: SlotState) =>
     slot.source === 'saved' ? charts.some((c) => c.id === slot.savedId)
@@ -647,7 +682,24 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
             </div>
           )}
           <div class="syn__slots">
-            <SlotForm slot={slotA} setSlot={(u) => setSlotA(u)} charts={charts} idPrefix="syn-a" fallbackLabel={t(locale, 'personA')} locale={locale} loadEngine={loadEngine} />
+            <SlotForm
+              slot={slotA}
+              setSlot={(u) => setSlotA(u)}
+              charts={charts}
+              idPrefix="syn-a"
+              fallbackLabel={t(locale, 'personA')}
+              locale={locale}
+              loadEngine={loadEngine}
+              quickFill={showQuickFill ? {
+                label: pcf(locale, 'useMyChart', { handle: handleOf(latestChart.name) }),
+                dismissLabel: pc(locale, 'dismissMyChart'),
+                onUse: () => {
+                  setQuickFillDismissed(true);
+                  setSlotA((s) => ({ ...s, source: 'saved', savedId: latestChart.id }));
+                },
+                onDismiss: () => setQuickFillDismissed(true),
+              } : undefined}
+            />
             <SlotForm slot={slotB} setSlot={(u) => setSlotB(u)} charts={charts} idPrefix="syn-b" fallbackLabel={t(locale, 'personB')} locale={locale} loadEngine={loadEngine} />
           </div>
 
