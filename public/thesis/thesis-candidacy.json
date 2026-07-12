@@ -1,0 +1,35 @@
+{
+  "$comment": "Maintainer-editable candidacy evidence for /thesis Section V. Same contract as thesis-disclosure.json: pending fields render the amber chip; filled fields render the value (a count or short factual note), the asOf date, and a Verify link when given. PHASE 2: hydrate from @zodiacs/sdk at build time.",
+  "criteria": {
+    "independentIntegrations": {
+      "value": null,
+      "status": "pending",
+      "asOf": null,
+      "verifyUrl": null
+    },
+    "thirdPartyCitations": {
+      "value": null,
+      "status": "pending",
+      "asOf": null,
+      "verifyUrl": null
+    },
+    "holderDispersion": {
+      "value": null,
+      "status": "pending",
+      "asOf": null,
+      "verifyUrl": null
+    },
+    "liquidityPersistence": {
+      "value": null,
+      "status": "pending",
+      "asOf": null,
+      "verifyUrl": null
+    },
+    "archiveContinuity": {
+      "value": null,
+      "status": "pending",
+      "asOf": null,
+      "verifyUrl": null
+    }
+  }
+}

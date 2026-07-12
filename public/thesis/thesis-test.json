@@ -1,0 +1,24 @@
+{
+  "$comment": "Maintainer-editable commitment data for the one-tap test (/thesis Section VII). status stays 'pending' until criteria are published; each criterion follows the same field contract as thesis-disclosure.json. PHASE 2: hydrate from @zodiacs/sdk at build time.",
+  "status": "pending",
+  "criteria": {
+    "uniqueClaimants": {
+      "value": null,
+      "status": "pending",
+      "asOf": null,
+      "verifyUrl": null
+    },
+    "ninetyDayRetention": {
+      "value": null,
+      "status": "pending",
+      "asOf": null,
+      "verifyUrl": null
+    },
+    "holderDispersion": {
+      "value": null,
+      "status": "pending",
+      "asOf": null,
+      "verifyUrl": null
+    }
+  }
+}

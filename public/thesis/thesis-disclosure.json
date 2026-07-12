@@ -1,0 +1,655 @@
+{
+  "$comment": "Maintainer-editable disclosure data for /thesis Section X. Every field renders exactly what it contains: status 'pending' shows the amber Pending-disclosure chip; a filled value renders with its asOf date and, when verifyUrl is present, a Verify link (Solscan for Solana, Basescan for Base). PHASE 2: hydrate this file from @zodiacs/sdk at build time - the render contract is unchanged.",
+  "signs": {
+    "aries": {
+      "supply": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      },
+      "mintAuthority": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      },
+      "freezeAuthority": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      },
+      "topTenHolders": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      },
+      "liquidity": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      },
+      "bridge": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      },
+      "treasury": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      },
+      "continuity": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      }
+    },
+    "taurus": {
+      "supply": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      },
+      "mintAuthority": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      },
+      "freezeAuthority": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      },
+      "topTenHolders": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      },
+      "liquidity": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      },
+      "bridge": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      },
+      "treasury": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      },
+      "continuity": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      }
+    },
+    "gemini": {
+      "supply": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      },
+      "mintAuthority": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      },
+      "freezeAuthority": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      },
+      "topTenHolders": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      },
+      "liquidity": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      },
+      "bridge": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      },
+      "treasury": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      },
+      "continuity": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      }
+    },
+    "cancer": {
+      "supply": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      },
+      "mintAuthority": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      },
+      "freezeAuthority": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      },
+      "topTenHolders": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      },
+      "liquidity": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      },
+      "bridge": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      },
+      "treasury": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      },
+      "continuity": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      }
+    },
+    "leo": {
+      "supply": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      },
+      "mintAuthority": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      },
+      "freezeAuthority": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      },
+      "topTenHolders": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      },
+      "liquidity": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      },
+      "bridge": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      },
+      "treasury": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      },
+      "continuity": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      }
+    },
+    "virgo": {
+      "supply": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      },
+      "mintAuthority": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      },
+      "freezeAuthority": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      },
+      "topTenHolders": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      },
+      "liquidity": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      },
+      "bridge": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      },
+      "treasury": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      },
+      "continuity": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      }
+    },
+    "libra": {
+      "supply": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      },
+      "mintAuthority": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      },
+      "freezeAuthority": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      },
+      "topTenHolders": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      },
+      "liquidity": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      },
+      "bridge": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      },
+      "treasury": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      },
+      "continuity": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      }
+    },
+    "scorpio": {
+      "supply": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      },
+      "mintAuthority": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      },
+      "freezeAuthority": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      },
+      "topTenHolders": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      },
+      "liquidity": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      },
+      "bridge": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      },
+      "treasury": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      },
+      "continuity": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      }
+    },
+    "sagittarius": {
+      "supply": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      },
+      "mintAuthority": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      },
+      "freezeAuthority": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      },
+      "topTenHolders": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      },
+      "liquidity": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      },
+      "bridge": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      },
+      "treasury": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      },
+      "continuity": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      }
+    },
+    "capricorn": {
+      "supply": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      },
+      "mintAuthority": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      },
+      "freezeAuthority": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      },
+      "topTenHolders": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      },
+      "liquidity": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      },
+      "bridge": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      },
+      "treasury": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      },
+      "continuity": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      }
+    },
+    "aquarius": {
+      "supply": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      },
+      "mintAuthority": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      },
+      "freezeAuthority": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      },
+      "topTenHolders": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      },
+      "liquidity": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      },
+      "bridge": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      },
+      "treasury": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      },
+      "continuity": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      }
+    },
+    "pisces": {
+      "supply": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      },
+      "mintAuthority": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      },
+      "freezeAuthority": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      },
+      "topTenHolders": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      },
+      "liquidity": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      },
+      "bridge": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      },
+      "treasury": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      },
+      "continuity": {
+        "value": null,
+        "status": "pending",
+        "asOf": null,
+        "verifyUrl": null
+      }
+    }
+  },
+  "aggregate": {
+    "supply": {
+      "value": null,
+      "status": "pending",
+      "asOf": null,
+      "verifyUrl": null
+    },
+    "mintAuthority": {
+      "value": null,
+      "status": "pending",
+      "asOf": null,
+      "verifyUrl": null
+    },
+    "freezeAuthority": {
+      "value": null,
+      "status": "pending",
+      "asOf": null,
+      "verifyUrl": null
+    },
+    "topTenHolders": {
+      "value": null,
+      "status": "pending",
+      "asOf": null,
+      "verifyUrl": null
+    },
+    "liquidity": {
+      "value": null,
+      "status": "pending",
+      "asOf": null,
+      "verifyUrl": null
+    },
+    "bridge": {
+      "value": null,
+      "status": "pending",
+      "asOf": null,
+      "verifyUrl": null
+    },
+    "treasury": {
+      "value": null,
+      "status": "pending",
+      "asOf": null,
+      "verifyUrl": null
+    },
+    "continuity": {
+      "value": null,
+      "status": "pending",
+      "asOf": null,
+      "verifyUrl": null
+    }
+  }
+}

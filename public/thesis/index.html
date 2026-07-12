@@ -10,33 +10,33 @@
        renders nothing. Mark Chromium so the nav-pill lens applies only there. */
     try { if (window.chrome && window.CSS && CSS.supports('backdrop-filter', "url('#zdx-lens-nav')")) document.documentElement.classList.add('zdx-lens'); } catch (e) {}
   </script>
-  <title>The Thesis — Belief Is the Oldest Asset | Zodiacs.org</title>
-  <meta name="description" content="Why the twelve Zodiacs — humanity's most durable identity system — belong onchain, and why they endure there. The full thesis behind the official registry." />
+  <title>Belief is the oldest asset. — The Thesis | Zodiacs.org</title>
+  <meta name="description" content="The registry’s argument for the twelve Zodiacs onchain — including the case against it, and the instrument disclosed." />
   <link rel="canonical" href="https://zodiacs.org/thesis/" />
 
   <meta property="og:site_name" content="Zodiacs" />
-  <meta property="og:title" content="The Thesis — Belief Is the Oldest Asset" />
-  <meta property="og:description" content="Why the twelve Zodiacs — humanity's most durable identity system — belong onchain, and why they endure there." />
+  <meta property="og:title" content="Belief is the oldest asset." />
+  <meta property="og:description" content="The registry’s argument for the twelve Zodiacs onchain — including the case against it, and the instrument disclosed." />
   <meta property="og:type" content="article" />
   <meta property="og:url" content="https://zodiacs.org/thesis/" />
-  <meta property="og:image" content="https://zodiacs.org/assets/og/v2/share.png" />
+  <meta property="og:image" content="https://zodiacs.org/assets/og/v2/thesis.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content="Explore the stars behind your story. Free birth charts, sign guides, and astrology tools." />
+  <meta property="og:image:alt" content="Belief is the oldest asset. — zodiacs.org, The Registry · Revised July 2026" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="The Thesis — Belief Is the Oldest Asset" />
-  <meta name="twitter:description" content="Why the twelve Zodiacs belong onchain, and why they endure there." />
-  <meta name="twitter:image" content="https://zodiacs.org/assets/og/v2/share.png" />
-  <meta name="twitter:image:alt" content="Explore the stars behind your story. Free birth charts, sign guides, and astrology tools." />
+  <meta name="twitter:title" content="Belief is the oldest asset." />
+  <meta name="twitter:description" content="The registry’s argument for the twelve Zodiacs onchain — including the case against it, and the instrument disclosed." />
+  <meta name="twitter:image" content="https://zodiacs.org/assets/og/v2/thesis.png" />
+  <meta name="twitter:image:alt" content="Belief is the oldest asset. — zodiacs.org, The Registry · Revised July 2026" />
 
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "Article",
     "@id": "https://zodiacs.org/thesis/#article",
-    "headline": "The Thesis — Belief Is the Oldest Asset",
-    "description": "Why the twelve Zodiacs — humanity's most durable identity system — belong onchain, and why they endure there.",
-    "image": "https://zodiacs.org/assets/og/v2/share.png",
+    "headline": "Belief is the oldest asset.",
+    "description": "The registry’s argument for the twelve Zodiacs onchain — including the case against it, and the instrument disclosed.",
+    "image": "https://zodiacs.org/assets/og/v2/thesis.png",
     "url": "https://zodiacs.org/thesis/",
     "inLanguage": "en",
     "author": { "@type": "Organization", "@id": "https://zodiacs.org/#org", "name": "Zodiacs" },
@@ -281,6 +281,18 @@
       color: var(--gold-bright); letter-spacing: -0.01em;
     }
     .stats__v { margin-top: 8px; font-family: var(--mono); font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-dim); line-height: 1.6; }
+    /* Provenance — every figure names the kind of source it came from. */
+    .stats__tag {
+      display: inline-block; margin-top: 10px;
+      font-family: var(--mono); font-size: 7.5px; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--ink-mute);
+      border: 1px solid var(--hair); padding: 2px 6px;
+    }
+    .mov .stats__title {
+      margin: 34px 0 -26px; font-family: var(--mono); font-size: 10px;
+      letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-dim);
+    }
+    .mov .stats__title + .stats { margin-top: 38px; }
     /* Caption rules carry .mov so they outrank the essay's body-text
        sizing (.mov p) — without it these captions render at 17.5px. */
     .mov .stats__src {
@@ -388,6 +400,133 @@
       .pulse__cell--wide { grid-column: 1 / -1; }
       .pulse__bar { grid-template-columns: 130px 1fr 40px; }
     }
+
+    /* Pending disclosure — the amber state. The hue is the sanctioned
+       warm pastel from the twelve sign discs (#E0B080); Warm Gilt stays
+       retired. Honest and prominent: a pending field looks pending. */
+    .pending-disclosure {
+      display: inline-block;
+      font-family: var(--mono); font-size: 8.5px; letter-spacing: 0.14em;
+      text-transform: uppercase; white-space: nowrap;
+      color: #E0B080; border: 1px solid rgba(224,176,128,0.38);
+      background: rgba(224,176,128,0.07);
+      padding: 2px 7px; vertical-align: 2px;
+    }
+    .mov .pulse-caption {
+      margin: 10px 0 0; font-family: var(--mono); font-size: 10px;
+      letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-mute);
+    }
+    .hero__clock {
+      margin: 14px 0 0; font-family: var(--mono); font-size: 10px;
+      letter-spacing: 0.24em; text-transform: uppercase; color: var(--ink-2);
+      text-shadow: 0 1px 14px rgba(0,0,0,0.6);
+    }
+
+    /* Disclosure table — the instrument, in the open. Horizontal scroll
+       on small screens; never wider than the viewport. */
+    .disc-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 26px 0 0; border: 1px solid var(--hair); }
+    .disc { border-collapse: collapse; width: 100%; min-width: 940px; }
+    .disc th, .disc td { border: 1px solid var(--hair); padding: 9px 10px; text-align: left; vertical-align: middle; }
+    .disc thead th {
+      font-family: var(--mono); font-size: 8px; letter-spacing: 0.16em;
+      text-transform: uppercase; color: var(--ink-dim); background: var(--surface);
+      white-space: nowrap;
+    }
+    .disc tbody th {
+      font-family: var(--serif); font-size: 14.5px; font-weight: 400;
+      color: var(--ink); white-space: nowrap; background: var(--bg);
+    }
+    .disc td { font-family: var(--mono); font-size: 9px; color: var(--ink-2); background: var(--bg); }
+    .disc tr.disc__agg th, .disc tr.disc__agg td { border-top: 1px solid var(--hair-3); background: var(--surface); }
+    .disc-val { color: var(--ink); }
+    .disc-asof { color: var(--ink-mute); letter-spacing: 0.06em; }
+    .disc-verify {
+      color: var(--ink-dim); text-decoration: none; white-space: nowrap;
+      border-bottom: 1px solid rgba(198,204,218,0.22); padding-bottom: 1px;
+    }
+    .disc-verify:hover { color: var(--gold-bright); border-bottom-color: var(--gold); }
+    .mov .disc-updated {
+      margin: 10px 0 0; font-family: var(--mono); font-size: 9.5px;
+      letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-mute);
+    }
+    .disc-legend { margin: 18px 0 0; padding: 0; list-style: none; max-width: 66ch; }
+    .disc-legend li {
+      font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.05em;
+      line-height: 1.9; color: var(--ink-mute);
+    }
+    .disc-legend li strong { color: var(--ink-dim); font-weight: 400; }
+    .ednote {
+      margin: 26px 0 0; padding: 18px 20px 16px; max-width: 60ch;
+      border-left: 1px solid rgba(224,176,128,0.55);
+      background: linear-gradient(90deg, rgba(224,176,128,0.05), transparent 70%);
+    }
+    .mov .ednote p {
+      margin: 0; font-family: var(--serif); font-style: italic;
+      font-size: 15.5px; line-height: 1.55; color: var(--ink);
+    }
+
+    /* Candidacy scoreboard — Section V */
+    .score { margin: 26px 0 0; border: 1px solid var(--hair); max-width: 720px; }
+    .score__row {
+      display: grid; grid-template-columns: minmax(0, 1fr);
+      gap: 4px 14px; padding: 11px 14px; border-top: 1px solid var(--hair);
+    }
+    .score__row:first-child { border-top: 0; }
+    .score__row--head { display: none; }
+    .score__k { font-family: var(--serif); font-size: 15px; color: var(--ink); }
+    .score__v { font-family: var(--mono); font-size: 9px; color: var(--ink-2); }
+    .score__d { font-family: var(--mono); font-size: 9px; letter-spacing: 0.08em; color: var(--ink-mute); }
+    @media (min-width: 720px) {
+      .score__row { grid-template-columns: 240px minmax(0, 1fr) 110px; align-items: center; }
+      .score__row--head {
+        display: grid; background: var(--surface);
+        font-family: var(--mono); font-size: 8px; letter-spacing: 0.16em;
+        text-transform: uppercase; color: var(--ink-dim);
+      }
+      .score__d { text-align: right; }
+    }
+    .mov .score__cap {
+      margin: 10px 0 0; font-family: var(--mono); font-size: 9.5px;
+      letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-mute);
+    }
+
+    /* Format timeline — Section I */
+    .tline-wrap { margin: 30px 0 0; }
+    .tline-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .tline { min-width: 560px; width: 100%; height: auto; display: block; }
+
+    /* Test commitment card — Section VII */
+    .tcard {
+      margin: 26px 0 0; max-width: 560px;
+      border: 1px solid var(--hair-2); background: var(--surface);
+      padding: 16px 18px 14px;
+    }
+    .tcard__head {
+      display: flex; justify-content: space-between; align-items: baseline;
+      gap: 10px; flex-wrap: wrap; margin-bottom: 12px;
+    }
+    .tcard__title { font-family: var(--serif); font-size: 17px; color: var(--ink); }
+    .tcard__row {
+      display: flex; justify-content: space-between; align-items: baseline;
+      gap: 12px; flex-wrap: wrap;
+      padding: 8px 0; border-top: 1px solid var(--hair);
+    }
+    .tcard__k { font-family: var(--mono); font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-dim); }
+    .tcard__v { font-family: var(--mono); font-size: 9px; color: var(--ink-2); }
+    .mov .tcard__note {
+      margin: 12px 0 0; font-family: var(--serif); font-style: italic;
+      font-size: 14.5px; color: var(--ink-2);
+    }
+
+    /* Objection reference chips — Section IX */
+    .chip-ref {
+      display: inline-block; margin-left: 10px; vertical-align: 2px;
+      font-family: var(--mono); font-size: 8px; letter-spacing: 0.16em;
+      color: var(--ink-dim); border: 1px solid var(--hair-2);
+      padding: 2px 7px; text-decoration: none; white-space: nowrap;
+    }
+    a.chip-ref { transition: color 320ms var(--ease), border-color 320ms var(--ease); }
+    a.chip-ref:hover { color: var(--gold-bright); border-color: var(--gold); }
 
     /* Sign-off */
     .sig {
@@ -567,8 +706,10 @@
       <h1 class="hero__title">Belief is the <span class="it">oldest asset.</span></h1>
       <p class="hero__sub">
         Why the twelve Zodiacs — humanity's most durable identity system —
-        belong onchain, and why they endure there.
+        may belong onchain, what would have to be true for that to work,
+        and the strongest case against it, answered in the open.
       </p>
+      <p class="hero__clock" data-season-clock hidden></p>
       <div class="hero__cue" aria-hidden="true"><span class="line"></span><span>Read the argument</span></div>
     </div>
   </header>
@@ -576,42 +717,71 @@
   <main class="pg">
     <article class="essay" id="essay">
       <div class="essay__rail reveal">
-        <span class="label label--gold">Nº 04 · Extended</span>
+        <span class="label label--gold">Nº 05 · Revised</span>
         <span class="line"></span>
         <span class="label">The Registry's Argument</span>
       </div>
 
       <div class="essay__body">
-        <section class="mov reveal">
+        <section class="mov reveal" id="the-system">
           <div class="mov__head"><span class="mov__no">I</span><h2 class="mov__title">The system that <span class="it">outlived everything.</span></h2></div>
           <p>
             <span class="dc">B</span>efore money, before nations, before writing
             reached most of the world, people organized identity by the sky.
-            The twelve-sign zodiac has run, almost unchanged, from Babylonian
-            star catalogues through Greek mathematics, Roman empire, Islamic
-            astronomy, and the Renaissance — into the phone of nearly every
-            person alive. Roughly nine in ten Americans know their sign.
-            Worldwide the audience is larger still: across much of Asia,
-            astrology remains woven into marriage, naming, and daily life.
+            The twelve-sign zodiac has run, recognizably continuous, from
+            Babylonian star catalogues through Greek mathematics, Roman empire,
+            Islamic astronomy, and the Renaissance — into the phone of nearly
+            every person alive. Roughly <a href="https://today.yougov.com/entertainment/articles/42292-one-four-americans-say-they-believe-astrology" rel="noopener noreferrer">nine in ten Americans know their sign</a>.
           </p>
           <p>
-            That identity is <strong>permanent</strong>. Nobody stops being a
-            Scorpio. It is <strong>universal</strong> — Leo means the same thing
-            in Lagos, Seoul, New York, and São Paulo. And it is
-            <strong>renewed daily</strong>, by horoscopes, birthdays, seasons,
-            and retrogrades, without anyone spending a cent to keep it alive.
+            Precision matters here, so two things this essay does not claim.
+            The Western twelve are globally <em>recognized</em>, not globally
+            <em>identical in meaning</em> — a sign carries different weight in
+            different places, and much of the world's astrological practice
+            runs on other systems entirely: Vedic astrology uses a sidereal
+            zodiac, and the Chinese zodiac is a different scheme altogether.
+            Recognition is enough. A symbol set that nearly everyone on Earth
+            can name, that costs nothing to maintain, and that has survived
+            every empire that adopted it, needs no overclaim.
           </p>
+          <p>
+            That identity is <strong>permanent</strong> — nobody stops being a
+            Scorpio. It is <strong>recognized nearly everywhere</strong> the
+            Western calendar reaches. And it is <strong>renewed daily</strong>,
+            by horoscopes, birthdays, seasons, and retrogrades, without anyone
+            spending a cent to keep it alive.
+          </p>
+          <figure class="tline-wrap">
+            <div class="tline-scroll" role="img" aria-label="The format timeline: star catalogue, print, newspaper column, hotline, app, record — from the fifth century BCE to 2024">
+              <svg class="tline" viewBox="0 0 720 84" aria-hidden="true" focusable="false">
+                <line x1="16" y1="30" x2="704" y2="30" stroke="var(--hair-3)" stroke-width="1"/>
+                <circle cx="16" cy="30" r="3" fill="var(--gold)"/>
+                <text x="16" y="54" text-anchor="start" fill="var(--ink-dim)" font-family="JetBrains Mono, monospace" font-size="9" letter-spacing="1">Star catalogue</text>
+                <text x="16" y="70" text-anchor="start" fill="var(--ink-mute)" font-family="JetBrains Mono, monospace" font-size="8" letter-spacing="1">~5th c. BCE</text>
+                <circle cx="153.6" cy="30" r="3" fill="var(--gold)"/>
+                <text x="153.6" y="54" text-anchor="middle" fill="var(--ink-dim)" font-family="JetBrains Mono, monospace" font-size="9" letter-spacing="1">Print</text>
+                <circle cx="291.2" cy="30" r="3" fill="var(--gold)"/>
+                <text x="291.2" y="54" text-anchor="middle" fill="var(--ink-dim)" font-family="JetBrains Mono, monospace" font-size="9" letter-spacing="1">Newspaper column</text>
+                <circle cx="428.8" cy="30" r="3" fill="var(--gold)"/>
+                <text x="428.8" y="54" text-anchor="middle" fill="var(--ink-dim)" font-family="JetBrains Mono, monospace" font-size="9" letter-spacing="1">Hotline</text>
+                <circle cx="566.4" cy="30" r="3" fill="var(--gold)"/>
+                <text x="566.4" y="54" text-anchor="middle" fill="var(--ink-dim)" font-family="JetBrains Mono, monospace" font-size="9" letter-spacing="1">App</text>
+                <circle cx="704" cy="30" r="3" fill="var(--gold)"/>
+                <text x="704" y="54" text-anchor="end" fill="var(--ink-dim)" font-family="JetBrains Mono, monospace" font-size="9" letter-spacing="1">Record</text>
+                <text x="704" y="70" text-anchor="end" fill="var(--ink-mute)" font-family="JetBrains Mono, monospace" font-size="8" letter-spacing="1">2024</text>
+              </svg>
+            </div>
+          </figure>
         </section>
 
-        <section class="mov reveal">
+        <section class="mov reveal" id="attention">
           <div class="mov__head"><span class="mov__no">II</span><h2 class="mov__title">Attention that <span class="it">renews itself.</span></h2></div>
           <p>
             Most cultural assets must manufacture attention to survive.
             Astrology's attention arrives on schedule. Every day brings a new
             horoscope; every month the sun changes signs; several times a year
             a retrograde takes over the feed; every birthday, relationship,
-            and career change sends people back to their chart. The content
-            writes itself, and the audience returns on its own.
+            and career change sends people back to their chart.
           </p>
           <p>
             The largest consumer platforms already follow this attention.
@@ -623,10 +793,10 @@
             recurring mass behavior — and astrology is recurring mass behavior.
           </p>
           <div class="stats" role="list" aria-label="Reported figures">
-            <div class="stats__cell" role="listitem"><div class="stats__k">12</div><div class="stats__v">Signs · fixed for millennia</div></div>
-            <div class="stats__cell" role="listitem"><div class="stats__k">~90%</div><div class="stats__v">of Americans know their sign</div></div>
-            <div class="stats__cell" role="listitem"><div class="stats__k">43%</div><div class="stats__v">of women 18–49 say they believe · Pew</div></div>
-            <div class="stats__cell" role="listitem"><div class="stats__k">30M+</div><div class="stats__v">Co-Star users · reported</div></div>
+            <div class="stats__cell" role="listitem"><div class="stats__k">12</div><div class="stats__v">Signs · fixed for millennia</div><span class="stats__tag">REPORTED</span></div>
+            <div class="stats__cell" role="listitem"><div class="stats__k">~90%</div><div class="stats__v">of Americans know their sign</div><span class="stats__tag">SURVEYED</span></div>
+            <div class="stats__cell" role="listitem"><div class="stats__k">43%</div><div class="stats__v">of women 18–49 say they believe · Pew</div><span class="stats__tag">SURVEYED</span></div>
+            <div class="stats__cell" role="listitem"><div class="stats__k">30M+</div><div class="stats__v">Co-Star users · reported</div><span class="stats__tag">REPORTED</span></div>
           </div>
           <p class="stats__src">
             Sources:
@@ -699,13 +869,75 @@
               <div class="pulse__grid" data-pulse-est></div>
             </div>
           </div>
+          <p class="pulse-caption">Attention is an input, never proof of demand.</p>
+
+          <p style="margin-top: 22px;">
+            One discipline the instrument imposes on the essay around it:
+            attention is an input, never proof of demand. Pageviews measure
+            curiosity, not bids. The distinction is kept deliberately, and
+            Section IX depends on it.
+          </p>
         </section>
 
-        <section class="mov reveal">
-          <div class="mov__head"><span class="mov__no">III</span><h2 class="mov__title">Belief becomes <span class="it">record.</span></h2></div>
+        <section class="mov reveal" id="belief-pays">
+          <div class="mov__head"><span class="mov__no">III</span><h2 class="mov__title">Belief pays — <span class="it">for something.</span></h2></div>
           <p>
-            What gives gold its price? Not industry. Not utility. A founder of
-            the largest exchange in crypto put it plainly:
+            A belief that never opens a wallet is trivia. This one opens
+            wallets on a schedule.
+          </p>
+          <p>
+            <a href="https://www.alliedmarketresearch.com/press-release/astrology-market.html" rel="noopener noreferrer">Allied Market Research valued the global astrology market</a>
+            at $12.8 billion in 2021, projected toward $22.8 billion by 2031.
+            On phones alone, <a href="https://sensortower.com/blog/astrology-apps-2019-revenue-downloads" rel="noopener noreferrer">Sensor Tower measured U.S. astrology app revenue</a>
+            growing 64.7 percent in a single year to nearly $40 million, with
+            the top apps compounding above 70 percent annually across the late
+            2010s. Venture capital noticed:
+            <a href="https://www.axios.com/2021/04/14/astrology-app-co-star-raises-15-million-funding" rel="noopener noreferrer">Co-Star raised a $15 million Series A led by Spark Capital</a>
+            — roughly $21 million in total — for an app that sells horoscopes.
+          </p>
+          <p>
+            Now the honest boundary of that evidence. Every dollar above was
+            paid for readings, personalization, and entertainment — a service
+            consumed, not an asset held. Spending on horoscopes proves the
+            culture is monetizable; it does not prove anyone wants a
+            zero-cash-flow token wearing the same name. What this section
+            establishes is a necessary condition, not a sufficient one: a
+            culture that never paid for anything could not support an asset at
+            all. This one pays, reliably, and has for a century across formats
+            — newspaper columns, hotlines, apps. Whether paying converts to
+            holding is a separate question, and it is treated as one in
+            Section IX rather than smuggled through here.
+          </p>
+          <p>
+            One caveat belongs in the open before a skeptic surfaces it.
+            <a href="https://www.pewresearch.org/religion/2025/05/21/3-in-10-americans-consult-astrology-tarot-cards-or-fortune-tellers/" rel="noopener noreferrer">Pew finds</a>
+            that most people who consult astrology say they do it mostly for
+            fun, and almost none report relying on it for major life
+            decisions. Good. Fun is not a weakness in a memetic asset — it is
+            the propulsion system. Nobody bought Doge out of conviction in the
+            dog. The assets that spread are the ones that are fun to hold, fun
+            to send, fun to argue about, and the zodiac has been fun for two
+            thousand years.
+          </p>
+          <div class="stats" role="list" aria-label="Market figures">
+            <div class="stats__cell" role="listitem"><div class="stats__k">$12.8B</div><div class="stats__v">global astrology market, 2021 · Allied</div><span class="stats__tag">REPORTED</span></div>
+            <div class="stats__cell" role="listitem"><div class="stats__k">$22.8B</div><div class="stats__v">projected by 2031 · Allied</div><span class="stats__tag">PROJECTED</span></div>
+            <div class="stats__cell" role="listitem"><div class="stats__k">+64.7%</div><div class="stats__v">U.S. app revenue growth in one year · Sensor Tower</div><span class="stats__tag">REPORTED</span></div>
+            <div class="stats__cell" role="listitem"><div class="stats__k">$21M</div><div class="stats__v">raised by a single horoscope app · Axios</div><span class="stats__tag">REPORTED</span></div>
+          </div>
+          <p class="stats__src">
+            Sources:
+            <a href="https://www.alliedmarketresearch.com/press-release/astrology-market.html" rel="noopener noreferrer">Allied Market Research</a> ·
+            <a href="https://sensortower.com/blog/astrology-apps-2019-revenue-downloads" rel="noopener noreferrer">Sensor Tower</a> ·
+            <a href="https://www.axios.com/2021/04/14/astrology-app-co-star-raises-15-million-funding" rel="noopener noreferrer">Axios, 2021</a>
+          </p>
+        </section>
+
+        <section class="mov reveal" id="belief-becomes-record">
+          <div class="mov__head"><span class="mov__no">IV</span><h2 class="mov__title">Belief becomes <span class="it">record.</span></h2></div>
+          <p>
+            A founder of the largest exchange in crypto states the strong
+            version of the claim this section needs:
           </p>
           <blockquote class="quote">
             <p>"Gold's price is not derived from its industrial or utility
@@ -713,72 +945,195 @@
             <cite>— <a href="https://x.com/cz_binance/status/1983514879643292126" rel="noopener noreferrer">CZ, founder of Binance · October 2025</a></cite>
           </blockquote>
           <p>
-            Astrology is one of the strongest belief networks on Earth — older
-            than any currency, larger than any fandom — and for all of history
-            it produced words, never records. The Twelve change the format,
-            not the meaning: each sign now has one canonical, ownable record.
-            A Leo can hold <em>Leo</em>. Belief, for the first time, has a
-            ledger entry.
+            The strong version is wrong, and it is worth saying so here before
+            a skeptic does. Gold is not pure belief: it is scarce by physics,
+            costly to extract, worn as jewelry, vaulted by central banks,
+            liquid everywhere, and recognized by centuries of law and custom.
+            Belief is one layer of the premium, not the whole tower. What
+            survives the correction is narrower and still useful: some
+            meaningful share of gold's value is coordination around a durable
+            symbol — people holding it because they expect others to keep
+            treating it as worth holding. Coordination around a durable symbol
+            is the only thing this essay claims the Twelve can earn. Nothing
+            more is borrowed from gold than that.
+          </p>
+          <p>
+            The ledger's contribution is equally specific. Astrology has
+            produced words for four thousand years — spoken, printed, streamed
+            — and never anything that could be held. The Twelve change the
+            format: each sign now has a public record with a published
+            address. A Leo can hold <em>Leo</em>. And precision again, because
+            the language of identity invites overreach: what the chain
+            verifies is the holding, not the Leo. Anyone can buy all twelve
+            signs; a Leo can hold none. The token is a badge, not a credential
+            — a tradable symbol of affiliation, like a jersey, which never
+            proved fandom either and never needed to. This essay will not
+            pretend a wallet proves a birthday.
           </p>
         </section>
 
-        <section class="mov reveal">
-          <div class="mov__head"><span class="mov__no">IV</span><h2 class="mov__title">Twelve. Fixed. <span class="it">Unowned.</span></h2></div>
+        <section class="mov reveal" id="the-candidacy">
+          <div class="mov__head"><span class="mov__no">V</span><h2 class="mov__title">Twelve. Fixed. <span class="it">Contested.</span></h2></div>
           <p>
             The properties most assets spend their whole lives trying to
             manufacture, the Twelve begin with:
           </p>
           <ul>
-            <li>A <strong>fixed universe</strong> — twelve signs, no version two, no thirteenth lot, no dilution of the set.</li>
-            <li><strong>Unowned symbols</strong> — the zodiac itself is public domain: no IP holder, no celebrity, no licensor who can sue, censor, or sell out. The symbols belong to everyone and offend no one.</li>
+            <li>A <strong>fixed story</strong> — twelve signs, closed more than two thousand years ago. No version two, no genre creep, no weekly launch diluting the ones before it.</li>
+            <li><strong>Unowned symbols</strong> — the zodiac is public domain: no IP holder, no licensor, no celebrity who can be canceled or cash out. (Not universally loved — some faiths object to astrology itself — but no one owns it, and no one can take it away.)</li>
             <li><strong>Built-in distribution</strong> — everyone has a sign; the question "which one are you?" is the oldest onboarding flow in the world.</li>
             <li><strong>Permanent relevance</strong> — the attention cycle resets monthly, forever.</li>
           </ul>
           <p>
-            This is what separates the Twelve from every other category the
-            market has tried. Dog coins, cat coins, frog coins, AI coins:
-            each is a genre, open at the top, and every week another launch
-            dilutes the ones before it. The zodiac does not work that way.
-            The set was closed more than two thousand years ago. There will
-            only ever be twelve, so the attention the category earns has
-            only twelve places to land, and the narrative cannot be forked,
-            extended, or relaunched. A fixed story, a fixed supply of
-            symbols, and a calendar that retells it every month.
+            Here the essay owes the reader its most careful paragraph, because
+            the obvious objection is the correct one. The twelve <em>signs</em>
+            are scarce. <em>Tokens named after them</em> are not. Anyone can
+            deploy another Leo this afternoon, and eventually someone will.
+            Bitcoin's scarcity is enforced by consensus; no code on any chain
+            prevents a thirteenth Leo. And the openness runs deeper than
+            copycat tokens: the monetization surface around the zodiac — apps,
+            NFTs, wrappers, brands, competing registries — is unlimited. A
+            closed vocabulary is not a closed market.
+          </p>
+          <p>
+            So what, exactly, does this registry claim? Not scarcity, and —
+            stated plainly — not canonicity either, yet. Canonicity in open
+            systems is never declared; it is converged upon, and the
+            convergence has not finished happening. What zodiacs.org holds
+            today is provenance and a head start: a continuous public archive
+            since 2024, machine-readable addresses, an
+            <a href="https://zodiacs.org/sdk/" rel="noopener noreferrer">open-source SDK</a>
+            any builder can verify against. That makes it the earliest
+            candidate for the canonical record — a candidacy to be judged on
+            evidence, and here is the evidence that would count: independent
+            integrations that read this registry rather than another; third
+            parties citing these addresses unprompted; holder dispersion
+            widening; liquidity that survives quiet months; an archive that
+            stays continuous through adverse ones. Until those accumulate
+            here, "canonical" names the objective, not the fact.
+          </p>
+          <div class="score" role="table" aria-label="Candidacy scoreboard">
+            <div class="score__row score__row--head" role="row">
+              <span role="columnheader">Criterion</span><span role="columnheader">Current evidence</span><span role="columnheader">As of</span>
+            </div>
+            <div class="score__row" role="row">
+              <span class="score__k" role="rowheader">Independent integrations</span>
+              <span class="score__v" role="cell"><span class="pending-disclosure" data-field="criteria.independentIntegrations">Pending disclosure</span></span>
+              <span class="score__d" role="cell" data-asof-field="criteria.independentIntegrations">—</span>
+            </div>
+            <div class="score__row" role="row">
+              <span class="score__k" role="rowheader">Unprompted third-party citations</span>
+              <span class="score__v" role="cell"><span class="pending-disclosure" data-field="criteria.thirdPartyCitations">Pending disclosure</span></span>
+              <span class="score__d" role="cell" data-asof-field="criteria.thirdPartyCitations">—</span>
+            </div>
+            <div class="score__row" role="row">
+              <span class="score__k" role="rowheader">Holder dispersion</span>
+              <span class="score__v" role="cell"><span class="pending-disclosure" data-field="criteria.holderDispersion">Pending disclosure</span></span>
+              <span class="score__d" role="cell" data-asof-field="criteria.holderDispersion">—</span>
+            </div>
+            <div class="score__row" role="row">
+              <span class="score__k" role="rowheader">Liquidity persistence</span>
+              <span class="score__v" role="cell"><span class="pending-disclosure" data-field="criteria.liquidityPersistence">Pending disclosure</span></span>
+              <span class="score__d" role="cell" data-asof-field="criteria.liquidityPersistence">—</span>
+            </div>
+            <div class="score__row" role="row">
+              <span class="score__k" role="rowheader">Archive continuity</span>
+              <span class="score__v" role="cell"><span class="pending-disclosure" data-field="criteria.archiveContinuity">Pending disclosure</span></span>
+              <span class="score__d" role="cell" data-asof-field="criteria.archiveContinuity">—</span>
+            </div>
+          </div>
+          <p class="score__cap">The candidacy is judged on these. The same list defines the loss condition.</p>
+          <p>
+            The closed set helps in exactly one way, and it is worth keeping
+            after all the concessions: coordination is cheaper on twelve
+            Schelling points than on an infinite genre. Twelve names everyone
+            already knows give convergence somewhere obvious to land. Cheaper
+            is not automatic. The bet, stated exactly, is that convergence
+            happens — and happens here first.
+          </p>
+          <p>
+            Even the set's most famous "threat" argues for its fixedness.
+            Every few years the thirteenth-sign story trends — NASA mentions
+            Ophiuchus, the feed panics — and within a week the world has
+            reasserted the twelve. The panic is not a crack in the system. It
+            is the system's immune response, arriving on schedule, generating
+            another cycle of attention for the same twelve names.
           </p>
         </section>
 
-        <section class="mov reveal">
-          <div class="mov__head"><span class="mov__no">V</span><h2 class="mov__title">The generation that <span class="it">already believes.</span></h2></div>
+        <section class="mov reveal" id="what-holding-means">
+          <div class="mov__head"><span class="mov__no">VI</span><h2 class="mov__title">What <span class="it">holding means.</span></h2></div>
+          <p>
+            What does holding <em>Leo</em> actually do? Three things, stated
+            plainly.
+          </p>
+          <p>
+            <strong>It signals.</strong> A sign is the one affiliation people
+            volunteer before being asked. A public record of holding it turns
+            the oldest self-description in the world into something you can
+            point to — a badge, worn by choice, verified as held rather than
+            as true.
+          </p>
+          <p>
+            <strong>It unlocks.</strong> The registry is open infrastructure.
+            Any app can read it and treat holders differently —
+            ownership-aware readings, sign-versus-sign games, shelves and
+            goods on the consumer surfaces
+            <a href="https://astrofolio.xyz/" rel="noopener noreferrer">Astrofolio</a>
+            maintains. The record is a key; the doors are being built around
+            it.
+          </p>
+          <p>
+            <strong>It speculates.</strong> Part of why anyone holds a memetic
+            asset is the expectation that others will want it later. This
+            essay will not pretend otherwise — pretending would insult the
+            reader. Holding a sign is, among other things, a position on the
+            argument of this page.
+          </p>
+        </section>
+
+        <section class="mov reveal" id="the-test">
+          <div class="mov__head"><span class="mov__no">VII</span><h2 class="mov__title">The generation, the gap, <span class="it">and the test.</span></h2></div>
           <p>
             The cohort that grew up online treats crypto as ordinary
             infrastructure. In <a href="https://www.gemini.com/blog/gemini-survey-finds-more-than-half-of-gen-z-owns-crypto" rel="noopener noreferrer">Gemini's 2024 global survey</a>,
-            just over half of Gen&nbsp;Z adults in the United States had
-            owned crypto, against 29 percent of Gen&nbsp;X.
+            just over half of Gen Z adults in the United States had owned
+            crypto, against 29 percent of Gen X.
             <a href="https://www.prnewswire.com/news-releases/millennials-and-gen-z-are-as-likely-to-own-cryptocurrency-as-they-are-real-estate-302111864.html" rel="noopener noreferrer">Policygenius found</a>
-            Gen&nbsp;Z and millennials about as likely to own crypto as real
-            estate. The trust runs deeper than the ownership: in
-            <a href="https://www.prnewswire.com/news-releases/new-etoro-survey-nearly-half-of-millennials-trust-us-stock-market-less-than-crypto-300797937.html" rel="noopener noreferrer">an eToro survey</a>,
-            43 percent of millennial traders said they trust crypto
+            Gen Z and millennials about as likely to own crypto as real
+            estate. Among traders specifically,
+            <a href="https://www.prnewswire.com/news-releases/new-etoro-survey-nearly-half-of-millennials-trust-us-stock-market-less-than-crypto-300797937.html" rel="noopener noreferrer">an eToro survey</a>
+            found 43 percent of millennial respondents trusting crypto
             exchanges more than the stock market, and
             <a href="https://www.okx.com/en-gb/learn/crypto-age-gap" rel="noopener noreferrer">a 2026 OKX poll</a>
-            found roughly four in ten Gen&nbsp;Z and millennial respondents
-            rate crypto platforms highly while only about one in five say
-            the same of banks.
+            of its surveyed population found roughly four in ten Gen Z and
+            millennial respondents rating crypto platforms highly against
+            about one in five for banks. Meanwhile
+            <a href="https://www.pewresearch.org/religion/2025/05/21/3-in-10-americans-consult-astrology-tarot-cards-or-fortune-tellers/" rel="noopener noreferrer">Pew finds</a>
+            astrology engagement concentrated in the same cohort: younger,
+            online, fluent in symbols.
           </p>
           <p>
-            The same generation keeps the chart open in the other tab.
-            <a href="https://www.pewresearch.org/religion/2025/05/21/3-in-10-americans-consult-astrology-tarot-cards-or-fortune-tellers/" rel="noopener noreferrer">Pew Research finds</a>
-            about three in ten American adults consult astrology, with
-            belief concentrated in exactly this cohort: younger, online,
-            and fluent in symbols. For the first time, the people most
-            fluent in the zodiac and the people most comfortable holding
-            assets onchain are the same people.
+            To be precise about what those surveys can and cannot say: they
+            are cohort statistics. No public dataset shows that the
+            individuals who read charts are the individuals who hold coins.
+            The overlap is plausible — same ages, same platforms, same comfort
+            with digital-native value — but plausible is not proven, and this
+            essay will not launder two circles into one. Likewise with the
+            inheritance numbers:
+            <a href="https://www.cerulli.com/press-releases/cerulli-anticipates-124-trillion-in-wealth-will-transfer-through-2048" rel="noopener noreferrer">Cerulli projects</a>
+            $124 trillion changing hands through 2048, roughly $45.6 trillion
+            of it to millennials. Transfers establish future purchasing power,
+            not its allocation. Nothing about an inheritance routes it to a
+            zodiac token, and the essay claims only the weaker thing: the
+            demographic holding the symbols will, in time, hold the money.
           </p>
-          <div class="stats" role="list" aria-label="Reported figures">
-            <div class="stats__cell" role="listitem"><div class="stats__k">51%</div><div class="stats__v">of Gen Z have owned crypto · Gemini</div></div>
-            <div class="stats__cell" role="listitem"><div class="stats__k">43%</div><div class="stats__v">trust crypto over the stock market · eToro</div></div>
-            <div class="stats__cell" role="listitem"><div class="stats__k">$124T</div><div class="stats__v">changing hands by 2048 · Cerulli</div></div>
-            <div class="stats__cell" role="listitem"><div class="stats__k">$45.6T</div><div class="stats__v">to millennials alone · Cerulli</div></div>
+          <p class="stats__title">Cohort statistics — overlap plausible, not proven</p>
+          <div class="stats" role="list" aria-label="Cohort statistics — overlap plausible, not proven">
+            <div class="stats__cell" role="listitem"><div class="stats__k">51%</div><div class="stats__v">of Gen Z have owned crypto · Gemini</div><span class="stats__tag">SURVEYED</span></div>
+            <div class="stats__cell" role="listitem"><div class="stats__k">43%</div><div class="stats__v">of surveyed millennial traders trust crypto over the stock market · eToro</div><span class="stats__tag">SURVEYED</span></div>
+            <div class="stats__cell" role="listitem"><div class="stats__k">$124T</div><div class="stats__v">changing hands by 2048 · Cerulli</div><span class="stats__tag">PROJECTED</span></div>
+            <div class="stats__cell" role="listitem"><div class="stats__k">$45.6T</div><div class="stats__v">to millennials alone · Cerulli</div><span class="stats__tag">PROJECTED</span></div>
           </div>
           <p class="stats__src">
             Sources:
@@ -788,19 +1143,35 @@
             <a href="https://www.cerulli.com/press-releases/cerulli-anticipates-124-trillion-in-wealth-will-transfer-through-2048" rel="noopener noreferrer">Cerulli, 2024</a>
           </p>
           <p style="margin-top: 26px;">
-            And the capital is coming to them.
-            <a href="https://www.cerulli.com/press-releases/cerulli-anticipates-124-trillion-in-wealth-will-transfer-through-2048" rel="noopener noreferrer">Cerulli Associates projects</a>
-            124 trillion dollars changing hands through 2048, the largest
-            transfer of wealth in history; millennials inherit the largest
-            share, roughly 45.6 trillion, with another 15 trillion to
-            Gen&nbsp;Z. The money is leaving the generation that trusts
-            institutions and arriving at the one that trusts the chain and
-            reads the chart.
+            And a concession this section owes: a crypto-native corner of
+            astrology has existed for years without repricing anything. That
+            is not a postponed experiment — it is a partial test with a
+            negative result so far, and the friction explanation cannot be
+            spent forever. Friction is real: holding a token still costs a
+            normal person more than one tap, and the rails are visibly
+            removing that cost — passkey wallets, embedded onramps, social
+            platforms converging on payments. But an explanation that can
+            absorb any amount of disconfirmation is not an explanation, so the
+            registry commits to the honest version instead: a dated, one-tap
+            claim surface for sign-holders, with success criteria published in
+            advance <span class="pending-disclosure">criteria to be published — pending</span>
+            and the result published either way. A thesis that cannot lose is
+            not a thesis.
           </p>
+          <aside class="tcard" aria-label="The one-tap test — commitment card">
+            <div class="tcard__head">
+              <span class="tcard__title">The one-tap test</span>
+              <span class="pending-disclosure">PENDING — criteria not yet published</span>
+            </div>
+            <div class="tcard__row"><span class="tcard__k">Unique claimants</span><span class="tcard__v"><span class="pending-disclosure" data-field="criteria.uniqueClaimants">Pending disclosure</span></span></div>
+            <div class="tcard__row"><span class="tcard__k">90-day retention</span><span class="tcard__v"><span class="pending-disclosure" data-field="criteria.ninetyDayRetention">Pending disclosure</span></span></div>
+            <div class="tcard__row"><span class="tcard__k">Holder dispersion</span><span class="tcard__v"><span class="pending-disclosure" data-field="criteria.holderDispersion">Pending disclosure</span></span></div>
+            <p class="tcard__note">Result will be published either way.</p>
+          </aside>
         </section>
 
-        <section class="mov reveal">
-          <div class="mov__head"><span class="mov__no">VI</span><h2 class="mov__title">Why Solana. <span class="it">Why Base.</span></h2></div>
+        <section class="mov reveal" id="why-solana-why-base">
+          <div class="mov__head"><span class="mov__no">VIII</span><h2 class="mov__title">Why Solana. <span class="it">Why Base.</span></h2></div>
           <p>
             Identity-first, social, emotional, mobile, short sessions —
             astrology behaves like the consumer activity Solana has already
@@ -811,17 +1182,152 @@
             are. Official bridged representations extend each sign to Base —
             one origin, verified everywhere the registry points.
           </p>
+        </section>
+
+        <section class="mov reveal" id="the-case-against">
+          <div class="mov__head"><span class="mov__no">IX</span><h2 class="mov__title">The case <span class="it">against.</span></h2></div>
           <p>
-            The audience most fluent in the symbol — the astrology mainstream
-            of Instagram and TikTok — is not yet the audience setting onchain
-            prices. That gap is the thesis. Social platforms are converging on
-            financial rails; when the rails turn invisible, the culture does
-            the onboarding.
+            An argument that hides its weaknesses is an advertisement. These
+            are the five strongest objections to everything above, stated the
+            way a skeptic would state them.
+          </p>
+          <p>
+            <strong>"Belief in the sign is not demand for the record."</strong> <span class="chip-ref">CONCEDED IN PART</span>
+            Correct — and this is the actual bet, so here it is at full
+            strength: nine in ten Americans know their sign, and approximately
+            zero of them woke up today wanting a token. Section III's spending
+            proves demand for readings and entertainment — a service consumed
+            — not for a zero-cash-flow asset with infinitely reproducible
+            substitutes. The baseball-card comparison sometimes offered here
+            is an analogy, not evidence: cards carried physical scarcity,
+            licensed imagery, grading, and dealer networks that tokens do not
+            inherit, and nobody has published a base rate for how often
+            durable cultures become durable financial assets. The nearest real
+            precedent actually cuts the other way, so it belongs on this page:
+            football fan tokens — durable tribal identity, closed sets,
+            official issuance — mostly shed the bulk of their value from their
+            peaks. The structural difference is real but must be stated
+            carefully: fan tokens were centrally issued instruments sold on
+            promised utility that largely failed to arrive, and they were
+            priced against those promises. The Twelve are permissionless
+            records that promise nothing — no votes, no perks, no yield —
+            which means there is less to fail to deliver, and also less to
+            point to. Whether "promises nothing" reads as a defense or an
+            indictment is precisely the reader's call. The essay's claim
+            survives only in its narrowest form: a paying culture, a durable
+            symbol set, and falling friction make the bet <em>possible</em>.
+            Nothing on this page makes it <em>likely</em>, and the essay stops
+            claiming at possible.
+          </p>
+          <p>
+            <strong>"If the audience wanted this, they would already have it."</strong> <a class="chip-ref" href="#the-test">TESTABLE — §VII</a>
+            Partly conceded above: the existing crypto-native astrology
+            overlap is a partial test with a negative result so far, and it
+            counts against the thesis rather than being suspended by it. What
+            remains true is that the mainstream astrology audience — the one
+            on Instagram and TikTok — has never faced a one-tap version of
+            this, the way it never faced one-tap horoscopes until apps existed
+            and then paid $40 million a year for them. That history says
+            friction can hide real demand; it does not say demand is hiding
+            here. Hence the committed test in Section VII, with criteria
+            published before the result. If the one-tap version reaches that
+            audience and nothing moves, the friction explanation is spent, and
+            the registry will say so on this page.
+          </p>
+          <p>
+            <strong>"The registry appointed itself."</strong> <a class="chip-ref" href="#the-candidacy">LOSS CONDITION DEFINED — §V</a>
+            It did. There was no other way to begin — every canonical registry
+            in history was self-appointed on day one and legitimate only in
+            retrospect. Legitimacy here is earned the boring way: publish
+            verifiable facts, keep the archive continuous, never sell the
+            position, be right for years. Section V lists the evidence that
+            would count toward the candidacy; the same list defines the loss
+            condition. If a competing record earns more integrations, more
+            verification, and more trust, this one loses its status, as it
+            should. A registry that cannot lose is not a registry; it is a
+            brand.
+          </p>
+          <p>
+            <strong>"This is a memecoin with a literature review."</strong> <span class="chip-ref">CONCEDED IN PART</span>
+            Half true, and the half that is true is embraced: the Twelve are
+            memetic assets, priced by attention and belief, and dressing that
+            up would be dishonest. The structural difference is narrower than
+            a defender would like and still real: memecoins are open genres —
+            dogs, cats, frogs — where every launch dilutes the last, while the
+            zodiac supplies twelve fixed names that give coordination
+            somewhere obvious to land. A closed vocabulary is not a closed
+            market, and Section V concedes as much; twelve Schelling points
+            make convergence cheaper, not certain. Most memetic assets ask you
+            to believe a joke will last. This one asks you to notice a belief
+            that already has — and then asks you to make the further, unproven
+            bet that the belief coordinates onto these records.
+          </p>
+          <p>
+            <strong>"You have described the mythology and omitted the instrument."</strong> <a class="chip-ref" href="#the-instrument">ANSWERED BY DATA — §X</a>
+            The sharpest objection of the five, and the only one prose cannot
+            answer. Even if every cultural claim above is right, a buyer
+            underwrites a specific instrument: a supply, a holder
+            distribution, a set of administrative authorities, a bridge, a
+            pool of liquidity, a treasury. A permanent symbol can be attached
+            to a temporary, concentrated, or extractive token, and cultural
+            durability protects no one from any of that. Telling readers the
+            facts are "verifiable onchain" is not disclosure; most readers
+            cannot reconstruct control rights from a block explorer, and
+            should not have to. So the answer is not an argument. It is the
+            next section.
           </p>
         </section>
 
-        <section class="mov reveal">
-          <div class="mov__head"><span class="mov__no">VII</span><h2 class="mov__title">The slower <span class="it">bet.</span></h2></div>
+        <section class="mov reveal" id="the-instrument">
+          <div class="mov__head"><span class="mov__no">X</span><h2 class="mov__title">The instrument, <span class="it">in the open.</span></h2></div>
+          <p>
+            The registry's position is that an essay asking readers to
+            scrutinize astrology has no right to ask faith on the asset. The
+            facts below are published here, dated, and kept current — several
+            are read live from the same
+            <a href="https://zodiacs.org/sdk/" rel="noopener noreferrer">SDK</a>
+            any builder can run independently.
+          </p>
+          <div class="disc-scroll" role="region" aria-label="Disclosure table — the instrument, per sign" tabindex="0">
+            <table class="disc">
+              <thead>
+                <tr><th scope="col">Sign</th><th scope="col">Supply</th><th scope="col">Mint authority</th><th scope="col">Freeze authority</th><th scope="col">Top-10 holders</th><th scope="col">Liquidity</th><th scope="col">Bridge</th><th scope="col">Treasury / insider</th><th scope="col">Continuity</th></tr>
+              </thead>
+              <tbody>
+            <tr><th scope="row">Aries</th><td><span class="pending-disclosure" data-field="signs.aries.supply">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.aries.mintAuthority">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.aries.freezeAuthority">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.aries.topTenHolders">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.aries.liquidity">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.aries.bridge">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.aries.treasury">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.aries.continuity">Pending disclosure</span></td></tr>
+            <tr><th scope="row">Taurus</th><td><span class="pending-disclosure" data-field="signs.taurus.supply">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.taurus.mintAuthority">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.taurus.freezeAuthority">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.taurus.topTenHolders">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.taurus.liquidity">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.taurus.bridge">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.taurus.treasury">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.taurus.continuity">Pending disclosure</span></td></tr>
+            <tr><th scope="row">Gemini</th><td><span class="pending-disclosure" data-field="signs.gemini.supply">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.gemini.mintAuthority">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.gemini.freezeAuthority">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.gemini.topTenHolders">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.gemini.liquidity">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.gemini.bridge">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.gemini.treasury">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.gemini.continuity">Pending disclosure</span></td></tr>
+            <tr><th scope="row">Cancer</th><td><span class="pending-disclosure" data-field="signs.cancer.supply">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.cancer.mintAuthority">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.cancer.freezeAuthority">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.cancer.topTenHolders">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.cancer.liquidity">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.cancer.bridge">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.cancer.treasury">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.cancer.continuity">Pending disclosure</span></td></tr>
+            <tr><th scope="row">Leo</th><td><span class="pending-disclosure" data-field="signs.leo.supply">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.leo.mintAuthority">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.leo.freezeAuthority">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.leo.topTenHolders">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.leo.liquidity">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.leo.bridge">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.leo.treasury">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.leo.continuity">Pending disclosure</span></td></tr>
+            <tr><th scope="row">Virgo</th><td><span class="pending-disclosure" data-field="signs.virgo.supply">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.virgo.mintAuthority">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.virgo.freezeAuthority">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.virgo.topTenHolders">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.virgo.liquidity">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.virgo.bridge">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.virgo.treasury">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.virgo.continuity">Pending disclosure</span></td></tr>
+            <tr><th scope="row">Libra</th><td><span class="pending-disclosure" data-field="signs.libra.supply">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.libra.mintAuthority">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.libra.freezeAuthority">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.libra.topTenHolders">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.libra.liquidity">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.libra.bridge">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.libra.treasury">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.libra.continuity">Pending disclosure</span></td></tr>
+            <tr><th scope="row">Scorpio</th><td><span class="pending-disclosure" data-field="signs.scorpio.supply">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.scorpio.mintAuthority">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.scorpio.freezeAuthority">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.scorpio.topTenHolders">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.scorpio.liquidity">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.scorpio.bridge">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.scorpio.treasury">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.scorpio.continuity">Pending disclosure</span></td></tr>
+            <tr><th scope="row">Sagittarius</th><td><span class="pending-disclosure" data-field="signs.sagittarius.supply">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.sagittarius.mintAuthority">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.sagittarius.freezeAuthority">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.sagittarius.topTenHolders">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.sagittarius.liquidity">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.sagittarius.bridge">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.sagittarius.treasury">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.sagittarius.continuity">Pending disclosure</span></td></tr>
+            <tr><th scope="row">Capricorn</th><td><span class="pending-disclosure" data-field="signs.capricorn.supply">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.capricorn.mintAuthority">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.capricorn.freezeAuthority">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.capricorn.topTenHolders">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.capricorn.liquidity">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.capricorn.bridge">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.capricorn.treasury">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.capricorn.continuity">Pending disclosure</span></td></tr>
+            <tr><th scope="row">Aquarius</th><td><span class="pending-disclosure" data-field="signs.aquarius.supply">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.aquarius.mintAuthority">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.aquarius.freezeAuthority">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.aquarius.topTenHolders">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.aquarius.liquidity">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.aquarius.bridge">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.aquarius.treasury">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.aquarius.continuity">Pending disclosure</span></td></tr>
+            <tr><th scope="row">Pisces</th><td><span class="pending-disclosure" data-field="signs.pisces.supply">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.pisces.mintAuthority">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.pisces.freezeAuthority">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.pisces.topTenHolders">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.pisces.liquidity">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.pisces.bridge">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.pisces.treasury">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="signs.pisces.continuity">Pending disclosure</span></td></tr>
+            <tr class="disc__agg"><th scope="row">All twelve · aggregate</th><td><span class="pending-disclosure" data-field="aggregate.supply">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="aggregate.mintAuthority">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="aggregate.freezeAuthority">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="aggregate.topTenHolders">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="aggregate.liquidity">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="aggregate.bridge">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="aggregate.treasury">Pending disclosure</span></td><td><span class="pending-disclosure" data-field="aggregate.continuity">Pending disclosure</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="disc-updated" data-disclosure-updated>Last updated: no disclosures published yet</p>
+          <ul class="disc-legend">
+            <li><strong>Supply</strong> — total and circulating, per sign</li>
+            <li><strong>Mint authority</strong> — status per sign (retained / renounced), address if retained</li>
+            <li><strong>Freeze authority</strong> — status per sign</li>
+            <li><strong>Holder concentration</strong> — top-10 wallet share per sign, dated</li>
+            <li><strong>Liquidity</strong> — venue, pool addresses, LP ownership and any locks</li>
+            <li><strong>Bridge</strong> — mechanism for Base representations, custody model, what fails if the bridge fails</li>
+            <li><strong>Treasury and insider holdings</strong> — project-controlled wallets, amounts, any lockups or vesting, disposal policy</li>
+            <li><strong>Registry continuity</strong> — governance of the record itself; what survives if the operating entity disappears (static registry file, forkable SDK, mirrored archive)</li>
+          </ul>
+          <div class="ednote">
+            <p>Where a number above is unflattering — concentration usually is, early — it is published anyway, with the plan beside it. A registry that redacts its own instrument has already answered the fifth objection in the wrong direction.</p>
+          </div>
+        </section>
+
+        <section class="mov reveal" id="the-slower-bet">
+          <div class="mov__head"><span class="mov__no">XI</span><h2 class="mov__title">The slower <span class="it">bet.</span></h2></div>
           <p>
             The archive documents the Twelve in public from 2024 onward, with
             registry addresses and community activity preserved across public
@@ -831,19 +1337,39 @@
             <a href="https://tiktok.com/@astrofolio" rel="noopener noreferrer">TikTok</a>, and
             <a href="https://t.me/astrofoliosol" rel="noopener noreferrer">Telegram</a>.
             Around the record, Astrofolio maintains the consumer surfaces —
-            shelves, multi-buy, physical goods — while this registry keeps
-            the canonical facts.
+            shelves, multi-buy, physical goods — while this registry keeps the
+            canonical facts. The case against is printed above, and the
+            instrument is disclosed beside the mythology, because a registry
+            that lives on trust can afford to bury neither.
           </p>
           <p>
             It is a bet on permanence over novelty, identity over irony,
-            cultural persistence over manufactured attention. The oldest
-            identity system in human history did not need crypto to survive.
-            Crypto, looking for its next demographic, may well need it.
+            cultural persistence over manufactured attention — made as a
+            candidacy, judged on published criteria, losable in public. The
+            oldest identity system in human history did not need crypto to
+            survive. Crypto, looking for its next demographic, may well need
+            it.
           </p>
           <div class="sig">
-            <span>Zodiacs.org — The Registry</span>
-            <span>An editorial thesis · not advice</span>
+            <span>Zodiacs.org — The Registry · An editorial thesis · not advice · Revised July 2026 · <a href="#changelog">changelog</a></span>
           </div>
+        </section>
+
+        <section class="mov reveal" id="changelog">
+          <div class="mov__head"><span class="mov__no">—</span><h2 class="mov__title">Changelog</h2></div>
+          <p>
+            <strong>Nº 05 — July 2026.</strong> This thesis was submitted to
+            external adversarial review and revised. What changed: “canonical”
+            is now claimed as a candidacy judged on published criteria, not a
+            status (§V); the evidence in §III is scoped to what it can prove;
+            the demographic argument concedes that cohort overlap is not
+            individual overlap (§VII); a fifth objection — that the essay
+            described the mythology and omitted the instrument — was accepted
+            in full, and §X now exists to answer it with disclosures rather
+            than prose; a committed, falsifiable adoption test was added
+            (§VII). Earlier versions are preserved in the archive. A registry
+            that edits its argument in the open is the argument.
+          </p>
         </section>
       </div>
     </article>
@@ -1141,6 +1667,121 @@
         host.querySelector('[data-pulse-src]').textContent = 'Source: Wikimedia · live';
         host.classList.add('is-live');
       }).catch(function () { /* snapshot remains */ });
+    })();
+
+    /* ── Season clock — the hero names the current tropical season.
+       Boundaries are the engine's exact Sun-ingress instants (the same
+       table /learn/zodiac-dates/ prints), embedded through January 2028.
+       Outside the embedded range the element simply stays hidden. */
+    (function () {
+      var el = document.querySelector('[data-season-clock]');
+      if (!el) return;
+      var WINDOWS = [
+        ['aquarius', '2026-01-20T01:44:34.379Z'],
+        ['pisces', '2026-02-18T15:51:26.627Z'],
+        ['aries', '2026-03-20T14:45:34.021Z'],
+        ['taurus', '2026-04-20T01:39:12.143Z'],
+        ['gemini', '2026-05-21T00:37:22.918Z'],
+        ['cancer', '2026-06-21T08:25:08.400Z'],
+        ['leo', '2026-07-22T19:13:26.161Z'],
+        ['virgo', '2026-08-23T02:19:04.019Z'],
+        ['libra', '2026-09-23T00:05:40.402Z'],
+        ['scorpio', '2026-10-23T09:38:21.771Z'],
+        ['sagittarius', '2026-11-22T07:23:27.992Z'],
+        ['capricorn', '2026-12-21T20:50:14.049Z'],
+        ['aquarius', '2027-01-20T07:29:54.622Z'],
+        ['pisces', '2027-02-18T21:33:36.367Z'],
+        ['aries', '2027-03-20T20:24:41.375Z'],
+        ['taurus', '2027-04-20T07:17:24.887Z'],
+        ['gemini', '2027-05-21T06:18:00.373Z'],
+        ['cancer', '2027-06-21T14:10:41.847Z'],
+        ['leo', '2027-07-23T01:04:31.814Z'],
+        ['virgo', '2027-08-23T08:13:59.497Z'],
+        ['libra', '2027-09-23T06:01:20.130Z'],
+        ['scorpio', '2027-10-23T15:32:42.212Z'],
+        ['sagittarius', '2027-11-22T13:16:14.602Z'],
+        ['capricorn', '2027-12-22T02:42:10.520Z']
+      ];
+      var END = Date.parse('2028-01-20T13:21:47.878Z');
+      var now = Date.now();
+      if (!(now >= Date.parse(WINDOWS[0][1]) && now < END)) return;
+      for (var i = 0; i < WINDOWS.length; i++) {
+        var from = Date.parse(WINDOWS[i][1]);
+        var to = i + 1 < WINDOWS.length ? Date.parse(WINDOWS[i + 1][1]) : END;
+        if (now >= from && now < to) {
+          var sign = WINDOWS[i][0].charAt(0).toUpperCase() + WINDOWS[i][0].slice(1);
+          var day = Math.floor((now - from) / 86400000) + 1;
+          var total = Math.round((to - from) / 86400000);
+          el.textContent = sign + ' season · day ' + day + ' of ' + total;
+          el.hidden = false;
+          return;
+        }
+      }
+    })();
+
+    /* ── Disclosure surfaces — Sections V, VII, X ──
+       The page ships every field in its honest default state: an amber
+       "Pending disclosure" chip. These JSON files are the single source
+       the maintainer edits; whatever they contain is rendered verbatim —
+       a filled field shows its value, its as-of date, and a Verify link
+       when one is given. Nothing here invents a number.
+       PHASE 2: hydrate from @zodiacs/sdk — write these JSON files from
+       the SDK at build time; this render contract is unchanged. */
+    (function () {
+      if (!window.fetch) return;
+      function fieldAt(data, path) {
+        var f = data;
+        var parts = path.split('.');
+        for (var i = 0; i < parts.length && f; i++) f = f[parts[i]];
+        return f && typeof f === 'object' ? f : null;
+      }
+      function render(el, f) {
+        if (!f || f.status === 'pending' || f.value == null) return null; // pending chip stands
+        var out = document.createElement('span');
+        var val = document.createElement('span');
+        val.className = 'disc-val';
+        val.textContent = String(f.value);
+        out.appendChild(val);
+        if (f.asOf) {
+          var when = document.createElement('span');
+          when.className = 'disc-asof';
+          when.textContent = ' as of ' + f.asOf;
+          out.appendChild(when);
+        }
+        if (f.verifyUrl) {
+          var verify = document.createElement('a');
+          verify.className = 'disc-verify';
+          verify.href = String(f.verifyUrl);
+          verify.rel = 'noopener noreferrer';
+          verify.textContent = ' Verify \u2197';
+          out.appendChild(verify);
+        }
+        el.replaceWith(out);
+        return f.asOf || null;
+      }
+      function hydrate(url, rootId, updatedSel) {
+        var root = document.getElementById(rootId);
+        if (!root) return;
+        fetch(url)
+          .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+          .then(function (data) {
+            var latest = null;
+            root.querySelectorAll('[data-field]').forEach(function (el) {
+              var asOf = render(el, fieldAt(data, el.getAttribute('data-field')));
+              if (asOf && (!latest || asOf > latest)) latest = asOf;
+            });
+            root.querySelectorAll('[data-asof-field]').forEach(function (el) {
+              var f = fieldAt(data, el.getAttribute('data-asof-field'));
+              if (f && f.asOf) el.textContent = f.asOf;
+            });
+            var up = updatedSel && root.querySelector(updatedSel);
+            if (up) up.textContent = 'Last updated: ' + (latest || 'no disclosures published yet');
+          })
+          .catch(function () { /* the static pending state stands */ });
+      }
+      hydrate('/thesis/thesis-disclosure.json', 'the-instrument', '[data-disclosure-updated]');
+      hydrate('/thesis/thesis-candidacy.json', 'the-candidacy', null);
+      hydrate('/thesis/thesis-test.json', 'the-test', null);
     })();
   </script>
   <svg class="glass-defs" aria-hidden="true" focusable="false">
