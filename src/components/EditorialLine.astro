@@ -14,7 +14,7 @@ const { locale } = Astro.props;
 ---
 <aside class="editorial-line container container--narrow">
   <span>
-    {t(locale, 'editedBy')}
+    {t(locale, 'editedBy')}{' '}
     <a href="/about/#editor">{EDITOR_NAME}</a>
     <span aria-hidden="true"> · </span>
     <a href={localizePath(locale, '/methodology/')}>{t(locale, 'editorialHow')}</a>

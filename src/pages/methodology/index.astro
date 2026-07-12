@@ -41,12 +41,12 @@ const jsonLd = [
         (a sixtieth of a degree). We compute <strong>apparent geocentric
         tropical longitudes of date</strong> — the standard frame of Western
         astrology — including light-time, aberration, and nutation. The Moon
-        uses a dedicated high-accuracy lunar model; the lunar node is the
+        uses a dedicated high-accuracy lunar model; the lunar node is the{' '}
         <em>true node</em>, derived from the Moon's instantaneous orbit.
       </p>
       <p>
         Every change to the engine must pass an automated accuracy gate
-        before it ships: positions are compared against
+        before it ships: positions are compared against{' '}
         <strong>NASA JPL Horizons</strong> reference data at multiple epochs
         (including a 1907 chart), with tolerances of a few hundredths of a
         degree for planets. The test suite also checks the sky against itself:
@@ -59,7 +59,7 @@ const jsonLd = [
         The ascendant and midheaven are computed from Greenwich apparent
         sidereal time, your birthplace coordinates, and the obliquity of the
         ecliptic (IAU 2006). We offer <strong>whole sign</strong> houses (the
-        oldest system — each house is one complete sign) and
+        oldest system — each house is one complete sign) and{' '}
         <strong>Placidus</strong> (the most common modern system, computed by
         iterative semi-arc division). Placidus is mathematically undefined
         near the poles; above 66° latitude we fall back to whole sign and say
@@ -69,9 +69,9 @@ const jsonLd = [
       <h2>Time zones</h2>
       <p>
         A birth chart is only as good as its clock conversion. We resolve your
-        birth time against the <strong>complete IANA time zone history</strong>
+        birth time against the <strong>complete IANA time zone history</strong>{' '}
         of your birthplace: daylight saving in all its regional weirdness,
-        wartime clock changes, and pre-standardization <em>local mean time</em>
+        wartime clock changes, and pre-standardization <em>local mean time</em>{' '}
         — including offsets with seconds, like Mexico City's −6:36:36 before
         1922.
       </p>
@@ -87,8 +87,8 @@ const jsonLd = [
 
       <h2>Birthplace search</h2>
       <p>
-        Place lookup runs against a bundled index of ~34,000 cities from
-        <a href="https://www.geonames.org/" rel="noopener noreferrer">GeoNames</a>
+        Place lookup runs against a bundled index of ~34,000 cities from{' '}
+        <a href="https://www.geonames.org/" rel="noopener noreferrer">GeoNames</a>{' '}
         (CC BY 4.0), each carrying its IANA time zone. Coordinates are stored
         to ~1 km precision — far finer than a birth chart needs.
       </p>
