@@ -8,6 +8,7 @@ export interface SearchEntry {
   title: string;
   description: string;
   kind: string;
+  keywords?: string[];
 }
 
 /** Mild preference for destinations over reference when scores tie. */
@@ -31,6 +32,7 @@ const wordBoundary = (haystack: string, needle: string) =>
 export function scoreEntry(entry: SearchEntry, tokens: string[]): number {
   const title = entry.title.toLowerCase();
   const description = entry.description.toLowerCase();
+  const keywords = entry.keywords?.join(' ').toLowerCase() ?? '';
   let score = 0;
   for (const token of tokens) {
     if (title === token) score += 8;
@@ -39,6 +41,7 @@ export function scoreEntry(entry: SearchEntry, tokens: string[]): number {
     else if (title.includes(token)) score += 2;
     else if (wordBoundary(description, token)) score += 1;
     else if (description.includes(token)) score += 0.5;
+    else if (wordBoundary(keywords, token)) score += 0.25;
     else return 0;
   }
   return score + (KIND_BOOST[entry.kind] ?? 0);

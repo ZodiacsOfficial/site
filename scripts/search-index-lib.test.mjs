@@ -1,5 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import {
+  CURATED_WING_ENTRIES,
+  SEARCH_KINDS,
   extractPageMetadata,
   firstSentence,
   glossarySearchEntries,
@@ -11,6 +13,8 @@ import {
   sortSearchEntries,
   truncateAtWord,
 } from './search-index-lib.mjs';
+
+const BANNED_MARKET_WORDS = /\b(?:market|markets|price|prices|pricing|token|tokens|sale|sales|trade|trades|trading|buy|buying|sell|selling|investment|investments|liquidity|exchange|exchanges|speculation)\b/i;
 
 describe('search-index HTML extraction', () => {
   it('extracts normalized title and description regardless of meta attribute order', () => {
@@ -102,7 +106,7 @@ describe('glossary search entries', () => {
     expect(searchIndexShapeFailures(null, { minEntries: 1 })).toEqual(['root must be an array']);
     expect(searchIndexShapeFailures([
       ...sorted,
-      { path: '/a/', title: '', description: 'duplicate', kind: 'mystery' },
+      { path: '/a/', title: '', description: 'duplicate', kind: 'mystery', keywords: [''] },
       { path: '/../outside', title: 'Outside', description: 'Escapes dist', kind: 'page' },
       { path: '/learn/glossary/#orb#alias', title: 'Alias', description: 'Alias term', kind: 'term' },
       { path: '/learn/glossary/#%6Frb', title: 'Encoded', description: 'Encoded term', kind: 'term' },
@@ -111,6 +115,7 @@ describe('glossary search entries', () => {
       'entry 2 has invalid title',
       'duplicate path /a/',
       'entry 2 has unknown kind mystery',
+      'entry 2 has invalid keywords',
       'entries are not sorted at /a/',
       'entry 3 path contains a parent segment',
       'entry 4 path contains multiple fragments',
@@ -118,5 +123,65 @@ describe('glossary search entries', () => {
       'entry 5 term path is not canonical',
       'entry 6 non-term path contains a fragment',
     ]));
+  });
+});
+
+describe('curated wing search entries', () => {
+  it('freezes the fifteen records-register destinations with validated registry kinds', () => {
+    expect(SEARCH_KINDS).toContain('registry');
+    expect(CURATED_WING_ENTRIES).toHaveLength(15);
+    expect(Object.isFrozen(CURATED_WING_ENTRIES)).toBe(true);
+    expect(CURATED_WING_ENTRIES.every((entry) => (
+      Object.isFrozen(entry) && Object.isFrozen(entry.keywords)
+    ))).toBe(true);
+    expect(CURATED_WING_ENTRIES.map((entry) => entry.path)).toEqual([
+      '/registry/',
+      '/thesis/',
+      '/sdk/',
+      '/registry/aries/',
+      '/registry/taurus/',
+      '/registry/gemini/',
+      '/registry/cancer/',
+      '/registry/leo/',
+      '/registry/virgo/',
+      '/registry/libra/',
+      '/registry/scorpio/',
+      '/registry/sagittarius/',
+      '/registry/capricorn/',
+      '/registry/aquarius/',
+      '/registry/pisces/',
+    ]);
+    expect(CURATED_WING_ENTRIES.slice(0, 3)).toEqual([
+      expect.objectContaining({
+        path: '/registry/',
+        title: 'The Zodiacs Registry',
+        description: 'The registry of the twelve signs — canonical records, provenance, and the Astrofolio catalogue.',
+      }),
+      expect.objectContaining({
+        path: '/thesis/',
+        title: 'The Registry Thesis',
+        description: 'Why the twelve records exist — the essay of record, with published disclosures.',
+      }),
+      expect.objectContaining({
+        path: '/sdk/',
+        title: 'Zodiacs SDK',
+        description: 'Open tools for building astrology apps — charts, icons, and the registry interface.',
+      }),
+    ]);
+    expect(CURATED_WING_ENTRIES[3]).toEqual(expect.objectContaining({
+      path: '/registry/aries/',
+      title: 'Aries — registry record',
+      description: 'The canonical record of Aries in the registry: provenance, description, and verification.',
+    }));
+    expect(searchIndexShapeFailures(
+      sortSearchEntries(CURATED_WING_ENTRIES),
+      { minEntries: 0 },
+    )).toEqual([]);
+  });
+
+  it('keeps curated titles and descriptions out of the market register', () => {
+    for (const entry of CURATED_WING_ENTRIES) {
+      expect(`${entry.title} ${entry.description}`).not.toMatch(BANNED_MARKET_WORDS);
+    }
   });
 });
