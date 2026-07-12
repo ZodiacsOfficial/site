@@ -3,28 +3,28 @@
   "signs": {
     "aries": {
       "supply": {
-        "value": null,
-        "status": "pending",
-        "asOf": null,
-        "verifyUrl": null
+        "value": "999,678,206.507775 total",
+        "status": "filled",
+        "asOf": "2026-07-12",
+        "verifyUrl": "https://solscan.io/token/GhFiFrExPY3proVF96oth1gESWA5QPQzdtb8cy8b1YZv"
       },
       "mintAuthority": {
-        "value": null,
-        "status": "pending",
-        "asOf": null,
-        "verifyUrl": null
+        "value": "renounced",
+        "status": "filled",
+        "asOf": "2026-07-12",
+        "verifyUrl": "https://solscan.io/token/GhFiFrExPY3proVF96oth1gESWA5QPQzdtb8cy8b1YZv"
       },
       "freezeAuthority": {
-        "value": null,
-        "status": "pending",
-        "asOf": null,
-        "verifyUrl": null
+        "value": "renounced",
+        "status": "filled",
+        "asOf": "2026-07-12",
+        "verifyUrl": "https://solscan.io/token/GhFiFrExPY3proVF96oth1gESWA5QPQzdtb8cy8b1YZv"
       },
       "topTenHolders": {
-        "value": null,
-        "status": "pending",
-        "asOf": null,
-        "verifyUrl": null
+        "value": "28.4% · top-10 token accounts",
+        "status": "filled",
+        "asOf": "2026-07-12",
+        "verifyUrl": "https://solscan.io/token/GhFiFrExPY3proVF96oth1gESWA5QPQzdtb8cy8b1YZv"
       },
       "liquidity": {
         "value": null,
@@ -53,28 +53,28 @@
     },
     "taurus": {
       "supply": {
-        "value": null,
-        "status": "pending",
-        "asOf": null,
-        "verifyUrl": null
+        "value": "999,971,191.376845 total",
+        "status": "filled",
+        "asOf": "2026-07-12",
+        "verifyUrl": "https://solscan.io/token/EjkkxYpfSwS6TAtKKuiJuNMMngYvumc1t1v9ZX1WJKMp"
       },
       "mintAuthority": {
-        "value": null,
-        "status": "pending",
-        "asOf": null,
-        "verifyUrl": null
+        "value": "renounced",
+        "status": "filled",
+        "asOf": "2026-07-12",
+        "verifyUrl": "https://solscan.io/token/EjkkxYpfSwS6TAtKKuiJuNMMngYvumc1t1v9ZX1WJKMp"
       },
       "freezeAuthority": {
-        "value": null,
-        "status": "pending",
-        "asOf": null,
-        "verifyUrl": null
+        "value": "renounced",
+        "status": "filled",
+        "asOf": "2026-07-12",
+        "verifyUrl": "https://solscan.io/token/EjkkxYpfSwS6TAtKKuiJuNMMngYvumc1t1v9ZX1WJKMp"
       },
       "topTenHolders": {
-        "value": null,
-        "status": "pending",
-        "asOf": null,
-        "verifyUrl": null
+        "value": "25.7% · top-10 token accounts",
+        "status": "filled",
+        "asOf": "2026-07-12",
+        "verifyUrl": "https://solscan.io/token/EjkkxYpfSwS6TAtKKuiJuNMMngYvumc1t1v9ZX1WJKMp"
       },
       "liquidity": {
         "value": null,
@@ -103,28 +103,28 @@
     },
     "gemini": {
       "supply": {
-        "value": null,
-        "status": "pending",
-        "asOf": null,
-        "verifyUrl": null
+        "value": "999,873,368.815688 total",
+        "status": "filled",
+        "asOf": "2026-07-12",
+        "verifyUrl": "https://solscan.io/token/ARiZfq6dK19uNqxWyRudhbM2MswLyYhVUHdndGkffdGc"
       },
       "mintAuthority": {
-        "value": null,
-        "status": "pending",
-        "asOf": null,
-        "verifyUrl": null
+        "value": "renounced",
+        "status": "filled",
+        "asOf": "2026-07-12",
+        "verifyUrl": "https://solscan.io/token/ARiZfq6dK19uNqxWyRudhbM2MswLyYhVUHdndGkffdGc"
       },
       "freezeAuthority": {
-        "value": null,
-        "status": "pending",
-        "asOf": null,
-        "verifyUrl": null
+        "value": "renounced",
+        "status": "filled",
+        "asOf": "2026-07-12",
+        "verifyUrl": "https://solscan.io/token/ARiZfq6dK19uNqxWyRudhbM2MswLyYhVUHdndGkffdGc"
       },
       "topTenHolders": {
-        "value": null,
-        "status": "pending",
-        "asOf": null,
-        "verifyUrl": null
+        "value": "22.5% · top-10 token accounts",
+        "status": "filled",
+        "asOf": "2026-07-12",
+        "verifyUrl": "https://solscan.io/token/ARiZfq6dK19uNqxWyRudhbM2MswLyYhVUHdndGkffdGc"
       },
       "liquidity": {
         "value": null,
@@ -153,28 +153,28 @@
     },
     "cancer": {
       "supply": {
-        "value": null,
-        "status": "pending",
-        "asOf": null,
-        "verifyUrl": null
+        "value": "999,939,090.363424 total",
+        "status": "filled",
+        "asOf": "2026-07-12",
+        "verifyUrl": "https://solscan.io/token/CmomKM8iPKRSMN7y1jqyW1QKj5bGoZmbvNZXWBJSUdnZ"
       },
       "mintAuthority": {
-        "value": null,
-        "status": "pending",
-        "asOf": null,
-        "verifyUrl": null
+        "value": "renounced",
+        "status": "filled",
+        "asOf": "2026-07-12",
+        "verifyUrl": "https://solscan.io/token/CmomKM8iPKRSMN7y1jqyW1QKj5bGoZmbvNZXWBJSUdnZ"
       },
       "freezeAuthority": {
-        "value": null,
-        "status": "pending",
-        "asOf": null,
-        "verifyUrl": null
+        "value": "renounced",
+        "status": "filled",
+        "asOf": "2026-07-12",
+        "verifyUrl": "https://solscan.io/token/CmomKM8iPKRSMN7y1jqyW1QKj5bGoZmbvNZXWBJSUdnZ"
       },
       "topTenHolders": {
-        "value": null,
-        "status": "pending",
-        "asOf": null,
-        "verifyUrl": null
+        "value": "25.9% · top-10 token accounts",
+        "status": "filled",
+        "asOf": "2026-07-12",
+        "verifyUrl": "https://solscan.io/token/CmomKM8iPKRSMN7y1jqyW1QKj5bGoZmbvNZXWBJSUdnZ"
       },
       "liquidity": {
         "value": null,
@@ -203,28 +203,28 @@
     },
     "leo": {
       "supply": {
-        "value": null,
-        "status": "pending",
-        "asOf": null,
-        "verifyUrl": null
+        "value": "999,799,059.031383 total",
+        "status": "filled",
+        "asOf": "2026-07-12",
+        "verifyUrl": "https://solscan.io/token/8Cd7wXoPb5Yt9cUGtmHNqAEmpMDrhfcVqnGbLC48b8Qm"
       },
       "mintAuthority": {
-        "value": null,
-        "status": "pending",
-        "asOf": null,
-        "verifyUrl": null
+        "value": "renounced",
+        "status": "filled",
+        "asOf": "2026-07-12",
+        "verifyUrl": "https://solscan.io/token/8Cd7wXoPb5Yt9cUGtmHNqAEmpMDrhfcVqnGbLC48b8Qm"
       },
       "freezeAuthority": {
-        "value": null,
-        "status": "pending",
-        "asOf": null,
-        "verifyUrl": null
+        "value": "renounced",
+        "status": "filled",
+        "asOf": "2026-07-12",
+        "verifyUrl": "https://solscan.io/token/8Cd7wXoPb5Yt9cUGtmHNqAEmpMDrhfcVqnGbLC48b8Qm"
       },
       "topTenHolders": {
-        "value": null,
-        "status": "pending",
-        "asOf": null,
-        "verifyUrl": null
+        "value": "26.5% · top-10 token accounts",
+        "status": "filled",
+        "asOf": "2026-07-12",
+        "verifyUrl": "https://solscan.io/token/8Cd7wXoPb5Yt9cUGtmHNqAEmpMDrhfcVqnGbLC48b8Qm"
       },
       "liquidity": {
         "value": null,
@@ -253,28 +253,28 @@
     },
     "virgo": {
       "supply": {
-        "value": null,
-        "status": "pending",
-        "asOf": null,
-        "verifyUrl": null
+        "value": "999,981,708.827609 total",
+        "status": "filled",
+        "asOf": "2026-07-12",
+        "verifyUrl": "https://solscan.io/token/Ez4bst5qu5uqX3AntYWUdafw9XvtFeJ3gugytKKbSJso"
       },
       "mintAuthority": {
-        "value": null,
-        "status": "pending",
-        "asOf": null,
-        "verifyUrl": null
+        "value": "renounced",
+        "status": "filled",
+        "asOf": "2026-07-12",
+        "verifyUrl": "https://solscan.io/token/Ez4bst5qu5uqX3AntYWUdafw9XvtFeJ3gugytKKbSJso"
       },
       "freezeAuthority": {
-        "value": null,
-        "status": "pending",
-        "asOf": null,
-        "verifyUrl": null
+        "value": "renounced",
+        "status": "filled",
+        "asOf": "2026-07-12",
+        "verifyUrl": "https://solscan.io/token/Ez4bst5qu5uqX3AntYWUdafw9XvtFeJ3gugytKKbSJso"
       },
       "topTenHolders": {
-        "value": null,
-        "status": "pending",
-        "asOf": null,
-        "verifyUrl": null
+        "value": "27.6% · top-10 token accounts",
+        "status": "filled",
+        "asOf": "2026-07-12",
+        "verifyUrl": "https://solscan.io/token/Ez4bst5qu5uqX3AntYWUdafw9XvtFeJ3gugytKKbSJso"
       },
       "liquidity": {
         "value": null,
@@ -303,28 +303,28 @@
     },
     "libra": {
       "supply": {
-        "value": null,
-        "status": "pending",
-        "asOf": null,
-        "verifyUrl": null
+        "value": "999,795,290.115149 total",
+        "status": "filled",
+        "asOf": "2026-07-12",
+        "verifyUrl": "https://solscan.io/token/7Zt2KUh5mkpEpPGcNcFy51aGkh9Ycb5ELcqRH1n2GmAe"
       },
       "mintAuthority": {
-        "value": null,
-        "status": "pending",
-        "asOf": null,
-        "verifyUrl": null
+        "value": "renounced",
+        "status": "filled",
+        "asOf": "2026-07-12",
+        "verifyUrl": "https://solscan.io/token/7Zt2KUh5mkpEpPGcNcFy51aGkh9Ycb5ELcqRH1n2GmAe"
       },
       "freezeAuthority": {
-        "value": null,
-        "status": "pending",
-        "asOf": null,
-        "verifyUrl": null
+        "value": "renounced",
+        "status": "filled",
+        "asOf": "2026-07-12",
+        "verifyUrl": "https://solscan.io/token/7Zt2KUh5mkpEpPGcNcFy51aGkh9Ycb5ELcqRH1n2GmAe"
       },
       "topTenHolders": {
-        "value": null,
-        "status": "pending",
-        "asOf": null,
-        "verifyUrl": null
+        "value": "27.0% · top-10 token accounts",
+        "status": "filled",
+        "asOf": "2026-07-12",
+        "verifyUrl": "https://solscan.io/token/7Zt2KUh5mkpEpPGcNcFy51aGkh9Ycb5ELcqRH1n2GmAe"
       },
       "liquidity": {
         "value": null,
@@ -353,28 +353,28 @@
     },
     "scorpio": {
       "supply": {
-        "value": null,
-        "status": "pending",
-        "asOf": null,
-        "verifyUrl": null
+        "value": "999,991,345.402552 total",
+        "status": "filled",
+        "asOf": "2026-07-12",
+        "verifyUrl": "https://solscan.io/token/J4fQTRN13MKpXhVE74t99msKJLbrjegjEgLBnzEv2YH1"
       },
       "mintAuthority": {
-        "value": null,
-        "status": "pending",
-        "asOf": null,
-        "verifyUrl": null
+        "value": "renounced",
+        "status": "filled",
+        "asOf": "2026-07-12",
+        "verifyUrl": "https://solscan.io/token/J4fQTRN13MKpXhVE74t99msKJLbrjegjEgLBnzEv2YH1"
       },
       "freezeAuthority": {
-        "value": null,
-        "status": "pending",
-        "asOf": null,
-        "verifyUrl": null
+        "value": "renounced",
+        "status": "filled",
+        "asOf": "2026-07-12",
+        "verifyUrl": "https://solscan.io/token/J4fQTRN13MKpXhVE74t99msKJLbrjegjEgLBnzEv2YH1"
       },
       "topTenHolders": {
-        "value": null,
-        "status": "pending",
-        "asOf": null,
-        "verifyUrl": null
+        "value": "26.0% · top-10 token accounts",
+        "status": "filled",
+        "asOf": "2026-07-12",
+        "verifyUrl": "https://solscan.io/token/J4fQTRN13MKpXhVE74t99msKJLbrjegjEgLBnzEv2YH1"
       },
       "liquidity": {
         "value": null,
@@ -403,28 +403,28 @@
     },
     "sagittarius": {
       "supply": {
-        "value": null,
-        "status": "pending",
-        "asOf": null,
-        "verifyUrl": null
+        "value": "999,521,026.139883 total",
+        "status": "filled",
+        "asOf": "2026-07-12",
+        "verifyUrl": "https://solscan.io/token/8x17zMmVjJxqswjX4hNpxVPc7Tr5UabVJF3kv8TKq8Y3"
       },
       "mintAuthority": {
-        "value": null,
-        "status": "pending",
-        "asOf": null,
-        "verifyUrl": null
+        "value": "renounced",
+        "status": "filled",
+        "asOf": "2026-07-12",
+        "verifyUrl": "https://solscan.io/token/8x17zMmVjJxqswjX4hNpxVPc7Tr5UabVJF3kv8TKq8Y3"
       },
       "freezeAuthority": {
-        "value": null,
-        "status": "pending",
-        "asOf": null,
-        "verifyUrl": null
+        "value": "renounced",
+        "status": "filled",
+        "asOf": "2026-07-12",
+        "verifyUrl": "https://solscan.io/token/8x17zMmVjJxqswjX4hNpxVPc7Tr5UabVJF3kv8TKq8Y3"
       },
       "topTenHolders": {
-        "value": null,
-        "status": "pending",
-        "asOf": null,
-        "verifyUrl": null
+        "value": "28.8% · top-10 token accounts",
+        "status": "filled",
+        "asOf": "2026-07-12",
+        "verifyUrl": "https://solscan.io/token/8x17zMmVjJxqswjX4hNpxVPc7Tr5UabVJF3kv8TKq8Y3"
       },
       "liquidity": {
         "value": null,
@@ -453,28 +453,28 @@
     },
     "capricorn": {
       "supply": {
-        "value": null,
-        "status": "pending",
-        "asOf": null,
-        "verifyUrl": null
+        "value": "999,981,653.290163 total",
+        "status": "filled",
+        "asOf": "2026-07-12",
+        "verifyUrl": "https://solscan.io/token/3C2SN1FjzE9MiLFFVRp7Jhkp8Gjwpk29S2TCSJ2jkHn2"
       },
       "mintAuthority": {
-        "value": null,
-        "status": "pending",
-        "asOf": null,
-        "verifyUrl": null
+        "value": "renounced",
+        "status": "filled",
+        "asOf": "2026-07-12",
+        "verifyUrl": "https://solscan.io/token/3C2SN1FjzE9MiLFFVRp7Jhkp8Gjwpk29S2TCSJ2jkHn2"
       },
       "freezeAuthority": {
-        "value": null,
-        "status": "pending",
-        "asOf": null,
-        "verifyUrl": null
+        "value": "renounced",
+        "status": "filled",
+        "asOf": "2026-07-12",
+        "verifyUrl": "https://solscan.io/token/3C2SN1FjzE9MiLFFVRp7Jhkp8Gjwpk29S2TCSJ2jkHn2"
       },
       "topTenHolders": {
-        "value": null,
-        "status": "pending",
-        "asOf": null,
-        "verifyUrl": null
+        "value": "30.6% · top-10 token accounts",
+        "status": "filled",
+        "asOf": "2026-07-12",
+        "verifyUrl": "https://solscan.io/token/3C2SN1FjzE9MiLFFVRp7Jhkp8Gjwpk29S2TCSJ2jkHn2"
       },
       "liquidity": {
         "value": null,
@@ -503,28 +503,28 @@
     },
     "aquarius": {
       "supply": {
-        "value": null,
-        "status": "pending",
-        "asOf": null,
-        "verifyUrl": null
+        "value": "999,986,479.833301 total",
+        "status": "filled",
+        "asOf": "2026-07-12",
+        "verifyUrl": "https://solscan.io/token/C49Ut3om3QFTDrMZ5Cr8VcTKPpHDcQ2Fv8mmuJHHigDt"
       },
       "mintAuthority": {
-        "value": null,
-        "status": "pending",
-        "asOf": null,
-        "verifyUrl": null
+        "value": "renounced",
+        "status": "filled",
+        "asOf": "2026-07-12",
+        "verifyUrl": "https://solscan.io/token/C49Ut3om3QFTDrMZ5Cr8VcTKPpHDcQ2Fv8mmuJHHigDt"
       },
       "freezeAuthority": {
-        "value": null,
-        "status": "pending",
-        "asOf": null,
-        "verifyUrl": null
+        "value": "renounced",
+        "status": "filled",
+        "asOf": "2026-07-12",
+        "verifyUrl": "https://solscan.io/token/C49Ut3om3QFTDrMZ5Cr8VcTKPpHDcQ2Fv8mmuJHHigDt"
       },
       "topTenHolders": {
-        "value": null,
-        "status": "pending",
-        "asOf": null,
-        "verifyUrl": null
+        "value": "24.8% · top-10 token accounts",
+        "status": "filled",
+        "asOf": "2026-07-12",
+        "verifyUrl": "https://solscan.io/token/C49Ut3om3QFTDrMZ5Cr8VcTKPpHDcQ2Fv8mmuJHHigDt"
       },
       "liquidity": {
         "value": null,
@@ -553,28 +553,28 @@
     },
     "pisces": {
       "supply": {
-        "value": null,
-        "status": "pending",
-        "asOf": null,
-        "verifyUrl": null
+        "value": "999,916,173.438719 total",
+        "status": "filled",
+        "asOf": "2026-07-12",
+        "verifyUrl": "https://solscan.io/token/3JsSsmGzjWDNe9XCw2L9vznC5JU9wSqQeB6ns5pAkPeE"
       },
       "mintAuthority": {
-        "value": null,
-        "status": "pending",
-        "asOf": null,
-        "verifyUrl": null
+        "value": "renounced",
+        "status": "filled",
+        "asOf": "2026-07-12",
+        "verifyUrl": "https://solscan.io/token/3JsSsmGzjWDNe9XCw2L9vznC5JU9wSqQeB6ns5pAkPeE"
       },
       "freezeAuthority": {
-        "value": null,
-        "status": "pending",
-        "asOf": null,
-        "verifyUrl": null
+        "value": "renounced",
+        "status": "filled",
+        "asOf": "2026-07-12",
+        "verifyUrl": "https://solscan.io/token/3JsSsmGzjWDNe9XCw2L9vznC5JU9wSqQeB6ns5pAkPeE"
       },
       "topTenHolders": {
-        "value": null,
-        "status": "pending",
-        "asOf": null,
-        "verifyUrl": null
+        "value": "29.0% · top-10 token accounts",
+        "status": "filled",
+        "asOf": "2026-07-12",
+        "verifyUrl": "https://solscan.io/token/3JsSsmGzjWDNe9XCw2L9vznC5JU9wSqQeB6ns5pAkPeE"
       },
       "liquidity": {
         "value": null,
@@ -604,27 +604,27 @@
   },
   "aggregate": {
     "supply": {
-      "value": null,
-      "status": "pending",
-      "asOf": null,
+      "value": "11,998,434,593.142491 total",
+      "status": "filled",
+      "asOf": "2026-07-12",
       "verifyUrl": null
     },
     "mintAuthority": {
-      "value": null,
-      "status": "pending",
-      "asOf": null,
+      "value": "12 of 12 renounced",
+      "status": "filled",
+      "asOf": "2026-07-12",
       "verifyUrl": null
     },
     "freezeAuthority": {
-      "value": null,
-      "status": "pending",
-      "asOf": null,
+      "value": "12 of 12 renounced",
+      "status": "filled",
+      "asOf": "2026-07-12",
       "verifyUrl": null
     },
     "topTenHolders": {
-      "value": null,
-      "status": "pending",
-      "asOf": null,
+      "value": "lowest 22.5% – highest 30.6%",
+      "status": "filled",
+      "asOf": "2026-07-12",
       "verifyUrl": null
     },
     "liquidity": {
