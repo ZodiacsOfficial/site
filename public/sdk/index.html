@@ -1385,6 +1385,13 @@
       text-transform: uppercase;
       color: var(--ink-mute);
     }
+    footer .assistant-link {
+      appearance: none; border: 0; padding: 0; background: transparent;
+      color: var(--ink-dim); font: inherit; letter-spacing: inherit;
+      text-transform: inherit; cursor: pointer; transition: color 220ms var(--ease);
+    }
+    footer .assistant-link:hover { color: var(--gold-bright); }
+    footer .assistant-link:focus-visible { outline: 1px solid var(--gold); outline-offset: 4px; }
 
     @media (max-width: 520px) {
       main {
@@ -2521,10 +2528,24 @@ const promptContext = {
       </a>
 
       <footer>
-        Zodiacs.org · Official registry · MMXXVI
+        <button class="assistant-link" type="button" data-assistant-open aria-haspopup="dialog">Ask the site</button>
+        · Zodiacs.org · Official registry · MMXXVI
       </footer>
     </main>
   </div>
+  <script>
+  (function () {
+    var buttons = document.querySelectorAll('[data-assistant-open]');
+    if (!buttons.length) return;
+    var modulePromise;
+    buttons.forEach(function (button) {
+      button.addEventListener('click', function () {
+        modulePromise = modulePromise || import('/assets/assistant-ui.js');
+        modulePromise.then(function (mod) { mod.openAssistant('en', button); }).catch(function () {});
+      });
+    });
+  })();
+  </script>
   <script>
   (function(){
     var wrap = document.querySelector('[data-wnav]') ? document.querySelector('[data-wnav]').parentElement : null;

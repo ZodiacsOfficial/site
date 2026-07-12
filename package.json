@@ -8,7 +8,7 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build && vite-node --script scripts/build-search-index.mjs && node scripts/build-search-ui.mjs",
+    "build": "astro build && vite-node --script scripts/build-search-index.mjs && node scripts/build-search-ui.mjs && node scripts/build-assistant-ui.mjs",
     "preview": "astro preview",
     "check": "astro check",
     "test": "vitest run",
@@ -31,9 +31,12 @@
     "test:visual": "node tests/visual/visual-regression.mjs",
     "test:visual:update": "node tests/visual/visual-regression.mjs --update",
     "test:lighthouse": "node tests/visual/lighthouse.mjs",
-    "data:search-ui": "node scripts/build-search-ui.mjs"
+    "data:search-ui": "node scripts/build-search-ui.mjs",
+    "data:assistant-context": "vite-node --script scripts/build-assistant-context.mjs",
+    "data:assistant-ui": "node scripts/build-assistant-ui.mjs"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.111.0",
     "@astrojs/mdx": "^7.0.2",
     "@astrojs/preact": "^6.0.1",
     "@supabase/supabase-js": "^2.110.0",

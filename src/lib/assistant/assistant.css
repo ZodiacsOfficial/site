@@ -1,0 +1,245 @@
+/* ── Lazy assistant dialog (src/lib/assistant/open-assistant.ts) ── */
+.zassistant {
+  /* The assistant also opens on the hand-authored registry wing, whose
+     equivalent design tokens use older names. Keep the lazy stylesheet
+     self-contained without adding a second palette. */
+  --za-void-0: var(--void-0, var(--bg, #060709));
+  --za-void-1: var(--void-1, var(--bg-2, #0A0C11));
+  --za-void-2: var(--void-2, var(--surface, #0F121A));
+  --za-void-3: var(--void-3, var(--surface-2, #151925));
+  --za-ink-0: var(--ink-0, var(--ink, #EEF1F7));
+  --za-ink-1: var(--ink-1, var(--ink-2, #C6CCDA));
+  --za-muted: var(--muted, var(--ink-dim, #8E96AB));
+  --za-faint: var(--faint, var(--ink-mute, #7A8397));
+  --za-hair-1: var(--hair-1, var(--hair, rgba(198, 204, 218, 0.08)));
+  --za-hair-2: var(--hair-2, rgba(198, 204, 218, 0.16));
+  --za-hair-3: var(--hair-3, rgba(198, 204, 218, 0.28));
+  position: fixed;
+  inset: 0;
+  /* Hand-authored wing navigation tops out at 60. The assistant is a true
+     modal layer and must win both paint order and hit testing there. */
+  z-index: max(var(--z-overlay, 70), 70);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: max(7vh, 48px) 16px 16px;
+  background: rgba(6, 7, 9, 0.68);
+  color: var(--za-ink-0);
+  font-family: var(--font-sans, 'Instrument Sans', system-ui, -apple-system, sans-serif);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+.zassistant[hidden] { display: none; }
+.zassistant,
+.zassistant * { box-sizing: border-box; }
+.zassistant :where(button) {
+  appearance: none;
+  margin: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+.zassistant .mono {
+  font-family: var(--font-mono, var(--mono, 'JetBrains Mono', ui-monospace, Menlo, Consolas, monospace));
+}
+.zassistant__panel {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 640px;
+  max-height: min(84dvh, 760px);
+  overflow: hidden;
+  border: 1px solid var(--za-hair-2);
+  border-radius: var(--r-lg, 22px);
+  background: var(--za-void-1);
+  box-shadow: inset 0 1px 0 rgba(238, 241, 247, 0.05), 0 24px 64px -24px rgba(0, 0, 0, 0.86);
+}
+.zassistant__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 58px;
+  padding: 7px 8px 7px 18px;
+  border-bottom: 1px solid var(--za-hair-1);
+}
+.zassistant__title {
+  margin: 0;
+  color: var(--za-ink-0);
+  font-family: var(--font-serif, var(--serif, 'EB Garamond', Georgia, serif));
+  font-size: clamp(21px, 4vw, 25px);
+  font-weight: 500;
+  line-height: 1.1;
+}
+.zassistant__close {
+  display: grid;
+  place-items: center;
+  flex: 0 0 44px;
+  width: 44px;
+  height: 44px;
+  color: var(--za-muted);
+  font-size: 16px;
+  line-height: 1;
+}
+.zassistant__intro {
+  margin: 0;
+  padding: 18px 18px 4px;
+  color: var(--za-muted);
+  font-size: var(--text-sm, 0.875rem);
+}
+.zassistant__intro[hidden] { display: none; }
+.zassistant__chart-chip {
+  align-self: flex-start;
+  min-height: 44px;
+  margin: 10px 18px 4px;
+  padding: 8px 12px;
+  border: 1px solid var(--za-hair-2);
+  border-radius: var(--r-full, 999px);
+  color: var(--za-muted);
+  font-size: var(--text-xs, 0.75rem);
+  line-height: 1.25;
+  transition: border-color 140ms ease, color 140ms ease, transform 140ms ease;
+}
+.zassistant__chart-chip.is-active {
+  border-color: var(--za-hair-3);
+  color: var(--za-ink-0);
+  background: var(--za-void-2);
+}
+.zassistant__chart-chip:active,
+.zassistant__send:active,
+.zassistant__stop:active,
+.zassistant__close:active { transform: scale(0.97); }
+.zassistant__log {
+  display: grid;
+  align-content: start;
+  gap: 12px;
+  min-height: 96px;
+  padding: 14px 18px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+}
+.zassistant__message {
+  display: grid;
+  gap: 4px;
+  width: min(92%, 520px);
+  padding: 11px 13px;
+  border: 1px solid var(--za-hair-1);
+  border-radius: var(--r-md, 14px);
+  background: var(--za-void-2);
+}
+.zassistant__message--user {
+  justify-self: end;
+  background: var(--za-void-3);
+}
+.zassistant__message--assistant { justify-self: start; }
+.zassistant__message.is-partial { border-style: dashed; }
+.zassistant__speaker {
+  color: var(--za-faint);
+  font-size: 9.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.zassistant__message-body {
+  margin: 0;
+  color: var(--za-ink-0);
+  font-size: var(--text-sm, 0.875rem);
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+.zassistant__link {
+  color: var(--za-ink-1);
+  text-decoration-color: var(--za-hair-3);
+  text-underline-offset: 3px;
+}
+.zassistant__status {
+  min-height: 22px;
+  margin: 0;
+  padding: 0 18px 6px;
+  color: var(--za-faint);
+  font-size: 12px;
+}
+.zassistant__status:empty { min-height: 8px; padding-bottom: 0; }
+.zassistant__form {
+  display: grid;
+  gap: 8px;
+  margin: 0 12px;
+  padding: 10px;
+  border: 1px solid var(--za-hair-2);
+  border-radius: var(--r-md, 14px);
+  background: var(--za-void-2);
+}
+.zassistant__input {
+  display: block;
+  width: 100%;
+  min-height: 52px;
+  max-height: 144px;
+  resize: none;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--za-ink-0);
+  font: inherit;
+  font-size: var(--text-sm, 0.875rem);
+  line-height: 1.5;
+}
+.zassistant__input::placeholder { color: var(--za-faint); }
+.zassistant__actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.zassistant__hint {
+  margin-right: auto;
+  color: var(--za-faint);
+  font-size: 9.5px;
+  letter-spacing: 0.02em;
+}
+.zassistant__send,
+.zassistant__stop {
+  min-width: 72px;
+  min-height: 44px;
+  padding: 9px 14px;
+  border: 1px solid var(--za-hair-3);
+  border-radius: var(--r-full, 999px);
+  background: var(--za-ink-0);
+  color: var(--za-void-0);
+  font-size: var(--text-xs, 0.75rem);
+  font-weight: 650;
+  transition: opacity 140ms ease, transform 140ms ease;
+}
+.zassistant__stop {
+  background: transparent;
+  color: var(--za-ink-0);
+}
+.zassistant__send:disabled {
+  cursor: default;
+  opacity: 0.42;
+}
+.zassistant__privacy {
+  margin: 0;
+  padding: 10px 18px 13px;
+  color: var(--za-faint);
+  font-size: 10.5px;
+  line-height: 1.45;
+}
+.zassistant button:focus-visible,
+.zassistant textarea:focus-visible,
+.zassistant a:focus-visible {
+  outline: 2px solid var(--za-ink-1);
+  outline-offset: 2px;
+}
+@media (max-width: 560px) {
+  .zassistant {
+    align-items: flex-end;
+    padding: 12px;
+  }
+  .zassistant__panel {
+    max-height: calc(100dvh - 24px);
+    border-radius: var(--r-lg, 22px);
+  }
+  .zassistant__hint { display: none; }
+  .zassistant__message { width: 96%; }
+}

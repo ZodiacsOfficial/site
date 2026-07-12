@@ -25,10 +25,14 @@ const EVERGREEN_LASTMOD = new Map<string, string>([
     '/terms/', '/feeds/',
     '/es/', '/es/birth-chart/', '/es/compatibility/', '/es/moon-sign/',
     '/es/rising-sign/', '/es/moon-phase/', '/es/saturn-return/', '/es/transits/',
-    '/es/tools/', '/es/profile/', '/es/baby-zodiac/', '/es/methodology/',
+    '/es/tools/', '/es/profile/', '/es/baby-zodiac/', '/es/methodology/', '/es/privacy/',
   ].map((loc) => [
     loc,
-    ['/', '/learn/', '/learn/zodiac-dates/', '/learn/glossary/'].includes(loc) ? '2026-07-11' : '2026-07-10',
+    ['/privacy/', '/es/privacy/'].includes(loc)
+      ? '2026-07-12'
+      : ['/', '/learn/', '/learn/zodiac-dates/', '/learn/glossary/'].includes(loc)
+        ? '2026-07-11'
+        : '2026-07-10',
   ] as const),
   ...LEGACY_URLS.map((url) => [url.path, '2026-07-10'] as const),
 ]);
@@ -39,6 +43,13 @@ function getLastmod(loc: string): string {
     throw new Error(`Missing evergreen lastmod for ${loc}`);
   }
   return date;
+}
+
+function sitemapAlternates(loc: string) {
+  if (loc === '/privacy/' || loc === '/es/privacy/') {
+    return { en: '/privacy/', es: '/es/privacy/' };
+  }
+  return alternatePaths(loc);
 }
 
 export const GET: APIRoute = async () => {
@@ -131,14 +142,18 @@ export const GET: APIRoute = async () => {
       const loc = alternatePaths(u.loc)!.es;
       return { ...u, loc, lastmod: EVERGREEN_LASTMOD.has(loc) ? getLastmod(loc) : u.lastmod };
     });
-  const allUrls = [...urls, ...localizedUrls];
+  const allUrls = [
+    ...urls,
+    ...localizedUrls,
+    { loc: '/es/privacy/', priority: 0.4, lastmod: getLastmod('/es/privacy/') },
+  ];
 
   const body = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
 ${allUrls
   .map(
     (u) => {
-      const alternates = alternatePaths(u.loc);
+      const alternates = sitemapAlternates(u.loc);
       return `  <url>
     <loc>${SITE}${u.loc}</loc>${alternates ? `
     <xhtml:link rel="alternate" hreflang="en" href="${SITE}${alternates.en}" />

@@ -515,8 +515,15 @@
     .ftr .mark { color: var(--ink-2); letter-spacing: 0.18em; font-family: var(--serif); text-transform: none; font-size: 13px; }
     .ftr .mark .g { color: var(--gold); }
     .ftr__links { display: inline-flex; flex-wrap: wrap; gap: 12px 16px; }
-    .ftr__links a { color: var(--ink-dim); text-decoration: none; transition: color 320ms var(--ease); }
-    .ftr__links a:hover { color: var(--gold); }
+    .ftr__links a,
+    .ftr__links .assistant-link { color: var(--ink-dim); text-decoration: none; transition: color 320ms var(--ease); }
+    .ftr__links a:hover,
+    .ftr__links .assistant-link:hover { color: var(--gold); }
+    .assistant-link {
+      appearance: none; border: 0; padding: 0; background: transparent;
+      font: inherit; letter-spacing: inherit; text-transform: inherit; cursor: pointer;
+    }
+    .assistant-link:focus-visible { outline: 1px solid var(--gold); outline-offset: 4px; }
 
     /* ── Reveal ── */
     .reveal {
@@ -827,6 +834,7 @@
           <a href="/thesis/">Thesis</a>
           <a href="/sdk/">SDK</a>
           <a href="/registry/zodiacs.registry.json">Record</a>
+          <button class="assistant-link" type="button" data-assistant-open aria-haspopup="dialog">Ask the site</button>
         </div>
         <div>Read-only</div>
       </div>
@@ -841,6 +849,20 @@
       </div>
     </footer>
   </main>
+
+  <script>
+  (function () {
+    var buttons = document.querySelectorAll('[data-assistant-open]');
+    if (!buttons.length) return;
+    var modulePromise;
+    buttons.forEach(function (button) {
+      button.addEventListener('click', function () {
+        modulePromise = modulePromise || import('/assets/assistant-ui.js');
+        modulePromise.then(function (mod) { mod.openAssistant('en', button); }).catch(function () {});
+      });
+    });
+  })();
+  </script>
 
   <script>
   (function () {

@@ -50,6 +50,21 @@ const jsonLd = [
           </div>
         </a>
       ))}
+      <button
+        class="shell tinted assistant-tool"
+        type="button"
+        style="--sign:var(--sign-aquarius)"
+        data-assistant-open
+        data-assistant-locale="es"
+        aria-haspopup="dialog"
+      >
+        <div class="core tinted tool-card">
+          <ToolGlyph kind="assistant" />
+          <h3>Pregunta al sitio</h3>
+          <p>Pregunta por una herramienta, un término astrológico o una carta que hayas guardado aquí.</p>
+          <span class="tool-card__go">Iniciar una conversación →</span>
+        </div>
+      </button>
     </div>
 
     <div class="tools-upcoming">
@@ -71,6 +86,9 @@ const jsonLd = [
   .tool-card h3 { margin: 4px 0 0; font-size: var(--text-lg); font-weight: 620; color: var(--text); }
   .tool-card p { margin: 0; font-size: var(--text-sm); color: var(--text-2); line-height: 1.6; }
   .tool-card__go { margin-top: auto; font-size: 13px; font-weight: 550; color: var(--text); }
+  .assistant-tool { display: block; width: 100%; text-align: left; transition: border-color var(--dur-2) var(--ease), transform var(--dur-2) var(--ease); }
+  .assistant-tool:hover { border-color: color-mix(in oklab, var(--sign) 45%, transparent); transform: translateY(-2px); }
+  .assistant-tool:hover .core { border-color: color-mix(in oklab, var(--sign) 28%, transparent); }
   .tools-upcoming { margin-top: clamp(28px, 5vw, 44px); padding-top: 24px; border-top: 1px solid var(--hair-1); }
   .tools-upcoming ul { margin: 12px 0 0; padding: 0; list-style: none; display: grid; gap: 8px; }
   .tools-upcoming li { font-size: var(--text-sm); color: var(--muted); }

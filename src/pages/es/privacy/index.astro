@@ -1,0 +1,83 @@
+---
+import Base from '../../../layouts/Base.astro';
+
+const updated = '12 de julio de 2026';
+
+const jsonLd = [
+  {
+    '@type': 'WebPage',
+    name: 'Privacidad en Zodiacs.org',
+    url: 'https://zodiacs.org/es/privacy/',
+    description: 'Cómo trata zodiacs.org tus datos, desde los cálculos locales hasta el asistente opcional.',
+    inLanguage: 'es',
+  },
+];
+---
+<Base
+  title="Privacidad — Tus datos de nacimiento permanecen en tu dispositivo | Zodiacs.org"
+  description="Cómo trata zodiacs.org tus datos: las cartas se calculan en tu navegador, el asistente es opcional y no guardamos las conversaciones."
+  path="/es/privacy/"
+  locale="es"
+  jsonLd={jsonLd}
+>
+  <section class="section container container--narrow">
+    <em class="kicker">Privacidad</em>
+    <h1 class="method-title display">Tus datos de nacimiento permanecen en tu dispositivo.</h1>
+
+    <div class="prose">
+      <p class="lede">
+        Las cartas se calculan en tu navegador. Tu fecha, hora y lugar de
+        nacimiento no se envían a nuestros servidores, salvo que decidas crear
+        una cuenta y sincronizar una carta guardada.
+      </p>
+
+      <h2>Calculadoras y cartas guardadas</h2>
+      <p>
+        La búsqueda de lugares y el cálculo astrológico ocurren en tu
+        dispositivo. Las cartas que guardas permanecen en el almacenamiento
+        local del navegador. Una cuenta es opcional; si la usas, Supabase
+        guarda el correo y las cartas que eliges sincronizar para mostrarlas en
+        tus otros dispositivos.
+      </p>
+
+      <h2>Asistente de IA</h2>
+      <p>
+        Cuando usas el asistente, tus mensajes de chat y, cuando preguntas por
+        tu carta, un resumen de las posiciones calculadas se envían a nuestro
+        proveedor de IA, Anthropic, para generar la respuesta. No guardamos las
+        conversaciones y el tráfico de la API no se usa para entrenar modelos.
+        El asistente nunca adjunta tu nombre, fecha, hora o lugar de nacimiento
+        guardados; todo lo que escribas en el chat forma parte del mensaje que
+        envías. Para aplicar el límite diario, conservamos un identificador
+        unidireccional con sal derivado de tu dirección IP y su recuento diario,
+        nunca la IP original; las comprobaciones de cuota borran los registros
+        de más de 35 días. Enviamos ese mismo identificador seudónimo a Anthropic
+        como metadato de la solicitud.
+      </p>
+
+      <h2>Correo y alojamiento</h2>
+      <p>
+        El correo semanal requiere una cuenta y una suscripción voluntaria;
+        está desactivado de forma predeterminada y cada mensaje permite darse
+        de baja. Vercel aloja el sitio y puede conservar registros técnicos
+        breves para entregar las páginas y prevenir abusos. No usamos
+        publicidad ni seguimiento entre sitios.
+      </p>
+
+      <h2>Tus opciones</h2>
+      <p>
+        Puedes usar las calculadoras sin cuenta, borrar las cartas locales
+        desde el navegador y pedir que eliminemos una cuenta escribiendo a
+        <a href="mailto:hello@zodiacs.org">hello@zodiacs.org</a>.
+      </p>
+
+      <p class="method-updated mono">Última actualización: {updated}</p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .method-title { margin: 6px 0 8px; }
+  .prose .lede { font-size: var(--text-lg); color: var(--text); }
+  .method-updated { margin-top: 40px; color: var(--faint); font-size: 12px; letter-spacing: 0.04em; }
+</style>
