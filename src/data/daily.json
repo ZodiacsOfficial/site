@@ -1,72 +1,72 @@
 {
-  "date": "2026-07-11",
+  "date": "2026-07-12",
   "bodies": [
     {
       "body": "Moon",
-      "lon": 68.22,
+      "lon": 83.22,
       "sign": "gemini",
-      "degree": 8.2,
+      "degree": 23.2,
       "retrograde": false
     },
     {
       "body": "Sun",
-      "lon": 109.21,
+      "lon": 110.17,
       "sign": "cancer",
-      "degree": 19.2,
+      "degree": 20.2,
       "retrograde": false
     },
     {
       "body": "Mercury",
-      "lon": 111.71,
+      "lon": 111.06,
       "sign": "cancer",
-      "degree": 21.7,
+      "degree": 21.1,
       "retrograde": true
     },
     {
       "body": "Venus",
-      "lon": 151.97,
+      "lon": 153.08,
       "sign": "virgo",
-      "degree": 2,
+      "degree": 3.1,
       "retrograde": false
     },
     {
       "body": "Mars",
-      "lon": 68.97,
+      "lon": 69.67,
       "sign": "gemini",
-      "degree": 9,
+      "degree": 9.7,
       "retrograde": false
     },
     {
       "body": "Jupiter",
-      "lon": 122.44,
+      "lon": 122.65,
       "sign": "leo",
-      "degree": 2.4,
+      "degree": 2.7,
       "retrograde": false
     },
     {
       "body": "Saturn",
-      "lon": 14.55,
+      "lon": 14.57,
       "sign": "aries",
-      "degree": 14.5,
+      "degree": 14.6,
       "retrograde": false
     },
     {
       "body": "Uranus",
-      "lon": 64.21,
+      "lon": 64.25,
       "sign": "gemini",
-      "degree": 4.2,
+      "degree": 4.3,
       "retrograde": false
     },
     {
       "body": "Neptune",
-      "lon": 4.42,
+      "lon": 4.41,
       "sign": "aries",
       "degree": 4.4,
       "retrograde": true
     },
     {
       "body": "Pluto",
-      "lon": 304.65,
+      "lon": 304.63,
       "sign": "aquarius",
       "degree": 4.6,
       "retrograde": true
@@ -74,7 +74,7 @@
   ],
   "moon": {
     "phase": "Waning Crescent",
-    "illumination": 0.125
+    "illumination": 0.056
   },
   "events": []
 }
