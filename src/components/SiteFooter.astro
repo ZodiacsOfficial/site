@@ -7,10 +7,14 @@ const year = new Date().getFullYear();
 interface Props { locale?: Locale }
 const locale = normalizeLocale(Astro.props.locale);
 // The other language's twin of this page when one exists; otherwise its home.
-const twin = alternatePaths(Astro.url.pathname);
+const twin = Astro.url.pathname === '/privacy/' || Astro.url.pathname === '/es/privacy/'
+  ? { en: '/privacy/', es: '/es/privacy/' }
+  : alternatePaths(Astro.url.pathname);
 const otherHref = locale === 'es' ? (twin?.en ?? '/') : (twin?.es ?? '/es/');
 const otherLabel = locale === 'es' ? 'English' : 'Español';
 const otherLang = locale === 'es' ? 'en' : 'es';
+const assistantLabel = locale === 'es' ? 'Pregunta al sitio' : 'Ask the site';
+const privacyHref = locale === 'es' ? '/es/privacy/' : '/privacy/';
 ---
 <footer class="footer">
   <div class="container">
@@ -21,6 +25,15 @@ const otherLang = locale === 'es' ? 'en' : 'es';
           <span class="footer__name">Zodiacs</span><span class="footer__tld">.org</span>
         </a>
         <p class="footer__tag">{t(locale, 'footerTag')}</p>
+        <button
+          class="footer__assistant"
+          type="button"
+          data-assistant-open
+          data-assistant-locale={locale}
+          aria-haspopup="dialog"
+        >
+          {assistantLabel}
+        </button>
       </div>
 
       <nav class="footer__col" aria-label={t(locale, 'navTools')}>
@@ -69,7 +82,7 @@ const otherLang = locale === 'es' ? 'en' : 'es';
       <span>© {year} Zodiacs.org</span>
       <span class="footer__base-links">
         <a href="/about/">{t(locale, 'footerAbout')}</a>
-        <a href="/privacy/">{t(locale, 'footerPrivacy')}</a>
+        <a href={privacyHref}>{t(locale, 'footerPrivacy')}</a>
         <a href="/terms/">{t(locale, 'footerTerms')}</a>
         <a href={localizePath(locale, '/methodology/')}>{t(locale, 'footerMethodology')}</a>
         <span>{t(locale, 'footerPlaceData')}: <a href="https://www.geonames.org/" rel="noopener noreferrer">GeoNames</a> (CC BY 4.0)</span>
@@ -81,6 +94,25 @@ const otherLang = locale === 'es' ? 'en' : 'es';
     </div>
   </div>
 </footer>
+
+<script is:inline>
+  /* The assistant stays outside Astro's module graph. Its dialog and chart
+     summary code load only after an explicit click, from one stable bundle. */
+  (function () {
+    var buttons = document.querySelectorAll('[data-assistant-open]');
+    if (!buttons.length) return;
+    var modulePromise;
+    function open(button) {
+      modulePromise = modulePromise || import('/assets/assistant-ui.js');
+      modulePromise.then(function (mod) {
+        mod.openAssistant(button.getAttribute('data-assistant-locale') === 'es' ? 'es' : 'en', button);
+      }).catch(function () {});
+    }
+    buttons.forEach(function (button) {
+      button.addEventListener('click', function () { open(button); });
+    });
+  })();
+</script>
 
 <style>
   .footer {
@@ -129,6 +161,17 @@ const otherLang = locale === 'es' ? 'en' : 'es';
     color: var(--muted);
     text-wrap: pretty;
   }
+  .footer__assistant {
+    margin-top: 14px;
+    min-height: 44px;
+    padding: 0 15px;
+    border: 1px solid var(--hair-2);
+    border-radius: 999px;
+    color: var(--text-2);
+    font-size: var(--text-sm);
+    transition: color var(--dur-1) var(--ease), border-color var(--dur-1) var(--ease);
+  }
+  .footer__assistant:hover { color: var(--text); border-color: var(--hair-3); }
   .footer__col { display: flex; flex-direction: column; gap: 9px; }
   .footer__label {
     margin-bottom: 4px;

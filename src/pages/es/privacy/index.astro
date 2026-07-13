@@ -8,14 +8,14 @@ const jsonLd = [
     '@type': 'WebPage',
     name: 'Privacidad en Zodiacs.org',
     url: 'https://zodiacs.org/es/privacy/',
-    description: 'Cómo trata zodiacs.org tus datos: los cálculos y las cartas guardadas permanecen bajo tu control.',
+    description: 'Cómo trata zodiacs.org tus datos, desde los cálculos locales hasta el asistente y las notificaciones opcionales.',
     inLanguage: 'es',
   },
 ];
 ---
 <Base
   title="Privacidad — Tus datos de nacimiento permanecen en tu dispositivo | Zodiacs.org"
-  description="Cómo trata zodiacs.org tus datos: las cartas se calculan en tu navegador, las funciones opcionales requieren tu permiso y no usamos seguimiento publicitario."
+  description="Cómo trata zodiacs.org tus datos: las cartas se calculan en tu navegador, las funciones opcionales requieren tu permiso y no guardamos las conversaciones."
   path="/es/privacy/"
   locale="es"
   jsonLd={jsonLd}
@@ -38,6 +38,21 @@ const jsonLd = [
         local del navegador. Una cuenta es opcional; si la usas, Supabase
         guarda el correo y las cartas que eliges sincronizar para mostrarlas en
         tus otros dispositivos.
+      </p>
+
+      <h2>Asistente de IA</h2>
+      <p>
+        Cuando usas el asistente, tus mensajes de chat y, cuando preguntas por
+        tu carta, un resumen de las posiciones calculadas se envían a nuestro
+        proveedor de IA, Anthropic, para generar la respuesta. No guardamos las
+        conversaciones y el tráfico de la API no se usa para entrenar modelos.
+        El asistente nunca adjunta tu nombre, fecha, hora o lugar de nacimiento
+        guardados; todo lo que escribas en el chat forma parte del mensaje que
+        envías. Para aplicar el límite diario, conservamos un identificador
+        unidireccional con sal derivado de tu dirección IP y su recuento diario,
+        nunca la IP original; las comprobaciones de cuota borran los registros
+        de más de 35 días. Enviamos ese mismo identificador seudónimo a Anthropic
+        como metadato de la solicitud.
       </p>
 
       <h2>Resumen diario, calendario y notificaciones</h2>

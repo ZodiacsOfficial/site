@@ -43,6 +43,13 @@ function getLastmod(loc: string): string {
   return date;
 }
 
+function sitemapAlternates(loc: string) {
+  if (loc === '/privacy/' || loc === '/es/privacy/') {
+    return { en: '/privacy/', es: '/es/privacy/' };
+  }
+  return alternatePaths(loc);
+}
+
 export const GET: APIRoute = async () => {
   const guides = await getCollection('guides', ({ data }) => !data.draft);
   const pairs = await getCollection('pairs', ({ data }) => !data.draft);
@@ -135,14 +142,17 @@ export const GET: APIRoute = async () => {
       const loc = alternatePaths(u.loc)!.es;
       return { ...u, loc, lastmod: EVERGREEN_LASTMOD.has(loc) ? getLastmod(loc) : u.lastmod };
     });
-  const allUrls = [...urls, ...localizedUrls];
+  const allUrls = [
+    ...urls,
+    ...localizedUrls,
+  ];
 
   const body = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
 ${allUrls
   .map(
     (u) => {
-      const alternates = alternatePaths(u.loc);
+      const alternates = sitemapAlternates(u.loc);
       return `  <url>
     <loc>${SITE}${u.loc}</loc>${alternates ? `
     <xhtml:link rel="alternate" hreflang="en" href="${SITE}${alternates.en}" />

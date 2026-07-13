@@ -12,6 +12,14 @@
   <meta property="og:image" content="https://zodiacs.org/assets/og/v2/share.png" />
   <meta property="og:url" content="https://zodiacs.org/sdk/examples/simastry-aura/" />
   <link rel="stylesheet" href="../../../assets/discovery.css" />
+  <style>
+    .assistant-link {
+      appearance: none; border: 0; padding: 0; background: transparent;
+      color: inherit; font: inherit; cursor: pointer;
+    }
+    .assistant-link:hover { color: var(--ink); }
+    .assistant-link:focus-visible { outline: 1px solid var(--ink-2); outline-offset: 4px; }
+  </style>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -139,8 +147,24 @@ const aiAstrologistContext = {
       <a class="link" href="/sdk/#core-api"><strong>Ownership API</strong><span>Read-only SDK surface</span></a>
     </section>
 
-    <footer>Official registry. Public reads. No custody. No signing. No transactions.</footer>
+    <footer>
+      <button class="assistant-link" type="button" data-assistant-open aria-haspopup="dialog">Ask the site</button>
+      · Official registry. Public reads. No custody. No signing. No transactions.
+    </footer>
   </main>
+  <script>
+  (function () {
+    var buttons = document.querySelectorAll('[data-assistant-open]');
+    if (!buttons.length) return;
+    var modulePromise;
+    buttons.forEach(function (button) {
+      button.addEventListener('click', function () {
+        modulePromise = modulePromise || import('/assets/assistant-ui.js');
+        modulePromise.then(function (mod) { mod.openAssistant('en', button); }).catch(function () {});
+      });
+    });
+  })();
+  </script>
   <script>
     const elements = {
       aries: "fire",

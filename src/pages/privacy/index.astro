@@ -9,13 +9,13 @@ const jsonLd = [
     name: 'Privacy at Zodiacs.org',
     url: 'https://zodiacs.org/privacy/',
     description:
-      'How zodiacs.org handles your data: birth details are computed in your browser and never sent to our servers; accounts and the weekly email are optional and opt-in.',
+      'How zodiacs.org handles your data: charts stay local; assistant messages and placement summaries go to Anthropic for replies, and conversations are not stored by us.',
   },
 ];
 ---
 <Base
   title="Privacy — Your Birth Data Stays on Your Device | Zodiacs.org"
-  description="How zodiacs.org handles your data: charts are computed in your browser and your birth details are never sent to us. Accounts and email are optional and opt-in. No ad tracking."
+  description="How zodiacs.org handles your data: charts stay local; assistant messages and placement summaries go to Anthropic for replies, and conversations are not stored by us."
   path="/privacy/"
   jsonLd={jsonLd}
 >
@@ -43,6 +43,20 @@ const jsonLd = [
         Place search uses a list of cities that ships with the site and runs
         entirely in your browser. Typing a city name does not call an external
         service.
+      </p>
+
+      <h2>AI assistant</h2>
+      <p>
+        When you use the assistant, your chat messages and, when you ask about
+        your chart, a summary of its computed placements are sent to our AI
+        provider, Anthropic, to generate the reply. We do not store
+        conversations, and API traffic is not used for model training. Your
+        saved name, birth date, time, and birthplace are never attached by the
+        assistant; anything you type into chat is part of the message you send.
+        To enforce the daily limit, we keep a salted one-way identifier derived
+        from your IP address with its daily count, never the raw IP; quota
+        checks delete records older than 35 days. We send that same pseudonymous
+        identifier to Anthropic as request metadata.
       </p>
 
       <h2>Charts you save</h2>

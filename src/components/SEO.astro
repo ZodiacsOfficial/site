@@ -35,7 +35,11 @@ const site = 'https://zodiacs.org';
 const locale = normalizeLocale(rawLocale);
 const canonical = site + canonicalPath;
 const imageUrl = image.startsWith('http') ? image : site + image;
-const alternates = noindex ? null : alternatePaths(path);
+const alternates = noindex
+  ? null
+  : path === '/privacy/' || path === '/es/privacy/'
+    ? { en: '/privacy/', es: '/es/privacy/' }
+    : alternatePaths(path);
 const ogLocale = locale === 'es' ? 'es_ES' : 'en_US';
 const ogLocaleAlternate = locale === 'es' ? 'en_US' : 'es_ES';
 const organization = {

@@ -3000,12 +3000,19 @@
       margin-top: 14px !important;
       border-top: 1px solid var(--hair) !important;
     }
-    .ftr__legal a {
+    .ftr__legal a,
+    .ftr__legal .assistant-link {
       color: var(--ink-dim);
       text-decoration: none;
       transition: color 320ms var(--ease);
     }
-    .ftr__legal a:hover { color: var(--gold); }
+    .ftr__legal a:hover,
+    .ftr__legal .assistant-link:hover { color: var(--gold); }
+    .ftr__legal .assistant-link {
+      appearance: none; border: 0; padding: 0; background: transparent;
+      font: inherit; letter-spacing: inherit; cursor: pointer;
+    }
+    .ftr__legal .assistant-link:focus-visible { outline: 1px solid var(--gold); outline-offset: 4px; }
 
     /* ── Static fallback for crawlers, audit tools, and no-JS clients ─ */
     .static-site {
@@ -3158,6 +3165,13 @@
       text-transform: uppercase;
       color: var(--ink-mute);
     }
+    .static-site__footer .assistant-link {
+      appearance: none; border: 0; padding: 0; background: transparent;
+      color: var(--ink-dim); font: inherit; letter-spacing: inherit;
+      text-transform: inherit; cursor: pointer; transition: color 320ms var(--ease);
+    }
+    .static-site__footer .assistant-link:hover { color: var(--gold-bright); }
+    .static-site__footer .assistant-link:focus-visible { outline: 1px solid var(--gold); outline-offset: 4px; }
 
     /* ── Transitions on active content ─────────────────────────── */
 
@@ -3560,10 +3574,25 @@
           <a href="https://t.me/astrofoliosol" rel="noopener noreferrer">Telegram</a> ·
           <a href="https://astrofolio.xyz/" rel="noopener noreferrer">Astrofolio</a>
         </p>
+        <p style="margin:0 0 14px">
+          <button class="assistant-link" type="button" data-assistant-open aria-haspopup="dialog">Ask the site</button>
+        </p>
         Zodiacs.org · Official registry · MMXXVI
       </footer>
     </main>
   </div>
+
+  <script>
+  (function () {
+    var modulePromise;
+    document.addEventListener('click', function (event) {
+      var button = event.target.closest && event.target.closest('[data-assistant-open]');
+      if (!button) return;
+      modulePromise = modulePromise || import('/assets/assistant-ui.js');
+      modulePromise.then(function (mod) { mod.openAssistant('en', button); }).catch(function () {});
+    });
+  })();
+  </script>
 
   <!-- Lens filter for the glass nav pill: capsule displacement map rides
        inline (nothing fetched); mirrors the main site chrome. Browsers
