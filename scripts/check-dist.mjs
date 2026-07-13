@@ -14,14 +14,15 @@
  *   5. Every href/src in built *.html — site-relative and relative paths
  *      must resolve to a file; internal fragment links must point at an
  *      existing id.
- *   6. search-index.json — valid, populated, sorted, and every path resolves.
+ *   6. search-index.json — valid, populated, sorted, and every path resolves;
+ *      deferred search/WebMCP assets exist with their expected fingerprints.
  *   7. sitemap.xml — unique dated locs resolve, exclude noindex, and cover
  *      every indexable built page's same-origin canonical.
  *   8. Root artifacts the outside world depends on are present.
  *   9. Source sky, transit, and daily snapshots cover the build date.
  */
 import { readFile, readdir, stat } from 'node:fs/promises';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 import { dirname, resolve, join, relative, sep } from 'node:path';
 import {
   extractPageMetadata, htmlFileToPath, isEnglishHtml,
@@ -228,6 +229,38 @@ if (!(await exists(searchUiPath))) {
   }
 }
 
+const webMcpPath = resolve(root, 'assets/webmcp-register.js');
+if (!(await exists(webMcpPath))) {
+  fail('webmcp: missing assets/webmcp-register.js');
+} else {
+  const webMcp = await readFile(webMcpPath, 'utf8');
+  for (const fingerprint of ['zodiacs.search', 'INVALID_INPUT', 'INDEX_UNAVAILABLE']) {
+    if (!webMcp.includes(fingerprint)) {
+      fail(`webmcp: assets/webmcp-register.js is missing ${fingerprint}`);
+    }
+  }
+}
+
+for (const relativePath of ['index.html', 'aries/index.html']) {
+  const html = await readFile(resolve(root, relativePath), 'utf8');
+  if (!html.includes("import('/assets/webmcp-register.js')")) {
+    fail(`webmcp: ${relativePath} is missing the English feature detector`);
+  }
+}
+for (const relativePath of [
+  'es/index.html',
+  'es/aries/index.html',
+  'registry/index.html',
+  'thesis/index.html',
+  'sdk/index.html',
+  'archive/index.html',
+]) {
+  const html = await readFile(resolve(root, relativePath), 'utf8');
+  if (html.includes('/assets/webmcp-register.js')) {
+    fail(`webmcp: ${relativePath} must not register English tools`);
+  }
+}
+
 const searchIndexPath = resolve(root, 'search-index.json');
 if (!(await exists(searchIndexPath))) {
   fail('search-index: missing search-index.json');
@@ -325,6 +358,37 @@ if (!(await exists(searchIndexPath))) {
         if (extractPageMetadata(html).noindex) continue;
         if (!indexedPaths.has(pagePath)) {
           fail(`search-index: indexable page missing from the index — ${pagePath}`);
+        }
+      }
+
+      if (await exists(webMcpPath)) {
+        try {
+          const webMcp = await import(`${pathToFileURL(webMcpPath).href}?dist-check`);
+          const fetch = async () => ({ ok: true, json: async () => searchIndex });
+          for (const [query, expectedPath] of [
+            ['birth charts', '/birth-chart/'],
+            ['trines', '/learn/aspects/trine/'],
+            ['Aries', '/aries/'],
+            ['eclipses', '/eclipses/'],
+          ]) {
+            const envelope = await webMcp.executeWebMcpSearch({ query }, { fetch });
+            const topThree = envelope.ok
+              ? envelope.data.results.slice(0, 3).map((entry) => entry.path)
+              : [];
+            if (!topThree.includes(expectedPath)) {
+              fail(`webmcp: ${query} did not place ${expectedPath} in its top three`);
+            }
+          }
+          for (const query of ['registry', 'thesis', 'astrofolio', 'aries record']) {
+            const envelope = await webMcp.executeWebMcpSearch({ query }, { fetch });
+            const leaked = envelope.ok && envelope.data.results.some((entry) => (
+              entry.kind === 'registry'
+              || /^\/(?:registry|thesis|sdk|archive|collect)(?:\/|$)/.test(entry.path)
+            ));
+            if (leaked) fail(`webmcp: ${query} returned a wing entry`);
+          }
+        } catch (error) {
+          fail(`webmcp: deferred asset could not execute — ${error.message}`);
         }
       }
     }

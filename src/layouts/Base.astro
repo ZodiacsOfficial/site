@@ -80,6 +80,17 @@ const FAVICON = "data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/sv
       crossorigin
     />
     <SEO {...props} />
+    {locale === 'en' && (
+      <script is:inline>
+        (function () {
+          var context = document.modelContext || Reflect.get(navigator, 'modelContext');
+          if (!context || typeof context.registerTool !== 'function') return;
+          import('/assets/webmcp-register.js')
+            .then(function (module) { return module.registerWebMcpSearch(context); })
+            .catch(function () {});
+        })();
+      </script>
+    )}
     <script is:inline>window.zodiacsAnalytics = window.zodiacsAnalytics || Object.freeze({ track: function () {} });</script>
     {plausibleEnabled && (
       <>
