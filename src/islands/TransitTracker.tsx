@@ -16,6 +16,7 @@ import { localizePath, normalizeLocale, t, type Locale } from '../lib/i18n';
 import { useEngine, type EngineLoader } from '../lib/hooks/useEngine';
 import { useProfile } from '../lib/hooks/useProfile';
 import type { TransitSky } from './transit/TransitRing';
+import type { CalendarPositionsSource } from './CalendarSubscribe';
 
 type RingModule = typeof import('./transit/TransitRing');
 
@@ -39,6 +40,7 @@ interface NatalWheel {
   cusps: number[] | null;
   minimal: MinimalBody[];
   timeKnown: boolean;
+  calendarPositions: CalendarPositionsSource | null;
 }
 
 interface Result {
@@ -47,7 +49,11 @@ interface Result {
   nowMs: number;
 }
 
-function wheelFromChart(r: Chart, timeKnown: boolean): NatalWheel {
+function wheelFromChart(
+  r: Chart,
+  timeKnown: boolean,
+  houseSystem: CalendarPositionsSource['houseSystem'] = r.houses?.system ?? 'whole',
+): NatalWheel {
   return {
     // South Node stays off the drawn wheel — the site-wide convention
     // (share card, demo chart, calculator scene all hide it). `minimal`
@@ -60,10 +66,25 @@ function wheelFromChart(r: Chart, timeKnown: boolean): NatalWheel {
     cusps: timeKnown ? (r.houses?.cusps ?? null) : null,
     minimal: r.bodies.map(({ body, lon }) => ({ body, lon })),
     timeKnown,
+    calendarPositions: {
+      bodies: r.bodies,
+      angles: r.angles ? { asc: r.angles.asc, mc: r.angles.mc } : null,
+      houseSystem,
+      engineVersion: r.engineVersion,
+    },
   };
 }
 
 type Engine = Awaited<ReturnType<EngineLoader>>;
+
+function calendarPositionsFromSaved(chart: SavedChart): CalendarPositionsSource {
+  return {
+    bodies: chart.summary.bodies,
+    angles: chart.summary.angles,
+    houseSystem: chart.summary.houseSystem,
+    engineVersion: chart.summary.engineVersion,
+  };
+}
 
 function natalFromForm(slot: SlotState, engine: Engine): NatalWheel {
   const timeKnown = slot.timeKnown && slot.time !== '';
@@ -95,7 +116,7 @@ function natalFromSaved(chart: SavedChart, engine: Engine): NatalWheel {
       timeKnown,
       flags: resolved.flags,
     });
-    return wheelFromChart(r, timeKnown);
+    return wheelFromChart(r, timeKnown, chart.summary.houseSystem);
   }
   // No stored place — draw from the summary (bodies + ascendant), no house ring.
   return {
@@ -107,6 +128,7 @@ function natalFromSaved(chart: SavedChart, engine: Engine): NatalWheel {
     cusps: null,
     minimal: chart.summary.bodies.map(({ body, lon }) => ({ body, lon })),
     timeKnown: chart.birth.timeKnown,
+    calendarPositions: calendarPositionsFromSaved(chart),
   };
 }
 

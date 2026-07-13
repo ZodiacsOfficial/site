@@ -10,7 +10,7 @@
  */
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import { BirthFields } from './BirthFields';
-import { CopyLinkButton, type CopyLinkState } from './CopyLinkButton';
+import type { CopyLinkState } from './CopyLinkButton';
 import SignChip from './SignChip';
 import PlanetGlyph from '../components/PlanetGlyph';
 import AspectGlyph from '../components/AspectGlyph';
@@ -49,7 +49,10 @@ interface Props { mode: Mode; locale?: Locale }
 
 type ShareSurfaceModule = typeof import('./PositionsShareSurface');
 type TourModule = typeof import('./explorer/tour');
+type CalendarSubscribeModule = typeof import('./CalendarSubscribe');
+type CopyLinkModule = typeof import('./CopyLinkButton');
 type A2hsHint = import('../lib/a2hs').A2hsHint;
+type PushOptInModule = typeof import('./PushOptIn');
 
 const DIGNITY_KEY = {
   domicile: 'dignityDomicile',
@@ -88,8 +91,11 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   const [fromLink, setFromLink] = useState(false);
   const [positionsOnly, setPositionsOnly] = useState<PositionsShareChart | null>(null);
   const [shareSurface, setShareSurface] = useState<ShareSurfaceModule | null>(null);
+  const [calendarSurface, setCalendarSurface] = useState<CalendarSubscribeModule | null>(null);
+  const [copyLinkModule, setCopyLinkModule] = useState<CopyLinkModule | null>(null);
   const [shareDialogOpen, setShareDialogOpen] = useState(false);
   const [a2hsHint, setA2hsHint] = useState<A2hsHint | null>(null);
+  const [pushOptIn, setPushOptIn] = useState<PushOptInModule | null>(null);
   const resultRef = useRef<HTMLDivElement>(null);
   const resultHeadingRef = useRef<HTMLHeadingElement>(null);
   const errorRef = useRef<HTMLParagraphElement>(null);
@@ -130,6 +136,10 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
     (window as unknown as {
       zodiacsAnalytics?: { track?: (n: string, p: Record<string, string>) => void };
     }).zodiacsAnalytics?.track?.(name, props);
+  }
+
+  function loadPushOptIn(): void {
+    void import('./PushOptIn').then(setPushOptIn, () => {});
   }
 
   async function startTour() {
@@ -369,6 +379,10 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
         flags: resolved.flags,
       });
       setChart(result);
+      if (mode === 'full') {
+        void import('./CalendarSubscribe').then(setCalendarSurface, () => {});
+        void import('./CopyLinkButton').then(setCopyLinkModule, () => {});
+      }
       track('result_rendered', { mode });
       setShareInput({
         date: input.date,
@@ -437,7 +451,10 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
     if (status === 'saved' || status === 'updated') {
       void import('../lib/a2hs').then(({ claimA2hsHint }) => {
         const hint = claimA2hsHint(locale, navigator.userAgent, localStorage);
-        if (hint) setA2hsHint(hint);
+        const standalone = (navigator as Navigator & { standalone?: boolean }).standalone === true
+          || window.matchMedia('(display-mode: standalone)').matches;
+        if (hint && !standalone) setA2hsHint(hint);
+        else loadPushOptIn();
       }).catch(() => {});
     }
   }
@@ -518,6 +535,9 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
 
   const PositionsOnlyView = shareSurface?.PositionsOnlyResult;
   const ShareDialog = shareSurface?.ChartShareDialog;
+  const CalendarSubscribe = calendarSurface?.default;
+  const CopyLinkButton = copyLinkModule?.CopyLinkButton;
+  const PushOptIn = pushOptIn?.default;
 
   return (
     <div class="calc">
@@ -766,6 +786,17 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                     <span>{card === 'busy' ? t(locale, 'rendering') : card === 'saved' ? t(locale, 'cardSaved') : t(locale, 'shareChart')}</span>
                     <span class="orb">{card === 'saved' ? '✓' : '↗'}</span>
                   </button>
+                  {CalendarSubscribe && (
+                    <CalendarSubscribe
+                      locale={locale}
+                      positions={{
+                        bodies: chart.bodies,
+                        angles: chart.angles ? { asc: chart.angles.asc, mc: chart.angles.mc } : null,
+                        houseSystem: chart.houses?.system ?? houseSystem,
+                        engineVersion: chart.engineVersion,
+                      }}
+                    />
+                  )}
                 </div>
               )}
 
@@ -928,13 +959,17 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                 type="button"
                 class="place__clear"
                 aria-label={a2hsHint.dismissLabel}
-                onClick={() => setA2hsHint(null)}
+                onClick={() => {
+                  setA2hsHint(null);
+                  if (a2hsHint.platform !== 'ios') loadPushOptIn();
+                }}
               >×</button>
             </div>
           )}
+          {PushOptIn && <PushOptIn locale={locale} />}
 
           {/* Share: the link carries the data; no server involved */}
-          {mode === 'full' && shareInput && (
+          {mode === 'full' && shareInput && CopyLinkButton && (
             <div class="calc__share">
               <CopyLinkButton
                 url={shareUrl()}

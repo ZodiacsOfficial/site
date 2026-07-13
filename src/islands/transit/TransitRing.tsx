@@ -29,6 +29,7 @@ import { formatLongitude } from '../../lib/signs';
 import { formatDate, formatDateTime } from '../../lib/i18n/dates';
 import { aspectLabel, planetLabel } from '../../lib/i18n/astrology';
 import { t, type Locale } from '../../lib/i18n';
+import CalendarSubscribe, { type CalendarPositionsSource } from '../CalendarSubscribe';
 
 export interface TransitSky {
   body: string;
@@ -45,6 +46,7 @@ export interface TransitRingProps {
     cusps: number[] | null;
     minimal: MinimalBody[];
     timeKnown: boolean;
+    calendarPositions: CalendarPositionsSource | null;
   };
   /** Positions of the transiting bodies at a UTC instant (engine-bound). */
   computeSky: (when: Date) => TransitSky[];
@@ -78,8 +80,6 @@ const COPY = {
     marksLabel: 'Exact slow-transit dates in this window',
     nextUp: 'Next to go exact:',
     noSlowExact: 'No slow transits go exact in this window.',
-    addToCalendar: 'Add these dates to your calendar',
-    calNote: 'dates · Jupiter through Pluto · UTC · no birth data in the file',
   },
   es: {
     skyRingLabel: 'el cielo en tránsito',
@@ -98,8 +98,6 @@ const COPY = {
     marksLabel: 'Fechas exactas de tránsitos lentos en esta ventana',
     nextUp: 'Próximos en llegar a exacto:',
     noSlowExact: 'Ningún tránsito lento llega a exacto en esta ventana.',
-    addToCalendar: 'Añade estas fechas a tu calendario',
-    calNote: 'fechas · de Júpiter a Plutón · UTC · sin datos de nacimiento en el archivo',
   },
 } as const;
 
@@ -181,23 +179,6 @@ export default function TransitRing({ locale, natal, computeSky, nowMs }: Transi
     if (e.natalPoint !== 'ASC' && e.natalPoint !== 'MC') {
       setSel(`${e.transitBody}-${e.aspect}-${e.natalPoint}`);
     }
-  }
-
-  /** Build the .ics on demand — the serializer is its own tiny lazy import. */
-  async function downloadCalendar() {
-    if (!events || events.length === 0) return;
-    const { serializeTransitContacts } = await import('../../lib/ical');
-    const ics = serializeTransitContacts(events, {
-      generatedAt: new Date().toISOString(),
-      calendarName: locale === 'es' ? 'Tránsitos — Zodiacs.org' : 'Transits — Zodiacs.org',
-    });
-    const blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'zodiacs-transits.ics';
-    a.click();
-    setTimeout(() => URL.revokeObjectURL(url), 5000);
   }
 
   const whenLabel = formatDateTime(locale, when, {
@@ -351,15 +332,8 @@ export default function TransitRing({ locale, natal, computeSky, nowMs }: Transi
       {/* Live announcement of the scrubbed instant, once it settles. */}
       <p class="sr-only" role="status">{announced}</p>
 
-      {/* Take the exact dates with you — no birth data leaves in the file. */}
-      {events !== null && events.length > 0 && (
-        <div class="tring__cal">
-          <button class="btn btn--glass tring__step" type="button" onClick={downloadCalendar} data-transit-cal>
-            <span>{c.addToCalendar}</span>
-            <span class="orb">↓</span>
-          </button>
-          <span class="tring__cal-note mono">{events.length} {c.calNote}</span>
-        </div>
+      {natal.calendarPositions && (
+        <CalendarSubscribe locale={locale} positions={natal.calendarPositions} />
       )}
 
       {/* The selected transit, foregrounded. */}

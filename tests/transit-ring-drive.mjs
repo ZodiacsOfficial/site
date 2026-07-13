@@ -33,7 +33,7 @@ const profile = {
   }],
 };
 
-const preview = spawn('npx', ['astro', 'preview', '--port', '4399'], { stdio: 'ignore' });
+const preview = spawn('npx', ['astro', 'preview', '--host', '127.0.0.1', '--port', '4399'], { stdio: 'ignore' });
 await wait(2500);
 const results = [];
 const check = (name, ok, detail = '') => { results.push({ name, ok, detail }); };
@@ -132,14 +132,25 @@ try {
     (await page.locator('.tring__date').textContent()) !== dateBeforeJump);
   await shot(page, 'transit-ring-markers.png', { clip: { x: 0, y: 0, width: 1440, height: 1100 } });
 
-  // Integration: the calendar download produces a real .ics file.
-  const calBtn = page.locator('[data-transit-cal]');
-  check('calendar button renders once the scan lands', (await calBtn.count()) === 1);
-  const [download] = await Promise.all([
-    page.waitForEvent('download', { timeout: 10000 }),
-    calBtn.click(),
-  ]);
-  check('calendar downloads as zodiacs-transits.ics', download.suggestedFilename() === 'zodiacs-transits.ics');
+  // Integration: the durable calendar subscription carries only the v2
+  // positions token used by chart sharing — never the saved birth input.
+  const calBtn = page.locator('[data-calendar-subscribe]');
+  await page.waitForSelector('[data-calendar-subscribe][href^="webcal:"]', { timeout: 10000 });
+  check('calendar subscription button renders', (await calBtn.count()) === 1);
+  const calendarHref = await calBtn.getAttribute('href');
+  const calendarUrl = calendarHref ? new URL(calendarHref) : null;
+  const positionsToken = calendarUrl?.searchParams.get('token') ?? '';
+  const positionsWire = positionsToken.startsWith('2.')
+    ? JSON.parse(Buffer.from(positionsToken.slice(2), 'base64url').toString('utf8'))
+    : null;
+  check('calendar uses a webcal feed URL', calendarUrl?.protocol === 'webcal:');
+  check('calendar URL has only the positions token',
+    calendarUrl != null
+      && [...calendarUrl.searchParams.keys()].join(',') === 'token'
+      && positionsWire != null
+      && Object.keys(positionsWire).every((key) => ['b', 'a', 'h', 'v'].includes(key))
+      && !calendarHref?.includes('Coyoac')
+      && !calendarHref?.includes('1907-07-06'));
   await page.close();
 
   // ── Mobile ──
