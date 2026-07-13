@@ -71,7 +71,7 @@ export function BirthFields({
         <input
           id={timeId} class="field__input" type="time"
           disabled={!timeKnown} required={requireKnownTime && timeKnown} value={time}
-          onFocus={() => { onWarm?.(); }}
+          onFocus={onWarm}
           onInput={(e) => onTimeChange((e.target as HTMLInputElement).value)}
         />
         {timeHelp !== undefined && <p class="field__help">{timeHelp}</p>}

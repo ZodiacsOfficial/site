@@ -39,6 +39,7 @@ These lines use each live page’s meta description to state what it computes or
 - /retrogrades/ — Which planets are retrograde right now, and when the next windows run: Mercury through Pluto for 2026–2027, station dates and positions computed exactly.
 - /rising-sign/ — Calculate your rising sign (ascendant) free with your birth time and place — how people first read you, plus your chart ruler. Computed on your device, no signup.
 - /saturn-return/ — Find your exact Saturn return dates free: every crossing, retrograde passes included, computed from Saturn's real motion on your device. Just needs your birth date.
+- /solar-return/ — Cast the exact chart of the moment the Sun returns to its birth position — any year, any location, computed in your browser.
 - /transits/ — Today's transits to your natal planets, within 3° of exact — and a slider that moves the sky up to a year forward or back. Free, computed on your device.
 - /widgets/ — Drop today's sky into your own site: planetary positions, moon phase, and active retrogrades, updated daily. Free with the link intact.
 

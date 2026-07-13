@@ -14,6 +14,9 @@
  */
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import Wheel from '../../lib/wheel/Wheel';
+
+/** Reuse the already-lazy static wheel boundary in other calculation results. */
+export const StaticWheel = Wheel;
 import PlanetGlyph from '../../components/PlanetGlyph';
 import AspectGlyph from '../../components/AspectGlyph';
 import { findInterAspects } from '../../lib/engine/synastry';

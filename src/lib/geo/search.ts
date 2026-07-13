@@ -54,7 +54,6 @@ export async function searchCities(query: string, limit = 8): Promise<City[]> {
 
   const index = await preloadIndex();
   const key = /^[a-z]/.test(q) ? q[0] : '0';
-  if (!index.shards.includes(key)) return [];
   const rows = await shard(key);
 
   const starts: Row[] = [];

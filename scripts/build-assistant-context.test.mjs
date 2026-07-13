@@ -41,6 +41,7 @@ describe('assistant site context', () => {
       '/retrogrades/',
       '/rising-sign/',
       '/saturn-return/',
+      '/solar-return/',
       '/transits/',
       '/widgets/',
     ]);
@@ -48,13 +49,13 @@ describe('assistant site context', () => {
 
     expect(counts).toEqual({
       birthdays: 366,
-      consumerRoutes: 659,
+      consumerRoutes: 660,
       glossary: 139,
       guides: 12,
       learn: 159,
       pairs: 78,
-      staticPages: 32,
-      tools: 15,
+      staticPages: 33,
+      tools: 16,
     });
     expect(context).toContain('- /birthday/february-29/ — Pisces birthday guide.');
     expect(context).toContain('- /compatibility/aries-pisces/ — Aries and Pisces in love and the long run.');
