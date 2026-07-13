@@ -1,13 +1,13 @@
 {
-  "capturedAt": "2026-07-06",
+  "capturedAt": "2026-07-13",
   "method": "getTokenSupply + getTokenLargestAccounts via public Solana RPC. Shares are of raw on-chain supply; the largest accounts include DEX liquidity pools, so wallet concentration is lower than the raw figures read.",
   "signs": {
     "aries": {
       "supply": "999678206.507775",
       "accountsSampled": 20,
-      "top1Pct": 10.32,
-      "top10Pct": 28.27,
-      "top20Pct": 38.99
+      "top1Pct": 7.85,
+      "top10Pct": 28.52,
+      "top20Pct": 39.33
     },
     "taurus": {
       "supply": "999971193.609047",
@@ -19,16 +19,16 @@
     "gemini": {
       "supply": "999873368.815688",
       "accountsSampled": 20,
-      "top1Pct": 8.05,
-      "top10Pct": 23.16,
-      "top20Pct": 33.23
+      "top1Pct": 6.35,
+      "top10Pct": 23,
+      "top20Pct": 33.27
     },
     "cancer": {
       "supply": "999939090.363424",
       "accountsSampled": 20,
-      "top1Pct": 10.86,
-      "top10Pct": 25.24,
-      "top20Pct": 35.4
+      "top1Pct": 8.23,
+      "top10Pct": 25.99,
+      "top20Pct": 36.18
     },
     "leo": {
       "supply": "999799059.031383",
@@ -45,11 +45,11 @@
       "top20Pct": 38.13
     },
     "libra": {
-      "supply": "999795492.095314",
+      "supply": "999795290.115149",
       "accountsSampled": 20,
-      "top1Pct": 12.56,
-      "top10Pct": 27.31,
-      "top20Pct": 37.58
+      "top1Pct": 9.62,
+      "top10Pct": 27.16,
+      "top20Pct": 37.44
     },
     "scorpio": {
       "supply": "999991345.402552",
@@ -65,6 +65,13 @@
       "top10Pct": 28.11,
       "top20Pct": 38.78
     },
+    "capricorn": {
+      "supply": "999981653.290163",
+      "accountsSampled": 20,
+      "top1Pct": 7.51,
+      "top10Pct": 30.62,
+      "top20Pct": 43.18
+    },
     "aquarius": {
       "supply": "999989951.789259",
       "accountsSampled": 20,
@@ -73,11 +80,11 @@
       "top20Pct": 35.99
     },
     "pisces": {
-      "supply": "999916175.753681",
+      "supply": "999916173.438719",
       "accountsSampled": 20,
-      "top1Pct": 9.58,
-      "top10Pct": 28.88,
-      "top20Pct": 40.33
+      "top1Pct": 7.16,
+      "top10Pct": 28.96,
+      "top20Pct": 40.88
     }
   }
 }
