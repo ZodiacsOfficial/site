@@ -8,13 +8,27 @@
 import { bodyLongitude, computeBodies, longitudeSpeed } from './full';
 import { findLongitudeCrossings } from './returns';
 import type { Angles, AspectType, BodyName, BodyPosition } from './types';
+import {
+  DEFAULT_TRANSIT_BODIES,
+  MAJOR_ASPECT_ORDER,
+  NATAL_POINT_ORDER,
+  TRANSIT_BODY_ORDER,
+  type NatalPoint,
+  type TransitBody,
+} from './transit-scan-shared';
+
+export {
+  DEFAULT_TRANSIT_BODIES,
+  MAJOR_ASPECT_ORDER,
+  NATAL_POINT_ORDER,
+  SLOW_TRANSIT_BODIES,
+  TRANSIT_BODY_ORDER,
+} from './transit-scan-shared';
+export type { NatalPoint, TransitBody } from './transit-scan-shared';
 
 const DAY = 86_400_000;
 const MINUTE = 60_000;
 const BOUNDARY_EPSILON_MS = 100;
-
-export type TransitBody = Exclude<BodyName, 'North Node' | 'South Node'>;
-export type NatalPoint = TransitBody | 'ASC' | 'MC';
 
 export interface NatalTransitChart {
   bodies: readonly Pick<BodyPosition, 'body' | 'lon'>[];
@@ -45,29 +59,11 @@ export interface TransitScanOptions {
   includeMoon?: boolean;
   /** Optional bounded subset for a focused timeline or test fixture. */
   transitBodies?: readonly TransitBody[];
+  /** Optional bounded subset of natal bodies/angles. */
+  natalPoints?: readonly NatalPoint[];
+  /** Optional bounded subset of major aspects. */
+  aspects?: readonly AspectType[];
 }
-
-export const TRANSIT_BODY_ORDER = [
-  'Sun', 'Moon', 'Mercury', 'Venus', 'Mars',
-  'Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto',
-] as const satisfies readonly TransitBody[];
-
-export const DEFAULT_TRANSIT_BODIES = [
-  'Sun', 'Mercury', 'Venus', 'Mars',
-  'Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto',
-] as const satisfies readonly TransitBody[];
-
-export const SLOW_TRANSIT_BODIES = [
-  'Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto',
-] as const satisfies readonly TransitBody[];
-
-export const MAJOR_ASPECT_ORDER = [
-  'conjunction', 'sextile', 'square', 'trine', 'opposition',
-] as const satisfies readonly AspectType[];
-
-export const NATAL_POINT_ORDER = [
-  ...TRANSIT_BODY_ORDER, 'ASC', 'MC',
-] as const satisfies readonly NatalPoint[];
 
 const ASPECT_TARGET_OFFSETS: Record<AspectType, readonly number[]> = {
   conjunction: [0],
@@ -170,6 +166,22 @@ function selectedTransitBodies(options: TransitScanOptions): TransitBody[] {
   return TRANSIT_BODY_ORDER.filter((body) => selected.has(body));
 }
 
+function selectedNatalPoints(
+  natal: NatalTransitChart,
+  options: TransitScanOptions,
+): NatalTransitPoint[] {
+  const points = natalTransitPoints(natal);
+  if (options.natalPoints === undefined) return points;
+  const selected = new Set(options.natalPoints);
+  return points.filter((point) => selected.has(point.name));
+}
+
+function selectedAspects(options: TransitScanOptions): AspectType[] {
+  if (options.aspects === undefined) return [...MAJOR_ASPECT_ORDER];
+  const selected = new Set(options.aspects);
+  return MAJOR_ASPECT_ORDER.filter((aspect) => selected.has(aspect));
+}
+
 function refineLongitudeExtremum(
   body: TransitBody,
   fromMs: number,
@@ -261,9 +273,10 @@ export function scanTransitContacts(
   options: TransitScanOptions = {},
 ): TransitContact[] {
   assertWindow(from, to);
-  const points = natalTransitPoints(natal);
+  const points = selectedNatalPoints(natal, options);
   const bodies = selectedTransitBodies(options);
-  if (points.length === 0 || bodies.length === 0) return [];
+  const aspects = selectedAspects(options);
+  if (points.length === 0 || bodies.length === 0 || aspects.length === 0) return [];
 
   const fromMs = from.getTime();
   const toMs = to.getTime();
@@ -275,7 +288,7 @@ export function scanTransitContacts(
     const boundaries = [from, ...stations, to];
 
     for (const point of points) {
-      for (const aspect of MAJOR_ASPECT_ORDER) {
+      for (const aspect of aspects) {
         for (const targetLon of aspectTargetLongitudes(point.lon, aspect)) {
           const hits = boundaries.slice(0, -1).flatMap((boundary, index) =>
             findLongitudeCrossings(transitBody, targetLon, boundary, boundaries[index + 1], stepDays));

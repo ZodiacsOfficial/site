@@ -891,6 +891,140 @@
 .tring__next-link:hover { text-decoration-color: var(--accent); }
 .tring__next-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
+/* ── Find a transit — light collapsed host, worker-backed lazy results ── */
+.tsearch-host {
+  margin-top: clamp(22px, 4vw, 36px);
+  overflow: clip;
+}
+.tsearch-host__summary {
+  min-height: 64px;
+  padding: 18px clamp(18px, 4vw, 30px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  cursor: pointer;
+  list-style: none;
+  font-family: var(--font-serif);
+  font-size: clamp(1.25rem, 1.05rem + 0.8vw, 1.6rem);
+  font-weight: 500;
+}
+.tsearch-host__summary::-webkit-details-marker { display: none; }
+.tsearch-host__summary .orb { transition: transform var(--dur-1) var(--ease); }
+.tsearch-host[open] .tsearch-host__summary .orb { transform: rotate(90deg); }
+.tsearch-host__summary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -4px;
+  border-radius: var(--r-md);
+}
+.tsearch-host__core { border-top: 1px solid var(--hair-2); }
+.tsearch {
+  width: 100%;
+  min-width: 0;
+  display: grid;
+  gap: 22px;
+}
+.tsearch__intro,
+.tsearch__empty,
+.tsearch__cap {
+  margin: 0;
+  max-width: 66ch;
+  color: var(--text-2);
+  font-size: var(--text-sm);
+  line-height: 1.65;
+}
+.tsearch__form { display: grid; gap: 20px; }
+.tsearch__field { min-width: 0; margin: 0; padding: 0; border: 0; }
+.tsearch__field .field__label { margin-bottom: 9px; }
+.tsearch__chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.tsearch__chip {
+  min-height: 36px;
+  padding: 7px 12px;
+  border: 1px solid var(--hair-2);
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--surface) 68%, transparent);
+  color: var(--muted);
+  font: inherit;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+}
+.tsearch__chip:hover { border-color: var(--hair-3); color: var(--text); }
+.tsearch__chip.is-on {
+  border-color: color-mix(in oklab, var(--accent) 54%, var(--hair-2));
+  background: color-mix(in oklab, var(--accent) 14%, var(--surface));
+  color: var(--text);
+}
+.tsearch__chip:focus-visible,
+.tsearch__show:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+.tsearch__selects { display: grid; gap: 14px; }
+@media (min-width: 620px) {
+  .tsearch__selects { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+.tsearch__status { margin: 0; color: var(--muted); font-size: 11px; letter-spacing: 0.04em; }
+.tsearch__results { min-width: 0; display: grid; gap: 18px; }
+.tsearch__result-head {
+  min-width: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.tsearch__result-head p { margin: 0; color: var(--muted); font-size: 11px; }
+.tsearch__result-head .btn { max-width: 100%; white-space: normal; text-align: left; }
+.tsearch__months { min-width: 0; display: grid; gap: 28px; }
+.tsearch__month { min-width: 0; display: grid; gap: 16px; }
+.tsearch__month > h3 {
+  margin: 0;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--hair-2);
+  font-family: var(--font-serif);
+  font-size: var(--text-lg);
+  font-weight: 500;
+}
+.tsearch__contact { min-width: 0; display: grid; gap: 8px; }
+.tsearch__contact h4 {
+  margin: 0;
+  color: var(--text-2);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+.tsearch__contact ol { margin: 0; padding: 0; list-style: none; display: grid; gap: 6px; }
+.tsearch__contact li {
+  min-width: 0;
+  padding: 10px 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: 8px 14px;
+  border-bottom: 1px solid var(--hair-1);
+  color: var(--muted);
+  font-size: 12px;
+}
+.tsearch__contact li .mono { min-width: 0; white-space: normal; overflow-wrap: anywhere; }
+.tsearch__show {
+  border: 0;
+  padding: 2px 0;
+  background: none;
+  color: var(--text-2);
+  font: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--hair-3);
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+.tsearch__show:hover { text-decoration-color: var(--accent); }
+@media (max-width: 519px) {
+  .tsearch__contact li { grid-template-columns: minmax(0, 1fr); }
+  .tsearch__show { justify-self: start; }
+}
+
 /* ── The Relationship Wheel — two charts, one bi-wheel (/compatibility/) ──
    Reuses the transit ring's focus/row/caption grammar; only the swap row is
    its own. */
