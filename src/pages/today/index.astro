@@ -1,0 +1,155 @@
+---
+import Base from '../../layouts/Base.astro';
+import TodayBrief from '../../islands/today/TodayBrief';
+---
+<Base
+  title="Today — Your Daily Astrology Brief | Zodiacs.org"
+  description="Today’s precomputed sky compared privately with your latest saved birth chart, with degrees and a UTC timestamp."
+  path="/today/"
+>
+  <section class="section--tight container container--narrow today-page">
+    <header class="today-hero">
+      <em class="kicker">Your daily brief</em>
+      <h1 class="display">Today</h1>
+      <p>
+        The latest chart saved on this device, compared with the precomputed
+        sky. Nothing leaves this browser.
+      </p>
+    </header>
+
+    <TodayBrief client:load />
+
+    <p class="today-method">
+      Active contacts are major aspects within 3° of exact. The listed
+      positions are the noon-UTC snapshot for the date shown.
+    </p>
+  </section>
+</Base>
+
+<style is:global>
+  .today-page { max-width: 780px; }
+  .today-hero { max-width: 60ch; margin-bottom: clamp(24px, 5vw, 40px); }
+  .today-hero h1 {
+    margin: 12px 0 12px;
+    font-size: var(--text-2xl);
+    line-height: 1.04;
+  }
+  .today-hero p {
+    margin: 0;
+    color: var(--muted);
+    font-size: var(--text-lg);
+    line-height: 1.55;
+    text-wrap: pretty;
+  }
+  .today-card__core { padding: clamp(22px, 5vw, 38px); }
+  .today-card__head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 18px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--hair-1);
+  }
+  .today-card__date {
+    margin: 0;
+    color: var(--text);
+    font-size: var(--text-lg);
+    font-weight: 620;
+    letter-spacing: -0.015em;
+  }
+  .today-card__time { margin: 4px 0 0; color: var(--faint); font-size: 11px; }
+  .today-streak {
+    display: grid;
+    grid-template-columns: auto auto;
+    align-items: baseline;
+    gap: 5px;
+    margin: 0;
+    color: var(--muted);
+    font-size: 12px;
+    white-space: nowrap;
+  }
+  .today-streak__count {
+    color: var(--sign-cancer);
+    font-family: var(--font-serif);
+    font-size: 28px;
+    font-weight: 500;
+    line-height: 1;
+    animation: today-streak-in 220ms var(--ease-soft) both;
+  }
+  @keyframes today-streak-in {
+    from { opacity: 0.35; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .today-reading { display: grid; gap: 24px; padding-top: 24px; }
+  .today-reading__head h2,
+  .today-empty h2 {
+    margin: 0;
+    color: var(--text);
+    font-size: var(--text-xl);
+    font-weight: 620;
+    letter-spacing: -0.02em;
+  }
+  .today-reading__head p,
+  .today-empty p {
+    margin: 7px 0 0;
+    color: var(--muted);
+    font-size: var(--text-sm);
+    line-height: 1.6;
+  }
+  .today-lines {
+    display: grid;
+    gap: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .today-lines li {
+    padding: 18px 0 18px 18px;
+    border-bottom: 1px solid var(--hair-1);
+    border-left: 2px solid color-mix(in oklab, var(--sign-cancer) 70%, transparent);
+  }
+  .today-lines li:first-child { padding-top: 4px; }
+  .today-lines li:last-child { padding-bottom: 4px; border-bottom: 0; }
+  .today-lines__sentence {
+    margin: 0;
+    color: var(--text-2);
+    font-size: clamp(1rem, 0.96rem + 0.25vw, 1.12rem);
+    line-height: 1.65;
+    text-wrap: pretty;
+  }
+  .today-lines__receipt {
+    margin: 8px 0 0;
+    color: var(--faint);
+    font-size: 10.5px;
+    line-height: 1.65;
+  }
+  .today-private,
+  .today-method,
+  .today-loading {
+    margin: 0;
+    color: var(--faint);
+    font-size: 12px;
+    line-height: 1.7;
+  }
+  .today-method { margin-top: 18px; padding-inline: 4px; }
+  .today-loading { min-height: 180px; display: grid; align-items: center; }
+  .today-empty {
+    display: grid;
+    justify-items: start;
+    gap: 14px;
+    padding-top: 24px;
+  }
+  .today-empty p { margin: 0; max-width: 50ch; }
+  .today-empty .btn { margin-top: 2px; }
+  .today-quiet { padding-top: 24px; }
+  .today-quiet p { margin: 0; color: var(--text-2); line-height: 1.65; }
+  .today-quiet .mono { margin-top: 8px; color: var(--faint); font-size: 10.5px; }
+  @media (max-width: 480px) {
+    .today-card__head { align-items: center; }
+    .today-lines li { padding-left: 14px; }
+    .today-lines__receipt { overflow-wrap: anywhere; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .today-streak__count { animation: none; }
+  }
+</style>

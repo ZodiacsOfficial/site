@@ -74,6 +74,9 @@ owns that page.
   the files alone, don't regenerate or re-reference them)
 - `public/assets/pulse.json` / `distribution.json` ← weekly cron workflows
 
+`public/sw.js` is push-only: it must never add a `fetch` handler or cache site
+assets, because a caching service worker can serve stale static deploys.
+
 CI re-runs the wing generators and fails on drift — always commit regenerated
 output together with the source edit.
 

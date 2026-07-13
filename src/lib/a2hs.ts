@@ -15,12 +15,12 @@ interface StorageLike {
 
 const COPY = {
   en: {
-    ios: 'To keep your saved charts close, tap Share → Add to Home Screen.',
+    ios: 'To keep your saved charts close, tap Share → Add to Home Screen. Daily notifications on iPhone and iPad work only from the installed site.',
     android: 'To keep your saved charts close, tap Menu → Add to Home screen.',
     dismiss: 'Dismiss home-screen hint',
   },
   es: {
-    ios: 'Para tener tus cartas guardadas a mano, toca Compartir → Añadir a pantalla de inicio.',
+    ios: 'Para tener tus cartas guardadas a mano, toca Compartir → Añadir a pantalla de inicio. Las notificaciones diarias en iPhone y iPad solo funcionan desde el sitio instalado.',
     android: 'Para tener tus cartas guardadas a mano, toca Menú → Añadir a pantalla de inicio.',
     dismiss: 'Descartar indicación de pantalla de inicio',
   },

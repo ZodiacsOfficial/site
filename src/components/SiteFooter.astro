@@ -39,6 +39,7 @@ const privacyHref = locale === 'es' ? '/es/privacy/' : '/privacy/';
       <nav class="footer__col" aria-label={t(locale, 'navTools')}>
         <span class="footer__label">{t(locale, 'navTools')}</span>
         <a href={localizePath(locale, '/birth-chart/')}>{t(locale, 'birthChart')}</a>
+        <a href="/today/" hreflang="en">{locale === 'es' ? 'Hoy (en inglés)' : 'Today'}</a>
         <a href={localizePath(locale, '/compatibility/')}>{t(locale, 'compatibility')}</a>
         <a href={localizePath(locale, '/moon-sign/')}>{t(locale, 'moonSign')}</a>
         <a href={localizePath(locale, '/rising-sign/')}>{t(locale, 'risingSign')}</a>

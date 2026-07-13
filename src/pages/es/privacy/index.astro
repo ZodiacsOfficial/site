@@ -1,21 +1,21 @@
 ---
 import Base from '../../../layouts/Base.astro';
 
-const updated = '12 de julio de 2026';
+const updated = '13 de julio de 2026';
 
 const jsonLd = [
   {
     '@type': 'WebPage',
     name: 'Privacidad en Zodiacs.org',
     url: 'https://zodiacs.org/es/privacy/',
-    description: 'Cómo trata zodiacs.org tus datos, desde los cálculos locales hasta el asistente opcional.',
+    description: 'Cómo trata zodiacs.org tus datos, desde los cálculos locales hasta el asistente y las notificaciones opcionales.',
     inLanguage: 'es',
   },
 ];
 ---
 <Base
   title="Privacidad — Tus datos de nacimiento permanecen en tu dispositivo | Zodiacs.org"
-  description="Cómo trata zodiacs.org tus datos: las cartas se calculan en tu navegador, el asistente es opcional y no guardamos las conversaciones."
+  description="Cómo trata zodiacs.org tus datos: las cartas se calculan en tu navegador, las funciones opcionales requieren tu permiso y no guardamos las conversaciones."
   path="/es/privacy/"
   locale="es"
   jsonLd={jsonLd}
@@ -53,6 +53,18 @@ const jsonLd = [
         nunca la IP original; las comprobaciones de cuota borran los registros
         de más de 35 días. Enviamos ese mismo identificador seudónimo a Anthropic
         como metadato de la solicitud.
+      </p>
+
+      <h2>Resumen diario, calendario y notificaciones</h2>
+      <p>
+        El resumen diario lee las posiciones calculadas de una carta guardada
+        en tu dispositivo. El calendario de tránsitos recibe el mismo código de
+        solo posiciones que usa la función para compartir cartas; ninguno
+        incluye tu nombre, fecha, hora, lugar de nacimiento ni coordenadas. Si
+        activas las notificaciones diarias, guardamos la suscripción push del
+        navegador — una URL del servicio de notificaciones y sus claves de
+        entrega, sin datos de nacimiento — para poder enviar la nota. Puedes
+        desactivarlas en cualquier momento.
       </p>
 
       <h2>Correo y alojamiento</h2>

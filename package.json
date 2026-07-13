@@ -27,6 +27,7 @@
     "data:eclipses": "node scripts/build-eclipses.mjs",
     "data:birthdays": "node scripts/build-birthdays.mjs",
     "digest:weekly": "vite-node scripts/send-weekly-digest.ts",
+    "push:daily": "node scripts/send-daily-push.mjs",
     "report:bundles": "node scripts/report-bundles.mjs",
     "test:visual": "node tests/visual/visual-regression.mjs",
     "test:visual:update": "node tests/visual/visual-regression.mjs --update",
@@ -60,6 +61,7 @@
     "sharp": "^0.34.0",
     "typescript": "^5.8.0",
     "vite-node": "^3.2.4",
-    "vitest": "^3.2.0"
+    "vitest": "^3.2.0",
+    "web-push": "^3.6.7"
   }
 }

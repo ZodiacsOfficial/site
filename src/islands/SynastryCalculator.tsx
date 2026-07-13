@@ -6,7 +6,7 @@
  */
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import { BirthFields } from './BirthFields';
-import { CopyLinkButton, type CopyLinkState } from './CopyLinkButton';
+import type { CopyLinkState } from './CopyLinkButton';
 import SignChip from './SignChip';
 import { resolveSavedChart } from '../lib/profile/resolve';
 import { MAX_PAIRS, deletePair, hasPair, loadPairs, pairSideLabels, prunePairs, savePair } from '../lib/profile/pairs';
@@ -54,6 +54,7 @@ interface Person {
 }
 
 type WheelModule = typeof import('./synastry/RelationshipWheel');
+type CopyLinkModule = typeof import('./CopyLinkButton');
 
 const emptySlot = (): SlotState => ({
   source: 'form', savedId: '', name: '', date: '', time: '', timeKnown: true, city: null, link: null,
@@ -305,6 +306,7 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
     sides: [SavedPairSide | null, SavedPairSide | null];
   } | null>(null);
   const [wheelMod, setWheelMod] = useState<WheelModule | null>(null);
+  const [copyLinkMod, setCopyLinkMod] = useState<CopyLinkModule | null>(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
   const [autoRan, setAutoRan] = useState(false);
@@ -320,6 +322,17 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
   const errorRef = useRef<HTMLParagraphElement>(null);
   const focusAfterComputeRef = useRef(false);
   const profileLinksReadRef = useRef(false);
+
+  // Invite copy is result-only. Keep its helper outside the entry form's
+  // initial closure, then load it alongside the result that can expose it.
+  useEffect(() => {
+    if (!result || copyLinkMod) return;
+    let cancelled = false;
+    void import('./CopyLinkButton').then((module) => {
+      if (!cancelled) setCopyLinkMod(module);
+    }).catch(() => {});
+    return () => { cancelled = true; };
+  }, [result, copyLinkMod]);
 
   useEffect(() => {
     if (!profileReady || profileLinksReadRef.current) return;
@@ -411,6 +424,7 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
     && slotA.timeKnown && slotA.city === null && slotA.link === null;
   const showQuickFill = profileReady && latestChart !== null
     && slotAIsUntouched && !quickFillDismissed;
+  const CopyLinkButton = copyLinkMod?.CopyLinkButton;
 
   const slotReady = (slot: SlotState) =>
     slot.source === 'saved' ? charts.some((c) => c.id === slot.savedId)
@@ -798,7 +812,7 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
           )}
 
           {/* Invite: A's side rides in the link; B fills their own */}
-          {invite && (
+          {invite && CopyLinkButton && (
             <div class="calc__share">
               <CopyLinkButton
                 url={inviteUrl()}

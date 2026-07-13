@@ -67,6 +67,7 @@ PAGE INVENTORY — EVERGREEN PAGES AND HUBS
 - /methodology/ — The exact astronomy behind every chart on…
 - /privacy/ — How zodiacs.org handles your data.
 - /terms/ — The terms for using zodiacs.org.
+- /today/ — Today’s precomputed sky compared…
 - /tools/ — Free astrology calculators, no signup.
 
 PAGE INVENTORY — THE TWELVE SIGN GUIDES

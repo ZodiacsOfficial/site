@@ -18,7 +18,7 @@ const EVERGREEN_LASTMOD = new Map<string, string>([
   ...[
     '/', '/birth-chart/', '/compatibility/', '/moon-sign/', '/rising-sign/',
     '/moon-phase/', '/saturn-return/', '/mercury-retrograde/', '/transits/',
-    '/eclipses/', '/full-moon-calendar/', '/retrogrades/', '/learn/', '/tools/',
+    '/eclipses/', '/full-moon-calendar/', '/retrogrades/', '/today/', '/learn/', '/tools/',
     '/profile/', '/learn/how-to-read-a-birth-chart/', '/learn/zodiac-dates/', '/learn/glossary/', '/learn/planets/',
     '/learn/houses/', '/learn/aspects/', '/learn/placements/', '/birthday/',
     '/baby-zodiac/', '/widgets/', '/methodology/', '/about/', '/privacy/',
@@ -28,11 +28,9 @@ const EVERGREEN_LASTMOD = new Map<string, string>([
     '/es/tools/', '/es/profile/', '/es/baby-zodiac/', '/es/methodology/', '/es/privacy/',
   ].map((loc) => [
     loc,
-    ['/privacy/', '/es/privacy/'].includes(loc)
-      ? '2026-07-12'
-      : ['/', '/learn/', '/learn/zodiac-dates/', '/learn/glossary/'].includes(loc)
-        ? '2026-07-11'
-        : '2026-07-10',
+    ['/today/', '/privacy/', '/es/privacy/'].includes(loc)
+      ? '2026-07-13'
+      : ['/', '/learn/', '/learn/zodiac-dates/', '/learn/glossary/'].includes(loc) ? '2026-07-11' : '2026-07-10',
   ] as const),
   ...LEGACY_URLS.map((url) => [url.path, '2026-07-10'] as const),
 ]);
@@ -73,6 +71,7 @@ export const GET: APIRoute = async () => {
     { loc: '/eclipses/', priority: 0.85 },
     { loc: '/full-moon-calendar/', priority: 0.85 },
     { loc: '/retrogrades/', priority: 0.8 },
+    { loc: '/today/', priority: 0.8 },
     { loc: '/learn/', priority: 0.85 },
     { loc: '/tools/', priority: 0.8 },
     { loc: '/profile/', priority: 0.75 },
@@ -89,6 +88,7 @@ export const GET: APIRoute = async () => {
     { loc: '/methodology/', priority: 0.6 },
     { loc: '/about/', priority: 0.55 },
     { loc: '/privacy/', priority: 0.4 },
+    { loc: '/es/privacy/', priority: 0.4 },
     { loc: '/terms/', priority: 0.4 },
     { loc: '/feeds/', priority: 0.55 },
   ].map((url) => ({ ...url, lastmod: getLastmod(url.loc) }));
@@ -145,7 +145,6 @@ export const GET: APIRoute = async () => {
   const allUrls = [
     ...urls,
     ...localizedUrls,
-    { loc: '/es/privacy/', priority: 0.4, lastmod: getLastmod('/es/privacy/') },
   ];
 
   const body = `<?xml version="1.0" encoding="UTF-8"?>
