@@ -8,7 +8,7 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build && vite-node --script scripts/build-search-index.mjs && node scripts/build-search-ui.mjs && node scripts/build-assistant-ui.mjs",
+    "build": "astro build && vite-node --script scripts/build-search-index.mjs && node scripts/build-search-ui.mjs && node scripts/build-assistant-ui.mjs && node scripts/build-webmcp.mjs",
     "preview": "astro preview",
     "check": "astro check",
     "test": "vitest run",
@@ -32,9 +32,11 @@
     "test:visual": "node tests/visual/visual-regression.mjs",
     "test:visual:update": "node tests/visual/visual-regression.mjs --update",
     "test:lighthouse": "node tests/visual/lighthouse.mjs",
+    "test:webmcp": "node tests/webmcp-drive.mjs",
     "data:search-ui": "node scripts/build-search-ui.mjs",
     "data:assistant-context": "vite-node --script scripts/build-assistant-context.mjs",
-    "data:assistant-ui": "node scripts/build-assistant-ui.mjs"
+    "data:assistant-ui": "node scripts/build-assistant-ui.mjs",
+    "data:webmcp": "node scripts/build-webmcp.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.111.0",
@@ -51,6 +53,7 @@
     "@fontsource-variable/instrument-sans": "^5.2.0",
     "@fontsource-variable/jetbrains-mono": "^5.2.0",
     "@fontsource/eb-garamond": "^5.2.7",
+    "@mcp-b/webmcp-polyfill": "4.0.0",
     "@types/node": "^22.20.0",
     "chrome-launcher": "^1.2.1",
     "esbuild": "^0.28.1",
