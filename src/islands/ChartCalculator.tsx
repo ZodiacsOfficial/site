@@ -8,7 +8,7 @@
  *   'moon'   — moon-focused result view (same engine)
  *   'rising' — rising-focused result view (time required)
  */
-import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import { BirthFields } from './BirthFields';
 import type { CopyLinkState } from './CopyLinkButton';
 import SignChip from './SignChip';
@@ -49,6 +49,15 @@ interface Props { mode: Mode; locale?: Locale }
 
 type ShareSurfaceModule = typeof import('./PositionsShareSurface');
 type TourModule = typeof import('./explorer/tour');
+type LensModule = typeof import('./explorer/lens/ChartLens');
+type LensId = import('./explorer/lens/copy').LensId;
+type LensRingRenderer = (geo: import('../lib/wheel/Wheel').WheelGeometry) => import('preact').ComponentChildren;
+
+/** Rail labels stay host-local: they render before the lens module loads. */
+const LENS_LABELS: Record<'en' | 'es', Record<'rail' | 'natal' | LensId, string>> = {
+  en: { rail: 'Chart through time', natal: 'Natal', sky: 'Sky now', progressed: 'Progressed', return: 'Solar return' },
+  es: { rail: 'La carta en el tiempo', natal: 'Natal', sky: 'Cielo ahora', progressed: 'Progresada', return: 'Retorno solar' },
+};
 type CalendarSubscribeModule = typeof import('./CalendarSubscribe');
 type CopyLinkModule = typeof import('./CopyLinkButton');
 type A2hsHint = import('../lib/a2hs').A2hsHint;
@@ -74,6 +83,7 @@ function sceneHas(scene: ChartSceneModel, ref: EntityRef): boolean {
 
 export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Props) {
   const locale = normalizeLocale(rawLocale);
+  const lensLocale = locale === 'es' ? 'es' : 'en';
   const loadEngine = useEngine();
   const [date, setDate] = useState('');
   const [time, setTime] = useState('');
@@ -114,6 +124,16 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   const [tourOpen, setTourOpen] = useState(false);
   const [tourVisual, setTourVisual] = useState<TourVisual | null>(null);
 
+  // ── Time-Lens rail (lazy — same discipline as the tour) ──
+  const [lensMod, setLensMod] = useState<LensModule | null>(null);
+  const [lens, setLens] = useState<'natal' | LensId>('natal');
+  const [lensRing, setLensRing] = useState<LensRingRenderer | null>(null);
+  // Stable identity — the lens module's ring effect depends on it.
+  const onLensRing = useCallback(
+    (renderer: LensRingRenderer | null) => setLensRing(() => renderer),
+    [],
+  );
+
   const scene = useMemo(
     () => (chart && mode === 'full' ? buildSceneModel(chart) : null),
     [chart, mode],
@@ -146,6 +166,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
     try {
       const mod = tourMod ?? await import('./explorer/tour');
       setTourMod(mod);
+      resetLens(); // the tour teaches the natal wheel; a lens ring would contradict it
       setTourOpen(true);
       track('tour_start', { variant: 'v1' });
       requestAnimationFrame(() => wheelboxRef.current?.scrollIntoView({
@@ -159,6 +180,27 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   function exitTour() {
     setTourOpen(false);
     setTourVisual(null);
+  }
+
+  function resetLens() {
+    setLens('natal');
+    setLensRing(null);
+  }
+  async function selectLens(next: 'natal' | LensId) {
+    if (next === lens) return;
+    if (next === 'natal') {
+      resetLens();
+      track('lens_change', { lens: 'natal' });
+      return;
+    }
+    try {
+      const mod = lensMod ?? await import('./explorer/lens/ChartLens');
+      setLensMod(mod);
+      setLens(next);
+      track('lens_change', { lens: next });
+    } catch {
+      setError(t(locale, 'chartError'));
+    }
   }
 
   /** Spoken summary of a selection for the polite live region. */
@@ -363,6 +405,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
     setA2hsHint(null);
     setShare('idle');
     setCard('idle');
+    resetLens();
     setPositionsOnly(null);
     setShareDialogOpen(false);
     setMoonAmbiguous(false);
@@ -704,7 +747,10 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                           asc={asc}
                           mc={chart.angles?.mc ?? null}
                           cusps={viewCusps}
-                          aspects={chart.aspects.filter((a) => a.orb < 6 && aspectTypes.includes(a.type))}
+                          aspects={lens === 'natal'
+                            ? chart.aspects.filter((a) => a.orb < 6 && aspectTypes.includes(a.type))
+                            : []}
+                          renderOverlay={lensRing ?? undefined}
                           animate
                           interactive={{
                             scene: viewScene ?? scene,
@@ -715,6 +761,22 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                           }}
                         />
                       </div>
+                      {!tourOpen && (
+                        <div class="calc__lens-rail" role="group" aria-label={LENS_LABELS[lensLocale].rail}>
+                          {(['natal', 'sky', 'progressed', 'return'] as const).map((id) => (
+                            <button
+                              key={id}
+                              type="button"
+                              class={`calc__lens-btn${lens === id ? ' is-active' : ''}`}
+                              aria-pressed={lens === id}
+                              onClick={() => void selectLens(id)}
+                              data-lens-btn={id}
+                            >
+                              {LENS_LABELS[lensLocale][id]}
+                            </button>
+                          ))}
+                        </div>
+                      )}
                       <LayerChips
                         aspectTypes={aspectTypes}
                         onAspectTypes={setAspectTypes}
@@ -723,6 +785,16 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                         hasHouses={chart.houses != null}
                         locale={locale}
                       />
+                      {lens !== 'natal' && lensMod && (
+                        <lensMod.default
+                          lens={lens}
+                          chart={chart}
+                          locale={lensLocale}
+                          loadEngine={loadEngine}
+                          track={track}
+                          onRing={onLensRing}
+                        />
+                      )}
                     </div>
                     {tourOpen && tourMod ? (
                       <tourMod.ChartTour

@@ -331,3 +331,74 @@ tr[data-selected='true'] td:last-child { border-radius: 0 8px 8px 0; }
 @media (prefers-reduced-motion: reduce) {
   .tour__dot::after { transition: none; }
 }
+
+/* ── Time-Lens rail: one wheel, four skies ──
+   A view switcher, not a data filter — so body type, not mono chips. */
+.calc__lens-rail {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 14px;
+  padding: 3px;
+  width: fit-content;
+  border: 1px solid var(--hair-1);
+  border-radius: var(--r-full);
+}
+.calc__lens-btn {
+  padding: 5px 13px;
+  border-radius: var(--r-full);
+  font-size: var(--text-sm);
+  color: var(--muted);
+  transition: color var(--dur-1) var(--ease), background var(--dur-1) var(--ease);
+}
+.calc__lens-btn:hover { color: var(--text); }
+.calc__lens-btn.is-active {
+  color: var(--text);
+  background: rgba(198, 204, 218, 0.09);
+}
+
+.lens { margin-top: 14px; }
+.lens__intro { font-size: var(--text-sm); color: var(--text-2); }
+.lens__loading { margin-top: 8px; font-size: 11px; color: var(--faint); }
+.lens__receipt {
+  margin-top: 10px;
+  font-size: 12px;
+  color: var(--text-2);
+  letter-spacing: 0.03em;
+}
+.lens__contacts { margin-top: 10px; }
+.lens__contacts-label { font-size: var(--text-sm); color: var(--muted); }
+.lens__contacts ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 6px;
+  padding: 0;
+  list-style: none;
+}
+.lens__contact {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 11px;
+  border: 1px solid var(--hair-2);
+  border-radius: var(--r-full);
+  font-size: 11px;
+  color: var(--text-2);
+  transition: color var(--dur-1) var(--ease), border-color var(--dur-1) var(--ease);
+}
+.lens__contact:hover { color: var(--text); border-color: var(--hair-3); }
+.lens__contact.is-active { color: var(--text); border-color: var(--hair-3); background: rgba(198, 204, 218, 0.07); }
+.lens__orb { color: var(--faint); }
+.lens__none { margin-top: 10px; font-size: var(--text-sm); color: var(--faint); }
+.lens__line { margin-top: 12px; font-size: var(--text-sm); color: var(--text-2); max-width: 60ch; }
+.lens__line--faint { color: var(--muted); }
+.lens__note { margin-top: 10px; font-size: 12px; color: var(--faint); max-width: 60ch; }
+.lens__note a { color: var(--muted); }
+.lens__note a:hover { color: var(--text); }
+.lens__trust {
+  margin-top: 14px;
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  color: var(--faint);
+}
