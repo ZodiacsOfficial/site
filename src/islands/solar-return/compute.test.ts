@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { bodyLongitude } from '../../lib/engine/full';
+import { solarReturnInstant } from '../../lib/engine/solar-return';
 import { yearScan } from '../../lib/engine/year-scan';
 import { computeSolarReturn, currentReturnYear, nearForReturnYear } from './compute';
 
@@ -25,6 +26,22 @@ describe('solar return calculator model', () => {
     }).chart.input.utc;
     expect(currentReturnYear(KAHLO_SUN, '1907-07-06', new Date(thisReturn.getTime() - 1))).toBe(2025);
     expect(currentReturnYear(KAHLO_SUN, '1907-07-06', thisReturn)).toBe(2026);
+  });
+
+  it('handles a January 1 return that lands on December 31', () => {
+    const sun = bodyLongitude('Sun', new Date('1900-01-01T00:00:00Z'));
+    const instant = solarReturnInstant(sun, nearForReturnYear(2025, '1900-01-01'));
+    expect(instant.getUTCFullYear()).toBe(2024);
+    expect(currentReturnYear(sun, '1900-01-01', new Date(instant.getTime() - 1))).toBe(2024);
+    expect(currentReturnYear(sun, '1900-01-01', instant)).toBe(2025);
+  });
+
+  it('handles a December 31 return that lands on January 1', () => {
+    const sun = bodyLongitude('Sun', new Date('2000-12-31T23:00:00Z'));
+    const instant = solarReturnInstant(sun, nearForReturnYear(2025, '2000-12-31'));
+    expect(instant.getUTCFullYear()).toBe(2026);
+    expect(currentReturnYear(sun, '2000-12-31', new Date(instant.getTime() - 1))).toBe(2024);
+    expect(currentReturnYear(sun, '2000-12-31', instant)).toBe(2025);
   });
 
   it('relocation changes angles but not planets and no-time suppresses houses', () => {

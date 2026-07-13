@@ -35,8 +35,13 @@ export function nearForReturnYear(year: number, birthDate: string): Date {
 
 export function currentReturnYear(natalSunLon: number, birthDate: string, now: Date): number {
   const year = now.getUTCFullYear();
-  const thisYear = solarReturnInstant(natalSunLon, nearForReturnYear(year, birthDate));
-  return thisYear.getTime() <= now.getTime() ? year : year - 1;
+  const candidates = [year - 2, year - 1, year, year + 1]
+    .map((label) => ({ label, instant: solarReturnInstant(natalSunLon, nearForReturnYear(label, birthDate)) }))
+    .filter(({ instant }) => instant.getTime() <= now.getTime());
+  if (!candidates.length) throw new Error('No governing solar return found.');
+  return candidates.reduce((latest, candidate) => (
+    candidate.instant.getTime() > latest.instant.getTime() ? candidate : latest
+  )).label;
 }
 
 export function computeSolarReturn(input: SolarReturnComputeInput, now = new Date()): SolarReturnResultData {
