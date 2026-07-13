@@ -17,8 +17,15 @@ import { useEngine, type EngineLoader } from '../lib/hooks/useEngine';
 import { useProfile } from '../lib/hooks/useProfile';
 import type { TransitSky } from './transit/TransitRing';
 import type { CalendarPositionsSource } from './CalendarSubscribe';
+import type {
+  NatalPoint,
+  NatalTransitChart,
+  TransitBody,
+  TransitContact,
+} from '../lib/engine/transit-scan';
 
 type RingModule = typeof import('./transit/TransitRing');
+type SearchModule = typeof import('./transit/TransitSearch');
 
 // The transiting bodies drawn on the outer ring (planets + the Moon; the Moon
 // circles fast and is left out of the aspect list, but shown so you can watch it).
@@ -47,6 +54,10 @@ interface Result {
   natal: NatalWheel;
   computeSky: (when: Date) => TransitSky[];
   nowMs: number;
+}
+
+interface TransitFocusRequest {
+  contact: TransitContact;
 }
 
 function wheelFromChart(
@@ -141,6 +152,10 @@ export default function TransitTracker({ locale: rawLocale = 'en' }: { locale?: 
   });
   const [result, setResult] = useState<Result | null>(null);
   const [ringMod, setRingMod] = useState<RingModule | null>(null);
+  const [searchMod, setSearchMod] = useState<SearchModule | null>(null);
+  const [searchLoading, setSearchLoading] = useState(false);
+  const [searchError, setSearchError] = useState('');
+  const [searchFocus, setSearchFocus] = useState<TransitFocusRequest | null>(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
   const resultHeadingRef = useRef<HTMLHeadingElement>(null);
@@ -184,6 +199,7 @@ export default function TransitTracker({ locale: rawLocale = 'en' }: { locale?: 
           .filter((b) => TRANSIT_BODIES.has(b.body))
           .map(({ body, lon, retrograde }) => ({ body, lon, retrograde }));
       setRingMod(mod);
+      setSearchFocus(null);
       setResult({ natal, computeSky, nowMs: Date.now() });
     } catch (err) {
       setError(t(locale, 'transitError'));
@@ -207,6 +223,32 @@ export default function TransitTracker({ locale: rawLocale = 'en' }: { locale?: 
   }, [busy, error, result]);
 
   const RingComponent = ringMod?.default;
+  const SearchComponent = searchMod?.TransitSearch;
+  const searchNatal: NatalTransitChart | null = result ? {
+    bodies: result.natal.minimal
+      .filter((body) => TRANSIT_BODIES.has(body.body))
+      .map((body) => ({ body: body.body as TransitBody, lon: body.lon })),
+    angles: result.natal.asc != null && result.natal.mc != null
+      ? { asc: result.natal.asc, mc: result.natal.mc }
+      : null,
+  } : null;
+  const searchNatalPoints = searchNatal ? [
+    ...searchNatal.bodies.map(({ body }) => ({ name: body as NatalPoint })),
+    ...(searchNatal.angles ? [
+      { name: 'ASC' as const },
+      { name: 'MC' as const },
+    ] : []),
+  ] : [];
+
+  function openSearch(event: Event): void {
+    if (!(event.currentTarget as HTMLDetailsElement).open || searchMod || searchLoading) return;
+    setSearchLoading(true);
+    setSearchError('');
+    void import('./transit/TransitSearch')
+      .then(setSearchMod)
+      .catch(() => setSearchError('The transit search could not load. Close this section and try again.'))
+      .finally(() => setSearchLoading(false));
+  }
 
   return (
     <div class="calc">
@@ -290,8 +332,37 @@ export default function TransitTracker({ locale: rawLocale = 'en' }: { locale?: 
             natal={result.natal}
             computeSky={result.computeSky}
             nowMs={result.nowMs}
+            focusRequest={searchFocus}
           />
         </div>
+      )}
+
+      {locale === 'en' && (
+        <details class="tsearch-host shell" onToggle={openSearch} data-transit-search-host>
+          <summary class="tsearch-host__summary">
+            <span>Find a transit</span>
+            <span class="orb" aria-hidden="true">↗</span>
+          </summary>
+          <div class="core tsearch-host__core">
+            {SearchComponent ? (
+              <SearchComponent
+                key={result?.nowMs ?? 'no-chart'}
+                natal={searchNatal}
+                natalPoints={searchNatalPoints}
+                nowMs={result?.nowMs ?? Date.now()}
+                onShowOnRing={(contact) => setSearchFocus({ contact })}
+              />
+            ) : (
+              searchError
+                ? <p class="calc__error" role="alert">{searchError}</p>
+                : (
+                    <p class="tsearch__status mono" role="status">
+                      {searchLoading ? 'Loading transit search…' : 'Open to load the transit search.'}
+                    </p>
+                  )
+            )}
+          </div>
+        </details>
       )}
     </div>
   );

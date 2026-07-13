@@ -128,6 +128,43 @@ describe('scanTransitContacts', () => {
     ]);
   });
 
+  it('filters natal points and aspects before scanning', () => {
+    const exact = new Date('2026-07-15T12:00:00Z');
+    const marsLon = bodyLongitude('Mars', exact);
+    const natal: NatalTransitChart = {
+      bodies: [
+        at('Sun', marsLon),
+        at('Moon', normalize(marsLon - 90)),
+      ],
+      angles: { asc: normalize(marsLon - 180), mc: normalize(marsLon - 120) },
+    };
+
+    const contacts = scanTransitContacts(
+      natal,
+      new Date('2026-07-15T06:00:00Z'),
+      new Date('2026-07-15T18:00:00Z'),
+      {
+        transitBodies: ['Mars'],
+        natalPoints: ['Moon', 'ASC'],
+        aspects: ['opposition'],
+      },
+    );
+
+    expect(contacts.map(({ natalPoint, aspect }) => ({ natalPoint, aspect }))).toEqual([
+      { natalPoint: 'ASC', aspect: 'opposition' },
+    ]);
+    expect(scanTransitContacts(natal, exact, exact, {
+      transitBodies: ['Mars'],
+      natalPoints: [],
+      aspects: ['conjunction'],
+    })).toEqual([]);
+    expect(scanTransitContacts(natal, exact, exact, {
+      transitBodies: ['Mars'],
+      natalPoints: ['Sun'],
+      aspects: [],
+    })).toEqual([]);
+  });
+
   it('keeps the exposed exact instant inside a sub-minute window', () => {
     const exact = new Date('2026-07-15T12:00:25Z');
     const from = new Date('2026-07-15T12:00:15Z');

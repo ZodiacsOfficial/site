@@ -21,6 +21,14 @@ const ASPECT_COLOR: Record<string, string> = {
   opposition: 'rgba(224,169,180,0.6)',
 };
 
+export interface FocusedPointContact {
+  transitBody: string;
+  natalPoint: string;
+  natalLon: number;
+  aspect: string;
+  orb: number;
+}
+
 export function renderTransitOverlay(
   overlay: WheelOverlay,
   /** Inner-ring body → its collision-fanned DRAW longitude (chords must land
@@ -29,19 +37,45 @@ export function renderTransitOverlay(
   natalDrawLonOf: (name: string) => number | null,
   onSelect: (id: string | null) => void,
   geo: WheelGeometry,
-  opts: { dashedMarkers?: boolean } = {},
+  opts: { dashedMarkers?: boolean; focusedPoint?: FocusedPointContact | null } = {},
 ) {
   const dashed = opts.dashedMarkers ?? true;
+  const focusedPoint = opts.focusedPoint ?? null;
   const { size, cx, cy, rOuter, rOuterSeat, rSigns, rBodies, pt } = geo;
   const focus = overlay.focus;
-  const focusOuter = focus ? overlay.aspects.find((a) => overlayAspectId(a) === focus)?.outer ?? null : null;
-  const chordDim = (a: WheelOverlay['aspects'][number]) => (focus && overlayAspectId(a) !== focus ? 0.16 : 1);
-  const bodyDim = (name: string) => (focus && name !== focusOuter ? 0.32 : 1);
+  const focusOuter = focusedPoint?.transitBody
+    ?? (focus ? overlay.aspects.find((a) => overlayAspectId(a) === focus)?.outer ?? null : null);
+  const chordDim = (a: WheelOverlay['aspects'][number]) =>
+    (focusedPoint || (focus && overlayAspectId(a) !== focus) ? 0.16 : 1);
+  const bodyDim = (name: string) => ((focus || focusedPoint) && name !== focusOuter ? 0.32 : 1);
+  const focusedPointBody = focusedPoint
+    ? overlay.bodies.find((body) => body.body === focusedPoint.transitBody) ?? null
+    : null;
 
   return (
     <g class="wheel__overlay" role="group" aria-label={overlay.label}>
       {/* Seat circle for the outer ring. */}
       <circle cx={cx} cy={cy} r={rOuterSeat} fill="none" stroke="rgba(198,204,218,0.14)" stroke-width="1" stroke-dasharray={dashed ? '2 4' : undefined} />
+
+      {/* Search-only focus for ASC/MC and Moon contacts. These stay outside
+          the shared InterAspect/Wheel contracts; this lazy overlay owns the
+          one requested chord. */}
+      {focusedPoint && focusedPointBody && (() => {
+        const outer = pt(focusedPointBody.drawLon, rOuter - size * 0.03);
+        const id = `${focusedPoint.transitBody}-${focusedPoint.aspect}-${focusedPoint.natalPoint}`;
+        const isAngle = focusedPoint.natalPoint === 'ASC' || focusedPoint.natalPoint === 'MC';
+        const inner = pt(focusedPoint.natalLon, isAngle ? rSigns : rBodies);
+        return (
+          <line
+            x1={outer.x} y1={outer.y} x2={inner.x} y2={inner.y}
+            stroke={ASPECT_COLOR[focusedPoint.aspect] ?? 'rgba(198,204,218,0.5)'}
+            stroke-width="1.8"
+            pointer-events="none"
+            data-transit-search-aspect={id}
+            data-transit-angle-aspect={isAngle ? id : undefined}
+          />
+        );
+      })()}
 
       {/* Transit → natal contact chords, outer marker to natal planet. */}
       {overlay.aspects.map((a) => {

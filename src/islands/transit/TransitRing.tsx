@@ -20,6 +20,7 @@ import { findInterAspects } from '../../lib/engine/synastry';
 import type { MinimalBody } from '../../lib/engine/synastry';
 import type { TransitContact } from '../../lib/engine/transit-scan';
 import type { BodyName } from '../../lib/engine/types';
+import { separation } from '../../lib/engine/aspects';
 import { buildTransitOverlay } from '../../lib/scene/overlay';
 import { collisionNudge } from '../../lib/scene/layout';
 import { overlayAspectId, overlayBodyId } from '../../lib/scene/types';
@@ -52,6 +53,8 @@ export interface TransitRingProps {
   computeSky: (when: Date) => TransitSky[];
   /** Baseline "now" in epoch ms (captured once at compute). */
   nowMs: number;
+  /** Exact-date request emitted by the separately lazy transit search. */
+  focusRequest?: { contact: TransitContact } | null;
 }
 
 const DAY = 86_400_000;
@@ -59,6 +62,13 @@ const WINDOW_DAYS = 365; // scrub one year either side — enough for the slow t
 const reducedMotion = () =>
   typeof matchMedia !== 'undefined' && matchMedia('(prefers-reduced-motion: reduce)').matches;
 const easeInOutCubic = (k: number) => (k < 0.5 ? 4 * k * k * k : 1 - ((-2 * k + 2) ** 3) / 2);
+const ASPECT_ANGLE = {
+  conjunction: 0,
+  sextile: 60,
+  square: 90,
+  trine: 120,
+  opposition: 180,
+} as const;
 
 // Ring-specific copy, module-local (EN + ES) — the lazy chunk keeps it out of
 // the /transits/ static closure. General labels reuse the shared dictionary.
@@ -101,10 +111,11 @@ const COPY = {
   },
 } as const;
 
-export default function TransitRing({ locale, natal, computeSky, nowMs }: TransitRingProps) {
+export default function TransitRing({ locale, natal, computeSky, nowMs, focusRequest = null }: TransitRingProps) {
   const c = COPY[locale] ?? COPY.en;
   const [offset, setOffset] = useState(0);          // days from now (may be fractional mid-tween)
   const [sel, setSel] = useState<string | null>(null);
+  const [searchPointFocus, setSearchPointFocus] = useState<TransitContact | null>(null);
   const rafRef = useRef<number | null>(null);
 
   const when = useMemo(() => new Date(nowMs + offset * DAY), [nowMs, offset]);
@@ -129,6 +140,27 @@ export default function TransitRing({ locale, natal, computeSky, nowMs }: Transi
   // at the neighbouring planet. Same algorithm and input as the Wheel's own
   // layout, so the endpoints land exactly on the drawn marks.
   const natalDraw = useMemo(() => collisionNudge(natal.bodies), [natal.bodies]);
+  const focusedPoint = useMemo(() => {
+    if (!searchPointFocus) return null;
+    const isAngle = searchPointFocus.natalPoint === 'ASC' || searchPointFocus.natalPoint === 'MC';
+    const natalLon = searchPointFocus.natalPoint === 'ASC'
+      ? natal.asc
+      : searchPointFocus.natalPoint === 'MC'
+        ? natal.mc
+        : natal.minimal.find((candidate) => candidate.body === searchPointFocus.natalPoint)?.lon ?? null;
+    const body = overlayBase.bodies.find((candidate) => candidate.body === searchPointFocus.transitBody);
+    if (natalLon == null || !body) return null;
+    const orb = Math.abs(separation(body.lon, natalLon) - ASPECT_ANGLE[searchPointFocus.aspect]);
+    return orb <= TRANSIT_ORB ? {
+      transitBody: searchPointFocus.transitBody,
+      natalPoint: searchPointFocus.natalPoint,
+      // Planet chords end on the collision-fanned marker; angle chords end
+      // on the angle's true longitude.
+      natalLon: isAngle ? natalLon : (natalDraw.get(searchPointFocus.natalPoint) ?? natalLon),
+      aspect: searchPointFocus.aspect,
+      orb,
+    } : null;
+  }, [searchPointFocus, natal.asc, natal.mc, natal.minimal, natalDraw, overlayBase.bodies]);
 
   // ── Exact dates: the slow transits (Jupiter–Pluto) across the window. ──
   // The scanner is engine-bound and ~100 ms per body, so it loads lazily and
@@ -172,14 +204,23 @@ export default function TransitRing({ locale, natal, computeSky, nowMs }: Transi
   };
   const nextUp = events?.filter((e) => Date.parse(e.exactUtc) > when.getTime()).slice(0, 3) ?? [];
 
-  /** Jump the sky to a contact's exact date and, when it has a ring
-   * counterpart (a planet contact), focus its chord on arrival. */
+  /** Jump the sky to a contact's exact date and focus its chord on arrival. */
   function goToEvent(e: TransitContact) {
-    glideTo(eventOffset(e));
-    if (e.natalPoint !== 'ASC' && e.natalPoint !== 'MC') {
+    glideTo(eventOffset(e), true);
+    // ASC/MC are outside InterAspect; Moon is intentionally omitted from the
+    // standing transit list. Both use one search-local chord instead.
+    if (e.natalPoint === 'ASC' || e.natalPoint === 'MC' || e.transitBody === 'Moon') {
+      setSel(null);
+      setSearchPointFocus(e);
+    } else {
+      setSearchPointFocus(null);
       setSel(`${e.transitBody}-${e.aspect}-${e.natalPoint}`);
     }
   }
+
+  useEffect(() => {
+    if (focusRequest) goToEvent(focusRequest.contact);
+  }, [focusRequest]);
 
   const whenLabel = formatDateTime(locale, when, {
     year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit',
@@ -193,10 +234,11 @@ export default function TransitRing({ locale, natal, computeSky, nowMs }: Transi
   useEffect(() => cancelTween, []);
 
   /** Glide the offset from its current value to a target (instant if reduced).
-   * Targets clamp to the scrub window and land on whole days, so stepping
-   * can neither escape ±{WINDOW_DAYS} nor strand "Now" on a fraction. */
-  function glideTo(rawTarget: number) {
-    const target = Math.max(-WINDOW_DAYS, Math.min(WINDOW_DAYS, Math.round(rawTarget)));
+   * Targets clamp to the scrub window. Controls land on whole days; exact
+   * transit requests preserve their fractional-day UTC instant. */
+  function glideTo(rawTarget: number, preserveFraction = false) {
+    const unclamped = preserveFraction ? rawTarget : Math.round(rawTarget);
+    const target = Math.max(-WINDOW_DAYS, Math.min(WINDOW_DAYS, unclamped));
     cancelTween();
     if (reducedMotion()) { setOffset(target); return; }
     const from = offset;
@@ -244,8 +286,12 @@ export default function TransitRing({ locale, natal, computeSky, nowMs }: Transi
           renderOverlay={(geo) => renderTransitOverlay(
             overlay,
             (name) => natalDraw.get(name) ?? null,
-            (id) => setSel((prev) => (prev === id ? null : id)),
+            (id) => {
+              setSearchPointFocus(null);
+              setSel((prev) => (prev === id ? null : id));
+            },
             geo,
+            { focusedPoint },
           )}
         />
       </div>
@@ -254,7 +300,7 @@ export default function TransitRing({ locale, natal, computeSky, nowMs }: Transi
       <div class="tring__scrub">
         <div class="tring__scrub-head">
           <label class="field__label" for="tring-date">{c.scrubLabel}</label>
-          <output class="tring__date mono" for="tring-date">{whenLabel}</output>
+          <output class="tring__date mono" for="tring-date" data-ring-instant={when.toISOString()}>{whenLabel}</output>
         </div>
         <input
           id="tring-date"
@@ -337,8 +383,28 @@ export default function TransitRing({ locale, natal, computeSky, nowMs }: Transi
       )}
 
       {/* The selected transit, foregrounded. */}
-      {(selectedAspect || selectedBody) && (
+      {(selectedAspect || selectedBody || focusedPoint) && (
         <div class="tring__focus" role="status">
+          {focusedPoint && (
+            <>
+              <span
+                class="tring__focus-receipt mono"
+                data-transit-search-focus
+                data-transit-angle-focus={focusedPoint.natalPoint === 'ASC' || focusedPoint.natalPoint === 'MC' ? '' : undefined}
+              >
+                <PlanetGlyph body={focusedPoint.transitBody} size={13} class="pg-inline" /> {planetLabel(locale, focusedPoint.transitBody)}
+                {' '}<AspectGlyph type={focusedPoint.aspect} size={13} class="pg-inline" /> {aspectLabel(locale, focusedPoint.aspect)}
+                {' '}{t(locale, 'natal')}{' '}
+                {focusedPoint.natalPoint !== 'ASC' && focusedPoint.natalPoint !== 'MC' && (
+                  <PlanetGlyph body={focusedPoint.natalPoint} size={13} class="pg-inline" />
+                )}{' '}{focusedPoint.natalPoint === 'ASC' || focusedPoint.natalPoint === 'MC'
+                  ? focusedPoint.natalPoint
+                  : planetLabel(locale, focusedPoint.natalPoint)}
+                {' · '}{t(locale, 'orb')} {focusedPoint.orb.toFixed(1)}°
+              </span>
+              <p class="tring__focus-read">{transitLine(focusedPoint.transitBody, focusedPoint.aspect, focusedPoint.natalPoint)}</p>
+            </>
+          )}
           {selectedAspect && (
             <>
               <span class="tring__focus-receipt mono">
@@ -350,7 +416,7 @@ export default function TransitRing({ locale, natal, computeSky, nowMs }: Transi
               <p class="tring__focus-read">{transitLine(selectedAspect.outer, selectedAspect.type, selectedAspect.inner)}</p>
             </>
           )}
-          {!selectedAspect && selectedBody && (
+          {!focusedPoint && !selectedAspect && selectedBody && (
             <span class="tring__focus-receipt mono">
               <PlanetGlyph body={selectedBody.body} size={13} class="pg-inline" /> {planetLabel(locale, selectedBody.body)}
               {' · '}{formatLongitude(selectedBody.lon, locale)}{selectedBody.retrograde ? ' ℞' : ''}
@@ -375,7 +441,10 @@ export default function TransitRing({ locale, natal, computeSky, nowMs }: Transi
               class={`syn__aspect tring__row${sel === id ? ' is-focus' : ''}`}
               type="button"
               key={id}
-              onClick={() => setSel((prev) => (prev === id ? null : id))}
+              onClick={() => {
+                setSearchPointFocus(null);
+                setSel((prev) => (prev === id ? null : id));
+              }}
             >
               <span class="syn__aspect-receipt mono">
                 <PlanetGlyph body={a.outer} size={13} class="pg-inline" /> {planetLabel(locale, a.outer)} <AspectGlyph type={a.type} size={13} class="pg-inline" /> {aspectLabel(locale, a.type)} {t(locale, 'natal')} <PlanetGlyph body={a.inner} size={13} class="pg-inline" /> {planetLabel(locale, a.inner)} · {t(locale, 'orb')} {a.orb.toFixed(1)}°
