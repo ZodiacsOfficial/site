@@ -1,58 +1,58 @@
 {
-  "date": "2026-07-12",
+  "date": "2026-07-13",
   "bodies": [
     {
       "body": "Moon",
-      "lon": 83.22,
-      "sign": "gemini",
-      "degree": 23.2,
+      "lon": 98.34,
+      "sign": "cancer",
+      "degree": 8.3,
       "retrograde": false
     },
     {
       "body": "Sun",
-      "lon": 110.17,
+      "lon": 111.12,
       "sign": "cancer",
-      "degree": 20.2,
+      "degree": 21.1,
       "retrograde": false
     },
     {
       "body": "Mercury",
-      "lon": 111.06,
+      "lon": 110.42,
       "sign": "cancer",
-      "degree": 21.1,
+      "degree": 20.4,
       "retrograde": true
     },
     {
       "body": "Venus",
-      "lon": 153.08,
+      "lon": 154.19,
       "sign": "virgo",
-      "degree": 3.1,
+      "degree": 4.2,
       "retrograde": false
     },
     {
       "body": "Mars",
-      "lon": 69.67,
+      "lon": 70.36,
       "sign": "gemini",
-      "degree": 9.7,
+      "degree": 10.4,
       "retrograde": false
     },
     {
       "body": "Jupiter",
-      "lon": 122.65,
+      "lon": 122.87,
       "sign": "leo",
-      "degree": 2.7,
+      "degree": 2.9,
       "retrograde": false
     },
     {
       "body": "Saturn",
-      "lon": 14.57,
+      "lon": 14.6,
       "sign": "aries",
       "degree": 14.6,
       "retrograde": false
     },
     {
       "body": "Uranus",
-      "lon": 64.25,
+      "lon": 64.3,
       "sign": "gemini",
       "degree": 4.3,
       "retrograde": false
@@ -66,15 +66,27 @@
     },
     {
       "body": "Pluto",
-      "lon": 304.63,
+      "lon": 304.6,
       "sign": "aquarius",
       "degree": 4.6,
       "retrograde": true
     }
   ],
   "moon": {
-    "phase": "Waning Crescent",
-    "illumination": 0.056
+    "phase": "New Moon",
+    "illumination": 0.014
   },
-  "events": []
+  "events": [
+    {
+      "kind": "aspect",
+      "a": "Venus",
+      "b": "Uranus",
+      "type": "square",
+      "at": "2026-07-13T14:26:43.095Z",
+      "aSign": "virgo",
+      "aDegree": 4.3,
+      "bSign": "gemini",
+      "bDegree": 4.3
+    }
+  ]
 }
