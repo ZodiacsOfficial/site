@@ -17,30 +17,30 @@ export default function PlaceSearch({ onSelect, selected, id = 'place', locale =
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState(0);
   const [error, setError] = useState(false);
-  const debounce = useRef<number>();
+  const debounce = useRef<ReturnType<typeof setTimeout>>();
   const requestToken = useRef(0);
 
   function onInput(value: string) {
     const token = ++requestToken.current;
-    const trimmed = value.trim();
     setQuery(value);
     onSelect(null);
-    window.clearTimeout(debounce.current);
+    clearTimeout(debounce.current);
     setOpen(false);
     setError(false);
+    value = value.trim();
 
-    if (trimmed.length < 2) return;
+    if (!value[1]) return;
 
-    debounce.current = window.setTimeout(async () => {
+    debounce.current = setTimeout(async () => {
       try {
-        const cities = await searchCities(trimmed);
-        if (token !== requestToken.current) return;
-        setResults(cities);
-        setActive(0);
-        setOpen(true);
+        const cities = await searchCities(value);
+        if (token === requestToken.current) {
+          setResults(cities);
+          setActive(0);
+          setOpen(true);
+        }
       } catch {
-        if (token !== requestToken.current) return;
-        setError(true);
+        if (token === requestToken.current) setError(true);
       }
     }, 120);
   }
@@ -78,8 +78,8 @@ export default function PlaceSearch({ onSelect, selected, id = 'place', locale =
   return (
     <div class="place" onFocusOut={(event) => {
       if (!(event.currentTarget as HTMLDivElement).contains(event.relatedTarget as Node | null)) {
-        window.clearTimeout(debounce.current);
-        requestToken.current += 1;
+        clearTimeout(debounce.current);
+        ++requestToken.current;
         setOpen(false);
       }
     }}>
@@ -94,7 +94,7 @@ export default function PlaceSearch({ onSelect, selected, id = 'place', locale =
         placeholder={t(locale, 'placePlaceholder')}
         autocomplete="off"
         value={query}
-        onFocus={() => { preloadIndex().catch(() => setError(true)); }}
+        onFocus={() => preloadIndex().catch(() => setError(true))}
         onInput={(e) => onInput((e.target as HTMLInputElement).value)}
         onKeyDown={onKeyDown}
       />
@@ -103,7 +103,7 @@ export default function PlaceSearch({ onSelect, selected, id = 'place', locale =
         <ul class="place__list" id={`${id}-list`} role="listbox">
           {results.length ? (
             results.map((c, i) => (
-              <li key={i} role="none">
+              <li key={c.name + c.lat + c.lon} role="none">
                 <button
                   type="button"
                   id={`${id}-opt-${i}`}
@@ -111,6 +111,7 @@ export default function PlaceSearch({ onSelect, selected, id = 'place', locale =
                   aria-selected={i === active}
                   tabIndex={-1}
                   class={i === active ? 'place__option is-active' : 'place__option'}
+                  onMouseEnter={() => setActive(i)}
                   onClick={() => choose(c)}
                 >
                   <span class="place__name">{c.name}</span>

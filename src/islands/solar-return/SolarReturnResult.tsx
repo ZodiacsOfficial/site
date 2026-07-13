@@ -68,7 +68,7 @@ export function SolarReturnResult({ result, Wheel }: SolarReturnResultProps) {
               <caption class="sr-only">Solar return placements</caption>
               <thead><tr><th>Body</th><th>Sign</th><th>Degree</th>{chart.houses && <th>House</th>}</tr></thead>
               <tbody>
-                {chart.bodies.filter((body) => body.body !== 'South Node').map((body) => {
+                {chart.bodies.map((body) => {
                   const sign = signForLongitude(body.lon);
                   const degree = formatLongitude(body.lon).split(' ')[0];
                   return <tr key={body.body}><td>{body.body}</td><td>{sign.name}</td><td class="mono">{degree}</td>{chart.houses && <td class="mono">{houseOf(body.lon, chart.houses.cusps)}</td>}</tr>;

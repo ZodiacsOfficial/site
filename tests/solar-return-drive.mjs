@@ -45,6 +45,8 @@ try {
   check('saved calculation finishes within 45 seconds', savedRuntime < 45_000, `${savedRuntime} ms`);
   check('engine and lazy result load only on compute', fetched.some((path) => /full\.[\w-]+\.js$/.test(path)) && fetched.some((path) => /SolarReturnResult\.[\w-]+\.js$/.test(path)) && fetched.some((path) => /TransitRing\.[\w-]+\.js$/.test(path)));
   check('located result has wheel and houses', await page.locator('.wheel').count() === 1 && await page.getByRole('columnheader', { name: 'House' }).count() === 1);
+  const placementBodies = await page.locator('.calc__table tbody td:first-child').allTextContents();
+  check('placements table includes both lunar nodes', placementBodies.includes('North Node') && placementBodies.includes('South Node'), placementBodies.join(', '));
   const ascLine = (await page.locator('[data-sr-corpus="asc"]').textContent()) ?? '';
   const houseLine = (await page.locator('[data-sr-corpus="sun-house"]').textContent()) ?? '';
   check('ASC corpus fixture line is exact', ascLine === 'The year leads with consolidation — building, furnishing, and letting good things get boring in the best way. Slow is the strategy, not the setback.', ascLine);

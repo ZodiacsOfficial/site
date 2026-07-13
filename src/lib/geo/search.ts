@@ -37,11 +37,8 @@ export function preloadIndex(): Promise<CityIndex> {
 }
 
 function shard(key: string): Promise<Row[]> {
-  let p = shardCache.get(key);
-  if (!p) {
-    p = fetchJson<Row[]>(`/data/cities/${key}.json`);
-    shardCache.set(key, p);
-  }
+  const p = shardCache.get(key) || fetchJson<Row[]>(`/data/cities/${key}.json`);
+  shardCache.set(key, p);
   return p;
 }
 
@@ -50,18 +47,22 @@ const fold = (s: string) =>
 
 export async function searchCities(query: string, limit = 8): Promise<City[]> {
   const q = fold(query.trim());
-  if (q.length < 2) return [];
+  if (!q[1]) return [];
 
   const index = await preloadIndex();
   const key = /^[a-z]/.test(q) ? q[0] : '0';
+  if (!index.shards.includes(key)) return [];
   const rows = await shard(key);
 
   const starts: Row[] = [];
   const contains: Row[] = [];
   for (const row of rows) {
-    const ascii = fold(typeof row[1] === 'string' ? row[1] : row[0]);
-    if (ascii.startsWith(q)) starts.push(row);
-    else if (q.length >= 3 && ascii.includes(q)) contains.push(row);
+    const ascii = fold(row[1] === 0 ? row[0] : row[1]);
+    const match = ascii.indexOf(q);
+    // `indexOf` is 0 for a prefix and -1 (whose bitwise complement is 0)
+    // for no match, so one lookup serves both result tiers.
+    if (!match) starts.push(row);
+    else if (q[2] && ~match) contains.push(row);
     if (starts.length >= limit * 3) break;
   }
 
