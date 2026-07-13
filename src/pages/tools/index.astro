@@ -126,6 +126,21 @@ const jsonLd = [
           </div>
         </a>
       ))}
+      <button
+        class="shell tinted assistant-tool"
+        type="button"
+        style="--sign:var(--sign-aquarius)"
+        data-assistant-open
+        data-assistant-locale="en"
+        aria-haspopup="dialog"
+      >
+        <div class="core tinted tool-card">
+          <ToolGlyph kind="assistant" />
+          <h2>Ask the site</h2>
+          <p>Ask about a tool, an astrology term, or a chart you have saved here.</p>
+          <span class="tool-card__go">Start a conversation →</span>
+        </div>
+      </button>
     </div>
 
     <div class="tools-upcoming">
@@ -181,6 +196,17 @@ const jsonLd = [
     font-weight: 550;
     color: var(--text);
   }
+  .assistant-tool {
+    display: block;
+    width: 100%;
+    text-align: left;
+    transition: border-color var(--dur-2) var(--ease), transform var(--dur-2) var(--ease);
+  }
+  .assistant-tool:hover {
+    border-color: color-mix(in oklab, var(--sign) 45%, transparent);
+    transform: translateY(-2px);
+  }
+  .assistant-tool:hover .core { border-color: color-mix(in oklab, var(--sign) 28%, transparent); }
   .tools-upcoming {
     margin-top: clamp(28px, 5vw, 44px);
     padding-top: 24px;

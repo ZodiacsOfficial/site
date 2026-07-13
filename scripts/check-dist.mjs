@@ -261,6 +261,32 @@ for (const relativePath of [
   }
 }
 
+// The assistant follows the same stable, lazy-bundle contract as search. A
+// missing artifact would leave every static launcher inert without a build
+// error, so keep it inside the distribution gate.
+const assistantUiPath = resolve(root, 'assets/assistant-ui.js');
+const assistantCssPath = resolve(root, 'assets/assistant-ui.css');
+if (!(await exists(assistantUiPath))) {
+  fail('assistant-ui: missing assets/assistant-ui.js');
+} else {
+  const assistantUi = await readFile(assistantUiPath, 'utf8');
+  if (
+    !assistantUi.includes('openAssistant') ||
+    !assistantUi.includes('zassistant') ||
+    !assistantUi.includes('/assets/assistant-ui.css')
+  ) {
+    fail('assistant-ui: assets/assistant-ui.js does not look like the assistant dialog bundle');
+  }
+}
+if (!(await exists(assistantCssPath))) {
+  fail('assistant-ui: missing assets/assistant-ui.css');
+} else {
+  const assistantCss = await readFile(assistantCssPath, 'utf8');
+  if (!assistantCss.includes('.zassistant') || !assistantCss.includes('.zassistant__panel')) {
+    fail('assistant-ui: assets/assistant-ui.css does not look like the assistant dialog stylesheet');
+  }
+}
+
 const searchIndexPath = resolve(root, 'search-index.json');
 if (!(await exists(searchIndexPath))) {
   fail('search-index: missing search-index.json');

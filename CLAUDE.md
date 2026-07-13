@@ -64,6 +64,9 @@ owns that page.
   `now` receipt year — refresh yearly with sky.json)
 - `src/data/transits-YYYY-MM.json` ← `node scripts/build-transits.mjs`
   (monthly cron: transits-monthly.yml)
+- `api/_assistant/context.ts` ← `vite-node --script
+  scripts/build-assistant-context.mjs` (committed assistant site guide)
+- `api/_assistant/persona.ts` is Fable-authored source; edit it only via Fable.
 - `public/assets/og/v2/` ← `node --experimental-strip-types
   scripts/build-og-void.mjs` (ALL share cards sitewide since Part Q — wing
   pages reference `v2/sign/{slug}.png` + `v2/share.png`; the 13 legacy gilt

@@ -3319,6 +3319,7 @@
             <a href="/registry/zodiacs.registry.json">Record</a>
             <a href="#thesis">Thesis</a>
             <a href="/archive/">Archive</a>
+            <button className="assistant-link" type="button" data-assistant-open aria-haspopup="dialog">Ask the site</button>
           </div>
             <div>Read-only</div>
           </div>

@@ -1,4 +1,10 @@
 {
+  "functions": {
+    "api/assistant.ts": {
+      "supportsCancellation": true,
+      "maxDuration": 60
+    }
+  },
   "redirects": [
     {
       "source": "/:path(.*)",
