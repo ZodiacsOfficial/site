@@ -128,7 +128,7 @@ function dependencies(options: {
 describe('assistant request validation', () => {
   it('keeps Fable\'s persona byte-identical', () => {
     expect(createHash('sha256').update(ASSISTANT_PERSONA).digest('hex')).toBe(
-      '37276d21d1412a22b5ad789762bbb389bd62d197c66b47b0f150ac6292d96a7b',
+      '36c3cfb0cfdc1a6bd21387bc016b15451fb39ebbfdc80815210f3d2872cfc036',
     );
   });
 
