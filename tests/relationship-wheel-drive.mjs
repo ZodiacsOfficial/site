@@ -15,21 +15,45 @@ import { setTimeout as wait } from 'node:timers/promises';
 
 const OUT = process.env.OUT_DIR ?? null;
 const CHROMIUM = process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH ?? '/opt/pw-browsers/chromium';
+const PORT = 4399;
+const BASE = `http://127.0.0.1:${PORT}`;
+const CURATED_SUN_MOON = 'One of you runs on purpose, the other on feeling, and here they agree — what one wants to do is what the other wants to come home to. This is the classic ease that makes a relationship feel inevitable in retrospect.';
+const FALLBACK_NEPTUNE_URANUS = 'Frida’s imagination pushes against Diego’s independence — friction that forces growth or starts fights, depending on the week.';
+const COMPOSITE_NOTE = "A composite chart is the midpoint of two charts — a portrait of the relationship itself rather than either person. Composite houses need a location convention we won't fake, so this chart is shown without houses.";
+const SAVED_MC = {
+  'drive-frida': 53.32837167390386,
+  'drive-diego': 16.9870696472928,
+  'drive-trine': 89.93171672845051,
+};
 
 const chart = (id, name, date, time, lat, lon, tz, place) => ({
   id, name, createdAt: '2026-07-11T00:00:00Z', updatedAt: '2026-07-11T00:00:00Z',
   birth: { date, time, timeKnown: time !== null, place: { name: place, admin1: '', country: '', lat, lon, tz } },
-  summary: { engineVersion: '0-stale', utcISO: `${date}T18:00:00Z`, houseSystem: 'whole', bodies: [], angles: null, flags: [] },
+  summary: {
+    engineVersion: '0-stale',
+    utcISO: `${date}T18:00:00Z`,
+    houseSystem: 'whole',
+    bodies: [],
+    // Stale bodies deliberately exercise recomputation; stored MC is still
+    // the saved-profile source used by the relationship wheel.
+    angles: { asc: 0, mc: SAVED_MC[id] },
+    flags: [],
+  },
 });
 const profile = {
   version: 1, settings: { houseSystem: 'whole' },
   charts: [
     chart('drive-frida', 'Frida', '1907-07-06', '08:30', 19.35, -99.16, 'America/Mexico_City', 'Coyoacán'),
     chart('drive-diego', 'Diego', '1886-12-08', '20:00', 21.02, -101.26, 'America/Mexico_City', 'Guanajuato'),
+    chart('drive-trine', 'Trine fixture', '1886-09-30', '05:23', 19.43, -99.13, 'America/Mexico_City', 'Mexico City'),
   ],
 };
 
-const preview = spawn('npx', ['astro', 'preview', '--port', '4399'], { stdio: 'ignore' });
+const preview = spawn(
+  process.execPath,
+  ['node_modules/astro/bin/astro.mjs', 'preview', '--host', '127.0.0.1', '--port', String(PORT)],
+  { stdio: 'ignore' },
+);
 await wait(2500);
 const results = [];
 const check = (name, ok, detail = '') => { results.push({ name, ok, detail }); };
@@ -38,8 +62,14 @@ const shot = async (t, p, o = {}) => { if (OUT) await t.screenshot({ path: `${OU
 try {
   const browser = await chromium.launch({ executablePath: CHROMIUM });
   const page = await browser.newPage({ viewport: { width: 1440, height: 1200 }, deviceScaleFactor: 1 });
-  await page.addInitScript((prof) => localStorage.setItem('zodiacs.profile.v1', JSON.stringify(prof)), profile);
-  await page.goto('http://127.0.0.1:4399/compatibility/', { waitUntil: 'networkidle' });
+  await page.addInitScript((prof) => {
+    localStorage.setItem('zodiacs.profile.v1', JSON.stringify(prof));
+    globalThis.__relationshipEvents = [];
+    globalThis.zodiacsAnalytics = Object.freeze({
+      track(name, props) { globalThis.__relationshipEvents.push({ name, props }); },
+    });
+  }, profile);
+  await page.goto(`${BASE}/compatibility/`, { waitUntil: 'networkidle' });
 
   // Pick the two saved charts and compare.
   await page.locator('#syn-a-source').selectOption('drive-frida');
@@ -57,6 +87,11 @@ try {
   check('cross-chart chords draw', (await page.locator('[data-transit-aspect]').count()) > 0);
   check('caption names both people', /Frida/.test(await page.locator('.tring__caption').textContent() ?? '')
     && /Diego/.test(await page.locator('.tring__caption').textContent() ?? ''));
+  check('Wheel, Grid, and Composite tabs render with Wheel selected',
+    (await page.getByRole('tab').count()) === 3
+      && await page.locator('[data-relationship-tab="wheel"]').getAttribute('aria-selected') === 'true');
+  check('an uncurated top contact keeps the role-composed fallback verbatim',
+    (await page.locator('.syn__aspect-read[data-fallback-line]').first().textContent())?.trim() === FALLBACK_NEPTUNE_URANUS);
   await page.locator('.tring__wheelbox').evaluate((n) => n.scrollIntoView({ block: 'center' }));
   await wait(800);
   await shot(page, 'rwheel-both.png', { clip: { x: 0, y: 0, width: 1440, height: 1200 } });
@@ -77,6 +112,53 @@ try {
   check('swap clears the focused contact', (await page.locator('.tring__row.is-focus').count()) === 0);
   check('rings still render after swap', (await page.locator('.wheel__transit').count()) === 11);
   await shot(page, 'rwheel-swapped.png', { clip: { x: 0, y: 0, width: 1440, height: 1200 } });
+
+  // Accessible tabs + shared selection: choose a body contact in the grid,
+  // return to the wheel, then repeat with an angle contact.
+  await page.locator('[data-relationship-tab="wheel"]').focus();
+  await page.keyboard.press('ArrowRight');
+  check('tab arrow keys switch from Wheel to Grid',
+    await page.locator('[data-relationship-tab="grid"]').getAttribute('aria-selected') === 'true');
+  check('grid includes ten aspect bodies plus known ASC and MC on both axes',
+    (await page.locator('.rgrid__table tbody tr').count()) === 12
+      && (await page.locator('.rgrid__table thead th').count()) === 13);
+
+  const bodyContact = page.locator('[data-grid-contact="Neptune-square-Uranus"]');
+  await bodyContact.click();
+  check('grid body-cell selection opens the fallback detail',
+    (await page.locator('[data-grid-detail] [data-fallback-line]').textContent())?.trim() === FALLBACK_NEPTUNE_URANUS);
+  await page.locator('[data-relationship-tab="wheel"]').click();
+  check('grid body selection stays focused on the wheel tab',
+    (await page.locator('.tring__row.is-focus').count()) === 1
+      && await page.locator('[data-transit-aspect="Neptune-square-Uranus"]').evaluate((node) => node.parentElement?.getAttribute('opacity') === '1'));
+  await page.locator('[data-relationship-tab="grid"]').click();
+  check('body-cell selection survives a round trip across tabs',
+    await bodyContact.getAttribute('aria-pressed') === 'true');
+
+  const angleContact = page.locator('[data-grid-contact="MC-sextile-ASC"]');
+  await angleContact.click();
+  await page.locator('[data-relationship-tab="wheel"]').click();
+  check('angle-cell selection layers one module-local focused chord',
+    (await page.locator('[data-relationship-angle-aspect="MC-sextile-ASC"]').count()) === 1);
+
+  await page.locator('[data-relationship-tab="composite"]').click();
+  check('composite tab renders a static house-free wheel',
+    (await page.locator('[data-composite-wheel] svg.wheel').count()) === 1
+      && (await page.locator('[data-composite-wheel] .wheel__body').count()) === 11
+      && (await page.locator('[data-composite-wheel] .wheel__house').count()) === 0);
+  check('composite lists all 12 midpoint placements',
+    (await page.locator('[data-composite-point]').count()) === 12);
+  check('the English composite note is verbatim',
+    (await page.locator('[data-composite-note]').textContent())?.trim() === COMPOSITE_NOTE);
+  await page.locator('[data-relationship-tab="grid"]').click();
+  await page.locator('[data-relationship-tab="composite"]').click();
+  const relationshipEvents = await page.evaluate(() => globalThis.__relationshipEvents);
+  check('grid selection analytics fires without props',
+    relationshipEvents.filter((event) => event.name === 'grid_select').length === 2
+      && relationshipEvents.filter((event) => event.name === 'grid_select').every((event) => Object.keys(event.props).length === 0));
+  check('composite analytics fires once per compare without props',
+    relationshipEvents.filter((event) => event.name === 'composite_view').length === 1
+      && Object.keys(relationshipEvents.find((event) => event.name === 'composite_view')?.props ?? { unexpected: true }).length === 0);
 
   // The invite + pairing blocks survive below the module.
   check('pairing CTA renders', (await page.locator('.calc__actions .btn--ghost').count()) >= 1);
@@ -108,6 +190,24 @@ try {
   check('removing empties storage', afterRemove.length === 0);
   await page.close();
 
+  // Deterministic real-chart fixture whose Sun–Moon trine lands in the top 8.
+  const curated = await browser.newPage({ viewport: { width: 1440, height: 1200 } });
+  await curated.addInitScript((prof) => localStorage.setItem('zodiacs.profile.v1', JSON.stringify(prof)), profile);
+  await curated.goto(`${BASE}/compatibility/`, { waitUntil: 'networkidle' });
+  await curated.locator('#syn-a-source').selectOption('drive-frida');
+  await curated.locator('#syn-b-source').selectOption('drive-trine');
+  await curated.locator('.calc__submit').click();
+  await curated.waitForSelector('.rwheel', { timeout: 20000 });
+  const curatedTopLine = curated.locator('.syn__aspect-read[data-curated-line]').filter({ hasText: CURATED_SUN_MOON });
+  check('known Sun–Moon trine shows the curated top-contact line verbatim',
+    (await curatedTopLine.count()) === 1
+      && (await curatedTopLine.textContent())?.trim() === CURATED_SUN_MOON);
+  await curated.locator('[data-relationship-tab="grid"]').click();
+  await curated.locator('[data-grid-contact="Sun-trine-Moon"]').click();
+  check('known Sun–Moon trine shows the same curated grid detail verbatim',
+    (await curated.locator('[data-grid-detail] [data-curated-line]').textContent())?.trim() === CURATED_SUN_MOON);
+  await curated.close();
+
   // An inline (by-value) side restores as a locked chip and still
   // compares; a pair referencing a missing chart prunes itself.
   const seededPairs = [
@@ -132,7 +232,7 @@ try {
   const mixed = await browser.newPage({ viewport: { width: 1440, height: 1200 } });
   await mixed.addInitScript((prof) => localStorage.setItem('zodiacs.profile.v1', JSON.stringify(prof)), profile);
   await mixed.addInitScript((pairs) => localStorage.setItem('zodiacs.pairs.v1', JSON.stringify(pairs)), seededPairs);
-  await mixed.goto('http://127.0.0.1:4399/compatibility/', { waitUntil: 'networkidle' });
+  await mixed.goto(`${BASE}/compatibility/`, { waitUntil: 'networkidle' });
   await mixed.waitForSelector('.syn__pair-restore', { timeout: 10000 });
   await wait(400);
   const pruned = await mixed.evaluate(() => JSON.parse(localStorage.getItem('zodiacs.pairs.v1') ?? '[]'));
@@ -151,9 +251,27 @@ try {
   const es = await browser.newPage({ viewport: { width: 1440, height: 1200 } });
   await es.addInitScript((prof) => localStorage.setItem('zodiacs.profile.v1', JSON.stringify(prof)), profile);
   await es.addInitScript((pairs) => localStorage.setItem('zodiacs.pairs.v1', JSON.stringify(pairs)), [seededPairs[0]]);
-  await es.goto('http://127.0.0.1:4399/es/compatibility/', { waitUntil: 'networkidle' });
+  await es.goto(`${BASE}/es/compatibility/`, { waitUntil: 'networkidle' });
   await es.waitForSelector('.syn__pair-restore', { timeout: 10000 });
   check('ES strip renders translated', /Comparaciones guardadas/.test(await es.locator('.syn__pairs').textContent() ?? ''));
+  await es.locator('#syn-a-source').selectOption('drive-frida');
+  await es.locator('#syn-b-source').selectOption('drive-diego');
+  await es.locator('.calc__submit').click();
+  await es.waitForSelector('.rwheel', { timeout: 20000 });
+  await es.locator('[data-relationship-tab="grid"]').click();
+  await es.locator('[data-grid-contact]').first().click();
+  check('ES grid keeps receipts but suppresses English narrative',
+    (await es.locator('[data-grid-contact]').count()) > 0
+      && (await es.locator('[data-grid-detail] .tring__focus-read').count()) === 0
+      && !(await es.locator('body').textContent() ?? '').includes(CURATED_SUN_MOON));
+  check('ES relationship tabs use module-local Spanish chrome',
+    /Rueda/.test(await es.locator('[data-relationship-tab="wheel"]').textContent() ?? '')
+      && /Cuadrícula/.test(await es.locator('[data-relationship-tab="grid"]').textContent() ?? '')
+      && /Compuesta/.test(await es.locator('[data-relationship-tab="composite"]').textContent() ?? ''));
+  await es.locator('[data-relationship-tab="composite"]').click();
+  check('ES composite shows localized receipts without the English note',
+    /Posiciones de la carta compuesta/.test(await es.locator('[data-composite-panel]').textContent() ?? '')
+      && !(await es.locator('[data-composite-panel]').textContent() ?? '').includes(COMPOSITE_NOTE));
   await es.close();
 
   // Profile page: saved comparisons live beside saved charts; the chip
@@ -161,7 +279,7 @@ try {
   const pf = await browser.newPage({ viewport: { width: 1440, height: 1200 } });
   await pf.addInitScript((prof) => localStorage.setItem('zodiacs.profile.v1', JSON.stringify(prof)), profile);
   await pf.addInitScript((pairs) => localStorage.setItem('zodiacs.pairs.v1', JSON.stringify(pairs)), [seededPairs[0]]);
-  await pf.goto('http://127.0.0.1:4399/profile/', { waitUntil: 'networkidle' });
+  await pf.goto(`${BASE}/profile/`, { waitUntil: 'networkidle' });
   await pf.waitForSelector('.pf-pairs .syn__pair-restore', { timeout: 10000 });
   check('profile lists the saved comparison', /Frida × Diego/.test(await pf.locator('.pf-pairs').textContent() ?? ''));
   await shot(pf, 'pf-pairs.png');
@@ -175,7 +293,7 @@ try {
   const pf2 = await browser.newPage({ viewport: { width: 1440, height: 1200 } });
   await pf2.addInitScript((prof) => localStorage.setItem('zodiacs.profile.v1', JSON.stringify(prof)), profile);
   await pf2.addInitScript((pairs) => localStorage.setItem('zodiacs.pairs.v1', JSON.stringify(pairs)), [seededPairs[0]]);
-  await pf2.goto('http://127.0.0.1:4399/profile/', { waitUntil: 'networkidle' });
+  await pf2.goto(`${BASE}/profile/`, { waitUntil: 'networkidle' });
   await pf2.waitForSelector('.pf-pairs .syn__pair-remove', { timeout: 10000 });
   await pf2.locator('.pf-pairs .syn__pair-remove').first().click();
   await wait(200);
@@ -196,7 +314,7 @@ try {
       b: { kind: 'chart', chartId: 'drive-diego', label: 'Diego' },
     },
   ]);
-  await mob.goto('http://127.0.0.1:4399/compatibility/', { waitUntil: 'networkidle' });
+  await mob.goto(`${BASE}/compatibility/`, { waitUntil: 'networkidle' });
   await mob.waitForSelector('.syn__pair-restore', { timeout: 10000 });
   const overflow = await mob.evaluate(() => ({
     doc: document.documentElement.scrollWidth, win: window.innerWidth,
@@ -208,6 +326,21 @@ try {
   await mob.locator('.calc__submit').click();
   await mob.waitForSelector('.rwheel', { timeout: 20000 });
   check('mobile: bi-wheel renders', (await mob.locator('.wheel__transit').count()) === 11);
+  await mob.locator('[data-relationship-tab="grid"]').click();
+  await mob.waitForFunction(() => {
+    const grid = document.querySelector('.rgrid__scroll');
+    return grid && getComputedStyle(grid).overflowX === 'auto';
+  });
+  await wait(100);
+  const mobileGrid = await mob.locator('.rgrid__scroll').evaluate((node) => ({
+    scrollWidth: node.scrollWidth,
+    clientWidth: node.clientWidth,
+    docWidth: document.documentElement.scrollWidth,
+    winWidth: window.innerWidth,
+  }));
+  check('320px grid scrolls inside itself without page overflow',
+    mobileGrid.scrollWidth > mobileGrid.clientWidth && mobileGrid.docWidth <= mobileGrid.winWidth,
+    JSON.stringify(mobileGrid));
   await shot(mob, 'rwheel-mobile.png');
   await mob.close();
 
