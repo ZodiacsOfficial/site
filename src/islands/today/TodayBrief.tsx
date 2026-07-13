@@ -126,12 +126,12 @@ export default function TodayBrief() {
             </a>
           </div>
         ) : !reading || !transitsModule ? (
-          <p class="today-loading">Reading the committed sky…</p>
+          <p class="today-loading">Reading today's sky…</p>
         ) : (
           <div class="today-reading">
             <div class="today-reading__head">
               <h2>For {chart.name || 'your latest chart'}</h2>
-              <p>These are the tightest active contacts in the committed noon sky.</p>
+              <p>These are the tightest active contacts in today's noon sky.</p>
             </div>
 
             {reading.contacts.length > 0 ? (
