@@ -5,6 +5,7 @@ import { localizePath } from '../../../lib/i18n';
 
 const tools = [
   { href: '/birth-chart/', title: 'Calculadora de carta natal', promise: 'Ve tu Sol, Luna, ascendente, planetas, casas y lo que significan.', hue: 'var(--sign-cancer)', kind: 'birth' as const },
+  { href: '/today/', title: 'Hoy (en inglés)', promise: 'Tu última carta guardada frente al cielo del mediodía, con grados.', hue: 'var(--sign-cancer)', kind: 'transit' as const, englishOnly: true },
   { href: '/compatibility/', title: 'Compatibilidad', promise: 'Compara dos cartas y mira dónde conectan, chocan y crecen.', hue: 'var(--sign-libra)', kind: 'compat' as const },
   { href: '/moon-sign/', title: 'Calculadora de signo lunar', promise: 'Cómo sientes y qué te ayuda a volver a ti.', hue: 'var(--sign-pisces)', kind: 'moon' as const },
   { href: '/rising-sign/', title: 'Calculadora de ascendente', promise: 'Encuentra la energía que otros notan primero.', hue: 'var(--sign-gemini)', kind: 'rising' as const },
@@ -41,7 +42,7 @@ const jsonLd = [
 
     <div class="tools-grid">
       {tools.map((tool) => (
-        <a class="shell tinted" href={localizePath('es', tool.href)} style={`--sign:${tool.hue}`}>
+        <a class="shell tinted" href={'englishOnly' in tool ? tool.href : localizePath('es', tool.href)} hreflang={'englishOnly' in tool ? 'en' : undefined} style={`--sign:${tool.hue}`}>
           <div class="core tinted tool-card">
             <ToolGlyph kind={tool.kind} />
             <h3>{tool.title}</h3>

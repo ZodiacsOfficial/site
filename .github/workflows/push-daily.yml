@@ -1,0 +1,60 @@
+name: Daily Push
+
+on:
+  schedule:
+    - cron: "0 7 * * *"
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Render without sending"
+        required: false
+        type: boolean
+        default: true
+      limit:
+        description: "Maximum subscriptions for this run"
+        required: false
+        type: string
+        default: "500"
+
+concurrency:
+  group: daily-push
+  cancel-in-progress: false
+
+jobs:
+  push:
+    name: Send daily push
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Smoke dry run
+        run: npm run push:daily -- --dry-run --fixture --date 2026-07-13 --limit 1
+
+      # Scheduled sends remain off until the owner completes the VAPID and
+      # Supabase setup. A manual workflow_dispatch always reaches this step.
+      - name: Run daily push
+        if: github.event_name != 'schedule' || vars.PUSH_ENABLED == 'true'
+        env:
+          PUBLIC_SUPABASE_URL: ${{ vars.PUBLIC_SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          VAPID_PUBLIC_KEY: ${{ vars.VAPID_PUBLIC_KEY }}
+          VAPID_PRIVATE_KEY: ${{ secrets.VAPID_PRIVATE_KEY }}
+          VAPID_SUBJECT: ${{ vars.VAPID_SUBJECT || 'mailto:hello@zodiacs.org' }}
+          PUSH_DRY_RUN: ${{ github.event.inputs.dry_run }}
+          PUSH_LIMIT: ${{ github.event.inputs.limit }}
+        run: |
+          ARGS="--limit ${PUSH_LIMIT:-500}"
+          if [ "${PUSH_DRY_RUN:-false}" = "true" ]; then
+            ARGS="$ARGS --dry-run"
+          fi
+          npm run push:daily -- $ARGS
