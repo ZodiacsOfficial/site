@@ -69,6 +69,7 @@ const CHART_BOOK_COPY = {
 type SavePrefillSource = 'link' | 'match' | 'auto';
 type CalendarSubscribeModule = typeof import('./CalendarSubscribe');
 type CopyLinkModule = typeof import('./CopyLinkButton');
+type CommunicationReadModule = typeof import('./CommunicationRead');
 type A2hsHint = import('../lib/a2hs').A2hsHint;
 type PushOptInModule = typeof import('./PushOptIn');
 
@@ -118,6 +119,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   const [shareSurface, setShareSurface] = useState<ShareSurfaceModule | null>(null);
   const [calendarSurface, setCalendarSurface] = useState<CalendarSubscribeModule | null>(null);
   const [copyLinkModule, setCopyLinkModule] = useState<CopyLinkModule | null>(null);
+  const [communicationSurface, setCommunicationSurface] = useState<CommunicationReadModule | null>(null);
   const [shareDialogOpen, setShareDialogOpen] = useState(false);
   const [a2hsHint, setA2hsHint] = useState<A2hsHint | null>(null);
   const [pushOptIn, setPushOptIn] = useState<PushOptInModule | null>(null);
@@ -485,6 +487,9 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
       if (mode === 'full') {
         void import('./CalendarSubscribe').then(setCalendarSurface, () => {});
         void import('./CopyLinkButton').then(setCopyLinkModule, () => {});
+        if (locale === 'en') {
+          void import('./CommunicationRead').then(setCommunicationSurface, () => {});
+        }
       }
       track('result_rendered', { mode });
       setShareInput({
@@ -737,6 +742,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   const ShareDialog = shareSurface?.ChartShareDialog;
   const CalendarSubscribe = calendarSurface?.default;
   const CopyLinkButton = copyLinkModule?.CopyLinkButton;
+  const CommunicationRead = communicationSurface?.default;
   const PushOptIn = pushOptIn?.default;
 
   return (
@@ -1077,6 +1083,10 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                     </li>
                   </ol>
                 </section>
+              )}
+
+              {mode === 'full' && locale === 'en' && CommunicationRead && (
+                <CommunicationRead chart={chart} />
               )}
 
               {shareInput && (

@@ -762,6 +762,18 @@
 .calc__read-more { display: inline-block; margin-top: 2px; font-size: 12px; color: var(--muted); text-decoration: none; border-bottom: 1px solid var(--hair-2); }
 .calc__read-more:hover { color: var(--text); border-bottom-color: var(--muted); }
 
+/* Communication read: the same editorial register as the guided reading. */
+.calc__comm { margin-top: 34px; padding-top: 26px; border-top: 1px solid var(--hair-2); }
+.calc__comm > h2 { margin: 0 0 6px; font-family: var(--font-serif); font-weight: 500; font-size: clamp(1.45rem, 1.2rem + 1vw, 1.9rem); letter-spacing: 0.01em; }
+.calc__comm-intro { margin: 0 0 22px; max-width: 56ch; font-size: var(--text-sm); color: var(--text-2); line-height: 1.65; }
+.calc__comm-part + .calc__comm-part { margin-top: 24px; }
+.calc__comm-part > h3 { margin: 0 0 10px; font-size: var(--text-sm); font-weight: 600; letter-spacing: 0.01em; }
+.calc__comm-part > p { margin: 0; max-width: 60ch; font-size: var(--text-sm); color: var(--text-2); line-height: 1.65; }
+.calc__comm-part > p + p { margin-top: 10px; }
+.calc__comm-part > p.calc__comm-addendum { color: var(--muted); }
+.calc__comm-part > ul { margin: 12px 0 0; padding: 0; list-style: none; display: grid; gap: 12px; }
+.calc__comm-part > ul > li { max-width: 62ch; font-size: var(--text-sm); color: var(--text-2); line-height: 1.62; }
+
 /* Profile dashboard: the daily layer above the chart shelf. */
 .pfd { display: grid; gap: 16px; margin-bottom: clamp(22px, 4vw, 34px); }
 .pfd__core { padding: 20px; display: grid; gap: 14px; }
