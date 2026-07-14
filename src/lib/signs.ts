@@ -179,7 +179,7 @@ const SIGN_ESSENCE_FR: Record<string, string> = {
   scorpio: 'Intensité, intuition et vérité qui va au-delà de la surface.',
   sagittarius: 'Franchise, horizon et envie de trouver du sens.',
   capricorn: 'Patience, ambition et force de construire quelque chose de réel.',
-  aquarius: 'Indépendance, idées propres et amour de l’avenir.',
+  aquarius: 'Indépendance, idées personnelles et amour de l’avenir.',
   pisces: 'Imagination, empathie et sensibilité à ce qui ne se dit pas.',
 };
 

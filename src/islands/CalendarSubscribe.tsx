@@ -33,7 +33,7 @@ const COPY = {
   fr: {
     action: 'Ajouter à ton calendrier',
     unavailable: 'Lien de calendrier indisponible',
-    note: 'Ce calendrier se met à jour automatiquement. Abonne-toi une fois, ton calendrier actualisera ensuite les événements. L’URL contient uniquement les positions planétaires et l’ASC/MC : ni nom, ni date, ni heure, ni lieu, ni coordonnées de naissance.',
+    note: 'Ce calendrier se met à jour automatiquement. Abonne-toi une seule fois, puis ton calendrier actualisera les événements. L’URL contient uniquement les positions planétaires et l’ASC/MC : ni nom, ni date, ni heure, ni lieu, ni coordonnées de naissance.',
   },
 } as const;
 

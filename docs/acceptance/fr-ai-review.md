@@ -4,9 +4,10 @@ Méthode : **AI language review by Sol**.
 
 Date de la revue : **15 juillet 2026**.
 
-Statut : **le corpus français isolé est revu ; son intégration aux rails de
-locale, les modules interactifs et le contrôle visuel à 320 px restent à
-effectuer sur la branche empilée**.
+Statut : **la revue linguistique intégrée est terminée pour les pages, les
+guides, les dictionnaires et les modules interactifs en français. Le contrôle
+visuel à 320 px, la couverture des polices et le gate complet restent à
+effectuer**.
 
 accepted by the owner in lieu of a human native-speaker sign-off.
 
@@ -32,22 +33,22 @@ terminologie retenue est `thème astral`, `ascendant`, `maisons`, `transits`,
 - [x] Les scans de source ne trouvent ni registre formel `vous`, ni prose
   espagnole, ni prose anglaise non signalée. Les destinations encore en anglais
   sont explicitement indiquées et portent `hreflang="en"`.
-- [x] Aucune modification ne touche `public/`, une surface partagée, l’aile du
-  registre ou le SDK dans ce brouillon de contenu isolé.
-- [ ] Les dictionnaires partagés, les modules interactifs, l’assistant, les
-  libellés astrologiques et le sitemap seront vérifiés après intégration aux
-  branches L0 et portugaise.
+- [x] Les dictionnaires partagés, les entrées `fr` des modules interactifs,
+  l’assistant, les notifications, les libellés astrologiques, la navigation,
+  le pied de page et le sitemap ont été relus après intégration.
+- [x] Les clés et paramètres substitués des chaînes françaises correspondent
+  aux chaînes anglaises, sans perte de variable ni changement de sens.
+- [x] Les corrections de cette revue ne touchent aucune chaîne anglaise,
+  espagnole ou portugaise, ni `public/`, l’aile du registre ou le SDK.
 - [ ] Le parcours visuel à 320 px et la couverture des glyphes
-  `à â é è ê ç œ` par les trois polices auto-hébergées ne sont pas revendiqués
-  par ce brouillon isolé.
+  `à â é è ê ç œ` par les trois polices auto-hébergées restent à vérifier.
 - [ ] Le build, le check, la suite complète, `check-dist` et le contrôle des
-  bundles seront consignés sur la branche intégrée.
+  bundles restent à exécuter sur la branche intégrée.
 
-## Chaînes critiques proposées pour l’intégration
+## Chaînes critiques intégrées
 
-Ces traductions sont les valeurs approuvées par la revue de contenu. Elles ne
-sont pas câblées ici, car leurs propriétaires sont des fichiers partagés qui ne
-font pas partie de ce brouillon localisé.
+Ces traductions ont été vérifiées dans leurs propriétaires partagés après leur
+intégration.
 
 | Source anglaise | Français | Note de registre |
 | --- | --- | --- |
@@ -72,11 +73,10 @@ voix, donc aucune n’a été appliquée.
 | `src/pages/fr/baby-zodiac/index.astro` | `Zodiaque du bébé` | `Signe astrologique du bébé` | La proposition est plus descriptive ; la version actuelle reste cohérente avec le nom de l’outil source. |
 | `src/data/fr-guides.ts` | `une étrangeté partagée` | `une originalité partagée` | `Originalité` est plus doux ; `étrangeté` préserve mieux la nuance assumée du texte source. |
 
-## Vérifications d’intégration encore requises
+## Vérifications encore requises
 
-La branche de contenu a été produite depuis un instantané qui ne connaît que
-`en` et `es`. Elle ne modifie volontairement ni les types de locale ni les
-dictionnaires partagés. L’intégration doit encore relier `fr` au routage, aux
-liens `hreflang`, au sitemap, aux formats de date, aux noms des signes, aux
-islands, à la navigation, au pied de page, à l’assistant, aux lentilles, au
-parcours guidé et à la recherche avant publication.
+Le routage, les liens `hreflang`, le sitemap, les formats de date, les noms des
+signes, les islands, la navigation, le pied de page, l’assistant, les lentilles,
+le parcours guidé et la recherche sont intégrés et ont été relus dans la source.
+Restent le parcours visuel à 320 px, la vérification des glyphes dans les polices
+auto-hébergées et le gate complet de la branche.

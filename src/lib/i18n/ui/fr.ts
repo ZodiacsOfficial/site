@@ -212,7 +212,7 @@ const fr = {
   cusp: 'Cuspide',
   span: 'Étendue',
   emptyHouseNote: 'Aucune planète ici. Une maison vide n’est pas une page blanche — ses thèmes s’expriment à travers la planète qui la gouverne.',
-  angleAscNote: 'L’Ascendant — le degré qui se levait à l’horizon est au moment de la naissance. Il ancre toute la roue.',
+  angleAscNote: 'L’Ascendant — le degré qui se levait à l’est au moment de la naissance. Il ancre toute la roue.',
   angleDscNote: 'Le Descendant — le degré qui se couchait à l’horizon ouest, à l’opposé de l’Ascendant. La porte traditionnelle vers les partenaires.',
   angleMcNote: 'Le Milieu du Ciel — le degré qui culminait au-dessus de l’horizon à la naissance. Carrière, réputation, vie publique.',
   angleIcNote: 'Le Fond du Ciel — le point le plus bas de la roue, à l’opposé du Milieu du Ciel. Foyer, racines, vie privée.',

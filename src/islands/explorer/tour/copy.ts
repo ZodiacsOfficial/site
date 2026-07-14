@@ -214,7 +214,7 @@ const TOUR_COPY = {
     housesBody1: 'Les douze secteurs sont les maisons — les domaines de la vie où chaque planète agit. Ils viennent de ton heure et de ton lieu de naissance, pas du calendrier.',
     housesBody2: 'Deux façons rigoureuses de les diviser : les signes entiers attribuent un signe à chaque maison ; Placidus s’appuie sur le calcul exact de l’horizon. Essaie l’autre méthode — les planètes ne bougent jamais, seules les limites changent.',
     aspectsTitle: 'Les conversations',
-    aspectsBody1: 'Les lignes au centre sont les aspects : des angles définis entre les planètes, chacun comme une forme de conversation. Les lignes plus épaisses sont plus proches de l’exactitude — elles pèsent davantage ; celles en pointillé sont déjà en train de se séparer.',
+    aspectsBody1: 'Les lignes au centre sont les aspects : des angles définis entre les planètes, chacun comme une forme de conversation. Les lignes plus épaisses sont plus proches du point exact — elles pèsent davantage ; celles en pointillé sont déjà en train de se séparer.',
     wholeTitle: 'La vue d’ensemble',
     wholeBody1: 'Tout est de nouveau visible. Un thème n’est pas une liste de traits — c’est un seul ciel où tout se produit en même temps. La lecture ci-dessous le parcourt ligne par ligne.',
     wholeBody2: 'Enregistre-le et ta page de profil calcule son année à venir — toujours sur cet appareil. Le lien de partage contient les données dans le lien lui-même ; elles ne passent jamais par un serveur.',

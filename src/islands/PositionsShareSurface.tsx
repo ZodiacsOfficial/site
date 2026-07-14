@@ -63,7 +63,7 @@ const SHARE_COPY = {
     closeShare: 'Fermer les options de partage',
     hideBirthDetails: 'Masquer les données de naissance',
     copyPositionsLink: 'Copier le lien avec les positions uniquement',
-    positionsShareNote: 'Le lien omet ta date, ton heure et ton lieu de naissance ; la carte remplace ces données par la version du moteur. Les positions planétaires peuvent tout de même permettre de t’identifier : ce partage n’est pas anonyme.',
+    positionsShareNote: 'Le lien omet ta date, ton heure et ton lieu de naissance ; sur l’image, ces données sont remplacées par la version du moteur. Les positions planétaires peuvent tout de même permettre de t’identifier : ce partage n’est pas anonyme.',
     positionsOnlyTitle: 'Positions partagées du thème',
     positionsOnlyNotice: 'Positions uniquement — données de naissance non incluses.',
     positionsOnlyPrivacy: 'Ce code omet la date, l’heure et le lieu de naissance. Les positions planétaires peuvent tout de même permettre de t’identifier : ce partage n’est pas anonyme.',

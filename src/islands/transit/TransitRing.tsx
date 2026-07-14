@@ -140,7 +140,7 @@ const COPY = {
     outerRing: 'Anneau extérieur : le ciel à cette date. Roue intérieure : ton thème natal.',
     tapHint: 'Touche une planète en mouvement ou une ligne de liaison pour lire ce transit.',
     noContacts: 'Aucun transit de planète à planète à moins de',
-    ofExact: 'de l’exactitude',
+    ofExact: 'du point exact',
     moonOmitted: 'la Lune va trop vite pour figurer dans la liste, mais tu peux la suivre sur la roue',
     announce: 'Ciel du',
     scanning: 'Calcul des dates exactes des transits lents…',
