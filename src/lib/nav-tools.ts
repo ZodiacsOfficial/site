@@ -63,7 +63,7 @@ export const NAV_TOOLS = [
       es: 'Encuentra la energía que otros notan primero.',
       pt: 'Descubra o signo que as pessoas percebem primeiro em você. O horário de nascimento ajuda.',
       fr: 'Découvre le signe que les autres perçoivent en premier. L’heure de naissance est utile.',
-      it: 'Il segno che mostri agli altri al primo incontro.',
+      it: 'Il segno che mostri agli altri al primo incontro. L’ora di nascita aiuta.',
     },
   },
   {

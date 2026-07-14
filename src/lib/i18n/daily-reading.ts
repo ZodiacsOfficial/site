@@ -376,7 +376,7 @@ function eventLineIt(event: DailyEvent, sunSign: string): DailyLine | null {
     const house = solarHouse(event.sign, sunSign);
     const name = event.type === 'new' ? 'Luna nuova' : 'Luna piena';
     const meaning = event.type === 'new'
-      ? 'apre un nuovo inizio'
+      ? 'apre un nuovo capitolo'
       : 'segna un compimento';
     return {
       text: `La ${name} nella tua ${ORDINAL_IT[house]} casa ${meaning}: ${HOUSE_THEME_IT[house]}.`,
@@ -403,7 +403,7 @@ function eventLineIt(event: DailyEvent, sunSign: string): DailyLine | null {
     const b = planetLabel('it', event.b);
     const aspect = aspectLabel('it', event.type);
     return {
-      text: `${a} in ${aspect} con ${b} raggiunge oggi il punto esatto: è un aspetto collettivo e il riscontro mostra l’ora.`,
+      text: `${a} in ${aspect} con ${b} raggiunge oggi il punto esatto: è un aspetto collettivo e qui sotto trovi l’ora esatta.`,
       receipt: `${a} ${aspect} ${b} · esatto alle ${utcTime(event.at)}`,
       body: event.a,
     };

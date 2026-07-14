@@ -158,7 +158,7 @@ const COPY = {
     outerRing: 'Anello esterno: il cielo in quel momento. Ruota interna: il tuo tema natale.',
     tapHint: 'Tocca un pianeta in movimento o una linea di collegamento per leggere quel transito.',
     noContacts: 'Nessun transito tra pianeti entro',
-    ofExact: 'dall’esattezza',
+    ofExact: 'dal punto esatto',
     moonOmitted: 'la Luna si muove troppo in fretta per comparire nell’elenco, ma puoi seguirla sulla ruota',
     announce: 'Cielo del',
     scanning: 'Calcolo delle date esatte dei transiti lenti…',

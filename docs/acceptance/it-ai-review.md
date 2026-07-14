@@ -4,8 +4,9 @@ Review method: **AI language review by Sol**.
 
 Review date: **2026-07-15**.
 
-Status: **translation draft complete; integration and browser verification are
-pending the shared locale rails**.
+Status: **the integrated Italian language review is complete across pages,
+guides, shared dictionaries and interactive modules. The 320 px browser pass,
+font coverage and full gate remain pending**.
 
 accepted by the owner in lieu of a human native-speaker sign-off.
 
@@ -38,12 +39,14 @@ natale`, `ascendente`, `case`, `transiti`, `luna piena`, `luna nuova` and
   as translated content.
 - [x] Source-level scans find no French, Spanish or unlabelled English prose in
   the Italian page and guide corpus.
-- [ ] Shared locale rails, interactive module dictionaries and Italian search
-  integration will be verified after the L0 branch is available.
+- [x] Shared locale rails, the 331-key UI catalog, module-local copy,
+  assistant chrome, push delivery, navigation, sitemap and search behavior were
+  reviewed after integration.
+- [x] Italian UI keys and interpolation placeholders match the English catalog.
 - [ ] Draft publication dates use the review date and must be refreshed to the
   actual merge date together with the sitemap `lastmod` values.
 - [ ] The complete built route set will be driven at 320 px after integration;
-  no visual-browser result is claimed by this isolated translation draft.
+  no visual-browser result is claimed by this integrated language review.
 - [ ] Build, check, tests, distribution drift and bundle gates will be recorded
   on the integrated branch.
 
@@ -55,8 +58,8 @@ ritorno di Saturno, transiti, zodiaco del bambino, profile, methodology,
 privacy, localized 404 and the noindex English-content fallback.
 
 The Italian sign pages reuse the existing sign-card social images. No new
-image assets and no registry-wing or SDK files are part of this translation
-draft.
+image assets and no registry-wing or SDK files are part of this language
+review.
 
 ## Guide depth contract
 
@@ -66,18 +69,48 @@ placements, shadow and growth, and an intimate closing section. Each guide
 also covers dates, element and modality, ruler, compatibility, strong chart
 emphasis and the case where a reader does not identify with the Sun sign.
 
+## Clear defects corrected
+
+- The privacy lede now preserves every English promise; the tools index and
+  shared tools navigation restore the missing birth-time guidance.
+- Italian push subscriptions retain `it` instead of falling back to English.
+- Literal calques and grammar errors were corrected in the methodology,
+  Saturn-return, baby-zodiac, transit ring, guided tour, daily reading,
+  composite-tab and no-time/boundary copy.
+- The guide corpus fixes nine clear article, agreement and collocation defects,
+  including the malformed generated Leone sentence and the feminine Bilancia
+  references, without changing any source fact.
+
+## Gate-critical strings
+
+The Italian values below are byte-identical to their integrated source values.
+
+| English source | Italian implementation | Register note |
+| --- | --- | --- |
+| `Registry` | `Registro` | Documentary navigation label, without commercial language. |
+| `Overview` | `Panoramica` | Neutral overview label. |
+| `Collector’s wing` | `Ala della collezione` | Quiet, museum-like register. |
+| `also exists as one of the Twelve — a canonical record in the registry.` | `esiste anche come uno dei Dodici — una scheda di riferimento nel registro.` | `Scheda` reads as a catalog record, not an offer. |
+| `View the record →` | `Vedi la scheda →` | Points to a documentary record. |
+| `The short version: when you calculate a chart, the math runs in your browser and your birth date, time, and place are never sent to us. Accounts and the weekly email are optional, off by default, and easy to leave. We show no ads and use no cross-site tracking.` | `In breve: quando calcoli un tema natale, il calcolo avviene nel tuo browser e la tua data, la tua ora e il tuo luogo di nascita non ci vengono mai inviati. L’account e l’e-mail settimanale sono facoltativi e disattivati per impostazione predefinita; puoi rinunciarvi facilmente. Non mostriamo pubblicità e non usiamo il tracciamento tra siti.` | Direct informal reassurance with every source promise preserved. |
+| `Send this page:` / `Email` | `Condividi questa pagina:` / `E-mail` | Plain courtesy label and standard Italian spelling. |
+
 ## Unapplied judgment-call findings
 
-None. The fresh review found clear grammar, calque and semantic-parity defects;
-those were corrected directly. No remaining alternative would improve the
-Italian without also changing voice, nuance or established terminology.
+| File | Current | Proposed | Reason |
+| --- | --- | --- | --- |
+| `src/data/it-guides.ts` | `una singolarità condivisa` | `stranezze condivise` | Both are correct. The proposal is more conversational, while the current wording better preserves the source’s emphasis on accepted individuality. |
+| `src/islands/explorer/lens/copy.ts` | `Scorri questo cielo nel tempo su /transits/.` | `Esplora questo cielo nel tempo su /transits/.` | Both are natural; the proposal is a little less literal as a navigation prompt. |
+| `src/lib/assistant/open-assistant.ts` | `Scrittura della risposta…` | `Sto scrivendo una risposta…` | The current compact status label is correct; the proposal is more conversational. |
+| `src/islands/synastry/RelationshipWheel.tsx` | `armoniosi` | `armonici` | Both describe easeful contacts correctly; the proposal uses the more technical astrological adjective. |
+| `src/pages/it/compatibility/index.astro` | `Due temi, confrontati con chiarezza` | `Due temi, confrontati con onestà` | The current phrase is natural; the proposal follows “honestly” more closely but changes the emphasis. |
+| `src/data/it-guides.ts` | `migliorare il concreto` | `migliorare la realtà concreta` | The current compressed phrasing is understandable; the proposal is more idiomatic but less concise. |
+| `src/data/it-guides.ts` | `In Venere…` / `In Mercurio…` | `Con Venere in Toro…` / `Con Mercurio in Gemelli…` | The shorthand is clear in context and follows the translated corpus pattern; the proposal is more conventional but repeats the sign and changes the rhythm. |
 
 ## Integration checks still required
 
-The exact-main snapshot only knows `en` and `es`; this translation draft does
-not alter shared locale types or runtime dictionaries so it can stack cleanly
-after L0. Integration must wire `it` through routing, hreflang, sitemap,
-canonical URLs, date formatting, localized sign names, islands, navigation,
-footer, assistant, chart lenses, tour copy and search before publication.
-Those dependencies are deliberately recorded as pending rather than described
-as already tested.
+Italian is integrated through routing, hreflang, sitemap, canonical URLs, date
+formatting, localized sign names, islands, navigation, footer, assistant, chart
+lenses, tour copy, push delivery and search behavior. The remaining checks are
+the 320 px browser pass, coverage of `à è ì ò ù` in all three self-hosted font
+families, the merge-date refresh and the full branch gate.

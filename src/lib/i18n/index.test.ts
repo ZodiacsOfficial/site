@@ -156,4 +156,16 @@ describe('i18n helpers', () => {
     );
     expect(UI.pt.babyMoonBody).toContain('Bebês que nascem na mesma semana');
   });
+
+  it('keeps the Italian baby result sentences grammatical when signs are inserted', () => {
+    expect(UI.it.babySunNearEdge + ' Gemelli ' + UI.it.babySunNearEdgeTail).toBe(
+      'La data è vicina al confine del segno, quindi nascere più di un giorno prima o dopo può portare il Sole in Gemelli — decide la data di nascita.',
+    );
+    expect(
+      UI.it.babySunSplitA + ' Ariete ' + UI.it.babySunSplitOr + ' Toro ' + UI.it.babySunSplitTail,
+    ).toBe(
+      'In questa data il Sole cambia segno: alla nascita sarà in Ariete oppure in Toro a seconda dell’ora. Decide il momento esatto della nascita.',
+    );
+    expect(UI.it.babyMoonBody).toContain('Chi nasce nella stessa settimana');
+  });
 });

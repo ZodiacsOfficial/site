@@ -266,13 +266,13 @@ const TOUR_COPY = {
     housesBody1: 'I dodici settori sono le case — gli ambiti della vita in cui agisce ogni pianeta. Derivano dalla tua ora e dal tuo luogo di nascita, non dal calendario.',
     housesBody2: 'Due modi rigorosi per dividerle: il sistema a segno intero assegna un segno a ogni casa; Placidus divide usando il calcolo esatto dell’orizzonte. Prova l’altro sistema — i pianeti non si muovono mai, cambiano solo i confini.',
     aspectsTitle: 'Le conversazioni',
-    aspectsBody1: 'Le linee al centro sono gli aspetti: angoli definiti tra i pianeti, ciascuno rappresenta un tipo di conversazione. Le linee più spesse corrispondono agli aspetti più esatti — sono quelli che pesano di più; quelle tratteggiate si stanno già separando.',
+    aspectsBody1: 'Le linee al centro sono gli aspetti: angoli definiti tra i pianeti, ciascuno dei quali rappresenta un tipo di conversazione. Le linee più spesse corrispondono agli aspetti più esatti — sono quelli che pesano di più; quelle tratteggiate si stanno già separando.',
     wholeTitle: 'Il quadro completo',
     wholeBody1: 'Tutto è di nuovo visibile. Un tema non è un elenco di tratti — è un solo cielo in cui tutto accade insieme. La lettura qui sotto lo percorre riga per riga.',
     wholeBody2: 'Salvalo e la pagina del tuo profilo ne calcola i prossimi dodici mesi — sempre su questo dispositivo. Il link di condivisione contiene i dati nel link stesso; non passano mai da un server.',
     'no-housesTitle': 'Perché questo tema non ha case',
     'no-housesBody1': 'Le case derivano dal minuto esatto della nascita — dalla rotazione del cielo, non dal calendario. Senza un’ora, calcoliamo un tema di mezzogiorno: il segno di ogni pianeta è corretto — tranne a volte quello della Luna, che può cambiare segno nell’arco della giornata — ma non c’è un orizzonte a cui ancorare le case.',
-    'no-housesBody2': 'Se un giorno ritrovi l’ora — il certificato di nascita spesso la riporta — aggiungila qui sopra: la ruota ottiene le sue case e tu, un ascendente.',
+    'no-housesBody2': 'Se un giorno ritrovi l’ora — il certificato di nascita spesso la riporta — aggiungila qui sopra: la ruota si completa con le case e compare anche il tuo ascendente.',
   },
 } as const satisfies Record<Locale, Record<string, string>>;
 

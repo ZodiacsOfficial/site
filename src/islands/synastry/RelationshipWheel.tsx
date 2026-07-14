@@ -119,7 +119,7 @@ const COPY = {
     views: 'Viste della relazione',
     wheel: 'Ruota',
     grid: 'Griglia',
-    composite: 'Composto',
+    composite: 'Composito',
   },
 } as const;
 

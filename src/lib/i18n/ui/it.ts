@@ -201,7 +201,7 @@ const it = {
     "La data è vicina al confine del segno, quindi nascere più di un giorno prima o dopo può portare il Sole in",
   babySunNearEdgeTail: "— decide la data di nascita.",
   babySunSplitA: "In questa data il Sole cambia segno: alla nascita sarà in",
-  babySunSplitOr: "oppure",
+  babySunSplitOr: "oppure in",
   babySunSplitTail:
     "a seconda dell’ora. Decide il momento esatto della nascita.",
   babyNoonNote: "segni letti a mezzogiorno nel tempo universale",
@@ -271,7 +271,7 @@ const it = {
   polarNotice:
     "Le case Placidus non sono definite così vicino al polo, quindi questo tema usa invece le case a segno intero.",
   noTimeNotice:
-    "Senza un’ora di nascita calcoliamo a mezzogiorno: i pianeti sono esatti per il giorno, ma per ascendente e case serve l’orario.",
+    "Senza un’ora di nascita calcoliamo a mezzogiorno: le posizioni dei pianeti sono precise per quel giorno, ma per ascendente e case serve l’orario.",
   moonAmbiguousNotice:
     "Anche la Luna ha cambiato segno quel giorno — finché non trovi l’ora, è corretto leggere entrambi i segni vicini.",
   fromLinkNotice:
