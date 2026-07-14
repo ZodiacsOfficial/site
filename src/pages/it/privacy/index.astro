@@ -1,0 +1,103 @@
+---
+import Base from '../../../layouts/Base.astro';
+
+const updated = '15 luglio 2026';
+
+const jsonLd = [
+  {
+    '@type': 'WebPage',
+    name: 'Privacy su Zodiacs.org',
+    url: 'https://zodiacs.org/it/privacy/',
+    description: 'Come zodiacs.org tratta i tuoi dati, dai calcoli locali all’assistente e alle notifiche facoltative.',
+    inLanguage: 'it',
+  },
+];
+---
+<Base
+  title="Privacy — I tuoi dati di nascita restano sul tuo dispositivo | Zodiacs.org"
+  description="Come zodiacs.org tratta i tuoi dati: i temi vengono calcolati nel browser, le funzioni facoltative richiedono il tuo consenso e non conserviamo le conversazioni."
+  path="/it/privacy/"
+  locale="it"
+  jsonLd={jsonLd}
+>
+  <section class="section container container--narrow">
+    <em class="kicker">Privacy</em>
+    <h1 class="method-title display">I tuoi dati di nascita restano sul tuo dispositivo.</h1>
+
+    <div class="prose">
+      <p class="lede">
+        In breve: quando calcoli un tema natale, il calcolo avviene nel tuo
+        browser e la tua data, la tua ora e il tuo luogo di nascita non ci
+        vengono mai inviati. L’account e l’e-mail settimanale sono facoltativi
+        e disattivati per impostazione predefinita; puoi rinunciarvi facilmente.
+        Non mostriamo pubblicità e non usiamo il tracciamento tra siti.
+      </p>
+
+      <h2>Calcolatori e temi salvati</h2>
+      <p>
+        La ricerca dei luoghi e il calcolo astrologico avvengono sul tuo
+        dispositivo. I temi che salvi restano nella memoria locale del browser.
+        L’account è facoltativo; se lo usi, Supabase conserva il tuo indirizzo
+        e-mail e i temi che scegli di sincronizzare per mostrarli sugli altri
+        dispositivi.
+      </p>
+
+      <h2>Assistente IA</h2>
+      <p>
+        Quando usi l’assistente, i tuoi messaggi e, se chiedi del tuo tema, un
+        riepilogo delle posizioni calcolate vengono inviati al nostro fornitore
+        di IA, Anthropic, per generare la risposta. Non conserviamo le
+        conversazioni e il traffico dell’API non viene usato per addestrare i
+        modelli. L’assistente non allega mai il tuo nome né la data, l’ora o il
+        luogo di nascita salvati; tutto ciò che scrivi nella chat fa parte del messaggio
+        inviato. Per applicare il limite giornaliero, conserviamo un
+        identificatore irreversibile derivato dal tuo indirizzo IP con
+        l’aggiunta di un valore casuale e il relativo conteggio quotidiano, mai
+        l’IP originale; i controlli del limite eliminano le voci più vecchie di
+        35 giorni. Lo stesso identificatore pseudonimo viene inviato ad
+        Anthropic nei metadati della
+        richiesta.
+      </p>
+
+      <h2>Riepilogo quotidiano, calendario e notifiche</h2>
+      <p>
+        Il riepilogo quotidiano legge le posizioni calcolate di un tema salvato
+        sul tuo dispositivo. Il calendario dei transiti riceve lo stesso codice
+        del tema, limitato alle posizioni, usato dalla funzione di condivisione;
+        nessuno dei due include nome, data, ora o luogo di nascita, né le
+        coordinate. Se attivi le notifiche quotidiane, conserviamo la
+        sottoscrizione del browser alle notifiche push — un URL del servizio di
+        notifica e le relative chiavi di consegna, senza dati di nascita — per
+        poter inviare la notifica. Puoi disattivarle in qualsiasi momento.
+      </p>
+
+      <h2>E-mail e hosting</h2>
+      <p>
+        L’e-mail settimanale richiede un account e un’iscrizione volontaria; è
+        disattivata per impostazione predefinita e ogni messaggio permette di
+        annullare l’iscrizione. Vercel ospita il sito e può conservare brevi log
+        tecnici per fornire le pagine e prevenire gli abusi. Non usiamo
+        pubblicità né tracciamento tra siti. Contiamo le visualizzazioni di
+        pagina e l’uso anonimo delle funzioni con Plausible, un servizio di
+        analisi senza cookie: nessun tracciamento tra siti, nessun dato di
+        nascita e nulla di ciò che scrivi. Gli eventi contengono soltanto
+        etichette di categoria — «un tema è stato salvato», mai da chi.
+      </p>
+
+      <h2>Le tue scelte</h2>
+      <p>
+        Puoi usare i calcolatori senza account, eliminare i temi locali dal
+        browser e chiedere la cancellazione di un account scrivendo a
+        <a href="mailto:hello@zodiacs.org">hello@zodiacs.org</a>.
+      </p>
+
+      <p class="method-updated mono">Ultimo aggiornamento: {updated}</p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .method-title { margin: 6px 0 8px; }
+  .prose .lede { font-size: var(--text-lg); color: var(--text); }
+  .method-updated { margin-top: 40px; color: var(--faint); font-size: 12px; letter-spacing: 0.04em; }
+</style>

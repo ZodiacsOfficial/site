@@ -35,12 +35,19 @@ describe('astrology localization', () => {
     expect(aspectLabel('fr', 'square')).toBe('carré');
     expect(moonPhaseLabel('fr', 'Waning Crescent')).toBe('Dernier croissant');
     expect(moonPhaseLabel('fr', 'Waxing Gibbous')).toBe('Lune gibbeuse croissante');
+    expect(planetLabel('it', 'Venus')).toBe('Venere');
+    expect(planetLabel('it', 'North Node')).toBe('Nodo Nord');
+    expect(aspectLabel('it', 'trine')).toBe('trigono');
+    expect(aspectLabel('it', 'square')).toBe('quadratura');
+    expect(moonPhaseLabel('it', 'Waning Crescent')).toBe('Falce calante');
+    expect(moonPhaseLabel('it', 'Waxing Gibbous')).toBe('Gibbosa crescente');
   });
 
   it('uses the neutral Latin American locale for Spanish dates', () => {
     expect(intlLocale('es')).toBe('es-419');
     expect(intlLocale('pt')).toBe('pt-BR');
     expect(intlLocale('fr')).toBe('fr-FR');
+    expect(intlLocale('it')).toBe('it-IT');
   });
 
   it('localizes French sign names, dates, essences, elements, and modalities', () => {
@@ -50,6 +57,15 @@ describe('astrology localization', () => {
     expect(signEssence('libra', 'fr')).toBe('Charme, équilibre et sens aigu de la justice.');
     expect(elementLabel('water', 'fr')).toBe('Eau');
     expect(modalityLabel('fixed', 'fr')).toBe('Fixe');
+  });
+
+  it('localizes Italian sign names, dates, essences, elements, and modalities', () => {
+    expect(signName('aries', 'it')).toBe('Ariete');
+    expect(signName('aquarius', 'it')).toBe('Acquario');
+    expect(signDates('pisces', 'it')).toBe('19 feb – 20 mar');
+    expect(signEssence('libra', 'it')).toBe('Fascino, equilibrio e un senso acuto della giustizia.');
+    expect(elementLabel('water', 'it')).toBe('Acqua');
+    expect(modalityLabel('fixed', 'it')).toBe('Fisso');
   });
 
   it('localizes every visible part of the monthly transit list', () => {
@@ -89,6 +105,19 @@ describe('astrology localization', () => {
     expect(august).toContain('Mercure en conjonction avec Jupiter');
     expect(`${july} ${august}`).not.toMatch(
       /\b(?:Sun|Moon|Mercury|Venus|Saturn|Pluto|retrograde|conjunction|square|trine|Aries|Taurus|Gemini|Leo|Virgo|Libra|Scorpio|Sagittarius|Capricorn|Aquarius|Pisces)\b/,
+    );
+  });
+
+  it('keeps English transit terms out of the Italian month list', () => {
+    const july = eventList('2026-07', 'it').map((event) => event.label).join(' ');
+    const august = eventList('2026-08', 'it').map((event) => event.label).join(' ');
+
+    expect(july).toContain('Nettuno staziona in moto retrogrado');
+    expect(july).toContain('Mercurio staziona in moto diretto');
+    expect(july).toContain('Luna nuova a 22° in Cancro');
+    expect(august).toContain('Mercurio in congiunzione con Giove');
+    expect(`${july} ${august}`).not.toMatch(
+      /\b(?:Sun|Moon|Mercury|Venus|Mars|Jupiter|Saturn|Uranus|Neptune|Pluto|retrograde|direct|conjunction|sextile|square|trine|opposition|Aries|Taurus|Gemini|Cancer|Leo|Virgo|Libra|Scorpio|Sagittarius|Capricorn|Aquarius|Pisces)\b/,
     );
   });
 
@@ -189,6 +218,30 @@ describe('astrology localization', () => {
       const visibleFrench = french.lines.map((line) => `${line.text} ${line.receipt}`).join(' ');
       expect(visibleFrench).not.toMatch(
         /\b(?:Sun|Moon|Mercury|Venus|Saturn|Uranus|Pluto|Taurus|Gemini|Scorpio|Sagittarius|Capricorn|Aquarius|Pisces|house|retrograde|Waning|Waxing|Quarter|Gibbous|conjunction|sextile|square|trine|opposition)\b/,
+      );
+    }
+  });
+
+  it('preserves TodayBySign fact selection while rendering Italian prose', () => {
+    const fixtures: Daily[] = [
+      daily,
+      { ...daily, events: [{ kind: 'ingress', at: `${daily.date}T12:00:00.000Z`, planet: 'Pluto', sign: 'aquarius', degree: 0 }] },
+      { ...daily, events: [{ kind: 'lunation', at: `${daily.date}T12:00:00.000Z`, type: 'new', sign: 'cancer', degree: 18 }] },
+      { ...daily, events: [{ kind: 'station', at: `${daily.date}T12:00:00.000Z`, planet: 'Neptune', type: 'retrograde', sign: 'aries', degree: 4 }] },
+      { ...daily, events: [{ kind: 'aspect', at: `${daily.date}T12:00:00.000Z`, a: 'Mars', b: 'Saturn', type: 'square' }] },
+    ];
+
+    for (const fixture of fixtures) for (const slug of SIGN_SLUGS) {
+      const english = dailyReadingForLocale(slug, fixture, 'en');
+      const italian = dailyReadingForLocale(slug, fixture, 'it');
+      expect(italian.lines).toHaveLength(english.lines.length);
+      expect(italian.lines.map((line) => line.body)).toEqual(english.lines.map((line) => line.body));
+      expect(italian.lines.map((line) => line.receipt.match(/casa (\d+)/)?.[1] ?? null)).toEqual(
+        english.lines.map((line) => line.receipt.match(/house (\d+)/)?.[1] ?? null),
+      );
+      const visibleItalian = italian.lines.map((line) => `${line.text} ${line.receipt}`).join(' ');
+      expect(visibleItalian).not.toMatch(
+        /\b(?:Sun|Moon|Mercury|Venus|Mars|Jupiter|Saturn|Uranus|Neptune|Pluto|Taurus|Gemini|Cancer|Leo|Virgo|Libra|Scorpio|Sagittarius|Capricorn|Aquarius|Pisces|house|retrograde|Waning|Waxing|Quarter|Gibbous|conjunction|sextile|square|trine|opposition)\b/,
       );
     }
   });

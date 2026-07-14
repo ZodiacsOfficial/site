@@ -41,7 +41,15 @@ describe.skipIf(!existsSync(distRoot))('built client UI payloads', () => {
     expect(html).toContain('"birthChart":"Thème astral"');
   });
 
-  it.each(['aries/index.html', 'es/aries/index.html', 'pt/aries/index.html', 'fr/aries/index.html'])(
+  it('embeds the selected Italian catalog on a hydrated Italian page', () => {
+    const html = readFileSync(join(distRoot, 'it', 'birth-chart', 'index.html'), 'utf8');
+
+    expect(html).toContain('globalThis.__ZDX_UI__');
+    expect(html).toContain('"navCollect":"Registro"');
+    expect(html).toContain('"birthChart":"Tema natale"');
+  });
+
+  it.each(['aries/index.html', 'es/aries/index.html', 'pt/aries/index.html', 'fr/aries/index.html', 'it/aries/index.html'])(
     'keeps the zero-JS guide %s free of client catalog payloads',
     (path) => {
       const html = readFileSync(join(distRoot, path), 'utf8');

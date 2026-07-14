@@ -33,8 +33,36 @@ describe('daily push', () => {
       .toBe('Neptune devient rétrograde aujourd’hui à 11:21 UTC.');
     expect(buildSkyLine(SKY, new Date('2026-07-30T12:00:00Z'), 'fr'))
       .toBe('À venir : Neptune redevient direct le 12 déc. à 22:13 UTC.');
+    expect(buildSkyLine(SKY, new Date('2026-07-13T12:00:00Z'), 'it'))
+      .toBe('Prossimo evento: Luna nuova, esatta il 14 lug alle 09:44 UTC.');
+    expect(buildSkyLine(SKY, new Date('2026-07-07T20:00:00Z'), 'it'))
+      .toBe('Nettuno staziona in moto retrogrado oggi alle 11:21 UTC.');
+    expect(buildSkyLine(SKY, new Date('2026-07-30T12:00:00Z'), 'it'))
+      .toBe('Prossimo evento: Nettuno staziona in moto diretto il 12 dic alle 22:13 UTC.');
     expect(buildSkyLine(SKY, new Date('2026-07-13T12:00:00Z'), 'de'))
       .toBe('Next: New Moon is exact 14 Jul at 09:44 UTC.');
+  });
+
+  it('keeps an Italian subscription in Italian during a dry run', async () => {
+    const sendNotification = vi.fn();
+    const log = vi.fn();
+    const report = await sendDailyPush({
+      subscriptions: [{ endpoint: 'https://push.test/it', p256dh: 'p', auth: 'a', lang: 'it' }],
+      sky: SKY,
+      date: new Date('2026-07-13T12:00:00Z'),
+      dryRun: true,
+      sendNotification,
+      fetchImpl: vi.fn(),
+      supabaseUrl: '',
+      serviceKey: '',
+      log,
+    });
+
+    expect(report).toEqual({ sent: 0, pruned: 0, failed: 0, dryRun: true, count: 1 });
+    expect(sendNotification).not.toHaveBeenCalled();
+    expect(log).toHaveBeenCalledWith(
+      'daily-push: dry-run it {"title":"Oggi su Zodiacs.org","body":"Prossimo evento: Luna nuova, esatta il 14 lug alle 09:44 UTC.","url":"/today/"}',
+    );
   });
 
   it('keeps a French subscription in French during a dry run', async () => {

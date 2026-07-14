@@ -37,6 +37,14 @@ const COPY = {
     next: (event, date, time) => `À venir : ${event}, exacte le ${date} à ${time} UTC.`,
     nextStation: (planet, direction, date, time) => `À venir : ${planet} ${direction === 'rétrograde' ? 'devient rétrograde' : 'redevient direct'} le ${date} à ${time} UTC.`,
   },
+  it: {
+    title: 'Oggi su Zodiacs.org',
+    moon: { new: 'Luna nuova', full: 'Luna piena' },
+    exact: (event, time) => `${event}, esatta oggi alle ${time} UTC.`,
+    station: (planet, direction, time) => `${planet} staziona in moto ${direction} oggi alle ${time} UTC.`,
+    next: (event, date, time) => `Prossimo evento: ${event}, esatta il ${date} alle ${time} UTC.`,
+    nextStation: (planet, direction, date, time) => `Prossimo evento: ${planet} staziona in moto ${direction} il ${date} alle ${time} UTC.`,
+  },
 };
 
 const MONTHS = {
@@ -44,6 +52,7 @@ const MONTHS = {
   es: ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'],
   pt: ['jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez'],
   fr: ['janv.', 'févr.', 'mars', 'avr.', 'mai', 'juin', 'juil.', 'août', 'sept.', 'oct.', 'nov.', 'déc.'],
+  it: ['gen', 'feb', 'mar', 'apr', 'mag', 'giu', 'lug', 'ago', 'set', 'ott', 'nov', 'dic'],
 };
 
 const PLANETS = {
@@ -51,9 +60,10 @@ const PLANETS = {
   es: { Neptune: 'Neptuno', Mercury: 'Mercurio', Venus: 'Venus', Mars: 'Marte', Jupiter: 'Júpiter', Saturn: 'Saturno', Uranus: 'Urano', Pluto: 'Plutón' },
   pt: { Neptune: 'Netuno', Mercury: 'Mercúrio', Venus: 'Vênus', Mars: 'Marte', Jupiter: 'Júpiter', Saturn: 'Saturno', Uranus: 'Urano', Pluto: 'Plutão' },
   fr: { Neptune: 'Neptune', Mercury: 'Mercure', Venus: 'Vénus', Mars: 'Mars', Jupiter: 'Jupiter', Saturn: 'Saturne', Uranus: 'Uranus', Pluto: 'Pluton' },
+  it: { Neptune: 'Nettuno', Mercury: 'Mercurio', Venus: 'Venere', Mars: 'Marte', Jupiter: 'Giove', Saturn: 'Saturno', Uranus: 'Urano', Pluto: 'Plutone' },
 };
 
-const normalizeLanguage = (language) => language === 'es' || language === 'pt' || language === 'fr' ? language : 'en';
+const normalizeLanguage = (language) => language === 'es' || language === 'pt' || language === 'fr' || language === 'it' ? language : 'en';
 const planetName = (planet, language) => PLANETS[language][planet] ?? planet;
 
 function utcDay(value) {
@@ -95,6 +105,7 @@ export function buildSkyLine(sky, date = new Date(), language = 'en') {
     es: 'Tu nota diaria está lista en /today/.',
     pt: 'Sua nota diária está pronta em /today/.',
     fr: 'Ta note quotidienne est prête sur /today/.',
+    it: 'La tua nota quotidiana è pronta su /today/.',
   }[lang];
 
   const isToday = utcDay(event.at) === today;
@@ -107,8 +118,8 @@ export function buildSkyLine(sky, date = new Date(), language = 'en') {
   const direction = lang === 'en'
     ? event.direction
     : (event.direction === 'direct'
-      ? (lang === 'es' ? 'directo' : lang === 'pt' ? 'direto' : 'direct')
-      : (lang === 'fr' ? 'rétrograde' : 'retrógrado'));
+      ? (lang === 'es' ? 'directo' : lang === 'pt' ? 'direto' : lang === 'it' ? 'diretto' : 'direct')
+      : (lang === 'fr' ? 'rétrograde' : lang === 'it' ? 'retrogrado' : 'retrógrado'));
   const planet = planetName(event.planet, lang);
   return isToday
     ? copy.station(planet, direction, utcTime(event.at))

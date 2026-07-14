@@ -92,7 +92,9 @@ export function parseSubscription(input: unknown): Required<PushSubscriptionInpu
   const requestedLang = candidate.lang?.trim().toLowerCase() ?? '';
   const lang = requestedLang === 'es' || requestedLang.startsWith('es-')
     ? 'es'
-    : requestedLang === 'pt' || requestedLang.startsWith('pt-') ? 'pt' : 'en';
+    : requestedLang === 'pt' || requestedLang.startsWith('pt-')
+      ? 'pt'
+      : requestedLang === 'it' || requestedLang.startsWith('it-') ? 'it' : 'en';
   return {
     endpoint: candidate.endpoint,
     keys: { p256dh: candidate.keys.p256dh, auth: candidate.keys.auth },

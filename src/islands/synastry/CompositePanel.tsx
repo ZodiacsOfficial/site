@@ -37,6 +37,13 @@ const COPY = {
     noAspects: 'Aucun aspect majeur du thème composite ne se trouve dans l’orbe.',
     note: 'Un thème composite correspond aux points médians de deux thèmes : il décrit la relation elle-même, et non l’une ou l’autre personne. Les maisons du thème composite exigent une convention de lieu que nous n’allons pas inventer ; ce thème est donc présenté sans maisons.',
   },
+  it: {
+    title: 'Due temi, un punto medio',
+    placements: 'Posizioni del tema composito',
+    aspects: 'Aspetti del tema composito',
+    noAspects: 'Nessun aspetto maggiore del tema composito rientra nell’orbita.',
+    note: 'Un tema composito corrisponde ai punti medi di due temi: descrive la relazione stessa, non l’una o l’altra persona. Le case del tema composito richiedono una convenzione sul luogo che non intendiamo inventare, quindi questo tema viene mostrato senza case.',
+  },
 } as const;
 
 interface CompositePanelProps {

@@ -148,20 +148,41 @@ const COPY = {
     nextUp: 'Prochains passages exacts :',
     noSlowExact: 'Aucun transit lent ne devient exact dans cette période.',
   },
+  it: {
+    skyRingLabel: 'il cielo in transito',
+    scrubLabel: 'Sposta la data',
+    scrubHint: 'Trascina per spostare il cielo avanti o indietro; l’anello esterno mostra dove si trovano i pianeti in quel momento.',
+    now: 'Ora',
+    back1m: '−1 mese',
+    fwd1m: '+1 mese',
+    outerRing: 'Anello esterno: il cielo in quel momento. Ruota interna: il tuo tema natale.',
+    tapHint: 'Tocca un pianeta in movimento o una linea di collegamento per leggere quel transito.',
+    noContacts: 'Nessun transito tra pianeti entro',
+    ofExact: 'dal punto esatto',
+    moonOmitted: 'la Luna si muove troppo in fretta per comparire nell’elenco, ma puoi seguirla sulla ruota',
+    announce: 'Cielo del',
+    scanning: 'Calcolo delle date esatte dei transiti lenti…',
+    marksLabel: 'Date esatte dei transiti lenti in questo intervallo',
+    nextUp: 'Prossimi passaggi esatti:',
+    noSlowExact: 'Nessun transito lento diventa esatto in questo intervallo.',
+  },
 } as const;
 
 const FRENCH_FEMININE_NATAL = new Set(['Moon', 'Venus']);
+const POSTPOSITIVE_NATAL_LOCALES = new Set<Locale>(['fr', 'it']);
 const isAngle = (point: string) => point === 'ASC' || point === 'MC';
 const natalQualifier = (locale: Locale, point: string) => (
-  locale === 'fr'
-    ? (FRENCH_FEMININE_NATAL.has(point) ? 'natale' : 'natal')
-    : t(locale, 'natal')
+  locale === 'it'
+    ? 'natale'
+    : locale === 'fr'
+      ? (FRENCH_FEMININE_NATAL.has(point) ? 'natale' : 'natal')
+      : t(locale, 'natal')
 );
 const natalPointName = (locale: Locale, point: string) => (
   isAngle(point) ? point : planetLabel(locale, point)
 );
-const natalPointText = (locale: Locale, point: string) => (
-  locale === 'fr'
+export const natalPointText = (locale: Locale, point: string) => (
+  POSTPOSITIVE_NATAL_LOCALES.has(locale)
     ? `${natalPointName(locale, point)} ${natalQualifier(locale, point)}`
     : `${natalQualifier(locale, point)} ${natalPointName(locale, point)}`
 );
@@ -169,10 +190,10 @@ const natalPointText = (locale: Locale, point: string) => (
 function NatalPointLabel({ locale, point }: { locale: Locale; point: string }) {
   return (
     <>
-      {locale !== 'fr' && <>{natalQualifier(locale, point)}{' '}</>}
+      {!POSTPOSITIVE_NATAL_LOCALES.has(locale) && <>{natalQualifier(locale, point)}{' '}</>}
       {!isAngle(point) && <><PlanetGlyph body={point} size={13} class="pg-inline" />{' '}</>}
       {natalPointName(locale, point)}
-      {locale === 'fr' && <>{' '}{natalQualifier(locale, point)}</>}
+      {POSTPOSITIVE_NATAL_LOCALES.has(locale) && <>{' '}{natalQualifier(locale, point)}</>}
     </>
   );
 }

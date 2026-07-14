@@ -1,0 +1,101 @@
+---
+import Base from '../../../layouts/Base.astro';
+import Faq from '../../../components/Faq.astro';
+import TransitTracker from '../../../islands/TransitTracker';
+import PlanetGlyph from '../../../components/PlanetGlyph';
+import { dayLabel, eventList, latestTransitMonth, monthLabel } from '../../../lib/horoscopes';
+import '../../../styles/calculator.css';
+
+const month = latestTransitMonth();
+const events = month ? eventList(month, 'it') : [];
+const label = month ? monthLabel(month, 'it') : null;
+
+const faq = [
+  {
+    q: 'Che cos’è un transito?',
+    a: 'I pianeti hanno continuato a muoversi dopo la tua nascita. Un transito è la posizione attuale di un pianeta confrontata con una posizione del tuo tema natale. Per esempio, Saturno in transito in quadratura alla tua Luna natale significa che oggi Saturno si trova a novanta gradi dalla posizione occupata dalla Luna alla nascita. I transiti sono il principale strumento astrologico per studiare i tempi della vita.',
+  },
+  {
+    q: 'Quali transiti mostra questa pagina?',
+    a: 'Mostra gli aspetti tra i dieci pianeti del cielo — oggi o nella data scelta con il cursore — e i dieci pianeti del tuo tema natale quando l’orbe è di 3 gradi o meno, il margine stretto entro cui un transito viene in genere considerato attivo. La Luna in transito non compare nell’elenco perché attraversa l’intero tema ogni mese, ma resta visibile nell’anello esterno.',
+  },
+  {
+    q: 'Perché i transiti lenti contano di più?',
+    a: 'La velocità determina la durata. Il Sole attraversa un punto natale in circa due giorni e Marte in una o due settimane, ma Saturno può restare per mesi entro tre gradi da un punto e Plutone per un paio d’anni. I cicli retrogradi fanno inoltre passare i pianeti lenti tre volte nello stesso punto. L’astrologia interpreta queste lunghe visite come capitoli, non come stati passeggeri.',
+  },
+  {
+    q: 'Mi serve l’ora esatta della nascita?',
+    a: 'Per la maggior parte dei transiti, no. Gli aspetti tra i pianeti funzionano con data e luogo di nascita. La Luna è l’eccezione: senza ora viene calcolata a mezzogiorno e la posizione calcolata può avere uno scarto fino a sei gradi, quindi i transiti lunari vicini al limite dell’orbe sono incerti. Lo strumento ti avvisa quando accade.',
+  },
+];
+
+const jsonLd = [
+  {
+    '@type': 'WebPage',
+    name: 'Tracciatore dei transiti: il cielo in movimento sul tuo tema',
+    url: 'https://zodiacs.org/it/transits/',
+    description: 'Il cielo in movimento sul tuo tema natale: transiti con un orbe massimo di 3 gradi, oggi o in qualsiasi data fino a un anno prima o dopo.',
+    inLanguage: 'it',
+    isPartOf: { '@id': 'https://zodiacs.org/#site' },
+  },
+  {
+    '@type': 'FAQPage',
+    inLanguage: 'it',
+    mainEntity: faq.map(({ q, a }) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: { '@type': 'Answer', text: a },
+    })),
+  },
+];
+---
+<Base
+  clientUi
+  title="Transiti sul tuo tema natale — il cielo in movimento | Zodiacs.org"
+  description="I transiti di oggi sui tuoi pianeti natali, con un orbe massimo di 3°, e un cursore per spostare il cielo fino a un anno prima o dopo. Gratis e sul tuo dispositivo."
+  path="/it/transits/"
+  locale="it"
+  image="/assets/og/v2/tool/transits.png"
+  imageAlt="Tracciatore dei transiti — Zodiacs.org"
+  jsonLd={jsonLd}
+  glass
+>
+  <section class="section--tight container container--narrow">
+    <div class="tool-hero reveal">
+      <h1 class="display">Il cielo, sul tuo tema.</h1>
+      <p>I pianeti di oggi confrontati con i tuoi, con un orbe massimo di 3°, e un cursore per spostare il cielo fino a un anno prima o dopo, così da vedere un transito formarsi, culminare e allontanarsi. Scegli un tema salvato o inserisci i tuoi dati; nessun dato lascia il tuo dispositivo.</p>
+    </div>
+    <TransitTracker locale="it" client:load />
+    <noscript>
+      <p>Questo calcolatore dei transiti richiede JavaScript. Attiva JavaScript e ricarica la pagina per confrontare il cielo attuale con il tuo tema natale nel browser.</p>
+    </noscript>
+  </section>
+
+  {month && (
+    <section class="section--tight container container--narrow">
+      <div class="section-head reveal">
+        <h2>Il cielo di {label}</h2>
+        <p>Eventi del mese calcolati dal motore: ingressi nei segni, lunazioni, stazioni e aspetti esatti. Gli orari sono in tempo universale.</p>
+      </div>
+      <ul class="trn-events reveal">
+        {events.map((event) => (
+          <li><span class="trn-events__date mono">{dayLabel(event.at, 'it')}</span><span class="trn-events__label"><PlanetGlyph body={event.body} hue={event.hue} size={14} class="rcpt-glyph" />{event.label}</span></li>
+        ))}
+      </ul>
+    </section>
+  )}
+
+  <section class="section--tight container container--narrow">
+    <Faq items={faq} heading="Domande sui transiti" />
+  </section>
+</Base>
+
+<style>
+  .tool-hero { max-width: 62ch; margin-bottom: clamp(24px, 4vw, 36px); }
+  .tool-hero h1 { margin: 0 0 16px; font-size: var(--text-2xl); line-height: 1.04; }
+  .tool-hero p { margin: 0; color: var(--muted); font-size: var(--text-lg); text-wrap: pretty; }
+  .trn-events { margin: 0; padding: 0; list-style: none; display: grid; gap: 7px; }
+  .trn-events li { display: flex; align-items: baseline; gap: 16px; padding-bottom: 7px; border-bottom: 1px solid var(--hair-1); }
+  .trn-events__date { flex-shrink: 0; width: 58px; font-size: 11px; color: var(--faint); letter-spacing: 0.05em; }
+  .trn-events__label { font-size: var(--text-sm); color: var(--text-2); }
+</style>

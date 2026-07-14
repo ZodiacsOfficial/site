@@ -47,10 +47,12 @@ describe('i18n helpers', () => {
     expect(localizePath('es', '/birth-chart/')).toBe('/es/birth-chart/');
     expect(localizePath('pt', '/birth-chart/')).toBe('/pt/birth-chart/');
     expect(localizePath('fr', '/birth-chart/')).toBe('/fr/birth-chart/');
+    expect(localizePath('it', '/birth-chart/')).toBe('/it/birth-chart/');
     expect(localizePath('es', '/compatibility/aries-taurus/')).toBe('/compatibility/aries-taurus/');
     expect(stripLocale('/es/aries/')).toBe('/aries/');
     expect(stripLocale('/pt/aries/')).toBe('/aries/');
     expect(stripLocale('/fr/aries/')).toBe('/aries/');
+    expect(stripLocale('/it/aries/')).toBe('/aries/');
   });
 
   it('derives locale parsing and prefixes from the declared locales', () => {
@@ -73,12 +75,14 @@ describe('i18n helpers', () => {
       es: '/es/tools/',
       pt: '/pt/tools/',
       fr: '/fr/tools/',
+      it: '/it/tools/',
     });
     expect(alternatePaths('/pt/privacy/')).toEqual({
       en: '/privacy/',
       es: '/es/privacy/',
       pt: '/pt/privacy/',
       fr: '/fr/privacy/',
+      it: '/it/privacy/',
     });
     expect(LOCALIZED_PATHS.get('/tools/')).toEqual(LOCALES);
     expect(Object.keys(alternatePaths('/tools/') ?? {})).toEqual([...LOCALES]);
@@ -87,6 +91,7 @@ describe('i18n helpers', () => {
       es: '/es/404/',
       pt: '/pt/404/',
       fr: '/fr/404/',
+      it: '/it/404/',
     });
     expect(alternatePaths('/learn/placements/venus-in-scorpio/')).toBeNull();
   });
@@ -96,6 +101,8 @@ describe('i18n helpers', () => {
     expect(tf('es', 'pairingCta', { a: 'Aries', b: 'Tauro' })).toBe('Leer la combinación de Aries y Tauro');
     expect(tf('pt', 'skyPlanetRetrograde', { planet: 'Plutão' })).toBe('Plutão retrógrado');
     expect(tf('pt', 'pairingCta', { a: 'Áries', b: 'Touro' })).toBe('Leia a combinação entre Áries e Touro');
+    expect(tf('it', 'skyPlanetRetrograde', { planet: 'Plutone' })).toBe('Plutone retrogrado');
+    expect(tf('it', 'pairingCta', { a: 'Ariete', b: 'Toro' })).toBe('Leggi l’abbinamento fra Ariete e Toro');
     expect(localizePath('es', '/horoscopes/aries/')).toBe('/horoscopes/aries/');
   });
 
@@ -118,6 +125,16 @@ describe('i18n helpers', () => {
     expect(UI.fr.recordViewLink).toBe('Voir la notice →');
   });
 
+  it('uses the approved Italian registry register', () => {
+    expect(UI.it.navCollect).toBe('Registro');
+    expect(UI.it.footerRegistry).toBe('Panoramica');
+    expect(UI.it.recordLabel).toBe('Ala della collezione');
+    expect(UI.it.recordOneOfTwelve).toBe(
+      'esiste anche come uno dei Dodici — una scheda di riferimento nel registro.',
+    );
+    expect(UI.it.recordViewLink).toBe('Vedi la scheda →');
+  });
+
   it('keeps the Spanish baby result sentences grammatical when signs are inserted', () => {
     expect(`${UI.es.babySunNearEdge} Géminis ${UI.es.babySunNearEdgeTail}`).toBe(
       'La fecha está cerca del borde del signo: si el bebé nace más de un día antes o después, puede tener el Sol en Géminis — la fecha de nacimiento decide.',
@@ -138,5 +155,17 @@ describe('i18n helpers', () => {
       'O Sol muda de signo nesta data: o bebê nasce com o Sol em Áries ou Touro dependendo do horário. O momento exato do nascimento decide.',
     );
     expect(UI.pt.babyMoonBody).toContain('Bebês que nascem na mesma semana');
+  });
+
+  it('keeps the Italian baby result sentences grammatical when signs are inserted', () => {
+    expect(UI.it.babySunNearEdge + ' Gemelli ' + UI.it.babySunNearEdgeTail).toBe(
+      'La data è vicina al confine del segno, quindi nascere più di un giorno prima o dopo può portare il Sole in Gemelli — decide la data di nascita.',
+    );
+    expect(
+      UI.it.babySunSplitA + ' Ariete ' + UI.it.babySunSplitOr + ' Toro ' + UI.it.babySunSplitTail,
+    ).toBe(
+      'In questa data il Sole cambia segno: alla nascita sarà in Ariete oppure in Toro a seconda dell’ora. Decide il momento esatto della nascita.',
+    );
+    expect(UI.it.babyMoonBody).toContain('Chi nasce nella stessa settimana');
   });
 });

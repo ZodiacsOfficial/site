@@ -115,6 +115,18 @@ const PAIR_COPY = {
     savedComparisonSide: 'd’une comparaison enregistrée',
     restoredSideHelp: 'Ce côté provient d’une comparaison enregistrée — efface-le pour saisir les données d’une autre personne.',
   },
+  it: {
+    savedPairs: 'Confronti salvati',
+    useMyChart: 'Usa il mio tema — {handle}',
+    dismissMyChart: 'Chiudi il suggerimento del tema salvato',
+    savePair: 'Salva questo confronto',
+    pairSaved: 'Confronto salvato su questo dispositivo.',
+    pairExists: 'Già salvato.',
+    pairSaveFull: 'Puoi salvare fino a {n} confronti — prima rimuovine uno.',
+    pairRemoved: 'Confronto rimosso.',
+    savedComparisonSide: 'da un confronto salvato',
+    restoredSideHelp: 'Questo lato proviene da un confronto salvato — cancellalo per inserire i dati di un’altra persona.',
+  },
 } as const satisfies Record<Locale, Record<keyof typeof PAIR_COPY_EN, string>>;
 
 const pc = (locale: Locale, key: keyof typeof PAIR_COPY_EN) => PAIR_COPY[locale][key];
