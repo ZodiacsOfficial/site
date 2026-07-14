@@ -1,5 +1,16 @@
 import { describe, expect, it } from 'vitest';
-import { alternatePaths, localizePath, stripLocale, tf, UI } from './index';
+import {
+  LOCALES,
+  LOCALE_META,
+  LOCALIZED_PATHS,
+  alternatePaths,
+  localizePath,
+  normalizeLocale,
+  showsEnglishOnlyInterpretation,
+  stripLocale,
+  tf,
+  UI,
+} from './index';
 
 describe('i18n helpers', () => {
   it('keeps the Spanish catalog aligned with English keys', () => {
@@ -19,8 +30,25 @@ describe('i18n helpers', () => {
     expect(stripLocale('/es/aries/')).toBe('/aries/');
   });
 
+  it('derives locale parsing and prefixes from the declared locales', () => {
+    for (const locale of LOCALES) {
+      expect(normalizeLocale(locale.toUpperCase())).toBe(locale);
+      expect(normalizeLocale(LOCALE_META[locale].htmlLang)).toBe(locale);
+      expect(normalizeLocale(LOCALE_META[locale].intlLocale)).toBe(locale);
+      expect(stripLocale(`${LOCALE_META[locale].pathPrefix}/tools/`)).toBe('/tools/');
+    }
+    expect(normalizeLocale('not-a-locale')).toBe('en');
+  });
+
+  it('keeps English interpretive corpora off every non-English locale', () => {
+    expect(LOCALES.filter(showsEnglishOnlyInterpretation)).toEqual(['en']);
+  });
+
   it('returns alternates for translated pages', () => {
     expect(alternatePaths('/es/tools/')).toEqual({ en: '/tools/', es: '/es/tools/' });
+    expect(alternatePaths('/es/privacy/')).toEqual({ en: '/privacy/', es: '/es/privacy/' });
+    expect(LOCALIZED_PATHS.get('/tools/')).toEqual(LOCALES);
+    expect(Object.keys(alternatePaths('/tools/') ?? {})).toEqual([...LOCALES]);
     expect(alternatePaths('/learn/placements/venus-in-scorpio/')).toBeNull();
   });
 

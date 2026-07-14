@@ -7,7 +7,7 @@
 import type { APIRoute } from 'astro';
 import { getCollection } from 'astro:content';
 import { LEGACY_URLS } from '../lib/legacy/urls';
-import { LOCALIZED_PATHS, alternatePaths } from '../lib/i18n';
+import { DEFAULT_LOCALE, LOCALES, LOCALE_META, alternatePaths } from '../lib/i18n';
 import daily from '../data/daily.json';
 
 const SITE = 'https://zodiacs.org';
@@ -49,9 +49,6 @@ function getLastmod(loc: string): string {
 }
 
 function sitemapAlternates(loc: string) {
-  if (loc === '/privacy/' || loc === '/es/privacy/') {
-    return { en: '/privacy/', es: '/es/privacy/' };
-  }
   return alternatePaths(loc);
 }
 
@@ -150,12 +147,22 @@ export const GET: APIRoute = async () => {
     ...LEGACY_URLS.map((u) => ({ loc: u.path, priority: u.priority, lastmod: getLastmod(u.path) })),
   ];
 
-  const localizedUrls = urls
-    .filter((u) => LOCALIZED_PATHS.has(u.loc) && u.loc !== '/404.html')
-    .map((u) => {
-      const loc = alternatePaths(u.loc)!.es;
-      return { ...u, loc, lastmod: EVERGREEN_LASTMOD.has(loc) ? getLastmod(loc) : u.lastmod };
+  const existingLocations = new Set(urls.map((url) => url.loc));
+  const localizedUrls = urls.flatMap((url) => {
+    if (url.loc === '/404.html') return [];
+    const alternates = alternatePaths(url.loc);
+    if (!alternates) return [];
+    return LOCALES.flatMap((locale) => {
+      const loc = alternates[locale];
+      if (!loc || loc === url.loc || existingLocations.has(loc)) return [];
+      existingLocations.add(loc);
+      return [{
+        ...url,
+        loc,
+        lastmod: EVERGREEN_LASTMOD.has(loc) ? getLastmod(loc) : url.lastmod,
+      }];
     });
+  });
   const allUrls = [
     ...urls,
     ...localizedUrls,
@@ -167,11 +174,18 @@ ${allUrls
   .map(
     (u) => {
       const alternates = sitemapAlternates(u.loc);
+      const defaultAlternate = alternates?.[DEFAULT_LOCALE];
+      const alternateLinks = alternates && defaultAlternate
+        ? `${LOCALES.flatMap((locale) => {
+            const href = alternates[locale];
+            return href
+              ? [`    <xhtml:link rel="alternate" hreflang="${LOCALE_META[locale].hreflang}" href="${SITE}${href}" />`]
+              : [];
+          }).join('\n')}
+    <xhtml:link rel="alternate" hreflang="x-default" href="${SITE}${defaultAlternate}" />`
+        : '';
       return `  <url>
-    <loc>${SITE}${u.loc}</loc>${alternates ? `
-    <xhtml:link rel="alternate" hreflang="en" href="${SITE}${alternates.en}" />
-    <xhtml:link rel="alternate" hreflang="es" href="${SITE}${alternates.es}" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="${SITE}${alternates.en}" />` : ''}${u.lastmod ? `\n    <lastmod>${u.lastmod}</lastmod>` : ''}
+    <loc>${SITE}${u.loc}</loc>${alternateLinks ? `\n${alternateLinks}` : ''}${u.lastmod ? `\n    <lastmod>${u.lastmod}</lastmod>` : ''}
     <priority>${u.priority.toFixed(2)}</priority>
   </url>`;
     }

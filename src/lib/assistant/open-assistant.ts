@@ -6,10 +6,11 @@
  */
 import './assistant.css';
 import { houseOf, wholeSignCusps } from '../engine/houses';
+import { normalizeLocale as normalizeSiteLocale, type Locale } from '../i18n';
 import { PROFILE_KEY } from '../profile/schema';
 import { degreeInSign, signForLongitude } from '../signs';
 
-export type AssistantLocale = 'en' | 'es';
+export type AssistantLocale = Locale;
 
 interface AssistantMessage {
   role: 'user' | 'assistant';
@@ -178,9 +179,7 @@ function ensureStylesheet(): Promise<void> {
 }
 
 function normalizeLocale(value?: string): AssistantLocale {
-  if (value === 'es') return 'es';
-  if (value === 'en') return 'en';
-  return document.documentElement.lang.toLowerCase().startsWith('es') ? 'es' : 'en';
+  return normalizeSiteLocale(value ?? document.documentElement.lang);
 }
 
 function track(name: string): void {
@@ -752,7 +751,7 @@ function build(): void {
 
 /** Open the assistant dialog. Safe to call repeatedly on the same page. */
 export async function openAssistant(
-  requestedLocale?: AssistantLocale,
+  requestedLocale?: string,
   from?: HTMLElement | null,
 ): Promise<void> {
   await ensureStylesheet();

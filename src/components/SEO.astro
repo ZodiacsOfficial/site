@@ -3,7 +3,7 @@
  * Per-page head metadata. `path` is the site-relative canonical path
  * (with trailing slash); JSON-LD nodes are passed pre-built.
  */
-import { alternatePaths, normalizeLocale, type Locale } from '../lib/i18n';
+import { DEFAULT_LOCALE, LOCALES, LOCALE_META, alternatePaths, normalizeLocale, type Locale } from '../lib/i18n';
 
 interface Props {
   title: string;
@@ -37,11 +37,18 @@ const canonical = site + canonicalPath;
 const imageUrl = image.startsWith('http') ? image : site + image;
 const alternates = noindex
   ? null
-  : path === '/privacy/' || path === '/es/privacy/'
-    ? { en: '/privacy/', es: '/es/privacy/' }
-    : alternatePaths(path);
-const ogLocale = locale === 'es' ? 'es_ES' : 'en_US';
-const ogLocaleAlternate = locale === 'es' ? 'en_US' : 'es_ES';
+  : alternatePaths(path);
+const alternateEntries = alternates
+  ? LOCALES.flatMap((candidate) => {
+      const href = alternates[candidate];
+      return href ? [{ locale: candidate, href }] : [];
+    })
+  : [];
+const defaultAlternate = alternates?.[DEFAULT_LOCALE];
+const ogLocale = LOCALE_META[locale].ogLocale;
+const ogLocaleAlternates = alternateEntries
+  .filter((entry) => entry.locale !== locale)
+  .map((entry) => LOCALE_META[entry.locale].ogLocale);
 const organization = {
   '@type': 'Organization',
   '@id': 'https://zodiacs.org/#org',
@@ -66,11 +73,12 @@ const graph = graphNodes.length
 <title>{title}</title>
 <meta name="description" content={description} />
 <link rel="canonical" href={canonical} />
-{alternates && (
+{defaultAlternate && (
   <>
-    <link rel="alternate" hreflang="en" href={site + alternates.en} />
-    <link rel="alternate" hreflang="es" href={site + alternates.es} />
-    <link rel="alternate" hreflang="x-default" href={site + alternates.en} />
+    {alternateEntries.map((entry) => (
+      <link rel="alternate" hreflang={LOCALE_META[entry.locale].hreflang} href={site + entry.href} />
+    ))}
+    <link rel="alternate" hreflang="x-default" href={site + defaultAlternate} />
   </>
 )}
 <meta name="robots" content={noindex ? 'noindex, follow, max-image-preview:large' : 'max-image-preview:large'} />
@@ -85,7 +93,7 @@ const graph = graphNodes.length
 <meta property="og:image:height" content="630" />
 <meta property="og:image:alt" content={imageAlt} />
 <meta property="og:locale" content={ogLocale} />
-{alternates && <meta property="og:locale:alternate" content={ogLocaleAlternate} />}
+{ogLocaleAlternates.map((alternate) => <meta property="og:locale:alternate" content={alternate} />)}
 
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content={title} />

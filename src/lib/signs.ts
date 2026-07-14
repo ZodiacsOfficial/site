@@ -4,6 +4,7 @@
  * Hues are sampled from the pastel SDK icon discs — the same values live
  * as --sign-* custom properties in src/styles/tokens.css.
  */
+import type { Locale } from './i18n';
 
 export type Element = 'fire' | 'earth' | 'air' | 'water';
 export type Modality = 'cardinal' | 'fixed' | 'mutable';
@@ -45,7 +46,7 @@ export const SIGNS: readonly Sign[] = [
 ] as const;
 
 export const SIGN_SLUGS = SIGNS.map((s) => s.slug);
-export type DisplayLocale = 'en' | 'es';
+export type DisplayLocale = Locale;
 
 const SIGN_NAME_ES: Record<string, string> = {
   aries: 'Aries',
@@ -92,6 +93,21 @@ const SIGN_ESSENCE_ES: Record<string, string> = {
   pisces: 'Imaginación, empatía y sensibilidad para lo que no se dice.',
 };
 
+const SIGN_NAME_OVERRIDES = {
+  en: null,
+  es: SIGN_NAME_ES,
+} satisfies Record<DisplayLocale, Record<string, string> | null>;
+
+const SIGN_DATES_OVERRIDES = {
+  en: null,
+  es: SIGN_DATES_ES,
+} satisfies Record<DisplayLocale, Record<string, string> | null>;
+
+const SIGN_ESSENCE_OVERRIDES = {
+  en: null,
+  es: SIGN_ESSENCE_ES,
+} satisfies Record<DisplayLocale, Record<string, string> | null>;
+
 export function signBySlug(slug: string): Sign {
   const sign = SIGNS.find((s) => s.slug === slug);
   if (!sign) throw new Error(`Unknown sign: ${slug}`);
@@ -108,19 +124,18 @@ export function signForLongitude(lon: number): Sign {
 }
 
 export function signName(sign: Sign | string, locale: DisplayLocale = 'en'): string {
-  const slug = typeof sign === 'string' ? sign : sign.slug;
-  if (locale === 'es') return SIGN_NAME_ES[slug] ?? (typeof sign === 'string' ? sign : sign.name);
-  return typeof sign === 'string' ? signBySlug(sign).name : sign.name;
+  const resolved = typeof sign === 'string' ? signBySlug(sign) : sign;
+  return SIGN_NAME_OVERRIDES[locale]?.[resolved.slug] ?? resolved.name;
 }
 
 export function signDates(sign: Sign | string, locale: DisplayLocale = 'en'): string {
-  const s = typeof sign === 'string' ? signBySlug(sign) : sign;
-  return locale === 'es' ? SIGN_DATES_ES[s.slug] ?? s.dates : s.dates;
+  const resolved = typeof sign === 'string' ? signBySlug(sign) : sign;
+  return SIGN_DATES_OVERRIDES[locale]?.[resolved.slug] ?? resolved.dates;
 }
 
 export function signEssence(sign: Sign | string, locale: DisplayLocale = 'en'): string {
-  const s = typeof sign === 'string' ? signBySlug(sign) : sign;
-  return locale === 'es' ? SIGN_ESSENCE_ES[s.slug] ?? s.essence : s.essence;
+  const resolved = typeof sign === 'string' ? signBySlug(sign) : sign;
+  return SIGN_ESSENCE_OVERRIDES[locale]?.[resolved.slug] ?? resolved.essence;
 }
 
 /** Degree within the sign (0–29.999…) for an ecliptic longitude. */
@@ -144,18 +159,22 @@ export const MODALITY_LABEL: Record<Modality, string> = {
   cardinal: 'Cardinal', fixed: 'Fixed', mutable: 'Mutable',
 };
 
+const ELEMENT_LABEL_OVERRIDES = {
+  en: null,
+  es: { fire: 'Fuego', earth: 'Tierra', air: 'Aire', water: 'Agua' },
+} satisfies Record<DisplayLocale, Record<Element, string> | null>;
+
+const MODALITY_LABEL_OVERRIDES = {
+  en: null,
+  es: { cardinal: 'Cardinal', fixed: 'Fijo', mutable: 'Mutable' },
+} satisfies Record<DisplayLocale, Record<Modality, string> | null>;
+
 export function elementLabel(element: Element, locale: DisplayLocale = 'en'): string {
-  if (locale === 'es') {
-    return ({ fire: 'Fuego', earth: 'Tierra', air: 'Aire', water: 'Agua' } as const)[element];
-  }
-  return ELEMENT_LABEL[element];
+  return ELEMENT_LABEL_OVERRIDES[locale]?.[element] ?? ELEMENT_LABEL[element];
 }
 
 export function modalityLabel(modality: Modality, locale: DisplayLocale = 'en'): string {
-  if (locale === 'es') {
-    return ({ cardinal: 'Cardinal', fixed: 'Fijo', mutable: 'Mutable' } as const)[modality];
-  }
-  return MODALITY_LABEL[modality];
+  return MODALITY_LABEL_OVERRIDES[locale]?.[modality] ?? MODALITY_LABEL[modality];
 }
 
 /** The sun sign whose season contains the given month/day (tropical). */

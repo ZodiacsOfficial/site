@@ -37,7 +37,7 @@ import type { TourVisual } from '../lib/scene/chapters';
 import { ENGINE_VERSION } from '../lib/engine/types';
 import type { Chart, HouseSystem } from '../lib/engine/types';
 import type { City } from '../lib/geo/search';
-import { localizePath, normalizeLocale, t, type Locale } from '../lib/i18n';
+import { LOCALES, localizePath, normalizeLocale, t, type Locale } from '../lib/i18n';
 import { aspectLabel, moonPhaseLabel, planetLabel } from '../lib/i18n/astrology';
 import { useEngine } from '../lib/hooks/useEngine';
 import type { AspectType } from '../lib/engine/types';
@@ -53,11 +53,11 @@ type LensId = import('./explorer/lens/copy').LensId;
 type LensRingRenderer = (geo: import('../lib/wheel/Wheel').WheelGeometry) => import('preact').ComponentChildren;
 
 /** Rail labels stay host-local: they render before the lens module loads. */
-const LENS_LABELS: Record<'en' | 'es', Record<'rail' | 'natal' | LensId, string>> = {
+const LENS_LABELS: Record<Locale, Record<'rail' | 'natal' | LensId, string>> = {
   en: { rail: 'Chart through time', natal: 'Natal', sky: 'Sky now', progressed: 'Progressed', return: 'Solar return' },
   es: { rail: 'La carta en el tiempo', natal: 'Natal', sky: 'Cielo ahora', progressed: 'Progresada', return: 'Retorno solar' },
 };
-const DETAIL_LABELS: Record<'en' | 'es', { lead: string; placements: string; aspects: string }> = {
+const DETAIL_LABELS: Record<Locale, { lead: string; placements: string; aspects: string }> = {
   en: { lead: 'Full detail — ', placements: ' placements · ', aspects: ' aspects · degrees & dignities' },
   es: { lead: 'Todo el detalle — ', placements: ' posiciones · ', aspects: ' aspectos · grados y dignidades' },
 };
@@ -65,7 +65,11 @@ const DETAIL_STORAGE_KEY = 'zodiacs.detail.v1';
 const CHART_BOOK_COPY = {
   en: { label: 'Whose chart is this?', save: 'Save', skip: 'Skip' },
   es: { label: '¿De quién es esta carta?', save: 'Guardar', skip: 'Omitir' },
-} as const;
+} as const satisfies Record<Locale, { label: string; save: string; skip: string }>;
+const PERSON_CHART_COPY = {
+  en: (name: string) => `${name}'s chart — "you" below means ${name}.`,
+  es: (name: string) => `La carta de ${name}: el "tú" de abajo se refiere a ${name}.`,
+} satisfies Record<Locale, (name: string) => string>;
 type SavePrefillSource = 'link' | 'match' | 'auto';
 type CalendarSubscribeModule = typeof import('./CalendarSubscribe');
 type CopyLinkModule = typeof import('./CopyLinkButton');
@@ -93,7 +97,7 @@ function sceneHas(scene: ChartSceneModel, ref: EntityRef): boolean {
 
 export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Props) {
   const locale = normalizeLocale(rawLocale);
-  const lensLocale = locale === 'es' ? 'es' : 'en';
+  const showsEnglishInterpretation = locale === 'en';
   const loadEngine = useEngine();
   const [date, setDate] = useState('');
   const [time, setTime] = useState('');
@@ -487,7 +491,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
       if (mode === 'full') {
         void import('./CalendarSubscribe').then(setCalendarSurface, () => {});
         void import('./CopyLinkButton').then(setCopyLinkModule, () => {});
-        if (locale === 'en') {
+        if (showsEnglishInterpretation) {
           void import('./CommunicationRead').then(setCommunicationSurface, () => {});
         }
       }
@@ -558,10 +562,11 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   const moon = chart?.bodies.find((b) => b.body === 'Moon');
   const asc = chart?.angles?.asc ?? null;
   const sunSign = sun ? signForLongitude(sun.lon) : null;
-  const autoNameEn = sunSign ? `${signName(sunSign, 'en')} ${t('en', 'sun')} · ${date}` : '';
-  const autoNameEs = sunSign ? `${signName(sunSign, 'es')} ${t('es', 'sun')} · ${date}` : '';
-  const autoName = locale === 'es' ? autoNameEs : autoNameEn;
-  const isAutoName = (name: string | null) => name === autoNameEn || name === autoNameEs;
+  const autoNames = LOCALES.map((candidate) =>
+    sunSign ? `${signName(sunSign, candidate)} ${t(candidate, 'sun')} · ${date}` : '',
+  );
+  const autoName = autoNames[LOCALES.indexOf(locale)] ?? '';
+  const isAutoName = (name: string | null) => name !== null && autoNames.includes(name);
   const personName = linkName && !isAutoName(linkName)
     ? linkName
     : matchedName && !isAutoName(matchedName) ? matchedName : null;
@@ -838,9 +843,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
           )}
           {personName && (
             <p class="notice" data-chart-person>
-              {locale === 'es'
-                ? `La carta de ${personName}: el "tú" de abajo se refiere a ${personName}.`
-                : `${personName}'s chart — "you" below means ${personName}.`}
+              {PERSON_CHART_COPY[locale](personName)}
             </p>
           )}
 
@@ -870,7 +873,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                       {signName(s, locale)}
                     </span>
                     <span class="mono three-card__deg">{formatLongitude(lon, locale)}</span>
-                    <p class="three-card__read">{bigThree(kind, s.slug)}</p>
+                    {showsEnglishInterpretation && <p class="three-card__read">{bigThree(kind, s.slug)}</p>}
                     <a class="three-card__more" href={localizePath(locale, `/${s.slug}/`)}>{t(locale, 'read')} {signName(s, locale)} →</a>
                   </div>
                 </div>
@@ -932,7 +935,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                         />
                       </div>
                       {!tourOpen && (
-                        <div class="calc__lens-rail" role="group" aria-label={LENS_LABELS[lensLocale].rail}>
+                        <div class="calc__lens-rail" role="group" aria-label={LENS_LABELS[locale].rail}>
                           {(['natal', 'sky', 'progressed', 'return'] as const).map((id) => (
                             <button
                               key={id}
@@ -942,7 +945,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                               onClick={() => void selectLens(id)}
                               data-lens-btn={id}
                             >
-                              {LENS_LABELS[lensLocale][id]}
+                              {LENS_LABELS[locale][id]}
                             </button>
                           ))}
                         </div>
@@ -959,7 +962,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                         <lensMod.default
                           lens={lens}
                           chart={chart}
-                          locale={lensLocale}
+                          locale={locale}
                           loadEngine={loadEngine}
                           track={track}
                           onRing={onLensRing}
@@ -1020,7 +1023,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
               </div>
 
               {/* The guided reading leads; full data follows the action rows. */}
-              {reading && (
+              {showsEnglishInterpretation && reading && (
                 <section class="calc__read" aria-labelledby="calc-read-title">
                   <h2 id="calc-read-title" class="calc__read-title">{t(locale, 'readInOrder')}</h2>
                   <p class="calc__read-intro">{t(locale, 'readIntro')}</p>
@@ -1085,7 +1088,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                 </section>
               )}
 
-              {mode === 'full' && locale === 'en' && CommunicationRead && (
+              {mode === 'full' && showsEnglishInterpretation && CommunicationRead && (
                 <CommunicationRead chart={chart} />
               )}
 
@@ -1190,7 +1193,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
               open={detailOpen}
               onToggle={onDetailToggle}
             >
-              <summary class="calc__detail-summary">{DETAIL_LABELS[lensLocale].lead}<span class="mono">{placements.length}</span>{DETAIL_LABELS[lensLocale].placements}<span class="mono">{chart.aspects.length}</span>{DETAIL_LABELS[lensLocale].aspects}</summary>
+              <summary class="calc__detail-summary">{DETAIL_LABELS[locale].lead}<span class="mono">{placements.length}</span>{DETAIL_LABELS[locale].placements}<span class="mono">{chart.aspects.length}</span>{DETAIL_LABELS[locale].aspects}</summary>
               <div class="calc__detail-body">
                 <div class="calc__table-wrap">
                   <table class="calc__table">
