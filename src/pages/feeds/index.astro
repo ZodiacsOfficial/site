@@ -12,6 +12,11 @@ const feeds = [
     title: 'Monthly horoscopes',
     description: 'The latest horoscope for all twelve signs, with each month written against its computed transit dates.',
   },
+  {
+    href: '/feeds/almanac.xml',
+    title: 'The Almanac',
+    description: 'New long-form notes on the computed sky and what the astrological tradition makes of it.',
+  },
 ];
 
 const jsonLd = [
@@ -19,7 +24,7 @@ const jsonLd = [
     '@type': 'CollectionPage',
     name: 'Zodiacs.org RSS feeds',
     url: 'https://zodiacs.org/feeds/',
-    description: 'RSS feeds for the computed daily sky and monthly horoscopes.',
+    description: 'RSS feeds for the computed daily sky, monthly horoscopes, and the Almanac.',
     mainEntity: {
       '@type': 'ItemList',
       itemListElement: feeds.map((feed, index) => ({
@@ -33,8 +38,8 @@ const jsonLd = [
 ];
 ---
 <Base
-  title="RSS Feeds — Daily Sky & Horoscopes | Zodiacs.org"
-  description="Follow the computed daily sky and monthly horoscopes for all twelve signs through Zodiacs.org RSS feeds."
+  title="RSS Feeds — Daily Sky, Horoscopes & Almanac | Zodiacs.org"
+  description="Follow the computed daily sky, monthly horoscopes, and long-form Almanac through Zodiacs.org RSS feeds."
   path="/feeds/"
   jsonLd={jsonLd}
 >
@@ -43,7 +48,8 @@ const jsonLd = [
     <h1 class="display">Follow the sky on your own terms.</h1>
     <p class="feeds__lede">
       Subscribe in any RSS reader. The daily feed follows the computed sky;
-      the horoscope feed changes when a new month is published. Neither needs
+      the horoscope feed changes when a new month is published, and the Almanac
+      feed changes when a new article appears. None needs
       an account or a notification permission.
     </p>
 

@@ -9,6 +9,7 @@
  *   horoscope/{slug}.png   the 12 horoscope pages (month-free, evergreen)
  *   placements/{planet}.png  one per planet, shared by its 12 placement pages
  *   rising/{slug}.png      the 12 rising-sign profiles
+ *   almanac/{slug}.png     the Almanac hub + published articles
  *
  * The legacy gilt cards at assets/og/*.png stay byte-identical — the
  * collector's wing still references them. This script never touches
@@ -21,7 +22,7 @@
  * CHROMIUM_PATH override module and binary).
  */
 import { existsSync } from 'node:fs';
-import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { dirname, resolve } from 'node:path';
 import sharp from 'sharp';
@@ -273,6 +274,47 @@ function risingCard(s) {
   return shell(body, `zodiacs.org/rising-sign/${s.slug}/`);
 }
 
+function almanacCard({ title, sub, path, hub = false }) {
+  const size = title.length > 40 ? 62 : title.length > 28 ? 68 : 76;
+  const body = `
+  <div class="stage">
+    <div class="left" style="max-width: 720px;">
+      <span class="kicker">${hub ? 'The sky, written down' : 'The Almanac'}</span>
+      <div class="display" style="font-size: ${size}px;">${title}</div>
+      <div class="sub" style="font-size: 25px; color: ${MUTED}; max-width: 700px;">${sub}</div>
+    </div>
+    ${wheelMark(250, 22)}
+  </div>`;
+  return shell(body, `zodiacs.org${path}`);
+}
+
+function frontmatterField(source, name) {
+  const frontmatter = source.match(/^---\r?\n([\s\S]*?)\r?\n---/)?.[1] ?? '';
+  const raw = frontmatter.match(new RegExp(`^${name}:\\s*(.+)$`, 'm'))?.[1]?.trim();
+  if (!raw) throw new Error(`Almanac entry missing ${name}`);
+  return raw.startsWith('"') ? JSON.parse(raw) : raw.replace(/^['"]|['"]$/g, '');
+}
+
+function frontmatterBoolean(source, name) {
+  const frontmatter = source.match(/^---\r?\n([\s\S]*?)\r?\n---/)?.[1] ?? '';
+  return frontmatter.match(new RegExp(`^${name}:\\s*(true|false)\\s*$`, 'm'))?.[1] === 'true';
+}
+
+const almanacEntries = (await Promise.all(
+  (await readdir(resolve(root, 'src/content/almanac')))
+    .filter((file) => file.endsWith('.mdx'))
+    .sort()
+    .map(async (file) => {
+      const source = await readFile(resolve(root, 'src/content/almanac', file), 'utf8');
+      return {
+        slug: file.replace(/\.mdx$/, ''),
+        title: frontmatterField(source, 'title'),
+        description: frontmatterField(source, 'description'),
+        draft: frontmatterBoolean(source, 'draft'),
+      };
+    }),
+)).filter((entry) => !entry.draft);
+
 const TOOLS = [
   { key: 'birth-chart', path: '/birth-chart/', kicker: 'Free calculator', title: 'Your birth chart', sub: 'Sun, moon, rising, houses, and aspects — computed on your device.' },
   { key: 'moon-sign', path: '/moon-sign/', kicker: 'Free calculator', title: 'Your moon sign', sub: 'How you feel and what soothes you — from your date, time, and place of birth.' },
@@ -294,7 +336,7 @@ const TOOLS = [
 ];
 
 // ── Render loop ───────────────────────────────────────────────────────
-for (const dir of ['', 'sign', 'tool', 'pair', 'horoscope', 'placements', 'rising', 'pin']) {
+for (const dir of ['', 'sign', 'tool', 'pair', 'horoscope', 'placements', 'rising', 'almanac', 'pin']) {
   await mkdir(resolve(OUT, dir), { recursive: true });
 }
 
@@ -316,6 +358,26 @@ async function shoot(html, outPath) {
   if (count % 20 === 0) console.log(`  …${count} cards, ${(total / 1024 / 1024).toFixed(1)}MB so far`);
 }
 
+if (process.argv.includes('--only-almanac')) {
+  console.log('Rendering Almanac OG cards…');
+  await shoot(almanacCard({
+    title: 'The Almanac',
+    sub: "What's actually happening up there each month, and what the tradition makes of it.",
+    path: '/almanac/',
+    hub: true,
+  }), 'almanac/index.png');
+  for (const entry of almanacEntries) {
+    await shoot(almanacCard({
+      title: entry.title,
+      sub: entry.description,
+      path: `/almanac/${entry.slug}/`,
+    }), `almanac/${entry.slug}.png`);
+  }
+  console.log(`Done: ${count} card(s), ${(total / 1024).toFixed(0)}KB.`);
+  await browser.close();
+  process.exit(0);
+}
+
 console.log('Rendering Cosmic Void OG cards…');
 await shoot(thesisCard(), 'thesis.png');
 if (process.argv.includes('--only-thesis')) {
@@ -324,6 +386,19 @@ if (process.argv.includes('--only-thesis')) {
   process.exit(0);
 }
 await shoot(shareCard(), 'share.png');
+await shoot(almanacCard({
+  title: 'The Almanac',
+  sub: "What's actually happening up there each month, and what the tradition makes of it.",
+  path: '/almanac/',
+  hub: true,
+}), 'almanac/index.png');
+for (const entry of almanacEntries) {
+  await shoot(almanacCard({
+    title: entry.title,
+    sub: entry.description,
+    path: `/almanac/${entry.slug}/`,
+  }), `almanac/${entry.slug}.png`);
+}
 for (const s of SIGNS) await shoot(signCard(s), `sign/${s.slug}.png`);
 for (const t of TOOLS) await shoot(toolCard(t), `tool/${t.key}.png`);
 for (let i = 0; i < SIGNS.length; i += 1) {
