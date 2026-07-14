@@ -1,0 +1,101 @@
+---
+import Base from '../../../layouts/Base.astro';
+import Faq from '../../../components/Faq.astro';
+import ChartCalculator from '../../../islands/ChartCalculator';
+import SignIcon from '../../../components/SignIcon.astro';
+import { SIGNS, signName } from '../../../lib/signs';
+import '../../../styles/calculator.css';
+
+const faq = [
+  {
+    q: 'Qu’est-ce que l’ascendant ?',
+    a: 'Ton ascendant est le signe du zodiaque qui se levait à l’est au moment de ta naissance. Il façonne les premières impressions : la manière dont les autres te perçoivent avant de connaître ton signe solaire. Il détermine aussi la répartition de toutes les maisons de ton thème.',
+  },
+  {
+    q: 'Pourquoi ai-je besoin de mon heure de naissance exacte ?',
+    a: 'L’ascendant parcourt les douze signes en 24 heures : il change de signe environ toutes les deux heures, parfois même plus vite. Près d’une limite, quinze minutes peuvent compter. Ton acte de naissance est la meilleure source, suivi des dossiers de la maternité et des souvenirs de ta famille.',
+  },
+  {
+    q: 'Et si mon heure de naissance est arrondie, par exemple à 7 h ?',
+    a: 'Les heures arrondies sont courantes dans les registres. Si ton ascendant calculé tombe dans les premiers ou derniers degrés d’un signe, quelques minutes peuvent changer le résultat. Consulte aussi le signe voisin et, si possible, confirme l’heure auprès d’une autre source ; te reconnaître dans une description ne remplace pas une donnée précise.',
+  },
+  {
+    q: 'Qu’est-ce que le maître du thème ?',
+    a: 'La planète qui gouverne ton ascendant est appelée maître du thème. L’astrologie considère son signe et sa maison comme un thème important de ta vie. Le calculateur l’identifie automatiquement et utilise les maîtrises traditionnelles par souci de cohérence.',
+  },
+  {
+    q: 'L’ascendant est-il vraiment si important ?',
+    a: 'Dans la lecture d’un thème, c’est peut-être le point le plus important : il fixe les maisons et détermine les domaines de vie où tombe chaque planète. Il explique aussi pourquoi deux personnes nées le même jour peuvent avoir des vies organisées très différemment.',
+  },
+];
+
+const jsonLd = [
+  {
+    '@type': 'WebApplication',
+    name: 'Calculateur d’ascendant',
+    url: 'https://zodiacs.org/fr/rising-sign/',
+    applicationCategory: 'LifestyleApplication',
+    operatingSystem: 'Web',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    inLanguage: 'fr',
+    isPartOf: { '@id': 'https://zodiacs.org/#site' },
+  },
+  {
+    '@type': 'FAQPage',
+    inLanguage: 'fr',
+    mainEntity: faq.map(({ q, a }) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: { '@type': 'Answer', text: a },
+    })),
+  },
+];
+---
+<Base
+  title="Calculateur gratuit d’ascendant | Zodiacs.org"
+  description="Calcule gratuitement ton ascendant avec ton heure et ton lieu de naissance : la première impression que tu donnes et la planète qui gouverne ton thème."
+  path="/fr/rising-sign/"
+  locale="fr"
+  image="/assets/og/v2/tool/rising-sign.png"
+  imageAlt="Calculateur d’ascendant — Zodiacs.org"
+  jsonLd={jsonLd}
+>
+  <section class="section--tight container">
+    <div class="tool-hero">
+      <h1 class="display">Découvre ton ascendant.</h1>
+      <p>L’ascendant est le signe qui se levait à l’horizon à ta naissance. Il exige une heure de naissance, et la précision compte.</p>
+    </div>
+    <ChartCalculator mode="rising" locale="fr" client:load />
+    <noscript>
+      <p>Ce calculateur d’ascendant nécessite JavaScript. Active JavaScript et recharge la page avec ta date, ton heure exacte et ton lieu de naissance.</p>
+    </noscript>
+  </section>
+
+  <section class="section--tight container container--narrow">
+    <div class="section-head">
+      <h2>Les douze ascendants</h2>
+      <p>Une fois que le calculateur a trouvé le tien, découvre comment il colore ta présence et ton thème. Les profils complets liés ci-dessous sont en anglais.</p>
+    </div>
+    <div class="risings">
+      {SIGNS.map((s) => (
+        <a class="risings__chip" href={`/rising-sign/${s.slug}/`} hreflang="en" style={`--sign:${s.hue}`}>
+          <SignIcon sign={s.slug} size={26} class="risings__disc" />
+          <span>Ascendant {signName(s, 'fr')}</span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="section--tight container container--narrow">
+    <Faq items={faq} heading="Questions sur l’ascendant" />
+  </section>
+</Base>
+
+<style>
+  .tool-hero { max-width: 62ch; margin-bottom: clamp(28px, 5vw, 44px); }
+  .tool-hero h1 { margin: 0 0 16px; font-size: var(--text-2xl); line-height: 1.04; }
+  .tool-hero p { margin: 0; color: var(--muted); font-size: var(--text-lg); text-wrap: pretty; }
+  .risings { display: flex; flex-wrap: wrap; gap: 8px; }
+  .risings__chip { display: inline-flex; align-items: center; gap: 9px; padding: 7px 14px 7px 8px; border: 1px solid var(--hair-1); border-radius: var(--r-full); color: var(--text-2); text-decoration: none; }
+  .risings__chip:hover { color: var(--text); border-color: color-mix(in oklab, var(--sign) 45%, transparent); }
+</style>

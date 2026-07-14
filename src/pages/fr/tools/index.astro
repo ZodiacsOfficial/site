@@ -1,0 +1,98 @@
+---
+import Base from '../../../layouts/Base.astro';
+import ToolGlyph from '../../../components/ToolGlyph.astro';
+import { localizePath } from '../../../lib/i18n';
+
+const tools = [
+  { href: '/birth-chart/', title: 'Thème astral', promise: 'Ton Soleil, ta Lune, ton ascendant, tes planètes, tes maisons et leur signification.', hue: 'var(--sign-cancer)', kind: 'birth' as const },
+  { href: '/today/', title: 'Aujourd’hui (en anglais)', promise: 'Ton dernier thème enregistré face au ciel de midi, degrés compris.', hue: 'var(--sign-cancer)', kind: 'transit' as const, englishOnly: true },
+  { href: '/compatibility/', title: 'Compatibilité', promise: 'Compare deux thèmes et vois où ils s’accordent, se heurtent et évoluent.', hue: 'var(--sign-libra)', kind: 'compat' as const },
+  { href: '/moon-sign/', title: 'Signe lunaire', promise: 'Ta manière de ressentir et ce qui t’apaise.', hue: 'var(--sign-pisces)', kind: 'moon' as const },
+  { href: '/rising-sign/', title: 'Ascendant', promise: 'Le signe que les autres rencontrent en premier.', hue: 'var(--sign-gemini)', kind: 'rising' as const },
+  { href: '/moon-phase/', title: 'Phase lunaire', promise: 'La Lune d’aujourd’hui et celle de toute date qui compte pour toi.', hue: 'var(--sign-cancer)', kind: 'moonphase' as const },
+  { href: '/saturn-return/', title: 'Retour de Saturne', promise: 'Quand le tien arrive, précisément, et ce qu’il tend à demander.', hue: 'var(--sign-capricorn)', kind: 'saturn' as const },
+  { href: '/transits/', title: 'Transits', promise: 'Le ciel d’aujourd’hui à côté de ton thème.', hue: 'var(--sign-aries)', kind: 'transit' as const },
+];
+
+const jsonLd = [
+  {
+    '@type': 'CollectionPage',
+    name: 'Outils d’astrologie gratuits',
+    url: 'https://zodiacs.org/fr/tools/',
+    description: 'Des outils d’astrologie gratuits, calculés en toute confidentialité dans ton navigateur.',
+    inLanguage: 'fr',
+    isPartOf: { '@id': 'https://zodiacs.org/#site' },
+  },
+];
+---
+<Base
+  title="Outils d’astrologie gratuits | Zodiacs.org"
+  description="Outils d’astrologie gratuits : thème astral, compatibilité, signe lunaire, ascendant, phase lunaire, retour de Saturne et transits, calculés dans ton navigateur."
+  path="/fr/tools/"
+  locale="fr"
+  image="/assets/og/v2/tool/tools.png"
+  imageAlt="Outils d’astrologie gratuits — Zodiacs.org"
+  jsonLd={jsonLd}
+>
+  <section class="section container">
+    <div class="section-head">
+      <h2>Outils d’astrologie gratuits</h2>
+      <p>Découvre ton thème astral, ton signe lunaire, ton ascendant, tes compatibilités et ce qui se passe dans le ciel maintenant. Tes données sont calculées dans ton navigateur.</p>
+    </div>
+
+    <div class="tools-grid">
+      {tools.map((tool) => (
+        <a class="shell tinted" href={'englishOnly' in tool ? tool.href : localizePath('fr', tool.href)} hreflang={'englishOnly' in tool ? 'en' : undefined} style={`--sign:${tool.hue}`}>
+          <div class="core tinted tool-card">
+            <ToolGlyph kind={tool.kind} />
+            <h3>{tool.title}</h3>
+            <p>{tool.promise}</p>
+            <span class="tool-card__go">Ouvrir →</span>
+          </div>
+        </a>
+      ))}
+      <button
+        class="shell tinted assistant-tool"
+        type="button"
+        style="--sign:var(--sign-aquarius)"
+        data-assistant-open
+        data-assistant-locale="fr"
+        aria-haspopup="dialog"
+      >
+        <div class="core tinted tool-card">
+          <ToolGlyph kind="assistant" />
+          <h3>Demande au site</h3>
+          <p>Pose une question sur un outil, un terme astrologique ou un thème que tu as enregistré ici.</p>
+          <span class="tool-card__go">Commencer une conversation →</span>
+        </div>
+      </button>
+    </div>
+
+    <div class="tools-upcoming">
+      <em class="kicker">Également disponible en anglais</em>
+      <ul>
+        <li><strong>Horoscopes.</strong> Un horoscope mensuel pour chaque signe, ancré dans les dates réelles du ciel : <a href="/horoscopes/" hreflang="en">lire ce mois-ci</a>.</li>
+        <li><strong>Mercure rétrograde.</strong> Les périodes exactes jusqu’en 2027 : <a href="/mercury-retrograde/" hreflang="en">voir les dates</a>.</li>
+      </ul>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .tools-grid { display: grid; gap: 14px; grid-template-columns: 1fr; }
+  @media (min-width: 700px) { .tools-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1000px) { .tools-grid { grid-template-columns: repeat(3, 1fr); } }
+  .tool-card { display: flex; flex-direction: column; gap: 10px; padding: 26px 22px; min-height: 210px; }
+  /* Tool-card icon disc lives in ToolGlyph.astro. */
+  .tool-card h3 { margin: 4px 0 0; font-size: var(--text-lg); font-weight: 620; color: var(--text); }
+  .tool-card p { margin: 0; font-size: var(--text-sm); color: var(--text-2); line-height: 1.6; }
+  .tool-card__go { margin-top: auto; font-size: 13px; font-weight: 550; color: var(--text); }
+  .assistant-tool { display: block; width: 100%; text-align: left; transition: border-color var(--dur-2) var(--ease), transform var(--dur-2) var(--ease); }
+  .assistant-tool:hover { border-color: color-mix(in oklab, var(--sign) 45%, transparent); transform: translateY(-2px); }
+  .assistant-tool:hover .core { border-color: color-mix(in oklab, var(--sign) 28%, transparent); }
+  .tools-upcoming { margin-top: clamp(28px, 5vw, 44px); padding-top: 24px; border-top: 1px solid var(--hair-1); }
+  .tools-upcoming ul { margin: 12px 0 0; padding: 0; list-style: none; display: grid; gap: 8px; }
+  .tools-upcoming li { font-size: var(--text-sm); color: var(--muted); }
+  .tools-upcoming strong { color: var(--text-2); font-weight: 600; }
+  .tools-upcoming a { color: var(--text); }
+</style>
