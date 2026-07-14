@@ -6,7 +6,7 @@
  */
 import './assistant.css';
 import { houseOf, wholeSignCusps } from '../engine/houses';
-import { normalizeLocale as normalizeSiteLocale, type Locale } from '../i18n';
+import { normalizeLocale as normalizeSiteLocale, type Locale } from '../i18n/core';
 import { PROFILE_KEY } from '../profile/schema';
 import { degreeInSign, signForLongitude } from '../signs';
 

@@ -1,4 +1,4 @@
-import { normalizeLocale, type Locale } from './index';
+import { normalizeLocale, type Locale } from './core';
 
 export const TECHNICAL_OFFSET_LOCALE = 'en-US';
 export const TECHNICAL_WALL_LOCALE = 'en-CA';
