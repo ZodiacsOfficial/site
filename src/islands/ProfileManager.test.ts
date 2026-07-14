@@ -48,3 +48,15 @@ describe('French profile chart count', () => {
     );
   });
 });
+
+describe('Italian profile chart count', () => {
+  it('uses singular grammar for one saved chart', () => {
+    expect(PF_BOOK_COPY.it.count(1)).toBe('1 tema salvato.');
+  });
+
+  it('uses plural grammar for multiple saved charts', () => {
+    expect(PF_BOOK_COPY.it.count(2)).toBe(
+      '2 temi salvati: il tuo e quelli che interpreti per altre persone.',
+    );
+  });
+});

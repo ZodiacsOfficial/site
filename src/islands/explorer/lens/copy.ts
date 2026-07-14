@@ -101,6 +101,24 @@ export const LENS_CHROME = {
     trustLine: 'Chacun de ces ciels est calculé sur cet appareil.',
     loading: 'Calcul en cours…',
   },
+  it: {
+    skyRingLabel: 'il cielo in questo momento',
+    progressedRingLabel: 'i tuoi pianeti progrediti',
+    returnRingLabel: 'il cielo della tua rivoluzione solare',
+    skyIntro: 'L’anello esterno è il cielo di questo momento, sovrapposto alla ruota del tuo tema natale.',
+    progressedIntro: 'L’anello esterno è il tuo tema progredito a oggi — un giorno dopo la nascita rappresenta un anno di vita.',
+    returnIntro: 'L’anello esterno è il cielo della tua rivoluzione solare più recente — l’istante in cui il Sole è tornato alla sua posizione di nascita.',
+    tightestNow: 'Contatti più esatti:',
+    noContacts: 'Nessun contatto ravvicinato entro questa orbita al momento.',
+    transitsLink: 'Scorri questo cielo nel tempo su /transits/.',
+    returnInstant: 'Istante della rivoluzione solare',
+    localTime: 'la tua ora',
+    noTimeNote: 'Calcolato da un tema di mezzogiorno — un’ora di nascita esatta rende più precise queste posizioni.',
+    noPlaceNote: 'Senza un luogo di nascita, la rivoluzione solare mostra solo i pianeti, senza case.',
+    progressedAngles: 'Le case progredite richiedono una convenzione che non abbiamo adottato, quindi qui progrediscono solo i pianeti.',
+    trustLine: 'Ognuno di questi cieli viene calcolato su questo dispositivo.',
+    loading: 'Calcolo in corso…',
+  },
 } as const satisfies Record<Locale, LensChrome>;
 
 /** The ~2.5-year emotional climate of the progressed Moon's sign. EN-only. */

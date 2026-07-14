@@ -71,6 +71,19 @@ const COPY = {
     denied: 'Les notifications sont bloquées dans ce navigateur. Tu peux modifier ce réglage dans les paramètres du site.',
     error: 'Les notes quotidiennes sont indisponibles pour le moment. Réessaie plus tard.',
   },
+  it: {
+    heading: 'Vuoi ricevere una nota quotidiana?',
+    body: 'Una breve nota sul cielo apre il tuo riepilogo privato su /today/. I tuoi dati di nascita restano su questo dispositivo.',
+    ios: 'Su iPhone e iPad, le notifiche funzionano solo dopo aver aggiunto il sito alla schermata Home. Installalo prima, poi torna qui.',
+    accept: 'Attiva le note quotidiane',
+    installing: 'Attivazione…',
+    dismiss: 'Non ora',
+    dismissLabel: 'Chiudi la proposta di nota quotidiana',
+    on: 'Le note quotidiane sono attive. Le notifiche aprono /today/; il tuo tema resta su questo dispositivo.',
+    off: 'Disattiva',
+    denied: 'Le notifiche sono bloccate in questo browser. Puoi modificare questa impostazione nelle preferenze del sito.',
+    error: 'Le note quotidiane non sono disponibili al momento. Riprova più tardi.',
+  },
 } as const satisfies Record<Locale, {
   heading: string;
   body: string;

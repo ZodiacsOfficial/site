@@ -71,6 +71,19 @@ const SHARE_COPY = {
     shareLinkAmbiguous: 'Ce lien contient deux formats de thème : aucun des deux n’a donc été ouvert.',
     positionsShareUnavailable: 'Impossible de créer un lien avec les positions uniquement pour ce thème.',
   },
+  it: {
+    shareOptionsTitle: 'Condividi questo tema',
+    closeShare: 'Chiudi le opzioni di condivisione',
+    hideBirthDetails: 'Nascondi i dati di nascita',
+    copyPositionsLink: 'Copia il link con le sole posizioni',
+    positionsShareNote: 'Il link omette data, ora e luogo di nascita; nell’immagine, questi dati sono sostituiti dalla versione del motore. Le posizioni planetarie possono comunque identificarti: questa condivisione non è anonima.',
+    positionsOnlyTitle: 'Posizioni condivise del tema',
+    positionsOnlyNotice: 'Solo posizioni — dati di nascita non inclusi.',
+    positionsOnlyPrivacy: 'Questo codice omette data, ora e luogo di nascita. Le posizioni planetarie possono comunque identificarti: non è anonimo.',
+    positionsLinkInvalid: 'Questo link con le sole posizioni non è valido o è incompleto.',
+    shareLinkAmbiguous: 'Questo link contiene due formati diversi per il tema, quindi non ne è stato aperto nessuno.',
+    positionsShareUnavailable: 'Non è stato possibile creare un link con le sole posizioni per questo tema.',
+  },
 } as const;
 
 export type ShareCopyKey = keyof typeof SHARE_COPY.en;

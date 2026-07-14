@@ -91,7 +91,7 @@ const COPY = {
     views: 'Visualizações da relação',
     wheel: 'Roda',
     grid: 'Grade',
-    composite: 'Composto',
+    composite: 'Composito',
   },
   fr: {
     caption: 'Roue intérieure\u00a0: {a}. Anneau extérieur\u00a0: {b}. Les lignes entre les deux indiquent où les thèmes se rejoignent.',
@@ -106,6 +106,20 @@ const COPY = {
     wheel: 'Roue',
     grid: 'Grille',
     composite: 'Composite',
+  },
+  it: {
+    caption: 'Ruota interna: {a}. Anello esterno: {b}. Le linee tra i due indicano dove i temi entrano in contatto.',
+    swap: 'Metti {name} all’interno',
+    tapHint: 'Tocca una linea di collegamento — o una riga qui sotto — per leggere quel contatto. Tocca un pianeta sull’anello esterno per vederne la posizione.',
+    ringLabel: 'Tema di {name}, sull’anello esterno',
+    tally: 'aspetti tra i temi',
+    easeful: 'armoniosi',
+    charged: 'tesi',
+    loudest: 'I contatti più marcati:',
+    views: 'Viste della relazione',
+    wheel: 'Ruota',
+    grid: 'Griglia',
+    composite: 'Composto',
   },
 } as const;
 
