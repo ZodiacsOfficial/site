@@ -5,8 +5,56 @@ export type Locale = typeof LOCALES[number];
 
 export const DEFAULT_LOCALE: Locale = 'en';
 
+/** Kept separate so client-side path helpers do not carry head-only metadata. */
+export const LOCALE_PATH_PREFIX = {
+  en: '',
+  es: '/es',
+} as const satisfies Record<Locale, string>;
+
+interface LocaleMeta {
+  /** URL segment, including its leading slash. Empty for the default locale. */
+  pathPrefix: string;
+  /** Value rendered on the document's `lang` attribute. */
+  htmlLang: string;
+  /** Value rendered on alternate links and sitemap entries. */
+  hreflang: string;
+  /** Locale passed to the browser's Intl formatters. */
+  intlLocale: string;
+  /** Open Graph's underscore-form locale identifier. */
+  ogLocale: string;
+  /** Self-name used by the footer language row. */
+  languageName: string;
+}
+
+export const LOCALE_META = {
+  en: {
+    pathPrefix: '',
+    htmlLang: 'en',
+    hreflang: 'en',
+    intlLocale: 'en-US',
+    ogLocale: 'en_US',
+    languageName: 'English',
+  },
+  es: {
+    pathPrefix: '/es',
+    htmlLang: 'es',
+    hreflang: 'es',
+    intlLocale: 'es-419',
+    ogLocale: 'es_ES',
+    languageName: 'Español',
+  },
+} as const satisfies Record<Locale, LocaleMeta>;
+
 export function normalizeLocale(locale: string | undefined | null): Locale {
-  return locale === 'es' ? 'es' : 'en';
+  const value = locale?.trim().toLowerCase();
+  if (!value) return DEFAULT_LOCALE;
+  return LOCALES.find((candidate) => value === candidate || value.startsWith(`${candidate}-`))
+    ?? DEFAULT_LOCALE;
+}
+
+/** D9 policy: authored interpretation corpora remain English-only. */
+export function showsEnglishOnlyInterpretation(locale: Locale): boolean {
+  return locale === 'en';
 }
 
 const CORE_LOCALIZED_PATHS = [
@@ -22,34 +70,52 @@ const CORE_LOCALIZED_PATHS = [
   '/baby-zodiac/',
   '/profile/',
   '/methodology/',
+  '/privacy/',
   '/404.html',
   ...SIGN_SLUGS.map((slug) => `/${slug}/`),
 ];
 
-export const LOCALIZED_PATHS = new Set(CORE_LOCALIZED_PATHS);
+/** Locales in which each translated route is actually available. */
+export const LOCALIZED_PATHS: ReadonlyMap<string, readonly Locale[]> = new Map(
+  CORE_LOCALIZED_PATHS.map((path) => [path, LOCALES] as const),
+);
 
 export function stripLocale(path: string): string {
-  if (path === '/es') return '/';
-  if (path.startsWith('/es/')) return path.slice(3) || '/';
+  for (const locale of LOCALES) {
+    const prefix = LOCALE_PATH_PREFIX[locale];
+    if (!prefix) continue;
+    if (path === prefix) return '/';
+    if (path.startsWith(`${prefix}/`)) return path.slice(prefix.length) || '/';
+  }
   return path;
 }
 
 export function localizePath(locale: Locale, path: string): string {
   if (path.startsWith('http') || path.startsWith('#')) return path;
   const clean = path.startsWith('/') ? path : `/${path}`;
-  if (locale === 'en') return stripLocale(clean);
-  if (clean === '/') return '/es/';
-  if (!LOCALIZED_PATHS.has(stripLocale(clean))) return clean;
-  return `/es${stripLocale(clean)}`;
+  const canonical = stripLocale(clean);
+  if (locale === DEFAULT_LOCALE) return canonical;
+  if (!LOCALIZED_PATHS.get(canonical)?.includes(locale)) return clean;
+  return `${LOCALE_PATH_PREFIX[locale]}${canonical}`;
 }
 
-export function alternatePaths(path: string): { en: string; es: string } | null {
-  const clean = stripLocale(path);
-  if (!LOCALIZED_PATHS.has(clean)) return null;
-  return {
-    en: clean,
-    es: localizePath('es', clean),
-  };
+export type AlternatePaths = Partial<Record<Locale, string>>;
+
+export function alternatePaths(path: string): AlternatePaths | null {
+  // Astro emits nested locale 404s at /{locale}/404/, while English remains
+  // /404.html. Normalize only this server-rendered alternate-link family so
+  // the client path helper stays byte-identical.
+  const clean = path.endsWith('/404/') ? '/404.html' : stripLocale(path);
+  const availableLocales = LOCALIZED_PATHS.get(clean);
+  if (!availableLocales) return null;
+  return Object.fromEntries(
+    availableLocales.map((locale) => [
+      locale,
+      clean === '/404.html' && locale !== DEFAULT_LOCALE
+        ? `${LOCALE_PATH_PREFIX[locale]}/404/`
+        : localizePath(locale, clean),
+    ]),
+  ) as AlternatePaths;
 }
 
 export const UI = {

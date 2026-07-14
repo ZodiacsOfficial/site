@@ -5,6 +5,7 @@
  * The rail button labels live in the HOST (they render before this module
  * loads); everything below the wheel lives here.
  */
+import type { Locale } from '../../../lib/i18n';
 
 export type LensId = 'sky' | 'progressed' | 'return';
 
@@ -64,7 +65,7 @@ export const LENS_CHROME = {
     trustLine: 'Cada uno de estos cielos se calcula en este dispositivo.',
     loading: 'Calculando…',
   },
-} as const satisfies Record<'en' | 'es', LensChrome>;
+} as const satisfies Record<Locale, LensChrome>;
 
 /** The ~2.5-year emotional climate of the progressed Moon's sign. EN-only. */
 export const PROGRESSED_MOON: Record<string, string> = {

@@ -47,40 +47,68 @@ export function latestTransitMonth(): string | null {
 
 const sn = (slug: string, locale: Locale = 'en') => signName(signBySlug(slug), locale);
 
+type IngressEvent = TransitFile['ingresses'][number];
+type LunationEvent = TransitFile['lunations'][number];
+type StationEvent = TransitFile['stations'][number];
+type AspectEvent = TransitFile['aspects'][number];
+
+interface TransitEventLabels {
+  ingress: (event: IngressEvent) => string;
+  lunation: (event: LunationEvent) => string;
+  station: (event: StationEvent) => string;
+  aspect: (event: AspectEvent) => string;
+}
+
+const TRANSIT_EVENT_LABELS = {
+  en: {
+    ingress: (event) =>
+      `${event.planet} enters ${sn(event.sign)}${event.retrograde ? ', retrograde' : ''}`,
+    lunation: (event) =>
+      `${event.type === 'new' ? 'New moon' : 'Full moon'} at ${Math.round(event.degree)}° ${sn(event.sign)}`,
+    station: (event) =>
+      `${event.planet} stations ${event.type} at ${Math.round(event.degree)}° ${sn(event.sign)}`,
+    aspect: (event) =>
+      `${event.a} ${event.type} ${event.b} (${sn(event.aSign)}–${sn(event.bSign)})`,
+  },
+  es: {
+    ingress: (event) =>
+      `${planetLabel('es', event.planet)} entra en ${sn(event.sign, 'es')}${event.retrograde ? ', retrógrado' : ''}`,
+    lunation: (event) =>
+      `${event.type === 'new' ? 'Luna nueva' : 'Luna llena'} a ${Math.round(event.degree)}° de ${sn(event.sign, 'es')}`,
+    station: (event) =>
+      `${planetLabel('es', event.planet)} estaciona ${event.type === 'retrograde' ? 'retrógrado' : 'directo'} a ${Math.round(event.degree)}° de ${sn(event.sign, 'es')}`,
+    aspect: (event) =>
+      `${planetLabel('es', event.a)} ${aspectLabel('es', event.type)} ${planetLabel('es', event.b)} (${sn(event.aSign, 'es')}–${sn(event.bSign, 'es')})`,
+  },
+} satisfies Record<Locale, TransitEventLabels>;
+
 /** The month's events as one chronological, human-readable list. */
 export function eventList(month: string, locale: Locale = 'en'): TransitEvent[] {
   const t = transitsFor(month);
   if (!t) return [];
+  const labels = TRANSIT_EVENT_LABELS[locale];
   const events: TransitEvent[] = [
     ...t.ingresses.map((e) => ({
       at: e.at,
-      label: locale === 'es'
-        ? `${planetLabel(locale, e.planet)} entra en ${sn(e.sign, locale)}${e.retrograde ? ', retrógrado' : ''}`
-        : `${e.planet} enters ${sn(e.sign)}${e.retrograde ? ', retrograde' : ''}`,
+      label: labels.ingress(e),
       body: e.planet,
       hue: signBySlug(e.sign).hue,
     })),
     ...t.lunations.map((e) => ({
       at: e.at,
-      label: locale === 'es'
-        ? `${e.type === 'new' ? 'Luna nueva' : 'Luna llena'} a ${Math.round(e.degree)}° de ${sn(e.sign, locale)}`
-        : `${e.type === 'new' ? 'New moon' : 'Full moon'} at ${Math.round(e.degree)}° ${sn(e.sign)}`,
+      label: labels.lunation(e),
       body: 'Moon',
       hue: signBySlug(e.sign).hue,
     })),
     ...t.stations.map((e) => ({
       at: e.at,
-      label: locale === 'es'
-        ? `${planetLabel(locale, e.planet)} estaciona ${e.type === 'retrograde' ? 'retrógrado' : 'directo'} a ${Math.round(e.degree)}° de ${sn(e.sign, locale)}`
-        : `${e.planet} stations ${e.type} at ${Math.round(e.degree)}° ${sn(e.sign)}`,
+      label: labels.station(e),
       body: e.planet,
       hue: signBySlug(e.sign).hue,
     })),
     ...t.aspects.map((e) => ({
       at: e.at,
-      label: locale === 'es'
-        ? `${planetLabel(locale, e.a)} ${aspectLabel(locale, e.type)} ${planetLabel(locale, e.b)} (${sn(e.aSign, locale)}–${sn(e.bSign, locale)})`
-        : `${e.a} ${e.type} ${e.b} (${sn(e.aSign)}–${sn(e.bSign)})`,
+      label: labels.aspect(e),
       body: e.a,
       hue: signBySlug(e.aSign).hue,
     })),

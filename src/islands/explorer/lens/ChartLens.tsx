@@ -13,6 +13,8 @@ import { overlayAspectId, type WheelOverlay } from '../../../lib/scene/types';
 import { collisionNudge } from '../../../lib/scene/layout';
 import { findInterAspects, type InterAspect } from '../../../lib/engine/synastry';
 import { renderTransitOverlay } from '../../transit/renderTransitOverlay';
+import type { Locale } from '../../../lib/i18n';
+import { intlLocale } from '../../../lib/i18n/dates';
 import type { WheelGeometry } from '../../../lib/wheel/Wheel';
 import type { Chart } from '../../../lib/engine/types';
 import type { EngineLoader } from '../../../lib/hooks/useEngine';
@@ -39,7 +41,7 @@ interface LensSky {
 export interface ChartLensProps {
   lens: LensId;
   chart: Chart;
-  locale: 'en' | 'es';
+  locale: Locale;
   loadEngine: EngineLoader;
   track: (name: string, props: Record<string, string>) => void;
   /** Hands the host a bound Wheel-overlay renderer (or null to clear). */
@@ -139,7 +141,7 @@ export default function ChartLens({ lens, chart, locale, loadEngine, track, onRi
       {sky && lens === 'return' && sky.instant && (
         <p class="lens__receipt mono" data-lens-receipt>
           {c.returnInstant}: {sky.instant.toISOString().replace('T', ' · ').slice(0, 21)} UTC
-          {' · '}{c.localTime}: {sky.instant.toLocaleString(locale === 'es' ? 'es-419' : 'en', {
+          {' · '}{c.localTime}: {sky.instant.toLocaleString(intlLocale(locale), {
             year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit',
           })}
         </p>

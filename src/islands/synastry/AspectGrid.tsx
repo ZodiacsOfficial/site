@@ -20,35 +20,25 @@ const COPY = {
   en: {
     caption: '{a} by {b} aspect grid',
     empty: 'No major aspect',
+    contact: ["'s ", ', orb ', ' degrees'],
   },
   es: {
     caption: 'Cuadrícula de aspectos de {a} y {b}',
     empty: 'Sin aspecto mayor',
+    contact: [': ', ', orbe ', ' grados'],
   },
-} as const;
+} as const satisfies Record<Locale, { caption: string; empty: string; contact: readonly [string, string, string] }>;
 
-const fmt = (text: string, values: Record<string, string>) =>
+export const formatRelationshipCopy = (text: string, values: Record<string, string>) =>
   text.replace(/\{(\w+)\}/g, (match, key) => values[key] ?? match);
 
 const isAngle = (name: RelationshipPointName): name is 'ASC' | 'MC' => name === 'ASC' || name === 'MC';
 const pointLabel = (locale: Locale, name: RelationshipPointName) => isAngle(name) ? name : planetLabel(locale, name);
 
-function ContactPoint({ locale, name }: { locale: Locale; name: RelationshipPointName }) {
+export function RelationshipContactPoint({ locale, name }: { locale: Locale; name: RelationshipPointName }) {
   return isAngle(name) ? <>{name}</> : (
     <><PlanetGlyph body={name} size={13} class="pg-inline" /> {planetLabel(locale, name)}</>
   );
-}
-
-function accessibleContactName(
-  locale: Locale,
-  aLabel: string,
-  bLabel: string,
-  contact: RelationshipContact,
-): string {
-  if (locale === 'es') {
-    return `${aLabel}: ${pointLabel(locale, contact.a)} ${aspectLabel(locale, contact.type)} ${bLabel}: ${pointLabel(locale, contact.b)}, orbe ${contact.orb.toFixed(1)} grados`;
-  }
-  return `${aLabel}'s ${pointLabel(locale, contact.a)} ${aspectLabel(locale, contact.type)} ${bLabel}'s ${pointLabel(locale, contact.b)}, orb ${contact.orb.toFixed(1)} degrees`;
 }
 
 export function AspectGrid({
@@ -67,17 +57,18 @@ export function AspectGrid({
   const reading = selected
     ? curated ?? synastryLine(aLabel, selected.a, bLabel, selected.b, selected.type)
     : null;
+  const caption = formatRelationshipCopy(c.caption, { a: aLabel, b: bLabel });
 
   return (
     <div class="rgrid" data-relationship-grid>
       <div
         class="rgrid__scroll"
         role="region"
-        aria-label={fmt(c.caption, { a: aLabel, b: bLabel })}
+        aria-label={caption}
         tabIndex={0}
       >
         <table class="rgrid__table">
-          <caption class="sr-only">{fmt(c.caption, { a: aLabel, b: bLabel })}</caption>
+          <caption class="sr-only">{caption}</caption>
           <thead>
             <tr>
               <th class="rgrid__corner" scope="col"><span aria-hidden="true">A × B</span></th>
@@ -106,7 +97,7 @@ export function AspectGrid({
                       <button
                         type="button"
                         class={`rgrid__contact rgrid__contact--${contact.type}${active ? ' is-focus' : ''}`}
-                        aria-label={accessibleContactName(locale, aLabel, bLabel, contact)}
+                        aria-label={`${aLabel}${c.contact[0]}${pointLabel(locale, contact.a)} ${aspectLabel(locale, contact.type)} ${bLabel}${c.contact[0]}${pointLabel(locale, contact.b)}${c.contact[1]}${contact.orb.toFixed(1)}${c.contact[2]}`}
                         aria-pressed={active}
                         onClick={() => onSelect(contact)}
                         data-grid-contact={id}
@@ -126,9 +117,9 @@ export function AspectGrid({
       {selected && reading && (
         <div class="tring__focus rgrid__detail" role="status" data-grid-detail>
           <span class="tring__focus-receipt mono">
-            {aLabel}: <ContactPoint locale={locale} name={selected.a} />
+            {aLabel}: <RelationshipContactPoint locale={locale} name={selected.a} />
             {' '}<AspectGlyph type={selected.type} size={13} class="pg-inline" /> {aspectLabel(locale, selected.type)}
-            {' '}{bLabel}: <ContactPoint locale={locale} name={selected.b} />
+            {' '}{bLabel}: <RelationshipContactPoint locale={locale} name={selected.b} />
             {' · '}{t(locale, 'orb')} {selected.orb.toFixed(1)}°
           </span>
           {locale === 'en' && (

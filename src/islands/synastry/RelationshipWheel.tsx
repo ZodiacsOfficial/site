@@ -16,14 +16,13 @@ import { synastryLine } from '../../lib/compat';
 import { elementLabel, formatLongitude, signForLongitude, signName } from '../../lib/signs';
 import { aspectLabel, planetLabel } from '../../lib/i18n/astrology';
 import { t, type Locale } from '../../lib/i18n';
-import { AspectGrid } from './AspectGrid';
+import { AspectGrid, formatRelationshipCopy, RelationshipContactPoint } from './AspectGrid';
 import { CompositePanel } from './CompositePanel';
 import {
   buildCompositeTabData,
   buildRelationshipGrid,
   relationshipContactId,
   type RelationshipContact,
-  type RelationshipPointName,
 } from './relationshipData';
 import { renderRelationshipAngleContact } from './renderRelationshipAngleContact';
 import {
@@ -85,12 +84,8 @@ const COPY = {
 const TAB_ORDER = ['wheel', 'grid', 'composite'] as const;
 type RelationshipTab = typeof TAB_ORDER[number];
 
-const fmt = (text: string, values: Record<string, string>) =>
-  text.replace(/\{(\w+)\}/g, (match, key) => values[key] ?? match);
-
 /** South Node stays off drawn wheels — the sitewide convention. */
 const drawable = (person: WheelPerson) => person.bodies.filter((point) => point.body !== 'South Node');
-const isAngle = (name: RelationshipPointName): name is 'ASC' | 'MC' => name === 'ASC' || name === 'MC';
 type CommunicationBody = 'Mercury' | 'Moon' | 'Mars';
 type CommunicationContact = InterAspect & { a: CommunicationBody; b: CommunicationBody };
 const communicationBodies = new Set<CommunicationBody>(['Mercury', 'Moon', 'Mars']);
@@ -107,12 +102,6 @@ function track(name: 'grid_select' | 'composite_view'): void {
     zodiacsAnalytics?: { track?: (event: string, props: Record<string, never>) => void };
   }).zodiacsAnalytics;
   analytics?.track?.(name, {});
-}
-
-function ContactPoint({ locale, name }: { locale: Locale; name: RelationshipPointName }) {
-  return isAngle(name) ? <>{name}</> : (
-    <><PlanetGlyph body={name} size={13} class="pg-inline" /> {planetLabel(locale, name)}</>
-  );
 }
 
 function contactReading(
@@ -169,7 +158,7 @@ export default function RelationshipWheel({ locale, a, b, summary }: Relationshi
     });
     return {
       overlayBase: buildTransitOverlay(
-        fmt(c.ringLabel, { name: outer.label }),
+        formatRelationshipCopy(c.ringLabel, { name: outer.label }),
         drawable(outer),
         oriented,
         null,
@@ -265,7 +254,7 @@ export default function RelationshipWheel({ locale, a, b, summary }: Relationshi
           class="rwheel__panel"
           data-relationship-panel="wheel"
         >
-          <p class="tring__caption mono">{fmt(c.caption, { a: inner.label, b: outer.label })}</p>
+          <p class="tring__caption mono">{formatRelationshipCopy(c.caption, { a: inner.label, b: outer.label })}</p>
 
           <div class="tring__wheelbox">
             <Wheel
@@ -302,7 +291,7 @@ export default function RelationshipWheel({ locale, a, b, summary }: Relationshi
               onClick={() => { setFlipped((value) => !value); setSel(null); }}
               data-swap
             >
-              <span>{fmt(c.swap, { name: outer.label })}</span>
+              <span>{formatRelationshipCopy(c.swap, { name: outer.label })}</span>
               <span class="orb">⇄</span>
             </button>
           </div>
@@ -313,9 +302,9 @@ export default function RelationshipWheel({ locale, a, b, summary }: Relationshi
               {selectedContact && focusedReading && (
                 <>
                   <span class="tring__focus-receipt mono">
-                    {a.label}: <ContactPoint locale={locale} name={selectedContact.a} />
+                    {a.label}: <RelationshipContactPoint locale={locale} name={selectedContact.a} />
                     {' '}<AspectGlyph type={selectedContact.type} size={13} class="pg-inline" /> {aspectLabel(locale, selectedContact.type)}
-                    {' '}{b.label}: <ContactPoint locale={locale} name={selectedContact.b} />
+                    {' '}{b.label}: <RelationshipContactPoint locale={locale} name={selectedContact.b} />
                     {' · '}{t(locale, 'orb')} {selectedContact.orb.toFixed(1)}°
                   </span>
                   {locale === 'en' && (
@@ -401,9 +390,9 @@ export default function RelationshipWheel({ locale, a, b, summary }: Relationshi
                         return (
                           <div class="rcomm__contact syn__aspect" role="listitem" data-communication-contact key={canonicalId(contact)}>
                             <span class="rcomm__contact-receipt syn__aspect-receipt mono">
-                              {a.label}: <ContactPoint locale={locale} name={contact.a} />
+                              {a.label}: <RelationshipContactPoint locale={locale} name={contact.a} />
                               {' '}<AspectGlyph type={contact.type} size={13} class="pg-inline" /> {aspectLabel(locale, contact.type)}
-                              {' '}{b.label}: <ContactPoint locale={locale} name={contact.b} />
+                              {' '}{b.label}: <RelationshipContactPoint locale={locale} name={contact.b} />
                               {' · '}{t(locale, 'orb')} {contact.orb.toFixed(1)}°
                             </span>
                             <span class="rcomm__contact-read syn__aspect-read" data-curated-line>{reading}</span>

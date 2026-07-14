@@ -1,11 +1,17 @@
 ---
+import type { Locale } from '../lib/i18n';
+
 interface Props {
   text: string;
   url: string;
-  locale?: 'en' | 'es';
+  locale?: Locale;
 }
 
 const { text, url, locale = 'en' } = Astro.props;
+const LABEL = {
+  en: 'Send this page:',
+  es: 'Comparte esta página:',
+} as const satisfies Record<Locale, string>;
 const encode = (value: string) => encodeURIComponent(value).replace(/[!'()*]/g, (char) =>
   `%${char.charCodeAt(0).toString(16).toUpperCase()}`
 );
@@ -15,7 +21,7 @@ const encodedUrl = encode(url);
 const encodedMessage = encode(message);
 ---
 <p class="identity-share">
-  {locale === 'es' ? 'Comparte esta página:' : 'Send this page:'}{' '}
+  {LABEL[locale]}{' '}
   <a href={`https://x.com/intent/post?text=${encodedMessage}`} target="_blank" rel="noopener noreferrer">X</a>{' · '}
   <a href={`https://wa.me/?text=${encodedMessage}`} target="_blank" rel="noopener noreferrer">WhatsApp</a>{' · '}
   <a href={`https://t.me/share/url?url=${encodedUrl}&text=${encodedText}`} target="_blank" rel="noopener noreferrer">Telegram</a>{' · '}

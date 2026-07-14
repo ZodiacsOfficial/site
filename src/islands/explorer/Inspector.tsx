@@ -64,6 +64,7 @@ function Receipt({ label, children }: { label: string; children: ComponentChildr
 }
 
 export default function Inspector({ scene, selection, onSelect, locale, banner }: Props) {
+  const showsEnglishInterpretation = locale === 'en';
   const [detent, setDetent] = useState<'half' | 'full'>('half');
   const headingRef = useRef<HTMLHeadingElement>(null);
   const dragFrom = useRef<number | null>(null);
@@ -139,7 +140,7 @@ export default function Inspector({ scene, selection, onSelect, locale, banner }
               </ul>
             </div>
           )}
-          {sb.house != null && <p class="insp__read">{planetInHouseLine(sb.body, sb.house)}</p>}
+          {showsEnglishInterpretation && sb.house != null && <p class="insp__read">{planetInHouseLine(sb.body, sb.house)}</p>}
           {/* Placement pages exist for the ten planets only — the nodes
               have no learn page to link. */}
           {!sb.body.includes('Node')
@@ -220,7 +221,7 @@ export default function Inspector({ scene, selection, onSelect, locale, banner }
           <Receipt label={t(locale, 'orb')}>
             {sa.orb.toFixed(1)}° · {sa.applying ? t(locale, 'applying') : t(locale, 'separating')}
           </Receipt>
-          <p class="insp__read">{natalAspectLine(sa.a, sa.type, sa.b)}</p>
+          {showsEnglishInterpretation && <p class="insp__read">{natalAspectLine(sa.a, sa.type, sa.b)}</p>}
           {learn(`/learn/aspects/${sa.type}/`, aspectLabel(locale, sa.type))}
         </>
       );

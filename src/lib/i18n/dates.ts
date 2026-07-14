@@ -3,8 +3,13 @@ import { normalizeLocale, type Locale } from './index';
 export const TECHNICAL_OFFSET_LOCALE = 'en-US';
 export const TECHNICAL_WALL_LOCALE = 'en-CA';
 
+const INTL_LOCALES = {
+  en: 'en-US',
+  es: 'es-419',
+} as const satisfies Record<Locale, string>;
+
 export function intlLocale(locale: Locale): string {
-  return locale === 'es' ? 'es-419' : 'en-US';
+  return INTL_LOCALES[locale];
 }
 
 export function formatDate(

@@ -1,3 +1,5 @@
+import type { Locale } from './i18n';
+
 export const A2HS_HINT_KEY = 'zodiacs.a2hs.v1';
 
 export type A2hsPlatform = 'ios' | 'android';
@@ -24,7 +26,11 @@ const COPY = {
     android: 'Para tener tus cartas guardadas a mano, toca Menú → Añadir a pantalla de inicio.',
     dismiss: 'Descartar indicación de pantalla de inicio',
   },
-} as const;
+} as const satisfies Record<Locale, {
+  ios: string;
+  android: string;
+  dismiss: string;
+}>;
 
 /** User-agent routing only chooses the instruction; it never changes behavior. */
 export function a2hsPlatform(userAgent: string): A2hsPlatform | null {
@@ -42,7 +48,7 @@ export function a2hsPlatform(userAgent: string): A2hsPlatform | null {
 
 /** Atomically claims the one-time hint. Storage failure means no repeated prompt. */
 export function claimA2hsHint(
-  locale: 'en' | 'es',
+  locale: Locale,
   userAgent: string,
   storage: StorageLike,
 ): A2hsHint | null {

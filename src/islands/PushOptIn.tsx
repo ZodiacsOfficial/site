@@ -45,7 +45,19 @@ const COPY = {
     denied: 'Las notificaciones están bloqueadas en este navegador. Puedes cambiarlo en los ajustes del sitio.',
     error: 'Las notas diarias no están disponibles ahora. Inténtalo más tarde.',
   },
-} as const;
+} as const satisfies Record<Locale, {
+  heading: string;
+  body: string;
+  ios: string;
+  accept: string;
+  installing: string;
+  dismiss: string;
+  dismissLabel: string;
+  on: string;
+  off: string;
+  denied: string;
+  error: string;
+}>;
 
 function track(name: 'push_prompt' | 'push_subscribe'): void {
   (window as Window & {
@@ -63,8 +75,7 @@ async function currentSubscription(): Promise<PushSubscription | null> {
 }
 
 export default function PushOptIn({ locale = 'en', context = 'chart-save' }: Props) {
-  const lang = locale === 'es' ? 'es' : 'en';
-  const copy = COPY[lang];
+  const copy = COPY[locale];
   const [view, setView] = useState<View>('hidden');
 
   useEffect(() => {
@@ -83,7 +94,7 @@ export default function PushOptIn({ locale = 'en', context = 'chart-save' }: Pro
       if (needsInstall) {
         // Claim only the install hint. The independent push claim remains open
         // for the first contextual visit from the installed Home Screen app.
-        if (claimA2hsHint(lang, navigator.userAgent, localStorage)) setView('ios-install');
+        if (claimA2hsHint(locale, navigator.userAgent, localStorage)) setView('ios-install');
         return;
       }
 
@@ -134,7 +145,7 @@ export default function PushOptIn({ locale = 'en', context = 'chart-save' }: Pro
         method: 'POST',
         credentials: 'same-origin',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...subscription.toJSON(), lang }),
+        body: JSON.stringify({ ...subscription.toJSON(), lang: locale }),
       });
       if (!response.ok) {
         if (!existing) await subscription.unsubscribe();
