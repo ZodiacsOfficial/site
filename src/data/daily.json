@@ -1,58 +1,58 @@
 {
-  "date": "2026-07-13",
+  "date": "2026-07-14",
   "bodies": [
     {
       "body": "Moon",
-      "lon": 98.34,
+      "lon": 113.41,
       "sign": "cancer",
-      "degree": 8.3,
+      "degree": 23.4,
       "retrograde": false
     },
     {
       "body": "Sun",
-      "lon": 111.12,
+      "lon": 112.08,
       "sign": "cancer",
-      "degree": 21.1,
+      "degree": 22.1,
       "retrograde": false
     },
     {
       "body": "Mercury",
-      "lon": 110.42,
+      "lon": 109.79,
       "sign": "cancer",
-      "degree": 20.4,
+      "degree": 19.8,
       "retrograde": true
     },
     {
       "body": "Venus",
-      "lon": 154.19,
+      "lon": 155.29,
       "sign": "virgo",
-      "degree": 4.2,
+      "degree": 5.3,
       "retrograde": false
     },
     {
       "body": "Mars",
-      "lon": 70.36,
+      "lon": 71.06,
       "sign": "gemini",
-      "degree": 10.4,
+      "degree": 11.1,
       "retrograde": false
     },
     {
       "body": "Jupiter",
-      "lon": 122.87,
+      "lon": 123.09,
       "sign": "leo",
-      "degree": 2.9,
+      "degree": 3.1,
       "retrograde": false
     },
     {
       "body": "Saturn",
-      "lon": 14.6,
+      "lon": 14.62,
       "sign": "aries",
       "degree": 14.6,
       "retrograde": false
     },
     {
       "body": "Uranus",
-      "lon": 64.3,
+      "lon": 64.34,
       "sign": "gemini",
       "degree": 4.3,
       "retrograde": false
@@ -66,7 +66,7 @@
     },
     {
       "body": "Pluto",
-      "lon": 304.6,
+      "lon": 304.58,
       "sign": "aquarius",
       "degree": 4.6,
       "retrograde": true
@@ -74,19 +74,15 @@
   ],
   "moon": {
     "phase": "New Moon",
-    "illumination": 0.014
+    "illumination": 0.001
   },
   "events": [
     {
-      "kind": "aspect",
-      "a": "Venus",
-      "b": "Uranus",
-      "type": "square",
-      "at": "2026-07-13T14:26:43.095Z",
-      "aSign": "virgo",
-      "aDegree": 4.3,
-      "bSign": "gemini",
-      "bDegree": 4.3
+      "kind": "lunation",
+      "type": "new",
+      "at": "2026-07-14T09:44:04.307Z",
+      "sign": "cancer",
+      "degree": 22
     }
   ]
 }
