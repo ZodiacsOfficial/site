@@ -25,6 +25,7 @@ const PF_PAIR_COPY = {
   en: { savedPairs: 'Saved comparisons', pairRemoved: 'Comparison removed.' },
   es: { savedPairs: 'Comparaciones guardadas', pairRemoved: 'Comparación eliminada.' },
   pt: { savedPairs: 'Comparações salvas', pairRemoved: 'Comparação removida.' },
+  fr: { savedPairs: 'Comparaisons enregistrées', pairRemoved: 'Comparaison supprimée.' },
 } as const satisfies Record<Locale, Record<'savedPairs' | 'pairRemoved', string>>;
 export const PF_BOOK_COPY = {
   en: {
@@ -47,6 +48,13 @@ export const PF_BOOK_COPY = {
       : `${n} mapas salvos: o seu e os das pessoas para quem você faz leituras.`,
     add: 'Adicionar o mapa de alguém',
     privacy: 'Salvo neste dispositivo. Nada é enviado, a menos que você ative a sincronização.',
+  },
+  fr: {
+    count: (n: number) => n === 1
+      ? '1 thème enregistré.'
+      : `${n} thèmes enregistrés : le tien et ceux que tu interprètes pour d’autres personnes.`,
+    add: 'Ajouter le thème de quelqu’un',
+    privacy: 'Enregistré sur cet appareil. Rien n’est envoyé tant que tu n’actives pas la synchronisation.',
   },
 } as const;
 const HAS_PROFILE_SYNC = Boolean(

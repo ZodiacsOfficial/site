@@ -130,7 +130,52 @@ const COPY = {
     nextUp: 'Próximos a chegar ao ponto exato:',
     noSlowExact: 'Nenhum trânsito lento chega ao ponto exato nesta janela.',
   },
+  fr: {
+    skyRingLabel: 'le ciel en transit',
+    scrubLabel: 'Déplacer la date',
+    scrubHint: 'Fais glisser pour avancer ou reculer dans le ciel ; l’anneau extérieur montre la position des planètes à cet instant.',
+    now: 'Maintenant',
+    back1m: '−1 mois',
+    fwd1m: '+1 mois',
+    outerRing: 'Anneau extérieur : le ciel à cette date. Roue intérieure : ton thème natal.',
+    tapHint: 'Touche une planète en mouvement ou une ligne de liaison pour lire ce transit.',
+    noContacts: 'Aucun transit de planète à planète à moins de',
+    ofExact: 'de l’exactitude',
+    moonOmitted: 'la Lune va trop vite pour figurer dans la liste, mais tu peux la suivre sur la roue',
+    announce: 'Ciel du',
+    scanning: 'Calcul des dates exactes des transits lents…',
+    marksLabel: 'Dates exactes des transits lents dans cette période',
+    nextUp: 'Prochains passages exacts :',
+    noSlowExact: 'Aucun transit lent ne devient exact dans cette période.',
+  },
 } as const;
+
+const FRENCH_FEMININE_NATAL = new Set(['Moon', 'Venus']);
+const isAngle = (point: string) => point === 'ASC' || point === 'MC';
+const natalQualifier = (locale: Locale, point: string) => (
+  locale === 'fr'
+    ? (FRENCH_FEMININE_NATAL.has(point) ? 'natale' : 'natal')
+    : t(locale, 'natal')
+);
+const natalPointName = (locale: Locale, point: string) => (
+  isAngle(point) ? point : planetLabel(locale, point)
+);
+const natalPointText = (locale: Locale, point: string) => (
+  locale === 'fr'
+    ? `${natalPointName(locale, point)} ${natalQualifier(locale, point)}`
+    : `${natalQualifier(locale, point)} ${natalPointName(locale, point)}`
+);
+
+function NatalPointLabel({ locale, point }: { locale: Locale; point: string }) {
+  return (
+    <>
+      {locale !== 'fr' && <>{natalQualifier(locale, point)}{' '}</>}
+      {!isAngle(point) && <><PlanetGlyph body={point} size={13} class="pg-inline" />{' '}</>}
+      {natalPointName(locale, point)}
+      {locale === 'fr' && <>{' '}{natalQualifier(locale, point)}</>}
+    </>
+  );
+}
 
 export default function TransitRing({ locale, natal, computeSky, nowMs, focusRequest = null }: TransitRingProps) {
   const c = COPY[locale] ?? COPY.en;
@@ -220,9 +265,7 @@ export default function TransitRing({ locale, natal, computeSky, nowMs, focusReq
   /** Days from now to a contact's exact instant (fractional). */
   const eventOffset = (e: TransitContact) => (Date.parse(e.exactUtc) - nowMs) / DAY;
   const eventLabel = (e: TransitContact) => {
-    const point = e.natalPoint === 'ASC' || e.natalPoint === 'MC'
-      ? e.natalPoint : planetLabel(locale, e.natalPoint);
-    return `${planetLabel(locale, e.transitBody)} ${aspectLabel(locale, e.aspect)} ${t(locale, 'natal')} ${point}`;
+    return `${planetLabel(locale, e.transitBody)} ${aspectLabel(locale, e.aspect)} ${natalPointText(locale, e.natalPoint)}`;
   };
   const nextUp = events?.filter((e) => Date.parse(e.exactUtc) > when.getTime()).slice(0, 3) ?? [];
 
@@ -416,12 +459,7 @@ export default function TransitRing({ locale, natal, computeSky, nowMs, focusReq
               >
                 <PlanetGlyph body={focusedPoint.transitBody} size={13} class="pg-inline" /> {planetLabel(locale, focusedPoint.transitBody)}
                 {' '}<AspectGlyph type={focusedPoint.aspect} size={13} class="pg-inline" /> {aspectLabel(locale, focusedPoint.aspect)}
-                {' '}{t(locale, 'natal')}{' '}
-                {focusedPoint.natalPoint !== 'ASC' && focusedPoint.natalPoint !== 'MC' && (
-                  <PlanetGlyph body={focusedPoint.natalPoint} size={13} class="pg-inline" />
-                )}{' '}{focusedPoint.natalPoint === 'ASC' || focusedPoint.natalPoint === 'MC'
-                  ? focusedPoint.natalPoint
-                  : planetLabel(locale, focusedPoint.natalPoint)}
+                {' '}<NatalPointLabel locale={locale} point={focusedPoint.natalPoint} />
                 {' · '}{t(locale, 'orb')} {focusedPoint.orb.toFixed(1)}°
               </span>
               {showInterpretation && (
@@ -434,7 +472,7 @@ export default function TransitRing({ locale, natal, computeSky, nowMs, focusReq
               <span class="tring__focus-receipt mono">
                 <PlanetGlyph body={selectedAspect.outer} size={13} class="pg-inline" /> {planetLabel(locale, selectedAspect.outer)}
                 {' '}<AspectGlyph type={selectedAspect.type} size={13} class="pg-inline" /> {aspectLabel(locale, selectedAspect.type)}
-                {' '}{t(locale, 'natal')} <PlanetGlyph body={selectedAspect.inner} size={13} class="pg-inline" /> {planetLabel(locale, selectedAspect.inner)}
+                {' '}<NatalPointLabel locale={locale} point={selectedAspect.inner} />
                 {' · '}{t(locale, 'orb')} {selectedAspect.orb.toFixed(1)}°
               </span>
               {showInterpretation && (
@@ -473,7 +511,7 @@ export default function TransitRing({ locale, natal, computeSky, nowMs, focusReq
               }}
             >
               <span class="syn__aspect-receipt mono">
-                <PlanetGlyph body={a.outer} size={13} class="pg-inline" /> {planetLabel(locale, a.outer)} <AspectGlyph type={a.type} size={13} class="pg-inline" /> {aspectLabel(locale, a.type)} {t(locale, 'natal')} <PlanetGlyph body={a.inner} size={13} class="pg-inline" /> {planetLabel(locale, a.inner)} · {t(locale, 'orb')} {a.orb.toFixed(1)}°
+                <PlanetGlyph body={a.outer} size={13} class="pg-inline" /> {planetLabel(locale, a.outer)} <AspectGlyph type={a.type} size={13} class="pg-inline" /> {aspectLabel(locale, a.type)} <NatalPointLabel locale={locale} point={a.inner} /> · {t(locale, 'orb')} {a.orb.toFixed(1)}°
               </span>
               {showInterpretation && (
                 <span class="syn__aspect-read">{transitLine(a.outer, a.type, a.inner)}</span>

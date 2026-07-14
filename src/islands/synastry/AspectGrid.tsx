@@ -32,6 +32,11 @@ const COPY = {
     empty: 'Sem aspecto maior',
     contact: [': ', ', orbe ', ' graus'],
   },
+  fr: {
+    caption: 'Grille des aspects entre {a} et {b}',
+    empty: 'Aucun aspect majeur',
+    contact: ['\u00a0: ', ', orbe ', ' degrés'],
+  },
 } as const satisfies Record<Locale, { caption: string; empty: string; contact: readonly [string, string, string] }>;
 
 export const formatRelationshipCopy = (text: string, values: Record<string, string>) =>
