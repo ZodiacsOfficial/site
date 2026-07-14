@@ -58,6 +58,19 @@ const SHARE_COPY = {
     shareLinkAmbiguous: 'Este link contém dois formatos de mapa, por isso nenhum deles foi aberto.',
     positionsShareUnavailable: 'Não foi possível criar um link apenas com posições para este mapa.',
   },
+  fr: {
+    shareOptionsTitle: 'Partager ce thème',
+    closeShare: 'Fermer les options de partage',
+    hideBirthDetails: 'Masquer les données de naissance',
+    copyPositionsLink: 'Copier le lien avec les positions uniquement',
+    positionsShareNote: 'Le lien omet ta date, ton heure et ton lieu de naissance ; sur l’image, ces données sont remplacées par la version du moteur. Les positions planétaires peuvent tout de même permettre de t’identifier : ce partage n’est pas anonyme.',
+    positionsOnlyTitle: 'Positions partagées du thème',
+    positionsOnlyNotice: 'Positions uniquement — données de naissance non incluses.',
+    positionsOnlyPrivacy: 'Ce code omet la date, l’heure et le lieu de naissance. Les positions planétaires peuvent tout de même permettre de t’identifier : ce partage n’est pas anonyme.',
+    positionsLinkInvalid: 'Ce lien avec les positions uniquement est incorrect ou incomplet.',
+    shareLinkAmbiguous: 'Ce lien contient deux formats de thème : aucun des deux n’a donc été ouvert.',
+    positionsShareUnavailable: 'Impossible de créer un lien avec les positions uniquement pour ce thème.',
+  },
 } as const;
 
 export type ShareCopyKey = keyof typeof SHARE_COPY.en;

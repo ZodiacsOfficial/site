@@ -30,6 +30,11 @@ const COPY = {
     unavailable: 'Link do calendário indisponível',
     note: 'Este é um calendário com atualização automática. Assine uma vez, e seu calendário manterá os eventos atualizados. A URL contém apenas posições planetárias e ASC/MC: não inclui nome, data, hora, local nem coordenadas de nascimento.',
   },
+  fr: {
+    action: 'Ajouter à ton calendrier',
+    unavailable: 'Lien de calendrier indisponible',
+    note: 'Ce calendrier se met à jour automatiquement. Abonne-toi une seule fois, puis ton calendrier actualisera les événements. L’URL contient uniquement les positions planétaires et l’ASC/MC : ni nom, ni date, ni heure, ni lieu, ni coordonnées de naissance.',
+  },
 } as const;
 
 export function calendarWebcalUrl(origin: string, token: string): string {

@@ -1,0 +1,82 @@
+---
+import Base from '../../../layouts/Base.astro';
+import Faq from '../../../components/Faq.astro';
+import SaturnReturnCalculator from '../../../islands/SaturnReturnCalculator';
+import '../../../styles/calculator.css';
+
+const faq = [
+  {
+    q: 'Qu’est-ce qu’un retour de Saturne ?',
+    a: 'C’est le moment où Saturne en transit revient au degré exact qu’il occupait à ta naissance. Saturne met environ 29,4 ans à parcourir le zodiaque : le premier retour arrive donc vers 29 ans, le deuxième vers 58 ans et le troisième autour de 88 ans. L’astrologie l’interprète comme un examen de ce qui fonctionne par inertie plutôt que par choix.',
+  },
+  {
+    q: 'Quand a lieu mon retour de Saturne ?',
+    a: 'Indique ta date de naissance. Le calculateur suit le mouvement réel de Saturne et donne les dates exactes, passages rétrogrades compris. La plupart des premiers retours commencent entre 28 et 30 ans ; l’idée répandue selon laquelle « Saturne a gâché mes 29 ans » décrit souvent le cœur de cette période.',
+  },
+  {
+    q: 'Pourquoi mon retour de Saturne comporte-t-il trois dates ?',
+    a: 'Saturne rétrograde environ quatre mois et demi par an. Lorsque cette boucle croise ton degré natal, la planète peut le toucher trois fois : une fois en avançant, une fois en reculant, puis une dernière fois en repartant. Toute cette période, souvent longue de huit à douze mois, fait partie du retour.',
+  },
+  {
+    q: 'Combien de temps dure un retour de Saturne ?',
+    a: 'Les passages exacts peuvent s’étendre de quelques jours à près d’un an, selon qu’une boucle rétrograde intervient ou non. L’expérience se lit plus largement : on considère généralement tout le transit de Saturne dans le signe de ton Saturne natal, soit environ deux ans et demi.',
+  },
+  {
+    q: 'Le retour de Saturne est-il une mauvaise chose ?',
+    a: 'Il a la réputation de tout démolir, mais il ressemble plutôt à une inspection. Les carrières, relations et modes de vie qui conviennent se consolident ; ceux qui ne tiennent que par habitude finissent par en payer le prix. Beaucoup de personnes le trouvent terrible à 29 ans et formateur lorsqu’elles le regardent à 35 ans.',
+  },
+];
+
+const jsonLd = [
+  {
+    '@type': 'WebApplication',
+    name: 'Calculateur de retour de Saturne',
+    url: 'https://zodiacs.org/fr/saturn-return/',
+    applicationCategory: 'LifestyleApplication',
+    operatingSystem: 'Web',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    inLanguage: 'fr',
+    isPartOf: { '@id': 'https://zodiacs.org/#site' },
+  },
+  {
+    '@type': 'FAQPage',
+    inLanguage: 'fr',
+    mainEntity: faq.map(({ q, a }) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: { '@type': 'Answer', text: a },
+    })),
+  },
+];
+---
+<Base
+  clientUi
+  title="Calculateur de retour de Saturne | Zodiacs.org"
+  description="Trouve gratuitement les dates exactes de ton retour de Saturne, passages rétrogrades compris, calculées sur ton appareil."
+  path="/fr/saturn-return/"
+  locale="fr"
+  image="/assets/og/v2/tool/saturn-return.png"
+  imageAlt="Calculateur de retour de Saturne — Zodiacs.org"
+  jsonLd={jsonLd}
+>
+  <section class="section--tight container">
+    <div class="tool-hero">
+      <h1 class="display">Ton retour de Saturne, avec ses dates.</h1>
+      <p>Autour de 29 ans, Saturne revient à la place qu’il occupait à ta naissance. Ce calculateur trouve les dates exactes à partir de ta date de naissance.</p>
+    </div>
+    <SaturnReturnCalculator locale="fr" client:load />
+    <noscript>
+      <p>Ce calculateur de retour de Saturne nécessite JavaScript. Active JavaScript et recharge la page pour calculer les dates de tes retours à partir de ta date de naissance.</p>
+    </noscript>
+  </section>
+
+  <section class="section--tight container container--narrow">
+    <Faq items={faq} heading="Questions sur le retour de Saturne" />
+  </section>
+</Base>
+
+<style>
+  .tool-hero { max-width: 62ch; margin-bottom: clamp(28px, 5vw, 44px); }
+  .tool-hero h1 { margin: 0 0 16px; font-size: var(--text-2xl); line-height: 1.04; }
+  .tool-hero p { margin: 0; color: var(--muted); font-size: var(--text-lg); text-wrap: pretty; }
+</style>

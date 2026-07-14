@@ -16,6 +16,7 @@ const FOOTER_COPY = {
   en: { assistant: 'Ask the site', today: 'Today' },
   es: { assistant: 'Pregúntale al sitio', today: 'Hoy (en inglés)' },
   pt: { assistant: 'Pergunte ao site', today: 'Hoje (em inglês)' },
+  fr: { assistant: 'Poser une question au site', today: 'Aujourd’hui (en anglais)' },
 } as const satisfies Record<Locale, { assistant: string; today: string }>;
 const privacyHref = localizePath(locale, '/privacy/');
 ---

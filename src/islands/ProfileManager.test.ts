@@ -36,3 +36,15 @@ describe('Brazilian Portuguese profile chart count', () => {
     );
   });
 });
+
+describe('French profile chart count', () => {
+  it('uses singular grammar for one saved chart', () => {
+    expect(PF_BOOK_COPY.fr.count(1)).toBe('1 thème enregistré.');
+  });
+
+  it('uses plural grammar for multiple saved charts', () => {
+    expect(PF_BOOK_COPY.fr.count(2)).toBe(
+      '2 thèmes enregistrés : le tien et ceux que tu interprètes pour d’autres personnes.',
+    );
+  });
+});

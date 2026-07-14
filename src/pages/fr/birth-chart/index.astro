@@ -1,0 +1,102 @@
+---
+import Base from '../../../layouts/Base.astro';
+import Faq from '../../../components/Faq.astro';
+import ChartCalculator from '../../../islands/ChartCalculator';
+import '../../../styles/calculator.css';
+import '../../../styles/explorer.css';
+
+const faq = [
+  {
+    q: 'Qu’est-ce qu’un thème astral ?',
+    a: 'Un thème astral, ou thème natal, est une carte de la position de chaque planète — vue depuis la Terre — au moment et à l’endroit précis de ta naissance. Il indique ton Soleil, ta Lune et ton ascendant, ainsi que les positions de Mercure à Pluton dans les douze maisons.',
+  },
+  {
+    q: 'Dois-je connaître mon heure de naissance exacte ?',
+    a: 'Oui, pour calculer l’ascendant et les maisons : l’ascendant change environ toutes les deux heures. Si tu ignores l’heure, nous calculons les planètes à midi ; ton Soleil et, en général, ta Lune restent précis pour cette journée. Ton acte de naissance, ton carnet de santé ou ta famille sont souvent les meilleures sources.',
+  },
+  {
+    q: 'Quelle est la précision de ce calculateur ?',
+    a: 'Les positions planétaires sont calculées avec un moteur astronomique professionnel et comparées en continu aux données de référence du JPL de la NASA, avec une marge de quelques centièmes de degré. Les fuseaux horaires historiques, y compris l’heure moyenne locale avant 1922 et les changements d’heure en temps de guerre, sont traités avec la base complète de l’IANA.',
+  },
+  {
+    q: 'Que deviennent mes données de naissance ?',
+    a: 'Le thème complet est calculé dans ton navigateur ; aucune API serveur ne traite les thèmes et tu n’as pas besoin de compte. Si tu enregistres un thème, il reste d’abord sur cet appareil. La synchronisation facultative ne transfère tes thèmes enregistrés qu’après ta connexion.',
+  },
+  {
+    q: 'Maisons en signes entiers ou Placidus : que choisir ?',
+    a: 'Le système des maisons en signes entiers est le plus ancien et le plus simple à lire : chaque maison occupe un signe complet. Placidus est l’option moderne la plus courante et divise les maisons selon leur temps d’ascension, si bien que leur taille varie. Essaie les deux : tes planètes ne bougent pas ; seules les limites des maisons changent.',
+  },
+];
+
+const jsonLd = [
+  {
+    '@type': 'WebApplication',
+    name: 'Calculateur gratuit de thème astral',
+    url: 'https://zodiacs.org/fr/birth-chart/',
+    applicationCategory: 'LifestyleApplication',
+    operatingSystem: 'Web',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    featureList: 'Soleil, Lune, ascendant, planètes de Mercure à Pluton, Nœud vrai, maisons en signes entiers et Placidus, aspects',
+    inLanguage: 'fr',
+    isPartOf: { '@id': 'https://zodiacs.org/#site' },
+  },
+  {
+    '@type': 'FAQPage',
+    inLanguage: 'fr',
+    mainEntity: faq.map(({ q, a }) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: { '@type': 'Answer', text: a },
+    })),
+  },
+  {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Zodiacs.org en français', item: 'https://zodiacs.org/fr/' },
+      { '@type': 'ListItem', position: 2, name: 'Outils', item: 'https://zodiacs.org/fr/tools/' },
+      { '@type': 'ListItem', position: 3, name: 'Calculateur de thème astral', item: 'https://zodiacs.org/fr/birth-chart/' },
+    ],
+  },
+];
+---
+<Base
+  clientUi
+  glass
+  title="Thème astral gratuit — Soleil, Lune et ascendant | Zodiacs.org"
+  description="Calcule gratuitement ton thème astral : Soleil, Lune, ascendant, planètes, maisons et leur signification. Confidentiel dans ton navigateur et expliqué clairement."
+  path="/fr/birth-chart/"
+  locale="fr"
+  image="/assets/og/v2/tool/birth-chart.png"
+  imageAlt="Calculateur gratuit de thème astral — Zodiacs.org"
+  jsonLd={jsonLd}
+>
+  <section class="section--tight container">
+    <div class="tool-hero">
+      <h1 class="display">Obtiens ton thème astral gratuit.</h1>
+      <p>Indique ta date, ton heure et ton lieu de naissance pour voir ton Soleil, ta Lune, ton ascendant, tes planètes, tes maisons et leur signification.</p>
+    </div>
+    <ChartCalculator mode="full" locale="fr" client:load />
+    <noscript>
+      <p>Ce calculateur de thème astral nécessite JavaScript. Active JavaScript et recharge la page pour calculer ton Soleil, ta Lune, ton ascendant, tes planètes et tes maisons dans ton navigateur.</p>
+    </noscript>
+  </section>
+
+  <section class="section--tight container container--narrow">
+    <div class="prose">
+      <h2>Ce que tu regardes</h2>
+      <p>Un thème astral est une photographie du ciel prise depuis ton lieu de naissance, au moment où tu es né·e. Il montre les signes, les maisons et les planètes à des degrés précis.</p>
+      <p>Commence par ton Soleil, ta Lune et ton ascendant : identité, vie émotionnelle et première impression. Tu peux ensuite enregistrer le thème et y revenir quand tu veux.</p>
+      <p>Retrouve toute la méthodologie dans <a href="/fr/methodology/">notre méthode de calcul</a>.</p>
+    </div>
+  </section>
+
+  <section class="section--tight container container--narrow">
+    <Faq items={faq} heading="Questions sur le thème astral" />
+  </section>
+</Base>
+
+<style>
+  .tool-hero { max-width: 62ch; margin-bottom: clamp(28px, 5vw, 44px); }
+  .tool-hero h1 { margin: 0 0 16px; font-size: var(--text-2xl); line-height: 1.04; }
+  .tool-hero p { margin: 0; color: var(--muted); font-size: var(--text-lg); text-wrap: pretty; }
+</style>

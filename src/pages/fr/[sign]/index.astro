@@ -1,0 +1,215 @@
+---
+import Base from '../../../layouts/Base.astro';
+import SignIcon from '../../../components/SignIcon.astro';
+import Faq from '../../../components/Faq.astro';
+import CollectBand from '../../../components/CollectBand.astro';
+import ShareRow from '../../../components/ShareRow.astro';
+import { SIGNS, SIGN_SLUGS, elementLabel, signBySlug, signDates, signName } from '../../../lib/signs';
+import { localizePath } from '../../../lib/i18n';
+import { frenchGuideFor } from '../../../data/fr-guides';
+import { pairSlug } from '../../../lib/compat';
+import { EDITOR_AUTHOR } from '../../../lib/editorial';
+
+export function getStaticPaths() {
+  return SIGN_SLUGS.map((sign) => ({ params: { sign } }));
+}
+
+const sign = signBySlug(Astro.params.sign!);
+const guide = frenchGuideFor(sign);
+const idx = SIGNS.findIndex((s) => s.slug === sign.slug);
+const prev = SIGNS[(idx + 11) % 12];
+const next = SIGNS[(idx + 1) % 12];
+const easeful = {
+  aries: ['leo', 'sagittarius', 'gemini'],
+  taurus: ['virgo', 'capricorn', 'cancer'],
+  gemini: ['libra', 'aquarius', 'aries'],
+  cancer: ['scorpio', 'pisces', 'taurus'],
+  leo: ['aries', 'sagittarius', 'libra'],
+  virgo: ['taurus', 'capricorn', 'cancer'],
+  libra: ['gemini', 'aquarius', 'leo'],
+  scorpio: ['cancer', 'pisces', 'virgo'],
+  sagittarius: ['aries', 'leo', 'aquarius'],
+  capricorn: ['taurus', 'virgo', 'scorpio'],
+  aquarius: ['gemini', 'libra', 'sagittarius'],
+  pisces: ['cancer', 'scorpio', 'capricorn'],
+}[sign.slug]!;
+
+const jsonLd = [
+  {
+    '@type': 'Article',
+    headline: guide.title,
+    description: guide.description,
+    url: `https://zodiacs.org/fr/${sign.slug}/`,
+    datePublished: '2026-07-07T03:45:11+07:00',
+    dateModified: '2026-07-15T00:00:00+07:00',
+    author: EDITOR_AUTHOR,
+    publisher: { '@id': 'https://zodiacs.org/#org' },
+    mainEntityOfPage: { '@type': 'WebPage', '@id': `https://zodiacs.org/fr/${sign.slug}/` },
+    image: `https://zodiacs.org/assets/og/v2/sign/${sign.slug}.png`,
+    inLanguage: 'fr',
+    about: { '@type': 'Thing', name: `${signName(sign, 'fr')} (astrologie)` },
+  },
+  {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Zodiacs.org en français', item: 'https://zodiacs.org/fr/' },
+      { '@type': 'ListItem', position: 2, name: 'Signes du zodiaque', item: 'https://zodiacs.org/fr/#signes' },
+      { '@type': 'ListItem', position: 3, name: signName(sign, 'fr'), item: `https://zodiacs.org/fr/${sign.slug}/` },
+    ],
+  },
+  {
+    '@type': 'FAQPage',
+    inLanguage: 'fr',
+    mainEntity: guide.faq.map(({ q, a }) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: { '@type': 'Answer', text: a },
+    })),
+  },
+];
+---
+<Base
+  title={`${guide.title} | Zodiacs.org`}
+  description={guide.description}
+  path={`/fr/${sign.slug}/`}
+  image={`/assets/og/v2/sign/${sign.slug}.png`}
+  imageAlt={`${signName(sign, 'fr')} — guide du signe sur Zodiacs.org`}
+  type="article"
+  locale="fr"
+  jsonLd={jsonLd}
+>
+  <article style={`--sign:${sign.hue}`}>
+    <header class="guide-es-hero container">
+      <SignIcon sign={sign.slug} size={168} loading="eager" class="guide-es-hero__icon" />
+      <div>
+        <span class="eyebrow">{sign.glyph} · {elementLabel(sign.element, 'fr')} · {signDates(sign, 'fr')}</span>
+        <h1 class="display">{signName(sign, 'fr')}</h1>
+        <p>{guide.intro[0]}</p>
+        <div class="guide-es-hero__ctas">
+          <a class="btn btn--primary" href={localizePath('fr', '/birth-chart/')}><span>Obtiens ton thème astral gratuit</span><span class="orb">↗</span></a>
+          <a class="btn btn--ghost" href={localizePath('fr', '/compatibility/')}><span>Voir la compatibilité</span></a>
+        </div>
+      </div>
+    </header>
+
+    <div class="container container--narrow guide-es-body">
+      <div class="reveal">
+        <CollectBand signName={signName(sign, 'fr')} slug={sign.slug} locale="fr" />
+      </div>
+
+      <div class="prose reveal">
+        {guide.intro.slice(1).map((p) => <p>{p}</p>)}
+        {guide.sections.map((section) => (
+          <>
+            <h2>{section.heading}</h2>
+            {section.body.map((p) => <p>{p}</p>)}
+            {section.risingProfile && (
+              <p>
+                <a href={`/rising-sign/${sign.slug}/`} hreflang="en">
+                  Profil complet de l’ascendant {signName(sign, 'fr')} (en anglais) →
+                </a>
+              </p>
+            )}
+          </>
+        ))}
+      </div>
+
+      <section class="guide-es-panel shell tinted reveal" style={`--sign:${sign.hue}`}>
+        <div class="core tinted guide-es-panel__core">
+          <h2>Compatibilité en bref</h2>
+          <p>
+            L’alchimie entre deux signes solaires n’est qu’un début. Ces signes
+            s’accordent souvent avec {signName(sign, 'fr')} ; pour une lecture complète, compare les deux thèmes.
+            Les guides de paires liés ci-dessous sont en anglais.
+          </p>
+          <div class="guide-es-panel__chips">
+            {easeful.map((slug) => {
+              const s = signBySlug(slug);
+              return (
+                <a class="chip" href={`/compatibility/${pairSlug(sign.slug, s.slug)}/`} hreflang="en" style={`--sign:${s.hue}`}>
+                  <SignIcon sign={s.slug} size={18} class="chip__icon" /> {signName(sign, 'fr')} et {signName(s, 'fr')}
+                </a>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      <section class="reveal">
+        <Faq items={guide.faq} heading={`${signName(sign, 'fr')} : questions fréquentes`} />
+      </section>
+
+      <ShareRow
+        text={`${signName(sign, 'fr')} — le guide complet`}
+        url={`https://zodiacs.org/fr/${sign.slug}/`}
+        locale="fr"
+      />
+    </div>
+
+    <nav class="container guide-es-nav reveal" aria-label="Autres signes">
+      <a class="guide-es-nav__link" href={localizePath('fr', `/${prev.slug}/`)} style={`--sign:${prev.hue}`}>
+        <span class="mono--label">← Précédent</span>
+        <span><SignIcon sign={prev.slug} size={22} /> {signName(prev, 'fr')}</span>
+      </a>
+      <a class="guide-es-nav__link guide-es-nav__link--next" href={localizePath('fr', `/${next.slug}/`)} style={`--sign:${next.hue}`}>
+        <span class="mono--label">Suivant →</span>
+        <span><SignIcon sign={next.slug} size={22} /> {signName(next, 'fr')}</span>
+      </a>
+    </nav>
+  </article>
+</Base>
+
+<style>
+  .guide-es-hero {
+    display: grid;
+    gap: clamp(22px, 5vw, 44px);
+    align-items: center;
+    padding-block: clamp(28px, 6vw, 68px) clamp(22px, 5vw, 42px);
+  }
+  @media (min-width: 760px) {
+    .guide-es-hero { grid-template-columns: auto minmax(0, 1fr); }
+  }
+  .guide-es-hero :global(.guide-es-hero__icon) {
+    width: clamp(118px, 16vw, 168px);
+    filter: drop-shadow(0 18px 44px color-mix(in oklab, var(--sign) 30%, transparent));
+  }
+  .guide-es-hero h1 {
+    margin: 12px 0 14px;
+    font-size: var(--text-hero);
+    line-height: 0.96;
+  }
+  .guide-es-hero p {
+    margin: 0;
+    max-width: 58ch;
+    color: var(--muted);
+    font-size: var(--text-lg);
+    line-height: 1.6;
+    text-wrap: pretty;
+  }
+  .guide-es-hero__ctas { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+  .guide-es-body { display: grid; gap: clamp(28px, 5vw, 46px); }
+  .guide-es-panel__core { padding: clamp(22px, 4vw, 32px); display: grid; gap: 12px; }
+  .guide-es-panel h2 { margin: 0; font-size: var(--text-xl); }
+  .guide-es-panel p { margin: 0; max-width: 58ch; color: var(--text-2); line-height: 1.65; }
+  .guide-es-panel__chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .guide-es-nav {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding-block: clamp(34px, 6vw, 70px) 0;
+  }
+  .guide-es-nav__link {
+    display: grid;
+    gap: 7px;
+    min-width: 0;
+    color: var(--text);
+    text-decoration: none;
+  }
+  .guide-es-nav__link span:last-child {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+  }
+  .guide-es-nav__link--next { text-align: right; justify-items: end; }
+</style>

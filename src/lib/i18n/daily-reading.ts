@@ -77,6 +77,39 @@ const PLANET_VERB_PT: Record<string, string> = {
   Pluto: 'Plutão transforma lentamente',
 };
 
+const ORDINAL_FR = [
+  '', 'première', 'deuxième', 'troisième', 'quatrième', 'cinquième', 'sixième',
+  'septième', 'huitième', 'neuvième', 'dixième', 'onzième', 'douzième',
+];
+
+const HOUSE_THEME_FR: Record<number, string> = {
+  1: 'ton image, tes débuts et l’impression que tu donnes',
+  2: 'l’argent, les possessions et ce qui t’apporte de la stabilité',
+  3: 'les déplacements du quotidien, la fratrie, les messages et ton environnement proche',
+  4: 'le foyer, la famille et les fondations intimes de ta vie',
+  5: 'le plaisir, les histoires d’amour, les enfants et ce que tu crées par goût',
+  6: 'le travail en cours, les habitudes de santé et la charge quotidienne',
+  7: 'les relations et les personnes qui te font face',
+  8: 'l’argent partagé, les dettes, l’intimité et ce qui se mêle',
+  9: 'les voyages, les études, les croyances et la vision à long terme',
+  10: 'la carrière, la réputation et ce que voit le public',
+  11: 'les amitiés, les groupes et l’avenir que tu vises',
+  12: 'le repos, le retrait et ce qui se passe sous la surface',
+};
+
+const PLANET_VERB_FR: Record<string, string> = {
+  Moon: 'La Lune traverse aujourd’hui',
+  Sun: 'Le Soleil parcourt',
+  Mercury: 'Mercure active',
+  Venus: 'Vénus réchauffe',
+  Mars: 'Mars dynamise',
+  Jupiter: 'Jupiter développe',
+  Saturn: 'Saturne met à l’épreuve',
+  Uranus: 'Uranus bouleverse',
+  Neptune: 'Neptune brouille',
+  Pluto: 'Pluton transforme lentement',
+};
+
 const emPt = (phrase: string) => `em ${phrase}`
   .replace(/^em o /, 'no ')
   .replace(/^em a /, 'na ')
@@ -85,6 +118,7 @@ const emPt = (phrase: string) => `em ${phrase}`
 
 const signLabel = (slug: string) => signName(signBySlug(slug), 'es');
 const signLabelPt = (slug: string) => signName(signBySlug(slug), 'pt');
+const signLabelFr = (slug: string) => signName(signBySlug(slug), 'fr');
 const utcTime = (at: string) => `${at.slice(11, 16)} UTC`;
 
 function houseLineEs(body: DailyBody, house: number): DailyLine {
@@ -215,6 +249,70 @@ function eventLinePt(event: DailyEvent, sunSign: string): DailyLine | null {
   return null;
 }
 
+function houseLineFr(body: DailyBody, house: number): DailyLine {
+  const planet = planetLabel('fr', body.body);
+  const rx = body.retrograde ? ' ℞' : '';
+  return {
+    text: `${PLANET_VERB_FR[body.body] ?? `${planet} parcourt`} ta ${ORDINAL_FR[house]} maison : ${HOUSE_THEME_FR[house]}.`,
+    receipt: `${planet} ${body.degree.toFixed(1)}° ${signLabelFr(body.sign)}${rx} · maison ${house}`,
+    body: body.body,
+    hue: signBySlug(body.sign).hue,
+  };
+}
+
+function eventLineFr(event: DailyEvent, sunSign: string): DailyLine | null {
+  if (event.kind === 'ingress' && event.planet && event.sign) {
+    const house = solarHouse(event.sign, sunSign);
+    const planet = planetLabel('fr', event.planet);
+    const focus = event.planet === 'Saturn' || event.planet === 'Pluto'
+      ? 'met l’accent à long terme sur'
+      : 'met l’accent sur';
+    return {
+      text: `${planet} entre aujourd’hui dans ta ${ORDINAL_FR[house]} maison et ${focus} ${HOUSE_THEME_FR[house]}.`,
+      receipt: `${planet} → 0° ${signLabelFr(event.sign)} · ${utcTime(event.at)}`,
+      body: event.planet,
+      hue: signBySlug(event.sign).hue,
+    };
+  }
+  if (event.kind === 'lunation' && event.sign) {
+    const house = solarHouse(event.sign, sunSign);
+    const name = event.type === 'new' ? 'Nouvelle Lune' : 'Pleine Lune';
+    const meaning = event.type === 'new'
+      ? 'ouvre un nouveau chapitre'
+      : 'marque un aboutissement';
+    return {
+      text: `La ${name} dans ta ${ORDINAL_FR[house]} maison ${meaning} : ${HOUSE_THEME_FR[house]}.`,
+      receipt: `${name} ${event.degree}° ${signLabelFr(event.sign)} · ${utcTime(event.at)}`,
+      body: 'Moon',
+      hue: signBySlug(event.sign).hue,
+    };
+  }
+  if (event.kind === 'station' && event.planet && event.sign) {
+    const house = solarHouse(event.sign, sunSign);
+    const planet = planetLabel('fr', event.planet);
+    const retrograde = event.type === 'retrograde';
+    const direction = retrograde ? 'devient rétrograde' : 'redevient direct';
+    const meaning = retrograde ? 'invite à revoir' : 'remet en mouvement';
+    return {
+      text: `${planet} ${direction} dans ta ${ORDINAL_FR[house]} maison : ${meaning} ${HOUSE_THEME_FR[house]}.`,
+      receipt: `${planet} ${direction} ${event.degree}° ${signLabelFr(event.sign)} · ${utcTime(event.at)}`,
+      body: event.planet,
+      hue: signBySlug(event.sign).hue,
+    };
+  }
+  if (event.kind === 'aspect' && event.a && event.b && event.type) {
+    const a = planetLabel('fr', event.a);
+    const b = planetLabel('fr', event.b);
+    const aspect = aspectLabel('fr', event.type);
+    return {
+      text: `${a} en ${aspect} avec ${b} devient exact aujourd’hui : cet aspect est collectif, et le relevé en indique l’heure.`,
+      receipt: `${a} ${aspect} ${b} · exact à ${utcTime(event.at)}`,
+      body: event.a,
+    };
+  }
+  return null;
+}
+
 /**
  * Locale-aware rendering over the same structured daily facts. English keeps
  * the canonical source output byte-for-byte; translated locales mirror its
@@ -223,9 +321,13 @@ function eventLinePt(event: DailyEvent, sunSign: string): DailyLine | null {
 export function dailyReadingForLocale(sunSign: string, daily: Daily, locale: Locale): DailyReading {
   if (locale === 'en') return dailyReading(sunSign, daily);
 
-  const eventLine = locale === 'pt' ? eventLinePt : eventLineEs;
-  const houseLine = locale === 'pt' ? houseLinePt : houseLineEs;
-  const fallback = locale === 'pt' ? 'Um céu tranquilo hoje.' : 'Un cielo tranquilo hoy.';
+  const eventLine = locale === 'pt' ? eventLinePt : locale === 'fr' ? eventLineFr : eventLineEs;
+  const houseLine = locale === 'pt' ? houseLinePt : locale === 'fr' ? houseLineFr : houseLineEs;
+  const fallback = locale === 'pt'
+    ? 'Um céu tranquilo hoje.'
+    : locale === 'fr'
+      ? 'Un ciel calme aujourd’hui.'
+      : 'Un cielo tranquilo hoy.';
 
   const lines: DailyLine[] = [];
   const usedHouses = new Set<number>();

@@ -46,9 +46,11 @@ describe('i18n helpers', () => {
   it('localizes only supported core paths', () => {
     expect(localizePath('es', '/birth-chart/')).toBe('/es/birth-chart/');
     expect(localizePath('pt', '/birth-chart/')).toBe('/pt/birth-chart/');
+    expect(localizePath('fr', '/birth-chart/')).toBe('/fr/birth-chart/');
     expect(localizePath('es', '/compatibility/aries-taurus/')).toBe('/compatibility/aries-taurus/');
     expect(stripLocale('/es/aries/')).toBe('/aries/');
     expect(stripLocale('/pt/aries/')).toBe('/aries/');
+    expect(stripLocale('/fr/aries/')).toBe('/aries/');
   });
 
   it('derives locale parsing and prefixes from the declared locales', () => {
@@ -70,11 +72,13 @@ describe('i18n helpers', () => {
       en: '/tools/',
       es: '/es/tools/',
       pt: '/pt/tools/',
+      fr: '/fr/tools/',
     });
     expect(alternatePaths('/pt/privacy/')).toEqual({
       en: '/privacy/',
       es: '/es/privacy/',
       pt: '/pt/privacy/',
+      fr: '/fr/privacy/',
     });
     expect(LOCALIZED_PATHS.get('/tools/')).toEqual(LOCALES);
     expect(Object.keys(alternatePaths('/tools/') ?? {})).toEqual([...LOCALES]);
@@ -82,6 +86,7 @@ describe('i18n helpers', () => {
       en: '/404.html',
       es: '/es/404/',
       pt: '/pt/404/',
+      fr: '/fr/404/',
     });
     expect(alternatePaths('/learn/placements/venus-in-scorpio/')).toBeNull();
   });
@@ -101,6 +106,16 @@ describe('i18n helpers', () => {
       'também integra os Doze — um registro canônico no acervo.',
     );
     expect(UI.pt.recordViewLink).toBe('Ver o registro →');
+  });
+
+  it('uses the approved French registry register', () => {
+    expect(UI.fr.navCollect).toBe('Registre');
+    expect(UI.fr.footerRegistry).toBe('Vue d’ensemble');
+    expect(UI.fr.recordLabel).toBe('Aile des collections');
+    expect(UI.fr.recordOneOfTwelve).toBe(
+      'figure aussi parmi les Douze — une notice de référence dans le registre.',
+    );
+    expect(UI.fr.recordViewLink).toBe('Voir la notice →');
   });
 
   it('keeps the Spanish baby result sentences grammatical when signs are inserted', () => {

@@ -29,21 +29,31 @@ const COPY = {
     next: (event, date, time) => `Próximo: ${event}, exata em ${date} às ${time} UTC.`,
     nextStation: (planet, direction, date, time) => `Próximo: ${planet} estaciona ${direction} em ${date} às ${time} UTC.`,
   },
+  fr: {
+    title: 'Aujourd’hui sur Zodiacs.org',
+    moon: { new: 'Nouvelle Lune', full: 'Pleine Lune' },
+    exact: (event, time) => `${event}, exacte aujourd’hui à ${time} UTC.`,
+    station: (planet, direction, time) => `${planet} ${direction === 'rétrograde' ? 'devient rétrograde' : 'redevient direct'} aujourd’hui à ${time} UTC.`,
+    next: (event, date, time) => `À venir : ${event}, exacte le ${date} à ${time} UTC.`,
+    nextStation: (planet, direction, date, time) => `À venir : ${planet} ${direction === 'rétrograde' ? 'devient rétrograde' : 'redevient direct'} le ${date} à ${time} UTC.`,
+  },
 };
 
 const MONTHS = {
   en: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
   es: ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'],
   pt: ['jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez'],
+  fr: ['janv.', 'févr.', 'mars', 'avr.', 'mai', 'juin', 'juil.', 'août', 'sept.', 'oct.', 'nov.', 'déc.'],
 };
 
 const PLANETS = {
   en: {},
   es: { Neptune: 'Neptuno', Mercury: 'Mercurio', Venus: 'Venus', Mars: 'Marte', Jupiter: 'Júpiter', Saturn: 'Saturno', Uranus: 'Urano', Pluto: 'Plutón' },
   pt: { Neptune: 'Netuno', Mercury: 'Mercúrio', Venus: 'Vênus', Mars: 'Marte', Jupiter: 'Júpiter', Saturn: 'Saturno', Uranus: 'Urano', Pluto: 'Plutão' },
+  fr: { Neptune: 'Neptune', Mercury: 'Mercure', Venus: 'Vénus', Mars: 'Mars', Jupiter: 'Jupiter', Saturn: 'Saturne', Uranus: 'Uranus', Pluto: 'Pluton' },
 };
 
-const normalizeLanguage = (language) => language === 'es' || language === 'pt' ? language : 'en';
+const normalizeLanguage = (language) => language === 'es' || language === 'pt' || language === 'fr' ? language : 'en';
 const planetName = (planet, language) => PLANETS[language][planet] ?? planet;
 
 function utcDay(value) {
@@ -84,6 +94,7 @@ export function buildSkyLine(sky, date = new Date(), language = 'en') {
     en: 'Your daily note is ready at /today/.',
     es: 'Tu nota diaria está lista en /today/.',
     pt: 'Sua nota diária está pronta em /today/.',
+    fr: 'Ta note quotidienne est prête sur /today/.',
   }[lang];
 
   const isToday = utcDay(event.at) === today;
@@ -95,7 +106,9 @@ export function buildSkyLine(sky, date = new Date(), language = 'en') {
   }
   const direction = lang === 'en'
     ? event.direction
-    : (event.direction === 'direct' ? (lang === 'es' ? 'directo' : 'direto') : 'retrógrado');
+    : (event.direction === 'direct'
+      ? (lang === 'es' ? 'directo' : lang === 'pt' ? 'direto' : 'direct')
+      : (lang === 'fr' ? 'rétrograde' : 'retrógrado'));
   const planet = planetName(event.planet, lang);
   return isToday
     ? copy.station(planet, direction, utcTime(event.at))

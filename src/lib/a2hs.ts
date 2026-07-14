@@ -31,6 +31,11 @@ const COPY = {
     android: 'Para manter seus mapas salvos por perto, toque em Menu → Adicionar à tela inicial.',
     dismiss: 'Dispensar dica da tela inicial',
   },
+  fr: {
+    ios: 'Pour garder tes thèmes enregistrés à portée de main, appuie sur Partager → Ajouter à l’écran d’accueil. Sur iPhone et iPad, les notifications quotidiennes fonctionnent uniquement depuis le site installé.',
+    android: 'Pour garder tes thèmes enregistrés à portée de main, appuie sur Menu → Ajouter à l’écran d’accueil.',
+    dismiss: 'Ignorer l’indication d’ajout à l’écran d’accueil',
+  },
 } as const satisfies Record<Locale, {
   ios: string;
   android: string;

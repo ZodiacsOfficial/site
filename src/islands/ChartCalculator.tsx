@@ -57,27 +57,32 @@ const LENS_LABELS: Record<Locale, Record<'rail' | 'natal' | LensId, string>> = {
   en: { rail: 'Chart through time', natal: 'Natal', sky: 'Sky now', progressed: 'Progressed', return: 'Solar return' },
   es: { rail: 'La carta en el tiempo', natal: 'Natal', sky: 'Cielo ahora', progressed: 'Progresada', return: 'Retorno solar' },
   pt: { rail: 'O mapa ao longo do tempo', natal: 'Natal', sky: 'Céu agora', progressed: 'Progredido', return: 'Retorno solar' },
+  fr: { rail: 'Le thème au fil du temps', natal: 'Natal', sky: 'Ciel actuel', progressed: 'Progressé', return: 'Révolution solaire' },
 };
 const DETAIL_LABELS: Record<Locale, { lead: string; placements: string; aspects: string }> = {
   en: { lead: 'Full detail — ', placements: ' placements · ', aspects: ' aspects · degrees & dignities' },
   es: { lead: 'Todo el detalle — ', placements: ' posiciones · ', aspects: ' aspectos · grados y dignidades' },
   pt: { lead: 'Todos os detalhes — ', placements: ' posições · ', aspects: ' aspectos · graus e dignidades' },
+  fr: { lead: 'Tous les détails — ', placements: ' positions · ', aspects: ' aspects · degrés et dignités' },
 };
 const DETAIL_STORAGE_KEY = 'zodiacs.detail.v1';
 const CHART_BOOK_COPY = {
   en: { label: 'Whose chart is this?', save: 'Save', skip: 'Skip' },
   es: { label: '¿De quién es esta carta?', save: 'Guardar', skip: 'Omitir' },
   pt: { label: 'De quem é este mapa?', save: 'Salvar', skip: 'Pular' },
+  fr: { label: 'À qui appartient ce thème\u202f?', save: 'Enregistrer', skip: 'Passer' },
 } as const satisfies Record<Locale, { label: string; save: string; skip: string }>;
 const PERSON_CHART_COPY = {
   en: (name: string) => `${name}'s chart — "you" below means ${name}.`,
   es: (name: string) => `La carta de ${name}: el "tú" de abajo se refiere a ${name}.`,
   pt: (name: string) => `O mapa de ${name}: o "você" abaixo se refere a ${name}.`,
+  fr: (name: string) => `Le thème de ${name}\u00a0: le «\u00a0tu\u00a0» ci-dessous désigne ${name}.`,
 } satisfies Record<Locale, (name: string) => string>;
 const AUTO_NAME_SUN = {
   en: 'Sun',
   es: 'Sol',
   pt: 'Sol',
+  fr: 'Soleil',
 } as const satisfies Record<Locale, string>;
 type SavePrefillSource = 'link' | 'match' | 'auto';
 type CalendarSubscribeModule = typeof import('./CalendarSubscribe');
@@ -904,7 +909,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
             const ruler = chart.bodies.find((b) => b.body === rulerName);
             return ruler ? (
               <p class="calc__phase mono">
-                {t(locale, 'chartRuler')}: {planetLabel(locale, rulerName)} <PlanetGlyph body={rulerName} size={13} class="calc__pg" /> {t(locale, 'readIn')} {signName(signForLongitude(ruler.lon), locale)} - {t(locale, 'planetSteering')}
+                {t(locale, 'chartRuler')}{locale === 'fr' ? '\u202f:' : ':'} {planetLabel(locale, rulerName)} <PlanetGlyph body={rulerName} size={13} class="calc__pg" /> {t(locale, 'readIn')} {signName(signForLongitude(ruler.lon), locale)} - {t(locale, 'planetSteering')}
               </p>
             ) : null;
           })()}

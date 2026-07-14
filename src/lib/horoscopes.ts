@@ -90,6 +90,16 @@ const TRANSIT_EVENT_LABELS = {
     aspect: (event) =>
       `${planetLabel('pt', event.a)} em ${aspectLabel('pt', event.type)} com ${planetLabel('pt', event.b)} (${sn(event.aSign, 'pt')}–${sn(event.bSign, 'pt')})`,
   },
+  fr: {
+    ingress: (event) =>
+      `${planetLabel('fr', event.planet)} entre en ${sn(event.sign, 'fr')}${event.retrograde ? ', rétrograde' : ''}`,
+    lunation: (event) =>
+      `${event.type === 'new' ? 'Nouvelle Lune' : 'Pleine Lune'} à ${Math.round(event.degree)}° en ${sn(event.sign, 'fr')}`,
+    station: (event) =>
+      `${planetLabel('fr', event.planet)} ${event.type === 'retrograde' ? 'devient rétrograde' : 'redevient direct'} à ${Math.round(event.degree)}° en ${sn(event.sign, 'fr')}`,
+    aspect: (event) =>
+      `${planetLabel('fr', event.a)} en ${aspectLabel('fr', event.type)} avec ${planetLabel('fr', event.b)} (${sn(event.aSign, 'fr')}–${sn(event.bSign, 'fr')})`,
+  },
 } satisfies Record<Locale, TransitEventLabels>;
 
 /** The month's events as one chronological, human-readable list. */

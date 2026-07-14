@@ -30,6 +30,13 @@ const COPY = {
     noAspects: 'Nenhum aspecto maior está dentro do orbe.',
     note: 'Um mapa composto é o ponto médio de dois mapas: um retrato da própria relação, não de nenhuma das duas pessoas. As casas do mapa composto exigem uma convenção de localização, e não vamos fingir que adotamos uma; por isso, este mapa é mostrado sem casas.',
   },
+  fr: {
+    title: 'Deux thèmes, un point médian',
+    placements: 'Positions du thème composite',
+    aspects: 'Aspects du thème composite',
+    noAspects: 'Aucun aspect majeur du thème composite ne se trouve dans l’orbe.',
+    note: 'Un thème composite correspond aux points médians de deux thèmes : il décrit la relation elle-même, et non l’une ou l’autre personne. Les maisons du thème composite exigent une convention de lieu que nous n’allons pas inventer ; ce thème est donc présenté sans maisons.',
+  },
 } as const;
 
 interface CompositePanelProps {

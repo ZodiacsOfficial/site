@@ -93,6 +93,20 @@ const COPY = {
     grid: 'Grade',
     composite: 'Composto',
   },
+  fr: {
+    caption: 'Roue intérieure\u00a0: {a}. Anneau extérieur\u00a0: {b}. Les lignes entre les deux indiquent où les thèmes se rejoignent.',
+    swap: 'Placer {name} à l’intérieur',
+    tapHint: 'Touche une ligne de liaison — ou une ligne ci-dessous — pour lire ce contact. Touche une planète de l’anneau extérieur pour voir sa position.',
+    ringLabel: 'Thème de {name}, sur l’anneau extérieur',
+    tally: 'aspects entre les thèmes',
+    easeful: 'fluides',
+    charged: 'tendus',
+    loudest: 'Les contacts les plus marqués\u00a0:',
+    views: 'Vues de la relation',
+    wheel: 'Roue',
+    grid: 'Grille',
+    composite: 'Composite',
+  },
 } as const;
 
 const TAB_ORDER = ['wheel', 'grid', 'composite'] as const;
