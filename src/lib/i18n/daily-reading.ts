@@ -110,6 +110,39 @@ const PLANET_VERB_FR: Record<string, string> = {
   Pluto: 'Pluton transforme lentement',
 };
 
+const ORDINAL_IT = [
+  '', 'prima', 'seconda', 'terza', 'quarta', 'quinta', 'sesta',
+  'settima', 'ottava', 'nona', 'decima', 'undicesima', 'dodicesima',
+];
+
+const HOUSE_THEME_IT: Record<number, string> = {
+  1: 'la tua immagine, i tuoi inizi e l’impressione che dai',
+  2: 'il denaro, i beni e ciò che ti dà stabilità',
+  3: 'le commissioni, fratelli e sorelle, i messaggi e il tuo ambiente vicino',
+  4: 'la casa, la famiglia e le fondamenta private della tua vita',
+  5: 'il piacere, l’amore, i figli e ciò che crei per il gusto di farlo',
+  6: 'il lavoro in corso, le abitudini di salute e il carico quotidiano',
+  7: 'le relazioni e le persone che hai di fronte',
+  8: 'il denaro condiviso, i debiti, l’intimità e ciò che si unisce',
+  9: 'i viaggi, lo studio, le convinzioni e la visione a lungo termine',
+  10: 'la carriera, la reputazione e ciò che vede il pubblico',
+  11: 'le amicizie, i gruppi e il futuro a cui punti',
+  12: 'il riposo, il ritiro e ciò che accade sotto la superficie',
+};
+
+const PLANET_VERB_IT: Record<string, string> = {
+  Moon: 'La Luna attraversa oggi',
+  Sun: 'Il Sole attraversa',
+  Mercury: 'Mercurio attiva',
+  Venus: 'Venere riscalda',
+  Mars: 'Marte mette in moto',
+  Jupiter: 'Giove espande',
+  Saturn: 'Saturno mette alla prova',
+  Uranus: 'Urano scuote',
+  Neptune: 'Nettuno sfuma',
+  Pluto: 'Plutone trasforma lentamente',
+};
+
 const emPt = (phrase: string) => `em ${phrase}`
   .replace(/^em o /, 'no ')
   .replace(/^em a /, 'na ')
@@ -119,6 +152,7 @@ const emPt = (phrase: string) => `em ${phrase}`
 const signLabel = (slug: string) => signName(signBySlug(slug), 'es');
 const signLabelPt = (slug: string) => signName(signBySlug(slug), 'pt');
 const signLabelFr = (slug: string) => signName(signBySlug(slug), 'fr');
+const signLabelIt = (slug: string) => signName(signBySlug(slug), 'it');
 const utcTime = (at: string) => `${at.slice(11, 16)} UTC`;
 
 function houseLineEs(body: DailyBody, house: number): DailyLine {
@@ -313,6 +347,70 @@ function eventLineFr(event: DailyEvent, sunSign: string): DailyLine | null {
   return null;
 }
 
+function houseLineIt(body: DailyBody, house: number): DailyLine {
+  const planet = planetLabel('it', body.body);
+  const rx = body.retrograde ? ' ℞' : '';
+  return {
+    text: `${PLANET_VERB_IT[body.body] ?? `${planet} attraversa`} la tua ${ORDINAL_IT[house]} casa: ${HOUSE_THEME_IT[house]}.`,
+    receipt: `${planet} ${body.degree.toFixed(1)}° ${signLabelIt(body.sign)}${rx} · casa ${house}`,
+    body: body.body,
+    hue: signBySlug(body.sign).hue,
+  };
+}
+
+function eventLineIt(event: DailyEvent, sunSign: string): DailyLine | null {
+  if (event.kind === 'ingress' && event.planet && event.sign) {
+    const house = solarHouse(event.sign, sunSign);
+    const planet = planetLabel('it', event.planet);
+    const focus = event.planet === 'Saturn' || event.planet === 'Pluto'
+      ? 'porta lì l’attenzione a lungo termine'
+      : 'porta lì l’attenzione';
+    return {
+      text: `${planet} entra oggi nella tua ${ORDINAL_IT[house]} casa e ${focus}: ${HOUSE_THEME_IT[house]}.`,
+      receipt: `${planet} → 0° ${signLabelIt(event.sign)} · ${utcTime(event.at)}`,
+      body: event.planet,
+      hue: signBySlug(event.sign).hue,
+    };
+  }
+  if (event.kind === 'lunation' && event.sign) {
+    const house = solarHouse(event.sign, sunSign);
+    const name = event.type === 'new' ? 'Luna nuova' : 'Luna piena';
+    const meaning = event.type === 'new'
+      ? 'apre un nuovo inizio'
+      : 'segna un compimento';
+    return {
+      text: `La ${name} nella tua ${ORDINAL_IT[house]} casa ${meaning}: ${HOUSE_THEME_IT[house]}.`,
+      receipt: `${name} ${event.degree}° ${signLabelIt(event.sign)} · ${utcTime(event.at)}`,
+      body: 'Moon',
+      hue: signBySlug(event.sign).hue,
+    };
+  }
+  if (event.kind === 'station' && event.planet && event.sign) {
+    const house = solarHouse(event.sign, sunSign);
+    const planet = planetLabel('it', event.planet);
+    const retrograde = event.type === 'retrograde';
+    const direction = retrograde ? 'staziona in moto retrogrado' : 'staziona in moto diretto';
+    const meaning = retrograde ? 'porta a rivedere' : 'rimette in moto';
+    return {
+      text: `${planet} ${direction} nella tua ${ORDINAL_IT[house]} casa: ${meaning} ${HOUSE_THEME_IT[house]}.`,
+      receipt: `${planet} ${direction} ${event.degree}° ${signLabelIt(event.sign)} · ${utcTime(event.at)}`,
+      body: event.planet,
+      hue: signBySlug(event.sign).hue,
+    };
+  }
+  if (event.kind === 'aspect' && event.a && event.b && event.type) {
+    const a = planetLabel('it', event.a);
+    const b = planetLabel('it', event.b);
+    const aspect = aspectLabel('it', event.type);
+    return {
+      text: `${a} in ${aspect} con ${b} raggiunge oggi il punto esatto: è un aspetto collettivo e il riscontro mostra l’ora.`,
+      receipt: `${a} ${aspect} ${b} · esatto alle ${utcTime(event.at)}`,
+      body: event.a,
+    };
+  }
+  return null;
+}
+
 /**
  * Locale-aware rendering over the same structured daily facts. English keeps
  * the canonical source output byte-for-byte; translated locales mirror its
@@ -321,13 +419,27 @@ function eventLineFr(event: DailyEvent, sunSign: string): DailyLine | null {
 export function dailyReadingForLocale(sunSign: string, daily: Daily, locale: Locale): DailyReading {
   if (locale === 'en') return dailyReading(sunSign, daily);
 
-  const eventLine = locale === 'pt' ? eventLinePt : locale === 'fr' ? eventLineFr : eventLineEs;
-  const houseLine = locale === 'pt' ? houseLinePt : locale === 'fr' ? houseLineFr : houseLineEs;
+  const eventLine = locale === 'pt'
+    ? eventLinePt
+    : locale === 'fr'
+      ? eventLineFr
+      : locale === 'it'
+        ? eventLineIt
+        : eventLineEs;
+  const houseLine = locale === 'pt'
+    ? houseLinePt
+    : locale === 'fr'
+      ? houseLineFr
+      : locale === 'it'
+        ? houseLineIt
+        : houseLineEs;
   const fallback = locale === 'pt'
     ? 'Um céu tranquilo hoje.'
     : locale === 'fr'
       ? 'Un ciel calme aujourd’hui.'
-      : 'Un cielo tranquilo hoy.';
+      : locale === 'it'
+        ? 'Un cielo tranquillo oggi.'
+        : 'Un cielo tranquilo hoy.';
 
   const lines: DailyLine[] = [];
   const usedHouses = new Set<number>();

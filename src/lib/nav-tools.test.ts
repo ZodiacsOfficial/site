@@ -31,5 +31,7 @@ describe('NAV_TOOLS', () => {
     expect(localizePath('pt', '/birthday/')).toBe('/birthday/');
     expect(localizePath('fr', '/transits/')).toBe('/fr/transits/');
     expect(localizePath('fr', '/birthday/')).toBe('/birthday/');
+    expect(localizePath('it', '/transits/')).toBe('/it/transits/');
+    expect(localizePath('it', '/birthday/')).toBe('/birthday/');
   });
 });

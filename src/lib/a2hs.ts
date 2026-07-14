@@ -36,6 +36,11 @@ const COPY = {
     android: 'Pour garder tes thèmes enregistrés à portée de main, appuie sur Menu → Ajouter à l’écran d’accueil.',
     dismiss: 'Ignorer l’indication d’ajout à l’écran d’accueil',
   },
+  it: {
+    ios: 'Per tenere a portata di mano i temi salvati, tocca Condividi → Aggiungi alla schermata Home. Su iPhone e iPad, le notifiche giornaliere funzionano solo dal sito installato.',
+    android: 'Per tenere a portata di mano i temi salvati, tocca Menu → Aggiungi alla schermata Home.',
+    dismiss: 'Ignora il suggerimento per la schermata Home',
+  },
 } as const satisfies Record<Locale, {
   ios: string;
   android: string;
