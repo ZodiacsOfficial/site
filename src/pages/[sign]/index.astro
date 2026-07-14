@@ -6,6 +6,7 @@ import FactTable from '../../components/FactTable.astro';
 import HeritageTimeline from '../../components/HeritageTimeline.astro';
 import CollectBand from '../../components/CollectBand.astro';
 import Faq from '../../components/Faq.astro';
+import ShareRow from '../../components/ShareRow.astro';
 import { SIGNS, SIGN_SLUGS, signBySlug, ELEMENT_LABEL } from '../../lib/signs';
 import { pairSlug } from '../../lib/compat';
 import { heritage } from '../../lib/legacy/sign-lore';
@@ -163,6 +164,8 @@ const jsonLd = [
         <section class="reveal">
           <Faq items={guide.data.faq} heading={`${sign.name}, asked and answered`} />
         </section>
+
+        <ShareRow text={`${sign.name} — the full guide`} url={`https://zodiacs.org/${sign.slug}/`} />
       </div>
 
       <aside class="guide-side">
