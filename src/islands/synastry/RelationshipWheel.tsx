@@ -13,7 +13,7 @@ import { collisionNudge } from '../../lib/scene/layout';
 import { overlayBodyId } from '../../lib/scene/types';
 import { renderTransitOverlay } from '../transit/renderTransitOverlay';
 import { synastryLine } from '../../lib/compat';
-import { elementLabel, formatLongitude } from '../../lib/signs';
+import { elementLabel, formatLongitude, signForLongitude, signName } from '../../lib/signs';
 import { aspectLabel, planetLabel } from '../../lib/i18n/astrology';
 import { t, type Locale } from '../../lib/i18n';
 import { AspectGrid } from './AspectGrid';
@@ -26,7 +26,12 @@ import {
   type RelationshipPointName,
 } from './relationshipData';
 import { renderRelationshipAngleContact } from './renderRelationshipAngleContact';
-import { synastryCorpusLine } from './synastryLines';
+import {
+  MERCURY_ELEMENT_PAIRS,
+  mercuryElementPairKey,
+  NO_CONTACT,
+  synastryCorpusLine,
+} from './synastryLines';
 import './relationship.css';
 
 export interface WheelPerson {
@@ -86,6 +91,16 @@ const fmt = (text: string, values: Record<string, string>) =>
 /** South Node stays off drawn wheels — the sitewide convention. */
 const drawable = (person: WheelPerson) => person.bodies.filter((point) => point.body !== 'South Node');
 const isAngle = (name: RelationshipPointName): name is 'ASC' | 'MC' => name === 'ASC' || name === 'MC';
+type CommunicationBody = 'Mercury' | 'Moon' | 'Mars';
+type CommunicationContact = InterAspect & { a: CommunicationBody; b: CommunicationBody };
+const communicationBodies = new Set<CommunicationBody>(['Mercury', 'Moon', 'Mars']);
+const isCommunicationBody = (name: string): name is CommunicationBody => communicationBodies.has(name as CommunicationBody);
+
+function isCommunicationContact(contact: InterAspect): contact is CommunicationContact {
+  return isCommunicationBody(contact.a)
+    && isCommunicationBody(contact.b)
+    && (contact.a === 'Mercury' || contact.b === 'Mercury');
+}
 
 function track(name: 'grid_select' | 'composite_view'): void {
   const analytics = (globalThis as typeof globalThis & {
@@ -125,6 +140,14 @@ export default function RelationshipWheel({ locale, a, b, summary }: Relationshi
   const canonicalId = (aspect: InterAspect) => `${aspect.a}-${aspect.type}-${aspect.b}`;
   const grid = useMemo(() => buildRelationshipGrid(a, b), [a, b]);
   const composite = useMemo(() => buildCompositeTabData(a.bodies, b.bodies), [a.bodies, b.bodies]);
+  const mercuryA = a.bodies.find((point) => point.body === 'Mercury');
+  const mercuryB = b.bodies.find((point) => point.body === 'Mercury');
+  const mercurySignA = mercuryA ? signForLongitude(mercuryA.lon) : null;
+  const mercurySignB = mercuryB ? signForLongitude(mercuryB.lon) : null;
+  const mercuryPairKey = mercurySignA && mercurySignB
+    ? mercuryElementPairKey(mercurySignA.element, mercurySignB.element)
+    : null;
+  const communicationContacts = summary.aspects.filter(isCommunicationContact);
 
   // The overlay wants aspects oriented outer-first; summary aspects are
   // chart-A-first. Reorient while remembering each chord's canonical id.
@@ -349,6 +372,52 @@ export default function RelationshipWheel({ locale, a, b, summary }: Relationshi
               );
             })}
           </div>
+
+          {mercurySignA && mercurySignB && mercuryPairKey && (
+            <div
+              class="rcomm syn__aspect"
+              data-communication-read
+              data-mercury-elements={mercuryPairKey}
+            >
+              {locale === 'en' && (
+                <>
+                  <h3 class="rcomm__title">How you two communicate</h3>
+                  <p class="rcomm__intro syn__aspect-read">Mercury against Mercury is the shape of your conversations; Mercury against Moon and Mars is whether talking feels like comfort or combat.</p>
+                </>
+              )}
+              <p class="rcomm__receipt syn__aspect-receipt mono">
+                {planetLabel(locale, 'Mercury')}: {signName(mercurySignA, locale)}
+                {' · '}
+                {planetLabel(locale, 'Mercury')}: {signName(mercurySignB, locale)}
+              </p>
+              {locale === 'en' && (
+                <>
+                  <p class="rcomm__framing syn__aspect-read">{MERCURY_ELEMENT_PAIRS[mercuryPairKey]}</p>
+                  {communicationContacts.length > 0 ? (
+                    <div class="rcomm__contacts syn__aspects" role="list">
+                      {communicationContacts.map((contact) => {
+                        const reading = synastryCorpusLine(contact.a, contact.b, contact.type);
+                        if (!reading) return null;
+                        return (
+                          <div class="rcomm__contact syn__aspect" role="listitem" data-communication-contact key={canonicalId(contact)}>
+                            <span class="rcomm__contact-receipt syn__aspect-receipt mono">
+                              {a.label}: <ContactPoint locale={locale} name={contact.a} />
+                              {' '}<AspectGlyph type={contact.type} size={13} class="pg-inline" /> {aspectLabel(locale, contact.type)}
+                              {' '}{b.label}: <ContactPoint locale={locale} name={contact.b} />
+                              {' · '}{t(locale, 'orb')} {contact.orb.toFixed(1)}°
+                            </span>
+                            <span class="rcomm__contact-read syn__aspect-read" data-curated-line>{reading}</span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  ) : (
+                    <p class="rcomm__fallback syn__aspect-read" data-communication-no-contact>{NO_CONTACT}</p>
+                  )}
+                </>
+              )}
+            </div>
+          )}
 
           <div class="syn__balances">
             {[{ person: a, balance: summary.elements.a }, { person: b, balance: summary.elements.b }].map(({ person, balance }) => (

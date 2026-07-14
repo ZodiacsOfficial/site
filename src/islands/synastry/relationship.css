@@ -39,6 +39,10 @@
 }
 .rwheel__panel { display: grid; gap: 16px; }
 
+.rcomm { margin-top: 6px; }
+.rcomm__title { margin: 0; font-size: var(--text-lg); }
+.rcomm__receipt { margin: 0; overflow-wrap: anywhere; }
+
 .rgrid { display: grid; gap: 18px; }
 .rgrid__scroll {
   width: 100%;
