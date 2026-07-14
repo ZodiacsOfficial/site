@@ -158,6 +158,9 @@ async function loadHoroscopes(root) {
   const all = [];
   for (const file of await filesUnder(root, '.mdx')) {
     const source = await readFile(file, 'utf8');
+    // The horoscope routes render the latest NON-DRAFT month; the site guide
+    // must describe the same month a visitor actually sees.
+    if (/^draft:\s*true$/m.test(source.split(/\r?\n---(?:\r?\n|$)/)[0] ?? '')) continue;
     all.push({
       sign: frontmatterField(source, 'sign', file),
       month: frontmatterField(source, 'month', file),
