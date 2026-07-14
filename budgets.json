@@ -6,6 +6,9 @@
   "/today/": 16,
   "/compatibility/": 35.5,
   "/aries/": 0,
+  "/almanac/": 0,
+  "/almanac/sky-2026-08/": 0,
+  "/almanac/reading-a-childs-chart/": 0,
   "chunk-max": 60,
   "engine-chunk": 25
 }

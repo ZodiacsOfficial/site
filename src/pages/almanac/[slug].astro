@@ -1,0 +1,76 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { EDITOR_AUTHOR } from '../../lib/editorial';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('almanac', ({ data }) => !data.draft);
+  return entries.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const slug = entry.id;
+const path = `/almanac/${slug}/`;
+const dateLabel = entry.data.published.toLocaleDateString('en-US', {
+  day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC',
+});
+
+const jsonLd = [
+  {
+    '@type': 'Article',
+    headline: entry.data.title,
+    description: entry.data.description,
+    url: `https://zodiacs.org${path}`,
+    datePublished: entry.data.published.toISOString(),
+    dateModified: entry.data.updated.toISOString(),
+    author: EDITOR_AUTHOR,
+    publisher: { '@id': 'https://zodiacs.org/#org' },
+    mainEntityOfPage: { '@type': 'WebPage', '@id': `https://zodiacs.org${path}` },
+    inLanguage: 'en',
+    citation: entry.data.sources.map((source) => source.href
+      ? { '@type': 'CreativeWork', name: source.label, url: source.href }
+      : source.label),
+  },
+  {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Zodiacs.org', item: 'https://zodiacs.org/' },
+      { '@type': 'ListItem', position: 2, name: 'The Almanac', item: 'https://zodiacs.org/almanac/' },
+      { '@type': 'ListItem', position: 3, name: entry.data.title, item: `https://zodiacs.org${path}` },
+    ],
+  },
+];
+---
+<Base
+  title={`${entry.data.title} | The Almanac`}
+  description={entry.data.description}
+  path={path}
+  image={`/assets/og/v2/almanac/${slug}.png`}
+  imageAlt={`${entry.data.title} — The Almanac at Zodiacs.org`}
+  type="article"
+  jsonLd={jsonLd}
+  sources={entry.data.sources}
+>
+  <article class="container container--narrow almanac-article">
+    <header class="almanac-article__hero reveal">
+      <a class="kicker" href="/almanac/">The Almanac</a>
+      <h1 class="display">{entry.data.title}</h1>
+      <p>{entry.data.description}</p>
+      <time class="mono" datetime={entry.data.published.toISOString()}>{dateLabel}</time>
+    </header>
+    <div class="prose almanac-article__body reveal">
+      <Content />
+    </div>
+  </article>
+</Base>
+
+<style>
+  .almanac-article { display: grid; gap: clamp(30px, 6vw, 54px); padding-block: clamp(24px, 5vw, 56px) 0; }
+  .almanac-article__hero { max-width: 64ch; }
+  .almanac-article__hero .kicker { color: var(--muted); text-decoration: none; }
+  .almanac-article__hero h1 { margin: 14px 0; font-size: clamp(2.45rem, 1.7rem + 4vw, 4.6rem); line-height: 1.01; }
+  .almanac-article__hero p { margin: 0; color: var(--muted); font-size: var(--text-lg); line-height: 1.6; text-wrap: pretty; }
+  .almanac-article__hero time { display: block; margin-top: 18px; color: var(--faint); font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; }
+  .almanac-article__body { max-width: 68ch; }
+</style>

@@ -186,4 +186,21 @@ const horoscopes = defineCollection({
   }),
 });
 
-export const collections = { guides, pairs, learn, horoscopes, birthdays };
+/**
+ * The Almanac: dated, long-form articles about the computed sky and the
+ * tradition's reading of it. Unlike learn, this collection is deliberately
+ * flat: each filename is its public slug.
+ */
+const almanac = defineCollection({
+  loader: glob({ pattern: '*.mdx', base: './src/content/almanac' }),
+  schema: z.object({
+    title: z.string(),
+    description: z.string().max(170),
+    published: z.coerce.date(),
+    updated: z.coerce.date(),
+    sources: z.array(z.object({ label: z.string(), href: z.url().optional() })).min(1),
+    draft: z.boolean().default(false),
+  }),
+});
+
+export const collections = { guides, pairs, learn, horoscopes, birthdays, almanac };

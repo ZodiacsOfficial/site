@@ -22,13 +22,13 @@ const EVERGREEN_LASTMOD = new Map<string, string>([
     '/profile/', '/learn/how-to-read-a-birth-chart/', '/learn/zodiac-dates/', '/learn/glossary/', '/learn/planets/',
     '/learn/houses/', '/learn/aspects/', '/learn/placements/', '/birthday/',
     '/baby-zodiac/', '/widgets/', '/methodology/', '/about/', '/privacy/',
-    '/terms/', '/feeds/',
+    '/terms/', '/feeds/', '/almanac/',
     '/es/', '/es/birth-chart/', '/es/compatibility/', '/es/moon-sign/',
     '/es/rising-sign/', '/es/moon-phase/', '/es/saturn-return/', '/es/transits/',
     '/es/tools/', '/es/profile/', '/es/baby-zodiac/', '/es/methodology/', '/es/privacy/',
   ].map((loc) => [
     loc,
-    ['/solar-return/', '/tools/'].includes(loc)
+    ['/solar-return/', '/tools/', '/almanac/'].includes(loc)
       ? '2026-07-14'
       : ['/today/', '/privacy/', '/es/privacy/'].includes(loc)
       ? '2026-07-13'
@@ -58,6 +58,7 @@ export const GET: APIRoute = async () => {
   const learn = await getCollection('learn', ({ data }) => !data.draft);
   const horoscopes = await getCollection('horoscopes', ({ data }) => !data.draft);
   const birthdays = await getCollection('birthdays', ({ data }) => !data.draft);
+  const almanac = await getCollection('almanac', ({ data }) => !data.draft);
   const latestMonth = horoscopes.map((h) => h.data.month).sort().at(-1);
 
   const evergreenUrls = [
@@ -94,6 +95,7 @@ export const GET: APIRoute = async () => {
     { loc: '/es/privacy/', priority: 0.4 },
     { loc: '/terms/', priority: 0.4 },
     { loc: '/feeds/', priority: 0.55 },
+    { loc: '/almanac/', priority: 0.75 },
   ].map((url) => ({ ...url, lastmod: getLastmod(url.loc) }));
 
   const urls: { loc: string; priority: number; lastmod?: string }[] = [
@@ -135,6 +137,11 @@ export const GET: APIRoute = async () => {
       loc: `/birthday/${b.id}/`,
       priority: 0.65,
       lastmod: b.data.updated.toISOString().slice(0, 10),
+    })),
+    ...almanac.map((entry) => ({
+      loc: `/almanac/${entry.id}/`,
+      priority: 0.65,
+      lastmod: entry.data.updated.toISOString().slice(0, 10),
     })),
     ...LEGACY_URLS.map((u) => ({ loc: u.path, priority: u.priority, lastmod: getLastmod(u.path) })),
   ];

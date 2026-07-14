@@ -98,6 +98,7 @@ if (!rss.startsWith('<?xml')) fail('rss.xml: missing XML declaration');
 for (const { file, minItems } of [
   { file: 'feeds/horoscopes.xml', minItems: 12 },
   { file: 'feeds/daily-sky.xml', minItems: 1 },
+  { file: 'feeds/almanac.xml', minItems: 1 },
 ]) {
   const path = resolve(root, file);
   if (!(await exists(path))) {
