@@ -27,13 +27,24 @@ export type AnalyticsEventName =
   | 'tour_step'
   | 'search_open'
   | 'search_go'
+  | 'assistant_open'
+  | 'assistant_reply'
   | 'push_prompt'
   | 'push_subscribe'
   | 'today_view'
   | 'calendar_subscribe'
   | 'chart_save'
   | 'chart_share'
-  | 'wing_entry';
+  | 'wing_entry'
+  | 'lens_change'
+  | 'transit_search'
+  | 'srchart_view'
+  | 'composite_view'
+  | 'grid_select'
+  | 'chiron_toggle'
+  | 'detail_toggle'
+  | 'chart_name_set'
+  | 'comm_read_view';
 export type AnalyticsPropertyValue = string | number | boolean;
 export type AnalyticsProperties = Record<string, AnalyticsPropertyValue>;
 

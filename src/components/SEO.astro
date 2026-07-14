@@ -3,7 +3,23 @@
  * Per-page head metadata. `path` is the site-relative canonical path
  * (with trailing slash); JSON-LD nodes are passed pre-built.
  */
-import { DEFAULT_LOCALE, LOCALES, LOCALE_META, alternatePaths, normalizeLocale, type Locale } from '../lib/i18n';
+import {
+  DEFAULT_LOCALE,
+  LOCALES,
+  LOCALE_META,
+  alternatePaths,
+  normalizeLocale,
+  stripLocale,
+  type Locale,
+} from '../lib/i18n';
+import {
+  SCHEMA_EN,
+  SOCIAL_PROFILES,
+  WEB_APPLICATION_PATHS,
+  breadcrumbLabel,
+  ogAltForPath,
+  ogImageForPath,
+} from '../strings/seo.en.mjs';
 
 interface Props {
   title: string;
@@ -23,8 +39,8 @@ const {
   description,
   path,
   canonicalPath = path,
-  image = '/assets/og/v2/share.png',
-  imageAlt = 'Zodiacs.org — free birth charts, sign guides, and astrology tools.',
+  image: explicitImage,
+  imageAlt: explicitImageAlt,
   type = 'website',
   noindex = false,
   jsonLd = [],
@@ -34,6 +50,9 @@ const {
 const site = 'https://zodiacs.org';
 const locale = normalizeLocale(rawLocale);
 const canonical = site + canonicalPath;
+const contentPath = stripLocale(canonicalPath);
+const image = explicitImage ?? ogImageForPath(contentPath) ?? '/assets/og/v2/share.png';
+const imageAlt = explicitImageAlt ?? ogAltForPath(contentPath);
 const imageUrl = image.startsWith('http') ? image : site + image;
 const alternates = noindex
   ? null
@@ -52,8 +71,8 @@ const ogLocaleAlternates = alternateEntries
 const organization = {
   '@type': 'Organization',
   '@id': 'https://zodiacs.org/#org',
-  name: 'Zodiacs',
-  alternateName: 'Zodiacs.org',
+  name: SCHEMA_EN.organizationName,
+  alternateName: SCHEMA_EN.organizationAlternateName,
   url: 'https://zodiacs.org/',
   logo: {
     '@type': 'ImageObject',
@@ -61,13 +80,165 @@ const organization = {
     width: 512,
     height: 512,
   },
+  sameAs: SOCIAL_PROFILES,
 };
+
+const nodeHasType = (node: Record<string, unknown>, wanted: string) => {
+  const value = node['@type'];
+  return Array.isArray(value) ? value.includes(wanted) : value === wanted;
+};
+
+const suppliedOrganization = jsonLd.find((node) => node['@id'] === organization['@id']);
+const mergedOrganization = suppliedOrganization
+  ? {
+      ...organization,
+      ...suppliedOrganization,
+      sameAs: [...new Set([
+        ...SOCIAL_PROFILES,
+        ...(Array.isArray(suppliedOrganization.sameAs) ? suppliedOrganization.sameAs : []),
+      ])],
+    }
+  : organization;
+const pageNodes = jsonLd
+  .filter((node) => node !== suppliedOrganization)
+  .map((node) => {
+    if (nodeHasType(node, 'Article')) {
+      return {
+        headline: title.replace(/\s*[|—]\s*Zodiacs\.org.*$/i, ''),
+        description,
+        url: canonical,
+        mainEntityOfPage: { '@type': 'WebPage', '@id': canonical },
+        image: imageUrl,
+        author: { '@id': organization['@id'] },
+        publisher: { '@id': organization['@id'] },
+        inLanguage: LOCALE_META[locale].htmlLang,
+        ...node,
+      };
+    }
+    if (nodeHasType(node, 'WebApplication')) {
+      return {
+        name: title.replace(/\s*[|—]\s*Zodiacs\.org.*$/i, ''),
+        url: canonical,
+        description,
+        applicationCategory: SCHEMA_EN.applicationCategory,
+        operatingSystem: SCHEMA_EN.operatingSystem,
+        browserRequirements: SCHEMA_EN.browserRequirements,
+        isAccessibleForFree: true,
+        offers: {
+          '@type': 'Offer',
+          price: SCHEMA_EN.freePrice,
+          priceCurrency: SCHEMA_EN.currency,
+        },
+        image: imageUrl,
+        publisher: { '@id': organization['@id'] },
+        ...node,
+      };
+    }
+    return node;
+  });
+
+function automaticBreadcrumb(): Record<string, unknown> | null {
+  if (noindex || canonicalPath === '/' || pageNodes.some((node) => nodeHasType(node, 'BreadcrumbList'))) {
+    return null;
+  }
+  if (contentPath === '/' && locale !== DEFAULT_LOCALE) {
+    return {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: SCHEMA_EN.breadcrumbHome, item: `${site}/` },
+        {
+          '@type': 'ListItem',
+          position: 2,
+          name: LOCALE_META[locale].languageName,
+          item: canonical,
+        },
+      ],
+    };
+  }
+  const segments = contentPath.split(/[?#]/, 1)[0].split('/').filter(Boolean);
+  const localePrefix = LOCALE_META[locale].pathPrefix;
+  const itemListElement: Record<string, unknown>[] = [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: SCHEMA_EN.breadcrumbHome,
+      item: `${site}${localePrefix || '/'}`,
+    },
+  ];
+  let current = localePrefix;
+  segments.forEach((segment, index) => {
+    current += `/${segment}`;
+    itemListElement.push({
+      '@type': 'ListItem',
+      position: index + 2,
+      name: breadcrumbLabel(segment),
+      item: `${site}${current}/`,
+    });
+  });
+  return { '@type': 'BreadcrumbList', itemListElement };
+}
+
+const normalizedCanonicalPath = contentPath === '/'
+  ? '/'
+  : `/${contentPath.split(/[?#]/, 1)[0].replace(/^\/+|\/+$/g, '')}/`;
+const automaticWebApplication = WEB_APPLICATION_PATHS.includes(normalizedCanonicalPath)
+  && !pageNodes.some((node) => nodeHasType(node, 'WebApplication'))
+  ? {
+      '@type': 'WebApplication',
+      '@id': `${canonical}#application`,
+      name: title.replace(/\s*[|—]\s*Zodiacs\.org.*$/i, ''),
+      url: canonical,
+      description,
+      applicationCategory: SCHEMA_EN.applicationCategory,
+      operatingSystem: SCHEMA_EN.operatingSystem,
+      browserRequirements: SCHEMA_EN.browserRequirements,
+      isAccessibleForFree: true,
+      offers: {
+        '@type': 'Offer',
+        price: SCHEMA_EN.freePrice,
+        priceCurrency: SCHEMA_EN.currency,
+      },
+      image: imageUrl,
+      publisher: { '@id': organization['@id'] },
+    }
+  : null;
+
+const automaticWebsite = contentPath === '/'
+  && !pageNodes.some((node) => nodeHasType(node, 'WebSite'))
+  ? {
+      '@type': 'WebSite',
+      '@id': 'https://zodiacs.org/#site',
+      url: 'https://zodiacs.org/',
+      name: SCHEMA_EN.websiteName,
+      description: SCHEMA_EN.websiteDescription,
+      publisher: { '@id': organization['@id'] },
+      inLanguage: LOCALE_META[locale].htmlLang,
+    }
+  : null;
+
+const automaticArticle = type === 'article'
+  && !pageNodes.some((node) => nodeHasType(node, 'Article'))
+  ? {
+      '@type': 'Article',
+      headline: title.replace(/\s*[|—]\s*Zodiacs\.org.*$/i, ''),
+      description,
+      url: canonical,
+      mainEntityOfPage: { '@type': 'WebPage', '@id': canonical },
+      image: imageUrl,
+      author: { '@id': organization['@id'] },
+      publisher: { '@id': organization['@id'] },
+      inLanguage: LOCALE_META[locale].htmlLang,
+    }
+  : null;
+
 const graphNodes = [
-  ...(jsonLd.some((node) => node['@id'] === organization['@id']) ? [] : [organization]),
-  ...jsonLd,
+  mergedOrganization,
+  ...[automaticWebsite, automaticBreadcrumb(), automaticWebApplication, automaticArticle]
+    .filter((node): node is Record<string, unknown> => Boolean(node)),
+  ...pageNodes,
 ];
 const graph = graphNodes.length
-  ? JSON.stringify({ '@context': 'https://schema.org', '@graph': graphNodes })
+  ? JSON.stringify({ '@context': 'https://schema.org', '@graph': graphNodes }).replaceAll('<', '\\u003c')
   : null;
 ---
 <title>{title}</title>
