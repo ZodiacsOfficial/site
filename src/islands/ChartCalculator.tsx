@@ -82,6 +82,7 @@ const AUTO_NAME_SUN = {
   en: 'Sun',
   es: 'Sol',
   pt: 'Sol',
+  fr: 'Soleil',
 } as const satisfies Record<Locale, string>;
 type SavePrefillSource = 'link' | 'match' | 'auto';
 type CalendarSubscribeModule = typeof import('./CalendarSubscribe');
