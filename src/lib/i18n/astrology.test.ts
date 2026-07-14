@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import dailyData from '../../data/daily.json';
+import { eventList } from '../horoscopes';
 import { SIGN_SLUGS } from '../signs';
 import type { Daily } from '../daily';
 import {
@@ -8,6 +9,7 @@ import {
   planetLabel,
 } from './astrology';
 import { dailyReadingForLocale } from './daily-reading';
+import { intlLocale } from './dates';
 
 const daily = dailyData as Daily;
 
@@ -20,6 +22,24 @@ describe('astrology localization', () => {
     expect(aspectLabel('es', 'square')).toBe('cuadratura');
     expect(moonPhaseLabel('es', 'Waning Crescent')).toBe('Luna menguante');
     expect(moonPhaseLabel('es', 'Waxing Gibbous')).toBe('Gibosa creciente');
+  });
+
+  it('uses the neutral Latin American locale for Spanish dates', () => {
+    expect(intlLocale('es')).toBe('es-419');
+  });
+
+  it('localizes every visible part of the monthly transit list', () => {
+    const july = eventList('2026-07', 'es').map((event) => event.label).join(' ');
+    const august = eventList('2026-08', 'es').map((event) => event.label).join(' ');
+
+    expect(july).toContain('Neptuno estaciona retrógrado');
+    expect(july).toContain('Mercurio estaciona directo');
+    expect(july).toContain('Luna nueva a 22° de Cáncer');
+    expect(july).toContain('Neptuno estaciona retrógrado a 4° de Aries');
+    expect(august).toContain('Mercurio conjunción Júpiter');
+    expect(`${july} ${august}`).not.toMatch(
+      /\b(?:Sun|Moon|Mercury|Mars|Jupiter|Saturn|Uranus|Neptune|Pluto|retrograde|direct|conjunction|sextile|square|trine|opposition)\b/,
+    );
   });
 
   it('preserves TodayBySign fact selection while rendering Spanish prose', () => {

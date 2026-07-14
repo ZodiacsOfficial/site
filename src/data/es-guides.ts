@@ -825,7 +825,7 @@ function expandedFaq(profile: GuideDepth): SpanishGuide['faq'] {
     },
     {
       q: `¿Qué pasa si no me identifico con ${profile.name}?`,
-      a: 'Es normal. El ascendente, la Luna, planetas dominantes y aspectos fuertes pueden cambiar mucho la forma en que se vive el signo solar. Calcula la carta completa antes de descartar el signo.',
+      a: 'Es normal. El ascendente, la Luna, los planetas dominantes y los aspectos fuertes pueden cambiar mucho la forma en que se vive el signo solar. Calcula la carta completa antes de descartar el signo.',
     },
     {
       q: `¿Cuál es la lección de ${profile.name}?`,

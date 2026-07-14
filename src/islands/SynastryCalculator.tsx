@@ -89,7 +89,7 @@ const PAIR_COPY = {
     pairSaveFull: 'Puedes guardar hasta {n} comparaciones — elimina una primero.',
     pairRemoved: 'Comparación eliminada.',
     savedComparisonSide: 'de una comparación guardada',
-    restoredSideHelp: 'Este lado viene de una comparación guardada — bórralo para ingresar a otra persona.',
+    restoredSideHelp: 'Este lado viene de una comparación guardada — bórralo para ingresar los datos de otra persona.',
   },
 } as const satisfies Record<Locale, Record<keyof typeof PAIR_COPY_EN, string>>;
 

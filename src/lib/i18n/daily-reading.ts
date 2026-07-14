@@ -21,7 +21,7 @@ const HOUSE_THEME_ES: Record<number, string> = {
   2: 'el dinero, las posesiones y lo que te da estabilidad',
   3: 'los recados, los hermanos, los mensajes y tu entorno cercano',
   4: 'el hogar, la familia y la base privada de tu vida',
-  5: 'el placer, el romance, la infancia y lo que creas por gusto',
+  5: 'el placer, el romance, los hijos y lo que creas por gusto',
   6: 'el trabajo en curso, los hábitos de salud y la carga diaria',
   7: 'la pareja y las personas que se sientan frente a ti',
   8: 'el dinero compartido, las deudas, la intimidad y lo que se fusiona',

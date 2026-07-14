@@ -13,7 +13,7 @@ const twin = Astro.url.pathname === '/privacy/' || Astro.url.pathname === '/es/p
 const otherHref = locale === 'es' ? (twin?.en ?? '/') : (twin?.es ?? '/es/');
 const otherLabel = locale === 'es' ? 'English' : 'Español';
 const otherLang = locale === 'es' ? 'en' : 'es';
-const assistantLabel = locale === 'es' ? 'Pregunta al sitio' : 'Ask the site';
+const assistantLabel = locale === 'es' ? 'Pregúntale al sitio' : 'Ask the site';
 const privacyHref = locale === 'es' ? '/es/privacy/' : '/privacy/';
 ---
 <footer class="footer">

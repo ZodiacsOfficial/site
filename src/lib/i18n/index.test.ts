@@ -29,4 +29,14 @@ describe('i18n helpers', () => {
     expect(tf('es', 'pairingCta', { a: 'Aries', b: 'Tauro' })).toBe('Leer la combinación de Aries y Tauro');
     expect(localizePath('es', '/horoscopes/aries/')).toBe('/horoscopes/aries/');
   });
+
+  it('keeps the Spanish baby result sentences grammatical when signs are inserted', () => {
+    expect(`${UI.es.babySunNearEdge} Géminis ${UI.es.babySunNearEdgeTail}`).toBe(
+      'La fecha está cerca del borde del signo: si el bebé nace más de un día antes o después, puede tener el Sol en Géminis — la fecha de nacimiento decide.',
+    );
+    expect(`${UI.es.babySunSplitA} Aries ${UI.es.babySunSplitOr} Tauro ${UI.es.babySunSplitTail}`).toBe(
+      'El Sol cambia de signo ese día: el bebé nace con el Sol en Aries o en Tauro según la hora. El momento exacto del nacimiento decide.',
+    );
+    expect(UI.es.babyMoonBody).toContain('Los bebés nacidos la misma semana');
+  });
 });

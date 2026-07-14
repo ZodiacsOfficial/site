@@ -92,7 +92,7 @@ const COPY: Record<AssistantLocale, Copy> = {
     privacy: "The assistant can be wrong. Conversations aren't stored by us.",
   },
   es: {
-    title: 'Pregunta a Zodiacs',
+    title: 'Pregúntale a Zodiacs',
     close: 'Cerrar asistente',
     intro: 'Pregunta sobre signos, casas, aspectos, ciclos o una carta guardada.',
     log: 'Conversación',

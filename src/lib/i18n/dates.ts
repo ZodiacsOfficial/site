@@ -4,7 +4,7 @@ export const TECHNICAL_OFFSET_LOCALE = 'en-US';
 export const TECHNICAL_WALL_LOCALE = 'en-CA';
 
 export function intlLocale(locale: Locale): string {
-  return locale === 'es' ? 'es-ES' : 'en-US';
+  return locale === 'es' ? 'es-419' : 'en-US';
 }
 
 export function formatDate(
@@ -37,4 +37,3 @@ export function formatDateTime(
 export function formatShortDate(locale: Locale, value: Date | string): string {
   return formatDate(locale, value, { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
 }
-

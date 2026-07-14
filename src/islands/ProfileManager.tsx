@@ -25,14 +25,16 @@ const PF_PAIR_COPY = {
   en: { savedPairs: 'Saved comparisons', pairRemoved: 'Comparison removed.' },
   es: { savedPairs: 'Comparaciones guardadas', pairRemoved: 'Comparación eliminada.' },
 } as const satisfies Record<Locale, Record<'savedPairs' | 'pairRemoved', string>>;
-const PF_BOOK_COPY = {
+export const PF_BOOK_COPY = {
   en: {
     count: (n: number) => `${n} charts saved — yours and the people you read for.`,
     add: "Add someone's chart",
     privacy: 'Saved on this device. Nothing is uploaded unless you turn sync on.',
   },
   es: {
-    count: (n: number) => `${n} cartas guardadas: la tuya y las de las personas que lees.`,
+    count: (n: number) => n === 1
+      ? '1 carta guardada.'
+      : `${n} cartas guardadas: la tuya y las de las personas para quienes haces lecturas.`,
     add: 'Añade la carta de alguien',
     privacy: 'Guardado en este dispositivo. No se sube nada salvo que actives la sincronización.',
   },

@@ -23,7 +23,7 @@ const COPY = {
   es: {
     action: 'Añadir a tu calendario',
     unavailable: 'Enlace de calendario no disponible',
-    note: 'Es un calendario actualizado. Suscríbete una vez y tu calendario lo renovará. La URL solo contiene posiciones planetarias y ASC/MC: no incluye nombre, fecha, hora, lugar ni coordenadas de nacimiento.',
+    note: 'Es un calendario actualizado. Suscríbete una vez y tu calendario lo actualizará. La URL solo contiene posiciones planetarias y ASC/MC: no incluye nombre, fecha, hora, lugar ni coordenadas de nacimiento.',
   },
 } as const;
 
