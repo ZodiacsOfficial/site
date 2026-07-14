@@ -13,6 +13,7 @@ export const LOCALE_PATH_PREFIX = {
   en: '',
   es: '/es',
   pt: '/pt',
+  fr: '/fr',
 } as const satisfies Record<Locale, string>;
 
 interface LocaleMeta {
@@ -54,6 +55,14 @@ export const LOCALE_META = {
     intlLocale: 'pt-BR',
     ogLocale: 'pt_BR',
     languageName: 'Português (Brasil)',
+  },
+  fr: {
+    pathPrefix: '/fr',
+    htmlLang: 'fr',
+    hreflang: 'fr',
+    intlLocale: 'fr-FR',
+    ogLocale: 'fr_FR',
+    languageName: 'Français',
   },
 } as const satisfies Record<Locale, LocaleMeta>;
 

@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import dailyData from '../../data/daily.json';
 import { eventList } from '../horoscopes';
-import { SIGN_SLUGS } from '../signs';
+import { SIGN_SLUGS, elementLabel, modalityLabel, signDates, signEssence, signName } from '../signs';
 import type { Daily } from '../daily';
 import {
   aspectLabel,
@@ -29,11 +29,27 @@ describe('astrology localization', () => {
     expect(aspectLabel('pt', 'square')).toBe('quadratura');
     expect(moonPhaseLabel('pt', 'Waning Crescent')).toBe('Lua minguante');
     expect(moonPhaseLabel('pt', 'Waxing Gibbous')).toBe('Gibosa crescente');
+    expect(planetLabel('fr', 'Venus')).toBe('Vénus');
+    expect(planetLabel('fr', 'North Node')).toBe('Nœud Nord');
+    expect(aspectLabel('fr', 'trine')).toBe('trigone');
+    expect(aspectLabel('fr', 'square')).toBe('carré');
+    expect(moonPhaseLabel('fr', 'Waning Crescent')).toBe('Dernier croissant');
+    expect(moonPhaseLabel('fr', 'Waxing Gibbous')).toBe('Lune gibbeuse croissante');
   });
 
   it('uses the neutral Latin American locale for Spanish dates', () => {
     expect(intlLocale('es')).toBe('es-419');
     expect(intlLocale('pt')).toBe('pt-BR');
+    expect(intlLocale('fr')).toBe('fr-FR');
+  });
+
+  it('localizes French sign names, dates, essences, elements, and modalities', () => {
+    expect(signName('aries', 'fr')).toBe('Bélier');
+    expect(signName('aquarius', 'fr')).toBe('Verseau');
+    expect(signDates('pisces', 'fr')).toBe('19 févr. – 20 mars');
+    expect(signEssence('libra', 'fr')).toBe('Charme, équilibre et sens aigu de la justice.');
+    expect(elementLabel('water', 'fr')).toBe('Eau');
+    expect(modalityLabel('fixed', 'fr')).toBe('Fixe');
   });
 
   it('localizes every visible part of the monthly transit list', () => {
@@ -60,6 +76,19 @@ describe('astrology localization', () => {
     expect(august).toContain('Mercúrio em conjunção com Júpiter');
     expect(`${july} ${august}`).not.toMatch(
       /\b(?:Sun|Moon|Mercury|Mars|Jupiter|Saturn|Uranus|Neptune|Pluto|retrograde|direct|conjunction|sextile|square|trine|opposition)\b/,
+    );
+  });
+
+  it('keeps English transit terms out of the French month list', () => {
+    const july = eventList('2026-07', 'fr').map((event) => event.label).join(' ');
+    const august = eventList('2026-08', 'fr').map((event) => event.label).join(' ');
+
+    expect(july).toContain('Neptune devient rétrograde');
+    expect(july).toContain('Mercure redevient direct');
+    expect(july).toContain('Nouvelle Lune à 22° en Cancer');
+    expect(august).toContain('Mercure en conjonction avec Jupiter');
+    expect(`${july} ${august}`).not.toMatch(
+      /\b(?:Sun|Moon|Mercury|Venus|Saturn|Pluto|retrograde|conjunction|square|trine|Aries|Taurus|Gemini|Leo|Virgo|Libra|Scorpio|Sagittarius|Capricorn|Aquarius|Pisces)\b/,
     );
   });
 
@@ -137,6 +166,30 @@ describe('astrology localization', () => {
         /\b(?:Sun|Moon|Mercury|Mars|Jupiter|Saturn|Uranus|Neptune|Pluto|Taurus|Gemini|Cancer|Scorpio|Sagittarius|Capricorn|Aquarius|Pisces|house|retrograde|Waning|Waxing|Quarter|Gibbous|conjunction|sextile|square|trine|opposition)\b/,
       );
       expect(visiblePortuguese).not.toMatch(/\bem (?:o|a|os|as)\b/);
+    }
+  });
+
+  it('preserves TodayBySign fact selection while rendering French prose', () => {
+    const fixtures: Daily[] = [
+      daily,
+      { ...daily, events: [{ kind: 'ingress', at: `${daily.date}T12:00:00.000Z`, planet: 'Pluto', sign: 'aquarius', degree: 0 }] },
+      { ...daily, events: [{ kind: 'lunation', at: `${daily.date}T12:00:00.000Z`, type: 'new', sign: 'cancer', degree: 18 }] },
+      { ...daily, events: [{ kind: 'station', at: `${daily.date}T12:00:00.000Z`, planet: 'Neptune', type: 'retrograde', sign: 'aries', degree: 4 }] },
+      { ...daily, events: [{ kind: 'aspect', at: `${daily.date}T12:00:00.000Z`, a: 'Mars', b: 'Saturn', type: 'square' }] },
+    ];
+
+    for (const fixture of fixtures) for (const slug of SIGN_SLUGS) {
+      const english = dailyReadingForLocale(slug, fixture, 'en');
+      const french = dailyReadingForLocale(slug, fixture, 'fr');
+      expect(french.lines).toHaveLength(english.lines.length);
+      expect(french.lines.map((line) => line.body)).toEqual(english.lines.map((line) => line.body));
+      expect(french.lines.map((line) => line.receipt.match(/maison (\d+)/)?.[1] ?? null)).toEqual(
+        english.lines.map((line) => line.receipt.match(/house (\d+)/)?.[1] ?? null),
+      );
+      const visibleFrench = french.lines.map((line) => `${line.text} ${line.receipt}`).join(' ');
+      expect(visibleFrench).not.toMatch(
+        /\b(?:Sun|Moon|Mercury|Venus|Saturn|Uranus|Pluto|Taurus|Gemini|Scorpio|Sagittarius|Capricorn|Aquarius|Pisces|house|retrograde|Waning|Waxing|Quarter|Gibbous|conjunction|sextile|square|trine|opposition)\b/,
+      );
     }
   });
 });

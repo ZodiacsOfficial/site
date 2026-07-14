@@ -16,6 +16,11 @@ const PLANET_LABELS: Record<Locale, Record<string, string>> = {
     Jupiter: 'Júpiter', Saturn: 'Saturno', Uranus: 'Urano', Neptune: 'Netuno', Pluto: 'Plutão',
     'North Node': 'Nodo Norte', 'South Node': 'Nodo Sul',
   },
+  fr: {
+    Sun: 'Soleil', Moon: 'Lune', Mercury: 'Mercure', Venus: 'Vénus', Mars: 'Mars',
+    Jupiter: 'Jupiter', Saturn: 'Saturne', Uranus: 'Uranus', Neptune: 'Neptune', Pluto: 'Pluton',
+    'North Node': 'Nœud Nord', 'South Node': 'Nœud Sud',
+  },
 };
 
 const ASPECT_LABELS: Record<Locale, Record<string, string>> = {
@@ -30,6 +35,10 @@ const ASPECT_LABELS: Record<Locale, Record<string, string>> = {
   pt: {
     conjunction: 'conjunção', sextile: 'sextil', square: 'quadratura',
     trine: 'trígono', opposition: 'oposição',
+  },
+  fr: {
+    conjunction: 'conjonction', sextile: 'sextile', square: 'carré',
+    trine: 'trigone', opposition: 'opposition',
   },
 };
 
@@ -63,6 +72,16 @@ const MOON_PHASE_LABELS: Record<Locale, Record<string, string>> = {
     'Waning Gibbous': 'Gibosa minguante',
     'Last Quarter': 'Quarto minguante',
     'Waning Crescent': 'Lua minguante',
+  },
+  fr: {
+    'New Moon': 'Nouvelle Lune',
+    'Waxing Crescent': 'Premier croissant',
+    'First Quarter': 'Premier quartier',
+    'Waxing Gibbous': 'Lune gibbeuse croissante',
+    'Full Moon': 'Pleine Lune',
+    'Waning Gibbous': 'Lune gibbeuse décroissante',
+    'Last Quarter': 'Dernier quartier',
+    'Waning Crescent': 'Dernier croissant',
   },
 };
 
