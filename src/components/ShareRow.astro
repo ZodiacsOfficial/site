@@ -1,0 +1,36 @@
+---
+interface Props {
+  text: string;
+  url: string;
+  locale?: 'en' | 'es';
+}
+
+const { text, url, locale = 'en' } = Astro.props;
+const encode = (value: string) => encodeURIComponent(value).replace(/[!'()*]/g, (char) =>
+  `%${char.charCodeAt(0).toString(16).toUpperCase()}`
+);
+const message = `${text} ${url}`;
+const encodedText = encode(text);
+const encodedUrl = encode(url);
+const encodedMessage = encode(message);
+---
+<p class="identity-share">
+  {locale === 'es' ? 'Comparte esta página:' : 'Send this page:'}{' '}
+  <a href={`https://x.com/intent/post?text=${encodedMessage}`} target="_blank" rel="noopener noreferrer">X</a>{' · '}
+  <a href={`https://wa.me/?text=${encodedMessage}`} target="_blank" rel="noopener noreferrer">WhatsApp</a>{' · '}
+  <a href={`https://t.me/share/url?url=${encodedUrl}&text=${encodedText}`} target="_blank" rel="noopener noreferrer">Telegram</a>{' · '}
+  <a href={`mailto:?subject=${encodedText}&body=${encodedMessage}`} target="_blank" rel="noopener noreferrer">Email</a>
+</p>
+
+<style>
+  .identity-share {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    line-height: 1.8;
+    letter-spacing: 0.06em;
+    color: var(--faint);
+  }
+  .identity-share a { color: inherit; text-decoration: none; border-bottom: 1px solid var(--hair-1); }
+  .identity-share a:hover { color: var(--muted); border-bottom-color: var(--hair-2); }
+</style>

@@ -3,6 +3,7 @@ import Base from '../../../layouts/Base.astro';
 import SignIcon from '../../../components/SignIcon.astro';
 import Faq from '../../../components/Faq.astro';
 import CollectBand from '../../../components/CollectBand.astro';
+import ShareRow from '../../../components/ShareRow.astro';
 import { SIGNS, SIGN_SLUGS, elementLabel, signBySlug, signDates, signName } from '../../../lib/signs';
 import { localizePath } from '../../../lib/i18n';
 import { spanishGuideFor } from '../../../data/es-guides';
@@ -136,6 +137,12 @@ const jsonLd = [
       <section class="reveal">
         <Faq items={guide.faq} heading={`${signName(sign, 'es')}, preguntas frecuentes`} />
       </section>
+
+      <ShareRow
+        text={`${signName(sign, 'es')} — the full guide`}
+        url={`https://zodiacs.org/es/${sign.slug}/`}
+        locale="es"
+      />
     </div>
 
     <nav class="container guide-es-nav reveal" aria-label="Más signos">

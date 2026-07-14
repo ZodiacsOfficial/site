@@ -2,6 +2,7 @@
 import { getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import Faq from '../../components/Faq.astro';
+import ShareRow from '../../components/ShareRow.astro';
 import SignIcon from '../../components/SignIcon.astro';
 import { signBySlug, formatLongitude } from '../../lib/signs';
 import {
@@ -107,7 +108,7 @@ const prevSlug = birthdaySlug(prev.month, prev.day);
 const nextSlug = birthdaySlug(next.month, next.day);
 const linkSigns = sign ? [sign] : cusp ? [cusp.a, cusp.b] : [];
 
-const ogImage = sign ? `/assets/og/v2/sign/${sign.slug}.png` : '/assets/og/v2/tool/birthday.png';
+const ogImage = `/assets/og/v2/sign/${heroSign!.slug}.png`;
 
 const jsonLd = [
   {
@@ -270,6 +271,8 @@ const jsonLd = [
         </div>
       </div>
     </nav>
+
+    <ShareRow text={`Born ${label} — here's what that sky says`} url={`https://zodiacs.org/birthday/${slug}/`} />
   </article>
 </Base>
 
