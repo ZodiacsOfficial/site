@@ -27,7 +27,9 @@ const PF_PAIR_COPY = {
 } as const satisfies Record<Locale, Record<'savedPairs' | 'pairRemoved', string>>;
 export const PF_BOOK_COPY = {
   en: {
-    count: (n: number) => `${n} charts saved — yours and the people you read for.`,
+    count: (n: number) => n === 1
+      ? '1 chart saved.'
+      : `${n} charts saved — yours and the people you read for.`,
     add: "Add someone's chart",
     privacy: 'Saved on this device. Nothing is uploaded unless you turn sync on.',
   },
