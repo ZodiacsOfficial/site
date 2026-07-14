@@ -50,19 +50,31 @@
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "Article",
-    "@id": "https://zodiacs.org/thesis/#article",
-    "headline": "Belief is the oldest asset.",
-    "description": "The registry’s argument for the twelve Zodiacs onchain — including the case against it, and the instrument disclosed.",
-    "image": "https://zodiacs.org/assets/og/v2/thesis.png",
-    "url": "https://zodiacs.org/thesis/",
-    "inLanguage": "en",
-    "author": { "@type": "Organization", "@id": "https://zodiacs.org/#org", "name": "Zodiacs" },
-    "publisher": { "@type": "Organization", "@id": "https://zodiacs.org/#org", "name": "Zodiacs" },
-    "isPartOf": { "@type": "WebSite", "@id": "https://zodiacs.org/#site" },
-    "about": [
-      { "@type": "Thing", "name": "Astrology" },
-      { "@type": "Dataset", "@id": "https://zodiacs.org/#registry", "name": "Zodiacs Registry" }
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Zodiacs.org", "item": "https://zodiacs.org/" },
+          { "@type": "ListItem", "position": 2, "name": "The Registry", "item": "https://zodiacs.org/registry/" },
+          { "@type": "ListItem", "position": 3, "name": "The Thesis", "item": "https://zodiacs.org/thesis/" }
+        ]
+      },
+      {
+        "@type": "Article",
+        "@id": "https://zodiacs.org/thesis/#article",
+        "headline": "Belief is the oldest asset.",
+        "description": "The registry’s argument for the twelve Zodiacs onchain — including the case against it, and the instrument disclosed.",
+        "image": "https://zodiacs.org/assets/og/v2/thesis.png",
+        "url": "https://zodiacs.org/thesis/",
+        "inLanguage": "en",
+        "author": { "@type": "Organization", "@id": "https://zodiacs.org/#org", "name": "Zodiacs" },
+        "publisher": { "@type": "Organization", "@id": "https://zodiacs.org/#org", "name": "Zodiacs" },
+        "isPartOf": { "@type": "WebSite", "@id": "https://zodiacs.org/#site" },
+        "about": [
+          { "@type": "Thing", "name": "Astrology" },
+          { "@type": "Dataset", "@id": "https://zodiacs.org/#registry", "name": "Zodiacs Registry" }
+        ]
+      }
     ]
   }
   </script>
@@ -1356,7 +1368,8 @@
         <section class="mov reveal" id="the-slower-bet">
           <div class="mov__head"><span class="mov__no">XI</span><h2 class="mov__title">The slower <span class="it">bet.</span></h2></div>
           <p>
-            The archive documents the Twelve in public from 2024 onward, with
+            The archive documents the Twelve from the first public registry
+            origin records onward, with
             registry addresses and community activity preserved across public
             channels, including
             <a href="https://x.com/astrofoliosol" rel="noopener noreferrer">X</a>,
@@ -1444,6 +1457,7 @@
         </span>
         <span class="ftr__links">
           <a href="/registry/zodiacs.registry.json">Registry JSON</a>
+          <a href="/disclosure/" data-i18n="disclosure.linkLabel">Disclosure</a>
           <a href="/llms.txt">llms.txt</a>
           <button class="assistant-link" type="button" data-assistant-open aria-haspopup="dialog">Ask the site</button>
         </span>

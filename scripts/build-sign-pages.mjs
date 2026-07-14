@@ -20,6 +20,8 @@ import {
   jupiterSwapUrl, dexscreenerUrl
 } from './sign-data.mjs';
 import { wingNavHtml, wingNavCss, wingNavScript } from './wing-nav.mjs';
+import { REGISTRY_ESTABLISHED_YEAR } from '../src/lib/registry-establishment.mjs';
+import { EN, enFormat } from '../src/strings/en.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const root = resolve(here, '..');
@@ -83,7 +85,7 @@ function provenanceBeats(m) {
       body: 'Canonized in Ptolemy’s Almagest among the forty-eight classical constellations; carried through the Arabic observatories into medieval Europe.' },
     { era: 'AD 1515', place: 'Nuremberg',
       body: 'Engraved in Albrecht Dürer’s celestial planispheres, the first printed star charts of the Western sky.' },
-    { era: 'AD 2024', place: 'Solana',
+    { era: `AD ${REGISTRY_ESTABLISHED_YEAR}`, place: 'Solana',
       body: `Minted as the official ${m.name} record — one canonical SPL asset, entered in the Zodiacs.org registry.` },
     { era: 'Present', place: 'Solana · Base',
       body: 'One identity, two official representations: the native Solana origin and its bridged Base counterpart, publicly verifiable in the registry.' }
@@ -128,6 +130,11 @@ function render(m) {
   const p = m.page;
   const meta = m.asset.metadata;
   const beats = provenanceBeats(m);
+  const ogImageAlt = enFormat('registry.ogLotAlt', {
+    sign: m.name,
+    number: String(m.order).padStart(2, '0'),
+    lot: p.lot,
+  });
   const marketConfig = m.pair
     ? `{ chainId: ${JSON.stringify(m.pair.chainId)}, pairId: ${JSON.stringify(m.pair.pairId)} }`
     : 'null';
@@ -179,14 +186,15 @@ function render(m) {
   <meta property="og:description" content="${esc(`${p.epithet} Provenance from Babylon to the onchain record.`)}" />
   <meta property="og:type" content="article" />
   <meta property="og:url" content="${signUrl(m.slug)}" />
-  <meta property="og:image" content="https://zodiacs.org/assets/og/v2/sign/${m.slug}.png" />
+  <meta property="og:image" content="https://zodiacs.org/assets/og/v2/registry/${m.slug}.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content="${esc(`${m.name} — Lot ${p.lot} of XII. Sculptural gold figure on the official Zodiacs.org catalogue card.`)}" />
+  <meta property="og:image:alt" content="${esc(ogImageAlt)}" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="${esc(m.name)} · Lot ${p.lot} of XII — Zodiacs" />
   <meta name="twitter:description" content="${esc(`${p.epithet} Provenance from Babylon to the onchain record.`)}" />
-  <meta name="twitter:image" content="https://zodiacs.org/assets/og/v2/sign/${m.slug}.png" />
+  <meta name="twitter:image" content="https://zodiacs.org/assets/og/v2/registry/${m.slug}.png" />
+  <meta name="twitter:image:alt" content="${esc(ogImageAlt)}" />
 
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23060709'/%3E%3Cg%3E%3Ccircle cx='32' cy='10' r='3.4' fill='%23DE8E79'/%3E%3Ccircle cx='43' cy='12.9' r='3.4' fill='%23B9D4BE'/%3E%3Ccircle cx='51.1' cy='21' r='3.4' fill='%23B29DD0'/%3E%3Ccircle cx='54' cy='32' r='3.4' fill='%23B6D4E4'/%3E%3Ccircle cx='51.1' cy='43' r='3.4' fill='%23E0A9B4'/%3E%3Ccircle cx='43' cy='51.1' r='3.4' fill='%23B7D9B0'/%3E%3Ccircle cx='32' cy='54' r='3.4' fill='%23D3A9DE'/%3E%3Ccircle cx='21' cy='51.1' r='3.4' fill='%23B9DCE8'/%3E%3Ccircle cx='12.9' cy='43' r='3.4' fill='%23E0B080'/%3E%3Ccircle cx='10' cy='32' r='3.4' fill='%23C0DEA8'/%3E%3Ccircle cx='12.9' cy='21' r='3.4' fill='%23AE8FC9'/%3E%3Ccircle cx='21' cy='12.9' r='3.4' fill='%23A9D4C4'/%3E%3C/g%3E%3C/svg%3E" />
 
@@ -793,6 +801,7 @@ ${SIGN_ORDER.map((s) => `        <a href="${signPath(s)}"${s === m.slug ? ' clas
           <a href="/registry/#verify">Verify</a>
           <a href="/thesis/">Thesis</a>
           <a href="/sdk/">SDK</a>
+          <a href="/disclosure/">${esc(EN['disclosure.linkLabel'])}</a>
           <a href="/registry/zodiacs.registry.json">Record</a>
           <button class="assistant-link" type="button" data-assistant-open aria-haspopup="dialog">Ask the site</button>
           <a href="https://astrofolio.xyz/" rel="noopener noreferrer">Astrofolio ↗</a>

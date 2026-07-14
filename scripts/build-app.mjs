@@ -13,6 +13,11 @@ import { readFile, writeFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
+import {
+  REGISTRY_ESTABLISHED,
+  REGISTRY_ESTABLISHMENT_PROVENANCE_URL,
+} from '../src/lib/registry-establishment.mjs';
+import { EN } from '../src/strings/en.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const root = resolve(here, '..');
@@ -46,7 +51,16 @@ const { code } = Babel.transform(source, {
 });
 
 const banner = '/* Generated from src/app.jsx by scripts/build-app.mjs — do not edit directly. */\n';
-const output = banner + code + '\n';
+const registryMeta = [
+  `const REGISTRY_ESTABLISHED=${JSON.stringify(REGISTRY_ESTABLISHED)};`,
+  `const REGISTRY_ESTABLISHMENT_PROVENANCE_URL=${JSON.stringify(REGISTRY_ESTABLISHMENT_PROVENANCE_URL)};`,
+  `const REGISTRY_DISCLOSURE_LABEL=${JSON.stringify(EN['disclosure.linkLabel'])};`,
+  `const REGISTRY_PROVENANCE_PENDING_LABEL=${JSON.stringify(EN['disclosure.provenancePendingShort'])};`,
+  `const REGISTRY_VERIFIER_NOT_FOUND_SENTENCE=${JSON.stringify(EN['registry.verifierNotFoundSentence'])};`,
+  `const REGISTRY_VERIFIER_NOT_FOUND_INLINE=${JSON.stringify(EN['registry.verifierNotFoundInline'])};`,
+  `const REGISTRY_ESTABLISHMENT_PROVENANCE_LABEL=${JSON.stringify(EN['registry.establishmentProvenanceLink'])};`,
+].join('');
+const output = banner + registryMeta + code + '\n';
 await writeFile(OUT, output, 'utf8');
 
 const hash = createHash('sha256').update(output).digest('hex').slice(0, 12);

@@ -41,15 +41,27 @@
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "TechArticle",
-    "@id": "https://zodiacs.org/sdk/examples/simastry-aura/#page",
-    "headline": "Simastry Aura Example",
-    "description": "A Simastry-inspired runnable example for shareable Aura context using Zodiacs SDK.",
-    "url": "https://zodiacs.org/sdk/examples/simastry-aura/",
-    "about": [
-      { "@type": "SoftwareApplication", "name": "Zodiacs SDK", "url": "https://zodiacs.org/sdk/" },
-      { "@type": "SoftwareApplication", "name": "Simastry" },
-      { "@type": "Thing", "name": "AI astrologist conversation context" }
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Zodiacs.org", "item": "https://zodiacs.org/" },
+          { "@type": "ListItem", "position": 2, "name": "SDK", "item": "https://zodiacs.org/sdk/" },
+          { "@type": "ListItem", "position": 3, "name": "Simastry Aura example", "item": "https://zodiacs.org/sdk/examples/simastry-aura/" }
+        ]
+      },
+      {
+        "@type": "TechArticle",
+        "@id": "https://zodiacs.org/sdk/examples/simastry-aura/#page",
+        "headline": "Simastry Aura Example",
+        "description": "A Simastry-inspired runnable example for shareable Aura context using Zodiacs SDK.",
+        "url": "https://zodiacs.org/sdk/examples/simastry-aura/",
+        "about": [
+          { "@type": "SoftwareApplication", "name": "Zodiacs SDK", "url": "https://zodiacs.org/sdk/" },
+          { "@type": "SoftwareApplication", "name": "Simastry" },
+          { "@type": "Thing", "name": "AI astrologist conversation context" }
+        ]
+      }
     ]
   }
   </script>
