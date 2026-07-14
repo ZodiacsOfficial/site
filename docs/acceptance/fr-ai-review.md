@@ -6,8 +6,8 @@ Date de la revue : **15 juillet 2026**.
 
 Statut : **la revue linguistique intégrée est terminée pour les pages, les
 guides, les dictionnaires et les modules interactifs en français. Le contrôle
-visuel à 320 px, la couverture des polices et le gate complet restent à
-effectuer**.
+visuel à 320 px et la couverture des polices sont validés ; le gate Linux
+complet reste à confirmer**.
 
 accepted by the owner in lieu of a human native-speaker sign-off.
 
@@ -40,10 +40,14 @@ terminologie retenue est `thème astral`, `ascendant`, `maisons`, `transits`,
   aux chaînes anglaises, sans perte de variable ni changement de sens.
 - [x] Les corrections de cette revue ne touchent aucune chaîne anglaise,
   espagnole ou portugaise, ni `public/`, l’aile du registre ou le SDK.
-- [ ] Le parcours visuel à 320 px et la couverture des glyphes
-  `à â é è ê ç œ` par les trois polices auto-hébergées restent à vérifier.
-- [ ] Le build, le check, la suite complète, `check-dist` et le contrôle des
-  bundles restent à exécuter sur la branche intégrée.
+- [x] Les 16 routes représentatives ont été parcourues à 320 × 844 px : aucune
+  largeur de document excédentaire, aucune superposition de framework et
+  aucune erreur de page. Les glyphes `à â é è ê ç œ` proviennent bien des
+  versions auto-hébergées d’Instrument Sans, EB Garamond et JetBrains Mono.
+- [ ] Le build, le check, `check-dist` et le contrôle des bundles passent en
+  local. La suite compte 458 tests réussis sur 459 ; seul l’instantané
+  astronomique préexistant diffère aux dernières décimales sous macOS. Le gate
+  Linux complet reste à confirmer avant fusion.
 
 ## Chaînes critiques intégrées
 
@@ -77,6 +81,6 @@ voix, donc aucune n’a été appliquée.
 
 Le routage, les liens `hreflang`, le sitemap, les formats de date, les noms des
 signes, les islands, la navigation, le pied de page, l’assistant, les lentilles,
-le parcours guidé et la recherche sont intégrés et ont été relus dans la source.
-Restent le parcours visuel à 320 px, la vérification des glyphes dans les polices
-auto-hébergées et le gate complet de la branche.
+le parcours guidé, la recherche, les vues à 320 px et les polices auto-hébergées
+sont vérifiés. Seule la confirmation du gate Linux complet reste requise avant
+fusion.
