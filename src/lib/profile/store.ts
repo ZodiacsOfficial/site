@@ -13,6 +13,10 @@ interface PersistOptions {
   sync?: boolean;
 }
 
+export type StoredChartIdentity = Pick<SavedChart, 'birth'> & {
+  summary: Pick<SavedChart['summary'], 'houseSystem'>;
+};
+
 export function loadProfile(): Profile {
   try {
     const raw = localStorage.getItem(PROFILE_KEY);
@@ -54,7 +58,7 @@ export function replaceProfile(profile: Profile): boolean {
   return ok;
 }
 
-function sameStoredInput(a: SavedChart, b: SavedChart): boolean {
+function sameStoredInput(a: StoredChartIdentity, b: StoredChartIdentity): boolean {
   const aPlace = a.birth.place;
   const bPlace = b.birth.place;
   return a.birth.date === b.birth.date &&
@@ -66,8 +70,16 @@ function sameStoredInput(a: SavedChart, b: SavedChart): boolean {
     a.summary.houseSystem === b.summary.houseSystem;
 }
 
-export function saveChart(chart: SavedChart): 'saved' | 'updated' | 'full' | 'error' {
+export function findMatchingChart(chart: StoredChartIdentity): SavedChart | null {
+  return loadProfile().charts.find((candidate) => sameStoredInput(candidate, chart)) ?? null;
+}
+
+export function saveChart(
+  chart: SavedChart,
+  options: { explicitName?: string } = {},
+): 'saved' | 'updated' | 'full' | 'error' {
   const profile = loadProfile();
+  const explicitName = options.explicitName?.trim() || undefined;
   let existing = profile.charts.findIndex((c) => c.id === chart.id);
   if (existing < 0) {
     existing = profile.charts.findIndex((candidate) => sameStoredInput(candidate, chart));
@@ -77,6 +89,7 @@ export function saveChart(chart: SavedChart): 'saved' | 'updated' | 'full' | 'er
     const updated = {
       ...chart,
       id: saved.id,
+      name: explicitName ?? saved.name,
       createdAt: saved.createdAt,
       updatedAt: new Date().toISOString(),
     };
@@ -86,9 +99,10 @@ export function saveChart(chart: SavedChart): 'saved' | 'updated' | 'full' | 'er
     return 'updated';
   }
   if (profile.charts.length >= MAX_CHARTS) return 'full';
-  profile.charts.unshift(chart);
+  const inserted = explicitName ? { ...chart, name: explicitName } : chart;
+  profile.charts.unshift(inserted);
   if (!persist(profile)) return 'error';
-  clearChartDeletion(chart.id);
+  clearChartDeletion(inserted.id);
   return 'saved';
 }
 

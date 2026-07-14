@@ -108,9 +108,9 @@ afterEach(() => {
 });
 
 describe('saveChart', () => {
-  it('updates the same stored input while retaining its identity and creation time', () => {
+  it('preserves a rename when an opened chart is saved again without an explicit name', () => {
     const existing = makeChart('kept-id', {
-      name: 'My chart',
+      name: 'Mom',
       createdAt: '2025-01-01T00:00:00.000Z',
     });
     seedProfile([existing]);
@@ -130,9 +130,32 @@ describe('saveChart', () => {
     expect(saved.id).toBe(existing.id);
     expect(saved.createdAt).toBe(existing.createdAt);
     expect(saved.updatedAt).toBe(NOW);
-    expect(saved.name).toBe('Fresh calculation');
+    expect(saved.name).toBe('Mom');
     expect(saved.summary.engineVersion).toBe('next-engine');
     expect(loadChartDeletions()).toEqual([]);
+  });
+
+  it('uses an explicit name for matched updates and new charts', () => {
+    seedProfile([makeChart('existing', { name: 'Mom' })]);
+
+    expect(saveChart(makeChart('incoming', { name: 'Auto name' }), {
+      explicitName: '  Aunt Ana  ',
+    })).toBe('updated');
+    expect(loadProfile().charts[0].name).toBe('Aunt Ana');
+
+    expect(saveChart(makeChart('new-person', { lat: 14, name: 'Auto name' }), {
+      explicitName: 'Friend',
+    })).toBe('saved');
+    expect(loadProfile().charts[0].name).toBe('Friend');
+  });
+
+  it('treats an empty explicit name as non-explicit', () => {
+    seedProfile([makeChart('existing', { name: 'Mom' })]);
+
+    expect(saveChart(makeChart('incoming', { name: 'Auto name' }), {
+      explicitName: '   ',
+    })).toBe('updated');
+    expect(loadProfile().charts[0].name).toBe('Mom');
   });
 
   it.each<[string, ChartOptions]>([
@@ -161,7 +184,9 @@ describe('saveChart', () => {
     ));
     seedProfile(charts);
 
-    expect(saveChart(makeChart('replacement-id', { lat: 10, name: 'Updated ten' }))).toBe('updated');
+    expect(saveChart(makeChart('replacement-id', { lat: 10, name: 'Updated ten' }), {
+      explicitName: 'Updated ten',
+    })).toBe('updated');
     expect(loadProfile().charts).toHaveLength(MAX_CHARTS);
     expect(loadProfile().charts.find((chart) => chart.id === 'chart-10')?.name).toBe('Updated ten');
     expect(saveChart(makeChart('overflow', { lat: 100 }))).toBe('full');
