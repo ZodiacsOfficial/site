@@ -155,6 +155,24 @@ function render(m) {
   <title>${esc(m.name)} — Lot ${p.lot} of XII · Official ${esc(m.ticker)} Record | Zodiacs.org</title>
   <meta name="description" content="${esc(`${p.epithet} The official ${m.name} record: lore and provenance of the sign, native Solana mint, official Base representation, live market context, and acquisition.`)}" />
   <link rel="canonical" href="${signUrl(m.slug)}" />
+  <script>
+    window.plausible = window.plausible || function () {
+      (window.plausible.q = window.plausible.q || []).push(arguments);
+    };
+    window.plausible.init = window.plausible.init || function (options) {
+      window.plausible.o = options || {};
+    };
+    window.plausible.init({
+      hashBasedRouting: false,
+      transformRequest: function (payload) {
+        var canonical = document.querySelector('link[rel="canonical"]');
+        payload.u = canonical ? canonical.href : location.origin + location.pathname;
+        if (payload.p && payload.p.url) delete payload.p.url;
+        return payload;
+      }
+    });
+  </script>
+  <script async src="https://plausible.io/js/pa-HwF2IBb5Sw8eboNPSOgHv.js"></script>
 
   <meta property="og:site_name" content="Zodiacs" />
   <meta property="og:title" content="${esc(m.name)} · Lot ${p.lot} of XII — Zodiacs" />
@@ -800,6 +818,30 @@ ${CHANNELS.map((c) => `          <a href="${c.url}" rel="noopener noreferrer">${
         modulePromise = modulePromise || import('/assets/assistant-ui.js');
         modulePromise.then(function (mod) { mod.openAssistant('en', button); }).catch(function () {});
       });
+    });
+  })();
+  </script>
+
+  <script>
+  (function () {
+    var sign = ${JSON.stringify(m.slug)};
+
+    function trackWingEvent(name) {
+      if (typeof plausible === 'function') {
+        window.plausible(name, { props: { sign: sign } });
+      }
+    }
+
+    window.addEventListener('load', function () {
+      trackWingEvent('wing_record_view');
+    });
+
+    document.addEventListener('click', function (event) {
+      var target = event.target;
+      var link = target && target.closest
+        ? target.closest('#market a, #acquire .acq__cta a')
+        : null;
+      if (link) trackWingEvent('wing_acquisition_click');
     });
   })();
   </script>
