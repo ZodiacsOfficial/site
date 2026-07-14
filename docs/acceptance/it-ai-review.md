@@ -6,8 +6,8 @@ Review date: **2026-07-15**.
 
 Status: **the integrated Italian language review is complete across pages,
 guides, shared dictionaries and interactive modules. The 320 px browser pass
-and accented-font coverage are verified; the authoritative Linux gate remains
-to be confirmed**.
+and accented-font coverage are verified; the authoritative Linux gate passes
+in full**.
 
 accepted by the owner in lieu of a human native-speaker sign-off.
 
@@ -50,10 +50,10 @@ natale`, `ascendente`, `case`, `transiti`, `luna piena`, `luna nuova` and
   viewport after integration. Every page had meaningful content, `lang="it"`,
   no document overflow, no framework overlay and no page error; the localized
   `/it/404/` and the labelled English fallback were included.
-- [ ] Build, check, distribution drift and bundle gates pass locally. The local
-  suite passes 472/473 tests; only the pre-existing Kahlo astronomy snapshot
-  differs at machine-precision decimals under macOS, exactly as on the earlier
-  stack layers. The authoritative Linux gate remains to be recorded.
+- [x] Build, check, tests, distribution drift, bundle gates, visual regression
+  and Lighthouse pass in the authoritative Linux gate. Locally under macOS,
+  472/473 tests pass; only the pre-existing Kahlo astronomy snapshot differs at
+  machine-precision decimals, exactly as on the earlier stack layers.
 
 ## Mobile and font evidence
 
@@ -123,10 +123,11 @@ The Italian values below are byte-identical to their integrated source values.
 | `src/data/it-guides.ts` | `migliorare il concreto` | `migliorare la realtà concreta` | The current compressed phrasing is understandable; the proposal is more idiomatic but less concise. |
 | `src/data/it-guides.ts` | `In Venere…` / `In Mercurio…` | `Con Venere in Toro…` / `Con Mercurio in Gemelli…` | The shorthand is clear in context and follows the translated corpus pattern; the proposal is more conventional but repeats the sign and changes the rhythm. |
 
-## Integration checks still required
+## Integration verification
 
 Italian is integrated through routing, hreflang, sitemap, canonical URLs, date
 formatting, localized sign names, islands, navigation, footer, assistant, chart
 lenses, tour copy, push delivery and search behavior. Mobile rendering and
-accented-font coverage are verified. The remaining checks are the merge-date
-refresh, if needed, and the authoritative Linux branch gate.
+accented-font coverage are verified, and the authoritative Linux branch gate
+passes in full. Only the merge-date refresh remains if Fable merges after the
+recorded review date.
