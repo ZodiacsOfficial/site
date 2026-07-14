@@ -28,9 +28,12 @@ const EVERGREEN_LASTMOD = new Map<string, string>([
     '/es/tools/', '/es/profile/', '/es/baby-zodiac/', '/es/methodology/', '/es/privacy/',
   ].map((loc) => [
     loc,
-    ['/solar-return/', '/tools/', '/almanac/', '/learn/', '/learn/communication/'].includes(loc)
+    [
+      '/solar-return/', '/tools/', '/almanac/', '/learn/', '/learn/communication/',
+      '/privacy/', '/es/privacy/',
+    ].includes(loc)
       ? '2026-07-14'
-      : ['/today/', '/privacy/', '/es/privacy/'].includes(loc)
+      : ['/today/'].includes(loc)
       ? '2026-07-13'
       : ['/', '/learn/zodiac-dates/', '/learn/glossary/'].includes(loc) ? '2026-07-11' : '2026-07-10',
   ] as const),
