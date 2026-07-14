@@ -243,7 +243,12 @@ try {
   check('an inline side restores and compares', (await mixed.locator('.wheel__transit').count()) === 11);
   check('the inline side shows as a saved-comparison chip',
     /from a saved comparison/.test(await mixed.locator('#syn-b-linked').inputValue()));
-  check('a restored own side still offers the invite', (await mixed.locator('[data-invite-link]').count()) >= 1);
+  // The invite button arrives via the lazily imported CopyLink module, a beat
+  // after the result module paints .rwheel — an instant count races it on
+  // slower hardware, so this check waits like the other async assertions.
+  const inviteAppears = await mixed.waitForSelector('[data-invite-link]', { timeout: 10000 })
+    .then(() => true).catch(() => false);
+  check('a restored own side still offers the invite', inviteAppears);
   await shot(mixed, 'rwheel-restored-inline.png', { clip: { x: 0, y: 0, width: 1440, height: 1200 } });
   await mixed.close();
 
