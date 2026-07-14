@@ -68,10 +68,15 @@ try {
       track: (name, props) => window.__detailEvents.push({ name, props }),
     });
   });
+  await page.goto('http://127.0.0.1:4399/birth-chart/', { waitUntil: 'networkidle' });
+  check('communication read: lazy chunk is absent before compute', await page.evaluate(() =>
+    !performance.getEntriesByType('resource').some((entry) => /\/CommunicationRead\.[^/]+\.js$/.test(new URL(entry.name).pathname))));
   await page.goto('about:blank');
   await page.goto(`http://127.0.0.1:4399/birth-chart/${kahlo}`, { waitUntil: 'networkidle' });
   await page.waitForSelector('.calc__result', { timeout: 15000 });
   await page.waitForSelector('.wheel--interactive', { timeout: 15000 });
+  await page.waitForSelector('.calc__comm', { timeout: 15000 });
+  await page.waitForFunction(() => window.__detailEvents.filter((event) => event.name === 'comm_read_view').length === 1);
 
   const detail = page.locator('details.calc__detail[data-detail]');
   const detailSummary = detail.locator('summary');
@@ -79,13 +84,24 @@ try {
   const aspectCount = await detail.locator('.calc__aspects li').count();
   check('plain-first: reading precedes actions and full-detail table', await page.evaluate(() => {
     const read = document.querySelector('.calc__read');
+    const communication = document.querySelector('.calc__comm');
     const actions = document.querySelector('.calc__chart-share');
     const detailNode = document.querySelector('[data-detail]');
     const table = document.querySelector('.calc__table');
-    return Boolean(read && actions && detailNode && table
-      && (read.compareDocumentPosition(actions) & Node.DOCUMENT_POSITION_FOLLOWING)
+    return Boolean(read && communication && actions && detailNode && table
+      && read.nextElementSibling === communication
+      && communication.nextElementSibling === actions
       && (actions.compareDocumentPosition(detailNode) & Node.DOCUMENT_POSITION_FOLLOWING)
       && (read.compareDocumentPosition(table) & Node.DOCUMENT_POSITION_FOLLOWING));
+  }));
+  check('communication read: chunk loads after compute', await page.evaluate(() =>
+    performance.getEntriesByType('resource').some((entry) => /\/CommunicationRead\.[^/]+\.js$/.test(new URL(entry.name).pathname))));
+  check('communication read: Kahlo corpus line is byte-identical',
+    await page.locator('.calc__comm-part').first().locator(':scope > p').first().textContent()
+      === 'You communicate like a performance with an audience of one — warm, committed, a story where a sentence would do. It works because you mean it; flattery without conviction reads as static to you.');
+  check('communication read: analytics fires once with no properties', await page.evaluate(() => {
+    const events = window.__detailEvents.filter((event) => event.name === 'comm_read_view');
+    return events.length === 1 && Object.keys(events[0].props ?? {}).length === 0;
   }));
   check('plain-first: detail is closed by default', !(await detail.evaluate((node) => node.open)));
   check('plain-first: EN summary is exact with mono counts',
@@ -104,6 +120,8 @@ try {
     await page.evaluate(() => localStorage.getItem('zodiacs.detail.v1')) === 'open');
   check('plain-first: open analytics is allowlisted shape', await page.evaluate(() =>
     window.__detailEvents.some((event) => event.name === 'detail_toggle' && event.props?.to === 'full')));
+  check('communication read: parent rerender does not duplicate analytics', await page.evaluate(() =>
+    window.__detailEvents.filter((event) => event.name === 'comm_read_view').length === 1));
 
   await page.goto('about:blank');
   await page.goto(`http://127.0.0.1:4399/birth-chart/${kahlo}`, { waitUntil: 'networkidle' });
@@ -237,11 +255,13 @@ try {
   check('invalid ?sel survives (no crash)', (await page.locator('.calc__table').count()) === 1);
 
   // North Node inspector has no placements link (page doesn't exist).
+  await page.goto('about:blank');
   await page.goto(`http://127.0.0.1:4399/birth-chart/?sel=body%3ANorth%20Node${kahlo}`, { waitUntil: 'networkidle' });
   await page.waitForSelector('.insp--card', { timeout: 15000 });
   check('North Node card has no 404 learn link', (await page.locator('.insp__more[href*="placements/north-node"]').count()) === 0);
 
   // Deep link: fresh load with ?sel=body:Venus.
+  await page.goto('about:blank');
   await page.goto(`http://127.0.0.1:4399/birth-chart/?sel=body%3AVenus${kahlo}`, { waitUntil: 'networkidle' });
   await page.waitForSelector('.insp--card', { timeout: 15000 });
   const t6 = await page.locator('.insp__title').textContent();
@@ -259,6 +279,10 @@ try {
   check('plain-first: ES summary line is exact',
     esSummary === `Todo el detalle — ${esPlacements} posiciones · ${esAspects} aspectos · grados y dignidades`,
     esSummary ?? '');
+  check('communication read: absent from Spanish',
+    await es.locator('.calc__comm').count() === 0
+    && await es.evaluate(() => !performance.getEntriesByType('resource')
+      .some((entry) => /\/CommunicationRead\.[^/]+\.js$/.test(new URL(entry.name).pathname))));
   await es.close();
 
   // ── Desktop: guided tour ──
