@@ -1,0 +1,110 @@
+---
+import Base from '../../../layouts/Base.astro';
+import Faq from '../../../components/Faq.astro';
+import SignIcon from '../../../components/SignIcon.astro';
+import SynastryCalculator from '../../../islands/SynastryCalculator';
+import { SIGNS, signName } from '../../../lib/signs';
+import { pairSlug } from '../../../lib/compat';
+import '../../../styles/calculator.css';
+
+const faq = [
+  {
+    q: 'Como funciona a compatibilidade astrológica?',
+    a: 'A astrologia compara dois mapas astrais medindo os ângulos entre os planetas de uma pessoa e os da outra; essa prática se chama sinastria. Trígonos e sextis entre os mapas são interpretados como facilidade, enquanto quadraturas e oposições apontam atritos produtivos. A compatibilidade entre signos solares é apenas o resumo mais curto de uma comparação muito mais ampla.',
+  },
+  {
+    q: 'A compatibilidade entre signos solares é real?',
+    a: 'Ela é a camada útil mais simples. Duas pessoas são muito mais do que seus signos solares: na prática, Lua, Vênus e Marte costumam importar mais. Os guias de pares de signos são pontos de partida honestos, e a calculadora compara os dois mapas completos quando você tem os dados de nascimento.',
+  },
+  {
+    q: 'Preciso das horas exatas de nascimento para comparar dois mapas?',
+    a: 'Os horários ajudam, mas não são indispensáveis. Sem eles, as posições dos planetas continuam precisas para o dia; apenas os ascendentes e as casas são omitidos. A Lua avança cerca de 13 graus por dia, então um horário desconhecido pode deixar algum aspecto lunar impreciso.',
+  },
+];
+
+const jsonLd = [
+  {
+    '@type': 'WebApplication',
+    name: 'Calculadora de compatibilidade',
+    url: 'https://zodiacs.org/pt/compatibility/',
+    applicationCategory: 'LifestyleApplication',
+    operatingSystem: 'Any',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    description: 'Calculadora gratuita de sinastria para comparar dois mapas astrais no seu dispositivo.',
+    inLanguage: 'pt-BR',
+    isPartOf: { '@id': 'https://zodiacs.org/#site' },
+  },
+  {
+    '@type': 'FAQPage',
+    inLanguage: 'pt-BR',
+    mainEntity: faq.map(({ q, a }) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: { '@type': 'Answer', text: a },
+    })),
+  },
+];
+---
+<Base
+  title="Calculadora de compatibilidade astrológica | Zodiacs.org"
+  description="Compare dois mapas astrais grátis e com privacidade no seu navegador, com leituras claras e guias para as 78 combinações de signos."
+  path="/pt/compatibility/"
+  locale="pt"
+  image="/assets/og/v2/tool/compatibility.png"
+  imageAlt="Calculadora de compatibilidade — Zodiacs.org"
+  jsonLd={jsonLd}
+  glass
+>
+  <section class="section--tight container container--narrow">
+    <div class="compat-hero">
+      <em class="kicker">Dois mapas, comparados com clareza</em>
+      <h1 class="display">Veja sua compatibilidade astrológica.</h1>
+      <p>Os signos solares são apenas o começo. Compare dois mapas astrais no seu navegador: um mapa dentro do outro em uma só roda, com as conexões desenhadas entre eles e uma leitura que você possa usar.</p>
+    </div>
+    <SynastryCalculator locale="pt" client:load />
+    <noscript>
+      <p>Esta calculadora de compatibilidade precisa de JavaScript. Ative-o e recarregue a página para comparar dois mapas astrais no seu navegador.</p>
+    </noscript>
+  </section>
+
+  <section class="section container">
+    <div class="section-head">
+      <h2>As 78 combinações</h2>
+      <p>Os guias completos continuam em inglês por enquanto, mas você pode explorar cada par como ponto de partida.</p>
+    </div>
+    <div class="compat-index">
+      {SIGNS.map((a) => (
+        <div class="compat-row" style={`--sign:${a.hue}`}>
+          <a class="compat-row__sign" href={`/pt/${a.slug}/`}>
+            <SignIcon sign={a.slug} size={34} class="compat-row__icon" />
+            <span>{signName(a, 'pt')}</span>
+          </a>
+          <div class="compat-row__pairs">
+            {SIGNS.map((b) => (
+              <a class="compat-row__pair" href={`/compatibility/${pairSlug(a.slug, b.slug)}/`} hreflang="en">
+                {signName(b, 'pt')}
+              </a>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="section--tight container container--narrow">
+    <Faq items={faq} heading="Perguntas sobre compatibilidade" />
+  </section>
+</Base>
+
+<style>
+  .compat-hero { max-width: 58ch; margin-bottom: clamp(26px, 5vw, 42px); }
+  .compat-hero h1 { margin: 14px 0; font-size: var(--text-2xl); line-height: 1.04; }
+  .compat-hero p { margin: 0; color: var(--muted); font-size: var(--text-lg); text-wrap: pretty; }
+  .compat-index { display: grid; }
+  .compat-row { display: grid; gap: 10px 26px; padding: 16px 0; border-bottom: 1px solid var(--hair-1); grid-template-columns: 1fr; }
+  .compat-row:first-child { border-top: 1px solid var(--hair-1); }
+  @media (min-width: 760px) { .compat-row { grid-template-columns: 190px 1fr; align-items: start; } }
+  .compat-row__sign { display: inline-flex; align-items: center; gap: 10px; color: var(--text); text-decoration: none; font-weight: 600; }
+  .compat-row__pairs { display: flex; flex-wrap: wrap; gap: 7px; }
+  .compat-row__pair { padding: 5px 10px; border: 1px solid var(--hair-1); border-radius: var(--r-full); color: var(--text-2); text-decoration: none; font-size: 13px; }
+</style>

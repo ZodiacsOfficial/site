@@ -1,0 +1,101 @@
+---
+import Base from '../../../layouts/Base.astro';
+
+const updated = '15 de julho de 2026';
+
+const jsonLd = [
+  {
+    '@type': 'WebPage',
+    name: 'Privacidade no Zodiacs.org',
+    url: 'https://zodiacs.org/pt/privacy/',
+    description: 'Como o zodiacs.org trata seus dados, dos cálculos locais ao assistente e às notificações opcionais.',
+    inLanguage: 'pt-BR',
+  },
+];
+---
+<Base
+  title="Privacidade — Seus dados de nascimento ficam no seu dispositivo | Zodiacs.org"
+  description="Como o zodiacs.org trata seus dados: os mapas são calculados no navegador, os recursos opcionais dependem da sua escolha e não armazenamos as conversas."
+  path="/pt/privacy/"
+  locale="pt"
+  jsonLd={jsonLd}
+>
+  <section class="section container container--narrow">
+    <em class="kicker">Privacidade</em>
+    <h1 class="method-title display">Seus dados de nascimento ficam no seu dispositivo.</h1>
+
+    <div class="prose">
+      <p class="lede">
+        Em resumo: quando você calcula um mapa astral, os cálculos são feitos
+        no seu navegador, e sua data, hora e local de nascimento nunca são
+        enviados a nós. A conta e o e-mail semanal são opcionais, ficam
+        desativados por padrão e são fáceis de cancelar. Não exibimos anúncios
+        nem usamos rastreamento entre sites.
+      </p>
+
+      <h2>Calculadoras e mapas salvos</h2>
+      <p>
+        A busca de lugares e o cálculo astrológico acontecem no seu dispositivo.
+        Os mapas que você salva ficam no armazenamento local do navegador. A
+        conta é opcional; se você a usar, o Supabase armazena seu e-mail e os
+        mapas que você escolher sincronizar para exibi-los nos seus outros
+        dispositivos.
+      </p>
+
+      <h2>Assistente de IA</h2>
+      <p>
+        Quando você usa o assistente, suas mensagens e, se a pergunta for sobre
+        seu mapa, um resumo das posições calculadas são enviados ao nosso
+        provedor de IA, a Anthropic, para gerar a resposta. Não armazenamos as
+        conversas, e o tráfego da API não é usado para treinar modelos. O
+        assistente nunca anexa seu nome nem a data, a hora ou o local de
+        nascimento salvos; tudo o que você digitar no chat fará parte da
+        mensagem enviada. Para aplicar o limite diário, mantemos um
+        identificador unidirecional com sal derivado do seu endereço IP e a
+        contagem do dia, nunca o IP original; as verificações de cota apagam
+        registros com mais de 35 dias. Enviamos esse mesmo identificador
+        pseudônimo à Anthropic como metadado da solicitação.
+      </p>
+
+      <h2>Resumo diário, calendário e notificações</h2>
+      <p>
+        O resumo diário lê as posições calculadas de um mapa salvo no seu
+        dispositivo. O calendário de trânsitos recebe o mesmo código apenas de
+        posições usado no compartilhamento; nenhum deles inclui seu nome, data,
+        hora ou local de nascimento nem coordenadas. Se você ativar as
+        notificações diárias, armazenamos a assinatura push do navegador — uma
+        URL do serviço de notificações e suas chaves de entrega, sem dados de
+        nascimento — para enviar o aviso. Você pode desativá-las a qualquer
+        momento.
+      </p>
+
+      <h2>E-mail e hospedagem</h2>
+      <p>
+        O e-mail semanal exige uma conta e uma adesão voluntária; fica
+        desativado por padrão, e toda mensagem permite cancelar a assinatura. A
+        Vercel hospeda o site e pode manter registros técnicos breves para
+        entregar as páginas e prevenir abusos. Não usamos publicidade nem
+        rastreamento entre sites. Contamos visualizações de páginas e o uso
+        anônimo de recursos com o Plausible, um serviço de análise sem cookies:
+        sem cookies, sem rastreamento entre sites, sem dados de nascimento e sem
+        nada do que você digita. Os eventos levam apenas rótulos de categoria —
+        “um mapa foi salvo”, nunca de quem.
+      </p>
+
+      <h2>Suas escolhas</h2>
+      <p>
+        Você pode usar as calculadoras sem conta, apagar os mapas locais pelo
+        navegador e pedir a exclusão de uma conta escrevendo para
+        <a href="mailto:hello@zodiacs.org">hello@zodiacs.org</a>.
+      </p>
+
+      <p class="method-updated mono">Última atualização: {updated}</p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .method-title { margin: 6px 0 8px; }
+  .prose .lede { font-size: var(--text-lg); color: var(--text); }
+  .method-updated { margin-top: 40px; color: var(--faint); font-size: 12px; letter-spacing: 0.04em; }
+</style>

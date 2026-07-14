@@ -1,0 +1,105 @@
+---
+import Base from '../../../layouts/Base.astro';
+import Faq from '../../../components/Faq.astro';
+import BabyZodiac from '../../../islands/BabyZodiac';
+import '../../../styles/calculator.css';
+
+const faq = [
+  {
+    q: 'Qual será o signo do meu bebê?',
+    a: 'Informe a data prevista do parto. O signo solar dessa data é quase certo, porque o Sol passa cerca de um mês em cada signo. As exceções honestas estão nos limites: uma data próxima da mudança de signo ou um nascimento algumas semanas antes ou depois pode alterar a resposta. A ferramenta calcula essas possibilidades em vez de adivinhar.',
+  },
+  {
+    q: 'Posso saber o signo lunar antes do nascimento?',
+    a: 'Apenas como uma lista curta. A Lua muda de signo a cada dois ou três dias, então a semana prevista do parto costuma abranger dois ou três signos lunares. A ferramenta mostra os intervalos dessa semana com suas datas; o dia e a hora do nascimento determinam qual deles vale.',
+  },
+  {
+    q: 'E o ascendente?',
+    a: 'Não é possível prever. O ascendente muda aproximadamente a cada duas horas ao longo do dia, por isso depende completamente do minuto e do local do nascimento. É por isso que a certidão de nascimento é importante para a astrologia.',
+  },
+  {
+    q: 'Nascer com um planeta retrógrado significa algo ruim?',
+    a: 'Não. Os movimentos retrógrados são normais: Mercúrio fica retrógrado cerca de um quinto do tempo, e todo mundo nasce com algum planeta em alguma condição. Em um mapa astral, um planeta retrógrado costuma ser interpretado como uma energia mais voltada para dentro; é uma nuance, não um defeito.',
+  },
+  {
+    q: 'Quando devo calcular o mapa de verdade?',
+    a: 'Quando você tiver o horário de nascimento por escrito. A data, a hora exata e o local permitem calcular o mapa completo: o signo exato da Lua, o ascendente, as casas e os aspectos. A calculadora faz tudo no seu dispositivo e leva cerca de vinte segundos.',
+  },
+];
+
+const jsonLd = [
+  {
+    '@type': 'WebPage',
+    name: 'Zodíaco do bebê: qual será o signo?',
+    url: 'https://zodiacs.org/pt/baby-zodiac/',
+    description: 'Informe a data prevista do parto para ver o signo solar quase certo, os possíveis signos lunares da semana e o que só poderá ser conhecido depois do nascimento.',
+    inLanguage: 'pt-BR',
+    isPartOf: { '@id': 'https://zodiacs.org/#site' },
+  },
+  {
+    '@type': 'FAQPage',
+    inLanguage: 'pt-BR',
+    mainEntity: faq.map(({ q, a }) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: { '@type': 'Answer', text: a },
+    })),
+  },
+];
+---
+<Base
+  title="Qual será o signo do meu bebê? Calculadora pela data do parto | Zodiacs.org"
+  description="Informe a data prevista do parto: o signo solar quase certo, com avisos de cúspide calculados, os possíveis signos lunares da semana e o que só poderá ser conhecido depois do nascimento."
+  path="/pt/baby-zodiac/"
+  locale="pt"
+  image="/assets/og/v2/tool/baby-zodiac.png"
+  imageAlt="Calculadora do zodíaco do bebê — Zodiacs.org"
+  jsonLd={jsonLd}
+>
+  <section class="section--tight container container--narrow">
+    <div class="tool-hero reveal">
+      <h1 class="display">Qual será o signo do bebê?</h1>
+      <p>
+        Informe a data prevista do parto e veja a versão honesta: o signo
+        solar é quase certo, o lunar é uma lista curta que o dia do nascimento
+        resolve, e o ascendente precisa esperar pelo relógio. Tudo é calculado
+        no seu dispositivo.
+      </p>
+    </div>
+    <BabyZodiac locale="pt" client:load />
+    <noscript>
+      <p>Esta calculadora do zodíaco do bebê precisa de JavaScript. Ative-o e recarregue a página para ver as possibilidades do Sol, o intervalo da Lua e os movimentos retrógrados próximos à data prevista do parto.</p>
+    </noscript>
+  </section>
+
+  <section class="section--tight container container--narrow">
+    <div class="prose reveal">
+      <p>
+        O Sol passa um mês em cada signo, então a data prevista oferece uma
+        resposta bastante segura; as exceções — datas no limite de um signo ou
+        bebês que nascem antes — são calculadas acima, em vez de adivinhadas. A
+        Lua muda de signo a cada dois ou três dias, e o ascendente muda a cada
+        duas horas: ele pertence ao minuto do nascimento. Depois do parto, o{' '}
+        <a href="/pt/birth-chart/">mapa astral completo</a> calcula tudo.
+      </p>
+    </div>
+  </section>
+
+  <section class="section--tight container container--narrow">
+    <Faq items={faq} heading="Perguntas sobre o zodíaco do bebê" />
+  </section>
+</Base>
+
+<style>
+  .tool-hero { max-width: 62ch; margin-bottom: clamp(24px, 4vw, 36px); }
+  .tool-hero h1 {
+    margin: 0 0 16px;
+    font-family: var(--font-serif);
+    font-size: var(--text-2xl);
+    font-weight: 500;
+    letter-spacing: -0.005em;
+    line-height: 1.04;
+    text-wrap: balance;
+  }
+  .tool-hero p { margin: 0; color: var(--muted); font-size: var(--text-lg); text-wrap: pretty; }
+</style>
