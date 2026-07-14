@@ -33,7 +33,7 @@ export const MERCURY_ELEMENT_PAIRS: Record<MercuryElementPairKey, string> = {
   'water-water': `You two talk under the words — tone, timing, what wasn't said. Beautiful and hermetic; the discipline is saying the important things out loud anyway, for the record.`,
 };
 
-export const NO_CONTACT = `Your Mercuries make no major contact — the tradition reads that as neutral, not bad: your minds neither collide nor complete each other by default, so your conversational style is built, not given. The sign pairing below is the material you're building with.`;
+export const NO_CONTACT = `Your Mercuries make no major contact — the tradition reads that as neutral, not bad: your minds neither collide nor complete each other by default, so your conversational style is built, not given. The sign pairing above is the material you're building with.`;
 
 const ELEMENT_ORDER: readonly Element[] = ['fire', 'earth', 'air', 'water'];
 

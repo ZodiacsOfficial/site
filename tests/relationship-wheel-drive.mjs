@@ -23,7 +23,7 @@ const COMPOSITE_NOTE = "A composite chart is the midpoint of two charts — a po
 const COMMUNICATION_FIRE_FIRE = 'Two minds that think at speaking speed — conversation as sparring, fast and warm. Nobody finishes their sentences here; nobody minds.';
 const COMMUNICATION_MERCURY_MERCURY = 'Your minds are running compatible operating systems — shorthand develops fast, and it lasts. You will never run out of conversation, only of evening.';
 const COMMUNICATION_MOON_MERCURY = 'Analysis meets emotion mid-sentence: one wants the feeling named precisely, the other wants it felt first. Ask "solve or listen?" and this aspect behaves.';
-const COMMUNICATION_NO_CONTACT = "Your Mercuries make no major contact — the tradition reads that as neutral, not bad: your minds neither collide nor complete each other by default, so your conversational style is built, not given. The sign pairing below is the material you're building with.";
+const COMMUNICATION_NO_CONTACT = "Your Mercuries make no major contact — the tradition reads that as neutral, not bad: your minds neither collide nor complete each other by default, so your conversational style is built, not given. The sign pairing above is the material you're building with.";
 const SAVED_MC = {
   'drive-frida': 53.32837167390386,
   'drive-diego': 16.9870696472928,
