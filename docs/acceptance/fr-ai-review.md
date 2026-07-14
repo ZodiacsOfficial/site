@@ -6,8 +6,8 @@ Date de la revue : **15 juillet 2026**.
 
 Statut : **la revue linguistique intégrée est terminée pour les pages, les
 guides, les dictionnaires et les modules interactifs en français. Le contrôle
-visuel à 320 px et la couverture des polices sont validés ; le gate Linux
-complet reste à confirmer**.
+visuel à 320 px, la couverture des polices et le gate Linux complet sont
+validés**.
 
 accepted by the owner in lieu of a human native-speaker sign-off.
 
@@ -44,10 +44,10 @@ terminologie retenue est `thème astral`, `ascendant`, `maisons`, `transits`,
   largeur de document excédentaire, aucune superposition de framework et
   aucune erreur de page. Les glyphes `à â é è ê ç œ` proviennent bien des
   versions auto-hébergées d’Instrument Sans, EB Garamond et JetBrains Mono.
-- [ ] Le build, le check, `check-dist` et le contrôle des bundles passent en
-  local. La suite compte 458 tests réussis sur 459 ; seul l’instantané
-  astronomique préexistant diffère aux dernières décimales sous macOS. Le gate
-  Linux complet reste à confirmer avant fusion.
+- [x] Le build, le check, la suite complète, `check-dist`, le contrôle des
+  bundles, la régression visuelle et Lighthouse passent dans le gate Linux. En
+  local sous macOS, 458 tests sur 459 passent ; seul l’instantané astronomique
+  préexistant diffère aux dernières décimales, sans modification du corpus.
 
 ## Chaînes critiques intégrées
 
@@ -81,6 +81,5 @@ voix, donc aucune n’a été appliquée.
 
 Le routage, les liens `hreflang`, le sitemap, les formats de date, les noms des
 signes, les islands, la navigation, le pied de page, l’assistant, les lentilles,
-le parcours guidé, la recherche, les vues à 320 px et les polices auto-hébergées
-sont vérifiés. Seule la confirmation du gate Linux complet reste requise avant
-fusion.
+le parcours guidé, la recherche, les vues à 320 px, les polices auto-hébergées
+et le gate Linux complet sont vérifiés.
