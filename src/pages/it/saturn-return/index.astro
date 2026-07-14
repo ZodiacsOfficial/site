@@ -1,0 +1,81 @@
+---
+import Base from '../../../layouts/Base.astro';
+import Faq from '../../../components/Faq.astro';
+import SaturnReturnCalculator from '../../../islands/SaturnReturnCalculator';
+import '../../../styles/calculator.css';
+
+const faq = [
+  {
+    q: 'Che cos’è un ritorno di Saturno?',
+    a: 'È il momento in cui Saturno in transito torna al grado esatto che occupava alla tua nascita. Saturno impiega circa 29,4 anni a percorrere lo zodiaco: il primo ritorno arriva quindi intorno ai 29 anni, il secondo verso i 58 e il terzo attorno agli 88. L’astrologia lo interpreta come una verifica di ciò che funziona per inerzia anziché per scelta.',
+  },
+  {
+    q: 'Quando avviene il mio ritorno di Saturno?',
+    a: 'Inserisci la data di nascita. Il calcolatore segue il movimento reale di Saturno e restituisce le date esatte, compresi i passaggi retrogradi. La maggior parte dei primi ritorni inizia tra i 28 e i 30 anni; l’idea diffusa che «Saturno mi abbia rovinato i 29 anni» descrive spesso il cuore del periodo.',
+  },
+  {
+    q: 'Perché il mio ritorno di Saturno ha tre date?',
+    a: 'Saturno è retrogrado per circa quattro mesi e mezzo ogni anno. Quando questo moto all’indietro attraversa il tuo grado natale, il pianeta può toccarlo tre volte: una avanzando, una tornando indietro e un’ultima volta in uscita. L’intero periodo, spesso lungo da otto a dodici mesi, fa parte del ritorno.',
+  },
+  {
+    q: 'Quanto dura un ritorno di Saturno?',
+    a: 'I passaggi esatti possono estendersi da pochi giorni a quasi un anno, a seconda che intervenga o meno il moto retrogrado. L’esperienza viene letta in modo più ampio: di solito si considera l’intero transito di Saturno nel segno del tuo Saturno natale, circa due anni e mezzo.',
+  },
+  {
+    q: 'Il ritorno di Saturno è qualcosa di negativo?',
+    a: 'Ha fama di demolire tutto, ma somiglia più a un’ispezione. Carriere, relazioni e modi di vivere adatti si consolidano; quelli tenuti in piedi solo dall’abitudine presentano il conto. Molte persone lo trovano terribile a 29 anni e formativo quando lo riguardano a 35.',
+  },
+];
+
+const jsonLd = [
+  {
+    '@type': 'WebApplication',
+    name: 'Calcolatore del ritorno di Saturno',
+    url: 'https://zodiacs.org/it/saturn-return/',
+    applicationCategory: 'LifestyleApplication',
+    operatingSystem: 'Web',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    inLanguage: 'it',
+    isPartOf: { '@id': 'https://zodiacs.org/#site' },
+  },
+  {
+    '@type': 'FAQPage',
+    inLanguage: 'it',
+    mainEntity: faq.map(({ q, a }) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: { '@type': 'Answer', text: a },
+    })),
+  },
+];
+---
+<Base
+  title="Calcolatore del ritorno di Saturno | Zodiacs.org"
+  description="Trova gratuitamente le date esatte del tuo ritorno di Saturno, compresi i passaggi retrogradi, calcolate sul tuo dispositivo."
+  path="/it/saturn-return/"
+  locale="it"
+  image="/assets/og/v2/tool/saturn-return.png"
+  imageAlt="Calcolatore del ritorno di Saturno — Zodiacs.org"
+  jsonLd={jsonLd}
+>
+  <section class="section--tight container">
+    <div class="tool-hero">
+      <h1 class="display">Il tuo ritorno di Saturno, con le date.</h1>
+      <p>Intorno ai 29 anni, Saturno torna nel punto che occupava alla tua nascita. Questo calcolatore trova le date esatte a partire dalla tua data di nascita.</p>
+    </div>
+    <SaturnReturnCalculator locale="it" client:load />
+    <noscript>
+      <p>Questo calcolatore del ritorno di Saturno richiede JavaScript. Attiva JavaScript e ricarica la pagina per calcolare le date dei tuoi ritorni dalla data di nascita.</p>
+    </noscript>
+  </section>
+
+  <section class="section--tight container container--narrow">
+    <Faq items={faq} heading="Domande sul ritorno di Saturno" />
+  </section>
+</Base>
+
+<style>
+  .tool-hero { max-width: 62ch; margin-bottom: clamp(28px, 5vw, 44px); }
+  .tool-hero h1 { margin: 0 0 16px; font-size: var(--text-2xl); line-height: 1.04; }
+  .tool-hero p { margin: 0; color: var(--muted); font-size: var(--text-lg); text-wrap: pretty; }
+</style>

@@ -1,0 +1,77 @@
+---
+import Base from '../../../layouts/Base.astro';
+import Faq from '../../../components/Faq.astro';
+import MoonPhaseTool from '../../../islands/MoonPhaseTool';
+import '../../../styles/calculator.css';
+
+const faq = [
+  {
+    q: 'In quale fase si trova la Luna stasera?',
+    a: 'L’indicatore in cima alla pagina la calcola in tempo reale sul tuo dispositivo: mostra il nome della fase attuale, la percentuale di illuminazione e il segno occupato dalla Luna in questo momento, con l’ora in tempo universale.',
+  },
+  {
+    q: 'Qual era la fase lunare il giorno del mio compleanno?',
+    a: 'Inserisci la tua data di nascita nello strumento. La fase può essere calcolata con precisione dalla data, perché la Luna impiega circa 29,5 giorni per completare il ciclo. L’astrologia interpreta la fase natale come una sfumatura del temperamento: si dice che chi nasce con la luna nuova dia inizio alle cose, mentre chi nasce con la luna piena viva in modo più visibile.',
+  },
+  {
+    q: 'Ogni quanto c’è la luna piena?',
+    a: 'In media ogni 29,5 giorni: questo periodo si chiama mese sinodico. Lo scarto rispetto al calendario fa cambiare la data della luna piena ogni mese e, a volte, produce una seconda luna piena nello stesso mese civile: la cosiddetta luna blu.',
+  },
+  {
+    q: 'La fase lunare influenza il mio segno lunare?',
+    a: 'Sono due misure diverse. La fase confronta la Luna con il Sole; il segno lunare indica dove si trovava la Luna nello zodiaco. La luna piena può avvenire in ciascuno dei dodici segni. È il segno lunare che l’astrologia interpreta come descrizione del temperamento emotivo.',
+  },
+];
+
+const jsonLd = [
+  {
+    '@type': 'WebApplication',
+    name: 'Strumento per le fasi lunari',
+    url: 'https://zodiacs.org/it/moon-phase/',
+    applicationCategory: 'LifestyleApplication',
+    operatingSystem: 'Web',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    inLanguage: 'it',
+    isPartOf: { '@id': 'https://zodiacs.org/#site' },
+  },
+  {
+    '@type': 'FAQPage',
+    inLanguage: 'it',
+    mainEntity: faq.map(({ q, a }) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: { '@type': 'Answer', text: a },
+    })),
+  },
+];
+---
+<Base
+  title="Fase lunare di oggi e della tua nascita | Zodiacs.org"
+  description="Consulta la fase lunare di oggi o di qualsiasi altra data: fase, illuminazione e segno lunare, gratis e sul tuo dispositivo."
+  path="/it/moon-phase/"
+  locale="it"
+  image="/assets/og/v2/tool/moon-phase.png"
+  imageAlt="Fase lunare di oggi e di qualsiasi altra data — Zodiacs.org"
+  jsonLd={jsonLd}
+>
+  <section class="section--tight container">
+    <div class="tool-hero">
+      <h1 class="display">La Luna, oggi o in qualsiasi altra notte.</h1>
+      <p>La fase di stasera, calcolata in tempo reale. Più sotto, scopri la Luna della tua nascita o quella di qualsiasi data importante.</p>
+    </div>
+    <MoonPhaseTool locale="it" client:load />
+    <noscript>
+      <p>Questo calcolatore delle fasi lunari richiede JavaScript. Attiva JavaScript e ricarica la pagina per vedere la fase di stasera o consultare quella di un’altra data.</p>
+    </noscript>
+  </section>
+
+  <section class="section--tight container container--narrow">
+    <Faq items={faq} heading="Domande sulle fasi lunari" />
+  </section>
+</Base>
+
+<style>
+  .tool-hero { max-width: 62ch; margin-bottom: clamp(28px, 5vw, 44px); }
+  .tool-hero h1 { margin: 0 0 16px; font-size: var(--text-2xl); line-height: 1.04; }
+  .tool-hero p { margin: 0; color: var(--muted); font-size: var(--text-lg); text-wrap: pretty; }
+</style>

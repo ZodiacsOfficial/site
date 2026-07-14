@@ -1,0 +1,47 @@
+---
+import Base from '../../../layouts/Base.astro';
+import { EDITOR_AUTHOR } from '../../../lib/editorial';
+
+const jsonLd = [
+  {
+    '@type': 'Article',
+    headline: 'Come calcoliamo il tuo tema natale',
+    url: 'https://zodiacs.org/it/methodology/',
+    datePublished: '2026-07-15T00:00:00+07:00',
+    dateModified: '2026-07-15T00:00:00+07:00',
+    author: EDITOR_AUTHOR,
+    publisher: { '@id': 'https://zodiacs.org/#org' },
+    mainEntityOfPage: { '@type': 'WebPage', '@id': 'https://zodiacs.org/it/methodology/' },
+    inLanguage: 'it',
+    about: 'Metodo astronomico, gestione dei fusi orari e modello di privacy del motore per i temi natali di Zodiacs.org.',
+    isPartOf: { '@id': 'https://zodiacs.org/#site' },
+  },
+];
+---
+<Base
+  title="Come calcoliamo il tuo tema natale — metodo e privacy | Zodiacs.org"
+  description="L’astronomia dietro ogni tema: effemeridi, case, fusi orari storici, controlli di precisione e privacy locale."
+  path="/it/methodology/"
+  locale="it"
+  type="article"
+  jsonLd={jsonLd}
+>
+  <section class="section container container--narrow">
+    <em class="kicker">Metodo</em>
+    <h1 class="method-title display">Come calcoliamo il tuo tema natale.</h1>
+    <div class="prose">
+      <p>I temi sono calcolati nel tuo browser a partire da posizioni planetarie apparenti, geocentriche e tropicali: il quadro standard dell’astrologia occidentale.</p>
+      <p>Il motore viene testato con i dati di riferimento JPL Horizons della NASA. Verifichiamo anche la coerenza del cielo stesso: all’alba, per esempio, l’ascendente deve coincidere con la posizione del Sole.</p>
+      <h2>Fusi orari</h2>
+      <p>Convertiamo la tua ora locale usando l’intera cronologia del fuso del luogo di nascita, che comprende l’ora legale, i cambiamenti dovuti alle guerre e l’ora media locale precedente alla standardizzazione.</p>
+      <h2>Privacy</h2>
+      <p>Il tema viene calcolato sul tuo dispositivo. Nessuna API del server riceve i tuoi dati di nascita. Se salvi un tema, resta prima di tutto nella memoria locale; la sincronizzazione con un account è facoltativa.</p>
+      <h2>Limiti dichiarati con chiarezza</h2>
+      <p>Gli anni supportati vanno dal 1800 al 2199. Se non conosci l’ora di nascita, calcoliamo il tema a mezzogiorno: i pianeti restano affidabili per quel giorno, ma l’ascendente e le case richiedono l’ora.</p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .method-title { margin: 14px 0 24px; font-size: var(--text-2xl); line-height: 1.04; }
+</style>

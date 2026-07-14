@@ -1,0 +1,106 @@
+---
+import Base from '../../../layouts/Base.astro';
+import Faq from '../../../components/Faq.astro';
+import BabyZodiac from '../../../islands/BabyZodiac';
+import '../../../styles/calculator.css';
+
+const faq = [
+  {
+    q: 'Quale sarà il segno del mio bambino?',
+    a: 'Inserisci la data prevista del parto. Il segno solare in quella data è quasi certo, perché il Sole resta circa un mese in ogni segno. Le vere eccezioni sono ai confini: una data vicina al cambio di segno o una nascita alcune settimane prima o dopo può modificare la risposta. Lo strumento calcola entrambi i casi invece di indovinarli.',
+  },
+  {
+    q: 'Posso conoscere il segno lunare prima della nascita?',
+    a: 'Solo come breve elenco. La Luna cambia segno ogni due o tre giorni, quindi la settimana prevista del parto comprende spesso due o tre segni lunari. Lo strumento mostra gli intervalli di quella settimana con le date; il giorno e l’ora della nascita stabiliranno quello giusto.',
+  },
+  {
+    q: 'E l’ascendente?',
+    a: 'Non si può prevedere. L’ascendente cambia circa ogni due ore nel corso della giornata, quindi dipende interamente dal minuto e dal luogo della nascita. Ecco perché il certificato di nascita è importante in astrologia.',
+  },
+  {
+    q: 'Un pianeta retrogrado alla nascita significa qualcosa di negativo?',
+    a: 'No. Le retrogradazioni sono normali: Mercurio è retrogrado per circa un quinto del tempo, e tutti nascono con qualche pianeta in questo stato. In un tema natale, un pianeta retrogrado viene di solito interpretato come un’espressione più interiore del solito; è una sfumatura, non un difetto.',
+  },
+  {
+    q: 'Quando devo calcolare il tema vero e proprio?',
+    a: 'Quando hai l’ora di nascita scritta su un documento. Data, ora esatta e luogo permettono di calcolare il tema completo: segno lunare esatto, ascendente, case e aspetti. Il calcolatore lo fa sul tuo dispositivo in una ventina di secondi.',
+  },
+];
+
+const jsonLd = [
+  {
+    '@type': 'WebPage',
+    name: 'Zodiaco del bambino: quale sarà il suo segno?',
+    url: 'https://zodiacs.org/it/baby-zodiac/',
+    description: 'Inserisci la data prevista del parto per vedere il segno solare quasi certo, i possibili segni lunari della settimana e ciò che resterà ignoto fino al minuto della nascita.',
+    inLanguage: 'it',
+    isPartOf: { '@id': 'https://zodiacs.org/#site' },
+  },
+  {
+    '@type': 'FAQPage',
+    inLanguage: 'it',
+    mainEntity: faq.map(({ q, a }) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: { '@type': 'Answer', text: a },
+    })),
+  },
+];
+---
+<Base
+  title="Quale sarà il segno del mio bambino? Calcolo dalla data prevista | Zodiacs.org"
+  description="Inserisci la data prevista del parto: segno solare quasi certo con confini calcolati, possibili segni lunari della settimana e ciò che resterà ignoto fino alla nascita."
+  path="/it/baby-zodiac/"
+  locale="it"
+  image="/assets/og/v2/tool/baby-zodiac.png"
+  imageAlt="Calcolatore dello zodiaco del bambino — Zodiacs.org"
+  jsonLd={jsonLd}
+>
+  <section class="section--tight container container--narrow">
+    <div class="tool-hero reveal">
+      <h1 class="display">Quale sarà il segno del bambino?</h1>
+      <p>
+        Inserisci la data prevista del parto per una risposta onesta: il segno
+        solare è quasi certo, quello lunare si riduce a un breve elenco che il
+        giorno della nascita chiarirà, e l’ascendente deve aspettare l’ora
+        esatta. Il calcolo resta sul tuo dispositivo.
+      </p>
+    </div>
+    <BabyZodiac locale="it" client:load />
+    <noscript>
+      <p>Questo calcolatore dello zodiaco del bambino richiede JavaScript. Attiva JavaScript e ricarica la pagina per vedere le possibilità del Sole, l’intervallo della Luna e le retrogradazioni vicine alla data prevista.</p>
+    </noscript>
+  </section>
+
+  <section class="section--tight container container--narrow">
+    <div class="prose reveal">
+      <p>
+        Il Sole trascorre un mese in ogni segno, quindi la data prevista permette
+        di stabilirlo con molta fiducia. Le eccezioni — date al confine tra due
+        segni o bambini che arrivano in anticipo — vengono calcolate qui sopra
+        invece di essere indovinate. La Luna cambia segno ogni due o tre giorni
+        e l’ascendente ogni due ore: quest’ultimo dipende dal minuto della
+        nascita. Dopo il parto, il{' '}
+        <a href="/it/birth-chart/">tema completo</a> calcola tutto.
+      </p>
+    </div>
+  </section>
+
+  <section class="section--tight container container--narrow">
+    <Faq items={faq} heading="Domande sullo zodiaco del bambino" />
+  </section>
+</Base>
+
+<style>
+  .tool-hero { max-width: 62ch; margin-bottom: clamp(24px, 4vw, 36px); }
+  .tool-hero h1 {
+    margin: 0 0 16px;
+    font-family: var(--font-serif);
+    font-size: var(--text-2xl);
+    font-weight: 500;
+    letter-spacing: -0.005em;
+    line-height: 1.04;
+    text-wrap: balance;
+  }
+  .tool-hero p { margin: 0; color: var(--muted); font-size: var(--text-lg); text-wrap: pretty; }
+</style>
