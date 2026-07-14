@@ -5,6 +5,7 @@ import {
   formatRawTokenAmount,
   formatUiAmountString,
   hydrateDisclosure,
+  hydrateReviewedProse,
   percentageTenths,
   sumTokenAmounts,
 } from './build-thesis-disclosure.mjs';
@@ -117,6 +118,160 @@ describe('collectRpcOutcomes', () => {
     expect(outcomes.aries.supply).toEqual(ok(supplyResult('1000', 6, '0.001')));
     expect(outcomes.aries.accountInfo.ok).toBe(true);
     expect(outcomes.aries.largestAccounts.ok).toBe(true);
+  });
+});
+
+describe('hydrateReviewedProse', () => {
+  const reviewedSource = () => ({
+    asOf: '2026-07-14',
+    signs: {
+      aries: {
+        liquidity: {
+          value: '7.8% of supply · Raydium pool · LP unlocked',
+          verifyUrl: 'https://solscan.io/account/PoolAries',
+        },
+        bridge: {
+          value: 'Wormhole BridgeToken · lock-and-mint from Solana',
+          verifyUrl: 'https://basescan.org/token/0x0000000000000000000000000000000000000001',
+        },
+      },
+    },
+    aggregate: {
+      liquidity: {
+        value: '7.8–7.8% per sign · Raydium pools · LP: 0 burned, 1 unlocked',
+        verifyUrl: 'https://raydium.io/liquidity-pools/',
+      },
+      bridge: {
+        value: '1 Wormhole BridgeToken contract · lock-and-mint from Solana',
+        verifyUrl: 'https://wormhole.com/docs/products/token-transfers/wrapped-token-transfers/overview/',
+      },
+    },
+    treasury: {
+      status: 'pending',
+      reason: 'Owner confirmation is required.',
+    },
+    continuity: {
+      value: "Astrofolio.xyz · the registry's companion app carries the records forward",
+      verifyUrl: 'https://astrofolio.xyz/',
+    },
+  });
+
+  it('materializes reviewed fields while preserving an explicit treasury stop', () => {
+    const existing = disclosureFor(['aries']);
+    const before = JSON.stringify(existing);
+    const { disclosure, report } = hydrateReviewedProse(
+      existing,
+      [{ sign: 'aries', mint: 'MintAries', decimals: 6 }],
+      reviewedSource(),
+    );
+
+    expect(disclosure.signs.aries.liquidity).toEqual({
+      value: '7.8% of supply · Raydium pool · LP unlocked',
+      status: 'filled',
+      asOf: '2026-07-14',
+      verifyUrl: 'https://solscan.io/account/PoolAries',
+    });
+    expect(disclosure.signs.aries.bridge.status).toBe('filled');
+    expect(disclosure.signs.aries.continuity.value).toBe(
+      "Astrofolio.xyz · the registry's companion app carries the records forward",
+    );
+    expect(disclosure.signs.aries.treasury).toEqual(pending());
+    expect(disclosure.aggregate.treasury).toEqual(pending());
+    expect(report).toEqual(expect.arrayContaining([
+      {
+        path: 'signs.aries.treasury',
+        status: 'pending',
+        reason: 'Owner confirmation is required.',
+      },
+      {
+        path: 'aggregate.treasury',
+        status: 'pending',
+        reason: 'Owner confirmation is required.',
+      },
+    ]));
+    expect(JSON.stringify(existing)).toBe(before);
+  });
+
+  it('materializes filled treasury definitions with stranger-checkable receipts', () => {
+    const source = reviewedSource();
+    source.treasury = {
+      status: 'filled',
+      signs: {
+        aries: {
+          value: 'none · no project treasury; supply is in circulation',
+          verifyUrl: 'https://solscan.io/token/MintAries#holders',
+        },
+      },
+      aggregate: {
+        value: 'none · no project treasury; supply is in circulation',
+        verifyUrl: 'https://solscan.io/account/CreatorWallet',
+      },
+    };
+
+    const { disclosure, report } = hydrateReviewedProse(
+      disclosureFor(['aries']),
+      [{ sign: 'aries', mint: 'MintAries', decimals: 6 }],
+      source,
+    );
+
+    expect(disclosure.signs.aries.treasury).toEqual({
+      value: 'none · no project treasury; supply is in circulation',
+      status: 'filled',
+      asOf: '2026-07-14',
+      verifyUrl: 'https://solscan.io/token/MintAries#holders',
+    });
+    expect(disclosure.aggregate.treasury).toEqual({
+      value: 'none · no project treasury; supply is in circulation',
+      status: 'filled',
+      asOf: '2026-07-14',
+      verifyUrl: 'https://solscan.io/account/CreatorWallet',
+    });
+    expect(report).toEqual(expect.arrayContaining([
+      {
+        path: 'signs.aries.treasury',
+        status: 'filled',
+        value: 'none · no project treasury; supply is in circulation',
+      },
+      {
+        path: 'aggregate.treasury',
+        status: 'filled',
+        value: 'none · no project treasury; supply is in circulation',
+      },
+    ]));
+  });
+
+  it('rejects a filled treasury sign receipt that is not its canonical holders URL', () => {
+    const source = reviewedSource();
+    source.treasury = {
+      status: 'filled',
+      signs: {
+        aries: {
+          value: 'none · no project treasury; supply is in circulation',
+          verifyUrl: 'https://solscan.io/token/AnotherMint#holders',
+        },
+      },
+      aggregate: {
+        value: 'none · no project treasury; supply is in circulation',
+        verifyUrl: 'https://solscan.io/account/CreatorWallet',
+      },
+    };
+
+    expect(() => hydrateReviewedProse(
+      disclosureFor(['aries']),
+      [{ sign: 'aries', mint: 'MintAries', decimals: 6 }],
+      source,
+    )).toThrow('signs.aries.treasury.verifyUrl must be the canonical Solscan mint holders URL');
+  });
+
+  it('rejects a filled reviewed field without a stranger-checkable URL', () => {
+    const source = reviewedSource();
+    source.signs.aries.liquidity.verifyUrl = null;
+
+    expect(() => hydrateReviewedProse(
+      disclosureFor(['aries']),
+      [{ sign: 'aries', mint: 'MintAries', decimals: 6 }],
+      source,
+    )).toThrow('signs.aries.liquidity.verifyUrl must be a non-empty string');
   });
 });
 

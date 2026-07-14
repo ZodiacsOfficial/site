@@ -1,0 +1,197 @@
+{
+  "$comment": "Maintainer-reviewed prose disclosures for scripts/build-thesis-disclosure.mjs. Liquidity is a 2026-07-14 onchain snapshot of each canonical Raydium CPMM pool; where LP supply is nonzero the value carries the observed burned share of LP tokens instead of a bare lock claim. Bridge contracts were checked on Base as Wormhole BridgeToken proxies with Solana origin metadata. The owner classified the recurring cross-sign holder as not a project treasury and approved the treasury negative for publication.",
+  "asOf": "2026-07-14",
+  "signs": {
+    "aries": {
+      "liquidity": {
+        "value": "7.8% of supply · Raydium pool · LP 99.99% burned",
+        "verifyUrl": "https://solscan.io/account/HRn98YLGigP475eS1GaQYRMbqk1V4dkV6tdKyLhVh2iS"
+      },
+      "bridge": {
+        "value": "Wormhole BridgeToken · lock-and-mint from Solana",
+        "verifyUrl": "https://basescan.org/token/0x3ffB5282F5891Dd8c813E64059EdB0607537eC91"
+      }
+    },
+    "taurus": {
+      "liquidity": {
+        "value": "7.2% of supply · Raydium pool · LP 99.51% burned",
+        "verifyUrl": "https://solscan.io/account/2GNtxia4fLW3URj5MLqVfgoKrAgDpphtAVazK41eTPfu"
+      },
+      "bridge": {
+        "value": "Wormhole BridgeToken · lock-and-mint from Solana",
+        "verifyUrl": "https://basescan.org/token/0xd5356c6E529569c6912978433DAfb7ca72B5f09C"
+      }
+    },
+    "gemini": {
+      "liquidity": {
+        "value": "6.4% of supply · Raydium pool · LP 99.98% burned",
+        "verifyUrl": "https://solscan.io/account/HxhdKrB1UpSwfuMoZMVzPVELzbPWHdyN6PHU9CBFium9"
+      },
+      "bridge": {
+        "value": "Wormhole BridgeToken · lock-and-mint from Solana",
+        "verifyUrl": "https://basescan.org/token/0x8F6eb25aB4CD2F8f064f7da5E35136D4EC600b4f"
+      }
+    },
+    "cancer": {
+      "liquidity": {
+        "value": "8.1% of supply · Raydium pool · LP 95.94% burned",
+        "verifyUrl": "https://solscan.io/account/DaTEcH6da4i1evZU37F9ibQirYXhLKZpKDzDno346nSW"
+      },
+      "bridge": {
+        "value": "Wormhole BridgeToken · lock-and-mint from Solana",
+        "verifyUrl": "https://basescan.org/token/0xb9Fd3c3157C7b69260Ca285FbbC74F6309226378"
+      }
+    },
+    "leo": {
+      "liquidity": {
+        "value": "8.1% of supply · Raydium pool · LP 92.04% burned",
+        "verifyUrl": "https://solscan.io/account/48ErBGMqiZekyLoCcebd7cS5KNQPzqr7QQAK9mzAPQGQ"
+      },
+      "bridge": {
+        "value": "Wormhole BridgeToken · lock-and-mint from Solana",
+        "verifyUrl": "https://basescan.org/token/0x4f7B4c12DE5d47314C86Ed3BA25E289aA139CF75"
+      }
+    },
+    "virgo": {
+      "liquidity": {
+        "value": "7.6% of supply · Raydium pool · LP burned",
+        "verifyUrl": "https://solscan.io/account/5WcVjf8fzPkHaZqTSZDdbDFL6p2bLbAgEigxpevNrcRh"
+      },
+      "bridge": {
+        "value": "Wormhole BridgeToken · lock-and-mint from Solana",
+        "verifyUrl": "https://basescan.org/token/0xAcFd97106bbE5D931aC430Be76A8E362832D48f4"
+      }
+    },
+    "libra": {
+      "liquidity": {
+        "value": "9.5% of supply · Raydium pool · LP 99.42% burned",
+        "verifyUrl": "https://solscan.io/account/DTXPQjK4ae4h2Wc7D5Rpij8YmSQxqLuTcNKrpBCjcAN9"
+      },
+      "bridge": {
+        "value": "Wormhole BridgeToken · lock-and-mint from Solana",
+        "verifyUrl": "https://basescan.org/token/0x4201eff5F419CD6EEDFb28fa240edeaFc9002204"
+      }
+    },
+    "scorpio": {
+      "liquidity": {
+        "value": "7.7% of supply · Raydium pool · LP burned",
+        "verifyUrl": "https://solscan.io/account/3d2KYuMgj2yotNC6SKX4HNoeSWp4n8zqZSQ9kFH81Yta"
+      },
+      "bridge": {
+        "value": "Wormhole BridgeToken · lock-and-mint from Solana",
+        "verifyUrl": "https://basescan.org/token/0x0057C9cB6D16C2ecA808788f14d0d0c367b26676"
+      }
+    },
+    "sagittarius": {
+      "liquidity": {
+        "value": "7.8% of supply · Raydium pool · LP burned",
+        "verifyUrl": "https://solscan.io/account/7mP6WeVYBNt3eao5szsMPmuHughHjNRx26TcrgJXZRky"
+      },
+      "bridge": {
+        "value": "Wormhole BridgeToken · lock-and-mint from Solana",
+        "verifyUrl": "https://basescan.org/token/0xD21fAb1EB5E11AC3C281F7cF8096eCC4683eEa9c"
+      }
+    },
+    "capricorn": {
+      "liquidity": {
+        "value": "7.5% of supply · Raydium pool · LP burned",
+        "verifyUrl": "https://solscan.io/account/549aknNCvxbiqmikS6sAnY6Dbg37MeENWn6ZFBfc7sin"
+      },
+      "bridge": {
+        "value": "Wormhole BridgeToken · lock-and-mint from Solana",
+        "verifyUrl": "https://basescan.org/token/0xbFB102C18FDf49f2ffCB9B3aF4522f7DC9f51018"
+      }
+    },
+    "aquarius": {
+      "liquidity": {
+        "value": "7.4% of supply · Raydium pool · LP 99.99% burned",
+        "verifyUrl": "https://solscan.io/account/BygCEAhCNyWC8Co9yPa4K84NGkgkgMWdib2FG5hhuiUv"
+      },
+      "bridge": {
+        "value": "Wormhole BridgeToken · lock-and-mint from Solana",
+        "verifyUrl": "https://basescan.org/token/0xccA7CD4F96336Fd26eF6c5F579eaC651bAC5535F"
+      }
+    },
+    "pisces": {
+      "liquidity": {
+        "value": "7.1% of supply · Raydium pool · LP burned",
+        "verifyUrl": "https://solscan.io/account/Fzz8QrSV8sPKsTtHocwYARE8Zo6Rd4Wv2Ee4JtCuiDko"
+      },
+      "bridge": {
+        "value": "Wormhole BridgeToken · lock-and-mint from Solana",
+        "verifyUrl": "https://basescan.org/token/0x43fA1855a89b7A3e07426Fa7a1B44b4187d29Daf"
+      }
+    }
+  },
+  "aggregate": {
+    "liquidity": {
+      "value": "6.4–9.5% per sign · Raydium pools · LP ≥92% burned",
+      "verifyUrl": "https://raydium.io/liquidity-pools/"
+    },
+    "bridge": {
+      "value": "12 Wormhole BridgeToken contracts · lock-and-mint from Solana",
+      "verifyUrl": "https://wormhole.com/docs/products/token-transfers/wrapped-token-transfers/overview/"
+    }
+  },
+  "treasury": {
+    "status": "filled",
+    "signs": {
+      "aries": {
+        "value": "none · no project treasury; supply is in circulation",
+        "verifyUrl": "https://solscan.io/token/GhFiFrExPY3proVF96oth1gESWA5QPQzdtb8cy8b1YZv#holders"
+      },
+      "taurus": {
+        "value": "none · no project treasury; supply is in circulation",
+        "verifyUrl": "https://solscan.io/token/EjkkxYpfSwS6TAtKKuiJuNMMngYvumc1t1v9ZX1WJKMp#holders"
+      },
+      "gemini": {
+        "value": "none · no project treasury; supply is in circulation",
+        "verifyUrl": "https://solscan.io/token/ARiZfq6dK19uNqxWyRudhbM2MswLyYhVUHdndGkffdGc#holders"
+      },
+      "cancer": {
+        "value": "none · no project treasury; supply is in circulation",
+        "verifyUrl": "https://solscan.io/token/CmomKM8iPKRSMN7y1jqyW1QKj5bGoZmbvNZXWBJSUdnZ#holders"
+      },
+      "leo": {
+        "value": "none · no project treasury; supply is in circulation",
+        "verifyUrl": "https://solscan.io/token/8Cd7wXoPb5Yt9cUGtmHNqAEmpMDrhfcVqnGbLC48b8Qm#holders"
+      },
+      "virgo": {
+        "value": "none · no project treasury; supply is in circulation",
+        "verifyUrl": "https://solscan.io/token/Ez4bst5qu5uqX3AntYWUdafw9XvtFeJ3gugytKKbSJso#holders"
+      },
+      "libra": {
+        "value": "none · no project treasury; supply is in circulation",
+        "verifyUrl": "https://solscan.io/token/7Zt2KUh5mkpEpPGcNcFy51aGkh9Ycb5ELcqRH1n2GmAe#holders"
+      },
+      "scorpio": {
+        "value": "none · no project treasury; supply is in circulation",
+        "verifyUrl": "https://solscan.io/token/J4fQTRN13MKpXhVE74t99msKJLbrjegjEgLBnzEv2YH1#holders"
+      },
+      "sagittarius": {
+        "value": "none · no project treasury; supply is in circulation",
+        "verifyUrl": "https://solscan.io/token/8x17zMmVjJxqswjX4hNpxVPc7Tr5UabVJF3kv8TKq8Y3#holders"
+      },
+      "capricorn": {
+        "value": "none · no project treasury; supply is in circulation",
+        "verifyUrl": "https://solscan.io/token/3C2SN1FjzE9MiLFFVRp7Jhkp8Gjwpk29S2TCSJ2jkHn2#holders"
+      },
+      "aquarius": {
+        "value": "none · no project treasury; supply is in circulation",
+        "verifyUrl": "https://solscan.io/token/C49Ut3om3QFTDrMZ5Cr8VcTKPpHDcQ2Fv8mmuJHHigDt#holders"
+      },
+      "pisces": {
+        "value": "none · no project treasury; supply is in circulation",
+        "verifyUrl": "https://solscan.io/token/3JsSsmGzjWDNe9XCw2L9vznC5JU9wSqQeB6ns5pAkPeE#holders"
+      }
+    },
+    "aggregate": {
+      "value": "none · no project treasury; supply is in circulation",
+      "verifyUrl": "https://solscan.io/account/DUK1VN3WatYKsVLwRX2JxfJfaKX6bDXvijpPtT28ed13"
+    }
+  },
+  "continuity": {
+    "value": "Astrofolio.xyz · the registry's companion app carries the records forward",
+    "verifyUrl": "https://astrofolio.xyz/"
+  }
+}

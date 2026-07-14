@@ -3,8 +3,9 @@
  *
  * This tool is intentionally not part of the build: publishing fresh onchain
  * figures is a maintainer-reviewed action. It reads the twelve canonical native
- * Solana mints from the registry, preserves every field it cannot verify, and
- * writes one reviewable JSON diff.
+ * Solana mints from the registry, applies the separately reviewed prose source,
+ * preserves every mechanical field it cannot verify, and writes one reviewable
+ * JSON diff.
  */
 import { readFile, writeFile } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
@@ -19,6 +20,7 @@ export const DEFAULT_RPC_RETRY_DELAY_MS = 1_000;
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const registryPath = resolve(root, 'public/registry/zodiacs.registry.json');
 const disclosurePath = resolve(root, 'public/thesis/thesis-disclosure.json');
+const reviewedPath = resolve(root, 'scripts/thesis-disclosure-reviewed.json');
 const MECHANICAL_FIELDS = [
   'supply', 'mintAuthority', 'freezeAuthority', 'topTenHolders',
 ];
@@ -193,6 +195,32 @@ function freshField(value, asOf, verifyUrl) {
   return { value, status: 'filled', asOf, verifyUrl };
 }
 
+function pendingField() {
+  return { value: null, status: 'pending', asOf: null, verifyUrl: null };
+}
+
+function reviewedField(definition, asOf, path) {
+  if (!definition || typeof definition !== 'object') {
+    throw new TypeError(`Reviewed source is missing ${path}`);
+  }
+  if (typeof definition.value !== 'string' || !definition.value) {
+    throw new TypeError(`Reviewed source ${path}.value must be a non-empty string`);
+  }
+  if (typeof definition.verifyUrl !== 'string' || !definition.verifyUrl) {
+    throw new TypeError(`Reviewed source ${path}.verifyUrl must be a non-empty string`);
+  }
+  let url;
+  try {
+    url = new URL(definition.verifyUrl);
+  } catch {
+    throw new TypeError(`Reviewed source ${path}.verifyUrl must be an absolute URL`);
+  }
+  if (!['http:', 'https:'].includes(url.protocol)) {
+    throw new TypeError(`Reviewed source ${path}.verifyUrl must use HTTP or HTTPS`);
+  }
+  return freshField(definition.value, asOf, definition.verifyUrl);
+}
+
 function validateDisclosure(disclosure, assets) {
   if (!disclosure?.signs || !disclosure?.aggregate) {
     throw new Error('Disclosure must contain signs and aggregate rows');
@@ -211,6 +239,75 @@ function validateDisclosure(disclosure, assets) {
       throw new Error(`Disclosure is missing aggregate.${field}`);
     }
   }
+}
+
+/**
+ * Materialize the manually researched prose source into the disclosure contract.
+ * Treasury may remain explicitly pending with a reviewed reason, or be filled
+ * only when every sign and the aggregate have stranger-checkable definitions.
+ */
+export function hydrateReviewedProse(existing, assets, source) {
+  assertAsOf(source?.asOf);
+  if (!Array.isArray(assets) || assets.length === 0) {
+    throw new RangeError('At least one asset is required');
+  }
+  validateDisclosure(existing, assets);
+  const treasuryStatus = source?.treasury?.status;
+  if (treasuryStatus === 'pending') {
+    if (typeof source.treasury.reason !== 'string' || !source.treasury.reason) {
+      throw new TypeError('Reviewed source pending treasury must record a non-empty reason');
+    }
+  } else if (treasuryStatus !== 'filled') {
+    throw new TypeError('Reviewed source treasury.status must be pending or filled');
+  }
+
+  const disclosure = cloneJson(existing);
+  const report = [];
+  const fill = (path, row, field, definition) => {
+    row[field] = reviewedField(definition, source.asOf, path);
+    report.push({ path, status: 'filled', value: row[field].value });
+  };
+  const materializeTreasury = (path, row, definition, expectedVerifyUrl = null) => {
+    if (treasuryStatus === 'filled') {
+      if (expectedVerifyUrl !== null && definition?.verifyUrl !== expectedVerifyUrl) {
+        throw new TypeError(
+          `Reviewed source ${path}.verifyUrl must be the canonical Solscan mint holders URL`,
+        );
+      }
+      fill(path, row, 'treasury', definition);
+      return;
+    }
+    row.treasury = pendingField();
+    report.push({ path, status: 'pending', reason: source.treasury.reason });
+  };
+
+  for (const { sign, mint } of assets) {
+    const sourceRow = source.signs?.[sign];
+    if (!sourceRow || typeof sourceRow !== 'object') {
+      throw new TypeError(`Reviewed source is missing signs.${sign}`);
+    }
+    const row = disclosure.signs[sign];
+    fill(`signs.${sign}.liquidity`, row, 'liquidity', sourceRow.liquidity);
+    fill(`signs.${sign}.bridge`, row, 'bridge', sourceRow.bridge);
+    materializeTreasury(
+      `signs.${sign}.treasury`,
+      row,
+      source.treasury.signs?.[sign],
+      `https://solscan.io/token/${mint}#holders`,
+    );
+    fill(`signs.${sign}.continuity`, row, 'continuity', source.continuity);
+  }
+
+  fill('aggregate.liquidity', disclosure.aggregate, 'liquidity', source.aggregate?.liquidity);
+  fill('aggregate.bridge', disclosure.aggregate, 'bridge', source.aggregate?.bridge);
+  materializeTreasury(
+    'aggregate.treasury',
+    disclosure.aggregate,
+    source.treasury.aggregate,
+  );
+  fill('aggregate.continuity', disclosure.aggregate, 'continuity', source.continuity);
+
+  return { disclosure, report };
 }
 
 /**
@@ -433,12 +530,13 @@ export async function collectRpcOutcomes(
 function printReport(report) {
   for (const entry of report) {
     if (entry.status === 'filled') console.log(`filled  ${entry.path}: ${entry.value}`);
+    else if (entry.status === 'pending') console.warn(`pending ${entry.path}: ${entry.reason}`);
     else console.warn(`skipped ${entry.path}: ${entry.reason}`);
   }
   const filled = report.filter((entry) => entry.status === 'filled').length;
-  const skipped = report.length - filled;
-  console.log(`report: ${filled} filled, ${skipped} skipped`);
-  console.log(`untouched by design: ${PROSE_FIELDS.join(', ')} (12 signs + aggregate)`);
+  const pending = report.filter((entry) => entry.status === 'pending').length;
+  const skipped = report.filter((entry) => entry.status === 'skipped').length;
+  console.log(`report: ${filled} filled, ${pending} pending, ${skipped} skipped`);
 }
 
 export async function main(argv = process.argv.slice(2)) {
@@ -451,13 +549,20 @@ export async function main(argv = process.argv.slice(2)) {
   assertAsOf(asOf);
   const registry = JSON.parse(await readFile(registryPath, 'utf8'));
   const existing = JSON.parse(await readFile(disclosurePath, 'utf8'));
+  const reviewed = JSON.parse(await readFile(reviewedPath, 'utf8'));
   const assets = canonicalNativeAssets(registry);
+  const reviewedResult = hydrateReviewedProse(existing, assets, reviewed);
   const outcomes = await collectRpcOutcomes(assets, {
     url: process.env.SOLANA_RPC_URL ?? DEFAULT_SOLANA_RPC_URL,
   });
-  const { disclosure, report } = hydrateDisclosure(existing, assets, outcomes, asOf);
+  const { disclosure, report } = hydrateDisclosure(
+    reviewedResult.disclosure,
+    assets,
+    outcomes,
+    asOf,
+  );
   await writeFile(disclosurePath, `${JSON.stringify(disclosure, null, 2)}\n`, 'utf8');
-  printReport(report);
+  printReport([...reviewedResult.report, ...report]);
 }
 
 const invokedPath = process.argv[1] ? pathToFileURL(resolve(process.argv[1])).href : null;
