@@ -93,19 +93,67 @@ const SIGN_ESSENCE_ES: Record<string, string> = {
   pisces: 'Imaginación, empatía y sensibilidad para lo que no se dice.',
 };
 
+const SIGN_NAME_PT: Record<string, string> = {
+  aries: 'Áries',
+  taurus: 'Touro',
+  gemini: 'Gêmeos',
+  cancer: 'Câncer',
+  leo: 'Leão',
+  virgo: 'Virgem',
+  libra: 'Libra',
+  scorpio: 'Escorpião',
+  sagittarius: 'Sagitário',
+  capricorn: 'Capricórnio',
+  aquarius: 'Aquário',
+  pisces: 'Peixes',
+};
+
+const SIGN_DATES_PT: Record<string, string> = {
+  aries: '21 mar – 19 abr',
+  taurus: '20 abr – 20 mai',
+  gemini: '21 mai – 20 jun',
+  cancer: '21 jun – 22 jul',
+  leo: '23 jul – 22 ago',
+  virgo: '23 ago – 22 set',
+  libra: '23 set – 22 out',
+  scorpio: '23 out – 21 nov',
+  sagittarius: '22 nov – 21 dez',
+  capricorn: '22 dez – 19 jan',
+  aquarius: '20 jan – 18 fev',
+  pisces: '19 fev – 20 mar',
+};
+
+const SIGN_ESSENCE_PT: Record<string, string> = {
+  aries: 'Impulso, coragem e vontade de começar.',
+  taurus: 'Calma, prazer e uma lealdade construída com o tempo.',
+  gemini: 'Curiosidade, conversa e uma mente sempre em movimento.',
+  cancer: 'Sensibilidade, memória e cuidado com o que ama.',
+  leo: 'Calor, presença e uma forma natural de brilhar.',
+  virgo: 'Precisão, ajuda prática e atenção ao que melhora a vida.',
+  libra: 'Charme, equilíbrio e um senso apurado de justiça.',
+  scorpio: 'Intensidade, intuição e uma verdade que vai além da superfície.',
+  sagittarius: 'Honestidade, horizonte e vontade de encontrar sentido.',
+  capricorn: 'Paciência, ambição e a força de construir algo real.',
+  aquarius: 'Independência, ideias próprias e amor pelo futuro.',
+  pisces: 'Imaginação, empatia e sensibilidade para o que não é dito.',
+};
+
 const SIGN_NAME_OVERRIDES = {
   en: null,
   es: SIGN_NAME_ES,
+  pt: SIGN_NAME_PT,
 } satisfies Record<DisplayLocale, Record<string, string> | null>;
 
 const SIGN_DATES_OVERRIDES = {
   en: null,
   es: SIGN_DATES_ES,
+  pt: SIGN_DATES_PT,
 } satisfies Record<DisplayLocale, Record<string, string> | null>;
 
 const SIGN_ESSENCE_OVERRIDES = {
   en: null,
   es: SIGN_ESSENCE_ES,
+  pt: SIGN_ESSENCE_PT,
 } satisfies Record<DisplayLocale, Record<string, string> | null>;
 
 export function signBySlug(slug: string): Sign {
@@ -162,11 +210,13 @@ export const MODALITY_LABEL: Record<Modality, string> = {
 const ELEMENT_LABEL_OVERRIDES = {
   en: null,
   es: { fire: 'Fuego', earth: 'Tierra', air: 'Aire', water: 'Agua' },
+  pt: { fire: 'Fogo', earth: 'Terra', air: 'Ar', water: 'Água' },
 } satisfies Record<DisplayLocale, Record<Element, string> | null>;
 
 const MODALITY_LABEL_OVERRIDES = {
   en: null,
   es: { cardinal: 'Cardinal', fixed: 'Fijo', mutable: 'Mutable' },
+  pt: { cardinal: 'Cardinal', fixed: 'Fixo', mutable: 'Mutável' },
 } satisfies Record<DisplayLocale, Record<Modality, string> | null>;
 
 export function elementLabel(element: Element, locale: DisplayLocale = 'en'): string {

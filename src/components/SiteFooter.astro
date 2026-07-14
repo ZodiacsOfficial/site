@@ -15,6 +15,7 @@ const languageLinks = LOCALES.map((candidate) => ({
 const FOOTER_COPY = {
   en: { assistant: 'Ask the site', today: 'Today' },
   es: { assistant: 'Pregúntale al sitio', today: 'Hoy (en inglés)' },
+  pt: { assistant: 'Pergunte ao site', today: 'Hoje (em inglês)' },
 } as const satisfies Record<Locale, { assistant: string; today: string }>;
 const privacyHref = localizePath(locale, '/privacy/');
 ---

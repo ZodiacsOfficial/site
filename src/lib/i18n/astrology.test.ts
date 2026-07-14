@@ -22,10 +22,18 @@ describe('astrology localization', () => {
     expect(aspectLabel('es', 'square')).toBe('cuadratura');
     expect(moonPhaseLabel('es', 'Waning Crescent')).toBe('Luna menguante');
     expect(moonPhaseLabel('es', 'Waxing Gibbous')).toBe('Gibosa creciente');
+    expect(planetLabel('pt', 'Jupiter')).toBe('Júpiter');
+    expect(planetLabel('pt', 'Neptune')).toBe('Netuno');
+    expect(planetLabel('pt', 'Pluto')).toBe('Plutão');
+    expect(aspectLabel('pt', 'trine')).toBe('trígono');
+    expect(aspectLabel('pt', 'square')).toBe('quadratura');
+    expect(moonPhaseLabel('pt', 'Waning Crescent')).toBe('Lua minguante');
+    expect(moonPhaseLabel('pt', 'Waxing Gibbous')).toBe('Gibosa crescente');
   });
 
   it('uses the neutral Latin American locale for Spanish dates', () => {
     expect(intlLocale('es')).toBe('es-419');
+    expect(intlLocale('pt')).toBe('pt-BR');
   });
 
   it('localizes every visible part of the monthly transit list', () => {
@@ -37,6 +45,19 @@ describe('astrology localization', () => {
     expect(july).toContain('Luna nueva a 22° de Cáncer');
     expect(july).toContain('Neptuno estaciona retrógrado a 4° de Aries');
     expect(august).toContain('Mercurio conjunción Júpiter');
+    expect(`${july} ${august}`).not.toMatch(
+      /\b(?:Sun|Moon|Mercury|Mars|Jupiter|Saturn|Uranus|Neptune|Pluto|retrograde|direct|conjunction|sextile|square|trine|opposition)\b/,
+    );
+  });
+
+  it('keeps English transit terms out of the Brazilian Portuguese month list', () => {
+    const july = eventList('2026-07', 'pt').map((event) => event.label).join(' ');
+    const august = eventList('2026-08', 'pt').map((event) => event.label).join(' ');
+
+    expect(july).toContain('Netuno estaciona retrógrado');
+    expect(july).toContain('Mercúrio estaciona direto');
+    expect(july).toContain('Lua nova a 22° de Câncer');
+    expect(august).toContain('Mercúrio em conjunção com Júpiter');
     expect(`${july} ${august}`).not.toMatch(
       /\b(?:Sun|Moon|Mercury|Mars|Jupiter|Saturn|Uranus|Neptune|Pluto|retrograde|direct|conjunction|sextile|square|trine|opposition)\b/,
     );
@@ -91,6 +112,31 @@ describe('astrology localization', () => {
       expect(visibleSpanish).not.toMatch(
         /\b(?:Sun|Moon|Mercury|Mars|Jupiter|Saturn|Uranus|Neptune|Pluto|Taurus|Gemini|Cancer|Scorpio|Sagittarius|Capricorn|Aquarius|Pisces|house|retrograde|Waning|Waxing|Quarter|Gibbous|conjunction|sextile|square|trine|opposition)\b/,
       );
+    }
+  });
+
+  it('preserves TodayBySign fact selection while rendering Brazilian Portuguese prose', () => {
+    const fixtures: Daily[] = [
+      daily,
+      { ...daily, events: [{ kind: 'ingress', at: `${daily.date}T12:00:00.000Z`, planet: 'Pluto', sign: 'aquarius', degree: 0 }] },
+      { ...daily, events: [{ kind: 'lunation', at: `${daily.date}T12:00:00.000Z`, type: 'new', sign: 'cancer', degree: 18 }] },
+      { ...daily, events: [{ kind: 'station', at: `${daily.date}T12:00:00.000Z`, planet: 'Neptune', type: 'retrograde', sign: 'aries', degree: 4 }] },
+      { ...daily, events: [{ kind: 'aspect', at: `${daily.date}T12:00:00.000Z`, a: 'Mars', b: 'Saturn', type: 'square' }] },
+    ];
+
+    for (const fixture of fixtures) for (const slug of SIGN_SLUGS) {
+      const english = dailyReadingForLocale(slug, fixture, 'en');
+      const portuguese = dailyReadingForLocale(slug, fixture, 'pt');
+      expect(portuguese.lines).toHaveLength(english.lines.length);
+      expect(portuguese.lines.map((line) => line.body)).toEqual(english.lines.map((line) => line.body));
+      expect(portuguese.lines.map((line) => line.receipt.match(/casa (\d+)/)?.[1] ?? null)).toEqual(
+        english.lines.map((line) => line.receipt.match(/house (\d+)/)?.[1] ?? null),
+      );
+      const visiblePortuguese = portuguese.lines.map((line) => `${line.text} ${line.receipt}`).join(' ');
+      expect(visiblePortuguese).not.toMatch(
+        /\b(?:Sun|Moon|Mercury|Mars|Jupiter|Saturn|Uranus|Neptune|Pluto|Taurus|Gemini|Cancer|Scorpio|Sagittarius|Capricorn|Aquarius|Pisces|house|retrograde|Waning|Waxing|Quarter|Gibbous|conjunction|sextile|square|trine|opposition)\b/,
+      );
+      expect(visiblePortuguese).not.toMatch(/\bem (?:o|a|os|as)\b/);
     }
   });
 });

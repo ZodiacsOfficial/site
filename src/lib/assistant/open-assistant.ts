@@ -6,7 +6,7 @@
  */
 import './assistant.css';
 import { houseOf, wholeSignCusps } from '../engine/houses';
-import { normalizeLocale as normalizeSiteLocale, type Locale } from '../i18n';
+import { normalizeLocale as normalizeSiteLocale, type Locale } from '../i18n/core';
 import { PROFILE_KEY } from '../profile/schema';
 import { degreeInSign, signForLongitude } from '../signs';
 
@@ -115,6 +115,30 @@ const COPY: Record<AssistantLocale, Copy> = {
     user: 'Tú',
     assistant: 'Zodiacs',
     privacy: 'El asistente puede equivocarse. Nosotros no guardamos las conversaciones.',
+  },
+  pt: {
+    title: 'Pergunte ao Zodiacs',
+    close: 'Fechar assistente',
+    intro: 'Pergunte sobre signos, casas, aspectos, ciclos ou um mapa salvo.',
+    log: 'Conversa',
+    input: 'Sua pergunta',
+    placeholder: 'Faça uma pergunta sobre astrologia…',
+    send: 'Enviar',
+    stop: 'Parar',
+    newline: 'Shift + Enter para uma nova linha',
+    chartOn: 'Usando meu mapa',
+    chartOff: 'Usar meu mapa',
+    chartReading: 'Lendo as posições do seu mapa salvo…',
+    thinking: 'Escrevendo uma resposta…',
+    stopped: 'Interrompido.',
+    complete: 'Resposta concluída.',
+    empty: 'Escreva uma pergunta primeiro.',
+    unavailable: 'O assistente não está disponível agora. Tente novamente mais tarde.',
+    disabled: 'O assistente não está disponível neste site agora.',
+    rateLimited: 'Isso é tudo por hoje — o assistente tem um limite de 30 mensagens por dia.',
+    user: 'Você',
+    assistant: 'Zodiacs',
+    privacy: 'O assistente pode errar. Não armazenamos as conversas.',
   },
 };
 

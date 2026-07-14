@@ -1,0 +1,101 @@
+---
+import Base from '../../../layouts/Base.astro';
+import Faq from '../../../components/Faq.astro';
+import TransitTracker from '../../../islands/TransitTracker';
+import PlanetGlyph from '../../../components/PlanetGlyph';
+import { dayLabel, eventList, latestTransitMonth, monthLabel } from '../../../lib/horoscopes';
+import '../../../styles/calculator.css';
+
+const month = latestTransitMonth();
+const events = month ? eventList(month, 'pt') : [];
+const label = month ? monthLabel(month, 'pt') : null;
+
+const faq = [
+  {
+    q: 'O que é um trânsito?',
+    a: 'Os planetas continuaram se movendo depois do seu nascimento. Um trânsito é a posição atual de um planeta comparada com uma posição do seu mapa astral. Por exemplo, Saturno em trânsito em quadratura com sua Lua natal significa que hoje Saturno está a noventa graus de onde a Lua estava quando você nasceu. Os trânsitos são a principal ferramenta astrológica para estudar os ciclos da vida.',
+  },
+  {
+    q: 'Quais trânsitos esta página mostra?',
+    a: 'Ela mostra os aspectos dos dez planetas no céu — na data de hoje ou na data escolhida no controle — com os dez planetas do seu mapa astral, quando estão a um orbe de no máximo 3 graus, a margem estreita em que um trânsito costuma ser considerado ativo. A Lua em trânsito não aparece na lista porque atravessa todo o seu mapa a cada mês, mas continua no anel externo, onde você pode vê-la girar.',
+  },
+  {
+    q: 'Por que os trânsitos lentos importam mais?',
+    a: 'A velocidade determina a duração. O Sol cruza um ponto natal em cerca de dois dias e Marte em uma ou duas semanas, mas Saturno pode passar meses a menos de três graus de um ponto, e Plutão, alguns anos. Além disso, os movimentos retrógrados fazem com que os planetas lentos passem três vezes pelo mesmo ponto. A astrologia interpreta essas visitas longas como capítulos, não como estados passageiros.',
+  },
+  {
+    q: 'Preciso da hora exata do meu nascimento?',
+    a: 'Para a maioria dos trânsitos, não. Os aspectos entre planetas funcionam com a data e o local de nascimento. A exceção é a Lua: sem o horário, ela é calculada ao meio-dia e pode ficar até seis graus deslocada, então os trânsitos lunares perto do limite do orbe ficam incertos. A ferramenta avisa quando isso acontece.',
+  },
+];
+
+const jsonLd = [
+  {
+    '@type': 'WebPage',
+    name: 'Rastreador de trânsitos: o céu em movimento sobre seu mapa',
+    url: 'https://zodiacs.org/pt/transits/',
+    description: 'O céu em movimento sobre seu mapa astral: trânsitos com orbe máximo de 3 graus, hoje ou em qualquer data até um ano antes ou depois.',
+    inLanguage: 'pt-BR',
+    isPartOf: { '@id': 'https://zodiacs.org/#site' },
+  },
+  {
+    '@type': 'FAQPage',
+    inLanguage: 'pt-BR',
+    mainEntity: faq.map(({ q, a }) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: { '@type': 'Answer', text: a },
+    })),
+  },
+];
+---
+<Base
+  clientUi
+  title="Trânsitos sobre seu mapa astral — o céu em movimento | Zodiacs.org"
+  description="Os trânsitos de hoje sobre seus planetas natais, com orbe máximo de 3°, e um controle que move o céu até um ano antes ou depois. Grátis e no seu dispositivo."
+  path="/pt/transits/"
+  locale="pt"
+  image="/assets/og/v2/tool/transits.png"
+  imageAlt="Rastreador de trânsitos — Zodiacs.org"
+  jsonLd={jsonLd}
+  glass
+>
+  <section class="section--tight container container--narrow">
+    <div class="tool-hero reveal">
+      <h1 class="display">O céu, sobre seu mapa.</h1>
+      <p>Os planetas de hoje comparados com os seus, com orbe máximo de 3°, e um controle que move o céu até um ano antes ou depois para mostrar como um trânsito se forma, chega ao ponto exato e se separa. Escolha um mapa salvo ou informe seus dados; nada sai do seu dispositivo.</p>
+    </div>
+    <TransitTracker locale="pt" client:load />
+    <noscript>
+      <p>Esta calculadora de trânsitos precisa de JavaScript. Ative-o e recarregue a página para comparar o céu atual com seu mapa astral no navegador.</p>
+    </noscript>
+  </section>
+
+  {month && (
+    <section class="section--tight container container--narrow">
+      <div class="section-head reveal">
+        <h2>O céu em {label}</h2>
+        <p>Eventos do mês calculados pelo mecanismo: ingressos, lunações, estações e aspectos exatos. Os horários estão em tempo universal.</p>
+      </div>
+      <ul class="trn-events reveal">
+        {events.map((event) => (
+          <li><span class="trn-events__date mono">{dayLabel(event.at, 'pt')}</span><span class="trn-events__label"><PlanetGlyph body={event.body} hue={event.hue} size={14} class="rcpt-glyph" />{event.label}</span></li>
+        ))}
+      </ul>
+    </section>
+  )}
+
+  <section class="section--tight container container--narrow">
+    <Faq items={faq} heading="Perguntas sobre trânsitos" />
+  </section>
+</Base>
+
+<style>
+  .tool-hero { max-width: 62ch; margin-bottom: clamp(24px, 4vw, 36px); }
+  .tool-hero h1 { margin: 0 0 16px; font-size: var(--text-2xl); line-height: 1.04; }
+  .tool-hero p { margin: 0; color: var(--muted); font-size: var(--text-lg); text-wrap: pretty; }
+  .trn-events { margin: 0; padding: 0; list-style: none; display: grid; gap: 7px; }
+  .trn-events li { display: flex; align-items: baseline; gap: 16px; padding-bottom: 7px; border-bottom: 1px solid var(--hair-1); }
+  .trn-events__date { flex-shrink: 0; width: 58px; font-size: 11px; color: var(--faint); letter-spacing: 0.05em; }
+  .trn-events__label { font-size: var(--text-sm); color: var(--text-2); }
+</style>

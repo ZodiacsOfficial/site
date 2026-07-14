@@ -32,7 +32,7 @@ import { transitLine, TRANSIT_ORB } from '../../lib/transits';
 import { formatLongitude } from '../../lib/signs';
 import { formatDate, formatDateTime } from '../../lib/i18n/dates';
 import { aspectLabel, planetLabel } from '../../lib/i18n/astrology';
-import { t, type Locale } from '../../lib/i18n';
+import { showsEnglishOnlyInterpretation, t, type Locale } from '../../lib/i18n';
 import CalendarSubscribe, { type CalendarPositionsSource } from '../CalendarSubscribe';
 
 export interface TransitSky {
@@ -112,10 +112,29 @@ const COPY = {
     nextUp: 'Próximos en alcanzar la exactitud:',
     noSlowExact: 'Ningún tránsito lento alcanza la exactitud en esta ventana.',
   },
+  pt: {
+    skyRingLabel: 'o céu em trânsito',
+    scrubLabel: 'Mova a data',
+    scrubHint: 'Arraste para mover o céu para a frente ou para trás; o anel externo mostra onde os planetas estão nesse momento.',
+    now: 'Agora',
+    back1m: '−1 mês',
+    fwd1m: '+1 mês',
+    outerRing: 'Anel externo: o céu desse momento. Roda interna: seu mapa astral.',
+    tapHint: 'Toque em um planeta em movimento ou em uma linha de conexão para ler esse trânsito.',
+    noContacts: 'Nenhum trânsito entre planetas a menos de',
+    ofExact: 'do ponto exato',
+    moonOmitted: 'a Lua se move rápido demais para aparecer na lista, mas você pode acompanhá-la na roda',
+    announce: 'Céu de',
+    scanning: 'Calculando as datas exatas dos trânsitos lentos…',
+    marksLabel: 'Datas exatas dos trânsitos lentos nesta janela',
+    nextUp: 'Próximos a chegar ao ponto exato:',
+    noSlowExact: 'Nenhum trânsito lento chega ao ponto exato nesta janela.',
+  },
 } as const;
 
 export default function TransitRing({ locale, natal, computeSky, nowMs, focusRequest = null }: TransitRingProps) {
   const c = COPY[locale] ?? COPY.en;
+  const showInterpretation = showsEnglishOnlyInterpretation(locale);
   const [offset, setOffset] = useState(0);          // days from now (may be fractional mid-tween)
   const [sel, setSel] = useState<string | null>(null);
   const [searchPointFocus, setSearchPointFocus] = useState<TransitContact | null>(null);
@@ -405,7 +424,9 @@ export default function TransitRing({ locale, natal, computeSky, nowMs, focusReq
                   : planetLabel(locale, focusedPoint.natalPoint)}
                 {' · '}{t(locale, 'orb')} {focusedPoint.orb.toFixed(1)}°
               </span>
-              <p class="tring__focus-read">{transitLine(focusedPoint.transitBody, focusedPoint.aspect, focusedPoint.natalPoint)}</p>
+              {showInterpretation && (
+                <p class="tring__focus-read">{transitLine(focusedPoint.transitBody, focusedPoint.aspect, focusedPoint.natalPoint)}</p>
+              )}
             </>
           )}
           {selectedAspect && (
@@ -416,7 +437,9 @@ export default function TransitRing({ locale, natal, computeSky, nowMs, focusReq
                 {' '}{t(locale, 'natal')} <PlanetGlyph body={selectedAspect.inner} size={13} class="pg-inline" /> {planetLabel(locale, selectedAspect.inner)}
                 {' · '}{t(locale, 'orb')} {selectedAspect.orb.toFixed(1)}°
               </span>
-              <p class="tring__focus-read">{transitLine(selectedAspect.outer, selectedAspect.type, selectedAspect.inner)}</p>
+              {showInterpretation && (
+                <p class="tring__focus-read">{transitLine(selectedAspect.outer, selectedAspect.type, selectedAspect.inner)}</p>
+              )}
             </>
           )}
           {!focusedPoint && !selectedAspect && selectedBody && (
@@ -452,7 +475,9 @@ export default function TransitRing({ locale, natal, computeSky, nowMs, focusReq
               <span class="syn__aspect-receipt mono">
                 <PlanetGlyph body={a.outer} size={13} class="pg-inline" /> {planetLabel(locale, a.outer)} <AspectGlyph type={a.type} size={13} class="pg-inline" /> {aspectLabel(locale, a.type)} {t(locale, 'natal')} <PlanetGlyph body={a.inner} size={13} class="pg-inline" /> {planetLabel(locale, a.inner)} · {t(locale, 'orb')} {a.orb.toFixed(1)}°
               </span>
-              <span class="syn__aspect-read">{transitLine(a.outer, a.type, a.inner)}</span>
+              {showInterpretation && (
+                <span class="syn__aspect-read">{transitLine(a.outer, a.type, a.inner)}</span>
+              )}
             </button>
           );
         })}

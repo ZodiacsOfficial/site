@@ -38,6 +38,15 @@ const EVERGREEN_LASTMOD = new Map<string, string>([
       : ['/', '/learn/zodiac-dates/', '/learn/glossary/'].includes(loc) ? '2026-07-11' : '2026-07-10',
   ] as const),
   ...LEGACY_URLS.map((url) => [url.path, '2026-07-10'] as const),
+  ...[
+    '/pt/', '/pt/birth-chart/', '/pt/compatibility/', '/pt/moon-sign/',
+    '/pt/rising-sign/', '/pt/moon-phase/', '/pt/saturn-return/', '/pt/transits/',
+    '/pt/tools/', '/pt/profile/', '/pt/baby-zodiac/', '/pt/methodology/', '/pt/privacy/',
+    ...[
+      'aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo',
+      'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces',
+    ].map((sign) => `/pt/${sign}/`),
+  ].map((loc) => [loc, '2026-07-15'] as const),
 ]);
 
 function getLastmod(loc: string): string {

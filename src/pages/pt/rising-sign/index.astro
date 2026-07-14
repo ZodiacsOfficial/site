@@ -1,0 +1,102 @@
+---
+import Base from '../../../layouts/Base.astro';
+import Faq from '../../../components/Faq.astro';
+import ChartCalculator from '../../../islands/ChartCalculator';
+import SignIcon from '../../../components/SignIcon.astro';
+import { SIGNS, signName } from '../../../lib/signs';
+import '../../../styles/calculator.css';
+
+const faq = [
+  {
+    q: 'O que é o ascendente?',
+    a: 'Seu ascendente é o signo do zodíaco que surgia no horizonte leste no momento em que você nasceu. Ele molda as primeiras impressões: como as pessoas percebem você antes de conhecer seu signo solar. Também define a distribuição de todas as casas do seu mapa.',
+  },
+  {
+    q: 'Por que preciso da hora exata do nascimento?',
+    a: 'O ascendente percorre os doze signos em 24 horas: muda aproximadamente a cada duas horas e, às vezes, ainda mais depressa. Perto de uma transição, quinze minutos podem fazer diferença. A certidão de nascimento é a melhor fonte; depois vêm os registros do hospital e a memória da família.',
+  },
+  {
+    q: 'E se a hora do meu nascimento tiver sido arredondada, por exemplo, para 7h?',
+    a: 'Horários arredondados são comuns nos registros. Se o ascendente calculado cair nos primeiros ou últimos graus de um signo, alguns minutos podem mudar o resultado. Confira também o signo vizinho e, se puder, confirme o horário em outra fonte; identificar-se com uma descrição não substitui um dado preciso.',
+  },
+  {
+    q: 'O que é o regente do mapa?',
+    a: 'O planeta que rege seu ascendente é chamado de regente do mapa. A astrologia trata o signo e a casa desse planeta como temas importantes da sua vida. A calculadora o identifica automaticamente e usa regências tradicionais para manter a coerência.',
+  },
+  {
+    q: 'O ascendente é mesmo tão importante?',
+    a: 'Na leitura de um mapa, ele é possivelmente o ponto mais importante: define as casas e determina em quais áreas da vida cada planeta aparece. Também ajuda a explicar por que duas pessoas nascidas no mesmo dia podem organizar a vida de formas muito diferentes.',
+  },
+];
+
+const jsonLd = [
+  {
+    '@type': 'WebApplication',
+    name: 'Calculadora de ascendente',
+    url: 'https://zodiacs.org/pt/rising-sign/',
+    applicationCategory: 'LifestyleApplication',
+    operatingSystem: 'Web',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    inLanguage: 'pt-BR',
+    isPartOf: { '@id': 'https://zodiacs.org/#site' },
+  },
+  {
+    '@type': 'FAQPage',
+    inLanguage: 'pt-BR',
+    mainEntity: faq.map(({ q, a }) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: { '@type': 'Answer', text: a },
+    })),
+  },
+];
+---
+<Base
+  clientUi
+  title="Calculadora de ascendente grátis | Zodiacs.org"
+  description="Calcule seu ascendente grátis com a hora e o local de nascimento: como as pessoas percebem você de início e qual planeta rege seu mapa."
+  path="/pt/rising-sign/"
+  locale="pt"
+  image="/assets/og/v2/tool/rising-sign.png"
+  imageAlt="Calculadora de ascendente — Zodiacs.org"
+  jsonLd={jsonLd}
+>
+  <section class="section--tight container">
+    <div class="tool-hero">
+      <h1 class="display">Descubra seu ascendente.</h1>
+      <p>O ascendente é o signo que surgia no horizonte quando você nasceu. Ele depende da hora do nascimento, e a precisão importa.</p>
+    </div>
+    <ChartCalculator mode="rising" locale="pt" client:load />
+    <noscript>
+      <p>Esta calculadora de ascendente precisa de JavaScript. Ative-o e recarregue a página com sua data, hora exata e local de nascimento.</p>
+    </noscript>
+  </section>
+
+  <section class="section--tight container container--narrow">
+    <div class="section-head">
+      <h2>Os doze ascendentes</h2>
+      <p>Quando a calculadora encontrar o seu, veja como ele colore sua presença e seu mapa.</p>
+    </div>
+    <div class="risings">
+      {SIGNS.map((s) => (
+        <a class="risings__chip" href={`/rising-sign/${s.slug}/`} hreflang="en" style={`--sign:${s.hue}`}>
+          <SignIcon sign={s.slug} size={26} class="risings__disc" />
+          <span>Ascendente em {signName(s, 'pt')}</span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="section--tight container container--narrow">
+    <Faq items={faq} heading="Perguntas sobre o ascendente" />
+  </section>
+</Base>
+
+<style>
+  .tool-hero { max-width: 62ch; margin-bottom: clamp(28px, 5vw, 44px); }
+  .tool-hero h1 { margin: 0 0 16px; font-size: var(--text-2xl); line-height: 1.04; }
+  .tool-hero p { margin: 0; color: var(--muted); font-size: var(--text-lg); text-wrap: pretty; }
+  .risings { display: flex; flex-wrap: wrap; gap: 8px; }
+  .risings__chip { display: inline-flex; align-items: center; gap: 9px; padding: 7px 14px 7px 8px; border: 1px solid var(--hair-1); border-radius: var(--r-full); color: var(--text-2); text-decoration: none; }
+  .risings__chip:hover { color: var(--text); border-color: color-mix(in oklab, var(--sign) 45%, transparent); }
+</style>

@@ -24,6 +24,7 @@ const handle = (name: string) => name.split('·')[0].trim() || name;
 const PF_PAIR_COPY = {
   en: { savedPairs: 'Saved comparisons', pairRemoved: 'Comparison removed.' },
   es: { savedPairs: 'Comparaciones guardadas', pairRemoved: 'Comparación eliminada.' },
+  pt: { savedPairs: 'Comparações salvas', pairRemoved: 'Comparação removida.' },
 } as const satisfies Record<Locale, Record<'savedPairs' | 'pairRemoved', string>>;
 export const PF_BOOK_COPY = {
   en: {
@@ -39,6 +40,13 @@ export const PF_BOOK_COPY = {
       : `${n} cartas guardadas: la tuya y las de las personas para quienes haces lecturas.`,
     add: 'Añade la carta de alguien',
     privacy: 'Guardado en este dispositivo. No se sube nada salvo que actives la sincronización.',
+  },
+  pt: {
+    count: (n: number) => n === 1
+      ? '1 mapa salvo.'
+      : `${n} mapas salvos: o seu e os das pessoas para quem você faz leituras.`,
+    add: 'Adicionar o mapa de alguém',
+    privacy: 'Salvo neste dispositivo. Nada é enviado, a menos que você ative a sincronização.',
   },
 } as const;
 const HAS_PROFILE_SYNC = Boolean(

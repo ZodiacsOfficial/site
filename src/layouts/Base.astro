@@ -8,7 +8,7 @@ import SiteFooter from '../components/SiteFooter.astro';
 import SourcesLine, { type SourceLink } from '../components/SourcesLine.astro';
 import EditorialLine from '../components/EditorialLine.astro';
 import GlassDefs from '../components/GlassDefs.astro';
-import { LOCALE_META, normalizeLocale, t, type Locale } from '../lib/i18n';
+import { LOCALE_META, UI, normalizeLocale, t, type Locale } from '../lib/i18n';
 
 interface Props {
   title: string;
@@ -24,10 +24,13 @@ interface Props {
   sources?: SourceLink[];
   /** Include the liquid-glass lens defs so `.btn--glass` refracts on Chromium. */
   glass?: boolean;
+  /** Embed this page's one-locale UI catalog before hydrating client islands. */
+  clientUi?: boolean;
 }
 
 const props = Astro.props;
 const locale = normalizeLocale(props.locale);
+const clientUi = props.clientUi ? UI[locale] : null;
 const plausibleScriptUrl = import.meta.env.PUBLIC_PLAUSIBLE_SCRIPT_URL?.trim();
 const plausibleEndpoint = import.meta.env.PUBLIC_PLAUSIBLE_ENDPOINT?.trim() ?? '';
 const plausibleEnabled = Boolean(plausibleScriptUrl && !props.noindex);
@@ -53,6 +56,11 @@ const FAVICON = "data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/sv
         }
       } catch (e) {}
     </script>
+    {clientUi && (
+      <script is:inline define:vars={{ uiLocale: locale, uiMessages: clientUi }}>
+        globalThis.__ZDX_UI__ = { locale: uiLocale, messages: uiMessages };
+      </script>
+    )}
     <link rel="icon" type="image/svg+xml" href={FAVICON} />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />

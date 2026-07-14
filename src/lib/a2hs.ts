@@ -26,6 +26,11 @@ const COPY = {
     android: 'Para tener tus cartas guardadas a mano, toca Menú → Añadir a pantalla de inicio.',
     dismiss: 'Descartar indicación de pantalla de inicio',
   },
+  pt: {
+    ios: 'Para manter seus mapas salvos por perto, toque em Compartilhar → Adicionar à Tela de Início. As notificações diárias no iPhone e no iPad só funcionam pelo site instalado.',
+    android: 'Para manter seus mapas salvos por perto, toque em Menu → Adicionar à tela inicial.',
+    dismiss: 'Dispensar dica da tela inicial',
+  },
 } as const satisfies Record<Locale, {
   ios: string;
   android: string;

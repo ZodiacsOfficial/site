@@ -1,0 +1,82 @@
+---
+import Base from '../../../layouts/Base.astro';
+import Faq from '../../../components/Faq.astro';
+import SaturnReturnCalculator from '../../../islands/SaturnReturnCalculator';
+import '../../../styles/calculator.css';
+
+const faq = [
+  {
+    q: 'O que é o retorno de Saturno?',
+    a: 'É o momento em que Saturno em trânsito volta ao grau exato que ocupava quando você nasceu. Saturno leva cerca de 29,4 anos para percorrer o zodíaco, então o primeiro retorno ocorre perto dos 29 anos, o segundo por volta dos 58 e o terceiro perto dos 88. A astrologia o interpreta como uma revisão do que funciona por inércia, e não por escolha.',
+  },
+  {
+    q: 'Quando acontece meu retorno de Saturno?',
+    a: 'Informe sua data de nascimento. A calculadora percorre o movimento real de Saturno e mostra as datas exatas, incluindo as passagens retrógradas. A maioria dos primeiros retornos começa entre os 28 e os 30 anos; a ideia popular de que “meus 29 anos foram arruinados” costuma descrever a parte central do período.',
+  },
+  {
+    q: 'Por que meu retorno de Saturno tem três datas?',
+    a: 'Saturno fica retrógrado por cerca de quatro meses e meio a cada ano. Quando esse movimento para trás cruza seu grau natal, o planeta pode tocá-lo três vezes: uma avançando, outra retrocedendo e uma última quando retoma o movimento direto. Todo o intervalo, que costuma durar de oito a doze meses, faz parte do retorno.',
+  },
+  {
+    q: 'Quanto tempo dura o retorno de Saturno?',
+    a: 'Os cruzamentos exatos podem abranger de alguns dias a quase um ano, dependendo de haver ou não uma passagem retrógrada. A experiência é interpretada de forma mais ampla: em geral, considera-se todo o trânsito de Saturno pelo signo do seu Saturno natal, cerca de dois anos e meio.',
+  },
+  {
+    q: 'O retorno de Saturno é ruim?',
+    a: 'Ele tem fama de demolição, mas funciona mais como uma inspeção. Carreiras, relações e modos de vida que fazem sentido se consolidam; os que se sustentam apenas por hábito cobram seu preço. Muita gente o considera terrível aos 29 e formativo quando olha para trás aos 35.',
+  },
+];
+
+const jsonLd = [
+  {
+    '@type': 'WebApplication',
+    name: 'Calculadora de retorno de Saturno',
+    url: 'https://zodiacs.org/pt/saturn-return/',
+    applicationCategory: 'LifestyleApplication',
+    operatingSystem: 'Web',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    inLanguage: 'pt-BR',
+    isPartOf: { '@id': 'https://zodiacs.org/#site' },
+  },
+  {
+    '@type': 'FAQPage',
+    inLanguage: 'pt-BR',
+    mainEntity: faq.map(({ q, a }) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: { '@type': 'Answer', text: a },
+    })),
+  },
+];
+---
+<Base
+  clientUi
+  title="Calculadora de retorno de Saturno | Zodiacs.org"
+  description="Descubra grátis as datas exatas do seu retorno de Saturno, incluindo as passagens retrógradas, calculadas no seu dispositivo."
+  path="/pt/saturn-return/"
+  locale="pt"
+  image="/assets/og/v2/tool/saturn-return.png"
+  imageAlt="Calculadora de retorno de Saturno — Zodiacs.org"
+  jsonLd={jsonLd}
+>
+  <section class="section--tight container">
+    <div class="tool-hero">
+      <h1 class="display">Seu retorno de Saturno, com datas.</h1>
+      <p>Por volta dos 29 anos, Saturno volta ao lugar que ocupava quando você nasceu. Esta calculadora encontra as datas exatas a partir da sua data de nascimento.</p>
+    </div>
+    <SaturnReturnCalculator locale="pt" client:load />
+    <noscript>
+      <p>Esta calculadora de retorno de Saturno precisa de JavaScript. Ative-o e recarregue a página para calcular as datas dos seus retornos a partir da sua data de nascimento.</p>
+    </noscript>
+  </section>
+
+  <section class="section--tight container container--narrow">
+    <Faq items={faq} heading="Perguntas sobre o retorno de Saturno" />
+  </section>
+</Base>
+
+<style>
+  .tool-hero { max-width: 62ch; margin-bottom: clamp(28px, 5vw, 44px); }
+  .tool-hero h1 { margin: 0 0 16px; font-size: var(--text-2xl); line-height: 1.04; }
+  .tool-hero p { margin: 0; color: var(--muted); font-size: var(--text-lg); text-wrap: pretty; }
+</style>

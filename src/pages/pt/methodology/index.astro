@@ -1,0 +1,47 @@
+---
+import Base from '../../../layouts/Base.astro';
+import { EDITOR_AUTHOR } from '../../../lib/editorial';
+
+const jsonLd = [
+  {
+    '@type': 'Article',
+    headline: 'Como calculamos seu mapa astral',
+    url: 'https://zodiacs.org/pt/methodology/',
+    datePublished: '2026-07-07T03:45:11+07:00',
+    dateModified: '2026-07-15T00:00:00+07:00',
+    author: EDITOR_AUTHOR,
+    publisher: { '@id': 'https://zodiacs.org/#org' },
+    mainEntityOfPage: { '@type': 'WebPage', '@id': 'https://zodiacs.org/pt/methodology/' },
+    inLanguage: 'pt-BR',
+    about: 'Metodologia astronômica, tratamento de fusos horários e modelo de privacidade do mecanismo de mapas astrais do Zodiacs.org.',
+    isPartOf: { '@id': 'https://zodiacs.org/#site' },
+  },
+];
+---
+<Base
+  title="Como calculamos seu mapa astral — metodologia e privacidade | Zodiacs.org"
+  description="A astronomia por trás de cada mapa: efemérides, casas, fusos horários históricos, testes de precisão e privacidade local."
+  path="/pt/methodology/"
+  locale="pt"
+  type="article"
+  jsonLd={jsonLd}
+>
+  <section class="section container container--narrow">
+    <em class="kicker">Metodologia</em>
+    <h1 class="method-title display">Como calculamos seu mapa astral.</h1>
+    <div class="prose">
+      <p>Os mapas são calculados no seu navegador com posições planetárias aparentes, geocêntricas e tropicais, o padrão da astrologia ocidental.</p>
+      <p>O mecanismo é testado com dados de referência do JPL Horizons da NASA. Também verificamos a coerência interna do céu calculado: ao nascer do sol, por exemplo, o ascendente deve coincidir com a posição do Sol.</p>
+      <h2>Fusos horários</h2>
+      <p>Convertemos seu horário local usando todo o histórico do fuso do seu local de nascimento, incluindo horário de verão, mudanças ocorridas durante guerras e hora média local anterior à padronização.</p>
+      <h2>Privacidade</h2>
+      <p>O mapa é calculado no seu dispositivo. Não existe uma API no servidor que receba seus dados de nascimento. Se você salvar um mapa, ele fica primeiro no armazenamento local; a sincronização com uma conta é opcional.</p>
+      <h2>Limites claros</h2>
+      <p>O intervalo aceito é de 1800 a 2199. Se você não souber a hora de nascimento, calculamos para o meio-dia: as posições dos planetas continuam úteis para o dia, mas o ascendente e as casas dependem do horário.</p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .method-title { margin: 14px 0 24px; font-size: var(--text-2xl); line-height: 1.04; }
+</style>

@@ -10,11 +10,30 @@ import {
   stripLocale,
   tf,
   UI,
+  type UiKey,
 } from './index';
 
 describe('i18n helpers', () => {
-  it('keeps the Spanish catalog aligned with English keys', () => {
-    expect(Object.keys(UI.es).sort()).toEqual(Object.keys(UI.en).sort());
+  it('keeps every localized UI catalog aligned with all 331 English keys', () => {
+    const englishKeys = Object.keys(UI.en).sort();
+    expect(englishKeys).toHaveLength(331);
+    for (const locale of LOCALES) {
+      expect(Object.keys(UI[locale]).sort()).toEqual(englishKeys);
+    }
+  });
+
+  it('preserves interpolation placeholders in every localized message', () => {
+    const placeholders = (message: string) => (
+      [...message.matchAll(/\{([a-zA-Z][a-zA-Z0-9]*)\}/g)]
+        .map((match) => match[1])
+        .sort()
+    );
+    const keys = Object.keys(UI.en) as UiKey[];
+    for (const locale of LOCALES) {
+      for (const key of keys) {
+        expect(placeholders(UI[locale][key]), locale + '.' + key).toEqual(placeholders(UI.en[key]));
+      }
+    }
   });
 
   it('uses the canonical browser-only privacy disclosure', () => {
@@ -26,8 +45,10 @@ describe('i18n helpers', () => {
 
   it('localizes only supported core paths', () => {
     expect(localizePath('es', '/birth-chart/')).toBe('/es/birth-chart/');
+    expect(localizePath('pt', '/birth-chart/')).toBe('/pt/birth-chart/');
     expect(localizePath('es', '/compatibility/aries-taurus/')).toBe('/compatibility/aries-taurus/');
     expect(stripLocale('/es/aries/')).toBe('/aries/');
+    expect(stripLocale('/pt/aries/')).toBe('/aries/');
   });
 
   it('derives locale parsing and prefixes from the declared locales', () => {
@@ -45,18 +66,41 @@ describe('i18n helpers', () => {
   });
 
   it('returns alternates for translated pages', () => {
-    expect(alternatePaths('/es/tools/')).toEqual({ en: '/tools/', es: '/es/tools/' });
-    expect(alternatePaths('/es/privacy/')).toEqual({ en: '/privacy/', es: '/es/privacy/' });
+    expect(alternatePaths('/es/tools/')).toEqual({
+      en: '/tools/',
+      es: '/es/tools/',
+      pt: '/pt/tools/',
+    });
+    expect(alternatePaths('/pt/privacy/')).toEqual({
+      en: '/privacy/',
+      es: '/es/privacy/',
+      pt: '/pt/privacy/',
+    });
     expect(LOCALIZED_PATHS.get('/tools/')).toEqual(LOCALES);
     expect(Object.keys(alternatePaths('/tools/') ?? {})).toEqual([...LOCALES]);
-    expect(alternatePaths('/es/404/')).toEqual({ en: '/404.html', es: '/es/404/' });
+    expect(alternatePaths('/es/404/')).toEqual({
+      en: '/404.html',
+      es: '/es/404/',
+      pt: '/pt/404/',
+    });
     expect(alternatePaths('/learn/placements/venus-in-scorpio/')).toBeNull();
   });
 
   it('interpolates localized messages without changing unsupported paths', () => {
     expect(tf('es', 'skyPlanetRetrograde', { planet: 'Plutón' })).toBe('Plutón retrógrado');
     expect(tf('es', 'pairingCta', { a: 'Aries', b: 'Tauro' })).toBe('Leer la combinación de Aries y Tauro');
+    expect(tf('pt', 'skyPlanetRetrograde', { planet: 'Plutão' })).toBe('Plutão retrógrado');
+    expect(tf('pt', 'pairingCta', { a: 'Áries', b: 'Touro' })).toBe('Leia a combinação entre Áries e Touro');
     expect(localizePath('es', '/horoscopes/aries/')).toBe('/horoscopes/aries/');
+  });
+
+  it('uses the approved Brazilian Portuguese registry register', () => {
+    expect(UI.pt.navCollect).toBe('Registro');
+    expect(UI.pt.recordLabel).toBe('Ala do acervo');
+    expect(UI.pt.recordOneOfTwelve).toBe(
+      'também integra os Doze — um registro canônico no acervo.',
+    );
+    expect(UI.pt.recordViewLink).toBe('Ver o registro →');
   });
 
   it('keeps the Spanish baby result sentences grammatical when signs are inserted', () => {
@@ -67,5 +111,17 @@ describe('i18n helpers', () => {
       'El Sol cambia de signo ese día: el bebé nace con el Sol en Aries o en Tauro según la hora. El momento exacto del nacimiento decide.',
     );
     expect(UI.es.babyMoonBody).toContain('Los bebés nacidos la misma semana');
+  });
+
+  it('keeps the Portuguese baby result sentences grammatical when signs are inserted', () => {
+    expect(UI.pt.babySunNearEdge + ' Gêmeos ' + UI.pt.babySunNearEdgeTail).toBe(
+      'A data fica perto da transição de signo, então nascer mais de um dia antes ou depois pode levar o Sol para Gêmeos — a data do nascimento é que decide.',
+    );
+    expect(
+      UI.pt.babySunSplitA + ' Áries ' + UI.pt.babySunSplitOr + ' Touro ' + UI.pt.babySunSplitTail,
+    ).toBe(
+      'O Sol muda de signo nesta data: o bebê nasce com o Sol em Áries ou Touro dependendo do horário. O momento exato do nascimento decide.',
+    );
+    expect(UI.pt.babyMoonBody).toContain('Bebês que nascem na mesma semana');
   });
 });

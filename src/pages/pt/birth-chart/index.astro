@@ -1,0 +1,102 @@
+---
+import Base from '../../../layouts/Base.astro';
+import Faq from '../../../components/Faq.astro';
+import ChartCalculator from '../../../islands/ChartCalculator';
+import '../../../styles/calculator.css';
+import '../../../styles/explorer.css';
+
+const faq = [
+  {
+    q: 'O que é um mapa astral?',
+    a: 'Um mapa astral, ou mapa natal, mostra onde cada planeta estava — do ponto de vista da Terra — no momento e no lugar exatos do seu nascimento. Ele registra seu Sol, sua Lua e seu ascendente, além das posições de Mercúrio a Plutão nas doze casas.',
+  },
+  {
+    q: 'Preciso saber a hora exata do meu nascimento?',
+    a: 'Para calcular o ascendente e as casas, sim: o ascendente muda aproximadamente a cada duas horas. Sem o horário, calculamos os planetas ao meio-dia; o Sol e, na maioria dos casos, a Lua continuam precisos para aquele dia. A certidão de nascimento, o livro do bebê ou sua família costumam ser as melhores fontes.',
+  },
+  {
+    q: 'Qual é a precisão desta calculadora?',
+    a: 'As posições planetárias são calculadas com um mecanismo astronômico profissional e comparadas continuamente com dados de referência do JPL da NASA, com margem de poucos centésimos de grau. Os fusos horários históricos, incluindo a hora média local anterior a 1922 e mudanças de horário em períodos de guerra, são resolvidos com a base completa da IANA.',
+  },
+  {
+    q: 'O que acontece com meus dados de nascimento?',
+    a: 'O mapa inteiro é calculado no seu navegador; não existe uma API de mapas no servidor e você não precisa criar uma conta. Se salvar um mapa, ele fica primeiro neste dispositivo. A sincronização opcional só envia os mapas salvos depois que você entra na conta.',
+  },
+  {
+    q: 'Casas de signos inteiros ou Placidus: qual sistema escolher?',
+    a: 'O sistema de casas de signos inteiros é o mais antigo e o mais fácil de ler: cada casa ocupa um signo completo. Placidus é a opção moderna mais comum e divide as casas conforme o tempo de ascensão, por isso seus tamanhos variam. Experimente os dois: os planetas não mudam de lugar; apenas os limites das casas mudam.',
+  },
+];
+
+const jsonLd = [
+  {
+    '@type': 'WebApplication',
+    name: 'Calculadora gratuita de mapa astral',
+    url: 'https://zodiacs.org/pt/birth-chart/',
+    applicationCategory: 'LifestyleApplication',
+    operatingSystem: 'Web',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    featureList: 'Sol, Lua, ascendente, planetas de Mercúrio a Plutão, Nodo Norte verdadeiro, casas de signos inteiros e Placidus, aspectos',
+    inLanguage: 'pt-BR',
+    isPartOf: { '@id': 'https://zodiacs.org/#site' },
+  },
+  {
+    '@type': 'FAQPage',
+    inLanguage: 'pt-BR',
+    mainEntity: faq.map(({ q, a }) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: { '@type': 'Answer', text: a },
+    })),
+  },
+  {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Zodiacs.org em português', item: 'https://zodiacs.org/pt/' },
+      { '@type': 'ListItem', position: 2, name: 'Ferramentas', item: 'https://zodiacs.org/pt/tools/' },
+      { '@type': 'ListItem', position: 3, name: 'Calculadora de mapa astral', item: 'https://zodiacs.org/pt/birth-chart/' },
+    ],
+  },
+];
+---
+<Base
+  clientUi
+  glass
+  title="Mapa astral grátis — Sol, Lua e ascendente | Zodiacs.org"
+  description="Calcule seu mapa astral grátis: Sol, Lua, ascendente, planetas, casas e seus significados. Calculado com privacidade no seu navegador e explicado com clareza."
+  path="/pt/birth-chart/"
+  locale="pt"
+  image="/assets/og/v2/tool/birth-chart.png"
+  imageAlt="Calculadora gratuita de mapa astral — Zodiacs.org"
+  jsonLd={jsonLd}
+>
+  <section class="section--tight container">
+    <div class="tool-hero">
+      <h1 class="display">Calcule seu mapa astral grátis.</h1>
+      <p>Informe sua data, hora e local de nascimento para ver seu Sol, sua Lua, seu ascendente, seus planetas, suas casas e o que tudo isso significa.</p>
+    </div>
+    <ChartCalculator mode="full" locale="pt" client:load />
+    <noscript>
+      <p>Esta calculadora de mapa astral precisa de JavaScript. Ative-o e recarregue a página para calcular seu Sol, sua Lua, seu ascendente, seus planetas e suas casas no navegador.</p>
+    </noscript>
+  </section>
+
+  <section class="section--tight container container--narrow">
+    <div class="prose">
+      <h2>O que você está vendo</h2>
+      <p>Um mapa astral é uma fotografia do céu visto do lugar onde você nasceu, no momento do nascimento. Ele mostra os signos, as casas e os planetas em graus exatos.</p>
+      <p>Para começar, observe seu Sol, sua Lua e seu ascendente: identidade, vida emocional e primeira impressão. Depois, você pode salvar o mapa e voltar a ele quando quiser.</p>
+      <p>Veja a metodologia completa em <a href="/pt/methodology/">como calculamos seu mapa</a>.</p>
+    </div>
+  </section>
+
+  <section class="section--tight container container--narrow">
+    <Faq items={faq} heading="Perguntas sobre o mapa astral" />
+  </section>
+</Base>
+
+<style>
+  .tool-hero { max-width: 62ch; margin-bottom: clamp(28px, 5vw, 44px); }
+  .tool-hero h1 { margin: 0 0 16px; font-size: var(--text-2xl); line-height: 1.04; }
+  .tool-hero p { margin: 0; color: var(--muted); font-size: var(--text-lg); text-wrap: pretty; }
+</style>

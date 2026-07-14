@@ -79,6 +79,20 @@ const COPY = {
     grid: 'Cuadrícula',
     composite: 'Compuesta',
   },
+  pt: {
+    caption: 'Roda interna: {a}. Anel externo: {b}. As linhas entre eles mostram onde os mapas se encontram.',
+    swap: 'Colocar {name} dentro',
+    tapHint: 'Toque em uma linha de conexão — ou em uma linha abaixo — para ler esse contato. Toque em um planeta no anel externo para ver sua posição.',
+    ringLabel: 'Mapa de {name}, no anel externo',
+    tally: 'aspectos entre mapas',
+    easeful: 'harmoniosos',
+    charged: 'tensos',
+    loudest: 'Os contatos mais fortes:',
+    views: 'Visualizações da relação',
+    wheel: 'Roda',
+    grid: 'Grade',
+    composite: 'Composto',
+  },
 } as const;
 
 const TAB_ORDER = ['wheel', 'grid', 'composite'] as const;

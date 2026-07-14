@@ -91,6 +91,18 @@ const PAIR_COPY = {
     savedComparisonSide: 'de una comparación guardada',
     restoredSideHelp: 'Este lado viene de una comparación guardada — bórralo para ingresar los datos de otra persona.',
   },
+  pt: {
+    savedPairs: 'Comparações salvas',
+    useMyChart: 'Usar meu mapa — {handle}',
+    dismissMyChart: 'Dispensar sugestão de mapa salvo',
+    savePair: 'Salvar esta comparação',
+    pairSaved: 'Comparação salva neste dispositivo.',
+    pairExists: 'Já está salva.',
+    pairSaveFull: 'Você pode salvar até {n} comparações — remova uma primeiro.',
+    pairRemoved: 'Comparação removida.',
+    savedComparisonSide: 'de uma comparação salva',
+    restoredSideHelp: 'Este lado veio de uma comparação salva — limpe-o para inserir os dados de outra pessoa.',
+  },
 } as const satisfies Record<Locale, Record<keyof typeof PAIR_COPY_EN, string>>;
 
 const pc = (locale: Locale, key: keyof typeof PAIR_COPY_EN) => PAIR_COPY[locale][key];

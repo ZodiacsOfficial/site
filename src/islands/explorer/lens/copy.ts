@@ -65,6 +65,24 @@ export const LENS_CHROME = {
     trustLine: 'Cada uno de estos cielos se calcula en este dispositivo.',
     loading: 'Calculando…',
   },
+  pt: {
+    skyRingLabel: 'o céu neste momento',
+    progressedRingLabel: 'seus planetas progredidos',
+    returnRingLabel: 'seu céu do retorno solar',
+    skyIntro: 'O anel externo é o céu deste momento sobre sua roda natal.',
+    progressedIntro: 'O anel externo é seu mapa progredido até hoje: cada dia após o nascimento representa um ano de vida.',
+    returnIntro: 'O anel externo é o céu do seu retorno solar mais recente: o instante em que o Sol voltou à sua posição natal.',
+    tightestNow: 'Contatos mais exatos:',
+    noContacts: 'Nenhum contato próximo com este orbe agora.',
+    transitsLink: 'Percorra este céu ao longo do tempo em /transits/.',
+    returnInstant: 'Instante do retorno',
+    localTime: 'seu horário',
+    noTimeNote: 'Calculado com um mapa do meio-dia: a hora exata de nascimento torna estas posições mais precisas.',
+    noPlaceNote: 'Sem o local de nascimento, o retorno mostra apenas os planetas, sem casas.',
+    progressedAngles: 'As casas progredidas exigem uma convenção que ainda não adotamos; aqui, apenas os planetas progridem.',
+    trustLine: 'Cada um destes céus é calculado neste dispositivo.',
+    loading: 'Calculando…',
+  },
 } as const satisfies Record<Locale, LensChrome>;
 
 /** The ~2.5-year emotional climate of the progressed Moon's sign. EN-only. */

@@ -29,6 +29,16 @@ describe('push subscription API input', () => {
       keys: { p256dh: 'public_key-123', auth: 'auth_key-456' },
       lang: 'es',
     });
+    expect(parseSubscription({
+      endpoint: 'https://updates.push.services.mozilla.com/wpush/v2/portuguese',
+      keys: { p256dh: 'public_key-123', auth: 'auth_key-456' },
+      lang: 'pt-BR',
+    })?.lang).toBe('pt');
+    expect(parseSubscription({
+      endpoint: 'https://updates.push.services.mozilla.com/wpush/v2/portuguese',
+      keys: { p256dh: 'public_key-123', auth: 'auth_key-456' },
+      lang: 'pt',
+    })?.lang).toBe('pt');
   });
 
   it('rejects insecure endpoints and incomplete keys', () => {
