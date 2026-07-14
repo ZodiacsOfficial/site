@@ -28,7 +28,7 @@ const kahloNoTime = encodeChart({
   d: '1907-07-06', z: 'America/Mexico_City', la: 19.35, lo: -99.16,
 });
 
-const preview = spawn('npx', ['astro', 'preview', '--port', '4399'], { stdio: 'ignore', detached: false });
+const preview = spawn('npx', ['astro', 'preview', '--port', '4399', '--host', '127.0.0.1'], { stdio: 'ignore', detached: false });
 await wait(2500);
 const results = [];
 const check = (name, ok, detail = '') => { results.push({ name, ok, detail }); };
@@ -62,9 +62,70 @@ try {
 
   // ── Desktop: free exploration ──
   const page = await browser.newPage({ viewport: { width: 1440, height: 1000 }, deviceScaleFactor: 1 });
+  await page.addInitScript(() => {
+    window.__detailEvents = [];
+    window.zodiacsAnalytics = Object.freeze({
+      track: (name, props) => window.__detailEvents.push({ name, props }),
+    });
+  });
+  await page.goto('about:blank');
   await page.goto(`http://127.0.0.1:4399/birth-chart/${kahlo}`, { waitUntil: 'networkidle' });
   await page.waitForSelector('.calc__result', { timeout: 15000 });
   await page.waitForSelector('.wheel--interactive', { timeout: 15000 });
+
+  const detail = page.locator('details.calc__detail[data-detail]');
+  const detailSummary = detail.locator('summary');
+  const placementCount = await detail.locator('.calc__table tbody tr').count();
+  const aspectCount = await detail.locator('.calc__aspects li').count();
+  check('plain-first: reading precedes actions and full-detail table', await page.evaluate(() => {
+    const read = document.querySelector('.calc__read');
+    const actions = document.querySelector('.calc__chart-share');
+    const detailNode = document.querySelector('[data-detail]');
+    const table = document.querySelector('.calc__table');
+    return Boolean(read && actions && detailNode && table
+      && (read.compareDocumentPosition(actions) & Node.DOCUMENT_POSITION_FOLLOWING)
+      && (actions.compareDocumentPosition(detailNode) & Node.DOCUMENT_POSITION_FOLLOWING)
+      && (read.compareDocumentPosition(table) & Node.DOCUMENT_POSITION_FOLLOWING));
+  }));
+  check('plain-first: detail is closed by default', !(await detail.evaluate((node) => node.open)));
+  check('plain-first: EN summary is exact with mono counts',
+    await detailSummary.textContent() === `Full detail — ${placementCount} placements · ${aspectCount} aspects · degrees & dignities`
+    && await detailSummary.locator('.mono').count() === 2,
+    await detailSummary.textContent() ?? '');
+  check('plain-first: aspects are a section with no nested details',
+    await detail.locator('details').count() === 0
+    && await detail.locator('section.calc__aspects > h3 + ul').count() === 1);
+
+  await detailSummary.click();
+  await page.waitForFunction(() => document.querySelector('[data-detail]')?.hasAttribute('open')
+    && localStorage.getItem('zodiacs.detail.v1') === 'open'
+    && window.__detailEvents.some((event) => event.name === 'detail_toggle' && event.props?.to === 'full'));
+  check('plain-first: opening persists',
+    await page.evaluate(() => localStorage.getItem('zodiacs.detail.v1')) === 'open');
+  check('plain-first: open analytics is allowlisted shape', await page.evaluate(() =>
+    window.__detailEvents.some((event) => event.name === 'detail_toggle' && event.props?.to === 'full')));
+
+  await page.goto('about:blank');
+  await page.goto(`http://127.0.0.1:4399/birth-chart/${kahlo}`, { waitUntil: 'networkidle' });
+  await page.waitForSelector('.wheel--interactive', { timeout: 15000 });
+  await wait(100); // allow any restore-time native toggle task to flush
+  check('plain-first: open choice restores across reload', await detail.evaluate((node) => node.open));
+  check('plain-first: restoring does not emit a toggle event', await page.evaluate(() =>
+    window.__detailEvents.filter((event) => event.name === 'detail_toggle').length === 0));
+  await detailSummary.click();
+  await page.waitForFunction(() => !document.querySelector('[data-detail]')?.hasAttribute('open')
+    && localStorage.getItem('zodiacs.detail.v1') === 'closed'
+    && window.__detailEvents.some((event) => event.name === 'detail_toggle' && event.props?.to === 'plain'));
+  check('plain-first: closing persists and tracks plain',
+    await page.evaluate(() => localStorage.getItem('zodiacs.detail.v1')) === 'closed'
+    && await page.evaluate(() => window.__detailEvents.some(
+      (event) => event.name === 'detail_toggle' && event.props?.to === 'plain')));
+
+  await page.goto('about:blank');
+  await page.goto(`http://127.0.0.1:4399/birth-chart/${kahlo}`, { waitUntil: 'networkidle' });
+  await page.waitForSelector('.wheel--interactive', { timeout: 15000 });
+  check('plain-first: closed choice restores across reload', !(await detail.evaluate((node) => node.open)));
+  await wait(950); // let the freshly remounted wheel finish its entrance before geometric clicks
 
   check('wheel interactive', true);
   check('hint visible pre-selection', await page.locator('.insp--hint').isVisible());
@@ -75,6 +136,7 @@ try {
   const title = await page.locator('.insp__title').textContent();
   check('inspector opens on Mars', /Mars/.test(title ?? ''), title ?? '');
   check('url carries ?sel', (await page.url()).includes('sel=body%3AMars') || (await page.url()).includes('sel=body:Mars'), await page.url());
+  check('wheel body selection re-lights closed detail', await detail.evaluate((node) => node.open));
   check('table row synced', await page.locator('tr[data-selected="true"] .calc__rowbtn').textContent().then((x) => /Mars/.test(x ?? '')));
   check('reading item synced', (await page.locator('.calc__read-list li[data-selected="true"]').count()) === 1);
   await shot(page.locator('.xplr__wheelbox'), 'desktop-mars-selected.png');
@@ -157,7 +219,6 @@ try {
   await page.keyboard.press('Escape');
 
   // Selecting an aspect then filtering its type off clears the selection.
-  await page.locator('.calc__aspects summary').click();
   await page.locator('.calc__aspects .calc__rowbtn').first().click();
   const selUrl = page.url();
   const m = /sel=aspect%3A[^&]*(conjunction|sextile|square|trine|opposition)/.exec(selUrl);
@@ -186,6 +247,19 @@ try {
   const t6 = await page.locator('.insp__title').textContent();
   check('?sel deep link applies after compute', /Venus/.test(t6 ?? ''), t6 ?? '');
   await page.close();
+
+  // The disclosure copy is host-local; Spanish keeps the exact approved line.
+  const es = await browser.newPage({ viewport: { width: 1440, height: 1000 }, deviceScaleFactor: 1 });
+  await es.goto(`http://127.0.0.1:4399/es/birth-chart/${kahlo}`, { waitUntil: 'networkidle' });
+  await es.waitForSelector('.wheel--interactive', { timeout: 15000 });
+  const esDetail = es.locator('[data-detail]');
+  const esPlacements = await esDetail.locator('.calc__table tbody tr').count();
+  const esAspects = await esDetail.locator('.calc__aspects li').count();
+  const esSummary = await esDetail.locator('summary').textContent();
+  check('plain-first: ES summary line is exact',
+    esSummary === `Todo el detalle — ${esPlacements} posiciones · ${esAspects} aspectos · grados y dignidades`,
+    esSummary ?? '');
+  await es.close();
 
   // ── Desktop: guided tour ──
   const tp = await browser.newPage({ viewport: { width: 1440, height: 1000 }, deviceScaleFactor: 1 });
