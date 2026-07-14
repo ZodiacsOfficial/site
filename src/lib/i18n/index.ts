@@ -85,7 +85,12 @@ export function stripLocale(path: string): string {
     const prefix = LOCALE_PATH_PREFIX[locale];
     if (!prefix) continue;
     if (path === prefix) return '/';
-    if (path.startsWith(`${prefix}/`)) return path.slice(prefix.length) || '/';
+    if (path.startsWith(`${prefix}/`)) {
+      const unprefixed = path.slice(prefix.length) || '/';
+      // Astro emits nested locale 404s at /{locale}/404/, while the root 404
+      // remains /404.html. Treat them as one translated page family.
+      return unprefixed === '/404/' ? '/404.html' : unprefixed;
+    }
   }
   return path;
 }
@@ -96,6 +101,7 @@ export function localizePath(locale: Locale, path: string): string {
   const canonical = stripLocale(clean);
   if (locale === DEFAULT_LOCALE) return canonical;
   if (!LOCALIZED_PATHS.get(canonical)?.includes(locale)) return clean;
+  if (canonical === '/404.html') return `${LOCALE_PATH_PREFIX[locale]}/404/`;
   return `${LOCALE_PATH_PREFIX[locale]}${canonical}`;
 }
 

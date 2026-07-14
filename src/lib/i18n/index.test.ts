@@ -28,6 +28,8 @@ describe('i18n helpers', () => {
     expect(localizePath('es', '/birth-chart/')).toBe('/es/birth-chart/');
     expect(localizePath('es', '/compatibility/aries-taurus/')).toBe('/compatibility/aries-taurus/');
     expect(stripLocale('/es/aries/')).toBe('/aries/');
+    expect(localizePath('es', '/404.html')).toBe('/es/404/');
+    expect(stripLocale('/es/404/')).toBe('/404.html');
   });
 
   it('derives locale parsing and prefixes from the declared locales', () => {
@@ -49,6 +51,7 @@ describe('i18n helpers', () => {
     expect(alternatePaths('/es/privacy/')).toEqual({ en: '/privacy/', es: '/es/privacy/' });
     expect(LOCALIZED_PATHS.get('/tools/')).toEqual(LOCALES);
     expect(Object.keys(alternatePaths('/tools/') ?? {})).toEqual([...LOCALES]);
+    expect(alternatePaths('/es/404/')).toEqual({ en: '/404.html', es: '/es/404/' });
     expect(alternatePaths('/learn/placements/venus-in-scorpio/')).toBeNull();
   });
 
