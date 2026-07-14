@@ -27,7 +27,7 @@
         "verifyUrl": "https://solscan.io/token/GhFiFrExPY3proVF96oth1gESWA5QPQzdtb8cy8b1YZv"
       },
       "liquidity": {
-        "value": "7.8% of supply · Raydium pool · LP unlocked",
+        "value": "7.8% of supply · Raydium pool · LP 99.99% burned",
         "status": "filled",
         "asOf": "2026-07-14",
         "verifyUrl": "https://solscan.io/account/HRn98YLGigP475eS1GaQYRMbqk1V4dkV6tdKyLhVh2iS"
@@ -77,7 +77,7 @@
         "verifyUrl": "https://solscan.io/token/EjkkxYpfSwS6TAtKKuiJuNMMngYvumc1t1v9ZX1WJKMp"
       },
       "liquidity": {
-        "value": "7.2% of supply · Raydium pool · LP unlocked",
+        "value": "7.2% of supply · Raydium pool · LP 99.51% burned",
         "status": "filled",
         "asOf": "2026-07-14",
         "verifyUrl": "https://solscan.io/account/2GNtxia4fLW3URj5MLqVfgoKrAgDpphtAVazK41eTPfu"
@@ -127,7 +127,7 @@
         "verifyUrl": "https://solscan.io/token/ARiZfq6dK19uNqxWyRudhbM2MswLyYhVUHdndGkffdGc"
       },
       "liquidity": {
-        "value": "6.4% of supply · Raydium pool · LP unlocked",
+        "value": "6.4% of supply · Raydium pool · LP 99.98% burned",
         "status": "filled",
         "asOf": "2026-07-14",
         "verifyUrl": "https://solscan.io/account/HxhdKrB1UpSwfuMoZMVzPVELzbPWHdyN6PHU9CBFium9"
@@ -177,7 +177,7 @@
         "verifyUrl": "https://solscan.io/token/CmomKM8iPKRSMN7y1jqyW1QKj5bGoZmbvNZXWBJSUdnZ"
       },
       "liquidity": {
-        "value": "8.1% of supply · Raydium pool · LP unlocked",
+        "value": "8.1% of supply · Raydium pool · LP 95.94% burned",
         "status": "filled",
         "asOf": "2026-07-14",
         "verifyUrl": "https://solscan.io/account/DaTEcH6da4i1evZU37F9ibQirYXhLKZpKDzDno346nSW"
@@ -227,7 +227,7 @@
         "verifyUrl": "https://solscan.io/token/8Cd7wXoPb5Yt9cUGtmHNqAEmpMDrhfcVqnGbLC48b8Qm"
       },
       "liquidity": {
-        "value": "8.1% of supply · Raydium pool · LP unlocked",
+        "value": "8.1% of supply · Raydium pool · LP 92.04% burned",
         "status": "filled",
         "asOf": "2026-07-14",
         "verifyUrl": "https://solscan.io/account/48ErBGMqiZekyLoCcebd7cS5KNQPzqr7QQAK9mzAPQGQ"
@@ -327,7 +327,7 @@
         "verifyUrl": "https://solscan.io/token/7Zt2KUh5mkpEpPGcNcFy51aGkh9Ycb5ELcqRH1n2GmAe"
       },
       "liquidity": {
-        "value": "9.5% of supply · Raydium pool · LP unlocked",
+        "value": "9.5% of supply · Raydium pool · LP 99.42% burned",
         "status": "filled",
         "asOf": "2026-07-14",
         "verifyUrl": "https://solscan.io/account/DTXPQjK4ae4h2Wc7D5Rpij8YmSQxqLuTcNKrpBCjcAN9"
@@ -527,7 +527,7 @@
         "verifyUrl": "https://solscan.io/token/C49Ut3om3QFTDrMZ5Cr8VcTKPpHDcQ2Fv8mmuJHHigDt"
       },
       "liquidity": {
-        "value": "7.4% of supply · Raydium pool · LP unlocked",
+        "value": "7.4% of supply · Raydium pool · LP 99.99% burned",
         "status": "filled",
         "asOf": "2026-07-14",
         "verifyUrl": "https://solscan.io/account/BygCEAhCNyWC8Co9yPa4K84NGkgkgMWdib2FG5hhuiUv"
@@ -628,7 +628,7 @@
       "verifyUrl": null
     },
     "liquidity": {
-      "value": "6.4–9.5% per sign · Raydium pools · LP: 5 burned, 7 unlocked",
+      "value": "6.4–9.5% per sign · Raydium pools · LP ≥92% burned",
       "status": "filled",
       "asOf": "2026-07-14",
       "verifyUrl": "https://raydium.io/liquidity-pools/"

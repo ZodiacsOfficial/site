@@ -1,10 +1,10 @@
 {
-  "$comment": "Maintainer-reviewed prose disclosures for scripts/build-thesis-disclosure.mjs. Liquidity is a 2026-07-14 onchain snapshot of each canonical Raydium CPMM pool; bridge contracts were checked on Base as Wormhole BridgeToken proxies with Solana origin metadata. The owner classified the recurring cross-sign holder as not a project treasury and approved the treasury negative for publication.",
+  "$comment": "Maintainer-reviewed prose disclosures for scripts/build-thesis-disclosure.mjs. Liquidity is a 2026-07-14 onchain snapshot of each canonical Raydium CPMM pool; where LP supply is nonzero the value carries the observed burned share of LP tokens instead of a bare lock claim. Bridge contracts were checked on Base as Wormhole BridgeToken proxies with Solana origin metadata. The owner classified the recurring cross-sign holder as not a project treasury and approved the treasury negative for publication.",
   "asOf": "2026-07-14",
   "signs": {
     "aries": {
       "liquidity": {
-        "value": "7.8% of supply · Raydium pool · LP unlocked",
+        "value": "7.8% of supply · Raydium pool · LP 99.99% burned",
         "verifyUrl": "https://solscan.io/account/HRn98YLGigP475eS1GaQYRMbqk1V4dkV6tdKyLhVh2iS"
       },
       "bridge": {
@@ -14,7 +14,7 @@
     },
     "taurus": {
       "liquidity": {
-        "value": "7.2% of supply · Raydium pool · LP unlocked",
+        "value": "7.2% of supply · Raydium pool · LP 99.51% burned",
         "verifyUrl": "https://solscan.io/account/2GNtxia4fLW3URj5MLqVfgoKrAgDpphtAVazK41eTPfu"
       },
       "bridge": {
@@ -24,7 +24,7 @@
     },
     "gemini": {
       "liquidity": {
-        "value": "6.4% of supply · Raydium pool · LP unlocked",
+        "value": "6.4% of supply · Raydium pool · LP 99.98% burned",
         "verifyUrl": "https://solscan.io/account/HxhdKrB1UpSwfuMoZMVzPVELzbPWHdyN6PHU9CBFium9"
       },
       "bridge": {
@@ -34,7 +34,7 @@
     },
     "cancer": {
       "liquidity": {
-        "value": "8.1% of supply · Raydium pool · LP unlocked",
+        "value": "8.1% of supply · Raydium pool · LP 95.94% burned",
         "verifyUrl": "https://solscan.io/account/DaTEcH6da4i1evZU37F9ibQirYXhLKZpKDzDno346nSW"
       },
       "bridge": {
@@ -44,7 +44,7 @@
     },
     "leo": {
       "liquidity": {
-        "value": "8.1% of supply · Raydium pool · LP unlocked",
+        "value": "8.1% of supply · Raydium pool · LP 92.04% burned",
         "verifyUrl": "https://solscan.io/account/48ErBGMqiZekyLoCcebd7cS5KNQPzqr7QQAK9mzAPQGQ"
       },
       "bridge": {
@@ -64,7 +64,7 @@
     },
     "libra": {
       "liquidity": {
-        "value": "9.5% of supply · Raydium pool · LP unlocked",
+        "value": "9.5% of supply · Raydium pool · LP 99.42% burned",
         "verifyUrl": "https://solscan.io/account/DTXPQjK4ae4h2Wc7D5Rpij8YmSQxqLuTcNKrpBCjcAN9"
       },
       "bridge": {
@@ -104,7 +104,7 @@
     },
     "aquarius": {
       "liquidity": {
-        "value": "7.4% of supply · Raydium pool · LP unlocked",
+        "value": "7.4% of supply · Raydium pool · LP 99.99% burned",
         "verifyUrl": "https://solscan.io/account/BygCEAhCNyWC8Co9yPa4K84NGkgkgMWdib2FG5hhuiUv"
       },
       "bridge": {
@@ -125,7 +125,7 @@
   },
   "aggregate": {
     "liquidity": {
-      "value": "6.4–9.5% per sign · Raydium pools · LP: 5 burned, 7 unlocked",
+      "value": "6.4–9.5% per sign · Raydium pools · LP ≥92% burned",
       "verifyUrl": "https://raydium.io/liquidity-pools/"
     },
     "bridge": {
