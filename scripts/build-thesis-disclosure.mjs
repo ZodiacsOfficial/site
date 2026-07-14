@@ -243,8 +243,8 @@ function validateDisclosure(disclosure, assets) {
 
 /**
  * Materialize the manually researched prose source into the disclosure contract.
- * Treasury is deliberately allowed to remain pending when the source records an
- * unresolved owner-classification stop.
+ * Treasury may remain explicitly pending with a reviewed reason, or be filled
+ * only when every sign and the aggregate have stranger-checkable definitions.
  */
 export function hydrateReviewedProse(existing, assets, source) {
   assertAsOf(source?.asOf);
@@ -252,10 +252,13 @@ export function hydrateReviewedProse(existing, assets, source) {
     throw new RangeError('At least one asset is required');
   }
   validateDisclosure(existing, assets);
-  if (source?.treasury?.status !== 'pending'
-    || typeof source.treasury.reason !== 'string'
-    || !source.treasury.reason) {
-    throw new TypeError('Reviewed source treasury must record a non-empty pending reason');
+  const treasuryStatus = source?.treasury?.status;
+  if (treasuryStatus === 'pending') {
+    if (typeof source.treasury.reason !== 'string' || !source.treasury.reason) {
+      throw new TypeError('Reviewed source pending treasury must record a non-empty reason');
+    }
+  } else if (treasuryStatus !== 'filled') {
+    throw new TypeError('Reviewed source treasury.status must be pending or filled');
   }
 
   const disclosure = cloneJson(existing);
@@ -264,12 +267,21 @@ export function hydrateReviewedProse(existing, assets, source) {
     row[field] = reviewedField(definition, source.asOf, path);
     report.push({ path, status: 'filled', value: row[field].value });
   };
-  const pendTreasury = (path, row) => {
+  const materializeTreasury = (path, row, definition, expectedVerifyUrl = null) => {
+    if (treasuryStatus === 'filled') {
+      if (expectedVerifyUrl !== null && definition?.verifyUrl !== expectedVerifyUrl) {
+        throw new TypeError(
+          `Reviewed source ${path}.verifyUrl must be the canonical Solscan mint holders URL`,
+        );
+      }
+      fill(path, row, 'treasury', definition);
+      return;
+    }
     row.treasury = pendingField();
     report.push({ path, status: 'pending', reason: source.treasury.reason });
   };
 
-  for (const { sign } of assets) {
+  for (const { sign, mint } of assets) {
     const sourceRow = source.signs?.[sign];
     if (!sourceRow || typeof sourceRow !== 'object') {
       throw new TypeError(`Reviewed source is missing signs.${sign}`);
@@ -277,13 +289,22 @@ export function hydrateReviewedProse(existing, assets, source) {
     const row = disclosure.signs[sign];
     fill(`signs.${sign}.liquidity`, row, 'liquidity', sourceRow.liquidity);
     fill(`signs.${sign}.bridge`, row, 'bridge', sourceRow.bridge);
-    pendTreasury(`signs.${sign}.treasury`, row);
+    materializeTreasury(
+      `signs.${sign}.treasury`,
+      row,
+      source.treasury.signs?.[sign],
+      `https://solscan.io/token/${mint}#holders`,
+    );
     fill(`signs.${sign}.continuity`, row, 'continuity', source.continuity);
   }
 
   fill('aggregate.liquidity', disclosure.aggregate, 'liquidity', source.aggregate?.liquidity);
   fill('aggregate.bridge', disclosure.aggregate, 'bridge', source.aggregate?.bridge);
-  pendTreasury('aggregate.treasury', disclosure.aggregate);
+  materializeTreasury(
+    'aggregate.treasury',
+    disclosure.aggregate,
+    source.treasury.aggregate,
+  );
   fill('aggregate.continuity', disclosure.aggregate, 'continuity', source.continuity);
 
   return { disclosure, report };

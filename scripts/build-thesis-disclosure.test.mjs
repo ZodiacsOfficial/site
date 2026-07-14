@@ -192,6 +192,77 @@ describe('hydrateReviewedProse', () => {
     expect(JSON.stringify(existing)).toBe(before);
   });
 
+  it('materializes filled treasury definitions with stranger-checkable receipts', () => {
+    const source = reviewedSource();
+    source.treasury = {
+      status: 'filled',
+      signs: {
+        aries: {
+          value: 'none · no project treasury; supply is in circulation',
+          verifyUrl: 'https://solscan.io/token/MintAries#holders',
+        },
+      },
+      aggregate: {
+        value: 'none · no project treasury; supply is in circulation',
+        verifyUrl: 'https://solscan.io/account/CreatorWallet',
+      },
+    };
+
+    const { disclosure, report } = hydrateReviewedProse(
+      disclosureFor(['aries']),
+      [{ sign: 'aries', mint: 'MintAries', decimals: 6 }],
+      source,
+    );
+
+    expect(disclosure.signs.aries.treasury).toEqual({
+      value: 'none · no project treasury; supply is in circulation',
+      status: 'filled',
+      asOf: '2026-07-14',
+      verifyUrl: 'https://solscan.io/token/MintAries#holders',
+    });
+    expect(disclosure.aggregate.treasury).toEqual({
+      value: 'none · no project treasury; supply is in circulation',
+      status: 'filled',
+      asOf: '2026-07-14',
+      verifyUrl: 'https://solscan.io/account/CreatorWallet',
+    });
+    expect(report).toEqual(expect.arrayContaining([
+      {
+        path: 'signs.aries.treasury',
+        status: 'filled',
+        value: 'none · no project treasury; supply is in circulation',
+      },
+      {
+        path: 'aggregate.treasury',
+        status: 'filled',
+        value: 'none · no project treasury; supply is in circulation',
+      },
+    ]));
+  });
+
+  it('rejects a filled treasury sign receipt that is not its canonical holders URL', () => {
+    const source = reviewedSource();
+    source.treasury = {
+      status: 'filled',
+      signs: {
+        aries: {
+          value: 'none · no project treasury; supply is in circulation',
+          verifyUrl: 'https://solscan.io/token/AnotherMint#holders',
+        },
+      },
+      aggregate: {
+        value: 'none · no project treasury; supply is in circulation',
+        verifyUrl: 'https://solscan.io/account/CreatorWallet',
+      },
+    };
+
+    expect(() => hydrateReviewedProse(
+      disclosureFor(['aries']),
+      [{ sign: 'aries', mint: 'MintAries', decimals: 6 }],
+      source,
+    )).toThrow('signs.aries.treasury.verifyUrl must be the canonical Solscan mint holders URL');
+  });
+
   it('rejects a filled reviewed field without a stranger-checkable URL', () => {
     const source = reviewedSource();
     source.signs.aries.liquidity.verifyUrl = null;

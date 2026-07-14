@@ -1,5 +1,5 @@
 {
-  "$comment": "Maintainer-reviewed prose disclosures for scripts/build-thesis-disclosure.mjs. Liquidity is a 2026-07-14 onchain snapshot of each canonical Raydium CPMM pool; bridge contracts were checked on Base as Wormhole BridgeToken proxies with Solana origin metadata. Treasury stays pending because a recurring cross-sign top holder requires owner classification before the negative can be published.",
+  "$comment": "Maintainer-reviewed prose disclosures for scripts/build-thesis-disclosure.mjs. Liquidity is a 2026-07-14 onchain snapshot of each canonical Raydium CPMM pool; bridge contracts were checked on Base as Wormhole BridgeToken proxies with Solana origin metadata. The owner classified the recurring cross-sign holder as not a project treasury and approved the treasury negative for publication.",
   "asOf": "2026-07-14",
   "signs": {
     "aries": {
@@ -134,8 +134,61 @@
     }
   },
   "treasury": {
-    "status": "pending",
-    "reason": "Owner confirmation is required to classify a recurring cross-sign top holder before publishing the negative."
+    "status": "filled",
+    "signs": {
+      "aries": {
+        "value": "none · no project treasury; supply is in circulation",
+        "verifyUrl": "https://solscan.io/token/GhFiFrExPY3proVF96oth1gESWA5QPQzdtb8cy8b1YZv#holders"
+      },
+      "taurus": {
+        "value": "none · no project treasury; supply is in circulation",
+        "verifyUrl": "https://solscan.io/token/EjkkxYpfSwS6TAtKKuiJuNMMngYvumc1t1v9ZX1WJKMp#holders"
+      },
+      "gemini": {
+        "value": "none · no project treasury; supply is in circulation",
+        "verifyUrl": "https://solscan.io/token/ARiZfq6dK19uNqxWyRudhbM2MswLyYhVUHdndGkffdGc#holders"
+      },
+      "cancer": {
+        "value": "none · no project treasury; supply is in circulation",
+        "verifyUrl": "https://solscan.io/token/CmomKM8iPKRSMN7y1jqyW1QKj5bGoZmbvNZXWBJSUdnZ#holders"
+      },
+      "leo": {
+        "value": "none · no project treasury; supply is in circulation",
+        "verifyUrl": "https://solscan.io/token/8Cd7wXoPb5Yt9cUGtmHNqAEmpMDrhfcVqnGbLC48b8Qm#holders"
+      },
+      "virgo": {
+        "value": "none · no project treasury; supply is in circulation",
+        "verifyUrl": "https://solscan.io/token/Ez4bst5qu5uqX3AntYWUdafw9XvtFeJ3gugytKKbSJso#holders"
+      },
+      "libra": {
+        "value": "none · no project treasury; supply is in circulation",
+        "verifyUrl": "https://solscan.io/token/7Zt2KUh5mkpEpPGcNcFy51aGkh9Ycb5ELcqRH1n2GmAe#holders"
+      },
+      "scorpio": {
+        "value": "none · no project treasury; supply is in circulation",
+        "verifyUrl": "https://solscan.io/token/J4fQTRN13MKpXhVE74t99msKJLbrjegjEgLBnzEv2YH1#holders"
+      },
+      "sagittarius": {
+        "value": "none · no project treasury; supply is in circulation",
+        "verifyUrl": "https://solscan.io/token/8x17zMmVjJxqswjX4hNpxVPc7Tr5UabVJF3kv8TKq8Y3#holders"
+      },
+      "capricorn": {
+        "value": "none · no project treasury; supply is in circulation",
+        "verifyUrl": "https://solscan.io/token/3C2SN1FjzE9MiLFFVRp7Jhkp8Gjwpk29S2TCSJ2jkHn2#holders"
+      },
+      "aquarius": {
+        "value": "none · no project treasury; supply is in circulation",
+        "verifyUrl": "https://solscan.io/token/C49Ut3om3QFTDrMZ5Cr8VcTKPpHDcQ2Fv8mmuJHHigDt#holders"
+      },
+      "pisces": {
+        "value": "none · no project treasury; supply is in circulation",
+        "verifyUrl": "https://solscan.io/token/3JsSsmGzjWDNe9XCw2L9vznC5JU9wSqQeB6ns5pAkPeE#holders"
+      }
+    },
+    "aggregate": {
+      "value": "none · no project treasury; supply is in circulation",
+      "verifyUrl": "https://solscan.io/account/DUK1VN3WatYKsVLwRX2JxfJfaKX6bDXvijpPtT28ed13"
+    }
   },
   "continuity": {
     "value": "Astrofolio.xyz · the registry's companion app carries the records forward",
