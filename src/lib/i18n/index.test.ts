@@ -28,8 +28,6 @@ describe('i18n helpers', () => {
     expect(localizePath('es', '/birth-chart/')).toBe('/es/birth-chart/');
     expect(localizePath('es', '/compatibility/aries-taurus/')).toBe('/compatibility/aries-taurus/');
     expect(stripLocale('/es/aries/')).toBe('/aries/');
-    expect(localizePath('es', '/404.html')).toBe('/es/404/');
-    expect(stripLocale('/es/404/')).toBe('/404.html');
   });
 
   it('derives locale parsing and prefixes from the declared locales', () => {

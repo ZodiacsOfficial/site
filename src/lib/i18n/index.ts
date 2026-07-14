@@ -85,12 +85,7 @@ export function stripLocale(path: string): string {
     const prefix = LOCALE_PATH_PREFIX[locale];
     if (!prefix) continue;
     if (path === prefix) return '/';
-    if (path.startsWith(`${prefix}/`)) {
-      const unprefixed = path.slice(prefix.length) || '/';
-      // Astro emits nested locale 404s at /{locale}/404/, while the root 404
-      // remains /404.html. Treat them as one translated page family.
-      return unprefixed === '/404/' ? '/404.html' : unprefixed;
-    }
+    if (path.startsWith(`${prefix}/`)) return path.slice(prefix.length) || '/';
   }
   return path;
 }
@@ -101,18 +96,25 @@ export function localizePath(locale: Locale, path: string): string {
   const canonical = stripLocale(clean);
   if (locale === DEFAULT_LOCALE) return canonical;
   if (!LOCALIZED_PATHS.get(canonical)?.includes(locale)) return clean;
-  if (canonical === '/404.html') return `${LOCALE_PATH_PREFIX[locale]}/404/`;
   return `${LOCALE_PATH_PREFIX[locale]}${canonical}`;
 }
 
 export type AlternatePaths = Partial<Record<Locale, string>>;
 
 export function alternatePaths(path: string): AlternatePaths | null {
-  const clean = stripLocale(path);
+  // Astro emits nested locale 404s at /{locale}/404/, while English remains
+  // /404.html. Normalize only this server-rendered alternate-link family so
+  // the client path helper stays byte-identical.
+  const clean = path.endsWith('/404/') ? '/404.html' : stripLocale(path);
   const availableLocales = LOCALIZED_PATHS.get(clean);
   if (!availableLocales) return null;
   return Object.fromEntries(
-    availableLocales.map((locale) => [locale, localizePath(locale, clean)]),
+    availableLocales.map((locale) => [
+      locale,
+      clean === '/404.html' && locale !== DEFAULT_LOCALE
+        ? `${LOCALE_PATH_PREFIX[locale]}/404/`
+        : localizePath(locale, clean),
+    ]),
   ) as AlternatePaths;
 }
 
