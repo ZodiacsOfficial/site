@@ -1,3 +1,4 @@
+import { GROWTH_UI_EN } from "./growth";
 import type { UiCatalog } from "./schema";
 
 const it = {
@@ -403,6 +404,7 @@ const it = {
   needsTime: "serve un’ora",
   compareThese: "Confronta questi due temi",
   addAnotherChart: "Aggiungi un altro tema",
+  ...GROWTH_UI_EN,
 } satisfies UiCatalog;
 
 export default it;

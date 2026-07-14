@@ -400,7 +400,21 @@
   font-size: 12.5px;
   line-height: 1.6;
 }
-.calc-share-dialog__card { justify-content: space-between; }
+.calc-share-dialog__cards { display: grid; gap: 8px; }
+.calc-share-dialog__card { justify-content: space-between; width: 100%; }
+
+.syn__prefilled {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+.syn__prefilled-icons { display: flex; }
+.syn__prefilled-icons img { display: block; border-radius: 50%; }
+.syn__prefilled-icons img + img { margin-left: -8px; }
+.syn__prefilled-copy { display: grid; gap: 3px; color: var(--muted); font-size: var(--text-sm); }
+.syn__prefilled-copy strong { color: var(--text); }
 
 /* A received v2 token is a static positions receipt, never a reconstructed
    natal chart: no house spokes, motion column, aspects, save controls, or

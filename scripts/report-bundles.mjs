@@ -208,21 +208,43 @@ if (engineChunks.length !== 1) {
   fail(`engine-chunk: ${engineChunk.path} is ${kb(engineChunk.gzip)} KB gz (limit ${budgets['engine-chunk']} KB)`);
 }
 
-// Production source must keep the large vendor behind this single boundary.
-// Tests may import the vendor to construct independent reference vectors.
+// Production source must consume the vendored engine package and keep its
+// ephemeris behind one local dynamic-import boundary. Tests may import
+// astronomy-engine directly to construct independent reference vectors.
 const sourceFiles = await walk(resolve(repo, 'src'), (path) =>
   ['.astro', '.js', '.mjs', '.ts', '.tsx'].includes(extname(path))
   && !/\.(?:test|spec)\.[^.]+$/.test(path));
-const vendorImporters = [];
+const directVendorImporters = [];
+const engineInternalImporters = [];
+const engineMathImporters = [];
 for (const path of sourceFiles) {
   const source = await readFile(path, 'utf8');
-  const hasEsmImport = staticImportSpecifiers(source).includes('astronomy-engine');
-  const hasRequire = /\brequire\(\s*["']astronomy-engine["']\s*\)/.test(source);
-  if (hasEsmImport || hasRequire) vendorImporters.push(relative(repo, path).split(sep).join('/'));
+  const specifiers = staticImportSpecifiers(source);
+  const relativePath = relative(repo, path).split(sep).join('/');
+  const hasVendorImport = specifiers.includes('astronomy-engine')
+    || /\brequire\(\s*["']astronomy-engine["']\s*\)/.test(source);
+  if (hasVendorImport) directVendorImporters.push(relativePath);
+  if (specifiers.includes('@zodiacs/engine/internal')) engineInternalImporters.push(relativePath);
+  if (specifiers.includes('@zodiacs/engine/internal/math')) engineMathImporters.push(relativePath);
 }
-const allowedVendorImporter = 'src/lib/engine/full.ts';
-if (vendorImporters.length !== 1 || vendorImporters[0] !== allowedVendorImporter) {
-  fail(`engine source isolation: expected only ${allowedVendorImporter}; found ${vendorImporters.join(', ') || 'none'}`);
+if (directVendorImporters.length !== 0) {
+  fail(`engine source isolation: site production code imports astronomy-engine directly: ${directVendorImporters.join(', ')}`);
+}
+const allowedEngineImporter = 'src/lib/engine/full.ts';
+if (engineInternalImporters.length !== 1 || engineInternalImporters[0] !== allowedEngineImporter) {
+  fail(`engine source isolation: expected only ${allowedEngineImporter} to import @zodiacs/engine/internal; found ${engineInternalImporters.join(', ') || 'none'}`);
+}
+const allowedMathImporters = [
+  'src/lib/engine/aspects.ts',
+  'src/lib/engine/houses.ts',
+  'src/lib/engine/types.ts',
+];
+engineMathImporters.sort();
+if (
+  engineMathImporters.length !== allowedMathImporters.length
+  || engineMathImporters.some((path, index) => path !== allowedMathImporters[index])
+) {
+  fail(`engine math isolation: expected ${allowedMathImporters.join(', ')}; found ${engineMathImporters.join(', ') || 'none'}`);
 }
 
 const homepage = routeRows.find(({ route }) => route === '/');
@@ -248,7 +270,10 @@ if (largestChunk) {
 if (engineChunk) {
   console.log(`  ${'engine-chunk'.padEnd(16)} ${kb(engineChunk.gzip).padStart(6)} KB / ${String(budgets['engine-chunk']).padStart(4)} KB  (${engineChunk.path})`);
 }
-console.log(`engine isolation: source boundary ${vendorImporters.length === 1 && vendorImporters[0] === allowedVendorImporter ? 'clear' : 'failed'}; homepage markers ${homepageMarkerChunks.length ? 'found' : 'clear'}`);
+const sourceBoundaryClear = directVendorImporters.length === 0
+  && engineInternalImporters.length === 1
+  && engineInternalImporters[0] === allowedEngineImporter;
+console.log(`engine isolation: package boundary ${sourceBoundaryClear ? 'clear' : 'failed'}; homepage markers ${homepageMarkerChunks.length ? 'found' : 'clear'}`);
 
 if (failures.length) {
   const label = enforce ? 'failures' : 'warnings';

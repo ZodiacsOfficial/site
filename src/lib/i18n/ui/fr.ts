@@ -1,4 +1,5 @@
 import type { UiCatalog } from './schema';
+import { GROWTH_UI_EN } from './growth';
 
 const fr = {
   navPrimary: 'Navigation principale',
@@ -332,6 +333,7 @@ const fr = {
   needsTime: '— heure nécessaire',
   compareThese: 'Comparer ces deux thèmes',
   addAnotherChart: 'Ajouter un autre thème',
+  ...GROWTH_UI_EN,
 } satisfies UiCatalog;
 
 export default fr;

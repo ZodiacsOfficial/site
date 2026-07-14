@@ -11,15 +11,19 @@ import {
 } from '../lib/share-positions';
 import type { ShareChartInput } from '../lib/share';
 import { formatLongitude } from '../lib/signs';
+import { shareCardText } from '../lib/share-card-copy';
 import Wheel from '../lib/wheel/Wheel';
 import { CopyLinkButton, type CopyLinkState } from './CopyLinkButton';
 import SignChip from './SignChip';
 
 type CardState = 'idle' | 'busy' | 'saved' | 'error';
-type ShareVariant = 'details_link' | 'positions_link' | 'details_card' | 'positions_card';
+type ShareVariant =
+  | 'details_link'
+  | 'positions_link'
+  | 'big_three_card'
+  | 'full_chart_card';
 
-const SHARE_COPY = {
-  en: {
+export const SHARE_POSITIONS_EN = {
     shareOptionsTitle: 'Share this chart',
     closeShare: 'Close sharing options',
     hideBirthDetails: 'Hide birth details',
@@ -31,7 +35,10 @@ const SHARE_COPY = {
     positionsLinkInvalid: 'That positions-only link is invalid or incomplete.',
     shareLinkAmbiguous: 'This link contains two chart formats, so neither one was opened.',
     positionsShareUnavailable: "Couldn't create a positions-only link for this chart.",
-  },
+} as const;
+
+const SHARE_COPY = {
+  en: SHARE_POSITIONS_EN,
   es: {
     shareOptionsTitle: 'Compartir esta carta',
     closeShare: 'Cerrar opciones para compartir',
@@ -102,6 +109,13 @@ function trackShare(variant: ShareVariant) {
     zodiacsAnalytics?: { track?: (name: string, props: { variant: ShareVariant }) => void };
   }).zodiacsAnalytics;
   analytics?.track?.('chart_share', { variant });
+}
+
+function trackCardDownloaded(variant: Exclude<ShareVariant, 'details_link' | 'positions_link'>) {
+  const analytics = (window as Window & {
+    zodiacsAnalytics?: { track?: (name: string, props: { variant: ShareVariant }) => void };
+  }).zodiacsAnalytics;
+  analytics?.track?.('share_card_downloaded', { variant });
 }
 
 interface PositionsOnlyResultProps {
@@ -176,6 +190,37 @@ export function PositionsOnlyResult({ chart, locale }: PositionsOnlyResultProps)
   );
 }
 
+interface PositionsShareRouteProps {
+  locale: Locale;
+  onError: (message: string) => void;
+}
+
+/** Loaded only for a #p route; keeps its decoder and receiver UI off ordinary visits. */
+export function PositionsShareRoute({ locale, onError }: PositionsShareRouteProps) {
+  const [chart, setChart] = useState<PositionsShareChart | null>(null);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.hash.slice(1));
+    const clearFragment = () => history.replaceState(null, '', window.location.pathname + window.location.search);
+    if (params.has('c') && params.has('p')) {
+      clearFragment();
+      onError(shareText(locale, 'shareLinkAmbiguous'));
+      return;
+    }
+    const token = params.get('p');
+    if (!token) return;
+    const decoded = decodePositionsToken(token);
+    if (!decoded) {
+      onError(shareText(locale, 'positionsLinkInvalid'));
+      return;
+    }
+    setChart(decoded);
+    clearFragment();
+  }, [locale, onError]);
+
+  return chart ? <PositionsOnlyResult chart={chart} locale={locale} /> : null;
+}
+
 interface ChartShareDialogProps {
   chart: Chart;
   input: ShareChartInput;
@@ -228,14 +273,21 @@ export function ChartShareDialog({
     setHideBirthDetails(next);
   }
 
-  async function saveCard() {
+  async function saveCard(cardVariant: 'big-three' | 'full') {
     onCardStateChange('busy');
-    trackShare(hideBirthDetails ? 'positions_card' : 'details_card');
     try {
       const { saveChartCard } = await import('../lib/share-card');
-      const outcome = hideBirthDetails
-        ? await saveChartCard(chart, input, { hideBirthDetails: true })
-        : await saveChartCard(chart, input);
+      const variant: Exclude<ShareVariant, 'details_link' | 'positions_link'> = cardVariant === 'big-three'
+        ? 'big_three_card'
+        : 'full_chart_card';
+      const outcome = await saveChartCard(chart, {
+        variant: cardVariant,
+        locale,
+      });
+      if (outcome !== 'cancelled') {
+        trackShare(variant);
+        trackCardDownloaded(variant);
+      }
       onCardStateChange(outcome === 'cancelled' ? 'idle' : 'saved');
     } catch (error) {
       console.error(error);
@@ -303,16 +355,30 @@ export function ChartShareDialog({
           />
         )}
 
-        <button
-          class="btn btn--ghost calc-share-dialog__card"
-          type="button"
-          onClick={saveCard}
-          disabled={card === 'busy'}
-          data-share-card-action
-        >
-          <span>{card === 'busy' ? t(locale, 'rendering') : card === 'saved' ? t(locale, 'cardSaved') : t(locale, 'saveChartCard')}</span>
-          <span class="orb">{card === 'saved' ? '✓' : '↗'}</span>
-        </button>
+        <div class="calc-share-dialog__cards" role="group" aria-label={t(locale, 'shareChart')}>
+          {chart.angles && (
+            <button
+              class="btn btn--ghost calc-share-dialog__card"
+              type="button"
+              onClick={() => saveCard('big-three')}
+              disabled={card === 'busy'}
+              data-share-card-action="big-three"
+            >
+              <span>{card === 'busy' ? t(locale, 'rendering') : shareCardText(locale, 'bigThreeAction')}</span>
+              <span class="orb">↗</span>
+            </button>
+          )}
+          <button
+            class="btn btn--ghost calc-share-dialog__card"
+            type="button"
+            onClick={() => saveCard('full')}
+            disabled={card === 'busy'}
+            data-share-card-action="full"
+          >
+            <span>{card === 'busy' ? t(locale, 'rendering') : shareCardText(locale, 'fullChartAction')}</span>
+            <span class="orb">{card === 'saved' ? '✓' : '↗'}</span>
+          </button>
+        </div>
 
         {linkState === 'copied' && <p class="sr-only" role="status">{t(locale, 'chartLinkCopied')}</p>}
         {card === 'saved' && <p class="sr-only" role="status">{t(locale, 'chartCardSaved')}</p>}

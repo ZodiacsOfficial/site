@@ -1,0 +1,70 @@
+---
+/** Standalone private mini-chart embed. No Base shell and no analytics. */
+import MiniBirthChartWidget from '../islands/MiniBirthChartWidget';
+import { widgetAccentForTheme } from '../lib/widgets';
+import { WIDGET_EN } from '../strings/widgets';
+
+interface Props { theme?: 'dark' | 'light' }
+const requestedTheme = Astro.url.searchParams.get('theme');
+const theme = requestedTheme === 'light' || requestedTheme === 'dark'
+  ? requestedTheme
+  : Astro.props.theme ?? 'dark';
+const requestedAccent = Astro.url.searchParams.get('accent') ?? '';
+const accent = widgetAccentForTheme(requestedAccent, theme);
+const c = theme === 'dark'
+  ? { bg: '#0A0C11', text: '#EEF1F7', mut: '#8B93A7', surface: '#0F121A', hair: 'rgba(198,204,218,0.16)', link: accent ?? '#C6CCDA' }
+  : { bg: '#FBFAF7', text: '#1C1E26', mut: '#62697B', surface: '#F0EFEB', hair: 'rgba(28,30,38,0.16)', link: accent ?? '#3C4152' };
+---
+<!doctype html>
+<html lang="en" data-standalone-widget>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>{WIDGET_EN.widgetTitleChart}</title>
+  </head>
+  <body style={`--widget-bg:${c.bg};--widget-text:${c.text};--widget-muted:${c.mut};--widget-surface:${c.surface};--widget-hair:${c.hair};--widget-accent:${c.link};margin:0;background:${c.bg};color:${c.text};font:13px/1.45 system-ui,-apple-system,sans-serif;`}>
+    <main class="widget-shell">
+      <MiniBirthChartWidget client:load />
+      <footer>
+        <a href="https://zodiacs.org/?utm_source=embed&amp;utm_medium=widget&amp;utm_campaign=chart" target="_blank" rel="noopener noreferrer">{WIDGET_EN.poweredBy} →</a>
+      </footer>
+    </main>
+  </body>
+</html>
+
+<style>
+  .widget-shell { box-sizing: border-box; min-height: 100vh; padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+  footer { margin-top: auto; padding-top: 9px; border-top: 1px solid var(--widget-hair); text-align: right; }
+  footer a { color: var(--widget-accent); text-decoration: none; border-bottom: 1px solid var(--widget-hair); font-size: 11px; }
+  :global(.mini-chart) { display: grid; gap: 12px; }
+  :global(.mini-chart__header strong) { display: block; font-size: 14px; }
+  :global(.mini-chart__header span) { display: block; margin-top: 2px; color: var(--widget-muted); font-size: 11px; }
+  :global(.mini-chart__brand-rail) { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 3px; margin-top: 8px; }
+  :global(.mini-chart__brand-rail img) { display: block; width: 18px; height: 18px; max-width: 100%; }
+  :global(.mini-chart__form) { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }
+  :global(.mini-chart__field) { display: grid; gap: 4px; min-width: 0; color: var(--widget-muted); font-size: 10px; font-weight: 650; letter-spacing: 0.06em; text-transform: uppercase; }
+  :global(.mini-chart__field input) { box-sizing: border-box; width: 100%; min-height: 38px; border: 1px solid var(--widget-hair); border-radius: 8px; background: var(--widget-surface); color: var(--widget-text); padding: 8px 9px; font: 12px/1.2 system-ui,-apple-system,sans-serif; color-scheme: inherit; }
+  :global(.mini-chart__place) { grid-column: 1 / -1; position: relative; }
+  :global(.mini-chart__chosen) { min-height: 38px; border: 1px solid var(--widget-hair); border-radius: 8px; background: var(--widget-surface); padding: 7px 9px; display: flex; align-items: center; justify-content: space-between; gap: 8px; color: var(--widget-text); font-size: 11px; letter-spacing: 0; text-transform: none; }
+  :global(.mini-chart__chosen button) { border: 0; padding: 2px; background: transparent; color: var(--widget-accent); cursor: pointer; font: inherit; }
+  :global(.mini-chart__places) { position: absolute; z-index: 3; inset: calc(100% + 3px) 0 auto; max-height: 158px; overflow: auto; list-style: none; margin: 0; padding: 4px; border: 1px solid var(--widget-hair); border-radius: 8px; background: var(--widget-bg); box-shadow: 0 10px 25px rgba(0,0,0,.24); }
+  :global(.mini-chart__places li) { margin: 0; }
+  :global(.mini-chart__places button) { display: grid; gap: 1px; width: 100%; border: 0; border-radius: 5px; background: transparent; color: var(--widget-text); padding: 7px; text-align: left; cursor: pointer; }
+  :global(.mini-chart__places button:hover), :global(.mini-chart__places button:focus-visible) { outline: none; background: var(--widget-surface); }
+  :global(.mini-chart__places b) { font-size: 11px; }
+  :global(.mini-chart__places span), :global(.mini-chart__empty) { color: var(--widget-muted); font-size: 10px; }
+  :global(.mini-chart__empty) { padding: 8px; text-transform: none; letter-spacing: 0; }
+  :global(.mini-chart__submit) { grid-column: 1 / -1; min-height: 40px; border: 1px solid var(--widget-accent); border-radius: 8px; background: transparent; color: var(--widget-text); font: 650 12px/1 system-ui,-apple-system,sans-serif; cursor: pointer; }
+  :global(.mini-chart__submit:disabled) { opacity: .6; cursor: wait; }
+  :global(.mini-chart__result) { display: grid; grid-template-columns: repeat(3, 1fr); gap: 7px; }
+  :global(.mini-chart__result article) { min-width: 0; padding: 8px 5px; border: 1px solid var(--widget-hair); border-radius: 10px; background: var(--widget-surface); text-align: center; }
+  :global(.mini-chart__result img) { display: block; width: 42px; height: 42px; margin: 0 auto 4px; }
+  :global(.mini-chart__result small), :global(.mini-chart__result strong), :global(.mini-chart__result span) { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  :global(.mini-chart__result small), :global(.mini-chart__result span) { color: var(--widget-muted); font-size: 9px; }
+  :global(.mini-chart__result strong) { font-size: 11px; }
+  :global(.mini-chart__privacy), :global(.mini-chart__error) { margin: 0; color: var(--widget-muted); font-size: 10px; }
+  :global(.mini-chart__error) { color: var(--widget-accent); }
+  :global(button:focus-visible), :global(input:focus-visible), footer a:focus-visible { outline: 2px solid var(--widget-accent); outline-offset: 2px; }
+  @media (prefers-reduced-motion: reduce) { :global(*) { scroll-behavior: auto !important; transition-duration: 0.01ms !important; } }
+</style>

@@ -1,4 +1,5 @@
 import type { UiCatalog } from './schema';
+import { GROWTH_UI_ES } from './growth';
 
 const es = {
     navPrimary: 'Principal',
@@ -332,6 +333,7 @@ const es = {
     needsTime: 'necesita hora',
     compareThese: 'Comparar estas dos cartas',
     addAnotherChart: 'Agregar otra carta',
+    ...GROWTH_UI_ES,
 } satisfies UiCatalog;
 
 export default es;

@@ -1,0 +1,92 @@
+/**
+ * Fast production-build gate for required Open Graph cards.
+ *
+ * Generation is intentionally an explicit data task because it needs
+ * Chromium. Every normal build still verifies the committed output: required
+ * coverage, dimensions, byte-level uniqueness, manifest drift, canonical icon
+ * sources, and the frozen global fallback.
+ */
+import { createHash } from 'node:crypto';
+import { readFile } from 'node:fs/promises';
+import { fileURLToPath } from 'node:url';
+import { dirname, resolve } from 'node:path';
+import sharp from 'sharp';
+import { OG_EN } from '../src/strings/seo.en.mjs';
+
+const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
+const out = resolve(root, 'public/assets/og/v2');
+const signSlugs = [
+  'aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo',
+  'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces',
+];
+
+const expected = [
+  ...signSlugs.map((slug) => `sign/${slug}.png`),
+  ...signSlugs.map((slug) => `registry/${slug}.png`),
+  ...OG_EN.tools.map((tool) => `tool/${tool.key}.png`),
+  'registry.png',
+  'thesis.png',
+  'disclosure.png',
+].sort();
+
+const failures = [];
+const hashes = new Map();
+
+async function validatePng(relativePath, { unique = true } = {}) {
+  const absolutePath = resolve(out, relativePath);
+  let bytes;
+  try {
+    bytes = await readFile(absolutePath);
+  } catch {
+    failures.push(`${relativePath}: missing`);
+    return;
+  }
+  const metadata = await sharp(bytes).metadata();
+  if (metadata.format !== 'png' || metadata.width !== 1200 || metadata.height !== 630) {
+    failures.push(
+      `${relativePath}: expected 1200x630 PNG, received ${metadata.width ?? '?'}x${metadata.height ?? '?'} ${metadata.format ?? 'unknown'}`,
+    );
+  }
+  if (!unique) return;
+  const hash = createHash('sha256').update(bytes).digest('hex');
+  const duplicate = hashes.get(hash);
+  if (duplicate) failures.push(`${relativePath}: byte-identical to ${duplicate}`);
+  else hashes.set(hash, relativePath);
+}
+
+for (const slug of signSlugs) {
+  const iconPath = resolve(root, `public/assets/zodiac-icons/128/${slug}.webp`);
+  try {
+    const metadata = await sharp(await readFile(iconPath)).metadata();
+    if (metadata.format !== 'webp' || metadata.width !== 128 || metadata.height !== 128) {
+      failures.push(`canonical icon ${slug}: expected 128x128 WebP`);
+    }
+  } catch {
+    failures.push(`canonical icon ${slug}: missing`);
+  }
+}
+
+for (const relativePath of expected) await validatePng(relativePath);
+await validatePng('share.png', { unique: false });
+
+try {
+  const manifest = JSON.parse(await readFile(resolve(out, 'manifest.json'), 'utf8'));
+  if (manifest.schema !== 'zodiacs.og-cards.v1') failures.push('manifest.json: unsupported schema');
+  if (manifest.width !== 1200 || manifest.height !== 630) failures.push('manifest.json: invalid dimensions');
+  if (manifest.iconSource !== '/assets/zodiac-icons/128/{sign}.webp') {
+    failures.push('manifest.json: canonical icon source drifted');
+  }
+  if (JSON.stringify(manifest.requiredCards) !== JSON.stringify(expected)) {
+    failures.push('manifest.json: required card list drifted; rerun npm run data:og');
+  }
+} catch (error) {
+  failures.push(`manifest.json: ${error instanceof Error ? error.message : 'missing or invalid'}`);
+}
+
+if (failures.length) {
+  console.error(`verify-og-cards: ${failures.length} failure(s)`);
+  for (const failure of failures) console.error(`  - ${failure}`);
+  process.exit(1);
+}
+
+console.log(`verify-og-cards: OK — ${expected.length} unique page cards + frozen fallback, all 1200x630 PNG`);

@@ -51,6 +51,14 @@ describe('searchIndex', () => {
     expect(results).toHaveLength(1);
     expect(results[0].path).toBe('/birth-chart/');
   });
+  it('prefers a concept route over tools that only mention the same phrase', () => {
+    const results = searchIndex([
+      entries[3],
+      { path: '/widgets/', title: 'Free Astrology Widgets — Moon, Sky & Birth Chart', description: 'Embed a private mini birth chart.', kind: 'tool' },
+      { path: '/transits/', title: 'Transit Tracker — The Sky Moving Over Your Birth Chart', description: 'Transits over a birth chart.', kind: 'tool' },
+    ], 'birth chart');
+    expect(results[0].path).toBe('/birth-chart/');
+  });
   it('is case-insensitive and caps at the limit', () => {
     expect(searchIndex(entries, 'SATURN', 2)).toHaveLength(2);
   });

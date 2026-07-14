@@ -1,66 +1,81 @@
 # Analytics
 
-The analytics layer is a frozen allowlist shim in `src/layouts/Base.astro`.
-It forwards events to Plausible only when `PUBLIC_PLAUSIBLE_SCRIPT_URL` (and
-optionally `PUBLIC_PLAUSIBLE_ENDPOINT`, for a self-hosted or proxied
-endpoint) are set at build time. With the env unset, `zodiacsAnalytics.track`
-is a silent no-op — pages never break.
+The analytics layer is a frozen, cookieless allowlist shim in
+`src/layouts/Base.astro`. It forwards events to a Plausible-compatible script
+only when `PUBLIC_PLAUSIBLE_SCRIPT_URL` is set. `PUBLIC_PLAUSIBLE_ENDPOINT`
+optionally selects a first-party/self-hosted endpoint, and
+`PUBLIC_PLAUSIBLE_DOMAIN` optionally supplies the site identifier. With the
+script URL unset, the script is absent and `zodiacsAnalytics.track` is a
+silent no-op.
 
 ## Privacy invariant
 
-Events carry enums, counters, and booleans only. No birth data, no free
-text, no identifiers. The shim enforces this: an event not in the allowlist
-is dropped, a prop key not allowlisted for that event is dropped, and any
-string prop longer than 32 characters is dropped. Never add an event or
-prop that could carry a birth date, time, place, coordinates, or anything a
-visitor typed.
+Events carry fixed enums, counters, and booleans only. No birth data, free
+text, identifiers, query strings, URL fragments, chart positions, email
+values, or wallet addresses are forwarded. The shim replaces the browser URL
+with its canonical path, drops events and property keys outside the allowlist,
+and drops string values longer than 32 characters.
 
-## Event vocabulary
+Never add an event or property that could carry a birth date, time, place,
+coordinates, pasted address, or anything a visitor typed. The integration
+uses no cookies, pixels, fingerprinting, or session recording.
 
-| Event | Props | Fired when |
-| --- | --- | --- |
-| result_rendered | mode | A calculator renders a result |
-| explorer_interaction | mode, source | The chart wheel is used (tap, keyboard) |
-| tour_start / tour_complete / tour_step | variant / variant / step | Guided tour |
-| lens_change | lens | The wheel switches time lens (natal, sky, progressed, return) |
-| transit_search | span, bodies | A transit range search runs (span preset, body-set name) |
-| srchart_view | via | A solar-return chart renders (via: page, lens) |
-| composite_view | — | The composite tab renders on /compatibility/ |
-| grid_select | — | An aspect-grid cell is tapped |
-| chiron_toggle | on | The Chiron overlay chip is toggled |
-| detail_toggle | to | The birth-chart detail disclosure changes (to: full, plain) |
-| chart_name_set | via | A chart name is committed (via: prompt, link, skip) |
-| comm_read_view | — | A communication reading renders |
-| chart_save | source | A chart is saved on-device |
-| chart_share | variant | A share link/card is created |
-| search_open / search_go | — / kind | Site search |
-| assistant_open / assistant_reply | — | Site assistant |
-| push_prompt / push_subscribe | — | Daily notification opt-in |
-| today_view | — | /today/ brief renders |
-| calendar_subscribe | — | Transit calendar subscribed |
-| wing_entry | source | A records-register link into /registry/ is followed |
-
-## Wing
-
-The registry wing loads Plausible directly, independently of the consumer
-allowlist shim. These events exist only on `/registry/{sign}/` pages and carry
-only the sign slug. They never include wallet addresses or query strings.
+## Directive event taxonomy
 
 | Event | Props | Fired when |
 | --- | --- | --- |
-| wing_record_view | sign | A registry sign record loads |
-| wing_acquisition_click | sign | An acquisition or market link is followed from a registry sign record |
+| `chart_computed` | `mode` | A browser-computed astrology chart renders |
+| `chart_saved` | `source` | A chart or comparison is saved locally |
+| `compat_computed` | `source` | A compatibility comparison renders |
+| `email_subscribed` | `placement` | An anonymous week-ahead opt-in request is accepted |
+| `share_card_downloaded` | `variant` | A locally rendered PNG is downloaded or shared |
+| `widget_embed_copied` | `widget`, `mode` | Embed code is copied from the widget generator |
+| `registry_visit` | — | The Registry catalogue loads |
+| `verifier_used` | `chain`, `outcome` | Paste-address verification completes |
+| `sdk_click` | `source`, `destination` | A Registry or astrology surface opens SDK documentation |
+| `wallet_chart_computed` | `chain`, `holds_registry_asset` | A feature-flagged wallet chart renders |
 
-## The funnel we read
+`verifier_used` never includes the pasted address, and `email_subscribed`
+never includes the email or selected sign.
 
-result_rendered → explorer_interaction → lens_change → chart_save → return
-visit. The save-lift question (does interacting with the wheel correlate
-with saving?) is observational: compare save rate among sessions with
-explorer/lens events against sessions without, same period.
+## Existing product vocabulary
 
-## Owner runbook
+The established five-locale product events remain allowlisted for continuity.
+New directive code uses the taxonomy above.
 
-1. Provision Plausible (cloud or self-hosted) for zodiacs.org.
-2. In Vercel, set `PUBLIC_PLAUSIBLE_SCRIPT_URL` (and
-   `PUBLIC_PLAUSIBLE_ENDPOINT` if self-hosted/proxied).
-3. Redeploy. The shim activates; no code change needed.
+| Event | Props | Fired when |
+| --- | --- | --- |
+| `result_rendered` | `mode` | A calculator renders a result |
+| `explorer_interaction` | `mode`, `source` | The chart wheel is used by pointer or keyboard |
+| `tour_start`, `tour_complete`, `tour_step` | `variant`, `variant`, `step` | Guided reading activity |
+| `lens_change` | `lens` | The wheel changes time lens |
+| `transit_search` | `span`, `bodies` | A transit range search runs |
+| `srchart_view` | `via` | A solar-return chart renders |
+| `composite_view` | — | The composite tab renders on compatibility |
+| `grid_select` | — | An aspect-grid cell is selected |
+| `chiron_toggle` | `on` | The Chiron overlay is toggled |
+| `detail_toggle` | `to` | Birth-chart detail changes between plain/full |
+| `chart_name_set` | `via` | A chart name is committed |
+| `comm_read_view` | — | A communication reading renders |
+| `chart_save` | `source` | Legacy local chart-save event |
+| `chart_share` | `variant` | A share link/card is created |
+| `search_open`, `search_go` | —, `kind` | Site search |
+| `assistant_open`, `assistant_reply` | — | Site assistant |
+| `push_prompt`, `push_subscribe` | — | Flag-gated notification scaffold |
+| `today_view` | — | The today brief renders |
+| `calendar_subscribe` | — | A transit calendar is subscribed |
+| `wing_entry` | `source` | An astrology-to-Registry link is followed |
+
+## Registry lot events
+
+Registry-lot pages also emit `wing_record_view` and
+`wing_acquisition_click`, each with the fixed sign slug only. They never
+include wallet addresses or query strings. The Registry verifier and landing
+page use the directive taxonomy above.
+
+## Operator runbook
+
+1. Provision Plausible cloud or a compatible self-hosted endpoint.
+2. Set `PUBLIC_PLAUSIBLE_SCRIPT_URL`; optionally set
+   `PUBLIC_PLAUSIBLE_ENDPOINT` and `PUBLIC_PLAUSIBLE_DOMAIN`.
+3. Redeploy and verify the ten directive events without adding properties.

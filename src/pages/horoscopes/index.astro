@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import SignIcon from '../../components/SignIcon.astro';
+import EmailCapture from '../../components/EmailCapture.astro';
 import { SIGNS } from '../../lib/signs';
 import { monthLabel, warnIfStale } from '../../lib/horoscopes';
 import { dailyHeadline } from '../../lib/daily';
@@ -57,6 +58,8 @@ const jsonLd = [
         of the moon phases, retrogrades, and major transits.
       </p>
     </div>
+
+    <EmailCapture placement="horoscopes" />
 
     <div class="horo-grid reveal">
       {SIGNS.map((s) => (

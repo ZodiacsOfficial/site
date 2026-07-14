@@ -1,5 +1,7 @@
 /** Shared chart-engine types. Pure data — no ephemeris imports here. */
 
+export { ENGINE_VERSION } from '@zodiacs/engine/internal/math';
+
 export type BodyName =
   | 'Sun' | 'Moon' | 'Mercury' | 'Venus' | 'Mars'
   | 'Jupiter' | 'Saturn' | 'Uranus' | 'Neptune' | 'Pluto'
@@ -67,5 +69,3 @@ export interface Chart {
   flags: ChartFlag[];
   engineVersion: string;
 }
-
-export const ENGINE_VERSION = '1.0.0';

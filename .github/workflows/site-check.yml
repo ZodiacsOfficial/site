@@ -38,9 +38,10 @@ jobs:
 
       - name: Wing language stays in the wing
         # Crypto/market vocabulary must never appear on the new consumer
-        # surfaces. The wing itself (public/) is exempt by construction.
+        # surfaces. Registry routes are exempt by path; the one Registry-only
+        # island is exempt by exact filename. The rest of src stays covered.
         run: |
-          ! grep -RInE 'Solana|DexScreener|Jupiter swap|ERC-20|SPL record|memecoin|market cap' src/pages src/components src/islands src/content src/layouts
+          ! grep -RInE --exclude-dir=registry --exclude=WalletChart.tsx 'Solana|DexScreener|Jupiter swap|ERC-20|SPL record|memecoin|market cap' src/pages src/components src/islands src/content src/layouts
 
       - name: Voice — banned tells stay out of the copy
         # The smug vocabulary CLAUDE.md bans on new surfaces, enforced
@@ -63,6 +64,9 @@ jobs:
       - name: Link & artifact integrity over dist
         run: node scripts/check-dist.mjs
 
+      - name: Structured data validation
+        run: npm run schema:check
+
       - name: Bundle size & engine isolation gates
         run: node scripts/report-bundles.mjs --fail
 
@@ -71,6 +75,12 @@ jobs:
 
       - name: Lighthouse performance budgets
         run: npm run test:lighthouse
+
+      - name: Foreign-origin widget integration
+        run: npm run test:widgets:browser
+
+      - name: Widget Lighthouse thresholds
+        run: npm run test:widgets:lighthouse
 
       - name: Upload browser regression artifacts
         if: failure()

@@ -21,6 +21,10 @@ describe.skipIf(!existsSync(distRoot))('built client UI payloads', () => {
     expect(hydratedPages.length).toBeGreaterThan(0);
     for (const { path, html } of hydratedPages) {
       const installs = html.match(/globalThis\.__ZDX_UI__/g) ?? [];
+      if (html.includes('data-standalone-widget')) {
+        expect(installs, relative(distRoot, path)).toHaveLength(0);
+        continue;
+      }
       expect(installs, relative(distRoot, path)).toHaveLength(1);
     }
   });

@@ -33,6 +33,7 @@ export function scoreEntry(entry: SearchEntry, tokens: string[]): number {
   const title = entry.title.toLowerCase();
   const description = entry.description.toLowerCase();
   const keywords = entry.keywords?.join(' ').toLowerCase() ?? '';
+  const path = entry.path.toLowerCase();
   let score = 0;
   for (const token of tokens) {
     if (title === token) score += 8;
@@ -43,6 +44,9 @@ export function scoreEntry(entry: SearchEntry, tokens: string[]): number {
     else if (description.includes(token)) score += 0.5;
     else if (wordBoundary(keywords, token)) score += 0.25;
     else return 0;
+    // Once the copy has established relevance, prefer the route whose slug
+    // names the requested concept over pages that merely mention it.
+    if (wordBoundary(path, token)) score += 0.5;
   }
   return score + (KIND_BOOST[entry.kind] ?? 0);
 }

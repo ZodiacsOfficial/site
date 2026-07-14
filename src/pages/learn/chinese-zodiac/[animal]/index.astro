@@ -1,0 +1,96 @@
+---
+import Base from '../../../../layouts/Base.astro';
+import ChineseZodiacBrandRail from '../../../../components/ChineseZodiacBrandRail.astro';
+import {
+  CHINESE_ZODIAC_ANIMALS,
+  CHINESE_ZODIAC_COPY,
+  chineseZodiacText,
+  chineseYearsForAnimal,
+} from '../../../../data/chinese-zodiac';
+import '../../../../styles/chinese-zodiac.css';
+
+export function getStaticPaths() {
+  return CHINESE_ZODIAC_ANIMALS.map((animal) => ({ params: { animal: animal.slug }, props: { animal } }));
+}
+
+const { animal } = Astro.props;
+const years = chineseYearsForAnimal(animal.slug);
+const previous = CHINESE_ZODIAC_ANIMALS[(animal.position + 10) % 12];
+const next = CHINESE_ZODIAC_ANIMALS[animal.position % 12];
+const title = chineseZodiacText('metaAnimalTitle', { animal: animal.name });
+const description = chineseZodiacText('metaAnimalDescription', { animal: animal.name, branch: animal.branch, pinyin: animal.branchPinyin });
+const sources = [
+  { label: CHINESE_ZODIAC_COPY.sourceSmithsonian, href: 'https://www.si.edu/events/lunar-new-year' },
+  { label: CHINESE_ZODIAC_COPY.sourceMet, href: 'https://www.metmuseum.org/fr/exhibitions/listings/2017/year-of-the-rooster' },
+];
+const jsonLd = [
+  {
+    '@type': 'Article',
+    headline: chineseZodiacText('yearOf', { animal: animal.name }),
+    description,
+    url: `https://zodiacs.org/learn/chinese-zodiac/${animal.slug}/`,
+    author: { '@id': 'https://zodiacs.org/#org' },
+    publisher: { '@id': 'https://zodiacs.org/#org' },
+    inLanguage: 'en',
+  },
+  {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: CHINESE_ZODIAC_COPY.siteName, item: 'https://zodiacs.org/' },
+      { '@type': 'ListItem', position: 2, name: CHINESE_ZODIAC_COPY.learnLabel, item: 'https://zodiacs.org/learn/' },
+      { '@type': 'ListItem', position: 3, name: CHINESE_ZODIAC_COPY.kicker, item: 'https://zodiacs.org/learn/chinese-zodiac/' },
+      { '@type': 'ListItem', position: 4, name: animal.name, item: `https://zodiacs.org/learn/chinese-zodiac/${animal.slug}/` },
+    ],
+  },
+];
+---
+<Base title={title} description={description} path={`/learn/chinese-zodiac/${animal.slug}/`} type="article" jsonLd={jsonLd} sources={sources}>
+  <article class="container container--narrow cz-page">
+    <header>
+      <em class="kicker">{CHINESE_ZODIAC_COPY.animalKicker} · {chineseZodiacText('numberLabel', { number: String(animal.position).padStart(2, '0') })}</em>
+      <h1 class="display cz-page__title">{chineseZodiacText('yearOf', { animal: animal.name })}</h1>
+      <p class="cz-page__lede">{animal.association}</p>
+      <ChineseZodiacBrandRail />
+    </header>
+
+    <dl class="cz-facts">
+      <div><dt>{CHINESE_ZODIAC_COPY.branchLabel}</dt><dd>{animal.branch} · {animal.branchPinyin}</dd></div>
+      <div><dt>{CHINESE_ZODIAC_COPY.sequenceLabel}</dt><dd>{chineseZodiacText('positionValue', { position: animal.position })}</dd></div>
+      <div><dt>{CHINESE_ZODIAC_COPY.associationLabel}</dt><dd>{animal.context}</dd></div>
+    </dl>
+
+    <section aria-labelledby="animal-years">
+      <div class="section-head"><h2 id="animal-years">{CHINESE_ZODIAC_COPY.yearsLabel}</h2></div>
+      <ul class="cz-years">{years.map((year) => <li>{year}</li>)}</ul>
+      <p class="cz-sources">{CHINESE_ZODIAC_COPY.yearsBoundary}</p>
+    </section>
+
+    <section class="cz-note">
+      <h2>{CHINESE_ZODIAC_COPY.limitsTitle}</h2>
+      <p>{CHINESE_ZODIAC_COPY.limitsBody}</p>
+    </section>
+
+    <section>
+      <div class="section-head"><h2>{CHINESE_ZODIAC_COPY.allAnimals}</h2></div>
+      <div class="cz-grid">
+        {CHINESE_ZODIAC_ANIMALS.map((entry) => (
+          <a class="cz-card" href={`/learn/chinese-zodiac/${entry.slug}/`} aria-current={entry.slug === animal.slug ? 'page' : undefined}>
+            <span class="cz-card__no">{chineseZodiacText('numberLabel', { number: String(entry.position).padStart(2, '0') })} · {entry.branch}</span>
+            <strong>{entry.name}</strong>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <nav class="cz-nav" aria-label={CHINESE_ZODIAC_COPY.allAnimals}>
+      <a href={`/learn/chinese-zodiac/${previous.slug}/`}>← {CHINESE_ZODIAC_COPY.previous}: {previous.name}</a>
+      <a href="/learn/chinese-zodiac/">{CHINESE_ZODIAC_COPY.kicker}</a>
+      <a href={`/learn/chinese-zodiac/${next.slug}/`}>{CHINESE_ZODIAC_COPY.next}: {next.name} →</a>
+    </nav>
+
+    <p class="cz-sources">
+      <a href="/learn/zodiac-dates/">{CHINESE_ZODIAC_COPY.westernLink}</a> ·{' '}
+      <a href="/birth-chart/">{CHINESE_ZODIAC_COPY.chartLink}</a>
+    </p>
+  </article>
+</Base>

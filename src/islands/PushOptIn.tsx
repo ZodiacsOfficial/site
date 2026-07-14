@@ -17,6 +17,7 @@ interface Props {
 }
 
 type View = 'hidden' | 'offer' | 'ios-install' | 'busy' | 'subscribed' | 'denied' | 'error';
+const WEB_PUSH_ENABLED = import.meta.env.PUBLIC_WEB_PUSH_ENABLED === '1';
 
 const COPY = {
   en: {
@@ -105,7 +106,10 @@ function track(name: 'push_prompt' | 'push_subscribe'): void {
 }
 
 function supported(): boolean {
-  return 'serviceWorker' in navigator && 'PushManager' in window && 'Notification' in window;
+  return WEB_PUSH_ENABLED
+    && 'serviceWorker' in navigator
+    && 'PushManager' in window
+    && 'Notification' in window;
 }
 
 async function currentSubscription(): Promise<PushSubscription | null> {

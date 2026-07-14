@@ -1,0 +1,18 @@
+---
+import SignIcon from './SignIcon.astro';
+import { SIGNS } from '../lib/signs';
+import { CHINESE_ZODIAC_COPY } from '../data/chinese-zodiac';
+---
+<aside class="cz-brand" aria-label={CHINESE_ZODIAC_COPY.iconRailNote}>
+  <div class="cz-brand__icons" aria-hidden="true">
+    {SIGNS.map((sign) => <SignIcon sign={sign.slug} size={48} class="cz-brand__icon" />)}
+  </div>
+  <p>{CHINESE_ZODIAC_COPY.iconRailNote}</p>
+</aside>
+
+<style>
+  .cz-brand { display: grid; gap: 10px; margin: 24px 0; }
+  .cz-brand__icons { display: flex; flex-wrap: wrap; gap: 5px; }
+  .cz-brand :global(.cz-brand__icon) { width: 30px; height: 30px; border-radius: 50%; }
+  .cz-brand p { margin: 0; max-width: 72ch; color: var(--faint); font-size: var(--text-xs); line-height: 1.55; }
+</style>

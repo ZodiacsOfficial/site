@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
 import { chromium } from 'playwright-core';
 import { findChromium, STABLE_CHROMIUM_ARGS } from './visual/browser.mjs';
 import { withPreview } from './visual/preview-server.mjs';
@@ -9,6 +10,11 @@ const BIRTH = {
   time: '08:30',
   cityQuery: 'New York',
 };
+const ENGINE_PACKAGE = JSON.parse(await readFile(
+  new URL('../node_modules/@zodiacs/engine/package.json', import.meta.url),
+  'utf8',
+));
+const ENGINE_VERSION = String(ENGINE_PACKAGE.version);
 
 async function waitForHydration(page) {
   await page.locator('.calc__form').waitFor({ state: 'visible', timeout: TIMEOUT });
@@ -51,6 +57,14 @@ async function events(page) {
   return page.evaluate(() => globalThis.__t17Events.slice());
 }
 
+async function pngDimensions(download) {
+  const path = await download.path();
+  assert.ok(path, 'completed download must expose a local path');
+  const png = await readFile(path);
+  assert.equal(png.subarray(1, 4).toString('ascii'), 'PNG', 'download must be a PNG');
+  return { width: png.readUInt32BE(16), height: png.readUInt32BE(20) };
+}
+
 function v2Wire(url) {
   const parsed = new URL(url);
   const token = new URLSearchParams(parsed.hash.slice(1)).get('p');
@@ -85,6 +99,25 @@ try {
     await context.addInitScript(() => {
       globalThis.__t17Clipboard = [];
       globalThis.__t17Events = [];
+      globalThis.__t17CanvasText = [];
+      globalThis.__t17DownloadClicks = [];
+      globalThis.__t17ShareCalls = 0;
+      const fillText = CanvasRenderingContext2D.prototype.fillText;
+      CanvasRenderingContext2D.prototype.fillText = function (value, x, y, maxWidth) {
+        globalThis.__t17CanvasText.push({
+          value: String(value), x, y, align: this.textAlign, at: performance.now(),
+        });
+        return maxWidth === undefined
+          ? fillText.call(this, value, x, y)
+          : fillText.call(this, value, x, y, maxWidth);
+      };
+      const click = HTMLAnchorElement.prototype.click;
+      HTMLAnchorElement.prototype.click = function () {
+        if (this.download) {
+          globalThis.__t17DownloadClicks.push({ filename: this.download, at: performance.now() });
+        }
+        return click.call(this);
+      };
       Object.defineProperty(Navigator.prototype, 'clipboard', {
         configurable: true,
         get() {
@@ -118,8 +151,15 @@ try {
       await source.evaluate(() => {
         globalThis.__t17Events = [];
         globalThis.zodiacsAnalytics = {
-          track(name, props) { globalThis.__t17Events.push({ name, props }); },
+          track(name, props) { globalThis.__t17Events.push({ name, props, at: performance.now() }); },
         };
+      });
+      const iconRequests = [];
+      source.on('request', (request) => {
+        const path = new URL(request.url()).pathname;
+        if (path.includes('/assets/zodiac-icons/')) {
+          iconRequests.push({ path, type: request.resourceType() });
+        }
       });
 
       assert.equal(await source.locator('[data-share-card]').count(), 1, 'the legacy share-card hook must stay unique');
@@ -140,6 +180,59 @@ try {
       const fullParsed = new URL(fullUrl);
       assert.equal(fullParsed.hash.startsWith('#c=1.'), true, 'default link sharing must preserve v1 #c');
 
+      const fullCardStart = await source.evaluate(() => {
+        globalThis.__t17CanvasText = [];
+        globalThis.__t17DownloadClicks = [];
+        return performance.now();
+      });
+      const fullCardDownloadPromise = source.waitForEvent('download', { timeout: TIMEOUT });
+      await dialog.locator('[data-share-card-action="full"]').click();
+      assert.equal(await dialog.locator('[data-hide-birth-details]').isDisabled(), true,
+        'link-privacy control must be locked while a card export is in flight');
+      await source.waitForFunction(() => globalThis.__t17Events.length === 3, null, { timeout: TIMEOUT });
+      await source.waitForFunction(() => {
+        const toggle = document.querySelector('[data-hide-birth-details]');
+        const action = document.querySelector('[data-share-card-action="full"]');
+        return toggle instanceof HTMLInputElement
+          && !toggle.disabled
+          && !action?.textContent?.includes('Rendering');
+      }, null, { timeout: TIMEOUT });
+      const fullCardDownload = await fullCardDownloadPromise;
+      assert.equal(fullCardDownload.suggestedFilename(), 'zodiacs-chart.png',
+        'full-card filename must contain no birth input');
+      assert.deepEqual(await pngDimensions(fullCardDownload), { width: 1080, height: 1350 },
+        'full chart must export at 2× the 540×675 design size');
+
+      const fullCardRender = await source.evaluate(() => ({
+        text: globalThis.__t17CanvasText.slice(),
+        downloads: globalThis.__t17DownloadClicks.slice(),
+        events: globalThis.__t17Events.slice(),
+      }));
+      const fullCardText = fullCardRender.text.map((entry) => entry.value).join(' | ');
+      for (const privateValue of [BIRTH.date, BIRTH.time, BIRTH.cityQuery, 'June 15, 1990', 'America/New_York']) {
+        assert.equal(fullCardText.includes(privateValue), false, `default full-chart PNG leaked ${privateValue}`);
+      }
+      assert.equal(fullCardText.includes(`Engine ${ENGINE_VERSION}`), true,
+        'default full-chart PNG must carry only its engine receipt');
+      const fullCardWordmark = fullCardRender.text.find((entry) => entry.value === 'ZODIACS · ORG');
+      assert.deepEqual(
+        { align: fullCardWordmark?.align, x: fullCardWordmark?.x, y: fullCardWordmark?.y },
+        { align: 'right', x: 1016, y: 1304 },
+        'full-chart wordmark must occupy the bottom-right register',
+      );
+      const fullCardDownloadAt = fullCardRender.downloads.find((entry) => entry.filename === 'zodiacs-chart.png')?.at;
+      const fullCardEventAt = fullCardRender.events.find((entry) => entry.name === 'share_card_downloaded')?.at;
+      assert.ok(fullCardDownloadAt >= fullCardStart, 'full-chart download must start after the action');
+      assert.ok(fullCardEventAt >= fullCardDownloadAt,
+        'share_card_downloaded must fire only after the non-cancelled full-chart download starts');
+      assert.ok(fullCardEventAt - fullCardStart < 1000,
+        `full-chart PNG action took ${(fullCardEventAt - fullCardStart).toFixed(1)}ms; expected <1000ms`);
+      assert.deepEqual((await events(source)).map(({ name, props }) => ({ name, props })), [
+        { name: 'chart_share', props: { variant: 'details_link' } },
+        { name: 'chart_share', props: { variant: 'full_chart_card' } },
+        { name: 'share_card_downloaded', props: { variant: 'full_chart_card' } },
+      ], 'default full-card analytics must fire exactly once and contain no sensitive fields');
+
       await dialog.locator('[data-hide-birth-details]').check();
       assert.equal(await dialog.getAttribute('data-share-mode'), 'positions');
       const privacy = await dialog.locator('.calc-share-dialog__note').innerText();
@@ -157,33 +250,84 @@ try {
       for (const privateValue of [BIRTH.date, BIRTH.time, BIRTH.cityQuery, 'America/New_York', '40.7', '-74.0']) {
         assert.equal(wireText.includes(privateValue), false, `v2 wire leaked ${privateValue}`);
       }
-
-      const downloadPromise = source.waitForEvent('download', { timeout: TIMEOUT });
-      await dialog.locator('[data-share-card-action]').click();
-      assert.equal(await dialog.locator('[data-hide-birth-details]').isDisabled(), true,
-        'privacy mode must be locked while a card export is in flight');
-      await source.waitForFunction(() => globalThis.__t17Events.length === 3, null, { timeout: TIMEOUT });
-      await source.waitForFunction(() => {
-        const toggle = document.querySelector('[data-hide-birth-details]');
-        const action = document.querySelector('[data-share-card-action]');
-        return toggle instanceof HTMLInputElement
-          && !toggle.disabled
-          && action?.textContent?.includes('Card saved');
-      }, null, { timeout: TIMEOUT });
-      assert.equal(await dialog.locator('[data-hide-birth-details]').isDisabled(), false,
-        'privacy mode must unlock after the card has finished saving');
-      const download = await downloadPromise;
-      assert.equal(
-        download.suggestedFilename(),
-        'zodiacs-chart-positions.png',
-        'positions card filename must omit the birth date',
-      );
-
-      assert.deepEqual(await events(source), [
+      await source.waitForFunction(() => globalThis.__t17Events.length === 4, null, { timeout: TIMEOUT });
+      assert.deepEqual((await events(source)).map(({ name, props }) => ({ name, props })), [
         { name: 'chart_share', props: { variant: 'details_link' } },
+        { name: 'chart_share', props: { variant: 'full_chart_card' } },
+        { name: 'share_card_downloaded', props: { variant: 'full_chart_card' } },
         { name: 'chart_share', props: { variant: 'positions_link' } },
-        { name: 'chart_share', props: { variant: 'positions_card' } },
-      ], 'analytics must contain approved, non-sensitive variants only');
+      ], 'positions-link analytics must retain only its approved, non-sensitive variant');
+
+      const bigThreeStart = await source.evaluate(() => {
+        globalThis.__t17CanvasText = [];
+        globalThis.__t17DownloadClicks = [];
+        return performance.now();
+      });
+      const bigThreeDownloadPromise = source.waitForEvent('download', { timeout: TIMEOUT });
+      await dialog.locator('[data-share-card-action="big-three"]').click();
+      const bigThreeDownload = await bigThreeDownloadPromise;
+      await source.waitForFunction(() => globalThis.__t17Events.length === 6, null, { timeout: TIMEOUT });
+      assert.equal(bigThreeDownload.suggestedFilename(), 'zodiacs-big-three.png');
+      assert.deepEqual(await pngDimensions(bigThreeDownload), { width: 1080, height: 1350 },
+        'big-three card must export at 2× the 540×675 design size');
+      const bigThreeRender = await source.evaluate(() => ({
+        text: globalThis.__t17CanvasText.slice(),
+        downloads: globalThis.__t17DownloadClicks.slice(),
+        events: globalThis.__t17Events.slice(),
+      }));
+      const bigThreeText = bigThreeRender.text.map((entry) => entry.value).join(' | ');
+      for (const privateValue of [BIRTH.date, BIRTH.time, BIRTH.cityQuery, 'June 15, 1990', 'America/New_York']) {
+        assert.equal(bigThreeText.includes(privateValue), false, `big-three PNG leaked ${privateValue}`);
+      }
+      const bigThreeWordmark = bigThreeRender.text.find((entry) => entry.value === 'ZODIACS · ORG');
+      assert.deepEqual(
+        { align: bigThreeWordmark?.align, x: bigThreeWordmark?.x, y: bigThreeWordmark?.y },
+        { align: 'right', x: 1016, y: 1304 },
+        'big-three wordmark must occupy the bottom-right register',
+      );
+      const bigThreeDownloadAt = bigThreeRender.downloads.find((entry) => entry.filename === 'zodiacs-big-three.png')?.at;
+      const bigThreeEventAt = bigThreeRender.events.findLast((entry) => entry.name === 'share_card_downloaded')?.at;
+      assert.ok(bigThreeEventAt >= bigThreeDownloadAt,
+        'big-three analytics must follow the non-cancelled download');
+      assert.ok(bigThreeEventAt - bigThreeStart < 1000,
+        `big-three PNG action took ${(bigThreeEventAt - bigThreeStart).toFixed(1)}ms; expected <1000ms`);
+      assert.deepEqual((await events(source)).map(({ name, props }) => ({ name, props })), [
+        { name: 'chart_share', props: { variant: 'details_link' } },
+        { name: 'chart_share', props: { variant: 'full_chart_card' } },
+        { name: 'share_card_downloaded', props: { variant: 'full_chart_card' } },
+        { name: 'chart_share', props: { variant: 'positions_link' } },
+        { name: 'chart_share', props: { variant: 'big_three_card' } },
+        { name: 'share_card_downloaded', props: { variant: 'big_three_card' } },
+      ], 'each completed card must fire its two approved analytics events exactly once');
+
+      const eventCountBeforeCancel = (await events(source)).length;
+      await source.evaluate(() => {
+        globalThis.__t17DownloadClicks = [];
+        globalThis.__t17ShareCalls = 0;
+        Object.defineProperty(Navigator.prototype, 'canShare', { configurable: true, value: () => true });
+        Object.defineProperty(Navigator.prototype, 'share', {
+          configurable: true,
+          value: () => {
+            globalThis.__t17ShareCalls += 1;
+            return Promise.reject(new DOMException('cancelled', 'AbortError'));
+          },
+        });
+      });
+      await dialog.locator('[data-share-card-action="big-three"]').click();
+      await source.waitForFunction(() => {
+        const action = document.querySelector('[data-share-card-action="big-three"]');
+        return globalThis.__t17ShareCalls === 1
+          && action
+          && !action.textContent?.includes('Rendering');
+      }, null, { timeout: TIMEOUT });
+      assert.equal((await events(source)).length, eventCountBeforeCancel,
+        'a cancelled share sheet must not fire chart_share or share_card_downloaded');
+      assert.equal(await source.evaluate(() => globalThis.__t17DownloadClicks.length), 0,
+        'a cancelled share sheet must not fall through to download');
+      const cardIconRequests = iconRequests.filter((request) => request.type === 'fetch');
+      assert.ok(cardIconRequests.length >= 3, 'share cards must request canonical zodiac art');
+      assert.equal(cardIconRequests.every(({ path }) => /^\/assets\/zodiac-icons\/128\/[a-z-]+\.webp$/.test(path)), true,
+        'share cards may request only canonical 128px zodiac icons');
 
       const received = await trackedPage();
       await open(received, positionsUrl);
@@ -204,7 +348,8 @@ try {
       for (const privateValue of [BIRTH.date, BIRTH.time, BIRTH.cityQuery, 'UTC']) {
         assert.equal(receivedText.includes(privateValue), false, `positions result leaked ${privateValue}`);
       }
-      assert.match(receivedText, /engine v1\.0\.0/i, 'positions result must carry the engine receipt');
+      assert.equal(receivedText.toLowerCase().includes(`engine v${ENGINE_VERSION}`.toLowerCase()), true,
+        'positions result must carry the installed engine version receipt');
 
       const full = await trackedPage();
       await open(full, fullUrl);
@@ -233,8 +378,13 @@ try {
       transcript.positionsFragment = positionsParsed.hash.slice(0, 5);
       transcript.positionsWireKeys = Object.keys(wire).sort();
       transcript.positionsRows = await positions.locator('tbody tr').count();
-      transcript.cardFilename = download.suggestedFilename();
-      transcript.events = await events(source);
+      transcript.cardFilename = fullCardDownload.suggestedFilename();
+      transcript.bigThreeFilename = bigThreeDownload.suggestedFilename();
+      transcript.fullCardPng = await pngDimensions(fullCardDownload);
+      transcript.bigThreePng = await pngDimensions(bigThreeDownload);
+      transcript.fullCardMs = Math.round(fullCardEventAt - fullCardStart);
+      transcript.bigThreeMs = Math.round(bigThreeEventAt - bigThreeStart);
+      transcript.events = (await events(source)).map(({ name, props }) => ({ name, props }));
       transcript.hashesStripped = { positions: true, full: true, ambiguous: true };
     } finally {
       await context.close();

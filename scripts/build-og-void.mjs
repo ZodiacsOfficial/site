@@ -4,6 +4,10 @@
  *
  *   share.png              site-wide default
  *   sign/{slug}.png        the 12 sign guides
+ *   registry/{slug}.png    the 12 Registry lots (Nº / Lot convention)
+ *   registry.png           Registry landing page
+ *   thesis.png             Registry thesis
+ *   disclosure.png         Registry disclosure
  *   tool/{key}.png         calculators + hubs
  *   pair/{a}-{b}.png       all 78 compatibility pairings
  *   horoscope/{slug}.png   the 12 horoscope pages (month-free, evergreen)
@@ -12,8 +16,8 @@
  *   almanac/{slug}.png     the Almanac hub + published articles
  *
  * The legacy gilt cards at assets/og/*.png stay byte-identical — the
- * collector's wing still references them. This script never touches
- * them, the manifest, or anything the wing generators own.
+ * frozen originals remain available. This script never touches those files
+ * or any HTML owned by the wing generators.
  *
  *   npm run data:og
  *
@@ -35,6 +39,7 @@ const OUT = resolve(root, 'public/assets/og/v2');
 const { SIGNS, ELEMENT_LABEL, MODALITY_LABEL } = await import(
   pathToFileURL(resolve(root, 'src/lib/signs.ts')).href
 );
+const { OG_EN } = await import(pathToFileURL(resolve(root, 'src/strings/seo.en.mjs')).href);
 
 const { chromium } = await import(process.env.PLAYWRIGHT_MODULE ?? 'playwright-core');
 const executablePath =
@@ -53,7 +58,10 @@ const FONTS = {
 
 const DISCS = {};
 for (const s of SIGNS) {
-  DISCS[s.slug] = await b64(`public/assets/sdk/zodiac-icons/circle/${s.slug}.png`, 'image/png');
+  // The public 128px WebP tier is the canonical art primitive for every new
+  // surface. It is deliberately scaled by the card rather than substituted
+  // with a glyph, emoji, hue-only dot, or SDK packaging asset.
+  DISCS[s.slug] = await b64(`public/assets/zodiac-icons/128/${s.slug}.webp`, 'image/webp');
 }
 
 // ── Shared chrome ─────────────────────────────────────────────────────
@@ -133,7 +141,7 @@ function shell(body, footer, { centered = false } = {}) {
 </body></html>`;
 }
 
-/** The twelve pastel discs as a small wheel — the sign-less brand mark. */
+/** The twelve canonical sign icons as the sign-less wheel mark. */
 function wheelMark(diameter, dot) {
   const r = (diameter - dot) / 2;
   const c = diameter / 2;
@@ -141,12 +149,18 @@ function wheelMark(diameter, dot) {
     const a = (i / 12) * 2 * Math.PI - Math.PI / 2;
     const x = c + r * Math.cos(a) - dot / 2;
     const y = c + r * Math.sin(a) - dot / 2;
-    return `<span style="position:absolute;left:${x.toFixed(1)}px;top:${y.toFixed(1)}px;width:${dot}px;height:${dot}px;border-radius:50%;background:${s.hue}"></span>`;
+    return `<img src="${DISCS[s.slug]}" width="${dot}" height="${dot}" alt=""
+      style="position:absolute;left:${x.toFixed(1)}px;top:${y.toFixed(1)}px;width:${dot}px;height:${dot}px;border-radius:50%;display:block" />`;
   }).join('');
   return `<span style="position:relative;display:block;width:${diameter}px;height:${diameter}px">${dots}</span>`;
 }
 
 const nameSize = (name) => (name.length >= 10 ? 104 : name.length >= 8 ? 118 : 132);
+const signName = (sign) => OG_EN.signNames[sign.slug] ?? sign.name;
+const format = (template, values) => Object.entries(values).reduce(
+  (copy, [name, value]) => copy.replaceAll(`{${name}}`, String(value)),
+  template,
+);
 
 // ── Card renderers ────────────────────────────────────────────────────
 function shareCard() {
@@ -154,11 +168,11 @@ function shareCard() {
   <div class="stage" style="flex-direction: column; justify-content: center; gap: 40px;">
     ${wheelMark(160, 15)}
     <div>
-      <div class="display" style="font-size: 68px; max-width: 900px;">Explore the stars behind your story.</div>
-      <div class="sub" style="font-size: 26px; color: ${MUTED};">Free birth charts, sign guides, and astrology tools.</div>
+      <div class="display" style="font-size: 68px; max-width: 900px;">${OG_EN.share.title}</div>
+      <div class="sub" style="font-size: 26px; color: ${MUTED};">${OG_EN.share.subtitle}</div>
     </div>
   </div>`;
-  return shell(body, 'zodiacs.org', { centered: true });
+  return shell(body, OG_EN.site, { centered: true });
 }
 
 /** The thesis page's own card — reference-document register, no consumer
@@ -168,19 +182,20 @@ function thesisCard() {
   <div class="stage" style="flex-direction: column; justify-content: center; gap: 40px;">
     ${wheelMark(160, 15)}
     <div>
-      <span class="kicker">The Thesis</span>
-      <div class="display" style="font-size: 76px; max-width: 980px;">Belief is the oldest asset.</div>
+      <span class="kicker">${OG_EN.thesis.kicker}</span>
+      <div class="display" style="font-size: 76px; max-width: 980px;">${OG_EN.thesis.title}</div>
     </div>
   </div>`;
-  return shell(body, 'zodiacs.org — The Registry · Revised July 2026', { centered: true });
+  return shell(body, OG_EN.thesis.footer, { centered: true });
 }
 
 function signCard(s) {
+  const title = signName(s);
   const body = `
   <div class="stage">
     <div class="left">
-      <span class="kicker">Sign guide</span>
-      <div class="display" style="font-size: ${nameSize(s.name)}px;">${s.name}</div>
+      <span class="kicker">${OG_EN.signGuide.kicker}</span>
+      <div class="display" style="font-size: ${nameSize(title)}px;">${title}</div>
       <div class="sub" style="max-width: 620px;">${s.essence}</div>
       <div class="data">${s.dates} · ${ELEMENT_LABEL[s.element]} · ${MODALITY_LABEL[s.modality]}</div>
     </div>
@@ -188,6 +203,56 @@ function signCard(s) {
          style="box-shadow: 0 30px 90px ${s.hue}40;" />
   </div>`;
   return shell(body, `zodiacs.org/${s.slug}/`);
+}
+
+const LOTS = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII'];
+
+function registryLotCard(s, index) {
+  const title = signName(s);
+  const number = String(index + 1).padStart(2, '0');
+  const lot = LOTS[index];
+  const numberLine = OG_EN.registryLot.numberLine
+    .replace('{number}', number)
+    .replace('{lot}', lot);
+  const body = `
+  <div class="stage">
+    <div class="left">
+      <span class="kicker">${OG_EN.registryLot.kicker}</span>
+      <div class="display" style="font-size: ${nameSize(title)}px;">${title}</div>
+      <div class="data" style="font-size:24px;color:${INK2};">${numberLine}</div>
+      <div class="sub" style="font-size:23px;color:${MUTED};max-width:640px;">${OG_EN.registryLot.subtitle}</div>
+    </div>
+    <img class="disc" src="${DISCS[s.slug]}" width="360" height="360"
+         style="box-shadow: 0 30px 90px ${s.hue}40;" />
+  </div>`;
+  return shell(body, `zodiacs.org/registry/${s.slug}/`);
+}
+
+function registryCard() {
+  const body = `
+  <div class="stage">
+    <div class="left">
+      <span class="kicker">${OG_EN.registry.kicker}</span>
+      <div class="display" style="font-size: 78px;max-width:680px;">${OG_EN.registry.title}</div>
+      <div class="sub" style="font-size:25px;color:${MUTED};max-width:620px;">${OG_EN.registry.subtitle}</div>
+      <div class="data">${OG_EN.registry.data}</div>
+    </div>
+    ${wheelMark(330, 38)}
+  </div>`;
+  return shell(body, 'zodiacs.org/registry/');
+}
+
+function disclosureCard() {
+  const body = `
+  <div class="stage">
+    <div class="left">
+      <span class="kicker">${OG_EN.disclosure.kicker}</span>
+      <div class="display" style="font-size: 72px;max-width:720px;">${OG_EN.disclosure.title}</div>
+      <div class="sub" style="font-size:25px;color:${MUTED};max-width:690px;">${OG_EN.disclosure.subtitle}</div>
+    </div>
+    ${wheelMark(280, 32)}
+  </div>`;
+  return shell(body, 'zodiacs.org/disclosure/');
 }
 
 function toolCard(t) {
@@ -204,6 +269,8 @@ function toolCard(t) {
 }
 
 function pairCard(a, b) {
+  const aTitle = signName(a);
+  const bTitle = signName(b);
   const same = a.slug === b.slug;
   const discs = same
     ? `<img class="disc" src="${DISCS[a.slug]}" width="320" height="320" style="box-shadow: 0 30px 90px ${a.hue}40;" />`
@@ -214,12 +281,17 @@ function pairCard(a, b) {
        </div>`;
   const dataLine = same
     ? `<div class="sub" style="font-size: 24px; max-width: 560px;">${a.essence}</div>`
-    : `<div class="data">${ELEMENT_LABEL[a.element]} and ${ELEMENT_LABEL[b.element].toLowerCase()} · ${MODALITY_LABEL[a.modality].toLowerCase()} and ${MODALITY_LABEL[b.modality].toLowerCase()}</div>`;
+    : `<div class="data">${format(OG_EN.compatibility.data, {
+      aElement: ELEMENT_LABEL[a.element],
+      bElement: ELEMENT_LABEL[b.element].toLowerCase(),
+      aModality: MODALITY_LABEL[a.modality].toLowerCase(),
+      bModality: MODALITY_LABEL[b.modality].toLowerCase(),
+    })}</div>`;
   const body = `
   <div class="stage">
     <div class="left">
-      <span class="kicker">Compatibility</span>
-      <div class="display" style="font-size: 72px; line-height: 1.08;">${a.name}<br/>and ${b.name}</div>
+      <span class="kicker">${OG_EN.compatibility.kicker}</span>
+      <div class="display" style="font-size: 72px; line-height: 1.08;">${format(OG_EN.compatibility.title, { a: aTitle, b: bTitle })}</div>
       ${dataLine}
     </div>
     ${discs}
@@ -227,16 +299,17 @@ function pairCard(a, b) {
   return shell(body, `zodiacs.org/compatibility/${a.slug}-${b.slug}/`);
 }
 
-function placementCard(planet, glyph) {
+function placementCard(planetKey, glyph) {
+  const planet = OG_EN.planetNames[planetKey];
   const discsRow = SIGNS.map((s) =>
-    `<span style="display:inline-block;width:26px;height:26px;border-radius:50%;background:${s.hue};margin-right:10px;"></span>`,
+    `<img src="${DISCS[s.slug]}" width="26" height="26" alt="" style="display:inline-block;width:26px;height:26px;border-radius:50%;margin-right:10px;" />`,
   ).join('');
   const body = `
   <div class="stage">
     <div class="left">
-      <span class="kicker">Placements</span>
-      <div class="display" style="font-size: 72px; line-height: 1.08;">${planet} through<br/>the signs</div>
-      <div class="sub" style="font-size: 26px; color: ${MUTED}; max-width: 620px;">All twelve ${planet} placements, read closely.</div>
+      <span class="kicker">${OG_EN.placements.kicker}</span>
+      <div class="display" style="font-size: 72px; line-height: 1.08;">${format(OG_EN.placements.title, { planet })}</div>
+      <div class="sub" style="font-size: 26px; color: ${MUTED}; max-width: 620px;">${OG_EN.placements.subtitle.replace('{planet}', planet)}</div>
       <div style="margin-top: 26px; line-height: 0;">${discsRow}</div>
     </div>
     <span style="font-family: 'EB Garamond', serif; font-size: 220px; color: ${INK2}; opacity: 0.9; line-height: 1;">${glyph}</span>
@@ -245,12 +318,13 @@ function placementCard(planet, glyph) {
 }
 
 function horoscopeCard(s) {
+  const title = signName(s);
   const body = `
   <div class="stage">
     <div class="left">
-      <span class="kicker">Monthly horoscope</span>
-      <div class="display" style="font-size: ${nameSize(s.name)}px;">${s.name}</div>
-      <div class="sub" style="font-size: 26px; color: ${MUTED};">Monthly horoscopes grounded in real moon phases, retrogrades, and major transits.</div>
+      <span class="kicker">${OG_EN.horoscope.kicker}</span>
+      <div class="display" style="font-size: ${nameSize(title)}px;">${title}</div>
+      <div class="sub" style="font-size: 26px; color: ${MUTED};">${OG_EN.horoscope.subtitle}</div>
       <div class="data">${s.dates}</div>
     </div>
     <img class="disc" src="${DISCS[s.slug]}" width="340" height="340"
@@ -260,13 +334,14 @@ function horoscopeCard(s) {
 }
 
 function risingCard(s) {
+  const title = signName(s);
   const body = `
   <div class="stage">
     <div class="left">
-      <span class="kicker">Rising signs</span>
-      <div class="display" style="font-size: 84px; line-height: 1.06;">${s.name}<br/>rising</div>
-      <div class="sub" style="font-size: 26px; color: ${MUTED};">How the world first meets you — and the planet that steers your chart.</div>
-      <div class="data">the ascendant changes sign about every two hours</div>
+      <span class="kicker">${OG_EN.rising.kicker}</span>
+      <div class="display" style="font-size: 84px; line-height: 1.06;">${format(OG_EN.rising.title, { sign: title })}</div>
+      <div class="sub" style="font-size: 26px; color: ${MUTED};">${OG_EN.rising.subtitle}</div>
+      <div class="data">${OG_EN.rising.data}</div>
     </div>
     <img class="disc" src="${DISCS[s.slug]}" width="340" height="340"
          style="box-shadow: 0 30px 90px ${s.hue}40;" />
@@ -315,28 +390,10 @@ const almanacEntries = (await Promise.all(
     }),
 )).filter((entry) => !entry.draft);
 
-const TOOLS = [
-  { key: 'birth-chart', path: '/birth-chart/', kicker: 'Free calculator', title: 'Your birth chart', sub: 'Sun, moon, rising, houses, and aspects — computed on your device.' },
-  { key: 'moon-sign', path: '/moon-sign/', kicker: 'Free calculator', title: 'Your moon sign', sub: 'How you feel and what soothes you — from your date, time, and place of birth.' },
-  { key: 'rising-sign', path: '/rising-sign/', kicker: 'Free calculator', title: 'Your rising sign', sub: 'How people first read you — from your birth time and place.' },
-  { key: 'moon-phase', path: '/moon-phase/', kicker: 'Free calculator', title: 'The moon, any night', sub: 'Tonight’s phase, and the moon of any date that matters to you.' },
-  { key: 'saturn-return', path: '/saturn-return/', kicker: 'Free calculator', title: 'Your Saturn return', sub: 'The exact dates, every pass and retrograde loop included.' },
-  { key: 'mercury-retrograde', path: '/mercury-retrograde/', kicker: 'The calendar', title: 'Mercury retrograde', sub: 'Every window through 2027, computed from the planet’s real motion.' },
-  { key: 'compatibility', path: '/compatibility/', kicker: 'Compatibility', title: 'Two charts, compared', sub: 'Whole-chart synastry — plus guides to all 78 sign pairings.' },
-  { key: 'horoscopes', path: '/horoscopes/', kicker: 'Monthly horoscopes', title: 'All twelve signs', sub: 'Grounded in real moon phases, retrogrades, and major transits.' },
-  { key: 'learn', path: '/learn/', kicker: 'Learn astrology', title: 'Read your chart', sub: 'The signs, the planets, the houses, and the aspects, in plain language.' },
-  { key: 'how-to-read-a-birth-chart', path: '/learn/how-to-read-a-birth-chart/', kicker: 'Learn astrology', title: 'How to read a birth chart', sub: 'Big three, planets room by room, the working aspects, then the weather — in order.' },
-  { key: 'tools', path: '/tools/', kicker: 'Free astrology tools', title: 'Calculators, no signup', sub: 'Birth chart, compatibility, moon sign, and more — computed on your device.' },
-  { key: 'transits', path: '/transits/', kicker: 'Free tracker', title: 'Your transits, today', sub: 'The current sky aspected to your birth chart, within 3° of exact.' },
-  { key: 'eclipses', path: '/eclipses/', kicker: 'The calendar', title: 'Eclipses, dated', sub: 'Every solar and lunar eclipse through 2028, with exact peak times and signs.' },
-  { key: 'full-moon-calendar', path: '/full-moon-calendar/', kicker: 'The calendar', title: 'Every full moon', sub: 'Exact instants through 2027, with each moon’s sign, degree, and name.' },
-  { key: 'retrogrades', path: '/retrogrades/', kicker: 'The calendar', title: 'Every retrograde', sub: 'All eight planets, 2026–2027, computed station to station.' },
-  { key: 'baby-zodiac', path: '/baby-zodiac/', kicker: 'Free calculator', title: 'What sign will the baby be?', sub: 'The due date’s near-certain Sun, the week’s possible Moons, and what waits for the clock.' },
-  { key: 'birthday', path: '/birthday/', kicker: 'Birthday astrology', title: 'Every date, computed', sub: 'Sun sign checked across ninety-one years, degree spans, decans, and cusp tables.' },
-];
+const TOOLS = OG_EN.tools;
 
 // ── Render loop ───────────────────────────────────────────────────────
-for (const dir of ['', 'sign', 'tool', 'pair', 'horoscope', 'placements', 'rising', 'almanac', 'pin']) {
+for (const dir of ['', 'sign', 'registry', 'tool', 'pair', 'horoscope', 'placements', 'rising', 'almanac', 'pin']) {
   await mkdir(resolve(OUT, dir), { recursive: true });
 }
 
@@ -385,7 +442,9 @@ if (process.argv.includes('--only-thesis')) {
   await browser.close();
   process.exit(0);
 }
-await shoot(shareCard(), 'share.png');
+// Keep the established global fallback byte-stable unless a deliberate
+// fallback refresh is explicitly requested.
+if (process.argv.includes('--include-fallback')) await shoot(shareCard(), 'share.png');
 await shoot(almanacCard({
   title: 'The Almanac',
   sub: "What's actually happening up there each month, and what the tradition makes of it.",
@@ -400,6 +459,11 @@ for (const entry of almanacEntries) {
   }), `almanac/${entry.slug}.png`);
 }
 for (const s of SIGNS) await shoot(signCard(s), `sign/${s.slug}.png`);
+for (let i = 0; i < SIGNS.length; i += 1) {
+  await shoot(registryLotCard(SIGNS[i], i), `registry/${SIGNS[i].slug}.png`);
+}
+await shoot(registryCard(), 'registry.png');
+await shoot(disclosureCard(), 'disclosure.png');
 for (const t of TOOLS) await shoot(toolCard(t), `tool/${t.key}.png`);
 for (let i = 0; i < SIGNS.length; i += 1) {
   for (let j = i; j < SIGNS.length; j += 1) {
@@ -409,11 +473,11 @@ for (let i = 0; i < SIGNS.length; i += 1) {
 for (const s of SIGNS) await shoot(horoscopeCard(s), `horoscope/${s.slug}.png`);
 for (const s of SIGNS) await shoot(risingCard(s), `rising/${s.slug}.png`);
 const PLANET_GLYPHS = {
-  Sun: '☉', Moon: '☽', Mercury: '☿', Venus: '♀', Mars: '♂',
-  Jupiter: '♃', Saturn: '♄', Uranus: '♅', Neptune: '♆', Pluto: '♇',
+  sun: '☉', moon: '☽', mercury: '☿', venus: '♀', mars: '♂',
+  jupiter: '♃', saturn: '♄', uranus: '♅', neptune: '♆', pluto: '♇',
 };
-for (const [planet, glyph] of Object.entries(PLANET_GLYPHS)) {
-  await shoot(placementCard(planet, glyph), `placements/${planet.toLowerCase()}.png`);
+for (const [planetKey, glyph] of Object.entries(PLANET_GLYPHS)) {
+  await shoot(placementCard(planetKey, glyph), `placements/${planetKey}.png`);
 }
 
 // ── Pinterest pins — 1000×1500, the 2:3 ratio pins want ──────────────
@@ -444,12 +508,13 @@ function pinShell(body, footer) {
 }
 
 function pinSign(s) {
+  const title = signName(s);
   const body = `
   <div class="pstage">
-    <span class="kicker">Sign guide</span>
+    <span class="kicker">${OG_EN.pin.signGuide.kicker}</span>
     <img class="disc" src="${DISCS[s.slug]}" width="440" height="440" style="box-shadow: 0 44px 130px ${s.hue}45;" />
     <div>
-      <div class="display" style="font-size: ${nameSize(s.name) + 22}px;">${s.name}</div>
+      <div class="display" style="font-size: ${nameSize(title) + 22}px;">${title}</div>
       <div class="data" style="margin-top: 20px;">${s.dates} · ${ELEMENT_LABEL[s.element]} · ${MODALITY_LABEL[s.modality]}</div>
     </div>
     <div class="sub">${s.essence}</div>
@@ -458,33 +523,29 @@ function pinSign(s) {
 }
 
 function pinHoroscope(s) {
+  const title = signName(s);
   const body = `
   <div class="pstage">
-    <span class="kicker">Monthly horoscope</span>
+    <span class="kicker">${OG_EN.pin.horoscope.kicker}</span>
     <img class="disc" src="${DISCS[s.slug]}" width="400" height="400" style="box-shadow: 0 44px 130px ${s.hue}45;" />
     <div>
-      <div class="display" style="font-size: ${nameSize(s.name) + 8}px;">${s.name}, this month</div>
+      <div class="display" style="font-size: ${nameSize(title) + 8}px;">${format(OG_EN.pin.horoscope.title, { sign: title })}</div>
       <div class="data" style="margin-top: 20px;">${s.dates}</div>
     </div>
-    <div class="sub">Grounded in the real sky: moon phases, retrogrades, and major transits, each with its date.</div>
+    <div class="sub">${OG_EN.pin.horoscope.subtitle}</div>
   </div>`;
   return pinShell(body, `zodiacs.org/horoscopes/${s.slug}/`);
 }
 
 function pinHowTo() {
-  const steps = [
-    '1 · The big three',
-    '2 · Planets, room by room',
-    '3 · The working aspects',
-    '4 · The chart’s weather',
-  ]
+  const steps = Object.values(OG_EN.pin.howTo.steps)
     .map((t) => `<div class="data" style="font-size: 28px; color: ${INK2};">${t}</div>`)
     .join('');
   const body = `
   <div class="pstage" style="gap: 52px;">
-    <span class="kicker">Learn astrology</span>
+    <span class="kicker">${OG_EN.pin.howTo.kicker}</span>
     ${wheelMark(300, 26)}
-    <div class="display" style="font-size: 96px; max-width: 800px;">How to read a birth chart.</div>
+    <div class="display" style="font-size: 96px; max-width: 800px;">${OG_EN.pin.howTo.title}</div>
     <div style="display: grid; gap: 18px;">${steps}</div>
   </div>`;
   return pinShell(body, 'zodiacs.org/learn/how-to-read-a-birth-chart/');
@@ -494,6 +555,24 @@ await page.setViewportSize({ width: 1000, height: 1500 });
 for (const s of SIGNS) await shoot(pinSign(s), `pin/${s.slug}.png`);
 for (const s of SIGNS) await shoot(pinHoroscope(s), `pin/horoscope-${s.slug}.png`);
 await shoot(pinHowTo(), 'pin/how-to-read-a-birth-chart.png');
+
+const requiredCards = [
+  ...SIGNS.map((s) => `sign/${s.slug}.png`),
+  ...SIGNS.map((s) => `registry/${s.slug}.png`),
+  ...TOOLS.map((tool) => `tool/${tool.key}.png`),
+  'registry.png',
+  'thesis.png',
+  'disclosure.png',
+].sort();
+await writeFile(resolve(OUT, 'manifest.json'), `${JSON.stringify({
+  schema: 'zodiacs.og-cards.v1',
+  locale: 'en',
+  width: 1200,
+  height: 630,
+  iconSource: '/assets/zodiac-icons/128/{sign}.webp',
+  fallback: '/assets/og/v2/share.png',
+  requiredCards,
+}, null, 2)}\n`);
 
 await browser.close();
 

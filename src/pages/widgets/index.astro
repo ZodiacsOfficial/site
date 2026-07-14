@@ -1,81 +1,199 @@
 ---
 import Base from '../../layouts/Base.astro';
+import {
+  iframeEmbedCode,
+  WIDGET_DIMENSIONS,
+} from '../../lib/widgets';
+import { WIDGET_EN } from '../../strings/widgets';
 
-const SNIPPET_DARK = `<iframe src="https://zodiacs.org/embed/sky/" title="The sky right now — zodiacs.org" width="360" height="230" style="border:0;border-radius:12px;overflow:hidden" loading="lazy"></iframe>`;
-const SNIPPET_LIGHT = `<iframe src="https://zodiacs.org/embed/sky/light/" title="The sky right now — zodiacs.org" width="360" height="230" style="border:0;border-radius:12px;overflow:hidden" loading="lazy"></iframe>`;
+const publicOrigin = Astro.site?.origin ?? 'https://zodiacs.org';
+const defaultAccent = '#E0B080';
+const defaultCode = iframeEmbedCode({
+  origin: publicOrigin,
+  kind: 'moon',
+  theme: 'dark',
+  accent: defaultAccent,
+  title: WIDGET_EN.moonTitle,
+});
+const defaultPreview = `/embed/moon/?theme=dark&accent=${encodeURIComponent(defaultAccent)}`;
 
-const jsonLd = [
-  {
-    '@type': 'WebPage',
-    name: 'Free astrology widgets',
-    url: 'https://zodiacs.org/widgets/',
-    description: 'Embeddable current-sky widget: live planetary positions, moon phase, and retrogrades for any site.',
-  },
-];
+const jsonLd = [{
+  '@type': 'WebPage',
+  name: WIDGET_EN.pageMetaTitle,
+  url: `${publicOrigin}/widgets/`,
+  description: WIDGET_EN.pageMetaDescription,
+}];
 ---
 <Base
-  title="Free Astrology Widgets — Embed the Current Sky | Zodiacs.org"
-  description="Drop today's sky into your own site: planetary positions, moon phase, and active retrogrades, updated daily. Free with the link intact."
+  title={WIDGET_EN.pageMetaTitle}
+  description={WIDGET_EN.pageMetaDescription}
   path="/widgets/"
   jsonLd={jsonLd}
 >
   <section class="section container container--narrow">
-    <em class="kicker">Widgets</em>
-    <h1 class="display wdg-title">The sky, on your site.</h1>
-    <div class="prose">
-      <p>
-        A small card with today's planetary positions, moon phase, and
-        active retrogrades — recomputed every day at 12:00 UTC by the same
-        engine that runs the <a href="/birth-chart/">calculators here</a>.
-        Paste the snippet and you're done: no script, no cookies, no
-        requests beyond the card itself. Free for any site that keeps the
-        zodiacs.org link intact.
-      </p>
+    <em class="kicker">{WIDGET_EN.pageKicker}</em>
+    <h1 class="display wdg-title">{WIDGET_EN.pageTitle}</h1>
+    <div class="prose wdg-intro">
+      <p>{WIDGET_EN.pageIntro}</p>
     </div>
 
-    <div class="wdg-grid">
-      <div class="wdg-cell">
-        <h2>Dark</h2>
-        <iframe src="/embed/sky/" title="The sky right now — dark" width="360" height="230" style="border:0;border-radius:12px;" loading="lazy"></iframe>
-        <textarea class="field__input wdg-snip" readonly rows="4" aria-label="Embed code, dark theme">{SNIPPET_DARK}</textarea>
-        <button class="btn btn--ghost wdg-copy" type="button" data-copy><span>Copy embed code</span><span class="orb">⧉</span></button>
+    <section
+      class="wdg-generator"
+      aria-labelledby="widget-generator-title"
+      data-widget-generator
+      data-origin={publicOrigin}
+      data-title-moon={WIDGET_EN.moonTitle}
+      data-title-sky={WIDGET_EN.skyTitle}
+      data-title-chart={WIDGET_EN.chartTitle}
+      data-copy-label={WIDGET_EN.copyAction}
+      data-copied-label={WIDGET_EN.copiedAction}
+    >
+      <div class="wdg-controls">
+        <h2 id="widget-generator-title">{WIDGET_EN.generatorTitle}</h2>
+        <div class="wdg-fields">
+          <label class="field">
+            <span class="field__label">{WIDGET_EN.widgetLabel}</span>
+            <select class="field__input" data-widget-kind>
+              <option value="moon">{WIDGET_EN.moonOption}</option>
+              <option value="sky">{WIDGET_EN.skyOption}</option>
+              <option value="chart">{WIDGET_EN.chartOption}</option>
+            </select>
+          </label>
+          <label class="field">
+            <span class="field__label">{WIDGET_EN.modeLabel}</span>
+            <select class="field__input" data-widget-mode>
+              <option value="iframe">{WIDGET_EN.iframeOption}</option>
+              <option value="script">{WIDGET_EN.scriptOption}</option>
+            </select>
+          </label>
+          <label class="field">
+            <span class="field__label">{WIDGET_EN.themeLabel}</span>
+            <select class="field__input" data-widget-theme>
+              <option value="dark">{WIDGET_EN.darkOption}</option>
+              <option value="light">{WIDGET_EN.lightOption}</option>
+            </select>
+          </label>
+          <label class="field wdg-accent">
+            <span class="field__label">{WIDGET_EN.accentLabel}</span>
+            <input class="field__input" type="color" value={defaultAccent} data-widget-accent />
+          </label>
+        </div>
+        <p class="wdg-note mono">{WIDGET_EN.backlinkNote}</p>
+        <p class="wdg-note mono">{WIDGET_EN.privacyNote}</p>
+        <p class="wdg-note mono">{WIDGET_EN.sizeNote}</p>
       </div>
-      <div class="wdg-cell">
-        <h2>Light</h2>
-        <iframe src="/embed/sky/light/" title="The sky right now — light" width="360" height="230" style="border:0;border-radius:12px;" loading="lazy"></iframe>
-        <textarea class="field__input wdg-snip" readonly rows="4" aria-label="Embed code, light theme">{SNIPPET_LIGHT}</textarea>
-        <button class="btn btn--ghost wdg-copy" type="button" data-copy><span>Copy embed code</span><span class="orb">⧉</span></button>
-      </div>
-    </div>
 
-    <p class="wdg-note mono">
-      The card is 360×230 by default; any width from 300px up works. It
-      updates itself — your page never needs touching. Prefer the data raw?
-      There are feeds: <a href="/feeds/horoscopes.xml">monthly horoscopes</a>{' '}
-      and <a href="/feeds/daily-sky.xml">the daily sky</a>.
-    </p>
+      <div class="wdg-output">
+        <h2>{WIDGET_EN.previewTitle}</h2>
+        <div class="wdg-preview">
+          <iframe
+            src={defaultPreview}
+            title={WIDGET_EN.moonTitle}
+            width={WIDGET_DIMENSIONS.moon.width}
+            height={WIDGET_DIMENSIONS.moon.height}
+            loading="lazy"
+            sandbox="allow-scripts allow-forms allow-same-origin allow-popups allow-popups-to-escape-sandbox"
+            referrerpolicy="strict-origin-when-cross-origin"
+            data-widget-preview
+          ></iframe>
+        </div>
+        <label class="field" for="widget-code">
+          <span class="field__label">{WIDGET_EN.codeLabel}</span>
+        </label>
+        <textarea id="widget-code" class="field__input wdg-code" readonly rows="7" data-widget-code>{defaultCode}</textarea>
+        <button class="btn btn--ghost wdg-copy" type="button" data-widget-copy>{WIDGET_EN.copyAction}</button>
+      </div>
+    </section>
   </section>
 
-  <script is:inline>
-    document.querySelectorAll('[data-copy]').forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        var ta = btn.parentElement.querySelector('textarea');
-        ta.select();
-        navigator.clipboard.writeText(ta.value).then(function () {
-          btn.querySelector('span').textContent = 'Copied';
-          setTimeout(function () { btn.querySelector('span').textContent = 'Copy embed code'; }, 1600);
-        });
+  <script>
+    import {
+      iframeEmbedCode,
+      isWidgetKind,
+      isWidgetMode,
+      isWidgetTheme,
+      scriptEmbedCode,
+      WIDGET_DIMENSIONS,
+      widgetEmbedUrl,
+    } from '../../lib/widgets';
+    import { trackAnalytics } from '../../lib/analytics';
+
+    const root = document.querySelector<HTMLElement>('[data-widget-generator]');
+    if (root) {
+      const kindControl = root.querySelector<HTMLSelectElement>('[data-widget-kind]');
+      const modeControl = root.querySelector<HTMLSelectElement>('[data-widget-mode]');
+      const themeControl = root.querySelector<HTMLSelectElement>('[data-widget-theme]');
+      const accentControl = root.querySelector<HTMLInputElement>('[data-widget-accent]');
+      const preview = root.querySelector<HTMLIFrameElement>('[data-widget-preview]');
+      const code = root.querySelector<HTMLTextAreaElement>('[data-widget-code]');
+      const copy = root.querySelector<HTMLButtonElement>('[data-widget-copy]');
+      const publicOrigin = root.dataset.origin ?? 'https://zodiacs.org';
+
+      const update = () => {
+        const kind = kindControl?.value ?? '';
+        const mode = modeControl?.value ?? '';
+        const theme = themeControl?.value ?? '';
+        if (!isWidgetKind(kind) || !isWidgetMode(mode) || !isWidgetTheme(theme)) return;
+        const accent = accentControl?.value ?? null;
+        const title = root.dataset[`title${kind.charAt(0).toUpperCase()}${kind.slice(1)}`] ?? kind;
+        const options = { origin: publicOrigin, kind, theme, accent, title };
+        if (code) code.value = mode === 'iframe' ? iframeEmbedCode(options) : scriptEmbedCode(options);
+        if (preview) {
+          preview.src = widgetEmbedUrl(window.location.origin, kind, theme, accent);
+          preview.title = title;
+          preview.width = String(WIDGET_DIMENSIONS[kind].width);
+          preview.height = String(WIDGET_DIMENSIONS[kind].height);
+        }
+      };
+
+      [kindControl, modeControl, themeControl, accentControl].forEach((control) => {
+        control?.addEventListener('input', update);
+        control?.addEventListener('change', update);
       });
-    });
+
+      copy?.addEventListener('click', async () => {
+        const kind = kindControl?.value ?? '';
+        const mode = modeControl?.value ?? '';
+        if (!code || !isWidgetKind(kind) || !isWidgetMode(mode)) return;
+        try {
+          await navigator.clipboard.writeText(code.value);
+        } catch {
+          code.select();
+          document.execCommand('copy');
+        }
+        trackAnalytics('widget_embed_copied', { widget: kind, mode });
+        copy.textContent = root.dataset.copiedLabel ?? '';
+        window.setTimeout(() => { copy.textContent = root.dataset.copyLabel ?? ''; }, 1600);
+      });
+    }
   </script>
 </Base>
 
 <style>
-  .wdg-title { margin: 6px 0 18px; }
-  .wdg-grid { display: grid; gap: 26px; margin-top: 26px; }
-  @media (min-width: 820px) { .wdg-grid { grid-template-columns: 1fr 1fr; } }
-  .wdg-cell { display: grid; gap: 12px; justify-items: start; }
-  .wdg-cell h2 { margin: 0; font-size: var(--text-lg); font-weight: 620; }
-  .wdg-snip { width: 100%; font-family: var(--font-mono); font-size: 11px; line-height: 1.5; resize: none; }
-  .wdg-note { margin-top: 26px; font-size: 12px; line-height: 1.7; color: var(--muted); letter-spacing: 0.03em; max-width: 64ch; }
+  .wdg-title { margin: var(--s-1) 0 var(--s-4); }
+  .wdg-intro { max-width: 68ch; }
+  .wdg-generator { display: grid; gap: var(--s-8); margin-top: var(--s-8); }
+  .wdg-generator h2 { margin: 0 0 var(--s-4); font-size: var(--text-lg); }
+  .wdg-controls, .wdg-output { min-width: 0; }
+  .wdg-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s-4); }
+  .wdg-fields .field { margin: 0; }
+  .wdg-accent input { min-height: 46px; padding: 5px; cursor: pointer; }
+  .wdg-note { max-width: 62ch; margin: var(--s-3) 0 0; color: var(--muted); font-size: 11px; line-height: 1.65; letter-spacing: .025em; }
+  .wdg-output { display: grid; gap: var(--s-3); }
+  .wdg-output h2 { margin-bottom: 0; }
+  .wdg-preview { min-height: 276px; display: grid; place-items: center; overflow: auto; padding: var(--s-3); border: 1px solid var(--hair-2); border-radius: var(--r-md); background: var(--void-1); }
+  .wdg-preview iframe { display: block; max-width: 100%; border: 0; border-radius: var(--r-md); overflow: hidden; }
+  .wdg-code { width: 100%; min-height: 138px; resize: vertical; font-family: var(--font-mono); font-size: 11px; line-height: 1.55; }
+  .wdg-copy { justify-self: start; }
+  @media (min-width: 900px) {
+    .wdg-generator { grid-template-columns: minmax(250px, .72fr) minmax(0, 1.28fr); align-items: start; gap: var(--s-12); }
+    .wdg-controls { position: sticky; top: 94px; }
+  }
+  @media (max-width: 560px) {
+    .wdg-fields { grid-template-columns: 1fr; }
+    .wdg-preview { justify-content: start; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .wdg-preview iframe { transition: none; }
+  }
 </style>
