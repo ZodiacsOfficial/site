@@ -58,6 +58,11 @@ const LENS_LABELS: Record<'en' | 'es', Record<'rail' | 'natal' | LensId, string>
   en: { rail: 'Chart through time', natal: 'Natal', sky: 'Sky now', progressed: 'Progressed', return: 'Solar return' },
   es: { rail: 'La carta en el tiempo', natal: 'Natal', sky: 'Cielo ahora', progressed: 'Progresada', return: 'Retorno solar' },
 };
+const DETAIL_LABELS: Record<'en' | 'es', { lead: string; placements: string; aspects: string }> = {
+  en: { lead: 'Full detail — ', placements: ' placements · ', aspects: ' aspects · degrees & dignities' },
+  es: { lead: 'Todo el detalle — ', placements: ' posiciones · ', aspects: ' aspectos · grados y dignidades' },
+};
+const DETAIL_STORAGE_KEY = 'zodiacs.detail.v1';
 type CalendarSubscribeModule = typeof import('./CalendarSubscribe');
 type CopyLinkModule = typeof import('./CopyLinkButton');
 type A2hsHint = import('../lib/a2hs').A2hsHint;
@@ -115,9 +120,11 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   const [selection, setSelection] = useState<EntityRef | null>(null);
   const [aspectTypes, setAspectTypes] = useState<AspectType[]>(ALL_ASPECT_TYPES);
   const [showHouses, setShowHouses] = useState(true);
+  const [detailOpen, setDetailOpen] = useState(false);
   const [announce, setAnnounce] = useState('');
   const selFromUrl = useRef(false);
   const wheelboxRef = useRef<HTMLDivElement>(null);
+  const detailPreferenceRef = useRef<'open' | 'closed' | null>(null);
 
   // ── Guided tour (lazy — the module never loads until asked for) ──
   const [tourMod, setTourMod] = useState<TourModule | null>(null);
@@ -225,9 +232,17 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   }
 
   /** The one selection entry point: state + URL + announcement + focus care. */
+  function openDetailForSelection() {
+    if (detailOpen) return;
+    setDetailOpen(true);
+  }
+
   function applySelect(ref: EntityRef | null) {
     // Selecting a house someone can't see makes no sense — re-light the layer.
     if (ref?.kind === 'house') setShowHouses(true);
+    // The data rows now live inside a closed-by-default disclosure. Re-light
+    // that layer before applying a body/aspect highlight from the Explorer.
+    if (ref?.kind === 'body' || ref?.kind === 'aspect') openDetailForSelection();
     setSelection(ref);
     setAnnounce(ref ? describeSelection(ref) : t(locale, 'selectionCleared'));
     try {
@@ -251,8 +266,37 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
     selFromUrl.current = true;
     const id = new URLSearchParams(window.location.search).get('sel');
     const ref = id ? parseEntityId(id) : null;
-    if (ref && sceneHas(scene, ref)) setSelection(ref);
+    if (ref && sceneHas(scene, ref)) {
+      if (ref.kind === 'body' || ref.kind === 'aspect') openDetailForSelection();
+      setSelection(ref);
+    }
   }, [scene]);
+
+  // Device-local preference. The server and first client paint stay closed;
+  // the one mount read may restore an explicit choice without tracking it as
+  // a fresh interaction.
+  useEffect(() => {
+    if (mode !== 'full') return;
+    try {
+      const stored = localStorage.getItem(DETAIL_STORAGE_KEY);
+      detailPreferenceRef.current = stored === 'open' || stored === 'closed' ? stored : null;
+      if (detailPreferenceRef.current === 'open') setDetailOpen(true);
+    } catch { /* storage unavailable — closed default remains */ }
+  }, []);
+
+  function onDetailToggle(e: Event) {
+    const open = (e.currentTarget as HTMLDetailsElement).open;
+    setDetailOpen(open);
+    const preference = open ? 'open' : 'closed';
+    // A delayed DOM event for the mount-restored value is not a new visitor
+    // interaction. The validated preference was read exactly once on mount.
+    if (detailPreferenceRef.current === preference) return;
+    detailPreferenceRef.current = preference;
+    try {
+      localStorage.setItem(DETAIL_STORAGE_KEY, preference);
+    } catch { /* device preference is best effort */ }
+    track('detail_toggle', { to: open ? 'full' : 'plain' });
+  }
 
   // Recompute: keep the selection when the entity survives, clear it when
   // it doesn't (e.g. houses gone on a no-time chart).
@@ -846,99 +890,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                 </div>
               </div>
 
-              {shareInput && (
-                <div class="calc__chart-share">
-                  {reading && (
-                    <button class="btn btn--glass calc__tour-start" type="button" onClick={startTour} data-tour-start>
-                      <span>{t(locale, 'tourStart')}</span>
-                      <span class="orb">→</span>
-                    </button>
-                  )}
-                  <button class="btn btn--glass" type="button" onClick={openShareDialog} disabled={card === 'busy'} data-share-card>
-                    <span>{card === 'busy' ? t(locale, 'rendering') : card === 'saved' ? t(locale, 'cardSaved') : t(locale, 'shareChart')}</span>
-                    <span class="orb">{card === 'saved' ? '✓' : '↗'}</span>
-                  </button>
-                  {CalendarSubscribe && (
-                    <CalendarSubscribe
-                      locale={locale}
-                      positions={{
-                        bodies: chart.bodies,
-                        angles: chart.angles ? { asc: chart.angles.asc, mc: chart.angles.mc } : null,
-                        houseSystem: chart.houses?.system ?? houseSystem,
-                        engineVersion: chart.engineVersion,
-                      }}
-                    />
-                  )}
-                </div>
-              )}
-
-              <div class="calc__table-wrap">
-                <table class="calc__table">
-                  <thead>
-                    <tr><th>{t(locale, 'body')}</th><th>{t(locale, 'position')}</th><th>{t(locale, 'sign')}</th>{chart.houses && <th>{t(locale, 'house')}</th>}<th><span class="sr-only">{t(locale, 'motion')}</span></th></tr>
-                  </thead>
-                  <tbody>
-                    {placements.map((p) => {
-                      const inScene = scene.bodies.some((b) => b.body === p.body);
-                      const isSel = selection?.kind === 'body' && selection.body === p.body;
-                      const hue = signForLongitude(p.lon).hue;
-                      return (
-                        <tr key={p.body} data-selected={isSel ? 'true' : undefined} style={isSel ? `--sign:${hue}` : undefined}>
-                          <td>
-                            {inScene ? (
-                              <button
-                                class="calc__rowbtn"
-                                type="button"
-                                aria-pressed={isSel}
-                                onClick={() => applySelect(isSel ? null : { kind: 'body', body: p.body })}
-                              >
-                                <span class="calc__glyph"><PlanetGlyph body={p.body} size={15} /></span> {planetLabel(locale, p.body)}
-                              </button>
-                            ) : (
-                              <><span class="calc__glyph"><PlanetGlyph body={p.body} size={15} /></span> {planetLabel(locale, p.body)}</>
-                            )}
-                          </td>
-                          <td class="mono">{p.label.split(' ')[0]}</td>
-                          <td><SignChip lon={p.lon} locale={locale} /></td>
-                          {chart.houses && <td class="mono">{p.house}</td>}
-                          <td class="mono calc__retro">{p.retrograde ? 'Rx' : ''}</td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
-              </div>
-
-              {chart.aspects.length > 0 && (
-                <details class="calc__aspects">
-                  <summary>{t(locale, 'aspectsFound')} - {chart.aspects.length} {t(locale, 'found')}</summary>
-                  <ul>
-                    {chart.aspects.map((a) => {
-                      const ref: EntityRef = { kind: 'aspect', a: a.a, b: a.b, type: a.type };
-                      const inScene = aspectTypes.includes(a.type)
-                        && scene.aspects.some((x) => x.a === a.a && x.b === a.b && x.type === a.type);
-                      const isSel = selection?.kind === 'aspect'
-                        && selection.a === a.a && selection.b === a.b && selection.type === a.type;
-                      const line = (
-                        <>
-                          <PlanetGlyph body={a.a} size={13} class="calc__pg" /> {planetLabel(locale, a.a)} <AspectGlyph type={a.type} size={13} class="calc__pg" /> {aspectLabel(locale, a.type)} <PlanetGlyph body={a.b} size={13} class="calc__pg" /> {planetLabel(locale, a.b)} · {t(locale, 'orb')} {a.orb.toFixed(1)}° {a.applying ? `· ${t(locale, 'applying')}` : ''}
-                        </>
-                      );
-                      return (
-                        <li key={`${a.a}${a.b}${a.type}`} class="mono" data-selected={isSel ? 'true' : undefined}>
-                          {inScene ? (
-                            <button class="calc__rowbtn" type="button" aria-pressed={isSel} onClick={() => applySelect(isSel ? null : ref)}>
-                              {line}
-                            </button>
-                          ) : line}
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </details>
-              )}
-
-              {/* Guided reading — the tables above are the data; this is the order. */}
+              {/* The guided reading leads; full data follows the action rows. */}
               {reading && (
                 <section class="calc__read" aria-labelledby="calc-read-title">
                   <h2 id="calc-read-title" class="calc__read-title">{t(locale, 'readInOrder')}</h2>
@@ -1003,6 +955,32 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                   </ol>
                 </section>
               )}
+
+              {shareInput && (
+                <div class="calc__chart-share">
+                  {reading && (
+                    <button class="btn btn--glass calc__tour-start" type="button" onClick={startTour} data-tour-start>
+                      <span>{t(locale, 'tourStart')}</span>
+                      <span class="orb">→</span>
+                    </button>
+                  )}
+                  <button class="btn btn--glass" type="button" onClick={openShareDialog} disabled={card === 'busy'} data-share-card>
+                    <span>{card === 'busy' ? t(locale, 'rendering') : card === 'saved' ? t(locale, 'cardSaved') : t(locale, 'shareChart')}</span>
+                    <span class="orb">{card === 'saved' ? '✓' : '↗'}</span>
+                  </button>
+                  {CalendarSubscribe && (
+                    <CalendarSubscribe
+                      locale={locale}
+                      positions={{
+                        bodies: chart.bodies,
+                        angles: chart.angles ? { asc: chart.angles.asc, mc: chart.angles.mc } : null,
+                        houseSystem: chart.houses?.system ?? houseSystem,
+                        engineVersion: chart.engineVersion,
+                      }}
+                    />
+                  )}
+                </div>
+              )}
             </>
           )}
 
@@ -1039,6 +1017,84 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
             </div>
           )}
           {PushOptIn && <PushOptIn locale={locale} />}
+
+          {mode === 'full' && scene && (
+            <details
+              class="calc__detail"
+              data-detail
+              open={detailOpen}
+              onToggle={onDetailToggle}
+            >
+              <summary class="calc__detail-summary">{DETAIL_LABELS[lensLocale].lead}<span class="mono">{placements.length}</span>{DETAIL_LABELS[lensLocale].placements}<span class="mono">{chart.aspects.length}</span>{DETAIL_LABELS[lensLocale].aspects}</summary>
+              <div class="calc__detail-body">
+                <div class="calc__table-wrap">
+                  <table class="calc__table">
+                    <thead>
+                      <tr><th>{t(locale, 'body')}</th><th>{t(locale, 'position')}</th><th>{t(locale, 'sign')}</th>{chart.houses && <th>{t(locale, 'house')}</th>}<th><span class="sr-only">{t(locale, 'motion')}</span></th></tr>
+                    </thead>
+                    <tbody>
+                      {placements.map((p) => {
+                        const inScene = scene.bodies.some((b) => b.body === p.body);
+                        const isSel = selection?.kind === 'body' && selection.body === p.body;
+                        const hue = signForLongitude(p.lon).hue;
+                        return (
+                          <tr key={p.body} data-selected={isSel ? 'true' : undefined} style={isSel ? `--sign:${hue}` : undefined}>
+                            <td>
+                              {inScene ? (
+                                <button
+                                  class="calc__rowbtn"
+                                  type="button"
+                                  aria-pressed={isSel}
+                                  onClick={() => applySelect(isSel ? null : { kind: 'body', body: p.body })}
+                                >
+                                  <span class="calc__glyph"><PlanetGlyph body={p.body} size={15} /></span> {planetLabel(locale, p.body)}
+                                </button>
+                              ) : (
+                                <><span class="calc__glyph"><PlanetGlyph body={p.body} size={15} /></span> {planetLabel(locale, p.body)}</>
+                              )}
+                            </td>
+                            <td class="mono">{p.label.split(' ')[0]}</td>
+                            <td><SignChip lon={p.lon} locale={locale} /></td>
+                            {chart.houses && <td class="mono">{p.house}</td>}
+                            <td class="mono calc__retro">{p.retrograde ? 'Rx' : ''}</td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+
+                {chart.aspects.length > 0 && (
+                  <section class="calc__aspects" aria-labelledby="calc-aspects-title">
+                    <h3 id="calc-aspects-title">{t(locale, 'aspectsFound')} - {chart.aspects.length} {t(locale, 'found')}</h3>
+                    <ul>
+                      {chart.aspects.map((a) => {
+                        const ref: EntityRef = { kind: 'aspect', a: a.a, b: a.b, type: a.type };
+                        const inScene = aspectTypes.includes(a.type)
+                          && scene.aspects.some((x) => x.a === a.a && x.b === a.b && x.type === a.type);
+                        const isSel = selection?.kind === 'aspect'
+                          && selection.a === a.a && selection.b === a.b && selection.type === a.type;
+                        const line = (
+                          <>
+                            <PlanetGlyph body={a.a} size={13} class="calc__pg" /> {planetLabel(locale, a.a)} <AspectGlyph type={a.type} size={13} class="calc__pg" /> {aspectLabel(locale, a.type)} <PlanetGlyph body={a.b} size={13} class="calc__pg" /> {planetLabel(locale, a.b)} · {t(locale, 'orb')} {a.orb.toFixed(1)}° {a.applying ? `· ${t(locale, 'applying')}` : ''}
+                          </>
+                        );
+                        return (
+                          <li key={`${a.a}${a.b}${a.type}`} class="mono" data-selected={isSel ? 'true' : undefined}>
+                            {inScene ? (
+                              <button class="calc__rowbtn" type="button" aria-pressed={isSel} onClick={() => applySelect(isSel ? null : ref)}>
+                                {line}
+                              </button>
+                            ) : line}
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </section>
+                )}
+              </div>
+            </details>
+          )}
 
           {/* Share: the link carries the data; no server involved */}
           {mode === 'full' && shareInput && CopyLinkButton && (

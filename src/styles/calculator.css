@@ -247,14 +247,23 @@
 /* .chip / .chip__icon live in base.css (global) — SignChip is used on the
    homepage WelcomeBack strip too, which doesn't load this calculator sheet. */
 
-/* Aspects */
-.calc__aspects summary {
+/* Full-detail disclosure: one native control owns the placements + aspects. */
+.calc__detail {
+  border-top: 1px solid var(--hair-2);
+  border-bottom: 1px solid var(--hair-2);
+}
+.calc__detail-summary {
   cursor: pointer;
+  padding: 14px 4px;
   font-size: var(--text-sm);
   font-weight: 550;
   color: var(--text-2);
-  padding: 6px 0;
 }
+.calc__detail-summary::marker { color: var(--accent); }
+.calc__detail-summary .mono { font-size: 0.9em; font-weight: 500; }
+.calc__detail-body { display: grid; gap: 24px; padding: 4px 4px 20px; }
+.calc__aspects { border-top: 1px solid var(--hair-2); padding-top: 20px; }
+.calc__aspects h3 { margin: 0; font-size: var(--text-sm); font-weight: 550; color: var(--text-2); }
 .calc__aspects ul { margin: 10px 0 0; padding: 0; list-style: none; display: grid; gap: 6px; }
 .calc__aspects li { font-size: 12px; color: var(--muted); }
 
@@ -709,7 +718,7 @@
 }
 .field__labelrow .field__label { flex: 1; }
 
-/* Guided reading: the ordered walkthrough under the tables. Serif title
+/* Guided reading: the ordered walkthrough before the full data. Serif title
    like every section head; steps carry mono numerals via counter. */
 .calc__read { margin-top: 34px; padding-top: 26px; border-top: 1px solid var(--hair-2); }
 .calc__read-title {

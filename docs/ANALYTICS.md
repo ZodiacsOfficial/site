@@ -28,6 +28,9 @@ visitor typed.
 | composite_view | — | The composite tab renders on /compatibility/ |
 | grid_select | — | An aspect-grid cell is tapped |
 | chiron_toggle | on | The Chiron overlay chip is toggled |
+| detail_toggle | to | The birth-chart detail disclosure changes (to: full, plain) |
+| chart_name_set | via | A chart name is committed (via: prompt, link, skip) |
+| comm_read_view | — | A communication reading renders |
 | chart_save | source | A chart is saved on-device |
 | chart_share | variant | A share link/card is created |
 | search_open / search_go | — / kind | Site search |
