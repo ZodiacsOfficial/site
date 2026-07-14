@@ -5,8 +5,9 @@ Review method: **AI language review by Sol**.
 Review date: **2026-07-15**.
 
 Status: **the integrated Italian language review is complete across pages,
-guides, shared dictionaries and interactive modules. The 320 px browser pass,
-font coverage and full gate remain pending**.
+guides, shared dictionaries and interactive modules. The 320 px browser pass
+and accented-font coverage are verified; the authoritative Linux gate remains
+to be confirmed**.
 
 accepted by the owner in lieu of a human native-speaker sign-off.
 
@@ -45,10 +46,25 @@ natale`, `ascendente`, `case`, `transiti`, `luna piena`, `luna nuova` and
 - [x] Italian UI keys and interpolation placeholders match the English catalog.
 - [ ] Draft publication dates use the review date and must be refreshed to the
   actual merge date together with the sitemap `lastmod` values.
-- [ ] The complete built route set will be driven at 320 px after integration;
-  no visual-browser result is claimed by this integrated language review.
-- [ ] Build, check, tests, distribution drift and bundle gates will be recorded
-  on the integrated branch.
+- [x] Sixteen representative routes were driven at a 320 × 844 browser
+  viewport after integration. Every page had meaningful content, `lang="it"`,
+  no document overflow, no framework overlay and no page error; the localized
+  `/it/404/` and the labelled English fallback were included.
+- [ ] Build, check, distribution drift and bundle gates pass locally. The local
+  suite passes 472/473 tests; only the pre-existing Kahlo astronomy snapshot
+  differs at machine-precision decimals under macOS, exactly as on the earlier
+  stack layers. The authoritative Linux gate remains to be recorded.
+
+## Mobile and font evidence
+
+The home page, birth-chart calculator and Ariete guide were captured from the
+320 × 844 review viewport in `docs/acceptance/languages/`. Visual inspection
+found no clipping, truncation or fallback-font substitution.
+
+Chrome's font loading check returned `true` for every character in `à è ì ò ù`
+for all three self-hosted families: Instrument Sans, EB Garamond and JetBrains
+Mono. Computed styles on live Italian text also resolve to the intended sans
+and serif families; the locale row exercises the self-hosted mono family.
 
 ## Route coverage
 
@@ -111,6 +127,6 @@ The Italian values below are byte-identical to their integrated source values.
 
 Italian is integrated through routing, hreflang, sitemap, canonical URLs, date
 formatting, localized sign names, islands, navigation, footer, assistant, chart
-lenses, tour copy, push delivery and search behavior. The remaining checks are
-the 320 px browser pass, coverage of `à è ì ò ù` in all three self-hosted font
-families, the merge-date refresh and the full branch gate.
+lenses, tour copy, push delivery and search behavior. Mobile rendering and
+accented-font coverage are verified. The remaining checks are the merge-date
+refresh, if needed, and the authoritative Linux branch gate.
