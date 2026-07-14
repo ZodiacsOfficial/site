@@ -35,6 +35,7 @@ export const TOOL_ROUTES = Object.freeze([
   '/retrogrades/',
   '/rising-sign/',
   '/saturn-return/',
+  '/solar-return/',
   '/transits/',
   '/widgets/',
 ]);

@@ -260,6 +260,23 @@
 
 .calc__actions { display: flex; flex-wrap: wrap; gap: 12px; }
 
+/* Solar return: the form stays in the host chunk; this result surface arrives
+   with the wheel only after calculation. */
+.sr-form__source { margin-bottom: 24px; }
+.sr-form__birth { grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 720px) { .sr-form__birth { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.sr-form__options { align-items: start; }
+.sr-form__toggle { min-height: 46px; }
+.sr-result { display: grid; gap: clamp(18px, 3vw, 28px); min-width: 0; }
+.sr-result > * { min-width: 0; max-width: 100%; }
+.sr-result .calc__table-wrap { min-width: 0; max-width: 100%; }
+.sr-result .calc__actions .btn { max-width: 100%; white-space: normal; }
+.sr-result__core { padding: clamp(20px, 3.5vw, 34px); }
+.sr-result__core h2 { margin: 8px 0 10px; font-family: var(--font-serif); font-size: var(--text-xl); font-weight: 500; }
+.sr-result__receipt p { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.8; overflow-wrap: anywhere; }
+.sr-result__line { margin: 0; padding: 18px 20px; border-left: 2px solid var(--accent); background: rgba(198, 204, 218, 0.035); color: var(--text-2); line-height: 1.65; }
+@media (max-width: 359px) { .sr-result__core { padding-inline: 16px; } }
+
 /* The chart's own action row, docked directly under the wheel: the guided
    tour's front door beside "Share chart". Their liquid glass moved to the
    sitewide `.btn--glass` in base.css (the recipe this button pioneered);
