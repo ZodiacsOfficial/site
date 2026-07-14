@@ -1,9 +1,44 @@
 import type { AspectType } from '../../lib/engine/types';
+import type { Element } from '../../lib/signs';
 
 interface SynastryPairLines {
   conj?: string;
   soft: string;
   hard: string;
+}
+
+export type MercuryElementPairKey =
+  | 'fire-fire'
+  | 'fire-earth'
+  | 'fire-air'
+  | 'fire-water'
+  | 'earth-earth'
+  | 'earth-air'
+  | 'earth-water'
+  | 'air-air'
+  | 'air-water'
+  | 'water-water';
+
+/** Fable-authored Corpus B. Keep every value byte-identical to its source. */
+export const MERCURY_ELEMENT_PAIRS: Record<MercuryElementPairKey, string> = {
+  'fire-fire': `Two minds that think at speaking speed — conversation as sparring, fast and warm. Nobody finishes their sentences here; nobody minds.`,
+  'fire-earth': `One of you talks toward the idea, the other from the plan. The fire mind supplies the spark, the earth mind the load-bearing question: "how?"`,
+  'fire-air': `Kindling and wind — ideas escalate delightfully and land somewhere neither of you started. Keep one notepad between you for what was actually decided.`,
+  'fire-water': `One speaks in headlines, the other in tides. The fire mind must learn that silence isn't agreement; the water mind, that bluntness isn't attack.`,
+  'earth-earth': `Conversation as craftsmanship: concrete, unhurried, allergic to hypotheticals. You two can sit in a comfortable quiet that would alarm other pairs.`,
+  'earth-air': `The theorist and the surveyor — one loves the model, the other checks the ground. Together you're a full feasibility study; apart, a lecture and a spreadsheet.`,
+  'earth-water': `Words are practical on one side and tidal on the other, and both of you distrust noise. This pair often communicates best while doing something — the talk rides the task.`,
+  'air-air': `A conversation that never actually ends, just pauses — references, tangents, callbacks to a joke from years ago. The risk is analyzing a feeling instead of having it.`,
+  'air-water': `One narrates the feeling, the other feels the narration. Translation is the work: the air mind names, the water mind confirms the name actually fits.`,
+  'water-water': `You two talk under the words — tone, timing, what wasn't said. Beautiful and hermetic; the discipline is saying the important things out loud anyway, for the record.`,
+};
+
+export const NO_CONTACT = `Your Mercuries make no major contact — the tradition reads that as neutral, not bad: your minds neither collide nor complete each other by default, so your conversational style is built, not given. The sign pairing below is the material you're building with.`;
+
+const ELEMENT_ORDER: readonly Element[] = ['fire', 'earth', 'air', 'water'];
+
+export function mercuryElementPairKey(a: Element, b: Element): MercuryElementPairKey {
+  return (ELEMENT_ORDER.indexOf(a) <= ELEMENT_ORDER.indexOf(b) ? `${a}-${b}` : `${b}-${a}`) as MercuryElementPairKey;
 }
 
 /** Fable-authored Corpus 1. Keep every value byte-identical to its source. */

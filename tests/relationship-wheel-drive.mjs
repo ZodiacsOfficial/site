@@ -20,6 +20,10 @@ const BASE = `http://127.0.0.1:${PORT}`;
 const CURATED_SUN_MOON = 'One of you runs on purpose, the other on feeling, and here they agree — what one wants to do is what the other wants to come home to. This is the classic ease that makes a relationship feel inevitable in retrospect.';
 const FALLBACK_NEPTUNE_URANUS = 'Frida’s imagination pushes against Diego’s independence — friction that forces growth or starts fights, depending on the week.';
 const COMPOSITE_NOTE = "A composite chart is the midpoint of two charts — a portrait of the relationship itself rather than either person. Composite houses need a location convention we won't fake, so this chart is shown without houses.";
+const COMMUNICATION_FIRE_FIRE = 'Two minds that think at speaking speed — conversation as sparring, fast and warm. Nobody finishes their sentences here; nobody minds.';
+const COMMUNICATION_MERCURY_MERCURY = 'Your minds are running compatible operating systems — shorthand develops fast, and it lasts. You will never run out of conversation, only of evening.';
+const COMMUNICATION_MOON_MERCURY = 'Analysis meets emotion mid-sentence: one wants the feeling named precisely, the other wants it felt first. Ask "solve or listen?" and this aspect behaves.';
+const COMMUNICATION_NO_CONTACT = "Your Mercuries make no major contact — the tradition reads that as neutral, not bad: your minds neither collide nor complete each other by default, so your conversational style is built, not given. The sign pairing below is the material you're building with.";
 const SAVED_MC = {
   'drive-frida': 53.32837167390386,
   'drive-diego': 16.9870696472928,
@@ -92,6 +96,19 @@ try {
       && await page.locator('[data-relationship-tab="wheel"]').getAttribute('aria-selected') === 'true');
   check('an uncurated top contact keeps the role-composed fallback verbatim',
     (await page.locator('.syn__aspect-read[data-fallback-line]').first().textContent())?.trim() === FALLBACK_NEPTUNE_URANUS);
+  const communication = page.locator('[data-communication-read]');
+  check('communication read follows top contacts and precedes balances', await communication.evaluate((node) =>
+    node.previousElementSibling?.matches('.syn__aspects') === true
+      && node.nextElementSibling?.matches('.syn__balances') === true));
+  check('Frida and Diego pin the fire-fire Mercury pairing',
+    await communication.getAttribute('data-mercury-elements') === 'fire-fire'
+      && (await communication.locator('.rcomm__receipt').textContent())?.trim() === 'Mercury: Leo · Mercury: Sagittarius'
+      && (await communication.locator('.rcomm__framing').textContent())?.trim() === COMMUNICATION_FIRE_FIRE);
+  const communicationLines = await communication.locator('[data-communication-contact] .rcomm__contact-read').allTextContents();
+  check('the full aspect set renders both curated Frida-Diego communication contacts',
+    communicationLines.length === 2
+      && communicationLines.map((line) => line.trim()).includes(COMMUNICATION_MERCURY_MERCURY)
+      && communicationLines.map((line) => line.trim()).includes(COMMUNICATION_MOON_MERCURY));
   await page.locator('.tring__wheelbox').evaluate((n) => n.scrollIntoView({ block: 'center' }));
   await wait(800);
   await shot(page, 'rwheel-both.png', { clip: { x: 0, y: 0, width: 1440, height: 1200 } });
@@ -208,6 +225,20 @@ try {
     (await curated.locator('[data-grid-detail] [data-curated-line]').textContent())?.trim() === CURATED_SUN_MOON);
   await curated.close();
 
+  // The existing Diego/Trine pair has no Mercury-to-Mercury/Moon/Mars
+  // contact even though it has unrelated cross-chart aspects.
+  const noContact = await browser.newPage({ viewport: { width: 1440, height: 1200 } });
+  await noContact.addInitScript((prof) => localStorage.setItem('zodiacs.profile.v1', JSON.stringify(prof)), profile);
+  await noContact.goto(`${BASE}/compatibility/`, { waitUntil: 'networkidle' });
+  await noContact.locator('#syn-a-source').selectOption('drive-diego');
+  await noContact.locator('#syn-b-source').selectOption('drive-trine');
+  await noContact.locator('.calc__submit').click();
+  await noContact.waitForSelector('[data-communication-read]', { timeout: 20000 });
+  check('a pair with no qualifying Mercury contact shows the fallback verbatim',
+    (await noContact.locator('[data-communication-no-contact]').textContent())?.trim() === COMMUNICATION_NO_CONTACT
+      && (await noContact.locator('[data-communication-contact]').count()) === 0);
+  await noContact.close();
+
   // An inline (by-value) side restores as a locked chip and still
   // compares; a pair referencing a missing chart prunes itself.
   const seededPairs = [
@@ -263,6 +294,10 @@ try {
   await es.locator('#syn-b-source').selectOption('drive-diego');
   await es.locator('.calc__submit').click();
   await es.waitForSelector('.rwheel', { timeout: 20000 });
+  check('ES keeps the localized Mercury receipt and suppresses all English communication narrative',
+    (await es.locator('[data-communication-read] .rcomm__receipt').textContent())?.trim() === 'Mercurio: Leo · Mercurio: Sagitario'
+      && (await es.locator('[data-communication-read] .rcomm__title, [data-communication-read] .rcomm__intro, [data-communication-read] .rcomm__framing, [data-communication-read] [data-communication-contact], [data-communication-read] [data-communication-no-contact]').count()) === 0
+      && !(await es.locator('body').textContent() ?? '').includes(COMMUNICATION_FIRE_FIRE));
   await es.locator('[data-relationship-tab="grid"]').click();
   await es.locator('[data-grid-contact]').first().click();
   check('ES grid keeps receipts but suppresses English narrative',
@@ -331,6 +366,13 @@ try {
   await mob.locator('.calc__submit').click();
   await mob.waitForSelector('.rwheel', { timeout: 20000 });
   check('mobile: bi-wheel renders', (await mob.locator('.wheel__transit').count()) === 11);
+  const mobileCommunication = await mob.evaluate(() => ({
+    doc: document.documentElement.scrollWidth,
+    win: window.innerWidth,
+  }));
+  check('communication block does not overflow a 320px screen',
+    mobileCommunication.doc <= mobileCommunication.win,
+    `${mobileCommunication.doc} vs ${mobileCommunication.win}`);
   await mob.locator('[data-relationship-tab="grid"]').click();
   await mob.waitForFunction(() => {
     const grid = document.querySelector('.rgrid__scroll');
