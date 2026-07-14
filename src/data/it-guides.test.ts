@@ -50,4 +50,25 @@ describe('Italian sign guides', () => {
       expect(text).not.toContain('si confrontano con dettaglio');
     }
   });
+
+  it('keeps the reviewed Italian corrections and rejects the replaced calques', () => {
+    const aries = italianGuideFor(SIGNS.find(({ slug }) => slug === 'aries')!);
+    const libra = italianGuideFor(SIGNS.find(({ slug }) => slug === 'libra')!);
+    const capricorn = italianGuideFor(SIGNS.find(({ slug }) => slug === 'capricorn')!);
+    const corpus = SIGNS.map((sign) => JSON.stringify(italianGuideFor(sign))).join('\n');
+
+    expect(corpus).toContain('desiderio e conflitto allo stato puro: azione visibile, competizione aperta e poca pazienza per i giri di parole');
+    expect(corpus).toContain('l’ambito in cui hai bisogno di autonomia, decisione e del permesso di provare prima di avere garanzie');
+    expect(corpus).toContain('amicizie affidabili, buon cibo, musica, ricordi e una presenza senza fretta');
+    expect(corpus).toContain('amicizie con cui viaggiare');
+    expect(corpus).toContain('limiti personali di fronte alle persone esigenti');
+    expect(libra.sections.flatMap(({ body }) => body).join('\n')).toContain('imparare che la vera pace a volte comincia con una frase scomoda detta al momento giusto');
+    expect(capricorn.sections.flatMap(({ body }) => body).join('\n')).toContain('prendersi cura delle ossa, dormire, porre limiti al lavoro, coltivare l’umorismo, programmare il riposo e concedersi di non produrre');
+    expect(aries.faq).toContainEqual({
+      q: 'Con chi è compatibile l’Ariete?',
+      a: 'Tende a trovarsi bene con Leone, Sagittario e Gemelli. Per una lettura di coppia davvero utile, confronta i due temi completi.',
+    });
+    expect(corpus).not.toMatch(/progetti spontanei|progetti ricchi di buon cibo|relazioni riposanti|legami viaggiatori|limiti energetici/u);
+    expect(corpus).not.toContain('Quale pianeta governa l’Ariete?');
+  });
 });
