@@ -67,7 +67,7 @@ const COPY = {
     composite: 'Composite',
   },
   es: {
-    caption: 'Rueda interior: {a}. Anillo exterior: {b}. Las líneas entre ambos son donde sus cartas se tocan.',
+    caption: 'Rueda interior: {a}. Anillo exterior: {b}. Las líneas entre ambos marcan dónde se tocan sus cartas.',
     swap: 'Poner a {name} dentro',
     tapHint: 'Toca una línea de conexión — o una fila abajo — para leer ese contacto. Toca un planeta del anillo exterior para ver su posición.',
     ringLabel: 'La carta de {name}, en el anillo exterior',

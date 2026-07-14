@@ -55,7 +55,7 @@ export const LENS_CHROME = {
     returnIntro: 'El anillo exterior es el cielo de tu último retorno solar: el instante en que el Sol volvió a su posición natal.',
     tightestNow: 'Contactos más exactos:',
     noContacts: 'Sin contactos cercanos con este orbe ahora mismo.',
-    transitsLink: 'Recorre este cielo en el tiempo en /transits/.',
+    transitsLink: 'Recorre este cielo a través del tiempo en /transits/.',
     returnInstant: 'Instante del retorno',
     localTime: 'tu hora',
     noTimeNote: 'Calculado desde una carta de mediodía: la hora exacta de nacimiento afina estas posiciones.',

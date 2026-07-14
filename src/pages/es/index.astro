@@ -23,7 +23,7 @@ const jsonLd = [
     '@id': 'https://zodiacs.org/#site',
     url: 'https://zodiacs.org/',
     name: 'Zodiacs.org',
-    description: 'Cartas natales gratis, signo lunar, compatibilidad, horóscopos y guías de signos, privadas y fáciles de entender.',
+    description: 'Cartas natales gratis, signo lunar, compatibilidad, horóscopos y guías de signos, privados y fáciles de entender.',
     publisher: { '@id': 'https://zodiacs.org/#org' },
     inLanguage: ['en', 'es'],
   },
@@ -31,7 +31,7 @@ const jsonLd = [
 ---
 <Base
   title="Zodiacs.org en español — cartas natales gratis y astrología fácil"
-  description="Cartas natales gratis, signo lunar, ascendente, compatibilidad, horóscopos y guías de signos: precisas, privadas y fáciles de entender."
+  description="Cartas natales gratis, signo lunar, ascendente, compatibilidad, horóscopos y guías de signos: precisos, privados y fáciles de entender."
   path="/es/"
   locale="es"
   jsonLd={jsonLd}
@@ -331,7 +331,7 @@ const jsonLd = [
   }
 
   /* .ticker-band + .wb + .skyticker styles live in ../../styles/today.css. */
-  .home-tools-es { display: grid; gap: 14px; grid-template-columns: 1fr 1fr; }
+  .home-tools-es { display: grid; gap: 14px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
   @media (min-width: 900px) { .home-tools-es { grid-template-columns: repeat(4, 1fr); } }
   .home-tool-es { display: flex; flex-direction: column; gap: 9px; padding: 26px 22px 22px; min-height: 196px; }
   /* Tool-card icon disc lives in ToolGlyph.astro (shared with the EN home). */

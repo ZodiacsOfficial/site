@@ -139,7 +139,7 @@ export default function ChartLens({ lens, chart, locale, loadEngine, track, onRi
       {sky && lens === 'return' && sky.instant && (
         <p class="lens__receipt mono" data-lens-receipt>
           {c.returnInstant}: {sky.instant.toISOString().replace('T', ' · ').slice(0, 21)} UTC
-          {' · '}{c.localTime}: {sky.instant.toLocaleString(locale === 'es' ? 'es' : 'en', {
+          {' · '}{c.localTime}: {sky.instant.toLocaleString(locale === 'es' ? 'es-419' : 'en', {
             year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit',
           })}
         </p>

@@ -6,6 +6,7 @@
  */
 import { signBySlug, signName } from './signs';
 import type { Locale } from './i18n';
+import { aspectLabel, planetLabel } from './i18n/astrology';
 import { formatDate } from './i18n/dates';
 
 export interface TransitEvent {
@@ -54,7 +55,7 @@ export function eventList(month: string, locale: Locale = 'en'): TransitEvent[] 
     ...t.ingresses.map((e) => ({
       at: e.at,
       label: locale === 'es'
-        ? `${e.planet} entra en ${sn(e.sign, locale)}${e.retrograde ? ', retrógrado' : ''}`
+        ? `${planetLabel(locale, e.planet)} entra en ${sn(e.sign, locale)}${e.retrograde ? ', retrógrado' : ''}`
         : `${e.planet} enters ${sn(e.sign)}${e.retrograde ? ', retrograde' : ''}`,
       body: e.planet,
       hue: signBySlug(e.sign).hue,
@@ -62,7 +63,7 @@ export function eventList(month: string, locale: Locale = 'en'): TransitEvent[] 
     ...t.lunations.map((e) => ({
       at: e.at,
       label: locale === 'es'
-        ? `${e.type === 'new' ? 'Luna nueva' : 'Luna llena'} a ${Math.round(e.degree)}° ${sn(e.sign, locale)}`
+        ? `${e.type === 'new' ? 'Luna nueva' : 'Luna llena'} a ${Math.round(e.degree)}° de ${sn(e.sign, locale)}`
         : `${e.type === 'new' ? 'New moon' : 'Full moon'} at ${Math.round(e.degree)}° ${sn(e.sign)}`,
       body: 'Moon',
       hue: signBySlug(e.sign).hue,
@@ -70,14 +71,16 @@ export function eventList(month: string, locale: Locale = 'en'): TransitEvent[] 
     ...t.stations.map((e) => ({
       at: e.at,
       label: locale === 'es'
-        ? `${e.planet} estaciona ${e.type} a ${Math.round(e.degree)}° ${sn(e.sign, locale)}`
+        ? `${planetLabel(locale, e.planet)} estaciona ${e.type === 'retrograde' ? 'retrógrado' : 'directo'} a ${Math.round(e.degree)}° de ${sn(e.sign, locale)}`
         : `${e.planet} stations ${e.type} at ${Math.round(e.degree)}° ${sn(e.sign)}`,
       body: e.planet,
       hue: signBySlug(e.sign).hue,
     })),
     ...t.aspects.map((e) => ({
       at: e.at,
-      label: `${e.a} ${e.type} ${e.b} (${sn(e.aSign, locale)}–${sn(e.bSign, locale)})`,
+      label: locale === 'es'
+        ? `${planetLabel(locale, e.a)} ${aspectLabel(locale, e.type)} ${planetLabel(locale, e.b)} (${sn(e.aSign, locale)}–${sn(e.bSign, locale)})`
+        : `${e.a} ${e.type} ${e.b} (${sn(e.aSign)}–${sn(e.bSign)})`,
       body: e.a,
       hue: signBySlug(e.aSign).hue,
     })),

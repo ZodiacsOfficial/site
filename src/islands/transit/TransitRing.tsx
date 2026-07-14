@@ -109,8 +109,8 @@ const COPY = {
     announce: 'Cielo del',
     scanning: 'Calculando las fechas exactas de los tránsitos lentos…',
     marksLabel: 'Fechas exactas de tránsitos lentos en esta ventana',
-    nextUp: 'Próximos en llegar a exacto:',
-    noSlowExact: 'Ningún tránsito lento llega a exacto en esta ventana.',
+    nextUp: 'Próximos en alcanzar la exactitud:',
+    noSlowExact: 'Ningún tránsito lento alcanza la exactitud en esta ventana.',
   },
 } as const;
 
