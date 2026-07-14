@@ -120,13 +120,13 @@
         "path": "assets/nuggets/cancer.png",
         "width": 931,
         "height": 711,
-        "bytes": 353021
+        "bytes": 324221
       },
       "thumbnail": {
         "path": "assets/nuggets/thumb/cancer.png",
         "width": 320,
         "height": 244,
-        "bytes": 45363
+        "bytes": 43022
       }
     },
     {
