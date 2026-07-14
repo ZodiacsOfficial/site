@@ -219,6 +219,24 @@ function renderPage() {
   <link rel="canonical" href="${ARCHIVE_META.url}" />
   <link rel="alternate" type="application/rss+xml" title="Zodiacs — The Archive" href="/archive/rss.xml" />
   <link rel="alternate" type="application/feed+json" title="Zodiacs — The Archive" href="/archive/feed.json" />
+  <script>
+    window.plausible = window.plausible || function () {
+      (window.plausible.q = window.plausible.q || []).push(arguments);
+    };
+    window.plausible.init = window.plausible.init || function (options) {
+      window.plausible.o = options || {};
+    };
+    window.plausible.init({
+      hashBasedRouting: false,
+      transformRequest: function (payload) {
+        var canonical = document.querySelector('link[rel="canonical"]');
+        payload.u = canonical ? canonical.href : location.origin + location.pathname;
+        if (payload.p && payload.p.url) delete payload.p.url;
+        return payload;
+      }
+    });
+  </script>
+  <script async src="https://plausible.io/js/pa-HwF2IBb5Sw8eboNPSOgHv.js"></script>
 
   <meta property="og:site_name" content="Zodiacs" />
   <meta property="og:title" content="The Archive — Zodiacs" />

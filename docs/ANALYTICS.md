@@ -40,6 +40,17 @@ visitor typed.
 | calendar_subscribe | — | Transit calendar subscribed |
 | wing_entry | source | A records-register link into /registry/ is followed |
 
+## Wing
+
+The registry wing loads Plausible directly, independently of the consumer
+allowlist shim. These events exist only on `/registry/{sign}/` pages and carry
+only the sign slug. They never include wallet addresses or query strings.
+
+| Event | Props | Fired when |
+| --- | --- | --- |
+| wing_record_view | sign | A registry sign record loads |
+| wing_acquisition_click | sign | An acquisition or market link is followed from a registry sign record |
+
 ## The funnel we read
 
 result_rendered → explorer_interaction → lens_change → chart_save → return
