@@ -1,0 +1,199 @@
+/* Relationship-only result styles. Imported by the lazy result module so
+   none of this changes the /compatibility/ form's initial closure. */
+.rwheel,
+.rwheel__panel,
+.rgrid,
+.rcomp { min-width: 0; }
+
+.rwheel__tabs {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 4px;
+  width: min(100%, 430px);
+  margin: 0 auto;
+  padding: 4px;
+  border: 1px solid var(--hair-2);
+  border-radius: var(--r-lg);
+  background: color-mix(in oklab, var(--surface) 80%, transparent);
+}
+.rwheel__tab {
+  min-width: 0;
+  min-height: 40px;
+  padding: 8px 10px;
+  border: 1px solid transparent;
+  border-radius: var(--r-md);
+  background: transparent;
+  color: var(--muted);
+  font: 600 12px/1 var(--font-mono);
+  letter-spacing: 0.04em;
+  cursor: pointer;
+}
+.rwheel__tab[aria-selected='true'] {
+  border-color: var(--hair-2);
+  background: var(--surface-2);
+  color: var(--text);
+}
+.rwheel__tab:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+.rwheel__panel { display: grid; gap: 16px; }
+
+.rgrid { display: grid; gap: 18px; }
+.rgrid__scroll {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+  /* Sticky table headers otherwise make Chromium count the off-screen table
+     in the document's scroll width even though this element scrolls it. */
+  contain: layout paint;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  border: 1px solid var(--hair-2);
+  border-radius: var(--r-lg);
+  background: var(--void-1);
+  scrollbar-gutter: stable;
+}
+.rgrid__scroll:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+.rgrid__table {
+  width: max-content;
+  min-width: 100%;
+  border-spacing: 0;
+  border-collapse: separate;
+  font-family: var(--font-mono);
+}
+.rgrid__table th,
+.rgrid__table td {
+  width: 62px;
+  min-width: 62px;
+  height: 52px;
+  padding: 4px;
+  border-right: 1px solid var(--hair-1);
+  border-bottom: 1px solid var(--hair-1);
+  text-align: center;
+}
+.rgrid__table th {
+  color: var(--muted);
+  background: var(--void-2);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}
+.rgrid__table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+.rgrid__table tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  width: 76px;
+  min-width: 76px;
+  text-align: left;
+  padding-left: 10px;
+  box-shadow: 1px 0 0 var(--hair-2);
+}
+.rgrid__table .rgrid__corner {
+  left: 0;
+  z-index: 3;
+  width: 76px;
+  min-width: 76px;
+  text-align: left;
+  padding-left: 10px;
+}
+.rgrid__table tr:last-child > * { border-bottom: 0; }
+.rgrid__table tr > *:last-child { border-right: 0; }
+.rgrid__empty {
+  color: var(--hair-3);
+  font-size: 17px;
+}
+.rgrid__contact {
+  display: grid;
+  place-items: center;
+  gap: 2px;
+  width: 100%;
+  min-height: 42px;
+  padding: 3px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--ink-1);
+  cursor: pointer;
+}
+.rgrid__contact .mono { font-size: 8.5px; color: currentColor; }
+.rgrid__contact--sextile { color: #A9D4C4; }
+.rgrid__contact--trine { color: #B6D4E4; }
+.rgrid__contact--square { color: #DE8E79; }
+.rgrid__contact--opposition { color: #E0A9B4; }
+.rgrid__contact:hover { border-color: currentColor; }
+.rgrid__contact.is-focus {
+  border-color: currentColor;
+  background: color-mix(in oklab, currentColor 13%, transparent);
+}
+.rgrid__contact:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+.rgrid__detail { margin-inline: auto; width: min(100%, 720px); }
+
+.rcomp { display: grid; gap: 20px; }
+.rcomp__title {
+  margin: 0;
+  text-align: center;
+  font-size: var(--text-xl);
+  font-weight: 620;
+  letter-spacing: -0.01em;
+}
+.rcomp__wheel { width: min(100%, 440px); }
+.rcomp__note {
+  width: min(100%, 66ch);
+  margin: 0 auto;
+  color: var(--text-2);
+  font-size: var(--text-sm);
+  line-height: 1.65;
+}
+.rcomp__lists {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: minmax(0, 1fr);
+}
+.rcomp__lists section { min-width: 0; }
+.rcomp__lists h4 { margin: 0 0 10px; }
+.rcomp__placements,
+.rcomp__aspects {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.rcomp__placements li,
+.rcomp__aspects li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px 14px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--hair-1);
+  color: var(--text-2);
+  font-size: 11px;
+}
+.rcomp__aspects li { justify-content: flex-start; }
+.rcomp__placements li:last-child,
+.rcomp__aspects li:last-child { border-bottom: 0; }
+
+@media (min-width: 720px) {
+  .rcomp__lists { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+}
+
+@media (max-width: 359px) {
+  .rwheel__tab { padding-inline: 5px; font-size: 10.5px; }
+  .rgrid__table th,
+  .rgrid__table td { width: 58px; min-width: 58px; }
+  .rgrid__table tbody th,
+  .rgrid__table .rgrid__corner { width: 70px; min-width: 70px; }
+}

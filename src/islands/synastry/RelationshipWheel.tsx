@@ -1,18 +1,9 @@
 /**
- * The Relationship Wheel — two people's charts on one bi-wheel. One person
- * is the inner natal wheel, the other rides the outer ring (solid marks — a
- * fixed chart, not the moving sky), and the cross-chart aspects draw as
- * chords between the rings. Tap a chord or a row to read that connection;
- * swap who sits inside with one button.
- *
- * Lazy-loaded by SynastryCalculator on the first compare, the same pattern
- * as the Transit Ring: /compatibility/ pays for the wheel only when there
- * are two charts to draw. All the hard-won ring lessons apply: focus is
- * validated against the live chord list, chord endpoints land on
- * collision-fanned markers, and the aspect list stays the accessible,
- * text-first structure.
+ * The Relationship Wheel's lazy result module. It owns all three comparison
+ * views so the /compatibility/ form stays light: the original bi-wheel, a
+ * chart-A-by-chart-B aspect grid, and a house-free composite wheel.
  */
-import { useMemo, useState } from 'preact/hooks';
+import { useMemo, useRef, useState } from 'preact/hooks';
 import Wheel from '../../lib/wheel/Wheel';
 import PlanetGlyph from '../../components/PlanetGlyph';
 import AspectGlyph from '../../components/AspectGlyph';
@@ -25,6 +16,18 @@ import { synastryLine } from '../../lib/compat';
 import { elementLabel, formatLongitude } from '../../lib/signs';
 import { aspectLabel, planetLabel } from '../../lib/i18n/astrology';
 import { t, type Locale } from '../../lib/i18n';
+import { AspectGrid } from './AspectGrid';
+import { CompositePanel } from './CompositePanel';
+import {
+  buildCompositeTabData,
+  buildRelationshipGrid,
+  relationshipContactId,
+  type RelationshipContact,
+  type RelationshipPointName,
+} from './relationshipData';
+import { renderRelationshipAngleContact } from './renderRelationshipAngleContact';
+import { synastryCorpusLine } from './synastryLines';
+import './relationship.css';
 
 export interface WheelPerson {
   label: string;
@@ -43,8 +46,6 @@ export interface RelationshipWheelProps {
   summary: PairSummary;
 }
 
-// Module-local copy (the SHARE_COPY/TOUR_COPY precedent) — the lazy chunk
-// keeps these strings out of /compatibility/'s static closure.
 const COPY = {
   en: {
     caption: 'Inner wheel: {a}. Outer ring: {b}. The lines between are where their charts touch.',
@@ -55,6 +56,10 @@ const COPY = {
     easeful: 'easeful',
     charged: 'charged',
     loudest: 'The loudest contacts:',
+    views: 'Relationship chart views',
+    wheel: 'Wheel',
+    grid: 'Grid',
+    composite: 'Composite',
   },
   es: {
     caption: 'Rueda interior: {a}. Anillo exterior: {b}. Las líneas entre ambos son donde sus cartas se tocan.',
@@ -65,176 +70,333 @@ const COPY = {
     easeful: 'fáciles',
     charged: 'tensos',
     loudest: 'Los contactos más fuertes:',
+    views: 'Vistas de la relación',
+    wheel: 'Rueda',
+    grid: 'Cuadrícula',
+    composite: 'Compuesta',
   },
 } as const;
 
-const fmt = (s: string, values: Record<string, string>) =>
-  s.replace(/\{(\w+)\}/g, (m, k) => values[k] ?? m);
+const TAB_ORDER = ['wheel', 'grid', 'composite'] as const;
+type RelationshipTab = typeof TAB_ORDER[number];
+
+const fmt = (text: string, values: Record<string, string>) =>
+  text.replace(/\{(\w+)\}/g, (match, key) => values[key] ?? match);
 
 /** South Node stays off drawn wheels — the sitewide convention. */
-const drawable = (p: WheelPerson) => p.bodies.filter((x) => x.body !== 'South Node');
+const drawable = (person: WheelPerson) => person.bodies.filter((point) => point.body !== 'South Node');
+const isAngle = (name: RelationshipPointName): name is 'ASC' | 'MC' => name === 'ASC' || name === 'MC';
+
+function track(name: 'grid_select' | 'composite_view'): void {
+  const analytics = (globalThis as typeof globalThis & {
+    zodiacsAnalytics?: { track?: (event: string, props: Record<string, never>) => void };
+  }).zodiacsAnalytics;
+  analytics?.track?.(name, {});
+}
+
+function ContactPoint({ locale, name }: { locale: Locale; name: RelationshipPointName }) {
+  return isAngle(name) ? <>{name}</> : (
+    <><PlanetGlyph body={name} size={13} class="pg-inline" /> {planetLabel(locale, name)}</>
+  );
+}
+
+function contactReading(
+  aLabel: string,
+  bLabel: string,
+  contact: Pick<InterAspect, 'a' | 'b' | 'type'>,
+): { text: string; curated: boolean } {
+  const curated = synastryCorpusLine(contact.a, contact.b, contact.type);
+  return {
+    text: curated ?? synastryLine(aLabel, contact.a, bLabel, contact.b, contact.type),
+    curated: curated !== null,
+  };
+}
 
 export default function RelationshipWheel({ locale, a, b, summary }: RelationshipWheelProps) {
   const c = COPY[locale] ?? COPY.en;
-  // Who sits inside. Canonical focus ids are always A-first
-  // (`${aBody}-${type}-${bBody}`) so they survive a swap.
+  const [tab, setTab] = useState<RelationshipTab>('wheel');
   const [flipped, setFlipped] = useState(false);
+  // Canonical focus ids are always chart-A-first and live above every tab.
   const [sel, setSel] = useState<string | null>(null);
+  const compositeTracked = useRef(false);
 
   const inner = flipped ? b : a;
   const outer = flipped ? a : b;
-
-  const canonicalId = (asp: InterAspect) => `${asp.a}-${asp.type}-${asp.b}`;
+  const canonicalId = (aspect: InterAspect) => `${aspect.a}-${aspect.type}-${aspect.b}`;
+  const grid = useMemo(() => buildRelationshipGrid(a, b), [a, b]);
+  const composite = useMemo(() => buildCompositeTabData(a.bodies, b.bodies), [a.bodies, b.bodies]);
 
   // The overlay wants aspects oriented outer-first; summary aspects are
-  // A-first. Reorient (and remember each chord's canonical id).
+  // chart-A-first. Reorient while remembering each chord's canonical id.
   const { overlayBase, chordToCanonical } = useMemo(() => {
     const map = new Map<string, string>();
-    const oriented: InterAspect[] = summary.aspects.map((asp) => {
-      const o: InterAspect = flipped
-        ? asp
-        : { a: asp.b, aLon: asp.bLon, b: asp.a, bLon: asp.aLon, type: asp.type, orb: asp.orb };
-      map.set(`${o.a}-${o.type}-${o.b}`, canonicalId(asp));
-      return o;
+    const oriented: InterAspect[] = summary.aspects.map((aspect) => {
+      const reoriented: InterAspect = flipped
+        ? aspect
+        : {
+          a: aspect.b,
+          aLon: aspect.bLon,
+          b: aspect.a,
+          bLon: aspect.aLon,
+          type: aspect.type,
+          orb: aspect.orb,
+        };
+      map.set(`${reoriented.a}-${reoriented.type}-${reoriented.b}`, canonicalId(aspect));
+      return reoriented;
     });
-    const overlay = buildTransitOverlay(
-      fmt(c.ringLabel, { name: outer.label }),
-      drawable(outer),
-      oriented,
-      null,
-    );
-    return { overlayBase: overlay, chordToCanonical: map };
+    return {
+      overlayBase: buildTransitOverlay(
+        fmt(c.ringLabel, { name: outer.label }),
+        drawable(outer),
+        oriented,
+        null,
+      ),
+      chordToCanonical: map,
+    };
+    // A compare remounts the module; labels and orientation are the only
+    // live values this ring calculation needs after that boundary.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [summary, flipped, outer.label]);
 
-  // Focus only survives while its chord exists in the current orientation.
   const overlayFocusId = sel
-    ? [...chordToCanonical.entries()].find(([, canon]) => canon === sel)?.[0] ?? null
+    ? [...chordToCanonical.entries()].find(([, canonical]) => canonical === sel)?.[0] ?? null
     : null;
   const overlay = overlayFocusId ? { ...overlayBase, focus: overlayFocusId } : overlayBase;
-
   const innerBodies = useMemo(() => drawable(inner), [inner]);
   const innerDraw = useMemo(() => collisionNudge(innerBodies), [innerBodies]);
-
-  const selectedAspect = sel ? summary.aspects.find((asp) => canonicalId(asp) === sel) ?? null : null;
-  const selectedBody = sel && !chordToCanonical.has(sel) && sel.startsWith('transit:')
-    ? overlay.bodies.find((x) => overlayBodyId(x.body) === sel) ?? null
+  const selectedContact = sel
+    ? grid.contacts.find((contact) => relationshipContactId(contact) === sel) ?? null
+    : null;
+  const selectedBody = sel?.startsWith('transit:')
+    ? overlay.bodies.find((point) => overlayBodyId(point.body) === sel) ?? null
     : null;
 
   function onRingSelect(id: string | null) {
-    if (id === null) { setSel(null); return; }
-    // Chord taps arrive overlay-oriented; body taps arrive as transit:{body}.
-    setSel((prev) => {
+    if (id === null) {
+      setSel(null);
+      return;
+    }
+    setSel((previous) => {
       const canonical = chordToCanonical.get(id) ?? id;
-      return prev === canonical ? null : canonical;
+      return previous === canonical ? null : canonical;
     });
   }
 
+  function activateTab(next: RelationshipTab) {
+    setTab(next);
+    if (next === 'composite' && !compositeTracked.current) {
+      compositeTracked.current = true;
+      track('composite_view');
+    }
+  }
+
+  function onTabKeyDown(event: KeyboardEvent) {
+    const current = TAB_ORDER.indexOf(tab);
+    let next = current;
+    if (event.key === 'ArrowRight' || event.key === 'ArrowDown') next = (current + 1) % TAB_ORDER.length;
+    else if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') next = (current - 1 + TAB_ORDER.length) % TAB_ORDER.length;
+    else if (event.key === 'Home') next = 0;
+    else if (event.key === 'End') next = TAB_ORDER.length - 1;
+    else return;
+    event.preventDefault();
+    const nextTab = TAB_ORDER[next];
+    activateTab(nextTab);
+    requestAnimationFrame(() => document.getElementById(`relationship-tab-${nextTab}`)?.focus());
+  }
+
+  function onGridSelect(contact: RelationshipContact) {
+    setSel(relationshipContactId(contact));
+    track('grid_select');
+  }
+
+  const focusedReading = selectedContact
+    ? contactReading(a.label, b.label, selectedContact)
+    : null;
+
   return (
     <div class="rwheel">
-      <p class="tring__caption mono">{fmt(c.caption, { a: inner.label, b: outer.label })}</p>
-
-      <div class="tring__wheelbox">
-        <Wheel
-          bodies={innerBodies}
-          asc={inner.asc}
-          mc={inner.mc}
-          cusps={inner.cusps}
-          aspects={[]}
-          renderOverlay={(geo) => renderTransitOverlay(
-            overlay,
-            (name) => innerDraw.get(name) ?? null,
-            onRingSelect,
-            geo,
-            { dashedMarkers: false },
-          )}
-        />
+      <div class="rwheel__tabs" role="tablist" aria-label={c.views} onKeyDown={onTabKeyDown}>
+        {TAB_ORDER.map((name) => (
+          <button
+            key={name}
+            id={`relationship-tab-${name}`}
+            type="button"
+            role="tab"
+            class="rwheel__tab"
+            aria-selected={tab === name}
+            aria-controls={`relationship-panel-${name}`}
+            tabIndex={tab === name ? 0 : -1}
+            onClick={() => activateTab(name)}
+            data-relationship-tab={name}
+          >
+            {c[name]}
+          </button>
+        ))}
       </div>
 
-      <div class="rwheel__controls">
-        <button class="btn btn--glass tring__step" type="button" onClick={() => { setFlipped((f) => !f); setSel(null); }} data-swap>
-          <span>{fmt(c.swap, { name: outer.label })}</span>
-          <span class="orb">⇄</span>
-        </button>
-      </div>
-      <p class="field__help rwheel__hint">{c.tapHint}</p>
+      {tab === 'wheel' && (
+        <section
+          id="relationship-panel-wheel"
+          role="tabpanel"
+          aria-labelledby="relationship-tab-wheel"
+          class="rwheel__panel"
+          data-relationship-panel="wheel"
+        >
+          <p class="tring__caption mono">{fmt(c.caption, { a: inner.label, b: outer.label })}</p>
 
-      {/* The focused contact, foregrounded. */}
-      {(selectedAspect || selectedBody) && (
-        <div class="tring__focus" role="status">
-          {selectedAspect && (
-            <>
-              <span class="tring__focus-receipt mono">
-                <PlanetGlyph body={selectedAspect.a} size={13} class="pg-inline" /> {a.label}: {planetLabel(locale, selectedAspect.a)}
-                {' '}<AspectGlyph type={selectedAspect.type} size={13} class="pg-inline" /> {aspectLabel(locale, selectedAspect.type)}
-                {' '}<PlanetGlyph body={selectedAspect.b} size={13} class="pg-inline" /> {b.label}: {planetLabel(locale, selectedAspect.b)}
-                {' · '}{t(locale, 'orb')} {selectedAspect.orb.toFixed(1)}°
-              </span>
-              {/* The reading sentence exists in English only (compat.ts has no
-                  ES tables — master-plan P10). The receipt is fully localized. */}
-              {locale === 'en' && (
-                <p class="tring__focus-read">
-                  {synastryLine(a.label, selectedAspect.a, b.label, selectedAspect.b, selectedAspect.type)}
-                </p>
+          <div class="tring__wheelbox">
+            <Wheel
+              bodies={innerBodies}
+              asc={inner.asc}
+              mc={inner.mc}
+              cusps={inner.cusps}
+              aspects={[]}
+              renderOverlay={(geometry) => (
+                <>
+                  {renderTransitOverlay(
+                    overlay,
+                    (name) => innerDraw.get(name) ?? null,
+                    onRingSelect,
+                    geometry,
+                    { dashedMarkers: false },
+                  )}
+                  {renderRelationshipAngleContact(
+                    selectedContact,
+                    flipped,
+                    (name) => innerDraw.get(name) ?? null,
+                    (name) => overlayBase.bodies.find((point) => point.body === name)?.drawLon ?? null,
+                    geometry,
+                  )}
+                </>
               )}
-            </>
-          )}
-          {!selectedAspect && selectedBody && (
-            <span class="tring__focus-receipt mono">
-              {outer.label}: <PlanetGlyph body={selectedBody.body} size={13} class="pg-inline" /> {planetLabel(locale, selectedBody.body)}
-              {' · '}{formatLongitude(selectedBody.lon, locale)}{selectedBody.retrograde ? ' ℞' : ''}
-            </span>
-          )}
-        </div>
-      )}
+            />
+          </div>
 
-      <p class="syn__tally mono">
-        {summary.aspects.length} {c.tally} ·
-        {' '}{summary.easeful} {c.easeful} ({aspectLabel(locale, 'trine')}/{aspectLabel(locale, 'sextile')}) ·
-        {' '}{summary.charged} {c.charged} ({aspectLabel(locale, 'square')}/{aspectLabel(locale, 'opposition')})
-      </p>
-
-      {/* The loudest contacts — rows double as chord-focus controls. */}
-      <span class="mono--label">{c.loudest}</span>
-      <div class="syn__aspects">
-        {summary.top.map((asp) => {
-          const id = canonicalId(asp);
-          return (
+          <div class="rwheel__controls">
             <button
-              class={`syn__aspect tring__row${sel === id ? ' is-focus' : ''}`}
+              class="btn btn--glass tring__step"
               type="button"
-              key={id}
-              onClick={() => setSel((prev) => (prev === id ? null : id))}
+              onClick={() => { setFlipped((value) => !value); setSel(null); }}
+              data-swap
             >
-              <span class="syn__aspect-receipt mono">
-                <PlanetGlyph body={asp.a} size={13} class="pg-inline" /> {a.label}: {planetLabel(locale, asp.a)} <AspectGlyph type={asp.type} size={13} class="pg-inline" /> {aspectLabel(locale, asp.type)} <PlanetGlyph body={asp.b} size={13} class="pg-inline" /> {b.label}: {planetLabel(locale, asp.b)} · {t(locale, 'orb')} {asp.orb.toFixed(1)}°
-              </span>
-              {/* The sentence is EN-only (compat.ts, master-plan P10); the
-                  receipt above is fully localized. */}
-              {locale === 'en' && (
-                <span class="syn__aspect-read">
-                  {synastryLine(a.label, asp.a, b.label, asp.b, asp.type)}
+              <span>{fmt(c.swap, { name: outer.label })}</span>
+              <span class="orb">⇄</span>
+            </button>
+          </div>
+          <p class="field__help rwheel__hint">{c.tapHint}</p>
+
+          {(selectedContact || selectedBody) && (
+            <div class="tring__focus" role="status">
+              {selectedContact && focusedReading && (
+                <>
+                  <span class="tring__focus-receipt mono">
+                    {a.label}: <ContactPoint locale={locale} name={selectedContact.a} />
+                    {' '}<AspectGlyph type={selectedContact.type} size={13} class="pg-inline" /> {aspectLabel(locale, selectedContact.type)}
+                    {' '}{b.label}: <ContactPoint locale={locale} name={selectedContact.b} />
+                    {' · '}{t(locale, 'orb')} {selectedContact.orb.toFixed(1)}°
+                  </span>
+                  {locale === 'en' && (
+                    <p
+                      class="tring__focus-read"
+                      data-curated-line={focusedReading.curated ? '' : undefined}
+                      data-fallback-line={focusedReading.curated ? undefined : ''}
+                    >
+                      {focusedReading.text}
+                    </p>
+                  )}
+                </>
+              )}
+              {!selectedContact && selectedBody && (
+                <span class="tring__focus-receipt mono">
+                  {outer.label}: <PlanetGlyph body={selectedBody.body} size={13} class="pg-inline" /> {planetLabel(locale, selectedBody.body)}
+                  {' · '}{formatLongitude(selectedBody.lon, locale)}{selectedBody.retrograde ? ' ℞' : ''}
                 </span>
               )}
-            </button>
-          );
-        })}
-      </div>
+            </div>
+          )}
 
-      <div class="syn__balances">
-        {[{ p: a, bal: summary.elements.a }, { p: b, bal: summary.elements.b }].map(({ p, bal }) => (
-          <div class="syn__balance" key={p.label}>
-            <span class="syn__balance-name">{p.label}</span>
-            {(['fire', 'earth', 'air', 'water'] as const).map((el) => (
-              <div class="syn__bar" key={el}>
-                <span class="syn__bar-label mono--label">{elementLabel(el, locale)}</span>
-                <span class="syn__bar-track"><span class="syn__bar-fill" style={`width:${bal[el] * 10}%`} /></span>
-                <span class="syn__bar-n mono">{bal[el]}</span>
+          <p class="syn__tally mono">
+            {summary.aspects.length} {c.tally} ·
+            {' '}{summary.easeful} {c.easeful} ({aspectLabel(locale, 'trine')}/{aspectLabel(locale, 'sextile')}) ·
+            {' '}{summary.charged} {c.charged} ({aspectLabel(locale, 'square')}/{aspectLabel(locale, 'opposition')})
+          </p>
+
+          <span class="mono--label">{c.loudest}</span>
+          <div class="syn__aspects">
+            {summary.top.map((aspect) => {
+              const id = canonicalId(aspect);
+              const reading = contactReading(a.label, b.label, aspect);
+              return (
+                <button
+                  class={`syn__aspect tring__row${sel === id ? ' is-focus' : ''}`}
+                  type="button"
+                  key={id}
+                  onClick={() => setSel((previous) => (previous === id ? null : id))}
+                >
+                  <span class="syn__aspect-receipt mono">
+                    <PlanetGlyph body={aspect.a} size={13} class="pg-inline" /> {a.label}: {planetLabel(locale, aspect.a)} <AspectGlyph type={aspect.type} size={13} class="pg-inline" /> {aspectLabel(locale, aspect.type)} <PlanetGlyph body={aspect.b} size={13} class="pg-inline" /> {b.label}: {planetLabel(locale, aspect.b)} · {t(locale, 'orb')} {aspect.orb.toFixed(1)}°
+                  </span>
+                  {locale === 'en' && (
+                    <span
+                      class="syn__aspect-read"
+                      data-curated-line={reading.curated ? '' : undefined}
+                      data-fallback-line={reading.curated ? undefined : ''}
+                    >
+                      {reading.text}
+                    </span>
+                  )}
+                </button>
+              );
+            })}
+          </div>
+
+          <div class="syn__balances">
+            {[{ person: a, balance: summary.elements.a }, { person: b, balance: summary.elements.b }].map(({ person, balance }) => (
+              <div class="syn__balance" key={person.label}>
+                <span class="syn__balance-name">{person.label}</span>
+                {(['fire', 'earth', 'air', 'water'] as const).map((element) => (
+                  <div class="syn__bar" key={element}>
+                    <span class="syn__bar-label mono--label">{elementLabel(element, locale)}</span>
+                    <span class="syn__bar-track"><span class="syn__bar-fill" style={`width:${balance[element] * 10}%`} /></span>
+                    <span class="syn__bar-n mono">{balance[element]}</span>
+                  </div>
+                ))}
               </div>
             ))}
           </div>
-        ))}
-      </div>
+        </section>
+      )}
+
+      {tab === 'grid' && (
+        <section
+          id="relationship-panel-grid"
+          role="tabpanel"
+          aria-labelledby="relationship-tab-grid"
+          class="rwheel__panel"
+          data-relationship-panel="grid"
+        >
+          <AspectGrid
+            locale={locale}
+            aLabel={a.label}
+            bLabel={b.label}
+            grid={grid}
+            selectedId={sel}
+            onSelect={onGridSelect}
+          />
+        </section>
+      )}
+
+      {tab === 'composite' && (
+        <section
+          id="relationship-panel-composite"
+          role="tabpanel"
+          aria-labelledby="relationship-tab-composite"
+          class="rwheel__panel"
+          data-relationship-panel="composite"
+        >
+          <CompositePanel locale={locale} data={composite} />
+        </section>
+      )}
     </div>
   );
 }
