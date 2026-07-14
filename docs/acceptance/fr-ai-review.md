@@ -1,71 +1,82 @@
-# French language review
+# Revue linguistique du français
 
-Review method: **AI language review by Sol**.
+Méthode : **AI language review by Sol**.
 
-Review date: **2026-07-15**.
+Date de la revue : **15 juillet 2026**.
 
-Status: **translation draft complete; integration and browser verification are
-pending the shared locale rails**.
+Statut : **le corpus français isolé est revu ; son intégration aux rails de
+locale, les modules interactifs et le contrôle visuel à 320 px restent à
+effectuer sur la branche empilée**.
 
 accepted by the owner in lieu of a human native-speaker sign-off.
 
-The review uses warm, informal French with `tu` throughout. It covers the
-complete French page tree, all twelve long-form sign guides, page metadata,
-structured data, FAQs, privacy disclosures, empty states and the explicit
-English-content fallback. The established terminology is `thème astral`,
-`ascendant`, `maisons`, `transits`, `pleine lune`, `nouvelle lune` and
-`rétrograde`.
+La revue suit un français chaleureux et informel, avec `tu` partout. La
+terminologie retenue est `thème astral`, `ascendant`, `maisons`, `transits`,
+`pleine lune`, `nouvelle lune` et `rétrograde`.
 
-## Translation checklist
+## Résultats de la revue
 
-- [x] Informal `tu` is consistent across the authored page and guide copy.
-- [x] No `vous` register was introduced in consumer copy.
-- [x] Astrology terminology follows common contemporary French usage.
-- [x] Accents, ligatures and punctuation were reviewed, including `à`, `â`,
-  `ç`, `é`, `è`, `ê`, `œ`, curly apostrophes and French spacing before double
-  punctuation.
-- [x] All 12 sign guides provide two introductions, nine sections, 24 body
-  paragraphs and six FAQs.
-- [x] Metadata, schema names, descriptions, breadcrumbs and `inLanguage` use
-  French on the authored routes.
-- [x] Privacy copy preserves the meaning of the English policy, including
-  local calculation, optional sync, Anthropic processing, salted quota
-  identifiers, push subscriptions, Plausible analytics and deletion choices.
-- [x] English-only destinations are labelled as English and are not presented
-  as translated content.
-- [x] Source-level scans find no Spanish or unlabelled English prose in the
-  French page and guide corpus.
-- [ ] Shared locale rails, interactive module dictionaries and French search
-  integration will be verified after the L0 branch is available.
-- [ ] The complete built route set will be driven at 320 px after integration;
-  no visual-browser result is claimed by this isolated translation draft.
-- [ ] Build, check, tests, distribution drift and bundle gates will be recorded
-  on the integrated branch.
+- [x] Les 16 fichiers de pages présents sous `src/pages/fr/` correspondent au
+  jeu de routes espagnol : accueil, outils, huit surfaces de calcul ou de
+  lecture, profil, méthode, confidentialité, 404, guides et repli `noindex`.
+- [x] Les douze guides ont chacun 2 introductions, 9 sections, 24 paragraphes,
+  6 FAQ et exactement une section `risingProfile`, comparés dynamiquement à
+  `spanishGuideFor(sign)`.
+- [x] Les douze pratiques de progression sont distinctes et conservent les
+  faits du corpus source espagnol.
+- [x] Les calques et fautes clairs ont été corrigés, notamment les formulations
+  sur les emplacements dans le thème, le JPL, la synchronisation, les
+  notifications push et l’identifiant de quota.
+- [x] Les espaces insécables françaises précèdent `:`, `;`, `?` et `!` dans le
+  contenu destiné aux lecteurs.
+- [x] Les scans de source ne trouvent ni registre formel `vous`, ni prose
+  espagnole, ni prose anglaise non signalée. Les destinations encore en anglais
+  sont explicitement indiquées et portent `hreflang="en"`.
+- [x] Aucune modification ne touche `public/`, une surface partagée, l’aile du
+  registre ou le SDK dans ce brouillon de contenu isolé.
+- [ ] Les dictionnaires partagés, les modules interactifs, l’assistant, les
+  libellés astrologiques et le sitemap seront vérifiés après intégration aux
+  branches L0 et portugaise.
+- [ ] Le parcours visuel à 320 px et la couverture des glyphes
+  `à â é è ê ç œ` par les trois polices auto-hébergées ne sont pas revendiqués
+  par ce brouillon isolé.
+- [ ] Le build, le check, la suite complète, `check-dist` et le contrôle des
+  bundles seront consignés sur la branche intégrée.
 
-## Route coverage
+## Chaînes critiques proposées pour l’intégration
 
-The authored tree contains the French home page, all twelve sign guides,
-tools index, theme astral, compatibility, signe lunaire, ascendant, phase
-lunaire, retour de Saturne, transits, zodiaque du bébé, profile, methodology,
-privacy, localized 404 and the noindex English-content fallback.
+Ces traductions sont les valeurs approuvées par la revue de contenu. Elles ne
+sont pas câblées ici, car leurs propriétaires sont des fichiers partagés qui ne
+font pas partie de ce brouillon localisé.
 
-The French sign pages reuse the existing sign-card social images. No new image
-assets and no registry-wing or SDK files are part of this translation draft.
+| Source anglaise | Français | Note de registre |
+| --- | --- | --- |
+| `Registry` | `Registre` | Terme documentaire, sans connotation commerciale. |
+| `Overview` | `Vue d’ensemble` | Libellé de navigation neutre. |
+| `Collector’s wing` | `Aile des collections` | Ton muséal et discret. |
+| `{Sign} also exists as one of the Twelve — a canonical record in the registry.` | `{Signe} figure aussi parmi les Douze — une notice de référence dans le registre.` | Une `notice` désigne une fiche de catalogue ; la même phrase convient au guide et au calculateur de thème. |
+| `View the record →` | `Voir la notice →` | Renvoie à une fiche, pas à une transaction. |
+| `The short version: when you calculate a chart, the math runs in your browser and your birth date, time, and place are never sent to us. Accounts and the weekly email are optional, off by default, and easy to leave. We show no ads and use no cross-site tracking.` | `En bref : lorsque tu calcules un thème astral, le calcul se fait dans ton navigateur ; ta date, ton heure et ton lieu de naissance ne nous sont jamais envoyés. Créer un compte et recevoir l’e-mail hebdomadaire restent facultatifs ; ces options sont désactivées par défaut et tu peux facilement t’en passer. Nous n’affichons aucune publicité et n’utilisons aucun suivi intersite.` | Direct, rassurant et fidèle aux choix facultatifs. |
+| `Send this page:` / `Email` | `Partage cette page :` / `E-mail` | Tutoiement chaleureux et usage français courant. |
 
-## Guide depth contract
+## Points de style laissés à l’arbitrage
 
-For every sign, the guide includes personality, love, placement in the chart,
-recognition, relationships and trust, work and direction, planetary
-placements, shadow and growth, and an intimate closing section. Each guide
-also covers dates, element and modality, ruler, compatibility, strong chart
-emphasis and the case where a reader does not identify with the Sun sign.
+Ces formulations sont correctes. Les propositions ci-dessous sont des choix de
+voix, donc aucune n’a été appliquée.
 
-## Integration checks still required
+| Fichier | Formulation actuelle | Proposition | Motif |
+| --- | --- | --- | --- |
+| `src/pages/fr/index.astro` | `Explore les étoiles derrière ton histoire.` | `Explore les astres derrière ton histoire.` | `Astres` est plus exact en astrologie ; `étoiles` reste plus immédiat et chaleureux. |
+| `src/pages/fr/tools/index.astro` | `Quand le tien arrive, précisément, et ce qu’il tend à demander.` | `Quand le tien aura lieu, précisément, et ce qu’il tend à demander.` | Le futur est un peu plus idiomatique ; le présent reste vif et compréhensible. |
+| `src/pages/fr/profile/index.astro` | `Tes thèmes enregistrés.` | `Thèmes enregistrés.` | Le titre sans possessif est plus sobre ; le possessif conserve l’intimité du site. |
+| `src/pages/fr/baby-zodiac/index.astro` | `Zodiaque du bébé` | `Signe astrologique du bébé` | La proposition est plus descriptive ; la version actuelle reste cohérente avec le nom de l’outil source. |
+| `src/data/fr-guides.ts` | `une étrangeté partagée` | `une originalité partagée` | `Originalité` est plus doux ; `étrangeté` préserve mieux la nuance assumée du texte source. |
 
-The exact-main snapshot only knows `en` and `es`; this translation draft does
-not alter shared locale types or runtime dictionaries so it can stack cleanly
-after L0. Integration must wire `fr` through routing, hreflang, sitemap,
-canonical URLs, date formatting, localized sign names, islands, navigation,
-footer, assistant, chart lenses, tour copy and search before publication.
-Those dependencies are deliberately recorded as pending rather than described
-as already tested.
+## Vérifications d’intégration encore requises
+
+La branche de contenu a été produite depuis un instantané qui ne connaît que
+`en` et `es`. Elle ne modifie volontairement ni les types de locale ni les
+dictionnaires partagés. L’intégration doit encore relier `fr` au routage, aux
+liens `hreflang`, au sitemap, aux formats de date, aux noms des signes, aux
+islands, à la navigation, au pied de page, à l’assistant, aux lentilles, au
+parcours guidé et à la recherche avant publication.

@@ -41,7 +41,7 @@ const jsonLd = [
     description: guide.description,
     url: `https://zodiacs.org/fr/${sign.slug}/`,
     datePublished: '2026-07-07T03:45:11+07:00',
-    dateModified: '2026-07-11T00:00:00+07:00',
+    dateModified: '2026-07-15T00:00:00+07:00',
     author: EDITOR_AUTHOR,
     publisher: { '@id': 'https://zodiacs.org/#org' },
     mainEntityOfPage: { '@type': 'WebPage', '@id': `https://zodiacs.org/fr/${sign.slug}/` },
@@ -53,7 +53,7 @@ const jsonLd = [
     '@type': 'BreadcrumbList',
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Zodiacs.org en français', item: 'https://zodiacs.org/fr/' },
-      { '@type': 'ListItem', position: 2, name: 'Signes du zodiaque', item: 'https://zodiacs.org/fr/#signos' },
+      { '@type': 'ListItem', position: 2, name: 'Signes du zodiaque', item: 'https://zodiacs.org/fr/#signes' },
       { '@type': 'ListItem', position: 3, name: signName(sign, 'fr'), item: `https://zodiacs.org/fr/${sign.slug}/` },
     ],
   },
@@ -119,7 +119,7 @@ const jsonLd = [
           <h2>Compatibilité en bref</h2>
           <p>
             L’alchimie entre deux signes solaires n’est qu’un début. Ces signes
-            s’accordent souvent avec {signName(sign, 'fr')} ; pour une lecture complète, compare les deux thèmes.
+            s’accordent souvent avec {signName(sign, 'fr')} ; pour une lecture complète, compare les deux thèmes.
             Les guides de paires liés ci-dessous sont en anglais.
           </p>
           <div class="guide-es-panel__chips">
@@ -136,7 +136,7 @@ const jsonLd = [
       </section>
 
       <section class="reveal">
-        <Faq items={guide.faq} heading={`${signName(sign, 'fr')} : questions fréquentes`} />
+        <Faq items={guide.faq} heading={`${signName(sign, 'fr')} : questions fréquentes`} />
       </section>
 
       <ShareRow

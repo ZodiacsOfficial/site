@@ -15,7 +15,7 @@ const jsonLd = [
 ---
 <Base
   title="Confidentialité — Tes données de naissance restent sur ton appareil | Zodiacs.org"
-  description="La manière dont zodiacs.org traite tes données : les thèmes sont calculés dans ton navigateur, les fonctions facultatives demandent ton accord et nous ne conservons pas les conversations."
+  description="La manière dont zodiacs.org traite tes données : les thèmes sont calculés dans ton navigateur, les fonctions facultatives demandent ton accord et nous ne conservons pas les conversations."
   path="/fr/privacy/"
   locale="fr"
   jsonLd={jsonLd}
@@ -26,17 +26,19 @@ const jsonLd = [
 
     <div class="prose">
       <p class="lede">
-        Les thèmes sont calculés dans ton navigateur. Ta date, ton heure et ton
-        lieu de naissance ne sont pas envoyés à nos serveurs, sauf si tu choisis
-        de créer un compte et de synchroniser un thème enregistré. Tu peux
-        facilement y renoncer.
+        En bref : lorsque tu calcules un thème astral, le calcul se fait dans
+        ton navigateur ; ta date, ton heure et ton lieu de naissance ne nous
+        sont jamais envoyés. Créer un compte et recevoir l’e-mail hebdomadaire
+        restent facultatifs ; ces options sont désactivées par défaut et tu peux
+        facilement t’en passer. Nous n’affichons aucune publicité et n’utilisons
+        aucun suivi intersite.
       </p>
 
       <h2>Calculateurs et thèmes enregistrés</h2>
       <p>
         La recherche de lieux et le calcul astrologique ont lieu sur ton
         appareil. Les thèmes que tu enregistres restent dans le stockage local
-        du navigateur. Le compte est facultatif ; si tu l’utilises, Supabase
+        du navigateur. Le compte est facultatif ; si tu l’utilises, Supabase
         conserve ton adresse e-mail et les thèmes que tu choisis de synchroniser
         afin de les afficher sur tes autres appareils.
       </p>
@@ -47,12 +49,12 @@ const jsonLd = [
         sur ton thème, un résumé des positions calculées sont envoyés à notre
         fournisseur d’IA, Anthropic, afin de produire la réponse. Nous ne
         conservons pas les conversations et le trafic de l’API ne sert pas à
-        entraîner des modèles. L’assistant ne joint jamais ton nom ni tes date,
-        heure ou lieu de naissance enregistrés ; tout ce que tu écris dans la
+        entraîner des modèles. L’assistant ne joint jamais ton nom ni la date,
+        l’heure ou le lieu de naissance que tu as enregistrés ; tout ce que tu écris dans la
         discussion fait partie du message envoyé. Pour appliquer la limite
-        quotidienne, nous conservons un identifiant salé à sens unique dérivé
-        de ton adresse IP et son compteur journalier, jamais l’adresse IP
-        d’origine ; les contrôles de quota effacent les entrées de plus de
+        quotidienne, nous conservons un identifiant irréversible calculé avec
+        un sel à partir de ton adresse IP et son compteur journalier, jamais l’adresse IP
+        d’origine ; les contrôles de quota effacent les entrées de plus de
         35 jours. Ce même identifiant pseudonyme est transmis à Anthropic dans
         les métadonnées de la demande.
       </p>
@@ -60,11 +62,11 @@ const jsonLd = [
       <h2>Résumé quotidien, calendrier et notifications</h2>
       <p>
         Le résumé quotidien lit les positions calculées d’un thème enregistré
-        sur ton appareil. Le calendrier des transits reçoit le même code ne
-        contenant que les positions que la fonction de partage des thèmes ;
+        sur ton appareil. Le calendrier des transits reçoit le même code de
+        thème, limité aux positions, que la fonction de partage ;
         aucun des deux n’inclut ton nom, ta date, ton heure ou ton lieu de
         naissance, ni tes coordonnées. Si tu actives les notifications
-        quotidiennes, nous conservons l’abonnement push du navigateur — une URL
+        quotidiennes, nous conservons l’abonnement de ton navigateur aux notifications push — une URL
         du service de notification et ses clés de livraison, sans données de
         naissance — afin de pouvoir envoyer la note. Tu peux les désactiver à
         tout moment.
@@ -72,12 +74,12 @@ const jsonLd = [
 
       <h2>E-mail et hébergement</h2>
       <p>
-        L’e-mail hebdomadaire nécessite un compte et une inscription volontaire ;
+        L’e-mail hebdomadaire nécessite un compte et une inscription volontaire ;
         il est désactivé par défaut et chaque message permet de se désabonner.
         Vercel héberge le site et peut conserver de brefs journaux techniques
         pour servir les pages et prévenir les abus. Nous n’utilisons ni
         publicité ni suivi entre sites. Nous comptons les pages vues et l’usage
-        anonyme des fonctions avec Plausible, un service d’analyse sans cookies :
+        anonyme des fonctions avec Plausible, un service d’analyse sans cookies :
         aucun suivi entre sites, aucune donnée de naissance et rien de ce que tu
         écris. Les événements ne portent que des étiquettes de catégorie — « un
         thème a été enregistré », jamais le nom de la personne.
@@ -90,7 +92,7 @@ const jsonLd = [
         <a href="mailto:hello@zodiacs.org">hello@zodiacs.org</a>.
       </p>
 
-      <p class="method-updated mono">Dernière mise à jour : {updated}</p>
+      <p class="method-updated mono">Dernière mise à jour : {updated}</p>
     </div>
   </section>
 </Base>
