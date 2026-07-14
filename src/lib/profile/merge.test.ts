@@ -159,4 +159,32 @@ describe('mergeSyncState', () => {
     });
     expect(result.profile.charts.map((c) => c.id)).toEqual(['chart-b', 'chart-c', 'chart-a']);
   });
+
+  it('keeps more than twenty remote charts without dropping or duplicating overlaps', () => {
+    const remote = Array.from({ length: 25 }, (_, index) => (
+      chart(`chart-${index}`, `2026-07-${String(index + 1).padStart(2, '0')}T10:00:00.000Z`, `remote-${index}`)
+    ));
+    const local = [
+      chart('chart-2', '2026-07-30T10:00:00.000Z', 'newer-local'),
+      chart('chart-8', '2026-07-01T09:00:00.000Z', 'older-local'),
+    ];
+    const result = mergeSyncState({
+      localProfile: profile(local),
+      remoteSettings: null,
+      remoteCharts: remote.map((item) => ({
+        id: item.id,
+        payload: item,
+        updatedAt: item.updatedAt,
+      })),
+      localDeletions: [],
+      remoteDeletions: [],
+    });
+    const ids = result.profile.charts.map((item) => item.id);
+
+    expect(ids).toHaveLength(25);
+    expect(new Set(ids).size).toBe(25);
+    expect(new Set(ids)).toEqual(new Set(remote.map((item) => item.id)));
+    expect(result.profile.charts.find((item) => item.id === 'chart-2')?.name).toBe('newer-local');
+    expect(result.profile.charts.find((item) => item.id === 'chart-8')?.name).toBe('remote-8');
+  });
 });

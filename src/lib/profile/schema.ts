@@ -7,7 +7,7 @@
 import type { ChartFlag, HouseSystem } from '../engine/types';
 
 export const PROFILE_KEY = 'zodiacs.profile.v1';
-export const MAX_CHARTS = 20;
+export const MAX_CHARTS = 40;
 
 export interface SavedPlace {
   name: string;

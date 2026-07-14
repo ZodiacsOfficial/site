@@ -30,8 +30,7 @@ import { dignityFor, type Dignity } from '../lib/dignities';
 import { resolveLocalToUtc } from '../lib/time/localToUtc';
 import { houseOf } from '../lib/engine/houses';
 import { moonPhaseName } from '../lib/engine/lite';
-import { saveChart } from '../lib/profile/store';
-import { decodeChartLink, encodeChartLink } from '../lib/share';
+import { decodeChartLink, encodeChartLink, NAME_MAX } from '../lib/share';
 import type { ShareChartInput } from '../lib/share';
 import type { PositionsShareChart } from '../lib/share-positions';
 import type { TourVisual } from '../lib/scene/chapters';
@@ -63,6 +62,11 @@ const DETAIL_LABELS: Record<'en' | 'es', { lead: string; placements: string; asp
   es: { lead: 'Todo el detalle — ', placements: ' posiciones · ', aspects: ' aspectos · grados y dignidades' },
 };
 const DETAIL_STORAGE_KEY = 'zodiacs.detail.v1';
+const CHART_BOOK_COPY = {
+  en: { label: 'Whose chart is this?', save: 'Save', skip: 'Skip' },
+  es: { label: '¿De quién es esta carta?', save: 'Guardar', skip: 'Omitir' },
+} as const;
+type SavePrefillSource = 'link' | 'match' | 'auto';
 type CalendarSubscribeModule = typeof import('./CalendarSubscribe');
 type CopyLinkModule = typeof import('./CopyLinkButton');
 type A2hsHint = import('../lib/a2hs').A2hsHint;
@@ -104,6 +108,12 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   const [share, setShare] = useState<CopyLinkState>('idle');
   const [card, setCard] = useState<'idle' | 'busy' | 'saved' | 'error'>('idle');
   const [fromLink, setFromLink] = useState(false);
+  const [linkName, setLinkName] = useState<string | null>(null);
+  const [matchedName, setMatchedName] = useState<string | null>(null);
+  const [savePromptOpen, setSavePromptOpen] = useState(false);
+  const [saveDraft, setSaveDraft] = useState('');
+  const [saveInitial, setSaveInitial] = useState('');
+  const [saveSource, setSaveSource] = useState<SavePrefillSource>('auto');
   const [positionsOnly, setPositionsOnly] = useState<PositionsShareChart | null>(null);
   const [shareSurface, setShareSurface] = useState<ShareSurfaceModule | null>(null);
   const [calendarSurface, setCalendarSurface] = useState<CalendarSubscribeModule | null>(null);
@@ -114,6 +124,9 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   const resultRef = useRef<HTMLDivElement>(null);
   const resultHeadingRef = useRef<HTMLHeadingElement>(null);
   const errorRef = useRef<HTMLParagraphElement>(null);
+  const saveButtonRef = useRef<HTMLButtonElement>(null);
+  const saveNameRef = useRef<HTMLInputElement>(null);
+  const saveOriginRef = useRef<'tour' | 'free'>('free');
   const focusAfterComputeRef = useRef(false);
 
   // ── Chart Explorer state (full mode) ──
@@ -413,6 +426,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
     setCity(linkCity);
     setHouseSystem(decoded.houseSystem);
     setFromLink(true);
+    setLinkName(decoded.name ?? null);
     setPositionsOnly(null);
     clearFragment();
     runChart({
@@ -446,6 +460,8 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
     setBusy(true);
     setError('');
     setSaved('idle');
+    setMatchedName(null);
+    setSavePromptOpen(false);
     setA2hsHint(null);
     setShare('idle');
     setCard('idle');
@@ -503,47 +519,9 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   function compute(e: Event) {
     e.preventDefault();
     if (!canCompute || !city) return;
+    setFromLink(false);
+    setLinkName(null);
     runChart({ date, time, timeKnown, city, houseSystem }, true);
-  }
-
-  function onSave() {
-    if (!chart || !city) return;
-    track('chart_save', { source: tourOpen ? 'tour' : 'free' });
-    const sun = chart.bodies.find((b) => b.body === 'Sun')!;
-    const defaultName = `${signName(signForLongitude(sun.lon), locale)} ${t(locale, 'sun')} · ${date}`;
-    const status = saveChart({
-      id: crypto.randomUUID(),
-      name: defaultName,
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-      birth: {
-        date,
-        time: timeKnown ? time : null,
-        timeKnown,
-        place: {
-          name: city.name, admin1: city.admin1, country: city.country,
-          lat: city.lat, lon: city.lon, tz: city.tz,
-        },
-      },
-      summary: {
-        engineVersion: ENGINE_VERSION,
-        utcISO: chart.input.utc.toISOString(),
-        houseSystem: chart.houses?.system ?? houseSystem,
-        bodies: chart.bodies.map((b) => ({ body: b.body, lon: b.lon, retrograde: b.retrograde })),
-        angles: chart.angles ? { asc: chart.angles.asc, mc: chart.angles.mc } : null,
-        flags: chart.flags,
-      },
-    });
-    setSaved(status === 'updated' ? 'saved' : status);
-    if (status === 'saved' || status === 'updated') {
-      void import('../lib/a2hs').then(({ claimA2hsHint }) => {
-        const hint = claimA2hsHint(locale, navigator.userAgent, localStorage);
-        const standalone = (navigator as Navigator & { standalone?: boolean }).standalone === true
-          || window.matchMedia('(display-mode: standalone)').matches;
-        if (hint && !standalone) setA2hsHint(hint);
-        else loadPushOptIn();
-      }).catch(() => {});
-    }
   }
 
   const shareUrl = () =>
@@ -575,6 +553,141 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   const moon = chart?.bodies.find((b) => b.body === 'Moon');
   const asc = chart?.angles?.asc ?? null;
   const sunSign = sun ? signForLongitude(sun.lon) : null;
+  const autoNameEn = sunSign ? `${signName(sunSign, 'en')} ${t('en', 'sun')} · ${date}` : '';
+  const autoNameEs = sunSign ? `${signName(sunSign, 'es')} ${t('es', 'sun')} · ${date}` : '';
+  const autoName = locale === 'es' ? autoNameEs : autoNameEn;
+  const isAutoName = (name: string | null) => name === autoNameEn || name === autoNameEs;
+  const personName = linkName && !isAutoName(linkName)
+    ? linkName
+    : matchedName && !isAutoName(matchedName) ? matchedName : null;
+
+  useEffect(() => {
+    if (!chart || !city) return;
+    let active = true;
+    const identity = {
+      birth: {
+        date,
+        time: timeKnown ? time : null,
+        timeKnown,
+        place: {
+          name: city.name, admin1: city.admin1, country: city.country,
+          lat: city.lat, lon: city.lon, tz: city.tz,
+        },
+      },
+      summary: { houseSystem: chart.houses?.system ?? houseSystem },
+    };
+    void import('../lib/profile/store').then(({ findMatchingChart }) => {
+      if (active) setMatchedName(findMatchingChart(identity)?.name ?? null);
+    }).catch(() => {});
+    return () => { active = false; };
+  }, [chart, city, date, time, timeKnown, houseSystem]);
+
+  useEffect(() => {
+    if (savePromptOpen) saveNameRef.current?.focus();
+  }, [savePromptOpen]);
+
+  function chartIdentity() {
+    if (!chart || !city) return null;
+    return {
+      birth: {
+        date,
+        time: timeKnown ? time : null,
+        timeKnown,
+        place: {
+          name: city.name, admin1: city.admin1, country: city.country,
+          lat: city.lat, lon: city.lon, tz: city.tz,
+        },
+      },
+      summary: { houseSystem: chart.houses?.system ?? houseSystem },
+    };
+  }
+
+  function closeSavePrompt() {
+    setSavePromptOpen(false);
+    requestAnimationFrame(() => saveButtonRef.current?.focus());
+  }
+
+  async function openSavePrompt(origin: 'tour' | 'free' = 'free') {
+    const identity = chartIdentity();
+    if (!identity || saved === 'saved') return;
+    saveOriginRef.current = origin;
+    let currentName = matchedName;
+    try {
+      const { findMatchingChart } = await import('../lib/profile/store');
+      currentName = findMatchingChart(identity)?.name ?? null;
+      setMatchedName(currentName);
+    } catch { /* saving will surface an error if storage cannot load */ }
+    const source: SavePrefillSource = linkName ? 'link' : currentName ? 'match' : 'auto';
+    const prefill = (linkName ?? currentName ?? autoName).slice(0, NAME_MAX);
+    setSaveSource(source);
+    setSaveInitial(prefill);
+    setSaveDraft(prefill);
+    setSavePromptOpen(true);
+  }
+
+  async function commitSave(explicitName: string | undefined, via: 'prompt' | 'link' | 'skip') {
+    if (!chart || !city) return;
+    track('chart_save', { source: saveOriginRef.current });
+    const now = new Date().toISOString();
+    try {
+      const { saveChart } = await import('../lib/profile/store');
+      const status = saveChart({
+        id: crypto.randomUUID(),
+        name: explicitName ?? autoName,
+        createdAt: now,
+        updatedAt: now,
+        birth: {
+          date,
+          time: timeKnown ? time : null,
+          timeKnown,
+          place: {
+            name: city.name, admin1: city.admin1, country: city.country,
+            lat: city.lat, lon: city.lon, tz: city.tz,
+          },
+        },
+        summary: {
+          engineVersion: ENGINE_VERSION,
+          utcISO: chart.input.utc.toISOString(),
+          houseSystem: chart.houses?.system ?? houseSystem,
+          bodies: chart.bodies.map((b) => ({ body: b.body, lon: b.lon, retrograde: b.retrograde })),
+          angles: chart.angles ? { asc: chart.angles.asc, mc: chart.angles.mc } : null,
+          flags: chart.flags,
+        },
+      }, explicitName ? { explicitName } : undefined);
+      setSaved(status === 'updated' ? 'saved' : status);
+      if (status === 'saved' || status === 'updated') {
+        track('chart_name_set', { via });
+        setMatchedName(explicitName ?? matchedName ?? autoName);
+        void import('../lib/a2hs').then(({ claimA2hsHint }) => {
+          const hint = claimA2hsHint(locale, navigator.userAgent, localStorage);
+          const standalone = (navigator as Navigator & { standalone?: boolean }).standalone === true
+            || window.matchMedia('(display-mode: standalone)').matches;
+          if (hint && !standalone) setA2hsHint(hint);
+          else loadPushOptIn();
+        }).catch(() => {});
+      }
+    } catch {
+      setSaved('error');
+    }
+    closeSavePrompt();
+  }
+
+  function submitSaveName(e: Event) {
+    e.preventDefault();
+    const value = saveDraft.trim();
+    const accepted = value || autoName;
+    // Existing profile renames may predate the 24-character share-link cap.
+    // If the displayed, capped match is accepted unchanged, keep this save
+    // non-explicit so saveChart preserves the full stored name.
+    const unchangedMatch = saveSource === 'match' && accepted === saveInitial.trim();
+    const explicitName = isAutoName(accepted) || unchangedMatch ? undefined : accepted;
+    // A saved-name match has no fourth analytics category: accepting that
+    // non-auto value in the naming prompt is a prompt commit.
+    const via = saveSource === 'link' && accepted === saveInitial.trim()
+      ? 'link'
+      : explicitName || (unchangedMatch && !isAutoName(accepted)) ? 'prompt' : 'skip';
+    void commitSave(explicitName, via);
+  }
 
   // The guided reading: planets only (nodes stay in the table), each with
   // sign + dignity resolved once; aspects ranked; whole-chart weather.
@@ -715,6 +828,13 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
           {fromLink && (
             <p class="notice" role="status">
               {t(locale, 'fromLinkNotice')}
+            </p>
+          )}
+          {personName && (
+            <p class="notice" data-chart-person>
+              {locale === 'es'
+                ? `La carta de ${personName}: el "tú" de abajo se refiere a ${personName}.`
+                : `${personName}'s chart — "you" below means ${personName}.`}
             </p>
           )}
 
@@ -866,7 +986,10 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                           if (allAspects) setAspectTypes(ALL_ASPECT_TYPES);
                         }}
                         onTrack={track}
-                        onSave={onSave}
+                        onSave={() => {
+                          exitTour();
+                          void openSavePrompt('tour');
+                        }}
                         onShare={openShareDialog}
                         onExit={exitTour}
                         returnFocus={() => wheelboxRef.current?.focus()}
@@ -986,15 +1109,47 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
 
           {/* Save + share + next steps */}
           <div class="calc__actions">
-            <button class="btn btn--primary" type="button" onClick={onSave} disabled={saved === 'saved'}>
-              <span>{saved === 'saved' ? t(locale, 'chartSavedDevice') : t(locale, 'saveThisChart')}</span>
-              <span class="orb">{saved === 'saved' ? '✓' : '+'}</span>
-            </button>
-            {mode !== 'full' && (
-              <a class="btn btn--ghost" href={localizePath(locale, '/birth-chart/')}><span>{t(locale, 'getBirthChart')}</span><span class="orb">↗</span></a>
-            )}
-            {mode === 'full' && (
-              <a class="btn btn--ghost" href={localizePath(locale, '/profile/')}><span>{t(locale, 'savedCharts')}</span><span class="orb">→</span></a>
+            {savePromptOpen ? (
+              <form class="calc__save-prompt" onSubmit={submitSaveName} data-save-prompt>
+                <label class="sr-only" for="chart-save-name">{CHART_BOOK_COPY[locale].label}</label>
+                <input
+                  ref={saveNameRef}
+                  class="field__input calc__save-name"
+                  id="chart-save-name"
+                  value={saveDraft}
+                  maxLength={NAME_MAX}
+                  onInput={(e) => setSaveDraft((e.currentTarget as HTMLInputElement).value)}
+                  onKeyDown={(e) => {
+                    if (e.key !== 'Escape') return;
+                    e.preventDefault();
+                    closeSavePrompt();
+                  }}
+                />
+                <button class="btn btn--primary" type="submit">{CHART_BOOK_COPY[locale].save}</button>
+                <button class="btn btn--ghost" type="button" onClick={() => void commitSave(undefined, 'skip')}>
+                  {CHART_BOOK_COPY[locale].skip}
+                </button>
+              </form>
+            ) : (
+              <>
+                <button
+                  ref={saveButtonRef}
+                  class="btn btn--primary"
+                  type="button"
+                  onClick={() => void openSavePrompt()}
+                  aria-disabled={saved === 'saved'}
+                  data-save-chart
+                >
+                  <span>{saved === 'saved' ? t(locale, 'chartSavedDevice') : t(locale, 'saveThisChart')}</span>
+                  <span class="orb">{saved === 'saved' ? '✓' : '+'}</span>
+                </button>
+                {mode !== 'full' && (
+                  <a class="btn btn--ghost" href={localizePath(locale, '/birth-chart/')}><span>{t(locale, 'getBirthChart')}</span><span class="orb">↗</span></a>
+                )}
+                {mode === 'full' && (
+                  <a class="btn btn--ghost" href={localizePath(locale, '/profile/')}><span>{t(locale, 'savedCharts')}</span><span class="orb">→</span></a>
+                )}
+              </>
             )}
           </div>
           {mode === 'full' && saved !== 'saved' && <p class="calc__saved">{t(locale, 'saveYearAheadNote')}</p>}

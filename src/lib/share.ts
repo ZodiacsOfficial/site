@@ -22,7 +22,7 @@ export interface ShareChartInput {
 }
 
 const VERSION_PREFIX = '1.';
-const NAME_MAX = 24;
+export const NAME_MAX = 24;
 const PLACE_MAX = 40;
 
 /** Wire shape — single-letter keys keep links short. */

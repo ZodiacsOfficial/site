@@ -25,6 +25,18 @@ const PF_PAIR_COPY = {
   en: { savedPairs: 'Saved comparisons', pairRemoved: 'Comparison removed.' },
   es: { savedPairs: 'Comparaciones guardadas', pairRemoved: 'Comparación eliminada.' },
 } as const satisfies Record<Locale, Record<'savedPairs' | 'pairRemoved', string>>;
+const PF_BOOK_COPY = {
+  en: {
+    count: (n: number) => `${n} charts saved — yours and the people you read for.`,
+    add: "Add someone's chart",
+    privacy: 'Saved on this device. Nothing is uploaded unless you turn sync on.',
+  },
+  es: {
+    count: (n: number) => `${n} cartas guardadas: la tuya y las de las personas que lees.`,
+    add: 'Añade la carta de alguien',
+    privacy: 'Guardado en este dispositivo. No se sube nada salvo que actives la sincronización.',
+  },
+} as const;
 const HAS_PROFILE_SYNC = Boolean(
   import.meta.env.PUBLIC_SUPABASE_URL &&
   (import.meta.env.PUBLIC_SUPABASE_PUBLISHABLE_KEY || import.meta.env.PUBLIC_SUPABASE_ANON_KEY)
@@ -311,7 +323,7 @@ export default function ProfileManager({ locale: rawLocale = 'en' }: { locale?: 
       <p class="sr-only" role="status">{pairAnnounce}</p>
       {syncPanel}
       <p class="pf-count mono">
-        {profile.charts.length} {profile.charts.length === 1 ? t(locale, 'savedChartSingular') : t(locale, 'savedChartPlural')} · {session ? t(locale, 'syncedWhenSignedIn') : t(locale, 'storedBrowser')}
+        {PF_BOOK_COPY[locale].count(profile.charts.length)}
       </p>
 
       <div class="pf-list">
@@ -391,6 +403,8 @@ export default function ProfileManager({ locale: rawLocale = 'en' }: { locale?: 
         ))}
       </div>
 
+      <p class="pf-privacy">{PF_BOOK_COPY[locale].privacy}</p>
+
       {pairsBlock}
 
       {profile.charts.length >= 2 && (
@@ -415,7 +429,7 @@ export default function ProfileManager({ locale: rawLocale = 'en' }: { locale?: 
       )}
 
       <div class="pf-foot">
-        <a class="btn btn--ghost" href={localizePath(locale, '/birth-chart/')}><span>{t(locale, 'addAnotherChart')}</span><span class="orb">+</span></a>
+        <a class="btn btn--ghost" href={localizePath(locale, '/birth-chart/')}><span>{PF_BOOK_COPY[locale].add}</span><span class="orb">+</span></a>
       </div>
     </div>
   );

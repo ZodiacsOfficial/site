@@ -15,7 +15,7 @@
 import type { ShareChartInput } from '../share';
 
 export const PAIRS_KEY = 'zodiacs.pairs.v1';
-export const MAX_PAIRS = 12;
+export const MAX_PAIRS = 24;
 
 export type SavedPairSide =
   | {

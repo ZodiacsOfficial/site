@@ -268,6 +268,17 @@
 .calc__aspects li { font-size: 12px; color: var(--muted); }
 
 .calc__actions { display: flex; flex-wrap: wrap; gap: 12px; }
+.calc__save-prompt {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  gap: 8px;
+  width: min(100%, 620px);
+}
+.calc__save-name { min-width: 0; }
+@media (max-width: 420px) {
+  .calc__save-prompt { grid-template-columns: 1fr 1fr; }
+  .calc__save-name { grid-column: 1 / -1; }
+}
 
 /* Solar return: the form stays in the host chunk; this result surface arrives
    with the wheel only after calculation. */

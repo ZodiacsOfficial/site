@@ -105,6 +105,7 @@ describe('savePair', () => {
   });
 
   it('refuses past the cap', () => {
+    expect(MAX_PAIRS).toBe(24);
     for (let i = 0; i < MAX_PAIRS; i += 1) {
       expect(savePair(pair(`p${i}`, chartSide('frida'), inputSide({ lat: i })))).toBe('saved');
     }
