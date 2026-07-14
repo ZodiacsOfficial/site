@@ -23,6 +23,10 @@ describe('daily push', () => {
       .toBe('Next: New Moon is exact 14 Jul at 09:44 UTC.');
     expect(buildSkyLine(SKY, new Date('2026-07-14T20:00:00Z'), 'es'))
       .toBe('Luna nueva, exacta hoy a las 09:44 UTC.');
+    expect(buildSkyLine(SKY, new Date('2026-07-13T12:00:00Z'), 'pt'))
+      .toBe('Próximo: Lua nova, exata em 14 jul às 09:44 UTC.');
+    expect(buildSkyLine(SKY, new Date('2026-07-07T20:00:00Z'), 'pt'))
+      .toBe('Netuno estaciona retrógrado hoje às 11:21 UTC.');
   });
 
   it('prints a dry run without contacting a push service', async () => {

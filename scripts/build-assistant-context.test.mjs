@@ -63,13 +63,14 @@ describe('assistant site context', () => {
     expect(context).toContain('- /rising-sign/pisces/ — What Pisces rising means.');
   });
 
-  it('stays inside the cache-size band without Spanish routes or consumer-banned vocabulary', async () => {
+  it('stays inside the cache-size band without localized routes or consumer-banned vocabulary', async () => {
     const { context } = await generateAssistantContext();
     const bytes = Buffer.byteLength(context);
 
     expect(bytes).toBeGreaterThanOrEqual(MIN_CONTEXT_BYTES);
     expect(bytes).toBeLessThanOrEqual(MAX_CONTEXT_BYTES);
     expect(context).not.toMatch(/(?:^|\s)\/es\//m);
+    expect(context).not.toMatch(/(?:^|\s)\/pt\//m);
     for (const word of BANNED_CONSUMER_VOCABULARY) {
       expect(context).not.toMatch(new RegExp(`\\b${word}(?:s)?\\b`, 'i'));
     }

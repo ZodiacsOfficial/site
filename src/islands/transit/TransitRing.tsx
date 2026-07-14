@@ -112,6 +112,24 @@ const COPY = {
     nextUp: 'Próximos en alcanzar la exactitud:',
     noSlowExact: 'Ningún tránsito lento alcanza la exactitud en esta ventana.',
   },
+  pt: {
+    skyRingLabel: 'o céu em trânsito',
+    scrubLabel: 'Mova a data',
+    scrubHint: 'Arraste para mover o céu para a frente ou para trás; o anel externo mostra onde os planetas estão nesse momento.',
+    now: 'Agora',
+    back1m: '−1 mês',
+    fwd1m: '+1 mês',
+    outerRing: 'Anel externo: o céu desse momento. Roda interna: seu mapa astral.',
+    tapHint: 'Toque em um planeta em movimento ou em uma linha de conexão para ler esse trânsito.',
+    noContacts: 'Nenhum trânsito entre planetas a menos de',
+    ofExact: 'do ponto exato',
+    moonOmitted: 'a Lua se move rápido demais para aparecer na lista, mas você pode acompanhá-la na roda',
+    announce: 'Céu de',
+    scanning: 'Calculando as datas exatas dos trânsitos lentos…',
+    marksLabel: 'Datas exatas dos trânsitos lentos nesta janela',
+    nextUp: 'Próximos a chegar ao ponto exato:',
+    noSlowExact: 'Nenhum trânsito lento chega ao ponto exato nesta janela.',
+  },
 } as const;
 
 export default function TransitRing({ locale, natal, computeSky, nowMs, focusRequest = null }: TransitRingProps) {

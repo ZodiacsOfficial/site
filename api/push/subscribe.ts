@@ -89,7 +89,10 @@ export function parseSubscription(input: unknown): Required<PushSubscriptionInpu
   if (!validEndpoint(candidate.endpoint)
     || !validKey(candidate.keys?.p256dh)
     || !validKey(candidate.keys?.auth)) return null;
-  const lang = candidate.lang === 'es' ? 'es' : 'en';
+  const requestedLang = candidate.lang?.trim().toLowerCase() ?? '';
+  const lang = requestedLang === 'es' || requestedLang.startsWith('es-')
+    ? 'es'
+    : requestedLang === 'pt' || requestedLang.startsWith('pt-') ? 'pt' : 'en';
   return {
     endpoint: candidate.endpoint,
     keys: { p256dh: candidate.keys.p256dh, auth: candidate.keys.auth },

@@ -56,19 +56,23 @@ type LensRingRenderer = (geo: import('../lib/wheel/Wheel').WheelGeometry) => imp
 const LENS_LABELS: Record<Locale, Record<'rail' | 'natal' | LensId, string>> = {
   en: { rail: 'Chart through time', natal: 'Natal', sky: 'Sky now', progressed: 'Progressed', return: 'Solar return' },
   es: { rail: 'La carta en el tiempo', natal: 'Natal', sky: 'Cielo ahora', progressed: 'Progresada', return: 'Retorno solar' },
+  pt: { rail: 'O mapa ao longo do tempo', natal: 'Natal', sky: 'Céu agora', progressed: 'Progredido', return: 'Retorno solar' },
 };
 const DETAIL_LABELS: Record<Locale, { lead: string; placements: string; aspects: string }> = {
   en: { lead: 'Full detail — ', placements: ' placements · ', aspects: ' aspects · degrees & dignities' },
   es: { lead: 'Todo el detalle — ', placements: ' posiciones · ', aspects: ' aspectos · grados y dignidades' },
+  pt: { lead: 'Todos os detalhes — ', placements: ' posições · ', aspects: ' aspectos · graus e dignidades' },
 };
 const DETAIL_STORAGE_KEY = 'zodiacs.detail.v1';
 const CHART_BOOK_COPY = {
   en: { label: 'Whose chart is this?', save: 'Save', skip: 'Skip' },
   es: { label: '¿De quién es esta carta?', save: 'Guardar', skip: 'Omitir' },
+  pt: { label: 'De quem é este mapa?', save: 'Salvar', skip: 'Pular' },
 } as const satisfies Record<Locale, { label: string; save: string; skip: string }>;
 const PERSON_CHART_COPY = {
   en: (name: string) => `${name}'s chart — "you" below means ${name}.`,
   es: (name: string) => `La carta de ${name}: el "tú" de abajo se refiere a ${name}.`,
+  pt: (name: string) => `O mapa de ${name}: o "você" abaixo se refere a ${name}.`,
 } satisfies Record<Locale, (name: string) => string>;
 type SavePrefillSource = 'link' | 'match' | 'auto';
 type CalendarSubscribeModule = typeof import('./CalendarSubscribe');

@@ -45,6 +45,19 @@ const COPY = {
     denied: 'Las notificaciones están bloqueadas en este navegador. Puedes cambiarlo en los ajustes del sitio.',
     error: 'Las notas diarias no están disponibles ahora. Inténtalo más tarde.',
   },
+  pt: {
+    heading: 'Quer receber uma nota diária?',
+    body: 'Uma nota breve sobre o céu abre seu resumo privado em /today/. Seus dados de nascimento ficam neste dispositivo.',
+    ios: 'No iPhone e no iPad, as notificações só funcionam depois que você adiciona o site à Tela de Início. Instale primeiro e depois volte aqui.',
+    accept: 'Ativar notas diárias',
+    installing: 'Ativando…',
+    dismiss: 'Agora não',
+    dismissLabel: 'Dispensar oferta de nota diária',
+    on: 'As notas diárias estão ativadas. As notificações abrem /today/; seu mapa fica neste dispositivo.',
+    off: 'Desativar',
+    denied: 'As notificações estão bloqueadas neste navegador. Você pode mudar isso nas configurações do site.',
+    error: 'As notas diárias não estão disponíveis agora. Tente novamente mais tarde.',
+  },
 } as const satisfies Record<Locale, {
   heading: string;
   body: string;

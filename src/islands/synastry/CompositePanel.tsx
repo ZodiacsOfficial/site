@@ -23,6 +23,13 @@ const COPY = {
     noAspects: 'No hay aspectos mayores dentro del orbe.',
     note: 'Una carta compuesta es el punto medio de dos cartas: un retrato de la relación en sí, no de ninguna de las dos personas. Las casas compuestas requieren una convención de ubicación que no vamos a fingir, por eso esta carta se muestra sin casas.',
   },
+  pt: {
+    title: 'Dois mapas, um ponto médio',
+    placements: 'Posições do mapa composto',
+    aspects: 'Aspectos do mapa composto',
+    noAspects: 'Nenhum aspecto maior está dentro do orbe.',
+    note: 'Um mapa composto é o ponto médio de dois mapas: um retrato da própria relação, não de nenhuma das duas pessoas. As casas do mapa composto exigem uma convenção de localização, e não vamos fingir que adotamos uma; por isso, este mapa é mostrado sem casas.',
+  },
 } as const;
 
 interface CompositePanelProps {

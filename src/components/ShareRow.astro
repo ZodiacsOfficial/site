@@ -11,6 +11,7 @@ const { text, url, locale = 'en' } = Astro.props;
 const LABEL = {
   en: 'Send this page:',
   es: 'Comparte esta página:',
+  pt: 'Compartilhe esta página:',
 } as const satisfies Record<Locale, string>;
 const encode = (value: string) => encodeURIComponent(value).replace(/[!'()*]/g, (char) =>
   `%${char.charCodeAt(0).toString(16).toUpperCase()}`

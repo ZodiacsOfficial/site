@@ -11,6 +11,7 @@ import { readFile, readdir, writeFile } from 'node:fs/promises';
 import { dirname, extname, join, relative, resolve } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { GLOSSARY } from '../src/data/glossary.ts';
+import { DEFAULT_LOCALE, LOCALES } from '../src/lib/i18n/core.ts';
 
 const repo = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const DEFAULT_OUTPUT = resolve(repo, 'api/_assistant/context.ts');
@@ -57,6 +58,9 @@ export const BANNED_CONSUMER_VOCABULARY = Object.freeze([
 ]);
 
 const COLLAPSE = /\s+/g;
+const LOCALIZED_PAGE_PREFIXES = LOCALES
+  .filter((locale) => locale !== DEFAULT_LOCALE)
+  .map((locale) => `${locale}/`);
 
 function compareText(left, right) {
   return left < right ? -1 : left > right ? 1 : 0;
@@ -181,7 +185,7 @@ async function loadStaticPages(repoRoot, context) {
   const pages = [];
   for (const file of await filesUnder(pagesRoot, '.astro')) {
     const local = relative(pagesRoot, file).replaceAll('\\', '/');
-    if (local.startsWith('es/')) continue;
+    if (LOCALIZED_PAGE_PREFIXES.some((prefix) => local.startsWith(prefix))) continue;
     if (local.startsWith('embed/')) continue;
     if (local.includes('[')) continue;
     if (local === '404.astro') continue;
@@ -396,7 +400,10 @@ export async function generateAssistantContext({ repoRoot = repo } = {}) {
     '- /learn/zodiac-dates/ uses the tropical zodiac and gives Sun ingress instants in UTC.',
   ].join('\n');
 
-  if (context.includes('/es/')) throw new Error('Assistant context duplicates Spanish routes');
+  const duplicatedLocale = LOCALIZED_PAGE_PREFIXES.find((prefix) => context.includes(`/${prefix}`));
+  if (duplicatedLocale) {
+    throw new Error(`Assistant context duplicates localized routes under /${duplicatedLocale}`);
+  }
   const missingDescriptions = [...consumerRoutes]
     .filter((route) => !context.includes(`- ${route} —`));
   if (missingDescriptions.length) {

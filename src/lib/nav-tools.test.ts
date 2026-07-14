@@ -17,7 +17,7 @@ describe('NAV_TOOLS', () => {
   });
 
   it('resolves labels, one-line sublabels, and existing localized paths', () => {
-    for (const locale of ['en', 'es'] as const) {
+    for (const locale of ['en', 'es', 'pt'] as const) {
       for (const tool of NAV_TOOLS) {
         expect(t(locale, tool.label).trim()).not.toBe('');
         expect(tool.sublabel[locale]).not.toMatch(/[\r\n]/);
@@ -27,5 +27,7 @@ describe('NAV_TOOLS', () => {
 
     expect(localizePath('es', '/transits/')).toBe('/es/transits/');
     expect(localizePath('es', '/birthday/')).toBe('/birthday/');
+    expect(localizePath('pt', '/transits/')).toBe('/pt/transits/');
+    expect(localizePath('pt', '/birthday/')).toBe('/birthday/');
   });
 });

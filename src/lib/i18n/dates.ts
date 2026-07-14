@@ -6,6 +6,7 @@ export const TECHNICAL_WALL_LOCALE = 'en-CA';
 const INTL_LOCALES = {
   en: 'en-US',
   es: 'es-419',
+  pt: 'pt-BR',
 } as const satisfies Record<Locale, string>;
 
 export function intlLocale(locale: Locale): string {

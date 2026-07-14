@@ -24,3 +24,15 @@ describe('Spanish profile chart count', () => {
     );
   });
 });
+
+describe('Brazilian Portuguese profile chart count', () => {
+  it('uses singular grammar for one saved chart', () => {
+    expect(PF_BOOK_COPY.pt.count(1)).toBe('1 mapa salvo.');
+  });
+
+  it('uses plural grammar for multiple saved charts', () => {
+    expect(PF_BOOK_COPY.pt.count(2)).toBe(
+      '2 mapas salvos: o seu e os das pessoas para quem você faz leituras.',
+    );
+  });
+});

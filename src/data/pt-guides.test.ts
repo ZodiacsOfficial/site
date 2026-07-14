@@ -15,6 +15,7 @@ describe('Portuguese sign guides', () => {
       expect(guide.intro).toHaveLength(2);
       expect(guide.sections).toHaveLength(9);
       expect(guide.sections.flatMap((section) => section.body)).toHaveLength(24);
+      expect(guide.sections.filter((section) => section.risingProfile)).toHaveLength(1);
       expect(guide.faq).toHaveLength(6);
       expect(text).toContain('Seu dom é claro:');
       expect(text).toContain('Essa costuma ser a química mais fácil.');
