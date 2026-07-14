@@ -32,7 +32,7 @@ import { transitLine, TRANSIT_ORB } from '../../lib/transits';
 import { formatLongitude } from '../../lib/signs';
 import { formatDate, formatDateTime } from '../../lib/i18n/dates';
 import { aspectLabel, planetLabel } from '../../lib/i18n/astrology';
-import { t, type Locale } from '../../lib/i18n';
+import { showsEnglishOnlyInterpretation, t, type Locale } from '../../lib/i18n';
 import CalendarSubscribe, { type CalendarPositionsSource } from '../CalendarSubscribe';
 
 export interface TransitSky {
@@ -134,6 +134,7 @@ const COPY = {
 
 export default function TransitRing({ locale, natal, computeSky, nowMs, focusRequest = null }: TransitRingProps) {
   const c = COPY[locale] ?? COPY.en;
+  const showInterpretation = showsEnglishOnlyInterpretation(locale);
   const [offset, setOffset] = useState(0);          // days from now (may be fractional mid-tween)
   const [sel, setSel] = useState<string | null>(null);
   const [searchPointFocus, setSearchPointFocus] = useState<TransitContact | null>(null);
@@ -423,7 +424,9 @@ export default function TransitRing({ locale, natal, computeSky, nowMs, focusReq
                   : planetLabel(locale, focusedPoint.natalPoint)}
                 {' · '}{t(locale, 'orb')} {focusedPoint.orb.toFixed(1)}°
               </span>
-              <p class="tring__focus-read">{transitLine(focusedPoint.transitBody, focusedPoint.aspect, focusedPoint.natalPoint)}</p>
+              {showInterpretation && (
+                <p class="tring__focus-read">{transitLine(focusedPoint.transitBody, focusedPoint.aspect, focusedPoint.natalPoint)}</p>
+              )}
             </>
           )}
           {selectedAspect && (
@@ -434,7 +437,9 @@ export default function TransitRing({ locale, natal, computeSky, nowMs, focusReq
                 {' '}{t(locale, 'natal')} <PlanetGlyph body={selectedAspect.inner} size={13} class="pg-inline" /> {planetLabel(locale, selectedAspect.inner)}
                 {' · '}{t(locale, 'orb')} {selectedAspect.orb.toFixed(1)}°
               </span>
-              <p class="tring__focus-read">{transitLine(selectedAspect.outer, selectedAspect.type, selectedAspect.inner)}</p>
+              {showInterpretation && (
+                <p class="tring__focus-read">{transitLine(selectedAspect.outer, selectedAspect.type, selectedAspect.inner)}</p>
+              )}
             </>
           )}
           {!focusedPoint && !selectedAspect && selectedBody && (
@@ -470,7 +475,9 @@ export default function TransitRing({ locale, natal, computeSky, nowMs, focusReq
               <span class="syn__aspect-receipt mono">
                 <PlanetGlyph body={a.outer} size={13} class="pg-inline" /> {planetLabel(locale, a.outer)} <AspectGlyph type={a.type} size={13} class="pg-inline" /> {aspectLabel(locale, a.type)} {t(locale, 'natal')} <PlanetGlyph body={a.inner} size={13} class="pg-inline" /> {planetLabel(locale, a.inner)} · {t(locale, 'orb')} {a.orb.toFixed(1)}°
               </span>
-              <span class="syn__aspect-read">{transitLine(a.outer, a.type, a.inner)}</span>
+              {showInterpretation && (
+                <span class="syn__aspect-read">{transitLine(a.outer, a.type, a.inner)}</span>
+              )}
             </button>
           );
         })}

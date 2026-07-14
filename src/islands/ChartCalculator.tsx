@@ -74,6 +74,11 @@ const PERSON_CHART_COPY = {
   es: (name: string) => `La carta de ${name}: el "tú" de abajo se refiere a ${name}.`,
   pt: (name: string) => `O mapa de ${name}: o "você" abaixo se refere a ${name}.`,
 } satisfies Record<Locale, (name: string) => string>;
+const AUTO_NAME_SUN = {
+  en: 'Sun',
+  es: 'Sol',
+  pt: 'Sol',
+} as const satisfies Record<Locale, string>;
 type SavePrefillSource = 'link' | 'match' | 'auto';
 type CalendarSubscribeModule = typeof import('./CalendarSubscribe');
 type CopyLinkModule = typeof import('./CopyLinkButton');
@@ -567,7 +572,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   const asc = chart?.angles?.asc ?? null;
   const sunSign = sun ? signForLongitude(sun.lon) : null;
   const autoNames = LOCALES.map((candidate) =>
-    sunSign ? `${signName(sunSign, candidate)} ${t(candidate, 'sun')} · ${date}` : '',
+    sunSign ? `${signName(sunSign, candidate)} ${AUTO_NAME_SUN[candidate]} · ${date}` : '',
   );
   const autoName = autoNames[LOCALES.indexOf(locale)] ?? '';
   const isAutoName = (name: string | null) => name !== null && autoNames.includes(name);
