@@ -1,6 +1,6 @@
 import { createHmac, timingSafeEqual } from 'node:crypto';
 import { SIGN_SLUGS } from '../signs';
-import { LOCALES, type Locale } from '../i18n';
+import { LOCALES, type Locale } from '../i18n/core';
 
 const TOKEN_CONTEXT = 'zodiacs-email-capture-v1';
 export const EMAIL_OPT_IN_TTL_MS = 48 * 60 * 60 * 1_000;

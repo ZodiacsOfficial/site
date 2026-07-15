@@ -1,5 +1,5 @@
 import { SIGN_SLUGS } from '../signs';
-import { normalizeLocale, type Locale } from '../i18n';
+import { normalizeLocale, type Locale } from '../i18n/core';
 
 export interface ParsedEmailSubscription {
   email: string;
