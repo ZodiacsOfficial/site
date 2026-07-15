@@ -1,7 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import sharp from 'sharp';
-import { readFile } from 'node:fs/promises';
-import { resolve } from 'node:path';
+import { mkdtemp, readFile, rm } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { join, resolve } from 'node:path';
 import { buildPwaIcons, composeWheelIcon } from './build-pwa-icons.mjs';
 import { PWA_MANIFEST_EN } from '../src/strings/pwa.en.mjs';
 
@@ -18,11 +19,16 @@ describe('PWA icon compositor', () => {
   });
 
   it('writes install metadata from the English catalogue', async () => {
-    await buildPwaIcons();
-    const manifest = JSON.parse(await readFile(resolve('public/site.webmanifest'), 'utf8'));
-    expect(manifest.name).toBe(PWA_MANIFEST_EN.name);
-    expect(manifest.description).toBe(PWA_MANIFEST_EN.description);
-    expect(manifest.icons).toHaveLength(3);
-    expect(manifest.icons.at(-1)?.purpose).toBe('maskable');
+    const rootDirectory = await mkdtemp(join(tmpdir(), 'zodiacs-pwa-icons-'));
+    try {
+      await buildPwaIcons({ rootDirectory });
+      const manifest = JSON.parse(await readFile(resolve(rootDirectory, 'public/site.webmanifest'), 'utf8'));
+      expect(manifest.name).toBe(PWA_MANIFEST_EN.name);
+      expect(manifest.description).toBe(PWA_MANIFEST_EN.description);
+      expect(manifest.icons).toHaveLength(3);
+      expect(manifest.icons.at(-1)?.purpose).toBe('maskable');
+    } finally {
+      await rm(rootDirectory, { recursive: true, force: true });
+    }
   });
 });

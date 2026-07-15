@@ -7,7 +7,6 @@ import { PWA_MANIFEST_EN } from '../src/strings/pwa.en.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const sourceDirectory = resolve(root, 'public/assets/zodiac-icons/128');
-const outputDirectory = resolve(root, 'public/assets/app-icons');
 
 export async function composeWheelIcon(size, { maskable = false } = {}) {
   const logicalSize = 512;
@@ -33,7 +32,8 @@ export async function composeWheelIcon(size, { maskable = false } = {}) {
     .toBuffer();
 }
 
-export async function buildPwaIcons() {
+export async function buildPwaIcons({ rootDirectory = root } = {}) {
+  const outputDirectory = resolve(rootDirectory, 'public/assets/app-icons');
   await mkdir(outputDirectory, { recursive: true });
   const [icon192, icon512, maskable512, apple] = await Promise.all([
     composeWheelIcon(192),
@@ -45,8 +45,8 @@ export async function buildPwaIcons() {
     sharp(icon192).toFile(resolve(outputDirectory, 'icon-192.png')),
     sharp(icon512).toFile(resolve(outputDirectory, 'icon-512.png')),
     sharp(maskable512).toFile(resolve(outputDirectory, 'maskable-512.png')),
-    sharp(apple).toFile(resolve(root, 'public/apple-touch-icon.png')),
-    writeFile(resolve(root, 'public/site.webmanifest'), `${JSON.stringify({
+    sharp(apple).toFile(resolve(rootDirectory, 'public/apple-touch-icon.png')),
+    writeFile(resolve(rootDirectory, 'public/site.webmanifest'), `${JSON.stringify({
       name: PWA_MANIFEST_EN.name,
       short_name: PWA_MANIFEST_EN.shortName,
       description: PWA_MANIFEST_EN.description,
