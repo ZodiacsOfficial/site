@@ -48,6 +48,10 @@ describe('i18n helpers', () => {
     expect(localizePath('pt', '/birth-chart/')).toBe('/pt/birth-chart/');
     expect(localizePath('fr', '/birth-chart/')).toBe('/fr/birth-chart/');
     expect(localizePath('it', '/birth-chart/')).toBe('/it/birth-chart/');
+    expect(localizePath('es', '/disclosure/')).toBe('/es/disclosure/');
+    expect(localizePath('pt', '/disclosure/')).toBe('/pt/disclosure/');
+    expect(localizePath('fr', '/disclosure/')).toBe('/fr/disclosure/');
+    expect(localizePath('it', '/disclosure/')).toBe('/it/disclosure/');
     expect(localizePath('es', '/compatibility/aries-taurus/')).toBe('/compatibility/aries-taurus/');
     expect(stripLocale('/es/aries/')).toBe('/aries/');
     expect(stripLocale('/pt/aries/')).toBe('/aries/');
@@ -83,6 +87,13 @@ describe('i18n helpers', () => {
       pt: '/pt/privacy/',
       fr: '/fr/privacy/',
       it: '/it/privacy/',
+    });
+    expect(alternatePaths('/fr/disclosure/')).toEqual({
+      en: '/disclosure/',
+      es: '/es/disclosure/',
+      pt: '/pt/disclosure/',
+      fr: '/fr/disclosure/',
+      it: '/it/disclosure/',
     });
     expect(LOCALIZED_PATHS.get('/tools/')).toEqual(LOCALES);
     expect(Object.keys(alternatePaths('/tools/') ?? {})).toEqual([...LOCALES]);

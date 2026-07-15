@@ -497,25 +497,28 @@ function canonicalHref(html) {
 }
 
 // Coordinated indexing baseline (2026-07-15): compatibility prose remains
-// English-only under D9, while all 366 birthday and 13 Chinese-zodiac pages
-// ship on every locale rail. Keep exact counts so sitemap drift fails loudly.
+// English-only under D9, while birthdays, Chinese zodiac, and the Registry
+// disclosure ship on every locale rail. Keep exact counts so sitemap drift
+// fails loudly.
 const sitemapPolicy = {
-  total: 2314,
+  total: 2318,
   compatibilityPairs: 78,
   birthdays: 1830,
   chineseZodiac: 65,
-  translatedBlocks: 2020,
+  disclosures: 5,
+  translatedBlocks: 2025,
 };
-const ws5Families = [
+const indexedFamilies = [
   { label: 'compatibility pairs', pattern: /^\/compatibility\/[a-z]+-[a-z]+\/$/, expected: sitemapPolicy.compatibilityPairs, localized: false },
   { label: 'birthdays', pattern: /^\/(?:(?:es|pt|fr|it)\/)?birthday\/[a-z]+-\d{1,2}\/$/, expected: sitemapPolicy.birthdays, localized: true },
   { label: 'Chinese zodiac', pattern: /^\/(?:(?:es|pt|fr|it)\/)?learn\/chinese-zodiac(?:\/[a-z]+)?\/$/, expected: sitemapPolicy.chineseZodiac, localized: true },
+  { label: 'disclosures', pattern: /^\/(?:(?:es|pt|fr|it)\/)?disclosure\/$/, expected: sitemapPolicy.disclosures, localized: true },
 ];
 
 if (sitemapLocs.size !== sitemapPolicy.total) {
   fail(`sitemap.xml: ${sitemapLocs.size} locs vs coordinated baseline ${sitemapPolicy.total}`);
 }
-for (const family of ws5Families) {
+for (const family of indexedFamilies) {
   const locs = [...sitemapLocs].filter((loc) => family.pattern.test(loc));
   if (locs.length !== family.expected) {
     fail(`sitemap.xml: ${locs.length} ${family.label} vs baseline ${family.expected}`);

@@ -1,19 +1,21 @@
 ---
 import type { DisclosureRow } from '../lib/disclosure';
-import { EN } from '../strings/en.mjs';
+import { disclosureText } from '../lib/disclosure';
+import type { Locale } from '../lib/i18n';
 
 interface Props {
   rows: readonly DisclosureRow[];
+  locale: Locale;
 }
 
-const { rows } = Astro.props;
+const { rows, locale } = Astro.props;
 ---
 <div class="disclosure-table-wrap">
-  <table class="disclosure-table" aria-label={EN['disclosure.tableLabel']}>
+  <table class="disclosure-table" aria-label={disclosureText(locale, 'tableLabel')}>
     <thead>
       <tr>
-        <th scope="col">{EN['disclosure.statementHeading']}</th>
-        <th scope="col">{EN['disclosure.evidenceHeading']}</th>
+        <th scope="col">{disclosureText(locale, 'statementHeading')}</th>
+        <th scope="col">{disclosureText(locale, 'evidenceHeading')}</th>
       </tr>
     </thead>
     <tbody>
@@ -26,8 +28,8 @@ const { rows } = Astro.props;
           <td>
             <span class:list={['status-chip', `status-chip--${row.status}`]}>
               {row.status === 'pending'
-                ? EN['disclosure.statusPending']
-                : EN['disclosure.statusVerified']}
+                ? disclosureText(locale, 'statusPending')
+                : disclosureText(locale, 'statusVerified')}
             </span>
             <p class="disclosure-table__evidence">{row.evidence}</p>
             {row.links.length > 0 && (

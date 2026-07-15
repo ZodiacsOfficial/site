@@ -89,7 +89,7 @@ const isRegistryWing = /^\/(?:registry|sdk|thesis|archive|disclosure)(?:\/|$)/.t
         <span class="footer__label">{t(locale, 'navCollect')}</span>
         <a href="/registry/">{t(locale, 'footerRegistry')}</a>
         <a href="/sdk/">{t(locale, 'footerSdk')}</a>
-        <a href="/disclosure/" hreflang="en">{t(locale, 'footerDisclosure')}</a>
+        <a href={localizePath(locale, '/disclosure/')}>{t(locale, 'footerDisclosure')}</a>
         <span class="footer__note">{t(locale, 'footerCollectNote')}</span>
       </nav>
     </div>

@@ -94,6 +94,7 @@ const CORE_LOCALIZED_PATHS = [
   '/profile/',
   '/methodology/',
   '/privacy/',
+  '/disclosure/',
   '/404.html',
   ...SIGN_SLUGS.map((slug) => `/${slug}/`),
 ];

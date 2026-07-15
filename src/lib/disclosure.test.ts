@@ -1,21 +1,95 @@
+import { readFile } from 'node:fs/promises';
+import { dirname, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
-import { DISCLOSURE_ROWS } from './disclosure';
+import { EN } from '../strings/en.mjs';
+import { additionFormat } from '../strings/additions';
+import {
+  DISCLOSURE_ROWS,
+  disclosureRows,
+  disclosureText,
+  type DisclosureTextKey,
+} from './disclosure';
+import { LOCALES, LOCALE_META, localizePath, type Locale } from './i18n';
 import {
   REGISTRY_ESTABLISHED,
   REGISTRY_ESTABLISHMENT,
   REGISTRY_ESTABLISHMENT_PROVENANCE_URL,
 } from './registry-establishment.mjs';
+import { SIGNS, signName } from './signs';
+
+const ROW_IDS = [
+  'operator',
+  'economic-interest',
+  'origin',
+  'separation',
+  'read-only',
+  'financial-advice',
+] as const;
+const PENDING_IDS = ['operator', 'economic-interest', 'origin'] as const;
+const ROUTE_TEXT_KEYS = [
+  'metaTitle',
+  'metaDescription',
+  'kicker',
+  'title',
+  'intro',
+  'scope',
+  'establishedLabel',
+  'establishedPrefix',
+  'establishedPending',
+  'tableLabel',
+  'statementHeading',
+  'evidenceHeading',
+  'statusPending',
+  'statusVerified',
+  'operatorLabel',
+  'operatorStatement',
+  'operatorEvidence',
+  'economicLabel',
+  'economicStatement',
+  'economicEvidence',
+  'originLabel',
+  'originStatement',
+  'originEvidence',
+  'separationLabel',
+  'separationStatement',
+  'separationEvidence',
+  'readOnlyLabel',
+  'readOnlyStatement',
+  'readOnlyEvidence',
+  'adviceLabel',
+  'adviceStatement',
+  'adviceEvidence',
+  'linkPrivacy',
+  'linkMethodology',
+  'linkRegistry',
+  'linkSdk',
+  'linkTerms',
+  'linkThesis',
+  'operatorRequest',
+  'operatorRequestBody',
+  'backRegistry',
+] as const satisfies readonly DisclosureTextKey[];
+
+const repo = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
+
+function routeFile(locale: Locale): string {
+  const prefix = LOCALE_META[locale].pathPrefix.replace(/^\//, '');
+  return resolve(repo, 'dist', prefix, 'disclosure/index.html');
+}
+
+function routeRow(html: string, id: typeof ROW_IDS[number]): string {
+  return html.match(new RegExp(`<tr\\b[^>]*id="${id}"[^>]*>([\\s\\S]*?)<\\/tr>`))?.[1] ?? '';
+}
+
+function literalTextPattern(value: string): RegExp {
+  const escaped = value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  return new RegExp(`(?<!\\p{L})${escaped}(?!\\p{L})`, 'u');
+}
 
 describe('registry disclosure contract', () => {
   it('publishes every required disclosure row exactly once', () => {
-    expect(DISCLOSURE_ROWS.map((row) => row.id)).toEqual([
-      'operator',
-      'economic-interest',
-      'origin',
-      'separation',
-      'read-only',
-      'financial-advice',
-    ]);
+    expect(DISCLOSURE_ROWS.map((row) => row.id)).toEqual(ROW_IDS);
   });
 
   it('keeps every unverified operator claim visibly pending', () => {
@@ -35,5 +109,89 @@ describe('registry disclosure contract', () => {
   it('centralizes the provisional year and leaves provenance unsupplied', () => {
     expect(REGISTRY_ESTABLISHED).toBe(REGISTRY_ESTABLISHMENT.romanYear);
     expect(REGISTRY_ESTABLISHMENT_PROVENANCE_URL).toBeNull();
+  });
+
+  it('keeps pending chips on the established #E0B080 convention', async () => {
+    const source = await readFile(resolve(repo, 'src/components/DisclosureTable.astro'), 'utf8');
+    expect(source).toMatch(/\.status-chip--pending\s*\{[\s\S]*color:\s*#E0B080;/);
+  });
+
+  it('keeps the six-row contract and pending provenance localized in every catalog', () => {
+    for (const locale of LOCALES) {
+      const rows = disclosureRows(locale);
+      expect(rows.map((row) => row.id), locale).toEqual(ROW_IDS);
+      expect(rows.filter((row) => row.status === 'pending').map((row) => row.id), locale)
+        .toEqual(PENDING_IDS);
+      expect(rows.filter((row) => row.status === 'verified').map((row) => row.id), locale)
+        .toEqual(['separation', 'read-only', 'financial-advice']);
+      expect(rows.every((row) => !`${row.statement} ${row.evidence}`.includes('[OPERATOR')), locale)
+        .toBe(true);
+
+      const origin = rows.find((row) => row.id === 'origin')!;
+      expect(origin.links, locale).toHaveLength(SIGNS.length);
+      expect(origin.links.map((link) => link.label), locale).toEqual(SIGNS.map((sign) => (
+        additionFormat(
+          locale,
+          'disclosure.originSlot',
+          { sign: signName(sign, locale) },
+          EN['disclosure.originSlot'],
+        )
+      )));
+      expect(origin.links.every((link) => !link.href && !link.label.includes('[OPERATOR')), locale)
+        .toBe(true);
+
+      const separation = rows.find((row) => row.id === 'separation')!;
+      expect(separation.links.map((link) => link.href), locale).toEqual([
+        localizePath(locale, '/privacy/'),
+        localizePath(locale, '/methodology/'),
+      ]);
+    }
+  });
+
+  it('render-checks all five routes without operator scaffolding or English copy leakage', async () => {
+    for (const locale of LOCALES) {
+      const html = await readFile(routeFile(locale), 'utf8');
+      const route = localizePath(locale, '/disclosure/');
+      expect(html, locale).toContain(`<html lang="${LOCALE_META[locale].htmlLang}">`);
+      expect(html, locale).toContain(`<link rel="canonical" href="https://zodiacs.org${route}">`);
+      expect(html, locale).not.toContain('[OPERATOR');
+      for (const key of [
+        'operatorStatement',
+        'operatorEvidence',
+        'economicStatement',
+        'economicEvidence',
+      ] as const) {
+        expect(html, `${locale}:disclosure.${key}`).toContain(disclosureText(locale, key));
+      }
+      expect(html.match(/class="[^"]*status-chip--pending[^"]*"/g), locale).toHaveLength(3);
+      expect(html.match(/class="[^"]*status-chip--verified[^"]*"/g), locale).toHaveLength(3);
+      expect(html.match(/class="[^"]*establishment__pending[^"]*"/g), locale).toHaveLength(1);
+      expect(html, locale).toContain(disclosureText(locale, 'establishedPending'));
+      expect(html.match(/class="[^"]*evidence-slot[^"]*"/g), locale).toHaveLength(12);
+      for (const link of disclosureRows(locale).find((row) => row.id === 'origin')!.links) {
+        expect(html, `${locale}:${link.label}`).toContain(link.label);
+      }
+
+      for (const id of PENDING_IDS) {
+        const row = routeRow(html, id);
+        expect(row, `${locale}:${id}`).toContain('status-chip--pending');
+        expect(row, `${locale}:${id}`).toContain(disclosureText(locale, 'statusPending'));
+        expect(row, `${locale}:${id}`).not.toContain('status-chip--verified');
+        expect(row, `${locale}:${id}`).not.toContain(disclosureText(locale, 'statusVerified'));
+      }
+      for (const hreflang of ['en', 'es', 'pt-BR', 'fr', 'it', 'x-default']) {
+        expect(html, `${locale}:${hreflang}`).toContain(`hreflang="${hreflang}"`);
+      }
+      expect(html, locale).toContain(`href="${localizePath(locale, '/disclosure/')}"`);
+      expect(html, locale).toContain(`href="${localizePath(locale, '/privacy/')}"`);
+      expect(html, locale).toContain(`href="${localizePath(locale, '/methodology/')}"`);
+
+      if (locale === 'en') continue;
+      for (const key of ROUTE_TEXT_KEYS) {
+        const english = EN[`disclosure.${key}`];
+        if (english === disclosureText(locale, key)) continue;
+        expect(html, `${locale} leaked disclosure.${key}`).not.toMatch(literalTextPattern(english));
+      }
+    }
   });
 });
