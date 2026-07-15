@@ -299,8 +299,6 @@ ${JSON.stringify(jsonLd(m), null, 2)}
 
     /* ── Lot header ── */
     .lot { padding: 64px 0 36px; position: relative; }
-    /* Official sign icon, from the SDK asset set — the plate's seal */
-    .lot__icon { display: block; width: 30px; height: 30px; margin: 0 0 16px; }
     .lot__eyebrow {
       display: inline-flex; align-items: center; gap: 10px;
       margin-bottom: 26px; padding: 6px 14px 6px 10px;
@@ -317,7 +315,16 @@ ${JSON.stringify(jsonLd(m), null, 2)}
       line-height: 0.92; letter-spacing: -0.012em; color: var(--ink);
       text-wrap: balance;
     }
-    .lot__title .glyph { color: var(--gold-bright); font-variant-emoji: text; }
+    .lot__title-icon {
+      display: inline-block;
+      width: 0.76em;
+      height: 0.76em;
+      margin-left: 0.08em;
+      vertical-align: -0.08em;
+      line-height: 0;
+      filter: drop-shadow(0 8px 22px rgba(0,0,0,0.34));
+    }
+    .lot__title-icon img { display: block; width: 100%; height: 100%; border-radius: 50%; }
     .lot__epithet {
       margin: 0 0 10px; max-width: 30ch;
       font-family: var(--serif); font-style: italic;
@@ -649,9 +656,8 @@ ${JSON.stringify(jsonLd(m), null, 2)}
 
   <main class="pg" id="main">
     <section class="lot" aria-labelledby="lot-title">
-      <img class="lot__icon" src="/assets/sdk/zodiac-icons/circle/${m.slug}.png" alt="" decoding="async" width="30" height="30" />
       <span class="lot__eyebrow">Catalogue <span class="g">·</span> Lot ${p.lot} of XII <span class="g">·</span> ${esc(m.ticker)}</span>
-      <h1 class="lot__title" id="lot-title">${esc(m.name)} <span class="glyph">${p.glyph}</span></h1>
+      <h1 class="lot__title" id="lot-title">${esc(m.name)} <picture class="lot__title-icon" aria-hidden="true"><source srcset="/assets/zodiac-icons/400/${m.slug}.avif" type="image/avif"/><img src="/assets/zodiac-icons/400/${m.slug}.webp" width="112" height="112" alt="" decoding="async" fetchpriority="high"/></picture></h1>
       <p class="lot__epithet">${esc(p.epithet)}</p>
       <div class="lot__dates">${esc(p.datesDisplay)} · ${esc(titleCase(meta.element))} · ${esc(meta.rulingPlanet)}</div>
     </section>
