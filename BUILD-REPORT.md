@@ -1,0 +1,2444 @@
+# BUILD REPORT — Trust, Growth Infrastructure & SDK Expansion
+
+Generated 2026-07-15 from site branch `codex/trust-growth-sdk-expansion-locales`, rebased onto main `24a835637af8cadd43e07995611fa5d9fd86026c`. Package evidence comes from `codex/engine-expansion` at `cced011659d48877b8b73b8a85796815234cf741`.
+
+## Outcome and limits of this report
+
+All eight directive workstreams are implemented in the local site/package worktrees. The current site build is green, emits 1,824 Astro pages and 1,923 final HTML documents, and the latest unit run passes 555/555 tests across 87 files. The engine/SDK workspace passes 146/146 tests across 22 files.
+
+This is an implementation and local-verification report, not a deployment claim. No production deploy, live analytics-provider event check, credentialed ESP delivery, live archival-chain provider check, or physical-device install check was performed without operator configuration. Those externally dependent acceptance items are identified below. Pending factual disclosures and missing archived receipts continue to render with the existing `#E0B080` pending-chip convention.
+
+No wallet connection, signing, message signing, approval, transaction construction, custody, write RPC, financial solicitation, birth-data analytics, cookies, fingerprinting, pixels, or session recording was introduced.
+
+## Source-control and locale coordination
+
+- Locale foundation: PRs #100–#103 are present in main `24a8356`; the active rails are EN, ES, PT, FR, and IT.
+- Additive replay: `3bb50732d58f62fddc5d5e9e9733f1a25dcc46a0` re-expressed the non-shared growth work on the five-locale structure.
+- Shared surfaces were isolated and rebased one surface per commit. The Registry surface is `e66f1e0`, global head is `a16af01`, and footer is `9a2a26e`. The full Site Checks were rerun after each surface before proceeding.
+- Navigation was not touched; there is no nav shared-surface commit.
+- The coordinated indexing change is `115543c`. It is separate from all shared-surface work.
+- Existing locale templates, `LOCALE_META`, split UI catalogues, localized paths, RSS links, WebMCP behavior, and locale language attributes were retained. New shared strings use catalogue keys. English fallback is intentional where a translation is still pending.
+
+## Stack and repository audit
+
+- Site: Astro 7 static output, Preact islands, TypeScript, Vite, Vitest, existing handcrafted CSS/tokens, committed data/assets, custom search/sitemap generators, and Vercel serverless functions under `api/`.
+- Static-first posture: Astro pages render meaningful HTML before hydration. Registry pages remain committed/generated static documents sourced from the existing `src/app.jsx` and legacy build scripts; JavaScript only enhances filtering, verification, sharing, and optional market context.
+- Astronomy: browser-first computation uses the MIT-licensed `astronomy-engine` dependency through the vendored `@zodiacs/engine` package. GeoNames and historical timezone resolution remain optional boundaries. The existing opt-in saved-chart sync was not modified.
+- i18n: five strict locale rails (EN/ES/PT/FR/IT) with split UI catalogues and locale metadata. The additive manifest contains 541 keys. PT/FR/IT often use the documented English fallback for new work; Spanish and all-locale translations that already exist are recorded per key in `i18n-additions.md`.
+- Deployment/CI: Vercel static/serverless output and GitHub Site Checks. No new framework, meta-framework, CSS system, consent banner, or account/paywall layer was introduced.
+- Design tokens: existing Cosmic Void `#060709`, silver ink/type system, `#E0B080` pending state, spacing/radius/type scale, Instrument Sans, and Registry `Nº` convention.
+- Canonical art: every added visual family uses `/assets/zodiac-icons/48/{sign}.webp` or `/assets/zodiac-icons/128/{sign}.webp`; there are no emoji, third-party glyphs, or substitute zodiac illustrations.
+
+## Verification: current main baseline versus rebased result
+
+The “before” column is current locale main `24a8356` before the growth replay. The “after” column is the rebased growth branch after the coordinated indexing commit and final report/i18n updates.
+
+| Gate | Before: locale main | After: rebased growth branch |
+| --- | --- | --- |
+| Unit tests | 472 passed; 1 pre-existing deterministic snapshot failed | 555/555 passed across 87 files (latest run, 2026-07-15) |
+| Astro production build | Green; 1,807 pages | Green; 1,824 pages; 832 search entries; 46.0 KB gzip search index |
+| Distribution check | 1,824 HTML; 818 search entries; 9 feed items | 1,923 HTML; 832 search entries; 9 feed items |
+| JSON-LD schema gate | Directive schema script absent | 795 JSON-LD documents; 3,146 graph nodes; 0 errors |
+| Sitemap | Locale-project preservation baseline | 798 `<loc>` entries; 750 valid alternate links; zero WS5 hreflang alternates |
+| Service worker | Locale-main shell | 158 precache URLs; cache `908fb24d08af`; Registry identity remains network-first/fetch-only |
+| Programmatic uniqueness | No directive threshold gate | 78 pairs; maximum 5-gram Jaccard similarity 0.014; limit 0.42 |
+| Visual regression | Locale-main baselines | 9/9 green; maximum changed pixels 0.0974%, below the 0.1% limit |
+| Engine/SDK workspace | 110/111; one encoded-path documentation assertion | 146/146 across 22 files; engine/widgets/SDK build and typecheck green |
+
+Additional local evidence:
+
+- `astro check`: 0 errors and 3 non-blocking hints.
+- Bundle gates, gzip actual/budget: home 26.6/42 KB; birth chart 44.6/52 KB; transits 19.6/30 KB; solar return 17.9/30 KB; today 15.7/16 KB; compatibility 25.0/35.5 KB; largest chunk 51.4/60 KB; engine chunk 21.1/25 KB. Engine isolation remained clear.
+- Widget budgets: Moon and sky ship 0 KB initial JavaScript; the keyboard-complete mini chart ships 14.6 KB initial JavaScript gzip and 11.8 KB HTML; the script loader is 0.9 KB gzip.
+- Schema: `node scripts/validate-schema.mjs` reports 795 documents, 3,146 nodes, 0 errors.
+- Distribution: `node scripts/check-dist.mjs` reports 1,923 HTML files, 832 search entries, 9 feed items, Registry intact.
+- Sitemap: 798 locations and 750 alternates in `dist/sitemap.xml`.
+- Main-page Lighthouse: performance 100 on all nine runs, TBT 0, CLS 0.001; median LCP 0.63 s home, 0.66 s birth chart, and 0.48 s Aries.
+- Widget Lighthouse: moon 100/100 performance/accessibility, sky 100/96, mini chart 100/100; every score meets the ≥95 acceptance floor.
+- Foreign-origin widget browser checks pass for all three embeds.
+- Client share rendering in the deterministic T17 run: full chart 64 ms and Big Three 42 ms, both 1080×1350; cancellation, privacy, and analytics-event assertions pass.
+- Serverless TypeScript smoke bundles: email subscribe 58.6 KB, email confirm 57 KB, wallet birth 40.1 KB, push subscribe 4.9 KB.
+- OG verifier: all 45 directive-required files are distinct 1200×630 PNGs and the existing global fallback remains frozen.
+
+## Workstream status against acceptance criteria
+
+### WS1 — Trust and disclosure
+
+**Implemented locally; factual evidence remains operator-dependent.** `/disclosure/` renders the six required rows, dry evidence/status language, twelve deploy-transaction slots, astrology/Registry separation, read-only guarantees, and no-advice/no-solicitation statement. The Registry header/footer, Registry lots, About, Thesis, Archive, and SDK surfaces link to it; astrology-tool navigation was not expanded.
+
+Archive data now requires `receipts: [{ label, url, archivedUrl }]`, renders external chips with `rel="noopener nofollow"`, and emits a build warning for zero-receipt entries. `accidental-libra` cannot become verified without an archived primary source and remains pending. The following receipt IDs have direct URLs but still have empty `archivedUrl` slots: `accidental-libra` (first priority), `zodiac-iwo`, `onboarding-wave`, `astrology-girlies`, `oldest-meme`, `astrologers-arrive`, `horoscopes-to-hodl`, `origin`, and `pure-belief`.
+
+Registry establishment text consumes the single source `src/lib/registry-establishment.mjs`. `MMXXIV` remains provisional, visibly paired with a pending provenance slot. Acceptance is complete for route/link/schema behavior; operator wording, year, transaction evidence, and archived sources are unresolved.
+
+### WS2 — Growth infrastructure
+
+**Implemented locally; live-provider acceptance is pending credentials.**
+
+- Analytics: the Plausible-compatible shim is absent when unset and loads with `defer` only when configured. It canonicalizes paths and allowlists the ten directive events plus existing fixed-enum events. It rejects query strings, free text, birth details, chart positions, email values, wallet addresses, cookies, and fingerprinting. The taxonomy is documented in `docs/analytics.md`. Local event tests pass; “events visible in analytics” requires a configured deployment and remains pending.
+- Email: one `EmailCapture` powers post-chart, `/horoscopes/`, and astrology-footer placements in all five locale rails. Only normalized email plus optional self-declared sun sign enters the adapter. Resend, Buttondown, and Loops are env-selected and the component is omitted when configuration is incomplete. Scanner-safe signed Resend confirmation and a mocked end-to-end Buttondown request pass. A credentialed delivery/confirmation smoke test against the operator's chosen ESP remains pending.
+- OG/Twitter: 45 directive-required images are unique 1200×630 PNGs, use canonical sign art, and are wired per page; the existing `/assets/og/v2/share.png` is still the fallback. The complete rendered inventory appears below.
+- Structured data: homepage `WebSite`, `Organization`, and existing FAQ `FAQPage`; sitewide `BreadcrumbList`; guide/learn `Article` (including the five learn section hubs); and tool `WebApplication` validate with 0 errors. Disclosure references the canonical site `@id`.
+
+### WS3 — Shareable result cards
+
+**Acceptance complete in local browser tests.** Big Three, full-chart, and compatibility cards render entirely client-side at 2× output, use canonical icons as their only illustration, provide Web Share with download fallback, and fire `share_card_downloaded`. The full-card boundary receives chart results rather than raw birth input, uses a generic filename, and renders only fields the user selected. Deterministic Big Three/full-card timings are well below one second; compatibility and cancellation/error paths pass.
+
+### WS4 — PWA and retention scaffold
+
+**Implementation and automated acceptance complete; physical-device smoke remains a deployment-candidate check.** `site.webmanifest` and the 192/512/maskable icons use the twelve-icon wheel motif on `#060709`. The worker precaches 158 versioned tool-shell/data URLs under cache `908fb24d08af`, while Registry identity JSON is never authoritative from a stale cache. The prompt appears after the second computed chart and a local dismissal prevents repeat prompts.
+
+Push remains default-off. Client, endpoint, worker, and delivery code require both public/server flags and VAPID configuration; the default production worker has push disabled and the client does not expose the prompt. iOS/Android installability was validated through manifest/worker/browser gates, but a final physical-device install smoke should be run on the deployment candidate.
+
+### WS5 — Programmatic SEO and coordinated indexing
+
+**Acceptance complete for English static generation/indexing.** The 78 compatibility pairs and 366 birthday pages were already collection-backed on locale main and already self-canonical; this branch preserves that implementation and adds the engine-derived CTA/share/indexing work without duplicating routes. The uniqueness gate is 0.014 versus 0.42. Birthday pages retain verified 1940–2030 sign/date data, degrees, decans, cusp handling, adjacent-day links, and chart/sign CTAs.
+
+The Chinese-zodiac hub and twelve animal-year pages are statically rendered, self-canonical, internally linked, culturally framed, and explicitly separated from Western tropical astrology.
+
+Coordinated commit `115543c555fa834f54eeec505e120797cb16ad19` adds exactly fourteen EN sitemap locations—`/disclosure/` plus the Chinese-zodiac hub and twelve animal pages—while count-gating all 78 pair and 366 birthday pages already emitted by the collections. It refreshes the locale drift baseline to the intentional new output rather than disabling drift protection. WS5 pages have zero hreflang alternates because no WS5 translation exists; TODO(i18n) assertions preserve that rule. `robots.txt` was already correct and was not changed.
+
+Final sitemap: 798 locations and 750 alternates. Existing translated pages retain only real EN/ES/PT/FR/IT/x-default relationships.
+
+### WS6 — Embeddable widgets
+
+**Acceptance complete in local foreign-origin and Lighthouse tests.** `/widgets/` builds live previews and copyable iframe/script snippets for Moon phase today, The sky today, and Mini birth chart. Theme/accent inputs are constrained for readable contrast. Every embed retains canonical zodiac art and the non-removable `Powered by Zodiacs.org` link. Embeds contain no visitor analytics; only the parent generator fires `widget_embed_copied`. The iframe documents are standalone and lazy-load chart computation; all Lighthouse scores are ≥95.
+
+### WS7 — Engine and widgets packages
+
+**Package implementation/verification complete; npm publication is pending operator action.** The licensing gate is GO, detailed below. `@zodiacs/engine@0.1.0` exposes `positions`, `natalChart`, `transits`, `synastry`, `moonPhase`, `saturnReturn`, the requested type vocabulary, whole-sign/Placidus houses, browser/Node ESM, and optional `@zodiacs/engine/geo`. The site consumes the exact vendored package artifact, preventing a second calculation implementation from drifting.
+
+`@zodiacs/widgets@0.1.0` wraps WS6 mounting. `@zodiacs/sdk`'s read-only API was not changed; only sibling cross-links/documentation/posture coverage changed. TypeDoc is at `/sdk/engine/`, and root `llms.txt` / `llms-full.txt` cover Registry, SDK, engine, and copy-paste integrations.
+
+Package audits: engine 17 files, 17.4 KB compressed / 58.4 KB unpacked; widgets 5 files, 4.9 KB compressed / 13.7 KB unpacked. Vendored engine SHA-256 is `8da3e0f2eb3818fe2c5833e05331be61da9b605ffa118a8462182821412e7cbe`. Neither new package has been published to npm.
+
+### WS8 — Wallet natal chart
+
+**Implemented and mocked for both chains; live-provider acceptance remains pending and the feature is off.** `/registry/wallet-chart/` is paste-only, validates Solana base58/Base `0x` formats, uses the Registry's neutral not-found language, and has no connect/sign/approval/transaction path. A `WalletBirthProvider` supports paginated Solana history and Base explorer/history fallback with explicit cost/completeness caveats and bounded cache behavior.
+
+The chart is UTC, planets-in-signs only: a wallet has a time but no birthplace, houses, or angles. Optional owner details and synastry remain in the browser; the endpoint receives only a pasted public address. Official held-sign context appears only after a positive read-only balance result. Share art truncates the address and preserves the symbolic/read-only/not-financial-advice posture. `wallet_chart_computed` never includes the address.
+
+The route/API hide unless `PUBLIC_WALLET_CHART_ENABLED=1` and a provider exists. Local mocked Solana/Base tests pass; credentialed oldest-history checks against archival providers remain pending.
+
+## WS7 licensing gate
+
+**Outcome: GO for MIT extraction, subject to the repository operator having authority to publish the Zodiacs.org-authored adapter code under MIT. No Swiss Ephemeris-derived code or fixture was shipped.**
+
+- Provenance traces to Zodiacs.org TypeScript adapters over `astronomy-engine@2.1.19`, whose npm/source license is MIT (Don Cross, 2019–2023).
+- Repository, dependency, package, and bundled-output scans found no Swiss Ephemeris runtime import, package, vendored source, table, or binary.
+- Website-only Placidus reference constants generated with `pyswisseph` were explicitly excluded from the distributable package.
+- Package accuracy uses public JPL Horizons vectors, geometric/astronomical invariants, and synthetic aspects. Maximum modern longitude error is 0.004104°; historic maximum is 0.001735°, within the site-equivalent hundredths-of-a-degree tolerance.
+- `@zodiacs/engine/geo` is code-only. It bundles no GeoNames records or tzdb. `NOTICE` includes GeoNames CC BY 4.0 and downstream retention instructions; timezone conversion relies on host `Intl`/ICU coverage.
+- Evidence: `../zodiacs-engine/packages/engine/LICENSING.md`, `NOTICE`, `LICENSE`, package tests, and `npm pack` contents. Package source commit: `cced011659d48877b8b73b8a85796815234cf741`.
+
+## i18n status
+
+- Active rails: EN, ES, PT, FR, IT.
+- Additive key count: 541, including `footerDisclosure`.
+- Every additive key has an English default, a one-line location/tone/length brief, placeholder/`<br/>` preservation instructions where applicable, and an explicit pending-locale list. The manifest carries an explicit `TODO(i18n)` handoff marker.
+- Shared additions render through the five-locale catalogues. Twenty-two keys now have explicit copy in all five locales, including the feature-flagged push-prompt copy; English fallback is used only where the manifest marks a locale pending.
+- No new WS5 page has hreflang alternates until a translated page actually exists.
+- The canonical manifest is embedded byte-for-byte at the end of this report and also exists independently as `i18n-additions.md`.
+
+## Environment variables introduced or consumed by these workstreams
+
+| Variable | Purpose and safe default |
+| --- | --- |
+| `PUBLIC_PLAUSIBLE_SCRIPT_URL` | Full cookieless analytics script URL. When unset, no provider script is emitted. |
+| `PUBLIC_PLAUSIBLE_ENDPOINT` | Optional first-party/self-hosted Plausible-compatible event endpoint. |
+| `PUBLIC_PLAUSIBLE_DOMAIN` | Optional analytics site/domain identifier. |
+| `EMAIL_PROVIDER` | Selects `resend`, `buttondown`, or `loops`. Capture is omitted unless the chosen adapter is complete. |
+| `RESEND_API_KEY` | Server-only Resend API key. |
+| `RESEND_FROM_EMAIL` | Verified sender for the first-party confirmation email. |
+| `EMAIL_CONFIRM_SECRET` | At least 32 characters; signs 48-hour Resend double-opt-in tokens. |
+| `EMAIL_CONFIRM_BASE_URL` | Optional HTTPS confirmation origin; defaults to `https://zodiacs.org`. |
+| `RESEND_SEGMENT_ID` | Optional segment assigned only after explicit confirmation. |
+| `RESEND_SIGN_PROPERTY` | Optional selected-sign contact property; defaults to `sun_sign`. |
+| `BUTTONDOWN_API_KEY` | Server-only subscriber-write key; creates Buttondown's native unactivated/double-opt-in subscriber. |
+| `LOOPS_FORM_ENDPOINT` | Exact Loops newsletter-form endpoint. |
+| `LOOPS_DOUBLE_OPT_IN_CONFIRMED` | Must equal `1` only after the operator confirms Loops double opt-in is enabled/published. |
+| `LOOPS_MAILING_LIST_ID` | Optional Loops mailing-list ID. |
+| `LOOPS_SIGN_PROPERTY` | Optional sign property; defaults to `sunSign`. |
+| `PUBLIC_WALLET_CHART_ENABLED` | Must equal `1` to expose WS8; default is off. |
+| `SOLANA_RPC_URL` | Server-only archival Solana JSON-RPC URL. |
+| `SOLANA_WALLET_MAX_PAGES` | 1,000-signature page cap; default 200, maximum 1,000. |
+| `BASE_EXPLORER_API_KEY` | Enables Etherscan v2 Base account-history lookup. |
+| `BASE_EXPLORER_API_URL` | Optional Base explorer endpoint override. |
+| `BASE_RPC_URL` | Archive-capable Base fallback/history and read-only official-balance RPC. |
+| `WALLET_BIRTH_CACHE_TTL_SECONDS` | Warm-function address-cache TTL; default 86,400 seconds, bounded 5 minutes–7 days. |
+| `PUBLIC_WEB_PUSH_ENABLED` | Public build flag for the future push scaffold; default is off. |
+| `PUSH_ENABLED` | Server/build kill switch; both push flags must equal `1` before activation. |
+| `PUBLIC_VAPID_KEY` | Browser-visible VAPID public key. |
+| `VAPID_SUBJECT` | Server delivery contact URI. |
+| `VAPID_PUBLIC_KEY` | Server delivery public key. |
+| `VAPID_PRIVATE_KEY` | Server-only delivery private key. |
+| `PUBLIC_SUPABASE_URL` | Existing Supabase origin reused only by the flag-off push endpoint/delivery scaffold. |
+| `SUPABASE_SERVICE_ROLE_KEY` | Existing server-only credential reused by the flag-off push endpoint/delivery scaffold. |
+
+## Rendered visual inventory and paths
+
+### OG/Twitter images
+
+There are 186 PNGs under `/assets/og/v2/`. The exhaustive directive-required set is machine-readable at `/assets/og/v2/manifest.json` (45 unique files, 1200×630, English art). All rendered files are covered by these exact families:
+
+- Required sign guides (12): `/assets/og/v2/sign/{aquarius,aries,cancer,capricorn,gemini,leo,libra,pisces,sagittarius,scorpio,taurus,virgo}.png`.
+- Required Registry lots (12): `/assets/og/v2/registry/{aquarius,aries,cancer,capricorn,gemini,leo,libra,pisces,sagittarius,scorpio,taurus,virgo}.png`.
+- Required standalone cards (3): `/assets/og/v2/registry.png`, `/assets/og/v2/thesis.png`, `/assets/og/v2/disclosure.png`.
+- Required tool/content cards (18): `/assets/og/v2/tool/{baby-zodiac,birth-chart,birthday,compatibility,eclipses,full-moon-calendar,horoscopes,how-to-read-a-birth-chart,learn,mercury-retrograde,moon-phase,moon-sign,retrogrades,rising-sign,saturn-return,today,tools,transits}.png`.
+- Additional generated compatibility-pair cards (78): `/assets/og/v2/pair/{canonical-sign1-sign2}.png`; one file for every generated pair.
+- Additional monthly horoscope cards (12): `/assets/og/v2/horoscope/{sign}.png`.
+- Additional rising-sign cards (12): `/assets/og/v2/rising/{sign}.png`.
+- Additional placement cards (10): `/assets/og/v2/placements/{sun,moon,mercury,venus,mars,jupiter,saturn,uranus,neptune,pluto}.png`.
+- Pinterest/social variants (25): `/assets/og/v2/pin/{sign}.png` (12), `/assets/og/v2/pin/horoscope-{sign}.png` (12), and `/assets/og/v2/pin/how-to-read-a-birth-chart.png`.
+- Almanac cards (3): `/assets/og/v2/almanac/{index,reading-a-childs-chart,sky-2026-08}.png`.
+- Frozen global fallback (1): `/assets/og/v2/share.png`.
+
+### Client-generated share cards
+
+Share cards intentionally are not committed with user data. Their rendered route/test paths are:
+
+- Big Three and full chart: compute on `/birth-chart/`; deterministic coverage in `tests/t17-positions-share.mjs` and `src/lib/share-card.test.ts`.
+- Compatibility: compute on `/compatibility/`; deterministic coverage in `src/lib/compatibility-card.test.ts`.
+- Wallet placements/owner synastry: compute on feature-on `/registry/wallet-chart/`; deterministic coverage in `src/lib/wallet/share-card.test.ts`.
+
+All share-card renderers use canonical sign WebPs, `#060709`, silver type, and local 2× canvas output. No server render or image upload occurs.
+
+### Widgets and PWA icons
+
+- Generator/live previews: `/widgets/`.
+- Standalone iframe documents: `/embed/moon/`, `/embed/sky/`, `/embed/chart/`.
+- Script embed loader: `/assets/widgets.js`.
+- Foreign-origin/Lighthouse evidence: `tests/widgets-drive.mjs`, `tests/visual/widget-lighthouse.mjs`.
+- App icons: `/assets/app-icons/icon-192.png`, `/assets/app-icons/icon-512.png`, `/assets/app-icons/maskable-512.png`, and `/apple-touch-icon.png`.
+
+## Operator inputs and externally pending checks
+
+1. Confirm the exact Zodiacs.org/Astrofolio shared-operator wording.
+2. Confirm the operator's economic-interest statement.
+3. Confirm the Registry establishment year and provide the earliest deploy transaction proving it.
+4. Supply one deploy-transaction link per sign.
+5. Supply archived primary-source URLs for these exact receipt IDs: `accidental-libra` first, then `zodiac-iwo`, `onboarding-wave`, `astrology-girlies`, `oldest-meme`, `astrologers-arrive`, `horoscopes-to-hodl`, `origin`, and `pure-belief`.
+6. Select/configure Plausible or a compatible self-hosted endpoint and verify the ten directive events on a deployment candidate.
+7. Select Resend, Buttondown, or Loops; supply credentials; run a real delivery/confirmation/unsubscribe smoke test without linking email to chart data.
+8. Supply archival Solana and Base provider credentials and run live oldest-history checks before enabling WS8.
+9. Supply VAPID keys only if future push is separately authorized; push remains off.
+10. Confirm authority to publish the site-authored adapter code under MIT and publish `@zodiacs/engine` / `@zodiacs/widgets` if desired.
+11. Repeat iOS and Android physical-device install/offline smoke checks on the deployment candidate.
+
+## Exact coordination commit ledger
+
+Shared-surface commits, in branch order:
+
+1. `e66f1e00c9f283c33d32d5e3f2e2f13ce308f303` — `[shared-surface] rebase Registry disclosure and provenance links`
+2. `a16af01432615c07fcd355ac6ade22b76020df4a` — `[shared-surface] rebase head analytics and structured data`
+3. `9a2a26e44db16d9226eb770f871c2e05f6023af1` — `[shared-surface] rebase footer capture and disclosure link`
+
+No nav commit exists because navigation was not touched.
+
+Coordinated indexing:
+
+- `115543c555fa834f54eeec505e120797cb16ad19` — `[coordinated-indexing] register EN WS5 pages and refresh drift baseline`
+
+That commit intentionally changes sitemap output, updates the drift-check baseline to the new expected bytes/counts, asserts zero WS5 hreflang while translations are absent, and leaves robots unchanged.
+
+## Full i18n additions manifest (embedded verbatim)
+
+The remainder of this file is the exact content of `i18n-additions.md`.
+
+# i18n additions
+
+TODO(i18n): translation handoff for 541 additive keys introduced by the Trust, Growth Infrastructure & SDK Expansion build. Every surface renders in all five locale rails; a pending locale currently receives the English fallback shown here.
+
+Each entry names its English default, one-line usage brief, and exact pending locales. Keep placeholders such as `{sign}` byte-identical, and retain literal `<br/>` tags because they encode intentional line breaks in generated artwork. A “none” pending state means the locale project already supplied explicit EN/ES/PT/FR/IT copy.
+
+This file is generated by `scripts/build-i18n-additions.mjs` from the English source catalogues. Paths, URLs, slugs, schema enum constants, Roman numerals, and brand wordmarks remain literal unless an entry says otherwise.
+
+## WS1 — trust, disclosure, and archive receipts
+
+- `archive.archivedReceipt`
+  - EN default: `Archived copy`
+  - Usage: Location: /archive/ receipt labels, source chips, and evidence states. Tone: dry, factual, and non-promotional.
+  - Pending locales: ES, PT, FR, IT
+- `archive.entries.accidental-libra.receipts.mintAddress`
+  - EN default: `Portnoy post containing the Libra mint address`
+  - Usage: Location: /archive/ receipt labels, source chips, and evidence states. Tone: dry, factual, and non-promotional.
+  - Pending locales: ES, PT, FR, IT
+- `archive.entries.accidental-libra.receipts.wrongLibra`
+  - EN default: `Portnoy: “I’m buying the wrong libra”`
+  - Usage: Location: /archive/ receipt labels, source chips, and evidence states. Tone: dry, factual, and non-promotional.
+  - Pending locales: ES, PT, FR, IT
+- `archive.entries.astrologers-arrive.receipts.primary`
+  - EN default: `TikTokInvestors: “The astrologers have arrived”`
+  - Usage: Location: /archive/ receipt labels, source chips, and evidence states. Tone: dry, factual, and non-promotional.
+  - Pending locales: ES, PT, FR, IT
+- `archive.entries.astrology-girlies.receipts.primary`
+  - EN default: `iJaadee: astrology community call`
+  - Usage: Location: /archive/ receipt labels, source chips, and evidence states. Tone: dry, factual, and non-promotional.
+  - Pending locales: ES, PT, FR, IT
+- `archive.entries.horoscopes-to-hodl.receipts.primary`
+  - EN default: `Numinous Realm: “Horoscopes to HODL”`
+  - Usage: Location: /archive/ receipt labels, source chips, and evidence states. Tone: dry, factual, and non-promotional.
+  - Pending locales: ES, PT, FR, IT
+- `archive.entries.oldest-meme.receipts.primary`
+  - EN default: `Andrew Kang: “Human Civilization’s Oldest Meme”`
+  - Usage: Location: /archive/ receipt labels, source chips, and evidence states. Tone: dry, factual, and non-promotional.
+  - Pending locales: ES, PT, FR, IT
+- `archive.entries.onboarding-wave.receipts.primary`
+  - EN default: `wantonwallet: 1,200+ wallet onboarding record`
+  - Usage: Location: /archive/ receipt labels, source chips, and evidence states. Tone: dry, factual, and non-promotional.
+  - Pending locales: ES, PT, FR, IT
+- `archive.entries.origin.receipts.registry`
+  - EN default: `Published machine-readable registry`
+  - Usage: Location: /archive/ receipt labels, source chips, and evidence states. Tone: dry, factual, and non-promotional.
+  - Pending locales: ES, PT, FR, IT
+- `archive.entries.pure-belief.receipts.primary`
+  - EN default: `CZ: “Just a pure belief system”`
+  - Usage: Location: /archive/ receipt labels, source chips, and evidence states. Tone: dry, factual, and non-promotional.
+  - Pending locales: ES, PT, FR, IT
+- `archive.entries.zodiac-iwo.receipts.primary`
+  - EN default: `inversebrah: zodiac shorthand post`
+  - Usage: Location: /archive/ receipt labels, source chips, and evidence states. Tone: dry, factual, and non-promotional.
+  - Pending locales: ES, PT, FR, IT
+- `archive.pendingPrimary`
+  - EN default: `Pending archived primary source`
+  - Usage: Location: /archive/ receipt labels, source chips, and evidence states. Tone: dry, factual, and non-promotional.
+  - Pending locales: ES, PT, FR, IT
+- `archive.receiptsLabel`
+  - EN default: `Receipts`
+  - Usage: Location: /archive/ receipt labels, source chips, and evidence states. Tone: dry, factual, and non-promotional.
+  - Pending locales: ES, PT, FR, IT
+- `archive.verifiedRegistry`
+  - EN default: `Matches the official record`
+  - Usage: Location: /archive/ receipt labels, source chips, and evidence states. Tone: dry, factual, and non-promotional.
+  - Pending locales: ES, PT, FR, IT
+- `disclosure.aboutLink`
+  - EN default: `Read the Registry disclosure`
+  - Usage: Location: /disclosure/ and its Registry/About/Thesis disclosure links. Tone: dry, factual, and non-promotional.
+  - Pending locales: ES, PT, FR, IT
+- `disclosure.aboutNotice`
+  - EN default: `The Registry’s operator relationship, economic-interest statement, evidence status, and pending deploy-provenance slots are published on the disclosure page.`
+  - Usage: Location: /disclosure/ and its Registry/About/Thesis disclosure links. Tone: dry, factual, and non-promotional.
+  - Pending locales: ES, PT, FR, IT
+- `disclosure.adviceEvidence`
+  - EN default: `The Registry, thesis, SDK, and terms publish this limitation directly.`
+  - Usage: Location: /disclosure/ and its Registry/About/Thesis disclosure links. Tone: dry, factual, and non-promotional.
+  - Pending locales: ES, PT, FR, IT
+- `disclosure.adviceLabel`
+  - EN default: `Financial advice and solicitation`
+  - Usage: Location: /disclosure/ and its Registry/About/Thesis disclosure links. Tone: dry, factual, and non-promotional.
+  - Pending locales: ES, PT, FR, IT
+- `disclosure.adviceStatement`
+  - EN default: `Nothing on Zodiacs.org is financial advice or a solicitation to buy, sell, or hold an asset.`
+  - Usage: Location: /disclosure/ and its Registry/About/Thesis disclosure links. Tone: dry, factual, and non-promotional.
+  - Pending locales: ES, PT, FR, IT
+- `disclosure.backRegistry`
+  - EN default: `Return to the Registry`
+  - Usage: Location: /disclosure/ and its Registry/About/Thesis disclosure links. Tone: dry, factual, and non-promotional.
+  - Pending locales: ES, PT, FR, IT
+- `disclosure.economicEvidence`
+  - EN default: `No holdings attestation is present in the repository. [OPERATOR TO CONFIRM]`
+  - Usage: Location: /disclosure/ and its Registry/About/Thesis disclosure links. Tone: dry, factual, and non-promotional. Preserve the bracketed operator-action marker verbatim.
+  - Pending locales: ES, PT, FR, IT
+- `disclosure.economicLabel`
+  - EN default: `Economic interest`
+  - Usage: Location: /disclosure/ and its Registry/About/Thesis disclosure links. Tone: dry, factual, and non-promotional.
+  - Pending locales: ES, PT, FR, IT
+- `disclosure.economicStatement`
+  - EN default: `The operator holds positions in the twelve Registry assets. [OPERATOR TO CONFIRM]`
+  - Usage: Location: /disclosure/ and its Registry/About/Thesis disclosure links. Tone: dry, factual, and non-promotional. Preserve the bracketed operator-action marker verbatim.
+  - Pending locales: ES, PT, FR, IT
+- `disclosure.establishedLabel`
+  - EN default: `Registry establishment`
+  - Usage: Location: /disclosure/ and its Registry/About/Thesis disclosure links. Tone: dry, factual, and non-promotional.
+  - Pending locales: ES, PT, FR, IT
+- `disclosure.establishedPending`
+  - EN default: `Earliest deploy provenance — [OPERATOR TO SUPPLY TX LINK]`
+  - Usage: Location: /disclosure/ and its Registry/About/Thesis disclosure links. Tone: dry, factual, and non-promotional. Preserve the bracketed operator-action marker verbatim.
+  - Pending locales: ES, PT, FR, IT
+- `disclosure.establishedPrefix`
+  - EN default: `Est.`
+  - Usage: Location: /disclosure/ and its Registry/About/Thesis disclosure links. Tone: dry, factual, and non-promotional.
+  - Pending locales: ES, PT, FR, IT
+- `disclosure.establishedProvenance`
+  - EN default: `Earliest deploy transaction`
+  - Usage: Location: /disclosure/ and its Registry/About/Thesis disclosure links. Tone: dry, factual, and non-promotional.
+  - Pending locales: ES, PT, FR, IT
+- `disclosure.evidenceHeading`
+  - EN default: `Status and evidence`
+  - Usage: Location: /disclosure/ and its Registry/About/Thesis disclosure links. Tone: dry, factual, and non-promotional.
+  - Pending locales: ES, PT, FR, IT
+- `disclosure.intro`
+  - EN default: `This page separates facts supported by public evidence from statements that still require operator confirmation. Pending rows are not treated as verified.`
+  - Usage: Location: /disclosure/ and its Registry/About/Thesis disclosure links. Tone: dry, factual, and non-promotional.
+  - Pending locales: ES, PT, FR, IT
+- `disclosure.kicker`
+  - EN default: `Registry disclosure`
+  - Usage: Location: /disclosure/ and its Registry/About/Thesis disclosure links. Tone: dry, factual, and non-promotional.
+  - Pending locales: ES, PT, FR, IT
+- `disclosure.linkLabel`
+  - EN default: `Disclosure`
+  - Usage: Location: /disclosure/ and its Registry/About/Thesis disclosure links. Tone: dry, factual, and non-promotional.
+  - Pending locales: ES, PT, FR, IT
+- `disclosure.linkMethodology`
+  - EN default: `Methodology`
+  - Usage: Location: /disclosure/ and its Registry/About/Thesis disclosure links. Tone: dry, factual, and non-promotional.
+  - Pending locales: ES, PT, FR, IT
+- `disclosure.linkPrivacy`
+  - EN default: `Privacy`
+  - Usage: Location: /disclosure/ and its Registry/About/Thesis disclosure links. Tone: dry, factual, and non-promotional.
+  - Pending locales: ES, PT, FR, IT
+- `disclosure.linkRegistry`
+  - EN default: `Machine-readable Registry`
+  - Usage: Location: /disclosure/ and its Registry/About/Thesis disclosure links. Tone: dry, factual, and non-promotional.
+  - Pending locales: ES, PT, FR, IT
+- `disclosure.linkSdk`
+  - EN default: `SDK posture`
+  - Usage: Location: /disclosure/ and its Registry/About/Thesis disclosure links. Tone: dry, factual, and non-promotional.
+  - Pending locales: ES, PT, FR, IT
+- `disclosure.linkTerms`
+  - EN default: `Terms`
+  - Usage: Location: /disclosure/ and its Registry/About/Thesis disclosure links. Tone: dry, factual, and non-promotional.
+  - Pending locales: ES, PT, FR, IT
+- `disclosure.linkThesis`
+  - EN default: `Thesis`
+  - Usage: Location: /disclosure/ and its Registry/About/Thesis disclosure links. Tone: dry, factual, and non-promotional.
+  - Pending locales: ES, PT, FR, IT
+- `disclosure.metaDescription`
+  - EN default: `Plain-language operator, economic-interest, provenance, separation, read-only, and financial-advice disclosures for the Zodiacs.org Registry.`
+  - Usage: Location: /disclosure/ and its Registry/About/Thesis disclosure links. Tone: dry, factual, and non-promotional. Maximum: 170 characters.
+  - Pending locales: ES, PT, FR, IT
+- `disclosure.metaTitle`
+  - EN default: `Disclosure — Zodiacs.org Registry`
+  - Usage: Location: /disclosure/ and its Registry/About/Thesis disclosure links. Tone: dry, factual, and non-promotional. Maximum: 65 characters.
+  - Pending locales: ES, PT, FR, IT
+- `disclosure.operatorEvidence`
+  - EN default: `No operator attestation is present in the repository. [OPERATOR TO CONFIRM]`
+  - Usage: Location: /disclosure/ and its Registry/About/Thesis disclosure links. Tone: dry, factual, and non-promotional. Preserve the bracketed operator-action marker verbatim.
+  - Pending locales: ES, PT, FR, IT
+- `disclosure.operatorLabel`
+  - EN default: `Operator relationship`
+  - Usage: Location: /disclosure/ and its Registry/About/Thesis disclosure links. Tone: dry, factual, and non-promotional.
+  - Pending locales: ES, PT, FR, IT
+- `disclosure.operatorRequest`
+  - EN default: `Operator input still required`
+  - Usage: Location: /disclosure/ and its Registry/About/Thesis disclosure links. Tone: dry, factual, and non-promotional.
+  - Pending locales: ES, PT, FR, IT
+- `disclosure.operatorRequestBody`
+  - EN default: `Confirm the shared-operator wording, disclose economic interests, provide one deploy-transaction link per sign, and confirm the establishment year against the earliest transaction.`
+  - Usage: Location: /disclosure/ and its Registry/About/Thesis disclosure links. Tone: dry, factual, and non-promotional.
+  - Pending locales: ES, PT, FR, IT
+- `disclosure.operatorStatement`
+  - EN default: `Zodiacs.org and Astrofolio share an operator. [OPERATOR TO CONFIRM EXACT WORDING]`
+  - Usage: Location: /disclosure/ and its Registry/About/Thesis disclosure links. Tone: dry, factual, and non-promotional. Preserve the bracketed operator-action marker verbatim.
+  - Pending locales: ES, PT, FR, IT
+- `disclosure.originEvidence`
+  - EN default: `The Registry publishes canonical addresses, but it does not yet publish the twelve deploy-transaction receipts.`
+  - Usage: Location: /disclosure/ and its Registry/About/Thesis disclosure links. Tone: dry, factual, and non-promotional.
+  - Pending locales: ES, PT, FR, IT
+- `disclosure.originLabel`
+  - EN default: `Origin`
+  - Usage: Location: /disclosure/ and its Registry/About/Thesis disclosure links. Tone: dry, factual, and non-promotional.
+  - Pending locales: ES, PT, FR, IT
+- `disclosure.originSlot`
+  - EN default: `{sign} deploy transaction — [OPERATOR TO SUPPLY TX LINK]`
+  - Usage: Location: /disclosure/ and its Registry/About/Thesis disclosure links. Tone: dry, factual, and non-promotional. Preserve placeholders exactly: {sign}. Preserve the bracketed operator-action marker verbatim.
+  - Pending locales: ES, PT, FR, IT
+- `disclosure.originStatement`
+  - EN default: `Deployment provenance must be evidenced per sign by the earliest on-chain deploy transaction. [OPERATOR TO SUPPLY TX LINKS]`
+  - Usage: Location: /disclosure/ and its Registry/About/Thesis disclosure links. Tone: dry, factual, and non-promotional. Preserve the bracketed operator-action marker verbatim.
+  - Pending locales: ES, PT, FR, IT
+- `disclosure.provenancePendingShort`
+  - EN default: `Deploy provenance pending`
+  - Usage: Location: /disclosure/ and its Registry/About/Thesis disclosure links. Tone: dry, factual, and non-promotional.
+  - Pending locales: ES, PT, FR, IT
+- `disclosure.readOnlyEvidence`
+  - EN default: `The published Registry is paste-address-based, and the SDK documents and tests a read-only API surface.`
+  - Usage: Location: /disclosure/ and its Registry/About/Thesis disclosure links. Tone: dry, factual, and non-promotional.
+  - Pending locales: ES, PT, FR, IT
+- `disclosure.readOnlyLabel`
+  - EN default: `Read-only posture`
+  - Usage: Location: /disclosure/ and its Registry/About/Thesis disclosure links. Tone: dry, factual, and non-promotional.
+  - Pending locales: ES, PT, FR, IT
+- `disclosure.readOnlyStatement`
+  - EN default: `The Registry and @zodiacs/sdk do not connect wallets, hold assets, request signatures, construct transactions, or submit transactions.`
+  - Usage: Location: /disclosure/ and its Registry/About/Thesis disclosure links. Tone: dry, factual, and non-promotional.
+  - Pending locales: ES, PT, FR, IT
+- `disclosure.scope`
+  - EN default: `These disclosures apply to the Registry wing. The astrology tools remain free, browser-computed, and usable without the Registry.`
+  - Usage: Location: /disclosure/ and its Registry/About/Thesis disclosure links. Tone: dry, factual, and non-promotional.
+  - Pending locales: ES, PT, FR, IT
+- `disclosure.separationEvidence`
+  - EN default: `The calculators compute in the browser, and the astrology navigation does not require a Registry interaction.`
+  - Usage: Location: /disclosure/ and its Registry/About/Thesis disclosure links. Tone: dry, factual, and non-promotional.
+  - Pending locales: ES, PT, FR, IT
+- `disclosure.separationLabel`
+  - EN default: `Separation`
+  - Usage: Location: /disclosure/ and its Registry/About/Thesis disclosure links. Tone: dry, factual, and non-promotional.
+  - Pending locales: ES, PT, FR, IT
+- `disclosure.separationStatement`
+  - EN default: `The astrology tools are free, contain no advertising or cross-site trackers, and operate independently of the Registry. Using them requires no awareness of the Registry.`
+  - Usage: Location: /disclosure/ and its Registry/About/Thesis disclosure links. Tone: dry, factual, and non-promotional.
+  - Pending locales: ES, PT, FR, IT
+- `disclosure.statementHeading`
+  - EN default: `Statement`
+  - Usage: Location: /disclosure/ and its Registry/About/Thesis disclosure links. Tone: dry, factual, and non-promotional.
+  - Pending locales: ES, PT, FR, IT
+- `disclosure.statusPending`
+  - EN default: `Pending operator confirmation`
+  - Usage: Location: /disclosure/ and its Registry/About/Thesis disclosure links. Tone: dry, factual, and non-promotional.
+  - Pending locales: ES, PT, FR, IT
+- `disclosure.statusVerified`
+  - EN default: `Verified from published materials`
+  - Usage: Location: /disclosure/ and its Registry/About/Thesis disclosure links. Tone: dry, factual, and non-promotional.
+  - Pending locales: ES, PT, FR, IT
+- `disclosure.tableLabel`
+  - EN default: `Registry disclosures and evidence status`
+  - Usage: Location: /disclosure/ and its Registry/About/Thesis disclosure links. Tone: dry, factual, and non-promotional.
+  - Pending locales: ES, PT, FR, IT
+- `disclosure.title`
+  - EN default: `The facts, including the unresolved ones.`
+  - Usage: Location: /disclosure/ and its Registry/About/Thesis disclosure links. Tone: dry, factual, and non-promotional.
+  - Pending locales: ES, PT, FR, IT
+- `registry.establishmentProvenanceLink`
+  - EN default: `Provenance ↗`
+  - Usage: Location: Registry verifier, provenance, and Registry-lot metadata. Tone: dry, factual, and non-promotional.
+  - Pending locales: ES, PT, FR, IT
+- `registry.ogLotAlt`
+  - EN default: `{sign} — Nº {number} of 12, Lot {lot} of XII in the official Zodiacs.org Registry.`
+  - Usage: Location: Registry verifier, provenance, and Registry-lot metadata. Tone: dry, factual, and non-promotional. Preserve placeholders exactly: {sign}, {number}, {lot}.
+  - Pending locales: ES, PT, FR, IT
+- `registry.verifierNotFoundInline`
+  - EN default: `not found in the official Zodiacs.org registry`
+  - Usage: Location: Registry verifier, provenance, and Registry-lot metadata. Tone: dry, factual, and non-promotional.
+  - Pending locales: ES, PT, FR, IT
+- `registry.verifierNotFoundSentence`
+  - EN default: `Not found in the official Zodiacs.org registry.`
+  - Usage: Location: Registry verifier, provenance, and Registry-lot metadata. Tone: dry, factual, and non-promotional.
+  - Pending locales: ES, PT, FR, IT
+
+## WS2b — email capture and shared footer
+
+- `emailCaptureCopy`
+  - EN default: `A weekly forecast for your sign. Free, unsubscribe anytime.`
+  - Usage: Location: EmailCapture form on chart results, /horoscopes/, and the astrology footer. Tone: warm, plain, privacy-forward, and never salesy.
+  - Pending locales: PT, FR, IT
+- `emailCaptureEmailLabel`
+  - EN default: `Email address`
+  - Usage: Location: EmailCapture form on chart results, /horoscopes/, and the astrology footer. Tone: warm, plain, privacy-forward, and never salesy.
+  - Pending locales: PT, FR, IT
+- `emailCaptureEmailPlaceholder`
+  - EN default: `you@example.com`
+  - Usage: Location: EmailCapture form on chart results, /horoscopes/, and the astrology footer. Tone: warm, plain, privacy-forward, and never salesy. Maximum: 40 characters.
+  - Pending locales: PT, FR, IT
+- `emailCaptureError`
+  - EN default: `Couldn't start the subscription. Please try again.`
+  - Usage: Location: EmailCapture form on chart results, /horoscopes/, and the astrology footer. Tone: warm, plain, privacy-forward, and never salesy.
+  - Pending locales: PT, FR, IT
+- `emailCaptureErrorTitle`
+  - EN default: `Subscription unavailable`
+  - Usage: Location: EmailCapture form on chart results, /horoscopes/, and the astrology footer. Tone: warm, plain, privacy-forward, and never salesy.
+  - Pending locales: PT, FR, IT
+- `emailCaptureHoneypot`
+  - EN default: `Leave this field blank`
+  - Usage: Location: EmailCapture form on chart results, /horoscopes/, and the astrology footer. Tone: warm, plain, privacy-forward, and never salesy.
+  - Pending locales: PT, FR, IT
+- `emailCaptureKicker`
+  - EN default: `Free weekly forecast`
+  - Usage: Location: EmailCapture form on chart results, /horoscopes/, and the astrology footer. Tone: warm, plain, privacy-forward, and never salesy.
+  - Pending locales: PT, FR, IT
+- `emailCaptureNoSign`
+  - EN default: `Skip the sign`
+  - Usage: Location: EmailCapture form on chart results, /horoscopes/, and the astrology footer. Tone: warm, plain, privacy-forward, and never salesy.
+  - Pending locales: PT, FR, IT
+- `emailCapturePrivacy`
+  - EN default: `We store your email with your chosen sign only — never your birth data.`
+  - Usage: Location: EmailCapture form on chart results, /horoscopes/, and the astrology footer. Tone: warm, plain, privacy-forward, and never salesy.
+  - Pending locales: PT, FR, IT
+- `emailCaptureSignLegend`
+  - EN default: `Your sun sign (optional)`
+  - Usage: Location: EmailCapture form on chart results, /horoscopes/, and the astrology footer. Tone: warm, plain, privacy-forward, and never salesy.
+  - Pending locales: PT, FR, IT
+- `emailCaptureSubmit`
+  - EN default: `Send my week`
+  - Usage: Location: EmailCapture form on chart results, /horoscopes/, and the astrology footer. Tone: warm, plain, privacy-forward, and never salesy. Maximum: 32 characters.
+  - Pending locales: PT, FR, IT
+- `emailCaptureSubmitting`
+  - EN default: `Joining…`
+  - Usage: Location: EmailCapture form on chart results, /horoscopes/, and the astrology footer. Tone: warm, plain, privacy-forward, and never salesy. Maximum: 32 characters.
+  - Pending locales: PT, FR, IT
+- `emailCaptureSuccess`
+  - EN default: `Check your email to confirm your subscription.`
+  - Usage: Location: EmailCapture form on chart results, /horoscopes/, and the astrology footer. Tone: warm, plain, privacy-forward, and never salesy.
+  - Pending locales: PT, FR, IT
+- `emailCaptureTitle`
+  - EN default: `Your week ahead.`
+  - Usage: Location: EmailCapture form on chart results, /horoscopes/, and the astrology footer. Tone: warm, plain, privacy-forward, and never salesy.
+  - Pending locales: PT, FR, IT
+- `emailConfirmAction`
+  - EN default: `Confirm subscription`
+  - Usage: Location: double-opt-in email and confirmation-status pages. Tone: warm, plain, privacy-forward, and never salesy. Maximum: 32 characters.
+  - Pending locales: PT, FR, IT
+- `emailConfirmBody`
+  - EN default: `Confirm this subscription to begin the free weekly forecast. Until then, no weekly subscription is active.`
+  - Usage: Location: double-opt-in email and confirmation-status pages. Tone: warm, plain, privacy-forward, and never salesy.
+  - Pending locales: PT, FR, IT
+- `emailConfirmedBody`
+  - EN default: `Your free weekly forecast is on. Every message includes an unsubscribe link.`
+  - Usage: Location: double-opt-in email and confirmation-status pages. Tone: warm, plain, privacy-forward, and never salesy.
+  - Pending locales: PT, FR, IT
+- `emailConfirmedTitle`
+  - EN default: `Subscription confirmed.`
+  - Usage: Location: double-opt-in email and confirmation-status pages. Tone: warm, plain, privacy-forward, and never salesy.
+  - Pending locales: PT, FR, IT
+- `emailConfirmIgnore`
+  - EN default: `If you did not request this, ignore this email. Nothing will be subscribed.`
+  - Usage: Location: double-opt-in email and confirmation-status pages. Tone: warm, plain, privacy-forward, and never salesy.
+  - Pending locales: PT, FR, IT
+- `emailConfirmInvalidBody`
+  - EN default: `The confirmation link is invalid or has expired. Return to Zodiacs.org to request another.`
+  - Usage: Location: double-opt-in email and confirmation-status pages. Tone: warm, plain, privacy-forward, and never salesy.
+  - Pending locales: PT, FR, IT
+- `emailConfirmInvalidTitle`
+  - EN default: `This link is not valid.`
+  - Usage: Location: double-opt-in email and confirmation-status pages. Tone: warm, plain, privacy-forward, and never salesy.
+  - Pending locales: PT, FR, IT
+- `emailConfirmMessage`
+  - EN default: `Confirm that you want the free Zodiacs.org weekly forecast:`
+  - Usage: Location: double-opt-in email and confirmation-status pages. Tone: warm, plain, privacy-forward, and never salesy.
+  - Pending locales: PT, FR, IT
+- `emailConfirmSubject`
+  - EN default: `Confirm your Zodiacs.org weekly forecast`
+  - Usage: Location: double-opt-in email and confirmation-status pages. Tone: warm, plain, privacy-forward, and never salesy. Maximum: 78 characters.
+  - Pending locales: PT, FR, IT
+- `emailConfirmTitle`
+  - EN default: `One last check.`
+  - Usage: Location: double-opt-in email and confirmation-status pages. Tone: warm, plain, privacy-forward, and never salesy.
+  - Pending locales: PT, FR, IT
+- `emailPendingBody`
+  - EN default: `Use the confirmation link we sent before your weekly forecast begins.`
+  - Usage: Location: double-opt-in email and confirmation-status pages. Tone: warm, plain, privacy-forward, and never salesy.
+  - Pending locales: PT, FR, IT
+- `emailPendingTitle`
+  - EN default: `Check your email.`
+  - Usage: Location: double-opt-in email and confirmation-status pages. Tone: warm, plain, privacy-forward, and never salesy.
+  - Pending locales: PT, FR, IT
+- `emailReturnHome`
+  - EN default: `Return to Zodiacs.org`
+  - Usage: Location: double-opt-in email and confirmation-status pages. Tone: warm, plain, privacy-forward, and never salesy. Maximum: 32 characters.
+  - Pending locales: PT, FR, IT
+- `footerDisclosure`
+  - EN default: `Disclosure`
+  - Usage: Location: sitewide footer navigation. Tone: short, literal navigation label. Maximum: 22 characters.
+  - Pending locales: ES, PT, FR, IT
+- `footerWidgets`
+  - EN default: `Widgets`
+  - Usage: Location: sitewide footer navigation. Tone: short, literal navigation label. Maximum: 22 characters.
+  - Pending locales: ES, PT, FR, IT
+
+## WS2c — OG and social-card art
+
+- `og.compatibility.data`
+  - EN default: `{aElement} and {bElement} · {aModality} and {bModality}`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice. Maximum: 76 visible characters. Preserve placeholders exactly: {aElement}, {bElement}, {aModality}, {bModality}.
+  - Pending locales: ES, PT, FR, IT
+- `og.compatibility.kicker`
+  - EN default: `Compatibility`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice. Maximum: 34 visible characters.
+  - Pending locales: ES, PT, FR, IT
+- `og.compatibility.title`
+  - EN default: `{a}<br/>and {b}`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice. Maximum: 60 visible characters across the encoded line breaks. Preserve placeholders exactly: {a}, {b}. Preserve each literal <br/> as an intentional artwork line break.
+  - Pending locales: ES, PT, FR, IT
+- `og.disclosure.alt`
+  - EN default: `Registry disclosure — verified facts and pending operator confirmations.`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice. Maximum: 170 characters.
+  - Pending locales: ES, PT, FR, IT
+- `og.disclosure.kicker`
+  - EN default: `Registry disclosure`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice. Maximum: 34 visible characters.
+  - Pending locales: ES, PT, FR, IT
+- `og.disclosure.subtitle`
+  - EN default: `Operator, economic-interest, provenance, separation, and read-only disclosures.`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice. Maximum: 120 visible characters.
+  - Pending locales: ES, PT, FR, IT
+- `og.disclosure.title`
+  - EN default: `The facts, including the unresolved ones.`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice. Maximum: 60 visible characters across the encoded line breaks.
+  - Pending locales: ES, PT, FR, IT
+- `og.fallbackAlt`
+  - EN default: `Zodiacs.org — free birth charts, sign guides, and astrology tools.`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice. Maximum: 170 characters.
+  - Pending locales: ES, PT, FR, IT
+- `og.horoscope.kicker`
+  - EN default: `Monthly horoscope`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice. Maximum: 34 visible characters.
+  - Pending locales: ES, PT, FR, IT
+- `og.horoscope.subtitle`
+  - EN default: `Monthly horoscopes grounded in real moon phases, retrogrades, and major transits.`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice. Maximum: 120 visible characters.
+  - Pending locales: ES, PT, FR, IT
+- `og.pin.horoscope.kicker`
+  - EN default: `Monthly horoscope`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice. Maximum: 34 visible characters.
+  - Pending locales: ES, PT, FR, IT
+- `og.pin.horoscope.subtitle`
+  - EN default: `Grounded in the real sky: moon phases, retrogrades, and major transits, each with its date.`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice. Maximum: 120 visible characters.
+  - Pending locales: ES, PT, FR, IT
+- `og.pin.horoscope.title`
+  - EN default: `{sign}, this month`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice. Maximum: 60 visible characters across the encoded line breaks. Preserve placeholders exactly: {sign}.
+  - Pending locales: ES, PT, FR, IT
+- `og.pin.howTo.kicker`
+  - EN default: `Learn astrology`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice. Maximum: 34 visible characters.
+  - Pending locales: ES, PT, FR, IT
+- `og.pin.howTo.steps.aspects`
+  - EN default: `3 · The working aspects`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice.
+  - Pending locales: ES, PT, FR, IT
+- `og.pin.howTo.steps.bigThree`
+  - EN default: `1 · The big three`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice.
+  - Pending locales: ES, PT, FR, IT
+- `og.pin.howTo.steps.rooms`
+  - EN default: `2 · Planets, room by room`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice.
+  - Pending locales: ES, PT, FR, IT
+- `og.pin.howTo.steps.weather`
+  - EN default: `4 · The chart’s weather`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice.
+  - Pending locales: ES, PT, FR, IT
+- `og.pin.howTo.title`
+  - EN default: `How to read a birth chart.`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice. Maximum: 60 visible characters across the encoded line breaks.
+  - Pending locales: ES, PT, FR, IT
+- `og.pin.signGuide.kicker`
+  - EN default: `Sign guide`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice. Maximum: 34 visible characters.
+  - Pending locales: ES, PT, FR, IT
+- `og.placements.kicker`
+  - EN default: `Placements`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice. Maximum: 34 visible characters.
+  - Pending locales: ES, PT, FR, IT
+- `og.placements.subtitle`
+  - EN default: `All twelve {planet} placements, read closely.`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice. Maximum: 120 visible characters. Preserve placeholders exactly: {planet}.
+  - Pending locales: ES, PT, FR, IT
+- `og.placements.title`
+  - EN default: `{planet} through<br/>the signs`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice. Maximum: 60 visible characters across the encoded line breaks. Preserve placeholders exactly: {planet}. Preserve each literal <br/> as an intentional artwork line break.
+  - Pending locales: ES, PT, FR, IT
+- `og.planetNames.jupiter`
+  - EN default: `Jupiter`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice.
+  - Pending locales: ES, PT, FR, IT
+- `og.planetNames.mars`
+  - EN default: `Mars`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice.
+  - Pending locales: ES, PT, FR, IT
+- `og.planetNames.mercury`
+  - EN default: `Mercury`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice.
+  - Pending locales: ES, PT, FR, IT
+- `og.planetNames.moon`
+  - EN default: `Moon`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice.
+  - Pending locales: ES, PT, FR, IT
+- `og.planetNames.neptune`
+  - EN default: `Neptune`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice.
+  - Pending locales: ES, PT, FR, IT
+- `og.planetNames.pluto`
+  - EN default: `Pluto`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice.
+  - Pending locales: ES, PT, FR, IT
+- `og.planetNames.saturn`
+  - EN default: `Saturn`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice.
+  - Pending locales: ES, PT, FR, IT
+- `og.planetNames.sun`
+  - EN default: `Sun`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice.
+  - Pending locales: ES, PT, FR, IT
+- `og.planetNames.uranus`
+  - EN default: `Uranus`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice.
+  - Pending locales: ES, PT, FR, IT
+- `og.planetNames.venus`
+  - EN default: `Venus`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice.
+  - Pending locales: ES, PT, FR, IT
+- `og.registry.alt`
+  - EN default: `The Zodiacs.org Registry — twelve official Zodiac records in a read-only catalogue.`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice. Maximum: 170 characters.
+  - Pending locales: ES, PT, FR, IT
+- `og.registry.data`
+  - EN default: `Nº 01–12 / 12 · read-only by design`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice. Maximum: 76 visible characters.
+  - Pending locales: ES, PT, FR, IT
+- `og.registry.kicker`
+  - EN default: `The Official Registry`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice. Maximum: 34 visible characters.
+  - Pending locales: ES, PT, FR, IT
+- `og.registry.subtitle`
+  - EN default: `A read-only catalogue of the twelve official Zodiac records.`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice. Maximum: 120 visible characters.
+  - Pending locales: ES, PT, FR, IT
+- `og.registry.title`
+  - EN default: `Twelve signs. One register.`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice. Maximum: 60 visible characters across the encoded line breaks.
+  - Pending locales: ES, PT, FR, IT
+- `og.registryLot.kicker`
+  - EN default: `The Registry`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice. Maximum: 34 visible characters.
+  - Pending locales: ES, PT, FR, IT
+- `og.registryLot.numberLine`
+  - EN default: `Nº {number} / 12 · Lot {lot} of XII`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice. Maximum: 76 visible characters. Preserve placeholders exactly: {number}, {lot}.
+  - Pending locales: ES, PT, FR, IT
+- `og.registryLot.subtitle`
+  - EN default: `Official record · native Solana origin · bridged Base representation`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice. Maximum: 120 visible characters.
+  - Pending locales: ES, PT, FR, IT
+- `og.rising.data`
+  - EN default: `the ascendant changes sign about every two hours`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice. Maximum: 76 visible characters.
+  - Pending locales: ES, PT, FR, IT
+- `og.rising.kicker`
+  - EN default: `Rising signs`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice. Maximum: 34 visible characters.
+  - Pending locales: ES, PT, FR, IT
+- `og.rising.subtitle`
+  - EN default: `How the world first meets you — and the planet that steers your chart.`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice. Maximum: 120 visible characters.
+  - Pending locales: ES, PT, FR, IT
+- `og.rising.title`
+  - EN default: `{sign}<br/>rising`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice. Maximum: 60 visible characters across the encoded line breaks. Preserve placeholders exactly: {sign}. Preserve each literal <br/> as an intentional artwork line break.
+  - Pending locales: ES, PT, FR, IT
+- `og.share.subtitle`
+  - EN default: `Free birth charts, sign guides, and astrology tools.`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice. Maximum: 120 visible characters.
+  - Pending locales: ES, PT, FR, IT
+- `og.share.title`
+  - EN default: `Explore the stars behind your story.`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice. Maximum: 60 visible characters across the encoded line breaks.
+  - Pending locales: ES, PT, FR, IT
+- `og.signGuide.kicker`
+  - EN default: `Sign guide`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice. Maximum: 34 visible characters.
+  - Pending locales: ES, PT, FR, IT
+- `og.signNames.aquarius`
+  - EN default: `Aquarius`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice.
+  - Pending locales: ES, PT, FR, IT
+- `og.signNames.aries`
+  - EN default: `Aries`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice.
+  - Pending locales: ES, PT, FR, IT
+- `og.signNames.cancer`
+  - EN default: `Cancer`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice.
+  - Pending locales: ES, PT, FR, IT
+- `og.signNames.capricorn`
+  - EN default: `Capricorn`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice.
+  - Pending locales: ES, PT, FR, IT
+- `og.signNames.gemini`
+  - EN default: `Gemini`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice.
+  - Pending locales: ES, PT, FR, IT
+- `og.signNames.leo`
+  - EN default: `Leo`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice.
+  - Pending locales: ES, PT, FR, IT
+- `og.signNames.libra`
+  - EN default: `Libra`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice.
+  - Pending locales: ES, PT, FR, IT
+- `og.signNames.pisces`
+  - EN default: `Pisces`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice.
+  - Pending locales: ES, PT, FR, IT
+- `og.signNames.sagittarius`
+  - EN default: `Sagittarius`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice.
+  - Pending locales: ES, PT, FR, IT
+- `og.signNames.scorpio`
+  - EN default: `Scorpio`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice.
+  - Pending locales: ES, PT, FR, IT
+- `og.signNames.taurus`
+  - EN default: `Taurus`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice.
+  - Pending locales: ES, PT, FR, IT
+- `og.signNames.virgo`
+  - EN default: `Virgo`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice.
+  - Pending locales: ES, PT, FR, IT
+- `og.thesis.alt`
+  - EN default: `Belief is the oldest asset — the Zodiacs.org Registry thesis.`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice. Maximum: 170 characters.
+  - Pending locales: ES, PT, FR, IT
+- `og.thesis.footer`
+  - EN default: `zodiacs.org — The Registry · Revised July 2026`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice.
+  - Pending locales: ES, PT, FR, IT
+- `og.thesis.kicker`
+  - EN default: `The Thesis`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice. Maximum: 34 visible characters.
+  - Pending locales: ES, PT, FR, IT
+- `og.thesis.title`
+  - EN default: `Belief is the oldest asset.`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice. Maximum: 60 visible characters across the encoded line breaks.
+  - Pending locales: ES, PT, FR, IT
+- `og.tools.baby-zodiac.kicker`
+  - EN default: `Free calculator`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice. Maximum: 34 visible characters.
+  - Pending locales: ES, PT, FR, IT
+- `og.tools.baby-zodiac.sub`
+  - EN default: `The due date’s near-certain Sun, the week’s possible Moons, and what waits for the clock.`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice. Maximum: 120 visible characters.
+  - Pending locales: ES, PT, FR, IT
+- `og.tools.baby-zodiac.title`
+  - EN default: `What sign will the baby be?`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice. Maximum: 60 visible characters across the encoded line breaks.
+  - Pending locales: ES, PT, FR, IT
+- `og.tools.birth-chart.kicker`
+  - EN default: `Free calculator`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice. Maximum: 34 visible characters.
+  - Pending locales: ES, PT, FR, IT
+- `og.tools.birth-chart.sub`
+  - EN default: `Sun, moon, rising, houses, and aspects — computed on your device.`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice. Maximum: 120 visible characters.
+  - Pending locales: ES, PT, FR, IT
+- `og.tools.birth-chart.title`
+  - EN default: `Your birth chart`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice. Maximum: 60 visible characters across the encoded line breaks.
+  - Pending locales: ES, PT, FR, IT
+- `og.tools.birthday.kicker`
+  - EN default: `Birthday astrology`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice. Maximum: 34 visible characters.
+  - Pending locales: ES, PT, FR, IT
+- `og.tools.birthday.sub`
+  - EN default: `Sun sign checked across ninety-one years, degree spans, decans, and cusp tables.`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice. Maximum: 120 visible characters.
+  - Pending locales: ES, PT, FR, IT
+- `og.tools.birthday.title`
+  - EN default: `Every date, computed`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice. Maximum: 60 visible characters across the encoded line breaks.
+  - Pending locales: ES, PT, FR, IT
+- `og.tools.compatibility.kicker`
+  - EN default: `Compatibility`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice. Maximum: 34 visible characters.
+  - Pending locales: ES, PT, FR, IT
+- `og.tools.compatibility.sub`
+  - EN default: `Whole-chart synastry — plus guides to all 78 sign pairings.`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice. Maximum: 120 visible characters.
+  - Pending locales: ES, PT, FR, IT
+- `og.tools.compatibility.title`
+  - EN default: `Two charts, compared`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice. Maximum: 60 visible characters across the encoded line breaks.
+  - Pending locales: ES, PT, FR, IT
+- `og.tools.eclipses.kicker`
+  - EN default: `The calendar`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice. Maximum: 34 visible characters.
+  - Pending locales: ES, PT, FR, IT
+- `og.tools.eclipses.sub`
+  - EN default: `Every solar and lunar eclipse through 2028, with exact peak times and signs.`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice. Maximum: 120 visible characters.
+  - Pending locales: ES, PT, FR, IT
+- `og.tools.eclipses.title`
+  - EN default: `Eclipses, dated`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice. Maximum: 60 visible characters across the encoded line breaks.
+  - Pending locales: ES, PT, FR, IT
+- `og.tools.full-moon-calendar.kicker`
+  - EN default: `The calendar`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice. Maximum: 34 visible characters.
+  - Pending locales: ES, PT, FR, IT
+- `og.tools.full-moon-calendar.sub`
+  - EN default: `Exact instants through 2027, with each moon’s sign, degree, and name.`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice. Maximum: 120 visible characters.
+  - Pending locales: ES, PT, FR, IT
+- `og.tools.full-moon-calendar.title`
+  - EN default: `Every full moon`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice. Maximum: 60 visible characters across the encoded line breaks.
+  - Pending locales: ES, PT, FR, IT
+- `og.tools.horoscopes.kicker`
+  - EN default: `Monthly horoscopes`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice. Maximum: 34 visible characters.
+  - Pending locales: ES, PT, FR, IT
+- `og.tools.horoscopes.sub`
+  - EN default: `Grounded in real moon phases, retrogrades, and major transits.`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice. Maximum: 120 visible characters.
+  - Pending locales: ES, PT, FR, IT
+- `og.tools.horoscopes.title`
+  - EN default: `All twelve signs`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice. Maximum: 60 visible characters across the encoded line breaks.
+  - Pending locales: ES, PT, FR, IT
+- `og.tools.how-to-read-a-birth-chart.kicker`
+  - EN default: `Learn astrology`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice. Maximum: 34 visible characters.
+  - Pending locales: ES, PT, FR, IT
+- `og.tools.how-to-read-a-birth-chart.sub`
+  - EN default: `Big three, planets room by room, the working aspects, then the weather — in order.`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice. Maximum: 120 visible characters.
+  - Pending locales: ES, PT, FR, IT
+- `og.tools.how-to-read-a-birth-chart.title`
+  - EN default: `How to read a birth chart`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice. Maximum: 60 visible characters across the encoded line breaks.
+  - Pending locales: ES, PT, FR, IT
+- `og.tools.learn.kicker`
+  - EN default: `Learn astrology`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice. Maximum: 34 visible characters.
+  - Pending locales: ES, PT, FR, IT
+- `og.tools.learn.sub`
+  - EN default: `The signs, the planets, the houses, and the aspects, in plain language.`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice. Maximum: 120 visible characters.
+  - Pending locales: ES, PT, FR, IT
+- `og.tools.learn.title`
+  - EN default: `Read your chart`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice. Maximum: 60 visible characters across the encoded line breaks.
+  - Pending locales: ES, PT, FR, IT
+- `og.tools.mercury-retrograde.kicker`
+  - EN default: `The calendar`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice. Maximum: 34 visible characters.
+  - Pending locales: ES, PT, FR, IT
+- `og.tools.mercury-retrograde.sub`
+  - EN default: `Every window through 2027, computed from the planet’s real motion.`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice. Maximum: 120 visible characters.
+  - Pending locales: ES, PT, FR, IT
+- `og.tools.mercury-retrograde.title`
+  - EN default: `Mercury retrograde`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice. Maximum: 60 visible characters across the encoded line breaks.
+  - Pending locales: ES, PT, FR, IT
+- `og.tools.moon-phase.kicker`
+  - EN default: `Free calculator`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice. Maximum: 34 visible characters.
+  - Pending locales: ES, PT, FR, IT
+- `og.tools.moon-phase.sub`
+  - EN default: `Tonight’s phase, and the moon of any date that matters to you.`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice. Maximum: 120 visible characters.
+  - Pending locales: ES, PT, FR, IT
+- `og.tools.moon-phase.title`
+  - EN default: `The moon, any night`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice. Maximum: 60 visible characters across the encoded line breaks.
+  - Pending locales: ES, PT, FR, IT
+- `og.tools.moon-sign.kicker`
+  - EN default: `Free calculator`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice. Maximum: 34 visible characters.
+  - Pending locales: ES, PT, FR, IT
+- `og.tools.moon-sign.sub`
+  - EN default: `How you feel and what soothes you — from your date, time, and place of birth.`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice. Maximum: 120 visible characters.
+  - Pending locales: ES, PT, FR, IT
+- `og.tools.moon-sign.title`
+  - EN default: `Your moon sign`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice. Maximum: 60 visible characters across the encoded line breaks.
+  - Pending locales: ES, PT, FR, IT
+- `og.tools.retrogrades.kicker`
+  - EN default: `The calendar`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice. Maximum: 34 visible characters.
+  - Pending locales: ES, PT, FR, IT
+- `og.tools.retrogrades.sub`
+  - EN default: `All eight planets, 2026–2027, computed station to station.`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice. Maximum: 120 visible characters.
+  - Pending locales: ES, PT, FR, IT
+- `og.tools.retrogrades.title`
+  - EN default: `Every retrograde`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice. Maximum: 60 visible characters across the encoded line breaks.
+  - Pending locales: ES, PT, FR, IT
+- `og.tools.rising-sign.kicker`
+  - EN default: `Free calculator`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice. Maximum: 34 visible characters.
+  - Pending locales: ES, PT, FR, IT
+- `og.tools.rising-sign.sub`
+  - EN default: `How people first read you — from your birth time and place.`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice. Maximum: 120 visible characters.
+  - Pending locales: ES, PT, FR, IT
+- `og.tools.rising-sign.title`
+  - EN default: `Your rising sign`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice. Maximum: 60 visible characters across the encoded line breaks.
+  - Pending locales: ES, PT, FR, IT
+- `og.tools.saturn-return.kicker`
+  - EN default: `Free calculator`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice. Maximum: 34 visible characters.
+  - Pending locales: ES, PT, FR, IT
+- `og.tools.saturn-return.sub`
+  - EN default: `The exact dates, every pass and retrograde loop included.`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice. Maximum: 120 visible characters.
+  - Pending locales: ES, PT, FR, IT
+- `og.tools.saturn-return.title`
+  - EN default: `Your Saturn return`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice. Maximum: 60 visible characters across the encoded line breaks.
+  - Pending locales: ES, PT, FR, IT
+- `og.tools.today.kicker`
+  - EN default: `Your daily brief`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice. Maximum: 34 visible characters.
+  - Pending locales: ES, PT, FR, IT
+- `og.tools.today.sub`
+  - EN default: `The noon sky compared privately with the latest chart saved on this device.`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice. Maximum: 120 visible characters.
+  - Pending locales: ES, PT, FR, IT
+- `og.tools.today.title`
+  - EN default: `Today, against your chart`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice. Maximum: 60 visible characters across the encoded line breaks.
+  - Pending locales: ES, PT, FR, IT
+- `og.tools.tools.kicker`
+  - EN default: `Free astrology tools`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice. Maximum: 34 visible characters.
+  - Pending locales: ES, PT, FR, IT
+- `og.tools.tools.sub`
+  - EN default: `Birth chart, compatibility, moon sign, and more — computed on your device.`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice. Maximum: 120 visible characters.
+  - Pending locales: ES, PT, FR, IT
+- `og.tools.tools.title`
+  - EN default: `Calculators, no signup`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice. Maximum: 60 visible characters across the encoded line breaks.
+  - Pending locales: ES, PT, FR, IT
+- `og.tools.transits.kicker`
+  - EN default: `Free tracker`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice. Maximum: 34 visible characters.
+  - Pending locales: ES, PT, FR, IT
+- `og.tools.transits.sub`
+  - EN default: `The current sky aspected to your birth chart, within 3° of exact.`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice. Maximum: 120 visible characters.
+  - Pending locales: ES, PT, FR, IT
+- `og.tools.transits.title`
+  - EN default: `Your transits, today`
+  - Usage: Location: build-time 1200×630 Open Graph/Twitter artwork and image alt text. Tone: restrained Cosmic Void editorial voice. Maximum: 60 visible characters across the encoded line breaks.
+  - Pending locales: ES, PT, FR, IT
+
+## WS2d — structured data
+
+- `schema.applicationCategory`
+  - EN default: `LifestyleApplication`
+  - Usage: Location: homepage/tool JSON-LD emitted in the document head. Tone: literal and machine-readable; avoid promotional claims.
+  - Pending locales: ES, PT, FR, IT
+- `schema.breadcrumbHome`
+  - EN default: `Zodiacs.org`
+  - Usage: Location: sitewide BreadcrumbList JSON-LD. Tone: literal and machine-readable; avoid promotional claims. Maximum: 42 characters.
+  - Pending locales: ES, PT, FR, IT
+- `schema.breadcrumbLabels.about`
+  - EN default: `About`
+  - Usage: Location: sitewide BreadcrumbList JSON-LD. Tone: literal and machine-readable; avoid promotional claims. Maximum: 42 characters.
+  - Pending locales: ES, PT, FR, IT
+- `schema.breadcrumbLabels.archive`
+  - EN default: `Archive`
+  - Usage: Location: sitewide BreadcrumbList JSON-LD. Tone: literal and machine-readable; avoid promotional claims. Maximum: 42 characters.
+  - Pending locales: ES, PT, FR, IT
+- `schema.breadcrumbLabels.baby-zodiac`
+  - EN default: `Baby zodiac`
+  - Usage: Location: sitewide BreadcrumbList JSON-LD. Tone: literal and machine-readable; avoid promotional claims. Maximum: 42 characters.
+  - Pending locales: ES, PT, FR, IT
+- `schema.breadcrumbLabels.birth-chart`
+  - EN default: `Birth chart`
+  - Usage: Location: sitewide BreadcrumbList JSON-LD. Tone: literal and machine-readable; avoid promotional claims. Maximum: 42 characters.
+  - Pending locales: ES, PT, FR, IT
+- `schema.breadcrumbLabels.birthday`
+  - EN default: `Birthday astrology`
+  - Usage: Location: sitewide BreadcrumbList JSON-LD. Tone: literal and machine-readable; avoid promotional claims. Maximum: 42 characters.
+  - Pending locales: ES, PT, FR, IT
+- `schema.breadcrumbLabels.compatibility`
+  - EN default: `Compatibility`
+  - Usage: Location: sitewide BreadcrumbList JSON-LD. Tone: literal and machine-readable; avoid promotional claims. Maximum: 42 characters.
+  - Pending locales: ES, PT, FR, IT
+- `schema.breadcrumbLabels.disclosure`
+  - EN default: `Disclosure`
+  - Usage: Location: sitewide BreadcrumbList JSON-LD. Tone: literal and machine-readable; avoid promotional claims. Maximum: 42 characters.
+  - Pending locales: ES, PT, FR, IT
+- `schema.breadcrumbLabels.eclipses`
+  - EN default: `Eclipses`
+  - Usage: Location: sitewide BreadcrumbList JSON-LD. Tone: literal and machine-readable; avoid promotional claims. Maximum: 42 characters.
+  - Pending locales: ES, PT, FR, IT
+- `schema.breadcrumbLabels.es`
+  - EN default: `Español`
+  - Usage: Location: sitewide BreadcrumbList JSON-LD. Tone: literal and machine-readable; avoid promotional claims. Maximum: 42 characters.
+  - Pending locales: ES, PT, FR, IT
+- `schema.breadcrumbLabels.feeds`
+  - EN default: `Feeds`
+  - Usage: Location: sitewide BreadcrumbList JSON-LD. Tone: literal and machine-readable; avoid promotional claims. Maximum: 42 characters.
+  - Pending locales: ES, PT, FR, IT
+- `schema.breadcrumbLabels.full-moon-calendar`
+  - EN default: `Full moon calendar`
+  - Usage: Location: sitewide BreadcrumbList JSON-LD. Tone: literal and machine-readable; avoid promotional claims. Maximum: 42 characters.
+  - Pending locales: ES, PT, FR, IT
+- `schema.breadcrumbLabels.horoscopes`
+  - EN default: `Horoscopes`
+  - Usage: Location: sitewide BreadcrumbList JSON-LD. Tone: literal and machine-readable; avoid promotional claims. Maximum: 42 characters.
+  - Pending locales: ES, PT, FR, IT
+- `schema.breadcrumbLabels.houses`
+  - EN default: `Houses`
+  - Usage: Location: sitewide BreadcrumbList JSON-LD. Tone: literal and machine-readable; avoid promotional claims. Maximum: 42 characters.
+  - Pending locales: ES, PT, FR, IT
+- `schema.breadcrumbLabels.learn`
+  - EN default: `Learn astrology`
+  - Usage: Location: sitewide BreadcrumbList JSON-LD. Tone: literal and machine-readable; avoid promotional claims. Maximum: 42 characters.
+  - Pending locales: ES, PT, FR, IT
+- `schema.breadcrumbLabels.mercury-retrograde`
+  - EN default: `Mercury retrograde`
+  - Usage: Location: sitewide BreadcrumbList JSON-LD. Tone: literal and machine-readable; avoid promotional claims. Maximum: 42 characters.
+  - Pending locales: ES, PT, FR, IT
+- `schema.breadcrumbLabels.methodology`
+  - EN default: `Methodology`
+  - Usage: Location: sitewide BreadcrumbList JSON-LD. Tone: literal and machine-readable; avoid promotional claims. Maximum: 42 characters.
+  - Pending locales: ES, PT, FR, IT
+- `schema.breadcrumbLabels.moon-phase`
+  - EN default: `Moon phase`
+  - Usage: Location: sitewide BreadcrumbList JSON-LD. Tone: literal and machine-readable; avoid promotional claims. Maximum: 42 characters.
+  - Pending locales: ES, PT, FR, IT
+- `schema.breadcrumbLabels.moon-sign`
+  - EN default: `Moon sign`
+  - Usage: Location: sitewide BreadcrumbList JSON-LD. Tone: literal and machine-readable; avoid promotional claims. Maximum: 42 characters.
+  - Pending locales: ES, PT, FR, IT
+- `schema.breadcrumbLabels.placements`
+  - EN default: `Placements`
+  - Usage: Location: sitewide BreadcrumbList JSON-LD. Tone: literal and machine-readable; avoid promotional claims. Maximum: 42 characters.
+  - Pending locales: ES, PT, FR, IT
+- `schema.breadcrumbLabels.planets`
+  - EN default: `Planets`
+  - Usage: Location: sitewide BreadcrumbList JSON-LD. Tone: literal and machine-readable; avoid promotional claims. Maximum: 42 characters.
+  - Pending locales: ES, PT, FR, IT
+- `schema.breadcrumbLabels.privacy`
+  - EN default: `Privacy`
+  - Usage: Location: sitewide BreadcrumbList JSON-LD. Tone: literal and machine-readable; avoid promotional claims. Maximum: 42 characters.
+  - Pending locales: ES, PT, FR, IT
+- `schema.breadcrumbLabels.profile`
+  - EN default: `Profile`
+  - Usage: Location: sitewide BreadcrumbList JSON-LD. Tone: literal and machine-readable; avoid promotional claims. Maximum: 42 characters.
+  - Pending locales: ES, PT, FR, IT
+- `schema.breadcrumbLabels.registry`
+  - EN default: `The Registry`
+  - Usage: Location: sitewide BreadcrumbList JSON-LD. Tone: literal and machine-readable; avoid promotional claims. Maximum: 42 characters.
+  - Pending locales: ES, PT, FR, IT
+- `schema.breadcrumbLabels.retrogrades`
+  - EN default: `Retrogrades`
+  - Usage: Location: sitewide BreadcrumbList JSON-LD. Tone: literal and machine-readable; avoid promotional claims. Maximum: 42 characters.
+  - Pending locales: ES, PT, FR, IT
+- `schema.breadcrumbLabels.rising-sign`
+  - EN default: `Rising sign`
+  - Usage: Location: sitewide BreadcrumbList JSON-LD. Tone: literal and machine-readable; avoid promotional claims. Maximum: 42 characters.
+  - Pending locales: ES, PT, FR, IT
+- `schema.breadcrumbLabels.saturn-return`
+  - EN default: `Saturn return`
+  - Usage: Location: sitewide BreadcrumbList JSON-LD. Tone: literal and machine-readable; avoid promotional claims. Maximum: 42 characters.
+  - Pending locales: ES, PT, FR, IT
+- `schema.breadcrumbLabels.sdk`
+  - EN default: `SDK`
+  - Usage: Location: sitewide BreadcrumbList JSON-LD. Tone: literal and machine-readable; avoid promotional claims. Maximum: 42 characters.
+  - Pending locales: ES, PT, FR, IT
+- `schema.breadcrumbLabels.terms`
+  - EN default: `Terms`
+  - Usage: Location: sitewide BreadcrumbList JSON-LD. Tone: literal and machine-readable; avoid promotional claims. Maximum: 42 characters.
+  - Pending locales: ES, PT, FR, IT
+- `schema.breadcrumbLabels.thesis`
+  - EN default: `The Thesis`
+  - Usage: Location: sitewide BreadcrumbList JSON-LD. Tone: literal and machine-readable; avoid promotional claims. Maximum: 42 characters.
+  - Pending locales: ES, PT, FR, IT
+- `schema.breadcrumbLabels.today`
+  - EN default: `Today`
+  - Usage: Location: sitewide BreadcrumbList JSON-LD. Tone: literal and machine-readable; avoid promotional claims. Maximum: 42 characters.
+  - Pending locales: ES, PT, FR, IT
+- `schema.breadcrumbLabels.tools`
+  - EN default: `Astrology tools`
+  - Usage: Location: sitewide BreadcrumbList JSON-LD. Tone: literal and machine-readable; avoid promotional claims. Maximum: 42 characters.
+  - Pending locales: ES, PT, FR, IT
+- `schema.breadcrumbLabels.transits`
+  - EN default: `Transits`
+  - Usage: Location: sitewide BreadcrumbList JSON-LD. Tone: literal and machine-readable; avoid promotional claims. Maximum: 42 characters.
+  - Pending locales: ES, PT, FR, IT
+- `schema.breadcrumbLabels.widgets`
+  - EN default: `Widgets`
+  - Usage: Location: sitewide BreadcrumbList JSON-LD. Tone: literal and machine-readable; avoid promotional claims. Maximum: 42 characters.
+  - Pending locales: ES, PT, FR, IT
+- `schema.browserRequirements`
+  - EN default: `Requires a modern web browser.`
+  - Usage: Location: homepage/tool JSON-LD emitted in the document head. Tone: literal and machine-readable; avoid promotional claims.
+  - Pending locales: ES, PT, FR, IT
+- `schema.currency`
+  - EN default: `USD`
+  - Usage: Location: homepage/tool JSON-LD emitted in the document head. Tone: literal and machine-readable; avoid promotional claims.
+  - Pending locales: ES, PT, FR, IT
+- `schema.freePrice`
+  - EN default: `0`
+  - Usage: Location: homepage/tool JSON-LD emitted in the document head. Tone: literal and machine-readable; avoid promotional claims.
+  - Pending locales: ES, PT, FR, IT
+- `schema.operatingSystem`
+  - EN default: `Any device with a modern web browser`
+  - Usage: Location: homepage/tool JSON-LD emitted in the document head. Tone: literal and machine-readable; avoid promotional claims.
+  - Pending locales: ES, PT, FR, IT
+- `schema.organizationAlternateName`
+  - EN default: `Zodiacs.org`
+  - Usage: Location: homepage/tool JSON-LD emitted in the document head. Tone: literal and machine-readable; avoid promotional claims.
+  - Pending locales: ES, PT, FR, IT
+- `schema.organizationName`
+  - EN default: `Zodiacs`
+  - Usage: Location: homepage/tool JSON-LD emitted in the document head. Tone: literal and machine-readable; avoid promotional claims.
+  - Pending locales: ES, PT, FR, IT
+- `schema.websiteDescription`
+  - EN default: `Free birth charts, moon signs, compatibility, horoscopes, and sign guides — private in your browser.`
+  - Usage: Location: homepage/tool JSON-LD emitted in the document head. Tone: literal and machine-readable; avoid promotional claims.
+  - Pending locales: ES, PT, FR, IT
+- `schema.websiteName`
+  - EN default: `Zodiacs.org`
+  - Usage: Location: homepage/tool JSON-LD emitted in the document head. Tone: literal and machine-readable; avoid promotional claims.
+  - Pending locales: ES, PT, FR, IT
+
+## WS3 — share cards and result sharing
+
+- `compatibilityPrefill.clear`
+  - EN default: `Clear loaded sun-sign pairing`
+  - Usage: Location: /compatibility/ prefilled-pair notice. Tone: clear and non-deterministic. Maximum: 56 characters.
+  - Pending locales: PT, FR, IT
+- `compatibilityPrefill.help`
+  - EN default: `This keeps the sun-sign context visible while you enter the two actual charts below. It does not invent birth details.`
+  - Usage: Location: /compatibility/ prefilled-pair notice. Tone: clear and non-deterministic.
+  - Pending locales: PT, FR, IT
+- `compatibilityPrefill.title`
+  - EN default: `{a} and {b} pairing loaded`
+  - Usage: Location: /compatibility/ prefilled-pair notice. Tone: clear and non-deterministic. Maximum: 56 characters. Preserve placeholders exactly: {a}, {b}.
+  - Pending locales: PT, FR, IT
+- `shareCard.balanced`
+  - EN default: `Balanced`
+  - Usage: Location: client-rendered chart/compatibility PNG cards and their share controls. Tone: concise, privacy-aware, and non-clinical. Maximum: 96 visible characters.
+  - Pending locales: PT, FR, IT
+- `shareCard.bigThreeAction`
+  - EN default: `Share the big three`
+  - Usage: Location: client-rendered chart/compatibility PNG cards and their share controls. Tone: concise, privacy-aware, and non-clinical. Maximum: 58 visible characters.
+  - Pending locales: PT, FR, IT
+- `shareCard.bigThreeTitle`
+  - EN default: `Your big three`
+  - Usage: Location: client-rendered chart/compatibility PNG cards and their share controls. Tone: concise, privacy-aware, and non-clinical. Maximum: 58 visible characters.
+  - Pending locales: PT, FR, IT
+- `shareCard.compatibilityAction`
+  - EN default: `Share this compatibility`
+  - Usage: Location: client-rendered chart/compatibility PNG cards and their share controls. Tone: concise, privacy-aware, and non-clinical. Maximum: 58 visible characters.
+  - Pending locales: PT, FR, IT
+- `shareCard.compatibilityBalance`
+  - EN default: `An even exchange of ease and charge`
+  - Usage: Location: client-rendered chart/compatibility PNG cards and their share controls. Tone: concise, privacy-aware, and non-clinical. Maximum: 96 visible characters.
+  - Pending locales: PT, FR, IT
+- `shareCard.compatibilityBusy`
+  - EN default: `Rendering compatibility card…`
+  - Usage: Location: client-rendered chart/compatibility PNG cards and their share controls. Tone: concise, privacy-aware, and non-clinical. Maximum: 96 visible characters.
+  - Pending locales: PT, FR, IT
+- `shareCard.compatibilityCharge`
+  - EN default: `Chemistry that asks for attention`
+  - Usage: Location: client-rendered chart/compatibility PNG cards and their share controls. Tone: concise, privacy-aware, and non-clinical. Maximum: 96 visible characters.
+  - Pending locales: PT, FR, IT
+- `shareCard.compatibilityError`
+  - EN default: `Couldn't draw this card in your browser.`
+  - Usage: Location: client-rendered chart/compatibility PNG cards and their share controls. Tone: concise, privacy-aware, and non-clinical. Maximum: 96 visible characters.
+  - Pending locales: PT, FR, IT
+- `shareCard.compatibilityFlow`
+  - EN default: `Flow, with useful friction`
+  - Usage: Location: client-rendered chart/compatibility PNG cards and their share controls. Tone: concise, privacy-aware, and non-clinical. Maximum: 96 visible characters.
+  - Pending locales: PT, FR, IT
+- `shareCard.compatibilitySaved`
+  - EN default: `Compatibility card saved.`
+  - Usage: Location: client-rendered chart/compatibility PNG cards and their share controls. Tone: concise, privacy-aware, and non-clinical. Maximum: 96 visible characters.
+  - Pending locales: PT, FR, IT
+- `shareCard.compatibilityTitle`
+  - EN default: `Compatibility`
+  - Usage: Location: client-rendered chart/compatibility PNG cards and their share controls. Tone: concise, privacy-aware, and non-clinical. Maximum: 58 visible characters.
+  - Pending locales: PT, FR, IT
+- `shareCard.dominant`
+  - EN default: `Dominant {element} · {modality}`
+  - Usage: Location: client-rendered chart/compatibility PNG cards and their share controls. Tone: concise, privacy-aware, and non-clinical. Maximum: 96 visible characters. Preserve placeholders exactly: {element}, {modality}.
+  - Pending locales: PT, FR, IT
+- `shareCard.engineReceipt`
+  - EN default: `Engine {version}`
+  - Usage: Location: client-rendered chart/compatibility PNG cards and their share controls. Tone: concise, privacy-aware, and non-clinical. Maximum: 58 visible characters. Preserve placeholders exactly: {version}.
+  - Pending locales: PT, FR, IT
+- `shareCard.fullChartAction`
+  - EN default: `Share the full chart`
+  - Usage: Location: client-rendered chart/compatibility PNG cards and their share controls. Tone: concise, privacy-aware, and non-clinical. Maximum: 58 visible characters.
+  - Pending locales: PT, FR, IT
+- `shareCard.fullChartTitle`
+  - EN default: `A birth chart`
+  - Usage: Location: client-rendered chart/compatibility PNG cards and their share controls. Tone: concise, privacy-aware, and non-clinical. Maximum: 58 visible characters.
+  - Pending locales: PT, FR, IT
+- `shareCard.moon`
+  - EN default: `Moon`
+  - Usage: Location: client-rendered chart/compatibility PNG cards and their share controls. Tone: concise, privacy-aware, and non-clinical. Maximum: 96 visible characters.
+  - Pending locales: PT, FR, IT
+- `shareCard.moonDescriptor`
+  - EN default: `Instinct and emotional life`
+  - Usage: Location: client-rendered chart/compatibility PNG cards and their share controls. Tone: concise, privacy-aware, and non-clinical. Maximum: 58 visible characters.
+  - Pending locales: PT, FR, IT
+- `shareCard.rising`
+  - EN default: `Rising`
+  - Usage: Location: client-rendered chart/compatibility PNG cards and their share controls. Tone: concise, privacy-aware, and non-clinical. Maximum: 96 visible characters.
+  - Pending locales: PT, FR, IT
+- `shareCard.risingDescriptor`
+  - EN default: `First impression and chart horizon`
+  - Usage: Location: client-rendered chart/compatibility PNG cards and their share controls. Tone: concise, privacy-aware, and non-clinical. Maximum: 58 visible characters.
+  - Pending locales: PT, FR, IT
+- `shareCard.sun`
+  - EN default: `Sun`
+  - Usage: Location: client-rendered chart/compatibility PNG cards and their share controls. Tone: concise, privacy-aware, and non-clinical. Maximum: 96 visible characters.
+  - Pending locales: PT, FR, IT
+- `shareCard.sunDescriptor`
+  - EN default: `Core identity and direction`
+  - Usage: Location: client-rendered chart/compatibility PNG cards and their share controls. Tone: concise, privacy-aware, and non-clinical. Maximum: 58 visible characters.
+  - Pending locales: PT, FR, IT
+- `shareCard.tightestContacts`
+  - EN default: `Tightest contacts`
+  - Usage: Location: client-rendered chart/compatibility PNG cards and their share controls. Tone: concise, privacy-aware, and non-clinical. Maximum: 58 visible characters.
+  - Pending locales: PT, FR, IT
+- `sharePositions.closeShare`
+  - EN default: `Close sharing options`
+  - Usage: Location: birth-chart positions-only sharing dialog and receiver. Tone: concise, privacy-aware, and non-clinical. Maximum: 48 characters.
+  - Pending locales: none — explicit copy exists in EN, ES, PT, FR, and IT
+- `sharePositions.copyPositionsLink`
+  - EN default: `Copy positions-only link`
+  - Usage: Location: birth-chart positions-only sharing dialog and receiver. Tone: concise, privacy-aware, and non-clinical. Maximum: 48 characters.
+  - Pending locales: none — explicit copy exists in EN, ES, PT, FR, and IT
+- `sharePositions.hideBirthDetails`
+  - EN default: `Hide birth details`
+  - Usage: Location: birth-chart positions-only sharing dialog and receiver. Tone: concise, privacy-aware, and non-clinical. Maximum: 48 characters.
+  - Pending locales: none — explicit copy exists in EN, ES, PT, FR, and IT
+- `sharePositions.positionsLinkInvalid`
+  - EN default: `That positions-only link is invalid or incomplete.`
+  - Usage: Location: birth-chart positions-only sharing dialog and receiver. Tone: concise, privacy-aware, and non-clinical.
+  - Pending locales: none — explicit copy exists in EN, ES, PT, FR, and IT
+- `sharePositions.positionsOnlyNotice`
+  - EN default: `Positions only — birth details not included.`
+  - Usage: Location: birth-chart positions-only sharing dialog and receiver. Tone: concise, privacy-aware, and non-clinical.
+  - Pending locales: none — explicit copy exists in EN, ES, PT, FR, and IT
+- `sharePositions.positionsOnlyPrivacy`
+  - EN default: `This token omits the birth date, time, and place. Planetary positions can still be identifying; it is not anonymous.`
+  - Usage: Location: birth-chart positions-only sharing dialog and receiver. Tone: concise, privacy-aware, and non-clinical.
+  - Pending locales: none — explicit copy exists in EN, ES, PT, FR, and IT
+- `sharePositions.positionsOnlyTitle`
+  - EN default: `Shared chart positions`
+  - Usage: Location: birth-chart positions-only sharing dialog and receiver. Tone: concise, privacy-aware, and non-clinical. Maximum: 48 characters.
+  - Pending locales: none — explicit copy exists in EN, ES, PT, FR, and IT
+- `sharePositions.positionsShareNote`
+  - EN default: `The link omits your birth date, time, and place; the card replaces that receipt with the engine version. Planetary positions can still be identifying; this is not anonymous.`
+  - Usage: Location: birth-chart positions-only sharing dialog and receiver. Tone: concise, privacy-aware, and non-clinical.
+  - Pending locales: none — explicit copy exists in EN, ES, PT, FR, and IT
+- `sharePositions.positionsShareUnavailable`
+  - EN default: `Couldn't create a positions-only link for this chart.`
+  - Usage: Location: birth-chart positions-only sharing dialog and receiver. Tone: concise, privacy-aware, and non-clinical.
+  - Pending locales: none — explicit copy exists in EN, ES, PT, FR, and IT
+- `sharePositions.shareLinkAmbiguous`
+  - EN default: `This link contains two chart formats, so neither one was opened.`
+  - Usage: Location: birth-chart positions-only sharing dialog and receiver. Tone: concise, privacy-aware, and non-clinical.
+  - Pending locales: none — explicit copy exists in EN, ES, PT, FR, and IT
+- `sharePositions.shareOptionsTitle`
+  - EN default: `Share this chart`
+  - Usage: Location: birth-chart positions-only sharing dialog and receiver. Tone: concise, privacy-aware, and non-clinical. Maximum: 48 characters.
+  - Pending locales: none — explicit copy exists in EN, ES, PT, FR, and IT
+
+## WS4 — PWA, install prompt, and flag-off push scaffold
+
+- `push.notification.body`
+  - EN default: `Your daily sky note is ready.`
+  - Usage: Location: feature-flagged, default-off push notification payload. Tone: gentle, optional, and privacy-forward. Maximum: 120 characters.
+  - Pending locales: ES, PT, FR, IT
+- `push.notification.title`
+  - EN default: `Today at Zodiacs.org`
+  - Usage: Location: feature-flagged, default-off push notification payload. Tone: gentle, optional, and privacy-forward. Maximum: 48 characters.
+  - Pending locales: ES, PT, FR, IT
+- `push.prompt.accept`
+  - EN default: `Turn on daily notes`
+  - Usage: Location: feature-flagged, default-off daily-note permission UI. Tone: gentle, optional, and privacy-forward. Maximum: 36 characters.
+  - Pending locales: none — explicit copy exists in EN, ES, PT, FR, and IT
+- `push.prompt.body`
+  - EN default: `A short sky note opens your private brief at /today/. Your birth details stay on this device.`
+  - Usage: Location: feature-flagged, default-off daily-note permission UI. Tone: gentle, optional, and privacy-forward.
+  - Pending locales: none — explicit copy exists in EN, ES, PT, FR, and IT
+- `push.prompt.denied`
+  - EN default: `Notifications are blocked in this browser. You can change that in the site settings.`
+  - Usage: Location: feature-flagged, default-off daily-note permission UI. Tone: gentle, optional, and privacy-forward.
+  - Pending locales: none — explicit copy exists in EN, ES, PT, FR, and IT
+- `push.prompt.dismiss`
+  - EN default: `Not now`
+  - Usage: Location: feature-flagged, default-off daily-note permission UI. Tone: gentle, optional, and privacy-forward. Maximum: 36 characters.
+  - Pending locales: none — explicit copy exists in EN, ES, PT, FR, and IT
+- `push.prompt.dismissLabel`
+  - EN default: `Dismiss daily-note offer`
+  - Usage: Location: feature-flagged, default-off daily-note permission UI. Tone: gentle, optional, and privacy-forward.
+  - Pending locales: none — explicit copy exists in EN, ES, PT, FR, and IT
+- `push.prompt.error`
+  - EN default: `Daily notes are unavailable right now. Try again later.`
+  - Usage: Location: feature-flagged, default-off daily-note permission UI. Tone: gentle, optional, and privacy-forward.
+  - Pending locales: none — explicit copy exists in EN, ES, PT, FR, and IT
+- `push.prompt.heading`
+  - EN default: `Get a daily note?`
+  - Usage: Location: feature-flagged, default-off daily-note permission UI. Tone: gentle, optional, and privacy-forward.
+  - Pending locales: none — explicit copy exists in EN, ES, PT, FR, and IT
+- `push.prompt.installing`
+  - EN default: `Turning on…`
+  - Usage: Location: feature-flagged, default-off daily-note permission UI. Tone: gentle, optional, and privacy-forward.
+  - Pending locales: none — explicit copy exists in EN, ES, PT, FR, and IT
+- `push.prompt.ios`
+  - EN default: `On iPhone and iPad, notifications work only after you add this site to your Home Screen. Install it first, then return here.`
+  - Usage: Location: feature-flagged, default-off daily-note permission UI. Tone: gentle, optional, and privacy-forward.
+  - Pending locales: none — explicit copy exists in EN, ES, PT, FR, and IT
+- `push.prompt.off`
+  - EN default: `Turn off`
+  - Usage: Location: feature-flagged, default-off daily-note permission UI. Tone: gentle, optional, and privacy-forward. Maximum: 36 characters.
+  - Pending locales: none — explicit copy exists in EN, ES, PT, FR, and IT
+- `push.prompt.on`
+  - EN default: `Daily notes are on. Notifications open /today/; your chart stays on this device.`
+  - Usage: Location: feature-flagged, default-off daily-note permission UI. Tone: gentle, optional, and privacy-forward.
+  - Pending locales: none — explicit copy exists in EN, ES, PT, FR, and IT
+- `pwa.manifest.description`
+  - EN default: `Birth charts, compatibility, and transits — free, exact, and kept on your device.`
+  - Usage: Location: web app manifest shown by the operating system. Tone: gentle, optional, and privacy-forward. Maximum: 120 characters.
+  - Pending locales: ES, PT, FR, IT
+- `pwa.manifest.name`
+  - EN default: `Zodiacs — astrology computed on your device`
+  - Usage: Location: web app manifest shown by the operating system. Tone: gentle, optional, and privacy-forward. Maximum: 48 characters.
+  - Pending locales: ES, PT, FR, IT
+- `pwa.manifest.shortName`
+  - EN default: `Zodiacs`
+  - Usage: Location: web app manifest shown by the operating system. Tone: gentle, optional, and privacy-forward. Maximum: 12 characters.
+  - Pending locales: ES, PT, FR, IT
+- `pwa.prompt.body`
+  - EN default: `Install Zodiacs for a faster return to your private, browser-computed tools.`
+  - Usage: Location: install prompt shown after the second computed chart. Tone: gentle, optional, and privacy-forward.
+  - Pending locales: PT, FR, IT
+- `pwa.prompt.dismiss`
+  - EN default: `No, do not ask again`
+  - Usage: Location: install prompt shown after the second computed chart. Tone: gentle, optional, and privacy-forward. Maximum: 36 characters.
+  - Pending locales: PT, FR, IT
+- `pwa.prompt.heading`
+  - EN default: `Keep your tools close?`
+  - Usage: Location: install prompt shown after the second computed chart. Tone: gentle, optional, and privacy-forward.
+  - Pending locales: PT, FR, IT
+- `pwa.prompt.icons`
+  - EN default: `The twelve zodiac signs`
+  - Usage: Location: install prompt shown after the second computed chart. Tone: gentle, optional, and privacy-forward.
+  - Pending locales: PT, FR, IT
+- `pwa.prompt.install`
+  - EN default: `Install Zodiacs`
+  - Usage: Location: install prompt shown after the second computed chart. Tone: gentle, optional, and privacy-forward. Maximum: 36 characters.
+  - Pending locales: PT, FR, IT
+- `pwa.prompt.ios`
+  - EN default: `On iPhone or iPad, tap Share, then Add to Home Screen.`
+  - Usage: Location: install prompt shown after the second computed chart. Tone: gentle, optional, and privacy-forward.
+  - Pending locales: PT, FR, IT
+
+## WS5 — programmatic pages and Chinese zodiac
+
+- `chineseZodiac.allAnimals`
+  - EN default: `All twelve animal years`
+  - Usage: Location: /learn/chinese-zodiac/ hub and animal-year pages. Tone: educational, specific, and culturally careful.
+  - Pending locales: ES, PT, FR, IT
+- `chineseZodiac.animalKicker`
+  - EN default: `Animal year guide`
+  - Usage: Location: /learn/chinese-zodiac/ hub and animal-year pages. Tone: educational, specific, and culturally careful.
+  - Pending locales: ES, PT, FR, IT
+- `chineseZodiac.animals.dog.association`
+  - EN default: `Traditionally associated with loyalty, watchfulness, and protection.`
+  - Usage: Location: Chinese-zodiac animal-year guide body copy. Tone: educational, specific, and culturally careful.
+  - Pending locales: ES, PT, FR, IT
+- `chineseZodiac.animals.dog.context`
+  - EN default: `The Dog is eleventh. As on every page in this guide, the association describes a tradition of interpretation, not a personality diagnosis.`
+  - Usage: Location: Chinese-zodiac animal-year guide body copy. Tone: educational, specific, and culturally careful.
+  - Pending locales: ES, PT, FR, IT
+- `chineseZodiac.animals.dog.name`
+  - EN default: `Dog`
+  - Usage: Location: Chinese-zodiac animal-year guide body copy. Tone: educational, specific, and culturally careful.
+  - Pending locales: ES, PT, FR, IT
+- `chineseZodiac.animals.dragon.association`
+  - EN default: `Traditionally associated with auspicious power, vitality, and authority.`
+  - Usage: Location: Chinese-zodiac animal-year guide body copy. Tone: educational, specific, and culturally careful.
+  - Pending locales: ES, PT, FR, IT
+- `chineseZodiac.animals.dragon.context`
+  - EN default: `The Dragon is the sequence’s mythic animal. It carries a different cultural register from the adversarial dragon familiar in much European storytelling.`
+  - Usage: Location: Chinese-zodiac animal-year guide body copy. Tone: educational, specific, and culturally careful.
+  - Pending locales: ES, PT, FR, IT
+- `chineseZodiac.animals.dragon.name`
+  - EN default: `Dragon`
+  - Usage: Location: Chinese-zodiac animal-year guide body copy. Tone: educational, specific, and culturally careful.
+  - Pending locales: ES, PT, FR, IT
+- `chineseZodiac.animals.goat.association`
+  - EN default: `Traditionally associated with care, harmony, and creative cultivation.`
+  - Usage: Location: Chinese-zodiac animal-year guide body copy. Tone: educational, specific, and culturally careful.
+  - Pending locales: ES, PT, FR, IT
+- `chineseZodiac.animals.goat.context`
+  - EN default: `Goat, Ram, and Sheep all appear in English-language renderings. The underlying Chinese term does not force the same species distinction English does.`
+  - Usage: Location: Chinese-zodiac animal-year guide body copy. Tone: educational, specific, and culturally careful.
+  - Pending locales: ES, PT, FR, IT
+- `chineseZodiac.animals.goat.name`
+  - EN default: `Goat`
+  - Usage: Location: Chinese-zodiac animal-year guide body copy. Tone: educational, specific, and culturally careful.
+  - Pending locales: ES, PT, FR, IT
+- `chineseZodiac.animals.horse.association`
+  - EN default: `Traditionally associated with effort, bravery, resilience, and movement.`
+  - Usage: Location: Chinese-zodiac animal-year guide body copy. Tone: educational, specific, and culturally careful.
+  - Pending locales: ES, PT, FR, IT
+- `chineseZodiac.animals.horse.context`
+  - EN default: `The Horse is seventh in the sequence. Smithsonian material for the 2026 Fire Horse foregrounds hard work, bravery, and resilience.`
+  - Usage: Location: Chinese-zodiac animal-year guide body copy. Tone: educational, specific, and culturally careful.
+  - Pending locales: ES, PT, FR, IT
+- `chineseZodiac.animals.horse.name`
+  - EN default: `Horse`
+  - Usage: Location: Chinese-zodiac animal-year guide body copy. Tone: educational, specific, and culturally careful.
+  - Pending locales: ES, PT, FR, IT
+- `chineseZodiac.animals.monkey.association`
+  - EN default: `Traditionally associated with ingenuity, play, and quick adjustment.`
+  - Usage: Location: Chinese-zodiac animal-year guide body copy. Tone: educational, specific, and culturally careful.
+  - Pending locales: ES, PT, FR, IT
+- `chineseZodiac.animals.monkey.context`
+  - EN default: `The Monkey is ninth. Folklore and popular personality readings add layers beyond the calendrical animal; those layers are not uniform across all Chinese communities.`
+  - Usage: Location: Chinese-zodiac animal-year guide body copy. Tone: educational, specific, and culturally careful.
+  - Pending locales: ES, PT, FR, IT
+- `chineseZodiac.animals.monkey.name`
+  - EN default: `Monkey`
+  - Usage: Location: Chinese-zodiac animal-year guide body copy. Tone: educational, specific, and culturally careful.
+  - Pending locales: ES, PT, FR, IT
+- `chineseZodiac.animals.ox.association`
+  - EN default: `Traditionally associated with steady labor, endurance, and practical responsibility.`
+  - Usage: Location: Chinese-zodiac animal-year guide body copy. Tone: educational, specific, and culturally careful.
+  - Pending locales: ES, PT, FR, IT
+- `chineseZodiac.animals.ox.context`
+  - EN default: `Ox and water buffalo may be treated as the same zodiac category in Chinese art. The image emphasizes sustained work rather than speed.`
+  - Usage: Location: Chinese-zodiac animal-year guide body copy. Tone: educational, specific, and culturally careful.
+  - Pending locales: ES, PT, FR, IT
+- `chineseZodiac.animals.ox.name`
+  - EN default: `Ox`
+  - Usage: Location: Chinese-zodiac animal-year guide body copy. Tone: educational, specific, and culturally careful.
+  - Pending locales: ES, PT, FR, IT
+- `chineseZodiac.animals.pig.association`
+  - EN default: `Traditionally associated with plenty, generosity, and completion.`
+  - Usage: Location: Chinese-zodiac animal-year guide body copy. Tone: educational, specific, and culturally careful.
+  - Pending locales: ES, PT, FR, IT
+- `chineseZodiac.animals.pig.context`
+  - EN default: `The Pig closes the animal sequence before it returns to Rat. Boar and Pig both occur in English-language references.`
+  - Usage: Location: Chinese-zodiac animal-year guide body copy. Tone: educational, specific, and culturally careful.
+  - Pending locales: ES, PT, FR, IT
+- `chineseZodiac.animals.pig.name`
+  - EN default: `Pig`
+  - Usage: Location: Chinese-zodiac animal-year guide body copy. Tone: educational, specific, and culturally careful.
+  - Pending locales: ES, PT, FR, IT
+- `chineseZodiac.animals.rabbit.association`
+  - EN default: `Traditionally associated with vigilance, grace, and careful movement.`
+  - Usage: Location: Chinese-zodiac animal-year guide body copy. Tone: educational, specific, and culturally careful.
+  - Pending locales: ES, PT, FR, IT
+- `chineseZodiac.animals.rabbit.context`
+  - EN default: `English sources may use Rabbit or Hare. Regional zodiac traditions can name a different animal, which is one reason this guide stays specific to the Chinese cycle.`
+  - Usage: Location: Chinese-zodiac animal-year guide body copy. Tone: educational, specific, and culturally careful.
+  - Pending locales: ES, PT, FR, IT
+- `chineseZodiac.animals.rabbit.name`
+  - EN default: `Rabbit`
+  - Usage: Location: Chinese-zodiac animal-year guide body copy. Tone: educational, specific, and culturally careful.
+  - Pending locales: ES, PT, FR, IT
+- `chineseZodiac.animals.rat.association`
+  - EN default: `Traditionally associated with alertness, adaptability, and finding a way through constrained circumstances.`
+  - Usage: Location: Chinese-zodiac animal-year guide body copy. Tone: educational, specific, and culturally careful.
+  - Pending locales: ES, PT, FR, IT
+- `chineseZodiac.animals.rat.context`
+  - EN default: `The Rat opens the twelve-year sequence. Modern personality summaries often call it resourceful; that is a cultural association, not a measured trait.`
+  - Usage: Location: Chinese-zodiac animal-year guide body copy. Tone: educational, specific, and culturally careful.
+  - Pending locales: ES, PT, FR, IT
+- `chineseZodiac.animals.rat.name`
+  - EN default: `Rat`
+  - Usage: Location: Chinese-zodiac animal-year guide body copy. Tone: educational, specific, and culturally careful.
+  - Pending locales: ES, PT, FR, IT
+- `chineseZodiac.animals.rooster.association`
+  - EN default: `Traditionally associated with diligence, timekeeping, and industriousness.`
+  - Usage: Location: Chinese-zodiac animal-year guide body copy. Tone: educational, specific, and culturally careful.
+  - Pending locales: ES, PT, FR, IT
+- `chineseZodiac.animals.rooster.context`
+  - EN default: `The Met notes the rooster’s early rising as the basis for associations with diligence and industry, while also documenting its long use as an auspicious art motif.`
+  - Usage: Location: Chinese-zodiac animal-year guide body copy. Tone: educational, specific, and culturally careful.
+  - Pending locales: ES, PT, FR, IT
+- `chineseZodiac.animals.rooster.name`
+  - EN default: `Rooster`
+  - Usage: Location: Chinese-zodiac animal-year guide body copy. Tone: educational, specific, and culturally careful.
+  - Pending locales: ES, PT, FR, IT
+- `chineseZodiac.animals.snake.association`
+  - EN default: `Traditionally associated with perception, reserve, and transformation.`
+  - Usage: Location: Chinese-zodiac animal-year guide body copy. Tone: educational, specific, and culturally careful.
+  - Pending locales: ES, PT, FR, IT
+- `chineseZodiac.animals.snake.context`
+  - EN default: `The Snake follows the Dragon in the cycle. Interpretive traits vary by source, family, and region; the calendar position is the stable fact.`
+  - Usage: Location: Chinese-zodiac animal-year guide body copy. Tone: educational, specific, and culturally careful.
+  - Pending locales: ES, PT, FR, IT
+- `chineseZodiac.animals.snake.name`
+  - EN default: `Snake`
+  - Usage: Location: Chinese-zodiac animal-year guide body copy. Tone: educational, specific, and culturally careful.
+  - Pending locales: ES, PT, FR, IT
+- `chineseZodiac.animals.tiger.association`
+  - EN default: `Traditionally associated with courage, force, and protection.`
+  - Usage: Location: Chinese-zodiac animal-year guide body copy. Tone: educational, specific, and culturally careful.
+  - Pending locales: ES, PT, FR, IT
+- `chineseZodiac.animals.tiger.context`
+  - EN default: `The Tiger carries a protective as well as a bold register in Chinese visual culture. Short personality lists capture only one use of the symbol.`
+  - Usage: Location: Chinese-zodiac animal-year guide body copy. Tone: educational, specific, and culturally careful.
+  - Pending locales: ES, PT, FR, IT
+- `chineseZodiac.animals.tiger.name`
+  - EN default: `Tiger`
+  - Usage: Location: Chinese-zodiac animal-year guide body copy. Tone: educational, specific, and culturally careful.
+  - Pending locales: ES, PT, FR, IT
+- `chineseZodiac.associationLabel`
+  - EN default: `Traditional association`
+  - Usage: Location: /learn/chinese-zodiac/ hub and animal-year pages. Tone: educational, specific, and culturally careful.
+  - Pending locales: ES, PT, FR, IT
+- `chineseZodiac.boundaryBody`
+  - EN default: `An animal year does not switch on January 1. If a birth date falls in January or early February, check the Lunar New Year date for that calendar year before choosing an animal. Dates also vary across Asian traditions, and not every community uses the same zodiac.`
+  - Usage: Location: /learn/chinese-zodiac/ hub and animal-year pages. Tone: educational, specific, and culturally careful.
+  - Pending locales: ES, PT, FR, IT
+- `chineseZodiac.boundaryTitle`
+  - EN default: `The year starts at Lunar New Year`
+  - Usage: Location: /learn/chinese-zodiac/ hub and animal-year pages. Tone: educational, specific, and culturally careful.
+  - Pending locales: ES, PT, FR, IT
+- `chineseZodiac.branchLabel`
+  - EN default: `Earthly Branch`
+  - Usage: Location: /learn/chinese-zodiac/ hub and animal-year pages. Tone: educational, specific, and culturally careful.
+  - Pending locales: ES, PT, FR, IT
+- `chineseZodiac.chartLink`
+  - EN default: `Calculate a Western tropical birth chart`
+  - Usage: Location: /learn/chinese-zodiac/ hub and animal-year pages. Tone: educational, specific, and culturally careful.
+  - Pending locales: ES, PT, FR, IT
+- `chineseZodiac.historyBody`
+  - EN default: `The twelve animals are paired with the twelve Earthly Branches. Historical evidence places the animal-calendar association in China by the third century BCE, firmly established by the first century. The branches also combine with ten Heavenly Stems in a sixty-part cycle.`
+  - Usage: Location: /learn/chinese-zodiac/ hub and animal-year pages. Tone: educational, specific, and culturally careful.
+  - Pending locales: ES, PT, FR, IT
+- `chineseZodiac.historyTitle`
+  - EN default: `What the cycle records`
+  - Usage: Location: /learn/chinese-zodiac/ hub and animal-year pages. Tone: educational, specific, and culturally careful.
+  - Pending locales: ES, PT, FR, IT
+- `chineseZodiac.hubIntro`
+  - EN default: `A careful introduction to the Chinese zodiac: its animal sequence, year tables, historical frame, and the boundary that does not fall on January 1.`
+  - Usage: Location: /learn/chinese-zodiac/ hub and animal-year pages. Tone: educational, specific, and culturally careful.
+  - Pending locales: ES, PT, FR, IT
+- `chineseZodiac.hubTitle`
+  - EN default: `The twelve-year animal cycle.`
+  - Usage: Location: /learn/chinese-zodiac/ hub and animal-year pages. Tone: educational, specific, and culturally careful.
+  - Pending locales: ES, PT, FR, IT
+- `chineseZodiac.iconRailNote`
+  - EN default: `The colored discs are Zodiacs.org’s Western-sign site mark. They are not substitutes for, or mappings to, the Chinese zodiac animals.`
+  - Usage: Location: /learn/chinese-zodiac/ hub and animal-year pages. Tone: educational, specific, and culturally careful.
+  - Pending locales: ES, PT, FR, IT
+- `chineseZodiac.itemLink`
+  - EN default: `Read the Year of the {animal}`
+  - Usage: Location: /learn/chinese-zodiac/ hub and animal-year pages. Tone: educational, specific, and culturally careful. Preserve placeholders exactly: {animal}.
+  - Pending locales: ES, PT, FR, IT
+- `chineseZodiac.kicker`
+  - EN default: `Chinese zodiac`
+  - Usage: Location: /learn/chinese-zodiac/ hub and animal-year pages. Tone: educational, specific, and culturally careful.
+  - Pending locales: ES, PT, FR, IT
+- `chineseZodiac.learnLabel`
+  - EN default: `Learn`
+  - Usage: Location: /learn/chinese-zodiac/ hub and animal-year pages. Tone: educational, specific, and culturally careful.
+  - Pending locales: ES, PT, FR, IT
+- `chineseZodiac.limitsBody`
+  - EN default: `The annual animal is one calendar layer. A fuller Chinese astrology reading may also consider the Heavenly Stem and element, month, day, and hour. A year animal alone cannot determine a personality or predict an outcome.`
+  - Usage: Location: /learn/chinese-zodiac/ hub and animal-year pages. Tone: educational, specific, and culturally careful.
+  - Pending locales: ES, PT, FR, IT
+- `chineseZodiac.limitsTitle`
+  - EN default: `What this does—and does not—tell you`
+  - Usage: Location: /learn/chinese-zodiac/ hub and animal-year pages. Tone: educational, specific, and culturally careful.
+  - Pending locales: ES, PT, FR, IT
+- `chineseZodiac.metaAnimalDescription`
+  - EN default: `Year of the {animal}: cycle years, Earthly Branch {branch} ({pinyin}), traditional associations, and the Lunar New Year boundary.`
+  - Usage: Location: /learn/chinese-zodiac/ hub and animal-year pages. Tone: educational, specific, and culturally careful. Maximum: 170 characters. Preserve placeholders exactly: {animal}, {branch}, {pinyin}.
+  - Pending locales: ES, PT, FR, IT
+- `chineseZodiac.metaAnimalTitle`
+  - EN default: `Year of the {animal} — Chinese Zodiac Years | Zodiacs.org`
+  - Usage: Location: /learn/chinese-zodiac/ hub and animal-year pages. Tone: educational, specific, and culturally careful. Maximum: 65 characters. Preserve placeholders exactly: {animal}.
+  - Pending locales: ES, PT, FR, IT
+- `chineseZodiac.metaHubTitle`
+  - EN default: `Chinese Zodiac — The Twelve Animal Years | Zodiacs.org`
+  - Usage: Location: /learn/chinese-zodiac/ hub and animal-year pages. Tone: educational, specific, and culturally careful. Maximum: 65 characters.
+  - Pending locales: ES, PT, FR, IT
+- `chineseZodiac.next`
+  - EN default: `Next animal`
+  - Usage: Location: /learn/chinese-zodiac/ hub and animal-year pages. Tone: educational, specific, and culturally careful.
+  - Pending locales: ES, PT, FR, IT
+- `chineseZodiac.numberLabel`
+  - EN default: `Nº {number}`
+  - Usage: Location: /learn/chinese-zodiac/ hub and animal-year pages. Tone: educational, specific, and culturally careful. Preserve placeholders exactly: {number}.
+  - Pending locales: ES, PT, FR, IT
+- `chineseZodiac.positionValue`
+  - EN default: `{position} of 12`
+  - Usage: Location: /learn/chinese-zodiac/ hub and animal-year pages. Tone: educational, specific, and culturally careful. Preserve placeholders exactly: {position}.
+  - Pending locales: ES, PT, FR, IT
+- `chineseZodiac.previous`
+  - EN default: `Previous animal`
+  - Usage: Location: /learn/chinese-zodiac/ hub and animal-year pages. Tone: educational, specific, and culturally careful.
+  - Pending locales: ES, PT, FR, IT
+- `chineseZodiac.separateBody`
+  - EN default: `Western tropical astrology maps planets against twelve sectors of the ecliptic and uses an exact birth moment. The Chinese zodiac pages here begin with a lunisolar calendar year and its animal branch. The two systems can be studied beside each other, but one does not translate into the other.`
+  - Usage: Location: /learn/chinese-zodiac/ hub and animal-year pages. Tone: educational, specific, and culturally careful.
+  - Pending locales: ES, PT, FR, IT
+- `chineseZodiac.separateTitle`
+  - EN default: `A separate system from Western tropical astrology`
+  - Usage: Location: /learn/chinese-zodiac/ hub and animal-year pages. Tone: educational, specific, and culturally careful.
+  - Pending locales: ES, PT, FR, IT
+- `chineseZodiac.sequenceLabel`
+  - EN default: `Sequence position`
+  - Usage: Location: /learn/chinese-zodiac/ hub and animal-year pages. Tone: educational, specific, and culturally careful.
+  - Pending locales: ES, PT, FR, IT
+- `chineseZodiac.sequenceTitle`
+  - EN default: `The twelve animals, in order`
+  - Usage: Location: /learn/chinese-zodiac/ hub and animal-year pages. Tone: educational, specific, and culturally careful.
+  - Pending locales: ES, PT, FR, IT
+- `chineseZodiac.siteName`
+  - EN default: `Zodiacs.org`
+  - Usage: Location: /learn/chinese-zodiac/ hub and animal-year pages. Tone: educational, specific, and culturally careful.
+  - Pending locales: ES, PT, FR, IT
+- `chineseZodiac.sourceMet`
+  - EN default: `The Met — the twelve-year animal calendar and its history`
+  - Usage: Location: /learn/chinese-zodiac/ hub and animal-year pages. Tone: educational, specific, and culturally careful.
+  - Pending locales: ES, PT, FR, IT
+- `chineseZodiac.sourceMetBulletin`
+  - EN default: `The Met Bulletin — animals, branches, and the sixty-part cycle`
+  - Usage: Location: /learn/chinese-zodiac/ hub and animal-year pages. Tone: educational, specific, and culturally careful.
+  - Pending locales: ES, PT, FR, IT
+- `chineseZodiac.sourceMetHub`
+  - EN default: `The Met — history of the twelve-animal calendar cycle`
+  - Usage: Location: /learn/chinese-zodiac/ hub and animal-year pages. Tone: educational, specific, and culturally careful.
+  - Pending locales: ES, PT, FR, IT
+- `chineseZodiac.sourceSmithsonian`
+  - EN default: `Smithsonian — Chinese zodiac sequence and Lunar New Year context`
+  - Usage: Location: /learn/chinese-zodiac/ hub and animal-year pages. Tone: educational, specific, and culturally careful.
+  - Pending locales: ES, PT, FR, IT
+- `chineseZodiac.sourceSmithsonianHub`
+  - EN default: `Smithsonian — Lunar New Year and the zodiac sequence`
+  - Usage: Location: /learn/chinese-zodiac/ hub and animal-year pages. Tone: educational, specific, and culturally careful.
+  - Pending locales: ES, PT, FR, IT
+- `chineseZodiac.sourceTitle`
+  - EN default: `Museum and cultural sources`
+  - Usage: Location: /learn/chinese-zodiac/ hub and animal-year pages. Tone: educational, specific, and culturally careful.
+  - Pending locales: ES, PT, FR, IT
+- `chineseZodiac.westernLink`
+  - EN default: `Read how Western tropical zodiac dates work`
+  - Usage: Location: /learn/chinese-zodiac/ hub and animal-year pages. Tone: educational, specific, and culturally careful.
+  - Pending locales: ES, PT, FR, IT
+- `chineseZodiac.yearOf`
+  - EN default: `Year of the {animal}`
+  - Usage: Location: /learn/chinese-zodiac/ hub and animal-year pages. Tone: educational, specific, and culturally careful. Preserve placeholders exactly: {animal}.
+  - Pending locales: ES, PT, FR, IT
+- `chineseZodiac.yearsBoundary`
+  - EN default: `These labels name the lunisolar year that begins during the listed Gregorian year. January and early-February births may belong to the preceding animal.`
+  - Usage: Location: /learn/chinese-zodiac/ hub and animal-year pages. Tone: educational, specific, and culturally careful.
+  - Pending locales: ES, PT, FR, IT
+- `chineseZodiac.yearsLabel`
+  - EN default: `Cycle years`
+  - Usage: Location: /learn/chinese-zodiac/ hub and animal-year pages. Tone: educational, specific, and culturally careful.
+  - Pending locales: ES, PT, FR, IT
+- `chineseZodiac.yearsTitle`
+  - EN default: `Recent and upcoming cycle years`
+  - Usage: Location: /learn/chinese-zodiac/ hub and animal-year pages. Tone: educational, specific, and culturally careful.
+  - Pending locales: ES, PT, FR, IT
+- `programmatic.compatibilityPrefillCta`
+  - EN default: `Open the calculator with {a} and {b} loaded`
+  - Usage: Location: WS5 compatibility-pair page CTA. Tone: educational, specific, and culturally careful. Preserve placeholders exactly: {a}, {b}.
+  - Pending locales: ES, PT, FR, IT
+
+## WS6 — widgets
+
+- `widgets.accentLabel`
+  - EN default: `Accent`
+  - Usage: Location: /widgets/ generator and standalone iframe/script embed documents. Tone: compact, direct, and privacy-forward. Maximum: 48 characters.
+  - Pending locales: ES, PT, FR, IT
+- `widgets.backlinkNote`
+  - EN default: `The Powered by Zodiacs.org link is part of every widget and is not removable.`
+  - Usage: Location: /widgets/ generator and standalone iframe/script embed documents. Tone: compact, direct, and privacy-forward. Maximum: 150 characters.
+  - Pending locales: ES, PT, FR, IT
+- `widgets.changePlace`
+  - EN default: `Change birthplace`
+  - Usage: Location: /widgets/ generator and standalone iframe/script embed documents. Tone: compact, direct, and privacy-forward. Maximum: 48 characters.
+  - Pending locales: ES, PT, FR, IT
+- `widgets.chartError`
+  - EN default: `The chart could not be computed in this browser.`
+  - Usage: Location: /widgets/ generator and standalone iframe/script embed documents. Tone: compact, direct, and privacy-forward. Maximum: 150 characters.
+  - Pending locales: ES, PT, FR, IT
+- `widgets.chartIntro`
+  - EN default: `Sun, Moon, and rising—computed privately here.`
+  - Usage: Location: /widgets/ generator and standalone iframe/script embed documents. Tone: compact, direct, and privacy-forward. Maximum: 150 characters.
+  - Pending locales: ES, PT, FR, IT
+- `widgets.chartOption`
+  - EN default: `Mini birth chart`
+  - Usage: Location: /widgets/ generator and standalone iframe/script embed documents. Tone: compact, direct, and privacy-forward. Maximum: 48 characters.
+  - Pending locales: ES, PT, FR, IT
+- `widgets.chartPrivacy`
+  - EN default: `Computed on this device. Nothing entered here is sent to a chart API.`
+  - Usage: Location: /widgets/ generator and standalone iframe/script embed documents. Tone: compact, direct, and privacy-forward. Maximum: 150 characters.
+  - Pending locales: ES, PT, FR, IT
+- `widgets.chartTitle`
+  - EN default: `Mini birth chart`
+  - Usage: Location: /widgets/ generator and standalone iframe/script embed documents. Tone: compact, direct, and privacy-forward. Maximum: 48 characters.
+  - Pending locales: ES, PT, FR, IT
+- `widgets.codeLabel`
+  - EN default: `Embed code`
+  - Usage: Location: /widgets/ generator and standalone iframe/script embed documents. Tone: compact, direct, and privacy-forward. Maximum: 48 characters.
+  - Pending locales: ES, PT, FR, IT
+- `widgets.computeAction`
+  - EN default: `Find the big three`
+  - Usage: Location: /widgets/ generator and standalone iframe/script embed documents. Tone: compact, direct, and privacy-forward. Maximum: 48 characters.
+  - Pending locales: ES, PT, FR, IT
+- `widgets.computing`
+  - EN default: `Computing…`
+  - Usage: Location: /widgets/ generator and standalone iframe/script embed documents. Tone: compact, direct, and privacy-forward. Maximum: 48 characters.
+  - Pending locales: ES, PT, FR, IT
+- `widgets.copiedAction`
+  - EN default: `Copied`
+  - Usage: Location: /widgets/ generator and standalone iframe/script embed documents. Tone: compact, direct, and privacy-forward. Maximum: 48 characters.
+  - Pending locales: ES, PT, FR, IT
+- `widgets.copyAction`
+  - EN default: `Copy embed code`
+  - Usage: Location: /widgets/ generator and standalone iframe/script embed documents. Tone: compact, direct, and privacy-forward. Maximum: 48 characters.
+  - Pending locales: ES, PT, FR, IT
+- `widgets.darkOption`
+  - EN default: `Dark`
+  - Usage: Location: /widgets/ generator and standalone iframe/script embed documents. Tone: compact, direct, and privacy-forward. Maximum: 48 characters.
+  - Pending locales: ES, PT, FR, IT
+- `widgets.dateLabel`
+  - EN default: `Birth date`
+  - Usage: Location: /widgets/ generator and standalone iframe/script embed documents. Tone: compact, direct, and privacy-forward. Maximum: 48 characters.
+  - Pending locales: ES, PT, FR, IT
+- `widgets.generatorTitle`
+  - EN default: `Build an embed`
+  - Usage: Location: /widgets/ generator and standalone iframe/script embed documents. Tone: compact, direct, and privacy-forward. Maximum: 48 characters.
+  - Pending locales: ES, PT, FR, IT
+- `widgets.iframeOption`
+  - EN default: `Sandboxed iframe`
+  - Usage: Location: /widgets/ generator and standalone iframe/script embed documents. Tone: compact, direct, and privacy-forward. Maximum: 48 characters.
+  - Pending locales: ES, PT, FR, IT
+- `widgets.illumination`
+  - EN default: `{percent}% illuminated`
+  - Usage: Location: /widgets/ generator and standalone iframe/script embed documents. Tone: compact, direct, and privacy-forward. Maximum: 48 characters. Preserve placeholders exactly: {percent}.
+  - Pending locales: ES, PT, FR, IT
+- `widgets.lightOption`
+  - EN default: `Light`
+  - Usage: Location: /widgets/ generator and standalone iframe/script embed documents. Tone: compact, direct, and privacy-forward. Maximum: 48 characters.
+  - Pending locales: ES, PT, FR, IT
+- `widgets.modeLabel`
+  - EN default: `Embed mode`
+  - Usage: Location: /widgets/ generator and standalone iframe/script embed documents. Tone: compact, direct, and privacy-forward. Maximum: 48 characters.
+  - Pending locales: ES, PT, FR, IT
+- `widgets.moon`
+  - EN default: `Moon`
+  - Usage: Location: /widgets/ generator and standalone iframe/script embed documents. Tone: compact, direct, and privacy-forward. Maximum: 48 characters.
+  - Pending locales: ES, PT, FR, IT
+- `widgets.moonOption`
+  - EN default: `Moon phase today`
+  - Usage: Location: /widgets/ generator and standalone iframe/script embed documents. Tone: compact, direct, and privacy-forward. Maximum: 48 characters.
+  - Pending locales: ES, PT, FR, IT
+- `widgets.moonSign`
+  - EN default: `Moon in {sign}`
+  - Usage: Location: /widgets/ generator and standalone iframe/script embed documents. Tone: compact, direct, and privacy-forward. Maximum: 48 characters. Preserve placeholders exactly: {sign}.
+  - Pending locales: ES, PT, FR, IT
+- `widgets.moonTitle`
+  - EN default: `Moon phase today`
+  - Usage: Location: /widgets/ generator and standalone iframe/script embed documents. Tone: compact, direct, and privacy-forward. Maximum: 48 characters.
+  - Pending locales: ES, PT, FR, IT
+- `widgets.noPlaces`
+  - EN default: `No places found`
+  - Usage: Location: /widgets/ generator and standalone iframe/script embed documents. Tone: compact, direct, and privacy-forward. Maximum: 48 characters.
+  - Pending locales: ES, PT, FR, IT
+- `widgets.noRetrograde`
+  - EN default: `No planets retrograde`
+  - Usage: Location: /widgets/ generator and standalone iframe/script embed documents. Tone: compact, direct, and privacy-forward. Maximum: 48 characters.
+  - Pending locales: ES, PT, FR, IT
+- `widgets.pageIntro`
+  - EN default: `Three small, private astrology tools for another site. The iframe is the primary mode; the script mode mounts the same sandboxed document. Every widget keeps its Zodiacs.org credit.`
+  - Usage: Location: /widgets/ generator and standalone iframe/script embed documents. Tone: compact, direct, and privacy-forward. Maximum: 150 characters.
+  - Pending locales: ES, PT, FR, IT
+- `widgets.pageKicker`
+  - EN default: `Widgets`
+  - Usage: Location: /widgets/ generator and standalone iframe/script embed documents. Tone: compact, direct, and privacy-forward. Maximum: 48 characters.
+  - Pending locales: ES, PT, FR, IT
+- `widgets.pageMetaDescription`
+  - EN default: `Embed a moon phase, current sky, or private mini birth chart on any site. Sandboxed iframe and script modes, free with the Zodiacs.org credit intact.`
+  - Usage: Location: /widgets/ generator and standalone iframe/script embed documents. Tone: compact, direct, and privacy-forward. Maximum: 170 characters.
+  - Pending locales: ES, PT, FR, IT
+- `widgets.pageMetaTitle`
+  - EN default: `Free Astrology Widgets — Moon, Sky & Birth Chart | Zodiacs.org`
+  - Usage: Location: /widgets/ generator and standalone iframe/script embed documents. Tone: compact, direct, and privacy-forward. Maximum: 65 characters.
+  - Pending locales: ES, PT, FR, IT
+- `widgets.pageTitle`
+  - EN default: `The sky, on your site.`
+  - Usage: Location: /widgets/ generator and standalone iframe/script embed documents. Tone: compact, direct, and privacy-forward. Maximum: 48 characters.
+  - Pending locales: ES, PT, FR, IT
+- `widgets.phaseNames.First Quarter`
+  - EN default: `First Quarter`
+  - Usage: Location: compact moon-widget phase labels. Tone: compact, direct, and privacy-forward. Maximum: 48 characters.
+  - Pending locales: ES, PT, FR, IT
+- `widgets.phaseNames.Full Moon`
+  - EN default: `Full Moon`
+  - Usage: Location: compact moon-widget phase labels. Tone: compact, direct, and privacy-forward. Maximum: 48 characters.
+  - Pending locales: ES, PT, FR, IT
+- `widgets.phaseNames.Last Quarter`
+  - EN default: `Last Quarter`
+  - Usage: Location: compact moon-widget phase labels. Tone: compact, direct, and privacy-forward. Maximum: 48 characters.
+  - Pending locales: ES, PT, FR, IT
+- `widgets.phaseNames.New Moon`
+  - EN default: `New Moon`
+  - Usage: Location: compact moon-widget phase labels. Tone: compact, direct, and privacy-forward. Maximum: 48 characters.
+  - Pending locales: ES, PT, FR, IT
+- `widgets.phaseNames.Waning Crescent`
+  - EN default: `Waning Crescent`
+  - Usage: Location: compact moon-widget phase labels. Tone: compact, direct, and privacy-forward. Maximum: 48 characters.
+  - Pending locales: ES, PT, FR, IT
+- `widgets.phaseNames.Waning Gibbous`
+  - EN default: `Waning Gibbous`
+  - Usage: Location: compact moon-widget phase labels. Tone: compact, direct, and privacy-forward. Maximum: 48 characters.
+  - Pending locales: ES, PT, FR, IT
+- `widgets.phaseNames.Waxing Crescent`
+  - EN default: `Waxing Crescent`
+  - Usage: Location: compact moon-widget phase labels. Tone: compact, direct, and privacy-forward. Maximum: 48 characters.
+  - Pending locales: ES, PT, FR, IT
+- `widgets.phaseNames.Waxing Gibbous`
+  - EN default: `Waxing Gibbous`
+  - Usage: Location: compact moon-widget phase labels. Tone: compact, direct, and privacy-forward. Maximum: 48 characters.
+  - Pending locales: ES, PT, FR, IT
+- `widgets.placeError`
+  - EN default: `The offline place index could not load.`
+  - Usage: Location: /widgets/ generator and standalone iframe/script embed documents. Tone: compact, direct, and privacy-forward. Maximum: 150 characters.
+  - Pending locales: ES, PT, FR, IT
+- `widgets.placeLabel`
+  - EN default: `Birthplace`
+  - Usage: Location: /widgets/ generator and standalone iframe/script embed documents. Tone: compact, direct, and privacy-forward. Maximum: 48 characters.
+  - Pending locales: ES, PT, FR, IT
+- `widgets.placePlaceholder`
+  - EN default: `Start typing a city…`
+  - Usage: Location: /widgets/ generator and standalone iframe/script embed documents. Tone: compact, direct, and privacy-forward. Maximum: 48 characters.
+  - Pending locales: ES, PT, FR, IT
+- `widgets.planetNames.Jupiter`
+  - EN default: `Jupiter`
+  - Usage: Location: compact widget planet labels. Tone: compact, direct, and privacy-forward. Maximum: 48 characters.
+  - Pending locales: ES, PT, FR, IT
+- `widgets.planetNames.Mars`
+  - EN default: `Mars`
+  - Usage: Location: compact widget planet labels. Tone: compact, direct, and privacy-forward. Maximum: 48 characters.
+  - Pending locales: ES, PT, FR, IT
+- `widgets.planetNames.Mercury`
+  - EN default: `Mercury`
+  - Usage: Location: compact widget planet labels. Tone: compact, direct, and privacy-forward. Maximum: 48 characters.
+  - Pending locales: ES, PT, FR, IT
+- `widgets.planetNames.Moon`
+  - EN default: `Moon`
+  - Usage: Location: compact widget planet labels. Tone: compact, direct, and privacy-forward. Maximum: 48 characters.
+  - Pending locales: ES, PT, FR, IT
+- `widgets.planetNames.Neptune`
+  - EN default: `Neptune`
+  - Usage: Location: compact widget planet labels. Tone: compact, direct, and privacy-forward. Maximum: 48 characters.
+  - Pending locales: ES, PT, FR, IT
+- `widgets.planetNames.Pluto`
+  - EN default: `Pluto`
+  - Usage: Location: compact widget planet labels. Tone: compact, direct, and privacy-forward. Maximum: 48 characters.
+  - Pending locales: ES, PT, FR, IT
+- `widgets.planetNames.Saturn`
+  - EN default: `Saturn`
+  - Usage: Location: compact widget planet labels. Tone: compact, direct, and privacy-forward. Maximum: 48 characters.
+  - Pending locales: ES, PT, FR, IT
+- `widgets.planetNames.Sun`
+  - EN default: `Sun`
+  - Usage: Location: compact widget planet labels. Tone: compact, direct, and privacy-forward. Maximum: 48 characters.
+  - Pending locales: ES, PT, FR, IT
+- `widgets.planetNames.Uranus`
+  - EN default: `Uranus`
+  - Usage: Location: compact widget planet labels. Tone: compact, direct, and privacy-forward. Maximum: 48 characters.
+  - Pending locales: ES, PT, FR, IT
+- `widgets.planetNames.Venus`
+  - EN default: `Venus`
+  - Usage: Location: compact widget planet labels. Tone: compact, direct, and privacy-forward. Maximum: 48 characters.
+  - Pending locales: ES, PT, FR, IT
+- `widgets.poweredBy`
+  - EN default: `Powered by Zodiacs.org`
+  - Usage: Location: /widgets/ generator and standalone iframe/script embed documents. Tone: compact, direct, and privacy-forward. Maximum: 48 characters.
+  - Pending locales: ES, PT, FR, IT
+- `widgets.previewTitle`
+  - EN default: `Live preview`
+  - Usage: Location: /widgets/ generator and standalone iframe/script embed documents. Tone: compact, direct, and privacy-forward. Maximum: 48 characters.
+  - Pending locales: ES, PT, FR, IT
+- `widgets.privacyNote`
+  - EN default: `The mini chart computes in its iframe. Birth date, time, and place never leave the browser.`
+  - Usage: Location: /widgets/ generator and standalone iframe/script embed documents. Tone: compact, direct, and privacy-forward. Maximum: 150 characters.
+  - Pending locales: ES, PT, FR, IT
+- `widgets.requiresJavaScript`
+  - EN default: `JavaScript is required for the calculation, but the form remains private and sends no birth details.`
+  - Usage: Location: /widgets/ generator and standalone iframe/script embed documents. Tone: compact, direct, and privacy-forward. Maximum: 150 characters.
+  - Pending locales: ES, PT, FR, IT
+- `widgets.retrograde`
+  - EN default: `Retrograde: {planets}`
+  - Usage: Location: /widgets/ generator and standalone iframe/script embed documents. Tone: compact, direct, and privacy-forward. Maximum: 48 characters. Preserve placeholders exactly: {planets}.
+  - Pending locales: ES, PT, FR, IT
+- `widgets.retrogradeAbbreviation`
+  - EN default: `Rx`
+  - Usage: Location: /widgets/ generator and standalone iframe/script embed documents. Tone: compact, direct, and privacy-forward. Maximum: 48 characters.
+  - Pending locales: ES, PT, FR, IT
+- `widgets.rising`
+  - EN default: `Rising`
+  - Usage: Location: /widgets/ generator and standalone iframe/script embed documents. Tone: compact, direct, and privacy-forward. Maximum: 48 characters.
+  - Pending locales: ES, PT, FR, IT
+- `widgets.scriptOption`
+  - EN default: `Script mount`
+  - Usage: Location: /widgets/ generator and standalone iframe/script embed documents. Tone: compact, direct, and privacy-forward. Maximum: 48 characters.
+  - Pending locales: ES, PT, FR, IT
+- `widgets.signNames.aquarius`
+  - EN default: `Aquarius`
+  - Usage: Location: compact widget sign labels. Tone: compact, direct, and privacy-forward. Maximum: 48 characters.
+  - Pending locales: ES, PT, FR, IT
+- `widgets.signNames.aries`
+  - EN default: `Aries`
+  - Usage: Location: compact widget sign labels. Tone: compact, direct, and privacy-forward. Maximum: 48 characters.
+  - Pending locales: ES, PT, FR, IT
+- `widgets.signNames.cancer`
+  - EN default: `Cancer`
+  - Usage: Location: compact widget sign labels. Tone: compact, direct, and privacy-forward. Maximum: 48 characters.
+  - Pending locales: ES, PT, FR, IT
+- `widgets.signNames.capricorn`
+  - EN default: `Capricorn`
+  - Usage: Location: compact widget sign labels. Tone: compact, direct, and privacy-forward. Maximum: 48 characters.
+  - Pending locales: ES, PT, FR, IT
+- `widgets.signNames.gemini`
+  - EN default: `Gemini`
+  - Usage: Location: compact widget sign labels. Tone: compact, direct, and privacy-forward. Maximum: 48 characters.
+  - Pending locales: ES, PT, FR, IT
+- `widgets.signNames.leo`
+  - EN default: `Leo`
+  - Usage: Location: compact widget sign labels. Tone: compact, direct, and privacy-forward. Maximum: 48 characters.
+  - Pending locales: ES, PT, FR, IT
+- `widgets.signNames.libra`
+  - EN default: `Libra`
+  - Usage: Location: compact widget sign labels. Tone: compact, direct, and privacy-forward. Maximum: 48 characters.
+  - Pending locales: ES, PT, FR, IT
+- `widgets.signNames.pisces`
+  - EN default: `Pisces`
+  - Usage: Location: compact widget sign labels. Tone: compact, direct, and privacy-forward. Maximum: 48 characters.
+  - Pending locales: ES, PT, FR, IT
+- `widgets.signNames.sagittarius`
+  - EN default: `Sagittarius`
+  - Usage: Location: compact widget sign labels. Tone: compact, direct, and privacy-forward. Maximum: 48 characters.
+  - Pending locales: ES, PT, FR, IT
+- `widgets.signNames.scorpio`
+  - EN default: `Scorpio`
+  - Usage: Location: compact widget sign labels. Tone: compact, direct, and privacy-forward. Maximum: 48 characters.
+  - Pending locales: ES, PT, FR, IT
+- `widgets.signNames.taurus`
+  - EN default: `Taurus`
+  - Usage: Location: compact widget sign labels. Tone: compact, direct, and privacy-forward. Maximum: 48 characters.
+  - Pending locales: ES, PT, FR, IT
+- `widgets.signNames.virgo`
+  - EN default: `Virgo`
+  - Usage: Location: compact widget sign labels. Tone: compact, direct, and privacy-forward. Maximum: 48 characters.
+  - Pending locales: ES, PT, FR, IT
+- `widgets.sizeNote`
+  - EN default: `The documents are standalone and lazy-load their heavier computation only after a mini-chart submission.`
+  - Usage: Location: /widgets/ generator and standalone iframe/script embed documents. Tone: compact, direct, and privacy-forward. Maximum: 150 characters.
+  - Pending locales: ES, PT, FR, IT
+- `widgets.skyOption`
+  - EN default: `The sky today`
+  - Usage: Location: /widgets/ generator and standalone iframe/script embed documents. Tone: compact, direct, and privacy-forward. Maximum: 48 characters.
+  - Pending locales: ES, PT, FR, IT
+- `widgets.skyTitle`
+  - EN default: `The sky today`
+  - Usage: Location: /widgets/ generator and standalone iframe/script embed documents. Tone: compact, direct, and privacy-forward. Maximum: 48 characters.
+  - Pending locales: ES, PT, FR, IT
+- `widgets.sun`
+  - EN default: `Sun`
+  - Usage: Location: /widgets/ generator and standalone iframe/script embed documents. Tone: compact, direct, and privacy-forward. Maximum: 48 characters.
+  - Pending locales: ES, PT, FR, IT
+- `widgets.themeLabel`
+  - EN default: `Theme`
+  - Usage: Location: /widgets/ generator and standalone iframe/script embed documents. Tone: compact, direct, and privacy-forward. Maximum: 48 characters.
+  - Pending locales: ES, PT, FR, IT
+- `widgets.timeLabel`
+  - EN default: `Birth time`
+  - Usage: Location: /widgets/ generator and standalone iframe/script embed documents. Tone: compact, direct, and privacy-forward. Maximum: 48 characters.
+  - Pending locales: ES, PT, FR, IT
+- `widgets.widgetError`
+  - EN default: `Choose a complete date, time, and birthplace.`
+  - Usage: Location: /widgets/ generator and standalone iframe/script embed documents. Tone: compact, direct, and privacy-forward. Maximum: 150 characters.
+  - Pending locales: ES, PT, FR, IT
+- `widgets.widgetLabel`
+  - EN default: `Widget`
+  - Usage: Location: /widgets/ generator and standalone iframe/script embed documents. Tone: compact, direct, and privacy-forward. Maximum: 48 characters.
+  - Pending locales: ES, PT, FR, IT
+- `widgets.widgetTitleChart`
+  - EN default: `Mini birth chart — Zodiacs.org`
+  - Usage: Location: /widgets/ generator and standalone iframe/script embed documents. Tone: compact, direct, and privacy-forward. Maximum: 48 characters.
+  - Pending locales: ES, PT, FR, IT
+- `widgets.widgetTitleMoon`
+  - EN default: `Moon phase today — Zodiacs.org`
+  - Usage: Location: /widgets/ generator and standalone iframe/script embed documents. Tone: compact, direct, and privacy-forward. Maximum: 48 characters.
+  - Pending locales: ES, PT, FR, IT
+- `widgets.widgetTitleSky`
+  - EN default: `The sky today — Zodiacs.org`
+  - Usage: Location: /widgets/ generator and standalone iframe/script embed documents. Tone: compact, direct, and privacy-forward. Maximum: 48 characters.
+  - Pending locales: ES, PT, FR, IT
+
+## WS8 — wallet natal chart
+
+- `walletChart.addressHelp`
+  - EN default: `Accepted formats: a 32-byte Solana base58 public key or a Base 0x address.`
+  - Usage: Location: feature-flagged /registry/wallet-chart/ paste-only instrument and share card. Tone: neutral, symbolic, read-only, and never financial.
+  - Pending locales: ES, PT, FR, IT
+- `walletChart.addressLabel`
+  - EN default: `Solana or Base address`
+  - Usage: Location: feature-flagged /registry/wallet-chart/ paste-only instrument and share card. Tone: neutral, symbolic, read-only, and never financial.
+  - Pending locales: ES, PT, FR, IT
+- `walletChart.addressPlaceholder`
+  - EN default: `Paste a public address`
+  - Usage: Location: feature-flagged /registry/wallet-chart/ paste-only instrument and share card. Tone: neutral, symbolic, read-only, and never financial.
+  - Pending locales: ES, PT, FR, IT
+- `walletChart.applicationCategory`
+  - EN default: `EntertainmentApplication`
+  - Usage: Location: feature-flagged /registry/wallet-chart/ paste-only instrument and share card. Tone: neutral, symbolic, read-only, and never financial.
+  - Pending locales: ES, PT, FR, IT
+- `walletChart.base`
+  - EN default: `Base`
+  - Usage: Location: feature-flagged /registry/wallet-chart/ paste-only instrument and share card. Tone: neutral, symbolic, read-only, and never financial.
+  - Pending locales: ES, PT, FR, IT
+- `walletChart.boundary`
+  - EN default: `Paste an address. There is no wallet connection, message signing, approval, transaction construction, or custody.`
+  - Usage: Location: feature-flagged /registry/wallet-chart/ paste-only instrument and share card. Tone: neutral, symbolic, read-only, and never financial.
+  - Pending locales: ES, PT, FR, IT
+- `walletChart.breadcrumbPage`
+  - EN default: `Wallet natal chart`
+  - Usage: Location: feature-flagged /registry/wallet-chart/ paste-only instrument and share card. Tone: neutral, symbolic, read-only, and never financial.
+  - Pending locales: ES, PT, FR, IT
+- `walletChart.breadcrumbRegistry`
+  - EN default: `Registry`
+  - Usage: Location: feature-flagged /registry/wallet-chart/ paste-only instrument and share card. Tone: neutral, symbolic, read-only, and never financial.
+  - Pending locales: ES, PT, FR, IT
+- `walletChart.calculate`
+  - EN default: `Find the wallet’s chart`
+  - Usage: Location: feature-flagged /registry/wallet-chart/ paste-only instrument and share card. Tone: neutral, symbolic, read-only, and never financial. Maximum: 42 characters.
+  - Pending locales: ES, PT, FR, IT
+- `walletChart.calculating`
+  - EN default: `Reading public history…`
+  - Usage: Location: feature-flagged /registry/wallet-chart/ paste-only instrument and share card. Tone: neutral, symbolic, read-only, and never financial.
+  - Pending locales: ES, PT, FR, IT
+- `walletChart.cardBorn`
+  - EN default: `Public chart time · {time}`
+  - Usage: Location: feature-flagged /registry/wallet-chart/ paste-only instrument and share card. Tone: neutral, symbolic, read-only, and never financial. Maximum: 88 visible characters. Preserve placeholders exactly: {time}.
+  - Pending locales: ES, PT, FR, IT
+- `walletChart.cardNoBirthplace`
+  - EN default: `UTC · planets only · no birthplace`
+  - Usage: Location: feature-flagged /registry/wallet-chart/ paste-only instrument and share card. Tone: neutral, symbolic, read-only, and never financial. Maximum: 88 visible characters.
+  - Pending locales: ES, PT, FR, IT
+- `walletChart.cardOwnerHighlight`
+  - EN default: `Owner synastry · {ownerBody} {aspect} wallet {walletBody} · {orb}°`
+  - Usage: Location: feature-flagged /registry/wallet-chart/ paste-only instrument and share card. Tone: neutral, symbolic, read-only, and never financial. Maximum: 88 visible characters. Preserve placeholders exactly: {ownerBody}, {aspect}, {walletBody}, {orb}.
+  - Pending locales: ES, PT, FR, IT
+- `walletChart.cardSymbolic`
+  - EN default: `Symbolic context · read-only · not financial advice`
+  - Usage: Location: feature-flagged /registry/wallet-chart/ paste-only instrument and share card. Tone: neutral, symbolic, read-only, and never financial. Maximum: 88 visible characters.
+  - Pending locales: ES, PT, FR, IT
+- `walletChart.cardTitle`
+  - EN default: `Wallet natal chart`
+  - Usage: Location: feature-flagged /registry/wallet-chart/ paste-only instrument and share card. Tone: neutral, symbolic, read-only, and never financial. Maximum: 88 visible characters.
+  - Pending locales: ES, PT, FR, IT
+- `walletChart.elementBalance`
+  - EN default: `Held-sign element balance: {balance}.`
+  - Usage: Location: feature-flagged /registry/wallet-chart/ paste-only instrument and share card. Tone: neutral, symbolic, read-only, and never financial. Preserve placeholders exactly: {balance}.
+  - Pending locales: ES, PT, FR, IT
+- `walletChart.entertainmentDisclosure`
+  - EN default: `For entertainment and symbolic context only.`
+  - Usage: Location: feature-flagged /registry/wallet-chart/ paste-only instrument and share card. Tone: neutral, symbolic, read-only, and never financial.
+  - Pending locales: ES, PT, FR, IT
+- `walletChart.financialDisclosure`
+  - EN default: `Not financial advice. Nothing here is a solicitation, recommendation, or statement of value.`
+  - Usage: Location: feature-flagged /registry/wallet-chart/ paste-only instrument and share card. Tone: neutral, symbolic, read-only, and never financial.
+  - Pending locales: ES, PT, FR, IT
+- `walletChart.historyTooDeep`
+  - EN default: `This address exceeds the configured Solana history boundary. An archival provider with a higher page budget is required; no partial timestamp is shown.`
+  - Usage: Location: feature-flagged /registry/wallet-chart/ paste-only instrument and share card. Tone: neutral, symbolic, read-only, and never financial.
+  - Pending locales: ES, PT, FR, IT
+- `walletChart.intro`
+  - EN default: `A wallet has an earliest recorded transaction time, but no birthplace. This instrument maps that public UTC timestamp to planets in signs only.`
+  - Usage: Location: feature-flagged /registry/wallet-chart/ paste-only instrument and share card. Tone: neutral, symbolic, read-only, and never financial.
+  - Pending locales: ES, PT, FR, IT
+- `walletChart.invalidResponse`
+  - EN default: `The history provider returned an unreadable result. Try again later.`
+  - Usage: Location: feature-flagged /registry/wallet-chart/ paste-only instrument and share card. Tone: neutral, symbolic, read-only, and never financial.
+  - Pending locales: ES, PT, FR, IT
+- `walletChart.kicker`
+  - EN default: `Registry instrument · read-only`
+  - Usage: Location: feature-flagged /registry/wallet-chart/ paste-only instrument and share card. Tone: neutral, symbolic, read-only, and never financial.
+  - Pending locales: ES, PT, FR, IT
+- `walletChart.metaDescription`
+  - EN default: `Paste a Solana or Base address to map its earliest supported on-chain timestamp as a symbolic, planets-only chart. No connection, signing, or transaction.`
+  - Usage: Location: feature-flagged /registry/wallet-chart/ paste-only instrument and share card. Tone: neutral, symbolic, read-only, and never financial. Maximum: 170 characters.
+  - Pending locales: ES, PT, FR, IT
+- `walletChart.metaTitle`
+  - EN default: `Wallet Natal Chart — Read-only Registry Instrument | Zodiacs.org`
+  - Usage: Location: feature-flagged /registry/wallet-chart/ paste-only instrument and share card. Tone: neutral, symbolic, read-only, and never financial. Maximum: 65 characters.
+  - Pending locales: ES, PT, FR, IT
+- `walletChart.noJavaScript`
+  - EN default: `JavaScript is required for the private, in-browser astronomical calculation. The address lookup and chart computation do not run without your action.`
+  - Usage: Location: feature-flagged /registry/wallet-chart/ paste-only instrument and share card. Tone: neutral, symbolic, read-only, and never financial.
+  - Pending locales: ES, PT, FR, IT
+- `walletChart.notFound`
+  - EN default: `Not found in the official Zodiacs.org registry.`
+  - Usage: Location: feature-flagged /registry/wallet-chart/ paste-only instrument and share card. Tone: neutral, symbolic, read-only, and never financial.
+  - Pending locales: ES, PT, FR, IT
+- `walletChart.officialHoldingsIntro`
+  - EN default: `A read-only balance check found official Registry assets for these signs:`
+  - Usage: Location: feature-flagged /registry/wallet-chart/ paste-only instrument and share card. Tone: neutral, symbolic, read-only, and never financial.
+  - Pending locales: ES, PT, FR, IT
+- `walletChart.officialHoldingsTitle`
+  - EN default: `Official Registry context`
+  - Usage: Location: feature-flagged /registry/wallet-chart/ paste-only instrument and share card. Tone: neutral, symbolic, read-only, and never financial.
+  - Pending locales: ES, PT, FR, IT
+- `walletChart.ownerCalculating`
+  - EN default: `Calculating in this browser…`
+  - Usage: Location: feature-flagged /registry/wallet-chart/ paste-only instrument and share card. Tone: neutral, symbolic, read-only, and never financial.
+  - Pending locales: ES, PT, FR, IT
+- `walletChart.ownerCancel`
+  - EN default: `Clear private comparison`
+  - Usage: Location: feature-flagged /registry/wallet-chart/ paste-only instrument and share card. Tone: neutral, symbolic, read-only, and never financial. Maximum: 42 characters.
+  - Pending locales: ES, PT, FR, IT
+- `walletChart.ownerIntro`
+  - EN default: `Optionally calculate planets-only synastry against your birth moment. Place is used only to resolve historical local time.`
+  - Usage: Location: feature-flagged /registry/wallet-chart/ paste-only instrument and share card. Tone: neutral, symbolic, read-only, and never financial.
+  - Pending locales: ES, PT, FR, IT
+- `walletChart.ownerMissing`
+  - EN default: `Enter a birth date and choose a birthplace before calculating.`
+  - Usage: Location: feature-flagged /registry/wallet-chart/ paste-only instrument and share card. Tone: neutral, symbolic, read-only, and never financial.
+  - Pending locales: ES, PT, FR, IT
+- `walletChart.ownerPlaceHelp`
+  - EN default: `Place selects the historical time zone from the site’s local city data; no coordinates enter the chart.`
+  - Usage: Location: feature-flagged /registry/wallet-chart/ paste-only instrument and share card. Tone: neutral, symbolic, read-only, and never financial.
+  - Pending locales: ES, PT, FR, IT
+- `walletChart.ownerPrivacy`
+  - EN default: `Your birth date, time, place, planetary positions, and synastry stay in this browser. They are never sent to the wallet-history endpoint.`
+  - Usage: Location: feature-flagged /registry/wallet-chart/ paste-only instrument and share card. Tone: neutral, symbolic, read-only, and never financial.
+  - Pending locales: ES, PT, FR, IT
+- `walletChart.ownerStart`
+  - EN default: `Compare with your chart`
+  - Usage: Location: feature-flagged /registry/wallet-chart/ paste-only instrument and share card. Tone: neutral, symbolic, read-only, and never financial.
+  - Pending locales: ES, PT, FR, IT
+- `walletChart.ownerSubmit`
+  - EN default: `Calculate private synastry`
+  - Usage: Location: feature-flagged /registry/wallet-chart/ paste-only instrument and share card. Tone: neutral, symbolic, read-only, and never financial. Maximum: 42 characters.
+  - Pending locales: ES, PT, FR, IT
+- `walletChart.ownerTimeHelp`
+  - EN default: `If the time is unknown, the engine uses local noon and omits any claim about fast-moving angles.`
+  - Usage: Location: feature-flagged /registry/wallet-chart/ paste-only instrument and share card. Tone: neutral, symbolic, read-only, and never financial.
+  - Pending locales: ES, PT, FR, IT
+- `walletChart.ownerTitle`
+  - EN default: `You × your wallet`
+  - Usage: Location: feature-flagged /registry/wallet-chart/ paste-only instrument and share card. Tone: neutral, symbolic, read-only, and never financial.
+  - Pending locales: ES, PT, FR, IT
+- `walletChart.placementsIntro`
+  - EN default: `These placements use the returned UTC instant. A rising sign and houses would require a birthplace, which a wallet does not have.`
+  - Usage: Location: feature-flagged /registry/wallet-chart/ paste-only instrument and share card. Tone: neutral, symbolic, read-only, and never financial.
+  - Pending locales: ES, PT, FR, IT
+- `walletChart.placementsTitle`
+  - EN default: `Planets in signs`
+  - Usage: Location: feature-flagged /registry/wallet-chart/ paste-only instrument and share card. Tone: neutral, symbolic, read-only, and never financial.
+  - Pending locales: ES, PT, FR, IT
+- `walletChart.privacyBody`
+  - EN default: `The server receives the pasted public address and returns a public timestamp. Optional owner birth details and all astronomical computation stay on this device.`
+  - Usage: Location: feature-flagged /registry/wallet-chart/ paste-only instrument and share card. Tone: neutral, symbolic, read-only, and never financial.
+  - Pending locales: ES, PT, FR, IT
+- `walletChart.privacyTitle`
+  - EN default: `What crosses the boundary`
+  - Usage: Location: feature-flagged /registry/wallet-chart/ paste-only instrument and share card. Tone: neutral, symbolic, read-only, and never financial.
+  - Pending locales: ES, PT, FR, IT
+- `walletChart.readOnlyDisclosure`
+  - EN default: `Read-only by design. No custody, signing, approvals, or transactions.`
+  - Usage: Location: feature-flagged /registry/wallet-chart/ paste-only instrument and share card. Tone: neutral, symbolic, read-only, and never financial.
+  - Pending locales: ES, PT, FR, IT
+- `walletChart.registryBack`
+  - EN default: `Return to the official Registry`
+  - Usage: Location: feature-flagged /registry/wallet-chart/ paste-only instrument and share card. Tone: neutral, symbolic, read-only, and never financial. Maximum: 42 characters.
+  - Pending locales: ES, PT, FR, IT
+- `walletChart.resultChain`
+  - EN default: `Network`
+  - Usage: Location: feature-flagged /registry/wallet-chart/ paste-only instrument and share card. Tone: neutral, symbolic, read-only, and never financial.
+  - Pending locales: ES, PT, FR, IT
+- `walletChart.resultKicker`
+  - EN default: `Public timestamp receipt`
+  - Usage: Location: feature-flagged /registry/wallet-chart/ paste-only instrument and share card. Tone: neutral, symbolic, read-only, and never financial.
+  - Pending locales: ES, PT, FR, IT
+- `walletChart.resultSource`
+  - EN default: `Timestamp source`
+  - Usage: Location: feature-flagged /registry/wallet-chart/ paste-only instrument and share card. Tone: neutral, symbolic, read-only, and never financial.
+  - Pending locales: ES, PT, FR, IT
+- `walletChart.resultTitle`
+  - EN default: `{address} maps to {time}.`
+  - Usage: Location: feature-flagged /registry/wallet-chart/ paste-only instrument and share card. Tone: neutral, symbolic, read-only, and never financial. Preserve placeholders exactly: {address}, {time}.
+  - Pending locales: ES, PT, FR, IT
+- `walletChart.retrograde`
+  - EN default: `retrograde`
+  - Usage: Location: feature-flagged /registry/wallet-chart/ paste-only instrument and share card. Tone: neutral, symbolic, read-only, and never financial.
+  - Pending locales: ES, PT, FR, IT
+- `walletChart.share`
+  - EN default: `Share this symbolic chart`
+  - Usage: Location: feature-flagged /registry/wallet-chart/ paste-only instrument and share card. Tone: neutral, symbolic, read-only, and never financial. Maximum: 42 characters.
+  - Pending locales: ES, PT, FR, IT
+- `walletChart.shareComplete`
+  - EN default: `Share card ready.`
+  - Usage: Location: feature-flagged /registry/wallet-chart/ paste-only instrument and share card. Tone: neutral, symbolic, read-only, and never financial.
+  - Pending locales: ES, PT, FR, IT
+- `walletChart.shareError`
+  - EN default: `The share card could not be created on this device.`
+  - Usage: Location: feature-flagged /registry/wallet-chart/ paste-only instrument and share card. Tone: neutral, symbolic, read-only, and never financial.
+  - Pending locales: ES, PT, FR, IT
+- `walletChart.sharing`
+  - EN default: `Preparing the private card…`
+  - Usage: Location: feature-flagged /registry/wallet-chart/ paste-only instrument and share card. Tone: neutral, symbolic, read-only, and never financial.
+  - Pending locales: ES, PT, FR, IT
+- `walletChart.solana`
+  - EN default: `Solana`
+  - Usage: Location: feature-flagged /registry/wallet-chart/ paste-only instrument and share card. Tone: neutral, symbolic, read-only, and never financial.
+  - Pending locales: ES, PT, FR, IT
+- `walletChart.sourceBaseExplorer`
+  - EN default: `Base explorer account history`
+  - Usage: Location: feature-flagged /registry/wallet-chart/ paste-only instrument and share card. Tone: neutral, symbolic, read-only, and never financial.
+  - Pending locales: ES, PT, FR, IT
+- `walletChart.sourceBaseRpc`
+  - EN default: `Base archive RPC · earliest outgoing activity`
+  - Usage: Location: feature-flagged /registry/wallet-chart/ paste-only instrument and share card. Tone: neutral, symbolic, read-only, and never financial.
+  - Pending locales: ES, PT, FR, IT
+- `walletChart.sourceBaseRpcCaveat`
+  - EN default: `Standard Base RPC cannot index earlier incoming transfers. This fallback identifies the earliest outgoing transaction only.`
+  - Usage: Location: feature-flagged /registry/wallet-chart/ paste-only instrument and share card. Tone: neutral, symbolic, read-only, and never financial.
+  - Pending locales: ES, PT, FR, IT
+- `walletChart.sourceSolana`
+  - EN default: `Paginated Solana signature history`
+  - Usage: Location: feature-flagged /registry/wallet-chart/ paste-only instrument and share card. Tone: neutral, symbolic, read-only, and never financial.
+  - Pending locales: ES, PT, FR, IT
+- `walletChart.supportedNetworks`
+  - EN default: `Configured networks: {networks}.`
+  - Usage: Location: feature-flagged /registry/wallet-chart/ paste-only instrument and share card. Tone: neutral, symbolic, read-only, and never financial. Preserve placeholders exactly: {networks}.
+  - Pending locales: ES, PT, FR, IT
+- `walletChart.synastryBalance`
+  - EN default: `Flow and friction are evenly represented in the tight contacts.`
+  - Usage: Location: feature-flagged /registry/wallet-chart/ paste-only instrument and share card. Tone: neutral, symbolic, read-only, and never financial.
+  - Pending locales: ES, PT, FR, IT
+- `walletChart.synastryCharge`
+  - EN default: `The tight contacts lean more frictional than flowing.`
+  - Usage: Location: feature-flagged /registry/wallet-chart/ paste-only instrument and share card. Tone: neutral, symbolic, read-only, and never financial.
+  - Pending locales: ES, PT, FR, IT
+- `walletChart.synastryContact`
+  - EN default: `Your {ownerBody} is in {aspect} to the wallet’s {walletBody} ({orb}° orb).`
+  - Usage: Location: feature-flagged /registry/wallet-chart/ paste-only instrument and share card. Tone: neutral, symbolic, read-only, and never financial. Preserve placeholders exactly: {ownerBody}, {aspect}, {walletBody}, {orb}.
+  - Pending locales: ES, PT, FR, IT
+- `walletChart.synastryFlow`
+  - EN default: `The tight contacts lean more flowing than frictional.`
+  - Usage: Location: feature-flagged /registry/wallet-chart/ paste-only instrument and share card. Tone: neutral, symbolic, read-only, and never financial.
+  - Pending locales: ES, PT, FR, IT
+- `walletChart.synastryNoContact`
+  - EN default: `No major aspect falls within the engine’s standard orbs.`
+  - Usage: Location: feature-flagged /registry/wallet-chart/ paste-only instrument and share card. Tone: neutral, symbolic, read-only, and never financial.
+  - Pending locales: ES, PT, FR, IT
+- `walletChart.synastryTitle`
+  - EN default: `Symbolic synastry`
+  - Usage: Location: feature-flagged /registry/wallet-chart/ paste-only instrument and share card. Tone: neutral, symbolic, read-only, and never financial.
+  - Pending locales: ES, PT, FR, IT
+- `walletChart.title`
+  - EN default: `A symbolic chart for a public address.`
+  - Usage: Location: feature-flagged /registry/wallet-chart/ paste-only instrument and share card. Tone: neutral, symbolic, read-only, and never financial.
+  - Pending locales: ES, PT, FR, IT
+- `walletChart.unavailable`
+  - EN default: `Public chain history is temporarily unavailable. No identity or verification status has changed.`
+  - Usage: Location: feature-flagged /registry/wallet-chart/ paste-only instrument and share card. Tone: neutral, symbolic, read-only, and never financial.
+  - Pending locales: ES, PT, FR, IT
+- `walletChart.utcOnly`
+  - EN default: `UTC time · no birthplace · no houses or angles`
+  - Usage: Location: feature-flagged /registry/wallet-chart/ paste-only instrument and share card. Tone: neutral, symbolic, read-only, and never financial.
+  - Pending locales: ES, PT, FR, IT

@@ -1,8 +1,16 @@
 /**
- * Aspect detection between chart bodies. Pure angular math.
- * Majors only, documented orbs, luminary bonus, applying/separating
- * from relative longitude speed.
+ * Site-compatible major-aspect API backed by @zodiacs/engine's lightweight
+ * math entry. The adapter retains the site's historical `orbLuminary` and
+ * `{ def, orb }` names without duplicating the calculations.
  */
+import {
+  ASPECTS as ENGINE_ASPECTS,
+  ASPECT_BODIES,
+  findAspects as engineFindAspects,
+  matchAspect as engineMatchAspect,
+  separation,
+} from '@zodiacs/engine/internal/math';
+
 import type { Aspect, AspectType, BodyPosition } from './types';
 
 export interface AspectDef {
@@ -12,69 +20,30 @@ export interface AspectDef {
   orbLuminary: number;
 }
 
-export const ASPECTS: readonly AspectDef[] = [
-  { type: 'conjunction', angle: 0, orb: 8, orbLuminary: 10 },
-  { type: 'sextile', angle: 60, orb: 4, orbLuminary: 5 },
-  { type: 'square', angle: 90, orb: 7, orbLuminary: 8 },
-  { type: 'trine', angle: 120, orb: 7, orbLuminary: 8 },
-  { type: 'opposition', angle: 180, orb: 8, orbLuminary: 10 },
-] as const;
+export const ASPECTS: readonly AspectDef[] = ENGINE_ASPECTS.map((aspect) => ({
+  type: aspect.type,
+  angle: aspect.angle,
+  orb: aspect.orb,
+  orbLuminary: aspect.luminaryOrb,
+}));
 
-const LUMINARIES = new Set(['Sun', 'Moon']);
-/** Bodies that participate in aspect detection. */
-export const ASPECT_BODIES = new Set([
-  'Sun', 'Moon', 'Mercury', 'Venus', 'Mars',
-  'Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto',
-]);
+export { ASPECT_BODIES, separation };
 
-/** Unsigned angular separation 0–180. */
-export function separation(a: number, b: number): number {
-  const d = Math.abs((((a - b) % 360) + 360) % 360);
-  return d > 180 ? 360 - d : d;
-}
-
-/**
- * Best-matching major aspect between two longitudes, or null when none
- * is in orb. Luminary orbs apply when either body is the Sun or Moon.
- * Shared by natal aspect detection and inter-chart synastry.
- */
 export function matchAspect(
   aBody: string,
-  aLon: number,
+  aLongitude: number,
   bBody: string,
-  bLon: number,
+  bLongitude: number,
 ): { def: AspectDef; orb: number } | null {
-  const sep = separation(aLon, bLon);
-  const luminary = LUMINARIES.has(aBody) || LUMINARIES.has(bBody);
-  let best: { def: AspectDef; orb: number } | null = null;
-  for (const def of ASPECTS) {
-    const orb = Math.abs(sep - def.angle);
-    const max = luminary ? def.orbLuminary : def.orb;
-    if (orb <= max && (!best || orb < best.orb)) best = { def, orb };
-  }
-  return best;
+  const match = engineMatchAspect(aBody, aLongitude, bBody, bLongitude);
+  if (!match) return null;
+  const definition = ASPECTS.find((aspect) => aspect.type === match.definition.type);
+  if (!definition) return null;
+  return { def: definition, orb: match.orb };
 }
 
 export function findAspects(bodies: BodyPosition[]): Aspect[] {
-  const list = bodies.filter((b) => ASPECT_BODIES.has(b.body));
-  const out: Aspect[] = [];
-
-  for (let i = 0; i < list.length; i += 1) {
-    for (let j = i + 1; j < list.length; j += 1) {
-      const A = list[i];
-      const B = list[j];
-      const best = matchAspect(A.body, A.lon, B.body, B.lon);
-      if (!best) continue;
-
-      // Applying: is the separation moving toward the exact angle?
-      // d(sep)/dt has the sign of (sep' − sep) for a small step.
-      const step = 0.02; // days
-      const sepNext = separation(A.lon + A.speed * step, B.lon + B.speed * step);
-      const applying = Math.abs(sepNext - best.def.angle) < best.orb;
-
-      out.push({ a: A.body, b: B.body, type: best.def.type, orb: best.orb, applying });
-    }
-  }
-
-  return out.sort((x, y) => x.orb - y.orb);
+  return engineFindAspects(
+    bodies as unknown as Parameters<typeof engineFindAspects>[0],
+  ) as Aspect[];
 }

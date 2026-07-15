@@ -1,6 +1,7 @@
 ---
 import Base from '../../../layouts/Base.astro';
 import Faq from '../../../components/Faq.astro';
+import EmailCapture from '../../../components/EmailCapture.astro';
 import ChartCalculator from '../../../islands/ChartCalculator';
 import '../../../styles/calculator.css';
 import '../../../styles/explorer.css';
@@ -76,6 +77,7 @@ const jsonLd = [
       <p>Ingresa tu fecha, hora y lugar de nacimiento para ver tu Sol, Luna, ascendente, planetas, casas y lo que significan.</p>
     </div>
     <ChartCalculator mode="full" locale="es" client:load />
+    <EmailCapture placement="chart" locale="es" revealOnChart />
     <noscript>
       <p>Esta calculadora de carta natal necesita JavaScript. Activa JavaScript y recarga la página para calcular tu Sol, Luna, ascendente, planetas y casas en tu navegador.</p>
     </noscript>

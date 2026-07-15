@@ -1,0 +1,29 @@
+.pwa-install {
+  display: grid;
+  gap: 14px;
+  margin-top: 20px;
+  padding: 18px;
+}
+.pwa-install__icons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.pwa-install__icons img { display: block; width: 28px; height: 28px; }
+.pwa-install__copy { display: grid; gap: 4px; color: var(--text-2); }
+.pwa-install__copy strong { color: var(--text); }
+.pwa-install__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+.pwa-install__dismiss {
+  min-height: 44px;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  font: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+.pwa-install__dismiss:hover { color: var(--text); }
+@media (prefers-reduced-motion: reduce) {
+  .pwa-install, .pwa-install * { transition: none !important; }
+}

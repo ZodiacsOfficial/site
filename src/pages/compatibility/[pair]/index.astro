@@ -7,6 +7,7 @@ import { SIGNS, ELEMENT_LABEL, MODALITY_LABEL } from '../../../lib/signs';
 import { pairFacts, pairSlug } from '../../../lib/compat';
 import '../../../styles/calculator.css';
 import { EDITOR_AUTHOR } from '../../../lib/editorial';
+import { programmaticText } from '../../../strings/programmatic';
 
 export async function getStaticPaths() {
   const pairs = await getCollection('pairs', ({ data }) => !data.draft);
@@ -145,6 +146,11 @@ const jsonLd = [
             people, the calculator reads every cross-chart aspect between them.
           </p>
         </div>
+        <p>
+          <a class="btn btn--glass" href={`/compatibility/?sign1=${a.slug}&sign2=${b.slug}#calculator`}>
+            <span>{programmaticText('compatibilityPrefillCta', { a: a.name, b: b.name })}</span><span class="orb">→</span>
+          </a>
+        </p>
         <SynastryCalculator client:visible />
         <noscript>
           <p>This compatibility calculator needs JavaScript. Enable it and reload to compare two birth charts in your browser.</p>

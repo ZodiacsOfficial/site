@@ -1,5 +1,9 @@
     const { useState, useMemo, useEffect, useRef, useCallback } = React;
 
+    function trackAnalytics(name, properties = {}) {
+      window.zodiacsAnalytics?.track?.(name, properties);
+    }
+
     // IntersectionObserver-driven scroll reveal — no static mount.
     // Returns a ref-callback that adds `is-in` once the element enters.
     function useReveal(threshold = 0.15) {
@@ -1230,7 +1234,9 @@
             />
             <div className="cine__scrim" aria-hidden="true" />
             <div className="cine__content">
-              <span className="cine__eyebrow">The Official Registry · Est. MMXXIV</span>
+              <a className="cine__eyebrow" href="/disclosure/">
+                The Official Registry · Est. {REGISTRY_ESTABLISHED}
+              </a>
               <h1 className="cine__title">
                 Twelve signs.<br/>
                 <span className="it">One register.</span>
@@ -1587,8 +1593,13 @@
       const onSubmit = (e) => {
         e.preventDefault();
         const hit = lookupAddress(input);
-        if (!hit) { setResult({ state: 'not-found', queried: norm(input) }); return; }
-        setResult({ state: 'official-' + hit.network, sign: hit.sign, network: hit.network, queried: norm(input) });
+        const query = norm(input);
+        const chain = /^0x[0-9a-f]{40}$/i.test(query)
+          ? 'base'
+          : /^[1-9A-HJ-NP-Za-km-z]{32,44}$/.test(query) ? 'solana' : 'invalid';
+        trackAnalytics('verifier_used', { chain: hit?.network ?? chain, outcome: hit ? 'official' : 'not_found' });
+        if (!hit) { setResult({ state: 'not-found', queried: query }); return; }
+        setResult({ state: 'official-' + hit.network, sign: hit.sign, network: hit.network, queried: query });
       };
       const onClear = () => { setInput(''); setResult(null); };
       // Pick three "try-one" examples so the section demonstrates itself.
@@ -1663,7 +1674,7 @@
                 <>
                   <div className="vrf__result-head">
                     <span className="vrf__cross">—</span>
-                    <span>Not among the Twelve.</span>
+                    <span>{REGISTRY_VERIFIER_NOT_FOUND_SENTENCE}</span>
                   </div>
                   <div className="vrf__result-meta mono">{truncateAddress(result.queried, 10, 8) || '—'}</div>
                 </>
@@ -3216,13 +3227,13 @@
         label: 'Legitimacy & Trust',
         items: [
           { q: 'How do I know an address is official?',
-            a: <>Check it against the record. The verifier recognizes exactly twenty-four addresses: twelve native Solana mints and twelve bridged Base representations. Anything else is reported as not among the Twelve. The same addresses are mirrored in the public SDK repository and match the mints Astrofolio&rsquo;s own app routes to, and the Libra record was corroborated character for character in public view, in the events preserved in <a href="/archive/#accidental-libra">the archive</a>.</> },
+            a: <>Check it against the record. The verifier recognizes exactly twenty-four addresses: twelve native Solana mints and twelve bridged Base representations. Anything else is reported as {REGISTRY_VERIFIER_NOT_FOUND_INLINE}. The same addresses are mirrored in the public SDK repository and match the mints Astrofolio&rsquo;s own app routes to, and the Libra record was corroborated character for character in public view, in the events preserved in <a href="/archive/#accidental-libra">the archive</a>.</> },
           { q: 'Other tokens use the same names. Which is real?',
             a: 'Names and tickers can be copied; addresses cannot. Only the addresses in the registry are official records. When in doubt, verify the address itself, never the ticker.' },
           { q: 'Is this related to the LIBRA token from the news?',
             a: <>No. In early 2025 an unrelated token of that name collapsed in public view, and buyers went looking for the real one. The official Libra record predates that episode and sits in the registry. The full story is preserved in <a href="/archive/#accidental-libra">the archive</a>.</> },
           { q: 'What if an address is not listed?',
-            a: 'The verifier reports that it is not among the Twelve.' }
+            a: <>The verifier reports that it was {REGISTRY_VERIFIER_NOT_FOUND_INLINE}.</> }
         ]
       },
       {
@@ -3320,6 +3331,7 @@
             <a href="#thesis">Thesis</a>
             <a href="/archive/">Archive</a>
             <button className="assistant-link" type="button" data-assistant-open aria-haspopup="dialog">Ask the site</button>
+            <a href="/disclosure/">{REGISTRY_DISCLOSURE_LABEL}</a>
           </div>
             <div>Read-only</div>
           </div>
@@ -3334,7 +3346,12 @@
             <div>Channels</div>
           </div>
           <div className="ftr__row ftr__row--origin">
-            <span>Zodiacs.org · Official registry · MMXXVI</span>
+            <span>
+              Zodiacs.org · Official registry · Est. {REGISTRY_ESTABLISHED} ·{' '}
+              {REGISTRY_ESTABLISHMENT_PROVENANCE_URL
+                ? <a href={REGISTRY_ESTABLISHMENT_PROVENANCE_URL} rel="noopener nofollow">{REGISTRY_ESTABLISHMENT_PROVENANCE_LABEL}</a>
+                : <a href="/disclosure/#origin">{REGISTRY_PROVENANCE_PENDING_LABEL}</a>}
+            </span>
           </div>
         </footer>
       );
@@ -3349,6 +3366,22 @@
         () => SIGNS.find(s => s.ticker === activeTicker) ?? SIGNS[0],
         [activeTicker]
       );
+
+      useEffect(() => {
+        trackAnalytics('registry_visit');
+        const onClick = (event) => {
+          const link = event.target.closest?.('a[href]');
+          if (!link) return;
+          const href = link.getAttribute('href') ?? '';
+          const destination = href.startsWith('/sdk/')
+            ? 'docs'
+            : href.includes('npmjs.com/package/@zodiacs/sdk') ? 'npm'
+              : href.includes('github.com/ZodiacsOfficial/sdk') ? 'github' : null;
+          if (destination) trackAnalytics('sdk_click', { source: 'registry', destination });
+        };
+        document.addEventListener('click', onClick);
+        return () => document.removeEventListener('click', onClick);
+      }, []);
 
       return (
         <>

@@ -94,7 +94,9 @@ export function parseSubscription(input: unknown): Required<PushSubscriptionInpu
     ? 'es'
     : requestedLang === 'pt' || requestedLang.startsWith('pt-')
       ? 'pt'
-      : requestedLang === 'it' || requestedLang.startsWith('it-') ? 'it' : 'en';
+      : requestedLang === 'fr' || requestedLang.startsWith('fr-')
+        ? 'fr'
+        : requestedLang === 'it' || requestedLang.startsWith('it-') ? 'it' : 'en';
   return {
     endpoint: candidate.endpoint,
     keys: { p256dh: candidate.keys.p256dh, auth: candidate.keys.auth },

@@ -236,8 +236,12 @@ await withPreview({ port: 4410 }, async (baseURL) => {
     await page.getByText('Saved · on this device', { exact: true }).waitFor();
     const chartSave = await page.evaluate(() =>
       window.__chartBookEvents.find((event) => event.name === 'chart_save'));
+    const chartSaved = await page.evaluate(() =>
+      window.__chartBookEvents.find((event) => event.name === 'chart_saved'));
     check('tour source survives the prompt handoff', chartSave?.props?.source === 'tour'
       && Object.keys(chartSave.props).length === 1, JSON.stringify(chartSave));
+    check('successful save emits chart_saved after persistence', chartSaved?.props?.source === 'tour'
+      && Object.keys(chartSaved.props).length === 1, JSON.stringify(chartSaved));
     await page.close();
   }
 
@@ -247,7 +251,7 @@ await withPreview({ port: 4410 }, async (baseURL) => {
     await page.goto(`${baseURL}/profile/`, { waitUntil: 'domcontentloaded' });
     await page.locator('.pf-list').waitFor();
     check('EN count line is byte-identical', await page.locator('.pf-count').textContent()
-      === '1 charts saved — yours and the people you read for.');
+      === '1 chart saved.');
     check('EN profile privacy is byte-identical', await page.locator('.pf-privacy').textContent()
       === 'Saved on this device. Nothing is uploaded unless you turn sync on.');
     check('privacy renders under the chart list', await page.evaluate(() => {
@@ -277,7 +281,7 @@ await withPreview({ port: 4410 }, async (baseURL) => {
     await page.goto(`${baseURL}/es/profile/`, { waitUntil: 'domcontentloaded' });
     await page.locator('.pf-list').waitFor();
     check('ES count line is byte-identical', await page.locator('.pf-count').textContent()
-      === '1 cartas guardadas: la tuya y las de las personas que lees.');
+      === '1 carta guardada.');
     check('ES profile privacy is byte-identical', await page.locator('.pf-privacy').textContent()
       === 'Guardado en este dispositivo. No se sube nada salvo que actives la sincronización.');
     check('ES people CTA is byte-identical', await page.locator('.pf-foot .btn').textContent()

@@ -95,6 +95,9 @@ type CopyLinkModule = typeof import('./CopyLinkButton');
 type CommunicationReadModule = typeof import('./CommunicationRead');
 type A2hsHint = import('../lib/a2hs').A2hsHint;
 type PushOptInModule = typeof import('./PushOptIn');
+type PwaInstallModule = typeof import('./PwaInstallPrompt');
+
+const WEB_PUSH_ENABLED = import.meta.env.PUBLIC_WEB_PUSH_ENABLED === '1';
 
 const DIGNITY_KEY = {
   domicile: 'dignityDomicile',
@@ -146,6 +149,8 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   const [shareDialogOpen, setShareDialogOpen] = useState(false);
   const [a2hsHint, setA2hsHint] = useState<A2hsHint | null>(null);
   const [pushOptIn, setPushOptIn] = useState<PushOptInModule | null>(null);
+  const [pwaInstallModule, setPwaInstallModule] = useState<PwaInstallModule | null>(null);
+  const [pwaComputationCount, setPwaComputationCount] = useState(0);
   const resultRef = useRef<HTMLDivElement>(null);
   const resultHeadingRef = useRef<HTMLHeadingElement>(null);
   const errorRef = useRef<HTMLParagraphElement>(null);
@@ -204,6 +209,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   }
 
   function loadPushOptIn(): void {
+    if (!WEB_PUSH_ENABLED) return;
     void import('./PushOptIn').then(setPushOptIn, () => {});
   }
 
@@ -515,6 +521,10 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
         }
       }
       track('result_rendered', { mode });
+      track('chart_computed', { mode });
+      void import('./PwaInstallPrompt').then(setPwaInstallModule, () => {});
+      setPwaComputationCount((count) => count + 1);
+      window.dispatchEvent(new CustomEvent('zodiacs:chart-computed', { detail: { mode } }));
       setShareInput({
         date: input.date,
         time: input.timeKnown ? input.time : null,
@@ -685,6 +695,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
       }, explicitName ? { explicitName } : undefined);
       setSaved(status === 'updated' ? 'saved' : status);
       if (status === 'saved' || status === 'updated') {
+        track('chart_saved', { source: saveOriginRef.current });
         track('chart_name_set', { via });
         setMatchedName(explicitName ?? matchedName ?? autoName);
         void import('../lib/a2hs').then(({ claimA2hsHint }) => {
@@ -768,6 +779,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   const CopyLinkButton = copyLinkModule?.CopyLinkButton;
   const CommunicationRead = communicationSurface?.default;
   const PushOptIn = pushOptIn?.default;
+  const PwaInstallPrompt = pwaInstallModule?.default;
 
   return (
     <div class="calc">
@@ -1336,6 +1348,10 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
           onCardStateChange={setCard}
           onClose={() => setShareDialogOpen(false)}
         />
+      )}
+
+      {PwaInstallPrompt && (
+        <PwaInstallPrompt locale={locale} computationCount={pwaComputationCount} />
       )}
     </div>
   );

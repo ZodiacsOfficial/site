@@ -11,7 +11,10 @@ import { readFile, readdir, writeFile } from 'node:fs/promises';
 import { dirname, extname, join, relative, resolve } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { GLOSSARY } from '../src/data/glossary.ts';
+import { CHINESE_ZODIAC_COPY } from '../src/data/chinese-zodiac.ts';
 import { DEFAULT_LOCALE, LOCALES } from '../src/lib/i18n/core.ts';
+import { EN } from '../src/strings/en.mjs';
+import { WIDGET_EN } from '../src/strings/widgets.ts';
 
 const repo = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const DEFAULT_OUTPUT = resolve(repo, 'api/_assistant/context.ts');
@@ -132,6 +135,19 @@ function staticDescription(route, source, { ingresses, latestHoroscopeMonth }) {
   const literal = source.match(/<Base\b[\s\S]*?\bdescription="([^"]+)"/i)?.[1];
   if (literal) return clean(literal);
 
+  const catalogKey = source.match(/<Base\b[\s\S]*?\bdescription=\{EN\[['"]([^'"]+)['"]\]\}/i)?.[1];
+  if (catalogKey && EN[catalogKey]) return clean(EN[catalogKey]);
+
+  const chineseCatalogKey = source.match(/<Base\b[\s\S]*?\bdescription=\{CHINESE_ZODIAC_COPY\.([a-zA-Z0-9_]+)\}/i)?.[1];
+  if (chineseCatalogKey && CHINESE_ZODIAC_COPY[chineseCatalogKey]) {
+    return clean(CHINESE_ZODIAC_COPY[chineseCatalogKey]);
+  }
+
+  const widgetCatalogKey = source.match(/<Base\b[\s\S]*?\bdescription=\{WIDGET_EN\.([a-zA-Z0-9_]+)\}/i)?.[1];
+  if (widgetCatalogKey && WIDGET_EN[widgetCatalogKey]) {
+    return clean(WIDGET_EN[widgetCatalogKey]);
+  }
+
   if (route === '/horoscopes/') {
     return `${monthLabel(latestHoroscopeMonth)} horoscopes for every sign, grounded in the real dates of the moon phases, retrogrades, and major transits.`;
   }
@@ -190,6 +206,9 @@ async function loadStaticPages(repoRoot, context) {
     if (local.includes('[')) continue;
     if (local === '404.astro') continue;
     const route = pagePath(file, pagesRoot);
+    // Registry-only, feature-flagged utility: keep it out of the consumer
+    // astrology assistant and its deliberately strict vocabulary boundary.
+    if (route === '/registry/wallet-chart/') continue;
     const source = await readFile(file, 'utf8');
     pages.push({
       route,

@@ -8,6 +8,7 @@ import SiteFooter from '../components/SiteFooter.astro';
 import SourcesLine, { type SourceLink } from '../components/SourcesLine.astro';
 import EditorialLine from '../components/EditorialLine.astro';
 import GlassDefs from '../components/GlassDefs.astro';
+import { ANALYTICS_EVENT_PROPS } from '../lib/analytics';
 import { LOCALE_META, UI, normalizeLocale, t, type Locale } from '../lib/i18n';
 
 interface Props {
@@ -33,6 +34,7 @@ const locale = normalizeLocale(props.locale);
 const clientUi = props.clientUi ? UI[locale] : null;
 const plausibleScriptUrl = import.meta.env.PUBLIC_PLAUSIBLE_SCRIPT_URL?.trim();
 const plausibleEndpoint = import.meta.env.PUBLIC_PLAUSIBLE_ENDPOINT?.trim() ?? '';
+const plausibleDomain = import.meta.env.PUBLIC_PLAUSIBLE_DOMAIN?.trim() ?? '';
 const plausibleEnabled = Boolean(plausibleScriptUrl && !props.noindex);
 
 // The zodiac wheel as a favicon: twelve pastel dots on the void.
@@ -61,6 +63,15 @@ const FAVICON = "data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/sv
         globalThis.__ZDX_UI__ = { locale: uiLocale, messages: uiMessages };
       </script>
     )}
+    <script is:inline>
+      // Capture Chromium's one-shot install event before calculator islands
+      // hydrate. The prompt itself stays hidden until two successful charts.
+      window.addEventListener('beforeinstallprompt', function (event) {
+        event.preventDefault();
+        window.zodiacsInstallPrompt = event;
+        window.dispatchEvent(new Event('zodiacs:install-prompt-ready'));
+      });
+    </script>
     <link rel="icon" type="image/svg+xml" href={FAVICON} />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
@@ -103,7 +114,7 @@ const FAVICON = "data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/sv
     <script is:inline>window.zodiacsAnalytics = window.zodiacsAnalytics || Object.freeze({ track: function () {} });</script>
     {plausibleEnabled && (
       <>
-        <script is:inline define:vars={{ plausibleEndpoint }}>
+        <script is:inline define:vars={{ plausibleEndpoint, analyticsEventProps: ANALYTICS_EVENT_PROPS }}>
           window.plausible = window.plausible || function () {
             (window.plausible.q = window.plausible.q || []).push(arguments);
           };
@@ -121,33 +132,7 @@ const FAVICON = "data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/sv
           };
           if (plausibleEndpoint) options.endpoint = plausibleEndpoint;
           window.plausible.init(options);
-          var eventProps = Object.freeze({
-            result_rendered: ['mode'],
-            explorer_interaction: ['mode', 'source'],
-            tour_start: ['variant'],
-            tour_complete: ['variant'],
-            tour_step: ['step'],
-            search_open: [],
-            search_go: ['kind'],
-            assistant_open: [],
-            assistant_reply: [],
-            push_prompt: [],
-            push_subscribe: [],
-            today_view: [],
-            calendar_subscribe: [],
-            chart_save: ['source'],
-            chart_share: ['variant'],
-            wing_entry: ['source'],
-            lens_change: ['lens'],
-            transit_search: ['span', 'bodies'],
-            srchart_view: ['via'],
-            composite_view: [],
-            grid_select: [],
-            chiron_toggle: ['on'],
-            detail_toggle: ['to'],
-            chart_name_set: ['via'],
-            comm_read_view: []
-          });
+          var eventProps = Object.freeze(analyticsEventProps);
           window.zodiacsAnalytics = Object.freeze({
             track: function (name, props) {
               var allowed = eventProps[name];
@@ -161,8 +146,20 @@ const FAVICON = "data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/sv
               window.plausible(name, { props: safe });
             }
           });
+          document.addEventListener('click', function (event) {
+            var target = event.target;
+            var link = target && target.closest ? target.closest('a[href]') : null;
+            if (!link) return;
+            var href = link.getAttribute('href') || '';
+            var destination = href.indexOf('/sdk/') === 0 ? 'docs'
+              : href.indexOf('npmjs.com/package/@zodiacs/sdk') !== -1 ? 'npm'
+              : href.indexOf('github.com/ZodiacsOfficial/sdk') !== -1 ? 'github' : '';
+            if (destination) window.zodiacsAnalytics.track('sdk_click', {
+              source: 'astrology', destination: destination
+            });
+          });
         </script>
-        <script is:inline async src={plausibleScriptUrl}></script>
+        <script is:inline defer data-domain={plausibleDomain || undefined} src={plausibleScriptUrl}></script>
       </>
     )}
     <slot name="head" />
@@ -206,6 +203,14 @@ const FAVICON = "data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/sv
         reveals.forEach((el) => io.observe(el));
       } else {
         reveals.forEach((el) => el.classList.add('is-in'));
+      }
+
+      // The worker owns only a versioned astrology app shell. Registry
+      // identity JSON bypasses its caches in public/sw.js.
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js', { scope: '/' }).catch(() => {});
+        }, { once: true });
       }
     </script>
   </body>

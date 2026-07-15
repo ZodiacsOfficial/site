@@ -1,6 +1,7 @@
 ---
 import Base from '../../../layouts/Base.astro';
 import Faq from '../../../components/Faq.astro';
+import EmailCapture from '../../../components/EmailCapture.astro';
 import ChartCalculator from '../../../islands/ChartCalculator';
 import '../../../styles/calculator.css';
 import '../../../styles/explorer.css';
@@ -76,6 +77,7 @@ const jsonLd = [
       <p>Informe sua data, hora e local de nascimento para ver seu Sol, sua Lua, seu ascendente, seus planetas, suas casas e o que tudo isso significa.</p>
     </div>
     <ChartCalculator mode="full" locale="pt" client:load />
+    <EmailCapture placement="chart" locale="pt" revealOnChart />
     <noscript>
       <p>Esta calculadora de mapa astral precisa de JavaScript. Ative-o e recarregue a página para calcular seu Sol, sua Lua, seu ascendente, seus planetas e suas casas no navegador.</p>
     </noscript>

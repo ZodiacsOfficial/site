@@ -1,6 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import { EDITOR_PERSON } from '../../lib/editorial';
+import { EN } from '../../strings/en.mjs';
 
 const jsonLd = [
   EDITOR_PERSON as unknown as Record<string, unknown>,
@@ -99,6 +100,10 @@ const jsonLd = [
         Zodiacs.org account. Astrofolio separately explores personal Zodiac
         shelves, profiles, and share cards. It is never required to use the
         free tools.
+      </p>
+      <p>
+        {EN['disclosure.aboutNotice']}{' '}
+        <a href="/disclosure/">{EN['disclosure.aboutLink']}</a>.
       </p>
 
       <h2>Who runs it</h2>

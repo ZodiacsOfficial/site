@@ -12,16 +12,10 @@ import { resolveSavedChart } from '../lib/profile/resolve';
 import { MAX_PAIRS, deletePair, hasPair, loadPairs, pairSideLabels, prunePairs, savePair } from '../lib/profile/pairs';
 import type { SavedPair, SavedPairSide } from '../lib/profile/pairs';
 import type { SavedChart } from '../lib/profile/schema';
-import { summarizePair } from '../lib/engine/synastry';
 import type { MinimalBody, PairSummary } from '../lib/engine/synastry';
-import { pairSlug } from '../lib/compat';
-import { signForLongitude, signName } from '../lib/signs';
-import { resolveLocalToUtc } from '../lib/time/localToUtc';
-import { decodeChartLink, encodeChartLink } from '../lib/share';
 import type { ShareChartInput } from '../lib/share';
 import type { City } from '../lib/geo/search';
-import { localizePath, normalizeLocale, t, tf, type Locale } from '../lib/i18n';
-import { intlLocale } from '../lib/i18n/dates';
+import { LOCALE_META, localizePath, normalizeLocale, t, tf, type Locale } from '../lib/i18n';
 import { useEngine, type EngineLoader } from '../lib/hooks/useEngine';
 import { useProfile } from '../lib/hooks/useProfile';
 
@@ -55,6 +49,9 @@ interface Person {
 
 type WheelModule = typeof import('./synastry/RelationshipWheel');
 type CopyLinkModule = typeof import('./CopyLinkButton');
+type ShareModule = typeof import('../lib/share');
+type CompatibilityShareModule = typeof import('./CompatibilityShareControl');
+type PrefilledPairModule = typeof import('./PrefilledPairNotice');
 
 const emptySlot = (): SlotState => ({
   source: 'form', savedId: '', name: '', date: '', time: '', timeKnown: true, city: null, link: null,
@@ -132,6 +129,7 @@ const PAIR_COPY = {
 const pc = (locale: Locale, key: keyof typeof PAIR_COPY_EN) => PAIR_COPY[locale][key];
 const pcf = (locale: Locale, key: keyof typeof PAIR_COPY_EN, values: Record<string, string | number>) =>
   pc(locale, key).replace(/\{(\w+)\}/g, (_, k: string) => String(values[k] ?? ''));
+const listLocale = (locale: Locale) => LOCALE_META[locale].intlLocale;
 
 /** Short handle for sentences: chart names like "Cancer Sun · 1990-02-01" trim to "Cancer Sun". */
 const handleOf = (name: string) => name.split('·')[0].trim() || name;
@@ -155,7 +153,10 @@ async function resolveSaved(chart: SavedChart, loadEngine: EngineLoader): Promis
 }
 
 async function resolveLink(link: { input: ShareChartInput; label: string }, loadEngine: EngineLoader): Promise<Person> {
-  const engine = await loadEngine();
+  const [engine, { resolveLocalToUtc }] = await Promise.all([
+    loadEngine(),
+    import('../lib/time/localToUtc'),
+  ]);
   const { input } = link;
   const resolved = resolveLocalToUtc(
     input.date,
@@ -184,7 +185,10 @@ async function resolveLink(link: { input: ShareChartInput; label: string }, load
 }
 
 async function resolveForm(slot: SlotState, fallbackLabel: string, loadEngine: EngineLoader): Promise<Person> {
-  const engine = await loadEngine();
+  const [engine, { resolveLocalToUtc }] = await Promise.all([
+    loadEngine(),
+    import('../lib/time/localToUtc'),
+  ]);
   const timeKnown = slot.timeKnown && slot.time !== '';
   const resolved = resolveLocalToUtc(slot.date, timeKnown ? slot.time : '12:00', slot.city!.tz);
   const result = engine.computeChart({
@@ -343,6 +347,9 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
   } | null>(null);
   const [wheelMod, setWheelMod] = useState<WheelModule | null>(null);
   const [copyLinkMod, setCopyLinkMod] = useState<CopyLinkModule | null>(null);
+  const [shareMod, setShareMod] = useState<ShareModule | null>(null);
+  const [compatShareMod, setCompatShareMod] = useState<CompatibilityShareModule | null>(null);
+  const [prefilledPairMod, setPrefilledPairMod] = useState<PrefilledPairModule | null>(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
   const [autoRan, setAutoRan] = useState(false);
@@ -359,21 +366,39 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
   const focusAfterComputeRef = useRef(false);
   const profileLinksReadRef = useRef(false);
 
-  // Invite copy is result-only. Keep its helper outside the entry form's
-  // initial closure, then load it alongside the result that can expose it.
+  // Result-only actions stay outside the entry form's initial closure.
   useEffect(() => {
-    if (!result || copyLinkMod) return;
+    if (!result) return;
     let cancelled = false;
-    void import('./CopyLinkButton').then((module) => {
-      if (!cancelled) setCopyLinkMod(module);
-    }).catch(() => {});
+    if (!copyLinkMod || !shareMod) {
+      void Promise.all([
+        import('./CopyLinkButton'),
+        import('../lib/share'),
+      ]).then(([copyModule, shareModule]) => {
+        if (!cancelled) {
+          setCopyLinkMod(copyModule);
+          setShareMod(shareModule);
+        }
+      }).catch(() => {});
+    }
+    if (!compatShareMod) {
+      void import('./CompatibilityShareControl').then((module) => {
+        if (!cancelled) setCompatShareMod(module);
+      }).catch(() => {});
+    }
     return () => { cancelled = true; };
-  }, [result, copyLinkMod]);
+  }, [result, copyLinkMod, shareMod, compatShareMod]);
 
   useEffect(() => {
     if (!profileReady || profileLinksReadRef.current) return;
+    let active = true;
     profileLinksReadRef.current = true;
     const params = new URLSearchParams(window.location.search);
+    if (params.has('sign1') || params.has('sign2')) {
+      void import('./PrefilledPairNotice').then((module) => {
+        if (active) setPrefilledPairMod(module);
+      }, () => {});
+    }
     // ?pair= deep link (the profile page's saved-comparisons strip):
     // restore the stored pair and compare. Same-device ids, like ?a=&b=.
     const pairId = params.get('pair');
@@ -400,16 +425,20 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
     // birth details don't linger in the bar.
     const token = new URLSearchParams(window.location.hash.slice(1)).get('a');
     if (token) {
-      const decoded = decodeChartLink(token);
-      if (decoded) {
+      void import('../lib/share').then((module) => {
+        if (!active) return;
+        setShareMod(module);
+        const decoded = module.decodeChartLink(token);
+        if (!decoded) return;
         setSlotA({
           ...emptySlot(),
           source: 'link',
           link: { input: decoded, label: decoded.name ?? t(locale, 'sharedChart'), received: true },
         });
         history.replaceState(null, '', window.location.pathname + window.location.search);
-      }
+      }).catch(() => {});
     }
+    return () => { active = false; };
   }, [profileReady, profile, locale]);
 
   // Saved comparisons live beside the profile; every same-page write
@@ -511,7 +540,7 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
   }
 
   const inviteUrl = () =>
-    `${window.location.origin}${localizePath(locale, '/compatibility/')}#a=${encodeChartLink(invite!)}`;
+    `${window.location.origin}${localizePath(locale, '/compatibility/')}#a=${shareMod!.encodeChartLink(invite!)}`;
 
   const track = (name: string, props: Record<string, string> = {}) => {
     (window as unknown as {
@@ -568,7 +597,7 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
     if (outcome === 'saved' || outcome === 'exists') {
       setPairAnnounce(pc(locale, outcome === 'saved' ? 'pairSaved' : 'pairExists'));
     }
-    if (outcome === 'saved') track('chart_save', { source: 'pair' });
+    if (outcome === 'saved') track('chart_saved', { source: 'pair' });
   }
 
   function onRemovePair(pair: SavedPair, index: number) {
@@ -609,7 +638,7 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
   const pairName = (pair: SavedPair) => pairSideLabels(pair, charts).join(' × ');
   // Accessible names spell the glyph out: "Frida and Diego", not
   // "Frida multiplication sign Diego".
-  const pairSpokenName = (pair: SavedPair) => new Intl.ListFormat(intlLocale(locale), {
+  const pairSpokenName = (pair: SavedPair) => new Intl.ListFormat(listLocale(locale), {
     style: 'long', type: 'conjunction',
   }).format(pairSideLabels(pair, charts));
 
@@ -628,10 +657,11 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
         slot.source === 'saved' ? resolveSaved(charts.find((c) => c.id === slot.savedId)!, loadEngine)
           : slot.source === 'link' ? resolveLink(slot.link!, loadEngine)
           : resolveForm(slot, fallback, loadEngine);
-      const [a, b, mod] = await Promise.all([
+      const [a, b, mod, { summarizePair }] = await Promise.all([
         resolve(slotA, t(locale, 'personA')),
         resolve(slotB, t(locale, 'personB')),
         wheelMod ? Promise.resolve(wheelMod) : import('./synastry/RelationshipWheel'),
+        import('../lib/engine/synastry'),
       ]);
       const summary = summarizePair(a.bodies, b.bodies, 8);
       setWheelMod(mod);
@@ -643,6 +673,9 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
       setInviteState('idle');
       setPairSave('idle');
       setPairAnnounce(''); // same-text re-announcements need a mutation
+      track('compat_computed', {
+        source: slotA.source === 'form' && slotB.source === 'form' ? 'form' : 'restored',
+      });
     } catch (err) {
       setError(t(locale, 'compareError'));
       console.error(err);
@@ -685,16 +718,6 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
     }
   }, [busy, error, result]);
 
-  const pairHref = useMemo(() => {
-    if (!result) return null;
-    const sunA = result.a.bodies.find((b) => b.body === 'Sun');
-    const sunB = result.b.bodies.find((b) => b.body === 'Sun');
-    if (!sunA || !sunB) return null;
-    const sa = signForLongitude(sunA.lon);
-    const sb = signForLongitude(sunB.lon);
-    return { href: `/compatibility/${pairSlug(sa.slug, sb.slug)}/`, a: signName(sa, locale), b: signName(sb, locale) };
-  }, [result, locale]);
-
   return (
     <div class="calc">
       <form class="calc__form shell" onSubmit={compare} aria-busy={busy}>
@@ -731,6 +754,7 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
               </ul>
             </div>
           )}
+          {prefilledPairMod && <prefilledPairMod.PrefilledPairNotice locale={locale} />}
           <div class="syn__slots">
             <SlotForm
               slot={slotA}
@@ -776,7 +800,7 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
           <h2 class="sr-only" tabIndex={-1} ref={resultHeadingRef}>{t(locale, 'compatibility')}</h2>
           {(!result.a.timeKnown || !result.b.timeKnown) && (
             <p class="notice" role="status">
-              {t(locale, 'compareNoTimeNotice')} {new Intl.ListFormat(intlLocale(locale), {
+              {t(locale, 'compareNoTimeNotice')} {new Intl.ListFormat(listLocale(locale), {
                 style: 'long', type: 'conjunction',
               }).format([result.a, result.b].filter((p) => !p.timeKnown).map((p) => p.label))},
               {' '}{t(locale, 'moonMiddayEstimate')}
@@ -814,12 +838,14 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
             />
           )}
 
-          {(pairHref || (result.sides[0] && result.sides[1])) && (
+          {(compatShareMod || (result.sides[0] && result.sides[1])) && (
             <div class="calc__actions">
-              {pairHref && (
-                <a class="btn btn--ghost" href={pairHref.href}>
-                  <span>{tf(locale, 'pairingCta', { a: pairHref.a, b: pairHref.b })}</span><span class="orb">→</span>
-                </a>
+              {compatShareMod && (
+                <compatShareMod.CompatibilityPairingCta
+                  a={{ label: result.a.label, bodies: result.a.bodies, asc: result.a.asc }}
+                  b={{ label: result.b.label, bodies: result.b.bodies, asc: result.b.asc }}
+                  locale={locale}
+                />
               )}
               {result.sides[0] && result.sides[1] && (
                 <button
@@ -833,6 +859,15 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
                   </span>
                   <span class="orb">{pairSave === 'saved' || pairSave === 'exists' ? '✓' : '+'}</span>
                 </button>
+              )}
+              {compatShareMod && (
+                <compatShareMod.CompatibilityShareControl
+                  key={result.at}
+                  a={{ label: result.a.label, bodies: result.a.bodies, asc: result.a.asc }}
+                  b={{ label: result.b.label, bodies: result.b.bodies, asc: result.b.asc }}
+                  summary={result.summary}
+                  locale={locale}
+                />
               )}
             </div>
           )}
@@ -848,7 +883,7 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
           )}
 
           {/* Invite: A's side rides in the link; B fills their own */}
-          {invite && CopyLinkButton && (
+          {invite && CopyLinkButton && shareMod && (
             <div class="calc__share">
               <CopyLinkButton
                 url={inviteUrl()}

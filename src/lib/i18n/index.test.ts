@@ -14,9 +14,9 @@ import {
 } from './index';
 
 describe('i18n helpers', () => {
-  it('keeps every localized UI catalog aligned with all 331 English keys', () => {
+  it('keeps every localized UI catalog aligned with all 360 English keys', () => {
     const englishKeys = Object.keys(UI.en).sort();
-    expect(englishKeys).toHaveLength(331);
+    expect(englishKeys).toHaveLength(360);
     for (const locale of LOCALES) {
       expect(Object.keys(UI[locale]).sort()).toEqual(englishKeys);
     }
@@ -94,6 +94,18 @@ describe('i18n helpers', () => {
       it: '/it/404/',
     });
     expect(alternatePaths('/learn/placements/venus-in-scorpio/')).toBeNull();
+  });
+
+  it('keeps WS5 routes English-only until real translations exist', () => {
+    for (const path of [
+      '/compatibility/aries-taurus/',
+      '/birthday/july-15/',
+      '/learn/chinese-zodiac/',
+      '/learn/chinese-zodiac/dragon/',
+    ]) {
+      expect(LOCALIZED_PATHS.has(path)).toBe(false);
+      expect(alternatePaths(path)).toBeNull();
+    }
   });
 
   it('interpolates localized messages without changing unsupported paths', () => {

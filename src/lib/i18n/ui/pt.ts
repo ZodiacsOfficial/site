@@ -1,4 +1,5 @@
 import type { UiCatalog } from './schema';
+import { GROWTH_UI_EN } from './growth';
 
 const pt = {
   navPrimary: 'Principal',
@@ -332,6 +333,7 @@ const pt = {
   needsTime: 'precisa do horário',
   compareThese: 'Comparar estes dois mapas',
   addAnotherChart: 'Adicionar outro mapa',
+  ...GROWTH_UI_EN,
 } satisfies UiCatalog;
 
 export default pt;

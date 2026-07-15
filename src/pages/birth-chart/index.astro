@@ -1,6 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import ChartCalculator from '../../islands/ChartCalculator';
+import EmailCapture from '../../components/EmailCapture.astro';
 import '../../styles/calculator.css';
 import '../../styles/explorer.css';
 
@@ -75,6 +76,7 @@ const jsonLd = [
     </div>
 
     <ChartCalculator mode="full" client:load />
+    <EmailCapture placement="chart" revealOnChart />
     <noscript>
       <p>This birth chart calculator needs JavaScript. Enable it and reload to calculate your Sun, Moon, rising sign, planets, and houses in your browser.</p>
     </noscript>

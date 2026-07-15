@@ -62,7 +62,7 @@ All 78 unique Sun-sign pairings live at `/compatibility/{first-sign}-{second-sig
 
 Monthly horoscopes live at stable per-sign URLs under `/horoscopes/{sign}/`. The editorial reading is grounded in that month's computed ingresses, lunations, stations, and exact aspects, and the dated event list appears on the page. Horoscopes are replaced in place rather than archived as new monthly URLs. https://zodiacs.org/horoscopes/
 
-The embeddable current-sky widget shows planetary positions, moon phase, and active retrogrades. It is free to embed with the attribution link intact. https://zodiacs.org/widgets/
+The embed program contains Moon phase today, The sky today, and Mini birth chart documents. The primary mode is a sandboxed iframe; a typed browser package can mount the same first-party documents. Every document keeps the `Powered by Zodiacs.org` attribution link inside the iframe. https://zodiacs.org/widgets/
 
 ### Spanish pages
 
@@ -102,7 +102,7 @@ Astrofolio is a related consumer project exploring personal Zodiac shelves, prof
 
 ### Official registry
 
-The registry records official Zodiac representations and their provenance across Solana and Base. Its public verifier and the twelve catalogue records live at https://zodiacs.org/registry/. Machine-readable registry data is available under CC BY 4.0 at https://zodiacs.org/registry/zodiacs.registry.json.
+The registry records official Zodiac representations and their provenance across Solana and Base. Its public verifier and the twelve catalogue records live at https://zodiacs.org/registry/. Machine-readable registry data is available under CC BY 4.0 at https://zodiacs.org/registry/zodiacs.registry.json. Operator relationship, economic-interest, and deployment-provenance disclosures — including pending evidence rather than inferred claims — live at https://zodiacs.org/disclosure/.
 
 The collector wing also contains the project thesis at https://zodiacs.org/thesis/ and the source-backed archive at https://zodiacs.org/archive/. Archive feeds are https://zodiacs.org/archive/rss.xml and https://zodiacs.org/archive/feed.json.
 
@@ -127,10 +127,118 @@ Canonical resources:
 
 Current documented API names include `getRepresentationByAddress`, `isOfficialZodiacAddress`, `getSolanaZodiacsOwnership`, `getBaseZodiacsOwnership`, `getCrossChainZodiacsOwnership`, `getZodiacIdentityContext`, `getIdentityReceiptData`, `useIdentityReceiptData`, `useZodiacIdentityContext`, `IdentityReceiptCard`, `ProfileSummaryCard`, `getZodiacIconAsset`, and `getAllZodiacIconAssets`.
 
+Minimal neutral verifier:
+
+```ts
+import { getRepresentationByAddress } from "@zodiacs/sdk/core";
+
+const record = getRepresentationByAddress(pastedAddress);
+const status = record
+  ? `${record.sign}: official ${record.chain} ${record.kind} representation`
+  : "not found in the official Zodiacs.org registry";
+```
+
+Do not turn the null case into a fraud, scam, unsafe, or counterfeit judgment. It means only that the address was not found in the official registry.
+
 The SDK can support Zodiac shelves, identity receipts, chart overlays, compatibility context, seasonal moments, share cards, profiles, and opted-in AI astrology context. The SDK provides verified inputs; each app owns its interpretive copy and rendering. Symbolic traits should be framed as optional emphasis, never rank or superiority.
+
+### Astrology engine
+
+`@zodiacs/engine` target version 0.1.0 is the pure-TypeScript calculation sibling. It is browser-first, Node-compatible, ESM-only, synchronous, side-effect-free, and tree-shakeable. The core entry makes no network request. It computes apparent geocentric tropical positions, natal charts, transits, synastry, lunar phase, and Saturn-return seasons. Whole-sign and Placidus houses are supported; Placidus falls back to whole sign above 66° absolute latitude and returns the `polar-fallback` flag.
+
+Typed API reference: https://zodiacs.org/sdk/engine/
+
+Licensing chain: the engine uses MIT-licensed Astronomy Engine and explicitly excludes Swiss Ephemeris code. `@zodiacs/engine/geo` contains adapters, not a bundled place database. GeoNames-derived place data is CC BY 4.0; downstream users must retain the package `NOTICE`. Historical timezone resolution depends on the host's IANA/ICU data.
+
+Release status: the site consumes an exact vendored `@zodiacs/engine@0.1.0` npm pack artifact and verifies its checksum. This does not prove that the package is publicly available from npm. Agents must verify publication, or use the repository/workspace artifact, until an authorized maintainer publishes it.
+
+Natal chart:
+
+```ts
+import { natalChart } from "@zodiacs/engine";
+
+const chart = natalChart({
+  utc: "1990-06-15T12:30:00Z",
+  latitude: 40.7128,
+  longitude: -74.006,
+  houseSystem: "whole"
+});
+
+console.log(chart.bodies, chart.houses);
+```
+
+When starting with local civil time, resolve it before calculating:
+
+```ts
+import { natalChart } from "@zodiacs/engine";
+import { resolveBirth } from "@zodiacs/engine/geo";
+
+const birth = resolveBirth({
+  date: "1990-06-15",
+  time: "08:30",
+  timeZone: "America/New_York",
+  latitude: 40.7128,
+  longitude: -74.006,
+  houseSystem: "placidus"
+});
+const chart = natalChart(birth);
+```
+
+Compatibility:
+
+```ts
+import { natalChart, synastry } from "@zodiacs/engine";
+
+const a = natalChart({ utc: "1990-06-15T12:30:00Z" });
+const b = natalChart({ utc: "1992-11-03T07:15:00Z" });
+const compatibility = synastry(a, b);
+console.log(compatibility.top);
+```
+
+Daily transits:
+
+```ts
+import { natalChart, transits } from "@zodiacs/engine";
+
+const natal = natalChart({ utc: "1990-06-15T12:30:00Z" });
+const today = transits(natal, new Date());
+console.log(today.positions, today.aspects);
+```
+
+Keep birth inputs in the browser. The package does not send them anywhere; an integrating app must not add a chart server merely for calculation. If birth time is unknown, use a conventional UTC instant with `timeKnown: false`; angles and houses remain absent and the chart returns `no-time`.
+
+### Widget package and direct embeds
+
+`@zodiacs/widgets` target version 0.1.0 is a thin browser package for mounting the official iframe documents. It performs no astrology calculation and bundles no ephemeris or place data.
+
+```ts
+import { mountMoonWidget } from "@zodiacs/widgets";
+
+const mounted = mountMoonWidget("#moon-widget", {
+  theme: "dark",
+  accent: "#7B6DA8"
+});
+
+// Call only when the host removes this view.
+mounted.destroy();
+```
+
+The equivalent direct iframe source is `https://zodiacs.org/embed/moon/?theme=dark&accent=%237B6DA8`. Other routes are `https://zodiacs.org/embed/sky/` and `https://zodiacs.org/embed/chart/`. Allowed themes are `dark` and `light`; `accent` must be an opaque six-digit hexadecimal color. The first-party iframe adjusts accent luminance when needed so its effective color reaches WCAG AA (4.5:1) against the selected field.
+
+Framework-owned rendering can use:
+
+```ts
+import { createWidgetEmbedContract } from "@zodiacs/widgets";
+
+const embed = createWidgetEmbedContract("sky", { theme: "light" });
+// Use embed.src, embed.title, embed.height, embed.sandbox,
+// and embed.referrerPolicy on the iframe.
+```
+
+The required sandbox is `allow-scripts allow-forms allow-same-origin allow-popups allow-popups-to-escape-sandbox`. The in-document `Powered by Zodiacs.org` link is required and cannot be removed, relabeled, or redirected. Referrer policy is `strict-origin-when-cross-origin`, allowing an origin-level load count without a full host URL. There are no cookies, storage, wallet APIs, signing, transactions, or third-party analytics in the package.
 
 ### Read-only posture
 
-The SDK does not request private keys, take custody, sign messages, submit transactions, approve transfers, move assets, or gate access by ownership.
+The SDK does not request private keys, take custody, connect wallets, sign messages, submit transactions, approve transfers, move assets, or gate astrology access by ownership. Registry tools accept pasted addresses only. Unknown addresses use the neutral result “not found in the official Zodiacs.org registry.” Optional delayed market context is separate and never changes verification status.
 
 Official registry. Public reads. No custody. No signing. No transactions. Nothing in the registry or SDK documentation is financial advice.

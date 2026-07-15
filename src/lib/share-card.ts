@@ -11,30 +11,44 @@
  */
 import { h, render } from 'preact';
 import Wheel from './wheel/Wheel';
-import { signForLongitude } from './signs';
-import type { ShareChartInput } from './share';
+import {
+  degreeInSign,
+  elementLabel,
+  modalityLabel,
+  signForLongitude,
+  signName,
+  type Element,
+  type Modality,
+} from './signs';
 import type { Chart } from './engine/types';
+import type { Locale } from './i18n';
+import { shareCardFormat, shareCardText } from './share-card-copy';
 
 export type CardOutcome = 'shared' | 'downloaded' | 'cancelled';
+export type ChartCardVariant = 'full' | 'big-three';
 
 export interface ShareCardOptions {
-  /** Replace the birth receipt and dated filename with positions-only metadata. */
-  hideBirthDetails?: boolean;
+  /** The full wheel is the backwards-compatible default. */
+  variant?: ChartCardVariant;
+  locale?: Locale;
 }
 
-const W = 1080;
-const H = 1350;
+export const SHARE_CARD_SCALE = 2;
+const W = 540 * SHARE_CARD_SCALE;
+const H = 675 * SHARE_CARD_SCALE;
 const BG = '#060709';
 const INK_0 = '#EEF1F7';
 const INK_2 = '#8E96AB';
-const INK_3 = '#7A8397';
 const HAIR = 'rgba(198, 204, 218, 0.12)';
 const SERIF = '"EB Garamond", Georgia, serif';
 const MONO = '"JetBrains Mono", ui-monospace, Menlo, monospace';
 const WHEEL_SIZE = 780;
-
-const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July',
-  'August', 'September', 'October', 'November', 'December'];
+const PROFILE_BODIES = new Set(['Sun', 'Moon', 'Mercury', 'Venus', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto']);
+export const SHARE_CARD_WORDMARK = Object.freeze({
+  x: W - 64,
+  y: H - 46,
+  align: 'right' as const,
+});
 
 /** Read a same-origin asset as a data: URI (null on any failure). */
 function fetchAsDataUri(url: string): Promise<string | null> {
@@ -102,33 +116,59 @@ async function loadDisc(slug: string): Promise<ImageBitmap | null> {
   }
 }
 
-function formatDateLine(input: ShareChartInput): string {
-  const [y, m, d] = input.date.split('-').map(Number);
-  const parts = [`${MONTHS[m - 1]} ${d}, ${y}`];
-  if (input.timeKnown && input.time) parts.push(input.time);
-  if (input.place) parts.push(input.place);
-  return parts.join(' · ');
+export interface BigThreePlacement {
+  kind: 'sun' | 'moon' | 'rising';
+  lon: number;
+  slug: string;
+  sign: string;
+  degree: number;
 }
 
-/** Receipt rendered below the wheel. Kept pure so privacy can be regression-tested. */
+export function bigThreePlacements(chart: Pick<Chart, 'bodies' | 'angles'>, locale: Locale = 'en'): BigThreePlacement[] {
+  const sun = chart.bodies.find((body) => body.body === 'Sun');
+  const moon = chart.bodies.find((body) => body.body === 'Moon');
+  if (!sun || !moon) throw new Error('chart missing luminaries');
+  const rows: { kind: BigThreePlacement['kind']; lon: number }[] = [
+    { kind: 'sun', lon: sun.lon },
+    { kind: 'moon', lon: moon.lon },
+  ];
+  if (chart.angles) rows.push({ kind: 'rising', lon: chart.angles.asc });
+  return rows.map(({ kind, lon }) => {
+    const sign = signForLongitude(lon);
+    return { kind, lon, slug: sign.slug, sign: signName(sign, locale), degree: degreeInSign(lon) };
+  });
+}
+
+export function dominantProfile(chart: Pick<Chart, 'bodies'>): { element: Element | null; modality: Modality | null } {
+  const elementCounts: Record<Element, number> = { fire: 0, earth: 0, air: 0, water: 0 };
+  const modalityCounts: Record<Modality, number> = { cardinal: 0, fixed: 0, mutable: 0 };
+  for (const body of chart.bodies) {
+    if (!PROFILE_BODIES.has(body.body)) continue;
+    const sign = signForLongitude(body.lon);
+    elementCounts[sign.element] += 1;
+    modalityCounts[sign.modality] += 1;
+  }
+  const uniqueMax = <T extends string>(counts: Record<T, number>): T | null => {
+    const entries = Object.entries(counts) as [T, number][];
+    const max = Math.max(...entries.map(([, count]) => count));
+    const winners = entries.filter(([, count]) => count === max);
+    return winners.length === 1 ? winners[0][0] : null;
+  };
+  return { element: uniqueMax(elementCounts), modality: uniqueMax(modalityCounts) };
+}
+
+/** Cards accept computed positions, never the private birth input. */
 export function chartCardReceipt(
   chart: Pick<Chart, 'engineVersion'>,
-  input: ShareChartInput,
-  options: ShareCardOptions = {},
+  locale: Locale = 'en',
 ): string {
-  return options.hideBirthDetails
-    ? `Engine ${chart.engineVersion}`
-    : formatDateLine(input);
+  return shareCardFormat(locale, 'engineReceipt', { version: chart.engineVersion });
 }
 
-/** Download/share-sheet filename. Positions-only cards must not leak the input date. */
-export function chartCardFilename(
-  input: ShareChartInput,
-  options: ShareCardOptions = {},
-): string {
-  return options.hideBirthDetails
-    ? 'zodiacs-chart-positions.png'
-    : `zodiacs-chart-${input.date}.png`;
+/** Download/share-sheet filename contains no input-derived data. */
+export function chartCardFilename(options: ShareCardOptions = {}): string {
+  if (options.variant === 'big-three') return 'zodiacs-big-three.png';
+  return 'zodiacs-chart.png';
 }
 
 /** Shrink until the line fits — twelve-letter signs three times over is real. */
@@ -142,26 +182,17 @@ function fitText(ctx: CanvasRenderingContext2D, text: string, maxWidth: number, 
   return px;
 }
 
-export async function drawCard(
+async function drawFullChartCard(
   chart: Chart,
-  input: ShareChartInput,
   options: ShareCardOptions = {},
 ): Promise<Blob> {
-  const sun = chart.bodies.find((b) => b.body === 'Sun');
-  const moon = chart.bodies.find((b) => b.body === 'Moon');
-  if (!sun || !moon) throw new Error('chart missing luminaries');
-  const asc = chart.angles?.asc ?? null;
-
-  const trio: { label: string; slug: string; name: string }[] = [
-    { label: 'Sun', ...pick(sun.lon) },
-    { label: 'Moon', ...pick(moon.lon) },
-  ];
-  if (asc !== null) trio.push({ label: 'Rising', ...pick(asc) });
-
-  function pick(lon: number) {
-    const s = signForLongitude(lon);
-    return { slug: s.slug, name: s.name };
-  }
+  const locale = options.locale ?? 'en';
+  const placements = bigThreePlacements(chart, locale);
+  const trio = placements.map((placement) => ({
+    label: shareCardText(locale, placement.kind),
+    slug: placement.slug,
+    name: placement.sign,
+  }));
 
   await document.fonts.ready;
   await Promise.all([
@@ -199,7 +230,7 @@ export async function drawCard(
   // Kicker — sentence-case serif italic, the house register.
   ctx.fillStyle = INK_2;
   ctx.font = `italic 400 34px ${SERIF}`;
-  ctx.fillText('A birth chart', W / 2, 118);
+  ctx.fillText(shareCardText(locale, 'fullChartTitle'), W / 2, 118);
 
   ctx.drawImage(wheelImg, (W - WHEEL_SIZE) / 2, 158, WHEEL_SIZE, WHEEL_SIZE);
 
@@ -219,20 +250,27 @@ export async function drawCard(
   const px = fitText(ctx, line, W - 140, 52, 34, 500, SERIF);
   ctx.fillStyle = INK_0;
   ctx.font = `500 ${px}px ${SERIF}`;
-  ctx.fillText(line, W / 2, 1152);
+  ctx.fillText(line, W / 2, 1138);
+
+  const profile = dominantProfile(chart);
+  const element = profile.element ? elementLabel(profile.element, locale) : shareCardText(locale, 'balanced');
+  const modality = profile.modality ? modalityLabel(profile.modality, locale) : shareCardText(locale, 'balanced');
+  ctx.fillStyle = INK_2;
+  ctx.font = `400 24px ${MONO}`;
+  ctx.fillText(shareCardFormat(locale, 'dominant', { element, modality }), W / 2, 1192);
 
   // Receipt + footer.
   ctx.fillStyle = INK_2;
   ctx.font = `400 26px ${MONO}`;
-  ctx.fillText(chartCardReceipt(chart, input, options), W / 2, 1218);
+  ctx.fillText(chartCardReceipt(chart, locale), W / 2, 1240);
 
   // Wordmark — the display serif set as spaced small caps, an old-almanac /
   // inscriptional register rather than the techy monospace.
   ctx.fillStyle = INK_2;
   ctx.font = `500 34px ${SERIF}`;
+  ctx.textAlign = SHARE_CARD_WORDMARK.align;
   try { ctx.letterSpacing = '8px'; } catch { /* older canvases ignore it */ }
-  // letterSpacing pads a trailing gap; nudge right by half a step to re-centre.
-  ctx.fillText('ZODIACS · ORG', W / 2 + 4, 1294);
+  ctx.fillText('ZODIACS · ORG', SHARE_CARD_WORDMARK.x, SHARE_CARD_WORDMARK.y);
   try { ctx.letterSpacing = '0px'; } catch { /* no-op */ }
 
   const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, 'image/png'));
@@ -240,13 +278,97 @@ export async function drawCard(
   return blob;
 }
 
+async function drawBigThreeCard(
+  chart: Chart,
+  options: ShareCardOptions = {},
+): Promise<Blob> {
+  const locale = options.locale ?? 'en';
+  const placements = bigThreePlacements(chart, locale);
+
+  await document.fonts.ready;
+  await Promise.all([
+    document.fonts.load(`500 58px ${SERIF}`),
+    document.fonts.load(`400 30px ${MONO}`),
+  ]).catch(() => {});
+  const discs = await Promise.all(placements.map((placement) => loadDisc(placement.slug)));
+
+  const canvas = document.createElement('canvas');
+  canvas.width = W;
+  canvas.height = H;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) throw new Error('canvas unavailable');
+
+  ctx.fillStyle = BG;
+  ctx.fillRect(0, 0, W, H);
+  if (typeof ctx.roundRect === 'function') {
+    ctx.strokeStyle = HAIR;
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.roundRect(28.5, 28.5, W - 57, H - 57, 26);
+    ctx.stroke();
+  }
+
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillStyle = INK_2;
+  ctx.font = `italic 400 34px ${SERIF}`;
+  ctx.fillText(shareCardText(locale, 'bigThreeTitle'), W / 2, 112);
+
+  const gap = placements.length === 3 ? 292 : 370;
+  const firstY = placements.length === 3 ? 245 : 305;
+  placements.forEach((placement, index) => {
+    const y = firstY + index * gap;
+    const icon = discs[index];
+    if (icon) ctx.drawImage(icon, 98, y, 178, 178);
+
+    const label = shareCardText(locale, placement.kind);
+    ctx.textAlign = 'left';
+    ctx.fillStyle = INK_2;
+    ctx.font = `400 26px ${MONO}`;
+    ctx.fillText(`${label} · ${placement.degree.toFixed(1)}°`, 334, y + 25);
+    ctx.fillStyle = INK_0;
+    ctx.font = `500 58px ${SERIF}`;
+    ctx.fillText(placement.sign, 334, y + 84);
+    const descriptorKey = `${placement.kind}Descriptor` as 'sunDescriptor' | 'moonDescriptor' | 'risingDescriptor';
+    ctx.fillStyle = INK_2;
+    ctx.font = `400 28px ${SERIF}`;
+    ctx.fillText(shareCardText(locale, descriptorKey), 334, y + 137);
+  });
+
+  ctx.textAlign = 'center';
+  ctx.fillStyle = INK_2;
+  ctx.font = `400 24px ${MONO}`;
+  ctx.fillText(shareCardFormat(locale, 'engineReceipt', { version: chart.engineVersion }), W / 2, 1238);
+  ctx.font = `500 34px ${SERIF}`;
+  ctx.textAlign = SHARE_CARD_WORDMARK.align;
+  try { ctx.letterSpacing = '8px'; } catch {}
+  ctx.fillText('ZODIACS · ORG', SHARE_CARD_WORDMARK.x, SHARE_CARD_WORDMARK.y);
+  try { ctx.letterSpacing = '0px'; } catch {}
+
+  const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, 'image/png'));
+  if (!blob) throw new Error('png encode failed');
+  return blob;
+}
+
+export async function drawCard(
+  chart: Chart,
+  options: ShareCardOptions = {},
+): Promise<Blob> {
+  return options.variant === 'big-three'
+    ? drawBigThreeCard(chart, options)
+    : drawFullChartCard(chart, options);
+}
+
 export async function saveChartCard(
   chart: Chart,
-  input: ShareChartInput,
   options: ShareCardOptions = {},
 ): Promise<CardOutcome> {
-  const blob = await drawCard(chart, input, options);
-  const file = new File([blob], chartCardFilename(input, options), { type: 'image/png' });
+  const blob = await drawCard(chart, options);
+  return savePngBlob(blob, chartCardFilename(options));
+}
+
+export async function savePngBlob(blob: Blob, filename: string): Promise<CardOutcome> {
+  const file = new File([blob], filename, { type: 'image/png' });
 
   if (navigator.canShare?.({ files: [file] })) {
     try {

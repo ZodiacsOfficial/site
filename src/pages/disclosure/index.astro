@@ -1,0 +1,139 @@
+---
+import Base from '../../layouts/Base.astro';
+import DisclosureTable from '../../components/DisclosureTable.astro';
+import SignIcon from '../../components/SignIcon.astro';
+import { DISCLOSURE_ROWS } from '../../lib/disclosure';
+import { SIGNS } from '../../lib/signs';
+import {
+  REGISTRY_ESTABLISHED,
+  REGISTRY_ESTABLISHMENT_PROVENANCE_URL,
+} from '../../lib/registry-establishment.mjs';
+import { EN } from '../../strings/en.mjs';
+import { breadcrumbLabel, SCHEMA_EN } from '../../strings/seo.en.mjs';
+
+const jsonLd = [
+  {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: SCHEMA_EN.breadcrumbHome, item: 'https://zodiacs.org/' },
+      { '@type': 'ListItem', position: 2, name: breadcrumbLabel('registry'), item: 'https://zodiacs.org/registry/' },
+      { '@type': 'ListItem', position: 3, name: breadcrumbLabel('disclosure'), item: 'https://zodiacs.org/disclosure/' },
+    ],
+  },
+  {
+    '@type': 'WebPage',
+    '@id': 'https://zodiacs.org/disclosure/#page',
+    name: EN['disclosure.metaTitle'],
+    url: 'https://zodiacs.org/disclosure/',
+    description: EN['disclosure.metaDescription'],
+    isPartOf: { '@id': 'https://zodiacs.org/#site' },
+  },
+];
+---
+<Base
+  title={EN['disclosure.metaTitle']}
+  description={EN['disclosure.metaDescription']}
+  path="/disclosure/"
+  jsonLd={jsonLd}
+>
+  <section class="section container disclosure-page">
+    <header class="disclosure-hero">
+      <div class="disclosure-hero__icons" aria-hidden="true">
+        {SIGNS.map((sign) => <SignIcon sign={sign.slug} size={32} loading="eager" />)}
+      </div>
+      <em class="kicker">{EN['disclosure.kicker']}</em>
+      <h1 class="display">{EN['disclosure.title']}</h1>
+      <p class="disclosure-hero__intro">{EN['disclosure.intro']}</p>
+      <p class="disclosure-hero__scope">{EN['disclosure.scope']}</p>
+      <div class="establishment">
+        <span class="establishment__label">{EN['disclosure.establishedLabel']}</span>
+        <strong>{EN['disclosure.establishedPrefix']} {REGISTRY_ESTABLISHED}</strong>
+        {REGISTRY_ESTABLISHMENT_PROVENANCE_URL ? (
+          <a href={REGISTRY_ESTABLISHMENT_PROVENANCE_URL} rel="noopener nofollow">
+            {EN['disclosure.establishedProvenance']} ↗
+          </a>
+        ) : (
+          <span class="establishment__pending">{EN['disclosure.establishedPending']}</span>
+        )}
+      </div>
+    </header>
+
+    <DisclosureTable rows={DISCLOSURE_ROWS} />
+
+    <aside class="operator-request" aria-labelledby="operator-request-title">
+      <div class="operator-request__icons" aria-hidden="true">
+        <SignIcon sign="aries" size={40} />
+        <SignIcon sign="libra" size={40} />
+      </div>
+      <div>
+        <h2 id="operator-request-title">{EN['disclosure.operatorRequest']}</h2>
+        <p>{EN['disclosure.operatorRequestBody']}</p>
+      </div>
+    </aside>
+
+    <a class="btn btn--ghost disclosure-back" href="/registry/">
+      <span>{EN['disclosure.backRegistry']}</span><span class="orb">→</span>
+    </a>
+  </section>
+</Base>
+
+<style>
+  .disclosure-page { max-width: 1120px; }
+  .disclosure-hero { padding: clamp(18px, 4vw, 44px) 0 clamp(32px, 5vw, 56px); }
+  .disclosure-hero__icons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 28px;
+  }
+  .disclosure-hero h1 { margin: 8px 0 18px; max-width: 14ch; }
+  .disclosure-hero__intro {
+    margin: 0;
+    max-width: 64ch;
+    font-family: var(--font-serif);
+    font-size: var(--text-lg);
+    line-height: 1.55;
+    color: var(--text-2);
+  }
+  .disclosure-hero__scope {
+    margin: 16px 0 0;
+    max-width: 68ch;
+    font-size: var(--text-sm);
+    line-height: 1.65;
+    color: var(--muted);
+  }
+  .establishment {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 9px 14px;
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid var(--hair-1);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+  }
+  .establishment__label { color: var(--faint); text-transform: uppercase; letter-spacing: 0.2em; }
+  .establishment strong { color: var(--ink-1); font-weight: 500; }
+  .establishment a { color: var(--ink-1); }
+  .establishment__pending { color: #E0B080; }
+  .operator-request {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 18px;
+    margin-top: 28px;
+    padding: clamp(20px, 4vw, 30px);
+    border: 1px solid rgba(224, 176, 128, 0.32);
+    border-radius: var(--r-lg);
+    background: rgba(224, 176, 128, 0.05);
+  }
+  .operator-request__icons { display: flex; gap: 5px; }
+  .operator-request h2 { margin: 0 0 7px; font-size: var(--text-lg); color: #E0B080; }
+  .operator-request p { margin: 0; max-width: 68ch; color: var(--muted); line-height: 1.6; }
+  .disclosure-back { margin-top: 28px; }
+  @media (max-width: 660px) {
+    .operator-request { grid-template-columns: 1fr; }
+    .disclosure-hero__icons :global(picture:nth-child(n+7)) { display: none; }
+  }
+</style>

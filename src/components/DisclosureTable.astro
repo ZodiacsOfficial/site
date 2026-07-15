@@ -1,0 +1,148 @@
+---
+import type { DisclosureRow } from '../lib/disclosure';
+import { EN } from '../strings/en.mjs';
+
+interface Props {
+  rows: readonly DisclosureRow[];
+}
+
+const { rows } = Astro.props;
+---
+<div class="disclosure-table-wrap">
+  <table class="disclosure-table" aria-label={EN['disclosure.tableLabel']}>
+    <thead>
+      <tr>
+        <th scope="col">{EN['disclosure.statementHeading']}</th>
+        <th scope="col">{EN['disclosure.evidenceHeading']}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {rows.map((row) => (
+        <tr id={row.id}>
+          <th scope="row">
+            <span class="disclosure-table__label">{row.label}</span>
+            <span class="disclosure-table__statement">{row.statement}</span>
+          </th>
+          <td>
+            <span class:list={['status-chip', `status-chip--${row.status}`]}>
+              {row.status === 'pending'
+                ? EN['disclosure.statusPending']
+                : EN['disclosure.statusVerified']}
+            </span>
+            <p class="disclosure-table__evidence">{row.evidence}</p>
+            {row.links.length > 0 && (
+              <ul class="disclosure-table__links">
+                {row.links.map((link) => (
+                  <li>
+                    {link.href ? (
+                      <a
+                        href={link.href}
+                        rel={link.external ? 'noopener nofollow' : undefined}
+                      >
+                        {link.label}{link.external ? ' ↗' : ''}
+                      </a>
+                    ) : (
+                      <span class="evidence-slot">{link.label}</span>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+
+<style>
+  .disclosure-table-wrap {
+    overflow-x: auto;
+    border: 1px solid var(--hair-2);
+    border-radius: var(--r-lg);
+    background: rgba(15, 18, 26, 0.72);
+  }
+  .disclosure-table {
+    width: 100%;
+    min-width: 640px;
+    border-collapse: collapse;
+  }
+  th, td {
+    padding: clamp(18px, 3vw, 28px);
+    border-bottom: 1px solid var(--hair-1);
+    text-align: left;
+    vertical-align: top;
+  }
+  thead th {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--faint);
+  }
+  tbody tr:last-child > * { border-bottom: 0; }
+  tbody th { width: 52%; font-weight: 400; }
+  .disclosure-table__label {
+    display: block;
+    margin-bottom: 9px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-1);
+  }
+  .disclosure-table__statement {
+    display: block;
+    max-width: 56ch;
+    font-family: var(--font-serif);
+    font-size: var(--text-lg);
+    line-height: 1.45;
+    color: var(--text);
+  }
+  .status-chip {
+    display: inline-flex;
+    padding: 5px 9px;
+    border: 1px solid var(--hair-3);
+    border-radius: var(--r-full);
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .status-chip--verified { color: var(--ink-1); background: rgba(198, 204, 218, 0.06); }
+  .status-chip--pending {
+    color: #E0B080;
+    border-color: rgba(224, 176, 128, 0.45);
+    background: rgba(224, 176, 128, 0.08);
+  }
+  .disclosure-table__evidence {
+    margin: 12px 0 0;
+    max-width: 54ch;
+    font-size: var(--text-sm);
+    line-height: 1.6;
+    color: var(--muted);
+  }
+  .disclosure-table__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 14px 0 0;
+    padding: 0;
+    list-style: none;
+  }
+  .disclosure-table__links a,
+  .evidence-slot {
+    display: inline-flex;
+    padding: 6px 9px;
+    border: 1px solid var(--hair-2);
+    border-radius: var(--r-full);
+    font-family: var(--font-mono);
+    font-size: 9px;
+    line-height: 1.35;
+    letter-spacing: 0.05em;
+    text-decoration: none;
+  }
+  .disclosure-table__links a { color: var(--ink-1); }
+  .evidence-slot { color: #E0B080; border-color: rgba(224, 176, 128, 0.3); }
+</style>

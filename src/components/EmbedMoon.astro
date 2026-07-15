@@ -1,0 +1,53 @@
+---
+/** Standalone moon-phase embed. No site shell or analytics. */
+import daily from '../data/daily.json';
+import { signBySlug } from '../lib/signs';
+import { widgetAccentForTheme } from '../lib/widgets';
+import { WIDGET_EN, widgetPhaseName, widgetSignName, widgetText } from '../strings/widgets';
+
+interface Props { theme?: 'dark' | 'light' }
+const requestedTheme = Astro.url.searchParams.get('theme');
+const theme = requestedTheme === 'light' || requestedTheme === 'dark'
+  ? requestedTheme
+  : Astro.props.theme ?? 'dark';
+const requestedAccent = Astro.url.searchParams.get('accent') ?? '';
+const accent = widgetAccentForTheme(requestedAccent, theme);
+const moon = daily.bodies.find((body) => body.body === 'Moon');
+const sign = signBySlug(moon?.sign ?? 'aries');
+const illumination = Math.round(daily.moon.illumination * 100);
+const c = theme === 'dark'
+  ? { bg: '#0A0C11', text: '#EEF1F7', mut: '#8B93A7', hair: 'rgba(198,204,218,0.14)', track: '#151925', link: accent ?? '#C6CCDA' }
+  : { bg: '#FBFAF7', text: '#1C1E26', mut: '#62697B', hair: 'rgba(28,30,38,0.14)', track: '#E9E8E4', link: accent ?? '#3C4152' };
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>{WIDGET_EN.widgetTitleMoon}</title>
+  </head>
+  <body style={`margin:0;background:${c.bg};color:${c.text};font:13px/1.5 system-ui,-apple-system,sans-serif;`}>
+    <main style="padding:16px;display:flex;flex-direction:column;gap:12px;min-height:100vh;box-sizing:border-box;">
+      <div style="display:grid;grid-template-columns:58px 1fr;gap:12px;align-items:center;">
+        <img src={`/assets/zodiac-icons/48/${sign.slug}.webp`} alt="" width="58" height="58" decoding="async" />
+        <div>
+          <strong style="display:block;font-size:14px;letter-spacing:-0.01em;">{WIDGET_EN.moonTitle}</strong>
+          <span style={`display:block;color:${c.mut};font-size:12px;`}>{widgetPhaseName(daily.moon.phase)} · {widgetText('moonSign', { sign: widgetSignName(sign.slug) })}</span>
+        </div>
+      </div>
+      <div aria-label={widgetText('illumination', { percent: illumination })}>
+        <div style={`height:6px;border-radius:999px;background:${c.track};overflow:hidden;`}>
+          <div style={`width:${illumination}%;height:100%;background:${accent ?? sign.hue};border-radius:inherit;`}></div>
+        </div>
+        <div style={`display:flex;justify-content:space-between;gap:12px;margin-top:5px;color:${c.mut};font:10px/1.4 ui-monospace,monospace;text-transform:uppercase;letter-spacing:0.07em;`}>
+          <span>{widgetText('illumination', { percent: illumination })}</span>
+          <time datetime={daily.date}>{daily.date}</time>
+        </div>
+      </div>
+      <div style={`margin-top:auto;border-top:1px solid ${c.hair};padding-top:8px;text-align:right;`}>
+        <a href="https://zodiacs.org/?utm_source=embed&amp;utm_medium=widget&amp;utm_campaign=moon" target="_blank" rel="noopener noreferrer" style={`font-size:11px;color:${c.link};text-decoration:none;border-bottom:1px solid ${c.hair};white-space:nowrap;`}>{WIDGET_EN.poweredBy} →</a>
+      </div>
+    </main>
+  </body>
+</html>

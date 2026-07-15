@@ -153,7 +153,7 @@
       --surface: #0F121A; --surface-2: #151925;
       --hair: rgba(198,204,218,0.10); --hair-2: rgba(198,204,218,0.22); --hair-3: rgba(198,204,218,0.42);
       --gold: #C6CCDA; --gold-bright: #EEF1F7; --gold-deep: #8E96AB;
-      --live: #C6CCDA;
+      --live: #C6CCDA; --pending: #E0B080;
       --ink: #EEF1F7; --ink-2: #C6CCDA; --ink-dim: #8E96AB; --ink-mute: #7A8397;
       --serif: 'EB Garamond', Georgia, Cambria, serif;
       --mono: 'JetBrains Mono', ui-monospace, Menlo, Consolas, monospace;
@@ -364,6 +364,15 @@
     .arc__type--coverage { color: var(--ink-dim); }
     .arc__type--origin { color: var(--gold-bright); border-color: var(--hair-3); }
     .arc__type--context { color: var(--ink-mute); }
+    .arc__status {
+      padding: 4px 9px; border: 1px solid currentColor; border-radius: 999px;
+      font-family: var(--mono); font-size: 8.5px; line-height: 1.25;
+      letter-spacing: 0.16em; text-transform: uppercase;
+    }
+    .arc__status--pending {
+      color: var(--pending); background: rgba(224,176,128,0.08);
+      border-color: rgba(224,176,128,0.52);
+    }
     .arc__title {
       margin: 0 0 10px;
       font-family: var(--serif); font-weight: 400;
@@ -441,6 +450,12 @@
       transition: color 280ms var(--ease), border-bottom-color 280ms var(--ease);
     }
     .arc__proof-link:hover { color: var(--gold-bright); border-bottom-color: var(--gold); }
+    .arc__proof--pending {
+      border-color: rgba(224,176,128,0.34);
+      background:
+        linear-gradient(180deg, rgba(224,176,128,0.035), transparent 70%),
+        var(--surface);
+    }
 
     .arc__signs { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0; }
     .arc__signs a {
@@ -451,6 +466,31 @@
     .arc__signs a:hover { border-color: var(--hair-3); transform: translateY(-1px); }
     .arc__signs img { width: 18px; height: 18px; object-fit: contain; opacity: 0.72; }
     .arc__signs a:hover img { opacity: 1; }
+
+    .arc__receipts {
+      display: flex; flex-wrap: wrap; align-items: center; gap: 8px;
+      margin-top: 16px;
+    }
+    .arc__receipts-label {
+      margin-right: 2px; font-family: var(--mono); font-size: 8.5px;
+      letter-spacing: 0.22em; text-transform: uppercase; color: var(--ink-mute);
+    }
+    .arc__receipt-pair { display: inline-flex; flex-wrap: wrap; gap: 5px; }
+    .arc__receipt {
+      display: inline-flex; align-items: center; gap: 7px;
+      min-height: 30px; padding: 6px 10px; border: 1px solid var(--hair-2);
+      border-radius: 999px; background: rgba(198,204,218,0.045);
+      font-family: var(--mono); font-size: 8.5px; line-height: 1.35;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--ink-dim); text-decoration: none;
+      transition: color 280ms var(--ease), border-color 280ms var(--ease), background 280ms var(--ease);
+    }
+    .arc__receipt:hover {
+      color: var(--gold-bright); border-color: var(--hair-3);
+      background: rgba(198,204,218,0.09);
+    }
+    .arc__receipt--archive { color: var(--gold); }
+    .arc__external { color: var(--gold); font-size: 11px; line-height: 1; }
 
     .arc__sources { display: flex; flex-direction: column; gap: 8px; margin-top: 14px; }
     .arc__src {
@@ -638,6 +678,7 @@
         <div class="arc__rail">
           <span class="arc__date">October 2025</span>
           <span class="arc__type arc__type--context">context</span>
+
         </div>
         <div class="arc__main">
         <h3 class="arc__title">A pure belief system</h3>
@@ -646,6 +687,10 @@
           <blockquote><p>Gold’s price is not derived from its industrial or utility value. Just a pure belief system.</p></blockquote>
           <figcaption>Changpeng Zhao (CZ) <a class="arc__quote-src" href="https://x.com/cz_binance/status/1983514879643292126" rel="noopener noreferrer">View source ↗</a></figcaption>
         </figure>
+        <div class="arc__receipts" aria-label="Receipts">
+          <span class="arc__receipts-label">Receipts</span>
+          <span class="arc__receipt-pair"><a class="arc__receipt" href="https://x.com/cz_binance/status/1983514879643292126" rel="noopener nofollow"><span>CZ: “Just a pure belief system”</span><span class="arc__external" aria-hidden="true">↗</span></a></span>
+        </div>
         <div class="arc__sources">
           <a class="arc__src" href="https://x.com/cz_binance/status/1983514879643292126" rel="noopener noreferrer">The original post on X ↗</a>
           <a class="arc__src" href="/thesis/">The thesis, on this site</a>
@@ -656,6 +701,7 @@
         <div class="arc__rail">
           <span class="arc__date">February 17, 2025</span>
           <span class="arc__type arc__type--moment">moment</span>
+          <span class="arc__status arc__status--pending">Pending archived primary source</span>
         </div>
         <div class="arc__main">
         <h3 class="arc__title">The accidental Libra</h3>
@@ -679,13 +725,17 @@
           <blockquote><p>Fake politicians come and go, but the signs are timeless.</p></blockquote>
           <figcaption>Astrofolio · @astrofoliosol <a class="arc__quote-src" href="https://x.com/astrofoliosol/status/1891536867729743905" rel="noopener noreferrer">View source ↗</a></figcaption>
         </figure>
-        <div class="arc__proof">
-          <span class="arc__tick" aria-hidden="true">✓</span>
+        <div class="arc__proof arc__proof--pending">
           <span class="arc__proof-text">Matches the official record</span>
           <a class="arc__proof-link" href="/registry/libra/">Libra ↗</a>
           <a class="arc__proof-link" href="/registry/zodiacs.registry.json">Registry entry</a>
         </div>
-        <div class="arc__signs"><a href="/registry/libra/" aria-label="Libra"><img src="/assets/icons/libra.png" alt="" loading="lazy" decoding="async" /></a></div>
+        <div class="arc__signs"><a href="/registry/libra/" aria-label="Libra"><img src="/assets/zodiac-icons/48/libra.webp" width="18" height="18" alt="" loading="lazy" decoding="async" /></a></div>
+        <div class="arc__receipts" aria-label="Receipts">
+          <span class="arc__receipts-label">Receipts</span>
+          <span class="arc__receipt-pair"><a class="arc__receipt" href="https://x.com/stoolpresidente/status/1891526647033024920" rel="noopener nofollow"><span>Portnoy: “I’m buying the wrong libra”</span><span class="arc__external" aria-hidden="true">↗</span></a></span>
+          <span class="arc__receipt-pair"><a class="arc__receipt" href="https://x.com/stoolpresidente/status/1891528769770279114" rel="noopener nofollow"><span>Portnoy post containing the Libra mint address</span><span class="arc__external" aria-hidden="true">↗</span></a></span>
+        </div>
         <div class="arc__sources">
           <a class="arc__src" href="https://x.com/stoolpresidente/status/1891526130588406008" rel="noopener noreferrer">The re-entry post · @stoolpresidente ↗</a>
           <a class="arc__src" href="https://x.com/karbonbased/status/1891528919628538182" rel="noopener noreferrer">“Bro pumped the astrofolio libra” · @karbonbased ↗</a>
@@ -698,6 +748,7 @@
         <div class="arc__rail">
           <span class="arc__date">February 6, 2025</span>
           <span class="arc__type arc__type--moment">moment</span>
+
         </div>
         <div class="arc__main">
         <h3 class="arc__title">A nod from inversebrah</h3>
@@ -707,6 +758,10 @@
           <blockquote><p>wise move tbw consider investing in ur zodiac also iwo</p></blockquote>
           <figcaption>inversebrah · @inversebrah <a class="arc__quote-src" href="https://x.com/inversebrah/status/1887520374964867250" rel="noopener noreferrer">View source ↗</a></figcaption>
         </figure>
+        <div class="arc__receipts" aria-label="Receipts">
+          <span class="arc__receipts-label">Receipts</span>
+          <span class="arc__receipt-pair"><a class="arc__receipt" href="https://x.com/inversebrah/status/1887520374964867250" rel="noopener nofollow"><span>inversebrah: zodiac shorthand post</span><span class="arc__external" aria-hidden="true">↗</span></a></span>
+        </div>
         <div class="arc__sources">
           <a class="arc__src" href="https://x.com/inversebrah/status/1890545754256572583" rel="noopener noreferrer">The Libra poll, the week before the Portnoy moment ↗</a>
         </div>
@@ -716,6 +771,7 @@
         <div class="arc__rail">
           <span class="arc__date">January 27, 2025</span>
           <span class="arc__type arc__type--moment">moment</span>
+
         </div>
         <div class="arc__main">
         <h3 class="arc__title">Twelve hundred first wallets</h3>
@@ -725,12 +781,17 @@
           <blockquote><p>@phantom Amazing stuff rn, @astrofoliosol and @iJaadee just organically onboarded 1200+ real women, to (most) their first Phantom and Solana via a @astrofoliosol airdrop!</p></blockquote>
           <figcaption>wantonwallet · @wantonwallet, founder <a class="arc__quote-src" href="https://x.com/wantonwallet/status/1883692206349021677" rel="noopener noreferrer">View source ↗</a></figcaption>
         </figure>
+        <div class="arc__receipts" aria-label="Receipts">
+          <span class="arc__receipts-label">Receipts</span>
+          <span class="arc__receipt-pair"><a class="arc__receipt" href="https://x.com/wantonwallet/status/1883692206349021677" rel="noopener nofollow"><span>wantonwallet: 1,200+ wallet onboarding record</span><span class="arc__external" aria-hidden="true">↗</span></a></span>
+        </div>
         </div>
       </article>
       <article class="arc reveal" id="astrology-girlies">
         <div class="arc__rail">
           <span class="arc__date">January 19, 2025</span>
           <span class="arc__type arc__type--moment">moment</span>
+
         </div>
         <div class="arc__main">
         <h3 class="arc__title">The astrology girlies arrive</h3>
@@ -740,6 +801,10 @@
           <blockquote><p>astrology girlies prepare yourself to invest in the @astrofoliosol coins … coin identity (easy. invest in your sun moon and rising sign)</p></blockquote>
           <figcaption>iJaadee · @iJaadee <a class="arc__quote-src" href="https://x.com/iJaadee/status/1880988151805538587" rel="noopener noreferrer">View source ↗</a></figcaption>
         </figure>
+        <div class="arc__receipts" aria-label="Receipts">
+          <span class="arc__receipts-label">Receipts</span>
+          <span class="arc__receipt-pair"><a class="arc__receipt" href="https://x.com/iJaadee/status/1880988151805538587" rel="noopener nofollow"><span>iJaadee: astrology community call</span><span class="arc__external" aria-hidden="true">↗</span></a></span>
+        </div>
         </div>
       </article>
       <div class="arc-year" aria-hidden="true"><span>2024</span></div>
@@ -747,6 +812,7 @@
         <div class="arc__rail">
           <span class="arc__date">December 14, 2024</span>
           <span class="arc__type arc__type--moment">moment</span>
+
         </div>
         <div class="arc__main">
         <h3 class="arc__title">Human civilization’s oldest meme</h3>
@@ -756,6 +822,10 @@
           <blockquote><p>Astrology - Human Civilization’s Oldest Meme</p></blockquote>
           <figcaption>Andrew Kang · @Rewkang <a class="arc__quote-src" href="https://x.com/Rewkang/status/1867976901501009965" rel="noopener noreferrer">View source ↗</a></figcaption>
         </figure>
+        <div class="arc__receipts" aria-label="Receipts">
+          <span class="arc__receipts-label">Receipts</span>
+          <span class="arc__receipt-pair"><a class="arc__receipt" href="https://x.com/Rewkang/status/1867976901501009965" rel="noopener nofollow"><span>Andrew Kang: “Human Civilization’s Oldest Meme”</span><span class="arc__external" aria-hidden="true">↗</span></a></span>
+        </div>
         <div class="arc__sources">
           <a class="arc__src" href="https://x.com/Rewkang/status/1867976901501009965" rel="noopener noreferrer">The original post on X ↗</a>
           <a class="arc__src" href="/thesis/">The thesis, on this site</a>
@@ -766,6 +836,7 @@
         <div class="arc__rail">
           <span class="arc__date">November 22, 2024</span>
           <span class="arc__type arc__type--moment">moment</span>
+
         </div>
         <div class="arc__main">
         <h3 class="arc__title">The astrologers have arrived</h3>
@@ -774,12 +845,17 @@
           <blockquote><p>The astrologers have arrived</p></blockquote>
           <figcaption>TikTokInvestors · @TikTokInvestors <a class="arc__quote-src" href="https://x.com/TikTokInvestors/status/1859805329145594113" rel="noopener noreferrer">View source ↗</a></figcaption>
         </figure>
+        <div class="arc__receipts" aria-label="Receipts">
+          <span class="arc__receipts-label">Receipts</span>
+          <span class="arc__receipt-pair"><a class="arc__receipt" href="https://x.com/TikTokInvestors/status/1859805329145594113" rel="noopener nofollow"><span>TikTokInvestors: “The astrologers have arrived”</span><span class="arc__external" aria-hidden="true">↗</span></a></span>
+        </div>
         </div>
       </article>
       <article class="arc reveal" id="horoscopes-to-hodl">
         <div class="arc__rail">
           <span class="arc__date">August 29, 2024</span>
           <span class="arc__type arc__type--coverage">coverage</span>
+
         </div>
         <div class="arc__main">
         <h3 class="arc__title">Horoscopes to HODL</h3>
@@ -789,6 +865,10 @@
           <blockquote><p>the depths to which you can go with astrology are beautifully endless.</p></blockquote>
           <figcaption>wantonwallet, quoted by Somya Desai · Numinous Realm <a class="arc__quote-src" href="https://www.numinousrealm.com/news/horoscopes-to-hodl-building-your-astrofolio" rel="noopener noreferrer">View source ↗</a></figcaption>
         </figure>
+        <div class="arc__receipts" aria-label="Receipts">
+          <span class="arc__receipts-label">Receipts</span>
+          <span class="arc__receipt-pair"><a class="arc__receipt" href="https://www.numinousrealm.com/news/horoscopes-to-hodl-building-your-astrofolio" rel="noopener nofollow"><span>Numinous Realm: “Horoscopes to HODL”</span><span class="arc__external" aria-hidden="true">↗</span></a></span>
+        </div>
         <div class="arc__sources">
           <a class="arc__src" href="https://www.numinousrealm.com/news/horoscopes-to-hodl-building-your-astrofolio" rel="noopener noreferrer">“Horoscopes to Hodl: Building Your Astrofolio” · Somya Desai, Numinous Realm ↗</a>
         </div>
@@ -798,13 +878,18 @@
         <div class="arc__rail">
           <span class="arc__date">2024</span>
           <span class="arc__type arc__type--origin">origin</span>
+
         </div>
         <div class="arc__main">
         <h3 class="arc__title">Twelve mints, one register</h3>
         <p class="arc__lede">The public registry records twelve native Solana assets and their official Base representations.</p>
         <p class="arc__body">Each sign has one canonical Solana SPL record. Its official Base representation points back to that origin through Wormhole.</p>
         <p class="arc__body">The registry keeps the addresses, chain roles, and provenance public and machine-readable.</p>
-        <div class="arc__signs"><a href="/registry/aries/" aria-label="Aries"><img src="/assets/icons/aries.png" alt="" loading="lazy" decoding="async" /></a><a href="/registry/taurus/" aria-label="Taurus"><img src="/assets/icons/taurus.png" alt="" loading="lazy" decoding="async" /></a><a href="/registry/gemini/" aria-label="Gemini"><img src="/assets/icons/gemini.png" alt="" loading="lazy" decoding="async" /></a><a href="/registry/cancer/" aria-label="Cancer"><img src="/assets/icons/cancer.png" alt="" loading="lazy" decoding="async" /></a><a href="/registry/leo/" aria-label="Leo"><img src="/assets/icons/leo.png" alt="" loading="lazy" decoding="async" /></a><a href="/registry/virgo/" aria-label="Virgo"><img src="/assets/icons/virgo.png" alt="" loading="lazy" decoding="async" /></a><a href="/registry/libra/" aria-label="Libra"><img src="/assets/icons/libra.png" alt="" loading="lazy" decoding="async" /></a><a href="/registry/scorpio/" aria-label="Scorpio"><img src="/assets/icons/scorpio.png" alt="" loading="lazy" decoding="async" /></a><a href="/registry/sagittarius/" aria-label="Sagittarius"><img src="/assets/icons/sagittarius.png" alt="" loading="lazy" decoding="async" /></a><a href="/registry/capricorn/" aria-label="Capricorn"><img src="/assets/icons/capricorn.png" alt="" loading="lazy" decoding="async" /></a><a href="/registry/aquarius/" aria-label="Aquarius"><img src="/assets/icons/aquarius.png" alt="" loading="lazy" decoding="async" /></a><a href="/registry/pisces/" aria-label="Pisces"><img src="/assets/icons/pisces.png" alt="" loading="lazy" decoding="async" /></a></div>
+        <div class="arc__signs"><a href="/registry/aries/" aria-label="Aries"><img src="/assets/zodiac-icons/48/aries.webp" width="18" height="18" alt="" loading="lazy" decoding="async" /></a><a href="/registry/taurus/" aria-label="Taurus"><img src="/assets/zodiac-icons/48/taurus.webp" width="18" height="18" alt="" loading="lazy" decoding="async" /></a><a href="/registry/gemini/" aria-label="Gemini"><img src="/assets/zodiac-icons/48/gemini.webp" width="18" height="18" alt="" loading="lazy" decoding="async" /></a><a href="/registry/cancer/" aria-label="Cancer"><img src="/assets/zodiac-icons/48/cancer.webp" width="18" height="18" alt="" loading="lazy" decoding="async" /></a><a href="/registry/leo/" aria-label="Leo"><img src="/assets/zodiac-icons/48/leo.webp" width="18" height="18" alt="" loading="lazy" decoding="async" /></a><a href="/registry/virgo/" aria-label="Virgo"><img src="/assets/zodiac-icons/48/virgo.webp" width="18" height="18" alt="" loading="lazy" decoding="async" /></a><a href="/registry/libra/" aria-label="Libra"><img src="/assets/zodiac-icons/48/libra.webp" width="18" height="18" alt="" loading="lazy" decoding="async" /></a><a href="/registry/scorpio/" aria-label="Scorpio"><img src="/assets/zodiac-icons/48/scorpio.webp" width="18" height="18" alt="" loading="lazy" decoding="async" /></a><a href="/registry/sagittarius/" aria-label="Sagittarius"><img src="/assets/zodiac-icons/48/sagittarius.webp" width="18" height="18" alt="" loading="lazy" decoding="async" /></a><a href="/registry/capricorn/" aria-label="Capricorn"><img src="/assets/zodiac-icons/48/capricorn.webp" width="18" height="18" alt="" loading="lazy" decoding="async" /></a><a href="/registry/aquarius/" aria-label="Aquarius"><img src="/assets/zodiac-icons/48/aquarius.webp" width="18" height="18" alt="" loading="lazy" decoding="async" /></a><a href="/registry/pisces/" aria-label="Pisces"><img src="/assets/zodiac-icons/48/pisces.webp" width="18" height="18" alt="" loading="lazy" decoding="async" /></a></div>
+        <div class="arc__receipts" aria-label="Receipts">
+          <span class="arc__receipts-label">Receipts</span>
+          <span class="arc__receipt-pair"><a class="arc__receipt" href="https://zodiacs.org/registry/zodiacs.registry.json" rel="noopener nofollow"><span>Published machine-readable registry</span><span class="arc__external" aria-hidden="true">↗</span></a></span>
+        </div>
         <div class="arc__sources">
           <a class="arc__src" href="/registry/zodiacs.registry.json">The registry, machine-readable</a>
         </div>
@@ -850,6 +935,7 @@
           <a href="/registry/#registry">Registry</a>
           <a href="/registry/#verify">Verify</a>
           <a href="/thesis/">Thesis</a>
+          <a href="/disclosure/">Disclosure</a>
           <a href="/sdk/">SDK</a>
           <a href="/registry/zodiacs.registry.json">Record</a>
           <button class="assistant-link" type="button" data-assistant-open aria-haspopup="dialog">Ask the site</button>

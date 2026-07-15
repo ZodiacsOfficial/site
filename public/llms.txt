@@ -42,7 +42,7 @@ Birthday astrology (a page per calendar date at /birthday/{month}-{day}/, e.g. /
 Compatibility pairings (all 78 sun-sign combinations, e.g. /compatibility/aries-taurus/): https://zodiacs.org/compatibility/
 Monthly horoscopes (transit-grounded, dated claims, per-sign at /horoscopes/{sign}/): https://zodiacs.org/horoscopes/
 Feeds: monthly horoscopes RSS https://zodiacs.org/feeds/horoscopes.xml · daily sky RSS https://zodiacs.org/feeds/daily-sky.xml
-Embeddable current-sky widget (iframe, free with the backlink intact): https://zodiacs.org/widgets/
+Embeddable widgets (Moon phase today, The sky today, Mini birth chart; sandboxed iframe or typed mount, free with the `Powered by Zodiacs.org` backlink intact): https://zodiacs.org/widgets/
 
 Astrofolio relationship:
 Astrofolio is a related consumer project exploring personal Zodiac shelves, profiles, and share cards at https://astrofolio.xyz/. Zodiacs.org remains the free astrology reference and the official registry and SDK source of truth. Saved charts on Zodiacs.org live in the visitor's browser first; optional account sync is available from the saved-charts profile.
@@ -51,6 +51,7 @@ The collector's wing (the registry):
 - The Registry — the Twelve as canonical records, with address verifier: https://zodiacs.org/registry/
 - Token catalogue pages (provenance, official Solana mint, official Base representation): https://zodiacs.org/registry/aries/ … https://zodiacs.org/registry/pisces/ (same slug pattern for all twelve)
 - The thesis: https://zodiacs.org/thesis/
+- Dry operator/economic-interest/provenance disclosure, including visibly pending evidence: https://zodiacs.org/disclosure/
 - The archive (+ press kit; feeds at /archive/rss.xml and /archive/feed.json): https://zodiacs.org/archive/
 - Registry JSON (CC BY 4.0): https://zodiacs.org/registry/zodiacs.registry.json
 
@@ -66,6 +67,42 @@ Zodiacs SDK (for developers building astrology apps with verified Zodiac ownersh
 - Astrofolio relationship: https://zodiacs.org/sdk/#astrofolio
 - Interactive Simastry Aura example: https://zodiacs.org/sdk/examples/simastry-aura/
 
+Read-only verifier quickstart:
+```ts
+import { getRepresentationByAddress } from "@zodiacs/sdk/core";
+
+const record = getRepresentationByAddress(pastedAddress);
+const status = record
+  ? `${record.sign}: official ${record.chain} ${record.kind} representation`
+  : "not found in the official Zodiacs.org registry";
+```
+
+Astrology engine (target `@zodiacs/engine@0.1.0`):
+- Typed API docs: https://zodiacs.org/sdk/engine/
+- Core is synchronous, browser-first, Node-compatible, tree-shakeable, and performs no network request.
+- Public APIs: `positions`, `natalChart`, `transits`, `synastry`, `moonPhase`, `saturnReturn`; optional local-time/place adapter: `@zodiacs/engine/geo`.
+- The site currently consumes the exact in-repository 0.1.0 pack artifact. An authorized maintainer must confirm external npm publication before an agent assumes `npm install` availability.
+
+Natal-chart quickstart:
+```ts
+import { natalChart } from "@zodiacs/engine";
+
+const chart = natalChart({
+  utc: "1990-06-15T12:30:00Z",
+  latitude: 40.7128,
+  longitude: -74.006,
+  houseSystem: "whole"
+});
+```
+
+Widget package (target `@zodiacs/widgets@0.1.0`):
+```ts
+import { mountMoonWidget } from "@zodiacs/widgets";
+
+mountMoonWidget("#moon", { theme: "dark", accent: "#7B6DA8" });
+```
+Canonical iframe routes are `/embed/moon/`, `/embed/sky/`, and `/embed/chart/`. Themes are `dark|light`; `accent` is an opaque six-digit hex color, and the first-party document adjusts its luminance when needed to reach WCAG AA (4.5:1) against the selected field. Attribution inside the iframe is mandatory and non-removable. The package adds no analytics, cookies, storage, wallet access, signing, or transaction code.
+
 Full AI context: https://zodiacs.org/llms-full.txt
 
-Read-only posture (collector's wing): Official registry. Public reads. No custody. No signing. No transactions. Nothing on the site is financial advice. The astrology tools collect no birth data server-side.
+Read-only posture (collector's wing): Official registry. Public reads. Paste-address verification. No custody. No wallet connection. No signing. No transactions. Unknown addresses are reported only as “not found in the official Zodiacs.org registry.” Optional market context never changes identity status. Nothing on the site is financial advice. Astrology computation stays on-device; do not transmit birth data to a chart server.

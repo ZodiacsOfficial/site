@@ -53,6 +53,8 @@ function contactReceipt(contact: TodayContact): string {
   ].join(' · ');
 }
 
+const WEB_PUSH_ENABLED = import.meta.env.PUBLIC_WEB_PUSH_ENABLED === '1';
+
 export default function TodayBrief() {
   const { profile, ready } = useProfile();
   const [streak, setStreak] = useState<number | null>(null);
@@ -68,7 +70,7 @@ export default function TodayBrief() {
     }
     setStreak(recordTodayOpen(window.localStorage).count);
     void import('../../lib/transits').then(setTransitsModule).catch(() => {});
-    if (returning) {
+    if (returning && WEB_PUSH_ENABLED) {
       void import('../PushOptIn').then(setPushModule).catch(() => {});
     }
     (window as Window & {

@@ -1,3 +1,5 @@
+import { GROWTH_UI_EN } from './growth';
+
 const en = {
     navPrimary: 'Primary',
     navSigns: 'Signs',
@@ -330,6 +332,7 @@ const en = {
     needsTime: 'needs a time',
     compareThese: 'Compare these two charts',
     addAnotherChart: 'Add another chart',
+    ...GROWTH_UI_EN,
 } as const;
 
 export default en;

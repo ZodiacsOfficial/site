@@ -216,8 +216,12 @@ describe('astrology localization', () => {
         english.lines.map((line) => line.receipt.match(/house (\d+)/)?.[1] ?? null),
       );
       const visibleFrench = french.lines.map((line) => `${line.text} ${line.receipt}`).join(' ');
+      // Uranus, sextile, and opposition are spelled identically in French, so
+      // they cannot mark English leakage (today's sky triggers them whenever
+      // those bodies or aspects feature). Mars, Jupiter, Neptune, and Cancer
+      // were already omitted for the same reason.
       expect(visibleFrench).not.toMatch(
-        /\b(?:Sun|Moon|Mercury|Venus|Saturn|Uranus|Pluto|Taurus|Gemini|Scorpio|Sagittarius|Capricorn|Aquarius|Pisces|house|retrograde|Waning|Waxing|Quarter|Gibbous|conjunction|sextile|square|trine|opposition)\b/,
+        /\b(?:Sun|Moon|Mercury|Venus|Saturn|Pluto|Taurus|Gemini|Scorpio|Sagittarius|Capricorn|Aquarius|Pisces|house|retrograde|Waning|Waxing|Quarter|Gibbous|conjunction|square|trine)\b/,
       );
     }
   });

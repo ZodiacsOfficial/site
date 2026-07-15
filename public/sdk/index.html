@@ -37,6 +37,13 @@
     "@context": "https://schema.org",
     "@graph": [
       {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Zodiacs.org", "item": "https://zodiacs.org/" },
+          { "@type": "ListItem", "position": 2, "name": "SDK", "item": "https://zodiacs.org/sdk/" }
+        ]
+      },
+      {
         "@type": "SoftwareApplication",
         "@id": "https://zodiacs.org/sdk/#software",
         "name": "Zodiacs SDK",
@@ -2549,7 +2556,9 @@ const promptContext = {
 
       <footer>
         <button class="assistant-link" type="button" data-assistant-open aria-haspopup="dialog">Ask the site</button>
-        · Zodiacs.org · Official registry · MMXXVI
+        · Zodiacs.org · Official registry · Est. <span data-registry-established>MMXXIV</span> ·
+        <a href="/disclosure/" data-i18n="disclosure.linkLabel">Disclosure</a> ·
+        <a href="/disclosure/#origin" data-i18n="disclosure.provenancePendingShort">Deploy provenance pending</a>
       </footer>
     </main>
   </div>

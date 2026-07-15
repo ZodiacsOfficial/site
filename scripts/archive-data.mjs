@@ -10,6 +10,8 @@
 //   - Editorial text (title, lede, body) stays in the registry voice:
 //     factual, past-tense, no forward-looking claims, no recommendations.
 
+import { EN } from '../src/strings/en.mjs';
+
 export const ARCHIVE_META = {
   title: 'The Archive',
   tagline: 'What the record remembers.',
@@ -21,6 +23,69 @@ export const ARCHIVE_META = {
 };
 
 export const ENTRY_TYPES = ['moment', 'coverage', 'origin', 'context'];
+
+/**
+ * Receipt links are the direct record for an entry. Contextual and secondary
+ * reporting stays in `sources`; an `archivedUrl` is left empty until the
+ * operator supplies a real archive rather than a guessed one.
+ */
+function isAbsoluteHttpUrl(value) {
+  if (typeof value !== 'string') return false;
+  try {
+    const parsed = new URL(value);
+    return (parsed.protocol === 'http:' || parsed.protocol === 'https:') && Boolean(parsed.hostname);
+  } catch {
+    return false;
+  }
+}
+
+export function validateArchiveReceipts(entries) {
+  if (!Array.isArray(entries)) throw new TypeError('Archive entries must be an array');
+
+  for (const entry of entries) {
+    const id = entry?.id || '(unknown)';
+    if (!Array.isArray(entry?.receipts)) {
+      throw new TypeError(`Archive entry ${id} must define a receipts array`);
+    }
+
+    entry.receipts.forEach((receipt, index) => {
+      const prefix = `Archive receipt ${id}[${index}]`;
+      if (!receipt || typeof receipt !== 'object' || Array.isArray(receipt)) {
+        throw new TypeError(`${prefix} must be an object`);
+      }
+      if (typeof receipt.label !== 'string' || !receipt.label.trim()) {
+        throw new TypeError(`${prefix}.label must be a non-empty string`);
+      }
+      if (!isAbsoluteHttpUrl(receipt.url)) {
+        throw new TypeError(`${prefix}.url must be an absolute HTTP(S) URL`);
+      }
+      if (typeof receipt.archivedUrl !== 'string') {
+        throw new TypeError(`${prefix}.archivedUrl must be a string`);
+      }
+      if (receipt.archivedUrl && !isAbsoluteHttpUrl(receipt.archivedUrl)) {
+        throw new TypeError(`${prefix}.archivedUrl must be empty or an absolute HTTP(S) URL`);
+      }
+    });
+  }
+}
+
+export function listZeroReceiptEntryIds(entries = ARCHIVE_ENTRIES) {
+  if (!Array.isArray(entries)) throw new TypeError('Archive entries must be an array');
+  return entries
+    .filter((entry) => !Array.isArray(entry?.receipts) || entry.receipts.length === 0)
+    .map((entry) => entry?.id || '(unknown)');
+}
+
+export function hasArchivedPrimaryReceipt(entry) {
+  return Array.isArray(entry?.receipts) && entry.receipts.some(
+    (receipt) => typeof receipt?.archivedUrl === 'string' && receipt.archivedUrl.trim() !== '',
+  );
+}
+
+export function receiptVerificationState(entry) {
+  if (!entry?.requiresArchivedPrimaryReceipt) return null;
+  return hasArchivedPrimaryReceipt(entry) ? 'verified' : 'pending';
+}
 
 // Rendered newest-first; `date` is the sort key (YYYY-MM-DD). When a moment
 // has only year or month precision, `dateDisplay` overrides the rendered
@@ -77,6 +142,21 @@ export const ARCHIVE_ENTRIES = [
       address: '7Zt2KUh5mkpEpPGcNcFy51aGkh9Ycb5ELcqRH1n2GmAe',
       sign: 'libra'
     },
+    requiresArchivedPrimaryReceipt: true,
+    receipts: [
+      {
+        label: EN['archive.entries.accidental-libra.receipts.wrongLibra'],
+        url: 'https://x.com/stoolpresidente/status/1891526647033024920',
+        // [OPERATOR TO SUPPLY ARCHIVED PRIMARY SOURCE]
+        archivedUrl: ''
+      },
+      {
+        label: EN['archive.entries.accidental-libra.receipts.mintAddress'],
+        url: 'https://x.com/stoolpresidente/status/1891528769770279114',
+        // [OPERATOR TO SUPPLY ARCHIVED PRIMARY SOURCE]
+        archivedUrl: ''
+      }
+    ],
     sources: [
       { label: 'The re-entry post · @stoolpresidente',
         url: 'https://x.com/stoolpresidente/status/1891526130588406008' },
@@ -108,6 +188,13 @@ export const ARCHIVE_ENTRIES = [
         sourceUrl: 'https://x.com/inversebrah/status/1887520374964867250'
       }
     ],
+    receipts: [
+      {
+        label: EN['archive.entries.zodiac-iwo.receipts.primary'],
+        url: 'https://x.com/inversebrah/status/1887520374964867250',
+        archivedUrl: ''
+      }
+    ],
     sources: [
       { label: 'The Libra poll, the week before the Portnoy moment',
         url: 'https://x.com/inversebrah/status/1890545754256572583' }
@@ -136,6 +223,13 @@ export const ARCHIVE_ENTRIES = [
         sourceUrl: 'https://x.com/wantonwallet/status/1883692206349021677'
       }
     ],
+    receipts: [
+      {
+        label: EN['archive.entries.onboarding-wave.receipts.primary'],
+        url: 'https://x.com/wantonwallet/status/1883692206349021677',
+        archivedUrl: ''
+      }
+    ],
     sources: [],
     signs: []
   },
@@ -162,6 +256,13 @@ export const ARCHIVE_ENTRIES = [
         sourceUrl: 'https://x.com/iJaadee/status/1880988151805538587'
       }
     ],
+    receipts: [
+      {
+        label: EN['archive.entries.astrology-girlies.receipts.primary'],
+        url: 'https://x.com/iJaadee/status/1880988151805538587',
+        archivedUrl: ''
+      }
+    ],
     sources: [],
     signs: []
   },
@@ -184,6 +285,13 @@ export const ARCHIVE_ENTRIES = [
         sourceUrl: 'https://x.com/Rewkang/status/1867976901501009965'
       }
     ],
+    receipts: [
+      {
+        label: EN['archive.entries.oldest-meme.receipts.primary'],
+        url: 'https://x.com/Rewkang/status/1867976901501009965',
+        archivedUrl: ''
+      }
+    ],
     sources: [
       { label: 'The original post on X', url: 'https://x.com/Rewkang/status/1867976901501009965' },
       { label: 'The thesis, on this site', url: '/thesis/' }
@@ -204,6 +312,13 @@ export const ARCHIVE_ENTRIES = [
         text: 'The astrologers have arrived',
         attribution: 'TikTokInvestors · @TikTokInvestors',
         sourceUrl: 'https://x.com/TikTokInvestors/status/1859805329145594113'
+      }
+    ],
+    receipts: [
+      {
+        label: EN['archive.entries.astrologers-arrive.receipts.primary'],
+        url: 'https://x.com/TikTokInvestors/status/1859805329145594113',
+        archivedUrl: ''
       }
     ],
     sources: [],
@@ -229,6 +344,13 @@ export const ARCHIVE_ENTRIES = [
         sourceUrl: 'https://www.numinousrealm.com/news/horoscopes-to-hodl-building-your-astrofolio'
       }
     ],
+    receipts: [
+      {
+        label: EN['archive.entries.horoscopes-to-hodl.receipts.primary'],
+        url: 'https://www.numinousrealm.com/news/horoscopes-to-hodl-building-your-astrofolio',
+        archivedUrl: ''
+      }
+    ],
     sources: [
       { label: '“Horoscopes to Hodl: Building Your Astrofolio” · Somya Desai, Numinous Realm',
         url: 'https://www.numinousrealm.com/news/horoscopes-to-hodl-building-your-astrofolio' }
@@ -251,6 +373,13 @@ export const ARCHIVE_ENTRIES = [
       'and machine-readable.'
     ],
     quotes: [],
+    receipts: [
+      {
+        label: EN['archive.entries.origin.receipts.registry'],
+        url: 'https://zodiacs.org/registry/zodiacs.registry.json',
+        archivedUrl: ''
+      }
+    ],
     sources: [
       { label: 'The registry, machine-readable', url: '/registry/zodiacs.registry.json' }
     ],
@@ -276,6 +405,13 @@ export const ARCHIVE_ENTRIES = [
           'value. Just a pure belief system.',
         attribution: 'Changpeng Zhao (CZ)',
         sourceUrl: 'https://x.com/cz_binance/status/1983514879643292126'
+      }
+    ],
+    receipts: [
+      {
+        label: EN['archive.entries.pure-belief.receipts.primary'],
+        url: 'https://x.com/cz_binance/status/1983514879643292126',
+        archivedUrl: ''
       }
     ],
     sources: [

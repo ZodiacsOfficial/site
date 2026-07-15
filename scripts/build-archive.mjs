@@ -14,9 +14,19 @@
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
-import { ARCHIVE_META, ENTRY_TYPES, ARCHIVE_ENTRIES, PRESS_KIT } from './archive-data.mjs';
+import {
+  ARCHIVE_META,
+  ENTRY_TYPES,
+  ARCHIVE_ENTRIES,
+  PRESS_KIT,
+  listZeroReceiptEntryIds,
+  receiptVerificationState,
+  validateArchiveReceipts,
+} from './archive-data.mjs';
 import { CHANNELS } from './sign-data.mjs';
 import { wingNavHtml, wingNavCss, wingNavScript } from './wing-nav.mjs';
+import { REGISTRY_ESTABLISHED_YEAR } from '../src/lib/registry-establishment.mjs';
+import { EN } from '../src/strings/en.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const root = resolve(here, '..');
@@ -42,6 +52,7 @@ function solanaMintFor(slug) {
 }
 
 // ---- Validation (the build fails rather than shipping a wrong record) ----
+validateArchiveReceipts(ARCHIVE_ENTRIES);
 {
   const ids = new Set();
   for (const entry of ARCHIVE_ENTRIES) {
@@ -54,6 +65,12 @@ function solanaMintFor(slug) {
     if (!ENTRY_TYPES.includes(entry.type)) {
       throw new Error(`Unknown type on ${entry.id}: ${entry.type}`);
     }
+    if (
+      entry.requiresArchivedPrimaryReceipt !== undefined &&
+      typeof entry.requiresArchivedPrimaryReceipt !== 'boolean'
+    ) {
+      throw new Error(`Bad requiresArchivedPrimaryReceipt on ${entry.id}`);
+    }
     for (const slug of entry.signs || []) assetFor(slug);
     if (entry.mintProof) {
       const official = solanaMintFor(entry.mintProof.sign);
@@ -65,6 +82,11 @@ function solanaMintFor(slug) {
       }
     }
   }
+}
+
+const zeroReceiptIds = listZeroReceiptEntryIds(ARCHIVE_ENTRIES);
+if (zeroReceiptIds.length > 0) {
+  console.warn(`[archive] Entries with zero receipts: ${zeroReceiptIds.join(', ')}`);
 }
 
 const entries = [...ARCHIVE_ENTRIES].sort((a, b) => b.date.localeCompare(a.date));
@@ -103,9 +125,12 @@ function renderQuote(entry, quote) {
 function renderProof(entry) {
   if (!entry.mintProof) return '';
   const sign = assetFor(entry.mintProof.sign);
-  return `        <div class="arc__proof">
-          <span class="arc__tick" aria-hidden="true">✓</span>
-          <span class="arc__proof-text">Matches the official record</span>
+  const pendingPrimary = receiptVerificationState(entry) === 'pending';
+  const verifiedTick = pendingPrimary
+    ? ''
+    : '          <span class="arc__tick" aria-hidden="true">✓</span>\n';
+  return `        <div class="arc__proof${pendingPrimary ? ' arc__proof--pending' : ''}">
+${verifiedTick}          <span class="arc__proof-text">${esc(EN['archive.verifiedRegistry'])}</span>
           <a class="arc__proof-link" href="/registry/${entry.mintProof.sign}/">${esc(sign.displayName)} ↗</a>
           <a class="arc__proof-link" href="/registry/zodiacs.registry.json">Registry entry</a>
         </div>`;
@@ -114,9 +139,29 @@ function renderProof(entry) {
 function renderSigns(entry) {
   if (!entry.signs || !entry.signs.length) return '';
   const links = entry.signs.map((slug) =>
-    `<a href="/registry/${slug}/" aria-label="${escAttr(assetFor(slug).displayName)}"><img src="/assets/icons/${slug}.png" alt="" loading="lazy" decoding="async" /></a>`
+    `<a href="/registry/${slug}/" aria-label="${escAttr(assetFor(slug).displayName)}"><img src="/assets/zodiac-icons/48/${slug}.webp" width="18" height="18" alt="" loading="lazy" decoding="async" /></a>`
   ).join('');
   return `        <div class="arc__signs">${links}</div>`;
+}
+
+function renderReceipts(entry) {
+  if (!entry.receipts || !entry.receipts.length) return '';
+  const receiptLinks = entry.receipts.map((receipt) => {
+    const original = `<a class="arc__receipt" href="${escAttr(receipt.url)}" rel="noopener nofollow"><span>${esc(receipt.label)}</span><span class="arc__external" aria-hidden="true">↗</span></a>`;
+    const archived = receipt.archivedUrl
+      ? `<a class="arc__receipt arc__receipt--archive" href="${escAttr(receipt.archivedUrl)}" rel="noopener nofollow"><span>${esc(EN['archive.archivedReceipt'])}</span><span class="arc__external" aria-hidden="true">↗</span></a>`
+      : '';
+    return `          <span class="arc__receipt-pair">${original}${archived}</span>`;
+  }).join('\n');
+  return `        <div class="arc__receipts" aria-label="${escAttr(EN['archive.receiptsLabel'])}">
+          <span class="arc__receipts-label">${esc(EN['archive.receiptsLabel'])}</span>
+${receiptLinks}
+        </div>`;
+}
+
+function renderReceiptStatus(entry) {
+  if (receiptVerificationState(entry) !== 'pending') return '';
+  return `          <span class="arc__status arc__status--pending">${esc(EN['archive.pendingPrimary'])}</span>`;
 }
 
 function renderSources(entry) {
@@ -135,11 +180,12 @@ function renderEntry(entry) {
         <div class="arc__rail">
           <span class="arc__date">${esc(displayDate(entry))}</span>
           <span class="arc__type arc__type--${entry.type}">${esc(entry.type)}</span>
+${renderReceiptStatus(entry)}
         </div>
         <div class="arc__main">
         <h3 class="arc__title">${esc(entry.title)}</h3>
         <p class="arc__lede">${esc(entry.lede)}</p>
-${[body, quotes, renderProof(entry), renderSigns(entry), renderSources(entry)].filter(Boolean).join('\n')}
+${[body, quotes, renderProof(entry), renderSigns(entry), renderReceipts(entry), renderSources(entry)].filter(Boolean).join('\n')}
         </div>
       </article>`;
 }
@@ -272,7 +318,7 @@ ${JSON.stringify(jsonLd(), null, 2)}
       --surface: #0F121A; --surface-2: #151925;
       --hair: rgba(198,204,218,0.10); --hair-2: rgba(198,204,218,0.22); --hair-3: rgba(198,204,218,0.42);
       --gold: #C6CCDA; --gold-bright: #EEF1F7; --gold-deep: #8E96AB;
-      --live: #C6CCDA;
+      --live: #C6CCDA; --pending: #E0B080;
       --ink: #EEF1F7; --ink-2: #C6CCDA; --ink-dim: #8E96AB; --ink-mute: #7A8397;
       --serif: 'EB Garamond', Georgia, Cambria, serif;
       --mono: 'JetBrains Mono', ui-monospace, Menlo, Consolas, monospace;
@@ -429,6 +475,15 @@ ${JSON.stringify(jsonLd(), null, 2)}
     .arc__type--coverage { color: var(--ink-dim); }
     .arc__type--origin { color: var(--gold-bright); border-color: var(--hair-3); }
     .arc__type--context { color: var(--ink-mute); }
+    .arc__status {
+      padding: 4px 9px; border: 1px solid currentColor; border-radius: 999px;
+      font-family: var(--mono); font-size: 8.5px; line-height: 1.25;
+      letter-spacing: 0.16em; text-transform: uppercase;
+    }
+    .arc__status--pending {
+      color: var(--pending); background: rgba(224,176,128,0.08);
+      border-color: rgba(224,176,128,0.52);
+    }
     .arc__title {
       margin: 0 0 10px;
       font-family: var(--serif); font-weight: 400;
@@ -506,6 +561,12 @@ ${JSON.stringify(jsonLd(), null, 2)}
       transition: color 280ms var(--ease), border-bottom-color 280ms var(--ease);
     }
     .arc__proof-link:hover { color: var(--gold-bright); border-bottom-color: var(--gold); }
+    .arc__proof--pending {
+      border-color: rgba(224,176,128,0.34);
+      background:
+        linear-gradient(180deg, rgba(224,176,128,0.035), transparent 70%),
+        var(--surface);
+    }
 
     .arc__signs { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0; }
     .arc__signs a {
@@ -516,6 +577,31 @@ ${JSON.stringify(jsonLd(), null, 2)}
     .arc__signs a:hover { border-color: var(--hair-3); transform: translateY(-1px); }
     .arc__signs img { width: 18px; height: 18px; object-fit: contain; opacity: 0.72; }
     .arc__signs a:hover img { opacity: 1; }
+
+    .arc__receipts {
+      display: flex; flex-wrap: wrap; align-items: center; gap: 8px;
+      margin-top: 16px;
+    }
+    .arc__receipts-label {
+      margin-right: 2px; font-family: var(--mono); font-size: 8.5px;
+      letter-spacing: 0.22em; text-transform: uppercase; color: var(--ink-mute);
+    }
+    .arc__receipt-pair { display: inline-flex; flex-wrap: wrap; gap: 5px; }
+    .arc__receipt {
+      display: inline-flex; align-items: center; gap: 7px;
+      min-height: 30px; padding: 6px 10px; border: 1px solid var(--hair-2);
+      border-radius: 999px; background: rgba(198,204,218,0.045);
+      font-family: var(--mono); font-size: 8.5px; line-height: 1.35;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--ink-dim); text-decoration: none;
+      transition: color 280ms var(--ease), border-color 280ms var(--ease), background 280ms var(--ease);
+    }
+    .arc__receipt:hover {
+      color: var(--gold-bright); border-color: var(--hair-3);
+      background: rgba(198,204,218,0.09);
+    }
+    .arc__receipt--archive { color: var(--gold); }
+    .arc__external { color: var(--gold); font-size: 11px; line-height: 1; }
 
     .arc__sources { display: flex; flex-direction: column; gap: 8px; margin-top: 14px; }
     .arc__src {
@@ -653,7 +739,7 @@ ${JSON.stringify(jsonLd(), null, 2)}
         entries stand even when their links do not.
       </p>
       <div class="lead__meta">
-        <span>Since 2024</span>
+        <span>Since ${REGISTRY_ESTABLISHED_YEAR}</span>
         <span>·</span>
         <span>${entries.length} entries</span>
         <span>·</span>
@@ -691,6 +777,7 @@ ${renderPressKit()}
           <a href="/registry/#registry">Registry</a>
           <a href="/registry/#verify">Verify</a>
           <a href="/thesis/">Thesis</a>
+          <a href="/disclosure/">${esc(EN['disclosure.linkLabel'])}</a>
           <a href="/sdk/">SDK</a>
           <a href="/registry/zodiacs.registry.json">Record</a>
           <button class="assistant-link" type="button" data-assistant-open aria-haspopup="dialog">Ask the site</button>

@@ -74,8 +74,17 @@ owns that page.
   the files alone, don't regenerate or re-reference them)
 - `public/assets/pulse.json` / `distribution.json` ← weekly cron workflows
 
-`public/sw.js` is push-only: it must never add a `fetch` handler or cache site
-assets, because a caching service worker can serve stale static deploys.
+`public/sw.js` is a PWA worker — the owner approved superseding the old
+push-only rule (2026-07-15, WS4 merge decision). Strict invariants: HTML
+navigations and wing pages are network-first (a live deploy always wins;
+cache is only the offline fallback); `/registry/**.json` identity data is
+NEVER served from cache — offline is an honest network failure, not an old
+identity verdict; only hashed/immutable assets (`/_astro/`, fonts, icons)
+and `/data/` shards are cache-first; caches are versioned per build
+(`scripts/build-service-worker.mjs` stamps `CACHE_VERSION` between the
+`@build` markers; activate deletes old caches); push stays behind the
+build-time flag. Never make any HTML or registry-authority route
+cache-first — a caching worker can serve stale static deploys.
 
 CI re-runs the wing generators and fails on drift — always commit regenerated
 output together with the source edit.
