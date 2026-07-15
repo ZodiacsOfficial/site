@@ -215,7 +215,7 @@ ${JSON.stringify(jsonLd(m), null, 2)}
       --bg: #060709; --bg-2: #0A0C11;
       --surface: #0F121A; --surface-2: #151925;
       --hair: rgba(198,204,218,0.10); --hair-2: rgba(198,204,218,0.22); --hair-3: rgba(198,204,218,0.42);
-      --gold: #C6CCDA; --gold-bright: #EEF1F7; --gold-deep: #8E96AB;
+      --gold: #C6CCDA; --silver-bright: #EEF1F7; --gold-deep: #8E96AB;
       --live: #C6CCDA;
       --ink: #EEF1F7; --ink-2: #C6CCDA; --ink-dim: #8E96AB; --ink-mute: #7A8397;
       --serif: 'EB Garamond', Georgia, Cambria, serif;
@@ -328,7 +328,7 @@ ${JSON.stringify(jsonLd(m), null, 2)}
     .lot__epithet {
       margin: 0 0 10px; max-width: 30ch;
       font-family: var(--serif); font-style: italic;
-      font-size: clamp(19px, 3vw, 26px); line-height: 1.35; color: var(--gold-bright);
+      font-size: clamp(19px, 3vw, 26px); line-height: 1.35; color: var(--silver-bright);
       text-wrap: pretty;
     }
     .lot__dates {
@@ -419,7 +419,7 @@ ${JSON.stringify(jsonLd(m), null, 2)}
     }
     .note__lede::first-letter {
       font-size: 3.1em; float: left; line-height: 0.8;
-      padding: 6px 12px 0 0; color: var(--gold-bright); font-style: italic;
+      padding: 6px 12px 0 0; color: var(--silver-bright); font-style: italic;
     }
     .note p {
       margin: 0 0 20px;
@@ -475,7 +475,7 @@ ${JSON.stringify(jsonLd(m), null, 2)}
       border-bottom: 1px solid rgba(198,204,218,0.32); padding-bottom: 2px;
       transition: color 280ms var(--ease), border-bottom-color 280ms var(--ease);
     }
-    .rec__link:hover { color: var(--gold-bright); border-bottom-color: var(--gold); }
+    .rec__link:hover { color: var(--silver-bright); border-bottom-color: var(--gold); }
 
     .copychip {
       display: inline-flex; align-items: center; gap: 8px;
@@ -515,7 +515,7 @@ ${JSON.stringify(jsonLd(m), null, 2)}
       text-transform: uppercase; color: var(--ink-mute); text-decoration: none;
       border-bottom: 1px solid transparent;
     }
-    .market__source:hover { color: var(--gold-bright); border-bottom-color: var(--hair-3); }
+    .market__source:hover { color: var(--silver-bright); border-bottom-color: var(--hair-3); }
     .market__grid { display: grid; grid-template-columns: 1fr 1fr; }
     @media (min-width: 640px) { .market__grid { grid-template-columns: repeat(3, 1fr); } }
     .market__cell { min-height: 72px; padding: 13px 14px 12px; border-bottom: 1px solid var(--hair); border-right: 1px solid var(--hair); }
@@ -527,7 +527,7 @@ ${JSON.stringify(jsonLd(m), null, 2)}
     .market__k { margin-bottom: 7px; font-family: var(--mono); font-size: 8.5px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-mute); }
     .market__v { font-family: var(--serif); font-style: italic; font-size: 15px; line-height: 1.15; color: var(--ink-2); }
     .market__v--mono { font-family: var(--mono); font-style: normal; font-size: 11.5px; letter-spacing: 0.03em; }
-    .market__v--up { color: var(--gold-bright); }
+    .market__v--up { color: var(--silver-bright); }
     .market__v--down { color: var(--vermilion); }
     .market__state { margin: 0; padding: 15px 16px 16px; font-family: var(--serif); font-style: italic; font-size: 13.5px; color: var(--ink-mute); }
     .market__state::before { content: "—"; margin-right: 8px; font-style: normal; }
@@ -549,9 +549,9 @@ ${JSON.stringify(jsonLd(m), null, 2)}
       box-shadow: inset 0 1px 0 rgba(238,241,247,0.12), inset 0 -1px 0 rgba(0,0,0,0.5);
       transition: border-color 420ms var(--ease), color 420ms var(--ease), transform 220ms var(--ease);
     }
-    .btn:hover { border-color: var(--gold); color: var(--gold-bright); }
+    .btn:hover { border-color: var(--gold); color: var(--silver-bright); }
     .btn:active { transform: scale(0.985); }
-    .btn--primary { color: var(--gold-bright); }
+    .btn--primary { color: var(--silver-bright); }
     .btn--primary::before {
       content: ""; position: absolute; inset: 4px;
       border: 1px solid var(--hair); pointer-events: none;
@@ -571,7 +571,7 @@ ${JSON.stringify(jsonLd(m), null, 2)}
       max-width: 60ch; line-height: 1.8;
     }
     .acq__note a { color: var(--ink-dim); text-decoration: none; border-bottom: 1px solid rgba(198,204,218,0.22); }
-    .acq__note a:hover { color: var(--gold-bright); border-bottom-color: var(--gold); }
+    .acq__note a:hover { color: var(--silver-bright); border-bottom-color: var(--gold); }
     .acq__shelf {
       margin: 18px 0 0;
       display: flex; align-items: center; gap: 10px;
@@ -582,7 +582,7 @@ ${JSON.stringify(jsonLd(m), null, 2)}
       text-transform: uppercase; color: var(--ink-2);
       transition: border-color 320ms var(--ease), color 320ms var(--ease);
     }
-    .acq__shelf:hover { border-color: var(--gold); color: var(--gold-bright); }
+    .acq__shelf:hover { border-color: var(--gold); color: var(--silver-bright); }
     /* Official sign icon, from the SDK asset set */
     .acq__shelf-icon { display: block; flex: 0 0 auto; width: 18px; height: 18px; }
     .acq__shelf-arr { margin-left: auto; color: var(--gold); }
@@ -792,7 +792,7 @@ ${beats.map((b) => `        <div class="prov__item">
         </a>
       </nav>
       <nav class="strip" aria-label="All twelve signs">
-${SIGN_ORDER.map((s) => `        <a href="${signPath(s)}"${s === m.slug ? ' class="is-current" aria-current="page"' : ''} aria-label="${esc(assetFor(s).displayName)}"><img src="/assets/icons/${s}.png" alt="" loading="lazy" decoding="async" /></a>`).join('\n')}
+${SIGN_ORDER.map((s) => `        <a href="${signPath(s)}"${s === m.slug ? ' class="is-current" aria-current="page"' : ''} aria-label="${esc(assetFor(s).displayName)}"><img src="/assets/zodiac-icons/48/${s}.webp" alt="" loading="lazy" decoding="async" /></a>`).join('\n')}
       </nav>
     </section>
 

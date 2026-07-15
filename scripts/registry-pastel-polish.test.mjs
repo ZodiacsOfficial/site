@@ -4,6 +4,7 @@ import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
+const legacyIconPath = ['/assets', 'icons'].join('/') + '/';
 const signs = [
   ['aries', 'Aries'],
   ['taurus', 'Taurus'],
@@ -32,9 +33,13 @@ describe('registry pastel polish', () => {
     expect(source).toContain('src={`/assets/zodiac-icons/48/${s.asset.sign}.webp`}');
     expect(source).toContain('src={`/assets/zodiac-icons/128/${sign.asset.sign}.webp`}');
     expect(source).toContain('src={`/assets/zodiac-icons/48/${r.slug}.webp`}');
+    expect(source).toContain('src={`/assets/zodiac-icons/48/${slug}.webp`}');
+    expect(source).toContain('src={`/assets/zodiac-icons/48/${h.sign.asset.sign}.webp`}');
+    expect(source).not.toContain(legacyIconPath);
     expect(source).toContain('className="pulse__bar-k pulse__bar-k--sign"');
     expect(bundle).toContain('/assets/zodiac-icons/48/');
     expect(bundle).toContain('/assets/zodiac-icons/128/');
+    expect(bundle).not.toContain(legacyIconPath);
     expect(registry).toContain('@media (prefers-reduced-transparency: reduce)');
     expect(registry).toContain('@media (prefers-contrast: more)');
   });
@@ -58,6 +63,8 @@ describe('registry pastel polish', () => {
     expect(html).toContain(`srcset="/assets/zodiac-icons/400/${slug}.avif"`);
     expect(html).toContain(`src="/assets/zodiac-icons/400/${slug}.webp"`);
     expect(html).toContain('width="112" height="112" alt=""');
+    expect(html.match(/\/assets\/zodiac-icons\/48\/[a-z-]+\.webp/g)).toHaveLength(12);
+    expect(html).not.toContain(legacyIconPath);
     expect(html).not.toContain('class="lot__icon"');
     expect(html).not.toContain('<span class="glyph">');
   });
@@ -71,5 +78,22 @@ describe('registry pastel polish', () => {
       );
     }
     expect(thesis.match(/class="disc-sign__icon"/g)).toHaveLength(12);
+  });
+
+  it('uses neutral silver-bright naming throughout the Registry wing', async () => {
+    const paths = [
+      'scripts/build-sign-pages.mjs',
+      'scripts/build-archive.mjs',
+      'public/assets/discovery.css',
+      'public/registry/index.html',
+      ...signs.map(([slug]) => `public/registry/${slug}/index.html`),
+      'public/archive/index.html',
+      'public/sdk/index.html',
+      'public/thesis/index.html',
+    ];
+    const files = await Promise.all(paths.map(read));
+
+    expect(files.every((file) => file.includes('--silver-bright'))).toBe(true);
+    expect(files.every((file) => !file.includes('--gold-bright'))).toBe(true);
   });
 });

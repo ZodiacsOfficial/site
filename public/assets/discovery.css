@@ -32,7 +32,7 @@
   --ink-2: #C6CCDA;
   --ink-dim: #8E96AB;
   --gold: #C6CCDA;          /* legacy var names kept; values are void now */
-  --gold-bright: #EEF1F7;
+  --silver-bright: #EEF1F7;
   --hair: rgba(198, 204, 218, 0.16);
   --serif: 'EB Garamond', Georgia, "Times New Roman", serif;
   --sans: 'Instrument Sans', system-ui, -apple-system, sans-serif;
@@ -57,7 +57,7 @@ body {
 }
 
 a { color: inherit; text-decoration: none; }
-a:hover { color: var(--gold-bright); }
+a:hover { color: var(--silver-bright); }
 
 .page {
   width: min(100% - 32px, 880px);

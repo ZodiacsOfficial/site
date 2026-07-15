@@ -93,7 +93,7 @@
       --bg: #060709; --bg-2: #0A0C11;
       --surface: #0F121A; --surface-2: #151925;
       --hair: rgba(198,204,218,0.10); --hair-2: rgba(198,204,218,0.22); --hair-3: rgba(198,204,218,0.42);
-      --gold: #C6CCDA; --gold-bright: #EEF1F7; --gold-deep: #8E96AB;
+      --gold: #C6CCDA; --silver-bright: #EEF1F7; --gold-deep: #8E96AB;
       --ink: #EEF1F7; --ink-2: #C6CCDA; --ink-dim: #8E96AB; --ink-mute: #7A8397;
       --celestial: #3E6378; --live: #C6CCDA;
       --serif: 'EB Garamond', Georgia, Cambria, 'Times New Roman', serif;
@@ -237,7 +237,7 @@
       text-wrap: balance; max-width: 13ch;
       text-shadow: 0 2px 28px rgba(0,0,0,0.55);
     }
-    .hero__title .it { font-style: italic; color: var(--gold-bright); }
+    .hero__title .it { font-style: italic; color: var(--silver-bright); }
     .hero__sub {
       margin: 0; max-width: 44ch;
       font-family: var(--serif); font-style: italic;
@@ -266,7 +266,7 @@
       font-size: clamp(25px, 3.8vw, 34px); line-height: 1.08; color: var(--ink);
       letter-spacing: -0.008em; text-wrap: balance;
     }
-    .mov__title .it { font-style: italic; color: var(--gold-bright); }
+    .mov__title .it { font-style: italic; color: var(--silver-bright); }
     .mov p {
       margin: 0 0 18px; max-width: 64ch;
       font-size: 17px; line-height: 1.62; color: var(--ink-2); text-wrap: pretty;
@@ -275,7 +275,7 @@
     .mov p:last-child { margin-bottom: 0; }
     .mov .dc {
       float: left; font-family: var(--serif); font-style: italic;
-      font-size: 52px; line-height: 0.8; color: var(--gold-bright);
+      font-size: 52px; line-height: 0.8; color: var(--silver-bright);
       padding: 6px 12px 0 0;
     }
     .mov ul { margin: 0 0 18px; padding-left: 18px; max-width: 62ch; }
@@ -308,7 +308,7 @@
     .stats__cell { background: var(--bg); padding: 20px 18px 16px; }
     .stats__k {
       font-family: var(--serif); font-size: 34px; line-height: 1;
-      color: var(--gold-bright); letter-spacing: -0.01em;
+      color: var(--silver-bright); letter-spacing: -0.01em;
     }
     .stats__v { margin-top: 8px; font-family: var(--mono); font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-dim); line-height: 1.6; }
     /* Provenance — every figure names the kind of source it came from. */
@@ -334,7 +334,7 @@
       border-bottom: 1px solid rgba(198,204,218,0.22); padding-bottom: 1px;
       transition: color 320ms var(--ease), border-bottom-color 320ms var(--ease);
     }
-    .mov .stats__src a:hover { color: var(--gold-bright); border-bottom-color: var(--gold); }
+    .mov .stats__src a:hover { color: var(--silver-bright); border-bottom-color: var(--gold); }
 
     /* The Pulse — attention instrument */
     .pulse {
@@ -377,7 +377,7 @@
     }
     .pulse__v {
       font-family: var(--serif); font-size: 30px; line-height: 1;
-      color: var(--gold-bright); letter-spacing: -0.01em;
+      color: var(--silver-bright); letter-spacing: -0.01em;
       font-feature-settings: "tnum" 1;
     }
     .pulse__v--x { color: var(--ink); }
@@ -397,7 +397,7 @@
       white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
     .pulse__bar-track { display: block; height: 10px; border: 1px solid var(--hair); background: rgba(0,0,0,0.35); position: relative; }
-    .pulse__bar-tick { position: absolute; top: -3px; bottom: -3px; width: 1px; background: var(--gold-bright); opacity: 0.8; pointer-events: none; }
+    .pulse__bar-tick { position: absolute; top: -3px; bottom: -3px; width: 1px; background: var(--silver-bright); opacity: 0.8; pointer-events: none; }
     .mov .pulse__claim { margin: 0 0 14px; font-family: var(--serif); font-style: italic; font-size: 15.5px; line-height: 1.5; color: var(--ink); max-width: 56ch; }
     .pulse__bar-fill {
       display: block; height: 100%;
@@ -413,7 +413,7 @@
       border-bottom: 1px solid rgba(198,204,218,0.22); padding-bottom: 2px;
       transition: color 320ms var(--ease), border-bottom-color 320ms var(--ease);
     }
-    .pulse__out:hover { color: var(--gold-bright); border-bottom-color: var(--gold); }
+    .pulse__out:hover { color: var(--silver-bright); border-bottom-color: var(--gold); }
     .pulse__est {
       display: inline-block; font-family: var(--mono); font-size: 7.5px;
       letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold);
@@ -479,7 +479,7 @@
       color: var(--ink-dim); text-decoration: none; white-space: nowrap;
       border-bottom: 1px solid rgba(198,204,218,0.22); padding-bottom: 1px;
     }
-    .disc-verify:hover { color: var(--gold-bright); border-bottom-color: var(--gold); }
+    .disc-verify:hover { color: var(--silver-bright); border-bottom-color: var(--gold); }
     .mov .disc-updated {
       margin: 10px 0 0; font-family: var(--mono); font-size: 9.5px;
       letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-mute);
@@ -561,7 +561,7 @@
       padding: 2px 7px; text-decoration: none; white-space: nowrap;
     }
     a.chip-ref { transition: color 320ms var(--ease), border-color 320ms var(--ease); }
-    a.chip-ref:hover { color: var(--gold-bright); border-color: var(--gold); }
+    a.chip-ref:hover { color: var(--silver-bright); border-color: var(--gold); }
 
     /* Sign-off */
     .sig {
@@ -599,7 +599,7 @@
       mask: var(--m) center / contain no-repeat;
       transition: opacity 320ms var(--ease), background 320ms var(--ease);
     }
-    .twelve__item:hover .af-glyph { opacity: 1; background: var(--gold-bright); }
+    .twelve__item:hover .af-glyph { opacity: 1; background: var(--silver-bright); }
     .twelve__name { font-family: var(--mono); font-size: 9px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--ink-dim); }
     .twelve__item:hover .twelve__name { color: var(--ink-2); }
 
@@ -613,7 +613,7 @@
       text-transform: uppercase; color: var(--ink-2);
       transition: border-color 320ms var(--ease), color 320ms var(--ease);
     }
-    .cont a:hover { border-color: var(--gold); color: var(--gold-bright); }
+    .cont a:hover { border-color: var(--gold); color: var(--silver-bright); }
     .cont .arr { color: var(--gold); }
 
     /* ── Footer ── */
