@@ -32,6 +32,8 @@ export const GROWTH_UI_EN = {
 
 export const GROWTH_UI_ES = {
   ...GROWTH_UI_EN,
+  footerWidgets: 'Widgets',
+  footerDisclosure: 'Declaraciones',
   emailCaptureKicker: 'Pronóstico semanal gratuito',
   emailCaptureTitle: 'Tu semana por delante.',
   emailCaptureCopy: 'Un pronóstico semanal para tu signo. Gratis y con baja en cualquier momento.',

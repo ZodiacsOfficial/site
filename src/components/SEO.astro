@@ -13,13 +13,15 @@ import {
   type Locale,
 } from '../lib/i18n';
 import {
-  SCHEMA_EN,
   SOCIAL_PROFILES,
   WEB_APPLICATION_PATHS,
-  breadcrumbLabel,
-  ogAltForPath,
   ogImageForPath,
 } from '../strings/seo.en.mjs';
+import {
+  breadcrumbLabelForLocale,
+  ogAltForPathAndLocale,
+  schemaCatalog,
+} from '../strings/seo';
 
 interface Props {
   title: string;
@@ -49,10 +51,11 @@ const {
 
 const site = 'https://zodiacs.org';
 const locale = normalizeLocale(rawLocale);
+const schema = schemaCatalog(locale);
 const canonical = site + canonicalPath;
 const contentPath = stripLocale(canonicalPath);
 const image = explicitImage ?? ogImageForPath(contentPath) ?? '/assets/og/v2/share.png';
-const imageAlt = explicitImageAlt ?? ogAltForPath(contentPath);
+const imageAlt = explicitImageAlt ?? ogAltForPathAndLocale(contentPath, locale);
 const imageUrl = image.startsWith('http') ? image : site + image;
 const alternates = noindex
   ? null
@@ -71,8 +74,8 @@ const ogLocaleAlternates = alternateEntries
 const organization = {
   '@type': 'Organization',
   '@id': 'https://zodiacs.org/#org',
-  name: SCHEMA_EN.organizationName,
-  alternateName: SCHEMA_EN.organizationAlternateName,
+  name: schema.organizationName,
+  alternateName: schema.organizationAlternateName,
   url: 'https://zodiacs.org/',
   logo: {
     '@type': 'ImageObject',
@@ -120,14 +123,14 @@ const pageNodes = jsonLd
         name: title.replace(/\s*[|—]\s*Zodiacs\.org.*$/i, ''),
         url: canonical,
         description,
-        applicationCategory: SCHEMA_EN.applicationCategory,
-        operatingSystem: SCHEMA_EN.operatingSystem,
-        browserRequirements: SCHEMA_EN.browserRequirements,
+        applicationCategory: schema.applicationCategory,
+        operatingSystem: schema.operatingSystem,
+        browserRequirements: schema.browserRequirements,
         isAccessibleForFree: true,
         offers: {
           '@type': 'Offer',
-          price: SCHEMA_EN.freePrice,
-          priceCurrency: SCHEMA_EN.currency,
+          price: schema.freePrice,
+          priceCurrency: schema.currency,
         },
         image: imageUrl,
         publisher: { '@id': organization['@id'] },
@@ -145,7 +148,7 @@ function automaticBreadcrumb(): Record<string, unknown> | null {
     return {
       '@type': 'BreadcrumbList',
       itemListElement: [
-        { '@type': 'ListItem', position: 1, name: SCHEMA_EN.breadcrumbHome, item: `${site}/` },
+        { '@type': 'ListItem', position: 1, name: schema.breadcrumbHome, item: `${site}/` },
         {
           '@type': 'ListItem',
           position: 2,
@@ -161,7 +164,7 @@ function automaticBreadcrumb(): Record<string, unknown> | null {
     {
       '@type': 'ListItem',
       position: 1,
-      name: SCHEMA_EN.breadcrumbHome,
+      name: schema.breadcrumbHome,
       item: `${site}${localePrefix || '/'}`,
     },
   ];
@@ -171,7 +174,7 @@ function automaticBreadcrumb(): Record<string, unknown> | null {
     itemListElement.push({
       '@type': 'ListItem',
       position: index + 2,
-      name: breadcrumbLabel(segment),
+      name: breadcrumbLabelForLocale(segment, locale),
       item: `${site}${current}/`,
     });
   });
@@ -189,14 +192,14 @@ const automaticWebApplication = WEB_APPLICATION_PATHS.includes(normalizedCanonic
       name: title.replace(/\s*[|—]\s*Zodiacs\.org.*$/i, ''),
       url: canonical,
       description,
-      applicationCategory: SCHEMA_EN.applicationCategory,
-      operatingSystem: SCHEMA_EN.operatingSystem,
-      browserRequirements: SCHEMA_EN.browserRequirements,
+      applicationCategory: schema.applicationCategory,
+      operatingSystem: schema.operatingSystem,
+      browserRequirements: schema.browserRequirements,
       isAccessibleForFree: true,
       offers: {
         '@type': 'Offer',
-        price: SCHEMA_EN.freePrice,
-        priceCurrency: SCHEMA_EN.currency,
+        price: schema.freePrice,
+        priceCurrency: schema.currency,
       },
       image: imageUrl,
       publisher: { '@id': organization['@id'] },
@@ -209,8 +212,8 @@ const automaticWebsite = contentPath === '/'
       '@type': 'WebSite',
       '@id': 'https://zodiacs.org/#site',
       url: 'https://zodiacs.org/',
-      name: SCHEMA_EN.websiteName,
-      description: SCHEMA_EN.websiteDescription,
+      name: schema.websiteName,
+      description: schema.websiteDescription,
       publisher: { '@id': organization['@id'] },
       inLanguage: LOCALE_META[locale].htmlLang,
     }

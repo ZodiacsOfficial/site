@@ -405,6 +405,45 @@ const it = {
   compareThese: "Confronta questi due temi",
   addAnotherChart: "Aggiungi un altro tema",
   ...GROWTH_UI_EN,
+  footerWidgets: "Widget",
+  footerDisclosure: "Informativa",
+  emailCaptureKicker: "Previsione settimanale gratuita",
+  emailCaptureTitle: "La settimana che ti aspetta.",
+  emailCaptureCopy:
+    "Una previsione settimanale per il tuo segno. Gratuita, puoi annullare l’iscrizione quando vuoi.",
+  emailCaptureEmailLabel: "Indirizzo e-mail",
+  emailCaptureEmailPlaceholder: "tu@esempio.it",
+  emailCaptureSignLegend: "Il tuo segno solare (facoltativo)",
+  emailCaptureNoSign: "Salta il segno",
+  emailCaptureSubmit: "Invia la mia settimana",
+  emailCaptureSubmitting: "Iscrizione in corso…",
+  emailCaptureSuccess: "Controlla la posta per confermare l’iscrizione.",
+  emailCaptureErrorTitle: "Iscrizione non disponibile",
+  emailCaptureError:
+    "Non è stato possibile avviare l’iscrizione. Riprova.",
+  emailCapturePrivacy:
+    "Conserviamo solo il tuo indirizzo e-mail e il segno scelto — mai i tuoi dati di nascita.",
+  emailCaptureHoneypot: "Lascia vuoto questo campo",
+  emailPendingTitle: "Controlla la posta.",
+  emailPendingBody:
+    "Usa il link di conferma che ti abbiamo inviato prima che inizi la previsione settimanale.",
+  emailConfirmSubject:
+    "Conferma la tua previsione settimanale di Zodiacs.org",
+  emailConfirmMessage:
+    "Conferma di voler ricevere la previsione settimanale gratuita di Zodiacs.org:",
+  emailConfirmIgnore:
+    "Se non hai fatto tu questa richiesta, ignora l’e-mail. Non verrà attivata alcuna iscrizione.",
+  emailConfirmTitle: "Un’ultima verifica.",
+  emailConfirmBody:
+    "Conferma questa iscrizione per iniziare a ricevere la previsione settimanale gratuita. Fino ad allora non sarà attiva alcuna iscrizione settimanale.",
+  emailConfirmAction: "Conferma l’iscrizione",
+  emailConfirmedTitle: "Iscrizione confermata.",
+  emailConfirmedBody:
+    "La tua previsione settimanale gratuita è attiva. Ogni messaggio contiene un link per annullare l’iscrizione.",
+  emailConfirmInvalidTitle: "Questo link non è valido.",
+  emailConfirmInvalidBody:
+    "Il link di conferma non è valido o è scaduto. Torna su Zodiacs.org per richiederne un altro.",
+  emailReturnHome: "Torna su Zodiacs.org",
 } satisfies UiCatalog;
 
 export default it;

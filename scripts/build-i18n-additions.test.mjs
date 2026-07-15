@@ -1,11 +1,16 @@
 import { describe, expect, it } from 'vitest';
 import { GROWTH_UI_EN } from '../src/lib/i18n/ui/growth';
+import { SHARE_CARD_COPY } from '../src/lib/share-card-copy';
+import { COMPATIBILITY_PREFILL_COPY } from '../src/islands/PrefilledPairNotice';
 import { EN as TRUST_EN } from '../src/strings/en.mjs';
+import { PWA_PROMPT_COPY } from '../src/strings/pwa';
 import {
+  ADDITION_TRANSLATIONS,
   i18nAdditionEntries,
   i18nAdditionSections,
   i18nManifestIsCurrent,
   renderI18nAdditions,
+  requiredLocalesForKey,
 } from './build-i18n-additions.mjs';
 
 const EXPECTED_SECTION_COUNTS = {
@@ -45,8 +50,49 @@ describe('additive locale handoff manifest', () => {
     );
     expect(sharedEntries.find(({ key }) => key === 'footerDisclosure')).toMatchObject({
       english: 'Disclosure',
-      pendingLocales: ['ES', 'PT', 'FR', 'IT'],
+      pendingLocales: [],
     });
+  });
+
+  it('supplies the exact required key set for every translated catalogue', () => {
+    const entries = i18nAdditionEntries().flatMap(({ entries: values }) => values);
+    const byKey = new Map(entries.map((entry) => [entry.key, entry]));
+    const placeholders = (value) => [...value.matchAll(/\{[A-Za-z][A-Za-z0-9]*\}/g)].map(([token]) => token).sort();
+
+    for (const [locale, catalogue] of Object.entries(ADDITION_TRANSLATIONS)) {
+      const expected = entries
+        .filter(({ key }) => requiredLocalesForKey(key).includes(locale))
+        .map(({ key }) => key)
+        .sort();
+      expect(Object.keys(catalogue).sort(), locale).toEqual(expected);
+      for (const [key, translated] of Object.entries(catalogue)) {
+        const english = byKey.get(key)?.english;
+        expect(english, `${locale}.${key}`).toEqual(expect.any(String));
+        expect(placeholders(translated), `${locale}.${key}`).toEqual(placeholders(english));
+        expect((translated.match(/<br\/>/g) ?? []).length, `${locale}.${key}`).toBe((english.match(/<br\/>/g) ?? []).length);
+        const marker = english.match(/\[OPERATOR TO [^\]]+\]/)?.[0];
+        if (marker) expect(translated, `${locale}.${key}`).toContain(marker);
+      }
+    }
+  });
+
+  it('keeps client-safe runtime copy byte-identical to the translated catalogues', () => {
+    const families = [
+      ['shareCard', SHARE_CARD_COPY],
+      ['compatibilityPrefill', COMPATIBILITY_PREFILL_COPY],
+      ['pwa.prompt', PWA_PROMPT_COPY],
+    ];
+    for (const [locale, catalogue] of Object.entries({
+      pt: ADDITION_TRANSLATIONS.PT,
+      fr: ADDITION_TRANSLATIONS.FR,
+      it: ADDITION_TRANSLATIONS.IT,
+    })) {
+      for (const [prefix, runtimeCopy] of families) {
+        for (const [key, value] of Object.entries(runtimeCopy[locale])) {
+          expect(value, `${locale}.${prefix}.${key}`).toBe(catalogue[`${prefix}.${key}`]);
+        }
+      }
+    }
   });
 
   it('gives every key an English default, a one-line usage brief, and an explicit locale state', () => {
@@ -86,6 +132,7 @@ describe('additive locale handoff manifest', () => {
         .flatMap(({ entries: values }) => values)
         .find(({ key }) => key === 'push.prompt.accept')?.pendingLocales,
     ).toEqual([]);
+    expect(i18nAdditionEntries().flatMap(({ entries: values }) => values).every(({ pendingLocales }) => pendingLocales.length === 0)).toBe(true);
     expect(rendered.match(/^  - EN default:/gm)).toHaveLength(541);
     expect(rendered.match(/^  - Usage:/gm)).toHaveLength(541);
     expect(rendered.match(/^  - Pending locales:/gm)).toHaveLength(541);
