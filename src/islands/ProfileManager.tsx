@@ -41,7 +41,7 @@ export const PF_BOOK_COPY = {
       ? '1 carta guardada.'
       : `${n} cartas guardadas: la tuya y las de las personas para quienes haces lecturas.`,
     add: 'Añade la carta de alguien',
-    privacy: 'Guardado en este dispositivo. No se sube nada salvo que actives la sincronización.',
+    privacy: 'Se guardan en este dispositivo. No se sube nada salvo que actives la sincronización.',
   },
   pt: {
     count: (n: number) => n === 1

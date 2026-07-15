@@ -162,7 +162,7 @@ const es = {
     pfdYearBusy: 'Calculando los próximos doce meses en tu dispositivo — unos segundos…',
     pfdYearNote: 'Calculado a partir de tu carta guardada: fechas exactas para los próximos doce meses.',
     saveYearAheadNote: 'En la página de perfil, las cartas guardadas reciben un cálculo de los próximos doce meses: retorno solar, fechas de Júpiter y Saturno, eclipses.',
-    recordLabel: 'Zona de colección',
+    recordLabel: 'Ala de la colección',
     recordOneOfTwelve: 'forma parte de las Doce piezas del Registro.',
     recordViewLink: 'Ver el registro →',
     babyDueDate: 'Fecha probable de parto',
