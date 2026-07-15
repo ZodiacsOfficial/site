@@ -8,16 +8,28 @@ export const COMPATIBILITY_PREFILL_EN = {
     clear: 'Clear loaded sun-sign pairing',
 } as const;
 
-const COPY = {
+export const COMPATIBILITY_PREFILL_COPY = {
   en: COMPATIBILITY_PREFILL_EN,
   es: {
     title: 'Pareja {a} y {b} cargada',
     help: 'Esto mantiene visible el contexto de signos solares mientras ingresas las dos cartas reales. No inventa datos de nacimiento.',
     clear: 'Borrar pareja de signos solares cargada',
   },
-  pt: COMPATIBILITY_PREFILL_EN,
-  fr: COMPATIBILITY_PREFILL_EN,
-  it: COMPATIBILITY_PREFILL_EN,
+  pt: {
+    title: 'Combinação de {a} e {b} carregada',
+    help: 'Isso mantém visível o contexto dos signos solares enquanto você informa os dois mapas reais abaixo. Não inventa dados de nascimento.',
+    clear: 'Limpar combinação de signos solares carregada',
+  },
+  fr: {
+    title: 'Paire {a} et {b} chargée',
+    help: 'Le contexte des signes solaires reste visible pendant que tu saisis les deux véritables thèmes ci-dessous. Aucune donnée de naissance n’est inventée.',
+    clear: 'Effacer la paire de signes solaires chargée',
+  },
+  it: {
+    title: 'Abbinamento {a} e {b} caricato',
+    help: 'Mantiene visibile il contesto dei segni solari mentre inserisci i due temi reali qui sotto. Non inventa dati di nascita.',
+    clear: 'Rimuovi l’abbinamento di segni solari caricato',
+  },
 } as const;
 
 function initialPair(): { a: Sign; b: Sign } | null {
@@ -32,7 +44,7 @@ function initialPair(): { a: Sign; b: Sign } | null {
 export function PrefilledPairNotice({ locale }: { locale: Locale }) {
   const [pair, setPair] = useState(initialPair);
   if (!pair) return null;
-  const copy = COPY[locale];
+  const copy = COMPATIBILITY_PREFILL_COPY[locale];
   const title = copy.title
     .replace('{a}', signName(pair.a, locale))
     .replace('{b}', signName(pair.b, locale));

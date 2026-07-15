@@ -1,0 +1,101 @@
+---
+import Base from '../../layouts/Base.astro';
+import ChineseZodiacBrandRail from '../ChineseZodiacBrandRail.astro';
+import { chineseAnimalForCycleYear } from '../../data/chinese-zodiac';
+import {
+  chineseZodiacAnimals,
+  chineseZodiacCopy,
+  chineseZodiacLocalizedText,
+} from '../../data/chinese-zodiac-localized';
+import { LOCALE_META, localizePath, type Locale } from '../../lib/i18n';
+import '../../styles/chinese-zodiac.css';
+
+interface Props { locale: Exclude<Locale, 'en'> }
+const { locale } = Astro.props;
+const copy = chineseZodiacCopy(locale);
+const animals = chineseZodiacAnimals(locale);
+const animalBySlug = new Map(animals.map((animal) => [animal.slug, animal]));
+const path = localizePath(locale, '/learn/chinese-zodiac/');
+const cycle = Array.from({ length: 12 }, (_, index) => 2020 + index);
+const sources = [
+  { label: copy.sourceSmithsonianHub, href: 'https://www.si.edu/events/lunar-new-year' },
+  { label: copy.sourceMetHub, href: 'https://www.metmuseum.org/fr/exhibitions/listings/2017/year-of-the-rooster' },
+  { label: copy.sourceMetBulletin, href: 'https://resources.metmuseum.org/resources/metpublications/pdf/Chinese_Decorative_Arts_The_Metropolitan_Museum_of_Art_Bulletin_v_55_no_1_Summer_1997.pdf' },
+];
+
+const jsonLd = [
+  {
+    '@type': 'Article',
+    headline: copy.hubTitle,
+    description: copy.hubIntro,
+    url: `https://zodiacs.org${path}`,
+    author: { '@id': 'https://zodiacs.org/#org' },
+    publisher: { '@id': 'https://zodiacs.org/#org' },
+    inLanguage: LOCALE_META[locale].htmlLang,
+  },
+  {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: copy.siteName, item: `https://zodiacs.org${localizePath(locale, '/')}` },
+      { '@type': 'ListItem', position: 2, name: copy.learnLabel, item: 'https://zodiacs.org/learn/' },
+      { '@type': 'ListItem', position: 3, name: copy.kicker, item: `https://zodiacs.org${path}` },
+    ],
+  },
+];
+---
+<Base
+  title={copy.metaHubTitle}
+  description={copy.hubIntro}
+  path={path}
+  locale={locale}
+  type="article"
+  jsonLd={jsonLd}
+  sources={sources}
+>
+  <article class="container container--narrow cz-page">
+    <header>
+      <em class="kicker">{copy.kicker}</em>
+      <h1 class="display cz-page__title">{copy.hubTitle}</h1>
+      <p class="cz-page__lede">{copy.hubIntro}</p>
+      <ChineseZodiacBrandRail note={copy.iconRailNote} />
+    </header>
+
+    <section class="cz-note">
+      <h2>{copy.separateTitle}</h2>
+      <p>{copy.separateBody}</p>
+    </section>
+
+    <div class="prose">
+      <h2>{copy.historyTitle}</h2>
+      <p>{copy.historyBody}</p>
+      <h2>{copy.boundaryTitle}</h2>
+      <p>{copy.boundaryBody}</p>
+    </div>
+
+    <section aria-labelledby={`animals-heading-${locale}`}>
+      <div class="section-head"><h2 id={`animals-heading-${locale}`}>{copy.sequenceTitle}</h2></div>
+      <div class="cz-grid">
+        {animals.map((animal) => (
+          <a class="cz-card" href={localizePath(locale, `/learn/chinese-zodiac/${animal.slug}/`)}>
+            <span class="cz-card__no">{chineseZodiacLocalizedText(locale, 'numberLabel', { number: String(animal.position).padStart(2, '0') })} · {animal.branch} {animal.branchPinyin}</span>
+            <strong>{animal.name}</strong>
+            <span>{animal.association}</span>
+            <span class="sr-only">{chineseZodiacLocalizedText(locale, 'itemLink', { animal: animal.name })}</span>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section aria-labelledby={`cycle-heading-${locale}`}>
+      <div class="section-head"><h2 id={`cycle-heading-${locale}`}>{copy.yearsTitle}</h2></div>
+      <ul class="cz-years">
+        {cycle.map((year) => {
+          const englishAnimal = chineseAnimalForCycleYear(year);
+          const animal = animalBySlug.get(englishAnimal.slug)!;
+          return <li><a href={localizePath(locale, `/learn/chinese-zodiac/${animal.slug}/`)}>{year} · {animal.name}</a></li>;
+        })}
+      </ul>
+      <p class="cz-sources">{copy.yearsBoundary}</p>
+    </section>
+  </article>
+</Base>

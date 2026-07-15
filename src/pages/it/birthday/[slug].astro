@@ -1,0 +1,13 @@
+---
+import { getCollection } from 'astro:content';
+import LocalizedBirthdayPage from '../../../components/programmatic/LocalizedBirthdayPage.astro';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('birthdays', (entry) => !entry.data.draft);
+  if (entries.length !== 366) throw new Error(`Expected 366 Italian birthday pages, found ${entries.length}`);
+  return entries.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+---
+<LocalizedBirthdayPage locale="it" entry={entry} />

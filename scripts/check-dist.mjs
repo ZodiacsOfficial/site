@@ -496,20 +496,20 @@ function canonicalHref(html) {
   return tag ? attr(tag[0], 'href') : null;
 }
 
-// Coordinated indexing baseline (2026-07-15): the locale rails remain fixed
-// while WS5 adds 78 compatibility pairs, 366 birthdays, and 13 English-only
-// Chinese-zodiac pages. Keep exact counts so future sitemap drift fails loudly.
+// Coordinated indexing baseline (2026-07-15): compatibility prose remains
+// English-only under D9, while all 366 birthday and 13 Chinese-zodiac pages
+// ship on every locale rail. Keep exact counts so sitemap drift fails loudly.
 const sitemapPolicy = {
-  total: 798,
+  total: 2314,
   compatibilityPairs: 78,
-  birthdays: 366,
-  chineseZodiac: 13,
-  translatedBlocks: 125,
+  birthdays: 1830,
+  chineseZodiac: 65,
+  translatedBlocks: 2020,
 };
 const ws5Families = [
-  { label: 'compatibility pairs', pattern: /^\/compatibility\/[a-z]+-[a-z]+\/$/, expected: sitemapPolicy.compatibilityPairs },
-  { label: 'birthdays', pattern: /^\/birthday\/[a-z]+-\d{1,2}\/$/, expected: sitemapPolicy.birthdays },
-  { label: 'Chinese zodiac', pattern: /^\/learn\/chinese-zodiac(?:\/[a-z]+)?\/$/, expected: sitemapPolicy.chineseZodiac },
+  { label: 'compatibility pairs', pattern: /^\/compatibility\/[a-z]+-[a-z]+\/$/, expected: sitemapPolicy.compatibilityPairs, localized: false },
+  { label: 'birthdays', pattern: /^\/(?:(?:es|pt|fr|it)\/)?birthday\/[a-z]+-\d{1,2}\/$/, expected: sitemapPolicy.birthdays, localized: true },
+  { label: 'Chinese zodiac', pattern: /^\/(?:(?:es|pt|fr|it)\/)?learn\/chinese-zodiac(?:\/[a-z]+)?\/$/, expected: sitemapPolicy.chineseZodiac, localized: true },
 ];
 
 if (sitemapLocs.size !== sitemapPolicy.total) {
@@ -530,8 +530,15 @@ for (const family of ws5Families) {
     }
     const block = [...sitemap.matchAll(/<url>([\s\S]*?)<\/url>/g)]
       .find((match) => match[1].includes(`<loc>https://zodiacs.org${loc}</loc>`))?.[1] ?? '';
-    if (/hreflang=/.test(block)) {
-      fail(`sitemap.xml: English-only WS5 route has hreflang alternates — ${loc}`);
+    if (!family.localized && /hreflang=/.test(block)) {
+      fail(`sitemap.xml: English-only ${family.label} route has hreflang alternates — ${loc}`);
+    }
+    if (family.localized) {
+      for (const hreflang of ['en', 'es', 'pt-BR', 'fr', 'it', 'x-default']) {
+        if (!block.includes(`hreflang="${hreflang}"`)) {
+          fail(`sitemap.xml: localized ${family.label} route is missing ${hreflang} alternate — ${loc}`);
+        }
+      }
     }
   }
 }

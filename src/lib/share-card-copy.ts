@@ -25,7 +25,7 @@ export const SHARE_CARD_EN = {
   compatibilityError: "Couldn't draw this card in your browser.",
 } as const;
 
-const COPY = {
+export const SHARE_CARD_COPY = {
   en: SHARE_CARD_EN,
   es: {
     bigThreeTitle: 'Tus tres grandes',
@@ -51,15 +51,84 @@ const COPY = {
     compatibilitySaved: 'Tarjeta de compatibilidad guardada.',
     compatibilityError: 'No se pudo crear esta tarjeta en tu navegador.',
   },
-  pt: SHARE_CARD_EN,
-  fr: SHARE_CARD_EN,
-  it: SHARE_CARD_EN,
+  pt: {
+    bigThreeTitle: 'Seu trio principal',
+    fullChartTitle: 'Um mapa astral',
+    compatibilityTitle: 'Compatibilidade',
+    sun: 'Sol',
+    moon: 'Lua',
+    rising: 'Ascendente',
+    sunDescriptor: 'Identidade central e direção',
+    moonDescriptor: 'Instinto e vida emocional',
+    risingDescriptor: 'Primeira impressão e horizonte do mapa',
+    dominant: 'Elemento dominante: {element} · {modality}',
+    balanced: 'Equilibrado',
+    compatibilityFlow: 'Fluidez, com um atrito útil',
+    compatibilityCharge: 'Química que pede atenção',
+    compatibilityBalance: 'Uma troca equilibrada entre fluidez e intensidade',
+    tightestContacts: 'Contatos mais exatos',
+    engineReceipt: 'Motor {version}',
+    bigThreeAction: 'Compartilhar o trio principal',
+    fullChartAction: 'Compartilhar o mapa completo',
+    compatibilityAction: 'Compartilhar esta compatibilidade',
+    compatibilityBusy: 'Criando o cartão de compatibilidade…',
+    compatibilitySaved: 'Cartão de compatibilidade salvo.',
+    compatibilityError: 'Não foi possível criar este cartão no seu navegador.',
+  },
+  fr: {
+    bigThreeTitle: 'Tes trois piliers',
+    fullChartTitle: 'Un thème astral',
+    compatibilityTitle: 'Compatibilité',
+    sun: 'Soleil',
+    moon: 'Lune',
+    rising: 'Ascendant',
+    sunDescriptor: 'Identité profonde et direction',
+    moonDescriptor: 'Instinct et vie émotionnelle',
+    risingDescriptor: 'Première impression et horizon du thème',
+    dominant: 'Dominance : {element} · {modality}',
+    balanced: 'Équilibré',
+    compatibilityFlow: 'De la fluidité, avec une tension utile',
+    compatibilityCharge: 'Une alchimie qui demande de l’attention',
+    compatibilityBalance: 'Un équilibre entre fluidité et tension',
+    tightestContacts: 'Contacts les plus serrés',
+    engineReceipt: 'Moteur {version}',
+    bigThreeAction: 'Partager les trois piliers',
+    fullChartAction: 'Partager le thème complet',
+    compatibilityAction: 'Partager cette compatibilité',
+    compatibilityBusy: 'Création de la carte de compatibilité…',
+    compatibilitySaved: 'Carte de compatibilité enregistrée.',
+    compatibilityError: 'Impossible de créer cette carte dans ton navigateur.',
+  },
+  it: {
+    bigThreeTitle: 'I tuoi tre pilastri',
+    fullChartTitle: 'Un tema natale',
+    compatibilityTitle: 'Compatibilità',
+    sun: 'Sole',
+    moon: 'Luna',
+    rising: 'Ascendente',
+    sunDescriptor: 'Identità centrale e direzione',
+    moonDescriptor: 'Istinto e vita emotiva',
+    risingDescriptor: 'Prima impressione e orizzonte del tema',
+    dominant: 'Elemento dominante: {element} · {modality}',
+    balanced: 'Equilibrato',
+    compatibilityFlow: 'Fluidità, con un attrito utile',
+    compatibilityCharge: 'Un’intesa che richiede attenzione',
+    compatibilityBalance: 'Uno scambio equilibrato fra armonia e intensità',
+    tightestContacts: 'Contatti più esatti',
+    engineReceipt: 'Motore {version}',
+    bigThreeAction: 'Condividi i tre pilastri',
+    fullChartAction: 'Condividi il tema completo',
+    compatibilityAction: 'Condividi questa compatibilità',
+    compatibilityBusy: 'Creazione dell’immagine di compatibilità…',
+    compatibilitySaved: 'Immagine di compatibilità salvata.',
+    compatibilityError: 'Non è stato possibile creare questa immagine nel tuo browser.',
+  },
 } as const satisfies Record<Locale, Record<keyof typeof SHARE_CARD_EN, string>>;
 
 export type ShareCardCopyKey = keyof typeof SHARE_CARD_EN;
 
 export function shareCardText(locale: Locale, key: ShareCardCopyKey): string {
-  return COPY[locale]?.[key] ?? COPY.en[key];
+  return SHARE_CARD_COPY[locale]?.[key] ?? SHARE_CARD_COPY.en[key];
 }
 
 export function shareCardFormat(

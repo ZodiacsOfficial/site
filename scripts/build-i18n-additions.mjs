@@ -25,6 +25,10 @@ import {
   WIDGET_SIGN_NAMES_EN,
 } from '../src/strings/widgets.ts';
 import { WALLET_CHART_EN } from '../src/strings/wallet-chart.ts';
+import { ES_ADDITIONS } from '../src/strings/additions.es.mjs';
+import { PT_ADDITIONS } from '../src/strings/additions.pt.mjs';
+import { FR_ADDITIONS } from '../src/strings/additions.fr.mjs';
+import { IT_ADDITIONS } from '../src/strings/additions.it.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const output = resolve(root, 'i18n-additions.md');
@@ -55,6 +59,12 @@ const COMPATIBILITY_PREFILL_EN = readConstObject(
 
 const ALL_NON_EN_LOCALES = Object.freeze(['ES', 'PT', 'FR', 'IT']);
 const POST_ES_LOCALES = Object.freeze(['PT', 'FR', 'IT']);
+export const ADDITION_TRANSLATIONS = Object.freeze({
+  ES: ES_ADDITIONS,
+  PT: PT_ADDITIONS,
+  FR: FR_ADDITIONS,
+  IT: IT_ADDITIONS,
+});
 
 function entriesFromObject(prefix, value) {
   return Object.entries(value).map(([key, english]) => ({
@@ -119,7 +129,7 @@ function widgetEntries() {
   ];
 }
 
-function pendingLocales(key) {
+export function requiredLocalesForKey(key) {
   // These families already have explicit Spanish copy. Positions sharing was
   // translated into all five locale rails by the locale project.
   if (key.startsWith('sharePositions.') || key.startsWith('push.prompt.')) return [];
@@ -132,6 +142,13 @@ function pendingLocales(key) {
     return [...POST_ES_LOCALES];
   }
   return [...ALL_NON_EN_LOCALES];
+}
+
+function pendingLocales(key) {
+  return requiredLocalesForKey(key).filter((locale) => !Object.prototype.hasOwnProperty.call(
+    ADDITION_TRANSLATIONS[locale],
+    key,
+  ));
 }
 
 function locationFor(key) {

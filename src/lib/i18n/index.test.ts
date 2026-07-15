@@ -96,16 +96,29 @@ describe('i18n helpers', () => {
     expect(alternatePaths('/learn/placements/venus-in-scorpio/')).toBeNull();
   });
 
-  it('keeps WS5 routes English-only until real translations exist', () => {
+  it('localizes data-driven WS5 routes while keeping pair prose English-only', () => {
+    expect(LOCALIZED_PATHS.has('/compatibility/aries-taurus/')).toBe(false);
+    expect(alternatePaths('/compatibility/aries-taurus/')).toBeNull();
+
     for (const path of [
-      '/compatibility/aries-taurus/',
       '/birthday/july-15/',
       '/learn/chinese-zodiac/',
       '/learn/chinese-zodiac/dragon/',
     ]) {
+      // Programmatic families are recognized without enumerating hundreds of
+      // paths into every client island's i18n bundle.
       expect(LOCALIZED_PATHS.has(path)).toBe(false);
-      expect(alternatePaths(path)).toBeNull();
+      expect(alternatePaths(path)).toEqual({
+        en: path,
+        es: `/es${path}`,
+        pt: `/pt${path}`,
+        fr: `/fr${path}`,
+        it: `/it${path}`,
+      });
     }
+    expect(alternatePaths('/birthday/february-30/')).toBeNull();
+    expect(alternatePaths('/birthday/january-01/')).toBeNull();
+    expect(alternatePaths('/learn/chinese-zodiac/phoenix/')).toBeNull();
   });
 
   it('interpolates localized messages without changing unsupported paths', () => {
