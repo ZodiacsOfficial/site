@@ -138,6 +138,10 @@ function staticDescription(route, source, { ingresses, latestHoroscopeMonth }) {
   const catalogKey = source.match(/<Base\b[\s\S]*?\bdescription=\{EN\[['"]([^'"]+)['"]\]\}/i)?.[1];
   if (catalogKey && EN[catalogKey]) return clean(EN[catalogKey]);
 
+  if (source.includes('<LocalizedDisclosurePage locale="en"')) {
+    return clean(EN['disclosure.metaDescription']);
+  }
+
   const chineseCatalogKey = source.match(/<Base\b[\s\S]*?\bdescription=\{CHINESE_ZODIAC_COPY\.([a-zA-Z0-9_]+)\}/i)?.[1];
   if (chineseCatalogKey && CHINESE_ZODIAC_COPY[chineseCatalogKey]) {
     return clean(CHINESE_ZODIAC_COPY[chineseCatalogKey]);
