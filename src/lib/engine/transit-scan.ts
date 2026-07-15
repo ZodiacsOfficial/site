@@ -5,8 +5,8 @@
  * stays behind full.ts, and every exact pass is retained — including the
  * direct/retrograde/direct sequence around a station.
  */
-import { bodyLongitude, computeBodies, longitudeSpeed } from './full';
-import { findLongitudeCrossings } from './returns';
+import { bodyLongitude, computeBodies, longitudeSpeed } from './full.js';
+import { findLongitudeCrossings } from './returns.js';
 import type { Angles, AspectType, BodyName, BodyPosition } from './types';
 import {
   DEFAULT_TRANSIT_BODIES,
@@ -15,7 +15,7 @@ import {
   TRANSIT_BODY_ORDER,
   type NatalPoint,
   type TransitBody,
-} from './transit-scan-shared';
+} from './transit-scan-shared.js';
 
 export {
   DEFAULT_TRANSIT_BODIES,
@@ -23,7 +23,7 @@ export {
   NATAL_POINT_ORDER,
   SLOW_TRANSIT_BODIES,
   TRANSIT_BODY_ORDER,
-} from './transit-scan-shared';
+} from './transit-scan-shared.js';
 export type { NatalPoint, TransitBody } from './transit-scan-shared';
 
 const DAY = 86_400_000;

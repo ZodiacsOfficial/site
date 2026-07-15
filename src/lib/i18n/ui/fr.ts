@@ -1,5 +1,5 @@
 import type { UiCatalog } from './schema';
-import { GROWTH_UI_EN } from './growth';
+import { GROWTH_UI_EN } from './growth.js';
 
 const fr = {
   navPrimary: 'Navigation principale',

@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { UI } from '../../src/lib/i18n/ui/server';
+import { UI } from '../../src/lib/i18n/ui/server.js';
 
 const ORIGINAL_ENV = { ...process.env };
 
@@ -34,8 +34,8 @@ afterEach(() => {
 describe('unconfigured email endpoints', () => {
   it('imports both handlers without reading required environment at module scope', async () => {
     const [subscribe, confirm] = await Promise.all([
-      import('./subscribe'),
-      import('./confirm'),
+      import('../../api/email/subscribe.js'),
+      import('../../api/email/confirm.js'),
     ]);
 
     expect(subscribe.default).toBeTypeOf('function');
@@ -45,7 +45,7 @@ describe('unconfigured email endpoints', () => {
   it('returns the designed JSON 503 from subscribe without contacting a provider', async () => {
     const fetcher = vi.fn();
     vi.stubGlobal('fetch', fetcher);
-    const { default: handler } = await import('./subscribe');
+    const { default: handler } = await import('../../api/email/subscribe.js');
     const response = responseRecorder();
 
     await handler({
@@ -64,7 +64,7 @@ describe('unconfigured email endpoints', () => {
   it('returns the localized HTML 503 from a subscribe form post', async () => {
     const fetcher = vi.fn();
     vi.stubGlobal('fetch', fetcher);
-    const { default: handler } = await import('./subscribe');
+    const { default: handler } = await import('../../api/email/subscribe.js');
     const response = responseRecorder();
 
     await handler({
@@ -89,7 +89,7 @@ describe('unconfigured email endpoints', () => {
   it('does not let a filled honeypot bypass the unconfigured 503', async () => {
     const fetcher = vi.fn();
     vi.stubGlobal('fetch', fetcher);
-    const { default: handler } = await import('./subscribe');
+    const { default: handler } = await import('../../api/email/subscribe.js');
     const response = responseRecorder();
 
     await handler({
@@ -106,7 +106,7 @@ describe('unconfigured email endpoints', () => {
   it('returns the designed JSON 503 from confirm', async () => {
     const fetcher = vi.fn();
     vi.stubGlobal('fetch', fetcher);
-    const { default: handler } = await import('./confirm');
+    const { default: handler } = await import('../../api/email/confirm.js');
     const response = responseRecorder();
 
     await handler({
@@ -125,7 +125,7 @@ describe('unconfigured email endpoints', () => {
   it('returns the existing status page as a 503 from a confirm form post', async () => {
     const fetcher = vi.fn();
     vi.stubGlobal('fetch', fetcher);
-    const { default: handler } = await import('./confirm');
+    const { default: handler } = await import('../../api/email/confirm.js');
     const response = responseRecorder();
 
     await handler({

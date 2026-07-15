@@ -1,8 +1,8 @@
-import { createEmailSubscriptionAdapter } from '../../src/lib/email/provider';
-import { hasEmailCaptureProvider } from '../../src/lib/email/config';
-import { verifyEmailOptInToken } from '../../src/lib/email/opt-in-token';
-import { requestHeader } from '../../src/lib/email/request';
-import { emailStatusPage } from '../../src/lib/email/server-page';
+import { createEmailSubscriptionAdapter } from '../../src/lib/email/provider.js';
+import { hasEmailCaptureProvider } from '../../src/lib/email/config.js';
+import { verifyEmailOptInToken } from '../../src/lib/email/opt-in-token.js';
+import { requestHeader } from '../../src/lib/email/request.js';
+import { emailStatusPage } from '../../src/lib/email/server-page.js';
 import type { Locale } from '../../src/lib/i18n/core';
 
 function sendJson(res: any, status: number, body: Record<string, string | boolean>): void {

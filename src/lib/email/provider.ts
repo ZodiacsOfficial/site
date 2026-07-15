@@ -1,13 +1,13 @@
-import { createEmailOptInToken } from './opt-in-token';
+import { createEmailOptInToken } from './opt-in-token.js';
 import {
   emailProviderName,
   environmentValue,
   hasEmailCaptureProvider,
   validLoopsFormEndpoint,
   type EmailProviderName,
-} from './config';
+} from './config.js';
 import type { Locale } from '../i18n/core';
-import { serverUiMessage } from '../i18n/ui/server';
+import { serverUiMessage } from '../i18n/ui/server.js';
 
 type Environment = Record<string, unknown>;
 type Fetch = typeof fetch;

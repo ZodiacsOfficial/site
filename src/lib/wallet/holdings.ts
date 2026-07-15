@@ -1,6 +1,6 @@
-import registryDocument from '../../../public/registry/zodiacs.registry.json';
+import registryDocument from '../../../public/registry/zodiacs.registry.json' with { type: 'json' };
 import type { WalletChain } from './types';
-import { validWalletProviderEndpoint, type WalletEnvironment } from './config';
+import { validWalletProviderEndpoint, type WalletEnvironment } from './config.js';
 
 type Fetcher = typeof fetch;
 

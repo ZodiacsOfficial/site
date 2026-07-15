@@ -8,7 +8,7 @@
  * Lives beside full.ts and is only ever lazy-loaded with it — the
  * ephemeris stays out of every eager bundle.
  */
-import { bodyLongitude } from './full';
+import { bodyLongitude } from './full.js';
 import type { BodyName } from './types';
 
 const DAY = 86400_000;
