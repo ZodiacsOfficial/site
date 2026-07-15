@@ -54,6 +54,26 @@ const probes = [
     expectation: 'a non-5xx response',
   },
   {
+    label: 'push subscribe invalid body',
+    path: '/api/push/subscribe',
+    init: {
+      method: 'POST',
+      headers: { ...sameOriginHeaders, 'content-type': 'application/json' },
+      body: '{}',
+    },
+    accepts: (status) => status === 503,
+    expectedBody: '{"error":"disabled"}',
+    expectation: 'HTTP 503 with {"error":"disabled"}',
+  },
+  {
+    label: 'unsubscribe invalid token',
+    path: '/api/unsubscribe',
+    init: { method: 'GET', headers: sameOriginHeaders },
+    accepts: (status) => status === 400,
+    expectedBody: 'Invalid unsubscribe link.',
+    expectation: 'HTTP 400 with Invalid unsubscribe link.',
+  },
+  {
     label: 'calendar method guard',
     path: '/api/calendar/transits',
     init: { method: 'POST', headers: sameOriginHeaders },
@@ -123,8 +143,12 @@ for (const probe of probes) {
     );
     continue;
   }
-  if (!probe.accepts(response.status)) {
-    failures.push(`${probe.label}: expected ${probe.expectation}, received HTTP ${response.status}`);
+  const bodyMatches = probe.expectedBody === undefined || body === probe.expectedBody;
+  if (!probe.accepts(response.status) || !bodyMatches) {
+    failures.push(
+      `${probe.label}: expected ${probe.expectation}, received HTTP ${response.status} with `
+      + `${JSON.stringify(bodyExcerpt(body))}`,
+    );
   }
 }
 
