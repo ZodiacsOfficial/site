@@ -8,14 +8,10 @@ import type { APIRoute } from 'astro';
 import { getCollection } from 'astro:content';
 import { LEGACY_URLS } from '../lib/legacy/urls';
 import { DEFAULT_LOCALE, LOCALES, LOCALE_META, alternatePaths } from '../lib/i18n';
-import { CHINESE_ZODIAC_ANIMALS } from '../data/chinese-zodiac';
+import { CHINESE_ZODIAC_PATHS } from '../lib/programmatic-paths';
 import daily from '../data/daily.json';
 
 const SITE = 'https://zodiacs.org';
-const CHINESE_ZODIAC_PATHS = [
-  '/learn/chinese-zodiac/',
-  ...CHINESE_ZODIAC_ANIMALS.map((animal) => `/learn/chinese-zodiac/${animal.slug}/`),
-];
 // Keep these dates source-controlled: build environments may have shallow or
 // absent Git history. When an evergreen page's rendered source changes, update
 // its entry here in the same commit.
@@ -127,8 +123,8 @@ export const GET: APIRoute = async () => {
     { loc: '/baby-zodiac/', priority: 0.8 },
     { loc: '/widgets/', priority: 0.6 },
     { loc: '/disclosure/', priority: 0.5 },
-    // TODO(i18n): add locale routes and hreflang only after translated WS5
-    // pages exist. These entries are deliberately English-only this pass.
+    // Locale variants and hreflang blocks are added below through the same
+    // alternatePaths policy used by birthday pages and the translated rails.
     ...CHINESE_ZODIAC_PATHS.map((loc, index) => ({
       loc,
       priority: index === 0 ? 0.7 : 0.6,

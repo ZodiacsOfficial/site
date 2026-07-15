@@ -103,6 +103,42 @@ export const LOCALIZED_PATHS: ReadonlyMap<string, readonly Locale[]> = new Map(
   CORE_LOCALIZED_PATHS.map((path) => [path, LOCALES] as const),
 );
 
+const BIRTHDAY_MONTH_LENGTHS: Readonly<Record<string, number>> = Object.freeze({
+  january: 31,
+  february: 29,
+  march: 31,
+  april: 30,
+  may: 31,
+  june: 30,
+  july: 31,
+  august: 31,
+  september: 30,
+  october: 31,
+  november: 30,
+  december: 31,
+});
+const CHINESE_ZODIAC_SLUGS = new Set([
+  'rat', 'ox', 'tiger', 'rabbit', 'dragon', 'snake',
+  'horse', 'goat', 'monkey', 'rooster', 'dog', 'pig',
+]);
+
+/** Compact client-safe recognition for the data-driven localized families. */
+function isLocalizedProgrammaticPath(path: string): boolean {
+  if (path === '/learn/chinese-zodiac/') return true;
+  const animal = path.match(/^\/learn\/chinese-zodiac\/([a-z]+)\/$/)?.[1];
+  if (animal) return CHINESE_ZODIAC_SLUGS.has(animal);
+
+  const birthday = path.match(/^\/birthday\/([a-z]+)-(\d{1,2})\/$/);
+  if (!birthday) return false;
+  const maxDay = BIRTHDAY_MONTH_LENGTHS[birthday[1]];
+  const day = Number(birthday[2]);
+  return Boolean(maxDay && birthday[2] === String(day) && day >= 1 && day <= maxDay);
+}
+
+function availableLocales(path: string): readonly Locale[] | undefined {
+  return LOCALIZED_PATHS.get(path) ?? (isLocalizedProgrammaticPath(path) ? LOCALES : undefined);
+}
+
 export function stripLocale(path: string): string {
   for (const locale of LOCALES) {
     const prefix = LOCALE_PATH_PREFIX[locale];
@@ -118,7 +154,7 @@ export function localizePath(locale: Locale, path: string): string {
   const clean = path.startsWith('/') ? path : `/${path}`;
   const canonical = stripLocale(clean);
   if (locale === DEFAULT_LOCALE) return canonical;
-  if (!LOCALIZED_PATHS.get(canonical)?.includes(locale)) return clean;
+  if (!availableLocales(canonical)?.includes(locale)) return clean;
   return `${LOCALE_PATH_PREFIX[locale]}${canonical}`;
 }
 
@@ -129,10 +165,10 @@ export function alternatePaths(path: string): AlternatePaths | null {
   // /404.html. Normalize only this server-rendered alternate-link family so
   // the client path helper stays byte-identical.
   const clean = path.endsWith('/404/') ? '/404.html' : stripLocale(path);
-  const availableLocales = LOCALIZED_PATHS.get(clean);
-  if (!availableLocales) return null;
+  const locales = availableLocales(clean);
+  if (!locales) return null;
   return Object.fromEntries(
-    availableLocales.map((locale) => [
+    locales.map((locale) => [
       locale,
       clean === '/404.html' && locale !== DEFAULT_LOCALE
         ? `${LOCALE_PATH_PREFIX[locale]}/404/`

@@ -1,0 +1,104 @@
+---
+import Base from '../../layouts/Base.astro';
+import ChineseZodiacBrandRail from '../ChineseZodiacBrandRail.astro';
+import { chineseYearsForAnimal } from '../../data/chinese-zodiac';
+import {
+  chineseZodiacAnimals,
+  chineseZodiacCopy,
+  chineseZodiacLocalizedText,
+} from '../../data/chinese-zodiac-localized';
+import { LOCALE_META, localizePath, type Locale } from '../../lib/i18n';
+import '../../styles/chinese-zodiac.css';
+
+interface Props { locale: Exclude<Locale, 'en'>; animalSlug: string }
+const { locale, animalSlug } = Astro.props;
+const copy = chineseZodiacCopy(locale);
+const animals = chineseZodiacAnimals(locale);
+const animal = animals.find((candidate) => candidate.slug === animalSlug);
+if (!animal) throw new Error(`Unknown Chinese-zodiac animal: ${animalSlug}`);
+const years = chineseYearsForAnimal(animal.slug);
+const previous = animals[(animal.position + 10) % 12];
+const next = animals[animal.position % 12];
+const path = localizePath(locale, `/learn/chinese-zodiac/${animal.slug}/`);
+const hubPath = localizePath(locale, '/learn/chinese-zodiac/');
+const title = chineseZodiacLocalizedText(locale, 'metaAnimalTitle', { animal: animal.name });
+const description = chineseZodiacLocalizedText(locale, 'metaAnimalDescription', {
+  animal: animal.name,
+  branch: animal.branch,
+  pinyin: animal.branchPinyin,
+});
+const sources = [
+  { label: copy.sourceSmithsonian, href: 'https://www.si.edu/events/lunar-new-year' },
+  { label: copy.sourceMet, href: 'https://www.metmuseum.org/fr/exhibitions/listings/2017/year-of-the-rooster' },
+];
+const jsonLd = [
+  {
+    '@type': 'Article',
+    headline: chineseZodiacLocalizedText(locale, 'yearOf', { animal: animal.name }),
+    description,
+    url: `https://zodiacs.org${path}`,
+    author: { '@id': 'https://zodiacs.org/#org' },
+    publisher: { '@id': 'https://zodiacs.org/#org' },
+    inLanguage: LOCALE_META[locale].htmlLang,
+  },
+  {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: copy.siteName, item: `https://zodiacs.org${localizePath(locale, '/')}` },
+      { '@type': 'ListItem', position: 2, name: copy.learnLabel, item: 'https://zodiacs.org/learn/' },
+      { '@type': 'ListItem', position: 3, name: copy.kicker, item: `https://zodiacs.org${hubPath}` },
+      { '@type': 'ListItem', position: 4, name: animal.name, item: `https://zodiacs.org${path}` },
+    ],
+  },
+];
+---
+<Base title={title} description={description} path={path} locale={locale} type="article" jsonLd={jsonLd} sources={sources}>
+  <article class="container container--narrow cz-page">
+    <header>
+      <em class="kicker">{copy.animalKicker} · {chineseZodiacLocalizedText(locale, 'numberLabel', { number: String(animal.position).padStart(2, '0') })}</em>
+      <h1 class="display cz-page__title">{chineseZodiacLocalizedText(locale, 'yearOf', { animal: animal.name })}</h1>
+      <p class="cz-page__lede">{animal.association}</p>
+      <ChineseZodiacBrandRail note={copy.iconRailNote} />
+    </header>
+
+    <dl class="cz-facts">
+      <div><dt>{copy.branchLabel}</dt><dd>{animal.branch} · {animal.branchPinyin}</dd></div>
+      <div><dt>{copy.sequenceLabel}</dt><dd>{chineseZodiacLocalizedText(locale, 'positionValue', { position: animal.position })}</dd></div>
+      <div><dt>{copy.associationLabel}</dt><dd>{animal.context}</dd></div>
+    </dl>
+
+    <section aria-labelledby={`animal-years-${locale}`}>
+      <div class="section-head"><h2 id={`animal-years-${locale}`}>{copy.yearsLabel}</h2></div>
+      <ul class="cz-years">{years.map((year) => <li>{year}</li>)}</ul>
+      <p class="cz-sources">{copy.yearsBoundary}</p>
+    </section>
+
+    <section class="cz-note">
+      <h2>{copy.limitsTitle}</h2>
+      <p>{copy.limitsBody}</p>
+    </section>
+
+    <section>
+      <div class="section-head"><h2>{copy.allAnimals}</h2></div>
+      <div class="cz-grid">
+        {animals.map((entry) => (
+          <a class="cz-card" href={localizePath(locale, `/learn/chinese-zodiac/${entry.slug}/`)} aria-current={entry.slug === animal.slug ? 'page' : undefined}>
+            <span class="cz-card__no">{chineseZodiacLocalizedText(locale, 'numberLabel', { number: String(entry.position).padStart(2, '0') })} · {entry.branch}</span>
+            <strong>{entry.name}</strong>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <nav class="cz-nav" aria-label={copy.allAnimals}>
+      <a href={localizePath(locale, `/learn/chinese-zodiac/${previous.slug}/`)}>← {copy.previous}: {previous.name}</a>
+      <a href={hubPath}>{copy.kicker}</a>
+      <a href={localizePath(locale, `/learn/chinese-zodiac/${next.slug}/`)}>{copy.next}: {next.name} →</a>
+    </nav>
+
+    <p class="cz-sources">
+      <a href="/learn/zodiac-dates/" hreflang="en">{copy.westernLink}</a> ·{' '}
+      <a href={localizePath(locale, '/birth-chart/')}>{copy.chartLink}</a>
+    </p>
+  </article>
+</Base>

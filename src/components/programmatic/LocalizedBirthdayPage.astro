@@ -1,0 +1,358 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Faq from '../Faq.astro';
+import ShareRow from '../ShareRow.astro';
+import SignIcon from '../SignIcon.astro';
+import { LOCALE_META, localizePath } from '../../lib/i18n';
+import { planetLabel } from '../../lib/i18n/astrology';
+import { formatLongitude, signBySlug, signName } from '../../lib/signs';
+import {
+  birthdaySlug,
+  prevDate,
+  nextDate,
+  decanSpan,
+  cuspSummary,
+  cuspYearReading,
+  type BirthdayEntry,
+} from '../../lib/birthdays';
+import birthdays from '../../data/birthdays.json';
+import { EDITOR_AUTHOR } from '../../lib/editorial';
+import {
+  birthdayOrdinal,
+  birthdayText,
+  type BirthdayLocale,
+} from '../../strings/birthday';
+
+interface Props {
+  locale: BirthdayLocale;
+  entry: CollectionEntry<'birthdays'>;
+}
+
+const { locale, entry } = Astro.props;
+const { month, day } = entry.data;
+const slug = entry.id;
+const dateFormatter = new Intl.DateTimeFormat(LOCALE_META[locale].intlLocale, {
+  month: 'long',
+  day: 'numeric',
+  timeZone: 'UTC',
+});
+const dateLabel = (valueMonth: number, valueDay: number) => {
+  const formatted = dateFormatter.format(new Date(Date.UTC(2000, valueMonth - 1, valueDay)));
+  // Intl renders French first-of-month dates as “1 février”; editorial
+  // French requires the ordinal form wherever these labels enter prose.
+  return locale === 'fr' && valueDay === 1 ? formatted.replace(/^1 /, '1er ') : formatted;
+};
+const label = dateLabel(month, day);
+const text = (key: Parameters<typeof birthdayText>[1], values: Record<string, string | number> = {}) => (
+  birthdayText(locale, key, values)
+);
+
+const data = (birthdays.days as Record<string, BirthdayEntry>)[slug];
+if (!data) throw new Error(`No computed data for ${slug} — rerun scripts/build-birthdays.mjs`);
+const [yearFrom, yearTo] = birthdays.yearRange as [number, number];
+const sign = data.sign ? signBySlug(data.sign) : null;
+const cusp = data.cusp ? cuspSummary(data.cusp) : null;
+const nowReading = data.cusp ? cuspYearReading(data.cusp, data.now.year) : null;
+const decan = sign ? decanSpan(data) : null;
+const longitudeMin = formatLongitude(data.lonMin, locale);
+const longitudeMax = formatLongitude(data.lonMax, locale);
+const spanLabel = `${longitudeMin} – ${longitudeMax}`;
+const moonName = signName(data.now.moonSign, locale);
+const heroSign = sign ?? (cusp ? cusp.majority ?? cusp.a : null);
+const hue = heroSign?.hue ?? 'var(--text-2)';
+const localName = (candidate: NonNullable<typeof heroSign>) => signName(candidate, locale);
+const rulerName = (name: string | undefined) => name ? planetLabel(locale, name) : '';
+
+const faq: { q: string; a: string }[] = [];
+if (sign && decan) {
+  faq.push({
+    q: text('qSign', { date: label }),
+    a: text('aSign', { sign: localName(sign), from: yearFrom, to: yearTo }),
+  });
+  faq.push({
+    q: text('qDecan', { date: label }),
+    a: decan.lo === decan.hi
+      ? text('aDecanSingle', {
+          ordinal: birthdayOrdinal(locale, decan.lo),
+          sign: localName(sign),
+          ruler: rulerName(decan.ruler),
+        })
+      : text('aDecanSplit', {
+          degree: decan.lo * 10,
+          lo: birthdayOrdinal(locale, decan.lo),
+          hi: birthdayOrdinal(locale, decan.hi),
+          sign: localName(sign),
+        }),
+  });
+} else if (cusp) {
+  faq.push({
+    q: text('qSign', { date: label }),
+    a: text('aCusp', { a: localName(cusp.a), b: localName(cusp.b) }),
+  });
+  faq.push({
+    q: text('qDecan', { date: label }),
+    a: text('aDecanCusp', { a: localName(cusp.a), b: localName(cusp.b) }),
+  });
+}
+faq.push({
+  q: text('qDegree', { date: label }),
+  a: text('aDegree', { lo: longitudeMin, hi: longitudeMax }),
+});
+
+const prev = prevDate(month, day);
+const next = nextDate(month, day);
+const prevSlug = birthdaySlug(prev.month, prev.day);
+const nextSlug = birthdaySlug(next.month, next.day);
+const linkSigns = sign ? [sign] : cusp ? [cusp.a, cusp.b] : [];
+const signNames = linkSigns.map((candidate) => localName(candidate));
+const path = localizePath(locale, `/birthday/${slug}/`);
+const ogImage = `/assets/og/v2/sign/${heroSign!.slug}.png`;
+const title = text('metaTitle', { date: label });
+const description = sign
+  ? text('metaDescriptionSign', { date: label, sign: localName(sign) })
+  : text('metaDescriptionCusp', { date: label, a: localName(cusp!.a), b: localName(cusp!.b) });
+const jsonLd = [
+  {
+    '@type': 'Article',
+    headline: title,
+    description,
+    url: `https://zodiacs.org${path}`,
+    datePublished: entry.data.published.toISOString(),
+    dateModified: entry.data.updated.toISOString(),
+    author: EDITOR_AUTHOR,
+    publisher: { '@id': 'https://zodiacs.org/#org' },
+    mainEntityOfPage: { '@type': 'WebPage', '@id': `https://zodiacs.org${path}` },
+    inLanguage: LOCALE_META[locale].htmlLang,
+    image: `https://zodiacs.org${ogImage}`,
+    about: { '@type': 'Thing', name: text('imageAlt', { date: label }) },
+  },
+  {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Zodiacs.org', item: `https://zodiacs.org${localizePath(locale, '/')}` },
+      { '@type': 'ListItem', position: 2, name: text('kicker'), item: 'https://zodiacs.org/birthday/' },
+      { '@type': 'ListItem', position: 3, name: label, item: `https://zodiacs.org${path}` },
+    ],
+  },
+  {
+    '@type': 'FAQPage',
+    mainEntity: faq.map(({ q, a }) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: { '@type': 'Answer', text: a },
+    })),
+  },
+];
+---
+<Base
+  title={title}
+  description={description}
+  path={path}
+  locale={locale}
+  image={ogImage}
+  imageAlt={text('imageAlt', { date: label })}
+  type="article"
+  jsonLd={jsonLd}
+>
+  <article class="container container--narrow bday" style={`--sign:${hue}`}>
+    <header class="bday__hero reveal">
+      <em class="kicker">{text('kicker')}</em>
+      <div class="bday-lockup">
+        {heroSign && <SignIcon sign={heroSign.slug} size={128} class="bday-disc" />}
+        {cusp && <SignIcon sign={cusp.b.slug} size={128} class="bday-disc bday-disc--b" />}
+        <h1 class="display">{text('bornOn', { date: label })}</h1>
+      </div>
+
+      <dl class="bday-panel mono">
+        {sign ? (
+          <div class="bday-panel__row">
+            <dt>{text('sunSign')}</dt>
+            <dd><strong><a href={localizePath(locale, `/${sign.slug}/`)}>{localName(sign)}</a></strong> — {text('everyYear', { from: yearFrom, to: yearTo })}</dd>
+          </div>
+        ) : cusp && (
+          <>
+            <div class="bday-panel__row">
+              <dt>{text('sunSign')}</dt>
+              <dd>
+                <strong><a href={localizePath(locale, `/${cusp.a.slug}/`)}>{localName(cusp.a)}</a></strong>{' '}
+                {text('or')}{' '}
+                <strong><a href={localizePath(locale, `/${cusp.b.slug}/`)}>{localName(cusp.b)}</a></strong> —{' '}
+                {text('boundaryHere', { a: localName(cusp.a), b: localName(cusp.b) })}
+              </dd>
+            </div>
+            <div class="bday-panel__row">
+              <dt>{yearFrom}–{yearTo}</dt>
+              <dd>{text('rangeSummary', {
+                a: localName(cusp.a),
+                b: localName(cusp.b),
+                wholeA: cusp.wholeA,
+                wholeB: cusp.wholeB,
+                split: cusp.split,
+              })}</dd>
+            </div>
+            {nowReading && (
+              <div class="bday-panel__row">
+                <dt>{text('inYear', { year: data.now.year })}</dt>
+                <dd>{nowReading.kind === 'whole'
+                  ? text('allDay', { sign: signName(nowReading.sign, locale) })
+                  : text('untilThen', {
+                      before: signName(nowReading.before, locale),
+                      time: nowReading.atUtc,
+                      after: signName(nowReading.after, locale),
+                    })}</dd>
+              </div>
+            )}
+          </>
+        )}
+        <div class="bday-panel__row">
+          <dt>{text('sunDegrees')}</dt>
+          <dd>{spanLabel} · {text('noonUtc', { from: yearFrom, to: yearTo })}</dd>
+        </div>
+        {decan && sign && (
+          <div class="bday-panel__row">
+            <dt>{text('decan')}</dt>
+            <dd>{decan.lo === decan.hi
+              ? text('decanSingle', {
+                  ordinal: birthdayOrdinal(locale, decan.lo),
+                  sign: localName(sign),
+                  ruler: rulerName(decan.ruler),
+                })
+              : text('decanSplit', {
+                  lo: decan.lo,
+                  hi: decan.hi,
+                  sign: localName(sign),
+                  degree: decan.lo * 10,
+                  rulerLo: rulerName(decan.ruler),
+                  rulerHi: rulerName(decan.hiRuler),
+                })}</dd>
+          </div>
+        )}
+        {cusp && (
+          <div class="bday-panel__row">
+            <dt>{text('decan')}</dt>
+            <dd>{text('decanCusp', { a: localName(cusp.a), b: localName(cusp.b) })}</dd>
+          </div>
+        )}
+        <div class="bday-panel__row">
+          <dt>{text('thisYear')}</dt>
+          <dd>{text('sunMoon', {
+            date: label,
+            year: data.now.year,
+            sun: formatLongitude(data.now.lon, locale),
+            moon: moonName,
+          })}</dd>
+        </div>
+      </dl>
+
+      {cusp && (
+        <details class="bday-years mono">
+          <summary>{text('tableSummary', { from: yearFrom, to: yearTo })}</summary>
+          <div class="bday-years__grid">
+            {Object.entries(data.cusp!.years).map(([year, value]) => (
+              <span class="bday-years__cell">
+                <span class="bday-years__year">{year}</span>
+                {value === 'a'
+                  ? localName(cusp.a)
+                  : value === 'b'
+                  ? localName(cusp.b)
+                  : `${localName(cusp.a)} → ${localName(cusp.b)} ${value} UTC`}
+              </span>
+            ))}
+          </div>
+          <p class="bday-years__note">{text('timeNote')}</p>
+        </details>
+      )}
+    </header>
+
+    <section class="prose reveal">
+      <h2>{text('factsHeading')}</h2>
+      <p>{sign
+        ? text('factIntroSign', {
+            from: yearFrom,
+            to: yearTo,
+            sign: localName(sign),
+            date: label,
+            lo: longitudeMin,
+            hi: longitudeMax,
+          })
+        : text('factIntroCusp', { date: label, a: localName(cusp!.a), b: localName(cusp!.b) })}</p>
+      <p>{text('factDegrees')}</p>
+      <p>{text('factMethod')}</p>
+    </section>
+
+    <section class="reveal">
+      <Faq items={faq} heading={text('faqHeading')} />
+    </section>
+
+    <div class="bday__cta shell tinted reveal">
+      <div class="core tinted bday__cta-core">
+        <strong>{text('ctaTitle')}</strong>
+        <p>{text('ctaBody')}</p>
+        <a class="btn btn--primary" href={localizePath(locale, '/birth-chart/')}><span>{text('ctaAction')}</span><span class="orb">↗</span></a>
+      </div>
+    </div>
+
+    <nav class="bday-more reveal" aria-label={text('navAria')}>
+      <div class="bday-more__col">
+        <span class="bday-more__head">{text('calendar')}</span>
+        <div class="bday-more__chips">
+          <a class="bday-chip" href={localizePath(locale, `/birthday/${prevSlug}/`)}>← {dateLabel(prev.month, prev.day)}</a>
+          <a class="bday-chip" href="/birthday/" hreflang="en">{text('allBirthdaysEnglish')}</a>
+          <a class="bday-chip" href={localizePath(locale, `/birthday/${nextSlug}/`)}>{dateLabel(next.month, next.day)} →</a>
+        </div>
+      </div>
+      <div class="bday-more__col">
+        <span class="bday-more__head">{text('deeperInto', { signs: signNames.join(text('and')) })}</span>
+        <div class="bday-more__chips">
+          {linkSigns.map((candidate) => (
+            <a class="bday-chip" href={localizePath(locale, `/${candidate.slug}/`)}>
+              {text('guide', { sign: localName(candidate) })}
+            </a>
+          ))}
+        </div>
+      </div>
+    </nav>
+
+    <ShareRow
+      locale={locale}
+      text={text('share', { date: label })}
+      url={`https://zodiacs.org${path}`}
+    />
+  </article>
+</Base>
+
+<style>
+  .bday { display: grid; gap: clamp(28px, 5vw, 44px); padding-block: clamp(24px, 5vw, 56px) clamp(36px, 6vw, 72px); }
+  .bday__hero { display: grid; gap: 18px; justify-items: start; }
+  .bday-lockup { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+  .bday-lockup :global(.bday-disc) { border-radius: 50%; }
+  .bday-lockup :global(.bday-disc--b) { margin-left: -34px; }
+  .bday-lockup h1 { margin: 0; font-size: clamp(2.1rem, 1.4rem + 3.4vw, 3.6rem); line-height: 1.02; flex-basis: 100%; }
+  @media (min-width: 700px) { .bday-lockup h1 { flex-basis: auto; } }
+  .bday-panel { margin: 0; display: grid; width: 100%; max-width: 640px; }
+  .bday-panel__row { display: grid; gap: 2px 20px; padding: 9px 0; border-bottom: 1px solid var(--hair-1); font-size: 11.5px; letter-spacing: 0.05em; }
+  .bday-panel__row:first-child { border-top: 1px solid var(--hair-1); }
+  @media (min-width: 560px) { .bday-panel__row { grid-template-columns: 150px 1fr; } }
+  .bday-panel__row dt { color: var(--faint); text-transform: uppercase; font-size: 10px; letter-spacing: 0.14em; align-self: baseline; }
+  .bday-panel__row dd { margin: 0; color: var(--text-2); }
+  .bday-panel__row strong { color: var(--text); font-weight: 600; }
+  .bday-panel__row a { color: inherit; text-decoration: none; border-bottom: 1px solid var(--hair-2); }
+  .bday-panel__row a:hover { color: var(--text); border-bottom-color: var(--sign); }
+  .bday-years { width: 100%; max-width: 640px; border: 1px solid var(--hair-1); border-radius: var(--r-md); background: var(--void-1); padding: 4px 16px; font-size: 11.5px; }
+  .bday-years summary { cursor: pointer; padding: 10px 0; color: var(--text-2); }
+  .bday-years__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 4px 18px; padding: 8px 0 12px; }
+  .bday-years__cell { color: var(--muted); display: flex; gap: 8px; align-items: baseline; }
+  .bday-years__year { color: var(--faint); font-size: 10.5px; }
+  .bday-years__note { margin: 0 0 12px; color: var(--faint); font-size: 10.5px; }
+  .bday__cta-core { padding: clamp(22px, 4vw, 32px); display: grid; gap: 10px; justify-items: start; }
+  .bday__cta-core strong { font-size: var(--text-lg); letter-spacing: -0.01em; }
+  .bday__cta-core p { margin: 0; font-size: var(--text-sm); color: var(--text-2); max-width: 54ch; }
+  .bday-more { display: grid; gap: 20px; padding-top: 18px; border-top: 1px solid var(--hair-1); grid-template-columns: 1fr; }
+  @media (min-width: 700px) { .bday-more { grid-template-columns: auto 1fr; gap: 20px 48px; } }
+  .bday-more__col { display: grid; gap: 10px; align-content: start; }
+  .bday-more__head { font-weight: 600; font-size: var(--text-sm); color: var(--text); }
+  .bday-more__chips { display: flex; flex-wrap: wrap; gap: 4px 2px; }
+  .bday-chip { padding: 4px 9px; border-radius: var(--r-full); font-size: 12.5px; color: var(--muted); text-decoration: none; transition: color var(--dur-1) var(--ease), background var(--dur-1) var(--ease); }
+  .bday-chip:hover { color: var(--text); background: color-mix(in oklab, var(--sign) 12%, transparent); }
+</style>
