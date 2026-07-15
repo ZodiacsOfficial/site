@@ -1,6 +1,6 @@
-import { SIGN_SLUGS } from '../signs';
-import { localeHtmlLang, type Locale } from '../i18n/core';
-import { serverUiMessage } from '../i18n/ui/server';
+import { SIGN_SLUGS } from '../signs.js';
+import { localeHtmlLang, type Locale } from '../i18n/core.js';
+import { serverUiMessage } from '../i18n/ui/server.js';
 import type { UiKey } from '../i18n/ui/schema';
 
 function html(value: string): string {

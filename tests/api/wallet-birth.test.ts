@@ -3,8 +3,8 @@ import {
   clearWalletBirthCache,
   handleWalletBirth,
   isAllowedWalletRequest,
-} from './wallet-birth';
-import type { WalletBirthProvider } from '../src/lib/wallet/types';
+} from '../../api/wallet-birth.js';
+import type { WalletBirthProvider } from '../../src/lib/wallet/types';
 
 const ADDRESS = '0x0000000000000000000000000000000000000001';
 const ENV = {
@@ -78,4 +78,3 @@ describe('wallet birth endpoint', () => {
     expect(JSON.parse(response.body)).toEqual({ error: 'disabled' });
   });
 });
-

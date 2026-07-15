@@ -208,9 +208,11 @@ if (engineChunks.length !== 1) {
   fail(`engine-chunk: ${engineChunk.path} is ${kb(engineChunk.gzip)} KB gz (limit ${budgets['engine-chunk']} KB)`);
 }
 
-// Production source must consume the vendored engine package and keep its
-// ephemeris behind one local dynamic-import boundary. Tests may import
-// astronomy-engine directly to construct independent reference vectors.
+// Browser production source must consume the vendored engine package and keep
+// its ephemeris behind one local dynamic-import boundary. The one exact
+// server-only adapter may select astronomy-engine's CommonJS export because
+// Vercel externalizes that dual-mode dependency. Tests may also import it
+// directly to construct independent reference vectors.
 const sourceFiles = await walk(resolve(repo, 'src'), (path) =>
   ['.astro', '.js', '.mjs', '.ts', '.tsx'].includes(extname(path))
   && !/\.(?:test|spec)\.[^.]+$/.test(path));
@@ -227,8 +229,13 @@ for (const path of sourceFiles) {
   if (specifiers.includes('@zodiacs/engine/internal')) engineInternalImporters.push(relativePath);
   if (specifiers.includes('@zodiacs/engine/internal/math')) engineMathImporters.push(relativePath);
 }
-if (directVendorImporters.length !== 0) {
-  fail(`engine source isolation: site production code imports astronomy-engine directly: ${directVendorImporters.join(', ')}`);
+const allowedDirectVendorImporters = ['src/lib/engine/server-ephemeris.ts'];
+directVendorImporters.sort();
+if (
+  directVendorImporters.length !== allowedDirectVendorImporters.length
+  || directVendorImporters.some((path, index) => path !== allowedDirectVendorImporters[index])
+) {
+  fail(`engine source isolation: expected only ${allowedDirectVendorImporters.join(', ')} to import astronomy-engine directly; found ${directVendorImporters.join(', ') || 'none'}`);
 }
 const allowedEngineImporter = 'src/lib/engine/full.ts';
 if (engineInternalImporters.length !== 1 || engineInternalImporters[0] !== allowedEngineImporter) {
@@ -252,8 +259,15 @@ const engineMarkers = ['Value is not boolean:', 'Light-travel time solver did no
 const homepageMarkerChunks = homepage
   ? [...homepage.closure].filter((path) => engineMarkers.some((marker) => chunks.get(path).source.includes(marker)))
   : [];
+const serverOnlyMarkerChunks = chunkRows
+  .filter(({ source }) => ['astronomy-engine', 'node:module', 'createRequire']
+    .some((marker) => source.includes(marker)))
+  .map(({ path }) => path);
 if (homepageMarkerChunks.length) {
   fail(`homepage engine isolation: engine marker found in ${homepageMarkerChunks.join(', ')}`);
+}
+if (serverOnlyMarkerChunks.length) {
+  fail(`browser engine isolation: server-only import marker found in ${serverOnlyMarkerChunks.join(', ')}`);
 }
 if (engineChunk && !engineMarkers.every((marker) => engineChunk.source.includes(marker))) {
   fail(`engine marker fingerprint missing from ${engineChunk.path}`);
@@ -270,7 +284,8 @@ if (largestChunk) {
 if (engineChunk) {
   console.log(`  ${'engine-chunk'.padEnd(16)} ${kb(engineChunk.gzip).padStart(6)} KB / ${String(budgets['engine-chunk']).padStart(4)} KB  (${engineChunk.path})`);
 }
-const sourceBoundaryClear = directVendorImporters.length === 0
+const sourceBoundaryClear = directVendorImporters.length === allowedDirectVendorImporters.length
+  && directVendorImporters.every((path, index) => path === allowedDirectVendorImporters[index])
   && engineInternalImporters.length === 1
   && engineInternalImporters[0] === allowedEngineImporter;
 console.log(`engine isolation: package boundary ${sourceBoundaryClear ? 'clear' : 'failed'}; homepage markers ${homepageMarkerChunks.length ? 'found' : 'clear'}`);

@@ -1,7 +1,7 @@
-import { createEmailSubscriptionAdapter } from '../../src/lib/email/provider';
-import { parseEmailSubscription } from '../../src/lib/email/input';
-import { isAllowedEmailCaptureRequest, requestHeader } from '../../src/lib/email/request';
-import { emailStatusPage } from '../../src/lib/email/server-page';
+import { createEmailSubscriptionAdapter } from '../../src/lib/email/provider.js';
+import { parseEmailSubscription } from '../../src/lib/email/input.js';
+import { isAllowedEmailCaptureRequest, requestHeader } from '../../src/lib/email/request.js';
+import { emailStatusPage } from '../../src/lib/email/server-page.js';
 
 function sendJson(res: any, status: number, body: Record<string, string | boolean>): void {
   res.statusCode = status;

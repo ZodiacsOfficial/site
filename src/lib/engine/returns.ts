@@ -8,7 +8,9 @@
  * Lives beside full.ts and is only ever lazy-loaded with it — the
  * ephemeris stays out of every eager bundle.
  */
-import { bodyLongitude } from './full';
+import { bodyLongitude } from './full.js';
+import { findLongitudeCrossingsWith } from './longitude-crossings.js';
+import type { LongitudeCrossing } from './longitude-crossings';
 import type { BodyName } from './types';
 
 const DAY = 86400_000;
@@ -19,11 +21,7 @@ function delta(a: number, b: number): number {
   return d > 180 ? d - 360 : d;
 }
 
-export interface Crossing {
-  at: Date;
-  /** True when the body was moving backward through the degree. */
-  retrograde: boolean;
-}
+export type Crossing = LongitudeCrossing;
 
 export interface ReturnSeason {
   /** 1 = first return (~29), 2 = second (~58)… */
@@ -46,39 +44,7 @@ export function findLongitudeCrossings(
   to: Date,
   stepDays = 5,
 ): Crossing[] {
-  const out: Crossing[] = [];
-  const step = stepDays * DAY;
-  if (!Number.isFinite(step) || step <= 0) throw new RangeError('stepDays must be positive.');
-
-  let prevT = from.getTime();
-  let prev = delta(targetLon, bodyLongitude(body, from));
-  const toT = to.getTime();
-
-  while (prevT < toT) {
-    const t = Math.min(prevT + step, toT);
-    const date = new Date(t);
-    const cur = delta(targetLon, bodyLongitude(body, date));
-
-    // Sign change without the ±180 wrap (opposite side of the zodiac).
-    if (Math.sign(cur) !== Math.sign(prev) && Math.abs(cur) < 90 && Math.abs(prev) < 90) {
-      let lo = prevT;
-      let hi = t;
-      const rising = cur > prev;
-      for (let i = 0; i < 24; i += 1) {
-        const mid = (lo + hi) / 2;
-        const d = delta(targetLon, bodyLongitude(body, new Date(mid)));
-        if ((d > 0) === rising) hi = mid; else lo = mid;
-      }
-      const at = new Date(hi);
-      // Direction through the degree: longitude increasing = direct.
-      out.push({ at, retrograde: !rising });
-    }
-
-    prevT = t;
-    prev = cur;
-  }
-
-  return out;
+  return findLongitudeCrossingsWith(bodyLongitude, body, targetLon, from, to, stepDays);
 }
 
 /**

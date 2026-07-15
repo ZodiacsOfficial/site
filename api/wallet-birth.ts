@@ -1,14 +1,14 @@
-import { parseWalletAddress } from '../src/lib/wallet/address';
+import { parseWalletAddress } from '../src/lib/wallet/address.js';
 import {
   configuredWalletChains,
   walletCacheTtlMs,
   type WalletEnvironment,
-} from '../src/lib/wallet/config';
-import { resolveOfficialHeldSigns } from '../src/lib/wallet/holdings';
+} from '../src/lib/wallet/config.js';
+import { resolveOfficialHeldSigns } from '../src/lib/wallet/holdings.js';
 import {
   createWalletBirthProvider,
   HistoryCostBoundaryError,
-} from '../src/lib/wallet/providers';
+} from '../src/lib/wallet/providers.js';
 import type {
   WalletBirth,
   WalletBirthErrorCode,

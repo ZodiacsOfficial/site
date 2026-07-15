@@ -1,4 +1,4 @@
-import { GROWTH_UI_EN } from "./growth";
+import { GROWTH_UI_EN } from "./growth.js";
 import type { UiCatalog } from "./schema";
 
 const it = {
