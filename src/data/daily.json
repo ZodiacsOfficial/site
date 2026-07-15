@@ -1,72 +1,72 @@
 {
-  "date": "2026-07-14",
+  "date": "2026-07-15",
   "bodies": [
     {
       "body": "Moon",
-      "lon": 113.41,
-      "sign": "cancer",
-      "degree": 23.4,
+      "lon": 128.28,
+      "sign": "leo",
+      "degree": 8.3,
       "retrograde": false
     },
     {
       "body": "Sun",
-      "lon": 112.08,
+      "lon": 113.03,
       "sign": "cancer",
-      "degree": 22.1,
+      "degree": 23,
       "retrograde": false
     },
     {
       "body": "Mercury",
-      "lon": 109.79,
+      "lon": 109.18,
       "sign": "cancer",
-      "degree": 19.8,
+      "degree": 19.2,
       "retrograde": true
     },
     {
       "body": "Venus",
-      "lon": 155.29,
+      "lon": 156.39,
       "sign": "virgo",
-      "degree": 5.3,
+      "degree": 6.4,
       "retrograde": false
     },
     {
       "body": "Mars",
-      "lon": 71.06,
+      "lon": 71.76,
       "sign": "gemini",
-      "degree": 11.1,
+      "degree": 11.8,
       "retrograde": false
     },
     {
       "body": "Jupiter",
-      "lon": 123.09,
+      "lon": 123.31,
       "sign": "leo",
-      "degree": 3.1,
+      "degree": 3.3,
       "retrograde": false
     },
     {
       "body": "Saturn",
-      "lon": 14.62,
+      "lon": 14.64,
       "sign": "aries",
       "degree": 14.6,
       "retrograde": false
     },
     {
       "body": "Uranus",
-      "lon": 64.34,
+      "lon": 64.38,
       "sign": "gemini",
-      "degree": 4.3,
+      "degree": 4.4,
       "retrograde": false
     },
     {
       "body": "Neptune",
-      "lon": 4.41,
+      "lon": 4.4,
       "sign": "aries",
       "degree": 4.4,
       "retrograde": true
     },
     {
       "body": "Pluto",
-      "lon": 304.58,
+      "lon": 304.56,
       "sign": "aquarius",
       "degree": 4.6,
       "retrograde": true
@@ -74,15 +74,19 @@
   ],
   "moon": {
     "phase": "New Moon",
-    "illumination": 0.001
+    "illumination": 0.018
   },
   "events": [
     {
-      "kind": "lunation",
-      "type": "new",
-      "at": "2026-07-14T09:44:04.307Z",
-      "sign": "cancer",
-      "degree": 22
+      "kind": "aspect",
+      "a": "Uranus",
+      "b": "Neptune",
+      "type": "sextile",
+      "at": "2026-07-15T22:22:54.580Z",
+      "aSign": "gemini",
+      "aDegree": 4.4,
+      "bSign": "aries",
+      "bDegree": 4.4
     }
   ]
 }
