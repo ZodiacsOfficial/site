@@ -20,6 +20,14 @@ const update = process.argv.includes('--update') || process.env.UPDATE_VISUAL_BA
 const pixelmatchThreshold = 0.1;
 const maxDiffRatio = 0.001;
 const fixedNow = '2026-07-10T12:00:00.000Z';
+// Daily JSON is intentionally refreshed independently of layout changes. The
+// ticker's values, glyph types, and hues all come from that receipt, so mask
+// the live row plus the Today-by-sign date stamp. Their surrounding bands,
+// headings, sign controls, and any data-driven reflow remain under comparison.
+const liveDailySelectors = [
+  '.skyticker',
+  '.tbs__stamp',
+];
 
 const viewports = [
   { name: 'desktop', width: 1440, height: 1000 },
@@ -146,18 +154,45 @@ async function capture(browser, baseURL, testCase) {
     `,
   });
   await settlePage(page, testCase);
+  const masks = await page.locator(liveDailySelectors.join(', ')).evaluateAll((elements) => (
+    elements.flatMap((element) => {
+      const rect = element.getBoundingClientRect();
+      return rect.width > 0 && rect.height > 0
+        ? [{
+            x: rect.left + window.scrollX,
+            y: rect.top + window.scrollY,
+            width: rect.width,
+            height: rect.height,
+          }]
+        : [];
+    })
+  ));
   const image = await page.screenshot({ fullPage: true, animations: 'disabled' });
   await context.close();
-  return image;
+  return { image, masks };
 }
 
-function comparePng(expectedBuffer, actualBuffer) {
+function comparePng(expectedBuffer, actualBuffer, masks = []) {
   const expected = PNG.sync.read(expectedBuffer);
   const actual = PNG.sync.read(actualBuffer);
   if (expected.width !== actual.width || expected.height !== actual.height) {
     return {
       dimensionError: `${expected.width}×${expected.height} expected, ${actual.width}×${actual.height} received`,
     };
+  }
+
+  for (const mask of masks) {
+    const padding = 3;
+    const left = Math.max(0, Math.floor(mask.x) - padding);
+    const top = Math.max(0, Math.floor(mask.y) - padding);
+    const right = Math.min(actual.width, Math.ceil(mask.x + mask.width) + padding);
+    const bottom = Math.min(actual.height, Math.ceil(mask.y + mask.height) + padding);
+    for (let y = top; y < bottom; y += 1) {
+      for (let x = left; x < right; x += 1) {
+        const offset = (y * actual.width + x) * 4;
+        actual.data.set(expected.data.subarray(offset, offset + 4), offset);
+      }
+    }
   }
 
   const diff = new PNG({ width: expected.width, height: expected.height });
@@ -195,7 +230,14 @@ try {
     for (const testCase of cases) {
       const stem = fileStem(testCase);
       const baselinePath = resolve(baselineRoot, `${stem}.png`);
-      const actual = await capture(browser, baseURL, testCase);
+      const { image: actual, masks } = await capture(browser, baseURL, testCase);
+      const expectedMaskCount = testCase.name === 'home' ? 2 : 0;
+      if (masks.length !== expectedMaskCount) {
+        failures += 1;
+        await writeFile(resolve(artifactRoot, `${stem}.actual.png`), actual);
+        console.error(`  FAIL ${stem}: ${masks.length} daily masks found, expected ${expectedMaskCount}`);
+        continue;
+      }
 
       if (update) {
         await writeFile(baselinePath, actual);
@@ -213,7 +255,7 @@ try {
         continue;
       }
 
-      const comparison = comparePng(expected, actual);
+      const comparison = comparePng(expected, actual, masks);
       if (comparison.dimensionError) {
         failures += 1;
         await writeFile(resolve(artifactRoot, `${stem}.actual.png`), actual);
