@@ -8,9 +8,14 @@ import type { APIRoute } from 'astro';
 import { getCollection } from 'astro:content';
 import { LEGACY_URLS } from '../lib/legacy/urls';
 import { DEFAULT_LOCALE, LOCALES, LOCALE_META, alternatePaths } from '../lib/i18n';
+import { CHINESE_ZODIAC_ANIMALS } from '../data/chinese-zodiac';
 import daily from '../data/daily.json';
 
 const SITE = 'https://zodiacs.org';
+const CHINESE_ZODIAC_PATHS = [
+  '/learn/chinese-zodiac/',
+  ...CHINESE_ZODIAC_ANIMALS.map((animal) => `/learn/chinese-zodiac/${animal.slug}/`),
+];
 // Keep these dates source-controlled: build environments may have shallow or
 // absent Git history. When an evergreen page's rendered source changes, update
 // its entry here in the same commit.
@@ -38,6 +43,10 @@ const EVERGREEN_LASTMOD = new Map<string, string>([
       : ['/', '/learn/zodiac-dates/', '/learn/glossary/'].includes(loc) ? '2026-07-11' : '2026-07-10',
   ] as const),
   ...LEGACY_URLS.map((url) => [url.path, '2026-07-10'] as const),
+  ...[
+    '/disclosure/',
+    ...CHINESE_ZODIAC_PATHS,
+  ].map((loc) => [loc, '2026-07-15'] as const),
   ...[
     '/pt/', '/pt/birth-chart/', '/pt/compatibility/', '/pt/moon-sign/',
     '/pt/rising-sign/', '/pt/moon-phase/', '/pt/saturn-return/', '/pt/transits/',
@@ -117,6 +126,13 @@ export const GET: APIRoute = async () => {
     { loc: '/birthday/', priority: 0.7 },
     { loc: '/baby-zodiac/', priority: 0.8 },
     { loc: '/widgets/', priority: 0.6 },
+    { loc: '/disclosure/', priority: 0.5 },
+    // TODO(i18n): add locale routes and hreflang only after translated WS5
+    // pages exist. These entries are deliberately English-only this pass.
+    ...CHINESE_ZODIAC_PATHS.map((loc, index) => ({
+      loc,
+      priority: index === 0 ? 0.7 : 0.6,
+    })),
     { loc: '/methodology/', priority: 0.6 },
     { loc: '/about/', priority: 0.55 },
     { loc: '/privacy/', priority: 0.4 },

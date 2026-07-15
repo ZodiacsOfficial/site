@@ -496,6 +496,52 @@ function canonicalHref(html) {
   return tag ? attr(tag[0], 'href') : null;
 }
 
+// Coordinated indexing baseline (2026-07-15): the locale rails remain fixed
+// while WS5 adds 78 compatibility pairs, 366 birthdays, and 13 English-only
+// Chinese-zodiac pages. Keep exact counts so future sitemap drift fails loudly.
+const sitemapPolicy = {
+  total: 798,
+  compatibilityPairs: 78,
+  birthdays: 366,
+  chineseZodiac: 13,
+  translatedBlocks: 125,
+};
+const ws5Families = [
+  { label: 'compatibility pairs', pattern: /^\/compatibility\/[a-z]+-[a-z]+\/$/, expected: sitemapPolicy.compatibilityPairs },
+  { label: 'birthdays', pattern: /^\/birthday\/[a-z]+-\d{1,2}\/$/, expected: sitemapPolicy.birthdays },
+  { label: 'Chinese zodiac', pattern: /^\/learn\/chinese-zodiac(?:\/[a-z]+)?\/$/, expected: sitemapPolicy.chineseZodiac },
+];
+
+if (sitemapLocs.size !== sitemapPolicy.total) {
+  fail(`sitemap.xml: ${sitemapLocs.size} locs vs coordinated baseline ${sitemapPolicy.total}`);
+}
+for (const family of ws5Families) {
+  const locs = [...sitemapLocs].filter((loc) => family.pattern.test(loc));
+  if (locs.length !== family.expected) {
+    fail(`sitemap.xml: ${locs.length} ${family.label} vs baseline ${family.expected}`);
+  }
+  for (const loc of locs) {
+    const target = targetPath(loc);
+    if (!target || !(await exists(target))) continue;
+    const html = idCache.get(target) ?? (await readFile(target, 'utf8'));
+    const canonical = canonicalHref(html);
+    if (canonical !== `https://zodiacs.org${loc}`) {
+      fail(`sitemap.xml: ${loc} is not self-canonical — ${canonical ?? 'missing'}`);
+    }
+    const block = [...sitemap.matchAll(/<url>([\s\S]*?)<\/url>/g)]
+      .find((match) => match[1].includes(`<loc>https://zodiacs.org${loc}</loc>`))?.[1] ?? '';
+    if (/hreflang=/.test(block)) {
+      fail(`sitemap.xml: English-only WS5 route has hreflang alternates — ${loc}`);
+    }
+  }
+}
+for (const hreflang of ['en', 'es', 'pt-BR', 'fr', 'it', 'x-default']) {
+  const count = [...sitemap.matchAll(new RegExp(`hreflang="${hreflang}"`, 'g'))].length;
+  if (count !== sitemapPolicy.translatedBlocks) {
+    fail(`sitemap.xml: ${count} ${hreflang} alternates vs locale-rail baseline ${sitemapPolicy.translatedBlocks}`);
+  }
+}
+
 // Reverse coverage: every indexable HTML page must declare a same-origin
 // canonical URL that appears in the sitemap.
 for (const file of files) {
