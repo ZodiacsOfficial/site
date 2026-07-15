@@ -1,9 +1,9 @@
 import type { Locale } from '../core';
-import en from './en';
-import es from './es';
-import pt from './pt';
-import fr from './fr';
-import it from './it';
+import en from './en.js';
+import es from './es.js';
+import pt from './pt.js';
+import fr from './fr.js';
+import it from './it.js';
 import type { UiCatalog, UiKey } from './schema';
 
 export const UI = {

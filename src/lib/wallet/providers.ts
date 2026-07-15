@@ -4,7 +4,7 @@ import type {
   WalletChain,
   WalletBirthSource,
 } from './types';
-import { validWalletProviderEndpoint, type WalletEnvironment } from './config';
+import { validWalletProviderEndpoint, type WalletEnvironment } from './config.js';
 
 type Fetcher = typeof fetch;
 

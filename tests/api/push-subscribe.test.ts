@@ -1,5 +1,9 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import handler, { isAllowedSiteRequest, parseSubscription, parseUnsubscribe } from './subscribe';
+import handler, {
+  isAllowedSiteRequest,
+  parseSubscription,
+  parseUnsubscribe,
+} from '../../api/push/subscribe.js';
 
 const ORIGINAL_ENV = { ...process.env };
 

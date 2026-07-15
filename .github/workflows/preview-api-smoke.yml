@@ -1,0 +1,34 @@
+name: Preview API Smoke
+
+on:
+  deployment_status:
+
+permissions:
+  contents: read
+
+jobs:
+  preview-api-smoke:
+    name: Preview API smoke
+    if: >-
+      github.event.deployment_status.state == 'success' &&
+      github.event.deployment.environment == 'Preview' &&
+      github.event.deployment.creator.login == 'vercel[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the deployed revision
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event.deployment.sha }}
+          # The smoke script comes from the deployed revision; never leave a
+          # token on disk while running it.
+          persist-credentials: false
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Probe the public Preview functions
+        env:
+          PREVIEW_URL: ${{ github.event.deployment_status.environment_url || github.event.deployment_status.target_url }}
+        run: node scripts/smoke-preview-functions.mjs
