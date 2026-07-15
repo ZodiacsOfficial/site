@@ -1693,7 +1693,7 @@
           <div className="vrf__result-sign">
             <img
               className="vrf__result-icon"
-              src={`/assets/icons/${sign.name.toLowerCase()}.png`}
+              src={`/assets/zodiac-icons/128/${sign.asset.sign}.webp`}
               alt=""
               decoding="async"
             />
@@ -2412,7 +2412,7 @@
                             <td className="standings__lot">
                               <a href={`/registry/${slug}/`}>
                                 <img
-                                  src={`/assets/icons/${slug}.png`}
+                                  src={`/assets/zodiac-icons/48/${slug}.webp`}
                                   alt=""
                                   loading="lazy"
                                   decoding="async"
@@ -2680,7 +2680,7 @@
                       href={`/registry/${h.sign.name.toLowerCase()}/`}
                     >
                       <img
-                        src={`/assets/icons/${h.sign.name.toLowerCase()}.png`}
+                        src={`/assets/zodiac-icons/48/${h.sign.asset.sign}.webp`}
                         alt=""
                         loading="lazy"
                         width="26"
@@ -3054,7 +3054,7 @@
                 aria-label={`${s.name} — catalogue entry`}
               >
                 <img
-                  src={`/assets/icons/${s.name.toLowerCase()}.png`}
+                  src={`/assets/zodiac-icons/48/${s.asset.sign}.webp`}
                   alt=""
                   loading="lazy"
                   decoding="async"

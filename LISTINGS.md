@@ -58,7 +58,7 @@ Official links (use everywhere, consistently):
 - Related app: `https://astrofolio.xyz/`
 - GitHub: `https://github.com/ZodiacsOfficial`
 - Per-sign share image (1200×630): `https://zodiacs.org/assets/og/{sign}.png`
-- Icon (square-ish PNG): `https://zodiacs.org/assets/icons/{sign}.png`
+- Icon (square WebP): `https://zodiacs.org/assets/zodiac-icons/400/{sign}.webp`
 
 ## 1. Dex Screener token profiles
 

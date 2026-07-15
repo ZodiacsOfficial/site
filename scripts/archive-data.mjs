@@ -435,7 +435,7 @@ export const PRESS_KIT = {
   ],
   assets: [
     { label: 'Share cards · 1200×630 · /assets/og/v2/sign/{sign}.png', url: '/assets/og/v2/sign/libra.png' },
-    { label: 'Sign icons · /assets/icons/{sign}.png', url: '/assets/icons/libra.png' },
+    { label: 'Sign icons · /assets/zodiac-icons/400/{sign}.webp', url: '/assets/zodiac-icons/400/libra.webp' },
     { label: 'Sculptural figures · /assets/nuggets/{sign}.png', url: '/assets/nuggets/libra.png' },
     { label: 'Registry JSON · machine-readable', url: '/registry/zodiacs.registry.json' },
     { label: 'SDK · GitHub', url: 'https://github.com/ZodiacsOfficial/sdk' }

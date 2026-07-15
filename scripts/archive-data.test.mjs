@@ -11,6 +11,7 @@ import {
 } from './archive-data.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
+const legacyIconPath = ['/assets', 'icons'].join('/') + '/';
 const validReceipt = {
   label: 'Primary record',
   url: 'https://example.com/record',
@@ -93,6 +94,7 @@ describe('rendered archive receipts', () => {
   it('uses only the canonical zodiac icon primitive on touched sign visuals', async () => {
     const html = await readFile(resolve(root, 'public/archive/index.html'), 'utf8');
     expect(html).toContain('src="/assets/zodiac-icons/48/libra.webp"');
-    expect(html).not.toContain('class="arc__signs"><a href="/registry/libra/" aria-label="Libra"><img src="/assets/icons/');
+    expect(html).toContain('href="/assets/zodiac-icons/400/libra.webp"');
+    expect(html).not.toContain(legacyIconPath);
   });
 });

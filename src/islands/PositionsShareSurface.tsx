@@ -60,7 +60,7 @@ const SHARE_COPY = {
     positionsShareNote: 'O link omite sua data, hora e local de nascimento; no cartão, esses dados são substituídos pela versão do motor. As posições planetárias ainda podem identificar você; isso não é anônimo.',
     positionsOnlyTitle: 'Posições compartilhadas do mapa',
     positionsOnlyNotice: 'Apenas posições — os dados de nascimento não estão incluídos.',
-    positionsOnlyPrivacy: 'Este código omite a data, a hora e o local de nascimento. As posições planetárias ainda podem identificar você; isto não é anônimo.',
+    positionsOnlyPrivacy: 'Este código omite a data, a hora e o local de nascimento. As posições planetárias ainda podem identificar você; isso não é anônimo.',
     positionsLinkInvalid: 'Esse link apenas com posições é inválido ou está incompleto.',
     shareLinkAmbiguous: 'Este link contém dois formatos de mapa, por isso nenhum deles foi aberto.',
     positionsShareUnavailable: 'Não foi possível criar um link apenas com posições para este mapa.',

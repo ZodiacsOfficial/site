@@ -283,7 +283,7 @@ await withPreview({ port: 4410 }, async (baseURL) => {
     check('ES count line is byte-identical', await page.locator('.pf-count').textContent()
       === '1 carta guardada.');
     check('ES profile privacy is byte-identical', await page.locator('.pf-privacy').textContent()
-      === 'Guardado en este dispositivo. No se sube nada salvo que actives la sincronización.');
+      === 'Se guardan en este dispositivo. No se sube nada salvo que actives la sincronización.');
     check('ES people CTA is byte-identical', await page.locator('.pf-foot .btn').textContent()
       === 'Añade la carta de alguien+');
 

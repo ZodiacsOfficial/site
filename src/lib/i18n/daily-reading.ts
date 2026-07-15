@@ -275,7 +275,7 @@ function eventLinePt(event: DailyEvent, sunSign: string): DailyLine | null {
     const b = planetLabel('pt', event.b);
     const aspect = aspectLabel('pt', event.type);
     return {
-      text: `${a} em ${aspect} com ${b} chega hoje ao ponto exato: é um aspecto de alcance geral, e o registro mostra o horário.`,
+      text: `${a} em ${aspect} com ${b} chega hoje ao ponto exato: é um aspecto de alcance geral, e os detalhes mostram o horário.`,
       receipt: `${a} ${aspect} ${b} · exato às ${utcTime(event.at)}`,
       body: event.a,
     };
