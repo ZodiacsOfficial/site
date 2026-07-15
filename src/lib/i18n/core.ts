@@ -9,3 +9,7 @@ export function normalizeLocale(locale: string | undefined | null): Locale {
   return LOCALES.find((candidate) => value === candidate || value.startsWith(`${candidate}-`))
     ?? DEFAULT_LOCALE;
 }
+
+export function localeHtmlLang(locale: Locale): string {
+  return locale === 'pt' ? 'pt-BR' : locale;
+}
