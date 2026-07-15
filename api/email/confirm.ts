@@ -1,6 +1,17 @@
 import { createEmailSubscriptionAdapter } from '../../src/lib/email/provider';
+import { hasEmailCaptureProvider } from '../../src/lib/email/config';
 import { verifyEmailOptInToken } from '../../src/lib/email/opt-in-token';
+import { requestHeader } from '../../src/lib/email/request';
 import { emailStatusPage } from '../../src/lib/email/server-page';
+import type { Locale } from '../../src/lib/i18n/core';
+
+function sendJson(res: any, status: number, body: Record<string, string | boolean>): void {
+  res.statusCode = status;
+  res.setHeader('Cache-Control', 'no-store');
+  res.setHeader('Content-Type', 'application/json; charset=utf-8');
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.end(JSON.stringify(body));
+}
 
 function send(res: any, status: number, body: string): void {
   res.statusCode = status;
@@ -27,6 +38,15 @@ function tokenFromBody(body: unknown): string {
   return '';
 }
 
+function wantsJson(req: any): boolean {
+  return requestHeader(req, 'accept').includes('application/json');
+}
+
+function sendUnavailable(req: any, res: any, locale: Locale): void {
+  if (wantsJson(req)) sendJson(res, 503, { error: 'disabled' });
+  else send(res, 503, emailStatusPage(locale, 'emailCaptureErrorTitle', 'emailCaptureError'));
+}
+
 export default async function handler(req: any, res: any): Promise<void> {
   if (req.method !== 'GET' && req.method !== 'POST') {
     res.setHeader('Allow', 'GET, POST');
@@ -38,6 +58,10 @@ export default async function handler(req: any, res: any): Promise<void> {
     : tokenFromBody(req.body);
   const secret = process.env.EMAIL_CONFIRM_SECRET ?? '';
   const claim = secret ? verifyEmailOptInToken(token, secret) : null;
+  if (!hasEmailCaptureProvider(process.env)) {
+    sendUnavailable(req, res, claim?.locale ?? 'en');
+    return;
+  }
   if (!claim) {
     send(res, 400, emailStatusPage('en', 'emailConfirmInvalidTitle', 'emailConfirmInvalidBody'));
     return;

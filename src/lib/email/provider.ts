@@ -6,7 +6,8 @@ import {
   validLoopsFormEndpoint,
   type EmailProviderName,
 } from './config';
-import { t, type Locale } from '../i18n';
+import type { Locale } from '../i18n/core';
+import { serverUiMessage } from '../i18n/ui/server';
 
 type Environment = Record<string, unknown>;
 type Fetch = typeof fetch;
@@ -55,11 +56,11 @@ class ResendAdapter implements EmailSubscriptionAdapter {
 
     // Text-only by design: no tracking pixels, remote images, or open signal.
     const body = [
-      t(this.locale, 'emailConfirmMessage'),
+      serverUiMessage(this.locale, 'emailConfirmMessage'),
       '',
       confirmation.toString(),
       '',
-      t(this.locale, 'emailConfirmIgnore'),
+      serverUiMessage(this.locale, 'emailConfirmIgnore'),
     ].join('\n');
     const response = await this.fetcher('https://api.resend.com/emails', {
       method: 'POST',
@@ -70,7 +71,7 @@ class ResendAdapter implements EmailSubscriptionAdapter {
       body: JSON.stringify({
         from: environmentValue(this.env, 'RESEND_FROM_EMAIL'),
         to: [email],
-        subject: t(this.locale, 'emailConfirmSubject'),
+        subject: serverUiMessage(this.locale, 'emailConfirmSubject'),
         text: body,
       }),
     });
