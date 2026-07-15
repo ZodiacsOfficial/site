@@ -1,7 +1,7 @@
 // Vercel serverless function for a durable, subscribable transit calendar.
 // The query carries the existing positions-only v2 share token: planetary
 // longitudes plus ASC/MC, with no name, birth date, time, place, or coordinates.
-import { scanTransitContacts } from '../../src/lib/engine/transit-scan.js';
+import { scanTransitContacts } from '../../src/lib/engine/transit-scan-server.js';
 import { serializeTransitContacts } from '../../src/lib/ical.js';
 import { decodePositionsLink } from '../../src/lib/share-positions.js';
 

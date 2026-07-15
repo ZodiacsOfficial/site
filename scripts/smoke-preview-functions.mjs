@@ -54,6 +54,13 @@ const probes = [
     expectation: 'a non-5xx response',
   },
   {
+    label: 'calendar method guard',
+    path: '/api/calendar/transits',
+    init: { method: 'POST', headers: sameOriginHeaders },
+    accepts: (status) => status === 405,
+    expectation: 'HTTP 405',
+  },
+  {
     label: 'assistant method guard',
     path: '/api/assistant',
     init: { method: 'GET', headers: sameOriginHeaders },
