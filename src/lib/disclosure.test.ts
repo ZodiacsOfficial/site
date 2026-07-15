@@ -21,13 +21,15 @@ describe('registry disclosure contract', () => {
   it('keeps every unverified operator claim visibly pending', () => {
     const pending = DISCLOSURE_ROWS.filter((row) => row.status === 'pending');
     expect(pending.map((row) => row.id)).toEqual(['operator', 'economic-interest', 'origin']);
-    expect(pending.every((row) => `${row.statement} ${row.evidence}`.includes('[OPERATOR TO'))).toBe(true);
+    // The operator confirmed the statement wording (2026-07-15); evidence
+    // remains pending via row status, never via bracket scaffolding.
+    expect(pending.every((row) => !`${row.statement} ${row.evidence}`.includes('[OPERATOR'))).toBe(true);
   });
 
   it('provides one pending deploy-transaction slot per sign', () => {
     const origin = DISCLOSURE_ROWS.find((row) => row.id === 'origin');
     expect(origin?.links).toHaveLength(12);
-    expect(origin?.links.every((link) => !link.href && link.label.includes('[OPERATOR TO'))).toBe(true);
+    expect(origin?.links.every((link) => !link.href && link.label.endsWith('— pending'))).toBe(true);
   });
 
   it('centralizes the provisional year and leaves provenance unsupplied', () => {
