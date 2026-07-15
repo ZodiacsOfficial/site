@@ -113,8 +113,14 @@ sentence-case serif-italic (`.kicker`), not mono-caps eyebrows.
 ## Engine
 
 `src/lib/engine/` computes charts client-side (astronomy-engine + in-house
-houses/aspects). `engine/full.ts` is the only module allowed to import
-`astronomy-engine` (bundle isolation — the homepage must never load it).
+houses/aspects). `engine/full.ts` is the only BROWSER module allowed to
+import `astronomy-engine` (bundle isolation — the homepage must never load
+it). One server-only exception since the #108 hotfix:
+`src/lib/engine/server-ephemeris.ts` (the calendar function's Node adapter,
+CJS interop via createRequire). `scripts/report-bundles.mjs` enforces both
+sides — the exact import allowlist AND a marker check that no browser
+chunk ever carries astronomy-engine/createRequire; a CI parity test pins
+server and browser ephemeris to 1e-12 agreement.
 Accuracy is gated by `vitest` test vectors; run `npm test` after any engine
 change. Timezone conversion (`src/lib/time/localToUtc.ts`) resolves historical
 offsets via `Intl` — never hand-roll offsets.
