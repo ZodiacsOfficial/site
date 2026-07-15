@@ -57,6 +57,10 @@ export function PrefilledPairNotice({ locale }: { locale: Locale }) {
           params.delete('sign2');
           history.replaceState(null, '', `${window.location.pathname}${params.size ? `?${params}` : ''}${window.location.hash}`);
           setPair(null);
+          requestAnimationFrame(() => {
+            const target = document.querySelector<HTMLElement>('#syn-a-source, #syn-a-name, #syn-a-date');
+            target?.focus();
+          });
         }}
       >×</button>
     </aside>

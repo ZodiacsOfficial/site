@@ -391,10 +391,13 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
 
   useEffect(() => {
     if (!profileReady || profileLinksReadRef.current) return;
+    let active = true;
     profileLinksReadRef.current = true;
     const params = new URLSearchParams(window.location.search);
     if (params.has('sign1') || params.has('sign2')) {
-      void import('./PrefilledPairNotice').then(setPrefilledPairMod, () => {});
+      void import('./PrefilledPairNotice').then((module) => {
+        if (active) setPrefilledPairMod(module);
+      }, () => {});
     }
     // ?pair= deep link (the profile page's saved-comparisons strip):
     // restore the stored pair and compare. Same-device ids, like ?a=&b=.
@@ -423,6 +426,7 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
     const token = new URLSearchParams(window.location.hash.slice(1)).get('a');
     if (token) {
       void import('../lib/share').then((module) => {
+        if (!active) return;
         setShareMod(module);
         const decoded = module.decodeChartLink(token);
         if (!decoded) return;
@@ -434,6 +438,7 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
         history.replaceState(null, '', window.location.pathname + window.location.search);
       }).catch(() => {});
     }
+    return () => { active = false; };
   }, [profileReady, profile, locale]);
 
   // Saved comparisons live beside the profile; every same-page write

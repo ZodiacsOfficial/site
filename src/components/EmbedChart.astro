@@ -47,11 +47,12 @@ const c = theme === 'dark'
   :global(.mini-chart__field input) { box-sizing: border-box; width: 100%; min-height: 38px; border: 1px solid var(--widget-hair); border-radius: 8px; background: var(--widget-surface); color: var(--widget-text); padding: 8px 9px; font: 12px/1.2 system-ui,-apple-system,sans-serif; color-scheme: inherit; }
   :global(.mini-chart__place) { grid-column: 1 / -1; position: relative; }
   :global(.mini-chart__chosen) { min-height: 38px; border: 1px solid var(--widget-hair); border-radius: 8px; background: var(--widget-surface); padding: 7px 9px; display: flex; align-items: center; justify-content: space-between; gap: 8px; color: var(--widget-text); font-size: 11px; letter-spacing: 0; text-transform: none; }
+  :global(.mini-chart__chosen input) { flex: 1; min-width: 0; min-height: 0; border: 0; border-radius: 0; background: transparent; padding: 0; }
   :global(.mini-chart__chosen button) { border: 0; padding: 2px; background: transparent; color: var(--widget-accent); cursor: pointer; font: inherit; }
   :global(.mini-chart__places) { position: absolute; z-index: 3; inset: calc(100% + 3px) 0 auto; max-height: 158px; overflow: auto; list-style: none; margin: 0; padding: 4px; border: 1px solid var(--widget-hair); border-radius: 8px; background: var(--widget-bg); box-shadow: 0 10px 25px rgba(0,0,0,.24); }
   :global(.mini-chart__places li) { margin: 0; }
   :global(.mini-chart__places button) { display: grid; gap: 1px; width: 100%; border: 0; border-radius: 5px; background: transparent; color: var(--widget-text); padding: 7px; text-align: left; cursor: pointer; }
-  :global(.mini-chart__places button:hover), :global(.mini-chart__places button:focus-visible) { outline: none; background: var(--widget-surface); }
+  :global(.mini-chart__places button:hover), :global(.mini-chart__places button:focus-visible), :global(.mini-chart__places button.is-active) { outline: none; background: var(--widget-surface); }
   :global(.mini-chart__places b) { font-size: 11px; }
   :global(.mini-chart__places span), :global(.mini-chart__empty) { color: var(--widget-muted); font-size: 10px; }
   :global(.mini-chart__empty) { padding: 8px; text-transform: none; letter-spacing: 0; }

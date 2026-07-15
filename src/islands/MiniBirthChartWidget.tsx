@@ -22,6 +22,7 @@ export default function MiniBirthChartWidget() {
   const [city, setCity] = useState<City | null>(null);
   const [places, setPlaces] = useState<City[]>([]);
   const [placeOpen, setPlaceOpen] = useState(false);
+  const [activePlace, setActivePlace] = useState(0);
   const [placeError, setPlaceError] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
@@ -49,6 +50,7 @@ export default function MiniBirthChartWidget() {
         const matches = await searchCities(value);
         if (token !== request.current) return;
         setPlaces(matches);
+        setActivePlace(0);
         setPlaceOpen(true);
       } catch {
         if (token !== request.current) return;
@@ -65,6 +67,22 @@ export default function MiniBirthChartWidget() {
     setPlaces([]);
     setPlaceOpen(false);
     setPlaceError(false);
+  }
+
+  function onPlaceKeyDown(event: KeyboardEvent) {
+    if (!placeOpen) return;
+    if (event.key === 'ArrowDown' && places.length > 0) {
+      event.preventDefault();
+      setActivePlace((index) => Math.min(index + 1, places.length - 1));
+    } else if (event.key === 'ArrowUp' && places.length > 0) {
+      event.preventDefault();
+      setActivePlace((index) => Math.max(index - 1, 0));
+    } else if (event.key === 'Enter') {
+      event.preventDefault();
+      if (places[activePlace]) choosePlace(places[activePlace]);
+    } else if (event.key === 'Escape') {
+      setPlaceOpen(false);
+    }
   }
 
   async function compute(event: Event) {
@@ -124,11 +142,22 @@ export default function MiniBirthChartWidget() {
           <span>{WIDGET_EN.timeLabel}</span>
           <input type="time" required value={time} onInput={(event) => setTime((event.currentTarget as HTMLInputElement).value)} />
         </label>
-        <div class="mini-chart__field mini-chart__place">
+        <div class="mini-chart__field mini-chart__place" onFocusOut={(event) => {
+          if (!(event.currentTarget as HTMLDivElement).contains(event.relatedTarget as Node | null)) {
+            window.clearTimeout(timer.current);
+            request.current += 1;
+            setPlaceOpen(false);
+          }
+        }}>
           <label for="mini-chart-place">{WIDGET_EN.placeLabel}</label>
           {city ? (
             <div class="mini-chart__chosen">
-              <span>{city.name} · {[city.admin1, city.country].filter(Boolean).join(', ')}</span>
+              <input
+                id="mini-chart-place"
+                class="mini-chart__chosen-value"
+                readOnly
+                value={`${city.name} · ${[city.admin1, city.country].filter(Boolean).join(', ')}`}
+              />
               <button type="button" onClick={() => setCity(null)}>{WIDGET_EN.changePlace}</button>
             </div>
           ) : (
@@ -138,23 +167,35 @@ export default function MiniBirthChartWidget() {
                 type="text"
                 role="combobox"
                 aria-expanded={placeOpen}
+                aria-autocomplete="list"
                 aria-controls="mini-chart-places"
+                aria-activedescendant={placeOpen && places[activePlace] ? `mini-chart-place-${activePlace}` : undefined}
                 autoComplete="off"
                 placeholder={WIDGET_EN.placePlaceholder}
                 value={query}
                 onFocus={() => { preloadIndex().catch(() => setPlaceError(true)); }}
                 onInput={(event) => updatePlaceQuery((event.currentTarget as HTMLInputElement).value)}
+                onKeyDown={onPlaceKeyDown}
               />
               {placeOpen && (
                 <ul id="mini-chart-places" role="listbox" class="mini-chart__places">
-                  {places.length > 0 ? places.map((place) => (
+                  {places.length > 0 ? places.map((place, index) => (
                     <li key={`${place.name}-${place.lat}-${place.lon}`} role="none">
-                      <button type="button" role="option" onClick={() => choosePlace(place)}>
+                      <button
+                        id={`mini-chart-place-${index}`}
+                        type="button"
+                        role="option"
+                        aria-selected={index === activePlace}
+                        tabIndex={-1}
+                        class={index === activePlace ? 'is-active' : undefined}
+                        onMouseEnter={() => setActivePlace(index)}
+                        onClick={() => choosePlace(place)}
+                      >
                         <b>{place.name}</b>
                         <span>{[place.admin1, place.country].filter(Boolean).join(', ')}</span>
                       </button>
                     </li>
-                  )) : <li class="mini-chart__empty">{WIDGET_EN.noPlaces}</li>}
+                  )) : <li class="mini-chart__empty" role="option" aria-disabled={true}>{WIDGET_EN.noPlaces}</li>}
                 </ul>
               )}
               {placeError && <small role="alert">{WIDGET_EN.placeError}</small>}

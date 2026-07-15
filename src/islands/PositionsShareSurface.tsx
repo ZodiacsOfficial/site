@@ -190,37 +190,6 @@ export function PositionsOnlyResult({ chart, locale }: PositionsOnlyResultProps)
   );
 }
 
-interface PositionsShareRouteProps {
-  locale: Locale;
-  onError: (message: string) => void;
-}
-
-/** Loaded only for a #p route; keeps its decoder and receiver UI off ordinary visits. */
-export function PositionsShareRoute({ locale, onError }: PositionsShareRouteProps) {
-  const [chart, setChart] = useState<PositionsShareChart | null>(null);
-
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.hash.slice(1));
-    const clearFragment = () => history.replaceState(null, '', window.location.pathname + window.location.search);
-    if (params.has('c') && params.has('p')) {
-      clearFragment();
-      onError(shareText(locale, 'shareLinkAmbiguous'));
-      return;
-    }
-    const token = params.get('p');
-    if (!token) return;
-    const decoded = decodePositionsToken(token);
-    if (!decoded) {
-      onError(shareText(locale, 'positionsLinkInvalid'));
-      return;
-    }
-    setChart(decoded);
-    clearFragment();
-  }, [locale, onError]);
-
-  return chart ? <PositionsOnlyResult chart={chart} locale={locale} /> : null;
-}
-
 interface ChartShareDialogProps {
   chart: Chart;
   input: ShareChartInput;

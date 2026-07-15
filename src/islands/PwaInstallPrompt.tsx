@@ -82,6 +82,7 @@ export default function PwaInstallPrompt({ locale: rawLocale = 'en', computation
       <div class="pwa-install__icons" role="img" aria-label={pwaText(locale, 'icons')}>
         {SIGNS.map((sign) => (
           <img
+            key={sign.slug}
             src={`/assets/zodiac-icons/48/${sign.slug}.webp`}
             alt=""
             width="28"

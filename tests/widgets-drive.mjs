@@ -56,8 +56,15 @@ await withPreview({ port: Number(process.env.WIDGET_PREVIEW_PORT ?? 4331) }, asy
     const chart = page.frameLocator('#chart');
     await chart.getByLabel('Birth date').fill('1990-01-15');
     await chart.getByLabel('Birth time').fill('12:30');
-    await chart.getByLabel('Birthplace').fill('New York');
-    await chart.getByRole('option').first().click();
+    const birthplace = chart.getByLabel('Birthplace');
+    await birthplace.fill('New York');
+    await chart.getByRole('option').first().waitFor();
+    await birthplace.press('ArrowDown');
+    await birthplace.press('ArrowUp');
+    await birthplace.press('Enter');
+    if (!(await chart.getByLabel('Birthplace').inputValue()).includes('New York')) {
+      throw new Error('mini chart keyboard selection did not preserve the labeled birthplace input');
+    }
     await chart.getByRole('button', { name: 'Find the big three' }).click();
     await chart.locator('.mini-chart__result article').first().waitFor({ timeout: 30_000 });
     if (await chart.locator('.mini-chart__result article').count() !== 3) {

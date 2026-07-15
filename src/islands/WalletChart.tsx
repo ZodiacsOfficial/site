@@ -13,7 +13,11 @@ import {
   signForLongitude,
 } from '../lib/signs';
 import { trackAnalytics } from '../lib/analytics';
-import { parseWalletAddress, truncateWalletAddress } from '../lib/wallet/address';
+import {
+  parseWalletAddress,
+  truncateWalletAddress,
+  type ParsedWalletAddress,
+} from '../lib/wallet/address';
 import type {
   WalletBirth,
   WalletBirthErrorCode,
@@ -64,6 +68,15 @@ function validBirthResponse(value: unknown): value is WalletBirth {
     || Array.isArray(candidate.heldSigns) && candidate.heldSigns.every((sign) => {
       try { signBySlug(sign); return true; } catch { return false; }
     });
+}
+
+export function walletBirthMatchesRequest(
+  value: unknown,
+  request: ParsedWalletAddress,
+): value is WalletBirth {
+  return validBirthResponse(value)
+    && value.chain === request.chain
+    && value.address === request.address;
 }
 
 function errorMessage(code: WalletBirthErrorCode | null): string {
@@ -136,12 +149,15 @@ export default function WalletChart({ availableChains }: Props) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ address: parsed.address }),
       });
-      const payload = await response.json().catch(() => null) as any;
+      const payload: unknown = await response.json().catch(() => null);
       if (!response.ok) {
-        const code = typeof payload?.error === 'string' ? payload.error as WalletBirthErrorCode : null;
+        const code = payload && typeof payload === 'object' && 'error' in payload
+          && typeof payload.error === 'string'
+          ? payload.error as WalletBirthErrorCode
+          : null;
         throw new Error(errorMessage(code));
       }
-      if (!validBirthResponse(payload)) throw new Error(walletText('invalidResponse'));
+      if (!walletBirthMatchesRequest(payload, parsed)) throw new Error(walletText('invalidResponse'));
       const engine = await import('../lib/engine/full');
       const bodies = engine.computeBodies(new Date(payload.birthTimestamp));
       const computed = { ...payload, bodies };
@@ -323,16 +339,16 @@ export default function WalletChart({ availableChains }: Props) {
           )}
 
           <section class="wallet-owner" aria-labelledby="wallet-owner-title">
+            <div class={ownerOpen ? 'section-head' : 'sr-only'}>
+              <h3 id="wallet-owner-title">{walletText('ownerTitle')}</h3>
+              {ownerOpen && <p>{walletText('ownerIntro')}</p>}
+            </div>
             {!ownerOpen ? (
               <button class="btn btn--ghost" type="button" onClick={() => setOwnerOpen(true)}>
                 {walletText('ownerStart')}
               </button>
             ) : (
               <>
-                <div class="section-head">
-                  <h3 id="wallet-owner-title">{walletText('ownerTitle')}</h3>
-                  <p>{walletText('ownerIntro')}</p>
-                </div>
                 <p class="wallet-owner__privacy">{walletText('ownerPrivacy')}</p>
                 <form class="wallet-owner__form" onSubmit={submitOwner} aria-busy={ownerBusy}>
                   <BirthFields
