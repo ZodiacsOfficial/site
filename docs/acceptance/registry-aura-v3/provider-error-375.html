@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Registry Aura V3 proof — provider unavailable (375px)</title>
+<style>
+  :root{
+    --void-0:#060709; --void-1:#0A0C11; --void-2:#0F121A;
+    --hair-1:rgba(198,204,218,.08); --hair-2:rgba(198,204,218,.16); --hair-3:rgba(198,204,218,.28);
+    --ink:#EEF1F7; --ink-2:#C6CCDA; --muted:#A2A9BA;
+    --serif:'EB Garamond','Iowan Old Style',Georgia,serif;
+    --sans:'Instrument Sans',system-ui,-apple-system,sans-serif;
+    --mono:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace;
+    --leo:#E0A9B4;
+  }
+  *{box-sizing:border-box;margin:0}
+  body{font-variant-emoji:text;background:#040507;color:var(--ink-2);font:15px/1.55 var(--sans);padding:48px 20px 96px}
+  .proofhead{max-width:1080px;margin:0 auto 36px}
+  .proofhead .tag{font:600 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+  .proofhead h1{font:500 30px/1.2 var(--serif);color:var(--ink);margin:10px 0 6px}
+  .proofhead p{max-width:64ch;color:var(--muted)}
+  .stage{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:375px 1fr;gap:44px;align-items:start}
+  @media (max-width:860px){.stage{grid-template-columns:1fr}}
+  .frame{width:375px;background:var(--void-0);border:1px solid var(--hair-3);border-radius:28px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.55)}
+  .rail{display:grid;gap:14px;position:sticky;top:24px}
+  .note{border:1px solid var(--hair-2);border-left:2px solid var(--hair-3);border-radius:10px;background:var(--void-1);padding:12px 14px;font-size:13.5px}
+  .note b{display:inline-grid;place-items:center;width:20px;height:20px;margin-right:8px;border-radius:50%;background:var(--ink);color:var(--void-0);font:600 11px/1 var(--mono)}
+  .note em{color:var(--muted);font-style:normal;display:block;margin-top:4px;font-size:12.5px}
+  .screen{position:relative;padding:28px 16px 40px}
+  .kicker{font:italic 500 15px/1.3 var(--serif);color:var(--muted)}
+  .step{border:1px solid var(--hair-2);border-radius:16px;background:var(--void-1);padding:16px;margin-top:14px}
+  .step strong{font:500 19px/1 var(--serif);color:var(--ink);font-weight:500}
+  .field{margin-top:12px}
+  .field label{display:block;font-size:13px;color:var(--muted);margin-bottom:6px}
+  .field input{width:100%;padding:12px;border-radius:10px;border:1px solid var(--hair-3);background:var(--void-2);color:var(--ink);font:400 13px/1.3 var(--mono)}
+  .btn{display:block;width:100%;text-align:center;padding:13px 18px;border-radius:999px;font:500 15px/1 var(--sans);border:1px solid var(--hair-3);background:transparent;color:var(--ink);margin-top:12px}
+  .btn--primary{background:var(--ink);color:var(--void-0);border-color:var(--ink)}
+  .status{margin-top:16px;border:1px solid var(--hair-3);border-left:3px solid var(--ink-2);border-radius:12px;background:var(--void-1);padding:14px}
+  .status p{font-size:14px;color:var(--ink)}
+  .status small{display:block;font-size:12.5px;color:var(--muted);margin-top:8px}
+  .status .row{display:grid;gap:8px;margin-top:12px}
+</style>
+</head>
+<body>
+  <header class="proofhead">
+    <span class="tag">Registry Aura V3 · design proof · not production code</span>
+    <h1>Provider unavailable — an honest 503, and nobody gets stranded</h1>
+    <p>The blockchain data provider failed or timed out. The endpoint already refuses to invent an answer (partial data never becomes a false absence); the V3 change is purely experiential: the error keeps the retry path <em>and</em> adds a visible example escape, which the current implementation hides once an address is filled in. Audit §3 #16, §11.</p>
+  </header>
+
+  <div class="stage">
+    <div class="frame"><div class="screen">
+      <p class="kicker">Three records, one reading</p>
+
+      <section class="step">
+        <strong>The address</strong>
+        <div class="field">
+          <label for="a">Public Solana or Base address</label>
+          <input id="a" value="7f9…K2mQ (pasted address)" readonly>
+          <p style="font-size:12.5px;color:var(--muted);margin-top:8px">Reads as a Solana address.</p>
+        </div>
+        <button class="btn btn--primary" type="button">Read them side by side</button>
+      </section>
+
+      <div class="status" role="alert">
+        <p>The blockchain data provider did not return a complete answer. No absence has been inferred.</p>
+        <small>The address was not misread and nothing was saved from this attempt. The public record itself is unchanged — only the connection to its provider failed. Trying again in a minute usually resolves it.</small>
+        <div class="row">
+          <button class="btn" type="button" style="margin-top:0">Try again</button>
+          <button class="btn" type="button" style="margin-top:0">See the example instead</button>
+        </div>
+      </div>
+    </div></div>
+
+    <aside class="rail" aria-label="Annotations">
+      <p class="note"><b>1</b>The error sentence is kept verbatim — “No absence has been inferred” is the product refusing to lie when its provider fails, and it deserves its prominence. One added plain-language line explains what did and didn’t happen. <em>Audit §11</em></p>
+      <p class="note"><b>2</b>The fix this proof exists for: “See the example instead” is now part of every failure state. Today the example button requires an empty address field, so a failed lookup strands the visitor with only an error line and a disabled feeling. <em>Audit §3 #16</em></p>
+      <p class="note"><b>3</b>Focus returns to the address input on failure (current behavior, kept); the alert role announces once; the retry button re-runs the identical request rather than a subtly different one. <em>Audit §17</em></p>
+    </aside>
+  </div>
+</body>
+</html>

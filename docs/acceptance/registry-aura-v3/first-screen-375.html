@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Registry Aura V3 proof — 375px first screen</title>
+<style>
+  /* ============ proof chrome (not product) ============ */
+  :root{
+    --void-0:#060709; --void-1:#0A0C11; --void-2:#0F121A; --void-3:#151925;
+    --hair-1:rgba(198,204,218,.08); --hair-2:rgba(198,204,218,.16); --hair-3:rgba(198,204,218,.28);
+    --ink:#EEF1F7; --ink-2:#C6CCDA; --muted:#A2A9BA;
+    --serif:'EB Garamond','Iowan Old Style',Georgia,serif;
+    --sans:'Instrument Sans',system-ui,-apple-system,sans-serif;
+    --mono:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace;
+    --ease-soft:cubic-bezier(.22,1,.36,1);
+    --aries:#DE8E79; --taurus:#B9D4BE; --gemini:#B29DD0; --cancer:#B6D4E4; --leo:#E0A9B4; --virgo:#B7D9B0;
+    --libra:#D3A9DE; --scorpio:#B9DCE8; --sagittarius:#E0B080; --capricorn:#C0DEA8; --aquarius:#AE8FC9; --pisces:#A9D4C4;
+  }
+  *{box-sizing:border-box;margin:0}
+  body{font-variant-emoji:text;background:#040507;color:var(--ink-2);font:15px/1.55 var(--sans);padding:48px 20px 96px}
+  .proofhead{max-width:1080px;margin:0 auto 36px}
+  .proofhead .tag{font:600 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+  .proofhead h1{font:500 30px/1.2 var(--serif);color:var(--ink);margin:10px 0 6px}
+  .proofhead p{max-width:64ch;color:var(--muted)}
+  .stage{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:375px 1fr;gap:44px;align-items:start}
+  @media (max-width:860px){.stage{grid-template-columns:1fr}}
+  .frame{width:375px;background:var(--void-0);border:1px solid var(--hair-3);border-radius:28px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.55)}
+  .rail{display:grid;gap:14px;position:sticky;top:24px}
+  .note{border:1px solid var(--hair-2);border-left:2px solid var(--hair-3);border-radius:10px;background:var(--void-1);padding:12px 14px;font-size:13.5px;color:var(--ink-2)}
+  .note b{display:inline-grid;place-items:center;width:20px;height:20px;margin-right:8px;border-radius:50%;background:var(--ink);color:var(--void-0);font:600 11px/1 var(--mono)}
+  .note em{color:var(--muted);font-style:normal;display:block;margin-top:4px;font-size:12.5px}
+  .pin{position:absolute;z-index:3;display:grid;place-items:center;width:20px;height:20px;border-radius:50%;background:var(--ink);color:var(--void-0);font:600 11px/1 var(--mono);box-shadow:0 2px 10px rgba(0,0,0,.5)}
+
+  /* ============ product surface (V3 design) ============ */
+  .screen{position:relative;padding:56px 16px 40px;background:var(--void-0)}
+  .navstub{display:flex;justify-content:space-between;align-items:center;font:500 12px/1 var(--serif);letter-spacing:.22em;color:var(--ink-2);padding:0 2px 26px}
+  .navstub span:last-child{font-family:var(--mono);font-size:10px;letter-spacing:.18em;color:var(--muted)}
+  .kicker{font:italic 500 15px/1.3 var(--serif);color:var(--muted)}
+  h2.display{font:500 46px/1.04 var(--serif);color:var(--ink);margin:10px 0 14px;letter-spacing:.002em}
+  .sentence{font:400 17.5px/1.5 var(--serif);color:var(--ink-2)}
+  .sentence strong{color:var(--ink);font-weight:500}
+  .ctarow{display:grid;gap:10px;margin:22px 0 8px}
+  .btn{display:block;text-align:center;padding:13px 18px;border-radius:999px;font:500 15px/1 var(--sans);text-decoration:none;cursor:pointer}
+  .btn--primary{background:var(--ink);color:var(--void-0);border:1px solid var(--ink)}
+  .btn--ghost{background:transparent;color:var(--ink);border:1px solid var(--hair-3)}
+
+  /* example module */
+  .example{margin-top:30px;border:1px solid var(--hair-2);border-radius:16px;background:var(--void-1);overflow:hidden}
+  .example__cap{padding:12px 14px;border-bottom:1px solid var(--hair-1);font-size:12.5px;color:var(--muted)}
+  .example__cap b{color:var(--ink-2);font-weight:500}
+
+  /* the Alignment */
+  .algn{padding:6px 10px 2px}
+  .algn table{border-collapse:collapse;width:100%;table-layout:fixed}
+  .algn caption{caption-side:bottom;text-align:left;font-size:11.5px;color:var(--muted);padding:10px 4px 12px}
+  .algn thead th{font:400 13px/1 var(--serif);color:var(--muted);padding:8px 0 6px;text-align:center;font-weight:400}
+  .algn thead th.f{color:var(--ink)}
+  .algn tr.lbl th{padding:12px 4px 5px;text-align:left;font:500 10.5px/1.3 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);border-top:1px solid var(--hair-1)}
+  .algn tr.lbl th i{font-style:normal;color:var(--ink-2)}
+  .algn td{height:40px;text-align:center;vertical-align:middle;padding:0}
+  .algn td.f{background:rgba(238,241,247,.05);border-left:1px solid var(--hair-3);border-right:1px solid var(--hair-3)}
+  .algn thead th.f{border-left:1px solid var(--hair-3);border-right:1px solid var(--hair-3);border-top:1px solid var(--hair-3)}
+  .algn tbody:last-of-type td{border-bottom:0}
+  .algn tbody:last-of-type td.f{border-bottom:1px solid var(--hair-3)}
+  .m-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--ink-2)}
+  .m-chip{display:inline-grid;place-items:center;width:19px;height:19px;border-radius:50%;border:1px solid var(--hair-3);color:var(--ink);font:500 10px/1 var(--mono);background:var(--void-2)}
+  .m-disc{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:50%;color:rgba(6,7,9,.82);font:500 13px/1 var(--serif)}
+  .m-sky{font:400 15px/1 var(--serif);color:var(--ink)}
+  .focalcap{display:flex;gap:6px;align-items:center;font:400 11px/1 var(--mono);color:var(--muted);padding:0 4px}
+  .focalcap::before{content:"▲";font-size:9px;color:var(--ink-2)}
+  .example__read{display:grid;grid-template-columns:44px 1fr;gap:12px;align-items:start;padding:14px;border-top:1px solid var(--hair-1)}
+  .example__read .m-disc{width:44px;height:44px;font-size:24px}
+  .example__read h3{font:500 20px/1.1 var(--serif);color:var(--ink)}
+  .example__read p{font:italic 400 14.5px/1.45 var(--serif);color:var(--ink-2);margin-top:3px}
+  .example__read small{display:block;font:400 10.5px/1.5 var(--mono);letter-spacing:.04em;color:var(--muted);margin-top:6px;text-transform:uppercase}
+</style>
+</head>
+<body>
+  <header class="proofhead">
+    <span class="tag">Registry Aura V3 · design proof · not production code</span>
+    <h1>375&thinsp;px first screen — show, then tell, then ask</h1>
+    <p>Replaces the current hero (kicker “Identity context in the Registry”, riddle copy, four-term glossary). See REGISTRY-AURA-FABLE-V3-AUDIT.md §2, §6–7, §11. Production uses the real webp disc artwork and self-hosted fonts; this proof stands in with CSS discs and font fallbacks.</p>
+  </header>
+
+  <div class="stage">
+    <div class="frame">
+      <div class="screen">
+        <div class="navstub" aria-hidden="true"><span>ZODIACS·ORG</span><span>REGISTRY</span></div>
+
+        <span class="pin" style="top:118px;left:8px">1</span>
+        <p class="kicker">A reading from the Registry</p>
+        <h2 class="display">Registry Aura</h2>
+
+        <span class="pin" style="top:262px;left:8px">2</span>
+        <p class="sentence">Your saved <strong>birth chart</strong>, the official Zodiacs at one <strong>public wallet address</strong>, and <strong>today’s sky</strong> — read side by side, never blended.</p>
+
+        <span class="pin" style="top:404px;left:8px">3</span>
+        <section class="example" aria-label="Example reading">
+          <p class="example__cap"><b>An example reading.</b> Illustrative — no public address was checked, and no chart was read from this browser.</p>
+
+          <div class="algn">
+            <table>
+              <caption>The wallet record never changes the birth chart; each source keeps its own row.</caption>
+              <thead>
+                <tr>
+                  <th>♈︎</th><th>♉︎</th><th>♊︎</th><th>♋︎</th><th class="f">♌︎</th><th>♍︎</th><th>♎︎</th><th>♏︎</th><th>♐︎</th><th>♑︎</th><th>♒︎</th><th>♓︎</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="lbl"><th colspan="12"><i>Birth chart</i> · private, read on this device</th></tr>
+                <tr>
+                  <td><span class="m-dot" title="Venus"></span></td>
+                  <td><span class="m-dot" title="Sun"></span></td>
+                  <td><span class="m-dot" title="Mercury"></span></td>
+                  <td><span class="m-chip" title="Moon, Midheaven">2</span></td>
+                  <td class="f"><span class="m-dot" title="Mars"></span></td>
+                  <td></td>
+                  <td><span class="m-dot" title="Ascendant"></span></td>
+                  <td></td><td></td><td></td><td></td><td></td>
+                </tr>
+                <tr class="lbl"><th colspan="12"><i>At this address</i> · public record</th></tr>
+                <tr>
+                  <td></td><td></td><td></td>
+                  <td><span class="m-disc" style="background:var(--cancer)">♋︎</span></td>
+                  <td class="f"><span class="m-disc" style="background:var(--leo)">♌︎</span></td>
+                  <td></td><td></td>
+                  <td><span class="m-disc" style="background:var(--scorpio)">♏︎</span></td>
+                  <td></td><td></td>
+                  <td><span class="m-disc" style="background:var(--aquarius)">♒︎</span></td>
+                  <td></td>
+                </tr>
+                <tr class="lbl"><th colspan="12"><i>Sky</i> · July 16, 2026 UTC</th></tr>
+                <tr>
+                  <td></td><td></td><td></td>
+                  <td><span class="m-sky" title="Sun season">☉︎</span></td>
+                  <td class="f"><span class="m-sky" title="Current Moon">☾︎</span></td>
+                  <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                </tr>
+              </tbody>
+            </table>
+            <p class="focalcap" style="margin-left:34.5%">this visit’s focus</p>
+          </div>
+
+          <span class="pin" style="top:872px;left:8px">4</span>
+          <div class="example__read">
+            <span class="m-disc" style="background:var(--leo)">♌︎</span>
+            <div>
+              <h3>Leo</h3>
+              <p>Let one honest act be visible without making the response its measure — asked of everyone today, and familiar ground in this chart.</p>
+              <small>Why: the Moon is in Leo in the sky of July 16, 2026 UTC</small>
+            </div>
+          </div>
+        </section>
+
+        <span class="pin" style="top:1044px;left:8px">5</span>
+        <div class="ctarow">
+          <a class="btn btn--ghost" href="#">Open the full example</a>
+          <a class="btn btn--primary" href="#">Start with your chart</a>
+        </div>
+      </div>
+    </div>
+
+    <aside class="rail" aria-label="Annotations">
+      <p class="note"><b>1</b>Kicker replaces “Identity context in the Registry” — the old line led with the one implication the trust rules forbid. Serif-italic sentence case per the site’s own kicker rule; mono-caps eyebrows retired. <em>Audit §1, §13&nbsp;#1</em></p>
+      <p class="note"><b>2</b>The five-second sentence. It contains the three anchor nouns the old hero omitted — <i>birth chart, wallet address, today’s sky</i> — and the honesty clause “never blended.” No riddles, no register glossary. <em>Audit §2</em></p>
+      <p class="note"><b>3</b>The product demonstrates itself: a server-rendered example Alignment on the first screen. Three labeled rows (chart / address / sky); marks never leave their row; the focal column is a hairline, not a glow. Renders without JavaScript. <em>Audit §6, §7&nbsp;step&nbsp;1</em></p>
+      <p class="note"><b>4</b>The payoff is visible before any commitment: pastel disc, sign, a two-line reflection, and the fact-only “why.” Chroma appears only on held-record discs — color <i>means</i> “a Zodiac is here.” <em>Audit §9</em></p>
+      <p class="note"><b>5</b>Two honest doors: see more of the example, or start composing. The old page had one CTA and a four-term vocabulary lesson. The laws list is gone — the row labels now carry it. <em>Audit §7</em></p>
+    </aside>
+  </div>
+</body>
+</html>
