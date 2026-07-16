@@ -1251,8 +1251,8 @@
                     <span>Browse the Twelve</span>
                     <span className="arr">↗</span>
                   </a>
-                  <a className="btn" href="#verify">
-                    <span>Verify an address</span>
+                  <a className="btn" href="/thesis/">
+                    <span>The Thesis</span>
                   </a>
                 </div>
               </div>
@@ -1507,7 +1507,9 @@
                   title={s.name}
                 >
                   <img
-                    src={`/assets/icons/${s.name.toLowerCase()}.png`}
+                    src={`/assets/zodiac-icons/48/${s.asset.sign}.webp`}
+                    width="28"
+                    height="28"
                     alt=""
                     loading="lazy"
                     decoding="async"
@@ -1870,7 +1872,9 @@
             >
               <img
                 className="detail__symbol"
-                src={`/assets/icons/${sign.name.toLowerCase()}.png`}
+                src={`/assets/zodiac-icons/128/${sign.asset.sign}.webp`}
+                width="56"
+                height="56"
                 alt=""
                 decoding="async"
               />
@@ -2127,7 +2131,7 @@
 
                 {wiki.perSignAvgDay && (wiki.comparisons ?? []).length > 0 && (() => {
                   const rows = SIGNS
-                    .map(s => ({ name: s.name, v: wiki.perSignAvgDay[s.asset.sign] }))
+                    .map(s => ({ name: s.name, slug: s.asset.sign, v: wiki.perSignAvgDay[s.asset.sign] }))
                     .filter(r => Number.isFinite(r.v));
                   if (!rows.length) return null;
                   const strongest = wiki.comparisons.reduce((a, b) => (b.avgDay > a.avgDay ? b : a));
@@ -2151,7 +2155,18 @@
                       <div className="pulse__bars">
                         {rows.map(r => (
                           <div className="pulse__bar" key={r.name}>
-                            <span className="pulse__bar-k">{r.name}</span>
+                            <span className="pulse__bar-k pulse__bar-k--sign">
+                              <span className="pulse__bar-name">{r.name}</span>
+                              <img
+                                className="pulse__bar-icon"
+                                src={`/assets/zodiac-icons/48/${r.slug}.webp`}
+                                width="14"
+                                height="14"
+                                alt=""
+                                loading="lazy"
+                                decoding="async"
+                              />
+                            </span>
                             <span className="pulse__bar-track">
                               <span
                                 className="pulse__bar-fill is-twelve"

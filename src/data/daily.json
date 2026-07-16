@@ -1,58 +1,58 @@
 {
-  "date": "2026-07-15",
+  "date": "2026-07-16",
   "bodies": [
     {
       "body": "Moon",
-      "lon": 128.28,
+      "lon": 142.81,
       "sign": "leo",
-      "degree": 8.3,
+      "degree": 22.8,
       "retrograde": false
     },
     {
       "body": "Sun",
-      "lon": 113.03,
+      "lon": 113.99,
       "sign": "cancer",
-      "degree": 23,
+      "degree": 24,
       "retrograde": false
     },
     {
       "body": "Mercury",
-      "lon": 109.18,
+      "lon": 108.61,
       "sign": "cancer",
-      "degree": 19.2,
+      "degree": 18.6,
       "retrograde": true
     },
     {
       "body": "Venus",
-      "lon": 156.39,
+      "lon": 157.49,
       "sign": "virgo",
-      "degree": 6.4,
+      "degree": 7.5,
       "retrograde": false
     },
     {
       "body": "Mars",
-      "lon": 71.76,
+      "lon": 72.45,
       "sign": "gemini",
-      "degree": 11.8,
+      "degree": 12.5,
       "retrograde": false
     },
     {
       "body": "Jupiter",
-      "lon": 123.31,
+      "lon": 123.53,
       "sign": "leo",
-      "degree": 3.3,
+      "degree": 3.5,
       "retrograde": false
     },
     {
       "body": "Saturn",
-      "lon": 14.64,
+      "lon": 14.66,
       "sign": "aries",
-      "degree": 14.6,
+      "degree": 14.7,
       "retrograde": false
     },
     {
       "body": "Uranus",
-      "lon": 64.38,
+      "lon": 64.43,
       "sign": "gemini",
       "degree": 4.4,
       "retrograde": false
@@ -66,27 +66,15 @@
     },
     {
       "body": "Pluto",
-      "lon": 304.56,
+      "lon": 304.54,
       "sign": "aquarius",
-      "degree": 4.6,
+      "degree": 4.5,
       "retrograde": true
     }
   ],
   "moon": {
-    "phase": "New Moon",
-    "illumination": 0.018
+    "phase": "Waxing Crescent",
+    "illumination": 0.062
   },
-  "events": [
-    {
-      "kind": "aspect",
-      "a": "Uranus",
-      "b": "Neptune",
-      "type": "sextile",
-      "at": "2026-07-15T22:22:54.580Z",
-      "aSign": "gemini",
-      "aDegree": 4.4,
-      "bSign": "aries",
-      "bDegree": 4.4
-    }
-  ]
+  "events": []
 }
