@@ -1252,7 +1252,7 @@
                     <span className="arr">↗</span>
                   </a>
                   <a className="btn" href="/thesis/">
-                    <span>The Thesis</span>
+                    <span>Why this exists</span>
                   </a>
                 </div>
               </div>
