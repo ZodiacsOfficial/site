@@ -11,21 +11,23 @@ interface Props {
 const { rows, locale } = Astro.props;
 ---
 <div class="disclosure-table-wrap">
-  <table class="disclosure-table" aria-label={disclosureText(locale, 'tableLabel')}>
-    <thead>
-      <tr>
-        <th scope="col">{disclosureText(locale, 'statementHeading')}</th>
-        <th scope="col">{disclosureText(locale, 'evidenceHeading')}</th>
+  {/* Explicit table roles survive the ≤660px display:block switch, which
+      otherwise strips the implicit table semantics for assistive tech. */}
+  <table class="disclosure-table" role="table" aria-label={disclosureText(locale, 'tableLabel')}>
+    <thead role="rowgroup">
+      <tr role="row">
+        <th role="columnheader" scope="col">{disclosureText(locale, 'statementHeading')}</th>
+        <th role="columnheader" scope="col">{disclosureText(locale, 'evidenceHeading')}</th>
       </tr>
     </thead>
-    <tbody>
+    <tbody role="rowgroup">
       {rows.map((row) => (
-        <tr id={row.id}>
-          <th scope="row">
+        <tr role="row" id={row.id}>
+          <th role="rowheader" scope="row">
             <span class="disclosure-table__label">{row.label}</span>
             <span class="disclosure-table__statement">{row.statement}</span>
           </th>
-          <td>
+          <td role="cell">
             <span class:list={['status-chip', `status-chip--${row.status}`]}>
               {row.status === 'pending'
                 ? disclosureText(locale, 'statusPending')
@@ -147,4 +149,33 @@ const { rows, locale } = Astro.props;
   }
   .disclosure-table__links a { color: var(--ink-1); }
   .evidence-slot { color: #E0B080; border-color: rgba(224, 176, 128, 0.3); }
+  @media (max-width: 660px) {
+    .disclosure-table-wrap { overflow-x: visible; }
+    .disclosure-table { display: block; min-width: 0; }
+    .disclosure-table thead {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+    .disclosure-table tbody,
+    .disclosure-table tr,
+    .disclosure-table th,
+    .disclosure-table td { display: block; width: 100%; }
+    .disclosure-table tbody tr { border-bottom: 1px solid var(--hair-1); }
+    .disclosure-table tbody tr:last-child { border-bottom: 0; }
+    .disclosure-table tbody th {
+      padding-bottom: 10px;
+      border-bottom: 0;
+    }
+    .disclosure-table tbody td {
+      padding-top: 0;
+      border-bottom: 0;
+    }
+  }
 </style>

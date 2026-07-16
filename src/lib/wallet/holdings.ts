@@ -12,45 +12,86 @@ interface RegistryRepresentation {
 }
 
 interface RegistryAsset {
+  sign: string;
   representations: RegistryRepresentation[];
 }
 
-const OFFICIAL = (registryDocument.assets as RegistryAsset[])
+const REGISTRY_ASSETS = registryDocument.assets as RegistryAsset[];
+const ZODIAC_ORDER = REGISTRY_ASSETS.map((asset) => asset.sign);
+const OFFICIAL = REGISTRY_ASSETS
   .flatMap((asset) => asset.representations)
   .filter((representation) => representation.isOfficialRepresentation);
 
-const SOLANA_TOKEN_PROGRAM = 'TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA';
+export function normalizeOfficialHeldSigns(signs: readonly string[]): string[] {
+  const held = new Set(signs);
+  return ZODIAC_ORDER.filter((sign) => held.has(sign));
+}
 
-async function solanaHeldSigns(address: string, rpcUrl: string, fetcher: Fetcher): Promise<string[]> {
+async function solanaHeldSigns(
+  address: string,
+  rpcUrl: string,
+  fetcher: Fetcher,
+  signal?: AbortSignal,
+): Promise<string[]> {
+  const official = OFFICIAL.filter((asset) => asset.chain === 'solana');
+  const requests = official.map((asset, index) => ({
+    jsonrpc: '2.0', id: index + 1, method: 'getTokenAccountsByOwner',
+    params: [
+      address,
+      { mint: asset.address },
+      { encoding: 'jsonParsed', commitment: 'confirmed' },
+    ],
+  }));
   const response = await fetcher(rpcUrl, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      jsonrpc: '2.0', id: 1, method: 'getTokenAccountsByOwner',
-      params: [
-        address,
-        { programId: SOLANA_TOKEN_PROGRAM },
-        { encoding: 'jsonParsed', commitment: 'confirmed' },
-      ],
-    }),
+    signal,
+    body: JSON.stringify(requests),
   });
   if (!response.ok) throw new Error('holdings unavailable');
   const payload = await response.json() as any;
-  if (payload.error || !Array.isArray(payload.result?.value)) throw new Error('holdings unavailable');
-  const balances = new Map<string, bigint>();
-  for (const account of payload.result.value) {
-    const info = account?.account?.data?.parsed?.info;
-    const mint = info?.mint;
-    const amount = info?.tokenAmount?.amount;
-    if (typeof mint !== 'string' || typeof amount !== 'string' || !/^\d+$/.test(amount)) continue;
-    balances.set(mint, (balances.get(mint) ?? 0n) + BigInt(amount));
+  if (!Array.isArray(payload) || payload.length !== requests.length) {
+    throw new Error('holdings unavailable');
   }
-  return OFFICIAL
-    .filter((asset) => asset.chain === 'solana' && (balances.get(asset.address) ?? 0n) > 0n)
-    .map((asset) => asset.sign);
+
+  const byId = new Map<number, any[]>();
+  for (const entry of payload) {
+    const id = entry?.id;
+    const value = entry?.result?.value;
+    if (!Number.isInteger(id)
+      || id < 1
+      || id > requests.length
+      || byId.has(id)
+      || entry?.error != null
+      || !Array.isArray(value)) {
+      throw new Error('holdings unavailable');
+    }
+    byId.set(id, value);
+  }
+  if (byId.size !== requests.length) throw new Error('holdings unavailable');
+
+  return normalizeOfficialHeldSigns(official.flatMap((asset, index) => {
+    let balance = 0n;
+    for (const account of byId.get(index + 1)!) {
+      const info = account?.account?.data?.parsed?.info;
+      const amount = info?.tokenAmount?.amount;
+      if (info?.mint !== asset.address
+        || typeof amount !== 'string'
+        || !/^\d+$/.test(amount)) {
+        throw new Error('holdings unavailable');
+      }
+      balance += BigInt(amount);
+    }
+    return balance > 0n ? [asset.sign] : [];
+  }));
 }
 
-async function baseHeldSigns(address: string, rpcUrl: string, fetcher: Fetcher): Promise<string[]> {
+async function baseHeldSigns(
+  address: string,
+  rpcUrl: string,
+  fetcher: Fetcher,
+  signal?: AbortSignal,
+): Promise<string[]> {
   const official = OFFICIAL.filter((asset) => asset.chain === 'base');
   const ownerWord = address.toLowerCase().replace(/^0x/, '').padStart(64, '0');
   const requests = official.map((asset, index) => ({
@@ -60,21 +101,40 @@ async function baseHeldSigns(address: string, rpcUrl: string, fetcher: Fetcher):
   const response = await fetcher(rpcUrl, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
+    signal,
     body: JSON.stringify(requests),
   });
   if (!response.ok) throw new Error('holdings unavailable');
   const payload = await response.json() as any;
-  if (!Array.isArray(payload)) throw new Error('holdings unavailable');
-  const byId = new Map(payload.map((entry: any) => [entry.id, entry]));
-  return official.flatMap((asset, index) => {
-    const result = byId.get(index + 1)?.result;
-    if (typeof result !== 'string' || !/^0x[0-9a-fA-F]+$/.test(result)) return [];
-    try {
-      return BigInt(result) > 0n ? [asset.sign] : [];
-    } catch {
-      return [];
+  if (!Array.isArray(payload) || payload.length !== requests.length) {
+    throw new Error('holdings unavailable');
+  }
+
+  const byId = new Map<number, string>();
+  for (const entry of payload) {
+    const id = entry?.id;
+    const result = entry?.result;
+    if (!Number.isInteger(id)
+      || id < 1
+      || id > requests.length
+      || byId.has(id)
+      || entry?.error != null
+      || typeof result !== 'string'
+      || !/^0x[0-9a-fA-F]+$/.test(result)) {
+      throw new Error('holdings unavailable');
     }
-  });
+    try {
+      BigInt(result);
+    } catch {
+      throw new Error('holdings unavailable');
+    }
+    byId.set(id, result);
+  }
+  if (byId.size !== requests.length) throw new Error('holdings unavailable');
+
+  return normalizeOfficialHeldSigns(official.flatMap((asset, index) => (
+    BigInt(byId.get(index + 1)!) > 0n ? [asset.sign] : []
+  )));
 }
 
 /** Best-effort, read-only balance context. Failure never changes identity. */
@@ -83,15 +143,16 @@ export async function resolveOfficialHeldSigns(
   address: string,
   env: WalletEnvironment,
   fetcher: Fetcher = fetch,
+  signal?: AbortSignal,
 ): Promise<string[] | undefined> {
   try {
     const solanaRpcUrl = env.SOLANA_RPC_URL;
     const baseRpcUrl = env.BASE_RPC_URL;
     if (chain === 'solana' && solanaRpcUrl && validWalletProviderEndpoint(solanaRpcUrl, env)) {
-      return await solanaHeldSigns(address, solanaRpcUrl, fetcher);
+      return await solanaHeldSigns(address, solanaRpcUrl, fetcher, signal);
     }
     if (chain === 'base' && baseRpcUrl && validWalletProviderEndpoint(baseRpcUrl, env)) {
-      return await baseHeldSigns(address, baseRpcUrl, fetcher);
+      return await baseHeldSigns(address, baseRpcUrl, fetcher, signal);
     }
   } catch {
     return undefined;

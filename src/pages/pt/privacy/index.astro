@@ -1,36 +1,38 @@
 ---
 import Base from '../../../layouts/Base.astro';
 
-const updated = '15 de julho de 2026';
+const updated = '16 de julho de 2026';
 
 const jsonLd = [
   {
     '@type': 'WebPage',
     name: 'Privacidade no Zodiacs.org',
     url: 'https://zodiacs.org/pt/privacy/',
-    description: 'Como o zodiacs.org trata seus dados, dos cálculos locais ao assistente e às notificações opcionais.',
+    description: 'Como o zodiacs.org trata mapas astrais, consultas de endereços públicos do Registry Aura e Shelf, armazenamento, análise e recursos opcionais.',
     inLanguage: 'pt-BR',
   },
 ];
 ---
 <Base
-  title="Privacidade — Seus dados de nascimento ficam no seu dispositivo | Zodiacs.org"
-  description="Como o zodiacs.org trata seus dados: os mapas são calculados no navegador, os recursos opcionais dependem da sua escolha e não armazenamos as conversas."
+  title="Privacidade — Como seus dados são tratados | Zodiacs.org"
+  description="Como o zodiacs.org trata mapas astrais, consultas de endereços públicos do Registry Aura e Shelf, armazenamento, análise e recursos opcionais."
   path="/pt/privacy/"
   locale="pt"
   jsonLd={jsonLd}
 >
   <section class="section container container--narrow">
     <em class="kicker">Privacidade</em>
-    <h1 class="method-title display">Seus dados de nascimento ficam no seu dispositivo.</h1>
+    <h1 class="method-title display">Você escolhe quando os dados saem do seu dispositivo.</h1>
 
     <div class="prose">
       <p class="lede">
-        Em resumo: quando você calcula um mapa astral, os cálculos são feitos
-        no seu navegador, e sua data, hora e local de nascimento nunca são
-        enviados a nós. A conta e o e-mail semanal são opcionais, ficam
-        desativados por padrão e são fáceis de cancelar. Não exibimos anúncios
-        nem usamos rastreamento entre sites.
+        Em resumo: o mapa astral é calculado no seu navegador. Os dados de
+        nascimento não são enviados durante esse cálculo nem em uma consulta do
+        Registry Aura; eles só saem do dispositivo se você escolher sincronizar
+        uma conta ou digitá-los no assistente. Aura envia um endereço público de
+        carteira — não seus dados de nascimento nem do mapa — a um provedor de
+        dados de blockchain para uma consulta somente para leitura. Não exibimos
+        anúncios nem usamos rastreamento entre sites.
       </p>
 
       <h2>Calculadoras e mapas salvos</h2>
@@ -39,7 +41,85 @@ const jsonLd = [
         Os mapas que você salva ficam no armazenamento local do navegador. A
         conta é opcional; se você a usar, o Supabase armazena seu e-mail e os
         mapas que você escolher sincronizar para exibi-los nos seus outros
-        dispositivos.
+        dispositivos. Os dados de nascimento não são transmitidos nem
+        armazenados em nossos servidores como parte do cálculo em si.
+      </p>
+
+      <h2>Registry Aura, Shelf e endereços públicos</h2>
+      <p>
+        Registry Aura lê lado a lado o resumo de um mapa salvo neste navegador,
+        um endereço público de carteira e o céu datado. O mapa e a leitura
+        simbólica são compostos no seu dispositivo. Ao compor ou atualizar um
+        Aura, nosso endpoint de ativos recebe o endereço público e o encaminha
+        ao provedor de dados de blockchain configurado para verificar quais
+        entradas do Registro estão presentes. A solicitação não inclui dados de
+        nascimento, nome do mapa, posições ou geometria do mapa.
+      </p>
+      <p>
+        Quando ativado, o Shelf público opcional da página inicial do Registro
+        usa o mesmo endpoint e envia um único endereço público da Solana depois
+        que você pressiona “View”; ele não envia dados de nascimento nem do
+        mapa. Quando Aura está desativado, o Shelf ilustrativo não faz nenhuma
+        solicitação de endereço ou provedor. “Back to the example view” remove o
+        resultado da tela; recarregar ou fechar a página apaga o cache temporário
+        do Shelf mantido na memória.
+      </p>
+      <p>
+        Você pode colar um endereço sem conectar uma carteira. Se escolher
+        “Connect”, o software de uma carteira de terceiros só é aberto depois do
+        seu clique. Ele pode retornar a este navegador as contas públicas que
+        você autorizar; Aura seleciona um endereço compatível e encaminha apenas
+        esse endereço para a consulta. Aura não solicita frase de recuperação,
+        chave privada, assinatura de mensagem, aprovação de token, transação ou
+        mudança de rede. A política de privacidade do provedor da carteira se
+        aplica ao software dele.
+      </p>
+      <p>
+        Um endereço público é público, mas não necessariamente anônimo. Seus
+        ativos e seu histórico on-chain podem ser visíveis e vinculados a uma
+        pessoa ou a outra atividade. A Vercel, o provedor de dados de blockchain
+        configurado e a infraestrutura deles podem processar metadados comuns da
+        solicitação e registros operacionais ou de segurança, como endereço IP,
+        data, hora e informações do navegador. Não prometemos que uma consulta
+        de endereço público jamais seja registrada por provedores de
+        infraestrutura cujos prazos de retenção não controlamos.
+      </p>
+
+      <h2>Armazenamento e compartilhamento do Aura</h2>
+      <p>
+        Por padrão, Aura salva o endereço público, a rede, os signos do Registro
+        encontrados, o horário da consulta e o identificador do mapa selecionado
+        no armazenamento de sessão desta aba, com validade de restauração de
+        oito horas. A opção desmarcada “Remember this address on this device”
+        salva os mesmos campos no armazenamento local com validade de
+        restauração de 24 horas. Depois desses prazos, os registros não podem
+        mais ser restaurados. Aura os apaga na próxima tentativa de leitura, mas
+        os bytes expirados podem permanecer no armazenamento do navegador até
+        você voltar ao Aura ou limpar os dados do site. “Forget address / Clear
+        Aura data” remove os dois registros deste navegador, mas não apaga o
+        histórico público da blockchain nem registros de infraestrutura.
+      </p>
+      <p>
+        As imagens de compartilhamento do Aura são compostas no seu dispositivo.
+        Por padrão, elas omitem endereço, rede, nome e dados do mapa, posições
+        exatas, geometria e a quantidade ou lista de signos encontrados. Um
+        controle opcional, válido apenas durante a sessão, pode acrescentar que
+        o signo público em destaque aparece em algum lugar do mapa selecionado.
+        Se você ativá-lo, esse fato se torna público. O aplicativo escolhido na
+        folha de compartilhamento aplica sua própria política. Limpar o Aura não
+        recolhe cópias que outras pessoas ou serviços salvaram ou republicaram.
+      </p>
+
+      <h2>Solicitações automáticas do Registro</h2>
+      <p>
+        Algumas seções do Registro solicitam automaticamente, pelo seu
+        navegador, dados públicos de mercado à DexScreener e estatísticas
+        públicas de visualização à Wikimedia. Essas solicitações GET automáticas
+        não contêm endereço de carteira, dados de nascimento, dados do mapa nem
+        texto digitado por você. DexScreener e Wikimedia podem receber metadados
+        comuns de uma solicitação web, como endereço IP, data, hora, navegador e
+        a página de origem permitida pela política do navegador; as políticas de
+        privacidade próprias desses serviços se aplicam.
       </p>
 
       <h2>Assistente de IA</h2>
@@ -69,25 +149,40 @@ const jsonLd = [
         momento.
       </p>
 
-      <h2>E-mail e hospedagem</h2>
+      <h2>E-mail, hospedagem e análise</h2>
       <p>
         O e-mail semanal exige uma conta e uma adesão voluntária; fica
         desativado por padrão, e toda mensagem permite cancelar a assinatura. A
         Vercel hospeda o site e pode manter registros técnicos breves para
         entregar as páginas e prevenir abusos. Não usamos publicidade nem
         rastreamento entre sites. Contamos visualizações de páginas e o uso
-        anônimo de recursos com o Plausible, um serviço de análise sem cookies:
-        sem cookies, sem rastreamento entre sites, sem dados de nascimento e sem
-        nada do que você digita. Os eventos levam apenas rótulos de categoria —
-        “um mapa foi salvo”, nunca de quem.
+        anônimo de recursos com o Plausible, um serviço de análise sem cookies.
+        Ele não recebe dados de nascimento, endereço público, identificador de
+        mapa ou de conta conectada nem a lista exata de signos. Os eventos do
+        Aura incluem apenas categorias permitidas, como o resultado e uma faixa
+        aproximada da quantidade; os outros eventos registram “um mapa foi
+        salvo”, nunca de quem.
+      </p>
+
+      <h2>Armazenamento do navegador</h2>
+      <p>
+        Não usamos cookies de publicidade ou rastreamento. O armazenamento
+        próprio do site serve aos recursos que você solicita: mapas salvos,
+        dados de sessão limitados do Aura, um endereço do Aura lembrado de forma
+        opcional, preferências do site e, se você entrar, um token de acesso.
+        Ele não é usado para rastrear você em outros sites.
       </p>
 
       <h2>Suas escolhas</h2>
-      <p>
-        Você pode usar as calculadoras sem conta, apagar os mapas locais pelo
-        navegador e pedir a exclusão de uma conta escrevendo para
-        <a href="mailto:hello@zodiacs.org">hello@zodiacs.org</a>.
-      </p>
+      <ul>
+        <li>Usar as calculadoras sem conta nem armazenamento fora do dispositivo.</li>
+        <li>Experimentar o exemplo do Aura sem mapa, endereço, conexão ou compra.</li>
+        <li>Colar um endereço público em vez de conectar uma carteira de terceiros.</li>
+        <li>Deixar “Remember” desmarcado e limpar os dados do Aura quando quiser.</li>
+        <li>Voltar ao exemplo do Shelf e recarregar a página para apagar o cache temporário.</li>
+        <li>Apagar os mapas locais pelo navegador.</li>
+        <li>Pedir a exclusão de uma conta escrevendo para <a href="mailto:hello@zodiacs.org">hello@zodiacs.org</a>.</li>
+      </ul>
 
       <p class="method-updated mono">Última atualização: {updated}</p>
     </div>

@@ -5,12 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#060709" />
   <meta name="color-scheme" content="dark" />
+  <meta name="zodiacs-registry-aura-enabled" content="0" />
   <script>
     /* Chromium paints SVG url() backdrop filters; Safari reports support but
        renders nothing. Mark Chromium so the nav-pill lens applies only there. */
     try { if (window.chrome && window.CSS && CSS.supports('backdrop-filter', "url('#zdx-lens-nav')")) document.documentElement.classList.add('zdx-lens'); } catch (e) {}
   </script>
-  <meta name="description" content="Zodiacs. Twelve signs, one official record. Verify official assets across Solana and Base, then build symbolic identity context from public ownership." />
+  <meta name="description" content="Zodiacs. Twelve signs, one official record. Match asset addresses across Solana and Base, then build symbolic context from public records." />
 
   <link rel="canonical" href="https://zodiacs.org/registry/" />
   <link rel="alternate" type="application/rss+xml" title="Zodiacs — The Archive" href="/archive/rss.xml" />
@@ -36,7 +37,7 @@
 
   <meta property="og:site_name" content="Zodiacs" />
   <meta property="og:title" content="The Registry · The Twelve — Zodiacs" />
-  <meta property="og:description" content="Twelve signs, one official record. Verify official assets across Solana and Base, then build symbolic identity context from public ownership." />
+  <meta property="og:description" content="Twelve signs, one official record. Match asset addresses across Solana and Base, then build symbolic context from public records." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://zodiacs.org/registry/" />
   <!-- og:image / twitter:image use the canonical zodiacs.org host so
@@ -49,7 +50,7 @@
 
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="The Registry · The Twelve — Zodiacs" />
-  <meta name="twitter:description" content="Twelve signs, one official record. Verify official assets across Solana and Base, then build symbolic identity context from public ownership." />
+  <meta name="twitter:description" content="Twelve signs, one official record. Match asset addresses across Solana and Base, then build symbolic context from public records." />
   <meta name="twitter:image" content="https://zodiacs.org/assets/og/v2/registry.png" />
   <meta name="twitter:image:alt" content="Zodiacs — the official registry of the Twelve." />
 
@@ -71,7 +72,7 @@
         "@id": "https://zodiacs.org/registry/#page",
         "url": "https://zodiacs.org/registry/",
         "name": "The Registry · The Twelve — Zodiacs.org",
-        "description": "Twelve signs, one official record. Verify official assets across Solana and Base, then build symbolic identity context from public ownership.",
+        "description": "Twelve signs, one official record. Match asset addresses across Solana and Base, then build symbolic context from public records.",
         "inLanguage": "en",
         "isPartOf": { "@id": "https://zodiacs.org/#site" }
       },
@@ -1208,6 +1209,16 @@
       font-size: 14px;
       line-height: 1.52;
       color: var(--ink-2);
+    }
+    .idctx__card-link {
+      display: inline-block;
+      margin-top: 14px;
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      color: var(--ink);
+      text-decoration: none;
+      border-bottom: 1px solid var(--hair-3);
     }
     .idctx__example {
       border: 1px solid var(--hair-2);
@@ -3377,7 +3388,7 @@
         ></video>
         <div class="cine__scrim" aria-hidden="true"></div>
         <div class="cine__content">
-          <a class="cine__eyebrow" href="/disclosure/" data-i18n="disclosure.linkLabel">The Official Registry · Est. <span data-registry-established>MMXXIV</span></a>
+          <a class="cine__eyebrow" href="/disclosure/" data-i18n="disclosure.linkLabel">The Official Registry · Est. <span data-registry-established>MMXXIV</span> · provenance pending</a>
           <h1 class="cine__title">Twelve signs.<br><span class="it">One register.</span></h1>
           <div class="cine__foot">
             <p class="cine__line">Belief is the oldest asset.</p>
@@ -3432,6 +3443,12 @@
           Astrofolio is a related but separate consumer experience; Zodiacs.org
           remains the astrology reference and the official Registry and SDK source.
         </p>
+        <p>
+          “Official” means that an asset address appears in this Registry. It is
+          not government, regulator, wallet, or exchange approval, and it does
+          not prove identity, control, legal ownership, safety, value, liquidity,
+          or future performance.
+        </p>
         <div class="static-site__facts" aria-label="Registry facts">
           <div class="static-site__fact"><strong>Signs</strong>12 official Zodiacs</div>
           <div class="static-site__fact"><strong>Origin</strong>Native Solana SPL assets</div>
@@ -3471,6 +3488,14 @@
           This context may be delayed or unavailable and never changes the
           registry, identity, or verification status of a sign.
         </p>
+        <p>
+          Digital assets are speculative, volatile, and may be illiquid. Their
+          value can fall to zero. Market information is factual context, not a
+          recommendation, solicitation, or promise of performance. Read the
+          <a href="/terms/">Terms</a> and <a href="/disclosure/#financial-advice">financial-risk disclosure</a>.
+          Operator and economic-interest statements remain pending confirmation;
+          see the <a href="/disclosure/">Disclosure</a>.
+        </p>
       </section>
 
       <section class="static-site__section" id="catalogue">
@@ -3479,6 +3504,15 @@
           Each sign has a dedicated catalogue entry: lore and history from
           Babylon to the present record, provenance, the official Solana mint
           and Base representation, live market context, and acquisition routes.
+        </p>
+        <p>
+          Acquisition links open independently operated third-party venues. A
+          venue or wallet may ask you to approve, sign, pay, swap, or submit a
+          blockchain transaction; those actions can be irreversible. Check the
+          destination, network, asset address, amount, and every wallet prompt.
+          No purchase is required to use Registry Aura. Operator and
+          economic-interest statements remain pending confirmation; see the
+          <a href="/disclosure/">Disclosure</a>.
         </p>
         <ul>
           <li><a href="/registry/aries/">Aries — Lot I · The Ram</a></li>
@@ -3499,15 +3533,15 @@
       <section class="static-site__section" id="identity">
         <h2>Identity Context</h2>
         <p>
-          Zodiacs are not just addresses. Verified public ownership can become
-          display-ready symbolic context: held signs, element balance, modality
-          balance, current season, native and bridged representations, and wheel
-          coverage.
+          Public blockchain records can become display-ready symbolic context:
+          signs found at an address, element balance, modality balance, current
+          season, and native or bridged representations. A lookup does not prove
+          that a person controls an address or legally owns an asset.
         </p>
         <div class="static-site__grid">
           <article class="static-site__card">
-            <h3>Verified Ownership</h3>
-            <p>Confirm whether a wallet holds official Zodiacs.org assets across native Solana and bridged Base representations.</p>
+            <h3>Public Record Lookup</h3>
+            <p>Check whether one public address contains Registry-listed Zodiacs on Solana or Base without treating the result as identity or ownership proof.</p>
           </article>
           <article class="static-site__card">
             <h3>Symbolic Composition</h3>
@@ -3517,6 +3551,7 @@
             <h3>Built For Experiences</h3>
             <p>Build profiles, receipts, seasonal moments, verifiers, and identity surfaces on app-neutral infrastructure.</p>
           </article>
+          <!-- registry-aura-entry:slot -->
         </div>
       </section>
 
@@ -3534,7 +3569,7 @@
           </article>
           <article class="static-site__card">
             <h3>Public Shelves</h3>
-            <p>Shape public ownership into Zodiac shelves, identity receipts, zodiac wheel views, and birth chart overlays.</p>
+            <p>Shape public-address records into Zodiac shelves, public-record receipts, zodiac wheel views, and birth chart overlays.</p>
           </article>
           <article class="static-site__card">
             <h3>Quiet Integrations</h3>
@@ -3559,7 +3594,7 @@
         <p>
           The Zodiacs SDK is the public read-only TypeScript interface to the
           canonical Zodiacs.org registry. Apps can use it to verify official
-          addresses, read public ownership state, render sign metadata, and
+          addresses, read public-address holdings state, render sign metadata, and
           build identity surfaces.
         </p>
         <p><code class="static-site__code">npm i @zodiacs/sdk</code></p>
@@ -3584,10 +3619,18 @@
       <section class="static-site__section" id="security">
         <h2>Read-Only By Design</h2>
         <p>
-          Zodiacs.org and the SDK are made for recognition, verification,
-          metadata, public ownership reads, and identity surfaces. They do not
-          request private keys, provide custody, sign messages, submit
-          transactions, provide approval helpers, or move assets.
+          Registry Aura may, only after your click, ask compatible wallet
+          software for authorized public accounts; it selects and forwards one
+          compatible address, and you can paste an address instead. Zodiacs.org
+          and its SDK do not request private keys, signatures,
+          approvals, payments, swaps, network changes, or transactions for this
+          lookup, and they do not provide custody or move assets.
+        </p>
+        <p>
+          Wallet applications, market-data services, and trading venues reached
+          through outbound links are independent third parties. They have their
+          own prompts, risks, and privacy practices and may request transactions
+          outside Zodiacs.org. Never share a seed phrase or private key.
         </p>
       </section>
 
@@ -3603,6 +3646,8 @@
         <p style="margin:0 0 14px">
           <button class="assistant-link" type="button" data-assistant-open aria-haspopup="dialog">Ask the site</button>
         </p>
+        <a href="/privacy/">Privacy</a> ·
+        <a href="/terms/">Terms</a> ·
         <a href="/disclosure/" data-i18n="disclosure.linkLabel">Disclosure</a> ·
         Zodiacs.org · Official registry · Est. <span data-registry-established>MMXXIV</span> ·
         <a href="/disclosure/#origin" data-i18n="disclosure.provenancePendingShort">Deploy provenance pending</a>

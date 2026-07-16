@@ -739,7 +739,7 @@ ${JSON.stringify(jsonLd(), null, 2)}
         entries stand even when their links do not.
       </p>
       <div class="lead__meta">
-        <span>Since ${REGISTRY_ESTABLISHED_YEAR}</span>
+        <span>Registry year ${REGISTRY_ESTABLISHED_YEAR} · <a href="/disclosure/#origin">provenance pending</a></span>
         <span>·</span>
         <span>${entries.length} entries</span>
         <span>·</span>

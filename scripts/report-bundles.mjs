@@ -134,7 +134,7 @@ for (const [key, value] of Object.entries(budgets)) {
     fail(`budgets.json: ${key} must be a finite, non-negative number`);
   }
 }
-for (const required of ['/', '/birth-chart/', '/aries/', 'chunk-max', 'engine-chunk']) {
+for (const required of ['/', '/birth-chart/', '/registry/aura/', '/aries/', 'chunk-max', 'engine-chunk']) {
   if (!(required in budgets)) fail(`budgets.json: missing ${required}`);
 }
 
@@ -255,6 +255,7 @@ if (
 }
 
 const homepage = routeRows.find(({ route }) => route === '/');
+const registryAura = routeRows.find(({ route }) => route === '/registry/aura/');
 const engineMarkers = ['Value is not boolean:', 'Light-travel time solver did not converge'];
 const homepageMarkerChunks = homepage
   ? [...homepage.closure].filter((path) => engineMarkers.some((marker) => chunks.get(path).source.includes(marker)))
@@ -271,6 +272,26 @@ if (serverOnlyMarkerChunks.length) {
 }
 if (engineChunk && !engineMarkers.every((marker) => engineChunk.source.includes(marker))) {
   fail(`engine marker fingerprint missing from ${engineChunk.path}`);
+}
+
+if (registryAura) {
+  const auraSource = [...registryAura.closure].map((path) => chunks.get(path).source).join('\n');
+  const forbiddenAuraMarkers = [
+    '@zodiacs/sdk',
+    'signMessage',
+    'signTransaction',
+    'sendTransaction',
+    'wallet_addEthereumChain',
+    'wallet_switchEthereumChain',
+    'eth_sendTransaction',
+    'personal_sign',
+    'eth_signTypedData',
+  ];
+  const found = forbiddenAuraMarkers.filter((marker) => auraSource.includes(marker));
+  if (found.length) fail(`Registry Aura client boundary contains forbidden markers: ${found.join(', ')}`);
+  if ([...registryAura.closure].some((path) => /\/_astro\/full\.[^/]+\.js$/.test(path))) {
+    fail('Registry Aura eagerly loads the full astronomy engine chunk');
+  }
 }
 
 console.log('route gzip sizes (initial transitive local JS):');

@@ -46,11 +46,11 @@ function requestHeader(req: any, name: string): string {
   return firstHeader(req.headers?.[name.toLowerCase()]);
 }
 
-function hostname(value: string): string {
+function normalizedHost(value: string): string {
   const first = value.split(',')[0]?.trim().toLowerCase() ?? '';
   if (!first) return '';
   try {
-    return new URL(first.includes('://') ? first : `https://${first}`).hostname.toLowerCase();
+    return new URL(first.includes('://') ? first : `https://${first}`).host.toLowerCase();
   } catch {
     return '';
   }
@@ -66,16 +66,19 @@ export function isAllowedWalletRequest(req: any, env: WalletEnvironment = proces
   } catch {
     return false;
   }
-  const requestHost = hostname(requestHeader(req, 'x-forwarded-host') || requestHeader(req, 'host'));
-  if (!requestHost || sourceUrl.hostname.toLowerCase() !== requestHost) return false;
+  const requestHost = normalizedHost(requestHeader(req, 'x-forwarded-host') || requestHeader(req, 'host'));
+  const forwardedProtocol = requestHeader(req, 'x-forwarded-proto').split(',')[0]?.trim().toLowerCase();
+  const requestProtocol = forwardedProtocol || sourceUrl.protocol.slice(0, -1).toLowerCase();
+  if (!requestHost || `${sourceUrl.protocol}//${sourceUrl.host.toLowerCase()}` !== `${requestProtocol}://${requestHost}`) return false;
+  const requestHostname = new URL(`${requestProtocol}://${requestHost}`).hostname.toLowerCase();
   if (sourceUrl.protocol === 'https:') {
-    return requestHost === 'zodiacs.org'
-      || requestHost === 'www.zodiacs.org'
-      || requestHost.endsWith('.vercel.app');
+    return requestHostname === 'zodiacs.org'
+      || requestHostname === 'www.zodiacs.org'
+      || requestHostname.endsWith('.vercel.app');
   }
   return env.NODE_ENV !== 'production'
     && sourceUrl.protocol === 'http:'
-    && (requestHost === 'localhost' || requestHost === '127.0.0.1');
+    && (requestHostname === 'localhost' || requestHostname === '127.0.0.1');
 }
 
 function parseBody(input: unknown): unknown {

@@ -20,7 +20,6 @@ import {
   jupiterSwapUrl, dexscreenerUrl
 } from './sign-data.mjs';
 import { wingNavHtml, wingNavCss, wingNavScript } from './wing-nav.mjs';
-import { REGISTRY_ESTABLISHED_YEAR } from '../src/lib/registry-establishment.mjs';
 import { EN, enFormat } from '../src/strings/en.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
@@ -85,8 +84,8 @@ function provenanceBeats(m) {
       body: 'Canonized in Ptolemy’s Almagest among the forty-eight classical constellations; carried through the Arabic observatories into medieval Europe.' },
     { era: 'AD 1515', place: 'Nuremberg',
       body: 'Engraved in Albrecht Dürer’s celestial planispheres, the first printed star charts of the Western sky.' },
-    { era: `AD ${REGISTRY_ESTABLISHED_YEAR}`, place: 'Solana',
-      body: `Minted as the official ${m.name} record — one canonical SPL asset, entered in the Zodiacs.org registry.` },
+    { era: 'Date pending provenance', place: 'Solana',
+      body: `The Registry identifies one canonical SPL ${m.name} record. Its earliest deploy receipt and establishment year have not yet been published, so this date is not presented as verified.` },
     { era: 'Present', place: 'Solana · Base',
       body: 'One identity, two official representations: the native Solana origin and its bridged Base counterpart, publicly verifiable in the registry.' }
   );
@@ -736,7 +735,7 @@ ${beats.map((b) => `        <div class="prov__item">
         <div class="market__head">
           <div>
             <span class="market__label">Market Context</span>
-            <p class="market__copy">Third-party market context. May be delayed or unavailable.</p>
+            <p class="market__copy">Independent third-party data, not a valuation or recommendation. It may be delayed or unavailable; prices and liquidity can change quickly, and a Zodiac can lose all market value. Operator and economic-interest statements remain pending confirmation; see the <a href="/disclosure/">Disclosure</a>.</p>
           </div>
           <a class="market__source" href="${esc(m.dexscreener)}" rel="noopener noreferrer">Dex Screener ↗</a>
         </div>
@@ -748,16 +747,22 @@ ${beats.map((b) => `        <div class="prov__item">
     <section class="sec reveal" id="acquire" aria-label="Acquisition">
       <div class="sec__head"><h2 class="sec__title">Acquisition</h2><span class="line"></span></div>
       <p class="acq__copy">
-        ${esc(m.name)} trades on open markets. The routes below are provided for
-        access; nothing here is a recommendation. Confirm the official mint
-        against the registry before acquiring.
+        The links below open independent third-party services; they are not
+        endorsements or recommendations, and Zodiacs.org does not sell or
+        execute transactions. A service may request a wallet connection, token
+        approval, signature, and an onchain transaction that cannot be reversed.
+        Digital assets are speculative, may become illiquid, and can lose all
+        market value. You could lose all money used to acquire a Zodiac. Verify
+        the official mint, network, amount, and destination before continuing.
+        Operator and economic-interest statements remain pending confirmation;
+        see the <a href="/disclosure/">Disclosure</a>.
       </p>
       <div class="acq__cta">
-        <a class="btn btn--primary" href="${esc(m.jupiter)}" rel="noopener noreferrer">
-          <span>Acquire via Jupiter</span><span class="arr">↗</span>
+        <a class="btn" href="${esc(m.jupiter)}" rel="noopener noreferrer external nofollow">
+          <span>Open Jupiter route</span><span class="arr">↗</span>
         </a>
-        <a class="btn" href="${esc(m.dexscreener)}" rel="noopener noreferrer">
-          <span>Live market</span><span class="arr">↗</span>
+        <a class="btn" href="${esc(m.dexscreener)}" rel="noopener noreferrer external nofollow">
+          <span>View market data</span><span class="arr">↗</span>
         </a>
       </div>
       <a class="acq__shelf" href="https://astrofolio.xyz/" rel="noopener noreferrer">
@@ -767,7 +772,7 @@ ${beats.map((b) => `        <div class="prov__item">
       </a>
       <p class="acq__note">
         Official mint: <a href="/registry/zodiacs.registry.json">${esc(m.solana.address.slice(0, 8))}…${esc(m.solana.address.slice(-6))}</a> ·
-        Read-only site — no custody, no signing, no transactions.
+        This Registry page does not request custody, signing, approvals, or transactions.
       </p>
     </section>
 
@@ -802,11 +807,13 @@ ${SIGN_ORDER.map((s) => `        <a href="${signPath(s)}"${s === m.slug ? ' clas
           <a href="/thesis/">Thesis</a>
           <a href="/sdk/">SDK</a>
           <a href="/disclosure/">${esc(EN['disclosure.linkLabel'])}</a>
+          <a href="/privacy/">${esc(EN['disclosure.linkPrivacy'])}</a>
+          <a href="/terms/">${esc(EN['disclosure.linkTerms'])}</a>
           <a href="/registry/zodiacs.registry.json">Record</a>
           <button class="assistant-link" type="button" data-assistant-open aria-haspopup="dialog">Ask the site</button>
           <a href="https://astrofolio.xyz/" rel="noopener noreferrer">Astrofolio ↗</a>
         </div>
-        <div>Read-only</div>
+        <div>Registry lookup/display tools: read-only</div>
       </div>
       <div class="ftr__row">
         <div class="ftr__links" aria-label="Official channels">

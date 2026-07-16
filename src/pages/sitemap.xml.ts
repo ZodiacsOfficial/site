@@ -9,6 +9,7 @@ import { getCollection } from 'astro:content';
 import { LEGACY_URLS } from '../lib/legacy/urls';
 import { DEFAULT_LOCALE, LOCALES, LOCALE_META, alternatePaths } from '../lib/i18n';
 import { CHINESE_ZODIAC_PATHS } from '../lib/programmatic-paths';
+import { registryAuraSitemapEntry } from '../lib/registry-aura-entry.mjs';
 import daily from '../data/daily.json';
 
 const SITE = 'https://zodiacs.org';
@@ -92,6 +93,10 @@ export const GET: APIRoute = async () => {
   const birthdays = await getCollection('birthdays', ({ data }) => !data.draft);
   const almanac = await getCollection('almanac', ({ data }) => !data.draft);
   const latestMonth = horoscopes.map((h) => h.data.month).sort().at(-1);
+  const registryAuraEntry = registryAuraSitemapEntry({
+    PUBLIC_REGISTRY_AURA_ENABLED:
+      import.meta.env.PUBLIC_REGISTRY_AURA_ENABLED ?? process.env.PUBLIC_REGISTRY_AURA_ENABLED,
+  });
 
   const evergreenUrls = [
     { loc: '/', priority: 1.0 },
@@ -140,6 +145,7 @@ export const GET: APIRoute = async () => {
 
   const urls: { loc: string; priority: number; lastmod?: string }[] = [
     ...evergreenUrls,
+    ...(registryAuraEntry ? [registryAuraEntry] : []),
     { loc: '/horoscopes/', priority: 0.8, lastmod: daily.date },
     ...guides.map((g) => ({
       loc: `/${g.data.sign}/`,

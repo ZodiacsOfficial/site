@@ -84,6 +84,8 @@ export interface WheelProps {
    * Wheel bundle (the homepage demo, the share card, the birth chart).
    */
   renderOverlay?: (geo: WheelGeometry) => ComponentChildren;
+  /** Caller-specific accessible name; the historical default is unchanged. */
+  ariaLabel?: string;
 }
 
 
@@ -100,7 +102,7 @@ const ASPECT_STROKE = [0.9, 1.3, 1.8] as const;
 
 export default function Wheel({
   bodies, asc = null, mc = null, cusps = null, aspects = [], size = 420, animate = false,
-  interactive, preview = false, renderOverlay,
+  interactive, preview = false, renderOverlay, ariaLabel = 'Birth chart wheel',
 }: WheelProps) {
   const cx = size / 2;
   const cy = size / 2;
@@ -224,7 +226,7 @@ export default function Wheel({
       // placements table remains the canonical accessible structure.
       role={ix ? undefined : 'img'}
       aria-hidden={ix ? 'true' : undefined}
-      aria-label={ix ? undefined : 'Birth chart wheel'}
+      aria-label={ix ? undefined : ariaLabel}
       class={[
         animate ? 'wheel wheel--animate' : 'wheel',
         ix ? 'wheel--interactive' : '',

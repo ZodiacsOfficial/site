@@ -106,7 +106,8 @@ function loadSvg(xml: string): Promise<HTMLImageElement> {
   });
 }
 
-async function loadDisc(slug: string): Promise<ImageBitmap | null> {
+/** Shared by every card builder; the 128px discs are the canonical card art. */
+export async function loadDisc(slug: string): Promise<ImageBitmap | null> {
   try {
     const res = await fetch(`/assets/zodiac-icons/128/${slug}.webp`);
     if (!res.ok) return null;

@@ -1,7 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 
-const updated = '8 July 2026';
+const updated = '16 July 2026';
 
 const jsonLd = [
   {
@@ -9,13 +9,13 @@ const jsonLd = [
     name: 'Terms of use — Zodiacs.org',
     url: 'https://zodiacs.org/terms/',
     description:
-      'The terms for using zodiacs.org: a free astrology reference offered for interest and self-reflection, provided as is, with an optional account.',
+      'The terms for using zodiacs.org astrology tools, Registry records, Registry Aura, public-address lookups, and third-party digital-asset routes.',
   },
 ];
 ---
 <Base
   title="Terms of Use | Zodiacs.org"
-  description="The terms for using zodiacs.org: a free astrology reference offered for interest and reflection, provided as is, with optional accounts. Plain language, no surprises."
+  description="Terms for the zodiacs.org astrology tools, Registry records, Registry Aura, public-address lookups, and third-party digital-asset routes."
   path="/terms/"
   jsonLd={jsonLd}
 >
@@ -25,8 +25,71 @@ const jsonLd = [
 
     <div class="prose">
       <p class="lede">
-        Zodiacs.org is a free astrology reference. Using it means you agree to
-        these terms. We have tried to keep them short and readable.
+        Zodiacs.org is a free astrology reference with a read-only Registry
+        wing. Using it means you agree to these terms. We have tried to keep
+        them short and readable.
+      </p>
+
+      <h2>Registry Aura and wallet connections</h2>
+      <p>
+        Registry Aura is an optional symbolic display that reads a locally
+        saved birth-chart summary, the public record of one wallet address, and
+        dated sky information side by side. It is a Zodiacs.org display
+        convention, not a traditional astrological technique, proof about a
+        person, wallet score, price prediction, or recommendation. The wallet
+        record does not change the birth chart, and no purchase is required.
+      </p>
+      <p>
+        Aura accepts a pasted public address or, after your click, asks
+        compatible third-party wallet software for public accounts you
+        authorize. Aura uses one compatible address for its lookup and does not
+        request or need a recovery phrase, private key, message signature, token
+        approval, transaction, or network switch. Pasted addresses may belong
+        to anyone. A connection or lookup does not prove control of an address,
+        legal ownership of an asset, or a person's identity.
+      </p>
+
+      <h2>What “official” means in the Registry</h2>
+      <p>
+        On Zodiacs.org, “official,” “official Zodiac,” and similar wording mean
+        only that an address, contract, mint, or representation matches an
+        entry in the Zodiacs.org Registry's published canonical list. This is a
+        Registry classification—not approval by a government, regulator,
+        wallet provider, marketplace, or blockchain; not identity verification;
+        and not a promise of authenticity beyond that list, safety, value,
+        scarcity, liquidity, or future performance. Verify important details
+        independently on-chain.
+      </p>
+
+      <h2>Digital-asset risks and third-party routes</h2>
+      <p>
+        Digital assets can be highly speculative and volatile. They may have no
+        buyers, become illiquid, fall to zero market value, or result in a total
+        loss. Other risks include counterfeit assets, scams, malicious
+        approvals, software or smart-contract defects, network disruption,
+        inaccurate or delayed market data, provider or venue failure, loss of
+        wallet access, and changes in law or regulation. Past activity, rarity,
+        Registry status, an Aura reading, or displayed market context does not
+        predict value or reduce those risks.
+      </p>
+      <p>
+        Explorer, marketplace, acquisition, and wallet-installation links lead
+        to independent third parties with their own terms, fees, security, and
+        privacy practices. Zodiacs.org does not execute, broker, custody, or
+        reverse a transaction reached through those links. A third-party venue
+        may ask you to connect, sign, approve a token, or submit a transaction;
+        those actions are outside Registry Aura's read-only flow. Blockchain
+        transactions are often irreversible. Before acting, verify the domain,
+        network, contract or mint, recipient, amount, fees, and permissions in
+        your wallet. Never disclose a recovery phrase or private key.
+      </p>
+      <p>
+        A link or Registry entry is provided for reference and is not an
+        endorsement, solicitation, or statement that an asset is suitable for
+        you. The <a href="/disclosure/">Registry disclosure</a> identifies
+        operator, economic-interest, and provenance statements as verified or
+        still pending operator confirmation; a pending statement must not be
+        treated as established fact.
       </p>
 
       <h2>What this site is</h2>
@@ -74,16 +137,19 @@ const jsonLd = [
         <strong>as available</strong>, without warranties of any kind. We do not
         guarantee that it will be uninterrupted, error-free, or fit for a
         particular purpose. Sky data covers a bounded range of years and is
-        refreshed periodically.
+        refreshed periodically. Registry, holdings, provider, and market data
+        may be delayed, incomplete, or unavailable and should be independently
+        verified before any consequential action.
       </p>
 
       <h2>Limitation of liability</h2>
       <p>
         To the fullest extent the law allows, Zodiacs.org and the people who run
         it are not liable for any indirect, incidental, or consequential loss
-        arising from your use of the site, or from decisions made in reliance on
-        it. Because the service is free and interpretive, you use it at your own
-        discretion.
+        arising from your use of the site, third-party services, wallet
+        software, or decisions made in reliance on site content. This includes
+        loss of digital assets, value, access, data, or opportunity. Because the
+        service is free and interpretive, you use it at your own discretion.
       </p>
 
       <h2>Content and intellectual property</h2>
@@ -103,11 +169,13 @@ const jsonLd = [
         you accept the updated terms.
       </p>
 
-      <h2>Governing law</h2>
+      <h2>Applicable law</h2>
       <p>
-        These terms are governed by the laws of the jurisdiction in which the
-        operator of Zodiacs.org is established, without regard to conflict-of-law
-        rules.
+        The operator's legal identity and a chosen governing jurisdiction have
+        not yet been confirmed in the site's published materials. Applicable
+        law still governs your use, and nothing in these terms removes mandatory
+        consumer or other rights that apply to you. We will update this section
+        and the date above when those facts are confirmed.
       </p>
 
       <h2>Contact</h2>

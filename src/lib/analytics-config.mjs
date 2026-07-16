@@ -10,6 +10,14 @@ export const ANALYTICS_EVENT_PROPS = Object.freeze({
   verifier_used: ['chain', 'outcome'],
   sdk_click: ['source', 'destination'],
   wallet_chart_computed: ['chain', 'holds_registry_asset'],
+  aura_view: [],
+  aura_compose: ['outcome', 'held_bucket'],
+  aura_share: ['outcome'],
+  aura_refresh: ['outcome'],
+  aura_calculator: ['direction'],
+  aura_entry: ['source'],
+  aura_return: ['interval'],
+  aura_response: ['value'],
 
   // Existing event names remain accepted so historical funnels do not break.
   result_rendered: ['mode'],

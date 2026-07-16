@@ -1,7 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 
-const updated = '14 July 2026';
+const updated = '16 July 2026';
 
 const jsonLd = [
   {
@@ -9,26 +9,29 @@ const jsonLd = [
     name: 'Privacy at Zodiacs.org',
     url: 'https://zodiacs.org/privacy/',
     description:
-      'How zodiacs.org handles your data: charts stay local; assistant messages and placement summaries go to Anthropic for replies, and conversations are not stored by us.',
+      'How zodiacs.org handles birth charts, Registry Aura public-address lookups, browser storage, sharing, analytics, accounts, and assistant messages.',
   },
 ];
 ---
 <Base
-  title="Privacy — Your Birth Data Stays on Your Device | Zodiacs.org"
-  description="How zodiacs.org handles your data: charts stay local; assistant messages and placement summaries go to Anthropic for replies, and conversations are not stored by us."
+  title="Privacy — How Your Data Is Handled | Zodiacs.org"
+  description="How zodiacs.org handles birth charts, Registry Aura public-address lookups, browser storage, sharing, analytics, accounts, and assistant messages."
   path="/privacy/"
   jsonLd={jsonLd}
 >
   <section class="section container container--narrow">
     <em class="kicker">Privacy</em>
-    <h1 class="method-title display">Your birth data stays on your device.</h1>
+    <h1 class="method-title display">You choose when data leaves your device.</h1>
 
     <div class="prose">
       <p class="lede">
-        The short version: when you calculate a chart, the math runs in your
-        browser and your birth date, time, and place are never sent to us.
-        Accounts and the weekly email are optional, off by default, and easy to
-        leave. We show no ads and use no cross-site tracking.
+        The short version: chart calculation runs in your browser. Birth fields
+        are not sent as part of calculation or a Registry Aura lookup; they
+        leave your device only if you choose account sync or type them into the
+        assistant. Aura sends one public wallet address—not your birth or chart
+        data—to a blockchain-data provider for a read-only lookup. Accounts,
+        remembered Aura data, and the weekly email are optional and off by
+        default. We show no ads and use no cross-site tracking.
       </p>
 
       <h2>What happens when you use a calculator</h2>
@@ -36,8 +39,10 @@ const jsonLd = [
         Every chart on this site is computed on your own device. When you enter
         a birth date, time, and place, that information is used by code running
         in your browser to calculate the chart. It is not transmitted to our
-        servers, logged, or stored by us. This is a deliberate design choice,
-        described in full on our <a href="/methodology/">methodology page</a>.
+        servers, logged, or stored by us as part of that calculation. It leaves
+        the device only if you later choose account sync or put it in an
+        assistant message. This is a deliberate design choice, described in
+        full on our <a href="/methodology/">methodology page</a>.
       </p>
       <p>
         Place search uses a list of cities that ships with the site and runs
@@ -66,6 +71,78 @@ const jsonLd = [
         choose to create an account (below). Clearing your browser's site data
         removes saved charts. We cannot see them and cannot recover them for
         you.
+      </p>
+
+      <h2>Registry Aura and public wallet addresses</h2>
+      <p>
+        Registry Aura reads a chart summary already saved in this browser, one
+        public wallet address, and the dated sky side by side. The chart and
+        symbolic reading are composed on your device. When you compose or
+        refresh an Aura, our holdings endpoint receives the public address and
+        forwards it to the configured blockchain-data provider to check which
+        Zodiacs.org Registry entries are present. The request does not include
+        birth fields, chart names, chart placements, or chart geometry.
+        When the feature is enabled, the Registry landing page's optional
+        public Shelf uses the same endpoint and sends the same single public
+        Solana address only after you press View; it does not send chart or
+        birth data. When Aura is off, the illustrative Shelf makes no address
+        or provider request.
+      </p>
+      <p>
+        You can paste a public address without connecting a wallet. If you
+        choose Connect, compatible third-party wallet software is invoked only
+        after your click. It may return the public accounts you authorize to
+        this browser; Aura selects one compatible address and forwards only that
+        address for the lookup. Aura does not request a recovery phrase, private
+        key, message signature, token approval, transaction, or network switch.
+        Your wallet provider's own privacy terms apply to its software and
+        connection prompt.
+      </p>
+      <p>
+        A public address is public but not necessarily anonymous. Its on-chain
+        holdings and history may be visible and may become linked with a person
+        or other activity. Vercel, the configured blockchain-data provider, and
+        their infrastructure may process routine request metadata and
+        operational or security logs, such as IP address, time, and browser
+        information. We do not promise that a public-address request is never
+        logged by infrastructure providers whose retention practices we do not
+        control.
+      </p>
+
+      <h2>Public Registry data sources</h2>
+      <p>
+        When a relevant Registry panel is displayed, your browser may request
+        public market data from Dex Screener or public attention data from
+        Wikimedia. Those automatic requests do not include a wallet address,
+        birth fields, chart data, or Aura results. The independent service still
+        receives ordinary web-request metadata, such as your IP address,
+        browser information, and request time, and its own privacy terms and
+        retention practices apply.
+      </p>
+
+      <h2>Aura browser storage and sharing</h2>
+      <p>
+        By default, Aura keeps the public address, chain, Registry sign results,
+        lookup time, and selected chart identifier in this tab's session
+        storage. It becomes ineligible for restoration after eight hours. The
+        unchecked “Remember this address on this device” option stores the same
+        fields in local storage and makes them ineligible after 24 hours.
+        Ineligible records are deleted the next time Aura reads them; if you do
+        not return, the browser may retain the expired bytes until you clear site
+        data. “Forget address / Clear Aura data” removes both Aura records from
+        this browser; it cannot erase public blockchain history or
+        infrastructure logs.
+      </p>
+      <p>
+        Aura share images are composed on your device. The default image omits
+        the public address, chain, chart name, birth fields, exact placements,
+        chart geometry, and the held-sign count and list. An optional,
+        session-only control can add the fact that the featured public sign
+        appears somewhere in the selected birth chart. If you enable it, that
+        fact becomes public to anyone who receives the image. A browser share
+        sheet or download sends the image to a destination you choose, whose
+        privacy terms then apply. Clearing Aura cannot recall copies that other
+        people or services have saved or reposted.
       </p>
 
       <h2>Optional account (sync across devices)</h2>
@@ -127,16 +204,19 @@ const jsonLd = [
         advertising, and we use no cross-site tracking cookies or third-party
         marketing pixels. We count page views and anonymous feature usage with
         Plausible, a cookieless analytics service: no cookies, no cross-site
-        tracking, no birth data, and nothing you type. Events carry only
-        category labels — "a chart was saved," never whose.
+        tracking, no birth data, public address, chart identifier, connected
+        account identifier, or exact held-sign list. Aura events carry only
+        allowlisted categories such as an outcome and a coarse held-count
+        bucket; other events similarly record “a chart was saved,” never whose.
       </p>
 
       <h2>Cookies</h2>
       <p>
         We do not use advertising or tracking cookies. The only browser storage
-        we rely on is local storage for your saved charts and, if you sign in, a
-        first-party sign-in token — both on your device, neither used to track
-        you elsewhere.
+        we use is first-party storage for features you request: saved charts,
+        bounded Aura session data, an optional remembered Aura address, site
+        preferences, and, if you sign in, a sign-in token. These stay on your
+        device and are not used to track you across other sites.
       </p>
 
       <h2>Children</h2>
@@ -149,6 +229,9 @@ const jsonLd = [
       <h2>Your choices</h2>
       <ul>
         <li>Use every calculator with no account and nothing stored off-device.</li>
+        <li>Use the Aura example without a chart, address, wallet connection, or purchase.</li>
+        <li>Paste a public address instead of connecting third-party wallet software.</li>
+        <li>Leave Aura's “Remember” option unchecked and clear its browser data at any time.</li>
         <li>Delete saved charts by clearing your browser's data for this site.</li>
         <li>Delete an account and its synced data by emailing us.</li>
         <li>Turn the weekly email off with one click, any time.</li>

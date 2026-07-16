@@ -17,12 +17,19 @@ import {
   REGISTRY_ESTABLISHED,
   REGISTRY_ESTABLISHMENT_PROVENANCE_URL,
 } from '../src/lib/registry-establishment.mjs';
+import {
+  REGISTRY_AURA_ENTRY_COPY,
+  REGISTRY_AURA_META_NAME,
+  REGISTRY_AURA_PATH,
+  injectRegistryAuraLanding,
+} from '../src/lib/registry-aura-entry.mjs';
 import { EN } from '../src/strings/en.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const root = resolve(here, '..');
 const SRC = resolve(root, 'src/app.jsx');
 const OUT = resolve(root, 'public/assets/app.js');
+const REGISTRY_HTML = resolve(root, 'public/registry/index.html');
 
 const BABEL_VERSION = '7.26.4';
 const BABEL_URL = `https://unpkg.com/@babel/standalone@${BABEL_VERSION}/babel.min.js`;
@@ -59,9 +66,16 @@ const registryMeta = [
   `const REGISTRY_VERIFIER_NOT_FOUND_SENTENCE=${JSON.stringify(EN['registry.verifierNotFoundSentence'])};`,
   `const REGISTRY_VERIFIER_NOT_FOUND_INLINE=${JSON.stringify(EN['registry.verifierNotFoundInline'])};`,
   `const REGISTRY_ESTABLISHMENT_PROVENANCE_LABEL=${JSON.stringify(EN['registry.establishmentProvenanceLink'])};`,
+  `const REGISTRY_AURA_ENABLED=document.querySelector('meta[name="${REGISTRY_AURA_META_NAME}"]')?.content==='1';`,
+  `const REGISTRY_AURA_PATH=${JSON.stringify(REGISTRY_AURA_PATH)};`,
+  `const REGISTRY_AURA_ENTRY_COPY=Object.freeze(${JSON.stringify(REGISTRY_AURA_ENTRY_COPY)});`,
 ].join('');
 const output = banner + registryMeta + code + '\n';
 await writeFile(OUT, output, 'utf8');
+
+const registryHtml = await readFile(REGISTRY_HTML, 'utf8');
+const configuredRegistry = injectRegistryAuraLanding(registryHtml, process.env).output;
+if (configuredRegistry !== registryHtml) await writeFile(REGISTRY_HTML, configuredRegistry, 'utf8');
 
 const hash = createHash('sha256').update(output).digest('hex').slice(0, 12);
 console.log(`Wrote ${OUT}`);
