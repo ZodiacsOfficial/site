@@ -45,9 +45,12 @@ describe('registry pastel polish', () => {
       read('public/registry/index.html'),
     ]);
 
+    // Owner-requested rename (2026-07-17): "The Thesis" reads cold to an
+    // everyday visitor; the button now answers the question they actually
+    // have. The destination is unchanged.
     expect(source).toContain('<a className="btn" href="/thesis/">');
-    expect(source).toContain('<span>The Thesis</span>');
-    expect(registry).toContain('<a class="btn" href="/thesis/"><span>The Thesis</span></a>');
+    expect(source).toContain('<span>Why this exists</span>');
+    expect(registry).toContain('<a class="btn" href="/thesis/"><span>Why this exists</span></a>');
   });
 
   it.each(signs)('renders the %s lot title with one decorative pastel disc', async (slug, name) => {
