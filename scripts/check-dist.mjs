@@ -496,12 +496,29 @@ function canonicalHref(html) {
   return tag ? attr(tag[0], 'href') : null;
 }
 
+const registryLandingPath = resolve(root, 'registry/index.html');
+const registryLandingHtml = idCache.get(registryLandingPath)
+  ?? (await readFile(registryLandingPath, 'utf8'));
+const registryAuraMarker = registryLandingHtml.match(
+  /<meta name="zodiacs-registry-aura-enabled" content="([01])" \/>/,
+)?.[1];
+if (!registryAuraMarker) fail('registry/index.html: missing Registry Aura build marker');
+const registryAuraBuildEnabled = registryAuraMarker === '1';
+const registryAuraLandingLinked = /href=["']\/registry\/aura\/["']/.test(registryLandingHtml);
+if (registryAuraLandingLinked !== registryAuraBuildEnabled) {
+  fail('registry/index.html: Registry Aura landing link does not match its build marker');
+}
+if (sitemapLocs.has('/registry/aura/') !== registryAuraBuildEnabled) {
+  fail('sitemap.xml: Registry Aura inclusion does not match the Registry build marker');
+}
+
 // Coordinated indexing baseline (2026-07-15): compatibility prose remains
 // English-only under D9, while birthdays, Chinese zodiac, and the Registry
 // disclosure ship on every locale rail. Keep exact counts so sitemap drift
 // fails loudly.
+const registryAuraIndexed = sitemapLocs.has('/registry/aura/');
 const sitemapPolicy = {
-  total: 2318,
+  total: 2318 + Number(registryAuraIndexed),
   compatibilityPairs: 78,
   birthdays: 1830,
   chineseZodiac: 65,
@@ -513,6 +530,7 @@ const indexedFamilies = [
   { label: 'birthdays', pattern: /^\/(?:(?:es|pt|fr|it)\/)?birthday\/[a-z]+-\d{1,2}\/$/, expected: sitemapPolicy.birthdays, localized: true },
   { label: 'Chinese zodiac', pattern: /^\/(?:(?:es|pt|fr|it)\/)?learn\/chinese-zodiac(?:\/[a-z]+)?\/$/, expected: sitemapPolicy.chineseZodiac, localized: true },
   { label: 'disclosures', pattern: /^\/(?:(?:es|pt|fr|it)\/)?disclosure\/$/, expected: sitemapPolicy.disclosures, localized: true },
+  { label: 'Registry Aura', pattern: /^\/registry\/aura\/$/, expected: Number(registryAuraIndexed), localized: false },
 ];
 
 if (sitemapLocs.size !== sitemapPolicy.total) {

@@ -95,9 +95,86 @@ describe('registry disclosure contract', () => {
   it('keeps every unverified operator claim visibly pending', () => {
     const pending = DISCLOSURE_ROWS.filter((row) => row.status === 'pending');
     expect(pending.map((row) => row.id)).toEqual(['operator', 'economic-interest', 'origin']);
-    // The operator confirmed the statement wording (2026-07-15); evidence
-    // remains pending via row status, never via bracket scaffolding.
+    expect(pending.slice(0, 2).every((row) => /unverified/i.test(row.statement))).toBe(true);
+    // Pending facts stay explicit in their own statement as well as row status;
+    // no operator confirmation is inferred from absent repository evidence.
     expect(pending.every((row) => !`${row.statement} ${row.evidence}`.includes('[OPERATOR'))).toBe(true);
+  });
+
+  it('describes Aura wallet access as optional, public-address-only, and non-transactional', () => {
+    const row = DISCLOSURE_ROWS.find((candidate) => candidate.id === 'read-only')!;
+    expect(row.statement).toContain('may connect to compatible wallet software');
+    expect(row.statement).toContain('authorized public accounts');
+    expect(row.statement).toContain('uses one compatible address for the lookup');
+    expect(row.statement).toContain('after a user click');
+    expect(row.statement).toContain('does not hold assets');
+    expect(row.statement).toContain('request signatures or approvals');
+    expect(row.statement).toContain('construct or submit transactions');
+    expect(row.statement).toContain('switch networks');
+    expect(row.statement).not.toContain('do not connect wallets');
+    expect(row.evidence).toContain('forwards only the one address used for its holdings lookup');
+    expect(row.evidence).toContain('not proof of identity, control, or legal ownership');
+  });
+
+  it('defines official as a Registry classification without implying safety or value', () => {
+    const row = DISCLOSURE_ROWS.find((candidate) => candidate.id === 'financial-advice')!;
+    expect(row.statement).toContain('not a wallet score or price signal');
+    expect(row.statement).toContain('no purchase is required');
+    expect(row.evidence).toContain('“Official” is a Registry classification only');
+    for (const excludedClaim of [
+      'government approval',
+      'identity verification',
+      'safety',
+      'value',
+      'liquidity',
+      'future performance',
+    ]) {
+      expect(row.evidence).toContain(excludedClaim);
+    }
+  });
+
+  it('states the presence-only boundary before Aura reads a wallet address', async () => {
+    const source = await readFile(resolve(repo, 'src/islands/RegistryAura.tsx'), 'utf8');
+    const boundary = (source.match(/<aside class="aura-entry__boundary"[\s\S]*?<\/aside>/)?.[0] ?? '')
+      .replace(/\s+/g, ' ');
+
+    expect(boundary).toContain(
+      'Aura reduces the public wallet record to present/not-present for Registry-listed signs.',
+    );
+    expect(boundary).toContain('It does not show quantities, prices, holding history, or unrelated assets.');
+  });
+
+  it('keeps the English privacy and terms pages explicit about Aura data and asset risk', async () => {
+    const [privacySource, termsSource] = await Promise.all([
+      readFile(resolve(repo, 'src/pages/privacy/index.astro'), 'utf8'),
+      readFile(resolve(repo, 'src/pages/terms/index.astro'), 'utf8'),
+    ]);
+    const privacy = privacySource.replace(/\s+/g, ' ');
+    const terms = termsSource.replace(/\s+/g, ' ');
+
+    for (const required of [
+      'configured blockchain-data provider',
+      'does not include birth fields, chart names, chart placements, or chart geometry',
+      'becomes ineligible for restoration after eight hours',
+      'ineligible after 24 hours',
+      'deleted the next time Aura reads them',
+      'We do not promise that a public-address request is never logged',
+      'Clearing Aura cannot recall copies',
+      'no birth data, public address, chart identifier, connected account identifier, or exact held-sign list',
+    ]) {
+      expect(privacy).toContain(required);
+    }
+
+    for (const required of [
+      'result in a total loss',
+      'Blockchain transactions are often irreversible',
+      "does not prove control of an address, legal ownership of an asset, or a person's identity",
+      '“official,” “official Zodiac,” and similar wording mean only',
+      'not an endorsement, solicitation, or statement that an asset is suitable for you',
+      'still pending operator confirmation',
+    ]) {
+      expect(terms).toContain(required);
+    }
   });
 
   it('provides one pending deploy-transaction slot per sign', () => {

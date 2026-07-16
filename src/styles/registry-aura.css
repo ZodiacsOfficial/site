@@ -1,0 +1,1708 @@
+.aura-page {
+  width: min(100% - 32px, 1120px);
+  padding-top: clamp(52px, 8vw, 104px);
+}
+
+.aura-page__hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(260px, 0.75fr);
+  gap: clamp(32px, 7vw, 88px);
+  align-items: end;
+  padding-bottom: clamp(40px, 6vw, 72px);
+  border-bottom: 1px solid var(--hair-2);
+}
+
+.aura-page__hero h1 {
+  max-width: 10ch;
+  margin: 10px 0 18px;
+  font-size: var(--text-hero);
+}
+
+.aura-page__hero-copy {
+  max-width: 58ch;
+  margin: 0;
+  color: var(--text-2);
+  font-family: var(--font-serif);
+  font-size: var(--text-lg);
+  line-height: 1.55;
+}
+
+.aura-page__demo {
+  display: grid;
+  gap: 14px;
+  padding: clamp(16px, 2.5vw, 24px);
+  border: 1px solid var(--hair-2);
+  border-radius: var(--r-lg);
+  background: rgba(10, 12, 17, 0.72);
+}
+
+.aura-page__demo-cap {
+  margin: 0;
+  color: var(--muted);
+  font-size: var(--text-sm);
+  line-height: 1.55;
+}
+
+.aura-page__demo-cap strong {
+  color: var(--text-2);
+  font-weight: 500;
+}
+
+.aura-page__demo-read {
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr);
+  gap: 14px;
+  align-items: start;
+  padding-top: 14px;
+  border-top: 1px solid var(--hair-1);
+}
+
+.aura-page__demo-read img {
+  border-radius: 50%;
+}
+
+.aura-page__demo-read h2 {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: var(--text-xl);
+  font-weight: 500;
+}
+
+.aura-page__demo-read p:first-of-type {
+  margin: 6px 0 0;
+  color: var(--text);
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: var(--text-lg);
+  line-height: 1.4;
+}
+
+.aura-page__demo-read small {
+  display: block;
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: var(--text-xs);
+}
+
+.aura-page__demo-detail {
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: var(--text-sm);
+  line-height: 1.55;
+}
+
+.aura-page__demo-stamp {
+  margin: 0;
+  color: var(--faint);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.aura-page__cta {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.aura-wallet-basics {
+  margin-top: clamp(40px, 6vw, 72px);
+  overflow: hidden;
+  border: 1px solid var(--hair-2);
+  border-radius: var(--r-lg);
+  background: rgba(15, 18, 26, 0.76);
+}
+
+.aura-wallet-basics__header {
+  display: grid;
+  grid-template-columns: minmax(240px, 0.8fr) minmax(0, 1.2fr);
+  gap: clamp(24px, 5vw, 64px);
+  align-items: end;
+  padding: clamp(24px, 4vw, 42px);
+}
+
+.aura-wallet-basics__header h2 {
+  margin: 7px 0 0;
+  font-family: var(--font-serif);
+  font-size: clamp(1.75rem, 4vw, 2.65rem);
+  font-weight: 500;
+  line-height: 1.08;
+}
+
+.aura-wallet-basics__header > p {
+  max-width: 58ch;
+  margin: 0;
+  color: var(--text-2);
+  font-family: var(--font-serif);
+  font-size: var(--text-lg);
+  line-height: 1.55;
+}
+
+.aura-wallet-basics__choices {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: 0;
+  border-block: 1px solid var(--hair-2);
+}
+
+.aura-wallet-basics__choices > div {
+  min-width: 0;
+  padding: 20px clamp(18px, 3vw, 28px);
+}
+
+.aura-wallet-basics__choices > div + div {
+  border-left: 1px solid var(--hair-2);
+}
+
+.aura-wallet-basics__choices dt {
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.aura-wallet-basics__choices dd {
+  margin: 7px 0 0;
+  color: var(--muted);
+  font-size: var(--text-sm);
+  line-height: 1.55;
+}
+
+.aura-wallet-basics__safety {
+  display: grid;
+  grid-template-columns: minmax(170px, 0.35fr) minmax(0, 1fr);
+  gap: 18px;
+  margin: clamp(20px, 3vw, 30px);
+  padding: 18px 20px;
+  border: 1px solid var(--hair-3);
+  border-left-width: 3px;
+  border-radius: var(--r-sm);
+  background: rgba(198, 204, 218, 0.035);
+}
+
+.aura-wallet-basics__safety strong {
+  font-family: var(--font-serif);
+  font-size: var(--text-lg);
+  font-weight: 500;
+}
+
+.aura-wallet-basics__safety p {
+  margin: 0;
+  color: var(--text-2);
+  line-height: 1.6;
+}
+
+.aura-wallet-basics__guide {
+  border-top: 1px solid var(--hair-2);
+}
+.aura-wallet-basics__guide details + details {
+  border-top: 1px solid var(--hair-2);
+}
+
+.aura-wallet-basics__guide summary {
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: center;
+  min-height: 64px;
+  padding: 14px clamp(18px, 3vw, 28px);
+  cursor: pointer;
+  list-style: none;
+}
+
+.aura-wallet-basics__guide summary::-webkit-details-marker {
+  display: none;
+}
+
+.aura-wallet-basics__guide summary::after {
+  content: "+";
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: var(--text-lg);
+}
+
+.aura-wallet-basics__guide details[open] summary::after {
+  content: "−";
+}
+
+.aura-wallet-basics__guide summary:focus-visible {
+  outline: 2px solid var(--ink-0);
+  outline-offset: -4px;
+}
+
+.aura-wallet-basics__guide summary > span:first-child {
+  color: var(--faint);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+}
+
+.aura-wallet-basics__guide summary strong {
+  display: block;
+  color: var(--text);
+  font-family: var(--font-serif);
+  font-size: var(--text-lg);
+  font-weight: 500;
+}
+
+.aura-wallet-basics__guide summary small {
+  display: block;
+  margin-top: 3px;
+  color: var(--muted);
+  font-size: var(--text-sm);
+  line-height: 1.45;
+}
+
+.aura-wallet-basics__answer {
+  max-width: 82ch;
+  padding: 0 clamp(18px, 3vw, 74px) 28px;
+  color: var(--text-2);
+  line-height: 1.65;
+  overflow-wrap: anywhere;
+}
+
+.aura-wallet-basics__answer p {
+  margin: 0 0 14px;
+}
+.aura-wallet-basics__answer p:last-child {
+  margin-bottom: 0;
+}
+.aura-wallet-basics__answer ol,
+.aura-wallet-basics__answer ul {
+  margin: 0 0 18px;
+  padding-left: 21px;
+}
+.aura-wallet-basics__answer li + li {
+  margin-top: 9px;
+}
+
+.aura-wallet-basics__definitions {
+  display: grid;
+  gap: 12px;
+  margin: 18px 0;
+}
+
+.aura-wallet-basics__definitions > div,
+.aura-wallet-basics__install-links {
+  padding: 16px 18px;
+  border: 1px solid var(--hair-2);
+  border-radius: var(--r-sm);
+}
+
+.aura-wallet-basics__definitions dt,
+.aura-wallet-basics__install-links strong {
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.aura-wallet-basics__definitions dd {
+  margin: 5px 0 0;
+}
+.aura-wallet-basics__install-links {
+  display: grid;
+  gap: 12px;
+  margin: 18px 0 10px;
+}
+.aura-wallet-basics__install-links p {
+  margin: 0;
+}
+.aura-wallet-basics__fine-print {
+  color: var(--muted);
+  font-size: var(--text-sm);
+}
+
+.aura-entry {
+  padding-block: clamp(48px, 8vw, 92px);
+}
+
+.aura-entry__intro {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  align-items: flex-end;
+  margin-bottom: 28px;
+}
+
+.aura-entry__intro h2,
+.aura-evidence h3,
+.aura-result__timing h3,
+.aura-result__limits h3 {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-weight: 500;
+}
+
+.aura-entry__intro p {
+  max-width: 56ch;
+  margin: 8px 0 0;
+  color: var(--muted);
+}
+
+.aura-example-button {
+  flex: 0 0 auto;
+}
+
+.aura-entry__boundary {
+  display: grid;
+  gap: 9px;
+  margin: 0 0 20px;
+  padding: 18px 20px;
+  border: 1px solid var(--hair-2);
+  border-radius: var(--r-md);
+  background: rgba(15, 18, 26, 0.48);
+}
+
+.aura-entry__boundary strong {
+  color: var(--text-2);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.aura-entry__boundary p {
+  max-width: 90ch;
+  margin: 0;
+  color: var(--muted);
+  font-size: var(--text-sm);
+  line-height: 1.55;
+}
+
+.aura-entry__boundary-lines {
+  display: grid;
+  gap: 7px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.aura-entry__boundary-lines li {
+  display: flex;
+  gap: 10px;
+  color: var(--text-2);
+  font-size: var(--text-sm);
+  line-height: 1.5;
+}
+
+.aura-entry__boundary-lines li::before {
+  content: "—";
+  flex: 0 0 auto;
+  color: var(--faint);
+}
+
+.aura-fineprint {
+  border: 1px solid var(--hair-2);
+  border-radius: var(--r-sm);
+}
+
+.aura-fineprint summary {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  min-height: 44px;
+  padding: 10px 14px;
+  cursor: pointer;
+  list-style: none;
+  color: var(--text-2);
+  font-size: var(--text-sm);
+}
+
+.aura-fineprint summary::-webkit-details-marker {
+  display: none;
+}
+
+.aura-fineprint summary::after {
+  content: "+";
+  margin-left: auto;
+  color: var(--muted);
+  font-family: var(--font-mono);
+}
+
+.aura-fineprint[open] summary::after {
+  content: "−";
+}
+
+.aura-fineprint summary:focus-visible {
+  outline: 2px solid var(--ink-0);
+  outline-offset: -4px;
+}
+
+.aura-fineprint > div,
+.aura-fineprint > p {
+  display: grid;
+  gap: 10px;
+  padding: 2px 14px 14px;
+}
+
+.aura-fineprint p {
+  margin: 0;
+  color: var(--muted);
+  font-size: var(--text-sm);
+  line-height: 1.55;
+}
+
+.aura-storage-details {
+  margin-bottom: 4px;
+}
+
+.aura-sky-stamp {
+  margin: 16px 0 0;
+  padding: 12px 14px;
+  border: 1px dashed var(--hair-2);
+  border-radius: var(--r-sm);
+  color: var(--muted);
+  font-size: var(--text-sm);
+}
+
+.aura-sky-stamp strong {
+  color: var(--text-2);
+  font-weight: 500;
+}
+
+.aura-error-escape {
+  margin-top: 12px;
+}
+
+.aura-compose {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.aura-step {
+  min-width: 0;
+  padding: clamp(20px, 3vw, 30px);
+  border: 1px solid var(--hair-2);
+  border-radius: var(--r-lg);
+  background: rgba(15, 18, 26, 0.76);
+}
+
+.aura-step__heading {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.aura-step__heading span {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  flex: 0 0 auto;
+  border: 1px solid var(--hair-3);
+  border-radius: 50%;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+}
+
+.aura-step__heading h3 {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: var(--text-xl);
+  font-weight: 500;
+}
+
+.aura-field {
+  display: grid;
+  gap: 8px;
+}
+.aura-field label {
+  color: var(--text-2);
+  font-size: var(--text-sm);
+}
+
+.aura-field input,
+.aura-field select {
+  width: 100%;
+  min-height: 50px;
+  padding: 11px 14px;
+  border: 1px solid var(--hair-3);
+  border-radius: var(--r-sm);
+  background: var(--void-1);
+  color: var(--text);
+  transition:
+    border-color 180ms var(--ease-soft),
+    background 180ms var(--ease-soft);
+}
+
+.aura-field input {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+}
+.aura-field input::placeholder {
+  color: var(--faint);
+}
+.aura-field input:focus,
+.aura-field select:focus {
+  border-color: var(--ink-1);
+  background: var(--void-2);
+}
+
+.aura-field__note,
+.aura-step__note {
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: var(--text-sm);
+  line-height: 1.55;
+}
+
+.aura-step__note--before-wallet {
+  margin: -6px 0 18px;
+}
+
+.aura-chart-missing {
+  display: grid;
+  gap: 12px;
+  justify-items: start;
+}
+
+.aura-chart-missing p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.aura-address-methods {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.aura-address-methods .btn {
+  min-height: 48px;
+  padding-inline: 14px;
+}
+
+.aura-wallet-list {
+  display: grid;
+  gap: 8px;
+  grid-column: 1 / -1;
+  padding: 12px;
+  border: 1px solid var(--hair-2);
+  border-radius: var(--r-md);
+}
+
+.aura-wallet-list p {
+  margin: 0;
+  color: var(--muted);
+  font-size: var(--text-sm);
+}
+.aura-wallet-list button {
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.aura-method-divider {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 12px;
+  align-items: center;
+  margin: 4px 0 18px;
+  color: var(--faint);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+}
+
+.aura-method-divider::before,
+.aura-method-divider::after {
+  content: "";
+  height: 1px;
+  background: var(--hair-2);
+}
+
+.aura-remember {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  margin: 16px 0;
+  color: var(--text-2);
+  font-size: var(--text-sm);
+}
+
+.aura-remember input {
+  width: 18px;
+  height: 18px;
+  margin: 2px 0 0;
+  accent-color: var(--ink-0);
+}
+
+.aura-compose__submit {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 18px;
+}
+
+.aura-connected {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 0 16px;
+  padding: 10px 12px;
+  border: 1px solid var(--hair-2);
+  border-radius: var(--r-sm);
+  color: var(--text-2);
+  font-size: var(--text-sm);
+}
+
+.aura-connected button {
+  color: var(--muted);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.aura-entry__privacy {
+  max-width: 78ch;
+  margin: 22px 0 0;
+  color: var(--muted);
+  font-size: var(--text-sm);
+}
+
+.aura-status {
+  min-height: 1.6em;
+  margin: 18px 0 0;
+  color: var(--text-2);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+}
+
+.aura-status[data-error="true"] {
+  color: var(--sign-aries);
+}
+
+.aura-result {
+  padding-top: clamp(50px, 8vw, 96px);
+  border-top: 1px solid var(--hair-2);
+  animation: aura-finished-state 260ms var(--ease-soft) both;
+}
+
+/* Kickers follow the site rule: sentence-case serif italic, not mono-caps.
+   Mono stays reserved for data stamps (dates, counts, networks). */
+.aura-result__kicker {
+  margin: 0 0 2px;
+  color: var(--muted);
+  font-family: var(--font-serif);
+  font-size: var(--text-base);
+  font-style: italic;
+  letter-spacing: 0.01em;
+}
+
+.aura-result__sources > header h2 {
+  max-width: 15ch;
+  margin: 4px 0 0;
+  font-family: var(--font-serif);
+  font-size: clamp(2.2rem, 5vw, 4rem);
+  font-weight: 500;
+  line-height: 1.02;
+  text-wrap: balance;
+}
+
+.aura-source-docket {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: clamp(28px, 4vw, 42px);
+  border-block: 1px solid var(--hair-2);
+}
+
+.aura-source {
+  position: relative;
+  min-width: 0;
+  padding: clamp(20px, 3vw, 28px);
+  background: rgba(15, 18, 26, 0.48);
+}
+
+.aura-source + .aura-source {
+  border-left: 1px solid var(--hair-2);
+}
+
+.aura-source__stamp {
+  display: block;
+  min-height: 2.8em;
+  color: var(--faint);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.aura-source h3 {
+  margin: 12px 0 0;
+  color: var(--text-2);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.aura-source p {
+  margin: 10px 0 0;
+  color: var(--text);
+  font-family: var(--font-serif);
+  font-size: var(--text-lg);
+  line-height: 1.35;
+}
+
+.aura-source small {
+  display: block;
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: var(--text-xs);
+}
+
+.aura-source--chart {
+  box-shadow: inset 0 2px rgba(230, 233, 239, 0.32);
+}
+.aura-source--record {
+  box-shadow: inset 0 2px rgba(182, 212, 228, 0.55);
+}
+.aura-source--sky {
+  box-shadow: inset 0 2px rgba(230, 233, 239, 0.68);
+}
+
+.aura-source-docket__join {
+  max-width: 76ch;
+  margin: 18px 0 0;
+  color: var(--text-2);
+  font-size: var(--text-sm);
+  line-height: 1.6;
+}
+
+.aura-plate__signals {
+  display: flex;
+  gap: 7px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+
+.aura-plate__signals span {
+  padding: 4px 9px;
+  border: 1px solid var(--hair-3);
+  border-radius: var(--r-full);
+  color: var(--text-2);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.aura-result__composition {
+  margin-top: clamp(44px, 7vw, 76px);
+}
+
+/* The Alignment: three source rows against twelve sign columns. Chroma is
+   reserved for held-record discs; chart marks stay neutral; sky marks are
+   line glyphs. The focal column is a hairline frame, never a glow. */
+.aura-algn {
+  width: min(100%, 820px);
+  margin: 0 auto;
+}
+
+.aura-algn table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.aura-algn caption {
+  caption-side: bottom;
+  padding: 12px 2px 0;
+  color: var(--muted);
+  font-size: var(--text-xs);
+  text-align: left;
+  line-height: 1.5;
+}
+
+.aura-algn__corner {
+  width: 172px;
+}
+
+.aura-algn__col {
+  padding: 10px 0 8px;
+  color: var(--muted);
+  font-family: var(--font-serif);
+  font-size: 15px;
+  font-weight: 400;
+  text-align: center;
+}
+
+.aura-algn__col.is-f {
+  color: var(--text);
+  border: 1px solid var(--hair-3);
+  border-bottom: 0;
+  background: rgba(238, 241, 247, 0.05);
+}
+
+.aura-algn__lbl {
+  padding: 6px 12px 6px 0;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+.aura-algn__lbl i {
+  display: block;
+  color: var(--text-2);
+  font-style: normal;
+}
+
+.aura-algn__lbl small {
+  display: block;
+  margin-top: 2px;
+  font-size: 9.5px;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+}
+
+.aura-algn__cell {
+  height: 54px;
+  border-top: 1px solid var(--hair-1);
+  text-align: center;
+  vertical-align: middle;
+}
+
+.aura-algn__cell.is-f {
+  border-left: 1px solid var(--hair-3);
+  border-right: 1px solid var(--hair-3);
+  background: rgba(238, 241, 247, 0.05);
+}
+
+.aura-algn tbody tr:last-child .aura-algn__cell.is-f {
+  border-bottom: 1px solid var(--hair-3);
+}
+
+.aura-algn__dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--ink-1);
+}
+
+.aura-algn__chip {
+  display: inline-grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border: 1px solid var(--hair-3);
+  border-radius: 50%;
+  background: var(--void-2);
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+}
+
+.aura-algn__disc {
+  display: inline-block;
+  border-radius: 50%;
+  vertical-align: middle;
+}
+
+.aura-algn__sky {
+  display: inline-grid;
+  place-items: center;
+  min-width: 18px;
+  color: var(--text);
+  font-family: var(--font-serif);
+  font-size: 16px;
+}
+
+.aura-algn__sky + .aura-algn__sky {
+  margin-left: 2px;
+}
+
+.aura-algn__empty {
+  padding: 14px 10px;
+  border: 1px dashed var(--hair-2);
+  border-radius: var(--r-sm);
+  color: var(--muted);
+  font-size: var(--text-sm);
+}
+
+.aura-algn__focal {
+  margin: 12px 0 0;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.05em;
+}
+
+.aura-algn__focal b {
+  color: var(--text-2);
+  font-weight: 500;
+}
+
+.aura-algn__wheel {
+  width: min(100%, 460px);
+  margin: 18px auto 0;
+  border: 1px solid var(--hair-2);
+  border-radius: var(--r-md);
+}
+
+.aura-algn__wheel summary {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  min-height: 44px;
+  padding: 12px 14px;
+  cursor: pointer;
+  list-style: none;
+  color: var(--text-2);
+  font-size: var(--text-sm);
+}
+
+.aura-algn__wheel summary::-webkit-details-marker {
+  display: none;
+}
+
+.aura-algn__wheel summary::after {
+  content: "+";
+  margin-left: auto;
+  color: var(--muted);
+  font-family: var(--font-mono);
+}
+
+.aura-algn__wheel[open] summary::after {
+  content: "−";
+}
+
+.aura-algn__wheel summary:focus-visible {
+  outline: 2px solid var(--ink-0);
+  outline-offset: -4px;
+}
+
+.aura-algn__wheel .wheel {
+  display: block;
+  padding: 6px 14px 16px;
+  overflow: visible;
+}
+
+.aura-result__fact,
+.aura-result__reading {
+  width: min(100%, 820px);
+  margin: clamp(54px, 8vw, 88px) auto 0;
+}
+
+.aura-result__fact {
+  padding-block: clamp(26px, 4vw, 38px);
+  border-block: 1px solid var(--hair-2);
+}
+
+.aura-result__fact h3 {
+  max-width: 34ch;
+  margin: 10px 0 0;
+  font-family: var(--font-serif);
+  font-size: clamp(1.55rem, 3.5vw, 2.4rem);
+  font-weight: 500;
+  line-height: 1.28;
+  text-wrap: balance;
+}
+
+.aura-result__fact > p:last-child {
+  max-width: 66ch;
+  margin: 18px 0 0;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.aura-result__empty-recovery {
+  display: grid;
+  gap: 10px;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--hair-2);
+}
+
+.aura-result__empty-recovery h4,
+.aura-result__empty-recovery p {
+  margin: 0;
+}
+.aura-result__empty-recovery h4 {
+  color: var(--text-2);
+  font-weight: 500;
+}
+.aura-result__empty-recovery p {
+  max-width: 70ch;
+  color: var(--muted);
+  line-height: 1.6;
+}
+.aura-result__empty-recovery > div {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+
+.aura-result__reading-head {
+  display: flex;
+  gap: clamp(16px, 3vw, 26px);
+  align-items: center;
+  margin-top: 14px;
+}
+
+.aura-result__disc {
+  flex: 0 0 auto;
+  border-radius: 50%;
+  outline: 1px solid var(--hair-3);
+  outline-offset: 8px;
+}
+
+.aura-result__reading > header h3 {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: clamp(2.5rem, 7vw, 5rem);
+  font-weight: 500;
+  line-height: 1;
+}
+
+.aura-result__reflection {
+  max-width: 38ch;
+  margin: 24px 0 0;
+  color: var(--text);
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: clamp(1.55rem, 3vw, 2.25rem);
+  line-height: 1.3;
+  text-wrap: balance;
+}
+
+/* The evidence strands under the lead: still the reading, one step quieter. */
+.aura-result__reading-detail {
+  max-width: 54ch;
+  margin: 16px 0 0;
+  color: var(--text-2);
+  font-family: var(--font-serif);
+  font-size: var(--text-lg);
+  line-height: 1.55;
+}
+
+.aura-result__timing {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: clamp(30px, 5vw, 52px);
+}
+
+.aura-result__timing section {
+  padding: 20px;
+  border-top: 1px solid var(--hair-3);
+}
+
+.aura-result__timing h4 {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: var(--text-lg);
+  font-weight: 500;
+}
+.aura-result__timing p {
+  margin: 8px 0 0;
+  color: var(--muted);
+}
+
+.aura-result__actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 32px;
+}
+
+.aura-result__actions .btn:disabled {
+  cursor: wait;
+  opacity: 0.58;
+}
+
+.aura-result__actions-note {
+  width: 100%;
+  margin: 0;
+  color: var(--faint);
+  font-size: var(--text-xs);
+  text-align: center;
+}
+.aura-result__share-status {
+  min-height: 1.5em;
+  margin: 12px 0 0;
+  color: var(--muted);
+  font-size: var(--text-sm);
+}
+
+.aura-evidence {
+  width: min(100%, 820px);
+  margin: clamp(64px, 10vw, 112px) auto 0;
+}
+.aura-evidence > header {
+  margin-bottom: 24px;
+}
+.aura-evidence > header h3 {
+  margin-top: 4px;
+  font-size: var(--text-2xl);
+}
+.aura-evidence > header p:last-child {
+  max-width: 52ch;
+  margin: 10px 0 0;
+  color: var(--muted);
+}
+
+.aura-plate {
+  border-top: 1px solid var(--hair-2);
+  border-bottom: 1px solid transparent;
+}
+
+.aura-plate:last-child {
+  border-bottom-color: var(--hair-2);
+}
+.aura-plate[open] {
+  background: rgba(15, 18, 26, 0.55);
+  border-color: var(--hair-3);
+}
+
+.aura-plate summary {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 14px;
+  align-items: center;
+  min-height: 78px;
+  padding: 14px 16px;
+  cursor: pointer;
+  list-style: none;
+}
+
+.aura-plate summary::-webkit-details-marker {
+  display: none;
+}
+.aura-plate summary::after {
+  content: "+";
+  color: var(--muted);
+  font-family: var(--font-mono);
+}
+.aura-plate[open] summary::after {
+  content: "−";
+}
+.aura-plate summary img {
+  border-radius: 50%;
+}
+
+.aura-plate__title {
+  display: grid;
+}
+.aura-plate__title strong {
+  font-family: var(--font-serif);
+  font-size: var(--text-lg);
+  font-weight: 500;
+}
+.aura-plate__title small {
+  color: var(--muted);
+  font-size: var(--text-xs);
+}
+.aura-plate__signals {
+  justify-content: flex-end;
+  margin: 0;
+}
+.aura-plate__signals span {
+  border-color: color-mix(
+    in srgb,
+    var(--aura-sign, var(--ink-1)) 40%,
+    transparent
+  );
+}
+
+.aura-plate__body {
+  display: grid;
+  gap: 0;
+  padding: 0 20px 24px 74px;
+}
+
+.aura-register {
+  display: grid;
+  grid-template-columns: 90px minmax(0, 1fr);
+  gap: 16px;
+  padding: 15px 0;
+  border-top: 1px solid var(--hair-1);
+}
+
+.aura-register h4 {
+  margin: 0;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 450;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.aura-register p,
+.aura-register ul {
+  margin: 0;
+  color: var(--text-2);
+}
+.aura-register ul {
+  display: grid;
+  gap: 6px;
+  padding-left: 18px;
+}
+.aura-register--reading p {
+  color: var(--text);
+  font-family: var(--font-serif);
+  font-size: var(--text-lg);
+  line-height: 1.45;
+}
+.aura-register--uncertainty p,
+.aura-register--uncertainty li {
+  color: var(--muted);
+  font-size: var(--text-sm);
+}
+
+.aura-plate__record-link {
+  justify-self: start;
+  margin-top: 14px;
+  color: var(--text-2);
+  text-underline-offset: 4px;
+}
+
+.aura-result__share {
+  display: grid;
+  gap: 20px;
+  justify-items: start;
+  width: min(100%, 820px);
+  margin: clamp(54px, 8vw, 88px) auto 0;
+  padding: clamp(22px, 4vw, 34px);
+  border: 1px solid var(--hair-2);
+  border-radius: var(--r-lg);
+  background: rgba(15, 18, 26, 0.58);
+}
+
+.aura-result__share h3,
+.aura-result__method h3 {
+  margin: 4px 0 0;
+  font-family: var(--font-serif);
+  font-size: var(--text-xl);
+  font-weight: 500;
+}
+
+.aura-result__share > div > p:not(.aura-result__kicker),
+.aura-result__method p {
+  max-width: 66ch;
+  margin: 10px 0 0;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.aura-result__share-warning {
+  padding-left: 14px;
+  border-left: 2px solid var(--hair-3);
+}
+
+.aura-share-chart-fact {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  max-width: 68ch;
+  padding: 16px;
+  border: 1px solid var(--hair-2);
+  border-radius: var(--r-sm);
+  color: var(--text-2);
+  cursor: pointer;
+}
+
+.aura-share-chart-fact input {
+  width: 18px;
+  height: 18px;
+  margin: 2px 0 0;
+  flex: 0 0 auto;
+  accent-color: var(--ink-0);
+}
+
+.aura-share-chart-fact span {
+  display: grid;
+  gap: 5px;
+}
+.aura-share-chart-fact strong {
+  font-size: var(--text-sm);
+  font-weight: 500;
+}
+.aura-share-chart-fact small {
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.aura-share-preview {
+  display: grid;
+  gap: 18px;
+  width: 100%;
+  padding-top: 22px;
+  border-top: 1px solid var(--hair-2);
+}
+
+.aura-share-preview header {
+  max-width: 62ch;
+}
+.aura-share-preview h4 {
+  margin: 4px 0 0;
+  font-family: var(--font-serif);
+  font-size: var(--text-xl);
+  font-weight: 500;
+}
+.aura-share-preview header > p:last-child {
+  margin: 8px 0 0;
+  color: var(--muted);
+  line-height: 1.55;
+}
+.aura-share-preview figure {
+  width: min(100%, 360px);
+  margin: 0;
+}
+.aura-share-preview img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--hair-3);
+  border-radius: var(--r-md);
+  background: var(--void-2);
+}
+.aura-share-preview__actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.aura-share-preview__actions [aria-disabled="true"] {
+  cursor: wait;
+  opacity: 0.58;
+}
+.aura-share-preview__fallback {
+  margin: -6px 0 0;
+  color: var(--muted);
+  font-size: var(--text-sm);
+}
+
+.aura-result__limits,
+.aura-result__response,
+.aura-result__method {
+  width: min(100%, 820px);
+  margin: 32px auto 0;
+  padding: 22px;
+  border: 1px solid var(--hair-2);
+  border-radius: var(--r-md);
+}
+
+.aura-result__limits h3 {
+  font-size: var(--text-lg);
+}
+.aura-result__limits ul {
+  margin: 10px 0 0;
+  padding-left: 20px;
+  color: var(--muted);
+}
+
+.aura-result__method {
+  border-style: dashed;
+}
+
+.aura-result__response {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  align-items: center;
+}
+
+.aura-result__response p {
+  margin: 0;
+  color: var(--text-2);
+}
+.aura-result__response > div {
+  display: flex;
+  gap: 8px;
+}
+
+/* One finished-state choreography, run once per composition: the three
+   sources arrive separately, the Alignment settles, the focal caption lands,
+   then the sentence and reading. Transform/opacity only; nothing loops. */
+.aura-result__sources .aura-source--chart {
+  animation: aura-rise 200ms var(--ease-soft) both;
+}
+.aura-result__sources .aura-source--record {
+  animation: aura-rise 200ms var(--ease-soft) 120ms both;
+}
+.aura-result__sources .aura-source--sky {
+  animation: aura-rise 200ms var(--ease-soft) 240ms both;
+}
+.aura-result .aura-result__composition {
+  animation: aura-rise 240ms var(--ease-soft) 380ms both;
+}
+.aura-result .aura-algn__focal {
+  animation: aura-mark 200ms var(--ease-soft) 640ms both;
+}
+.aura-result .aura-result__fact {
+  animation: aura-rise 240ms var(--ease-soft) 760ms both;
+}
+.aura-result .aura-result__reading {
+  animation: aura-rise 260ms var(--ease-soft) 900ms both;
+}
+
+@keyframes aura-finished-state {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes aura-rise {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes aura-mark {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .aura-wallet-basics__guide summary:hover {
+    background: rgba(198, 204, 218, 0.035);
+  }
+  .aura-plate summary:hover {
+    background: rgba(198, 204, 218, 0.035);
+  }
+  .aura-connected button:hover,
+  .aura-plate__record-link:hover {
+    color: var(--text);
+  }
+  /* Read one source at a time: hovering a row dims the other two. */
+  .aura-algn tbody:has(.aura-algn__row:hover) .aura-algn__row:not(:hover) {
+    opacity: 0.45;
+    transition: opacity 120ms var(--ease-soft);
+  }
+}
+
+@media (max-width: 760px) {
+  .aura-page {
+    width: min(100% - 24px, 1120px);
+  }
+  .aura-page__hero,
+  .aura-wallet-basics__header,
+  .aura-compose,
+  .aura-source-docket,
+  .aura-result__timing {
+    grid-template-columns: 1fr;
+  }
+  /* The Alignment's mobile shape: labels become full-width band headers
+     above their row, twelve columns always fit, no horizontal scroll.
+     Explicit table roles in the markup preserve semantics through the
+     display switch. */
+  .aura-algn thead tr,
+  .aura-algn tbody tr {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    align-items: center;
+  }
+  .aura-algn__corner {
+    display: none;
+  }
+  .aura-algn__lbl {
+    grid-column: 1 / -1;
+    display: flex;
+    gap: 8px;
+    align-items: baseline;
+    flex-wrap: wrap;
+    padding: 14px 2px 4px;
+    border-top: 1px solid var(--hair-1);
+  }
+  .aura-algn__lbl i,
+  .aura-algn__lbl small {
+    display: inline;
+    margin: 0;
+  }
+  .aura-algn__cell {
+    display: grid;
+    place-items: center;
+    height: 44px;
+    border-top: 0;
+  }
+  .aura-algn__empty {
+    grid-column: 1 / -1;
+  }
+  .aura-algn__col {
+    padding: 6px 0;
+    font-size: 13px;
+  }
+  .aura-algn__disc {
+    width: 24px;
+    height: 24px;
+  }
+  .aura-source + .aura-source {
+    border-left: 0;
+    border-top: 1px solid var(--hair-2);
+  }
+  .aura-source__stamp {
+    min-height: 0;
+  }
+  .aura-page__hero {
+    align-items: start;
+  }
+  .aura-wallet-basics__choices,
+  .aura-wallet-basics__safety {
+    grid-template-columns: 1fr;
+  }
+  .aura-wallet-basics__choices > div + div {
+    border-left: 0;
+    border-top: 1px solid var(--hair-2);
+  }
+  .aura-entry__intro {
+    display: grid;
+    align-items: start;
+  }
+  .aura-example-button {
+    justify-self: start;
+  }
+  .aura-result__timing section {
+    padding-inline: 0;
+  }
+}
+
+@media (max-width: 520px) {
+  .aura-wallet-basics__guide summary {
+    grid-template-columns: 28px minmax(0, 1fr) auto;
+    gap: 8px;
+  }
+  .aura-wallet-basics__safety {
+    margin-inline: 16px;
+  }
+  .aura-address-methods {
+    grid-template-columns: 1fr;
+  }
+  .aura-source {
+    padding-inline: 16px;
+  }
+  .aura-result__actions {
+    display: grid;
+    justify-content: stretch;
+  }
+  .aura-result__actions .btn {
+    width: 100%;
+  }
+  .aura-plate summary {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    padding-inline: 8px;
+  }
+  .aura-plate__signals {
+    grid-column: 2 / -1;
+    justify-content: flex-start;
+  }
+  .aura-plate__body {
+    padding: 0 12px 20px;
+  }
+  .aura-register {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+  .aura-result__response {
+    display: grid;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aura-result {
+    animation: aura-reduced-fade 180ms ease-out 1 both;
+  }
+  /* The choreography collapses into the single fade above; every element and
+     the same content remain — reduced motion is never a lesser reading. */
+  .aura-result__sources .aura-source--chart,
+  .aura-result__sources .aura-source--record,
+  .aura-result__sources .aura-source--sky,
+  .aura-result .aura-result__composition,
+  .aura-result .aura-algn__focal,
+  .aura-result .aura-result__fact,
+  .aura-result .aura-result__reading {
+    animation: none;
+  }
+  .aura-algn tbody:has(.aura-algn__row:hover) .aura-algn__row:not(:hover) {
+    transition: none;
+  }
+}
+
+@keyframes aura-reduced-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (forced-colors: active) {
+  .aura-step,
+  .aura-entry__boundary,
+  .aura-wallet-basics,
+  .aura-wallet-basics__safety,
+  .aura-wallet-basics__definitions > div,
+  .aura-wallet-basics__install-links,
+  .aura-plate,
+  .aura-result__limits,
+  .aura-result__response,
+  .aura-result__method,
+  .aura-result__share,
+  .aura-share-preview img,
+  .aura-source-docket,
+  .aura-source,
+  .aura-share-chart-fact {
+    border: 1px solid CanvasText;
+  }
+  .aura-plate__signals span {
+    border-color: CanvasText;
+  }
+  .aura-wallet-basics__choices,
+  .aura-wallet-basics__choices > div + div,
+  .aura-wallet-basics__guide,
+  .aura-wallet-basics__guide details + details {
+    border-color: CanvasText;
+  }
+  .aura-algn__dot {
+    background: CanvasText;
+  }
+  .aura-algn__chip {
+    border-color: CanvasText;
+  }
+  .aura-algn__disc {
+    outline: 1px solid CanvasText;
+  }
+  .aura-algn__col.is-f,
+  .aura-algn__cell.is-f {
+    border-color: CanvasText;
+  }
+  .aura-algn__empty,
+  .aura-algn__wheel,
+  .aura-fineprint,
+  .aura-sky-stamp,
+  .aura-page__demo {
+    border-color: CanvasText;
+  }
+}

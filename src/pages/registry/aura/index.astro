@@ -1,0 +1,253 @@
+---
+import Base from '../../../layouts/Base.astro';
+import { RegistryAura } from '../../../islands/RegistryAura';
+import { AlignmentGrid } from '../../../islands/aura/AlignmentGrid';
+import { registryAuraEnabled } from '../../../lib/registry-aura-entry.mjs';
+import { configuredAuraChains, type WalletEnvironment } from '../../../lib/wallet/config';
+import { composeAura } from '../../../lib/aura/compose';
+import { AURA_EXAMPLE_CHART, AURA_EXAMPLE_HELD_SIGNS } from '../../../lib/aura/example';
+import { auraDateStamp, auraFocalReason } from '../../../lib/aura/copy';
+import { signBySlug } from '../../../lib/signs';
+import '../../../styles/registry-aura.css';
+
+const environment: WalletEnvironment = {
+  ...process.env,
+  PUBLIC_REGISTRY_AURA_ENABLED:
+    import.meta.env.PUBLIC_REGISTRY_AURA_ENABLED ?? process.env.PUBLIC_REGISTRY_AURA_ENABLED,
+};
+
+if (!registryAuraEnabled(environment)) {
+  return Astro.redirect('/404.html');
+}
+
+const availableChains = configuredAuraChains(environment);
+if (availableChains.length === 0) {
+  throw new Error('Registry Aura is enabled but no Solana or Base RPC provider is configured.');
+}
+
+// The first-screen example is composed at build time from the same engine the
+// island uses: real markup with no JavaScript required, honestly stamped with
+// its build-time sky date. Composition runs server-side only.
+const exampleBuiltAt = new Date();
+const exampleComposition = composeAura({
+  heldSigns: AURA_EXAMPLE_HELD_SIGNS,
+  chart: AURA_EXAMPLE_CHART,
+  visitedAt: exampleBuiltAt,
+  illustrative: true,
+});
+const exampleFocalContext = exampleComposition.focal
+  ? (exampleComposition.signs.find(
+      (context) => context.sign === exampleComposition.focal?.sign,
+    ) ?? null)
+  : null;
+const exampleFocalSign = exampleFocalContext ? signBySlug(exampleFocalContext.sign) : null;
+const title = 'Registry Aura — Chart, Record, and Sky | Zodiacs.org';
+const description = 'Read a locally saved birth chart, the official Zodiacs found at one public wallet address, and the dated sky side by side. Read-only and composed in your browser.';
+const jsonLd = [
+  {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Zodiacs.org', item: 'https://zodiacs.org/' },
+      { '@type': 'ListItem', position: 2, name: 'The Registry', item: 'https://zodiacs.org/registry/' },
+      { '@type': 'ListItem', position: 3, name: 'Registry Aura', item: 'https://zodiacs.org/registry/aura/' },
+    ],
+  },
+  {
+    '@type': 'WebApplication',
+    name: 'Registry Aura',
+    url: 'https://zodiacs.org/registry/aura/',
+    description,
+    applicationCategory: 'LifestyleApplication',
+    operatingSystem: 'Any',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+  },
+];
+---
+<Base
+  title={title}
+  description={description}
+  path="/registry/aura/"
+  image="/assets/og/v2/share.png"
+  jsonLd={jsonLd}
+  glass
+  clientUi
+>
+  <section class="section container aura-page">
+    <header class="aura-page__hero">
+      <div class="aura-page__hero-lede">
+        <em class="kicker">A reading from the Registry</em>
+        <h1 class="display">Registry Aura</h1>
+        <p class="aura-page__hero-copy">
+          Your saved <strong>birth chart</strong>, the official Zodiacs
+          at one <strong>public wallet address</strong>, and <strong>today’s sky</strong> —
+          read side by side, never blended.
+        </p>
+      </div>
+      <section class="aura-page__demo" aria-labelledby="aura-demo-title">
+        <p class="aura-page__demo-cap" id="aura-demo-title">
+          <strong>An example reading.</strong> Illustrative — no public address
+          was checked, and no chart was read from this browser.
+        </p>
+        <AlignmentGrid
+          composition={exampleComposition}
+          chart={AURA_EXAMPLE_CHART}
+          checkedAt={exampleBuiltAt.toISOString()}
+          illustrative
+          wheel={false}
+        />
+        {exampleFocalSign && exampleFocalContext && (
+          <div class="aura-page__demo-read">
+            <img
+              src={`/assets/zodiac-icons/128/${exampleFocalSign.slug}.webp`}
+              width="64"
+              height="64"
+              alt=""
+            />
+            <div>
+              <h2>{exampleFocalSign.name}</h2>
+              <p>{exampleFocalContext.reading.lead}</p>
+              <p class="aura-page__demo-detail">{exampleFocalContext.reading.detail}</p>
+              <small>
+                Why: {auraFocalReason(exampleFocalContext, exampleComposition.currentSky.observedAt, true)}
+              </small>
+            </div>
+          </div>
+        )}
+        <p class="aura-page__demo-stamp">
+          Example sky computed {auraDateStamp(exampleBuiltAt.toISOString())} (site build).
+        </p>
+        <div class="aura-page__cta">
+          <a id="aura-primer-example" class="btn btn--ghost" href="#aura-composer">
+            Open the full example
+          </a>
+          <a class="btn btn--primary" href="#aura-composer">Start with your chart</a>
+        </div>
+      </section>
+    </header>
+
+    <section id="wallet-basics" class="aura-wallet-basics" aria-labelledby="wallet-basics-title">
+      <header class="aura-wallet-basics__header">
+        <div>
+          <em class="kicker">New to crypto?</em>
+          <h2 id="wallet-basics-title">Wallets, without the jargon</h2>
+        </div>
+        <p>
+          A wallet is an app or device that manages a blockchain account. Registry Aura only needs one public address—the shareable identifier used to look up its public record.
+        </p>
+      </header>
+
+      <dl class="aura-wallet-basics__choices">
+        <div>
+          <dt>Connect</dt>
+          <dd>Wallet software may expose the public accounts you authorize; Aura uses one compatible address.</dd>
+        </div>
+        <div>
+          <dt>Paste</dt>
+          <dd>Look up any public address without connecting a wallet.</dd>
+        </div>
+        <div>
+          <dt>Example</dt>
+          <dd>The first-screen example opens an illustrative Aura. No wallet, balance, purchase, or birth chart is needed.</dd>
+        </div>
+      </dl>
+
+      <aside class="aura-wallet-basics__safety" aria-label="Important wallet safety">
+        <strong>Aura never needs your wallet secrets.</strong>
+        <p>
+          Never type a recovery phrase, private key, wallet password, or PIN into Registry Aura. Aura never asks you to sign a message, approve or send a transaction, swap an asset, or switch networks. If a wallet prompt asks for any of those while using Aura, cancel it.
+        </p>
+      </aside>
+
+      <div class="aura-wallet-basics__guide" aria-label="Two-minute wallet guide">
+        <details>
+          <summary>
+            <span aria-hidden="true">01</span>
+            <span><strong>What is a wallet?</strong><small>Public addresses and secret keys are very different.</small></span>
+          </summary>
+          <div class="aura-wallet-basics__answer">
+            <p>A wallet does not hold coins like a physical wallet holds cash. Assets and activity remain recorded on a blockchain; the wallet manages the keys that let someone control an account.</p>
+            <dl class="aura-wallet-basics__definitions">
+              <div>
+                <dt>Public address</dt>
+                <dd>A shareable identifier used to receive assets and view public blockchain activity. It is not a password, but it is not private: its holdings and history may be visible and could become connected with an identity.</dd>
+              </div>
+              <div>
+                <dt>Recovery phrase or private key</dt>
+                <dd>The secret that can control a wallet. Anyone who obtains it may be able to take its assets. Never give it to a website, message, support account, or person.</dd>
+              </div>
+            </dl>
+            <p>A public address does not prove who a person is, and connecting one is not proof of identity or ownership.</p>
+          </div>
+        </details>
+
+        <details>
+          <summary>
+            <span aria-hidden="true">02</span>
+            <span><strong>What happens when I connect or paste?</strong><small>Both paths perform the same read-only lookup.</small></span>
+          </summary>
+          <div class="aura-wallet-basics__answer">
+            <p><strong>Connect</strong> opens an installed wallet after you click. Wallet software may expose the public accounts you authorize; Aura selects and uses one compatible address. <strong>Paste</strong> lets you inspect one public address without connecting. The resulting Registry lookup is the same.</p>
+            <p>Solana and Base are separate public networks, and Aura checks one address on one network at a time. Use the public address on the network where the Zodiac appears; an address from the other network will not find it.</p>
+            <p>The wallet record never changes the birth chart. Aura does not include chart or birth data in its address lookup; only the selected public address is sent to the configured blockchain data provider, which may also process routine request metadata.</p>
+            <p>Here, an <strong>official Zodiac</strong> means a token whose mint or contract matches a Zodiac listed by this Registry. It does not mean government approval, verified identity or control, financial safety, liquidity, or value.</p>
+            <p>A newly installed empty wallet will not create a Zodiac or make one appear. If you do not already use a wallet, begin with the example—there is no reason to buy or move anything just to understand Aura.</p>
+          </div>
+        </details>
+
+        <details>
+          <summary>
+            <span aria-hidden="true">03</span>
+            <span><strong>How do I install a wallet safely?</strong><small>Start from the provider’s real website, never an unexpected link.</small></span>
+          </summary>
+          <div class="aura-wallet-basics__answer">
+            <ol>
+              <li>Choose the public record you intend to use: Solana or Base. Zodiacs.org does not make or operate wallets.</li>
+              <li>Begin at the provider’s official website and follow its link to the browser extension store or official app store. Check the exact domain, spelling, and listed publisher. Avoid sponsored search ads, direct-message links, and pages asking you to “verify” or “restore” a wallet.</li>
+              <li>Install the wallet and follow its own instructions to create an account. If it gives you a recovery phrase, record it exactly using the provider’s backup guidance and keep it private and offline.</li>
+              <li>Return to Registry Aura and choose Connect, or copy the public address from the wallet and paste it. If a mobile browser cannot detect the wallet, open zodiacs.org in the wallet’s built-in browser when available, or paste the address instead.</li>
+            </ol>
+            <div class="aura-wallet-basics__install-links">
+              <p><strong>Solana example</strong> Phantom is one compatible third-party option. <a href="https://phantom.com/download" target="_blank" rel="noopener noreferrer external">Open Phantom’s official download page ↗</a></p>
+              <p><strong>Base choices</strong> Ethereum.org maintains a neutral comparison tool. Use its “New to crypto,” “Browser,” and “Base” filters. <a href="https://ethereum.org/wallets/find-wallet" target="_blank" rel="noopener noreferrer external">Compare wallets on ethereum.org ↗</a></p>
+            </div>
+            <p class="aura-wallet-basics__fine-print">Wallet apps and installation sites are independent third parties with their own terms, privacy practices, fees, and security risks. These links are provided for orientation, not endorsement. Zodiacs.org cannot protect or recover wallet assets or secrets. Compatibility can vary by browser, device, and provider.</p>
+          </div>
+        </details>
+
+        <details>
+          <summary>
+            <span aria-hidden="true">04</span>
+            <span><strong>How do I stay safe?</strong><small>Slow down, protect the backup, and read every prompt.</small></span>
+          </summary>
+          <div class="aura-wallet-basics__answer">
+            <ul>
+              <li>Keep recovery phrases and private keys private and preferably offline. Avoid screenshots, cloud notes, email, and chat.</li>
+              <li>Use a strong device passcode and keep the browser, operating system, and wallet updated.</li>
+              <li>A connection request is different from a signing request. Signing, token approval, or a transaction can authorize an action even when a page says it is “free.”</li>
+              <li>Be suspicious of urgency, giveaways, surprise airdrops, impersonated support, screen-sharing requests, and anyone offering to “sync,” “validate,” or recover a wallet.</li>
+              <li>For meaningful assets, consider a hardware wallet. It reduces some online exposure but does not replace careful backups and prompt review.</li>
+            </ul>
+            <p>If both a wallet and its valid backup are lost, access may be impossible to recover. Registry Aura and wallet support cannot recover a secret phrase for you.</p>
+            <p><a href="https://ethereum.org/security/" target="_blank" rel="noopener noreferrer external">Read Ethereum.org’s security and scam-prevention guide ↗</a></p>
+          </div>
+        </details>
+
+        <details>
+          <summary>
+            <span aria-hidden="true">05</span>
+            <span><strong>How do I disconnect or clear Aura?</strong><small>End the connection and remove browser-saved information.</small></span>
+          </summary>
+          <div class="aura-wallet-basics__answer">
+            <p>Use <strong>Disconnect</strong> in Aura to clear the composed result and ask the wallet to disconnect where the provider supports it. You can also remove the site from the wallet’s Connected sites or permissions settings.</p>
+            <p>Use <strong>Forget address / Clear Aura data</strong> to remove Aura information saved in this browser. This does not erase public blockchain history or cancel token approvals granted to other services; review and revoke those separately in the relevant wallet or approval tool.</p>
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <RegistryAura client:load availableChains={availableChains} />
+    <noscript>
+      <p class="aura-status" data-error="true">Registry Aura needs JavaScript to read local chart data and compose the result on this device.</p>
+    </noscript>
+  </section>
+</Base>

@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Registry Aura V3 proof — 375px composed result (four held signs)</title>
+<style>
+  :root{
+    --void-0:#060709; --void-1:#0A0C11; --void-2:#0F121A;
+    --hair-1:rgba(198,204,218,.08); --hair-2:rgba(198,204,218,.16); --hair-3:rgba(198,204,218,.28);
+    --ink:#EEF1F7; --ink-2:#C6CCDA; --muted:#A2A9BA;
+    --serif:'EB Garamond','Iowan Old Style',Georgia,serif;
+    --sans:'Instrument Sans',system-ui,-apple-system,sans-serif;
+    --mono:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace;
+    --cancer:#B6D4E4; --leo:#E0A9B4; --scorpio:#B9DCE8; --aquarius:#AE8FC9;
+  }
+  *{box-sizing:border-box;margin:0}
+  body{font-variant-emoji:text;background:#040507;color:var(--ink-2);font:15px/1.55 var(--sans);padding:48px 20px 96px}
+  .proofhead{max-width:1080px;margin:0 auto 36px}
+  .proofhead .tag{font:600 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+  .proofhead h1{font:500 30px/1.2 var(--serif);color:var(--ink);margin:10px 0 6px}
+  .proofhead p{max-width:64ch;color:var(--muted)}
+  .stage{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:375px 1fr;gap:44px;align-items:start}
+  @media (max-width:860px){.stage{grid-template-columns:1fr}}
+  .frame{width:375px;background:var(--void-0);border:1px solid var(--hair-3);border-radius:28px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.55)}
+  .rail{display:grid;gap:14px;position:sticky;top:24px}
+  .note{border:1px solid var(--hair-2);border-left:2px solid var(--hair-3);border-radius:10px;background:var(--void-1);padding:12px 14px;font-size:13.5px}
+  .note b{display:inline-grid;place-items:center;width:20px;height:20px;margin-right:8px;border-radius:50%;background:var(--ink);color:var(--void-0);font:600 11px/1 var(--mono)}
+  .note em{color:var(--muted);font-style:normal;display:block;margin-top:4px;font-size:12.5px}
+  .pin{position:absolute;z-index:3;display:grid;place-items:center;width:20px;height:20px;border-radius:50%;background:var(--ink);color:var(--void-0);font:600 11px/1 var(--mono);box-shadow:0 2px 10px rgba(0,0,0,.5)}
+
+  .screen{position:relative;padding:28px 16px 44px}
+  .kicker{font:italic 500 15px/1.3 var(--serif);color:var(--muted)}
+  .rule{border:0;border-top:1px solid var(--hair-2);margin:30px 0}
+  h2.title{font:500 30px/1.12 var(--serif);color:var(--ink);margin:6px 0 16px}
+  /* docket stamps */
+  .stamps{display:grid;border-block:1px solid var(--hair-2)}
+  .stamp{display:grid;grid-template-columns:1fr auto;gap:2px 12px;padding:12px 2px;border-top:1px solid var(--hair-1)}
+  .stamp:first-child{border-top:0}
+  .stamp h3{font:500 16.5px/1.2 var(--serif);color:var(--ink);font-weight:500}
+  .stamp .meta{grid-column:1;font-size:13px;color:var(--ink-2)}
+  .stamp .tag{grid-row:1 / span 2;align-self:start;font:400 10px/1.6 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:right}
+  .stamp small{grid-column:1;font-size:12px;color:var(--muted)}
+  .join{font-size:13.5px;color:var(--muted);margin-top:12px}
+  /* alignment */
+  .algn table{border-collapse:collapse;width:100%;table-layout:fixed}
+  .algn caption{caption-side:bottom;text-align:left;font-size:11.5px;color:var(--muted);padding:10px 2px 0}
+  .algn thead th{font:400 13px/1 var(--serif);color:var(--muted);padding:8px 0 6px;text-align:center;font-weight:400}
+  .algn thead th.f{color:var(--ink);border:1px solid var(--hair-3);border-bottom:0}
+  .algn tr.lbl th{padding:14px 2px 6px;text-align:left;font:500 10.5px/1.3 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);border-top:1px solid var(--hair-1)}
+  .algn tr.lbl th i{font-style:normal;color:var(--ink-2)}
+  .algn td{height:42px;text-align:center;vertical-align:middle;padding:0}
+  .algn td.f{background:rgba(238,241,247,.05);border-left:1px solid var(--hair-3);border-right:1px solid var(--hair-3)}
+  .algn tbody:last-of-type td.f{border-bottom:1px solid var(--hair-3)}
+  .m-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--ink-2)}
+  .m-chip{display:inline-grid;place-items:center;width:19px;height:19px;border-radius:50%;border:1px solid var(--hair-3);color:var(--ink);font:500 10px/1 var(--mono);background:var(--void-2)}
+  .m-disc{display:inline-grid;place-items:center;width:25px;height:25px;border-radius:50%;color:rgba(6,7,9,.82);font:500 13px/1 var(--serif)}
+  .m-sky{font:400 15px/1 var(--serif);color:var(--ink)}
+  .focalcap{display:flex;gap:6px;align-items:center;font:400 11px/1 var(--mono);color:var(--muted);margin-top:6px}
+  .focalcap::before{content:"▲";font-size:9px;color:var(--ink-2)}
+  .wheeldisc{margin-top:14px;border:1px solid var(--hair-2);border-radius:12px}
+  .wheeldisc summary{padding:12px 14px;font-size:13.5px;color:var(--ink);cursor:pointer;list-style:none;min-height:44px}
+  summary::-webkit-details-marker{display:none}
+  /* meet + reading */
+  .meet h3{font:500 22px/1.3 var(--serif);color:var(--ink);font-weight:500;margin-top:6px}
+  .meet p{font-size:14px;color:var(--ink-2);margin-top:10px}
+  .reading{margin-top:6px}
+  .reading .head{display:grid;grid-template-columns:96px 1fr;gap:16px;align-items:center}
+  .bigdisc{display:grid;place-items:center;width:96px;height:96px;border-radius:50%;color:rgba(6,7,9,.82);font:500 52px/1 var(--serif);position:relative}
+  .bigdisc::after{content:"";position:absolute;inset:-8px;border:1px solid var(--hair-3);border-radius:50%}
+  .reading h3{font:500 40px/1 var(--serif);color:var(--ink);font-weight:500}
+  .reflection{font:italic 400 22px/1.42 var(--serif);color:var(--ink);margin-top:18px}
+  .facts{display:grid;gap:14px;margin-top:20px}
+  .facts h4{font:500 15px/1.3 var(--serif);color:var(--ink)}
+  .facts p{font-size:13.5px;color:var(--ink-2)}
+  /* plates */
+  .plates details{border:1px solid var(--hair-2);border-radius:14px;background:var(--void-1);margin-top:10px;overflow:hidden}
+  .plates summary{display:flex;gap:12px;align-items:center;padding:12px 14px;min-height:44px;cursor:pointer}
+  .plates summary .m-disc{width:34px;height:34px;font-size:18px;flex:0 0 auto}
+  .plates summary strong{font:500 17px/1.2 var(--serif);color:var(--ink);font-weight:500}
+  .plates .sig{margin-left:auto;display:grid;gap:3px;justify-items:end}
+  .plates .sig span{font:400 9.5px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);border:1px solid var(--hair-2);border-radius:999px;padding:4px 8px}
+  .plates .body{border-top:1px solid var(--hair-1);padding:12px 14px;display:grid;gap:12px}
+  .plates .reg h5{font:500 10.5px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
+  .plates .reg p,.plates .reg li{font-size:13.5px;color:var(--ink-2)}
+  .plates .reg ul{padding-left:16px}
+  /* share + actions */
+  .share{border:1px solid var(--hair-2);border-radius:16px;background:var(--void-1);padding:16px}
+  .share h3{font:500 22px/1.2 var(--serif);color:var(--ink)}
+  .share p{font-size:13.5px;color:var(--ink-2);margin-top:8px}
+  .share .warn{color:var(--muted)}
+  .btn{display:block;width:100%;text-align:center;padding:13px 18px;border-radius:999px;font:500 15px/1 var(--sans);border:1px solid var(--hair-3);background:transparent;color:var(--ink);margin-top:12px}
+  .btn--primary{background:var(--ink);color:var(--void-0);border-color:var(--ink)}
+  .actions{display:grid;gap:10px;margin-top:26px}
+  .actions .sub{font-size:12px;color:var(--muted);text-align:center;margin-top:-4px}
+  .asides p{font-size:13px;color:var(--muted);margin-top:10px}
+  .asides h3{font:500 16px/1.3 var(--serif);color:var(--ink-2);margin-top:18px}
+  .resp{margin-top:24px;border-top:1px solid var(--hair-2);padding-top:18px}
+  .resp p{font-size:14px;color:var(--ink-2)}
+  .resp .row{display:flex;gap:10px;margin-top:10px}
+  .resp button{flex:1;padding:11px;border-radius:999px;border:1px solid var(--hair-3);background:transparent;color:var(--ink);font:500 14px/1 var(--sans)}
+</style>
+</head>
+<body>
+  <header class="proofhead">
+    <span class="tag">Registry Aura V3 · design proof · not production code</span>
+    <h1>375&thinsp;px composed result — four held signs</h1>
+    <p>The full V3 result flow in the plan’s mandated order (sources → composition → sentence → reading → evidence → share), rebalanced so evidence is calm and the reading is the typographic peak. Fixture matches the existing acceptance proofs: chart with recorded birth time, wallet checked Jul 15, sky Jul 16 2026 (Sun Cancer / Moon Leo), held Cancer·Leo·Scorpio·Aquarius, focal Leo. See audit §6–§11.</p>
+  </header>
+
+  <div class="stage">
+    <div class="frame"><div class="screen">
+
+      <p class="kicker">Chart · Record · Sky</p>
+      <h2 class="title">Three sources, read side by side</h2>
+
+      <span class="pin" style="top:104px;left:8px">1</span>
+      <div class="stamps">
+        <div class="stamp">
+          <h3>Selected birth chart</h3><span class="tag">Local</span>
+          <p class="meta">Read on this device; never sent</p>
+          <small>Recorded birth time</small>
+        </div>
+        <div class="stamp">
+          <h3>Public wallet address</h3><span class="tag">Checked Jul 15 · yesterday</span>
+          <p class="meta">4 official Zodiacs found</p>
+          <small>Solana public record · Re-check to update</small>
+        </div>
+        <div class="stamp">
+          <h3>The sky</h3><span class="tag">Jul 16, 2026 UTC</span>
+          <p class="meta">Sun in Cancer · Moon in Leo</p>
+          <small>Computed for this visit</small>
+        </div>
+      </div>
+      <p class="join">These sources are read side by side. The wallet record never changes the birth chart; it only determines which held signs receive a reading.</p>
+
+      <hr class="rule">
+
+      <span class="pin" style="top:606px;left:8px">2</span>
+      <div class="algn">
+        <table>
+          <caption>Marks never leave their row. An empty cell means nothing is drawn for that sign.</caption>
+          <thead><tr>
+            <th>♈&#xFE0E;</th><th>♉&#xFE0E;</th><th>♊&#xFE0E;</th><th>♋&#xFE0E;</th><th class="f">♌&#xFE0E;</th><th>♍&#xFE0E;</th><th>♎&#xFE0E;</th><th>♏&#xFE0E;</th><th>♐&#xFE0E;</th><th>♑&#xFE0E;</th><th>♒&#xFE0E;</th><th>♓&#xFE0E;</th>
+          </tr></thead>
+          <tbody>
+            <tr class="lbl"><th colspan="12"><i>Birth chart</i> · private, read on this device</th></tr>
+            <tr>
+              <td><span class="m-dot" title="Venus"></span></td>
+              <td><span class="m-dot" title="Sun"></span></td>
+              <td><span class="m-dot" title="Mercury"></span></td>
+              <td><span class="m-chip" title="Moon, Midheaven">2</span></td>
+              <td class="f"><span class="m-dot" title="Mars"></span></td>
+              <td></td>
+              <td><span class="m-dot" title="Ascendant"></span></td>
+              <td></td><td></td><td></td><td></td><td></td>
+            </tr>
+            <tr class="lbl"><th colspan="12"><i>At this address</i> · public record · checked Jul 15</th></tr>
+            <tr>
+              <td></td><td></td><td></td>
+              <td><span class="m-disc" style="background:var(--cancer)">♋&#xFE0E;</span></td>
+              <td class="f"><span class="m-disc" style="background:var(--leo)">♌&#xFE0E;</span></td>
+              <td></td><td></td>
+              <td><span class="m-disc" style="background:var(--scorpio)">♏&#xFE0E;</span></td>
+              <td></td><td></td>
+              <td><span class="m-disc" style="background:var(--aquarius)">♒&#xFE0E;</span></td>
+              <td></td>
+            </tr>
+            <tr class="lbl"><th colspan="12"><i>Sky</i> · Jul 16, 2026 UTC</th></tr>
+            <tr>
+              <td></td><td></td><td></td>
+              <td><span class="m-sky" title="Sun season">☉&#xFE0E;</span></td>
+              <td class="f"><span class="m-sky" title="Current Moon">☾&#xFE0E;</span></td>
+              <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="focalcap" style="margin-left:33%">this visit’s focus</p>
+        <details class="wheeldisc"><summary>Open the full natal wheel</summary></details>
+      </div>
+
+      <hr class="rule">
+
+      <span class="pin" style="top:1210px;left:8px">3</span>
+      <section class="meet">
+        <p class="kicker">Where they meet</p>
+        <h3>Leo is found at this public wallet address. It is also in the selected birth chart and in the sky of July 16, 2026 UTC.</h3>
+        <p>For this reading, that Leo becomes a talisman for this visit — a symbolic focus, not a score or an ownership claim.</p>
+      </section>
+
+      <hr class="rule">
+
+      <span class="pin" style="top:1480px;left:8px">4</span>
+      <section class="reading">
+        <p class="kicker" style="margin-bottom:16px">Symbolic reading</p>
+        <div class="head">
+          <span class="bigdisc" style="background:var(--leo)">♌&#xFE0E;</span>
+          <h3>Leo</h3>
+        </div>
+        <p class="reflection">Let one honest act be visible without making the response its measure — asked of everyone today, and familiar ground in this chart.</p>
+        <div class="facts">
+          <div>
+            <h4>Why this sign</h4>
+            <p>The Moon is in Leo in the sky of July 16, 2026 UTC.</p>
+          </div>
+          <div>
+            <span class="pin" style="left:-26px">5</span>
+            <h4>Next on the calendar</h4>
+            <p>Across the held signs, the Moon enters Scorpio next — exact Jul 21, 2026, 1:34 PM UTC, from the Registry’s published sky calendar.</p>
+          </div>
+        </div>
+      </section>
+
+      <hr class="rule">
+
+      <span class="pin" style="top:1938px;left:8px">6</span>
+      <section class="plates">
+        <p class="kicker">Chart · Record · Sky · Reading</p>
+        <h3 style="font:500 22px/1.2 var(--serif);color:var(--ink);margin:6px 0 2px">The evidence, sign by sign</h3>
+        <p style="font-size:13.5px;color:var(--muted)">Each source keeps its own label. Open a sign when you want the receipts.</p>
+
+        <details open>
+          <summary>
+            <span class="m-disc" style="background:var(--leo)">♌&#xFE0E;</span>
+            <strong>Leo</strong>
+            <span class="sig"><span>Found at this address</span><span>In the chart · In the sky</span></span>
+          </summary>
+          <div class="body">
+            <div class="reg"><h5>Record</h5><p>This address carries Leo. Checked Jul 15, 2026, 9:00 AM UTC.</p></div>
+            <div class="reg"><h5>Chart</h5><ul><li>Mars in Leo</li></ul></div>
+            <div class="reg"><h5>Sky</h5><ul><li>Current Moon in Leo · sky of July 16, 2026 UTC</li></ul></div>
+            <div class="reg"><h5>Reading</h5><p>Let one honest act be visible without making the response its measure — asked of everyone today, and familiar ground in this chart.</p></div>
+            <p style="font-size:13px"><a href="#" style="color:var(--ink-2)">View the Registry record →</a></p>
+          </div>
+        </details>
+        <details><summary><span class="m-disc" style="background:var(--cancer)">♋&#xFE0E;</span><strong>Cancer</strong><span class="sig"><span>Found at this address</span><span>In the chart · In the sky</span></span></summary></details>
+        <details><summary><span class="m-disc" style="background:var(--scorpio)">♏&#xFE0E;</span><strong>Scorpio</strong><span class="sig"><span>Found at this address</span></span></summary></details>
+        <details><summary><span class="m-disc" style="background:var(--aquarius)">♒&#xFE0E;</span><strong>Aquarius</strong><span class="sig"><span>Found at this address</span></span></summary></details>
+      </section>
+
+      <hr class="rule">
+
+      <span class="pin" style="top:2560px;left:8px">7</span>
+      <section class="share">
+        <h3>Make a social card</h3>
+        <p>The card features Leo, chosen from the public record and dated sky — never from the chart.</p>
+        <p>The card shows one held sign, dated public-record and sky facts, and a symbolic reflection. It never shows birth details or the address.</p>
+        <p class="warn">Once shared, other people and apps may save or repost the image. Clearing Aura cannot remove those copies. If you add the optional chart fact below, that disclosure becomes public too.</p>
+        <p style="margin-top:12px"><label><input type="checkbox"> <strong style="color:var(--ink)">Add “In the selected birth chart”</strong><br><small style="color:var(--muted)">This publicly reveals that this sign appears somewhere in the selected birth chart. Sharing several chart matches can reveal more of the chart.</small></label></p>
+        <button class="btn btn--primary" type="button">Create card preview</button>
+      </section>
+
+      <div class="actions">
+        <button class="btn" type="button">Re-check the address</button>
+        <button class="btn" type="button">Clear this reading</button>
+        <p class="sub">Forgets the address and result on this device</p>
+      </div>
+
+      <span class="pin" style="top:3116px;left:8px">8</span>
+      <div class="asides">
+        <h3>How to read Registry Aura</h3>
+        <p>The same selected chart, public wallet record, and dated sky produce the same words. This is a symbolic Zodiacs.org display convention — not a traditional astrological technique or proof that a person controls an address.</p>
+      </div>
+
+      <div class="resp" role="group" aria-labelledby="rq">
+        <p id="rq">Did this reflection feel meaningful?</p>
+        <div class="row">
+          <button type="button">Meaningful</button>
+          <button type="button">Not yet</button>
+        </div>
+      </div>
+
+    </div></div>
+
+    <aside class="rail" aria-label="Annotations">
+      <p class="note"><b>1</b>Docket compressed to stamp-rows: same three sources, same dates, one line of meta each. The divergent wallet/sky dates gain a relative word (“yesterday”) and a “Re-check to update” pointer — honesty that no longer reads as a bug. Join sentence kept verbatim. <em>Audit §11, §13 #13</em></p>
+      <p class="note"><b>2</b>The Alignment replaces the Carry Ring: a real <code>&lt;table&gt;</code>, three labeled rows, twelve columns. Chart marks are neutral dots/numerals, record marks are the only chroma, sky marks are line glyphs; the focal column is a hairline rectangle with a caption. The natal wheel survives one disclosure deep. <em>Audit §5–6</em></p>
+      <p class="note"><b>3</b>“Where they meet” — one engine-generated sentence (single source of truth; the UI duplicate generator is deleted) and the talisman line, requalified: “a talisman for this visit,” no “digital.” <em>Audit §13 #10, §15</em></p>
+      <p class="note"><b>4</b>The typographic peak: 96&thinsp;px disc with hairline orbit, sign at display size, the reflection in serif italic. This is the +chart+sky evidence-variant of Leo’s base line — the words now honestly reflect which sources contributed. <em>Audit §3 #3, §11</em></p>
+      <p class="note"><b>5</b>“Next on the calendar” in plain language; “committed Moon-ingress table” and “committed event window” are deleted from the interface. <em>Audit §13 #5–6</em></p>
+      <p class="note"><b>6</b>Evidence plates retained mechanically, renamed. Signal pills state Record / Chart / Sky facts; registers inside are unchanged (Record · Chart · Sky · Reading · Limits). <em>Audit §4</em></p>
+      <p class="note"><b>7</b>Share module: the “Chart fact off by default” eyebrow is gone; the checkbox and its cumulative-risk warning are kept verbatim; preview-first flow unchanged. <em>Audit §14</em></p>
+      <p class="note"><b>8</b>Method note kept word-for-word but moved up beside the actions; Meaningful / Not yet unchanged. <em>Audit §4</em></p>
+    </aside>
+  </div>
+</body>
+</html>

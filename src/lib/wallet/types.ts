@@ -21,6 +21,21 @@ export interface WalletBirthProvider {
   resolveEarliestTransaction(address: string): Promise<Omit<WalletBirth, 'heldSigns'> | null>;
 }
 
+export interface AuraHoldings {
+  chain: WalletChain;
+  heldSigns: string[];
+  /** Time the public balance check completed, always serialized as UTC. */
+  checkedAt: string;
+}
+
+export type AuraHoldingsErrorCode =
+  | 'invalid_address'
+  | 'unavailable'
+  | 'disabled'
+  | 'forbidden'
+  | 'method'
+  | 'rate_limited';
+
 export type WalletBirthErrorCode =
   | 'not_found'
   | 'unavailable'
@@ -28,4 +43,3 @@ export type WalletBirthErrorCode =
   | 'disabled'
   | 'forbidden'
   | 'method';
-

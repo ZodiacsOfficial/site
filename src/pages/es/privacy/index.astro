@@ -1,34 +1,38 @@
 ---
 import Base from '../../../layouts/Base.astro';
 
-const updated = '14 de julio de 2026';
+const updated = '16 de julio de 2026';
 
 const jsonLd = [
   {
     '@type': 'WebPage',
     name: 'Privacidad en Zodiacs.org',
     url: 'https://zodiacs.org/es/privacy/',
-    description: 'Cómo trata zodiacs.org tus datos, desde los cálculos locales hasta el asistente y las notificaciones opcionales.',
+    description: 'Cómo trata zodiacs.org las cartas natales, las consultas de direcciones públicas de Registry Aura y Shelf, el almacenamiento, la analítica y las funciones opcionales.',
     inLanguage: 'es',
   },
 ];
 ---
 <Base
-  title="Privacidad — Tus datos de nacimiento permanecen en tu dispositivo | Zodiacs.org"
-  description="Cómo trata zodiacs.org tus datos: las cartas se calculan en tu navegador, las funciones opcionales requieren tu permiso y no guardamos las conversaciones."
+  title="Privacidad — Cómo tratamos tus datos | Zodiacs.org"
+  description="Cómo trata zodiacs.org las cartas natales, las consultas de direcciones públicas de Registry Aura y Shelf, el almacenamiento, la analítica y las funciones opcionales."
   path="/es/privacy/"
   locale="es"
   jsonLd={jsonLd}
 >
   <section class="section container container--narrow">
     <em class="kicker">Privacidad</em>
-    <h1 class="method-title display">Tus datos de nacimiento permanecen en tu dispositivo.</h1>
+    <h1 class="method-title display">Tú decides cuándo salen datos de tu dispositivo.</h1>
 
     <div class="prose">
       <p class="lede">
-        Las cartas se calculan en tu navegador. Tu fecha, hora y lugar de
-        nacimiento no se envían a nuestros servidores, salvo que decidas crear
-        una cuenta y sincronizar una carta guardada.
+        El cálculo de las cartas se ejecuta en tu navegador. Los datos de
+        nacimiento no se envían como parte del cálculo ni de una consulta de
+        Registry Aura; solo salen del dispositivo si eliges sincronizar una
+        cuenta o los escribes en el asistente. Aura envía una dirección pública
+        de billetera —no tus datos de nacimiento ni de la carta— a un proveedor
+        de datos de blockchain para realizar una consulta de solo lectura.
+        Mostramos cero anuncios y no usamos seguimiento entre sitios.
       </p>
 
       <h2>Calculadoras y cartas guardadas</h2>
@@ -37,7 +41,88 @@ const jsonLd = [
         dispositivo. Las cartas que guardas permanecen en el almacenamiento
         local del navegador. Una cuenta es opcional; si la usas, Supabase
         guarda el correo y las cartas que eliges sincronizar para mostrarlas en
-        tus otros dispositivos.
+        tus otros dispositivos. Los datos de nacimiento no se transmiten ni se
+        guardan en nuestros servidores como parte del cálculo en sí.
+      </p>
+
+      <h2>Registry Aura, Shelf y direcciones públicas</h2>
+      <p>
+        Registry Aura lee en paralelo el resumen de una carta guardada en este
+        navegador, una dirección pública de billetera y el cielo fechado. La
+        carta y la lectura simbólica se componen en tu dispositivo. Al componer
+        o actualizar un Aura, nuestro endpoint de tenencias recibe la dirección
+        pública y la reenvía al proveedor de datos de blockchain configurado
+        para comprobar qué entradas del Registro están presentes. La solicitud
+        no incluye datos de nacimiento, nombre de la carta, posiciones ni
+        geometría de la carta.
+      </p>
+      <p>
+        Cuando está habilitado, el Shelf público opcional de la portada del
+        Registro usa el mismo endpoint y envía una sola dirección pública de
+        Solana después de que pulses «Ver»; no envía datos de nacimiento ni de
+        cartas. Si Aura está deshabilitado, el Shelf ilustrativo no hace ninguna
+        solicitud de dirección o proveedor. «Volver a la vista de ejemplo» quita
+        el resultado de la pantalla; recargar o cerrar la página elimina la
+        caché temporal del Shelf en memoria.
+      </p>
+      <p>
+        Puedes pegar una dirección sin conectar una billetera. Si eliges
+        «Conectar», el software de una billetera externa solo se abre después de
+        tu clic. Puede devolver a este navegador las cuentas públicas que
+        autorices; Aura elige una dirección compatible y solo reenvía esa
+        dirección para la consulta. No solicita frase de recuperación, clave
+        privada, firma de mensaje, aprobación de tokens, transacción ni cambio
+        de red. Se aplican las condiciones de privacidad del proveedor de la
+        billetera.
+      </p>
+      <p>
+        Una dirección pública es pública, pero no necesariamente anónima. Su
+        historial y sus tenencias on-chain pueden ser visibles y vincularse con
+        una persona u otra actividad. Vercel, el proveedor de datos de
+        blockchain configurado y su infraestructura pueden tratar metadatos
+        ordinarios de la solicitud y registros operativos o de seguridad, como
+        dirección IP, fecha, hora y datos del navegador. No prometemos que los
+        proveedores de infraestructura nunca registren una consulta de
+        dirección pública ni controlamos sus plazos de conservación.
+      </p>
+
+      <h2>Almacenamiento y uso compartido de Aura</h2>
+      <p>
+        De forma predeterminada, Aura guarda la dirección pública, la red, los
+        signos del Registro encontrados, la hora de consulta y el identificador
+        de la carta seleccionada en el almacenamiento de sesión de esta pestaña,
+        con una vigencia de restauración de ocho horas. La opción desmarcada
+        «Recordar esta dirección en este dispositivo» guarda los mismos campos
+        en el almacenamiento local con una vigencia de restauración de 24 horas.
+        Después de esos plazos, los registros ya no pueden restaurarse. Aura los
+        elimina la próxima vez que intenta leerlos, pero sus bytes caducados
+        pueden permanecer en el almacenamiento del navegador hasta que vuelvas
+        a Aura o borres los datos del sitio. «Olvidar dirección / Borrar datos
+        de Aura» elimina ambos registros del navegador, pero no el historial
+        público de la blockchain ni los registros de infraestructura.
+      </p>
+      <p>
+        Las imágenes para compartir se componen en tu dispositivo. De forma
+        predeterminada omiten dirección, red, nombre y datos de la carta,
+        posiciones exactas, geometría y la cantidad o lista de signos hallados.
+        Un control opcional, válido solo durante la sesión, puede añadir que el
+        signo público destacado aparece en algún lugar de la carta seleccionada.
+        Si lo activas, ese dato pasa a ser público. La aplicación de destino
+        elegida en la hoja de compartir aplica sus propias condiciones. Borrar
+        Aura no puede retirar copias guardadas o republicadas por otras personas
+        o servicios.
+      </p>
+
+      <h2>Solicitudes automáticas del Registro</h2>
+      <p>
+        Algunas secciones del Registro piden automáticamente desde tu navegador
+        datos públicos de mercado a DexScreener y estadísticas públicas de
+        visitas a Wikimedia. Estas solicitudes GET automáticas no contienen una
+        dirección de billetera, datos de nacimiento, datos de cartas ni texto
+        que hayas introducido. DexScreener y Wikimedia pueden recibir metadatos
+        ordinarios de una solicitud web, como dirección IP, fecha, hora,
+        navegador y la página de origen que permita la política del navegador; se
+        aplican sus propias políticas de privacidad.
       </p>
 
       <h2>Asistente de IA</h2>
@@ -67,25 +152,40 @@ const jsonLd = [
         desactivarlas en cualquier momento.
       </p>
 
-      <h2>Correo y alojamiento</h2>
+      <h2>Correo, alojamiento y analítica</h2>
       <p>
         El correo semanal requiere una cuenta y una suscripción voluntaria;
         está desactivado de forma predeterminada y cada mensaje permite darse
         de baja. Vercel aloja el sitio y puede conservar registros técnicos
         breves para entregar las páginas y prevenir abusos. No usamos
         publicidad ni seguimiento entre sitios. Contamos visitas y uso anónimo
-        de funciones con Plausible, un servicio de analítica sin cookies: sin
-        rastreo entre sitios, sin datos de nacimiento y sin nada de lo que
-        escribas. Los eventos solo llevan etiquetas de categoría: "se guardó
-        una carta", nunca de quién.
+        de funciones con Plausible, un servicio de analítica sin cookies. No
+        recibe datos de nacimiento, direcciones públicas, identificadores de
+        cartas o cuentas conectadas ni la lista exacta de signos. Los eventos de
+        Aura solo incluyen categorías permitidas, como el resultado y un rango
+        aproximado de cantidad; los demás eventos registran «se guardó una
+        carta», nunca de quién.
+      </p>
+
+      <h2>Almacenamiento del navegador</h2>
+      <p>
+        No usamos cookies publicitarias ni de seguimiento. Utilizamos
+        almacenamiento propio para las funciones que solicitas: cartas
+        guardadas, datos de sesión limitados de Aura, una dirección de Aura
+        recordada de forma opcional, preferencias del sitio y, si inicias
+        sesión, un token de acceso. No se usa para seguirte por otros sitios.
       </p>
 
       <h2>Tus opciones</h2>
-      <p>
-        Puedes usar las calculadoras sin cuenta, borrar las cartas locales
-        desde el navegador y pedir que eliminemos una cuenta escribiendo a
-        <a href="mailto:hello@zodiacs.org">hello@zodiacs.org</a>.
-      </p>
+      <ul>
+        <li>Usar las calculadoras sin cuenta ni almacenamiento fuera del dispositivo.</li>
+        <li>Probar el ejemplo de Aura sin carta, dirección, conexión o compra.</li>
+        <li>Pegar una dirección pública en lugar de conectar una billetera externa.</li>
+        <li>Dejar desmarcada la opción «Recordar» y borrar los datos de Aura cuando quieras.</li>
+        <li>Volver a la vista de ejemplo del Shelf y recargar la página para borrar su caché temporal.</li>
+        <li>Borrar cartas locales desde el navegador.</li>
+        <li>Pedir que eliminemos una cuenta escribiendo a <a href="mailto:hello@zodiacs.org">hello@zodiacs.org</a>.</li>
+      </ul>
 
       <p class="method-updated mono">Última actualización: {updated}</p>
     </div>

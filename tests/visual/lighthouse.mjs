@@ -15,6 +15,9 @@ const routes = [
   { name: 'birth-chart', path: '/birth-chart/' },
   { name: 'aries', path: '/aries/' },
 ];
+if (process.env.LIGHTHOUSE_INCLUDE_AURA === '1') {
+  routes.push({ name: 'registry-aura', path: '/registry/aura/' });
+}
 const budgets = {
   lcp: 2_000,
   cls: 0.05,

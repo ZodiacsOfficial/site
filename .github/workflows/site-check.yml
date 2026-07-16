@@ -38,10 +38,12 @@ jobs:
 
       - name: Wing language stays in the wing
         # Crypto/market vocabulary must never appear on the new consumer
-        # surfaces. Registry routes are exempt by path; the one Registry-only
-        # island is exempt by exact filename. The rest of src stays covered.
+        # surfaces. Registry routes are exempt by path; the Registry-only
+        # islands (WalletChart, RegistryAura, islands/aura/) are exempt by
+        # name; the privacy pages carry the legally required wallet/provider
+        # disclosures (CLAUDE.md carve-out). The rest of src stays covered.
         run: |
-          ! grep -RInE --exclude-dir=registry --exclude=WalletChart.tsx 'Solana|DexScreener|Jupiter swap|ERC-20|SPL record|memecoin|market cap' src/pages src/components src/islands src/content src/layouts
+          ! grep -RInE --exclude-dir=registry --exclude-dir=aura --exclude-dir=privacy --exclude=WalletChart.tsx --exclude=RegistryAura.tsx 'Solana|DexScreener|Jupiter swap|ERC-20|SPL record|memecoin|market cap' src/pages src/components src/islands src/content src/layouts
 
       - name: Voice — banned tells stay out of the copy
         # The smug vocabulary CLAUDE.md bans on new surfaces, enforced
@@ -117,3 +119,44 @@ jobs:
 
       - name: Drift gate
         run: git diff --exit-code -- public/
+
+  aura-drive:
+    # The flag-on browser acceptance suite for Registry Aura: docket honesty,
+    # Alignment grammar, share privacy, wallet lifecycle, forced colors, and
+    # the offline/error escapes. The holdings endpoint is mocked in-page, so
+    # the RPC URLs only need to satisfy build-time validation.
+    name: Registry Aura drive
+    runs-on: ubuntu-latest
+    env:
+      PUBLIC_REGISTRY_AURA_ENABLED: "1"
+      SOLANA_RPC_URL: https://aura-ci.invalid/rpc
+      BASE_RPC_URL: https://aura-ci.invalid/base
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Install Chromium
+        run: npx playwright-core install --with-deps chromium
+
+      - name: Build (feature flag on)
+        run: npm run build
+
+      - name: Browser acceptance drive
+        run: npm run test:aura:browser
+
+      - name: Upload regenerated proofs
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: aura-drive-proofs
+          path: docs/acceptance/registry-aura/
+          if-no-files-found: ignore

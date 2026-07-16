@@ -6,6 +6,10 @@ export function walletChartEnabled(env: WalletEnvironment): boolean {
   return env.PUBLIC_WALLET_CHART_ENABLED === '1';
 }
 
+export function auraEnabled(env: WalletEnvironment): boolean {
+  return env.PUBLIC_REGISTRY_AURA_ENABLED === '1';
+}
+
 export function validWalletProviderEndpoint(value: string | undefined, env: WalletEnvironment): boolean {
   if (!value?.trim()) return false;
   try {
@@ -27,6 +31,15 @@ export function configuredWalletChains(env: WalletEnvironment): WalletChain[] {
     && (!env.BASE_EXPLORER_API_URL
       || validWalletProviderEndpoint(env.BASE_EXPLORER_API_URL, env));
   if (explorerConfigured || validWalletProviderEndpoint(env.BASE_RPC_URL, env)) chains.push('base');
+  return chains;
+}
+
+/** Aura reads balances only, so Base requires an RPC endpoint rather than an explorer key. */
+export function configuredAuraChains(env: WalletEnvironment): WalletChain[] {
+  if (!auraEnabled(env)) return [];
+  const chains: WalletChain[] = [];
+  if (validWalletProviderEndpoint(env.SOLANA_RPC_URL, env)) chains.push('solana');
+  if (validWalletProviderEndpoint(env.BASE_RPC_URL, env)) chains.push('base');
   return chains;
 }
 

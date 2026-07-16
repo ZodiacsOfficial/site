@@ -30,6 +30,8 @@ import { dignityFor, type Dignity } from '../lib/dignities';
 import { resolveLocalToUtc } from '../lib/time/localToUtc';
 import { houseOf } from '../lib/engine/houses';
 import { moonPhaseName } from '../lib/engine/lite';
+import { registryAuraChartAnalytics, registryAuraChartLink } from '../lib/registry-aura-entry.mjs';
+import { trackAnalytics } from '../lib/analytics';
 import { decodeChartLink, encodeChartLink, NAME_MAX } from '../lib/share';
 import type { ShareChartInput } from '../lib/share';
 import type { PositionsShareChart } from '../lib/share-positions';
@@ -75,6 +77,43 @@ const CHART_BOOK_COPY = {
   fr: { label: 'À qui appartient ce thème\u202f?', save: 'Enregistrer', skip: 'Passer' },
   it: { label: 'Di chi è questo tema?', save: 'Salva', skip: 'Salta' },
 } as const satisfies Record<Locale, { label: string; save: string; skip: string }>;
+const REGISTRY_AURA_CHART_COPY = {
+  en: {
+    discover: 'Your saved chart can meet the Registry records carried by a public address.',
+    discoverLink: 'Read this chart beside a public address →',
+    return: 'Your chart is saved.',
+    returnLink: 'Return to Registry Aura →',
+  },
+  es: {
+    discover: 'Tu carta guardada puede encontrarse con los registros que lleva una dirección pública.',
+    discoverLink: 'Lee esta carta junto a una dirección pública →',
+    return: 'Tu carta está guardada.',
+    returnLink: 'Volver a Registry Aura →',
+  },
+  pt: {
+    discover: 'Seu mapa salvo pode se encontrar com os registros associados a um endereço público.',
+    discoverLink: 'Leia este mapa ao lado de um endereço público →',
+    return: 'Seu mapa foi salvo.',
+    returnLink: 'Voltar para Registry Aura →',
+  },
+  fr: {
+    discover: 'Votre thème enregistré peut rencontrer les notices portées par une adresse publique.',
+    discoverLink: 'Lire ce thème à côté d’une adresse publique →',
+    return: 'Votre thème est enregistré.',
+    returnLink: 'Retourner à Registry Aura →',
+  },
+  it: {
+    discover: 'Il tema salvato può incontrare i registri associati a un indirizzo pubblico.',
+    discoverLink: 'Leggi questa carta accanto a un indirizzo pubblico →',
+    return: 'Il tema è stato salvato.',
+    returnLink: 'Torna a Registry Aura →',
+  },
+} as const satisfies Record<Locale, {
+  discover: string;
+  discoverLink: string;
+  return: string;
+  returnLink: string;
+}>;
 const PERSON_CHART_COPY = {
   en: (name: string) => `${name}'s chart — "you" below means ${name}.`,
   es: (name: string) => `La carta de ${name}: el "tú" de abajo se refiere a ${name}.`,
@@ -120,6 +159,11 @@ function sceneHas(scene: ChartSceneModel, ref: EntityRef): boolean {
 export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Props) {
   const locale = normalizeLocale(rawLocale);
   const showsEnglishInterpretation = locale === 'en';
+  const registryAuraLink = typeof window === 'undefined'
+    ? null
+    : registryAuraChartLink(window.location.search, {
+        PUBLIC_REGISTRY_AURA_ENABLED: import.meta.env.PUBLIC_REGISTRY_AURA_ENABLED,
+      });
   const loadEngine = useEngine();
   const [date, setDate] = useState('');
   const [time, setTime] = useState('');
@@ -1201,6 +1245,22 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
           {saved === 'full' && <p class="calc__error" role="alert">{t(locale, 'chartSaveFull')}</p>}
           {saved === 'error' && <p class="calc__error" role="alert">{t(locale, 'chartSaveError')}</p>}
           {saved === 'saved' && <p class="calc__saved">{t(locale, 'chartSavedBeforeLink')} <a href={localizePath(locale, '/profile/')}>{t(locale, 'chartSavedLink')}</a> {t(locale, 'chartSavedAfterLink')}</p>}
+          {mode === 'full' && saved === 'saved' && registryAuraLink && (
+            <p class="calc__saved" data-registry-aura-chart-link>
+              {registryAuraLink.context === 'return'
+                ? REGISTRY_AURA_CHART_COPY[locale].return
+                : REGISTRY_AURA_CHART_COPY[locale].discover}{' '}
+              <a href={registryAuraLink.href} onClick={() => {
+                for (const event of registryAuraChartAnalytics(registryAuraLink.context)) {
+                  trackAnalytics(event.name, event.properties);
+                }
+              }}>
+                {registryAuraLink.context === 'return'
+                  ? REGISTRY_AURA_CHART_COPY[locale].returnLink
+                  : REGISTRY_AURA_CHART_COPY[locale].discoverLink}
+              </a>
+            </p>
+          )}
           {a2hsHint && (
             <div class="notice calc__a2hs" role="status">
               <span>{a2hsHint.message}</span>

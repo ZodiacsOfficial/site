@@ -1236,6 +1236,7 @@
             <div className="cine__content">
               <a className="cine__eyebrow" href="/disclosure/">
                 The Official Registry · Est. {REGISTRY_ESTABLISHED}
+                {!REGISTRY_ESTABLISHMENT_PROVENANCE_URL && ' · provenance pending'}
               </a>
               <h1 className="cine__title">
                 Twelve signs.<br/>
@@ -1280,7 +1281,7 @@
 
           <p className="hero__sub">
             One record for the twelve signs. Verify what belongs, where it
-            lives, and how public ownership becomes symbolic context.
+            lives, and how public blockchain records become symbolic context.
           </p>
 
           <Selector active={active} setActive={setActive} />
@@ -1537,7 +1538,7 @@
         { k: '12',         v: 'Signs' },
         { k: '1',          v: 'Origin' },
         { k: '2',          v: 'Homes' },
-        { k: 'Safe',       v: 'Lookup' },
+        { k: 'Read-only',   v: 'Lookup' },
       ];
       const meta = [
         { k: 'Original home',  v: 'Solana' },
@@ -1562,6 +1563,12 @@
           <p className="sec__disclosure">
             Astrofolio is a related but separate consumer experience; Zodiacs.org
             remains the astrology reference and the official Registry and SDK source.
+          </p>
+          <p className="sec__disclosure">
+            “Official” means that an asset address appears in this Registry. It
+            is not government, regulator, wallet, or exchange approval, and it
+            does not prove identity, control, legal ownership, safety, value,
+            liquidity, or future performance.
           </p>
 
           <div className="reg__facts">
@@ -1804,7 +1811,11 @@
             <div>
               <span className="market__label">Market Context</span>
               <p className="market__copy">
-                Third-party market context. May be delayed or unavailable.
+                Independent third-party data, not a valuation or recommendation.
+                It may be delayed or unavailable; prices and liquidity can change
+                quickly, and a Zodiac can lose all market value. Operator and
+                economic-interest statements remain pending confirmation; see
+                the <a href="/disclosure/">Disclosure</a>.
               </p>
             </div>
             {pair?.url && (
@@ -2281,8 +2292,8 @@
       );
     }
 
-    // ---- Nº 06 · The standings ----------------------------------------------
-    // Twelve lots, read from the market. Two labeled layers, same honesty
+    // ---- Nº 06 · Market snapshot --------------------------------------------
+    // Twelve lots in zodiac order. Two labeled layers, same honesty
     // contract as the Pulse: live DexScreener reads, and a weekly on-chain
     // distribution snapshot committed to the repository
     // (assets/distribution.json, refreshed by a scheduled action).
@@ -2341,9 +2352,7 @@
           .catch(() => { /* the leaderboard stands without the snapshot */ });
       }, [enabled]);
 
-      const ranked = rows
-        ? [...rows].sort((a, b) => (b.marketCap ?? -1) - (a.marketCap ?? -1))
-        : null;
+      const marketRows = rows;
       const distFor = (slug) => dist?.signs?.[slug] || null;
       const pctShare = (value) => {
         const n = toFiniteNumber(value);
@@ -2353,42 +2362,46 @@
       };
 
       return (
-        <section ref={reveal} id="standings" className="sec reveal" aria-label="The standings">
+        <section ref={reveal} id="standings" className="sec reveal" aria-label="Market snapshot">
           <div className="sec__head">
             <span className="sec__no">Nº 06</span>
             <span className="line" />
-            <h2 className="sec__title">The Standings</h2>
+            <h2 className="sec__title">Market snapshot</h2>
           </div>
 
           <h3 className="standings__statement">
-            The registry does not rank. <span className="it">The market does.</span>
+            Shown in zodiac order. <span className="it">Markets fluctuate.</span>
           </h3>
           <p className="sec__lede">
-            Twelve fixed lots, one open market. Prices are read live from
-            DexScreener; ownership spread is read from the chain and
-            snapshotted weekly. Nothing here is curated or weighted.
+            Twelve public records, observed across open markets. Prices are read
+            live from DexScreener; token-account concentration is read from the
+            chain and snapshotted weekly. Rows always follow zodiac order; the
+            figures are context—not a measure of quality, safety, or a
+            recommendation. Digital assets are speculative, may become illiquid,
+            and can lose all market value. Operator and economic-interest
+            statements remain pending confirmation; see the{' '}
+            <a href="/disclosure/">Disclosure</a>.
           </p>
 
-          <div ref={hostRef} className="standings" aria-busy={enabled && !ranked && !failed}>
-            {!ranked && !failed && (
+          <div ref={hostRef} className="standings" aria-busy={enabled && !marketRows && !failed}>
+            {!marketRows && !failed && (
               <div className="standings__state">Reading the market…</div>
             )}
-            {failed && !ranked && (
+            {failed && !marketRows && (
               <div className="standings__state">
                 Market data unavailable. The records stand in the <a href="#registry">registry</a>.
               </div>
             )}
-            {ranked && (
+            {marketRows && (
               <>
                 <div className="standings__src">
                   Source: DexScreener · live
-                  {dist ? ` · ownership snapshot ${dist.capturedAt}` : ''}
+                  {dist ? ` · token-account snapshot ${dist.capturedAt}` : ''}
                 </div>
                 <div className="standings__scroll">
                   <table className="standings__table">
                     <thead>
                       <tr>
-                        <th className="standings__th--n" scope="col" aria-label="Rank">#</th>
                         <th scope="col">Lot</th>
                         <th className="standings__th--r" scope="col">Price USD</th>
                         <th className="standings__th--r" scope="col">24H</th>
@@ -2397,7 +2410,7 @@
                       </tr>
                     </thead>
                     <tbody>
-                      {ranked.map((row, i) => {
+                      {marketRows.map((row) => {
                         const slug = row.sign.asset.sign;
                         const d = distFor(slug);
                         const change = toFiniteNumber(row.change24h);
@@ -2406,9 +2419,6 @@
                           : change > 0 ? ' market__change--up' : change < 0 ? ' market__change--down' : '';
                         return (
                           <tr key={row.sign.ticker}>
-                            <td className="standings__n">
-                              {row.marketCap !== null ? String(i + 1).padStart(2, '0') : '—'}
-                            </td>
                             <td className="standings__lot">
                               <a href={`/registry/${slug}/`}>
                                 <img
@@ -2442,10 +2452,10 @@
                   </table>
                 </div>
                 <p className="standings__note">
-                  Market figures are read live and move with the market; the
-                  registry records them, it does not rank them. Top-10 share
-                  is the portion of on-chain supply held by the ten largest
-                  token accounts, read from the Solana RPC
+                  Rows remain in zodiac order. Market figures are read live and
+                  may be delayed, incomplete, or wrong. Top-10 share is the
+                  portion of on-chain supply held by the ten largest token
+                  accounts, read from the Solana RPC
                   {dist ? ` and captured ${dist.capturedAt}` : ''}. The
                   largest accounts include DEX liquidity pools, so wallet
                   concentration is lower than the raw figure reads.
@@ -2458,12 +2468,9 @@
     }
 
     // ---- Shelf viewer (read-only public lookup) ----------------------------
-    // Reads native Solana holdings for a pasted wallet address through the
-    // public RPC. One POST per submit, per-session cache, no polling, no
-    // wallet connection. Unavailable-safe: the example receipt stands in
-    // whenever the lookup cannot run.
-    const SOLANA_RPC_URL = 'https://api.mainnet-beta.solana.com';
-    const SOLANA_TOKEN_PROGRAM = 'TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA';
+    // Reads native Solana holdings through the same minimized, same-origin
+    // endpoint as Registry Aura. The browser never sends an address directly
+    // to a public RPC or requests unrelated token accounts.
     const SOLANA_ADDRESS_RE = /^[1-9A-HJ-NP-Za-km-z]{32,44}$/;
     const ZODIAC_SOLANA_MINTS = new Map(
       SIGNS
@@ -2471,6 +2478,7 @@
         .map((s) => [s.representations.solana.address, s])
     );
     const SHELF_CACHE = new Map();
+    const ZODIAC_BY_SLUG = new Map(SIGNS.map((sign) => [sign.asset.sign, sign]));
 
     function shortAddress(value) {
       const s = String(value || '');
@@ -2480,43 +2488,40 @@
     async function fetchShelfHoldings(owner) {
       if (SHELF_CACHE.has(owner)) return SHELF_CACHE.get(owner);
       const request = (async () => {
-        const res = await fetch(SOLANA_RPC_URL, {
+        const res = await fetch('/api/aura-holdings', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            jsonrpc: '2.0',
-            id: 1,
-            method: 'getTokenAccountsByOwner',
-            params: [owner, { programId: SOLANA_TOKEN_PROGRAM }, { encoding: 'jsonParsed' }]
-          })
+          body: JSON.stringify({ address: owner })
         });
+        const payload = await res.json().catch(() => null);
         if (res.status === 429) {
           const err = new Error('rate-limited');
           err.kind = 'rate';
           throw err;
         }
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        const payload = await res.json();
-        if (payload.error) {
-          const message = String(payload.error.message || '');
-          const err = new Error(message || 'RPC error');
-          if (payload.error.code === -32602 || /invalid/i.test(message)) err.kind = 'invalid';
-          else if (/limit|too many/i.test(message)) err.kind = 'rate';
+        if (!res.ok) {
+          const err = new Error(`Shelf lookup failed (${res.status})`);
+          if (payload?.error === 'invalid_address') err.kind = 'invalid';
           throw err;
         }
-        const accounts = payload.result && Array.isArray(payload.result.value)
-          ? payload.result.value
-          : [];
-        const held = [];
-        for (const item of accounts) {
-          const info = item?.account?.data?.parsed?.info;
-          if (!info) continue;
-          const sign = ZODIAC_SOLANA_MINTS.get(info.mint);
-          const amount = toFiniteNumber(info.tokenAmount && info.tokenAmount.uiAmount);
-          if (sign && amount !== null && amount > 0) held.push({ sign, amount });
+        if (payload?.chain !== 'solana'
+          || !Array.isArray(payload.heldSigns)
+          || !Number.isFinite(Date.parse(payload.checkedAt))) {
+          throw new Error('Incomplete Shelf response');
         }
-        held.sort((a, b) => a.sign.order - b.sign.order);
-        return held;
+        const held = [];
+        const seen = new Set();
+        for (const slug of payload.heldSigns) {
+          const sign = typeof slug === 'string' ? ZODIAC_BY_SLUG.get(slug) : null;
+          if (!sign || seen.has(slug)) throw new Error('Incomplete Shelf response');
+          seen.add(slug);
+          held.push({ sign });
+        }
+        const canonical = [...held].sort((a, b) => a.sign.order - b.sign.order);
+        if (canonical.some((entry, index) => entry !== held[index])) {
+          throw new Error('Incomplete Shelf response');
+        }
+        return canonical;
       })();
       SHELF_CACHE.set(owner, request);
       try {
@@ -2539,7 +2544,7 @@
     }
 
     const SHELF_EXAMPLE_FACTS = [
-      { k: 'Shelf', v: '4 signs held' },
+      { k: 'Shelf', v: '4 illustrative Registry signs' },
       { k: 'Composition', v: 'Fire and water dominant' },
       { k: 'Season', v: 'Current season represented' },
       { k: 'Provenance', v: 'Native on Solana · bridged to Base' }
@@ -2601,7 +2606,7 @@
           ? view.held.some((h) => h.sign.name === season.sign.name)
           : false;
         liveFacts = [
-          { k: 'Shelf', v: `${view.held.length} of 12 signs` },
+          { k: 'Shelf', v: `${view.held.length} Registry ${view.held.length === 1 ? 'sign' : 'signs'} found` },
           { k: 'Composition', v: shelfComposition(view.held) },
           {
             k: 'Season',
@@ -2609,7 +2614,7 @@
               ? `${season.sign.name} season ${seasonHeld ? 'represented' : 'not represented'}`
               : 'Season unavailable'
           },
-          { k: 'Wallet', v: shortAddress(view.address) }
+          { k: 'Address', v: shortAddress(view.address) }
         ];
       }
 
@@ -2622,7 +2627,7 @@
             </div>
           </div>
 
-          <form className="shelf__form" onSubmit={onSubmit}>
+          {REGISTRY_AURA_ENABLED ? <form className="shelf__form" onSubmit={onSubmit}>
             <label className="shelf__label" htmlFor="shelf-input">
               View a public shelf
             </label>
@@ -2642,6 +2647,12 @@
                 {loading ? 'Reading' : 'View'}
               </button>
             </div>
+            <p className="shelf__hint">
+              On View, Zodiacs.org sends this public address to the configured
+              blockchain-data provider to check only the twelve Registry mints.
+              Public addresses and request metadata may be linkable. No chart or
+              birth data is sent. <a href="/privacy/">Privacy</a>
+            </p>
             {hint && <p className="shelf__hint">{hint}</p>}
             {view.state === 'mint-hint' && (
               <p className="shelf__hint">
@@ -2656,7 +2667,12 @@
                 </button>
               </p>
             )}
-          </form>
+          </form> : (
+            <p className="shelf__hint">
+              Live lookup is paused while Registry Aura is off. The illustrative
+              shelf below makes no address or provider request.
+            </p>
+          )}
 
           <div role="status" aria-live="polite">
             {loading && (
@@ -2687,7 +2703,7 @@
                         height="26"
                       />
                       <span className="shelf__sign-name">{h.sign.name}</span>
-                      <span className="shelf__sign-amt">{formatCompact(h.amount)}</span>
+                      <span className="shelf__sign-amt">Found</span>
                     </a>
                   ))}
                 </div>
@@ -2704,9 +2720,9 @@
 
             {view.state === 'empty' && (
               <div className="shelf__empty">
-                <p className="shelf__empty-line">No Zodiacs on this shelf yet.</p>
+                <p className="shelf__empty-line">No Registry-listed Zodiac was found at this address.</p>
                 <p className="shelf__empty-sub">
-                  <a href="#official-twelve">Browse the Twelve</a>
+                  The illustrative example remains available. No purchase is required.
                 </p>
               </div>
             )}
@@ -2725,8 +2741,8 @@
 
           <p className="idctx__note">
             {live
-              ? 'Reads native Solana holdings through the public RPC. Bridged Base representations are not included in this view.'
-              : 'The SDK provides computed symbolic context and public ownership state. The interface chooses how to present it.'}
+              ? 'One public Solana address was checked through the Zodiacs.org holdings endpoint. No chart or birth data was sent. Bridged Base representations are not included in this view.'
+              : 'The SDK provides computed symbolic context and public-address holdings state. The interface chooses how to present it.'}
           </p>
         </div>
       );
@@ -2736,17 +2752,23 @@
       const reveal = useReveal();
       const cards = [
         {
-          t: 'Verified Ownership',
-          d: 'Confirm whether a wallet holds official Zodiacs.org assets across native Solana and bridged Base representations.'
+          t: 'Registry Match',
+          d: 'Check whether a public address contains Registry-listed Zodiacs on Solana or Base. A match is not proof of identity, control, or legal ownership.'
         },
         {
           t: 'Symbolic Composition',
-          d: 'Turn held signs into element mix, modality mix, wheel coverage, and seasonal context.'
+          d: 'Turn signs found at a public address into element mix, modality mix, wheel coverage, and seasonal context.'
         },
         {
           t: 'Built For Experiences',
           d: 'Build profiles, receipts, seasonal moments, verifiers, and identity surfaces on app-neutral infrastructure.'
-        }
+        },
+        ...(REGISTRY_AURA_ENABLED ? [{
+          t: REGISTRY_AURA_ENTRY_COPY.title,
+          d: REGISTRY_AURA_ENTRY_COPY.description,
+          href: REGISTRY_AURA_PATH,
+          link: REGISTRY_AURA_ENTRY_COPY.link,
+        }] : []),
       ];
       return (
         <section ref={reveal} id="identity" className="sec idctx reveal" aria-label="Identity Context">
@@ -2762,8 +2784,8 @@
           </h2>
 
           <p className="idctx__copy">
-            The SDK turns verified public ownership into display-ready symbolic
-            context: held signs, element balance, modality balance, current
+            The SDK turns public-address records into display-ready symbolic
+            context: signs found, element balance, modality balance, current
             season, native and bridged representations, and wheel coverage.
             Apps can use this foundation to build profiles, receipts, seasonal
             experiences, and astrology-native interfaces without custody,
@@ -2776,6 +2798,7 @@
                 <span className="idctx__num">{String(i + 1).padStart(2, '0')}</span>
                 <h3 className="idctx__card-title">{card.t}</h3>
                 <p className="idctx__card-copy">{card.d}</p>
+                {card.href && <a className="idctx__card-link" href={card.href} onClick={() => trackAnalytics('aura_entry', { source: 'registry' })}>{card.link}</a>}
               </article>
             ))}
           </div>
@@ -2819,20 +2842,27 @@
           </div>
 
           <h2 className="access__statement">
-            Access Zodiacs across<br/>
-            <span className="it">leading onchain apps.</span>
+            Independent routes across<br/>
+            <span className="it">third-party onchain services.</span>
           </h2>
 
           <p className="access__copy">
-            Find and verify official Zodiac token records through major Solana,
-            Base, and wallet interfaces. Always confirm official mint addresses
-            through the Zodiacs.org registry.
+            These links open independent Solana, Base, and wallet services;
+            they are not endorsements or recommendations, and Zodiacs.org does
+            not sell or execute transactions. A service may request a wallet
+            connection, token approval, signature, and an onchain transaction
+            that cannot be reversed. Digital assets are speculative, may become
+            illiquid, and can lose all market value. You could lose all money
+            used to acquire a Zodiac. Verify the official mint, network, amount,
+            and destination before continuing. Operator and economic-interest
+            statements remain pending confirmation; see the{' '}
+            <a href="/disclosure/">Disclosure</a>.
           </p>
 
           <div className="access__primary" role="list">
             {ACCESS_PRIMARY.map(v => (
               <a className="access__card access__card--featured" role="listitem" key={v.name}
-                 href={v.url} rel="noopener noreferrer">
+                 href={v.url} rel="noopener noreferrer external nofollow">
                 <div className="access__logo" aria-hidden="true">
                   <VenueLogo src={v.logo} />
                 </div>
@@ -2846,7 +2876,7 @@
             <div className="access__rail" role="list">
               {ACCESS_RAIL.map(v => (
                 <a className="access__card access__card--rail" role="listitem" key={v.name}
-                   href={v.url} rel="noopener noreferrer">
+                   href={v.url} rel="noopener noreferrer external nofollow">
                   <div className="access__logo" aria-hidden="true">
                     <VenueLogo src={v.logo} />
                   </div>
@@ -2883,14 +2913,14 @@
         'Official asset verification',
         'Native and bridged mappings',
         'Public Zodiac Shelves',
-        'Identity receipts',
+        'Public-record receipts',
         'Zodiac wheel views',
         'Birth chart overlays',
         'Wallet integrations',
         'Gallery integrations',
         'Public profiles',
         'Share cards',
-        'Read-only ownership',
+        'Address-held context',
         'Seasonal context'
       ];
 
@@ -2910,7 +2940,7 @@
           <p className="builders__copy">
             Zodiacs are not only a collection of assets. They are a verified
             symbolic layer that can extend into astrology products, wallets,
-            galleries, profiles, share cards, and read-only ownership
+            galleries, profiles, share cards, and read-only public-record
             experiences.
           </p>
 
@@ -2952,7 +2982,7 @@
         },
         {
           t: 'Profile systems',
-          d: 'Turn public ownership into badges, wheel coverage, composition, and identity surfaces.'
+          d: 'Turn public-address records into badges, wheel coverage, composition, and identity surfaces.'
         },
         {
           t: 'Identity layers',
@@ -2960,7 +2990,7 @@
         },
         {
           t: 'Social moments',
-          d: 'Create identity receipts, seasonal cards, and lightweight public displays.'
+          d: 'Create public-record receipts, seasonal cards, and lightweight public displays.'
         },
         {
           t: 'AI astrology assistants',
@@ -3104,7 +3134,7 @@
       const reveal = useReveal();
       const caps = [
         { t: 'Verify', d: 'Recognize official Zodiacs.org representations across Solana and Base.' },
-        { t: 'Read', d: 'Read public ownership state without custody, signing, or transactions.' },
+        { t: 'Read', d: 'Read public-address holdings state without custody, signing, or transactions.' },
         { t: 'Compose', d: 'Shape held signs into seasonal context, wheel coverage, and identity surfaces.' },
       ];
       return (
@@ -3116,7 +3146,7 @@
           </div>
           <p className="sec__lede">
             The SDK is the public interface to the same registry shown here.
-            It gives apps verified facts for recognition, ownership display,
+            It gives apps verified facts for recognition, address-record display,
             and symbolic identity context.
           </p>
 
@@ -3193,9 +3223,13 @@
             <h2 className="sec__title">Read-only by design</h2>
           </div>
           <p className="sec__statement">
-            The tools are made for recognition and display. They can read public
-            information, but they cannot sign, hold, move, approve, or exchange
-            assets.
+            The Registry, Registry Aura, and SDK lookup/display tools are made
+            for recognition and display. They read public information but do
+            not request signatures, approvals, swaps, network changes, or
+            transactions, and they cannot hold or move assets. Wallets, market
+            services, and trading venues reached through outbound links are
+            independent third parties and may request those actions under their
+            own terms. Never share a seed phrase or private key.
           </p>
           <div className="ro__grid">
             {nots.map((n, i) => (
@@ -3216,13 +3250,13 @@
           { q: 'What is Zodiacs.org?',
             a: 'The official public registry for the twelve Zodiacs: their identities, records, origin, and verified representations.' },
           { q: 'What can I do here?',
-            a: 'Explore the Twelve, verify an address, inspect the public registry, and see how ownership can become symbolic identity context.' },
+            a: 'Explore the Twelve, verify an address against the registry, inspect the public record, and see how address holdings can become symbolic context.' },
           { q: 'What can be built with Zodiacs?',
-            a: 'Profiles, galleries, wallet views, Zodiac shelves, identity receipts, zodiac wheel views, seasonal moments, and astrology-native interfaces.' },
+            a: 'Profiles, galleries, wallet views, Zodiac shelves, public-record receipts, zodiac wheel views, seasonal moments, and astrology-native interfaces.' },
           { q: 'Where does Astrofolio fit?',
-            a: 'Astrofolio is a related consumer experience around personal Zodiac shelves and symbolic ownership. Zodiacs.org remains the official registry and SDK source of truth.' },
+            a: 'Astrofolio is a related consumer experience around personal Zodiac shelves and symbolic holdings. Zodiacs.org remains the official registry and SDK source of truth.' },
           { q: 'What does the SDK add?',
-            a: 'It gives apps a read-only way to recognize official Zodiacs, show records, read public ownership, and compute display-ready symbolic context.' },
+            a: 'It gives apps a read-only way to recognize official Zodiacs, show records, read public-address holdings, and compute display-ready symbolic context.' },
           { q: 'Why Solana and Base?',
             a: 'The original Zodiacs live on Solana. The Base records are official bridged counterparts that point back to those Solana origins.' }
         ]
@@ -3231,7 +3265,7 @@
         label: 'Acquisition & Ownership',
         items: [
           { q: 'How do I acquire a Zodiac?',
-            a: 'Through public onchain venues. Each sign’s catalogue page lists access routes, including Jupiter with the official Solana mint preloaded and the live market pair. Zodiacs.org itself never sells, swaps, or executes anything.' },
+            a: 'Each sign’s catalogue page links to independent third-party services, including Jupiter with the official Solana mint preloaded. Zodiacs.org does not sell, execute, or recommend a transaction. A service may request a wallet connection, token approval, signature, and an onchain transaction that cannot be reversed. Verify the mint, network, amount, and destination before continuing.' },
           { q: 'Do I need a special wallet?',
             a: 'Any wallet that holds SPL tokens on Solana or ERC-20 tokens on Base will do. The registry is wallet-neutral; the Onchain Access section lists familiar interfaces.' },
           { q: 'Does the registry prove presale or allocation history?',
@@ -3267,16 +3301,16 @@
       {
         label: 'Risk & Posture',
         items: [
-          { q: 'Are Zodiacs an investment?',
-            a: 'They are cultural assets, and nothing on this site is financial advice. Market context is shown for transparency and moves in both directions. Access routes are listed as routes, not recommendations.' },
+          { q: 'Does this site recommend Zodiacs as an investment?',
+            a: 'No. Nothing on this site promises profit or recommends buying, selling, or holding a Zodiac. Market data and third-party access links are informational and can be delayed, incomplete, or wrong.' },
           { q: 'What are the risks?',
-            a: 'The usual onchain ones: prices move, liquidity varies, bridges and contracts carry technical risk. Hold what you are content to hold.' },
+            a: 'Prices can be volatile, liquidity can be limited or disappear, and a Zodiac can lose all market value. You could lose all money used to acquire one. Wallet loss, scams, contract bugs, bridge failures, and user mistakes can cause permanent loss. Onchain transactions generally cannot be reversed.' },
           { q: 'What happens if this site goes away?',
             a: 'Nothing happens to the assets. They live onchain. The registry file is mirrored in the SDK package and the public repository, so the record outlives any single page.' },
           { q: 'Does the site or SDK move assets?',
-            a: 'No. The site and SDK are read-only.' },
+            a: 'No. The Registry and SDK do not request asset transfers, signatures, approvals, or transactions.' },
           { q: 'What is Market Context?',
-            a: 'Optional third-party context from Dex Screener. It may be delayed or unavailable and is secondary to identity, registry, and verification.' }
+            a: 'Optional third-party data from Dex Screener. It is not a valuation or recommendation, may be delayed, incomplete, unavailable, or wrong, and is secondary to identity, registry, and verification.' }
         ]
       }
     ];
@@ -3347,8 +3381,10 @@
             <a href="/archive/">Archive</a>
             <button className="assistant-link" type="button" data-assistant-open aria-haspopup="dialog">Ask the site</button>
             <a href="/disclosure/">{REGISTRY_DISCLOSURE_LABEL}</a>
+            <a href="/privacy/">Privacy</a>
+            <a href="/terms/">Terms</a>
           </div>
-            <div>Read-only</div>
+            <div>Registry lookup tools: read-only</div>
           </div>
           <div className="ftr__row">
             <div className="ftr__legal" aria-label="Official channels">

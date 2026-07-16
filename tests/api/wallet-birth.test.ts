@@ -37,6 +37,7 @@ describe('wallet birth endpoint', () => {
   it('requires an exact same-origin request', () => {
     expect(isAllowedWalletRequest(request(), ENV)).toBe(true);
     expect(isAllowedWalletRequest({ ...request(), headers: { origin: 'https://attacker.test', host: 'zodiacs.org' } }, ENV)).toBe(false);
+    expect(isAllowedWalletRequest({ ...request(), headers: { origin: 'https://zodiacs.org:8443', host: 'zodiacs.org' } }, ENV)).toBe(false);
     expect(isAllowedWalletRequest({ ...request(), headers: { host: 'zodiacs.org' } }, ENV)).toBe(false);
   });
 

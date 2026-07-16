@@ -212,7 +212,7 @@ async function loadStaticPages(repoRoot, context) {
     const route = pagePath(file, pagesRoot);
     // Registry-only, feature-flagged utility: keep it out of the consumer
     // astrology assistant and its deliberately strict vocabulary boundary.
-    if (route === '/registry/wallet-chart/') continue;
+    if (route.startsWith('/registry/')) continue;
     const source = await readFile(file, 'utf8');
     pages.push({
       route,

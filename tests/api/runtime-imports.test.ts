@@ -7,6 +7,7 @@ import * as ts from 'typescript';
 const ROOT = fileURLToPath(new URL('../..', import.meta.url));
 const API_ROOT = join(ROOT, 'api');
 const EXPECTED_HANDLERS = [
+  'api/aura-holdings.ts',
   'api/assistant.ts',
   'api/calendar/transits.ts',
   'api/email/confirm.ts',

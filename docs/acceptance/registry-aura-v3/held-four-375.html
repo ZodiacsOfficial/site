@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Registry Aura V3 proof — four held signs (375px)</title>
+<style>
+  :root{
+    --void-0:#060709; --void-1:#0A0C11; --void-2:#0F121A;
+    --hair-1:rgba(198,204,218,.08); --hair-2:rgba(198,204,218,.16); --hair-3:rgba(198,204,218,.28);
+    --ink:#EEF1F7; --ink-2:#C6CCDA; --muted:#A2A9BA;
+    --serif:'EB Garamond','Iowan Old Style',Georgia,serif;
+    --sans:'Instrument Sans',system-ui,-apple-system,sans-serif;
+    --mono:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace;
+    --cancer:#B6D4E4; --leo:#E0A9B4; --scorpio:#B9DCE8; --aquarius:#AE8FC9;
+  }
+  *{box-sizing:border-box;margin:0}
+  body{font-variant-emoji:text;background:#040507;color:var(--ink-2);font:15px/1.55 var(--sans);padding:48px 20px 96px}
+  .proofhead{max-width:1080px;margin:0 auto 36px}
+  .proofhead .tag{font:600 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+  .proofhead h1{font:500 30px/1.2 var(--serif);color:var(--ink);margin:10px 0 6px}
+  .proofhead p{max-width:64ch;color:var(--muted)}
+  .stage{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:375px 1fr;gap:44px;align-items:start}
+  @media (max-width:860px){.stage{grid-template-columns:1fr}}
+  .frame{width:375px;background:var(--void-0);border:1px solid var(--hair-3);border-radius:28px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.55)}
+  .rail{display:grid;gap:14px;position:sticky;top:24px}
+  .note{border:1px solid var(--hair-2);border-left:2px solid var(--hair-3);border-radius:10px;background:var(--void-1);padding:12px 14px;font-size:13.5px}
+  .note b{display:inline-grid;place-items:center;width:20px;height:20px;margin-right:8px;border-radius:50%;background:var(--ink);color:var(--void-0);font:600 11px/1 var(--mono)}
+  .note em{color:var(--muted);font-style:normal;display:block;margin-top:4px;font-size:12.5px}
+  .screen{position:relative;padding:28px 16px 40px}
+  .kicker{font:italic 500 15px/1.3 var(--serif);color:var(--muted)}
+  .recline{border-block:1px solid var(--hair-2);padding:12px 2px;display:grid;grid-template-columns:1fr auto;margin-top:10px}
+  .recline h3{font:500 16.5px/1.2 var(--serif);color:var(--ink)}
+  .recline p{font-size:13px;color:var(--ink-2)}
+  .recline .tag{font:400 10px/1.6 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:right}
+  .algn{margin-top:18px}
+  .algn table{border-collapse:collapse;width:100%;table-layout:fixed}
+  .algn caption{caption-side:bottom;text-align:left;font-size:11.5px;color:var(--muted);padding:10px 2px 0}
+  .algn thead th{font:400 13px/1 var(--serif);color:var(--muted);padding:8px 0 6px;text-align:center;font-weight:400}
+  .algn thead th.f{color:var(--ink);border:1px solid var(--hair-3);border-bottom:0}
+  .algn tr.lbl th{padding:14px 2px 6px;text-align:left;font:500 10.5px/1.3 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);border-top:1px solid var(--hair-1)}
+  .algn tr.lbl th i{font-style:normal;color:var(--ink-2)}
+  .algn td{height:42px;text-align:center;vertical-align:middle}
+  .algn td.f{background:rgba(238,241,247,.05);border-left:1px solid var(--hair-3);border-right:1px solid var(--hair-3)}
+  .algn tbody:last-of-type td.f{border-bottom:1px solid var(--hair-3)}
+  .m-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--ink-2)}
+  .m-chip{display:inline-grid;place-items:center;width:19px;height:19px;border-radius:50%;border:1px solid var(--hair-3);color:var(--ink);font:500 10px/1 var(--mono);background:var(--void-2)}
+  .m-disc{display:inline-grid;place-items:center;width:25px;height:25px;border-radius:50%;color:rgba(6,7,9,.82);font:500 13px/1 var(--serif)}
+  .m-sky{font:400 15px/1 var(--serif);color:var(--ink)}
+  .focalcap{display:flex;gap:6px;align-items:center;font:400 11px/1 var(--mono);color:var(--muted);margin-top:6px}
+  .focalcap::before{content:"▲";font-size:9px;color:var(--ink-2)}
+  .legendrow{margin-top:16px;display:grid;gap:8px;border-top:1px solid var(--hair-1);padding-top:14px}
+  .legendrow span{display:flex;gap:10px;align-items:center;font-size:12.5px;color:var(--muted)}
+</style>
+</head>
+<body>
+  <header class="proofhead">
+    <span class="tag">Registry Aura V3 · design proof · not production code</span>
+    <h1>Four held signs — the canonical mid-density case</h1>
+    <p>Same fixture as the current <code>four-375.png</code> acceptance proof (held Cancer·Leo·Scorpio·Aquarius, Sun Cancer, Moon Leo, focal Leo). Compare directly: the Carry Ring at this density needed a legend and study; the Alignment needs neither. Audit §5–6.</p>
+  </header>
+
+  <div class="stage">
+    <div class="frame"><div class="screen">
+      <p class="kicker">Chart · Record · Sky</p>
+      <div class="recline">
+        <h3>Public wallet address</h3><span class="tag">Checked Jul 15 · yesterday</span>
+        <p>4 official Zodiacs found · Solana public record</p>
+      </div>
+
+      <div class="algn">
+        <table>
+          <caption>Marks never leave their row. An empty cell means nothing is drawn for that sign.</caption>
+          <thead><tr>
+            <th>♈&#xFE0E;</th><th>♉&#xFE0E;</th><th>♊&#xFE0E;</th><th>♋&#xFE0E;</th><th class="f">♌&#xFE0E;</th><th>♍&#xFE0E;</th><th>♎&#xFE0E;</th><th>♏&#xFE0E;</th><th>♐&#xFE0E;</th><th>♑&#xFE0E;</th><th>♒&#xFE0E;</th><th>♓&#xFE0E;</th>
+          </tr></thead>
+          <tbody>
+            <tr class="lbl"><th colspan="12"><i>Birth chart</i> · private, read on this device</th></tr>
+            <tr>
+              <td><span class="m-dot" title="Venus"></span></td>
+              <td><span class="m-dot" title="Sun"></span></td>
+              <td><span class="m-dot" title="Mercury"></span></td>
+              <td><span class="m-chip" title="Moon, Midheaven">2</span></td>
+              <td class="f"><span class="m-dot" title="Mars"></span></td>
+              <td></td>
+              <td><span class="m-dot" title="Ascendant"></span></td>
+              <td></td><td></td><td></td><td></td><td></td>
+            </tr>
+            <tr class="lbl"><th colspan="12"><i>At this address</i> · public record · checked Jul 15</th></tr>
+            <tr>
+              <td></td><td></td><td></td>
+              <td><span class="m-disc" style="background:var(--cancer)">♋&#xFE0E;</span></td>
+              <td class="f"><span class="m-disc" style="background:var(--leo)">♌&#xFE0E;</span></td>
+              <td></td><td></td>
+              <td><span class="m-disc" style="background:var(--scorpio)">♏&#xFE0E;</span></td>
+              <td></td><td></td>
+              <td><span class="m-disc" style="background:var(--aquarius)">♒&#xFE0E;</span></td>
+              <td></td>
+            </tr>
+            <tr class="lbl"><th colspan="12"><i>Sky</i> · Jul 16, 2026 UTC</th></tr>
+            <tr>
+              <td></td><td></td><td></td>
+              <td><span class="m-sky" title="Sun season">☉&#xFE0E;</span></td>
+              <td class="f"><span class="m-sky" title="Current Moon">☾&#xFE0E;</span></td>
+              <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="focalcap" style="margin-left:33%">this visit’s focus</p>
+      </div>
+
+      <div class="legendrow" aria-hidden="true">
+        <span><span class="m-dot"></span> chart placement (numeral when more than one)</span>
+        <span><span class="m-disc" style="background:var(--cancer);width:20px;height:20px;font-size:11px">♋&#xFE0E;</span> official Zodiac at the address (the only color)</span>
+        <span><span class="m-sky">☉&#xFE0E; ☾&#xFE0E; ✳&#xFE0E;</span> sun season · current moon · dated event</span>
+      </div>
+    </div></div>
+
+    <aside class="rail" aria-label="Annotations">
+      <p class="note"><b>1</b>Four columns collect discs; two of them align with chart and sky marks. Leo wins focus by the Moon rule and the eye can verify it — the precedence is visible, not asserted. <em>Audit §6</em></p>
+      <p class="note"><b>2</b>Chroma discipline: the record row is the only color on the surface, so “found at this address” needs no legend to be felt. The legend below is a supplement, not a requirement. <em>Audit §9</em></p>
+      <p class="note"><b>3</b>Identical mark treatment across all four held signs — no ranking, no ordering by "strength," no connectors. Zodiac column order is the only order. <em>Audit §6, hard boundaries</em></p>
+    </aside>
+  </div>
+</body>
+</html>

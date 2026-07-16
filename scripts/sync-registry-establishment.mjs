@@ -12,6 +12,7 @@ import {
   REGISTRY_ESTABLISHED_YEAR,
   REGISTRY_ESTABLISHMENT_PROVENANCE_URL,
 } from '../src/lib/registry-establishment.mjs';
+import { injectRegistryAuraLanding } from '../src/lib/registry-aura-entry.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const root = resolve(here, '..');
@@ -33,12 +34,16 @@ export function injectRegistryEstablishment(source) {
   return { output, count };
 }
 
-export async function syncRegistryEstablishment() {
+export async function syncRegistryEstablishment(env = process.env) {
   let total = 0;
   for (const relativePath of ESTABLISHMENT_HTML_FILES) {
     const path = resolve(root, relativePath);
     const source = await readFile(path, 'utf8');
-    const { output, count } = injectRegistryEstablishment(source);
+    const established = injectRegistryEstablishment(source);
+    const output = relativePath === 'public/registry/index.html'
+      ? injectRegistryAuraLanding(established.output, env).output
+      : established.output;
+    const { count } = established;
     if (!count) throw new Error(`Missing data-registry-established marker: ${relativePath}`);
     total += count;
     if (output !== source) await writeFile(path, output, 'utf8');

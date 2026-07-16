@@ -49,6 +49,16 @@
       ]
     },
     {
+      "source": "/registry/aura/(.*)",
+      "headers": [
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://plausible.io; script-src-attr 'none'; connect-src 'self' https://plausible.io; img-src 'self' data: blob:; style-src 'self' 'unsafe-inline'; font-src 'self'; media-src 'self'; worker-src 'self' blob:; frame-src 'none'; frame-ancestors 'none'; object-src 'none'; base-uri 'self'; form-action 'self'"
+        },
+        { "key": "Referrer-Policy", "value": "same-origin" }
+      ]
+    },
+    {
       "source": "/embed/(.*)",
       "headers": [
         { "key": "X-Frame-Options", "value": "ALLOWALL" },

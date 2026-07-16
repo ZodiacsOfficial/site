@@ -8,7 +8,7 @@ All eight directive workstreams are implemented in the local site/package worktr
 
 This is an implementation and local-verification report, not a deployment claim. No production deploy, live analytics-provider event check, credentialed ESP delivery, live archival-chain provider check, or physical-device install check was performed without operator configuration. Those externally dependent acceptance items are identified below. Pending factual disclosures and missing archived receipts continue to render with the existing `#E0B080` pending-chip convention.
 
-No wallet connection, signing, message signing, approval, transaction construction, custody, write RPC, financial solicitation, birth-data analytics, cookies, fingerprinting, pixels, or session recording was introduced.
+This report predates the later, feature-flagged Registry Aura work. Registry Aura can, only after a visitor's click, ask an installed wallet for the selected public address or accept a pasted public address. Zodiacs.org does not request a private key, signature, approval, payment, swap, network change, or transaction for Aura; birth-chart data remains in the browser. Outbound wallet applications and trading venues are independent third parties with their own prompts, risks, and data practices.
 
 ## Source-control and locale coordination
 

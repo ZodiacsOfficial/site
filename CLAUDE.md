@@ -27,10 +27,15 @@ The CONTENT boundary survives the visual merge:
 
 1. **New surfaces** (`src/`): consumer astrology. **No token/market/crypto
    language or links.** The sanctioned cross-links into the wing are the
-   CollectBand on sign guides (EN + ES) and the records line on the
-   birth-chart result (`ChartCalculator`, full mode) — both in the records
-   register ("a canonical record in the registry → View the record"), never
-   market language. The wing's nav/footer label is "Registry" (ES
+   CollectBand on sign guides (EN + ES), the records line on the birth-chart
+   result (`ChartCalculator`, full mode), and the contextual saved-chart link
+   to Registry Aura when `PUBLIC_REGISTRY_AURA_ENABLED=1` — all in the records
+   register, never market language. Two carve-outs: `src/pages/registry/aura/`
+   is itself a Registry surface (records register, protective negations only,
+   no acquisition links), and the legal pages (Privacy, Terms, Disclosure, all
+   locales) carry the wallet/provider/market-risk disclosures that the Registry
+   features legally require — disclosure language there is compliance text,
+   not a boundary breach. The wing's nav/footer label is "Registry" (ES
    "Registro"); the URL path is `/registry/` (permanently 301-redirected
    from the old `/collect/` in `vercel.json`).
 2. **Wing** (`public/…` above): the registry catalogue keeps its museum
@@ -50,6 +55,14 @@ owns that page.
   (data: `scripts/sign-data.mjs` + `public/registry/zodiacs.registry.json`)
 - `public/archive/` (+ feeds) ← `node scripts/build-archive.mjs`
 - `public/assets/app.js` ← `node scripts/build-app.mjs` (source `src/app.jsx`)
+- `public/registry/index.html` Aura marker region (meta flag + no-JS entry
+  between the `registry-aura-entry` comments) ← stamped by
+  `scripts/configure-registry-aura.mjs` (predev/prebuild) and
+  `scripts/build-app.mjs` from `PUBLIC_REGISTRY_AURA_ENABLED` in the SHELL
+  env (plain-node generators don't read `.env` files — set the flag in the
+  shell or the Astro/site halves will skew, which `check-dist` fails on).
+  The committed state is always flag-OFF (`content="0"`, no entry): the CI
+  drift gate regenerates with the flag unset. Never commit flag-on output.
 - `public/assets/og/*.png` ← `node scripts/build-og-cards.mjs` (Playwright)
 - `public/assets/zodiac-icons/{48,128,400}/` ← `node scripts/build-icons.mjs`
   (sources in `public/assets/sdk/zodiac-icons/circle/` are SDK-public —

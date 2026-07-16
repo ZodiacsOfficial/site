@@ -20,6 +20,14 @@ export type AnalyticsEventName =
   | 'verifier_used'
   | 'sdk_click'
   | 'wallet_chart_computed'
+  | 'aura_view'
+  | 'aura_compose'
+  | 'aura_share'
+  | 'aura_refresh'
+  | 'aura_calculator'
+  | 'aura_entry'
+  | 'aura_return'
+  | 'aura_response'
   | 'result_rendered'
   | 'explorer_interaction'
   | 'tour_start'
@@ -69,8 +77,10 @@ export function trackAnalytics(
   properties: AnalyticsProperties = {},
 ): void {
   if (typeof window === 'undefined') return;
+  const safe = sanitizeAnalyticsProperties(name, properties);
+  if (!safe) return;
   const analytics = (window as Window & {
     zodiacsAnalytics?: { track?: (event: string, props: AnalyticsProperties) => void };
   }).zodiacsAnalytics;
-  analytics?.track?.(name, properties);
+  analytics?.track?.(name, safe);
 }

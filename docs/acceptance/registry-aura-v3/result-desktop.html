@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Registry Aura V3 proof — desktop result (two registers)</title>
+<style>
+  :root{
+    --void-0:#060709; --void-1:#0A0C11; --void-2:#0F121A;
+    --hair-1:rgba(198,204,218,.08); --hair-2:rgba(198,204,218,.16); --hair-3:rgba(198,204,218,.28);
+    --ink:#EEF1F7; --ink-2:#C6CCDA; --muted:#A2A9BA;
+    --serif:'EB Garamond','Iowan Old Style',Georgia,serif;
+    --sans:'Instrument Sans',system-ui,-apple-system,sans-serif;
+    --mono:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace;
+    --cancer:#B6D4E4; --leo:#E0A9B4; --scorpio:#B9DCE8; --aquarius:#AE8FC9;
+  }
+  *{box-sizing:border-box;margin:0}
+  body{font-variant-emoji:text;background:#040507;color:var(--ink-2);font:15px/1.55 var(--sans);padding:48px 20px 96px}
+  .proofhead{max-width:1240px;margin:0 auto 36px}
+  .proofhead .tag{font:600 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+  .proofhead h1{font:500 30px/1.2 var(--serif);color:var(--ink);margin:10px 0 6px}
+  .proofhead p{max-width:70ch;color:var(--muted)}
+  .frame{max-width:1240px;margin:0 auto;background:var(--void-0);border:1px solid var(--hair-3);border-radius:20px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.55)}
+  .notes{max-width:1240px;margin:20px auto 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
+  .note{border:1px solid var(--hair-2);border-left:2px solid var(--hair-3);border-radius:10px;background:var(--void-1);padding:12px 14px;font-size:13.5px}
+  .note b{display:inline-grid;place-items:center;width:20px;height:20px;margin-right:8px;border-radius:50%;background:var(--ink);color:var(--void-0);font:600 11px/1 var(--mono)}
+  .note em{color:var(--muted);font-style:normal;display:block;margin-top:4px;font-size:12.5px}
+
+  .screen{position:relative;padding:56px 64px 72px}
+  .kicker{font:italic 500 15px/1.3 var(--serif);color:var(--muted)}
+  h2.title{font:500 40px/1.08 var(--serif);color:var(--ink);margin:8px 0 26px;max-width:14ch}
+  .cols{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(360px,.85fr);gap:64px;align-items:start}
+  .pin{position:absolute;z-index:3;display:grid;place-items:center;width:20px;height:20px;border-radius:50%;background:var(--ink);color:var(--void-0);font:600 11px/1 var(--mono);box-shadow:0 2px 10px rgba(0,0,0,.5)}
+
+  .stamps{display:grid;grid-template-columns:repeat(3,1fr);border-block:1px solid var(--hair-2)}
+  .stamp{padding:16px 18px 16px 0;border-right:1px solid var(--hair-1)}
+  .stamp:last-child{border-right:0;padding-right:0}
+  .stamp .tag{font:400 10px/1.6 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+  .stamp h3{font:500 17px/1.25 var(--serif);color:var(--ink);margin:4px 0 2px}
+  .stamp .meta{font-size:13.5px;color:var(--ink-2)}
+  .stamp small{font-size:12px;color:var(--muted)}
+  .join{font-size:13.5px;color:var(--muted);margin-top:14px;max-width:64ch}
+
+  .algn{margin-top:34px}
+  .algn table{border-collapse:collapse;width:100%;table-layout:fixed}
+  .algn caption{caption-side:bottom;text-align:left;font-size:12px;color:var(--muted);padding:12px 2px 0}
+  .algn th.rowlbl{width:150px;text-align:left;font:500 10.5px/1.5 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding-right:10px}
+  .algn th.rowlbl i{font-style:normal;color:var(--ink-2);display:block}
+  .algn thead th{font:400 15px/1 var(--serif);color:var(--muted);padding:10px 0;text-align:center;font-weight:400}
+  .algn thead th.f{color:var(--ink);border:1px solid var(--hair-3);border-bottom:0}
+  .algn td{height:56px;text-align:center;vertical-align:middle;border-top:1px solid var(--hair-1)}
+  .algn td.f{background:rgba(238,241,247,.05);border-left:1px solid var(--hair-3);border-right:1px solid var(--hair-3)}
+  .algn tr:last-child td.f{border-bottom:1px solid var(--hair-3)}
+  .m-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--ink-2)}
+  .m-chip{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;border:1px solid var(--hair-3);color:var(--ink);font:500 11px/1 var(--mono);background:var(--void-2)}
+  .m-disc{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:50%;color:rgba(6,7,9,.82);font:500 18px/1 var(--serif)}
+  .m-sky{font:400 18px/1 var(--serif);color:var(--ink)}
+  .focalcap{display:flex;gap:6px;align-items:center;font:400 11px/1 var(--mono);color:var(--muted);margin-top:8px}
+  .focalcap::before{content:"▲";font-size:9px;color:var(--ink-2)}
+  .wheeldisc{margin-top:16px;border:1px solid var(--hair-2);border-radius:12px;max-width:340px}
+  .wheeldisc summary{padding:12px 14px;font-size:13.5px;color:var(--ink);cursor:pointer;list-style:none}
+  .plates{margin-top:34px}
+  .plates details{border:1px solid var(--hair-2);border-radius:14px;background:var(--void-1);margin-top:10px}
+  .plates summary{display:flex;gap:12px;align-items:center;padding:12px 16px;cursor:pointer;list-style:none}
+  .plates summary .m-disc{width:32px;height:32px;font-size:17px}
+  .plates summary strong{font:500 17px/1.2 var(--serif);color:var(--ink);font-weight:500}
+  .plates .sig{margin-left:auto;display:flex;gap:6px}
+  .plates .sig span{font:400 9.5px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);border:1px solid var(--hair-2);border-radius:999px;padding:4px 8px}
+  summary::-webkit-details-marker{display:none}
+
+  .right{position:sticky;top:32px;border-left:1px solid var(--hair-1);padding-left:56px}
+  .bigdisc{display:grid;place-items:center;width:128px;height:128px;border-radius:50%;color:rgba(6,7,9,.82);font:500 68px/1 var(--serif);position:relative}
+  .bigdisc::after{content:"";position:absolute;inset:-10px;border:1px solid var(--hair-3);border-radius:50%}
+  .right h3{font:500 56px/1 var(--serif);color:var(--ink);font-weight:500;margin-top:22px}
+  .reflection{font:italic 400 26px/1.4 var(--serif);color:var(--ink);margin-top:20px}
+  .meetline{font-size:14.5px;color:var(--ink-2);margin-top:18px}
+  .facts{display:grid;gap:14px;margin-top:22px;border-top:1px solid var(--hair-1);padding-top:18px}
+  .facts h4{font:500 15px/1.3 var(--serif);color:var(--ink)}
+  .facts p{font-size:13.5px;color:var(--ink-2)}
+  .btn{display:inline-block;text-align:center;padding:12px 22px;border-radius:999px;font:500 14px/1 var(--sans);border:1px solid var(--hair-3);background:transparent;color:var(--ink);margin-top:18px}
+  .btn--primary{background:var(--ink);color:var(--void-0);border-color:var(--ink)}
+</style>
+</head>
+<body>
+  <header class="proofhead">
+    <span class="tag">Registry Aura V3 · design proof · not production code</span>
+    <h1>Desktop result (≥1120&thinsp;px) — evidence register left, reading register right</h1>
+    <p>At desktop widths the result splits into two registers: the calm evidence column (stamps, Alignment with sticky row labels in the first table column, plates) and a sticky reading column where the payoff lives. Same DOM order as mobile — the split is CSS only. See audit §9 “Responsive.”</p>
+  </header>
+
+  <div class="frame"><div class="screen">
+    <p class="kicker">Chart · Record · Sky</p>
+    <h2 class="title">Three sources, read side by side</h2>
+
+    <div class="cols">
+      <div class="left">
+        <span class="pin" style="margin-left:-46px">1</span>
+        <div class="stamps">
+          <div class="stamp"><span class="tag">Local</span><h3>Selected birth chart</h3><p class="meta">Read on this device; never sent</p><small>Recorded birth time</small></div>
+          <div class="stamp"><span class="tag">Checked Jul 15 · yesterday</span><h3>Public wallet address</h3><p class="meta">4 official Zodiacs found</p><small>Solana public record · Re-check to update</small></div>
+          <div class="stamp"><span class="tag">Jul 16, 2026 UTC</span><h3>The sky</h3><p class="meta">Sun in Cancer · Moon in Leo</p><small>Computed for this visit</small></div>
+        </div>
+        <p class="join">These sources are read side by side. The wallet record never changes the birth chart; it only determines which held signs receive a reading.</p>
+
+        <span class="pin" style="margin-left:-46px">2</span>
+        <div class="algn">
+          <table>
+            <caption>Marks never leave their row. An empty cell means nothing is drawn for that sign.</caption>
+            <thead><tr>
+              <th class="rowlbl"></th>
+              <th>♈&#xFE0E;</th><th>♉&#xFE0E;</th><th>♊&#xFE0E;</th><th>♋&#xFE0E;</th><th class="f">♌&#xFE0E;</th><th>♍&#xFE0E;</th><th>♎&#xFE0E;</th><th>♏&#xFE0E;</th><th>♐&#xFE0E;</th><th>♑&#xFE0E;</th><th>♒&#xFE0E;</th><th>♓&#xFE0E;</th>
+            </tr></thead>
+            <tbody>
+              <tr>
+                <th class="rowlbl" scope="row"><i>Birth chart</i>private · this device</th>
+                <td><span class="m-dot" title="Venus"></span></td><td><span class="m-dot" title="Sun"></span></td><td><span class="m-dot" title="Mercury"></span></td>
+                <td><span class="m-chip" title="Moon, Midheaven">2</span></td>
+                <td class="f"><span class="m-dot" title="Mars"></span></td>
+                <td></td><td><span class="m-dot" title="Ascendant"></span></td><td></td><td></td><td></td><td></td><td></td>
+              </tr>
+              <tr>
+                <th class="rowlbl" scope="row"><i>At this address</i>public · checked Jul 15</th>
+                <td></td><td></td><td></td>
+                <td><span class="m-disc" style="background:var(--cancer)">♋&#xFE0E;</span></td>
+                <td class="f"><span class="m-disc" style="background:var(--leo)">♌&#xFE0E;</span></td>
+                <td></td><td></td>
+                <td><span class="m-disc" style="background:var(--scorpio)">♏&#xFE0E;</span></td>
+                <td></td><td></td>
+                <td><span class="m-disc" style="background:var(--aquarius)">♒&#xFE0E;</span></td>
+                <td></td>
+              </tr>
+              <tr>
+                <th class="rowlbl" scope="row"><i>Sky</i>Jul 16, 2026 UTC</th>
+                <td></td><td></td><td></td>
+                <td><span class="m-sky" title="Sun season">☉&#xFE0E;</span></td>
+                <td class="f"><span class="m-sky" title="Current Moon">☾&#xFE0E;</span></td>
+                <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="focalcap" style="margin-left:calc(150px + (100% - 150px) * 4.5 / 12 - 40px)">this visit’s focus</p>
+          <details class="wheeldisc"><summary>Open the full natal wheel</summary></details>
+        </div>
+
+        <span class="pin" style="margin-left:-46px">3</span>
+        <div class="plates">
+          <p class="kicker">Chart · Record · Sky · Reading</p>
+          <h3 style="font:500 22px/1.2 var(--serif);color:var(--ink);margin:6px 0 2px">The evidence, sign by sign</h3>
+          <details><summary><span class="m-disc" style="background:var(--cancer)">♋&#xFE0E;</span><strong>Cancer</strong><span class="sig"><span>Found at this address</span><span>Chart</span><span>Sky</span></span></summary></details>
+          <details><summary><span class="m-disc" style="background:var(--leo)">♌&#xFE0E;</span><strong>Leo</strong><span class="sig"><span>Found at this address</span><span>Chart</span><span>Sky</span></span></summary></details>
+          <details><summary><span class="m-disc" style="background:var(--scorpio)">♏&#xFE0E;</span><strong>Scorpio</strong><span class="sig"><span>Found at this address</span></span></summary></details>
+          <details><summary><span class="m-disc" style="background:var(--aquarius)">♒&#xFE0E;</span><strong>Aquarius</strong><span class="sig"><span>Found at this address</span></span></summary></details>
+        </div>
+      </div>
+
+      <aside class="right">
+        <span class="pin" style="margin-left:-80px">4</span>
+        <p class="kicker">Symbolic reading</p>
+        <div style="margin-top:20px"><span class="bigdisc" style="background:var(--leo)">♌&#xFE0E;</span></div>
+        <h3>Leo</h3>
+        <p class="reflection">Let one honest act be visible without making the response its measure — asked of everyone today, and familiar ground in this chart.</p>
+        <p class="meetline">Leo is found at this public wallet address. It is also in the selected birth chart and in the sky of July 16, 2026 UTC. For this reading, that Leo becomes a talisman for this visit — a symbolic focus, not a score or an ownership claim.</p>
+        <div class="facts">
+          <div><h4>Why this sign</h4><p>The Moon is in Leo in the sky of July 16, 2026 UTC.</p></div>
+          <div><h4>Next on the calendar</h4><p>Across the held signs, the Moon enters Scorpio next — exact Jul 21, 2026, 1:34 PM UTC, from the Registry’s published sky calendar.</p></div>
+        </div>
+        <button class="btn btn--primary" type="button">Create card preview</button>
+        <button class="btn" type="button" style="margin-left:8px">Clear this reading</button>
+      </aside>
+    </div>
+  </div></div>
+
+  <div class="notes">
+    <p class="note"><b>1</b>Evidence register: stamps sit 3-up above the Alignment; row labels move into a sticky first table column at this width (the mobile band-label pattern collapses back into a classic ledger). <em>Audit §9</em></p>
+    <p class="note"><b>2</b>The Alignment at desktop: 56&thinsp;px rows, 34&thinsp;px discs. The focal hairline spans all three rows; the caption sits under the focal column. <em>Audit §6</em></p>
+    <p class="note"><b>3</b>Plates stay collapsed and calm; pills summarize each sign’s facts without ranking. <em>Audit §4</em></p>
+    <p class="note"><b>4</b>Reading register is sticky: disc with hairline orbit, sign at display size, reflection, the engine sentence, fact stamps, and the two primary actions. DOM order remains evidence-first (mobile order); the visual split is CSS. <em>Audit §7, §9</em></p>
+  </div>
+</body>
+</html>

@@ -1,36 +1,38 @@
 ---
 import Base from '../../../layouts/Base.astro';
 
-const updated = '15 luglio 2026';
+const updated = '16 luglio 2026';
 
 const jsonLd = [
   {
     '@type': 'WebPage',
     name: 'Privacy su Zodiacs.org',
     url: 'https://zodiacs.org/it/privacy/',
-    description: 'Come zodiacs.org tratta i tuoi dati, dai calcoli locali all’assistente e alle notifiche facoltative.',
+    description: 'Come zodiacs.org tratta temi natali, consultazioni di indirizzi pubblici di Registry Aura e Shelf, memoria del browser, analisi e funzioni facoltative.',
     inLanguage: 'it',
   },
 ];
 ---
 <Base
-  title="Privacy — I tuoi dati di nascita restano sul tuo dispositivo | Zodiacs.org"
-  description="Come zodiacs.org tratta i tuoi dati: i temi vengono calcolati nel browser, le funzioni facoltative richiedono il tuo consenso e non conserviamo le conversazioni."
+  title="Privacy — Come vengono trattati i tuoi dati | Zodiacs.org"
+  description="Come zodiacs.org tratta temi natali, consultazioni di indirizzi pubblici di Registry Aura e Shelf, memoria del browser, analisi e funzioni facoltative."
   path="/it/privacy/"
   locale="it"
   jsonLd={jsonLd}
 >
   <section class="section container container--narrow">
     <em class="kicker">Privacy</em>
-    <h1 class="method-title display">I tuoi dati di nascita restano sul tuo dispositivo.</h1>
+    <h1 class="method-title display">Scegli tu quando i dati lasciano il dispositivo.</h1>
 
     <div class="prose">
       <p class="lede">
-        In breve: quando calcoli un tema natale, il calcolo avviene nel tuo
-        browser e la tua data, la tua ora e il tuo luogo di nascita non ci
-        vengono mai inviati. L’account e l’e-mail settimanale sono facoltativi
-        e disattivati per impostazione predefinita; puoi rinunciarvi facilmente.
-        Non mostriamo pubblicità e non usiamo il tracciamento tra siti.
+        In breve: il tema natale viene calcolato nel tuo browser. I dati di
+        nascita non vengono inviati durante quel calcolo né durante una
+        consultazione Registry Aura; lasciano il dispositivo solo se scegli di
+        sincronizzare un account o se li scrivi nell’assistente. Aura invia un
+        indirizzo pubblico del wallet — non i dati di nascita o del tema — a un
+        fornitore di dati blockchain per una consultazione di sola lettura. Non
+        mostriamo pubblicità e non usiamo il tracciamento tra siti.
       </p>
 
       <h2>Calcolatori e temi salvati</h2>
@@ -39,7 +41,89 @@ const jsonLd = [
         dispositivo. I temi che salvi restano nella memoria locale del browser.
         L’account è facoltativo; se lo usi, Supabase conserva il tuo indirizzo
         e-mail e i temi che scegli di sincronizzare per mostrarli sugli altri
-        dispositivi.
+        dispositivi. I dati di nascita non vengono trasmessi né conservati sui
+        nostri server come parte del calcolo stesso.
+      </p>
+
+      <h2>Registry Aura, Shelf e indirizzi pubblici</h2>
+      <p>
+        Registry Aura legge affiancati il riepilogo di un tema salvato in questo
+        browser, un indirizzo pubblico del wallet e il cielo con la relativa
+        data. Il tema e la lettura simbolica vengono composti sul dispositivo.
+        Quando componi o aggiorni un Aura, il nostro endpoint delle disponibilità
+        riceve l’indirizzo pubblico e lo inoltra al fornitore di dati blockchain
+        configurato per verificare quali voci del Registro sono presenti. La
+        richiesta non include dati di nascita, nome del tema, posizioni o
+        geometria del tema.
+      </p>
+      <p>
+        Quando è attivo, lo Shelf pubblico facoltativo nella pagina iniziale del
+        Registro usa lo stesso endpoint e invia un solo indirizzo pubblico Solana
+        dopo che premi “View”; non invia dati di nascita o del tema. Quando Aura
+        è disattivato, lo Shelf illustrativo non effettua richieste di indirizzi
+        o al fornitore. “Back to the example view” rimuove il risultato dallo
+        schermo; ricaricare o chiudere la pagina elimina la cache temporanea dello
+        Shelf conservata in memoria.
+      </p>
+      <p>
+        Puoi incollare un indirizzo senza collegare un wallet. Se scegli
+        “Connect”, il software di un wallet di terze parti si apre solo dopo un
+        tuo clic. Può restituire a questo browser gli account pubblici che
+        autorizzi; Aura seleziona un indirizzo compatibile e inoltra solo quello
+        per la consultazione. Aura non richiede frase di recupero, chiave
+        privata, firma di un messaggio, approvazione di token, transazione o
+        cambio di rete. Al software si applica l’informativa sulla privacy del
+        fornitore del wallet.
+      </p>
+      <p>
+        Un indirizzo pubblico è pubblico, ma non necessariamente anonimo. Le sue
+        disponibilità e la cronologia on-chain possono essere visibili e
+        collegate a una persona o ad altre attività. Vercel, il fornitore di dati
+        blockchain configurato e le rispettive infrastrutture possono trattare
+        i normali metadati della richiesta e log operativi o di sicurezza, come
+        indirizzo IP, data, ora e informazioni sul browser. Non promettiamo che
+        una richiesta relativa a un indirizzo pubblico non venga mai registrata
+        da fornitori di infrastruttura dei quali non controlliamo i tempi di
+        conservazione.
+      </p>
+
+      <h2>Memoria e condivisione di Aura</h2>
+      <p>
+        Per impostazione predefinita, Aura salva l’indirizzo pubblico, la rete, i
+        segni del Registro trovati, l’ora della consultazione e l’identificatore
+        del tema selezionato nella memoria di sessione di questa scheda, con una
+        validità di ripristino di otto ore. L’opzione non selezionata “Remember
+        this address on this device” salva gli stessi campi nella memoria locale
+        con una validità di ripristino di 24 ore. Dopo questi termini, le voci non
+        possono più essere ripristinate. Aura le elimina al successivo tentativo
+        di lettura, ma i byte scaduti possono restare nella memoria del browser
+        finché non torni in Aura o non cancelli i dati del sito. “Forget address
+        / Clear Aura data” rimuove entrambe le voci da questo browser, ma non può
+        cancellare la cronologia pubblica della blockchain o i log
+        dell’infrastruttura.
+      </p>
+      <p>
+        Le immagini Aura da condividere vengono composte sul tuo dispositivo.
+        Per impostazione predefinita escludono indirizzo, rete, nome e dati del
+        tema, posizioni esatte, geometria, numero e lista dei segni trovati.
+        Un’opzione facoltativa, valida solo per la sessione, può aggiungere il
+        fatto che il segno pubblico in evidenza compare in qualche punto del
+        tema selezionato. Se la attivi, quel fatto diventa pubblico.
+        L’applicazione scelta nel pannello di condivisione applica la propria
+        informativa. Cancellare Aura non consente di ritirare copie salvate o
+        ripubblicate da altre persone o servizi.
+      </p>
+
+      <h2>Richieste automatiche del Registro</h2>
+      <p>
+        Alcune sezioni del Registro richiedono automaticamente, tramite il tuo
+        browser, dati pubblici di mercato a DexScreener e statistiche pubbliche
+        sulle visualizzazioni a Wikimedia. Queste richieste GET automatiche non
+        contengono indirizzi di wallet, dati di nascita, dati del tema o testo
+        inserito da te. DexScreener e Wikimedia possono ricevere i normali
+        metadati di una richiesta web, come indirizzo IP, data, ora, browser e la
+        pagina di provenienza consentita dalle impostazioni del browser; si applicano le
+        rispettive informative sulla privacy.
       </p>
 
       <h2>Assistente IA</h2>
@@ -71,7 +155,7 @@ const jsonLd = [
         poter inviare la notifica. Puoi disattivarle in qualsiasi momento.
       </p>
 
-      <h2>E-mail e hosting</h2>
+      <h2>E-mail, hosting e analisi</h2>
       <p>
         L’e-mail settimanale richiede un account e un’iscrizione volontaria; è
         disattivata per impostazione predefinita e ogni messaggio permette di
@@ -79,17 +163,32 @@ const jsonLd = [
         tecnici per fornire le pagine e prevenire gli abusi. Non usiamo
         pubblicità né tracciamento tra siti. Contiamo le visualizzazioni di
         pagina e l’uso anonimo delle funzioni con Plausible, un servizio di
-        analisi senza cookie: nessun tracciamento tra siti, nessun dato di
-        nascita e nulla di ciò che scrivi. Gli eventi contengono soltanto
-        etichette di categoria — «un tema è stato salvato», mai da chi.
+        analisi senza cookie. Non riceve dati di nascita, indirizzi pubblici,
+        identificatori del tema o dell’account collegato né la lista esatta dei
+        segni. Gli eventi Aura includono solo categorie consentite, come l’esito
+        e una fascia approssimativa del numero di segni; gli altri eventi
+        registrano «un tema è stato salvato», mai da chi.
+      </p>
+
+      <h2>Memoria del browser</h2>
+      <p>
+        Non usiamo cookie pubblicitari o di tracciamento. La memoria interna del
+        sito serve alle funzioni che richiedi: temi salvati, dati di sessione
+        Aura limitati, un indirizzo Aura ricordato facoltativamente, preferenze
+        del sito e, se accedi, un token di accesso. Non viene usata per seguirti
+        su altri siti.
       </p>
 
       <h2>Le tue scelte</h2>
-      <p>
-        Puoi usare i calcolatori senza account, eliminare i temi locali dal
-        browser e chiedere la cancellazione di un account scrivendo a
-        <a href="mailto:hello@zodiacs.org">hello@zodiacs.org</a>.
-      </p>
+      <ul>
+        <li>Usare i calcolatori senza account o memoria esterna al dispositivo.</li>
+        <li>Provare l’esempio Aura senza tema, indirizzo, collegamento o acquisto.</li>
+        <li>Incollare un indirizzo pubblico invece di collegare un wallet di terze parti.</li>
+        <li>Lasciare “Remember” non selezionato e cancellare i dati Aura in qualsiasi momento.</li>
+        <li>Tornare all’esempio dello Shelf e ricaricare la pagina per cancellarne la cache temporanea.</li>
+        <li>Eliminare i temi locali dal browser.</li>
+        <li>Chiedere la cancellazione di un account scrivendo a <a href="mailto:hello@zodiacs.org">hello@zodiacs.org</a>.</li>
+      </ul>
 
       <p class="method-updated mono">Ultimo aggiornamento: {updated}</p>
     </div>
