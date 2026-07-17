@@ -2208,6 +2208,32 @@ async function verifyLandingHeroHandoff() {
   }
 }
 
+// A first-time desktop visitor must see the page name and the example
+// together on the first screen; a bottom-aligned lede beside the tall
+// example card silently pushed the headline below the fold.
+async function verifyHeroAboveTheFold(browser, baseURL) {
+  const context = await browser.newContext({
+    viewport: { width: 1280, height: 800 },
+  });
+  const page = await context.newPage();
+  await page.goto(`${baseURL}/registry/aura/`, { waitUntil: "networkidle" });
+  const headline = await page
+    .locator(".aura-page__hero h1")
+    .boundingBox();
+  const example = await page.locator(".aura-page__demo").boundingBox();
+  assert.ok(headline, "hero headline must render");
+  assert.ok(example, "hero example must render");
+  assert.ok(
+    headline.y >= 0 && headline.y + headline.height <= 800,
+    `the headline must sit inside the first 1280x800 screen (got y=${headline.y})`,
+  );
+  assert.ok(
+    example.y < 800,
+    "the example must begin inside the first desktop screen",
+  );
+  await context.close();
+}
+
 await mkdir(proofRoot, { recursive: true });
 await verifyAuraBundleSafety();
 await verifyLandingHeroHandoff();
@@ -2219,6 +2245,7 @@ const browser = await chromium.launch({
 });
 try {
   await withPreview({ port: 4331 }, async (baseURL) => {
+    await verifyHeroAboveTheFold(browser, baseURL);
     await verifyWalletEducation(browser, baseURL);
     const oneGeometry = await captureCase(browser, baseURL, "one", ["cancer"]);
     const fourGeometry = await captureCase(browser, baseURL, "four", [

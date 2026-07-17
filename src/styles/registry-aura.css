@@ -7,7 +7,10 @@
   display: grid;
   grid-template-columns: minmax(0, 1.25fr) minmax(260px, 0.75fr);
   gap: clamp(32px, 7vw, 88px);
-  align-items: end;
+  /* Top-aligned: the example card outgrew the lede (Alignment table +
+     braided reading), and end-alignment pushed the headline below the
+     fold on every desktop screen. */
+  align-items: start;
   padding-bottom: clamp(40px, 6vw, 72px);
   border-bottom: 1px solid var(--hair-2);
 }
