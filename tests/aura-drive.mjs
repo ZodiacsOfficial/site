@@ -2234,6 +2234,53 @@ async function verifyHeroAboveTheFold(browser, baseURL) {
   await context.close();
 }
 
+// The hero's example card is a narrow container on a wide viewport, so
+// the Alignment inside it must wear the stacked band-label shape (labels
+// above their row) that phones get — the side-label desktop shape crushes
+// twelve sign columns into ~18px each and the record discs collide.
+async function verifyDemoCardDensity(browser, baseURL) {
+  const context = await browser.newContext({
+    viewport: { width: 1280, height: 800 },
+  });
+  const page = await context.newPage();
+  await page.goto(`${baseURL}/registry/aura/`, { waitUntil: "networkidle" });
+
+  const label = await page
+    .locator(".aura-page__demo .aura-algn__lbl")
+    .first()
+    .boundingBox();
+  const firstCell = await page
+    .locator(".aura-page__demo .aura-algn tbody tr")
+    .first()
+    .locator(".aura-algn__cell")
+    .first()
+    .boundingBox();
+  assert.ok(label && firstCell, "demo Alignment must render labels and cells");
+  assert.ok(
+    label.y + label.height <= firstCell.y + 1,
+    `demo band label must sit above its marks row, not beside it (label bottom ${label.y + label.height}, cell top ${firstCell.y})`,
+  );
+
+  const discs = await page
+    .locator(".aura-page__demo .aura-algn__disc")
+    .evaluateAll((nodes) =>
+      nodes.map((node) => {
+        const box = node.getBoundingClientRect();
+        return { x: box.x, width: box.width };
+      }),
+    );
+  assert.ok(discs.length >= 2, "the example record must show several discs");
+  const sorted = [...discs].sort((a, b) => a.x - b.x);
+  for (let i = 1; i < sorted.length; i += 1) {
+    const gap = sorted[i].x - (sorted[i - 1].x + sorted[i - 1].width);
+    assert.ok(
+      gap >= 2,
+      `record discs in the demo card must not collide (gap ${gap.toFixed(1)}px)`,
+    );
+  }
+  await context.close();
+}
+
 await mkdir(proofRoot, { recursive: true });
 await verifyAuraBundleSafety();
 await verifyLandingHeroHandoff();
@@ -2246,6 +2293,7 @@ const browser = await chromium.launch({
 try {
   await withPreview({ port: 4331 }, async (baseURL) => {
     await verifyHeroAboveTheFold(browser, baseURL);
+    await verifyDemoCardDensity(browser, baseURL);
     await verifyWalletEducation(browser, baseURL);
     const oneGeometry = await captureCase(browser, baseURL, "one", ["cancer"]);
     const fourGeometry = await captureCase(browser, baseURL, "four", [
