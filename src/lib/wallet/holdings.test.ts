@@ -15,32 +15,38 @@ const SOLANA_ENV = {
 };
 
 interface RpcRequest {
+  jsonrpc: string;
   id: number;
-}
-
-interface SolanaRpcRequest extends RpcRequest {
   method: string;
-  params: [string, { mint: string }, unknown];
+  params: [string, { mint: string }, unknown] & unknown[];
 }
 
-function baseFetcher(
-  responseFor: (requests: RpcRequest[]) => unknown,
-  ok = true,
+// Public keyless RPC endpoints cap or reject JSON-RPC batches (observed
+// 2026-07-17: mainnet-beta 429s getTokenAccountsByOwner, PublicNode caps
+// that method at batch size 1, dRPC free tier caps batches at 3). The
+// resolver therefore sends each per-asset call as its own single-object
+// request, all twelve in parallel — these mocks answer one request per
+// fetch call and fail loudly if the resolver ever posts an array again.
+function singleFetcher(
+  respond: (request: RpcRequest) => unknown,
+  okFor: (request: RpcRequest) => boolean = () => true,
 ): typeof fetch {
   return vi.fn(async (_url: unknown, init?: RequestInit) => {
-    const requests = JSON.parse(String(init?.body)) as RpcRequest[];
+    const parsed = JSON.parse(String(init?.body)) as RpcRequest | RpcRequest[];
+    if (Array.isArray(parsed)) throw new Error('unexpected batch request');
     return {
-      ok,
-      json: async () => responseFor(requests),
+      ok: okFor(parsed),
+      json: async () => respond(parsed),
     } as Response;
   }) as unknown as typeof fetch;
 }
 
-function completeBatch(
-  requests: RpcRequest[],
-  resultFor: (id: number) => unknown = () => '0x0',
-) {
-  return requests.map(({ id }) => ({ jsonrpc: '2.0', id, result: resultFor(id) }));
+function baseResult(request: RpcRequest, result: unknown = '0x0') {
+  return { jsonrpc: '2.0', id: request.id, result };
+}
+
+function solanaResult(request: RpcRequest, value: unknown = []) {
+  return { jsonrpc: '2.0', id: request.id, result: { value } };
 }
 
 function solanaAccount(mint: string, amount: string) {
@@ -53,28 +59,9 @@ function solanaAccount(mint: string, amount: string) {
   };
 }
 
-function completeSolanaBatch(
-  requests: SolanaRpcRequest[],
-  valueFor: (request: SolanaRpcRequest) => unknown[] = () => [],
-) {
-  return requests.map((request) => ({
-    jsonrpc: '2.0',
-    id: request.id,
-    result: { value: valueFor(request) },
-  }));
-}
-
-function solanaFetcher(
-  responseFor: (requests: SolanaRpcRequest[]) => unknown,
-  ok = true,
-): typeof fetch {
-  return vi.fn(async (_url: unknown, init?: RequestInit) => {
-    const requests = JSON.parse(String(init?.body)) as SolanaRpcRequest[];
-    return {
-      ok,
-      json: async () => responseFor(requests),
-    } as Response;
-  }) as unknown as typeof fetch;
+function sentRequests(fetcher: typeof fetch): RpcRequest[] {
+  return (fetcher as unknown as ReturnType<typeof vi.fn>).mock.calls
+    .map(([, init]: [unknown, RequestInit]) => JSON.parse(String(init.body)) as RpcRequest);
 }
 
 describe('official holdings resolution', () => {
@@ -84,37 +71,43 @@ describe('official holdings resolution', () => {
     ])).toEqual(['aries', 'taurus', 'pisces']);
   });
 
-  it('accepts a complete Base batch in any response order', async () => {
-    const fetcher = baseFetcher((requests) => completeBatch(
-      requests,
-      (id) => id === 1 || id === 12 ? '0x01' : '0x00',
-    ).reverse());
+  it('resolves Base holdings from twelve individual balance calls', async () => {
+    const fetcher = singleFetcher((request) => baseResult(
+      request,
+      request.id === 1 || request.id === 12 ? '0x01' : '0x00',
+    ));
+
     await expect(resolveOfficialHeldSigns('base', ADDRESS, ENV, fetcher))
       .resolves.toEqual(['aries', 'pisces']);
+
+    const requests = sentRequests(fetcher);
+    expect(requests).toHaveLength(12);
+    expect(new Set(requests.map((request) => request.id)).size).toBe(12);
+    expect(requests.every((request) => request.method === 'eth_call')).toBe(true);
   });
 
-  it('treats a complete all-zero Base batch as a successful empty lookup', async () => {
-    const fetcher = baseFetcher((requests) => completeBatch(requests));
+  it('treats all-zero Base balances as a successful empty lookup', async () => {
+    const fetcher = singleFetcher((request) => baseResult(request));
     await expect(resolveOfficialHeldSigns('base', ADDRESS, ENV, fetcher))
       .resolves.toEqual([]);
   });
 
-  it('tolerates providers that add an explicit null error member to success entries', async () => {
-    const fetcher = baseFetcher((requests) => completeBatch(
-      requests,
-      (id) => (id === 1 ? '0x01' : '0x00'),
-    ).map((entry) => ({ ...entry, error: null })));
+  it('tolerates providers that add an explicit null error member to success responses', async () => {
+    const fetcher = singleFetcher((request) => ({
+      ...baseResult(request, request.id === 1 ? '0x01' : '0x00'),
+      error: null,
+    }));
     await expect(resolveOfficialHeldSigns('base', ADDRESS, ENV, fetcher))
       .resolves.toEqual(['aries']);
   });
 
-  it('queries only the twelve official Solana mints in one batch', async () => {
-    const fetcher = solanaFetcher((requests) => completeSolanaBatch(
-      requests,
-      (request) => request.id === 1 || request.id === 12
+  it('queries the twelve official Solana mints as individual mint-scoped calls', async () => {
+    const fetcher = singleFetcher((request) => solanaResult(
+      request,
+      request.id === 1 || request.id === 12
         ? [solanaAccount(request.params[1].mint, '1000000')]
         : [],
-    ).reverse());
+    ));
 
     await expect(resolveOfficialHeldSigns(
       'solana',
@@ -123,9 +116,10 @@ describe('official holdings resolution', () => {
       fetcher,
     )).resolves.toEqual(['aries', 'pisces']);
 
-    const body = JSON.parse(String((fetcher as any).mock.calls[0][1].body)) as SolanaRpcRequest[];
-    expect(body).toHaveLength(12);
-    expect(body.every((request) => (
+    const requests = sentRequests(fetcher);
+    expect(requests).toHaveLength(12);
+    expect(new Set(requests.map((request) => request.params[1].mint)).size).toBe(12);
+    expect(requests.every((request) => (
       request.method === 'getTokenAccountsByOwner'
         && Object.keys(request.params[1]).length === 1
         && typeof request.params[1].mint === 'string'
@@ -133,8 +127,8 @@ describe('official holdings resolution', () => {
     ))).toBe(true);
   });
 
-  it('treats a complete empty Solana batch as a successful empty lookup', async () => {
-    const fetcher = solanaFetcher((requests) => completeSolanaBatch(requests));
+  it('treats empty Solana responses as a successful empty lookup', async () => {
+    const fetcher = singleFetcher((request) => solanaResult(request));
     await expect(resolveOfficialHeldSigns(
       'solana',
       '11111111111111111111111111111111',
@@ -144,33 +138,28 @@ describe('official holdings resolution', () => {
   });
 
   it.each([
-    ['missing response', (requests: RpcRequest[]) => completeBatch(requests).slice(0, -1)],
-    ['duplicate response id', (requests: RpcRequest[]) => {
-      const payload = completeBatch(requests);
-      payload[payload.length - 1] = { ...payload[0] };
-      return payload;
-    }],
-    ['unknown response id', (requests: RpcRequest[]) => {
-      const payload = completeBatch(requests);
-      payload[payload.length - 1] = { jsonrpc: '2.0', id: 99, result: '0x0' };
-      return payload;
-    }],
-    ['per-call provider error', (requests: RpcRequest[]) => completeBatch(requests).map((entry, index) => (
-      index === 3 ? { jsonrpc: '2.0', id: entry.id, error: { code: -32000 } } : entry
-    ))],
-    ['malformed balance', (requests: RpcRequest[]) => completeBatch(
-      requests,
-      (id) => id === 4 ? 'not-hex' : '0x0',
+    ['mismatched response id', (request: RpcRequest) => baseResult({ ...request, id: 99 })],
+    ['provider error', (request: RpcRequest) => (
+      request.id === 4
+        ? { jsonrpc: '2.0', id: request.id, error: { code: -32000 } }
+        : baseResult(request)
     )],
-    ['non-array payload', () => ({ jsonrpc: '2.0', result: [] })],
-  ])('fails closed for a Base batch with a %s', async (_label, responseFor) => {
-    const fetcher = baseFetcher(responseFor);
+    ['malformed balance', (request: RpcRequest) => baseResult(
+      request,
+      request.id === 4 ? 'not-hex' : '0x0',
+    )],
+    ['array payload', (request: RpcRequest) => [baseResult(request)]],
+  ])('fails closed when any Base response carries a %s', async (_label, respond) => {
+    const fetcher = singleFetcher(respond);
     await expect(resolveOfficialHeldSigns('base', ADDRESS, ENV, fetcher))
       .resolves.toBeUndefined();
   });
 
-  it('fails closed for HTTP and JSON provider failures', async () => {
-    const httpFailure = baseFetcher(() => [], false);
+  it('fails closed when any single Base request fails at HTTP or JSON level', async () => {
+    const httpFailure = singleFetcher(
+      (request) => baseResult(request),
+      (request) => request.id !== 7,
+    );
     await expect(resolveOfficialHeldSigns('base', ADDRESS, ENV, httpFailure))
       .resolves.toBeUndefined();
 
@@ -183,34 +172,28 @@ describe('official holdings resolution', () => {
   });
 
   it.each([
-    ['missing response', (requests: SolanaRpcRequest[]) => completeSolanaBatch(requests).slice(0, -1)],
-    ['duplicate response id', (requests: SolanaRpcRequest[]) => {
-      const payload = completeSolanaBatch(requests);
-      payload[payload.length - 1] = { ...payload[0] };
-      return payload;
-    }],
-    ['unknown response id', (requests: SolanaRpcRequest[]) => {
-      const payload = completeSolanaBatch(requests);
-      payload[payload.length - 1] = { jsonrpc: '2.0', id: 99, result: { value: [] } };
-      return payload;
-    }],
-    ['per-call provider error', (requests: SolanaRpcRequest[]) => completeSolanaBatch(requests).map((entry, index) => (
-      index === 3 ? { jsonrpc: '2.0', id: entry.id, error: { code: -32000 } } : entry
-    ))],
-    ['malformed result', (requests: SolanaRpcRequest[]) => completeSolanaBatch(requests).map((entry, index) => (
-      index === 3 ? { jsonrpc: '2.0', id: entry.id, result: { value: {} } } : entry
-    ))],
-    ['wrong returned mint', (requests: SolanaRpcRequest[]) => completeSolanaBatch(
-      requests,
-      (request) => request.id === 4 ? [solanaAccount('wrong-mint', '1')] : [],
+    ['mismatched response id', (request: RpcRequest) => solanaResult({ ...request, id: 99 })],
+    ['provider error', (request: RpcRequest) => (
+      request.id === 4
+        ? { jsonrpc: '2.0', id: request.id, error: { code: -32000 } }
+        : solanaResult(request)
     )],
-    ['malformed balance', (requests: SolanaRpcRequest[]) => completeSolanaBatch(
-      requests,
-      (request) => request.id === 4 ? [solanaAccount(request.params[1].mint, '1.5')] : [],
+    ['malformed result', (request: RpcRequest) => (
+      request.id === 4
+        ? { jsonrpc: '2.0', id: request.id, result: { value: {} } }
+        : solanaResult(request)
     )],
-    ['non-array payload', () => ({ jsonrpc: '2.0', result: { value: [] } })],
-  ])('fails closed for a Solana batch with a %s', async (_label, responseFor) => {
-    const fetcher = solanaFetcher(responseFor);
+    ['wrong returned mint', (request: RpcRequest) => solanaResult(
+      request,
+      request.id === 4 ? [solanaAccount('wrong-mint', '1')] : [],
+    )],
+    ['malformed balance', (request: RpcRequest) => solanaResult(
+      request,
+      request.id === 4 ? [solanaAccount(request.params[1].mint, '1.5')] : [],
+    )],
+    ['array payload', (request: RpcRequest) => [solanaResult(request)]],
+  ])('fails closed when any Solana response carries a %s', async (_label, respond) => {
+    const fetcher = singleFetcher(respond);
     await expect(resolveOfficialHeldSigns(
       'solana',
       '11111111111111111111111111111111',
@@ -219,13 +202,29 @@ describe('official holdings resolution', () => {
     )).resolves.toBeUndefined();
   });
 
-  it('passes the endpoint abort signal to the RPC request', async () => {
-    const controller = new AbortController();
-    const fetcher = baseFetcher((requests) => completeBatch(requests));
-    await resolveOfficialHeldSigns('base', ADDRESS, ENV, fetcher, controller.signal);
-    expect(fetcher).toHaveBeenCalledWith(
-      ENV.BASE_RPC_URL,
-      expect.objectContaining({ signal: controller.signal }),
+  it('fails closed when any single Solana request fails at the HTTP level', async () => {
+    const fetcher = singleFetcher(
+      (request) => solanaResult(request),
+      (request) => request.id !== 7,
     );
+    await expect(resolveOfficialHeldSigns(
+      'solana',
+      '11111111111111111111111111111111',
+      SOLANA_ENV,
+      fetcher,
+    )).resolves.toBeUndefined();
+  });
+
+  it('passes the endpoint abort signal to every RPC request', async () => {
+    const controller = new AbortController();
+    const fetcher = singleFetcher((request) => baseResult(request));
+    await resolveOfficialHeldSigns('base', ADDRESS, ENV, fetcher, controller.signal);
+
+    const calls = (fetcher as unknown as ReturnType<typeof vi.fn>).mock.calls;
+    expect(calls).toHaveLength(12);
+    for (const [url, init] of calls) {
+      expect(url).toBe(ENV.BASE_RPC_URL);
+      expect((init as RequestInit).signal).toBe(controller.signal);
+    }
   });
 });
