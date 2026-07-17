@@ -2231,6 +2231,27 @@ async function verifyHeroAboveTheFold(browser, baseURL) {
     example.y < 800,
     "the example must begin inside the first desktop screen",
   );
+
+  // The V3 hero's "two honest doors" must be actionable without
+  // scrolling: buried at the bottom of the ~930px example card they
+  // were on no one's first screen.
+  for (const [name, href] of [
+    ["Open the full example", "#aura-composer"],
+    ["Start with your chart", "#aura-composer"],
+  ]) {
+    const door = await page
+      .locator(`.aura-page__hero a:has-text("${name}")`)
+      .boundingBox();
+    assert.ok(door, `hero door "${name}" must render`);
+    assert.ok(
+      door.y >= 0 && door.y + door.height <= 800,
+      `hero door "${name}" must sit inside the first 1280x800 screen (got y=${door.y})`,
+    );
+    const target = await page
+      .locator(`.aura-page__hero a:has-text("${name}")`)
+      .getAttribute("href");
+    assert.equal(target, href, `hero door "${name}" must anchor to the composer`);
+  }
   await context.close();
 }
 
