@@ -204,19 +204,101 @@ const tools = [
   </section>
 
   <!-- 01b · Returning visitors with a saved chart get greeted; everyone else sees nothing here -->
-  <WelcomeBack client:idle />
+  <WelcomeBack client:load />
 
   <!-- 02 · The sky, right now -->
   <section class="container ticker-band reveal">
     <SkyTicker client:load />
   </section>
 
-  <!-- 02b · Zero-input value: tap your sign, see today -->
+  <!-- 02b · Interactive proof of the hero promise -->
+  <section class="section container chart-preview" id="chart-preview">
+    <div class="section-head reveal">
+      <em class="kicker">Interactive preview</em>
+      <h2>See how a birth chart becomes a story.</h2>
+      <p>Explore a real chart without entering anything. Tap a planet, house, or connection to see what it means.</p>
+    </div>
+    <div class="reveal">
+      <DemoChart />
+      <script is:inline>
+        (function () {
+          var root = document.querySelector('[data-demo-preview]');
+          if (!root) return;
+          var caption = root.querySelector('[data-demo-caption]');
+          var title = root.querySelector('[data-demo-title-output]');
+          var kind = root.querySelector('[data-demo-kind-output]');
+          var targets = root.querySelectorAll('[data-demo-target]');
+          var jumps = root.querySelectorAll('[data-demo-jump]');
+          var highlights = root.querySelectorAll('[data-demo-highlight]');
+          var enterFrame = 0;
+          var settleFrame = 0;
+          if (!caption || !title || !kind || !targets.length) return;
+
+          var reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+          var targetFor = function (id) {
+            return Array.prototype.find.call(targets, function (target) {
+              return target.dataset.demoId === id;
+            });
+          };
+
+          var activate = function (target, event) {
+            if (!target) return;
+            window.cancelAnimationFrame(enterFrame);
+            window.cancelAnimationFrame(settleFrame);
+            var instant = !event || event.detail === 0;
+            var reducedMotion = !instant && reduced.matches;
+            var id = target.dataset.demoId;
+            var nextHighlight = null;
+
+            targets.forEach(function (item) {
+              item.setAttribute('aria-pressed', item === target ? 'true' : 'false');
+            });
+            jumps.forEach(function (item) {
+              item.setAttribute('aria-pressed', item.dataset.demoJump === id ? 'true' : 'false');
+            });
+            highlights.forEach(function (item) {
+              item.dataset.active = 'false';
+              if (item.dataset.demoHighlight === id) nextHighlight = item;
+            });
+
+            root.dataset.demoMotion = instant ? 'instant' : reducedMotion ? 'reduced' : 'animated';
+            root.dataset.activeLayer = target.dataset.demoLayer;
+            root.dataset.activeId = id;
+            kind.textContent = target.dataset.demoKind;
+            title.textContent = target.dataset.demoTitle;
+            caption.textContent = target.dataset.demoCopy;
+
+            if (!nextHighlight) return;
+            if (instant || reducedMotion) {
+              nextHighlight.dataset.active = 'true';
+              return;
+            }
+            enterFrame = window.requestAnimationFrame(function () {
+              settleFrame = window.requestAnimationFrame(function () {
+                nextHighlight.dataset.active = 'true';
+              });
+            });
+          };
+
+          targets.forEach(function (target) {
+            target.addEventListener('click', function (event) { activate(target, event); });
+          });
+          jumps.forEach(function (jump) {
+            jump.addEventListener('click', function (event) {
+              activate(targetFor(jump.dataset.demoJump), event);
+            });
+          });
+        })();
+      </script>
+    </div>
+  </section>
+
+  <!-- 03 · Zero-input value: tap your sign, see today -->
   <section class="section container reveal">
     <TodayBySign client:idle />
   </section>
 
-  <!-- 03 · Tools -->
+  <!-- 04 · Tools -->
   <section class="section container">
     <div class="section-head reveal">
       <h2>Start with your chart</h2>
@@ -242,41 +324,6 @@ const tools = [
           2028, with peak times in UTC — <a href="/eclipses/">see the dates</a>.
         </li>
       </ul>
-    </div>
-  </section>
-
-  <!-- 04 · Demo chart -->
-  <section class="section container">
-    <div class="section-head reveal">
-      <h2>What a chart can show you</h2>
-      <p>Frida Kahlo's chart, calculated from the 1907 sky and read in plain terms.</p>
-    </div>
-    <div class="reveal">
-      <DemoChart />
-      <script is:inline>
-        (function () {
-          var root = document.querySelector('[data-demo-preview]');
-          if (!root) return;
-          var caption = root.querySelector('[data-demo-caption]');
-          var buttons = root.querySelectorAll('[data-demo-layer]');
-          if (!caption || !buttons.length) return;
-          var initial = caption.textContent;
-          buttons.forEach(function (button) {
-            button.addEventListener('click', function () {
-              var clear = button.getAttribute('aria-pressed') === 'true';
-              buttons.forEach(function (item) { item.setAttribute('aria-pressed', 'false'); });
-              if (clear) {
-                delete root.dataset.activeLayer;
-                caption.textContent = initial;
-                return;
-              }
-              button.setAttribute('aria-pressed', 'true');
-              root.dataset.activeLayer = button.dataset.demoLayer;
-              caption.textContent = button.dataset.demoCopy;
-            });
-          });
-        })();
-      </script>
     </div>
   </section>
 
@@ -638,11 +685,83 @@ const tools = [
   .tools-upcoming a { color: var(--text); }
 
   /* ── Demo ── */
-  :global(.demo) { display: grid; gap: 22px; grid-template-columns: 1fr; align-items: start; }
-  @media (min-width: 960px) { :global(.demo) { grid-template-columns: 1.15fr 0.85fr; } }
-  :global(.demo__wheel-core) { padding: clamp(14px, 2.5vw, 26px); }
-  :global(.demo__wheel-stage) { position: relative; }
-  :global(.demo__targets) { position: absolute; inset: 0; pointer-events: none; }
+  .chart-preview { scroll-margin-top: 92px; }
+  .chart-preview .section-head { max-width: 720px; }
+  .chart-preview .section-head .kicker { display: block; margin-bottom: 12px; }
+  :global(.demo) {
+    display: grid;
+    gap: clamp(18px, 3vw, 34px);
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+  @media (min-width: 960px) {
+    :global(.demo) { grid-template-columns: minmax(0, 1.18fr) minmax(340px, 0.82fr); }
+  }
+  :global(.demo__wheel) { overflow: hidden; }
+  :global(.demo__wheel-core) { padding: clamp(12px, 2.5vw, 26px); }
+  :global(.demo__wheel-stage) { position: relative; max-width: 640px; margin-inline: auto; }
+  :global(.demo__sample-badge) {
+    position: absolute;
+    z-index: 5;
+    top: clamp(8px, 2vw, 16px);
+    left: clamp(8px, 2vw, 16px);
+    padding: 7px 10px;
+    border: 1px solid var(--hair-1);
+    border-radius: 999px;
+    background: rgba(8, 10, 14, 0.78);
+    color: var(--text-2);
+    font-size: 9px;
+    letter-spacing: 0.07em;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    pointer-events: none;
+  }
+  :global(.demo__focus-layer),
+  :global(.demo__targets) { position: absolute; inset: 0; width: 100%; height: 100%; }
+  :global(.demo__focus-layer) { z-index: 2; overflow: visible; pointer-events: none; }
+  :global(.demo__targets) { z-index: 3; pointer-events: none; }
+  :global([data-demo-highlight]) {
+    opacity: 0;
+    transform: scale(0.95);
+    transform-box: fill-box;
+    transform-origin: center;
+    pointer-events: none;
+    transition:
+      opacity 210ms cubic-bezier(0.23, 1, 0.32, 1),
+      transform 210ms cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  :global([data-demo-highlight][data-active='true']) { opacity: 1; transform: scale(1); }
+  :global(.demo[data-demo-motion='instant'] [data-demo-highlight]) { transition: none; }
+  :global(.demo[data-demo-motion='reduced'] [data-demo-highlight]) {
+    transform: none;
+    transition: opacity 160ms cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  :global(.demo__focus-disc) { fill: color-mix(in oklab, var(--focus) 14%, transparent); }
+  :global(.demo__focus-ring) {
+    fill: none;
+    stroke: var(--focus);
+    stroke-width: 0.5;
+    vector-effect: non-scaling-stroke;
+  }
+  :global(.demo__focus-house) {
+    fill: rgba(238, 241, 247, 0.095);
+    stroke: rgba(238, 241, 247, 0.82);
+    stroke-width: 0.42;
+    vector-effect: non-scaling-stroke;
+  }
+  :global(.demo__focus-aspect) {
+    stroke: var(--focus);
+    stroke-width: 0.75;
+    stroke-linecap: round;
+    vector-effect: non-scaling-stroke;
+  }
+  :global(.demo__focus-node) {
+    fill: rgba(10, 12, 17, 0.96);
+    stroke: var(--focus);
+    stroke-width: 0.5;
+    vector-effect: non-scaling-stroke;
+    pointer-events: none;
+  }
   :global(.demo__target) {
     position: absolute;
     left: calc(var(--x) * 1%);
@@ -675,31 +794,31 @@ const tools = [
   }
   :global(.demo__target--house) { width: clamp(22px, 6.6%, 34px); z-index: 2; }
   :global(.demo__target--aspect) { width: clamp(20px, 6%, 31px); z-index: 1; }
-  :global(.demo__target:hover),
-  :global(.demo__target[aria-pressed='true']) {
-    border-color: color-mix(in oklab, var(--sign, var(--text)) 55%, transparent);
-    background: color-mix(in oklab, var(--sign, var(--text)) 11%, transparent);
-  }
-  :global(.demo__target--planet:hover),
-  :global(.demo__target--planet[aria-pressed='true']) {
-    border-color: transparent;
-    background: transparent;
-  }
-  :global(.demo__target--planet:hover::before),
-  :global(.demo__target--planet[aria-pressed='true']::before) {
-    border-color: color-mix(in oklab, var(--sign) 55%, transparent);
-    background: color-mix(in oklab, var(--sign) 11%, transparent);
-  }
   :global(.demo__target:focus-visible) {
     outline: 2px solid var(--text);
     outline-offset: 2px;
   }
   :global(.demo__target--planet:focus-visible) { outline-offset: 7px; }
+  @media (hover: hover) and (pointer: fine) {
+    :global(.demo__target:hover) {
+      border-color: color-mix(in oklab, var(--sign, var(--text)) 58%, transparent);
+      background: color-mix(in oklab, var(--sign, var(--text)) 12%, transparent);
+    }
+    :global(.demo__target--planet:hover) { border-color: transparent; background: transparent; }
+    :global(.demo__target--planet:hover::before) {
+      border-color: color-mix(in oklab, var(--sign) 58%, transparent);
+      background: color-mix(in oklab, var(--sign) 12%, transparent);
+    }
+  }
   :global(.demo__wheel-stage .wheel__body),
   :global(.demo__wheel-stage .wheel__house),
   :global(.demo__wheel-stage .wheel__aspect) {
-    transition: opacity var(--dur-1) var(--ease);
+    transition: opacity 190ms cubic-bezier(0.23, 1, 0.32, 1);
   }
+  :global(.demo[data-demo-motion='instant'] .demo__wheel-stage .wheel__body),
+  :global(.demo[data-demo-motion='instant'] .demo__wheel-stage .wheel__house),
+  :global(.demo[data-demo-motion='instant'] .demo__wheel-stage .wheel__aspect),
+  :global(.demo[data-demo-motion='instant'] .demo__jump) { transition: none; }
   :global(.demo[data-active-layer='planets'] .wheel__house),
   :global(.demo[data-active-layer='planets'] .wheel__aspect),
   :global(.demo[data-active-layer='houses'] .wheel__body),
@@ -707,40 +826,120 @@ const tools = [
   :global(.demo[data-active-layer='aspects'] .wheel__body),
   :global(.demo[data-active-layer='aspects'] .wheel__house) { opacity: 0.16; }
   :global(.demo__preview-hint) {
-    margin: 10px 0 0;
+    margin: 8px 0 0;
     text-align: center;
     color: var(--faint);
     font-size: 10.5px;
     letter-spacing: 0.04em;
   }
-  :global(.demo__caption) {
-    margin: 7px auto 0;
-    max-width: 62ch;
-    min-height: 3.2em;
+  :global(.demo__receipt) {
+    margin: 8px 0 0;
+    text-align: center;
+    font-size: 9.5px;
+    letter-spacing: 0.05em;
+    color: var(--faint);
+  }
+  :global(.demo__guide) { display: grid; gap: 16px; align-content: center; }
+  :global(.demo__guide-head) { display: grid; gap: 8px; }
+  :global(.demo__guide-head .kicker) { margin: 0; }
+  :global(.demo__guide-head h3) {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: clamp(1.55rem, 2.4vw, 2.15rem);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+  }
+  :global(.demo__guide-head p) { margin: 0; color: var(--text-2); font-size: var(--text-sm); line-height: 1.55; }
+  :global(.demo__jumps) { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+  :global(.demo__jump) {
+    display: grid;
+    align-content: center;
+    gap: 4px;
+    min-height: 66px;
+    padding: 10px 12px;
+    border: 1px solid var(--hair-1);
+    border-radius: var(--r-md);
+    background: rgba(13, 16, 23, 0.5);
+    color: var(--text-2);
+    text-align: left;
+    cursor: pointer;
+    transition:
+      transform 140ms cubic-bezier(0.23, 1, 0.32, 1),
+      border-color 160ms ease,
+      background-color 160ms ease,
+      color 160ms ease;
+  }
+  :global(.demo__jump strong) { font-size: 12.5px; font-weight: 600; line-height: 1.2; }
+  :global(.demo__jump[aria-pressed='true']) {
+    border-color: rgba(238, 241, 247, 0.5);
+    background: rgba(238, 241, 247, 0.1);
+    color: var(--text);
+  }
+  :global(.demo__jump:active) { transform: scale(0.97); }
+  :global(.demo__jump:focus-visible) { outline: 2px solid var(--text); outline-offset: 2px; }
+  @media (hover: hover) and (pointer: fine) {
+    :global(.demo__jump:hover) { border-color: rgba(238, 241, 247, 0.34); color: var(--text); }
+  }
+  :global(.demo__insight) {
+    display: grid;
+    align-content: start;
+    gap: 10px;
+    min-height: 230px;
+    padding: clamp(18px, 3vw, 28px);
+    border: 1px solid var(--hair-1);
+    border-radius: var(--r-lg);
+    background:
+      radial-gradient(circle at 100% 0%, rgba(182, 212, 228, 0.08), transparent 42%),
+      rgba(13, 16, 23, 0.58);
+  }
+  :global(.demo__insight h3) { margin: 0; font-size: var(--text-lg); letter-spacing: -0.015em; }
+  :global(.demo__insight p) {
+    margin: 0;
     color: var(--text-2);
     font-size: var(--text-sm);
-    line-height: 1.6;
+    line-height: 1.62;
+    text-wrap: pretty;
   }
-  :global(.demo__caption a) { color: var(--text); white-space: nowrap; }
-  :global(.demo__receipt) { margin: 12px 0 0; text-align: center; font-size: 10.5px; letter-spacing: 0.06em; color: var(--faint); }
-  :global(.demo__callouts) { display: grid; gap: 12px; align-content: start; }
+  :global(.demo__cta) { width: fit-content; margin-top: auto; }
+  :global(.demo__big-three) { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
   :global(.demo__callout) {
     display: grid;
-    gap: 5px;
-    padding: 14px 16px;
+    gap: 4px;
+    padding: 11px 12px;
     border: 1px solid color-mix(in oklab, var(--sign) 30%, transparent);
     border-radius: var(--r-md);
     background: color-mix(in oklab, var(--sign) 6%, transparent);
   }
-  :global(.demo__callout strong) { font-size: var(--text-lg); letter-spacing: -0.01em; }
-  :global(.demo__callout p) { margin: 0; font-size: var(--text-sm); color: var(--text-2); line-height: 1.55; }
-  :global(.demo__cta-line) { margin: 8px 0 2px; font-size: var(--text-sm); color: var(--muted); line-height: 1.6; }
+  :global(.demo__callout strong) { font-size: 14px; letter-spacing: -0.01em; }
+  :global(.demo__callout p) { margin: 0; font-size: 11px; color: var(--text-2); line-height: 1.45; }
+  :global(.demo__cta-line) { margin: 0; font-size: 12px; color: var(--muted); line-height: 1.55; }
   :global(.demo__cta-line strong) { color: var(--text); }
 
+  @media (max-width: 640px) {
+    :global(.demo__sample-badge) { font-size: 8px; }
+    :global(.demo__preview-hint) { font-size: 9.5px; }
+    :global(.demo__receipt) { font-size: 8px; line-height: 1.45; }
+    :global(.demo__jump) { min-height: 62px; padding: 9px; }
+    :global(.demo__jump strong) { font-size: 11.5px; }
+    :global(.demo__insight) { min-height: 0; }
+    :global(.demo__cta) { width: 100%; justify-content: center; }
+    :global(.demo__callout p) { display: none; }
+  }
+
   @media (prefers-reduced-motion: reduce) {
+    :global([data-demo-highlight]) {
+      transform: none;
+      transition: opacity 160ms cubic-bezier(0.23, 1, 0.32, 1);
+    }
     :global(.demo__wheel-stage .wheel__body),
     :global(.demo__wheel-stage .wheel__house),
-    :global(.demo__wheel-stage .wheel__aspect) { transition: none; }
+    :global(.demo__wheel-stage .wheel__aspect) {
+      transition: opacity 160ms cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    :global(.demo__jump) {
+      transition: border-color 160ms ease, background-color 160ms ease, color 160ms ease;
+    }
+    :global(.demo__jump:active) { transform: none; }
   }
 
   /* ── The Twelve ── */
