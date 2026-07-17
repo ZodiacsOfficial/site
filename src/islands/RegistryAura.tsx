@@ -145,6 +145,15 @@ function validHoldingsPayload(value: unknown): value is AuraHoldings {
   );
 }
 
+// Wallets announce their own icons (Wallet Standard / EIP-6963 data URIs).
+// Only data:image/ URIs are rendered — a page-injected provider must not be
+// able to smuggle another scheme into an <img>.
+function walletIconSrc(icon: unknown): string | null {
+  return typeof icon === "string" && icon.startsWith("data:image/")
+    ? icon
+    : null;
+}
+
 function selectedChart(charts: SavedChart[], id: string): SavedChart | null {
   return charts.find((chart) => chart.id === id) ?? null;
 }
@@ -1026,9 +1035,34 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
                 solanaWallets.length === 1 ? undefined : "aura-solana-wallets"
               }
             >
-              {connectionBusy === "solana"
-                ? "Connecting…"
-                : "Connect Solana wallet"}
+              <span class="aura-wallet-line">
+                <img
+                  class="aura-chain-mark"
+                  src="/assets/wallets/solana-mark.svg"
+                  alt=""
+                  width="15"
+                  height="13"
+                />
+                <span>
+                  {connectionBusy === "solana"
+                    ? "Connecting…"
+                    : "Connect Solana wallet"}
+                </span>
+              </span>
+              {solanaWallets.length === 1 && (
+                <span class="aura-wallet-via">
+                  via {solanaWallets[0].name}
+                  {walletIconSrc(solanaWallets[0].icon) && (
+                    <img
+                      class="aura-wallet-icon"
+                      src={walletIconSrc(solanaWallets[0].icon)!}
+                      alt=""
+                      width="18"
+                      height="18"
+                    />
+                  )}
+                </span>
+              )}
             </button>
             <button
               ref={baseConnectRef}
@@ -1045,9 +1079,34 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
                 evmProviders.length === 1 ? undefined : "aura-base-wallets"
               }
             >
-              {connectionBusy === "base"
-                ? "Connecting…"
-                : "Connect Base wallet"}
+              <span class="aura-wallet-line">
+                <img
+                  class="aura-chain-mark"
+                  src="/assets/wallets/base-mark.svg"
+                  alt=""
+                  width="14"
+                  height="14"
+                />
+                <span>
+                  {connectionBusy === "base"
+                    ? "Connecting…"
+                    : "Connect Base wallet"}
+                </span>
+              </span>
+              {evmProviders.length === 1 && (
+                <span class="aura-wallet-via">
+                  via {evmProviders[0].info.name}
+                  {walletIconSrc(evmProviders[0].info.icon) && (
+                    <img
+                      class="aura-wallet-icon"
+                      src={walletIconSrc(evmProviders[0].info.icon)!}
+                      alt=""
+                      width="18"
+                      height="18"
+                    />
+                  )}
+                </span>
+              )}
             </button>
 
             {availableChains.length === 1 && (
@@ -1073,7 +1132,16 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
                       type="button"
                       onClick={() => void connectSolana(wallet)}
                     >
-                      {wallet.name}
+                      {walletIconSrc(wallet.icon) && (
+                        <img
+                          class="aura-wallet-icon"
+                          src={walletIconSrc(wallet.icon)!}
+                          alt=""
+                          width="20"
+                          height="20"
+                        />
+                      )}
+                      <span>{wallet.name}</span>
                     </button>
                   ))
                 ) : (
@@ -1099,7 +1167,16 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
                       type="button"
                       onClick={() => void connectBase(provider)}
                     >
-                      {provider.info.name}
+                      {walletIconSrc(provider.info.icon) && (
+                        <img
+                          class="aura-wallet-icon"
+                          src={walletIconSrc(provider.info.icon)!}
+                          alt=""
+                          width="20"
+                          height="20"
+                        />
+                      )}
+                      <span>{provider.info.name}</span>
                     </button>
                   ))
                 ) : (
