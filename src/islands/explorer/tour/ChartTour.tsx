@@ -20,7 +20,7 @@ import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import TourCard from './TourCard';
 import { tourFormat, tourText, type TourKey } from './copy';
 import {
-  deriveChapters, emphasisForChapter, flattenStops, interpolateCusps,
+  deriveChapters, deriveFirstReading, emphasisForChapter, flattenStops, interpolateCusps,
   lerpAngle, previewHouses, stepId,
   type ChapterDef, type TourVisual,
 } from '../../../lib/scene/chapters';
@@ -29,16 +29,21 @@ import type { Aspect, AspectType, Chart } from '../../../lib/engine/types';
 import { formatLongitude, signForLongitude, signName } from '../../../lib/signs';
 import { bigThree } from '../../../lib/interpretations';
 import { aspectLabel, planetLabel } from '../../../lib/i18n/astrology';
-import { t, type Locale } from '../../../lib/i18n';
+import { localizePath, t, type Locale } from '../../../lib/i18n';
 import PlanetGlyph from '../../../components/PlanetGlyph';
 import AspectGlyph from '../../../components/AspectGlyph';
+import AstroTerm from '../../AstroTerm';
 
 type EngineLoader = () => Promise<typeof import('../../../lib/engine/full')>;
+export type TourVariant = 'quick' | 'full';
 
 export interface ChartTourProps {
   scene: ChartSceneModel;
   chart: Chart;
   locale: Locale;
+  variant: TourVariant;
+  initialStep?: number;
+  moonAmbiguous?: boolean;
   selection: EntityRef | null;
   loadEngine: EngineLoader;
   /**
@@ -55,11 +60,18 @@ export interface ChartTourProps {
   renderInspector: (scene: ChartSceneModel, banner: ComponentChildren) => ComponentChildren;
   /** natal.ts's loudest-aspect ranking, injected for the same bundling reason. */
   topAspects: (aspects: Aspect[], n?: number) => Aspect[];
+  /** English authored reading, injected to keep natal.ts in the host chunk. */
+  readAspect: (a: string, type: string, b: string) => string;
+  /** English authored house reading, injected for the same bundling reason. */
+  readHouse: (body: string, house: number) => string;
   onSelect: (e: EntityRef | null) => void;
   onAnnounce: (msg: string) => void;
   onVisual: (v: TourVisual | null) => void;
   onEnsure: (needs: { houses?: boolean; allAspects?: boolean }) => void;
   onTrack: (name: string, props: Record<string, string>) => void;
+  onProgress?: (step: number, total: number) => void;
+  onComplete?: () => void;
+  onOpenForecast?: () => void;
   onSave: () => void;
   onShare: () => void;
   onExit: () => void;
@@ -73,14 +85,18 @@ const easeInOutCubic = (k: number) =>
   (k < 0.5 ? 4 * k * k * k : 1 - ((-2 * k + 2) ** 3) / 2);
 
 export default function ChartTour({
-  scene, chart, locale, selection, loadEngine, buildScene, renderInspector, topAspects,
-  onSelect, onAnnounce, onVisual, onEnsure, onTrack,
-  onSave, onShare, onExit, returnFocus,
+  scene, chart, locale, variant, initialStep = 0, moonAmbiguous = false, selection,
+  loadEngine, buildScene, renderInspector, topAspects, readAspect, readHouse,
+  onSelect, onAnnounce, onVisual, onEnsure, onTrack, onProgress, onComplete,
+  onOpenForecast, onSave, onShare, onExit, returnFocus,
 }: ChartTourProps) {
-  const chapters = useMemo(() => deriveChapters(scene), [scene]);
+  const chapters = useMemo(
+    () => (variant === 'quick' ? deriveFirstReading(scene) : deriveChapters(scene)),
+    [scene, variant],
+  );
   const stops = useMemo(() => flattenStops(chapters), [chapters]);
 
-  const [at, setAt] = useState(0);
+  const [at, setAt] = useState(Math.max(0, Math.min(stops.length - 1, initialStep)));
   const [ariesAnchor, setAriesAnchor] = useState(false);
   const [housePreview, setHousePreview] = useState(false);
   const [altScene, setAltScene] = useState<ChartSceneModel | null>(null);
@@ -89,6 +105,7 @@ export default function ChartTour({
   const headingRef = useRef<HTMLHeadingElement | null>(null);
   const rafRef = useRef<number | null>(null);
   const completedRef = useRef(false);
+  const hasBirthTime = chart.input.timeKnown !== false && !chart.flags.includes('no-time');
 
   const stop = stops[Math.min(at, stops.length - 1)];
   const chapterDef: ChapterDef = chapters[stop.chapter];
@@ -156,10 +173,17 @@ export default function ChartTour({
     }));
 
     const title = tourText(locale, targetChapter.titleKey as TourKey);
-    const kicker = tourFormat(locale, 'kicker', { n: target.chapter + 1, total: chapters.length });
+    const kicker = tourFormat(locale, variant === 'quick' ? 'quickKicker' : 'kicker', {
+      n: target.chapter + 1,
+      total: chapters.length,
+    });
     onAnnounce(`${title}. ${kicker}`);
-    onTrack('tour_step', { step: stepId(chapters, target) });
-    if (target.chapter === chapters.length - 1 && !completedRef.current) {
+    if (variant === 'quick') {
+      onProgress?.(clamped, stops.length);
+    } else {
+      onTrack('tour_step', { step: stepId(chapters, target) });
+    }
+    if (variant === 'full' && target.chapter === chapters.length - 1 && !completedRef.current) {
       completedRef.current = true;
       onTrack('tour_complete', { variant: 'v1' });
     }
@@ -170,7 +194,7 @@ export default function ChartTour({
 
   // Mount: enter the first stop. Unmount: clean up every override.
   useEffect(() => {
-    go(0, 'init');
+    go(Math.max(0, Math.min(stops.length - 1, initialStep)), 'init');
     return () => {
       cancelTween();
       onVisual(null);
@@ -377,6 +401,174 @@ export default function ChartTour({
       );
       break;
     }
+    case 'first-big-three': {
+      const sun = scene.bodies.find((body) => body.body === 'Sun');
+      const moon = scene.bodies.find((body) => body.body === 'Moon');
+      const entries = [
+        sun ? {
+          role: tourText(locale, 'quickRoleDrive'),
+          label: planetLabel(locale, 'Sun'),
+          lon: sun.lon,
+        } : null,
+        moon ? {
+          role: tourText(locale, 'quickRoleNeed'),
+          label: planetLabel(locale, 'Moon'),
+          lon: moon.lon,
+        } : null,
+        scene.angles ? {
+          role: tourText(locale, 'quickRoleImpression'),
+          label: t(locale, 'rising'),
+          lon: scene.angles.asc,
+        } : null,
+      ];
+      feature = (
+        <div class="tour__feature">
+          <ul class="tour__first-list">
+            {entries.map((entry, index) => (
+              <li key={index}>
+                {entry ? (
+                  <>
+                    <span class="tour__first-role">{entry.role}</span>
+                    <span class="tour__first-value">
+                      <strong>{signName(signForLongitude(entry.lon), locale)}</strong>
+                      <small>{entry.label}</small>
+                    </span>
+                  </>
+                ) : (
+                  <>
+                    <span class="tour__first-role">{tourText(locale, 'quickRoleImpression')}</span>
+                    <span class="tour__first-value">
+                      <strong>{t(locale, 'needsBirthTime')}</strong>
+                      <small>{t(locale, 'rising')}</small>
+                    </span>
+                  </>
+                )}
+              </li>
+            ))}
+          </ul>
+          {moonAmbiguous && <p class="tour__note">{t(locale, 'moonAmbiguousNotice')}</p>}
+          <div class="tour__why">
+            <span>{tourText(locale, 'quickWhyLabel')}</span>
+            <p>{tourText(locale, 'quickBigThreeWhy')}</p>
+          </div>
+        </div>
+      );
+      break;
+    }
+    case 'first-sun': {
+      const sun = scene.bodies.find((body) => body.body === 'Sun');
+      if (!sun) break;
+      const sign = signForLongitude(sun.lon);
+      feature = (
+        <div class="tour__feature">
+          <p class="insp__read tour__personal-reading">
+            {locale === 'en'
+              ? bigThree('sun', sign.slug)
+              : tourFormat(locale, 'quickSunPersonal', { sign: signName(sign, locale) })}
+          </p>
+          <p class="insp__read tour__life-area">
+            {sun.house != null && locale === 'en'
+              ? readHouse('Sun', sun.house)
+              : sun.house != null
+                ? tourFormat(locale, 'quickSunHouse', { n: sun.house })
+                : tourText(locale, 'quickSunNoHouse')}
+          </p>
+          <p class="mono tour__first-receipt">
+            {planetLabel(locale, 'Sun')} · {formatLongitude(sun.lon, locale)} · {signName(sign, locale)}
+            {sun.house != null ? (
+              <> · {locale === 'en'
+                ? <AstroTerm term="house" label={`${t(locale, 'house')} ${sun.house}`} surface="first-reading" />
+                : `${t(locale, 'house')} ${sun.house}`}</>
+            ) : ''}
+          </p>
+          <div class="tour__why">
+            <span>{tourText(locale, 'quickWhyLabel')}</span>
+            <p>{tourText(locale, 'quickSunWhy')}</p>
+          </div>
+        </div>
+      );
+      break;
+    }
+    case 'first-aspect': {
+      const ref = chapterDef.subs[0]?.entity;
+      const aspect = ref?.kind === 'aspect'
+        ? scene.aspects.find((candidate) => (
+          candidate.a === ref.a && candidate.b === ref.b && candidate.type === ref.type
+        ))
+        : null;
+      feature = aspect && ref?.kind === 'aspect' ? (
+        <div class="tour__feature">
+          <p class="insp__read tour__personal-reading">
+            {locale === 'en'
+              ? readAspect(ref.a, ref.type, ref.b)
+              : tourFormat(locale, 'quickAspectPersonal', {
+                a: planetLabel(locale, ref.a),
+                b: planetLabel(locale, ref.b),
+              })}
+          </p>
+          <p class="mono tour__first-receipt">
+            {planetLabel(locale, ref.a)} <AspectGlyph type={ref.type} size={12} class="insp__pg" />{' '}
+            {locale === 'en' ? (
+              <AstroTerm
+                term={ref.type}
+                label={aspectLabel(locale, ref.type)}
+                surface="first-reading"
+              />
+            ) : aspectLabel(locale, ref.type)}{' '}
+            {planetLabel(locale, ref.b)} · {aspect.orb.toFixed(1)}°
+          </p>
+          <div class="tour__why">
+            <span>{tourText(locale, 'quickWhyLabel')}</span>
+            <p>{tourText(locale, 'quickAspectWhy')}</p>
+          </div>
+        </div>
+      ) : (
+        <div class="tour__feature">
+          <div class="tour__why">
+            <span>{tourText(locale, 'quickWhyLabel')}</span>
+            <p>{tourText(locale, 'quickAspectEmpty')}</p>
+          </div>
+        </div>
+      );
+      break;
+    }
+    case 'first-next': {
+      const sun = scene.bodies.find((body) => body.body === 'Sun');
+      const sunSign = sun ? signForLongitude(sun.lon) : null;
+      feature = (
+        <div class="tour__feature">
+          <div class="tour__future-grid">
+            <div class="tour__future-card tour__future-card--personal">
+              <span>{tourText(locale, 'quickPersonalTimingLabel')}</span>
+              <strong>{tourText(locale, hasBirthTime
+                ? 'quickPersonalTimingTitle'
+                : 'quickPersonalTimingNoTimeTitle')}</strong>
+              <p>{tourText(locale, hasBirthTime
+                ? 'quickPersonalTimingBody'
+                : 'quickPersonalTimingNoTimeBody')}</p>
+            </div>
+            <a
+              class="tour__future-card tour__future-card--link"
+              href={localizePath(locale, sunSign ? `/horoscopes/${sunSign.slug}/` : '/horoscopes/')}
+              onClick={() => onComplete?.()}
+            >
+              <span>{tourText(locale, 'quickHoroscopeLabel')}</span>
+              <strong>{sunSign ? signName(sunSign, locale) : tourText(locale, 'quickHoroscopeLabel')}</strong>
+              <p>{tourText(locale, 'quickHoroscopeBody')}</p>
+              <em>{sunSign
+                ? tourFormat(locale, 'quickHoroscopeAction', { sign: signName(sunSign, locale) })
+                : tourText(locale, 'quickHoroscopeLabel')} →</em>
+              {locale !== 'en' && <small>{tourText(locale, 'quickHoroscopeEnglishNote')}</small>}
+            </a>
+          </div>
+          <div class="tour__why">
+            <span>{tourText(locale, 'quickWhyLabel')}</span>
+            <p>{tourText(locale, 'quickFutureWhy')}</p>
+          </div>
+        </div>
+      );
+      break;
+    }
     case 'save-share': {
       feature = (
         <div class="tour__feature tour__ctas">
@@ -434,17 +626,47 @@ export default function ChartTour({
   return (
     <TourCard
       locale={locale}
-      kicker={tourFormat(locale, 'kicker', { n: stop.chapter + 1, total: chapters.length })}
+      variant={variant}
+      kicker={tourFormat(locale, variant === 'quick' ? 'quickKicker' : 'kicker', {
+        n: stop.chapter + 1,
+        total: chapters.length,
+      })}
       title={tourText(locale, chapterDef.titleKey as TourKey)}
+      dotsLabel={tourText(locale, variant === 'quick' ? 'quickDotsLabel' : 'dotsLabel')}
+      exitLabel={tourText(locale, variant === 'quick' ? 'quickExitAria' : 'exitAria')}
+      finishLabel={tourText(locale, variant === 'quick'
+        ? hasBirthTime ? 'quickFinish' : 'quickFinishNoTime'
+        : 'finish')}
+      nextLabel={variant === 'quick'
+        ? tourText(locale, chapterDef.id === 'first-big-three'
+          ? 'quickNextBigThree'
+          : chapterDef.id === 'first-sun'
+            ? 'quickNextSun'
+            : 'quickNextAspect')
+        : tourText(locale, 'next')}
       paragraphs={paragraphs}
       feature={feature}
       dots={chapters.map((c, i) => ({
         label: tourText(locale, c.titleKey as TourKey),
         active: i === stop.chapter,
+        complete: i < stop.chapter,
       }))}
       onDot={(chapterIndex) => go(stops.findIndex((s) => s.chapter === chapterIndex && s.sub === 0), 'dot')}
       onPrev={() => go(at - 1, 'button')}
       onNext={() => go(at + 1, 'button')}
+      onFinish={() => {
+        cancelTween();
+        onVisual(null);
+        if (variant === 'quick') {
+          onComplete?.();
+          onOpenForecast?.();
+        }
+        else {
+          onAnnounce(tourText(locale, 'ended'));
+          onExit();
+        }
+        returnFocus();
+      }}
       prevDisabled={at === 0}
       isLast={at === stops.length - 1}
       onExit={() => {

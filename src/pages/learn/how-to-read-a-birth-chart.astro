@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import AstroTerm from '../../components/AstroTerm.astro';
 import { EDITOR_AUTHOR } from '../../lib/editorial';
 
 const faq = [
@@ -74,6 +75,12 @@ const jsonLd = [
         This page is the method on its own, with each step linking deeper
         when you want more than one paragraph.
       </p>
+      <p class="method-setup-note">
+        One setting you will meet is the <AstroTerm term="house-system" label="house system" surface="reading-guide" />.
+        <AstroTerm term="whole-sign-houses" label="Whole sign" surface="reading-guide" /> gives every sign one complete house;
+        <AstroTerm term="placidus" label="Placidus" surface="reading-guide" /> uses your time and location to create houses of different sizes.
+        This can move a planet from one house to another, but it never changes the planet’s sign.
+      </p>
 
       <h2 id="step-1-start-with-the-big-three">Step 1 — Start with the big three</h2>
       <p>
@@ -145,7 +152,7 @@ const jsonLd = [
         seesaw).
       </p>
       <p>
-        Don't read them all. Sort by <strong><a href="/learn/glossary/#orb">orb</a></strong> — the distance
+        Don't read them all. Sort by <strong><AstroTerm term="orb" label="orb" surface="reading-guide" /></strong> — the distance
         from geometrically exact — and read the tightest three or four,
         giving extra weight to anything touching the Sun or Moon. An exact
         square explains more about a life than six loose trines. A square,
@@ -197,4 +204,5 @@ const jsonLd = [
   .faq { margin-top: 12px; }
   .faq summary { cursor: pointer; font-weight: 600; color: var(--text); }
   .faq p { margin: 8px 0 4px; }
+  .method-setup-note { padding: 16px 18px; border: 1px solid var(--hair-2); border-radius: var(--r-sm); background: var(--void-1); }
 </style>

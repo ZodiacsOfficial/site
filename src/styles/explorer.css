@@ -105,7 +105,7 @@
 .insp__rx { color: var(--sign-sagittarius); font-size: 12px; }
 .insp__close {
   flex-shrink: 0;
-  width: 28px; height: 28px;
+  width: 44px; height: 44px;
   display: inline-grid; place-items: center;
   border-radius: 50%;
   border: 1px solid var(--hair-2);
@@ -175,6 +175,9 @@
   .insp--card {
     position: fixed;
     left: 0; right: 0; bottom: 0;
+    width: 100%;
+    max-width: 100vw;
+    box-sizing: border-box;
     z-index: var(--z-overlay, 50);
     border-radius: var(--r-lg) var(--r-lg) 0 0;
     border-bottom: 0;
@@ -187,6 +190,7 @@
     box-shadow: 0 -18px 48px -20px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(238, 241, 247, 0.1);
     max-height: 46dvh;
     overflow-y: auto;
+    overflow-x: clip;
     overscroll-behavior: contain;
     padding-bottom: env(safe-area-inset-bottom);
     transition: max-height var(--dur-2) var(--ease);
@@ -264,51 +268,209 @@ tr[data-selected='true'] td:last-child { border-radius: 0 8px 8px 0; }
 }
 
 /* ── Guided tour ─────────────────────────────────────────────────
-   The tour card wears the Inspector's `.insp--card` chrome (sheet
-   detents, page reservations, reduced-transparency fallbacks come
-   free); these rules add only the tour's own furniture. */
-.tour__heading { min-width: 0; }
+   The chart story uses the Inspector's accessible desktop/mobile shell,
+   then gives the content its own warmer hierarchy and one stable action
+   footer. The wheel remains visible as evidence, not as the lesson. */
+.tour {
+  overflow-x: clip;
+  border-color: color-mix(in oklab, var(--accent) 24%, var(--hair-2));
+  background:
+    radial-gradient(circle at 90% -10%, color-mix(in oklab, var(--accent) 13%, transparent), transparent 42%),
+    linear-gradient(180deg, var(--void-2) 0%, var(--void-1) 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(238, 241, 247, 0.08),
+    0 22px 55px -38px color-mix(in oklab, var(--accent) 40%, transparent);
+}
+.tour__heading { min-width: 0; padding-block: 2px; }
 .tour__kicker {
   display: block;
-  margin-bottom: 2px;
+  margin-bottom: 5px;
+  color: color-mix(in oklab, var(--accent) 72%, var(--text));
+  letter-spacing: 0.12em;
 }
-.tour .insp__body { gap: 12px; }
+.tour--quick .insp__title {
+  font-size: clamp(1.24rem, 1.08rem + 0.45vw, 1.55rem);
+  line-height: 1.12;
+  text-wrap: balance;
+}
+.tour .insp__title:focus-visible {
+  outline: 2px solid color-mix(in oklab, var(--accent) 72%, var(--text));
+  outline-offset: 4px;
+  border-radius: 3px;
+}
+.tour .insp__body { gap: 0; padding-top: 14px; }
+.tour__stage {
+  display: grid;
+  gap: 14px;
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 180ms cubic-bezier(0.23, 1, 0.32, 1), transform 180ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+@starting-style {
+  .tour__stage { opacity: 0; transform: translateY(6px); }
+}
 .tour__receipt { font-size: 11px; color: var(--faint); letter-spacing: 0.05em; }
 .tour__note { color: var(--faint); font-size: 12.5px; }
-.tour__feature { display: grid; gap: 10px; justify-items: start; }
+.tour__feature { width: 100%; display: grid; gap: 12px; justify-items: stretch; }
+.tour__personal-reading {
+  margin: 0;
+  color: var(--text);
+  font-size: 13.5px;
+  line-height: 1.58;
+}
+.tour__life-area {
+  margin: 0;
+  padding-left: 12px;
+  border-left: 2px solid color-mix(in oklab, var(--accent) 70%, transparent);
+}
 .tour__ctas { grid-auto-flow: column; justify-items: stretch; gap: 10px; }
+.tour__first-list {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 7px;
+}
+.tour__first-list li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  min-height: 48px;
+  padding: 9px 11px;
+  border: 1px solid var(--hair-1);
+  border-radius: 12px;
+  background: rgba(198, 204, 218, 0.035);
+}
+.tour__first-role { color: var(--text-2); font-size: 12.5px; }
+.tour__first-value { display: grid; justify-items: end; gap: 1px; text-align: right; }
+.tour__first-value strong { color: var(--text); font-size: 14px; font-weight: 650; }
+.tour__first-value small {
+  color: var(--faint);
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.tour__first-receipt {
+  margin: 0;
+  color: var(--text-2);
+  font-size: 11.5px;
+  line-height: 1.6;
+}
 .tour__sub-receipt { display: block; margin-bottom: 4px; color: var(--text-2); font-size: 12px; }
 .tour__sub-progress { letter-spacing: 0.14em; }
 .tour__sub-progress .tour__sub-on { color: var(--text); }
 
-.tour__nav {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  padding: 4px 16px 16px;
+.tour__why {
+  display: grid;
+  gap: 5px;
+  padding: 12px 13px;
+  border: 1px solid color-mix(in oklab, var(--accent) 20%, var(--hair-1));
+  border-radius: 12px;
+  background: color-mix(in oklab, var(--accent) 6%, rgba(198, 204, 218, 0.025));
 }
-.tour__btn { padding-block: 6px; font-size: 12.5px; }
+.tour__why > span {
+  color: color-mix(in oklab, var(--accent) 68%, var(--text-2));
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.tour__why p { margin: 0; color: var(--text-2); font-size: 12.5px; line-height: 1.5; }
+
+.tour__future-grid { display: grid; gap: 8px; }
+.tour__future-card {
+  display: grid;
+  gap: 4px;
+  padding: 12px 13px;
+  border: 1px solid var(--hair-1);
+  border-radius: 12px;
+  background: rgba(198, 204, 218, 0.035);
+  color: inherit;
+  text-decoration: none;
+}
+.tour__future-card > span {
+  color: var(--faint);
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.tour__future-card strong { color: var(--text); font-size: 14px; font-weight: 650; }
+.tour__future-card p { margin: 0; color: var(--muted); font-size: 11.5px; line-height: 1.45; }
+.tour__future-card em {
+  margin-top: 4px;
+  color: var(--text-2);
+  font-size: 11.5px;
+  font-style: normal;
+  font-weight: 600;
+}
+.tour__future-card small { color: var(--faint); font-size: 10.5px; line-height: 1.35; }
+.tour__future-card--personal {
+  border-color: color-mix(in oklab, var(--accent) 35%, var(--hair-1));
+  background: color-mix(in oklab, var(--accent) 7%, var(--void-1));
+}
+.tour__future-card--link {
+  transition: border-color 160ms cubic-bezier(0.23, 1, 0.32, 1), transform 160ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+.tour__future-card--link:active { transform: scale(0.98); }
+@media (hover: hover) and (pointer: fine) {
+  .tour__future-card--link:hover { border-color: var(--hair-3); transform: translateY(-2px); }
+}
+
+.tour__nav {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 8px 10px;
+  padding: 12px 16px 16px;
+  border-top: 1px solid var(--hair-1);
+  background: linear-gradient(180deg, rgba(13, 16, 23, 0.12), rgba(13, 16, 23, 0.45));
+}
+.tour__btn { min-width: 0; padding-block: 5px; font-size: 12px; white-space: nowrap; }
+.tour__btn--back {
+  grid-column: 1;
+  grid-row: 2;
+  justify-self: start;
+  padding-inline: 8px;
+  border-color: transparent;
+  color: var(--muted);
+}
+.tour__btn--next { grid-column: 2; grid-row: 2; justify-self: end; }
+.tour__btn--next .orb { width: 30px; height: 30px; }
 .tour__btn:disabled { opacity: 0.4; cursor: default; }
 
-.tour__dots { display: flex; align-items: center; gap: 4px; }
+.tour__dots {
+  grid-column: 1 / -1;
+  grid-row: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
 .tour__dot {
   position: relative;
-  width: 24px;
+  min-width: 0;
+  width: 100%;
   height: 24px;
+  flex: 1 1 0;
   display: inline-grid;
   place-items: center;
-  border-radius: 50%;
+  border-radius: 4px;
 }
 .tour__dot::after {
   content: '';
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--hair-3);
+  width: 100%;
+  height: 3px;
+  border-radius: var(--r-full);
+  background: var(--hair-2);
   transition: background var(--dur-1) var(--ease), transform var(--dur-1) var(--ease);
 }
-.tour__dot[aria-selected='true']::after { background: var(--accent); transform: scale(1.3); }
+.tour__dot[data-complete='true']::after { background: color-mix(in oklab, var(--accent) 42%, var(--hair-2)); }
+.tour__dot[aria-current='step']::after { background: var(--accent); transform: scaleY(1.5); }
 .tour__dot:focus-visible { outline: 1.5px solid var(--accent); outline-offset: 2px; }
 
 .tour__diff { display: grid; gap: 4px; }
@@ -328,8 +490,45 @@ tr[data-selected='true'] td:last-child { border-radius: 0 8px 8px 0; }
 }
 .insp__return:hover { color: var(--text); }
 
+@media (max-width: 959.5px) {
+  .tour__nav {
+    position: sticky;
+    z-index: 2;
+    bottom: 0;
+    background: rgba(13, 16, 23, 0.98);
+  }
+}
+
+@media (min-width: 960px) {
+  .tour {
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    height: min(410px, calc(100dvh - var(--nav-space, 96px) - 24px));
+  }
+  .tour .insp__body { min-height: 0; overflow-y: auto; }
+}
+
+@media (max-width: 390px) {
+  .tour .insp__head { padding-inline: 14px; }
+  .tour .insp__body { padding-inline: 14px; }
+  .tour__nav { gap: 6px 8px; padding-inline: 14px; }
+  .tour__btn { padding-inline: 10px; }
+  .tour__btn--back { padding-inline: 6px; }
+  .tour__btn--next { font-size: 11.5px; }
+  .tour__ctas {
+    width: 100%;
+    grid-auto-flow: row;
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .tour__ctas .tour__btn { width: 100%; justify-content: center; }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .tour__dot::after { transition: none; }
+  .tour__stage,
+  .tour__dot::after,
+  .tour__future-card--link { transition: none; }
+  .tour__future-card--link:active,
+  .tour__future-card--link:hover { transform: none; }
 }
 
 /* ── Time-Lens rail: one wheel, four skies ──

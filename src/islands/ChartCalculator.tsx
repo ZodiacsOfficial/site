@@ -10,6 +10,7 @@
  */
 import { useCallback, useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import { BirthFields } from './BirthFields';
+import AstroTerm from './AstroTerm';
 import type { CopyLinkState } from './CopyLinkButton';
 import SignChip from './SignChip';
 import PlanetGlyph from '../components/PlanetGlyph';
@@ -17,6 +18,13 @@ import AspectGlyph from '../components/AspectGlyph';
 import Wheel from '../lib/wheel/Wheel';
 import Inspector from './explorer/Inspector';
 import LayerChips from './explorer/LayerChips';
+import {
+  EMPTY_FIRST_READING,
+  readFirstReadingProgress,
+  writeFirstReadingProgress,
+  type FirstReadingProgress,
+  type FirstReadingStatus,
+} from './explorer/tour/progress';
 import { buildSceneModel } from '../lib/scene/build';
 import { emphasisFor } from '../lib/scene/emphasis';
 import {
@@ -63,13 +71,21 @@ const LENS_LABELS: Record<Locale, Record<'rail' | 'natal' | LensId, string>> = {
   it: { rail: 'Il tema nel tempo', natal: 'Natale', sky: 'Cielo attuale', progressed: 'Progredito', return: 'Rivoluzione solare' },
 };
 const DETAIL_LABELS: Record<Locale, { lead: string; placements: string; aspects: string }> = {
-  en: { lead: 'Full detail — ', placements: ' placements · ', aspects: ' aspects · degrees & dignities' },
-  es: { lead: 'Todo el detalle — ', placements: ' posiciones · ', aspects: ' aspectos · grados y dignidades' },
-  pt: { lead: 'Todos os detalhes — ', placements: ' posições · ', aspects: ' aspectos · graus e dignidades' },
-  fr: { lead: 'Tous les détails — ', placements: ' positions · ', aspects: ' aspects · degrés et dignités' },
-  it: { lead: 'Tutti i dettagli — ', placements: ' posizioni · ', aspects: ' aspetti · gradi e dignità' },
+  en: { lead: 'See exact chart data — ', placements: ' placements · ', aspects: ' aspects' },
+  es: { lead: 'Ver los datos exactos — ', placements: ' posiciones · ', aspects: ' aspectos' },
+  pt: { lead: 'Ver os dados exatos — ', placements: ' posições · ', aspects: ' aspectos' },
+  fr: { lead: 'Voir les données exactes — ', placements: ' positions · ', aspects: ' aspects' },
+  it: { lead: 'Vedi i dati esatti — ', placements: ' posizioni · ', aspects: ' aspetti' },
 };
 const DETAIL_STORAGE_KEY = 'zodiacs.detail.v1';
+function firstReadingChartKey(chart: Chart): string {
+  return [
+    chart.input.utc.toISOString(),
+    chart.input.timeKnown ? '1' : '0',
+    chart.input.latitude?.toFixed(4) ?? '',
+    chart.input.longitude?.toFixed(4) ?? '',
+  ].join('|');
+}
 const CHART_BOOK_COPY = {
   en: { label: 'Whose chart is this?', save: 'Save', skip: 'Skip' },
   es: { label: '¿De quién es esta carta?', save: 'Guardar', skip: 'Omitir' },
@@ -216,7 +232,11 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   // ── Guided tour (lazy — the module never loads until asked for) ──
   const [tourMod, setTourMod] = useState<TourModule | null>(null);
   const [tourOpen, setTourOpen] = useState(false);
+  const [tourKind, setTourKind] = useState<'quick' | 'full' | null>(null);
   const [tourVisual, setTourVisual] = useState<TourVisual | null>(null);
+  const [firstReading, setFirstReading] = useState<FirstReadingProgress>(EMPTY_FIRST_READING);
+  const [firstReadingLoaded, setFirstReadingLoaded] = useState(false);
+  const firstReadingImpressionRef = useRef('');
 
   // ── Time-Lens rail (lazy — same discipline as the tour) ──
   const [lensMod, setLensMod] = useState<LensModule | null>(null);
@@ -257,24 +277,85 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
     void import('./PushOptIn').then(setPushOptIn, () => {});
   }
 
-  async function startTour() {
+  function keepWheelAboveTour() {
+    requestAnimationFrame(() => {
+      const box = wheelboxRef.current;
+      if (!box || !matchMedia('(max-width: 959.5px)').matches) return;
+      const rect = box.getBoundingClientRect();
+      const visibleTop = 84 + (Number.parseFloat(getComputedStyle(document.documentElement)
+        .getPropertyValue('--safe-top')) || 0);
+      const sheetTop = window.innerHeight * 0.52;
+      if (rect.top >= visibleTop && rect.bottom <= sheetTop) return;
+      window.scrollBy({ top: rect.top - visibleTop, behavior: 'auto' });
+    });
+  }
+
+  function persistFirstReading(
+    status: FirstReadingStatus,
+    step: number,
+    chartKey = chart ? firstReadingChartKey(chart) : firstReading.chartKey,
+  ) {
+    let next: FirstReadingProgress = {
+      version: 1,
+      status,
+      step: Math.max(0, Math.min(3, step)),
+      updatedAt: new Date().toISOString(),
+    };
+    if (chartKey) next.chartKey = chartKey;
+    try {
+      next = writeFirstReadingProgress(localStorage, { status, step, chartKey });
+    } catch { /* storage unavailable — in-memory progress still works */ }
+    setFirstReading(next);
+    return next;
+  }
+
+  async function startTour(kind: 'quick' | 'full' = 'full') {
     try {
       const mod = tourMod ?? await import('./explorer/tour');
       setTourMod(mod);
       resetLens(); // the tour teaches the natal wheel; a lens ring would contradict it
+      if (selection) applySelect(null);
+      setTourKind(kind);
       setTourOpen(true);
-      track('tour_start', { variant: 'v1' });
-      requestAnimationFrame(() => wheelboxRef.current?.scrollIntoView({
-        behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
-        block: 'center',
-      }));
+      if (kind === 'full') track('tour_start', { variant: 'v1' });
+      keepWheelAboveTour();
     } catch {
+      setTourKind(null);
       setError(t(locale, 'chartError'));
     }
   }
   function exitTour() {
     setTourOpen(false);
+    setTourKind(null);
     setTourVisual(null);
+  }
+
+  function startFirstReading() {
+    const resume = firstReading.status === 'in_progress';
+    const next = resume ? firstReading : persistFirstReading('in_progress', 0);
+    track('first_reading_prompt', { action: resume ? 'resume' : 'start' });
+    track('next_action_clicked', { state: resume ? 'guide_in_progress' : 'new_chart', action: 'guide' });
+    setFirstReading(next);
+    void startTour('quick');
+  }
+
+  function dismissFirstReading() {
+    persistFirstReading('dismissed', 0);
+    track('first_reading_prompt', { action: 'explore' });
+  }
+
+  function replayFirstReading() {
+    persistFirstReading('in_progress', 0);
+    track('next_action_clicked', { state: 'guide_complete', action: 'replay_guide' });
+    void startTour('quick');
+  }
+
+  function completeFirstReading() {
+    if (firstReading.status !== 'complete') {
+      persistFirstReading('complete', 3);
+      track('first_reading_completed', {});
+    }
+    exitTour();
   }
 
   function resetLens() {
@@ -371,6 +452,29 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
       if (detailPreferenceRef.current === 'open') setDetailOpen(true);
     } catch { /* storage unavailable — closed default remains */ }
   }, []);
+
+  // The first-reading prompt is a device preference, just like exact-data
+  // disclosure. Delay its first paint until the stored state is known so a
+  // dismissed or completed prompt never flashes back during hydration.
+  useEffect(() => {
+    if (mode === 'full') {
+      try {
+        setFirstReading(readFirstReadingProgress(localStorage));
+      } catch { /* blocked storage keeps the unopened default */ }
+    }
+    setFirstReadingLoaded(true);
+  }, []);
+
+  useEffect(() => {
+    if (!chart || mode !== 'full' || !firstReadingLoaded || tourOpen) return;
+    if (firstReading.status !== 'not_started' && firstReading.status !== 'in_progress') return;
+    const key = `${chart.input.utc.toISOString()}:${firstReading.status}`;
+    if (firstReadingImpressionRef.current === key) return;
+    firstReadingImpressionRef.current = key;
+    track('first_reading_prompt', {
+      action: firstReading.status === 'in_progress' ? 'resume_view' : 'view',
+    });
+  }, [chart, mode, firstReadingLoaded, firstReading.status, tourOpen]);
 
   function onDetailToggle(e: Event) {
     const open = (e.currentTarget as HTMLDetailsElement).open;
@@ -557,6 +661,13 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
         flags: resolved.flags,
       });
       setChart(result);
+      if (mode === 'full' && firstReading.status === 'in_progress') {
+        const nextChartKey = firstReadingChartKey(result);
+        if (firstReading.chartKey !== nextChartKey) {
+          persistFirstReading('not_started', 0, nextChartKey);
+          exitTour();
+        }
+      }
       if (mode === 'full') {
         void import('./CalendarSubscribe').then(setCalendarSurface, () => {});
         void import('./CopyLinkButton').then(setCopyLinkModule, () => {});
@@ -568,7 +679,13 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
       track('chart_computed', { mode });
       void import('./PwaInstallPrompt').then(setPwaInstallModule, () => {});
       setPwaComputationCount((count) => count + 1);
-      window.dispatchEvent(new CustomEvent('zodiacs:chart-computed', { detail: { mode } }));
+      const computedSun = result.bodies.find((body) => body.body === 'Sun');
+      window.dispatchEvent(new CustomEvent('zodiacs:chart-computed', {
+        detail: {
+          mode,
+          sunSign: computedSun ? signForLongitude(computedSun.lon).slug : undefined,
+        },
+      }));
       setShareInput({
         date: input.date,
         time: input.timeKnown ? input.time : null,
@@ -861,6 +978,20 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                   <option value="whole">{t(locale, 'wholeSignDefault')}</option>
                   <option value="placidus">{t(locale, 'placidus')}</option>
                 </select>
+                {locale === 'en' && (
+                  <>
+                    <p class="field__help calc__house-terms">
+                      <AstroTerm
+                        term="whole-sign-houses"
+                        label={t(locale, 'wholeSignDefault')}
+                        surface="birth-chart-form"
+                      />
+                      <span aria-hidden="true"> · </span>
+                      <AstroTerm term="placidus" label={t(locale, 'placidus')} surface="birth-chart-form" />
+                    </p>
+                    <p class="field__help calc__context-cue">{t(locale, 'contextHelpCue')}</p>
+                  </>
+                )}
               </div>
             )}
           </div>
@@ -956,6 +1087,45 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
             })}
           </div>
 
+          {mode === 'full'
+            && firstReadingLoaded
+            && !tourOpen
+            && (firstReading.status === 'not_started' || firstReading.status === 'in_progress') && (
+            <aside class="calc__first-reading shell" aria-labelledby="first-reading-title" data-first-reading-prompt>
+              <div class="core calc__first-reading-core">
+                <div class="calc__first-reading-copy">
+                  <span class="mono--label">{t(locale, 'firstReadingLabel')}</span>
+                  <h2 id="first-reading-title">
+                    {firstReading.status === 'in_progress'
+                      ? t(locale, 'firstReadingResumeTitle')
+                      : t(locale, 'firstReadingTitle')}
+                  </h2>
+                  <p>
+                    {firstReading.status === 'in_progress'
+                      ? t(locale, 'firstReadingResumeBody')
+                      : t(locale, 'firstReadingBody')}
+                  </p>
+                  {firstReading.status === 'in_progress' && (
+                    <span class="mono calc__first-reading-progress">
+                      {t(locale, 'firstReadingStep')} {firstReading.step + 1} / 4
+                    </span>
+                  )}
+                </div>
+                <div class="calc__first-reading-actions">
+                  <button class="btn btn--primary" type="button" onClick={startFirstReading} data-first-reading-start>
+                    <span>{firstReading.status === 'in_progress'
+                      ? t(locale, 'firstReadingResume')
+                      : t(locale, 'firstReadingStart')}</span>
+                    <span class="orb">→</span>
+                  </button>
+                  <button class="btn btn--ghost" type="button" onClick={dismissFirstReading} data-first-reading-dismiss>
+                    {t(locale, 'firstReadingExplore')}
+                  </button>
+                </div>
+              </div>
+            </aside>
+          )}
+
           {/* Moon-mode extra: phase at birth */}
           {mode === 'moon' && (
             <p class="calc__phase mono">{t(locale, 'moonPhaseAtBirth')}: {moonPhaseLabel(locale, moonPhaseName(chart.input.utc))}</p>
@@ -978,7 +1148,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
           {/* Wheel + inspector + placements (full mode) — the Chart Explorer */}
           {mode === 'full' && scene && (
             <>
-              <div class="calc__wheel shell">
+              <div class={`calc__wheel shell${tourOpen ? ' calc__wheel--tour' : ''}`}>
                 <div class="core calc__wheel-core">
                   <div class="xplr">
                     <div class="xplr__stage">
@@ -1049,10 +1219,15 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                         scene={scene}
                         chart={chart}
                         locale={locale}
+                        variant={tourKind ?? 'full'}
+                        initialStep={tourKind === 'quick' ? firstReading.step : 0}
+                        moonAmbiguous={moonAmbiguous}
                         selection={selection}
                         loadEngine={loadEngine}
                         buildScene={buildSceneModel}
                         topAspects={topAspects}
+                        readAspect={natalAspectLine}
+                        readHouse={planetInHouseLine}
                         renderInspector={(inspScene, banner) => (
                           <Inspector
                             scene={inspScene}
@@ -1070,7 +1245,21 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                           if (allAspects) setAspectTypes(ALL_ASPECT_TYPES);
                         }}
                         onTrack={track}
+                        onProgress={(step) => {
+                          if (tourKind !== 'quick') return;
+                          persistFirstReading('in_progress', step);
+                          track('first_reading_step', { step: String(step + 1) });
+                          keepWheelAboveTour();
+                        }}
+                        onComplete={completeFirstReading}
+                        onOpenForecast={() => {
+                          track('next_action_clicked', { state: 'guide_complete', action: 'year_ahead' });
+                          void selectLens('return');
+                        }}
                         onSave={() => {
+                          if (tourKind === 'quick') {
+                            track('next_action_clicked', { state: 'guide_complete', action: 'save' });
+                          }
                           exitTour();
                           void openSavePrompt('tour');
                         }}
@@ -1123,7 +1312,12 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                                 ? planetInHouseLine(p.body, p.house, { withTheme: p.firstInHouse })
                                 : `${planetLabel(locale, p.body)} — ${p.signLabel}.`}
                               {p.dignity && (
-                                <span class="calc__read-dignity mono"> · {t(locale, DIGNITY_KEY[p.dignity])}</span>
+                                <span class="calc__read-dignity mono"> · <AstroTerm
+                                  term={p.dignity}
+                                  label={t(locale, DIGNITY_KEY[p.dignity])}
+                                  surface="chart-reading"
+                                  whyItMatters="This traditional label describes how supported the planet is considered in this sign."
+                                /></span>
                               )}
                             </p>
                             <a class="calc__read-more" href={`/learn/placements/${p.body.toLowerCase()}-in-${p.signSlug}/`}>
@@ -1166,36 +1360,10 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
               {mode === 'full' && showsEnglishInterpretation && CommunicationRead && (
                 <CommunicationRead chart={chart} />
               )}
-
-              {shareInput && (
-                <div class="calc__chart-share">
-                  {reading && (
-                    <button class="btn btn--glass calc__tour-start" type="button" onClick={startTour} data-tour-start>
-                      <span>{t(locale, 'tourStart')}</span>
-                      <span class="orb">→</span>
-                    </button>
-                  )}
-                  <button class="btn btn--glass" type="button" onClick={openShareDialog} disabled={card === 'busy'} data-share-card>
-                    <span>{card === 'busy' ? t(locale, 'rendering') : card === 'saved' ? t(locale, 'cardSaved') : t(locale, 'shareChart')}</span>
-                    <span class="orb">{card === 'saved' ? '✓' : '↗'}</span>
-                  </button>
-                  {CalendarSubscribe && (
-                    <CalendarSubscribe
-                      locale={locale}
-                      positions={{
-                        bodies: chart.bodies,
-                        angles: chart.angles ? { asc: chart.angles.asc, mc: chart.angles.mc } : null,
-                        houseSystem: chart.houses?.system ?? houseSystem,
-                        engineVersion: chart.engineVersion,
-                      }}
-                    />
-                  )}
-                </div>
-              )}
             </>
           )}
 
-          {/* Save + share + next steps */}
+          {/* One primary action, derived from the visitor's current state. */}
           <div class="calc__actions">
             {savePromptOpen ? (
               <form class="calc__save-prompt" onSubmit={submitSaveName} data-save-prompt>
@@ -1218,6 +1386,39 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                   {CHART_BOOK_COPY[locale].skip}
                 </button>
               </form>
+            ) : mode === 'full' ? (
+              !firstReadingLoaded
+                || firstReading.status === 'not_started'
+                || firstReading.status === 'in_progress' ? null
+                : saved !== 'saved' ? (
+                <button
+                  ref={saveButtonRef}
+                  class="btn btn--primary"
+                  type="button"
+                  onClick={() => {
+                    track('next_action_clicked', {
+                      state: firstReading.status === 'complete' ? 'guide_complete' : 'exploring',
+                      action: 'save',
+                    });
+                    void openSavePrompt();
+                  }}
+                  data-save-chart
+                  data-primary-action="save"
+                >
+                  <span>{t(locale, 'saveThisChart')}</span>
+                  <span class="orb">+</span>
+                </button>
+              ) : (
+                <a
+                  class="btn btn--primary"
+                  href="/today/"
+                  onClick={() => track('next_action_clicked', { state: 'saved', action: 'today' })}
+                  data-primary-action="today"
+                >
+                  <span>{t(locale, 'seeTodaySky')}</span>
+                  <span class="orb">→</span>
+                </a>
+              )
             ) : (
               <>
                 <button
@@ -1231,20 +1432,98 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                   <span>{saved === 'saved' ? t(locale, 'chartSavedDevice') : t(locale, 'saveThisChart')}</span>
                   <span class="orb">{saved === 'saved' ? '✓' : '+'}</span>
                 </button>
-                {mode !== 'full' && (
-                  <a class="btn btn--ghost" href={localizePath(locale, '/birth-chart/')}><span>{t(locale, 'getBirthChart')}</span><span class="orb">↗</span></a>
-                )}
-                {mode === 'full' && (
-                  <a class="btn btn--ghost" href={localizePath(locale, '/profile/')}><span>{t(locale, 'savedCharts')}</span><span class="orb">→</span></a>
-                )}
+                <a class="btn btn--ghost" href={localizePath(locale, '/birth-chart/')}><span>{t(locale, 'getBirthChart')}</span><span class="orb">↗</span></a>
               </>
             )}
           </div>
-          {mode === 'full' && saved !== 'saved' && <p class="calc__saved">{t(locale, 'saveYearAheadNote')}</p>}
+          {mode === 'full'
+            && saved !== 'saved'
+            && firstReading.status !== 'not_started'
+            && firstReading.status !== 'in_progress'
+            && <p class="calc__saved">{t(locale, 'saveYearAheadNote')}</p>}
           {saved === 'saved' && <p class="sr-only" role="status">{t(locale, 'chartSavedStatus')}</p>}
           {saved === 'full' && <p class="calc__error" role="alert">{t(locale, 'chartSaveFull')}</p>}
           {saved === 'error' && <p class="calc__error" role="alert">{t(locale, 'chartSaveError')}</p>}
           {saved === 'saved' && <p class="calc__saved">{t(locale, 'chartSavedBeforeLink')} <a href={localizePath(locale, '/profile/')}>{t(locale, 'chartSavedLink')}</a> {t(locale, 'chartSavedAfterLink')}</p>}
+          {mode === 'full' && shareInput && (
+            <details class="calc__more" data-chart-more>
+              <summary class="calc__more-summary">
+                <span>{t(locale, 'chartActionsMore')}</span>
+                <span class="orb" aria-hidden="true">+</span>
+              </summary>
+              <div class="calc__more-body">
+                <div class="calc__more-actions">
+                  {firstReading.status === 'complete' && (
+                    <button
+                      class="btn btn--glass"
+                      type="button"
+                      onClick={replayFirstReading}
+                      data-tour-replay
+                    >
+                      <span>{t(locale, 'firstReadingReplay')}</span>
+                      <span class="orb">↻</span>
+                    </button>
+                  )}
+                  <button
+                    class="btn btn--glass"
+                    type="button"
+                    onClick={() => {
+                      track('next_action_clicked', { state: 'chart_result', action: 'full_tour' });
+                      void startTour('full');
+                    }}
+                    data-tour-start
+                  >
+                    <span>{t(locale, 'firstReadingFullTour')}</span>
+                    <span class="orb">→</span>
+                  </button>
+                  <button
+                    class="btn btn--glass"
+                    type="button"
+                    onClick={openShareDialog}
+                    disabled={card === 'busy'}
+                    data-share-card
+                  >
+                    <span>{card === 'busy' ? t(locale, 'rendering') : card === 'saved' ? t(locale, 'cardSaved') : t(locale, 'shareChart')}</span>
+                    <span class="orb">{card === 'saved' ? '✓' : '↗'}</span>
+                  </button>
+                </div>
+                {CopyLinkButton && (
+                  <div class="calc__more-copy">
+                    <CopyLinkButton
+                      url={shareUrl()}
+                      state={share}
+                      onStateChange={setShare}
+                      idleLabel={t(locale, 'copyChartLink')}
+                      copiedLabel={t(locale, 'linkCopied')}
+                      ariaLabel={t(locale, 'linkToChart')}
+                      buttonClass="btn btn--glass"
+                      dataHook="share"
+                    >
+                      <p class="calc__share-note">{t(locale, 'shareNote')}</p>
+                      {share === 'copied' && (
+                        <p class="sr-only" role="status">{t(locale, 'chartLinkCopied')}</p>
+                      )}
+                    </CopyLinkButton>
+                  </div>
+                )}
+                {card === 'saved' && (
+                  <p class="sr-only" role="status">{t(locale, 'chartCardSaved')}</p>
+                )}
+                {(saved === 'saved' || firstReading.status === 'complete') && CalendarSubscribe && (
+                  <CalendarSubscribe
+                    locale={locale}
+                    positions={{
+                      bodies: chart.bodies,
+                      angles: chart.angles ? { asc: chart.angles.asc, mc: chart.angles.mc } : null,
+                      houseSystem: chart.houses?.system ?? houseSystem,
+                      engineVersion: chart.engineVersion,
+                    }}
+                  />
+                )}
+                {card === 'error' && <p class="calc__error" role="alert">{t(locale, 'cardError')}</p>}
+              </div>
+            </details>
+          )}
           {mode === 'full' && saved === 'saved' && registryAuraLink && (
             <p class="calc__saved" data-registry-aura-chart-link>
               {registryAuraLink.context === 'return'
@@ -1355,36 +1634,6 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
             </details>
           )}
 
-          {/* Share: the link carries the data; no server involved */}
-          {mode === 'full' && shareInput && CopyLinkButton && (
-            <div class="calc__share">
-              <CopyLinkButton
-                url={shareUrl()}
-                state={share}
-                onStateChange={setShare}
-                idleLabel={t(locale, 'copyChartLink')}
-                copiedLabel={t(locale, 'linkCopied')}
-                ariaLabel={t(locale, 'linkToChart')}
-                buttonClass="btn btn--glass"
-                dataHook="share"
-              >
-                <p class="calc__share-note">
-                  {t(locale, 'shareNote')}
-                </p>
-                {(share === 'copied' || card === 'saved') && (
-                  <p class="sr-only" role="status">
-                    {share === 'copied' ? t(locale, 'chartLinkCopied') : t(locale, 'chartCardSaved')}
-                  </p>
-                )}
-                {card === 'error' && (
-                  <p class="calc__error" role="alert">
-                    {t(locale, 'cardError')}
-                  </p>
-                )}
-              </CopyLinkButton>
-            </div>
-          )}
-
           {/* The one sanctioned records bridge on a tool page: the sun
               sign's canonical record, one quiet click into the collector's
               wing. Records register — no market language (mirrors CollectBand). */}
@@ -1410,7 +1659,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
         />
       )}
 
-      {PwaInstallPrompt && (
+      {PwaInstallPrompt && (saved === 'saved' || firstReading.status === 'complete') && (
         <PwaInstallPrompt locale={locale} computationCount={pwaComputationCount} />
       )}
     </div>

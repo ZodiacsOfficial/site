@@ -8,14 +8,17 @@ interface Props {
   locale?: Locale;
   placement: 'chart' | 'horoscopes' | 'footer';
   revealOnChart?: boolean;
+  sign?: string;
 }
 
 const {
   locale: rawLocale = 'en',
   placement,
   revealOnChart = false,
+  sign: requestedSign,
 } = Astro.props;
 const locale = normalizeLocale(rawLocale);
+const selectedSign = SIGNS.some((sign) => sign.slug === requestedSign) ? requestedSign : undefined;
 // Astro's static frontmatter runs in Node; unprefixed provider secrets are
 // intentionally absent from `import.meta.env` client exposure.
 const enabled = hasEmailCaptureProvider(process.env);
@@ -25,6 +28,7 @@ const id = `email-${placement}-${locale}`;
   <section
     class:list={['email-capture', `email-capture--${placement}`]}
     data-email-capture-shell
+    data-placement={placement}
     data-reveal-on-chart={revealOnChart ? 'true' : undefined}
     hidden={revealOnChart}
     aria-labelledby={`${id}-title`}
@@ -62,7 +66,7 @@ const id = `email-${placement}-${locale}`;
             required
           />
         </div>
-        <button type="submit" data-label={t(locale, 'emailCaptureSubmit')} data-busy-label={t(locale, 'emailCaptureSubmitting')}>
+        <button class="btn btn--primary email-capture__submit" type="submit" data-label={t(locale, 'emailCaptureSubmit')} data-busy-label={t(locale, 'emailCaptureSubmitting')}>
           {t(locale, 'emailCaptureSubmit')}
         </button>
       </div>
@@ -70,17 +74,17 @@ const id = `email-${placement}-${locale}`;
       <fieldset class="email-capture__signs">
         <legend>{t(locale, 'emailCaptureSignLegend')}</legend>
         <label class="email-capture__skip">
-          <input type="radio" name="sign" value="" checked />
+          <input type="radio" name="sign" value="" checked={!selectedSign} />
           <span>{t(locale, 'emailCaptureNoSign')}</span>
         </label>
         <div class="email-capture__sign-grid">
           {SIGNS.map((sign) => (
             <label class="email-capture__sign" title={signName(sign, locale)}>
-              <input type="radio" name="sign" value={sign.slug} />
+              <input type="radio" name="sign" value={sign.slug} checked={selectedSign === sign.slug} />
               <span class="email-capture__disc">
                 <SignIcon sign={sign.slug} size={24} alt="" />
               </span>
-              <span class="sr-only">{signName(sign, locale)}</span>
+              <span class="email-capture__sign-name">{signName(sign, locale)}</span>
             </label>
           ))}
         </div>
@@ -95,10 +99,51 @@ const id = `email-${placement}-${locale}`;
 )}
 
 <script>
+  type AnalyticsWindow = Window & {
+    zodiacsAnalytics?: { track?: (name: string, props: Record<string, string>) => void };
+  };
+
+  function trackCaptureView(surface: HTMLElement) {
+    if (surface.dataset.viewTracked === 'true') return;
+    surface.dataset.viewTracked = 'true';
+    (window as AnalyticsWindow).zodiacsAnalytics?.track?.('email_capture_viewed', {
+      placement: surface.dataset.placement ?? 'unknown',
+    });
+  }
+
+  const captureSurfaces = document.querySelectorAll<HTMLElement>('[data-email-capture-shell]');
+  if ('IntersectionObserver' in window) {
+    const captureObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        trackCaptureView(entry.target as HTMLElement);
+        observer.unobserve(entry.target);
+      });
+    }, { threshold: 0.2 });
+    captureSurfaces.forEach((surface) => captureObserver.observe(surface));
+  } else {
+    captureSurfaces.forEach((surface) => {
+      if (!surface.hidden) trackCaptureView(surface);
+    });
+  }
+
+  function preselectCaptureSign(surface: HTMLElement, sign: string | undefined) {
+    if (!sign) return;
+    const radios = Array.from(surface.querySelectorAll<HTMLInputElement>('input[name="sign"]'));
+    const radio = radios.find((input) => input.value === sign);
+    if (!radio) return;
+    radios.forEach((input) => {
+      input.checked = input === radio;
+      input.defaultChecked = input === radio;
+    });
+  }
+
   function revealChartCapture(event: Event) {
-    const mode = (event as CustomEvent<{ mode?: string }>).detail?.mode;
+    const detail = (event as CustomEvent<{ mode?: string; sunSign?: string }>).detail;
+    const mode = detail?.mode;
     if (mode !== 'full') return;
     document.querySelectorAll<HTMLElement>('[data-reveal-on-chart="true"]').forEach((surface) => {
+      preselectCaptureSign(surface, detail?.sunSign);
       surface.hidden = false;
     });
   }
@@ -128,7 +173,7 @@ const id = `email-${placement}-${locale}`;
         status.textContent = form.querySelector<HTMLElement>('[data-success-copy]')?.textContent ?? '';
         form.reset();
         const placement = form.dataset.placement ?? 'unknown';
-        (window as Window & { zodiacsAnalytics?: { track?: (name: string, props: Record<string, string>) => void } })
+        (window as AnalyticsWindow)
           .zodiacsAnalytics?.track?.('email_subscribed', { placement });
       } catch {
         status.textContent = form.querySelector<HTMLElement>('[data-error-copy]')?.textContent ?? '';
@@ -148,7 +193,7 @@ const id = `email-${placement}-${locale}`;
     padding: clamp(22px, 4vw, 34px);
     border: 1px solid var(--hair-2);
     border-radius: var(--r-lg);
-    background: linear-gradient(145deg, rgba(21, 25, 37, 0.94), rgba(10, 12, 17, 0.96));
+    background: var(--void-1);
   }
   .email-capture[hidden] { display: none; }
   @media (min-width: 860px) {
@@ -191,23 +236,14 @@ const id = `email-${placement}-${locale}`;
   .email-capture button:focus-visible,
   .email-capture__sign input:focus-visible + .email-capture__disc,
   .email-capture__skip input:focus-visible + span { outline: 2px solid var(--ink-0); outline-offset: 3px; }
-  .email-capture button {
-    min-height: 43px;
-    padding: 0 18px;
-    border: 1px solid var(--ink-1);
-    border-radius: var(--r-full);
-    background: var(--ink-0);
-    color: var(--void-0);
-    font: 600 var(--text-sm)/1 var(--font-sans);
-    cursor: pointer;
-  }
-  .email-capture button:disabled { opacity: 0.65; cursor: wait; }
+  .email-capture__submit { min-height: 46px; padding-inline: 18px; white-space: nowrap; }
+  .email-capture__submit:disabled { cursor: wait; }
   .email-capture__signs { margin: 16px 0 0; padding: 0; border: 0; }
   .email-capture__signs legend { margin-bottom: 9px; }
   .email-capture__skip { display: inline-flex; align-items: center; gap: 7px; margin: 0 0 10px; color: var(--muted); font-size: 12px; cursor: pointer; }
   .email-capture__skip input { accent-color: var(--ink-1); }
   .email-capture__sign-grid { display: flex; flex-wrap: wrap; gap: 6px; }
-  .email-capture__sign { position: relative; cursor: pointer; }
+  .email-capture__sign { position: relative; display: grid; min-width: 44px; justify-items: center; gap: 3px; cursor: pointer; }
   .email-capture__sign input { position: absolute; opacity: 0; pointer-events: none; }
   .email-capture__disc {
     display: block;
@@ -219,6 +255,8 @@ const id = `email-${placement}-${locale}`;
   }
   .email-capture__sign:hover .email-capture__disc { opacity: 0.88; }
   .email-capture__sign input:checked + .email-capture__disc { opacity: 1; border-color: var(--ink-1); transform: translateY(-1px); }
+  .email-capture__sign-name { max-width: 58px; overflow: hidden; color: var(--faint); font-size: 9px; line-height: 1.2; text-overflow: ellipsis; white-space: nowrap; }
+  .email-capture__sign input:checked ~ .email-capture__sign-name { color: var(--text-2); }
   .email-capture__privacy,
   .email-capture__status { margin: 10px 0 0; color: var(--faint); font-size: 11px; line-height: 1.5; }
   .email-capture__status:not(:empty) { color: var(--text-2); }

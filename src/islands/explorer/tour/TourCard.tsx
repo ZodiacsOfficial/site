@@ -6,22 +6,28 @@
  * comes back through callbacks.
  */
 import type { ComponentChildren } from 'preact';
-import { useRef, useState, type MutableRef } from 'preact/hooks';
+import { useEffect, useRef, useState, type MutableRef } from 'preact/hooks';
 import { tourFormat, tourText } from './copy';
 import type { Locale } from '../../../lib/i18n';
 
-interface Dot { label: string; active: boolean }
+interface Dot { label: string; active: boolean; complete: boolean }
 
 interface Props {
   locale: Locale;
+  variant: 'quick' | 'full';
   kicker: string;
   title: string;
+  dotsLabel: string;
+  exitLabel: string;
+  finishLabel: string;
+  nextLabel: string;
   paragraphs: ComponentChildren[];
   feature: ComponentChildren;
   dots: Dot[];
   onDot: (index: number) => void;
   onPrev: () => void;
   onNext: () => void;
+  onFinish: () => void;
   prevDisabled: boolean;
   isLast: boolean;
   onExit: () => void;
@@ -29,11 +35,18 @@ interface Props {
 }
 
 export default function TourCard({
-  locale, kicker, title, paragraphs, feature, dots,
-  onDot, onPrev, onNext, prevDisabled, isLast, onExit, headingRef,
+  locale, variant, kicker, title, dotsLabel, exitLabel, finishLabel, nextLabel, paragraphs, feature, dots,
+  onDot, onPrev, onNext, onFinish, prevDisabled, isLast, onExit, headingRef,
 }: Props) {
   const [detent, setDetent] = useState<'half' | 'full'>('half');
   const dragFrom = useRef<{ x: number; y: number } | null>(null);
+  const cardRef = useRef<HTMLDivElement | null>(null);
+
+  // The mobile sheet itself scrolls. Start every chapter at its title rather
+  // than carrying the previous chapter's scroll position forward.
+  useEffect(() => {
+    if (cardRef.current) cardRef.current.scrollTop = 0;
+  }, [kicker, title]);
 
   // Same drag grammar as the Inspector sheet, plus a horizontal axis:
   // a sideways swipe on the handle turns the page.
@@ -55,27 +68,10 @@ export default function TourCard({
     else if (dy > 40) (detent === 'full' ? setDetent('half') : onExit());
   };
 
-  // Roving-tabindex tablist over the chapter dots.
-  const activeDot = dots.findIndex((d) => d.active);
-  const onDotsKeyDown = (e: KeyboardEvent) => {
-    let target = -1;
-    if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === 'PageDown') {
-      target = Math.min(dots.length - 1, activeDot + 1);
-    } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp' || e.key === 'PageUp') {
-      target = Math.max(0, activeDot - 1);
-    } else if (e.key === 'Home') target = 0;
-    else if (e.key === 'End') target = dots.length - 1;
-    if (target === -1 || target === activeDot) return;
-    e.preventDefault();
-    onDot(target);
-    requestAnimationFrame(() => {
-      (document.querySelector('.tour__dot[aria-selected="true"]') as HTMLElement | null)?.focus();
-    });
-  };
-
   return (
     <div
-      class={`insp insp--card insp--${detent} tour`}
+      ref={cardRef}
+      class={`insp insp--card insp--${detent} tour tour--${variant}`}
       data-explorer-inspector
       data-tour-card
       onKeyDown={(e: KeyboardEvent) => {
@@ -93,33 +89,35 @@ export default function TourCard({
           <span class="mono--label tour__kicker" data-tour-kicker>{kicker}</span>
           <h3 class="insp__title" tabIndex={-1} ref={headingRef} data-tour-heading>{title}</h3>
         </div>
-        <button class="insp__close" type="button" onClick={onExit} aria-label={tourText(locale, 'exitAria')} data-tour-exit>×</button>
+        <button class="insp__close" type="button" onClick={onExit} aria-label={exitLabel} data-tour-exit>×</button>
       </div>
-      <div class="insp__body">
-        {paragraphs.map((p, i) => <p class="insp__read" key={i}>{p}</p>)}
-        {feature}
+      <div class="insp__body" key={`${kicker}-${title}`}>
+        <div class="tour__stage">
+          {paragraphs.map((p, i) => <p class="insp__read" key={i}>{p}</p>)}
+          {feature}
+        </div>
       </div>
       <div class="tour__nav">
-        <button class="btn btn--glass tour__btn" type="button" onClick={onPrev} disabled={prevDisabled} data-tour-prev>
+        <button class="btn btn--ghost tour__btn tour__btn--back" type="button" onClick={onPrev} disabled={prevDisabled} data-tour-prev>
           <span>{tourText(locale, 'prev')}</span>
         </button>
-        <div class="tour__dots" role="tablist" aria-label={tourText(locale, 'dotsLabel')} onKeyDown={onDotsKeyDown}>
+        <div class="tour__dots" role="group" aria-label={dotsLabel}>
           {dots.map((dot, i) => (
             <button
               key={i}
               class="tour__dot"
-              role="tab"
               type="button"
-              aria-selected={dot.active}
-              tabIndex={dot.active ? 0 : -1}
+              aria-current={dot.active ? 'step' : undefined}
               aria-label={tourFormat(locale, 'dotAria', { title: dot.label, n: i + 1, total: dots.length })}
+              data-complete={dot.complete ? 'true' : undefined}
               onClick={() => onDot(i)}
               data-tour-dot
             />
           ))}
         </div>
-        <button class="btn btn--glass tour__btn" type="button" onClick={isLast ? onExit : onNext} data-tour-next>
-          <span>{isLast ? tourText(locale, 'finish') : tourText(locale, 'next')}</span>
+        <button class="btn btn--primary tour__btn tour__btn--next" type="button" onClick={isLast ? onFinish : onNext} data-tour-next>
+          <span>{isLast ? finishLabel : nextLabel}</span>
+          <span class="orb" aria-hidden="true">→</span>
         </button>
       </div>
     </div>

@@ -61,10 +61,17 @@ async function computeLensSky(lens: LensId, chart: Chart, loadEngine: EngineLoad
   const { solarReturnChart } = await import('../../../lib/engine/solar-return');
   const natalSun = chart.bodies.find((b) => b.body === 'Sun');
   if (!natalSun) throw new Error('No natal Sun in chart.');
-  const location = chart.input.latitude != null && chart.input.longitude != null
+  const hasBirthTime = chart.input.timeKnown !== false && !chart.flags.includes('no-time');
+  const location = hasBirthTime && chart.input.latitude != null && chart.input.longitude != null
     ? { latitude: chart.input.latitude, longitude: chart.input.longitude }
     : null;
-  const sr = solarReturnChart(natalSun.lon, now, location, chart.houses?.system ?? 'whole');
+  const sr = solarReturnChart(
+    natalSun.lon,
+    now,
+    location,
+    chart.houses?.system ?? 'whole',
+    'most-recent',
+  );
   return { bodies: sr.bodies, instant: sr.input.utc, srAsc: sr.angles?.asc ?? null };
 }
 
@@ -191,7 +198,7 @@ export default function ChartLens({ lens, chart, locale, loadEngine, track, onRi
       )}
 
       {lens === 'progressed' && <p class="lens__note">{c.progressedAngles}</p>}
-      {lens !== 'return' && noTime && <p class="lens__note">{c.noTimeNote}</p>}
+      {noTime && <p class="lens__note">{c.noTimeNote}</p>}
       {lens === 'return' && noPlace && <p class="lens__note">{c.noPlaceNote}</p>}
       {lens === 'sky' && (
         <p class="lens__note">

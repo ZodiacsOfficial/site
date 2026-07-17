@@ -1,6 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import ToolGlyph from '../../components/ToolGlyph.astro';
+import AstroTerm from '../../components/AstroTerm.astro';
 
 const tools = [
   {
@@ -9,13 +10,15 @@ const tools = [
     promise: 'See your sun, moon, rising, planets, houses, and what they mean.',
     hue: 'var(--sign-cancer)',
     kind: 'birth' as const,
+    group: 'start',
   },
   {
     href: '/today/',
     title: 'Today',
-    promise: 'Your latest saved chart against the noon sky, with degrees.',
+    promise: 'A plain-language daily brief once you have saved a chart.',
     hue: 'var(--sign-cancer)',
     kind: 'transit' as const,
+    group: 'start',
   },
   {
     href: '/compatibility/',
@@ -23,6 +26,7 @@ const tools = [
     promise: 'Compare two charts and see where they click, clash, and grow.',
     hue: 'var(--sign-libra)',
     kind: 'compat' as const,
+    group: 'start',
   },
   {
     href: '/moon-sign/',
@@ -30,6 +34,7 @@ const tools = [
     promise: 'How you feel, and what settles you.',
     hue: 'var(--sign-pisces)',
     kind: 'moon' as const,
+    group: 'start',
   },
   {
     href: '/rising-sign/',
@@ -37,6 +42,7 @@ const tools = [
     promise: 'Find the sign people meet first. Birth time helps.',
     hue: 'var(--sign-gemini)',
     kind: 'rising' as const,
+    group: 'start',
   },
   {
     href: '/moon-phase/',
@@ -44,6 +50,7 @@ const tools = [
     promise: 'Tonight’s moon, and the moon of any date you care about.',
     hue: 'var(--sign-cancer)',
     kind: 'moonphase' as const,
+    group: 'sky',
   },
   {
     href: '/saturn-return/',
@@ -51,6 +58,7 @@ const tools = [
     promise: 'When yours hits, exactly, and what it tends to ask.',
     hue: 'var(--sign-capricorn)',
     kind: 'saturn' as const,
+    group: 'milestones',
   },
   {
     href: '/solar-return/',
@@ -58,6 +66,7 @@ const tools = [
     promise: 'Cast the exact chart of your personal new year, for any year and place.',
     hue: 'var(--sign-leo)',
     kind: 'sun' as const,
+    group: 'milestones',
   },
   {
     href: '/transits/',
@@ -65,6 +74,7 @@ const tools = [
     promise: "See today's sky next to your chart.",
     hue: 'var(--sign-aries)',
     kind: 'transit' as const,
+    group: 'sky',
   },
   {
     href: '/baby-zodiac/',
@@ -72,6 +82,7 @@ const tools = [
     promise: 'What sign a due date makes likely, and what has to wait.',
     hue: 'var(--sign-cancer)',
     kind: 'baby' as const,
+    group: 'milestones',
   },
   {
     href: '/full-moon-calendar/',
@@ -79,6 +90,7 @@ const tools = [
     promise: 'Every full moon through 2027: date, sign, and name.',
     hue: 'var(--sign-taurus)',
     kind: 'fullmoon' as const,
+    group: 'sky',
   },
   {
     href: '/eclipses/',
@@ -86,6 +98,7 @@ const tools = [
     promise: 'Solar and lunar through 2028, with exact peak times.',
     hue: 'var(--sign-leo)',
     kind: 'eclipse' as const,
+    group: 'sky',
   },
   {
     href: '/retrogrades/',
@@ -93,8 +106,30 @@ const tools = [
     promise: "See each planet's retrograde dates at a glance.",
     hue: 'var(--sign-virgo)',
     kind: 'retrograde' as const,
+    group: 'sky',
   },
 ];
+
+const groups = [
+  {
+    id: 'start',
+    eyebrow: 'Start here',
+    title: 'Understand yourself and your relationships',
+    copy: 'These tools explain the basics first and introduce the chart a piece at a time.',
+  },
+  {
+    id: 'sky',
+    eyebrow: 'When you know the basics',
+    title: 'Follow the sky',
+    copy: 'See what is changing now, with the dates and calculations available when you want them.',
+  },
+  {
+    id: 'milestones',
+    eyebrow: 'For a specific question',
+    title: 'Life moments and annual charts',
+    copy: 'Use these when you are looking at a birthday, due date, Saturn return, or personal new year.',
+  },
+] as const;
 
 const jsonLd = [
   {
@@ -117,37 +152,53 @@ const jsonLd = [
     <div class="section-head">
       <h1 class="display tools-title">Free astrology tools</h1>
       <p>
-        Find your <a href="/learn/glossary/#birth-chart">birth chart</a>, <a href="/learn/glossary/#moon-sign">moon sign</a>, <a href="/learn/glossary/#rising-sign">rising sign</a>, compatibility, and what
+        Find your <AstroTerm term="birth-chart" label="birth chart" surface="tools-index" />, <AstroTerm term="moon-sign" label="moon sign" surface="tools-index" />, <AstroTerm term="rising-sign" label="rising sign" surface="tools-index" />, compatibility, and what
         the sky is doing now. Charts are calculated privately in your browser.
       </p>
     </div>
 
-    <div class="tools-grid">
-      {tools.map((t) => (
-        <a class="shell tinted" href={t.href} style={`--sign:${t.hue}`}>
-          <div class="core tinted tool-card">
-            <ToolGlyph kind={t.kind} />
-            <h2>{t.title}</h2>
-            <p>{t.promise}</p>
-            <span class="tool-card__go">Open →</span>
-          </div>
-        </a>
+    <div class="tool-groups">
+      {groups.map((group) => (
+        <>
+          <section class="tool-group" aria-labelledby={`tools-${group.id}`}>
+            <header class="tool-group__head">
+              <em class="kicker">{group.eyebrow}</em>
+              <h2 id={`tools-${group.id}`}>{group.title}</h2>
+              <p>{group.copy}</p>
+            </header>
+            <div class="tools-grid">
+              {tools.filter((tool) => tool.group === group.id).map((t) => (
+                <a class="shell tinted" href={t.href} style={`--sign:${t.hue}`}>
+                  <div class="core tinted tool-card">
+                    <ToolGlyph kind={t.kind} />
+                    <h3>{t.title}</h3>
+                    <p>{t.promise}</p>
+                    <span class="tool-card__go">Open →</span>
+                  </div>
+                </a>
+              ))}
+            </div>
+          </section>
+          {group.id === 'start' && (
+            <div class="tools-assistant shell tinted" style="--sign:var(--sign-aquarius)">
+              <button
+                class="assistant-tool core tinted"
+                type="button"
+                data-assistant-open
+                data-assistant-locale="en"
+                aria-haspopup="dialog"
+              >
+                <div class="tool-card">
+                  <ToolGlyph kind="assistant" />
+                  <h3>Not sure which tool you need?</h3>
+                  <p>Ask about a term, a tool, or a chart saved on this device.</p>
+                  <span class="tool-card__go">Ask the site →</span>
+                </div>
+              </button>
+            </div>
+          )}
+        </>
       ))}
-      <button
-        class="shell tinted assistant-tool"
-        type="button"
-        style="--sign:var(--sign-aquarius)"
-        data-assistant-open
-        data-assistant-locale="en"
-        aria-haspopup="dialog"
-      >
-        <div class="core tinted tool-card">
-          <ToolGlyph kind="assistant" />
-          <h2>Ask the site</h2>
-          <p>Ask about a tool, an astrology term, or a chart you have saved here.</p>
-          <span class="tool-card__go">Start a conversation →</span>
-        </div>
-      </button>
     </div>
 
     <div class="tools-upcoming">
@@ -179,6 +230,11 @@ const jsonLd = [
     gap: 14px;
     grid-template-columns: 1fr;
   }
+  .tool-groups { display: grid; gap: clamp(42px, 7vw, 72px); }
+  .tool-group { display: grid; gap: 18px; }
+  .tool-group__head { max-width: 58ch; }
+  .tool-group__head h2 { margin: 8px 0 7px; color: var(--text); font-size: var(--text-xl); letter-spacing: -0.02em; }
+  .tool-group__head p { margin: 0; color: var(--muted); font-size: var(--text-sm); line-height: 1.6; }
   @media (min-width: 700px) { .tools-grid { grid-template-columns: repeat(2, 1fr); } }
   @media (min-width: 1000px) { .tools-grid { grid-template-columns: repeat(3, 1fr); } }
   .tool-card {
@@ -189,7 +245,7 @@ const jsonLd = [
     min-height: 210px;
   }
   /* Tool-card icon disc lives in ToolGlyph.astro. */
-  .tool-card h2 {
+  .tool-card h3 {
     margin: 4px 0 0;
     font-size: var(--text-lg);
     font-weight: 620;
@@ -207,13 +263,15 @@ const jsonLd = [
     display: block;
     width: 100%;
     text-align: left;
-    transition: border-color var(--dur-2) var(--ease), transform var(--dur-2) var(--ease);
+    transition: transform 180ms cubic-bezier(0.22, 1, 0.36, 1);
   }
-  .assistant-tool:hover {
-    border-color: color-mix(in oklab, var(--sign) 45%, transparent);
-    transform: translateY(-2px);
+  .tools-assistant { margin-top: -22px; }
+  .tools-assistant .assistant-tool { border: 0; background: transparent; }
+  .tools-assistant .tool-card { min-height: 0; }
+  .assistant-tool:active { transform: scale(0.995); }
+  @media (hover: hover) and (pointer: fine) {
+    .assistant-tool:hover { transform: translateY(-2px); }
   }
-  .assistant-tool:hover .core { border-color: color-mix(in oklab, var(--sign) 28%, transparent); }
   .tools-upcoming {
     margin-top: clamp(28px, 5vw, 44px);
     padding-top: 24px;
@@ -229,4 +287,5 @@ const jsonLd = [
   .tools-upcoming li { font-size: var(--text-sm); color: var(--muted); }
   .tools-upcoming strong { color: var(--text-2); font-weight: 600; }
   .tools-upcoming a { color: var(--text); }
+  @media (prefers-reduced-motion: reduce) { .assistant-tool { transition: none; } }
 </style>

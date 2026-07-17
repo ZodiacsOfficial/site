@@ -30,11 +30,13 @@ const FOOTER_COPY = {
   it: { assistant: 'Chiedi al sito', today: 'Oggi (in inglese)' },
 } as const satisfies Record<Locale, { assistant: string; today: string }>;
 const privacyHref = localizePath(locale, '/privacy/');
-const isRegistryWing = /^\/(?:registry|sdk|thesis|archive|disclosure)(?:\/|$)/.test(stripLocale(Astro.url.pathname));
+const consumerPath = stripLocale(Astro.url.pathname);
+const isRegistryWing = /^\/(?:registry|sdk|thesis|archive|disclosure)(?:\/|$)/.test(consumerPath);
+const suppressFooterEmailCapture = /^\/(?:birth-chart|horoscopes|profile)(?:\/|$)/.test(consumerPath);
 ---
 <footer class="footer">
   <div class="container">
-    {!isRegistryWing && <EmailCapture locale={locale} placement="footer" />}
+    {!isRegistryWing && !suppressFooterEmailCapture && <EmailCapture locale={locale} placement="footer" />}
     <div class="footer__grid">
       <div class="footer__brand">
         <a class="footer__mark" href={localizePath(locale, '/')}>
@@ -146,7 +148,7 @@ const isRegistryWing = /^\/(?:registry|sdk|thesis|archive|disclosure)(?:\/|$)/.t
     margin-top: clamp(56px, 9vw, 104px);
     padding: clamp(48px, 7vw, 80px) 0 42px;
     border-top: 1px solid var(--hair-1);
-    background: linear-gradient(180deg, transparent, rgba(15, 18, 26, 0.5));
+    background: rgba(15, 18, 26, 0.34);
   }
   .footer__grid {
     display: grid;

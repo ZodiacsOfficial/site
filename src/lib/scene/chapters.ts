@@ -18,7 +18,8 @@ import { emphasisFor } from './emphasis';
 
 export type ChapterId =
   | 'sky' | 'zodiac' | 'horizon' | 'big-three' | 'planets'
-  | 'houses' | 'aspects' | 'whole' | 'no-houses';
+  | 'houses' | 'aspects' | 'whole' | 'no-houses'
+  | 'first-big-three' | 'first-sun' | 'first-aspect' | 'first-next';
 
 export interface ChapterDef {
   id: ChapterId;
@@ -30,7 +31,10 @@ export interface ChapterDef {
   /** Layer prerequisites applied on chapter entry. */
   needs: { houses?: boolean; allAspects?: boolean };
   /** The per-chapter feature block TourCard renders. */
-  feature: 'receipt' | 'anchor-rotate' | 'house-morph' | 'aspect-focus' | 'save-share' | null;
+  feature:
+    | 'receipt' | 'anchor-rotate' | 'house-morph' | 'aspect-focus' | 'save-share'
+    | 'first-big-three' | 'first-sun' | 'first-aspect' | 'first-next'
+    | null;
 }
 
 export interface TourStop { chapter: number; sub: number }
@@ -110,6 +114,53 @@ export function deriveChapters(scene: ChartSceneModel): ChapterDef[] {
   return chapters;
 }
 
+const PERSONAL_BODIES = new Set(['Sun', 'Moon', 'Mercury', 'Venus', 'Mars']);
+
+/**
+ * The single aspect used by the beginner reading. It follows the natal
+ * reading's ranking rule (tight aspects first, with a luminary contact given
+ * extra weight) but excludes slow-planet-only contacts that are harder to
+ * make personal on a first pass.
+ */
+export function strongestPersonalAspect(scene: ChartSceneModel) {
+  const score = (aspect: ChartSceneModel['aspects'][number]) => (
+    aspect.orb
+    - (aspect.a === 'Sun' || aspect.a === 'Moon' || aspect.b === 'Sun' || aspect.b === 'Moon' ? 1.5 : 0)
+  );
+  return scene.aspects
+    .filter((aspect) => PERSONAL_BODIES.has(aspect.a) || PERSONAL_BODIES.has(aspect.b))
+    .sort((a, b) => score(a) - score(b))[0] ?? null;
+}
+
+/**
+ * Four stops for the opt-in first reading. Unlike the full chapter tour this
+ * path is intentionally short and always has the same shape, including an
+ * honest empty-aspect branch and a no-time Sun-placement branch.
+ */
+export function deriveFirstReading(scene: ChartSceneModel): ChapterDef[] {
+  const aspect = strongestPersonalAspect(scene);
+  return [
+    chapter('first-big-three', [], {}, 'first-big-three', 1),
+    chapter(
+      'first-sun',
+      [{ id: 'sun', entity: { kind: 'body', body: 'Sun' } }],
+      {},
+      'first-sun',
+      1,
+    ),
+    chapter(
+      'first-aspect',
+      aspect
+        ? [{ id: 'aspect', entity: { kind: 'aspect', a: aspect.a, b: aspect.b, type: aspect.type } }]
+        : [],
+      { allAspects: true },
+      'first-aspect',
+      1,
+    ),
+    chapter('first-next', [], {}, 'first-next', 1),
+  ];
+}
+
 /** Flattened prev/next order across chapters and their sub-steps. */
 export function flattenStops(chapters: ChapterDef[]): TourStop[] {
   const stops: TourStop[] = [];
@@ -146,7 +197,33 @@ export function emphasisForChapter(
     case 'sky':
     case 'whole':
     case 'no-houses':
+    case 'first-next':
       break;
+
+    case 'first-big-three': {
+      for (const bodyName of ['Sun', 'Moon'] as const) {
+        const body = scene.bodies.find((candidate) => candidate.body === bodyName);
+        if (!body) continue;
+        highlight.add(entityId({ kind: 'body', body: bodyName }));
+        soft.add(entityId({ kind: 'sign', sign: body.sign }));
+      }
+      if (scene.angles) {
+        highlight.add(entityId({ kind: 'angle', angle: 'asc' }));
+        const rising = scene.signs[Math.floor(norm(scene.angles.asc) / 30)];
+        if (rising) soft.add(entityId({ kind: 'sign', sign: rising.slug }));
+      }
+      break;
+    }
+
+    case 'first-sun': {
+      return emphasisFor(scene, { kind: 'body', body: 'Sun' });
+    }
+
+    case 'first-aspect': {
+      const target = chapterDef.subs[0]?.entity;
+      if (target?.kind === 'aspect') return emphasisFor(scene, target);
+      break;
+    }
 
     case 'zodiac': {
       for (const s of scene.signs) highlight.add(entityId({ kind: 'sign', sign: s.slug }));

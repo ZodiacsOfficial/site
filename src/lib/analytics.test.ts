@@ -20,6 +20,12 @@ const REQUIRED_EVENTS = [
   'aura_entry',
   'aura_return',
   'aura_response',
+  'context_help_opened',
+  'first_reading_prompt',
+  'first_reading_step',
+  'first_reading_completed',
+  'next_action_clicked',
+  'email_capture_viewed',
 ] as const;
 
 describe('analytics event contract', () => {
@@ -70,5 +76,18 @@ describe('analytics event contract', () => {
       source: 'registry',
       destination: 'x'.repeat(33),
     })).toEqual({ source: 'registry' });
+  });
+
+  it('keeps beginner-guidance events useful without accepting chart data', () => {
+    expect(sanitizeAnalyticsProperties('context_help_opened', {
+      term: 'whole-sign-houses',
+      surface: 'chart-form',
+      birthDate: '1990-01-01',
+    })).toEqual({ term: 'whole-sign-houses', surface: 'chart-form' });
+    expect(sanitizeAnalyticsProperties('next_action_clicked', {
+      state: 'saved',
+      action: 'today',
+      chartId: 'private',
+    })).toEqual({ state: 'saved', action: 'today' });
   });
 });

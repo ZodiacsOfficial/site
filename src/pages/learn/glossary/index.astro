@@ -1,13 +1,18 @@
 ---
 import Base from '../../../layouts/Base.astro';
+import AstroTerm from '../../../components/AstroTerm.astro';
+import {
+  BEGINNER_TERM_SLUGS,
+  type GlossaryCategory,
+} from '../../../data/context-help';
 import { GLOSSARY, type GlossaryTerm } from '../../../data/glossary';
 import { EDITOR_AUTHOR } from '../../../lib/editorial';
 
 const PAGE_URL = 'https://zodiacs.org/learn/glossary/';
-const PAGE_DATE = '2026-07-11';
+const PAGE_DATE = '2026-07-17';
 const headline = 'The astrology glossary';
 const description =
-  'The words Zodiacs.org uses, defined against what the site computes: signs, chart anatomy, aspects, motion, timing, houses, planets, and synastry.';
+  'Astrology words in plain English, with precise definitions for signs, chart anatomy, aspects, motion, timing, houses, planets, and synastry.';
 const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 const termsByLetter = new Map<string, GlossaryTerm[]>();
 const termBySlug = new Map(GLOSSARY.map((entry) => [entry.slug, entry]));
@@ -19,7 +24,27 @@ for (const entry of GLOSSARY) {
   termsByLetter.set(letter, group);
 }
 
+const categoryLabels: Record<GlossaryCategory, string> = {
+  setup: 'Chart setup',
+  anatomy: 'Chart anatomy',
+  aspect: 'Aspects',
+  dignity: 'Dignities',
+  timing: 'Timing',
+  'sign-quality': 'Sign qualities',
+};
+const categories = Object.entries(categoryLabels) as [GlossaryCategory, string][];
 const activeLetters = letters.filter((letter) => termsByLetter.has(letter));
+const beginnerTerms = BEGINNER_TERM_SLUGS
+  .map((slug) => termBySlug.get(slug))
+  .filter((entry): entry is GlossaryTerm => Boolean(entry));
+const searchText = (entry: GlossaryTerm) => [
+  entry.term,
+  entry.slug,
+  ...(entry.aliases ?? []),
+  entry.plainDefinition,
+  entry.definition,
+].filter(Boolean).join(' ').toLowerCase();
+
 const sources = [
   { label: 'Calculation methodology', href: 'https://zodiacs.org/methodology/' },
   { label: 'Astronomy Engine', href: 'https://github.com/cosinekitty/astronomy' },
@@ -61,7 +86,7 @@ const jsonLd = [
       '@type': 'DefinedTerm',
       '@id': `${PAGE_URL}#${entry.slug}`,
       name: entry.term,
-      description: entry.definition,
+      description: entry.plainDefinition ?? entry.definition,
       url: `${PAGE_URL}#${entry.slug}`,
       inDefinedTermSet: { '@id': termSetId },
     })),
@@ -86,47 +111,138 @@ const jsonLd = [
   jsonLd={jsonLd}
   sources={sources}
 >
-  <article class="glossary">
+  <article class="glossary" data-glossary-browser>
     <header class="section--tight container container--narrow glossary__hero">
-      <em class="kicker">A reference for this site</em>
+      <em class="kicker">Plain English first</em>
       <h1 class="display">{headline}.</h1>
       <p class="glossary__lede">
-        The words this site uses, defined against what it computes. Signs,
-        chart anatomy, aspects, motion, timing, houses, planets, and synastry
-        — and when something isn&rsquo;t computed here, the entry says so.
+        Start with a simple explanation, then open the precise definition when
+        you want it. Search abbreviations such as
+        <AstroTerm term="Rx" surface="glossary-hero" />,
+        <AstroTerm term="ASC" surface="glossary-hero" />, or
+        <AstroTerm term="MC" surface="glossary-hero" />, too.
       </p>
       <p class="glossary__count mono">{GLOSSARY.length} terms · English</p>
     </header>
 
+    <section class="container container--narrow glossary__finder" aria-labelledby="find-a-term">
+      <div class="glossary__finder-heading">
+        <div>
+          <em class="kicker">Find an answer</em>
+          <h2 id="find-a-term">What did you come across?</h2>
+        </div>
+        <p class="mono" aria-live="polite">
+          <span data-glossary-visible-count>{GLOSSARY.length}</span> terms shown
+        </p>
+      </div>
+      <div class="glossary__controls">
+        <label class="glossary__field">
+          <span>Search a word or abbreviation</span>
+          <input
+            type="search"
+            inputmode="search"
+            autocomplete="off"
+            placeholder="Try sextile, Rx, ASC…"
+            data-glossary-search
+          />
+        </label>
+        <label class="glossary__field glossary__field--category">
+          <span>Filter by topic</span>
+          <select data-glossary-category-filter>
+            <option value="all">All topics</option>
+            {categories.map(([value, label]) => <option value={value}>{label}</option>)}
+            <option value="more">More astrology terms</option>
+          </select>
+        </label>
+        <button class="glossary__clear" type="button" data-glossary-clear hidden>
+          Clear filters
+        </button>
+      </div>
+    </section>
+
+    <section
+      class="section--tight container container--narrow glossary__starter"
+      aria-labelledby="start-here"
+      data-glossary-starter
+    >
+      <div class="glossary__section-heading">
+        <div>
+          <em class="kicker">New to astrology?</em>
+          <h2 id="start-here">Start with these terms</h2>
+        </div>
+        <p>These fifteen explain most of what you will meet in a first birth chart.</p>
+      </div>
+      <div class="glossary__starter-grid">
+        {beginnerTerms.map((entry, index) => (
+          <a class="glossary__starter-card" href={`#${entry.slug}`}>
+            <span class="mono">{String(index + 1).padStart(2, '0')}</span>
+            <strong>{entry.term}</strong>
+            <span>{entry.plainDefinition}</span>
+          </a>
+        ))}
+      </div>
+    </section>
+
     <section class="section--tight container container--narrow glossary__reference" aria-labelledby="glossary-a-z">
       <div class="glossary__jump-head">
-        <h2 id="glossary-a-z">A–Z</h2>
+        <h2 id="glossary-a-z">A–Z reference</h2>
         <p id="jump-instruction">Jump to a letter</p>
       </div>
       <div class="glossary__jump" role="group" aria-labelledby="jump-instruction">
         {letters.map((letter) => (
           termsByLetter.has(letter)
-            ? <a href={`#letter-${letter.toLowerCase()}`}>{letter}</a>
+            ? <a href={`#letter-${letter.toLowerCase()}`} data-glossary-jump={letter}>{letter}</a>
             : <span aria-hidden="true">{letter}</span>
         ))}
       </div>
 
+      <p class="glossary__empty" data-glossary-empty hidden>
+        No terms match those filters. Try a shorter word or choose all topics.
+      </p>
+
       <div id="terms" class="glossary__terms">
         {activeLetters.map((letter) => (
-          <section class="glossary__group" aria-labelledby={`letter-${letter.toLowerCase()}`}>
+          <section
+            class="glossary__group"
+            aria-labelledby={`letter-${letter.toLowerCase()}`}
+            data-glossary-group={letter}
+          >
             <h3 id={`letter-${letter.toLowerCase()}`}>{letter}</h3>
             <dl>
               {termsByLetter.get(letter)?.map((entry) => (
-                <>
+                <div
+                  class="glossary__term"
+                  data-glossary-item
+                  data-glossary-search-text={searchText(entry)}
+                  data-glossary-category={entry.category ?? 'more'}
+                >
                   <dt id={entry.slug}>
                     <a class="glossary__anchor" href={`#${entry.slug}`}>
                       <span>{entry.term}</span>
                       <span class="glossary__hash" aria-hidden="true">#</span>
                     </a>
+                    {entry.category && (
+                      <span class="glossary__tag mono">{categoryLabels[entry.category]}</span>
+                    )}
                   </dt>
                   <dd>
-                    <p>{entry.definition}</p>
-                    {entry.receipt && <p class="glossary__receipt mono">{entry.receipt}</p>}
+                    {entry.plainDefinition
+                      ? (
+                        <>
+                          <p class="glossary__plain">{entry.plainDefinition}</p>
+                          <details class="glossary__technical">
+                            <summary>Precise definition</summary>
+                            <p>{entry.definition}</p>
+                            {entry.receipt && <p class="glossary__receipt mono">{entry.receipt}</p>}
+                          </details>
+                        </>
+                      )
+                      : (
+                        <>
+                          <p class="glossary__definition">{entry.definition}</p>
+                          {entry.receipt && <p class="glossary__receipt mono">{entry.receipt}</p>}
+                        </>
+                      )}
                     {((entry.related && entry.related.length > 0) || entry.link) && (
                       <div class="glossary__meta">
                         {entry.related && entry.related.length > 0 && (
@@ -150,7 +266,7 @@ const jsonLd = [
                       </div>
                     )}
                   </dd>
-                </>
+                </div>
               ))}
             </dl>
           </section>
@@ -158,36 +274,243 @@ const jsonLd = [
       </div>
     </section>
   </article>
+
+  <script>
+  const root = document.querySelector<HTMLElement>('[data-glossary-browser]');
+  if (root) {
+    const search = root.querySelector<HTMLInputElement>('[data-glossary-search]');
+    const category = root.querySelector<HTMLSelectElement>('[data-glossary-category-filter]');
+    const clear = root.querySelector<HTMLButtonElement>('[data-glossary-clear]');
+    const count = root.querySelector<HTMLElement>('[data-glossary-visible-count]');
+    const empty = root.querySelector<HTMLElement>('[data-glossary-empty]');
+    const starter = root.querySelector<HTMLElement>('[data-glossary-starter]');
+    const items = Array.from(root.querySelectorAll<HTMLElement>('[data-glossary-item]'));
+    const groups = Array.from(root.querySelectorAll<HTMLElement>('[data-glossary-group]'));
+
+    const applyFilters = () => {
+      const query = search?.value.trim().toLocaleLowerCase() ?? '';
+      const selectedCategory = category?.value ?? 'all';
+      let visible = 0;
+
+      for (const item of items) {
+        const matchesQuery = !query || item.dataset.glossarySearchText?.includes(query);
+        const matchesCategory = selectedCategory === 'all'
+          || item.dataset.glossaryCategory === selectedCategory;
+        item.hidden = !(matchesQuery && matchesCategory);
+        if (!item.hidden) visible += 1;
+      }
+
+      for (const group of groups) {
+        const hasVisibleTerm = Boolean(group.querySelector('[data-glossary-item]:not([hidden])'));
+        group.hidden = !hasVisibleTerm;
+        const letter = group.dataset.glossaryGroup;
+        const jump = letter
+          ? root.querySelector<HTMLElement>(`[data-glossary-jump="${letter}"]`)
+          : null;
+        if (jump) jump.hidden = !hasVisibleTerm;
+      }
+
+      if (count) count.textContent = String(visible);
+      if (empty) empty.hidden = visible > 0;
+      if (clear) clear.hidden = !query && selectedCategory === 'all';
+      if (starter) starter.hidden = Boolean(query) || selectedCategory !== 'all';
+    };
+
+    search?.addEventListener('input', applyFilters);
+    category?.addEventListener('change', applyFilters);
+    clear?.addEventListener('click', () => {
+      if (search) search.value = '';
+      if (category) category.value = 'all';
+      applyFilters();
+      search?.focus();
+    });
+  }
+  </script>
 </Base>
 
 <style>
   .glossary__hero {
     padding-top: clamp(64px, 10vw, 116px);
-    padding-bottom: clamp(42px, 7vw, 72px);
+    padding-bottom: clamp(38px, 6vw, 64px);
   }
 
   .glossary__hero h1 {
-    margin: 12px 0 18px;
     max-width: 13ch;
+    margin: 12px 0 18px;
   }
 
   .glossary__lede {
-    max-width: 60ch;
+    max-width: 62ch;
     margin: 0;
+    color: var(--text-2);
     font-size: clamp(1.08rem, 1.5vw, 1.25rem);
     line-height: 1.7;
-    color: var(--text-2);
     text-wrap: pretty;
+  }
+
+  .glossary__lede strong {
+    color: var(--text);
+    font-weight: 600;
   }
 
   .glossary__count {
     margin: 20px 0 0;
+    color: var(--faint);
     font-size: var(--text-xs);
+  }
+
+  .glossary__finder {
+    padding: clamp(24px, 4vw, 38px);
+    border: 1px solid var(--hair-2);
+    border-radius: var(--r-lg);
+    background: var(--surface);
+  }
+
+  .glossary__finder-heading,
+  .glossary__section-heading {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 24px;
+  }
+
+  .glossary__finder-heading h2,
+  .glossary__section-heading h2,
+  .glossary__jump-head h2 {
+    margin: 7px 0 0;
+    color: var(--text);
+    font-family: var(--font-serif);
+    font-size: clamp(1.75rem, 3vw, 2.35rem);
+    font-weight: 500;
+  }
+
+  .glossary__finder-heading p {
+    flex: 0 0 auto;
+    margin: 0 0 4px;
+    color: var(--faint);
+    font-size: var(--text-xs);
+  }
+
+  .glossary__controls {
+    display: grid;
+    grid-template-columns: minmax(0, 1.5fr) minmax(190px, 0.7fr) auto;
+    gap: 12px;
+    align-items: end;
+    margin-top: 24px;
+  }
+
+  .glossary__field {
+    display: grid;
+    gap: 7px;
+    color: var(--muted);
+    font-size: var(--text-sm);
+  }
+
+  .glossary__field input,
+  .glossary__field select {
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 48px;
+    padding: 0 14px;
+    border: 1px solid var(--hair-3);
+    border-radius: var(--r-sm);
+    background: var(--void-1);
+    color: var(--text);
+    font: inherit;
+  }
+
+  .glossary__field input::placeholder {
     color: var(--faint);
   }
 
+  .glossary__field input:focus-visible,
+  .glossary__field select:focus-visible,
+  .glossary__clear:focus-visible {
+    outline: 2px solid var(--text-2);
+    outline-offset: 2px;
+  }
+
+  .glossary__clear {
+    min-height: 48px;
+    padding: 0 15px;
+    border: 1px solid var(--hair-3);
+    border-radius: var(--r-full);
+    background: transparent;
+    color: var(--text-2);
+    font: inherit;
+    white-space: nowrap;
+    cursor: pointer;
+  }
+
+  .glossary__starter {
+    padding-top: clamp(54px, 8vw, 88px);
+  }
+
+  .glossary__section-heading {
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--hair-1);
+  }
+
+  .glossary__section-heading > p {
+    max-width: 40ch;
+    margin: 0;
+    color: var(--muted);
+    font-size: var(--text-sm);
+    line-height: 1.6;
+  }
+
+  .glossary__starter-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+    margin-top: 20px;
+  }
+
+  .glossary__starter-card {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 5px 12px;
+    min-height: 132px;
+    padding: 18px;
+    border: 1px solid var(--hair-1);
+    border-radius: var(--r-md);
+    background: var(--surface);
+    color: var(--text-2);
+    text-decoration: none;
+  }
+
+  .glossary__starter-card:hover,
+  .glossary__starter-card:focus-visible {
+    border-color: var(--hair-3);
+    background: var(--surface-2);
+  }
+
+  .glossary__starter-card:focus-visible {
+    outline: 2px solid var(--text-2);
+    outline-offset: 2px;
+  }
+
+  .glossary__starter-card > .mono {
+    grid-row: 1 / span 2;
+    color: var(--faint);
+    font-size: 0.68rem;
+  }
+
+  .glossary__starter-card strong {
+    color: var(--text);
+    font-family: var(--font-serif);
+    font-size: 1.2rem;
+    font-weight: 500;
+  }
+
+  .glossary__starter-card > span:last-child {
+    grid-column: 2;
+    font-size: var(--text-sm);
+    line-height: 1.55;
+  }
+
   .glossary__reference {
-    padding-top: 0;
+    padding-top: clamp(54px, 8vw, 88px);
   }
 
   .glossary__jump-head {
@@ -201,16 +524,12 @@ const jsonLd = [
 
   .glossary__jump-head h2 {
     margin: 0;
-    font-family: var(--font-serif);
-    font-size: clamp(1.75rem, 3vw, 2.35rem);
-    font-weight: 500;
-    color: var(--text);
   }
 
   .glossary__jump-head p {
     margin: 0;
-    font-size: var(--text-sm);
     color: var(--muted);
+    font-size: var(--text-sm);
   }
 
   .glossary__jump {
@@ -244,6 +563,15 @@ const jsonLd = [
     opacity: 0.45;
   }
 
+  .glossary__empty {
+    margin: 42px 0;
+    padding: 22px;
+    border: 1px solid var(--hair-2);
+    border-radius: var(--r-md);
+    color: var(--muted);
+    text-align: center;
+  }
+
   .glossary__terms {
     padding-top: clamp(28px, 5vw, 52px);
   }
@@ -265,38 +593,44 @@ const jsonLd = [
     top: 92px;
     align-self: start;
     margin: 0;
+    color: var(--faint);
     font-family: var(--font-serif);
     font-size: clamp(2.2rem, 5vw, 3.5rem);
     font-weight: 400;
     line-height: 1;
-    color: var(--faint);
     scroll-margin-top: 110px;
   }
 
   .glossary__group dl {
-    display: grid;
-    grid-template-columns: minmax(150px, 0.38fr) minmax(0, 1fr);
     margin: 0;
   }
 
-  .glossary__group dt,
-  .glossary__group dd {
-    padding: 24px 0;
+  .glossary__term {
+    display: grid;
+    grid-template-columns: minmax(150px, 0.38fr) minmax(0, 1fr);
     border-top: 1px solid var(--hair-1);
   }
 
-  .glossary__group dt:first-of-type,
-  .glossary__group dt:first-of-type + dd {
-    padding-top: 0;
+  .glossary__term:first-child {
     border-top: 0;
   }
 
-  .glossary__group dt {
+  .glossary__term dt,
+  .glossary__term dd {
+    padding: 24px 0;
+  }
+
+  .glossary__term:first-child dt,
+  .glossary__term:first-child dd {
+    padding-top: 0;
+  }
+
+  .glossary__term dt {
     padding-right: clamp(18px, 4vw, 42px);
     scroll-margin-top: 110px;
   }
 
-  .glossary__group dd {
+  .glossary__term dd {
     margin: 0;
   }
 
@@ -304,18 +638,18 @@ const jsonLd = [
     display: inline-flex;
     align-items: baseline;
     gap: 8px;
+    color: var(--text);
     font-family: var(--font-serif);
     font-size: clamp(1.23rem, 2vw, 1.5rem);
     font-weight: 500;
     line-height: 1.25;
-    color: var(--text);
     text-decoration: none;
   }
 
   .glossary__hash {
+    color: var(--faint);
     font-family: var(--font-mono);
     font-size: 0.65em;
-    color: var(--faint);
     opacity: 0;
     transition: opacity var(--dur-1) var(--ease);
   }
@@ -325,19 +659,57 @@ const jsonLd = [
     opacity: 1;
   }
 
-  .glossary__group dd > p {
+  .glossary__tag {
+    display: block;
+    width: fit-content;
+    margin-top: 8px;
+    padding: 3px 7px;
+    border: 1px solid var(--hair-1);
+    border-radius: var(--r-full);
+    color: var(--faint);
+    font-size: 0.64rem;
+  }
+
+  .glossary__plain,
+  .glossary__definition,
+  .glossary__technical p {
     max-width: 68ch;
     margin: 0;
-    line-height: 1.72;
     color: var(--text-2);
+    line-height: 1.72;
     text-wrap: pretty;
+  }
+
+  .glossary__plain {
+    color: var(--text);
+    font-size: 1.04rem;
+  }
+
+  .glossary__technical {
+    margin-top: 12px;
+  }
+
+  .glossary__technical summary {
+    width: fit-content;
+    color: var(--muted);
+    font-size: var(--text-sm);
+    cursor: pointer;
+  }
+
+  .glossary__technical[open] summary {
+    margin-bottom: 9px;
+  }
+
+  .glossary__technical summary:hover,
+  .glossary__technical summary:focus-visible {
+    color: var(--text);
   }
 
   .glossary__receipt {
     margin-top: 10px !important;
+    color: var(--muted) !important;
     font-size: var(--text-xs);
     line-height: 1.55 !important;
-    color: var(--muted) !important;
   }
 
   .glossary__meta {
@@ -350,17 +722,17 @@ const jsonLd = [
 
   .glossary__meta p {
     margin: 0;
+    color: var(--muted);
     font-size: var(--text-sm);
     line-height: 1.55;
-    color: var(--muted);
   }
 
   .glossary__meta-label {
     margin-right: 10px;
+    color: var(--faint);
     font-size: 0.72em;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--faint);
   }
 
   .glossary__meta a {
@@ -380,7 +752,49 @@ const jsonLd = [
     text-decoration-color: var(--muted) !important;
   }
 
-  @media (max-width: 680px) {
+  [hidden] {
+    display: none !important;
+  }
+
+  @media (max-width: 760px) {
+    .glossary__finder-heading,
+    .glossary__section-heading {
+      display: block;
+    }
+
+    .glossary__finder-heading p,
+    .glossary__section-heading > p {
+      margin-top: 8px;
+    }
+
+    .glossary__controls {
+      grid-template-columns: 1fr;
+    }
+
+    .glossary__clear {
+      width: fit-content;
+    }
+
+    .glossary__starter-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 560px) {
+    .glossary__finder {
+      border-right: 0;
+      border-left: 0;
+      border-radius: 0;
+    }
+
+    .glossary__starter-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .glossary__starter-card {
+      min-height: 0;
+    }
+
     .glossary__jump-head {
       display: block;
     }
@@ -402,21 +816,19 @@ const jsonLd = [
       margin-bottom: 22px;
     }
 
-    .glossary__group dl {
+    .glossary__term {
       display: block;
     }
 
-    .glossary__group dt {
+    .glossary__term dt {
       padding: 22px 0 6px;
-      border-top: 1px solid var(--hair-1);
     }
 
-    .glossary__group dd {
+    .glossary__term dd {
       padding: 0 0 22px;
-      border-top: 0;
     }
 
-    .glossary__group dt:first-of-type {
+    .glossary__term:first-child dt {
       padding-top: 0;
     }
 

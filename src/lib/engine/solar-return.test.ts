@@ -1,6 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import { bodyLongitude } from './full';
-import { solarReturnChart, solarReturnInstant } from './solar-return';
+import {
+  mostRecentSolarReturnInstant, solarReturnChart, solarReturnInstant,
+} from './solar-return';
 import { yearScan } from './year-scan';
 
 const KAHLO_BIRTH = new Date('1907-07-06T15:06:36Z');
@@ -55,5 +57,13 @@ describe('solar returns', () => {
       unlocated.bodies.find((body) => body.body === 'Sun')!.lon,
       KAHLO_SUN_LON,
     )).toBeLessThan(0.01);
+  });
+
+  it('can select the birthday-year that is already in progress', () => {
+    const inBetweenReturns = new Date('2026-03-01T00:00:00Z');
+    const previous = mostRecentSolarReturnInstant(KAHLO_SUN_LON, inBetweenReturns);
+
+    expect(previous.getTime()).toBeLessThanOrEqual(inBetweenReturns.getTime());
+    expect(inBetweenReturns.getTime() - previous.getTime()).toBeLessThan(367 * DAY_MS);
   });
 });

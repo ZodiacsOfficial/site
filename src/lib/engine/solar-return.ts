@@ -22,6 +22,15 @@ export function solarReturnInstant(natalSunLon: number, near: Date): Date {
       : closest).at;
 }
 
+/** The latest solar return at or before `at`, used for the birthday-year in progress. */
+export function mostRecentSolarReturnInstant(natalSunLon: number, at: Date): Date {
+  const from = new Date(at.getTime() - 370 * DAY_MS);
+  const crossings = findLongitudeCrossings('Sun', natalSunLon, from, at, 1)
+    .filter((crossing) => crossing.at.getTime() <= at.getTime());
+  if (crossings.length === 0) throw new RangeError('No previous solar return found in the scan window.');
+  return crossings[crossings.length - 1].at;
+}
+
 /**
  * The solar-return chart for the return nearest `near`. With a location the
  * chart carries angles and houses; without one it is planets-only
@@ -32,8 +41,11 @@ export function solarReturnChart(
   near: Date,
   location: { latitude: number; longitude: number } | null,
   houseSystem: HouseSystem,
+  selection: 'nearest' | 'most-recent' = 'nearest',
 ): Chart {
-  const utc = solarReturnInstant(natalSunLon, near);
+  const utc = selection === 'most-recent'
+    ? mostRecentSolarReturnInstant(natalSunLon, near)
+    : solarReturnInstant(natalSunLon, near);
   return computeChart({
     utc,
     ...(location ?? {}),

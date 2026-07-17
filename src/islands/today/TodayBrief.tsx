@@ -11,6 +11,7 @@ import {
   TODAY_STORAGE_KEY,
   type TodayContact,
 } from '../../lib/today';
+import SunSignFallback from './SunSignFallback';
 
 type PushOptInModule = typeof import('../PushOptIn');
 type TransitsModule = typeof import('../../lib/transits');
@@ -109,7 +110,7 @@ export default function TodayBrief() {
         <header class="today-card__head">
           <div>
             <p class="today-card__date">{dateLabel(daily.date)}</p>
-            <p class="today-card__time mono">Planet positions at 12:00 UTC</p>
+            <p class="today-card__time">Your daily astrology snapshot</p>
           </div>
           {streak !== null && (
             <p class="today-streak" aria-label={`${streak} day streak`}>
@@ -120,20 +121,14 @@ export default function TodayBrief() {
         </header>
 
         {!chart ? (
-          <div class="today-empty">
-            <h2>No saved chart on this device.</h2>
-            <p>Save one first, then this page can compare it with the current sky.</p>
-            <a class="btn btn--primary" href="/birth-chart/">
-              <span>Get your birth chart</span><span class="orb" aria-hidden="true">→</span>
-            </a>
-          </div>
+          <SunSignFallback />
         ) : !reading || !transitsModule ? (
           <p class="today-loading">Reading today's sky…</p>
         ) : (
           <div class="today-reading">
             <div class="today-reading__head">
               <h2>For {chart.name || 'your latest chart'}</h2>
-              <p>These are the tightest active contacts in today's noon sky.</p>
+              <p>A few themes from today’s sky, compared with your saved birth chart.</p>
             </div>
 
             {reading.contacts.length > 0 ? (
@@ -143,27 +138,42 @@ export default function TodayBrief() {
                     <p class="today-lines__sentence">
                       {transitsModule.transitLine(contact.transiting, contact.type, contact.natal)}
                     </p>
-                    <p class="today-lines__receipt mono">{contactReceipt(contact)}</p>
                   </li>
                 ))}
               </ol>
             ) : (
               <div class="today-quiet" data-today-quiet>
                 <p>
-                  Nothing exact today
-                  {reading.nearest
-                    ? ` — the nearest is ${reading.nearest.transiting} ${reading.nearest.type} natal ${pointLabel(reading.nearest.natal)}, ${reading.nearest.orb.toFixed(1)}° from exact.`
-                    : '.'}
+                  Today looks quieter against your chart. There is less pressure to act on
+                  anything immediately.
                 </p>
-                {reading.nearest && (
-                  <p class="mono">{contactReceipt(reading.nearest)}</p>
-                )}
               </div>
             )}
 
             <p class="today-private">
               Your saved chart and this comparison stay in this browser.
             </p>
+            <details class="today-method-details">
+              <summary>How this was calculated</summary>
+              <div class="today-method-details__body">
+                <p>
+                  We compare the latest chart saved on this device with the day’s precomputed
+                  planet positions. Active contacts are major aspects within 3° of exact. The
+                  positions use a noon-UTC snapshot for the date shown.
+                </p>
+                {reading.contacts.length > 0 ? (
+                  <ul>
+                    {reading.contacts.map((contact) => (
+                      <li key={`${contact.transiting}-${contact.type}-${contact.natal}`}>
+                        {contactReceipt(contact)}
+                      </li>
+                    ))}
+                  </ul>
+                ) : reading.nearest ? (
+                  <p class="mono">Nearest contact: {contactReceipt(reading.nearest)}</p>
+                ) : null}
+              </div>
+            </details>
             {PushOptIn && <PushOptIn locale="en" context="today-return" />}
           </div>
         )}

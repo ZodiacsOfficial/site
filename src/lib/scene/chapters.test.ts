@@ -8,8 +8,8 @@ import { computeChart } from '../engine/full';
 import { buildSceneModel } from './build';
 import { emphasisOpacity } from './emphasis';
 import {
-  deriveChapters, emphasisForChapter, flattenStops, interpolateCusps,
-  lerpAngle, previewHouses, stepId,
+  deriveChapters, deriveFirstReading, emphasisForChapter, flattenStops, interpolateCusps,
+  lerpAngle, previewHouses, stepId, strongestPersonalAspect,
 } from './chapters';
 import type { ChartSceneModel } from './types';
 
@@ -87,6 +87,41 @@ describe('deriveChapters', () => {
   });
 });
 
+describe('deriveFirstReading', () => {
+  it('always produces the four decision-free beginner stops', () => {
+    const chapters = deriveFirstReading(kahlo());
+    expect(chapters.map((chapter) => chapter.id)).toEqual([
+      'first-big-three', 'first-sun', 'first-aspect', 'first-next',
+    ]);
+    expect(flattenStops(chapters)).toHaveLength(4);
+    expect(chapters[1].subs[0].entity).toEqual({ kind: 'body', body: 'Sun' });
+    expect(chapters[2].subs[0].entity.kind).toBe('aspect');
+  });
+
+  it('keeps the four-step shape for no-time and no-personal-aspect charts', () => {
+    const scene = kahloNoTime();
+    const withoutPersonalAspects: ChartSceneModel = {
+      ...scene,
+      aspects: scene.aspects.filter((aspect) => (
+        !['Sun', 'Moon', 'Mercury', 'Venus', 'Mars'].includes(aspect.a)
+        && !['Sun', 'Moon', 'Mercury', 'Venus', 'Mars'].includes(aspect.b)
+      )),
+    };
+    const chapters = deriveFirstReading(withoutPersonalAspects);
+    expect(chapters).toHaveLength(4);
+    expect(chapters[2].subs).toEqual([]);
+    expect(strongestPersonalAspect(withoutPersonalAspects)).toBeNull();
+  });
+
+  it('selects a major aspect involving at least one personal planet', () => {
+    const aspect = strongestPersonalAspect(kahlo());
+    expect(aspect).not.toBeNull();
+    expect(['Sun', 'Moon', 'Mercury', 'Venus', 'Mars']).toContain(
+      ['Sun', 'Moon', 'Mercury', 'Venus', 'Mars'].includes(aspect!.a) ? aspect!.a : aspect!.b,
+    );
+  });
+});
+
 describe('emphasisForChapter', () => {
   const scene = kahlo();
   const chapters = deriveChapters(scene);
@@ -142,6 +177,30 @@ describe('emphasisForChapter', () => {
     const b = emphasisForChapter(scene, byId('planets'));
     expect([...a.highlight].sort()).toEqual([...b.highlight].sort());
     expect([...a.soft].sort()).toEqual([...b.soft].sort());
+  });
+
+  it('lights the exact subjects used by each first-reading stop', () => {
+    const first = deriveFirstReading(scene);
+    const bigThree = emphasisForChapter(scene, first[0]);
+    expect(bigThree.highlight.has('body:Sun')).toBe(true);
+    expect(bigThree.highlight.has('body:Moon')).toBe(true);
+    expect(bigThree.highlight.has('angle:asc')).toBe(true);
+
+    const sun = emphasisForChapter(scene, first[1]);
+    expect(sun.highlight.has('body:Sun')).toBe(true);
+
+    const aspect = first[2].subs[0].entity;
+    const aspectEmphasis = emphasisForChapter(scene, first[2]);
+    expect(aspect.kind).toBe('aspect');
+    if (aspect.kind === 'aspect') {
+      expect(aspectEmphasis.highlight.has(`aspect:${aspect.a}-${aspect.type}-${aspect.b}`)).toBe(true);
+    }
+  });
+
+  it('does not invent a rising sign in the no-time first reading', () => {
+    const sceneNoTime = kahloNoTime();
+    const bigThree = emphasisForChapter(sceneNoTime, deriveFirstReading(sceneNoTime)[0]);
+    expect(bigThree.highlight.has('angle:asc')).toBe(false);
   });
 });
 

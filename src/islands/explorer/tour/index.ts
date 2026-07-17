@@ -4,4 +4,4 @@
  * card, copy, chapter logic) counts against any page's initial JS budget.
  */
 export { default as ChartTour } from './ChartTour';
-export type { ChartTourProps } from './ChartTour';
+export type { ChartTourProps, TourVariant } from './ChartTour';

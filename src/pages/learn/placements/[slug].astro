@@ -3,6 +3,7 @@ import { getCollection, render } from 'astro:content';
 import Base from '../../../layouts/Base.astro';
 import Faq from '../../../components/Faq.astro';
 import SignIcon from '../../../components/SignIcon.astro';
+import AstroTerm from '../../../components/AstroTerm.astro';
 import { SIGNS, signBySlug } from '../../../lib/signs';
 import { dignityFor, DIGNITY_GLOSS, hasClassicalDignities } from '../../../lib/dignities';
 import ingresses from '../../../data/ingresses.json';
@@ -159,12 +160,12 @@ const jsonLd = [
         {dignity ? (
           <div class="plc-panel__row">
             <dt>Classical standing</dt>
-            <dd><strong>{dignity}</strong> — {DIGNITY_GLOSS[dignity]}</dd>
+            <dd><strong><AstroTerm term={dignity} label={dignity} surface="placement-guide" whyItMatters="A dignity is a traditional description of support, not a score for whether a placement is good or bad." /></strong> — {DIGNITY_GLOSS[dignity]}</dd>
           </div>
         ) : hasClassicalDignities(planet) ? (
           <div class="plc-panel__row">
             <dt>Classical standing</dt>
-            <dd>neutral — no special dignity here</dd>
+            <dd>neutral — no special <AstroTerm term="essential-dignity" label="dignity" surface="placement-guide" /> here</dd>
           </div>
         ) : (
           <div class="plc-panel__row">

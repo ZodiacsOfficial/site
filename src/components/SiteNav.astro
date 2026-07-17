@@ -16,6 +16,16 @@ const links = [
 interface Props { locale?: Locale }
 const locale = normalizeLocale(Astro.props.locale);
 const path = Astro.url.pathname;
+const moreLabel: Record<Locale, string> = {
+  en: 'More', es: 'Más', pt: 'Mais', fr: 'Plus', it: 'Altro',
+};
+const registryLabel: Record<Locale, string> = {
+  en: 'Digital collection and registry',
+  es: 'Colección digital y registro',
+  pt: 'Coleção digital e registro',
+  fr: 'Collection numérique et registre',
+  it: 'Collezione digitale e registro',
+};
 ---
 <div class="nav-wrap">
   <nav class="nav" aria-label={t(locale, 'navPrimary')} data-nav>
@@ -44,8 +54,6 @@ const path = Astro.url.pathname;
         <kbd class="nav__search-kbd mono" aria-hidden="true">/</kbd>
       </button>
     )}
-
-    <a class="nav__chip" href={localizePath(locale, '/registry/')} aria-current={path.startsWith(localizePath(locale, '/registry/')) ? 'page' : undefined}>{t(locale, 'navCollect')}</a>
 
     <button class="nav__burger" type="button" data-menu-toggle aria-expanded="false" aria-controls="mobile-menu" aria-label={t(locale, 'navMenu')}>
       <span class="nav__burger-line"></span>
@@ -107,6 +115,12 @@ const path = Astro.url.pathname;
           </a>
         ))}
       </div>
+    </div>
+    <div class="mobile-menu__group mobile-menu__group--quiet">
+      <span class="mobile-menu__label">{moreLabel[locale]}</span>
+      <a class="mobile-menu__link" href={localizePath(locale, '/registry/')}>
+        {registryLabel[locale]}
+      </a>
     </div>
   </nav>
 </div>
@@ -207,25 +221,6 @@ const path = Astro.url.pathname;
   /* Saved-charts link tints to accent once this device has saved a chart. */
   .nav__saved.has-saves { color: var(--accent); }
   .nav__saved.has-saves:hover { color: var(--accent); }
-
-  /* Registry chip — the one sanctioned entry point into the wing, right-aligned. */
-  .nav__chip {
-    display: inline-flex;
-    align-items: center;
-    height: 34px;
-    padding: 0 2px 0 16px;
-    border-left: 1px solid var(--hair-2);
-    font-family: var(--font-serif);
-    font-size: 13px;
-    font-weight: 400;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--text-2);
-    text-decoration: none;
-    white-space: nowrap;
-    transition: color var(--dur-2) var(--ease);
-  }
-  .nav__chip:hover { color: var(--text); }
 
   .nav__burger {
     display: inline-grid;
@@ -336,6 +331,10 @@ const path = Astro.url.pathname;
     overflow-y: auto;
   }
   .mobile-menu__group + .mobile-menu__group { margin-top: 34px; }
+  .mobile-menu__group--quiet {
+    padding-top: 18px;
+    border-top: 1px solid var(--hair-1);
+  }
   .mobile-menu__label {
     display: block;
     margin-bottom: 14px;

@@ -13,6 +13,7 @@ import type { ComponentChildren } from 'preact';
 import { useEffect, useRef, useState } from 'preact/hooks';
 import PlanetGlyph from '../../components/PlanetGlyph';
 import AspectGlyph from '../../components/AspectGlyph';
+import AstroTerm from '../AstroTerm';
 import {
   formatLongitude, signBySlug, signDates, signForLongitude, signName,
   elementLabel, modalityLabel,
@@ -54,7 +55,7 @@ function SignDisc({ slug, size = 20 }: { slug: string; size?: number }) {
   );
 }
 
-function Receipt({ label, children }: { label: string; children: ComponentChildren }) {
+function Receipt({ label, children }: { label: ComponentChildren; children: ComponentChildren }) {
   return (
     <div class="insp__row">
       <span class="mono--label">{label}</span>
@@ -95,7 +96,13 @@ export default function Inspector({ scene, selection, onSelect, locale, banner }
       title = (
         <>
           <PlanetGlyph body={sb.body} size={17} class="insp__pg" /> {planetLabel(locale, sb.body)}
-          {sb.retrograde && <span class="mono insp__rx"> Rx</span>}
+          {sb.retrograde && (
+            <span class="mono insp__rx"> {' '}
+              {showsEnglishInterpretation
+                ? <AstroTerm term="retrograde" label="Rx" surface="chart-inspector" whyItMatters="This mark tells you the planet appeared to be moving backward when you were born." />
+                : 'Rx'}
+            </span>
+          )}
         </>
       );
       body = (
@@ -117,7 +124,11 @@ export default function Inspector({ scene, selection, onSelect, locale, banner }
             {sb.speed >= 0 ? '+' : '−'}{Math.abs(sb.speed).toFixed(2)}°/{t(locale, 'day')}
           </Receipt>
           {sb.dignity && (
-            <Receipt label={t(locale, 'dignity')}>{t(locale, DIGNITY_KEY[sb.dignity])}</Receipt>
+            <Receipt label={t(locale, 'dignity')}>
+              {showsEnglishInterpretation
+                ? <AstroTerm term={sb.dignity} label={t(locale, DIGNITY_KEY[sb.dignity])} surface="chart-inspector" whyItMatters="This is a traditional kind of support—not a verdict that the placement is good or bad." />
+                : t(locale, DIGNITY_KEY[sb.dignity])}
+            </Receipt>
           )}
           {sb.aspects.length > 0 && (
             <div class="insp__aspects">
@@ -156,7 +167,18 @@ export default function Inspector({ scene, selection, onSelect, locale, banner }
       body = (
         <>
           <Receipt label={t(locale, 'dates')}>{signDates(sign, locale)}</Receipt>
-          <Receipt label={t(locale, 'element')}>{elementLabel(sign.element, locale)} · {modalityLabel(sign.modality, locale)}</Receipt>
+          {showsEnglishInterpretation ? (
+            <>
+              <Receipt label={t(locale, 'element')}>
+                <AstroTerm term="element" label={elementLabel(sign.element, locale)} surface="chart-inspector" />
+              </Receipt>
+              <Receipt label="Modality">
+                <AstroTerm term={sign.modality} label={modalityLabel(sign.modality, locale)} surface="chart-inspector" />
+              </Receipt>
+            </>
+          ) : (
+            <Receipt label={t(locale, 'element')}>{elementLabel(sign.element, locale)} · {modalityLabel(sign.modality, locale)}</Receipt>
+          )}
           <Receipt label={t(locale, 'ruler')}>{planetLabel(locale, sign.ruler)}</Receipt>
           {occupants.length > 0 && (
             <div class="insp__aspects">
@@ -180,10 +202,12 @@ export default function Inspector({ scene, selection, onSelect, locale, banner }
     case 'house': {
       const house = scene.houses?.find((hs) => hs.index === selection.house);
       if (!house) return null;
-      title = <>{t(locale, 'house')} {house.index}</>;
+      title = <>{showsEnglishInterpretation ? <AstroTerm term="house" label={t(locale, 'house')} surface="chart-inspector" /> : t(locale, 'house')} {house.index}</>;
       body = (
         <>
-          <Receipt label={t(locale, 'cusp')}>{formatLongitude(house.cuspLon, locale)}</Receipt>
+          <Receipt label={showsEnglishInterpretation ? <AstroTerm term="cusp" label={t(locale, 'cusp')} surface="chart-inspector" whyItMatters="This is the exact point where the house begins." /> : t(locale, 'cusp')}>
+            {formatLongitude(house.cuspLon, locale)}
+          </Receipt>
           <Receipt label={t(locale, 'span')}>{house.spanDeg.toFixed(1)}°</Receipt>
           {house.occupants.length > 0 ? (
             <div class="insp__aspects">
@@ -218,8 +242,10 @@ export default function Inspector({ scene, selection, onSelect, locale, banner }
       );
       body = (
         <>
-          <Receipt label={t(locale, 'orb')}>
-            {sa.orb.toFixed(1)}° · {sa.applying ? t(locale, 'applying') : t(locale, 'separating')}
+          <Receipt label={showsEnglishInterpretation ? <AstroTerm term="orb" label={t(locale, 'orb')} surface="chart-inspector" whyItMatters="A smaller number usually makes the aspect more noticeable." /> : t(locale, 'orb')}>
+            {sa.orb.toFixed(1)}° · {showsEnglishInterpretation
+              ? <AstroTerm term={sa.applying ? 'applying' : 'separating'} label={sa.applying ? t(locale, 'applying') : t(locale, 'separating')} surface="chart-inspector" />
+              : sa.applying ? t(locale, 'applying') : t(locale, 'separating')}
           </Receipt>
           {showsEnglishInterpretation && <p class="insp__read">{natalAspectLine(sa.a, sa.type, sa.b)}</p>}
           {learn(`/learn/aspects/${sa.type}/`, aspectLabel(locale, sa.type))}
@@ -232,7 +258,13 @@ export default function Inspector({ scene, selection, onSelect, locale, banner }
       const lon = scene.angles[selection.angle];
       const sign = signForLongitude(lon);
       const KEY = { asc: 'angleAscNote', dsc: 'angleDscNote', mc: 'angleMcNote', ic: 'angleIcNote' } as const;
-      title = <>{selection.angle.toUpperCase()}</>;
+      title = <>
+        {showsEnglishInterpretation && selection.angle === 'asc'
+          ? <AstroTerm term="ascendant" label="ASC" surface="chart-inspector" />
+          : showsEnglishInterpretation && selection.angle === 'mc'
+            ? <AstroTerm term="midheaven" label="MC" surface="chart-inspector" />
+            : selection.angle.toUpperCase()}
+      </>;
       body = (
         <>
           <Receipt label={t(locale, 'position')}>{formatLongitude(lon, locale)}</Receipt>

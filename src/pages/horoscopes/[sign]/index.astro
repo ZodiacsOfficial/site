@@ -2,6 +2,7 @@
 import { getCollection, render } from 'astro:content';
 import Base from '../../../layouts/Base.astro';
 import SignIcon from '../../../components/SignIcon.astro';
+import EmailCapture from '../../../components/EmailCapture.astro';
 import PlanetGlyph from '../../../components/PlanetGlyph';
 import DailyForYou from '../../../islands/DailyForYou';
 import { SIGNS, SIGN_SLUGS, signBySlug } from '../../../lib/signs';
@@ -84,51 +85,62 @@ const jsonLd = [
       </div>
     </header>
 
-    <section class="horo__today reveal" aria-label={`${sign.name} today`}>
-      <div class="horo__today-head">
-        <h2>Today, computed</h2>
-        <span class="mono horo__today-stamp">{todayLabel} · positions at 12:00 UTC · {daily.moon.phase}</span>
-      </div>
-      <ul class="horo__today-lines">
-        {today.lines.map((l) => (
-          <li>
-            <p>{l.text}</p>
-            <span class="mono horo__today-receipt">
-              {l.body && <PlanetGlyph body={l.body} hue={l.hue} size={13} class="rcpt-glyph" />}
-              {l.receipt}
-            </span>
-          </li>
-        ))}
-      </ul>
-      <p class="horo__today-note">
-        Solar houses — your sign as the first house, today's planets placed
-        from there. The monthly read below goes deeper.
-      </p>
-    </section>
-
-    <DailyForYou client:idle sign={sign.slug} />
-
-    <div class="prose reveal">
+    <div class="prose reveal horo__monthly">
       <Content />
     </div>
 
-    <section class="horo__receipts reveal">
-      <h2>The month’s sky, computed</h2>
-      <p class="horo__receipts-note">
-        Every date above comes from this list — the month’s events as our
-        engine computed them. Times are universal time.
-      </p>
-      <ul class="horo__events">
-        {events.map((e) => (
-          <li>
-            <span class="horo__event-date mono">{dayLabel(e.at)}</span>
-            <span class="horo__event-label">
-              <PlanetGlyph body={e.body} hue={e.hue} size={14} class="rcpt-glyph" />{e.label}
-            </span>
-          </li>
-        ))}
-      </ul>
-    </section>
+    <EmailCapture placement="horoscopes" sign={sign.slug} />
+
+    <DailyForYou client:idle sign={sign.slug} />
+
+    <details class="horo__technical reveal">
+      <summary>
+        <span>
+          <strong>See the computed sky</strong>
+          <small>Today’s positions and the dated events behind this reading</small>
+        </span>
+        <span class="horo__technical-toggle" aria-hidden="true">+</span>
+      </summary>
+      <div class="horo__technical-body">
+        <section class="horo__today" aria-label={`${sign.name} today`}>
+          <div class="horo__today-head">
+            <h2>Today</h2>
+            <span class="mono horo__today-stamp">{todayLabel} · positions at 12:00 UTC · {daily.moon.phase}</span>
+          </div>
+          <ul class="horo__today-lines">
+            {today.lines.map((l) => (
+              <li>
+                <p>{l.text}</p>
+                <span class="mono horo__today-receipt">
+                  {l.body && <PlanetGlyph body={l.body} hue={l.hue} size={13} class="rcpt-glyph" />}
+                  {l.receipt}
+                </span>
+              </li>
+            ))}
+          </ul>
+          <p class="horo__today-note">
+            Solar houses use your sign as the first house, then place today’s planets from there.
+          </p>
+        </section>
+
+        <section class="horo__receipts">
+          <h2>The month’s dated events</h2>
+          <p class="horo__receipts-note">
+            Every date in the reading comes from this list. Times are universal time.
+          </p>
+          <ul class="horo__events">
+            {events.map((e) => (
+              <li>
+                <span class="horo__event-date mono">{dayLabel(e.at)}</span>
+                <span class="horo__event-label">
+                  <PlanetGlyph body={e.body} hue={e.hue} size={14} class="rcpt-glyph" />{e.label}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </section>
+      </div>
+    </details>
 
     <div class="horo__cta shell tinted reveal">
       <div class="core tinted horo__cta-core">
@@ -165,7 +177,29 @@ const jsonLd = [
   .horo__hero h1 { margin: 10px 0 8px; font-size: clamp(2.4rem, 1.7rem + 3.6vw, 4rem); line-height: 0.98; }
   .horo__dates { margin: 0; font-size: 11px; color: var(--faint); letter-spacing: 0.06em; }
 
-  .horo__today { display: grid; gap: 14px; padding: clamp(18px, 3vw, 26px); border: 1px solid var(--hair-2); border-radius: var(--r-md); background: rgba(198, 204, 218, 0.02); }
+  .horo__monthly { order: 0; }
+  .horo :global(.email-capture) { margin: 0; }
+
+  .horo__technical { overflow: hidden; border: 1px solid var(--hair-2); border-radius: var(--r-md); background: var(--void-1); }
+  .horo__technical > summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    padding: 18px 20px;
+    cursor: pointer;
+    list-style: none;
+  }
+  .horo__technical > summary::-webkit-details-marker { display: none; }
+  .horo__technical > summary:focus-visible { outline: 2px solid var(--ink-0); outline-offset: -4px; }
+  .horo__technical > summary > span:first-child { display: grid; gap: 3px; }
+  .horo__technical > summary strong { color: var(--text); font-size: var(--text-base); }
+  .horo__technical > summary small { color: var(--muted); font-size: 12px; line-height: 1.45; }
+  .horo__technical-toggle { color: var(--muted); font-size: 22px; line-height: 1; transition: transform 180ms cubic-bezier(0.22, 1, 0.36, 1); }
+  .horo__technical[open] .horo__technical-toggle { transform: rotate(45deg); }
+  .horo__technical-body { display: grid; gap: 28px; padding: 0 20px 22px; border-top: 1px solid var(--hair-1); }
+
+  .horo__today { display: grid; gap: 14px; padding-top: 22px; }
   .horo__today-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 16px; }
   .horo__today-head h2 { margin: 0; font-size: var(--text-xl); font-weight: 620; letter-spacing: -0.02em; }
   .horo__today-stamp { font-size: 11px; color: var(--faint); letter-spacing: 0.05em; }
@@ -223,4 +257,5 @@ const jsonLd = [
   }
   .chip:hover { background: color-mix(in oklab, var(--sign, var(--accent)) 16%, transparent); }
   .chip :global(.chip__icon img) { border-radius: 50%; }
+  @media (prefers-reduced-motion: reduce) { .horo__technical-toggle { transition: none; } }
 </style>

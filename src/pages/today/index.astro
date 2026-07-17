@@ -5,7 +5,7 @@ import TodayBrief from '../../islands/today/TodayBrief';
 <Base
   clientUi
   title="Today — Your Daily Astrology Brief | Zodiacs.org"
-  description="Today’s precomputed sky compared privately with your latest saved birth chart, with degrees and a UTC timestamp."
+  description="Choose your Sun sign for a clear daily note, or privately compare today’s sky with a birth chart saved on this device."
   path="/today/"
 >
   <section class="section--tight container container--narrow today-page">
@@ -13,17 +13,13 @@ import TodayBrief from '../../islands/today/TodayBrief';
       <em class="kicker">Your daily brief</em>
       <h1 class="display">Today</h1>
       <p>
-        The latest chart saved on this device, compared with the precomputed
-        sky. Nothing leaves this browser.
+        Start with the zodiac sign you know. If you have a saved birth chart,
+        you’ll automatically get a more personal comparison.
       </p>
     </header>
 
     <TodayBrief client:load />
 
-    <p class="today-method">
-      Active contacts are major aspects within 3° of exact. The listed
-      positions are the noon-UTC snapshot for the date shown.
-    </p>
   </section>
 </Base>
 
@@ -83,7 +79,7 @@ import TodayBrief from '../../islands/today/TodayBrief';
   }
   .today-reading { display: grid; gap: 24px; padding-top: 24px; }
   .today-reading__head h2,
-  .today-empty h2 {
+  .today-fallback__intro h2 {
     margin: 0;
     color: var(--text);
     font-size: var(--text-xl);
@@ -91,7 +87,7 @@ import TodayBrief from '../../islands/today/TodayBrief';
     letter-spacing: -0.02em;
   }
   .today-reading__head p,
-  .today-empty p {
+  .today-fallback__intro p {
     margin: 7px 0 0;
     color: var(--muted);
     font-size: var(--text-sm);
@@ -125,32 +121,133 @@ import TodayBrief from '../../islands/today/TodayBrief';
     line-height: 1.65;
   }
   .today-private,
-  .today-method,
   .today-loading {
     margin: 0;
     color: var(--faint);
     font-size: 12px;
     line-height: 1.7;
   }
-  .today-method { margin-top: 18px; padding-inline: 4px; }
   .today-loading { min-height: 180px; display: grid; align-items: center; }
-  .today-empty {
+  .today-fallback { display: grid; gap: 24px; padding-top: 24px; }
+  .today-fallback__intro p { max-width: 56ch; }
+  .today-sign-picker {
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+  .today-sign-picker__grid {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 8px;
+  }
+  .today-sign {
+    display: grid;
+    justify-items: center;
+    align-content: center;
+    min-width: 0;
+    min-height: 82px;
+    padding: 9px 5px;
+    border: 1px solid var(--hair-1);
+    border-radius: var(--r-md);
+    color: var(--muted);
+    background: var(--void-1);
+    cursor: pointer;
+    font: inherit;
+    text-align: center;
+    transition: border-color 160ms cubic-bezier(0.23, 1, 0.32, 1),
+      background 160ms cubic-bezier(0.23, 1, 0.32, 1),
+      transform 120ms cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  .today-sign:hover { border-color: color-mix(in oklab, var(--sign) 65%, var(--hair-2)); }
+  .today-sign:active { transform: scale(0.97); }
+  .today-sign:focus-visible { outline: 2px solid var(--ink-0); outline-offset: 2px; }
+  .today-sign--selected {
+    border-color: color-mix(in oklab, var(--sign) 75%, var(--hair-2));
+    color: var(--text);
+    background: color-mix(in oklab, var(--sign) 10%, var(--void-1));
+  }
+  .today-sign__glyph { color: var(--sign); font-size: 22px; line-height: 1; }
+  .today-sign__name { margin-top: 6px; font-size: 12px; font-weight: 650; line-height: 1; }
+  .today-sign__dates {
+    margin-top: 5px;
+    color: var(--faint);
+    font-size: 8.5px;
+    line-height: 1.2;
+    white-space: nowrap;
+  }
+  .today-fallback__result { min-height: 38px; }
+  .today-fallback__prompt { margin: 0; color: var(--faint); font-size: var(--text-sm); }
+  .today-sign-reading {
     display: grid;
     justify-items: start;
-    gap: 14px;
-    padding-top: 24px;
+    gap: 12px;
+    padding: clamp(18px, 4vw, 26px);
+    border: 1px solid color-mix(in oklab, var(--sign) 35%, var(--hair-1));
+    border-left: 3px solid var(--sign);
+    border-radius: var(--r-lg);
+    background: color-mix(in oklab, var(--sign) 7%, var(--void-1));
   }
-  .today-empty p { margin: 0; max-width: 50ch; }
-  .today-empty .btn { margin-top: 2px; }
+  .today-sign-reading .kicker { margin: 0; }
+  .today-sign-reading h3 {
+    margin: 0;
+    color: var(--text);
+    font-size: var(--text-xl);
+    letter-spacing: -0.02em;
+  }
+  .today-sign-reading__line {
+    margin: 0;
+    color: var(--text-2);
+    font-size: clamp(1rem, 0.96rem + 0.25vw, 1.12rem);
+    line-height: 1.65;
+    text-wrap: pretty;
+  }
+  .today-sign-reading .btn { margin-top: 2px; }
+  .today-fallback__personalize {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    padding-top: 20px;
+    border-top: 1px solid var(--hair-1);
+  }
+  .today-fallback__personalize strong { color: var(--text-2); font-size: var(--text-sm); }
+  .today-fallback__personalize p {
+    margin: 4px 0 0;
+    color: var(--faint);
+    font-size: 12px;
+    line-height: 1.5;
+  }
+  .today-fallback__personalize .btn { flex: 0 0 auto; }
   .today-quiet { padding-top: 24px; }
   .today-quiet p { margin: 0; color: var(--text-2); line-height: 1.65; }
-  .today-quiet .mono { margin-top: 8px; color: var(--faint); font-size: 10.5px; }
+  .today-method-details {
+    border-top: 1px solid var(--hair-1);
+    padding-top: 16px;
+    color: var(--faint);
+    font-size: 12px;
+  }
+  .today-method-details summary {
+    width: fit-content;
+    color: var(--muted);
+    cursor: pointer;
+    font-weight: 600;
+  }
+  .today-method-details summary:hover { color: var(--text); }
+  .today-method-details__body { padding-top: 12px; line-height: 1.7; }
+  .today-method-details__body p { margin: 0; }
+  .today-method-details__body ul { display: grid; gap: 6px; margin: 10px 0 0; padding-left: 18px; }
+  .today-method-details__body li { overflow-wrap: anywhere; font-family: var(--font-mono); font-size: 10.5px; }
   @media (max-width: 480px) {
     .today-card__head { align-items: center; }
     .today-lines li { padding-left: 14px; }
-    .today-lines__receipt { overflow-wrap: anywhere; }
+    .today-sign-picker__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .today-sign { min-height: 76px; }
+    .today-fallback__personalize { align-items: flex-start; flex-direction: column; }
+    .today-fallback__personalize .btn { width: 100%; justify-content: space-between; }
   }
   @media (prefers-reduced-motion: reduce) {
     .today-streak__count { animation: none; }
+    .today-sign { transition: none; }
   }
 </style>

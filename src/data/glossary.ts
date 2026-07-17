@@ -1,5 +1,13 @@
 import { ASPECTS } from '../lib/engine/aspects';
 import { TRANSIT_ORB } from '../lib/transits';
+import {
+  CONTEXT_TERMS,
+  normalizeContextTerm,
+  type GlossaryCategory,
+  type GlossaryLevel,
+} from './context-help';
+
+export type { GlossaryCategory, GlossaryLevel } from './context-help';
 
 export interface GlossaryLink {
   href: string;
@@ -10,6 +18,12 @@ export interface GlossaryTerm {
   slug: string;
   term: string;
   definition: string;
+  /** A one-sentence explanation suitable for first-time readers. */
+  plainDefinition?: string;
+  /** Search and inline-help spellings such as “Rx”, “ASC”, or “natal chart”. */
+  aliases?: readonly string[];
+  category?: GlossaryCategory;
+  level?: GlossaryLevel;
   receipt?: string;
   related?: string[];
   link?: GlossaryLink;
@@ -1011,5 +1025,29 @@ function compareTerms(a: GlossaryTerm, b: GlossaryTerm): number {
 }
 
 export const GLOSSARY: readonly GlossaryTerm[] = Object.freeze(
-  [...terms].sort(compareTerms),
+  terms
+    .map((entry) => {
+      const context = CONTEXT_TERMS.find((candidate) => candidate.slug === entry.slug);
+      return context ? { ...entry, ...context } : entry;
+    })
+    .sort(compareTerms),
 );
+
+const glossaryByKey = new Map<string, GlossaryTerm>();
+for (const entry of GLOSSARY) {
+  glossaryByKey.set(normalizeContextTerm(entry.slug), entry);
+  glossaryByKey.set(normalizeContextTerm(entry.term), entry);
+  for (const alias of entry.aliases ?? []) {
+    glossaryByKey.set(normalizeContextTerm(alias), entry);
+  }
+}
+
+/** Resolve a published slug, canonical term, or supported plain-language alias. */
+export function resolveGlossaryTerm(value: string): GlossaryTerm | undefined {
+  return glossaryByKey.get(normalizeContextTerm(value));
+}
+
+export function glossaryTermHref(value: string): string | undefined {
+  const entry = resolveGlossaryTerm(value);
+  return entry ? `/learn/glossary/#${entry.slug}` : undefined;
+}

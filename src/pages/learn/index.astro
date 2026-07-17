@@ -2,6 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import SignIcon from '../../components/SignIcon.astro';
 import ToolGlyph from '../../components/ToolGlyph.astro';
+import LearningPath from '../../islands/LearningPath';
 import { SIGNS, ELEMENT_LABEL, MODALITY_LABEL } from '../../lib/signs';
 import { GLOSSARY } from '../../data/glossary';
 
@@ -26,6 +27,7 @@ const jsonLd = [
 ];
 ---
 <Base
+  clientUi
   type="article"
   title="Learn Astrology — Zodiac Signs, Dates & the Big Three | Zodiacs.org"
   description="Astrology in plain language: all 12 zodiac sign guides, the sun–moon–rising big three explained, and the full table of zodiac dates, elements, and rulers."
@@ -34,17 +36,22 @@ const jsonLd = [
   imageAlt="Learn astrology — Zodiacs.org"
   jsonLd={jsonLd}
 >
-  <section class="section--tight container">
+  <section class="section--tight container learn-intro">
     <div class="section-head reveal">
-      <h1 class="display learn-lede">Learn to read your chart.</h1>
+      <h1 class="display learn-lede">What does your chart say about you?</h1>
       <p>
-        Start with your own chart, read your signs, and pick up the rest as you
-        go. The jargon is translated as it comes up.
+        Start with the parts that explain your personality and repeating patterns.
+        Then see what horoscopes can tell you about timing — without treating
+        your future like a fixed script.
       </p>
     </div>
   </section>
 
-  <section class="section--tight container">
+  <section class="section--tight container learn-path-section">
+    <LearningPath client:load />
+  </section>
+
+  <section class="section--tight container" id="big-three">
     <div class="bigthree reveal">
       <h2>The big three, in sixty seconds</h2>
       <div class="bigthree__grid">
@@ -165,16 +172,19 @@ const jsonLd = [
   </section>
 </Base>
 
-<style>
+<style is:global>
   .learn-lede {
     margin: 0;
     font-size: var(--text-xl);
     line-height: 1.1;
   }
+  .learn-intro { padding-bottom: clamp(24px, 3vw, 40px); }
+  .learn-intro .section-head { max-width: 50ch; margin-bottom: 0; }
+  .learn-path-section { padding-top: 0; }
   .bigthree {
     border: 1px solid var(--hair-1);
     border-radius: var(--r-lg);
-    background: linear-gradient(180deg, var(--void-1), transparent);
+    background: var(--void-1);
     padding: clamp(22px, 4vw, 36px);
   }
   .bigthree h2 { margin: 0 0 20px; font-size: var(--text-xl); font-weight: 620; letter-spacing: -0.02em; }
@@ -186,6 +196,118 @@ const jsonLd = [
   .bigthree__item p { margin: 10px 0 0; font-size: var(--text-sm); color: var(--text-2); line-height: 1.6; }
   .bigthree__item strong { color: var(--text); }
   .bigthree__item a { color: var(--text); }
+
+  .learning-path { --path-accent: var(--sign-cancer); }
+  .learning-path__core { padding: clamp(22px, 4vw, 36px); }
+  .learning-path__head {
+    display: grid;
+    gap: 20px;
+    padding-bottom: 22px;
+    border-bottom: 1px solid var(--hair-1);
+  }
+  @media (min-width: 720px) {
+    .learning-path__head { grid-template-columns: minmax(0, 1fr) 190px; align-items: end; }
+  }
+  .learning-path__head h2 { margin: 8px 0 6px; font-size: var(--text-xl); font-weight: 620; letter-spacing: -0.02em; }
+  .learning-path__head p { margin: 0; color: var(--muted); font-size: var(--text-sm); }
+  .learning-path__progress { display: grid; gap: 8px; color: var(--text-2); font-size: 12px; }
+  .learning-path__progress > span { justify-self: end; }
+  .learning-path__bar { height: 4px; overflow: hidden; border-radius: var(--r-full); background: var(--hair-2); }
+  .learning-path__bar > span { display: block; height: 100%; border-radius: inherit; background: var(--path-accent); transition: width 240ms cubic-bezier(0.22, 1, 0.36, 1); }
+  .learning-path__complete {
+    display: grid;
+    gap: 3px;
+    margin-top: 18px;
+    padding: 14px 16px;
+    border: 1px solid color-mix(in oklab, var(--sign-taurus) 35%, transparent);
+    border-radius: var(--r-sm);
+    background: color-mix(in oklab, var(--sign-taurus) 6%, var(--void-1));
+  }
+  .learning-path__complete span { color: var(--muted); font-size: var(--text-sm); }
+  .learning-path__loading { margin: 0; padding: 24px 0 4px; color: var(--muted); font-size: var(--text-sm); }
+  .learning-path__steps { display: grid; margin: 0; padding: 0; list-style: none; }
+  .learning-step {
+    position: relative;
+    display: grid;
+    grid-template-columns: 44px minmax(0, 1fr);
+    gap: 12px 14px;
+    align-items: start;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--hair-1);
+  }
+  @media (min-width: 720px) {
+    .learning-step { grid-template-columns: 44px minmax(0, 1fr) auto; align-items: center; }
+  }
+  .learning-step__check {
+    width: 44px;
+    height: 44px;
+    border: 1px solid var(--hair-2);
+    border-radius: 50%;
+    background: var(--void-0);
+    color: var(--muted);
+    font: 600 12px/1 var(--font-sans);
+    cursor: pointer;
+    transition: border-color 180ms cubic-bezier(0.22, 1, 0.36, 1), transform 180ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    button.learning-step__check:hover { border-color: var(--ink-1); }
+  }
+  button.learning-step__check:active { transform: scale(0.96); }
+  .learning-step__check--status { display: grid; place-items: center; cursor: default; }
+  .learning-step__check:focus-visible,
+  .learning-path__restart:focus-visible { outline: 2px solid var(--ink-0); outline-offset: 3px; }
+  .learning-step--active .learning-step__check { border-color: var(--path-accent); color: var(--text); box-shadow: 0 0 0 4px color-mix(in oklab, var(--path-accent) 12%, transparent); }
+  .learning-step--active::before {
+    content: '';
+    position: absolute;
+    inset-block: 14px;
+    left: -14px;
+    width: 2px;
+    border-radius: var(--r-full);
+    background: var(--path-accent);
+  }
+  .learning-step--active .learning-step__eyebrow { color: color-mix(in oklab, var(--path-accent) 72%, var(--text)); }
+  .learning-step--done .learning-step__check { border-color: var(--sign-taurus); background: color-mix(in oklab, var(--sign-taurus) 14%, var(--void-0)); color: var(--text); }
+  .learning-step__eyebrow { display: block; margin-bottom: 3px; color: var(--faint); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; }
+  .learning-step__copy h3 { margin: 0; color: var(--text); font-size: var(--text-lg); letter-spacing: -0.015em; }
+  .learning-step__copy p { margin: 5px 0 0; max-width: 61ch; color: var(--text-2); font-size: var(--text-sm); line-height: 1.55; }
+  .learning-step__copy .learning-step__why {
+    margin-top: 9px;
+    padding-left: 10px;
+    border-left: 1px solid color-mix(in oklab, var(--path-accent) 38%, var(--hair-2));
+    color: var(--muted);
+    font-size: 12px;
+  }
+  .learning-step__why strong { color: var(--text-2); font-weight: 650; }
+  .learning-step__action-wrap {
+    grid-column: 2;
+    display: grid;
+    gap: 7px;
+    justify-items: start;
+    justify-self: start;
+  }
+  .learning-step__next-cue {
+    color: color-mix(in oklab, var(--path-accent) 74%, var(--text));
+    font-size: 9px;
+    font-weight: 650;
+    letter-spacing: 0.12em;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+  .learning-step__action { white-space: nowrap; }
+  @media (max-width: 719.5px) {
+    .learning-step__action-wrap { width: 100%; }
+    .learning-step__action { box-sizing: border-box; width: 100%; max-width: 100%; justify-content: space-between; white-space: normal; }
+    .learning-step__action span:first-child { min-width: 0; }
+  }
+  @media (min-width: 720px) {
+    .learning-step__action-wrap { grid-column: auto; justify-items: end; justify-self: end; }
+  }
+  .learning-path__restart { margin-top: 18px; padding: 4px 0; border: 0; background: none; color: var(--muted); font: 500 12px/1.4 var(--font-sans); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+  .learning-path__restart:hover { color: var(--text); }
+  @media (prefers-reduced-motion: reduce) {
+    button.learning-step__check:active { transform: none; }
+  }
 
   .learn-grid { display: grid; gap: 12px; grid-template-columns: 1fr; }
   @media (min-width: 680px) { .learn-grid { grid-template-columns: 1fr 1fr; } }
@@ -235,4 +357,8 @@ const jsonLd = [
   .clusters__card strong { font-size: var(--text-lg); letter-spacing: -0.015em; }
   .clusters__card p { margin: 0; font-size: var(--text-sm); color: var(--text-2); line-height: 1.6; }
   .clusters__count { font-size: 10.5px; color: var(--faint); letter-spacing: 0.08em; margin-top: 4px; }
+  @media (prefers-reduced-motion: reduce) {
+    .learning-path__bar > span,
+    .learning-step__check { transition: none; }
+  }
 </style>

@@ -1,0 +1,81 @@
+---
+import { resolveGlossaryTerm } from '../data/glossary';
+import '../styles/context-help.css';
+
+interface Props {
+  /** Published glossary slug, canonical term, or supported alias such as “Rx”. */
+  term: string;
+  label?: string;
+  /** Stable, non-personal analytics surface such as “chart-inspector”. */
+  surface?: string;
+  /** Optional chart-specific sentence rendered locally; analytics receives no text. */
+  whyItMatters?: string;
+  class?: string;
+}
+
+const {
+  term,
+  label,
+  surface = 'inline',
+  whyItMatters,
+  class: className,
+} = Astro.props;
+const entry = resolveGlossaryTerm(term);
+
+if (!entry) {
+  throw new Error(`AstroTerm could not resolve glossary term “${term}”.`);
+}
+
+const firstSentence = entry.definition.match(/^.*?[.!?](?:\s|$)/)?.[0].trim() ?? entry.definition;
+const plainDefinition = entry.plainDefinition ?? firstSentence;
+const displayLabel = label ?? (term === entry.slug ? entry.term : term);
+---
+<astro-term-help
+  class:list={['astro-term', className]}
+  data-context-help-term={entry.slug}
+  data-context-help-surface={surface}
+>
+  <button
+    class="astro-term__trigger"
+    type="button"
+    aria-expanded="false"
+    data-context-help-trigger
+  >{displayLabel}</button>
+  <span
+    class="astro-term__panel"
+    role="note"
+    aria-label={`${entry.term} explained`}
+    data-context-help-panel
+    hidden
+  >
+    <span class="astro-term__eyebrow">In plain English</span>
+    <strong class="astro-term__title">{entry.term}</strong>
+    <span class="astro-term__definition">{plainDefinition}</span>
+    {whyItMatters && <span class="astro-term__why">{whyItMatters}</span>}
+    <a class="astro-term__link" href={`/learn/glossary/#${entry.slug}`}>
+      Learn more about {entry.term} →
+    </a>
+  </span>
+</astro-term-help>
+
+<script>
+  import { bindContextHelp } from '../lib/context-help-client';
+
+  class AstroTermHelp extends HTMLElement {
+    cleanup?: () => void;
+
+    connectedCallback() {
+      this.cleanup?.();
+      this.cleanup = bindContextHelp(this);
+    }
+
+    disconnectedCallback() {
+      this.cleanup?.();
+      this.cleanup = undefined;
+    }
+  }
+
+  if (!customElements.get('astro-term-help')) {
+    customElements.define('astro-term-help', AstroTermHelp);
+  }
+</script>

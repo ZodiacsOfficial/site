@@ -57,8 +57,14 @@ import '../../styles/calculator.css';
   }
   .pf-sync__core strong { display: block; margin-bottom: 4px; font-size: var(--text-lg); }
   .pf-sync__core p { margin: 0; color: var(--text-2); font-size: var(--text-sm); line-height: 1.55; }
+  .pf-sync__label { display: block; margin-bottom: 7px; color: var(--faint); }
+  .pf-digest-panel {
+    grid-column: 1 / -1;
+    padding-top: 16px;
+    border-top: 1px solid var(--hair-1);
+  }
   .pf-digest {
-    margin-top: 12px;
+    margin-top: 9px;
     display: grid;
     grid-template-columns: 18px minmax(0, 1fr);
     gap: 10px;
@@ -128,9 +134,6 @@ import '../../styles/calculator.css';
     color: var(--muted);
   }
   .pf-chip--empty { border-color: var(--hair-1); background: none; color: var(--faint); }
-  .pf-empty__core { padding: clamp(24px, 5vw, 40px); display: grid; gap: 14px; justify-items: start; }
-  .pf-empty__core h2 { margin: 0; font-size: var(--text-xl); font-weight: 620; letter-spacing: -0.02em; }
-  .pf-empty__core p { margin: 0; max-width: 46ch; color: var(--text-2); }
   .pf-next__core { padding: 18px 20px; display: grid; gap: 8px; justify-items: start; }
   .pf-next__core p { margin: 0; font-size: var(--text-sm); color: var(--text-2); }
   .pf-next__core .btn { margin-top: 6px; }

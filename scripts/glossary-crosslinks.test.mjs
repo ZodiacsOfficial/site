@@ -7,6 +7,8 @@ import { GLOSSARY } from '../src/data/glossary.ts';
 const repo = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const targetPattern = /\/learn\/glossary\/#([a-z0-9]+(?:-[a-z0-9]+)*)/g;
 const targetPresence = /\/learn\/glossary\/#/;
+// This guard covers explicit prose links. AstroTerm disclosures resolve their
+// own glossary destinations through the context-help data tests.
 const ASTRO_LINK_COUNTS = new Map(Object.entries({
   'src/pages/baby-zodiac/index.astro': 5,
   'src/pages/birth-chart/index.astro': 5,
@@ -16,7 +18,7 @@ const ASTRO_LINK_COUNTS = new Map(Object.entries({
   'src/pages/full-moon-calendar/index.astro': 5,
   'src/pages/learn/aspects/index.astro': 5,
   'src/pages/learn/houses/index.astro': 5,
-  'src/pages/learn/how-to-read-a-birth-chart.astro': 5,
+  'src/pages/learn/how-to-read-a-birth-chart.astro': 4,
   'src/pages/learn/placements/index.astro': 1,
   'src/pages/learn/planets/index.astro': 5,
   'src/pages/learn/zodiac-dates/index.astro': 5,
@@ -26,7 +28,6 @@ const ASTRO_LINK_COUNTS = new Map(Object.entries({
   'src/pages/retrogrades/index.astro': 5,
   'src/pages/rising-sign/index.astro': 5,
   'src/pages/saturn-return/index.astro': 5,
-  'src/pages/tools/index.astro': 3,
   'src/pages/transits/index.astro': 5,
 }));
 
@@ -122,7 +123,7 @@ describe('glossary crosslinks', () => {
       }
     }
 
-    expect(linkedFiles).toHaveLength(152);
-    expect(linkCount).toBe(233);
+    expect(linkedFiles).toHaveLength(151);
+    expect(linkCount).toBe(229);
   });
 });

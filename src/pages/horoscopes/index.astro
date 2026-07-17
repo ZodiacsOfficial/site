@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import SignIcon from '../../components/SignIcon.astro';
 import EmailCapture from '../../components/EmailCapture.astro';
+import AstroTerm from '../../components/AstroTerm.astro';
 import { SIGNS } from '../../lib/signs';
 import { monthLabel, warnIfStale } from '../../lib/horoscopes';
 import { dailyHeadline } from '../../lib/daily';
@@ -55,11 +56,10 @@ const jsonLd = [
       <h1 class="display">Monthly horoscopes</h1>
       <p>
         Read this month’s horoscope for your sign, grounded in the real dates
-        of the moon phases, retrogrades, and major transits.
+        of the moon phases, <AstroTerm term="retrograde" label="retrogrades" surface="horoscope-index" />, and major <AstroTerm term="transit" label="transits" surface="horoscope-index" />. Each card also
+        gives you one short line for today.
       </p>
     </div>
-
-    <EmailCapture placement="horoscopes" />
 
     <div class="horo-grid reveal">
       {SIGNS.map((s) => (
@@ -67,10 +67,15 @@ const jsonLd = [
           <SignIcon sign={s.slug} size={44} class="horo-card__icon" />
           <span class="horo-card__name">{s.name}</span>
           <span class="horo-card__dates mono">{s.dates}</span>
-          <span class="horo-card__today">{dailyHeadline(s.slug, daily)}</span>
+          <span class="horo-card__today">
+            <span class="horo-card__today-label mono">Today</span>
+            {dailyHeadline(s.slug, daily)}
+          </span>
         </a>
       ))}
     </div>
+
+    <EmailCapture placement="horoscopes" />
 
     <p class="horo-note reveal">
       Horoscopes read the sky against your sun sign; your birth chart says
@@ -114,6 +119,7 @@ const jsonLd = [
     text-align: center;
     text-wrap: pretty;
   }
+  .horo-card__today-label { display: block; margin-bottom: 4px; color: var(--faint); font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; }
 
   .horo-note { margin-top: clamp(22px, 4vw, 34px); font-size: var(--text-sm); color: var(--muted); }
   .horo-note a { color: var(--text); }

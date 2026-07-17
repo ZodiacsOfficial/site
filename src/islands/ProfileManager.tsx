@@ -28,6 +28,38 @@ const PF_PAIR_COPY = {
   fr: { savedPairs: 'Comparaisons enregistrées', pairRemoved: 'Comparaison supprimée.' },
   it: { savedPairs: 'Confronti salvati', pairRemoved: 'Confronto rimosso.' },
 } as const satisfies Record<Locale, Record<'savedPairs' | 'pairRemoved', string>>;
+const PF_EMAIL_COPY = {
+  en: {
+    syncLabel: 'Email for chart sync',
+    digestLabel: 'Optional weekly email',
+    digestTitle: 'Personalized weekly sky email',
+    digestCopy: 'A forecast based on your synced saved chart. Off until you check this box.',
+  },
+  es: {
+    syncLabel: 'Email para sincronizar cartas',
+    digestLabel: 'Email semanal opcional',
+    digestTitle: 'Email semanal personalizado del cielo',
+    digestCopy: 'Un pronóstico basado en tu carta guardada y sincronizada. Está desactivado hasta que marques esta casilla.',
+  },
+  pt: {
+    syncLabel: 'E-mail para sincronizar mapas',
+    digestLabel: 'E-mail semanal opcional',
+    digestTitle: 'E-mail semanal personalizado do céu',
+    digestCopy: 'Uma previsão baseada no seu mapa salvo e sincronizado. Fica desativada até você marcar esta caixa.',
+  },
+  fr: {
+    syncLabel: 'E-mail pour synchroniser les thèmes',
+    digestLabel: 'E-mail hebdomadaire facultatif',
+    digestTitle: 'E-mail personnalisé du ciel de la semaine',
+    digestCopy: 'Une prévision basée sur ton thème enregistré et synchronisé. Désactivée tant que tu ne coches pas cette case.',
+  },
+  it: {
+    syncLabel: 'E-mail per sincronizzare i temi',
+    digestLabel: 'E-mail settimanale facoltativa',
+    digestTitle: 'E-mail personalizzata del cielo settimanale',
+    digestCopy: 'Una previsione basata sul tema salvato e sincronizzato. Resta disattivata finché non selezioni questa casella.',
+  },
+} as const satisfies Record<Locale, Record<'syncLabel' | 'digestLabel' | 'digestTitle' | 'digestCopy', string>>;
 export const PF_BOOK_COPY = {
   en: {
     count: (n: number) => n === 1
@@ -114,6 +146,8 @@ export default function ProfileManager({ locale: rawLocale = 'en' }: { locale?: 
   const [email, setEmail] = useState('');
   const [syncState, setSyncState] = useState<'idle' | 'sending' | 'sent' | 'syncing' | 'synced' | 'error'>('idle');
   const [syncMessage, setSyncMessage] = useState('');
+  const [digestMessage, setDigestMessage] = useState('');
+  const [digestState, setDigestState] = useState<'idle' | 'saved' | 'error'>('idle');
   const [digestOptIn, setDigestOptInState] = useState(false);
   const [digestBusy, setDigestBusy] = useState(false);
 
@@ -177,7 +211,7 @@ export default function ProfileManager({ locale: rawLocale = 'en' }: { locale?: 
     requestAnimationFrame(() => {
       const chips = document.querySelectorAll<HTMLElement>('.pf-pairs .syn__pair-restore');
       const next = chips[Math.min(index, chips.length - 1)]
-        ?? document.querySelector<HTMLElement>('.pf-foot .btn, .pf-empty .btn');
+        ?? document.querySelector<HTMLElement>('.pf-foot .btn, .pfd__empty .btn');
       next?.focus();
     });
   }
@@ -244,6 +278,8 @@ export default function ProfileManager({ locale: rawLocale = 'en' }: { locale?: 
     await syncApi.signOutOfSync();
     setSession(null);
     setDigestOptInState(false);
+    setDigestMessage('');
+    setDigestState('idle');
     setSyncState('idle');
   }
 
@@ -253,16 +289,17 @@ export default function ProfileManager({ locale: rawLocale = 'en' }: { locale?: 
     const previous = digestOptIn;
     setDigestOptInState(checked);
     setDigestBusy(true);
-    setSyncMessage('');
+    setDigestMessage('');
+    setDigestState('idle');
     try {
       const saved = await syncApi.setDigestOptIn(checked);
       if (!saved) throw new Error(t(locale, 'digestFailed'));
-      setSyncState('synced');
-      setSyncMessage(t(locale, 'digestSaved'));
+      setDigestState('saved');
+      setDigestMessage(t(locale, 'digestSaved'));
     } catch {
       setDigestOptInState(previous);
-      setSyncState('error');
-      setSyncMessage(t(locale, 'digestFailed'));
+      setDigestState('error');
+      setDigestMessage(t(locale, 'digestFailed'));
     } finally {
       setDigestBusy(false);
     }
@@ -272,6 +309,7 @@ export default function ProfileManager({ locale: rawLocale = 'en' }: { locale?: 
     <aside class="pf-sync shell">
       <div class="core pf-sync__core">
         <div>
+          <span class="mono--label pf-sync__label">{PF_EMAIL_COPY[locale].syncLabel}</span>
           <strong>{session ? t(locale, 'syncOn') : t(locale, 'keepEveryDevice')}</strong>
           <p>
             {session
@@ -279,21 +317,6 @@ export default function ProfileManager({ locale: rawLocale = 'en' }: { locale?: 
               : t(locale, 'syncCopyOff')}
           </p>
           {syncMessage && <p class={`pf-sync__message pf-sync__message--${syncState}`}>{syncMessage}</p>}
-          {session && (
-            <label class="pf-digest">
-              <input
-                type="checkbox"
-                checked={digestOptIn}
-                disabled={digestBusy}
-                onChange={onDigestChange}
-                aria-label={t(locale, 'weeklyDigestAria')}
-              />
-              <span>
-                <strong>{t(locale, 'weeklyDigestTitle')}</strong>
-                <small>{t(locale, 'weeklyDigestCopy')}</small>
-              </span>
-            </label>
-          )}
         </div>
         {session ? (
           <div class="pf-sync__actions">
@@ -320,6 +343,25 @@ export default function ProfileManager({ locale: rawLocale = 'en' }: { locale?: 
             </button>
           </form>
         )}
+        {session && (
+          <div class="pf-digest-panel">
+            <span class="mono--label">{PF_EMAIL_COPY[locale].digestLabel}</span>
+            <label class="pf-digest">
+              <input
+                type="checkbox"
+                checked={digestOptIn}
+                disabled={digestBusy}
+                onChange={onDigestChange}
+                aria-label={t(locale, 'weeklyDigestAria')}
+              />
+              <span>
+                <strong>{PF_EMAIL_COPY[locale].digestTitle}</strong>
+                <small>{PF_EMAIL_COPY[locale].digestCopy}</small>
+              </span>
+            </label>
+            {digestMessage && <p class={`pf-sync__message pf-sync__message--${digestState}`}>{digestMessage}</p>}
+          </div>
+        )}
       </div>
     </aside>
   );
@@ -331,17 +373,6 @@ export default function ProfileManager({ locale: rawLocale = 'en' }: { locale?: 
         {syncPanel}
         {/* Inline-side pairs need no saved charts — still show them. */}
         {pairsBlock}
-        <div class="pf-empty shell">
-          <div class="core pf-empty__core">
-            <h2>{t(locale, 'nothingSaved')}</h2>
-            <p>
-              {t(locale, 'emptyProfile')}
-            </p>
-            <a class="btn btn--primary" href={localizePath(locale, '/birth-chart/')}>
-              <span>{t(locale, 'getBirthChart')}</span><span class="orb">↗</span>
-            </a>
-          </div>
-        </div>
       </div>
     );
   }

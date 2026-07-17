@@ -2,7 +2,8 @@ import { createHash } from 'node:crypto';
 import { describe, expect, it } from 'vitest';
 import { ASPECTS } from '../lib/engine/aspects';
 import { TRANSIT_ORB } from '../lib/transits';
-import { GLOSSARY } from './glossary';
+import { BEGINNER_TERM_SLUGS, CONTEXT_TERMS, resolveContextTerm } from './context-help';
+import { GLOSSARY, glossaryTermHref, resolveGlossaryTerm } from './glossary';
 
 const BANNED_PHRASES = [
   'done properly',
@@ -64,6 +65,38 @@ describe('glossary data', () => {
         expect(entry.link.href, entry.slug).toMatch(/^\//);
       }
     }
+  });
+
+  it('keeps beginner metadata synchronized and aliases unambiguous', () => {
+    const contextSlugs = new Set(CONTEXT_TERMS.map((entry) => entry.slug));
+
+    for (const slug of BEGINNER_TERM_SLUGS) {
+      expect(contextSlugs.has(slug), slug).toBe(true);
+    }
+
+    for (const context of CONTEXT_TERMS) {
+      const glossary = GLOSSARY.find((entry) => entry.slug === context.slug);
+      expect(glossary, context.slug).toBeDefined();
+      expect(glossary?.plainDefinition).toBe(context.plainDefinition);
+      expect(glossary?.category).toBe(context.category);
+      expect(glossary?.level).toBe(context.level);
+      expect(sentenceCount(context.plainDefinition), context.slug).toBe(1);
+
+      for (const alias of context.aliases ?? []) {
+        expect(resolveContextTerm(alias)?.slug, alias).toBe(context.slug);
+        expect(resolveGlossaryTerm(alias)?.slug, alias).toBe(context.slug);
+      }
+    }
+  });
+
+  it('resolves slugs, canonical names, and common abbreviations', () => {
+    expect(resolveGlossaryTerm('sextile')?.slug).toBe('sextile');
+    expect(resolveGlossaryTerm('Birth chart (natal chart)')?.slug).toBe('birth-chart');
+    expect(resolveGlossaryTerm('Rx')?.slug).toBe('retrograde');
+    expect(resolveGlossaryTerm('ASC')?.slug).toBe('ascendant');
+    expect(resolveGlossaryTerm('MC')?.slug).toBe('midheaven');
+    expect(glossaryTermHref('whole sign')).toBe('/learn/glossary/#whole-sign-houses');
+    expect(resolveGlossaryTerm('not-a-real-term')).toBeUndefined();
   });
 
   it('quotes aspect and transit numbers directly from engine constants', () => {
