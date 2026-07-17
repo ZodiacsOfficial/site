@@ -211,7 +211,9 @@ export function ChartShareDialog({
   onClose,
 }: ChartShareDialogProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
-  const [hideBirthDetails, setHideBirthDetails] = useState(false);
+  const [hideBirthDetails, setHideBirthDetails] = useState(() => (
+    typeof window !== 'undefined' && window.matchMedia('(max-width: 959.5px)').matches
+  ));
   const [linkState, setLinkState] = useState<CopyLinkState>('idle');
 
   useEffect(() => {
@@ -266,7 +268,7 @@ export function ChartShareDialog({
 
   return (
     <dialog
-      class="calc-share-dialog shell"
+      class="calc-share-dialog"
       ref={dialogRef}
       onClose={onClose}
       onClick={(event) => {
@@ -276,7 +278,7 @@ export function ChartShareDialog({
       data-share-mode={hideBirthDetails ? 'positions' : 'details'}
       aria-labelledby="chart-share-title"
     >
-      <div class="core calc-share-dialog__core">
+      <div class="calc-share-dialog__surface">
         <header class="calc-share-dialog__head">
           <h2 id="chart-share-title">{shareText(locale, 'shareOptionsTitle')}</h2>
           <button

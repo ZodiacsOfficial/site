@@ -1253,7 +1253,7 @@
                   </a>
                   {REGISTRY_AURA_ENABLED ? (
                     <a className="btn" href="/registry/aura/">
-                      <span>Bring your birth chart</span>
+                      <span>{REGISTRY_AURA_HERO_COPY.cta}</span>
                     </a>
                   ) : (
                     <a className="btn" href="/thesis/">
@@ -1262,7 +1262,7 @@
                   )}
                 </div>
                 {REGISTRY_AURA_ENABLED && (
-                  <a className="cine__why" href="/thesis/">Why this exists</a>
+                  <a className="cine__why" href="/thesis/">{REGISTRY_AURA_HERO_COPY.why}</a>
                 )}
               </div>
             </div>

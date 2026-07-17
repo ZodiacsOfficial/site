@@ -75,26 +75,28 @@ const jsonLd = [
   <section class="section container aura-page">
     <header class="aura-page__hero">
       <div class="aura-page__hero-lede">
-        <em class="kicker">A reading from the Registry</em>
-        <h1 class="display">Registry Aura</h1>
+        <em class="kicker">For Zodiac collectors · Registry Aura</em>
+        <h1 class="display">See where your collection meets your chart.</h1>
         <p class="aura-page__hero-copy">
-          Your saved <strong>birth chart</strong>, the official Zodiacs
-          at one <strong>public wallet address</strong>, and <strong>today’s sky</strong> —
-          read side by side, never blended.
+          If a public wallet holds any of the twelve official Zodiacs, Aura
+          compares those signs with your saved birth chart and today’s sky.
+          It explains the overlaps as a symbolic reading — never a wallet
+          score or price prediction.
+        </p>
+        <p class="aura-page__fit-note">
+          No Zodiac collection? Your regular birth chart and horoscopes work without this.
         </p>
       </div>
       <section class="aura-page__demo" aria-labelledby="aura-demo-title">
         <p class="aura-page__demo-cap" id="aura-demo-title">
-          <strong>An example reading.</strong> The chart and record here are
-          samples, so you can see how it works. Nothing of yours is read.
+          <strong>A 30-second example.</strong> The chart, wallet record, and
+          reading are samples. Nothing of yours is read.
         </p>
-        <AlignmentGrid
-          composition={exampleComposition}
-          chart={AURA_EXAMPLE_CHART}
-          checkedAt={exampleBuiltAt.toISOString()}
-          illustrative
-          wheel={false}
-        />
+        <ol class="aura-page__example-flow" aria-label="How Registry Aura creates a reading">
+          <li><span>Your chart</span><strong>What a sign means personally</strong></li>
+          <li><span>Your collection</span><strong>Which official Zodiac is present</strong></li>
+          <li><span>Today’s sky</span><strong>What may be emphasizing it now</strong></li>
+        </ol>
         {exampleFocalSign && exampleFocalContext && (
           <div class="aura-page__demo-read">
             <img
@@ -113,18 +115,29 @@ const jsonLd = [
             </div>
           </div>
         )}
+        <details class="aura-page__proof">
+          <summary>See how this reading was made</summary>
+          <AlignmentGrid
+            composition={exampleComposition}
+            chart={AURA_EXAMPLE_CHART}
+            checkedAt={exampleBuiltAt.toISOString()}
+            illustrative
+            wheel={false}
+          />
+        </details>
         <p class="aura-page__demo-stamp">
           Example sky computed {auraDateStamp(exampleBuiltAt.toISOString())} (site build).
         </p>
       </section>
       <div class="aura-page__cta">
-        <a id="aura-primer-example" class="btn btn--ghost" href="#aura-composer">
-          See a finished reading
-        </a>
-        <a class="btn btn--primary" href="#aura-composer">
-          <span>Start with your chart</span>
+        <a id="aura-primer-example" class="btn btn--primary" href="#aura-composer">
+          <span>Try the example — no wallet needed</span>
           <span class="orb" aria-hidden="true">↓</span>
         </a>
+        <a class="btn btn--ghost aura-page__create" href="#aura-composer">
+          <span>Create my Aura</span>
+        </a>
+        <a class="aura-page__exit" href="/birth-chart/">Not a collector? Explore your birth chart →</a>
       </div>
       <svg class="aura-constellation" viewBox="0 0 320 170" aria-hidden="true">
         <path d="M18 140 L78 96 L150 112 L196 54 L252 84 L300 26 M78 96 L120 22" fill="none" stroke="rgba(198, 204, 218, 0.28)" stroke-width="1" />
@@ -146,7 +159,7 @@ const jsonLd = [
             if (!raw) return;
             const chart = JSON.parse(raw)?.charts?.[0];
             const name = typeof chart?.name === "string" ? chart.name.trim() : "";
-            const door = document.querySelector(".aura-page__cta .btn--primary");
+            const door = document.querySelector(".aura-page__create");
             if (!name || !door) return;
             const label = name.length > 28 ? `${name.slice(0, 27)}…` : name;
             door.textContent = "";
@@ -178,9 +191,9 @@ const jsonLd = [
       <header data-wake>
         <h2 id="what-is-aura-title">What is Registry Aura?</h2>
         <p>
-          A reading built from three things you can check for yourself,
-          presented side by side so you can see exactly where every line
-          comes from.
+          A collector reading that finds the signs shared by your chart,
+          an official Zodiac collection at one public address, and the sky
+          today — then explains why that overlap may feel meaningful.
         </p>
       </header>
       <ol class="aura-what__tiles">
@@ -195,10 +208,10 @@ const jsonLd = [
               <circle cx="6" cy="21" r="2.1" fill="var(--sign-aries)" />
             </svg>
           </span>
-          <h3>Birth chart</h3>
+          <h3>You</h3>
           <p>
-            Saved in this browser and read on this device. It never leaves
-            here — not even for the address lookup.
+            Your saved birth chart shows what each sign represents personally.
+            It stays on this device.
           </p>
         </li>
         <li class="aura-what__tile" data-band="record" data-wake style="--wake-delay: 110ms">
@@ -218,10 +231,10 @@ const jsonLd = [
               <circle cx="8.75" cy="4.91" r="1.9" fill="var(--sign-pisces)" />
             </svg>
           </span>
-          <h3>Address record</h3>
+          <h3>Your collection</h3>
           <p>
-            One public wallet address, checked against the twelve official
-            Zodiacs listed in this Registry. Nothing else is read from it.
+            One public address shows which of the twelve official Zodiacs are
+            present. Quantities, prices, and unrelated assets are ignored.
           </p>
         </li>
         <li class="aura-what__tile" data-band="sky" data-wake style="--wake-delay: 220ms">
@@ -239,7 +252,7 @@ const jsonLd = [
               <path d="M20.8 4.2l.9 2.2 2.2.9-2.2.9-.9 2.2-.9-2.2-2.2-.9 2.2-.9z" fill="var(--sign-cancer)" opacity="0.9" />
             </svg>
           </span>
-          <h3>Today’s sky</h3>
+          <h3>What is active now</h3>
           <p>
             Where the Sun, Moon, and planets actually are — computed on this
             device for the moment you read.
@@ -247,20 +260,20 @@ const jsonLd = [
         </li>
       </ol>
       <p class="aura-what__close" data-wake>
-        Aura lines the three up, sign by sign, and reads where they meet —
-        never blending one into another. Every line shows its why.
+        Aura does not change your chart or judge your wallet. It simply finds
+        shared signs and turns the overlap into a dated, explainable reflection.
       </p>
     </section>
 
-    <section id="wallet-basics" class="aura-wallet-basics" aria-labelledby="wallet-basics-title">
-      <header class="aura-wallet-basics__header" data-wake>
+    <details id="wallet-basics" class="aura-wallet-basics">
+      <summary class="aura-wallet-basics__header" data-wake>
         <div>
-          <h2 id="wallet-basics-title">About wallets</h2>
+          <h2>New to wallets?</h2>
         </div>
         <p>
-          A wallet is an app or device that manages a blockchain account. Registry Aura only needs one public address—the shareable identifier used to look up its public record.
+          Open the two-minute safety guide. Aura only needs one public address — never a recovery phrase, signature, or transaction.
         </p>
-      </header>
+      </summary>
 
       <dl class="aura-wallet-basics__choices" data-wake style="--wake-delay: 110ms">
         <div>
@@ -369,7 +382,7 @@ const jsonLd = [
           </div>
         </details>
       </div>
-    </section>
+    </details>
 
     <RegistryAura client:load availableChains={availableChains} />
     <noscript>
@@ -377,6 +390,17 @@ const jsonLd = [
     </noscript>
   </section>
   <script is:inline>
+    // A link to the wallet guide opens the outer disclosure before the
+    // browser moves focus to it. The guide stays collapsed for everyone else.
+    (() => {
+      const guide = document.getElementById("wallet-basics");
+      if (!(guide instanceof HTMLDetailsElement)) return;
+      const sync = () => {
+        if (location.hash === "#wallet-basics") guide.open = true;
+      };
+      sync();
+      addEventListener("hashchange", sync);
+    })();
     // Sections wake as they enter the viewport. The hiding styles apply
     // only under html.js + motion-tolerant media, so visitors without
     // JavaScript or with reduced motion always see the full page at once.

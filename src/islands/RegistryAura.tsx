@@ -871,10 +871,10 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
     <div id="aura-composer" class="aura-entry">
       <div class="aura-entry__intro">
         <div>
-          <h2>Three records, one reading</h2>
+          <h2>Create your collector reading</h2>
           <p>
-            The chart is read on this device and never leaves it. The lookup
-            sends one public address, nothing else.
+            Choose a saved chart, add one public address, and Aura will explain
+            the signs they share with today’s sky. Your chart stays on this device.
           </p>
         </div>
         {persistenceReady && !result && !address && (
@@ -884,7 +884,7 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
             type="button"
             onClick={(event) => void showExample(event.currentTarget)}
           >
-            See the example
+            Try the example — no wallet needed
           </button>
         )}
       </div>
@@ -949,7 +949,7 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
         <section class="aura-step" aria-labelledby="aura-chart-step">
           <div class="aura-step__heading">
             <span>1</span>
-            <h3 id="aura-chart-step">Your chart</h3>
+            <h3 id="aura-chart-step">Choose whose chart to read</h3>
           </div>
           {!profileReady ? (
             <p class="aura-step__note">
@@ -1008,7 +1008,7 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
         <section class="aura-step" aria-labelledby="aura-address-step">
           <div class="aura-step__heading">
             <span>2</span>
-            <h3 id="aura-address-step">The address</h3>
+            <h3 id="aura-address-step">Add one public wallet address</h3>
           </div>
           <p class="aura-step__note aura-step__note--before-wallet">
             Connect an installed wallet or paste a public address — both are
@@ -1291,12 +1291,20 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
           </p>
 
           <div class="aura-compose__submit">
+            <div class="aura-step__heading">
+              <span>3</span>
+              <h3>See which signs overlap</h3>
+            </div>
+            <p>
+              Aura will name the shared signs, explain why each one matters in
+              the chart, and show what is emphasizing it today.
+            </p>
             <button
               class="btn btn--primary"
               type="submit"
               disabled={!chart || requestState === "busy"}
             >
-              {requestState === "busy" ? "Reading…" : "Read them side by side"}
+              {requestState === "busy" ? "Reading…" : "Create my Aura"}
             </button>
           </div>
         </section>

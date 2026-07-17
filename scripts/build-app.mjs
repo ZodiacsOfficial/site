@@ -19,6 +19,7 @@ import {
 } from '../src/lib/registry-establishment.mjs';
 import {
   REGISTRY_AURA_ENTRY_COPY,
+  REGISTRY_AURA_HERO_COPY,
   REGISTRY_AURA_META_NAME,
   REGISTRY_AURA_PATH,
   injectRegistryAuraLanding,
@@ -69,6 +70,7 @@ const registryMeta = [
   `const REGISTRY_AURA_ENABLED=document.querySelector('meta[name="${REGISTRY_AURA_META_NAME}"]')?.content==='1';`,
   `const REGISTRY_AURA_PATH=${JSON.stringify(REGISTRY_AURA_PATH)};`,
   `const REGISTRY_AURA_ENTRY_COPY=Object.freeze(${JSON.stringify(REGISTRY_AURA_ENTRY_COPY)});`,
+  `const REGISTRY_AURA_HERO_COPY=Object.freeze(${JSON.stringify(REGISTRY_AURA_HERO_COPY)});`,
 ].join('');
 const output = banner + registryMeta + code + '\n';
 await writeFile(OUT, output, 'utf8');

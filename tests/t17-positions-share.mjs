@@ -544,6 +544,53 @@ try {
       assert.match(await invalid.locator('.calc__error').innerText(), /invalid or incomplete/i);
       assert.equal(await invalid.locator('[data-positions-only], .calc__result').count(), 0, 'invalid v2 must not render a result');
 
+      // Mobile uses the native share sheet from the original tap and keeps
+      // the richer, privacy-first action sheet behind an explicit option.
+      const mobileContext = await browser.newContext({
+        viewport: { width: 390, height: 844 },
+        colorScheme: 'dark',
+        locale: 'en-US',
+        timezoneId: 'UTC',
+        reducedMotion: 'reduce',
+      });
+      await mobileContext.addInitScript(() => {
+        globalThis.__mobileSharePayload = null;
+        Object.defineProperty(Navigator.prototype, 'share', {
+          configurable: true,
+          value: (payload) => {
+            globalThis.__mobileSharePayload = { ...payload, at: performance.now() };
+            return Promise.resolve();
+          },
+        });
+      });
+      const mobile = await mobileContext.newPage();
+      mobile.on('pageerror', (error) => errors.push(`mobile-pageerror:${error.message}`));
+      mobile.on('console', (message) => {
+        if (message.type() === 'error') errors.push(`mobile-console:${message.text()}`);
+      });
+      await open(mobile, `${baseURL}/birth-chart/`);
+      await computeChart(mobile);
+      await mobile.locator('[data-share-options]').waitFor({ state: 'visible', timeout: TIMEOUT });
+      await mobile.locator('[data-share-card]').click();
+      await mobile.waitForFunction(() => globalThis.__mobileSharePayload !== null, null, { timeout: TIMEOUT });
+      const mobilePayload = await mobile.evaluate(() => globalThis.__mobileSharePayload);
+      const mobileWire = v2Wire(mobilePayload.url);
+      assert.equal(await mobile.locator('[data-share-dialog]').count(), 0,
+        'successful native mobile share must not open the fallback sheet');
+      assert.equal(JSON.stringify(mobileWire.wire).includes(BIRTH.date), false,
+        'native mobile share must omit birth details');
+      await mobile.locator('[data-share-options]').click();
+      const mobileSheet = mobile.locator('[data-share-dialog]');
+      await mobileSheet.waitFor({ state: 'visible', timeout: TIMEOUT });
+      assert.equal(await mobileSheet.locator('[data-hide-birth-details]').isChecked(), true,
+        'mobile fallback sheet must be privacy-first');
+      const mobileSheetBox = await mobileSheet.boundingBox();
+      assert.ok(mobileSheetBox && Math.abs(mobileSheetBox.y + mobileSheetBox.height - 844) < 2,
+        `mobile share sheet must dock to the viewport bottom: ${JSON.stringify(mobileSheetBox)}`);
+      assert.ok(mobileSheetBox.height < 844 && mobileSheetBox.width === 390,
+        'mobile share sheet must fit the viewport without becoming a blank full-screen layer');
+      await mobileContext.close();
+
       transcript.fullFragment = fullParsed.hash.slice(0, 5);
       transcript.positionsFragment = positionsParsed.hash.slice(0, 5);
       transcript.positionsWireKeys = Object.keys(wire).sort();
@@ -558,6 +605,7 @@ try {
       transcript.bigThreeMs = Math.round(bigThreeEventAt - bigThreeStart);
       transcript.events = (await events(source)).map(({ name, props }) => ({ name, props }));
       transcript.hashesStripped = { positions: true, full: true, ambiguous: true };
+      transcript.mobileNativeShare = 'positions-only';
     } finally {
       await context.close();
     }

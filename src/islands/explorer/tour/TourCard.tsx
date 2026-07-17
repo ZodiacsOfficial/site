@@ -38,7 +38,9 @@ export default function TourCard({
   locale, variant, kicker, title, dotsLabel, exitLabel, finishLabel, nextLabel, paragraphs, feature, dots,
   onDot, onPrev, onNext, onFinish, prevDisabled, isLast, onExit, headingRef,
 }: Props) {
-  const [detent, setDetent] = useState<'half' | 'full'>('half');
+  // The four-step first reading opens expanded on phones so the lesson and
+  // its navigation are immediately legible. Longer tours retain the peek.
+  const [detent, setDetent] = useState<'half' | 'full'>(variant === 'quick' ? 'full' : 'half');
   const dragFrom = useRef<{ x: number; y: number } | null>(null);
   const cardRef = useRef<HTMLDivElement | null>(null);
 

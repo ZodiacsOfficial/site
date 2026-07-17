@@ -40,6 +40,40 @@ const shot = async (target, path, opts = {}) => {
 try {
   const browser = await chromium.launch({ executablePath: CHROMIUM });
 
+  let navBreakpointsPass = true;
+  const navBreakpointsDetail = [];
+  for (const prefix of ['', '/es', '/pt', '/fr', '/it']) {
+    for (const width of [819, 820]) {
+      const navPage = await browser.newPage({ viewport: { width, height: 844 } });
+      await navPage.goto(`http://127.0.0.1:4399${prefix}/birth-chart/`, { waitUntil: 'domcontentloaded' });
+      const state = await navPage.evaluate(() => {
+        const nav = document.querySelector('[data-nav]')?.getBoundingClientRect();
+        const chip = document.querySelector('.nav__chip');
+        const burger = document.querySelector('[data-menu-toggle]');
+        return {
+          navFits: Boolean(nav && nav.left >= 0 && nav.right <= innerWidth),
+          chipVisible: Boolean(chip && getComputedStyle(chip).display !== 'none'),
+          chipHref: chip?.getAttribute('href'),
+          burgerVisible: Boolean(burger && getComputedStyle(burger).display !== 'none'),
+        };
+      });
+      if (width === 819) {
+        await navPage.locator('[data-menu-toggle]').click();
+        const mobileRegistryVisible = await navPage.locator('.mobile-menu__registry').isVisible();
+        state.mobileRegistryVisible = mobileRegistryVisible;
+      }
+      const pass = state.navFits
+        && state.chipVisible
+        && state.chipHref === '/registry/'
+        && state.burgerVisible === (width === 819)
+        && (width === 820 || state.mobileRegistryVisible === true);
+      navBreakpointsPass &&= pass;
+      navBreakpointsDetail.push(`${prefix || '/en'}@${width}:${pass ? 'ok' : JSON.stringify(state)}`);
+      await navPage.close();
+    }
+  }
+  check('navigation: Registry persists at 819/820px in all five locales', navBreakpointsPass, navBreakpointsDetail.join(' · '));
+
   // The site sets `scroll-behavior: smooth`, so scrolls animate — poll the
   // box until it stops moving before clicking.
   async function settledBox(el) {
@@ -615,7 +649,7 @@ try {
   check('mobile: Guide + Share dock is full-width below the interactive chart', await mob.evaluate(() => {
     const explorer = document.querySelector('.xplr')?.getBoundingClientRect();
     const dock = document.querySelector('[data-wheel-actions]')?.getBoundingClientRect();
-    const buttons = Array.from(document.querySelectorAll('[data-wheel-actions] button'))
+    const buttons = Array.from(document.querySelectorAll('[data-wheel-actions] .btn'))
       .map((button) => button.getBoundingClientRect());
     if (!explorer || !dock || buttons.length !== 2) return false;
     return dock.top >= explorer.bottom - 0.5

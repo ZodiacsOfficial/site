@@ -336,7 +336,7 @@ export function AuraResult({
                 type="button"
                 onClick={(event) => void onShowExample(event.currentTarget)}
               >
-                See the example
+                Try the example — no wallet needed
               </button>
             </div>
           </div>

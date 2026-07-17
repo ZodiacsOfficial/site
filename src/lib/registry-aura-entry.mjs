@@ -5,13 +5,13 @@ export const REGISTRY_AURA_META_NAME = 'zodiacs-registry-aura-enabled';
 export const REGISTRY_AURA_ENTRY_SLOT = '<!-- registry-aura-entry:slot -->';
 
 export const REGISTRY_AURA_ENTRY_COPY = Object.freeze({
-  title: 'Registry Aura',
-  description: 'Start with the example — no wallet needed. Then read one public address beside a saved birth chart and today’s sky.',
-  link: 'Open Registry Aura →',
+  title: 'Registry Aura — where your collection meets your chart',
+  description: 'For Zodiac collectors: see which official signs at one public address echo a saved birth chart and today’s sky. Start with the example — no wallet needed.',
+  link: 'See how Registry Aura works →',
 });
 
 export const REGISTRY_AURA_HERO_COPY = Object.freeze({
-  cta: 'Bring your birth chart',
+  cta: 'See where your collection meets your chart',
   why: 'Why this exists',
 });
 

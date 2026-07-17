@@ -226,7 +226,7 @@ async function verifyWalletEducation(browser, baseURL) {
   await noJsGuide.waitFor();
   const noJsText = await noJsGuide.textContent();
   for (const required of [
-    "About wallets",
+    "New to wallets?",
     "Public address",
     "Recovery phrase or private key",
     "Aura never needs your wallet secrets",
@@ -316,7 +316,7 @@ async function verifyWalletEducation(browser, baseURL) {
   const staticDemoText = await staticDemo.innerText();
   assert.match(
     staticDemoText,
-    /An example reading/i,
+    /A 30-second example/i,
     "the first screen must open with the server-rendered example",
   );
   assert.match(
@@ -336,7 +336,7 @@ async function verifyWalletEducation(browser, baseURL) {
   );
 
   const primerExample = page.getByRole("link", {
-    name: "See a finished reading",
+    name: "Try the example — no wallet needed",
   });
   assert.equal(await primerExample.getAttribute("href"), "#aura-composer");
   await primerExample.click();
@@ -380,6 +380,7 @@ async function verifyWalletEducation(browser, baseURL) {
   );
 
   const guide = page.locator("#wallet-basics");
+  await guide.evaluate((item) => { item.open = true; });
   const firstDetails = guide.locator("details").first();
   const firstSummary = firstDetails.locator("summary");
   await firstSummary.focus();
@@ -613,7 +614,7 @@ async function captureCase(
     "Disclosure, Privacy, and Terms must be available at the composition decision point",
   );
   await page.locator("#aura-address").fill(address);
-  await page.getByRole("button", { name: "Read them side by side" }).click();
+  await page.getByRole("button", { name: "Create my Aura" }).click();
   await page
     .locator("#aura-result-title")
     .waitFor({ state: "visible", timeout: 5_000 })
@@ -1248,7 +1249,9 @@ async function verifyNoChartAndOfflineExample(browser, baseURL) {
     )?.includes("return=registry-aura"),
   );
   await context.setOffline(true);
-  await page.getByRole("button", { name: "See the example" }).click();
+  await page
+    .getByRole("button", { name: "Try the example — no wallet needed" })
+    .click();
   await page.locator("#aura-result-title").waitFor();
   assert.equal(
     await page.locator(".aura-result [data-aura-record-sign]").count(),
@@ -1359,7 +1362,7 @@ async function verifyRequestInvalidation(browser, baseURL) {
   });
   await page.goto(`${baseURL}/registry/aura/`, { waitUntil: "networkidle" });
   await page.locator("#aura-address").fill(address);
-  await page.getByRole("button", { name: "Read them side by side" }).click();
+  await page.getByRole("button", { name: "Create my Aura" }).click();
   await lookupStarted;
   await page
     .locator("#aura-address")
@@ -1372,7 +1375,7 @@ async function verifyRequestInvalidation(browser, baseURL) {
     "an invalidated lookup must not restore its result",
   );
   assert.equal(
-    await page.getByRole("button", { name: "Read them side by side" }).isEnabled(),
+    await page.getByRole("button", { name: "Create my Aura" }).isEnabled(),
     true,
   );
   await context.close();
@@ -1411,7 +1414,7 @@ async function verifyRememberInterleaving(browser, baseURL) {
     name: /Remember this address/,
   });
   await remember.check();
-  await page.getByRole("button", { name: "Read them side by side" }).click();
+  await page.getByRole("button", { name: "Create my Aura" }).click();
   await started;
   await remember.uncheck();
   allowResponse();
@@ -1480,7 +1483,7 @@ async function verifyInputInvalidatesPersistence(browser, baseURL) {
   await page.goto(`${baseURL}/registry/aura/`, { waitUntil: "networkidle" });
   await page.locator("#aura-address").fill(address);
   await page.getByRole("checkbox", { name: /Remember this address/ }).check();
-  await page.getByRole("button", { name: "Read them side by side" }).click();
+  await page.getByRole("button", { name: "Create my Aura" }).click();
   await page.locator("#aura-result-title").waitFor();
   assert.equal(
     await page.evaluate(() =>
@@ -1509,7 +1512,7 @@ async function verifyInputInvalidatesPersistence(browser, baseURL) {
   );
 
   await page.locator("#aura-address").fill(address);
-  await page.getByRole("button", { name: "Read them side by side" }).click();
+  await page.getByRole("button", { name: "Create my Aura" }).click();
   await page.locator("#aura-result-title").waitFor();
   await page.locator("#aura-chart").selectOption("aura-browser-fixture-second");
   assert.equal(
@@ -1547,7 +1550,7 @@ async function verifySocialShareAndDisclosure(browser, baseURL) {
   );
   await page.goto(`${baseURL}/registry/aura/`, { waitUntil: "networkidle" });
   await page.locator("#aura-address").fill(address);
-  await page.getByRole("button", { name: "Read them side by side" }).click();
+  await page.getByRole("button", { name: "Create my Aura" }).click();
   await page.locator("#aura-result-title").waitFor();
 
   const chartDisclosure = page.getByRole("checkbox", {
@@ -1723,7 +1726,7 @@ async function verifyUnknownTimeOmissions(browser, baseURL) {
   );
   await page.goto(`${baseURL}/registry/aura/`, { waitUntil: "networkidle" });
   await page.locator("#aura-address").fill(address);
-  await page.getByRole("button", { name: "Read them side by side" }).click();
+  await page.getByRole("button", { name: "Create my Aura" }).click();
   await page.locator("#aura-result-title").waitFor();
   assert.match(
     await page.locator('[data-aura-source="chart"]').innerText(),
@@ -1897,7 +1900,7 @@ async function verifyWalletLifecycle(browser, baseURL) {
     "the single detected wallet must be named on the button",
   );
   await page.locator("#aura-address").fill(address);
-  await page.getByRole("button", { name: "Read them side by side" }).click();
+  await page.getByRole("button", { name: "Create my Aura" }).click();
   await firstStarted;
   await connectBaseButton.click();
   await page.getByText("Aura test wallet · connected address · Base").waitFor();
@@ -1909,7 +1912,7 @@ async function verifyWalletLifecycle(browser, baseURL) {
     document.activeElement?.textContent?.includes("Connect Base wallet"),
   );
   assert.equal(
-    await page.getByRole("button", { name: "Read them side by side" }).isEnabled(),
+    await page.getByRole("button", { name: "Create my Aura" }).isEnabled(),
     true,
     "connecting during a lookup must leave Compose usable",
   );
@@ -1920,7 +1923,7 @@ async function verifyWalletLifecycle(browser, baseURL) {
     0,
     "the superseded pasted-address result must stay discarded",
   );
-  await page.getByRole("button", { name: "Read them side by side" }).click();
+  await page.getByRole("button", { name: "Create my Aura" }).click();
   await page.locator("#aura-result-title").waitFor();
 
   const second = "0x0000000000000000000000000000000000000002";
@@ -2058,6 +2061,7 @@ async function verifyEdgeStates(browser, baseURL) {
         }),
   );
   await page.goto(`${baseURL}/registry/aura/`, { waitUntil: "networkidle" });
+  await page.locator("#wallet-basics").evaluate((item) => { item.open = true; });
   await page.locator("#wallet-basics details").evaluateAll((details) =>
     details.forEach((item) => {
       item.open = true;
@@ -2086,7 +2090,7 @@ async function verifyEdgeStates(browser, baseURL) {
     }),
   );
   await page.locator("#aura-address").fill(address);
-  await page.getByRole("button", { name: "Read them side by side" }).click();
+  await page.getByRole("button", { name: "Create my Aura" }).click();
   await page.locator('.aura-result [data-aura-record-sign="cancer"]').waitFor();
   assert.ok(
     await page.evaluate(
@@ -2135,7 +2139,7 @@ async function verifyEdgeStates(browser, baseURL) {
     .click();
   outcome = "empty";
   await page.locator("#aura-address").fill(address);
-  await page.getByRole("button", { name: "Read them side by side" }).click();
+  await page.getByRole("button", { name: "Create my Aura" }).click();
   await page.getByText("Public record", { exact: true }).waitFor();
   await page.getByText("Public record", { exact: true }).click();
   const emptyResultText = await page.locator(".aura-result").innerText();
@@ -2148,7 +2152,9 @@ async function verifyEdgeStates(browser, baseURL) {
     1,
   );
   assert.equal(
-    await page.getByRole("button", { name: "See the example" }).count(),
+    await page
+      .getByRole("button", { name: "Try the example — no wallet needed" })
+      .count(),
     1,
   );
   assert.equal(await page.locator(".aura-result [data-aura-record-sign]").count(), 0);
@@ -2163,7 +2169,7 @@ async function verifyEdgeStates(browser, baseURL) {
     .click();
   outcome = "unavailable";
   await page.locator("#aura-address").fill(address);
-  await page.getByRole("button", { name: "Read them side by side" }).click();
+  await page.getByRole("button", { name: "Create my Aura" }).click();
   await page
     .getByText(
       "The blockchain data provider did not return a complete answer. No absence has been inferred.",
@@ -2201,7 +2207,7 @@ async function verifyLandingHeroHandoff() {
   );
   assert.ok(
     staticHtml.includes(
-      '<a class="btn" href="/registry/aura/"><span>Bring your birth chart</span></a>',
+      '<a class="btn" href="/registry/aura/"><span>See where your collection meets your chart</span></a>',
     ),
     "static landing hero must carry the Aura CTA while the flag is on",
   );
@@ -2221,7 +2227,7 @@ async function verifyLandingHeroHandoff() {
     "utf8",
   );
   for (const marker of [
-    "Bring your birth chart",
+    "See where your collection meets your chart",
     "Why this exists",
     "cine__why",
     "/registry/aura/",
@@ -2263,8 +2269,8 @@ async function verifyHeroAboveTheFold(browser, baseURL) {
   // scrolling: buried at the bottom of the ~930px example card they
   // were on no one's first screen.
   for (const [name, href] of [
-    ["See a finished reading", "#aura-composer"],
-    ["Start with your chart", "#aura-composer"],
+    ["Try the example — no wallet needed", "#aura-composer"],
+    ["Create my Aura", "#aura-composer"],
   ]) {
     const door = await page
       .locator(`.aura-page__hero a:has-text("${name}")`)
@@ -2294,6 +2300,8 @@ async function verifyDemoCardDensity(browser, baseURL) {
   });
   const page = await context.newPage();
   await page.goto(`${baseURL}/registry/aura/`, { waitUntil: "networkidle" });
+
+  await page.locator(".aura-page__proof").evaluate((item) => { item.open = true; });
 
   const label = await page
     .locator(".aura-page__demo .aura-algn__lbl")
@@ -2352,7 +2360,7 @@ async function verifyWhatIsSection(browser, baseURL) {
   const tiles = section.locator(".aura-what__tile");
   assert.equal(await tiles.count(), 3, "one tile per source");
   const titles = (await tiles.locator("h3").allInnerTexts()).join(" | ");
-  for (const expected of ["Birth chart", "Address record", "Today’s sky"]) {
+  for (const expected of ["You", "Your collection", "What is active now"]) {
     assert.ok(titles.includes(expected), `missing source tile: ${expected}`);
   }
   assert.equal(
@@ -2380,7 +2388,6 @@ async function verifyWhatIsSection(browser, baseURL) {
     /without the jargon/i,
     /the short version/i,
     /new to crypto\b/i,
-    /two-minute/i,
     /illustrative/i,
     /built into this page/i,
   ]) {
@@ -2401,7 +2408,7 @@ async function verifyExampleDoorLanding(browser, baseURL) {
   });
   const page = await context.newPage();
   await page.goto(`${baseURL}/registry/aura/`, { waitUntil: "networkidle" });
-  await page.getByRole("link", { name: "See a finished reading" }).click();
+  await page.getByRole("link", { name: "Try the example — no wallet needed" }).click();
   const title = page.locator("#aura-result-title");
   await title.waitFor();
   await page.waitForFunction(() => {
@@ -2461,10 +2468,10 @@ async function verifyChartAwareDoor(browser, baseURL) {
   await anonymousPage.goto(`${baseURL}/registry/aura/`, {
     waitUntil: "networkidle",
   });
-  const anonymousDoor = anonymousPage.locator(".aura-page__cta .btn--primary");
+  const anonymousDoor = anonymousPage.locator(".aura-page__create");
   const anonymousLabel = await anonymousDoor.innerText();
   assert.ok(
-    anonymousLabel.includes("Start with your chart")
+    anonymousLabel.includes("Create my Aura")
       && !anonymousLabel.includes("Continue with"),
     `without a saved chart the door stays generic (got ${JSON.stringify(anonymousLabel)})`,
   );
@@ -2481,7 +2488,7 @@ async function verifyChartAwareDoor(browser, baseURL) {
   await returningPage.goto(`${baseURL}/registry/aura/`, {
     waitUntil: "networkidle",
   });
-  const door = returningPage.locator(".aura-page__cta .btn--primary");
+  const door = returningPage.locator(".aura-page__create");
   const doorText = await door.innerText();
   assert.ok(
     doorText.includes(profile.charts[0].name),

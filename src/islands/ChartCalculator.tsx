@@ -42,7 +42,7 @@ import { registryAuraChartAnalytics, registryAuraChartLink } from '../lib/regist
 import { trackAnalytics } from '../lib/analytics';
 import { decodeChartLink, encodeChartLink, NAME_MAX } from '../lib/share';
 import type { ShareChartInput } from '../lib/share';
-import type { PositionsShareChart } from '../lib/share-positions';
+import { encodePositionsLink, type PositionsShareChart } from '../lib/share-positions';
 import type { TourVisual } from '../lib/scene/chapters';
 import { ENGINE_VERSION } from '../lib/engine/types';
 import type { Chart, HouseSystem } from '../lib/engine/types';
@@ -79,12 +79,12 @@ const DETAIL_LABELS: Record<Locale, { lead: string; placements: string; aspects:
 };
 const DETAIL_STORAGE_KEY = 'zodiacs.detail.v1';
 const WHEEL_ACTION_COPY = {
-  en: { guide: 'Take the guided tour', replay: 'Replay the tour' },
-  es: { guide: 'Hacer el recorrido guiado', replay: 'Repetir el recorrido' },
-  pt: { guide: 'Fazer o tour guiado', replay: 'Repetir o tour' },
-  fr: { guide: 'Faire la visite guidée', replay: 'Rejouer la visite' },
-  it: { guide: 'Inizia il tour guidato', replay: 'Ripeti il tour' },
-} as const satisfies Record<Locale, { guide: string; replay: string }>;
+  en: { guide: 'Take the guided tour', replay: 'Replay the tour', moreShare: 'More sharing options', shareNote: 'My chart positions — birth details not included.' },
+  es: { guide: 'Hacer el recorrido guiado', replay: 'Repetir el recorrido', moreShare: 'Más opciones para compartir', shareNote: 'Posiciones de mi carta — sin datos de nacimiento.' },
+  pt: { guide: 'Fazer o tour guiado', replay: 'Repetir o tour', moreShare: 'Mais opções de compartilhamento', shareNote: 'Posições do meu mapa — sem dados de nascimento.' },
+  fr: { guide: 'Faire la visite guidée', replay: 'Rejouer la visite', moreShare: 'Plus d’options de partage', shareNote: 'Positions de mon thème — sans données de naissance.' },
+  it: { guide: 'Inizia il tour guidato', replay: 'Ripeti il tour', moreShare: 'Altre opzioni di condivisione', shareNote: 'Posizioni del mio tema — senza dati di nascita.' },
+} as const satisfies Record<Locale, { guide: string; replay: string; moreShare: string; shareNote: string }>;
 function firstReadingChartKey(chart: Chart): string {
   return [
     chart.input.utc.toISOString(),
@@ -214,6 +214,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   const [copyLinkModule, setCopyLinkModule] = useState<CopyLinkModule | null>(null);
   const [communicationSurface, setCommunicationSurface] = useState<CommunicationReadModule | null>(null);
   const [shareDialogOpen, setShareDialogOpen] = useState(false);
+  const [nativeShareAvailable, setNativeShareAvailable] = useState(false);
   const [a2hsHint, setA2hsHint] = useState<A2hsHint | null>(null);
   const [pushOptIn, setPushOptIn] = useState<PushOptInModule | null>(null);
   const [pwaInstallModule, setPwaInstallModule] = useState<PwaInstallModule | null>(null);
@@ -226,6 +227,14 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   const saveOriginRef = useRef<'tour' | 'free'>('free');
   const shareReturnRef = useRef<HTMLElement | null>(null);
   const focusAfterComputeRef = useRef(false);
+
+  useEffect(() => {
+    const mobile = window.matchMedia('(max-width: 959.5px)');
+    const sync = () => setNativeShareAvailable(mobile.matches && typeof navigator.share === 'function');
+    sync();
+    mobile.addEventListener?.('change', sync);
+    return () => mobile.removeEventListener?.('change', sync);
+  }, []);
 
   // ── Chart Explorer state (full mode) ──
   const [selection, setSelection] = useState<EntityRef | null>(null);
@@ -838,7 +847,20 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   const shareUrl = () =>
     `${window.location.origin}${localizePath(locale, '/birth-chart/')}#c=${encodeChartLink(shareInput!)}`;
 
-  async function openShareDialog() {
+  const positionsShareUrl = (): string | null => {
+    if (!chart) return null;
+    const token = encodePositionsLink({
+      bodies: chart.bodies,
+      angles: chart.angles ? { asc: chart.angles.asc, mc: chart.angles.mc } : null,
+      houseSystem: chart.houses?.system ?? houseSystem,
+      engineVersion: chart.engineVersion,
+    });
+    return token
+      ? `${window.location.origin}${localizePath(locale, '/birth-chart/')}#p=${token}`
+      : null;
+  };
+
+  async function openShareOptions() {
     if (!chart || !shareInput) return;
     shareReturnRef.current = document.activeElement instanceof HTMLElement
       ? document.activeElement
@@ -852,6 +874,29 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
       console.error(err);
       setCard('error');
     }
+  }
+
+  async function shareChartFromAction() {
+    if (!chart || !shareInput) return;
+    const safeUrl = positionsShareUrl();
+    if (nativeShareAvailable && safeUrl) {
+      try {
+        // Keep this call in the original tap task. iOS discards user
+        // activation if a lazy import runs before navigator.share().
+        await navigator.share({
+          title: t(locale, 'shareChart'),
+          text: WHEEL_ACTION_COPY[locale].shareNote,
+          url: safeUrl,
+        });
+        (window as Window & { zodiacsAnalytics?: { track?: (name: string, props: { variant: string }) => void } })
+          .zodiacsAnalytics?.track?.('chart_share', { variant: 'positions_link' });
+        return;
+      } catch (error) {
+        if (error instanceof DOMException && error.name === 'AbortError') return;
+        console.error(error);
+      }
+    }
+    await openShareOptions();
   }
 
   function closeShareDialog(): void {
@@ -1408,7 +1453,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                           exitTour();
                           void openSavePrompt('tour');
                         }}
-                        onShare={openShareDialog}
+                        onShare={shareChartFromAction}
                         onExit={exitTour}
                         returnFocus={() => wheelboxRef.current?.focus()}
                       />
@@ -1445,7 +1490,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                       <button
                         class="btn btn--ghost"
                         type="button"
-                        onClick={() => void openShareDialog()}
+                        onClick={() => void shareChartFromAction()}
                         disabled={card === 'busy'}
                         data-share-card
                       >
@@ -1454,6 +1499,16 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                           : card === 'saved' ? t(locale, 'cardSaved') : t(locale, 'shareChart')}</span>
                         <span class="orb" aria-hidden="true">{card === 'saved' ? '✓' : '↗'}</span>
                       </button>
+                      {nativeShareAvailable && (
+                        <button
+                          class="calc__share-more"
+                          type="button"
+                          onClick={() => void openShareOptions()}
+                          data-share-options
+                        >
+                          {WHEEL_ACTION_COPY[locale].moreShare}
+                        </button>
+                      )}
                     </div>
                   )}
                   <p class="sr-only" role="status">{announce}</p>
