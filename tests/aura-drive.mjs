@@ -2164,8 +2164,53 @@ async function verifyEdgeStates(browser, baseURL) {
   await context.close();
 }
 
+// The flag-on build hands the landing hero's secondary button to Aura in
+// both render paths: the stamped static markup (no-JS visitors, first
+// paint) and the compiled React bundle (which branches on the stamped meta
+// at runtime). Asserted from the built files, not a live mount — the
+// landing loads React from unpkg, and CI must not depend on a CDN.
+async function verifyLandingHeroHandoff() {
+  const staticHtml = await readFile(
+    resolve(root, "dist/registry/index.html"),
+    "utf8",
+  );
+  assert.ok(
+    staticHtml.includes(
+      '<a class="btn" href="/registry/aura/"><span>Bring your birth chart</span></a>',
+    ),
+    "static landing hero must carry the Aura CTA while the flag is on",
+  );
+  assert.ok(
+    staticHtml.includes(
+      '<a class="cine__why" href="/thesis/">Why this exists</a>',
+    ),
+    "static landing hero must keep the thesis as a demoted text link",
+  );
+  assert.ok(
+    !staticHtml.includes('<a class="btn" href="/thesis/">'),
+    "the thesis button must not survive the flag-on stamp",
+  );
+
+  const bundle = await readFile(
+    resolve(root, "dist/assets/app.js"),
+    "utf8",
+  );
+  for (const marker of [
+    "Bring your birth chart",
+    "Why this exists",
+    "cine__why",
+    "/registry/aura/",
+  ]) {
+    assert.ok(
+      bundle.includes(marker),
+      `compiled landing bundle must carry the hero handoff (missing ${JSON.stringify(marker)})`,
+    );
+  }
+}
+
 await mkdir(proofRoot, { recursive: true });
 await verifyAuraBundleSafety();
+await verifyLandingHeroHandoff();
 const executablePath = await findChromium();
 const browser = await chromium.launch({
   executablePath,
