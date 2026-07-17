@@ -6,6 +6,7 @@
 }
 
 .aura-page__hero {
+  position: relative;
   display: grid;
   grid-template-columns: minmax(0, 1.25fr) minmax(260px, 0.75fr);
   /* Row 1 hugs the lede so the doors sit right under the dek instead of
@@ -174,29 +175,41 @@
 .aura-what__mark {
   display: grid;
   place-items: center;
-  width: 44px;
-  height: 44px;
+  width: 50px;
+  height: 50px;
   margin-bottom: 14px;
   border: 1px solid var(--hair-2);
   border-radius: 50%;
   background: var(--void-2);
 }
 
-.aura-what__mark img {
-  border-radius: 50%;
+.aura-what__icon {
+  display: block;
 }
 
-.aura-what__dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--ink-1);
+/* Holding a tile lifts its band in the hero example (data-band-focus is
+   set by the page script); the other bands step back. */
+@media (hover: hover) and (pointer: fine) {
+  .aura-what__tile {
+    transition:
+      transform 200ms var(--ease-soft),
+      border-color 200ms var(--ease-soft);
+  }
+  .aura-what__tile:hover {
+    transform: translateY(-2px);
+    border-color: var(--hair-3);
+  }
 }
 
-.aura-what__sky {
-  color: var(--text);
-  font-family: var(--font-serif);
-  font-size: 20px;
+.aura-algn[data-band-focus] .aura-algn__row {
+  opacity: 0.4;
+  transition: opacity 180ms var(--ease-soft);
+}
+
+.aura-algn[data-band-focus="chart"] .aura-algn__row[data-aura-algn-row="chart"],
+.aura-algn[data-band-focus="record"] .aura-algn__row[data-aura-algn-row="record"],
+.aura-algn[data-band-focus="sky"] .aura-algn__row[data-aura-algn-row="sky"] {
+  opacity: 1;
 }
 
 .aura-what__tile h3 {
@@ -1669,6 +1682,51 @@
   }
 }
 
+/* A quiet asterism settles into the hero's open floor: the line traces
+   itself once, then each star arrives. Decorative only — hidden from
+   forced colors, static under reduced motion, and never looping. */
+.aura-constellation {
+  position: absolute;
+  left: 0;
+  bottom: clamp(16px, 4vw, 40px);
+  width: min(44%, 400px);
+  height: auto;
+  pointer-events: none;
+}
+
+.aura-constellation path:first-of-type {
+  stroke-dasharray: 620;
+  stroke-dashoffset: 620;
+  animation: aura-trace 1600ms var(--ease-soft) 750ms forwards;
+}
+
+.aura-constellation circle,
+.aura-constellation .aura-constellation__spark {
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: aura-pop 340ms var(--ease-soft) both;
+}
+
+.aura-constellation circle:nth-of-type(1) { animation-delay: 950ms; }
+.aura-constellation circle:nth-of-type(2) { animation-delay: 1090ms; }
+.aura-constellation circle:nth-of-type(3) { animation-delay: 1230ms; }
+.aura-constellation circle:nth-of-type(4) { animation-delay: 1370ms; }
+.aura-constellation circle:nth-of-type(5) { animation-delay: 1510ms; }
+.aura-constellation circle:nth-of-type(6) { animation-delay: 1650ms; }
+.aura-constellation .aura-constellation__spark { animation-delay: 1800ms; }
+
+@keyframes aura-trace {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* The generic door points where it goes. */
+.aura-page__cta .btn:hover .orb {
+  transform: translate(0, 2px);
+}
+
 /* One finished-state choreography, run once per composition: the three
    sources arrive separately, the Alignment settles, the focal caption lands,
    then the sentence and reading. Transform/opacity only; nothing loops. */
@@ -1825,6 +1883,9 @@
   .aura-what__tiles {
     grid-template-columns: 1fr;
   }
+  .aura-constellation {
+    display: none;
+  }
   .aura-wallet-basics__choices,
   .aura-wallet-basics__safety {
     grid-template-columns: 1fr;
@@ -1912,8 +1973,21 @@
   .aura-page__demo .aura-algn__col.is-f,
   .aura-page__demo .aura-algn__cell.is-f,
   .aura-page__demo-read,
-  .aura-page__demo-stamp {
+  .aura-page__demo-stamp,
+  .aura-constellation circle,
+  .aura-constellation path,
+  .aura-constellation .aura-constellation__spark {
     animation: none;
+  }
+  .aura-constellation path:first-of-type {
+    stroke-dashoffset: 0;
+  }
+  .aura-constellation circle,
+  .aura-constellation .aura-constellation__spark {
+    opacity: 1;
+  }
+  .aura-algn[data-band-focus] .aura-algn__row {
+    transition: none;
   }
   .aura-algn tbody:has(.aura-algn__row:hover) .aura-algn__row:not(:hover) {
     transition: none;
@@ -1978,7 +2052,13 @@
   .aura-what__mark {
     border-color: CanvasText;
   }
-  .aura-what__dot {
-    background: CanvasText;
+  .aura-what__icon circle,
+  .aura-what__icon path,
+  .aura-what__icon line {
+    fill: CanvasText;
+    stroke: CanvasText;
+  }
+  .aura-constellation {
+    display: none;
   }
 }

@@ -226,7 +226,7 @@ async function verifyWalletEducation(browser, baseURL) {
   await noJsGuide.waitFor();
   const noJsText = await noJsGuide.textContent();
   for (const required of [
-    "Wallets, without the jargon",
+    "About wallets",
     "Public address",
     "Recovery phrase or private key",
     "Aura never needs your wallet secrets",
@@ -335,7 +335,7 @@ async function verifyWalletEducation(browser, baseURL) {
   );
 
   const primerExample = page.getByRole("link", {
-    name: "Open the full example",
+    name: "See a finished reading",
   });
   assert.equal(await primerExample.getAttribute("href"), "#aura-composer");
   await primerExample.click();
@@ -2262,7 +2262,7 @@ async function verifyHeroAboveTheFold(browser, baseURL) {
   // scrolling: buried at the bottom of the ~930px example card they
   // were on no one's first screen.
   for (const [name, href] of [
-    ["Open the full example", "#aura-composer"],
+    ["See a finished reading", "#aura-composer"],
     ["Start with your chart", "#aura-composer"],
   ]) {
     const door = await page
@@ -2357,7 +2357,12 @@ async function verifyWhatIsSection(browser, baseURL) {
   assert.equal(
     await tiles.locator(".aura-what__mark").count(),
     3,
-    "each tile teaches its mark",
+    "each tile keeps its mark circle",
+  );
+  assert.equal(
+    await tiles.locator("svg.aura-what__icon").count(),
+    3,
+    "each tile carries its pastel icon",
   );
 
   const what = await section.boundingBox();
@@ -2366,6 +2371,79 @@ async function verifyWhatIsSection(browser, baseURL) {
     what.y < basics.y,
     "the what-is answer must come before the wallet guide",
   );
+
+  // Planner voice never ships: labels about the writing ("without the
+  // jargon", "the short version") are internal register, not public copy.
+  const pageText = await page.locator("main").innerText();
+  for (const banned of [
+    /without the jargon/i,
+    /the short version/i,
+    /new to crypto\b/i,
+    /two-minute/i,
+  ]) {
+    assert.ok(
+      !banned.test(pageText),
+      `planner-voice copy must not ship: ${banned}`,
+    );
+  }
+  await context.close();
+}
+
+// The hero's example door must land the visitor ON the finished example —
+// title at the top of the screen, unmistakably the example.
+async function verifyExampleDoorLanding(browser, baseURL) {
+  const context = await browser.newContext({
+    viewport: { width: 1280, height: 800 },
+    reducedMotion: "reduce",
+  });
+  const page = await context.newPage();
+  await page.goto(`${baseURL}/registry/aura/`, { waitUntil: "networkidle" });
+  await page.getByRole("link", { name: "See a finished reading" }).click();
+  const title = page.locator("#aura-result-title");
+  await title.waitFor();
+  await page.waitForFunction(() => {
+    const box = document
+      .querySelector("#aura-result-title")
+      ?.getBoundingClientRect();
+    return box && box.y >= -10 && box.y <= 240;
+  });
+  assert.match(
+    await title.innerText(),
+    /example/i,
+    "the landing title must say it is the example",
+  );
+  await context.close();
+}
+
+// Hovering a source tile highlights its band in the hero example — the
+// tiles and the table teach each other.
+async function verifyTileCrossHighlight(browser, baseURL) {
+  const context = await browser.newContext({
+    viewport: { width: 1280, height: 800 },
+    reducedMotion: "reduce",
+  });
+  const page = await context.newPage();
+  await page.goto(`${baseURL}/registry/aura/`, { waitUntil: "networkidle" });
+  const chartTile = page.locator('.aura-what__tile[data-band="chart"]');
+  await chartTile.hover();
+  await page.waitForFunction(() => (
+    document
+      .querySelector(".aura-page__demo .aura-algn")
+      ?.getAttribute("data-band-focus") === "chart"
+  ));
+  const dimmed = await page
+    .locator('.aura-page__demo [data-aura-algn-row="record"]')
+    .evaluate((node) => Number(getComputedStyle(node).opacity));
+  assert.ok(
+    dimmed < 1,
+    `the other bands must step back while a tile is held (opacity ${dimmed})`,
+  );
+  await page.mouse.move(0, 0);
+  await page.waitForFunction(() => (
+    !document
+      .querySelector(".aura-page__demo .aura-algn")
+      ?.hasAttribute("data-band-focus")
+  ));
   await context.close();
 }
 
@@ -2381,10 +2459,11 @@ async function verifyChartAwareDoor(browser, baseURL) {
     waitUntil: "networkidle",
   });
   const anonymousDoor = anonymousPage.locator(".aura-page__cta .btn--primary");
-  assert.equal(
-    (await anonymousDoor.innerText()).trim(),
-    "Start with your chart",
-    "without a saved chart the door stays generic",
+  const anonymousLabel = await anonymousDoor.innerText();
+  assert.ok(
+    anonymousLabel.includes("Start with your chart")
+      && !anonymousLabel.includes("Continue with"),
+    `without a saved chart the door stays generic (got ${JSON.stringify(anonymousLabel)})`,
   );
   await anonymous.close();
 
@@ -2476,6 +2555,8 @@ try {
     await verifyWhatIsSection(browser, baseURL);
     await verifyChartAwareDoor(browser, baseURL);
     await verifyScrollChoreography(browser, baseURL);
+    await verifyExampleDoorLanding(browser, baseURL);
+    await verifyTileCrossHighlight(browser, baseURL);
     await verifyWalletEducation(browser, baseURL);
     const oneGeometry = await captureCase(browser, baseURL, "one", ["cancer"]);
     const fourGeometry = await captureCase(browser, baseURL, "four", [
