@@ -131,6 +131,144 @@
   flex-wrap: wrap;
 }
 
+/* One scroll below the hero: the literal answer, and the three sources as
+   tiles that teach the Alignment's mark language (neutral dot, pastel
+   disc, line glyph) before the visitor meets the table again. */
+.aura-what {
+  padding-top: clamp(44px, 6vw, 76px);
+}
+
+.aura-what header p {
+  max-width: 58ch;
+  margin: 12px 0 0;
+  color: var(--text-2);
+  font-family: var(--font-serif);
+  font-size: var(--text-lg);
+  line-height: 1.55;
+}
+
+.aura-what h2 {
+  margin: 7px 0 0;
+  font-family: var(--font-serif);
+  font-size: clamp(1.75rem, 4vw, 2.65rem);
+  font-weight: 500;
+  line-height: 1.08;
+}
+
+.aura-what__tiles {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin: 28px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.aura-what__tile {
+  padding: 22px;
+  border: 1px solid var(--hair-2);
+  border-radius: var(--r-lg);
+  background: rgba(15, 18, 26, 0.5);
+}
+
+.aura-what__mark {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  margin-bottom: 14px;
+  border: 1px solid var(--hair-2);
+  border-radius: 50%;
+  background: var(--void-2);
+}
+
+.aura-what__mark img {
+  border-radius: 50%;
+}
+
+.aura-what__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--ink-1);
+}
+
+.aura-what__sky {
+  color: var(--text);
+  font-family: var(--font-serif);
+  font-size: 20px;
+}
+
+.aura-what__tile h3 {
+  margin: 0 0 6px;
+  font-family: var(--font-serif);
+  font-size: var(--text-lg);
+  font-weight: 500;
+}
+
+.aura-what__tile p {
+  margin: 0;
+  color: var(--muted);
+  font-size: var(--text-sm);
+  line-height: 1.6;
+}
+
+.aura-what__close {
+  max-width: 62ch;
+  margin: 22px 0 0;
+  color: var(--text-2);
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: var(--text-lg);
+  line-height: 1.5;
+}
+
+/* Scroll choreography: sections marked data-wake rise as they enter the
+   viewport. The hiding state exists only under html.js (set by the wake
+   script) and motion-tolerant media, so no-JS and reduced-motion visitors
+   always see the finished page. */
+@media (prefers-reduced-motion: no-preference) {
+  html.js [data-wake] {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  html.js [data-wake].is-awake {
+    opacity: 1;
+    transform: translateY(0);
+    transition:
+      opacity 560ms var(--ease-soft) var(--wake-delay, 0ms),
+      transform 560ms var(--ease-soft) var(--wake-delay, 0ms);
+  }
+}
+
+/* Wallet buttons: the network mark leads, the wallet's own announced icon
+   personalises a single-wallet button and every picker row. */
+.aura-chain-mark {
+  width: 15px;
+  height: auto;
+  opacity: 0.9;
+}
+
+.aura-wallet-icon {
+  width: 18px;
+  height: 18px;
+  border-radius: 5px;
+}
+
+.aura-wallet-via {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+  font-size: var(--text-sm);
+  font-weight: 400;
+}
+
+.aura-wallet-list .aura-wallet-icon {
+  width: 20px;
+  height: 20px;
+}
+
 .aura-wallet-basics {
   margin-top: clamp(40px, 6vw, 72px);
   overflow: hidden;
@@ -601,9 +739,22 @@
   margin-bottom: 20px;
 }
 
+/* Two-deck pill: network mark + label on the first line; when a single
+   wallet is detected, its own name and icon sit as a quiet second line
+   instead of crowding the label sideways. */
 .aura-address-methods .btn {
+  flex-direction: column;
+  gap: 3px;
   min-height: 48px;
+  padding-block: 8px;
   padding-inline: 14px;
+}
+
+.aura-wallet-line {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  white-space: nowrap;
 }
 
 .aura-wallet-list {
@@ -1458,6 +1609,66 @@
   gap: 8px;
 }
 
+/* Arrival: the lede inks in while the example card assembles itself —
+   glyph header first, then each band rises, the record discs pop, the
+   focal frame lands last. Runs once on load; transform/opacity only;
+   the settled frame is identical to the unanimated page. */
+.aura-page__hero .kicker {
+  animation: aura-rise 340ms var(--ease-soft) both;
+}
+.aura-page__hero h1 {
+  animation: aura-rise 380ms var(--ease-soft) 70ms both;
+}
+.aura-page__hero-copy {
+  animation: aura-rise 380ms var(--ease-soft) 150ms both;
+}
+.aura-page__cta {
+  animation: aura-rise 380ms var(--ease-soft) 240ms both;
+}
+.aura-page__demo {
+  animation: aura-rise 420ms var(--ease-soft) 180ms both;
+}
+.aura-page__demo .aura-algn thead tr {
+  animation: aura-mark 420ms var(--ease-soft) 480ms both;
+}
+.aura-page__demo .aura-algn tbody tr:nth-child(1) {
+  animation: aura-rise 300ms var(--ease-soft) 600ms both;
+}
+.aura-page__demo .aura-algn tbody tr:nth-child(2) {
+  animation: aura-rise 300ms var(--ease-soft) 720ms both;
+}
+.aura-page__demo .aura-algn tbody tr:nth-child(3) {
+  animation: aura-rise 300ms var(--ease-soft) 840ms both;
+}
+.aura-page__demo .aura-algn__disc {
+  animation: aura-pop 360ms var(--ease-soft) 900ms both;
+}
+.aura-page__demo .aura-algn__col.is-f,
+.aura-page__demo .aura-algn__cell.is-f {
+  animation: aura-mark 460ms var(--ease-soft) 1060ms both;
+}
+.aura-page__demo-read {
+  animation: aura-rise 320ms var(--ease-soft) 1150ms both;
+}
+.aura-page__demo-stamp {
+  animation: aura-mark 320ms var(--ease-soft) 1240ms both;
+}
+
+@keyframes aura-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.55);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.07);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
 /* One finished-state choreography, run once per composition: the three
    sources arrive separately, the Alignment settles, the focal caption lands,
    then the sentence and reading. Transform/opacity only; nothing loops. */
@@ -1611,6 +1822,9 @@
     grid-column: auto;
     grid-row: auto;
   }
+  .aura-what__tiles {
+    grid-template-columns: 1fr;
+  }
   .aura-wallet-basics__choices,
   .aura-wallet-basics__safety {
     grid-template-columns: 1fr;
@@ -1684,7 +1898,21 @@
   .aura-result .aura-result__composition,
   .aura-result .aura-algn__focal,
   .aura-result .aura-result__fact,
-  .aura-result .aura-result__reading {
+  .aura-result .aura-result__reading,
+  .aura-page__hero .kicker,
+  .aura-page__hero h1,
+  .aura-page__hero-copy,
+  .aura-page__cta,
+  .aura-page__demo,
+  .aura-page__demo .aura-algn thead tr,
+  .aura-page__demo .aura-algn tbody tr:nth-child(1),
+  .aura-page__demo .aura-algn tbody tr:nth-child(2),
+  .aura-page__demo .aura-algn tbody tr:nth-child(3),
+  .aura-page__demo .aura-algn__disc,
+  .aura-page__demo .aura-algn__col.is-f,
+  .aura-page__demo .aura-algn__cell.is-f,
+  .aura-page__demo-read,
+  .aura-page__demo-stamp {
     animation: none;
   }
   .aura-algn tbody:has(.aura-algn__row:hover) .aura-algn__row:not(:hover) {
@@ -1745,7 +1973,12 @@
   .aura-algn__wheel,
   .aura-fineprint,
   .aura-sky-stamp,
-  .aura-page__demo {
+  .aura-page__demo,
+  .aura-what__tile,
+  .aura-what__mark {
     border-color: CanvasText;
+  }
+  .aura-what__dot {
+    background: CanvasText;
   }
 }

@@ -123,10 +123,90 @@ const jsonLd = [
         </a>
         <a class="btn btn--primary" href="#aura-composer">Start with your chart</a>
       </div>
+      <script is:inline>
+        // When a chart is already saved in this browser, the primary door
+        // greets it by name (and wears its Sun-sign disc). Local read only —
+        // nothing leaves the device; blocked storage keeps the generic door.
+        (() => {
+          try {
+            const raw = localStorage.getItem("zodiacs.profile.v1");
+            if (!raw) return;
+            const chart = JSON.parse(raw)?.charts?.[0];
+            const name = typeof chart?.name === "string" ? chart.name.trim() : "";
+            const door = document.querySelector(".aura-page__cta .btn--primary");
+            if (!name || !door) return;
+            const label = name.length > 28 ? `${name.slice(0, 27)}…` : name;
+            door.textContent = "";
+            const text = document.createElement("span");
+            text.textContent = `Continue with “${label}”`;
+            door.append(text);
+            const sun = chart?.summary?.bodies?.find?.((body) => body?.body === "Sun");
+            if (Number.isFinite(sun?.lon)) {
+              const signs = ["aries", "taurus", "gemini", "cancer", "leo", "virgo", "libra", "scorpio", "sagittarius", "capricorn", "aquarius", "pisces"];
+              const slug = signs[Math.floor((((sun.lon % 360) + 360) % 360) / 30)];
+              const orb = document.createElement("span");
+              orb.className = "orb";
+              const disc = document.createElement("img");
+              disc.src = `/assets/zodiac-icons/48/${slug}.webp`;
+              disc.width = 18;
+              disc.height = 18;
+              disc.alt = "";
+              orb.append(disc);
+              door.append(orb);
+            }
+          } catch {
+            // Malformed profile or blocked storage: the generic door stands.
+          }
+        })();
+      </script>
     </header>
 
+    <section id="what-is-aura" class="aura-what" aria-labelledby="what-is-aura-title">
+      <header data-wake>
+        <em class="kicker">The short version</em>
+        <h2 id="what-is-aura-title">What is Registry Aura?</h2>
+        <p>
+          A reading built from three things you can check for yourself,
+          presented side by side so you can see exactly where every line
+          comes from.
+        </p>
+      </header>
+      <ol class="aura-what__tiles">
+        <li class="aura-what__tile" data-wake>
+          <span class="aura-what__mark" aria-hidden="true"><span class="aura-what__dot"></span></span>
+          <h3>Birth chart</h3>
+          <p>
+            Saved in this browser and read on this device. It never leaves
+            here — not even for the address lookup.
+          </p>
+        </li>
+        <li class="aura-what__tile" data-wake style="--wake-delay: 110ms">
+          <span class="aura-what__mark" aria-hidden="true">
+            <img src={`/assets/zodiac-icons/48/${exampleFocalSign?.slug ?? 'cancer'}.webp`} width="26" height="26" alt="" loading="lazy" />
+          </span>
+          <h3>Address record</h3>
+          <p>
+            One public wallet address, checked against the twelve official
+            Zodiacs listed in this Registry. Nothing else is read from it.
+          </p>
+        </li>
+        <li class="aura-what__tile" data-wake style="--wake-delay: 220ms">
+          <span class="aura-what__mark aura-what__sky" aria-hidden="true">☉&#xFE0E;</span>
+          <h3>Today’s sky</h3>
+          <p>
+            Where the Sun, Moon, and planets actually are — computed on this
+            device for the moment you read.
+          </p>
+        </li>
+      </ol>
+      <p class="aura-what__close" data-wake>
+        Aura lines the three up, sign by sign, and reads where they meet —
+        never blending one into another. Every line shows its why.
+      </p>
+    </section>
+
     <section id="wallet-basics" class="aura-wallet-basics" aria-labelledby="wallet-basics-title">
-      <header class="aura-wallet-basics__header">
+      <header class="aura-wallet-basics__header" data-wake>
         <div>
           <em class="kicker">New to crypto?</em>
           <h2 id="wallet-basics-title">Wallets, without the jargon</h2>
@@ -136,7 +216,7 @@ const jsonLd = [
         </p>
       </header>
 
-      <dl class="aura-wallet-basics__choices">
+      <dl class="aura-wallet-basics__choices" data-wake style="--wake-delay: 110ms">
         <div>
           <dt>Connect</dt>
           <dd>Wallet software may expose the public accounts you authorize; Aura uses one compatible address.</dd>
@@ -151,7 +231,7 @@ const jsonLd = [
         </div>
       </dl>
 
-      <aside class="aura-wallet-basics__safety" aria-label="Important wallet safety">
+      <aside class="aura-wallet-basics__safety" aria-label="Important wallet safety" data-wake style="--wake-delay: 200ms">
         <strong>Aura never needs your wallet secrets.</strong>
         <p>
           Never type a recovery phrase, private key, wallet password, or PIN into Registry Aura. Aura never asks you to sign a message, approve or send a transaction, swap an asset, or switch networks. If a wallet prompt asks for any of those while using Aura, cancel it.
@@ -250,4 +330,32 @@ const jsonLd = [
       <p class="aura-status" data-error="true">Registry Aura needs JavaScript to read local chart data and compose the result on this device.</p>
     </noscript>
   </section>
+  <script is:inline>
+    // Sections wake as they enter the viewport. The hiding styles apply
+    // only under html.js + motion-tolerant media, so visitors without
+    // JavaScript or with reduced motion always see the full page at once.
+    (() => {
+      document.documentElement.classList.add("js");
+      const nodes = [...document.querySelectorAll("[data-wake]")];
+      if (!nodes.length) return;
+      if (
+        !("IntersectionObserver" in window)
+        || matchMedia("(prefers-reduced-motion: reduce)").matches
+      ) {
+        for (const node of nodes) node.classList.add("is-awake");
+        return;
+      }
+      const observer = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (!entry.isIntersecting) continue;
+            entry.target.classList.add("is-awake");
+            observer.unobserve(entry.target);
+          }
+        },
+        { rootMargin: "0px 0px -8% 0px", threshold: 0.15 },
+      );
+      for (const node of nodes) observer.observe(node);
+    })();
+  </script>
 </Base>

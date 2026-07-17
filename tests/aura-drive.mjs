@@ -1877,6 +1877,24 @@ async function verifyWalletLifecycle(browser, baseURL) {
     "a direct one-provider connect must not claim to expand a chooser",
   );
   assert.equal(await connectBaseButton.getAttribute("aria-controls"), null);
+  // Chain buttons carry their network marks; a single detected provider
+  // personalises its button with the wallet's own announced icon + name.
+  assert.equal(
+    await page
+      .locator('.aura-address-methods img.aura-chain-mark')
+      .count(),
+    2,
+    "both chain buttons must wear their network mark",
+  );
+  assert.equal(
+    await connectBaseButton.locator("img.aura-wallet-icon").count(),
+    1,
+    "the single detected wallet's own icon must appear on its button",
+  );
+  assert.ok(
+    (await connectBaseButton.innerText()).includes("via Aura test wallet"),
+    "the single detected wallet must be named on the button",
+  );
   await page.locator("#aura-address").fill(address);
   await page.getByRole("button", { name: "Read them side by side" }).click();
   await firstStarted;
@@ -1995,6 +2013,12 @@ async function verifyWalletPickerFocus(browser, baseURL) {
   assert.equal(await connectBaseButton.getAttribute("aria-expanded"), "false");
   await connectBaseButton.click();
   assert.equal(await connectBaseButton.getAttribute("aria-expanded"), "true");
+  // Each picker row wears the icon the wallet announced about itself.
+  assert.equal(
+    await page.locator("#aura-base-wallets img.aura-wallet-icon").count(),
+    2,
+    "every announced wallet icon must appear in the picker",
+  );
   await page.getByRole("button", { name: "Second test wallet" }).click();
   await page
     .getByText("Second test wallet · connected address · Base")
@@ -2214,6 +2238,8 @@ async function verifyLandingHeroHandoff() {
 async function verifyHeroAboveTheFold(browser, baseURL) {
   const context = await browser.newContext({
     viewport: { width: 1280, height: 800 },
+    // Geometry assertions: read the settled layout, not a mid-entrance frame.
+    reducedMotion: "reduce",
   });
   const page = await context.newPage();
   await page.goto(`${baseURL}/registry/aura/`, { waitUntil: "networkidle" });
@@ -2262,6 +2288,8 @@ async function verifyHeroAboveTheFold(browser, baseURL) {
 async function verifyDemoCardDensity(browser, baseURL) {
   const context = await browser.newContext({
     viewport: { width: 1280, height: 800 },
+    // Geometry assertions: read the settled layout, not a mid-entrance frame.
+    reducedMotion: "reduce",
   });
   const page = await context.newPage();
   await page.goto(`${baseURL}/registry/aura/`, { waitUntil: "networkidle" });
@@ -2302,6 +2330,136 @@ async function verifyDemoCardDensity(browser, baseURL) {
   await context.close();
 }
 
+// The natural question one scroll below the hero is "what is this?" —
+// a plain-language answer with the three sources must sit between the
+// hero and the wallet guide.
+async function verifyWhatIsSection(browser, baseURL) {
+  const context = await browser.newContext({
+    viewport: { width: 1280, height: 800 },
+    reducedMotion: "reduce",
+  });
+  const page = await context.newPage();
+  await page.goto(`${baseURL}/registry/aura/`, { waitUntil: "networkidle" });
+
+  const section = page.locator("#what-is-aura");
+  assert.equal(await section.count(), 1, "the what-is section must exist");
+  assert.match(
+    await section.locator("h2").innerText(),
+    /what is registry aura/i,
+    "the section heading must answer the visitor's literal question",
+  );
+  const tiles = section.locator(".aura-what__tile");
+  assert.equal(await tiles.count(), 3, "one tile per source");
+  const titles = (await tiles.locator("h3").allInnerTexts()).join(" | ");
+  for (const expected of ["Birth chart", "Address record", "Today’s sky"]) {
+    assert.ok(titles.includes(expected), `missing source tile: ${expected}`);
+  }
+  assert.equal(
+    await tiles.locator(".aura-what__mark").count(),
+    3,
+    "each tile teaches its mark",
+  );
+
+  const what = await section.boundingBox();
+  const basics = await page.locator("#wallet-basics").boundingBox();
+  assert.ok(
+    what.y < basics.y,
+    "the what-is answer must come before the wallet guide",
+  );
+  await context.close();
+}
+
+// A visitor with a saved chart should see their chart at the door, not a
+// generic label.
+async function verifyChartAwareDoor(browser, baseURL) {
+  const anonymous = await browser.newContext({
+    viewport: { width: 1280, height: 800 },
+    reducedMotion: "reduce",
+  });
+  const anonymousPage = await anonymous.newPage();
+  await anonymousPage.goto(`${baseURL}/registry/aura/`, {
+    waitUntil: "networkidle",
+  });
+  const anonymousDoor = anonymousPage.locator(".aura-page__cta .btn--primary");
+  assert.equal(
+    (await anonymousDoor.innerText()).trim(),
+    "Start with your chart",
+    "without a saved chart the door stays generic",
+  );
+  await anonymous.close();
+
+  const returning = await browser.newContext({
+    viewport: { width: 1280, height: 800 },
+    reducedMotion: "reduce",
+  });
+  await returning.addInitScript((storedProfile) => {
+    localStorage.setItem("zodiacs.profile.v1", JSON.stringify(storedProfile));
+  }, profile);
+  const returningPage = await returning.newPage();
+  await returningPage.goto(`${baseURL}/registry/aura/`, {
+    waitUntil: "networkidle",
+  });
+  const door = returningPage.locator(".aura-page__cta .btn--primary");
+  const doorText = await door.innerText();
+  assert.ok(
+    doorText.includes(profile.charts[0].name),
+    `the door must present the saved chart by name (got ${JSON.stringify(doorText)})`,
+  );
+  assert.equal(
+    await door.getAttribute("href"),
+    "#aura-composer",
+    "the personalised door still leads to the composer",
+  );
+  assert.equal(
+    await door.locator("img").count(),
+    1,
+    "the personalised door carries the chart's sun-sign disc",
+  );
+  await returning.close();
+}
+
+// Sections wake as they enter the viewport; reduced motion sees
+// everything immediately (parity, never a lesser page).
+async function verifyScrollChoreography(browser, baseURL) {
+  const animated = await browser.newContext({
+    viewport: { width: 1280, height: 800 },
+  });
+  const animatedPage = await animated.newPage();
+  await animatedPage.goto(`${baseURL}/registry/aura/`, {
+    waitUntil: "networkidle",
+  });
+  const tile = animatedPage.locator(".aura-what__tile").first();
+  await tile.scrollIntoViewIfNeeded();
+  await animatedPage.waitForFunction(() => {
+    const node = document.querySelector(".aura-what__tile");
+    return node && getComputedStyle(node).opacity === "1";
+  });
+  const heroOpacity = await animatedPage
+    .locator(".aura-page__hero h1")
+    .evaluate((node) => getComputedStyle(node).opacity);
+  assert.equal(heroOpacity, "1", "the hero must finish fully painted");
+  await animated.close();
+
+  const reduced = await browser.newContext({
+    viewport: { width: 1280, height: 800 },
+    reducedMotion: "reduce",
+  });
+  const reducedPage = await reduced.newPage();
+  await reducedPage.goto(`${baseURL}/registry/aura/`, {
+    waitUntil: "networkidle",
+  });
+  const reducedOpacity = await reducedPage
+    .locator(".aura-what__tile")
+    .first()
+    .evaluate((node) => getComputedStyle(node).opacity);
+  assert.equal(
+    reducedOpacity,
+    "1",
+    "reduced motion must see every section without scrolling",
+  );
+  await reduced.close();
+}
+
 await mkdir(proofRoot, { recursive: true });
 await verifyAuraBundleSafety();
 await verifyLandingHeroHandoff();
@@ -2315,6 +2473,9 @@ try {
   await withPreview({ port: 4331 }, async (baseURL) => {
     await verifyHeroAboveTheFold(browser, baseURL);
     await verifyDemoCardDensity(browser, baseURL);
+    await verifyWhatIsSection(browser, baseURL);
+    await verifyChartAwareDoor(browser, baseURL);
+    await verifyScrollChoreography(browser, baseURL);
     await verifyWalletEducation(browser, baseURL);
     const oneGeometry = await captureCase(browser, baseURL, "one", ["cancer"]);
     const fourGeometry = await captureCase(browser, baseURL, "four", [
