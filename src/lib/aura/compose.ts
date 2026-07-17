@@ -39,7 +39,7 @@ const NATAL_BODY_ORDER: readonly AuraNatalBody[] = ['Sun', 'Moon', 'Mercury', 'V
 const NATAL_BODY_SET = new Set<string>(NATAL_BODY_ORDER);
 
 export const AURA_METHOD_NOTE = 'The same selected chart, public wallet record, and dated sky produce the same words. This is a symbolic Zodiacs.org display convention — not a traditional astrological technique or proof that a person controls an address.';
-const AURA_METHOD_NOTE_EXAMPLE = 'This illustrative chart and wallet record demonstrate how the dated sources are read side by side. No public address was checked.';
+const AURA_METHOD_NOTE_EXAMPLE = 'The chart and record in this example are samples, shown so you can see how the dated sources are read side by side. No real address was looked up.';
 
 function isAuraSign(value: string): value is AuraSign {
   return SIGN_SET.has(value);
@@ -397,7 +397,7 @@ function auraSentence(
   if (!focal) return 'No official Zodiac was found at this public wallet address, so no Aura is composed.';
   const signName = displaySign(focal.sign);
   const subject = illustrative
-    ? `${signName} is included in the illustrative wallet record`
+    ? `${signName} is included in the sample record`
     : `${signName} is found at this public wallet address`;
   const chartName = illustrative ? 'the example chart' : 'the selected birth chart';
   const context = contexts.find((item) => item.sign === focal.sign);

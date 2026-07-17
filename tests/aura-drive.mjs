@@ -321,11 +321,12 @@ async function verifyWalletEducation(browser, baseURL) {
   );
   assert.match(
     staticDemoText,
-    /no public address\s+was checked/i,
+    /samples?/i,
+    "the first-screen example must say its chart and record are samples",
   );
   assert.match(
     staticDemoText,
-    /no chart was read from this browser/i,
+    /nothing of yours is read/i,
     "the first-screen example must not imply a local chart exists",
   );
   assert.equal(
@@ -342,7 +343,7 @@ async function verifyWalletEducation(browser, baseURL) {
   await page.locator("#aura-result-title").waitFor();
   assert.match(
     await page.locator('[data-aura-source="record"]').innerText(),
-    /Illustrative example/i,
+    /Sample record/i,
   );
   const exampleChartSource = await page
     .locator('.aura-result [data-aura-source="chart"]')
@@ -352,7 +353,7 @@ async function verifyWalletEducation(browser, baseURL) {
     /Example chart/i,
     "the example docket must not claim a selected local chart",
   );
-  assert.match(exampleChartSource, /No chart was read from this browser/i);
+  assert.match(exampleChartSource, /none of your saved charts were touched/i);
   assert.equal(
     /Recorded birth time|Selected birth chart/i.test(exampleChartSource),
     false,
@@ -1260,14 +1261,14 @@ async function verifyNoChartAndOfflineExample(browser, baseURL) {
   const exampleRecord = await page
     .locator('.aura-result [data-aura-source="record"]')
     .innerText();
-  assert.match(exampleRecord, /Illustrative example/i);
-  assert.match(exampleRecord, /4 illustrative Zodiacs shown/i);
-  assert.match(exampleRecord, /No public address was checked/i);
+  assert.match(exampleRecord, /Sample record/i);
+  assert.match(exampleRecord, /4 sample Zodiacs shown/i);
+  assert.match(exampleRecord, /No real address was looked up/i);
   const exampleChart = await page
     .locator('.aura-result [data-aura-source="chart"]')
     .innerText();
   assert.match(exampleChart, /Example chart/i);
-  assert.match(exampleChart, /No chart was read from this browser/i);
+  assert.match(exampleChart, /none of your saved charts were touched/i);
   const exampleReading = await page
     .locator(".aura-result [data-aura-reading]")
     .innerText();
@@ -2373,13 +2374,15 @@ async function verifyWhatIsSection(browser, baseURL) {
   );
 
   // Planner voice never ships: labels about the writing ("without the
-  // jargon", "the short version") are internal register, not public copy.
+  // jargon", "illustrative") are internal register, not public copy.
   const pageText = await page.locator("main").innerText();
   for (const banned of [
     /without the jargon/i,
     /the short version/i,
     /new to crypto\b/i,
     /two-minute/i,
+    /illustrative/i,
+    /built into this page/i,
   ]) {
     assert.ok(
       !banned.test(pageText),

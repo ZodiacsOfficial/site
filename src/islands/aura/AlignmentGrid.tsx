@@ -146,7 +146,7 @@ export function AlignmentGrid({
               <i>At this address</i>
               <small>
                 {illustrative
-                  ? 'illustrative record · no address checked'
+                  ? 'sample record · no real address'
                   : `public record · checked ${recordDate}`}
               </small>
             </th>

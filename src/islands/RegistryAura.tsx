@@ -756,7 +756,7 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
         illustrative: true,
       }),
     });
-    setStatus("Example reading composed without reading an address.");
+    setStatus("Example ready — the chart and record in it are samples.");
     setError("");
     setShareState("idle");
     focusResultRef.current = true;
@@ -1234,7 +1234,7 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
             <p id="aura-address-note" class="aura-field__note">
               {detectedChain
                 ? `Reads as a ${detectedChain === "solana" ? "Solana" : "Base"} address.`
-                : "Address format is detected locally."}
+                : "Solana or Base — it's recognized as you type."}
             </p>
           </div>
 

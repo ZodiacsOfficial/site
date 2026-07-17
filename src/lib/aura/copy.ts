@@ -62,7 +62,7 @@ export function auraRelativeDayNote(earlierIso: string, laterIso: string): strin
 
 export function auraRecordSubject(mode: 'pasted' | 'connected' | 'restored' | 'example'): string {
   if (mode === 'connected') return 'The connected address carries';
-  if (mode === 'example') return 'The illustrative record includes';
+  if (mode === 'example') return 'The sample record includes';
   return 'This address carries';
 }
 
