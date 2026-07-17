@@ -225,7 +225,9 @@ export function AuraResult({
         <header>
           <p class="aura-result__kicker">Chart · Record · Sky</p>
           <h2 id="aura-result-title" ref={headingRef} tabIndex={-1}>
-            Three sources, read side by side
+            {illustrative
+              ? "The example, read side by side"
+              : "Three sources, read side by side"}
           </h2>
         </header>
         <div class="aura-source-docket">

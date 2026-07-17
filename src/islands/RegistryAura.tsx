@@ -409,7 +409,20 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
   useEffect(() => {
     if (!result || !focusResultRef.current) return;
     focusResultRef.current = false;
-    requestAnimationFrame(() => resultHeadingRef.current?.focus());
+    requestAnimationFrame(() => {
+      const heading = resultHeadingRef.current;
+      if (!heading) return;
+      // Land the reading at the top of the screen — focus alone only
+      // nudges the heading into the bottom edge, which reads as "where
+      // am I?" after the hero's example door.
+      const reduce = typeof matchMedia === "function"
+        && matchMedia("(prefers-reduced-motion: reduce)").matches;
+      heading.scrollIntoView({
+        block: "start",
+        behavior: reduce ? "auto" : "smooth",
+      });
+      heading.focus({ preventScroll: true });
+    });
   }, [result]);
 
   useEffect(() => {
@@ -1002,7 +1015,7 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
             the same read-only lookup. Solana and Base are separate networks;
             use the address on the network where the Zodiac appears. Aura
             checks one network at a time.{" "}
-            <a href="#wallet-basics">New to wallets? Read the two-minute guide.</a>
+            <a href="#wallet-basics">New to wallets? Read the guide first.</a>
           </p>
           {connectedWallet && (
             <p class="aura-connected">

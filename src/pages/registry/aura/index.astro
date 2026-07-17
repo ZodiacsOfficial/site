@@ -119,10 +119,23 @@ const jsonLd = [
       </section>
       <div class="aura-page__cta">
         <a id="aura-primer-example" class="btn btn--ghost" href="#aura-composer">
-          Open the full example
+          See a finished reading
         </a>
-        <a class="btn btn--primary" href="#aura-composer">Start with your chart</a>
+        <a class="btn btn--primary" href="#aura-composer">
+          <span>Start with your chart</span>
+          <span class="orb" aria-hidden="true">↓</span>
+        </a>
       </div>
+      <svg class="aura-constellation" viewBox="0 0 320 170" aria-hidden="true">
+        <path d="M18 140 L78 96 L150 112 L196 54 L252 84 L300 26 M78 96 L120 22" fill="none" stroke="rgba(198, 204, 218, 0.28)" stroke-width="1" />
+        <circle cx="18" cy="140" r="2.4" fill="var(--sign-aries)" />
+        <circle cx="78" cy="96" r="3" fill="var(--sign-cancer)" />
+        <circle cx="150" cy="112" r="2.2" fill="var(--sign-taurus)" />
+        <circle cx="252" cy="84" r="2.6" fill="var(--sign-gemini)" />
+        <circle cx="300" cy="26" r="2.2" fill="var(--sign-leo)" />
+        <circle cx="120" cy="22" r="2" fill="var(--sign-pisces)" />
+        <path class="aura-constellation__spark" d="M196 46.5l2 5 5 2-5 2-2 5-2-5-5-2 5-2z" fill="var(--sign-libra)" />
+      </svg>
       <script is:inline>
         // When a chart is already saved in this browser, the primary door
         // greets it by name (and wears its Sun-sign disc). Local read only —
@@ -163,7 +176,6 @@ const jsonLd = [
 
     <section id="what-is-aura" class="aura-what" aria-labelledby="what-is-aura-title">
       <header data-wake>
-        <em class="kicker">The short version</em>
         <h2 id="what-is-aura-title">What is Registry Aura?</h2>
         <p>
           A reading built from three things you can check for yourself,
@@ -172,17 +184,39 @@ const jsonLd = [
         </p>
       </header>
       <ol class="aura-what__tiles">
-        <li class="aura-what__tile" data-wake>
-          <span class="aura-what__mark" aria-hidden="true"><span class="aura-what__dot"></span></span>
+        <li class="aura-what__tile" data-band="chart" data-wake>
+          <span class="aura-what__mark" aria-hidden="true">
+            <svg class="aura-what__icon" viewBox="0 0 28 28" width="28" height="28">
+              <circle cx="14" cy="14" r="11" fill="none" stroke="var(--sign-taurus)" stroke-width="1.5" />
+              <circle cx="14" cy="14" r="5.5" fill="none" stroke="var(--sign-taurus)" stroke-width="1" opacity="0.5" />
+              <line x1="3" y1="14" x2="8.5" y2="14" stroke="var(--sign-taurus)" stroke-width="1" opacity="0.5" />
+              <circle cx="14" cy="3" r="2.1" fill="var(--sign-leo)" />
+              <circle cx="23.5" cy="19.5" r="2.1" fill="var(--sign-gemini)" />
+              <circle cx="6" cy="21" r="2.1" fill="var(--sign-aries)" />
+            </svg>
+          </span>
           <h3>Birth chart</h3>
           <p>
             Saved in this browser and read on this device. It never leaves
             here — not even for the address lookup.
           </p>
         </li>
-        <li class="aura-what__tile" data-wake style="--wake-delay: 110ms">
+        <li class="aura-what__tile" data-band="record" data-wake style="--wake-delay: 110ms">
           <span class="aura-what__mark" aria-hidden="true">
-            <img src={`/assets/zodiac-icons/48/${exampleFocalSign?.slug ?? 'cancer'}.webp`} width="26" height="26" alt="" loading="lazy" />
+            <svg class="aura-what__icon" viewBox="0 0 28 28" width="28" height="28">
+              <circle cx="14" cy="3.5" r="1.9" fill="var(--sign-aries)" />
+              <circle cx="19.25" cy="4.91" r="1.9" fill="var(--sign-taurus)" />
+              <circle cx="23.09" cy="8.75" r="1.9" fill="var(--sign-gemini)" />
+              <circle cx="24.5" cy="14" r="1.9" fill="var(--sign-cancer)" />
+              <circle cx="23.09" cy="19.25" r="1.9" fill="var(--sign-leo)" />
+              <circle cx="19.25" cy="23.09" r="1.9" fill="var(--sign-virgo)" />
+              <circle cx="14" cy="24.5" r="1.9" fill="var(--sign-libra)" />
+              <circle cx="8.75" cy="23.09" r="1.9" fill="var(--sign-scorpio)" />
+              <circle cx="4.91" cy="19.25" r="1.9" fill="var(--sign-sagittarius)" />
+              <circle cx="3.5" cy="14" r="1.9" fill="var(--sign-capricorn)" />
+              <circle cx="4.91" cy="8.75" r="1.9" fill="var(--sign-aquarius)" />
+              <circle cx="8.75" cy="4.91" r="1.9" fill="var(--sign-pisces)" />
+            </svg>
           </span>
           <h3>Address record</h3>
           <p>
@@ -190,8 +224,21 @@ const jsonLd = [
             Zodiacs listed in this Registry. Nothing else is read from it.
           </p>
         </li>
-        <li class="aura-what__tile" data-wake style="--wake-delay: 220ms">
-          <span class="aura-what__mark aura-what__sky" aria-hidden="true">☉&#xFE0E;</span>
+        <li class="aura-what__tile" data-band="sky" data-wake style="--wake-delay: 220ms">
+          <span class="aura-what__mark" aria-hidden="true">
+            <svg class="aura-what__icon" viewBox="0 0 28 28" width="28" height="28">
+              <circle cx="10" cy="13" r="4.2" fill="none" stroke="var(--sign-sagittarius)" stroke-width="1.5" />
+              <circle cx="10" cy="13" r="1.3" fill="var(--sign-sagittarius)" />
+              <g stroke="var(--sign-sagittarius)" stroke-width="1" opacity="0.7">
+                <line x1="10" y1="5.4" x2="10" y2="7.4" />
+                <line x1="10" y1="18.6" x2="10" y2="20.6" />
+                <line x1="2.4" y1="13" x2="4.4" y2="13" />
+                <line x1="15.6" y1="13" x2="17.6" y2="13" />
+              </g>
+              <path d="M22.5 8.5a6 6 0 1 0 3.4 9.8 5 5 0 0 1-3.4-9.8Z" fill="var(--sign-scorpio)" opacity="0.9" />
+              <path d="M20.8 4.2l.9 2.2 2.2.9-2.2.9-.9 2.2-.9-2.2-2.2-.9 2.2-.9z" fill="var(--sign-cancer)" opacity="0.9" />
+            </svg>
+          </span>
           <h3>Today’s sky</h3>
           <p>
             Where the Sun, Moon, and planets actually are — computed on this
@@ -208,8 +255,7 @@ const jsonLd = [
     <section id="wallet-basics" class="aura-wallet-basics" aria-labelledby="wallet-basics-title">
       <header class="aura-wallet-basics__header" data-wake>
         <div>
-          <em class="kicker">New to crypto?</em>
-          <h2 id="wallet-basics-title">Wallets, without the jargon</h2>
+          <h2 id="wallet-basics-title">About wallets</h2>
         </div>
         <p>
           A wallet is an app or device that manages a blockchain account. Registry Aura only needs one public address—the shareable identifier used to look up its public record.
@@ -356,6 +402,21 @@ const jsonLd = [
         { rootMargin: "0px 0px -8% 0px", threshold: 0.15 },
       );
       for (const node of nodes) observer.observe(node);
+    })();
+    // Holding a source tile lifts its band in the hero example — the tiles
+    // and the table point at each other.
+    (() => {
+      const demo = document.querySelector(".aura-page__demo .aura-algn");
+      if (!demo) return;
+      for (const tile of document.querySelectorAll(".aura-what__tile[data-band]")) {
+        const band = tile.getAttribute("data-band");
+        const hold = () => demo.setAttribute("data-band-focus", band);
+        const release = () => demo.removeAttribute("data-band-focus");
+        tile.addEventListener("mouseenter", hold);
+        tile.addEventListener("mouseleave", release);
+        tile.addEventListener("focusin", hold);
+        tile.addEventListener("focusout", release);
+      }
     })();
   </script>
 </Base>
