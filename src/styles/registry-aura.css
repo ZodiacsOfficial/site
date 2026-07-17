@@ -1,12 +1,18 @@
 .aura-page {
   width: min(100% - 32px, 1120px);
-  padding-top: clamp(52px, 8vw, 104px);
+  /* Shallow enough that the lede, both hero doors, and the example all
+     land inside a 1280x800 first screen (drive-asserted). */
+  padding-top: clamp(40px, 4.5vw, 56px);
 }
 
 .aura-page__hero {
   display: grid;
   grid-template-columns: minmax(0, 1.25fr) minmax(260px, 0.75fr);
-  gap: clamp(32px, 7vw, 88px);
+  /* Row 1 hugs the lede so the doors sit right under the dek instead of
+     drifting to wherever the tall example card's height lands them. */
+  grid-template-rows: auto 1fr;
+  column-gap: clamp(32px, 7vw, 88px);
+  row-gap: clamp(18px, 2.5vw, 28px);
   /* Top-aligned: the example card outgrew the lede (Alignment table +
      braided reading), and end-alignment pushed the headline below the
      fold on every desktop screen. */
@@ -15,9 +21,25 @@
   border-bottom: 1px solid var(--hair-2);
 }
 
+/* The tall example card owns the right rail; the lede and the two doors
+   share the left column, so name, pitch, and actions all land on the
+   first desktop screen. Under 760px the hero collapses to one column
+   and source order (lede, example, doors) takes over — the doors sit
+   after the example there, matching the V3 mobile proof. */
+.aura-page__demo {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+}
+
+.aura-page__cta {
+  grid-column: 1;
+  grid-row: 2;
+  align-self: start;
+}
+
 .aura-page__hero h1 {
   max-width: 10ch;
-  margin: 10px 0 18px;
+  margin: 8px 0 14px;
   font-size: var(--text-hero);
 }
 
@@ -1580,6 +1602,14 @@
   }
   .aura-page__hero {
     align-items: start;
+  }
+  .aura-page__hero {
+    grid-template-rows: none;
+  }
+  .aura-page__demo,
+  .aura-page__cta {
+    grid-column: auto;
+    grid-row: auto;
   }
   .aura-wallet-basics__choices,
   .aura-wallet-basics__safety {
