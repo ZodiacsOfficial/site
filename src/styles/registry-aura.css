@@ -806,10 +806,14 @@
 
 /* The Alignment: three source rows against twelve sign columns. Chroma is
    reserved for held-record discs; chart marks stay neutral; sky marks are
-   line glyphs. The focal column is a hairline frame, never a glow. */
+   line glyphs. The focal column is a hairline frame, never a glow.
+   The figure is a size container: the stacked band-label shape below keys
+   off the figure's own width, so it engages both on narrow viewports and
+   inside narrow homes like the hero's example card on a wide screen. */
 .aura-algn {
   width: min(100%, 820px);
   margin: 0 auto;
+  container-type: inline-size;
 }
 
 .aura-algn table {
@@ -1506,21 +1510,14 @@
   }
 }
 
-@media (max-width: 760px) {
-  .aura-page {
-    width: min(100% - 24px, 1120px);
-  }
-  .aura-page__hero,
-  .aura-wallet-basics__header,
-  .aura-compose,
-  .aura-source-docket,
-  .aura-result__timing {
-    grid-template-columns: 1fr;
-  }
-  /* The Alignment's mobile shape: labels become full-width band headers
-     above their row, twelve columns always fit, no horizontal scroll.
-     Explicit table roles in the markup preserve semantics through the
-     display switch. */
+/* The Alignment's stacked shape: labels become full-width band headers
+   above their row, twelve columns always fit, no horizontal scroll.
+   Explicit table roles in the markup preserve semantics through the
+   display switch. Container-keyed (not viewport-keyed): 730px is where
+   the side-label shape's sign columns fall under ~46px and marks start
+   crowding, and it matches the old 760px-viewport switch point once the
+   page gutters are subtracted. */
+@container (max-width: 730px) {
   .aura-algn thead tr,
   .aura-algn tbody tr {
     display: grid;
@@ -1560,6 +1557,19 @@
   .aura-algn__disc {
     width: 24px;
     height: 24px;
+  }
+}
+
+@media (max-width: 760px) {
+  .aura-page {
+    width: min(100% - 24px, 1120px);
+  }
+  .aura-page__hero,
+  .aura-wallet-basics__header,
+  .aura-compose,
+  .aura-source-docket,
+  .aura-result__timing {
+    grid-template-columns: 1fr;
   }
   .aura-source + .aura-source {
     border-left: 0;
