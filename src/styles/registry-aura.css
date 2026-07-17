@@ -1,20 +1,46 @@
 .aura-page {
   width: min(100% - 32px, 1120px);
-  padding-top: clamp(52px, 8vw, 104px);
+  /* Shallow enough that the lede, both hero doors, and the example all
+     land inside a 1280x800 first screen (drive-asserted). */
+  padding-top: clamp(40px, 4.5vw, 56px);
 }
 
 .aura-page__hero {
+  position: relative;
   display: grid;
   grid-template-columns: minmax(0, 1.25fr) minmax(260px, 0.75fr);
-  gap: clamp(32px, 7vw, 88px);
-  align-items: end;
+  /* Row 1 hugs the lede so the doors sit right under the dek instead of
+     drifting to wherever the tall example card's height lands them. */
+  grid-template-rows: auto 1fr;
+  column-gap: clamp(32px, 7vw, 88px);
+  row-gap: clamp(18px, 2.5vw, 28px);
+  /* Top-aligned: the example card outgrew the lede (Alignment table +
+     braided reading), and end-alignment pushed the headline below the
+     fold on every desktop screen. */
+  align-items: start;
   padding-bottom: clamp(40px, 6vw, 72px);
   border-bottom: 1px solid var(--hair-2);
 }
 
+/* The tall example card owns the right rail; the lede and the two doors
+   share the left column, so name, pitch, and actions all land on the
+   first desktop screen. Under 760px the hero collapses to one column
+   and source order (lede, example, doors) takes over — the doors sit
+   after the example there, matching the V3 mobile proof. */
+.aura-page__demo {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+}
+
+.aura-page__cta {
+  grid-column: 1;
+  grid-row: 2;
+  align-self: start;
+}
+
 .aura-page__hero h1 {
   max-width: 10ch;
-  margin: 10px 0 18px;
+  margin: 8px 0 14px;
   font-size: var(--text-hero);
 }
 
@@ -104,6 +130,156 @@
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
+}
+
+/* One scroll below the hero: the literal answer, and the three sources as
+   tiles that teach the Alignment's mark language (neutral dot, pastel
+   disc, line glyph) before the visitor meets the table again. */
+.aura-what {
+  padding-top: clamp(44px, 6vw, 76px);
+}
+
+.aura-what header p {
+  max-width: 58ch;
+  margin: 12px 0 0;
+  color: var(--text-2);
+  font-family: var(--font-serif);
+  font-size: var(--text-lg);
+  line-height: 1.55;
+}
+
+.aura-what h2 {
+  margin: 7px 0 0;
+  font-family: var(--font-serif);
+  font-size: clamp(1.75rem, 4vw, 2.65rem);
+  font-weight: 500;
+  line-height: 1.08;
+}
+
+.aura-what__tiles {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin: 28px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.aura-what__tile {
+  padding: 22px;
+  border: 1px solid var(--hair-2);
+  border-radius: var(--r-lg);
+  background: rgba(15, 18, 26, 0.5);
+}
+
+.aura-what__mark {
+  display: grid;
+  place-items: center;
+  width: 50px;
+  height: 50px;
+  margin-bottom: 14px;
+  border: 1px solid var(--hair-2);
+  border-radius: 50%;
+  background: var(--void-2);
+}
+
+.aura-what__icon {
+  display: block;
+}
+
+/* Holding a tile lifts its band in the hero example (data-band-focus is
+   set by the page script); the other bands step back. */
+@media (hover: hover) and (pointer: fine) {
+  .aura-what__tile {
+    transition:
+      transform 200ms var(--ease-soft),
+      border-color 200ms var(--ease-soft);
+  }
+  .aura-what__tile:hover {
+    transform: translateY(-2px);
+    border-color: var(--hair-3);
+  }
+}
+
+.aura-algn[data-band-focus] .aura-algn__row {
+  opacity: 0.4;
+  transition: opacity 180ms var(--ease-soft);
+}
+
+.aura-algn[data-band-focus="chart"] .aura-algn__row[data-aura-algn-row="chart"],
+.aura-algn[data-band-focus="record"] .aura-algn__row[data-aura-algn-row="record"],
+.aura-algn[data-band-focus="sky"] .aura-algn__row[data-aura-algn-row="sky"] {
+  opacity: 1;
+}
+
+.aura-what__tile h3 {
+  margin: 0 0 6px;
+  font-family: var(--font-serif);
+  font-size: var(--text-lg);
+  font-weight: 500;
+}
+
+.aura-what__tile p {
+  margin: 0;
+  color: var(--muted);
+  font-size: var(--text-sm);
+  line-height: 1.6;
+}
+
+.aura-what__close {
+  max-width: 62ch;
+  margin: 22px 0 0;
+  color: var(--text-2);
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: var(--text-lg);
+  line-height: 1.5;
+}
+
+/* Scroll choreography: sections marked data-wake rise as they enter the
+   viewport. The hiding state exists only under html.js (set by the wake
+   script) and motion-tolerant media, so no-JS and reduced-motion visitors
+   always see the finished page. */
+@media (prefers-reduced-motion: no-preference) {
+  html.js [data-wake] {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  html.js [data-wake].is-awake {
+    opacity: 1;
+    transform: translateY(0);
+    transition:
+      opacity 560ms var(--ease-soft) var(--wake-delay, 0ms),
+      transform 560ms var(--ease-soft) var(--wake-delay, 0ms);
+  }
+}
+
+/* Wallet buttons: the network mark leads, the wallet's own announced icon
+   personalises a single-wallet button and every picker row. */
+.aura-chain-mark {
+  width: 15px;
+  height: auto;
+  opacity: 0.9;
+}
+
+.aura-wallet-icon {
+  width: 18px;
+  height: 18px;
+  border-radius: 5px;
+}
+
+.aura-wallet-via {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+  font-size: var(--text-sm);
+  font-weight: 400;
+}
+
+.aura-wallet-list .aura-wallet-icon {
+  width: 20px;
+  height: 20px;
 }
 
 .aura-wallet-basics {
@@ -576,9 +752,22 @@
   margin-bottom: 20px;
 }
 
+/* Two-deck pill: network mark + label on the first line; when a single
+   wallet is detected, its own name and icon sit as a quiet second line
+   instead of crowding the label sideways. */
 .aura-address-methods .btn {
+  flex-direction: column;
+  gap: 3px;
   min-height: 48px;
+  padding-block: 8px;
   padding-inline: 14px;
+}
+
+.aura-wallet-line {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  white-space: nowrap;
 }
 
 .aura-wallet-list {
@@ -803,10 +992,14 @@
 
 /* The Alignment: three source rows against twelve sign columns. Chroma is
    reserved for held-record discs; chart marks stay neutral; sky marks are
-   line glyphs. The focal column is a hairline frame, never a glow. */
+   line glyphs. The focal column is a hairline frame, never a glow.
+   The figure is a size container: the stacked band-label shape below keys
+   off the figure's own width, so it engages both on narrow viewports and
+   inside narrow homes like the hero's example card on a wide screen. */
 .aura-algn {
   width: min(100%, 820px);
   margin: 0 auto;
+  container-type: inline-size;
 }
 
 .aura-algn table {
@@ -1429,6 +1622,111 @@
   gap: 8px;
 }
 
+/* Arrival: the lede inks in while the example card assembles itself —
+   glyph header first, then each band rises, the record discs pop, the
+   focal frame lands last. Runs once on load; transform/opacity only;
+   the settled frame is identical to the unanimated page. */
+.aura-page__hero .kicker {
+  animation: aura-rise 340ms var(--ease-soft) both;
+}
+.aura-page__hero h1 {
+  animation: aura-rise 380ms var(--ease-soft) 70ms both;
+}
+.aura-page__hero-copy {
+  animation: aura-rise 380ms var(--ease-soft) 150ms both;
+}
+.aura-page__cta {
+  animation: aura-rise 380ms var(--ease-soft) 240ms both;
+}
+.aura-page__demo {
+  animation: aura-rise 420ms var(--ease-soft) 180ms both;
+}
+.aura-page__demo .aura-algn thead tr {
+  animation: aura-mark 420ms var(--ease-soft) 480ms both;
+}
+.aura-page__demo .aura-algn tbody tr:nth-child(1) {
+  animation: aura-rise 300ms var(--ease-soft) 600ms both;
+}
+.aura-page__demo .aura-algn tbody tr:nth-child(2) {
+  animation: aura-rise 300ms var(--ease-soft) 720ms both;
+}
+.aura-page__demo .aura-algn tbody tr:nth-child(3) {
+  animation: aura-rise 300ms var(--ease-soft) 840ms both;
+}
+.aura-page__demo .aura-algn__disc {
+  animation: aura-pop 360ms var(--ease-soft) 900ms both;
+}
+.aura-page__demo .aura-algn__col.is-f,
+.aura-page__demo .aura-algn__cell.is-f {
+  animation: aura-mark 460ms var(--ease-soft) 1060ms both;
+}
+.aura-page__demo-read {
+  animation: aura-rise 320ms var(--ease-soft) 1150ms both;
+}
+.aura-page__demo-stamp {
+  animation: aura-mark 320ms var(--ease-soft) 1240ms both;
+}
+
+@keyframes aura-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.55);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.07);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* A quiet asterism settles into the hero's open floor: the line traces
+   itself once, then each star arrives. Decorative only — hidden from
+   forced colors, static under reduced motion, and never looping. */
+.aura-constellation {
+  position: absolute;
+  left: 0;
+  bottom: clamp(16px, 4vw, 40px);
+  width: min(44%, 400px);
+  height: auto;
+  pointer-events: none;
+}
+
+.aura-constellation path:first-of-type {
+  stroke-dasharray: 620;
+  stroke-dashoffset: 620;
+  animation: aura-trace 1600ms var(--ease-soft) 750ms forwards;
+}
+
+.aura-constellation circle,
+.aura-constellation .aura-constellation__spark {
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: aura-pop 340ms var(--ease-soft) both;
+}
+
+.aura-constellation circle:nth-of-type(1) { animation-delay: 950ms; }
+.aura-constellation circle:nth-of-type(2) { animation-delay: 1090ms; }
+.aura-constellation circle:nth-of-type(3) { animation-delay: 1230ms; }
+.aura-constellation circle:nth-of-type(4) { animation-delay: 1370ms; }
+.aura-constellation circle:nth-of-type(5) { animation-delay: 1510ms; }
+.aura-constellation circle:nth-of-type(6) { animation-delay: 1650ms; }
+.aura-constellation .aura-constellation__spark { animation-delay: 1800ms; }
+
+@keyframes aura-trace {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* The generic door points where it goes. */
+.aura-page__cta .btn:hover .orb {
+  transform: translate(0, 2px);
+}
+
 /* One finished-state choreography, run once per composition: the three
    sources arrive separately, the Alignment settles, the focal caption lands,
    then the sentence and reading. Transform/opacity only; nothing loops. */
@@ -1503,21 +1801,14 @@
   }
 }
 
-@media (max-width: 760px) {
-  .aura-page {
-    width: min(100% - 24px, 1120px);
-  }
-  .aura-page__hero,
-  .aura-wallet-basics__header,
-  .aura-compose,
-  .aura-source-docket,
-  .aura-result__timing {
-    grid-template-columns: 1fr;
-  }
-  /* The Alignment's mobile shape: labels become full-width band headers
-     above their row, twelve columns always fit, no horizontal scroll.
-     Explicit table roles in the markup preserve semantics through the
-     display switch. */
+/* The Alignment's stacked shape: labels become full-width band headers
+   above their row, twelve columns always fit, no horizontal scroll.
+   Explicit table roles in the markup preserve semantics through the
+   display switch. Container-keyed (not viewport-keyed): 730px is where
+   the side-label shape's sign columns fall under ~46px and marks start
+   crowding, and it matches the old 760px-viewport switch point once the
+   page gutters are subtracted. */
+@container (max-width: 730px) {
   .aura-algn thead tr,
   .aura-algn tbody tr {
     display: grid;
@@ -1558,6 +1849,19 @@
     width: 24px;
     height: 24px;
   }
+}
+
+@media (max-width: 760px) {
+  .aura-page {
+    width: min(100% - 24px, 1120px);
+  }
+  .aura-page__hero,
+  .aura-wallet-basics__header,
+  .aura-compose,
+  .aura-source-docket,
+  .aura-result__timing {
+    grid-template-columns: 1fr;
+  }
   .aura-source + .aura-source {
     border-left: 0;
     border-top: 1px solid var(--hair-2);
@@ -1567,6 +1871,20 @@
   }
   .aura-page__hero {
     align-items: start;
+  }
+  .aura-page__hero {
+    grid-template-rows: none;
+  }
+  .aura-page__demo,
+  .aura-page__cta {
+    grid-column: auto;
+    grid-row: auto;
+  }
+  .aura-what__tiles {
+    grid-template-columns: 1fr;
+  }
+  .aura-constellation {
+    display: none;
   }
   .aura-wallet-basics__choices,
   .aura-wallet-basics__safety {
@@ -1641,8 +1959,35 @@
   .aura-result .aura-result__composition,
   .aura-result .aura-algn__focal,
   .aura-result .aura-result__fact,
-  .aura-result .aura-result__reading {
+  .aura-result .aura-result__reading,
+  .aura-page__hero .kicker,
+  .aura-page__hero h1,
+  .aura-page__hero-copy,
+  .aura-page__cta,
+  .aura-page__demo,
+  .aura-page__demo .aura-algn thead tr,
+  .aura-page__demo .aura-algn tbody tr:nth-child(1),
+  .aura-page__demo .aura-algn tbody tr:nth-child(2),
+  .aura-page__demo .aura-algn tbody tr:nth-child(3),
+  .aura-page__demo .aura-algn__disc,
+  .aura-page__demo .aura-algn__col.is-f,
+  .aura-page__demo .aura-algn__cell.is-f,
+  .aura-page__demo-read,
+  .aura-page__demo-stamp,
+  .aura-constellation circle,
+  .aura-constellation path,
+  .aura-constellation .aura-constellation__spark {
     animation: none;
+  }
+  .aura-constellation path:first-of-type {
+    stroke-dashoffset: 0;
+  }
+  .aura-constellation circle,
+  .aura-constellation .aura-constellation__spark {
+    opacity: 1;
+  }
+  .aura-algn[data-band-focus] .aura-algn__row {
+    transition: none;
   }
   .aura-algn tbody:has(.aura-algn__row:hover) .aura-algn__row:not(:hover) {
     transition: none;
@@ -1702,7 +2047,18 @@
   .aura-algn__wheel,
   .aura-fineprint,
   .aura-sky-stamp,
-  .aura-page__demo {
+  .aura-page__demo,
+  .aura-what__tile,
+  .aura-what__mark {
     border-color: CanvasText;
+  }
+  .aura-what__icon circle,
+  .aura-what__icon path,
+  .aura-what__icon line {
+    fill: CanvasText;
+    stroke: CanvasText;
+  }
+  .aura-constellation {
+    display: none;
   }
 }

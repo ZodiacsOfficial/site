@@ -363,7 +363,21 @@
       /* Top padding clears the fixed nav pill (now overlapping the frame) plus
          any notch inset — same treatment as the main hero (index.astro). */
       padding: calc(clamp(96px, 13svh, 132px) + env(safe-area-inset-top)) clamp(22px, 4vw, 56px) clamp(28px, 5vw, 56px);
-      animation: cineIn 1500ms var(--ease) 200ms both;
+      /* Fade only, fill `backwards` only — never transform, never a lasting
+         fill. A perpetually-filling animation (opacity or transform) on this
+         ancestor keeps it compositor-isolated as a backdrop root, which cuts
+         the CTAs' backdrop-filter off from the footage: the liquid-glass lens
+         AND the frosted blur floor silently paint nothing. `backwards` covers
+         the 200ms delay and releases the element the moment the entrance
+         ends; the 12px rise lives on the text children, which hold no glass. */
+      animation: cineFade 1500ms var(--ease) 200ms backwards;
+    }
+    .cine__eyebrow, .cine__title, .cine__line {
+      animation: cineIn 1500ms var(--ease) 200ms backwards;
+    }
+    @keyframes cineFade {
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
     @keyframes cineIn {
       from { opacity: 0; transform: translateY(12px); }
@@ -412,6 +426,23 @@
     }
     .cine__cta {
       display: flex; flex-wrap: wrap; justify-content: center; gap: 12px;
+    }
+    /* Demoted thesis link once Registry Aura owns the secondary button:
+       a quiet serif footnote under the CTA row. */
+    .cine__why {
+      margin-top: calc(clamp(18px, 3vw, 26px) * -0.5);
+      font-family: var(--serif); font-style: italic;
+      font-size: 15px;
+      color: var(--ink-2);
+      text-decoration: underline;
+      text-decoration-color: rgba(198,204,218,0.4);
+      text-underline-offset: 4px;
+      text-shadow: 0 1px 16px rgba(0,0,0,0.7);
+      transition: color 0.2s ease, text-decoration-color 0.2s ease;
+    }
+    .cine__why:hover, .cine__why:focus-visible {
+      color: var(--ink);
+      text-decoration-color: currentColor;
     }
     /* Hero CTAs wear the lens over the footage — a frosted floor (rendered on
        Safari/iOS via -webkit-backdrop-filter) that the Chromium refraction lens
@@ -467,7 +498,7 @@
        text-only ghost button — centre the label and balance the padding. */
     .cine__cta .btn:not(.btn--primary) { justify-content: center; padding: 0 22px; }
     @media (prefers-reduced-motion: reduce) {
-      .cine__content { animation: none; }
+      .cine__content, .cine__eyebrow, .cine__title, .cine__line { animation: none; }
     }
     /* Phones: match the main site's hero tune (index.astro) — flush to the
        edges, a shorter frame that fits one screen, tighter content padding,
@@ -588,11 +619,12 @@
     .glass-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
     html.zdx-lens .cine__cta .btn {
       background: rgba(10, 12, 17, 0.40);
-      /* brightness() lifts the dark bottom scrim behind the CTAs so the lens
-         reads as vivid glass here (the hub's footage is darker than the main
-         hero's wheel); the extra saturate deepens the refracted colour. */
-      backdrop-filter: url(#zdx-lens-cta) brightness(1.16) saturate(1.1);
-      -webkit-backdrop-filter: url(#zdx-lens-cta) brightness(1.16) saturate(1.1);
+      /* The lens reference must stand ALONE: Chromium does not paint a
+         backdrop-filter list that chains url() with other functions (the
+         whole effect drops). The brightness lift the dark scrim needs is
+         baked into this page's #zdx-lens-cta primitives instead. */
+      backdrop-filter: url(#zdx-lens-cta);
+      -webkit-backdrop-filter: url(#zdx-lens-cta);
       border-color: rgba(238,241,247,0.46);
       box-shadow:
         inset 0 1px 0 rgba(255,255,255,0.28),
@@ -3431,8 +3463,8 @@
             <p class="cine__line">Belief is the oldest asset.</p>
             <div class="cine__cta">
               <a class="btn btn--primary" href="#official-twelve"><span>Browse the Twelve</span><span class="arr">↗</span></a>
-              <a class="btn" href="/thesis/"><span>The Thesis</span></a>
-            </div>
+              <!-- registry-aura-hero:cta --><a class="btn" href="/thesis/"><span>Why this exists</span></a><!-- /registry-aura-hero:cta -->
+            </div><!-- registry-aura-hero:why -->
           </div>
         </div>
       </div>
@@ -3718,7 +3750,15 @@
       <feImage href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAACXBIWXMAAAPoAAAD6AG1e1JrAAAOoUlEQVR42u2Z94sk6XnH9x+QJYwRCIHAYGxFJBvjgJWjZcmSg2Sffdq7npnO1aG6uqu7q2N1zrmnZ3rCzt3qpFPOOdhKKCAUkBURCAxCIISQ5H+g/XmnnmFr+3p2GbhDt8P88GG7q973eb/P8/1WzezutRs37NUpJ8JDwsPCTeHt8Ii9OubPIzi8KajPjzgcvAPeCY8K74J3w3vgvfA+eD98wF4tPwgfho/AR+Hj8Al7tf8p+DR8Fj5vr/b+C74AX7JXi6/A1+zV7jfgm/Zq/m34rr2a/Y+9mv7QXk1+DD+1V+Of2avh/9qrwc/tVf8X9qr3S3vV+ZW9av3aXjV/Y6/qv7VX1d/ZK/v/7FUZinzOc83iXpY1adam2JNkr0GNBLXi1IxRO8YZUc6KcKbG2RoawmgJoymEthAag2gNojmI9gA9BOglQE8BevPTo59e/fTsp3c/M/AzCx8z8TEbHzPyMSsfM/MxOx8z9D0qMFsfM/Y+IjB7702HHT5vwxbXt9SfN4WHhYeEE+GGw7WTI3t1yjEGH0sYNgTikHtL1u0dYsIBLDFBcSAcCqzZPRaos3viMKfGHCHzmwIi54id09CcxuY0OKfZGU3PGMCMQcwYyIzhTD8EDGvK0KYMb/JJYKBjBjtmwKP/hi9iOsMffBW+jvGY0vuWvep+B/O/h/nfx/wf2KvGj+xVDROrPyEAUIYiFLiW457Fmixr0+wx2ZuiRpJaBjUNaic4Q+csnTPjnB1HQwwtMTRF0RZFYxStUTRH0B6hhwi9ROgpQm8aPWr0qtGzRu8aM9CYhXZTYEYaswqfCMwwfCww2/ChcCDgQUjB5yDX/azxHp9v+Bb3PIojh2snbDzlUFgLxCH39vcxfIFBcwyYMfypw/iMmYu5sCsshD2BWmMEjxTUHh0KnDnivBEiRwgeIX7EMIYMZciAhgxqyMCGDG/AEAc8IQOG2mfAfZ6ePgPvMfjexzCdp6zD09b5jL1qfw7zeRKbGNbAuDpPZ+3L9qqCkTaUoQQFruW5l2ONxdosezLsTVMjTS2TmilqpzgjyVlJzkxytoEGAy0GmhJoS6AxgdYEmhNo1+lBpxednnR60+lRp1f9UGAGOrOIK5hNfE9YCLvCXJi5mDrEhCjXNNaE2BeglvfgsYZ7DoUDh2snLDxZupBAHPN5SaEFBWfK8DGGDDFgwOCh33cxcDFcYySMHXqKiTAVZgJn9XYFzu7tCWjsoqeLri7iuzTSpakuA+0w2A5D7jDsNkNvY0Cbp6uFIS2MaWJQA6MaGFbniaxhXpXXbgUjbShDCYpcK3Avz5oca3PssdibpUaWWhlqZqid4Yw0Z6U5M83ZJhpMtJhoMtFmotFEawrNqT2BXlK7Aj2mZsJUmAjMJnnGSBiuMXDRv4XB9wTorImxP0LdEGf5OXt7ectwz9LFvgoAC072XHDxiGv7CJwjakLBkTK9hxFdht5h2G2H9iY6G+iu0XPRdzEQhsLIoTUW0NOaCuhr0WCLoTbR20R7E+1NGmvSaAMzGphSx5w6RtV4CmuYVsW8igIjbShDScG1IhRYU2Btnj159uaokaOWRU2L2hZnWJxlcWaWs7NoyKIlOxXQmB07ZEbCUBgIfRc9F901OhtoP5a0YHI/xT6DWjrnxDhTQ08AfTsLx3DPnouFCgANnOze4ojv+2yas3mMwCEFe8r0FmY0GTg0Gw6NOjTuQvMcWhtor9Fx0RV6AtrqioGA3vpIYPg1eqhhSG3mUKWvKv1VFg72nkNZKC0ciqwpsrYwE6hRoFaemvmRwFn5gYCGnKIndIWOi/YarQ00z6FxF/DAajhkWZ+BNPVSnJtARxxtGnoD9LBDX55dF3MVABo8mTkc83mfBuc0NqaZAUW6Z8aL4fWaQ616B2oXoH4HGhto3k61JbRddISuQ4VeKn2B3mwXZRclRV9gT7ErdIS2i5ZDoblGYwP1O1C7ANXzydccVCCyDScIJvoMdMfpRaO3AN5u47FnJkxVAEj2ycRhSVJ2aX7CpgFNdinSVk+7y/RqxaHyRFC9ALVzqK/RcLAVzTUYUFnRXIO1pTPqa9TOoXoBKo8/ReEsDBZk0G/Sj4GXMTwN460fjz0TYawCwIUTknFIQhYkZcrCIUPpsbldF/PVU31mvO1g/76pXJDqZsrnUbkg9u+XknAaAshXJQR4mMLLBJ5G8TaEx1689uC5Z6gCQCpuwJJX3ZykjEhM/8z8qmP+k8r4x5nyJcMdhNMQVJ0QJPFUx1sNj/14vYXnnr4KAIk44sKCGxMWDFjYJTktZX7FefIvo/GXPcgqBKdvAsjipYmnBt7G8DiE1zt47umpAPBaOOD1MOfGmKT0WdhmQ0PMr9pXAbgXg3D6FpAQ5CCDp0m8jeOxhtc+PPd0VAD4sk8yZtwYsqDLwlbFefqvzL8cITh9C4CJtwk8juB1AM89eH/tmC97XJxycwAdFjZVAOyrAFyaAICFp2kw8DgKQTzfrqsA8GUBE24OoMPiJtSuzL80ISioAEAaDDyOQQjPt+HaERcXMIE+tKFxFYBLF4AcZCAJMQjBjq0CUCYAMIE+tKEBNaiAfcbVUO+tAJQdSlCAHGQgCTEIwU5Z/QgoEgCYlPgRAB0uNq8CcOkCYEEaDDyOQQjPt4sqAHl+CSzwSyBfBtDhZhPqLK5eheCeN78IeRUAPE2DgcdRCOL5dl79NdDir4E5/hrIlyEXu9xsqQCUrgJwaQKAl1kw8TaBxxG8DuC5x1IBSPMPQVn+IYgvY270WdBmYYMNtasQ3PPmF/AwBxk8TeJtHI81vPbhuSetApDin4JNfg/I8HsANwYko8vCVtF5C6gQ3BaAqyA8qY2/7Wd/SZ5+vDTx1MDbGB6H8HoHzz0pFYAk/xkESy7MuTFiQZ+FbZLSVCGAqoRgYxDuccqXjNLZ06/MxzsLMniZxFMdbzU89uP1Fp57kioACf47WOe/gw3eAiRiymthyOuhdxaCghOC0x8HT6YglC5IcTPl8yhdkCeR8YUz8wuO+Sm8TOBpFG9DeOzFaw+eexIqAHECEHNYcmGXVExYOCApXRLTzkkIoCZvg9MgPBEUL0DhHPJr5BxshbUGQykrrDVYWzojv0bhHIoXoPT4UxQK1M8XxHz0m/Rj4GUMT8N468djT0yIqwBEMT/icMznfZIxJyFjkjJgU5cBtSnSolgj7wThLAznUrgA+TuQ24B1O9WskHGRFkyHCr1UkgK92S7KLkqKpMCeoimkhYyLrEPBWiO3gfwdKFyA4vko0xU5amY5M4MWE30GuuP0otFbAG+38dgTEaIqABrmh29xxPd90jEnKWMGMWQAPYp0zoIAzZyDCkQjdxesc8huILNG2oUppAS01RWGgN66LpDsGj3UaLAWcajSV5X+KiEHO+hQFkohhyJriqwtRARqFKiVp2ZeFzgrbwhoyClSgimkXWTWyG7AOofcXcADK+eQtRzj09RLcW4CHXG0aegN0MMOfXnCLjQVAJo+CboIEAKu7dP8nE0TNo9odEBzPQp2VRgyDu1NpDdgrpFykXRhCAlBd2jFBfS0ogL6WjTQopEmeptob6K96QcfAfHCDmHYBg8heBAeIATXCYDibQQAylBScK0IBdYUWJtnT569OWrkqGVR06K2xRkWZ1mcmeXsLBqyaMlGBTRm4w4ZXUgIhpB0kXJhrpHeQOaxpAWT+yn2GdTSOSfGmRp6AujbQa8H7Z6gi5AKABdP/C58Dsd8XrJgQYMzGpvQ0IiCQxUG6CddGC4Sa+hC3KGniAlRISJwVi8scHYvKKCxi54uurqY0cWULuZ0twgiRnUwrYN5bYxs/yf8B8H4d3grYXgLQfgX+GeC8E+E4M2E4E0E4B8JAJShBEWuFbiXZ02OtTn2WOzNUiNLrQw1M9TOcEaas9KcmeZsEw0mWkw0mWgz0WiiNYXmVFCgl1RYoMdURIgKMYHZJM/QhcQahovkLQy+J0BnTYz9EeqGOMvP2dvo8fgEv4uACoAYfuIVdgSaugGH3Ntn4YJCcwpOET6JOozPiLjQhLAQEoICtcYcPlJQe+QVOHPEeSMGOmKwI57CEUMeMuwhQx/eDxgwvI8AYsgAYwYY1MeoPob1Ma+Hkb03EIzXE4jXwWsIw6sIwisIwssJwUsJwUsIwYsJwN8RAChDCQpcy3MvxxqLtVn2ZNibpkaaWiY1U9ROcUaSs5KcmeRsAw0GWgw0JdCWQGMCrQk0J9Cu04NOLzo96fSm06NOr7pXYAY6s4grmE08KISEsKAJERdRh5gQ5ZrGmhD7AtTyUnuL8zyKHcErSCCurRt+Y0vwCA86HHJvybo9Ni/YuEDwrsIneAXW7G4L1Nn1OMypMWcY8+sCA5ozqDkDm/N0zRnenCHO/g0Y6uxfgQHPeCKnDHzK4KdvhH8gfH8PryVIr4ZXEhQMG2HcECMHfwt/TSD+kjD8BWF4EUF4ASF4HiF4LiF4NgH4M94Cf0oAoAxFKHAtxz2LNVnWptljsjdFjSS1DGoa1E5whs5ZOmfGOTuOhhhaYmiKoi2Kxihao2iOoD1CDxF6idBThN40etToVaNnjd41ZqAxC+26wIw0ZhX2CMwwvC0w27BX8Al4EFLwOch1P2u8rN16UPAIW8JaIK6dZ/iNB4TrAiJvIPaYP4/g8LqgPt/vcEBDBzR2cJ9Aswc0fcATcsAADhjEAQM54OlZMpwlr90lw1oytCXDW/KU7fO07TPQfQa7z4D3eBL3XgY8nQuGv/gbAvVXgCnzP4cXEpLnE4znEApMnPwJofhjwvAsgvBMgvAMgvB0QvBHhOAPCcHTeAs8lQD8AQF4CgGAIp/zXLO4l2VNmrUp9iTZa1AjQa04NWPUjnFGlLMinKlxtoaGMFrCaAqhLYTGIFqDaA6iPUAPAXoJ0FOA3vz06KdXPz376d3PDPzMwsdMfMzGx4x8zMrHzHzMzscMffcJzNbHjL33C8zee91hh8/bsMX1LfXndeEB4ZxA/D9Vx+c6tDPU7wAAAABJRU5ErkJggg==" x="0" y="0" width="1" height="1" preserveAspectRatio="none" result="map" />
       <feDisplacementMap in="SourceGraphic" in2="map" scale="0.5" xChannelSelector="R" yChannelSelector="G" result="disp" />
       <feGaussianBlur in="disp" stdDeviation="0.009 0.038" result="soft" />
-      <feColorMatrix in="soft" type="saturate" values="1.4" />
+      <feColorMatrix in="soft" type="saturate" values="1.4" result="sat" />
+      <!-- The brightness lift the hero CTAs need over the dark bottom scrim.
+           It lives here because Chromium refuses a backdrop-filter that
+           chains url() with brightness()/saturate() functions. -->
+      <feComponentTransfer in="sat">
+        <feFuncR type="linear" slope="1.16" />
+        <feFuncG type="linear" slope="1.16" />
+        <feFuncB type="linear" slope="1.16" />
+      </feComponentTransfer>
     </filter>
   </svg>
 

@@ -1251,10 +1251,19 @@
                     <span>Browse the Twelve</span>
                     <span className="arr">↗</span>
                   </a>
-                  <a className="btn" href="/thesis/">
-                    <span>The Thesis</span>
-                  </a>
+                  {REGISTRY_AURA_ENABLED ? (
+                    <a className="btn" href="/registry/aura/">
+                      <span>Bring your birth chart</span>
+                    </a>
+                  ) : (
+                    <a className="btn" href="/thesis/">
+                      <span>Why this exists</span>
+                    </a>
+                  )}
                 </div>
+                {REGISTRY_AURA_ENABLED && (
+                  <a className="cine__why" href="/thesis/">Why this exists</a>
+                )}
               </div>
             </div>
           </div>

@@ -122,7 +122,7 @@ function EvidencePlate({
           <p>
             {auraRecordSubject(mode)} {sign.name}.
             {mode === "example"
-              ? " No public address was checked."
+              ? " No real address was looked up."
               : ` Checked ${auraDateTime(checkedAt)}.`}
           </p>
         </section>
@@ -225,7 +225,9 @@ export function AuraResult({
         <header>
           <p class="aura-result__kicker">Chart · Record · Sky</p>
           <h2 id="aura-result-title" ref={headingRef} tabIndex={-1}>
-            Three sources, read side by side
+            {illustrative
+              ? "The example, read side by side"
+              : "Three sources, read side by side"}
           </h2>
         </header>
         <div class="aura-source-docket">
@@ -234,17 +236,17 @@ export function AuraResult({
             data-aura-source="chart"
           >
             <span class="aura-source__stamp">
-              {illustrative ? "Illustrative" : "Local"}
+              {illustrative ? "Sample" : "Local"}
             </span>
             <h3>{illustrative ? "Example chart" : "Selected birth chart"}</h3>
             <p>
               {illustrative
-                ? "Built into this page"
+                ? "A sample chart, made in advance"
                 : "Read on this device; never sent"}
             </p>
             <small>
               {illustrative
-                ? "No chart was read from this browser"
+                ? "None of your saved charts were touched"
                 : chart.birth.timeKnown
                   ? "Recorded birth time"
                   : "Unknown time · sign-level estimates only"}
@@ -256,19 +258,19 @@ export function AuraResult({
           >
             <span class="aura-source__stamp">
               {illustrative
-                ? "Illustrative example"
+                ? "Sample record"
                 : `Checked ${checkedDate}${checkedNote ? ` · ${checkedNote}` : ""}`}
             </span>
             <h3>Public wallet address</h3>
             <p>
               {composition.heldSigns.length}{" "}
-              {illustrative ? "illustrative" : "official"}{" "}
+              {illustrative ? "sample" : "official"}{" "}
               {composition.heldSigns.length === 1 ? "Zodiac" : "Zodiacs"}
               {illustrative ? " shown" : " found"}
             </p>
             <small>
               {illustrative
-                ? "No public address was checked"
+                ? "No real address was looked up"
                 : `${chain === "solana" ? "Solana" : "Base"} public record${checkedNote ? " · Re-check to update" : ""}`}
             </small>
           </section>

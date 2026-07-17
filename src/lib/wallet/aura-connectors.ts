@@ -26,6 +26,8 @@ interface StandardEventsFeature {
 
 export interface StandardWallet {
   name: string;
+  /** Wallet Standard self-announced icon (a data URI per the spec). */
+  icon?: string;
   accounts?: readonly StandardAccount[];
   features: Record<string, unknown> & {
     'standard:connect'?: StandardConnectFeature;

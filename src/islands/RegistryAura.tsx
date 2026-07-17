@@ -145,6 +145,15 @@ function validHoldingsPayload(value: unknown): value is AuraHoldings {
   );
 }
 
+// Wallets announce their own icons (Wallet Standard / EIP-6963 data URIs).
+// Only data:image/ URIs are rendered — a page-injected provider must not be
+// able to smuggle another scheme into an <img>.
+function walletIconSrc(icon: unknown): string | null {
+  return typeof icon === "string" && icon.startsWith("data:image/")
+    ? icon
+    : null;
+}
+
 function selectedChart(charts: SavedChart[], id: string): SavedChart | null {
   return charts.find((chart) => chart.id === id) ?? null;
 }
@@ -400,7 +409,20 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
   useEffect(() => {
     if (!result || !focusResultRef.current) return;
     focusResultRef.current = false;
-    requestAnimationFrame(() => resultHeadingRef.current?.focus());
+    requestAnimationFrame(() => {
+      const heading = resultHeadingRef.current;
+      if (!heading) return;
+      // Land the reading at the top of the screen — focus alone only
+      // nudges the heading into the bottom edge, which reads as "where
+      // am I?" after the hero's example door.
+      const reduce = typeof matchMedia === "function"
+        && matchMedia("(prefers-reduced-motion: reduce)").matches;
+      heading.scrollIntoView({
+        block: "start",
+        behavior: reduce ? "auto" : "smooth",
+      });
+      heading.focus({ preventScroll: true });
+    });
   }, [result]);
 
   useEffect(() => {
@@ -734,7 +756,7 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
         illustrative: true,
       }),
     });
-    setStatus("Example reading composed without reading an address.");
+    setStatus("Example ready — the chart and record in it are samples.");
     setError("");
     setShareState("idle");
     focusResultRef.current = true;
@@ -993,7 +1015,7 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
             the same read-only lookup. Solana and Base are separate networks;
             use the address on the network where the Zodiac appears. Aura
             checks one network at a time.{" "}
-            <a href="#wallet-basics">New to wallets? Read the two-minute guide.</a>
+            <a href="#wallet-basics">New to wallets? Read the guide first.</a>
           </p>
           {connectedWallet && (
             <p class="aura-connected">
@@ -1026,9 +1048,34 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
                 solanaWallets.length === 1 ? undefined : "aura-solana-wallets"
               }
             >
-              {connectionBusy === "solana"
-                ? "Connecting…"
-                : "Connect Solana wallet"}
+              <span class="aura-wallet-line">
+                <img
+                  class="aura-chain-mark"
+                  src="/assets/wallets/solana-mark.svg"
+                  alt=""
+                  width="15"
+                  height="13"
+                />
+                <span>
+                  {connectionBusy === "solana"
+                    ? "Connecting…"
+                    : "Connect Solana wallet"}
+                </span>
+              </span>
+              {solanaWallets.length === 1 && (
+                <span class="aura-wallet-via">
+                  via {solanaWallets[0].name}
+                  {walletIconSrc(solanaWallets[0].icon) && (
+                    <img
+                      class="aura-wallet-icon"
+                      src={walletIconSrc(solanaWallets[0].icon)!}
+                      alt=""
+                      width="18"
+                      height="18"
+                    />
+                  )}
+                </span>
+              )}
             </button>
             <button
               ref={baseConnectRef}
@@ -1045,9 +1092,34 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
                 evmProviders.length === 1 ? undefined : "aura-base-wallets"
               }
             >
-              {connectionBusy === "base"
-                ? "Connecting…"
-                : "Connect Base wallet"}
+              <span class="aura-wallet-line">
+                <img
+                  class="aura-chain-mark"
+                  src="/assets/wallets/base-mark.svg"
+                  alt=""
+                  width="14"
+                  height="14"
+                />
+                <span>
+                  {connectionBusy === "base"
+                    ? "Connecting…"
+                    : "Connect Base wallet"}
+                </span>
+              </span>
+              {evmProviders.length === 1 && (
+                <span class="aura-wallet-via">
+                  via {evmProviders[0].info.name}
+                  {walletIconSrc(evmProviders[0].info.icon) && (
+                    <img
+                      class="aura-wallet-icon"
+                      src={walletIconSrc(evmProviders[0].info.icon)!}
+                      alt=""
+                      width="18"
+                      height="18"
+                    />
+                  )}
+                </span>
+              )}
             </button>
 
             {availableChains.length === 1 && (
@@ -1073,7 +1145,16 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
                       type="button"
                       onClick={() => void connectSolana(wallet)}
                     >
-                      {wallet.name}
+                      {walletIconSrc(wallet.icon) && (
+                        <img
+                          class="aura-wallet-icon"
+                          src={walletIconSrc(wallet.icon)!}
+                          alt=""
+                          width="20"
+                          height="20"
+                        />
+                      )}
+                      <span>{wallet.name}</span>
                     </button>
                   ))
                 ) : (
@@ -1099,7 +1180,16 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
                       type="button"
                       onClick={() => void connectBase(provider)}
                     >
-                      {provider.info.name}
+                      {walletIconSrc(provider.info.icon) && (
+                        <img
+                          class="aura-wallet-icon"
+                          src={walletIconSrc(provider.info.icon)!}
+                          alt=""
+                          width="20"
+                          height="20"
+                        />
+                      )}
+                      <span>{provider.info.name}</span>
                     </button>
                   ))
                 ) : (
@@ -1144,7 +1234,7 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
             <p id="aura-address-note" class="aura-field__note">
               {detectedChain
                 ? `Reads as a ${detectedChain === "solana" ? "Solana" : "Base"} address.`
-                : "Address format is detected locally."}
+                : "Solana or Base — it's recognized as you type."}
             </p>
           </div>
 

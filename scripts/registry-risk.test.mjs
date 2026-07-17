@@ -122,6 +122,23 @@ describe('Registry risk and trust copy', () => {
     expect(privacy).toContain('do not include a wallet address');
   });
 
+  it('names the current blockchain-data provider in every privacy locale', async () => {
+    // The Aura/Shelf lookup forwards the public address to a third party;
+    // the disclosure must say WHICH third party, in every language, and
+    // must be updated together with the production RPC configuration.
+    for (const path of [
+      'src/pages/privacy/index.astro',
+      'src/pages/es/privacy/index.astro',
+      'src/pages/fr/privacy/index.astro',
+      'src/pages/it/privacy/index.astro',
+      'src/pages/pt/privacy/index.astro',
+    ]) {
+      const html = await readFile(resolve(root, path), 'utf8');
+      expect(html, path).toContain('PublicNode');
+      expect(html, path).toContain('Allnodes');
+    }
+  });
+
   it('gives the Aura route a constrained browser connection policy', async () => {
     const config = JSON.parse(await readFile(resolve(root, 'vercel.json'), 'utf8'));
     const route = config.headers.find((entry) => entry.source === '/registry/aura/(.*)');
