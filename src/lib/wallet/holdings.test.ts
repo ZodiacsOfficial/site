@@ -1,4 +1,4 @@
-import { describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import {
   normalizeOfficialHeldSigns,
   resolveOfficialHeldSigns,
@@ -65,6 +65,16 @@ function sentRequests(fetcher: typeof fetch): RpcRequest[] {
 }
 
 describe('official holdings resolution', () => {
+  // Failed lookups warn (address-free) so Vercel function logs show the
+  // provider failure mode; keep test output quiet and the spy inspectable.
+  let warn: ReturnType<typeof vi.spyOn>;
+  beforeEach(() => {
+    warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+  });
+  afterEach(() => {
+    warn.mockRestore();
+  });
+
   it('normalizes official signs to unique zodiac order', () => {
     expect(normalizeOfficialHeldSigns([
       'pisces', 'aries', 'taurus', 'aries', 'unknown',
@@ -213,6 +223,66 @@ describe('official holdings resolution', () => {
       SOLANA_ENV,
       fetcher,
     )).resolves.toBeUndefined();
+  });
+
+  it('retries a failed call once before failing closed', async () => {
+    let firstAttemptForId7 = true;
+    const fetcher = singleFetcher(
+      (request) => baseResult(request, request.id === 1 ? '0x01' : '0x00'),
+      (request) => {
+        if (request.id === 7 && firstAttemptForId7) {
+          firstAttemptForId7 = false;
+          return false;
+        }
+        return true;
+      },
+    );
+
+    await expect(resolveOfficialHeldSigns('base', ADDRESS, ENV, fetcher))
+      .resolves.toEqual(['aries']);
+    expect((fetcher as unknown as ReturnType<typeof vi.fn>).mock.calls).toHaveLength(13);
+  });
+
+  it('fails closed when the retry also fails, and reports the failure without the address', async () => {
+    const fetcher = singleFetcher(
+      (request) => baseResult(request),
+      (request) => request.id !== 7,
+    );
+    await expect(resolveOfficialHeldSigns('base', ADDRESS, ENV, fetcher))
+      .resolves.toBeUndefined();
+    expect((fetcher as unknown as ReturnType<typeof vi.fn>).mock.calls).toHaveLength(13);
+
+    expect(warn).toHaveBeenCalledTimes(1);
+    const logged = warn.mock.calls[0].map(String).join(' ');
+    expect(logged).toContain('base');
+    expect(logged).toContain('http-error');
+    expect(logged).not.toContain(ADDRESS);
+  });
+
+  it('keeps at most four Solana calls in flight', async () => {
+    let inFlight = 0;
+    let peak = 0;
+    const fetcher = vi.fn(async (_url: unknown, init?: RequestInit) => {
+      const request = JSON.parse(String(init?.body)) as RpcRequest;
+      inFlight += 1;
+      peak = Math.max(peak, inFlight);
+      await new Promise((resolve) => setTimeout(resolve, 5));
+      inFlight -= 1;
+      return {
+        ok: true,
+        json: async () => solanaResult(request),
+      } as Response;
+    }) as unknown as typeof fetch;
+
+    await expect(resolveOfficialHeldSigns(
+      'solana',
+      '11111111111111111111111111111111',
+      SOLANA_ENV,
+      fetcher,
+    )).resolves.toEqual([]);
+    expect((fetcher as unknown as ReturnType<typeof vi.fn>).mock.calls).toHaveLength(12);
+    expect(peak).toBeLessThanOrEqual(4);
+    expect(peak).toBeGreaterThan(1);
   });
 
   it('passes the endpoint abort signal to every RPC request', async () => {

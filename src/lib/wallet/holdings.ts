@@ -27,29 +27,63 @@ export function normalizeOfficialHeldSigns(signs: readonly string[]): string[] {
   return ZODIAC_ORDER.filter((sign) => held.has(sign));
 }
 
-// Each per-asset call goes out as its own single-object request, all in
-// parallel: public keyless endpoints cap or reject JSON-RPC batches
-// (observed 2026-07-17: mainnet-beta rate-limits getTokenAccountsByOwner,
-// PublicNode caps that method at batch size 1, dRPC free tier caps
-// batches at 3), while every provider accepts the calls individually.
+// Each per-asset call goes out as its own single-object request: public
+// keyless endpoints cap or reject JSON-RPC batches (observed 2026-07-17:
+// mainnet-beta rate-limits getTokenAccountsByOwner, PublicNode caps that
+// method at batch size 1, dRPC free tier caps batches at 3), while every
+// provider accepts the calls individually. One retry with a short pause
+// and, for Solana, a small concurrency window keep a shared-egress
+// deployment (many tenants behind one IP) inside provider burst limits.
+const RETRY_DELAY_MS = 400;
+const SOLANA_CONCURRENCY = 4;
+
 async function rpcCall(
   rpcUrl: string,
   fetcher: Fetcher,
   signal: AbortSignal | undefined,
   request: { jsonrpc: string; id: number; method: string; params: unknown[] },
 ): Promise<any> {
-  const response = await fetcher(rpcUrl, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    signal,
-    body: JSON.stringify(request),
-  });
-  if (!response.ok) throw new Error('holdings unavailable');
-  const payload = await response.json() as any;
-  if (Array.isArray(payload) || payload?.id !== request.id || payload?.error != null) {
-    throw new Error('holdings unavailable');
+  const attempt = async () => {
+    const response = await fetcher(rpcUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      signal,
+      body: JSON.stringify(request),
+    });
+    if (!response.ok) throw new Error(`holdings unavailable (http-error ${response.status})`);
+    const payload = await response.json() as any;
+    if (Array.isArray(payload) || payload?.id !== request.id || payload?.error != null) {
+      throw new Error('holdings unavailable (rpc-shape)');
+    }
+    return payload;
+  };
+  try {
+    return await attempt();
+  } catch (error) {
+    if (signal?.aborted) throw error;
+    await new Promise((resolve) => setTimeout(resolve, RETRY_DELAY_MS));
+    return attempt();
   }
-  return payload;
+}
+
+async function mapWithConcurrency<T, R>(
+  items: readonly T[],
+  limit: number,
+  task: (item: T, index: number) => Promise<R>,
+): Promise<R[]> {
+  const results = new Array<R>(items.length);
+  let next = 0;
+  await Promise.all(Array.from(
+    { length: Math.min(limit, items.length) },
+    async () => {
+      while (next < items.length) {
+        const index = next;
+        next += 1;
+        results[index] = await task(items[index], index);
+      }
+    },
+  ));
+  return results;
 }
 
 async function solanaHeldSigns(
@@ -59,7 +93,7 @@ async function solanaHeldSigns(
   signal?: AbortSignal,
 ): Promise<string[]> {
   const official = OFFICIAL.filter((asset) => asset.chain === 'solana');
-  const held = await Promise.all(official.map(async (asset, index) => {
+  const held = await mapWithConcurrency(official, SOLANA_CONCURRENCY, async (asset, index) => {
     const payload = await rpcCall(rpcUrl, fetcher, signal, {
       jsonrpc: '2.0', id: index + 1, method: 'getTokenAccountsByOwner',
       params: [
@@ -83,7 +117,7 @@ async function solanaHeldSigns(
       balance += BigInt(amount);
     }
     return balance > 0n ? [asset.sign] : [];
-  }));
+  });
   return normalizeOfficialHeldSigns(held.flat());
 }
 
@@ -126,7 +160,11 @@ export async function resolveOfficialHeldSigns(
     if (chain === 'base' && baseRpcUrl && validWalletProviderEndpoint(baseRpcUrl, env)) {
       return await baseHeldSigns(address, baseRpcUrl, fetcher, signal);
     }
-  } catch {
+  } catch (error) {
+    // Address-free by construction: the thrown messages are static strings
+    // plus an HTTP status. Surfaces the provider failure mode in function
+    // logs without weakening the fail-closed contract.
+    console.warn('aura-holdings lookup failed', chain, (error as Error)?.message);
     return undefined;
   }
   return undefined;
