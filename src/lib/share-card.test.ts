@@ -5,7 +5,9 @@ import {
   bigThreePlacements,
   chartCardFilename,
   chartCardReceipt,
+  communicationCardContent,
   dominantProfile,
+  firstSentence,
 } from './share-card';
 import type { Chart } from './engine/types';
 
@@ -35,6 +37,10 @@ describe('chartCardFilename', () => {
 
   it('uses a private filename for the big-three card', () => {
     expect(chartCardFilename({ variant: 'big-three' })).toBe('zodiacs-big-three.png');
+  });
+
+  it('uses a generic filename for the communication card', () => {
+    expect(chartCardFilename({ variant: 'communication' })).toBe('zodiacs-communication.png');
   });
 });
 
@@ -74,5 +80,26 @@ describe('share-card content', () => {
 
   it('computes dominant element and modality without personal input fields', () => {
     expect(dominantProfile(chart)).toEqual({ element: 'fire', modality: 'cardinal' });
+  });
+
+  it('builds a concise communication card from positions only', () => {
+    const content = communicationCardContent({
+      ...chart,
+      engineVersion: '9.9.9',
+      aspects: [
+        { a: 'Mercury', b: 'Mars', type: 'square', orb: 0.5, applying: true },
+      ],
+    } as Chart);
+
+    expect(content.title).toBe('How I communicate');
+    expect(content.rows.map(({ body, sign, role }) => ({ body, sign, role }))).toEqual([
+      { body: 'Mercury', sign: 'Aries', role: 'How you phrase things' },
+      { body: 'Moon', sign: 'Taurus', role: 'What helps you feel heard' },
+      { body: 'Mars', sign: 'Leo', role: 'How you handle friction' },
+    ]);
+    expect(content.rows.every(({ reading }) => firstSentence(reading) === reading)).toBe(true);
+    expect(content.aspect).toMatch(/^Mercury square Mars/);
+    expect(content.receipt).toBe('Engine 9.9.9');
+    expect(JSON.stringify(content)).not.toMatch(/1990|08:30|New York|latitude|longitude/i);
   });
 });

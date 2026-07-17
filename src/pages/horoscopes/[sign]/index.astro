@@ -89,9 +89,9 @@ const jsonLd = [
       <Content />
     </div>
 
-    <EmailCapture placement="horoscopes" sign={sign.slug} />
-
     <DailyForYou client:idle sign={sign.slug} />
+
+    <EmailCapture placement="horoscopes" sign={sign.slug} />
 
     <details class="horo__technical reveal">
       <summary>
@@ -216,7 +216,9 @@ const jsonLd = [
   :global(.dfy__lines) { margin: 0; padding: 0; list-style: none; display: grid; gap: 11px; }
   :global(.dfy__lines p) { margin: 0 0 3px; font-size: var(--text-sm); color: var(--text-2); line-height: 1.55; }
   :global(.dfy__receipt) { font-size: 11px; color: var(--muted); letter-spacing: 0.04em; }
-  :global(.dfy__more) { font-size: var(--text-sm); color: var(--text-2); text-decoration: none; justify-self: start; }
+  :global(.dfy__actions) { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; margin-top: 2px; }
+  :global(.dfy__primary) { font-size: var(--text-sm); }
+  :global(.dfy__more) { display: inline-flex; align-items: center; gap: 6px; font-size: var(--text-sm); color: var(--muted); text-decoration: none; }
   :global(.dfy__more:hover) { color: var(--text); }
 
   .horo__receipts h2 { margin: 0 0 8px; font-size: var(--text-xl); font-weight: 620; letter-spacing: -0.02em; }
@@ -257,5 +259,9 @@ const jsonLd = [
   }
   .chip:hover { background: color-mix(in oklab, var(--sign, var(--accent)) 16%, transparent); }
   .chip :global(.chip__icon img) { border-radius: 50%; }
+  @media (max-width: 520px) {
+    :global(.dfy__actions) { align-items: stretch; }
+    :global(.dfy__primary) { width: 100%; justify-content: space-between; }
+  }
   @media (prefers-reduced-motion: reduce) { .horo__technical-toggle { transition: none; } }
 </style>

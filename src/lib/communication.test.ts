@@ -8,6 +8,7 @@ import {
   MARS_SIGN,
   communicationRead,
 } from './communication';
+import { MOON } from './interpretations';
 
 const SIGNS = [
   'aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo',
@@ -24,12 +25,14 @@ function aspect(a: BodyName, b: BodyName, type: Aspect['type'], orb: number): As
 
 function chart({
   mercuryLon = 0,
+  moonLon = 0,
   marsLon = 0,
   mercuryRetrograde = false,
   aspects = [],
   includeMercury = true,
 }: {
   mercuryLon?: number;
+  moonLon?: number;
   marsLon?: number;
   mercuryRetrograde?: boolean;
   aspects?: Aspect[];
@@ -39,6 +42,7 @@ function chart({
     input: { utc: new Date('2000-01-01T00:00:00Z'), houseSystem: 'whole', timeKnown: false },
     bodies: [
       ...(includeMercury ? [body('Mercury', mercuryLon, mercuryRetrograde)] : []),
+      body('Moon', moonLon),
       body('Mars', marsLon),
     ],
     angles: null,
@@ -52,6 +56,7 @@ function chart({
 describe('communication corpus', () => {
   it('contains every sign and all seven soft/hard aspect pairs', () => {
     expect(Object.keys(MERCURY_SIGN)).toEqual(SIGNS);
+    expect(Object.keys(MOON)).toEqual(SIGNS);
     expect(Object.keys(MARS_SIGN)).toEqual(SIGNS);
     expect(Object.keys(MERCURY_SIGN)).toHaveLength(12);
     expect(Object.keys(MARS_SIGN)).toHaveLength(12);
@@ -101,21 +106,27 @@ describe('Mercury aspect selection', () => {
     ];
     const original = [...source];
 
-    expect(communicationRead(chart({ aspects: source })).aspects).toEqual([
+    expect(communicationRead(chart({ aspects: source })).aspects.map(({ text }) => text)).toEqual([
       MERCURY_ASPECT.Moon.soft,
       MERCURY_ASPECT.Jupiter.soft,
       MERCURY_ASPECT.Mars.hard,
     ]);
+    expect(communicationRead(chart({ aspects: source })).aspects[0]).toEqual({
+      target: 'Moon',
+      type: 'conjunction',
+      orb: 0.4,
+      text: MERCURY_ASPECT.Moon.soft,
+    });
     expect(source).toEqual(original);
   });
 
   it('classifies conjunction, trine, and sextile as soft; square and opposition as hard', () => {
     for (const type of ['conjunction', 'trine', 'sextile'] as const) {
-      expect(communicationRead(chart({ aspects: [aspect('Mercury', 'Mars', type, 1)] })).aspects)
+      expect(communicationRead(chart({ aspects: [aspect('Mercury', 'Mars', type, 1)] })).aspects.map(({ text }) => text))
         .toEqual([MERCURY_ASPECT.Mars.soft]);
     }
     for (const type of ['square', 'opposition'] as const) {
-      expect(communicationRead(chart({ aspects: [aspect('Mars', 'Mercury', type, 1)] })).aspects)
+      expect(communicationRead(chart({ aspects: [aspect('Mars', 'Mercury', type, 1)] })).aspects.map(({ text }) => text))
         .toEqual([MERCURY_ASPECT.Mars.hard]);
     }
   });
@@ -125,6 +136,14 @@ describe('Mercury aspect selection', () => {
       includeMercury: false,
       aspects: [aspect('Moon', 'Mercury', 'square', 0.2)],
     })).aspects).toEqual([]);
+  });
+
+  it('adds the Moon reading and placement slugs for all three roles', () => {
+    const read = communicationRead(chart({ mercuryLon: 0, moonLon: 95, marsLon: 185 }));
+    expect(read.mercurySign).toBe('aries');
+    expect(read.moonSign).toBe('cancer');
+    expect(read.marsSign).toBe('libra');
+    expect(read.moon).toBe(MOON.cancer);
   });
 });
 
@@ -143,8 +162,12 @@ describe('canonical fixture', () => {
       {
         "aspects": [],
         "mars": "Anger gets processed like everything else — privately, on a schedule, converted into distance or doubled workload. The people close to you would rather have the sentence than the silence.",
+        "marsSign": "capricorn",
         "mercury": "You communicate like a performance with an audience of one — warm, committed, a story where a sentence would do. It works because you mean it; flattery without conviction reads as static to you.",
         "mercuryAddendum": null,
+        "mercurySign": "leo",
+        "moon": "You settle yourself through the senses: food, comfort, routine, one unhurried evening. Emotional safety means knowing nothing important will change without warning.",
+        "moonSign": "taurus",
       }
     `);
   });

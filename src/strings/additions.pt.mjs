@@ -74,6 +74,7 @@ export const PT_ADDITIONS = Object.freeze({
   'registry.verifierNotFoundSentence': 'Não encontrado no registro oficial do Zodiacs.org.',
 
   // WS2b — email capture and shared footer
+  'emailCaptureChangeSign': 'Alterar',
   'emailCaptureCopy': 'Uma previsão semanal para seu signo. Grátis, cancele quando quiser.',
   'emailCaptureEmailLabel': 'Endereço de e-mail',
   'emailCaptureEmailPlaceholder': 'voce@exemplo.com',
@@ -82,12 +83,14 @@ export const PT_ADDITIONS = Object.freeze({
   'emailCaptureHoneypot': 'Deixe este campo em branco',
   'emailCaptureKicker': 'Previsão semanal gratuita',
   'emailCaptureNoSign': 'Pular o signo',
+  'emailCapturePersonalTitle': 'Sua semana de {sign} pela frente.',
   'emailCapturePrivacy': 'Armazenamos apenas seu e-mail e o signo escolhido — nunca seus dados de nascimento.',
   'emailCaptureSignLegend': 'Seu signo solar (opcional)',
   'emailCaptureSubmit': 'Enviar minha semana',
   'emailCaptureSubmitting': 'Inscrevendo…',
   'emailCaptureSuccess': 'Confira seu e-mail para confirmar a assinatura.',
   'emailCaptureTitle': 'Sua semana pela frente.',
+  'emailCaptureUsingSign': 'Usando seu signo solar: {sign}',
   'emailConfirmAction': 'Confirmar assinatura',
   'emailConfirmBody': 'Confirme esta assinatura para começar a receber a previsão semanal gratuita. Até lá, nenhuma assinatura semanal estará ativa.',
   'emailConfirmedBody': 'Sua previsão semanal gratuita está ativa. Toda mensagem inclui um link para cancelar a assinatura.',

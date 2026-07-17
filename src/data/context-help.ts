@@ -93,6 +93,20 @@ export const CONTEXT_TERMS: readonly ContextTermMetadata[] = Object.freeze([
     level: 'core',
   },
   {
+    slug: 'north-node',
+    plainDefinition: 'A calculated point where the Moon’s orbit crosses the Sun’s apparent path, often read as a direction of growth rather than a fixed destiny.',
+    aliases: ['north lunar node'],
+    category: 'anatomy',
+    level: 'core',
+  },
+  {
+    slug: 'south-node',
+    plainDefinition: 'The calculated point opposite the North Node, often associated with familiar patterns and existing strengths.',
+    aliases: ['south lunar node'],
+    category: 'anatomy',
+    level: 'core',
+  },
+  {
     slug: 'ascendant',
     plainDefinition: 'The exact point rising on the eastern horizon, often shortened to ASC.',
     aliases: ['asc', 'asc.'],

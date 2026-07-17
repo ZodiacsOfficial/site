@@ -1,10 +1,25 @@
 import type { AspectType, BodyName, Chart } from './engine/types';
+import { MOON } from './interpretations';
+
+export type CommunicationSign = keyof typeof MERCURY_SIGN;
+export type CommunicationAspectTarget = keyof typeof MERCURY_ASPECT;
+
+export interface CommunicationAspect {
+  target: CommunicationAspectTarget;
+  type: AspectType;
+  orb: number;
+  text: string;
+}
 
 export interface CommunicationRead {
   mercury: string;
+  mercurySign: CommunicationSign | null;
   mercuryAddendum: string | null;
-  aspects: string[];
+  aspects: CommunicationAspect[];
+  moon: string;
+  moonSign: CommunicationSign | null;
   mars: string;
+  marsSign: CommunicationSign | null;
 }
 
 export const COMMUNICATION_COPY = {
@@ -81,19 +96,17 @@ export const MERCURY_ASPECT = {
   },
 } as const;
 
-type SignSlug = keyof typeof MERCURY_SIGN;
-type AspectTarget = keyof typeof MERCURY_ASPECT;
-type AspectTone = keyof (typeof MERCURY_ASPECT)[AspectTarget];
+type AspectTone = keyof (typeof MERCURY_ASPECT)[CommunicationAspectTarget];
 
-const SIGNS = Object.keys(MERCURY_SIGN) as SignSlug[];
-const ASPECT_TARGETS = new Set<BodyName>(Object.keys(MERCURY_ASPECT) as AspectTarget[]);
+const SIGNS = Object.keys(MERCURY_SIGN) as CommunicationSign[];
+const ASPECT_TARGETS = new Set<BodyName>(Object.keys(MERCURY_ASPECT) as CommunicationAspectTarget[]);
 
-function signForLongitude(longitude: number): SignSlug {
+function signForLongitude(longitude: number): CommunicationSign {
   const normalized = ((longitude % 360) + 360) % 360;
   return SIGNS[Math.floor(normalized / 30)];
 }
 
-function mercuryAddendum(sign: SignSlug, retrograde: boolean): string | null {
+function mercuryAddendum(sign: CommunicationSign, retrograde: boolean): string | null {
   const lines: string[] = [];
   if (sign === 'virgo') lines.push(MERCURY_ADDENDA.exaltation);
   else if (sign === 'gemini') lines.push(MERCURY_ADDENDA.domicile);
@@ -109,8 +122,10 @@ function aspectTone(type: AspectType): AspectTone {
 
 export function communicationRead(chart: Chart): CommunicationRead {
   const mercury = chart.bodies.find((body) => body.body === 'Mercury');
+  const moon = chart.bodies.find((body) => body.body === 'Moon');
   const mars = chart.bodies.find((body) => body.body === 'Mars');
   const mercurySign = mercury ? signForLongitude(mercury.lon) : null;
+  const moonSign = moon ? signForLongitude(moon.lon) : null;
   const marsSign = mars ? signForLongitude(mars.lon) : null;
   const aspects = mercury
     ? chart.aspects
@@ -119,21 +134,30 @@ export function communicationRead(chart: Chart): CommunicationRead {
           ? aspect.b
           : aspect.b === 'Mercury' ? aspect.a : null;
         return target && ASPECT_TARGETS.has(target)
-          ? { ...aspect, target: target as AspectTarget }
+          ? { ...aspect, target: target as CommunicationAspectTarget }
           : null;
       })
       .filter((aspect): aspect is NonNullable<typeof aspect> => aspect !== null)
       .sort((a, b) => a.orb - b.orb)
       .slice(0, 3)
-      .map((aspect) => MERCURY_ASPECT[aspect.target][aspectTone(aspect.type)])
+      .map((aspect) => ({
+        target: aspect.target,
+        type: aspect.type,
+        orb: aspect.orb,
+        text: MERCURY_ASPECT[aspect.target][aspectTone(aspect.type)],
+      }))
     : [];
 
   return {
     mercury: mercurySign ? MERCURY_SIGN[mercurySign] : '',
+    mercurySign,
     mercuryAddendum: mercurySign && mercury
       ? mercuryAddendum(mercurySign, mercury.retrograde)
       : null,
     aspects,
+    moon: moonSign ? MOON[moonSign] : '',
+    moonSign,
     mars: marsSign ? MARS_SIGN[marsSign] : '',
+    marsSign,
   };
 }

@@ -178,15 +178,18 @@ try {
       && Object.keys(relationshipEvents.find((event) => event.name === 'composite_view')?.props ?? { unexpected: true }).length === 0);
 
   // The invite + pairing blocks survive below the module.
-  check('pairing CTA renders', (await page.locator('.calc__actions .btn--ghost').count()) >= 1);
+  check('pairing CTA renders', (await page.locator('.syn__next-action .btn--ghost').count()) === 1);
 
-  // Save the comparison → it persists and the button settles.
+  // Save the comparison → it persists and advances to a quiet receipt.
   await page.locator('[data-save-pair]').click();
   await page.waitForSelector('[data-pair-status]', { timeout: 3000 });
   const stored = await page.evaluate(() => JSON.parse(localStorage.getItem('zodiacs.pairs.v1') ?? '[]'));
   check('saving stores one pair of chart references', stored.length === 1
     && stored[0].a.kind === 'chart' && stored[0].b.kind === 'chart');
-  check('save button settles into its saved state', await page.locator('[data-save-pair]').isDisabled());
+  check('save action advances to a completed state',
+    (await page.locator('[data-save-pair]').count()) === 0
+      && /Comparison saved/.test(await page.locator('[data-pair-status]').textContent() ?? '')
+      && (await page.locator('[data-pair-status] a[href="/profile/"]').count()) === 1);
   await shot(page, 'rwheel-saved.png', { clip: { x: 0, y: 0, width: 1440, height: 1200 } });
 
   // Reload: the saved comparison offers itself back and restores on tap.

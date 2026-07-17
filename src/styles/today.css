@@ -50,27 +50,8 @@
 .tbs__more:hover { color: var(--text); border-bottom-color: var(--sign); }
 
 /* ── Welcome back (returning visitors only; the island renders nothing
-   otherwise). Shared en/es so both homepages style it identically. ── */
-.wb {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 14px 24px;
-  margin-bottom: 26px;
-  padding: 16px 20px;
-  border: 1px solid var(--hair-2);
-  border-radius: var(--r-md);
-  background: rgba(198, 204, 218, 0.02);
-}
-.wb__lead {
-  margin: 0;
-  font-family: var(--font-serif);
-  font-style: italic;
-  font-size: 17px;
-  color: var(--text-2);
-}
-/* Sun / Moon / Rising as an aligned label→chip set: a wrapping inline row on
-   desktop, a tidy two-column grid (labels aligned) on phones. */
+   otherwise). It uses the shared recommended-next card with chart metadata. */
+.wb-card { margin-bottom: 26px; --sign: var(--sign-cancer); }
 .wb__three {
   margin: 0;
   display: flex;
@@ -81,23 +62,7 @@
 .wb__three dt { margin: 0; padding-inline-start: 8px; }
 .wb__three dt:first-of-type { padding-inline-start: 0; }
 .wb__three dd { margin: 0; display: inline-flex; align-items: center; }
-.wb__links {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 12px 18px;
-  margin-left: auto;
-  font-size: var(--text-sm);
-}
-.wb__sublinks { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 18px; }
-.wb__links a { color: var(--text-2); text-decoration: none; }
-.wb__links a:hover { color: var(--text); }
-/* The "open your chart" pill keeps its own (dark-on-white) colours, not the
-   muted link colour. */
-.wb__links a.wb__open { font-size: 13px; padding: 8px 8px 8px 16px; color: var(--void-0); }
-.wb__links a.wb__open:hover { color: var(--void-0); }
 @media (max-width: 719px) {
-  .wb { flex-direction: column; align-items: stretch; gap: 14px; padding: 18px; }
   .wb__three {
     display: grid;
     grid-template-columns: max-content 1fr;
@@ -105,15 +70,6 @@
     gap: 10px 14px;
   }
   .wb__three dt { padding-inline-start: 0; }
-  /* Actions sit below a hairline: pill on its own line, links beneath. */
-  .wb__links {
-    flex-direction: column;
-    align-items: flex-start;
-    margin-left: 0;
-    gap: 12px;
-    padding-top: 14px;
-    border-top: 1px solid var(--hair-1);
-  }
 }
 
 /* ── Sky ticker (the "right now" proof strip; shared en/es) ── */

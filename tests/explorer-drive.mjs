@@ -1,8 +1,9 @@
 /**
  * End-to-end drive of the Chart Explorer + Guided Tour against
- * `astro preview`: select on wheel → inspector + table + URL sync;
- * keyboard model; layer chips; ?sel= deep link; mobile bottom sheet;
- * tour chapters, anchor rotation, house morph, analytics events.
+ * `astro preview`: visual reading path → wheel + inspector + table + URL
+ * sync; beginner context; contextual wheel actions; keyboard model; layer
+ * chips; ?sel= deep link; mobile bottom sheet and non-overlapping action
+ * dock; tour chapters, anchor rotation, house morph, analytics events.
  *
  * Not part of `npm test` (needs a built site + Chromium). Run manually:
  *
@@ -59,6 +60,20 @@ try {
     const box = await settledBox(el);
     await pg.mouse.click(box.x + box.width / 2, box.y + box.height / 2);
   }
+  async function hasBeginnerInspector(pg) {
+    const labels = await pg.locator('.insp__insight h4').allTextContents();
+    return labels.length === 4
+      && /^What/.test(labels[0] ?? '')
+      && /^How/.test(labels[1] ?? '')
+      && /^Where/.test(labels[2] ?? '')
+      && /^Why/.test(labels[3] ?? '');
+  }
+  async function revealFullGuide(pg) {
+    await pg.waitForSelector('[data-first-reading-prompt], [data-tour-start]', { timeout: 5000 });
+    const prompt = pg.locator('[data-first-reading-prompt]');
+    if (await prompt.count()) await pg.locator('[data-first-reading-dismiss]').click();
+    await pg.waitForSelector('[data-tour-start]', { timeout: 5000 });
+  }
 
   // ── Desktop: free exploration ──
   const page = await browser.newPage({ viewport: { width: 1440, height: 1000 }, deviceScaleFactor: 1 });
@@ -82,17 +97,64 @@ try {
   const detailSummary = detail.locator('summary');
   const placementCount = await detail.locator('.calc__table tbody tr').count();
   const aspectCount = await detail.locator('.calc__aspects li').count();
-  check('plain-first: reading precedes actions and full-detail table', await page.evaluate(() => {
-    const read = document.querySelector('.calc__read');
+  check('first reading: prompt withholds guide but keeps one chart share available', await page.evaluate(() => {
+    const prompt = document.querySelector('[data-first-reading-prompt]');
+    const dock = document.querySelector('[data-wheel-actions]');
+    return Boolean(prompt && dock
+      && !dock.querySelector('[data-tour-start]')
+      && dock.querySelectorAll('[data-share-card]').length === 1
+      && document.querySelectorAll('[data-share-card]').length === 1);
+  }));
+  await page.locator('[data-first-reading-dismiss]').click();
+  await page.waitForSelector('[data-tour-start]', { timeout: 5000 });
+  check('first reading: dismissal reveals Guide + Share and one white next action', await page.evaluate(() => {
+    const dock = document.querySelector('[data-wheel-actions]');
+    return !document.querySelector('[data-first-reading-prompt]')
+      && dock?.querySelectorAll('button').length === 2
+      && dock.querySelectorAll('[data-tour-start]').length === 1
+      && dock.querySelectorAll('[data-share-card]').length === 1
+      && document.querySelectorAll('[data-primary-action]').length === 1;
+  }));
+  check('wheel actions: guide/share openers are unique and absent from More ways', await page.evaluate(() =>
+    document.querySelectorAll('[data-tour-start]').length === 1
+    && document.querySelectorAll('[data-share-card]').length === 1
+    && !document.querySelector('[data-chart-more] [data-tour-start], [data-chart-more] [data-share-card]')));
+  check('plain-first: visual story and communication precede actions and full detail', await page.evaluate(() => {
+    const wheel = document.querySelector('.calc__wheel');
+    const read = document.querySelector('.reading-path');
     const communication = document.querySelector('.calc__comm');
-    const actions = document.querySelector('.calc__chart-share');
+    const actions = document.querySelector('.calc__actions');
     const detailNode = document.querySelector('[data-detail]');
     const table = document.querySelector('.calc__table');
-    return Boolean(read && communication && actions && detailNode && table
-      && read.nextElementSibling === communication
-      && communication.nextElementSibling === actions
+    return Boolean(wheel && read && communication && actions && detailNode && table
+      && (wheel.compareDocumentPosition(read) & Node.DOCUMENT_POSITION_FOLLOWING)
+      && (read.compareDocumentPosition(communication) & Node.DOCUMENT_POSITION_FOLLOWING)
+      && (communication.compareDocumentPosition(actions) & Node.DOCUMENT_POSITION_FOLLOWING)
       && (actions.compareDocumentPosition(detailNode) & Node.DOCUMENT_POSITION_FOLLOWING)
       && (read.compareDocumentPosition(table) & Node.DOCUMENT_POSITION_FOLLOWING));
+  }));
+  check('visual story: all four cards render with houses, aspects, and balance bars', await page.evaluate(() => {
+    const slugs = Array.from(document.querySelectorAll('[data-reading-card]'))
+      .map((node) => node.getAttribute('data-reading-card'));
+    return slugs.join(',') === 'big-three,places,aspects,pattern'
+      && document.querySelectorAll('[data-reading-house]').length === 12
+      && document.querySelectorAll('.reading-path__aspect-list > li').length > 0
+      && document.querySelectorAll('.reading-path__bar-fill').length === 7;
+  }));
+  check('visual story: explicit Show on chart controls are keyboard-operable', await page.evaluate(() => {
+    const controls = Array.from(document.querySelectorAll('.reading-path__show'))
+      .filter((control) => control.getClientRects().length > 0);
+    return controls.length >= 3
+      && controls.every((control) => control instanceof HTMLButtonElement
+        && control.getAttribute('aria-label')?.startsWith('Show on chart:')
+        && /(Spotlight|Trace|Highlighted on chart)/.test(control.textContent ?? '')
+        && control.getBoundingClientRect().height >= 43.5);
+  }));
+  check('communication read: Mercury, Moon, Mars roles and contextual share render', await page.evaluate(() => {
+    const roles = Array.from(document.querySelectorAll('.calc__comm-part h3'))
+      .map((node) => node.textContent?.trim());
+    return roles.join('|') === 'How you phrase things|What helps you feel heard|How you handle friction'
+      && document.querySelectorAll('[data-communication-share]').length === 1;
   }));
   check('communication read: chunk loads after compute', await page.evaluate(() =>
     performance.getEntriesByType('resource').some((entry) => /\/CommunicationRead\.[^/]+\.js$/.test(new URL(entry.name).pathname))));
@@ -105,7 +167,7 @@ try {
   }));
   check('plain-first: detail is closed by default', !(await detail.evaluate((node) => node.open)));
   check('plain-first: EN summary is exact with mono counts',
-    await detailSummary.textContent() === `Full detail — ${placementCount} placements · ${aspectCount} aspects · degrees & dignities`
+    await detailSummary.textContent() === `See exact chart data — ${placementCount} placements · ${aspectCount} aspects`
     && await detailSummary.locator('.mono').count() === 2,
     await detailSummary.textContent() ?? '');
   check('plain-first: aspects are a section with no nested details',
@@ -153,19 +215,137 @@ try {
   await page.waitForSelector('.insp--card', { timeout: 5000 });
   const title = await page.locator('.insp__title').textContent();
   check('inspector opens on Mars', /Mars/.test(title ?? ''), title ?? '');
+  check('beginner inspector: body uses What / How / Where / Why', await hasBeginnerInspector(page));
+  check('beginner inspector: exact chart data is secondary and closed', await page.evaluate(() => {
+    const exact = document.querySelector('.insp__exact');
+    return exact instanceof HTMLDetailsElement
+      && !exact.open
+      && exact.querySelector('summary')?.textContent?.trim() === 'Exact chart data';
+  }));
   check('url carries ?sel', (await page.url()).includes('sel=body%3AMars') || (await page.url()).includes('sel=body:Mars'), await page.url());
   check('wheel body selection re-lights closed detail', await detail.evaluate((node) => node.open));
   check('table row synced', await page.locator('tr[data-selected="true"] .calc__rowbtn').textContent().then((x) => /Mars/.test(x ?? '')));
-  check('reading item synced', (await page.locator('.calc__read-list li[data-selected="true"]').count()) === 1);
+  check('visual story syncs the selected placement to its house', (await page.locator('.reading-path__room-map button[data-selected="true"]').count()) === 1);
+  await page.locator('.reading-path__placements > summary').click();
+  check('visual story syncs the selected body in all placements', await page.evaluate(() => {
+    const selected = document.querySelector('.reading-path__placements li[data-selected="true"]');
+    return selected?.querySelector('strong')?.textContent === 'Mars';
+  }));
   await shot(page.locator('.xplr__wheelbox'), 'desktop-mars-selected.png');
   await shot(page, 'desktop-explorer-region.png', { clip: { x: 0, y: 0, width: 1440, height: 1000 } });
 
-  // Aspect chip inside inspector navigates to the aspect.
-  const chip = page.locator('.insp__aspects .insp__chip').first();
+  // Reading-path actions return to the wheel, synchronize URL/selection,
+  // and hand focus back to the interactive chart for both pointer and keys.
+  const sunShow = page.locator('.reading-path__show[aria-label^="Show on chart: Sun in"]').first();
+  await sunShow.evaluate((node) => node.scrollIntoView({ block: 'center' }));
+  await sunShow.click();
+  await page.waitForFunction(() => new URLSearchParams(location.search).get('sel') === 'body:Sun'
+    && document.activeElement?.classList.contains('xplr__wheelbox'));
+  await page.waitForFunction(() => {
+    const wheel = document.querySelector('.xplr__wheelbox');
+    return wheel?.getAttribute('data-spotlight-id') === 'body:Sun'
+      && wheel?.getAttribute('data-spotlight-motion') === 'animated'
+      && wheel?.getAttribute('data-spotlight-phase') === 'settled';
+  });
+  check('visual story: pointer Show on chart selects Sun and returns to wheel',
+    /Sun/.test(await page.locator('.insp__title').textContent() ?? '')
+    && (await sunShow.getAttribute('aria-pressed')) === 'true');
+  check('visual story: Sun gets a unique animated planet halo', await page.evaluate(() => (
+    document.querySelectorAll('[data-spotlight-target="body:Sun"][data-spotlight-kind="body"]').length === 1
+    && document.querySelectorAll('[data-spotlight-target]').length === 1
+    && document.querySelector('g[data-entity="body:Sun"]')?.getAttribute('data-selected') === 'true'
+  )));
+
+  const firstSunRun = Number(await page.locator('.xplr__wheelbox').getAttribute('data-spotlight-run'));
+  await sunShow.click();
+  await page.waitForFunction((previous) => {
+    const wheel = document.querySelector('.xplr__wheelbox');
+    return wheel?.getAttribute('data-spotlight-id') === 'body:Sun'
+      && Number(wheel?.getAttribute('data-spotlight-run')) > previous
+      && document.querySelectorAll('[data-spotlight-target="body:Sun"]').length === 1;
+  }, firstSunRun);
+  check('visual story: re-clicking the same target replays one spotlight', true);
+
+  const moonShow = page.locator('.reading-path__show[aria-label^="Show on chart: Moon in"]').first();
+  await moonShow.focus();
+  await page.keyboard.press('Enter');
+  await page.waitForFunction(() => new URLSearchParams(location.search).get('sel') === 'body:Moon'
+    && document.activeElement?.classList.contains('xplr__wheelbox'));
+  check('visual story: keyboard Show on chart selects Moon and returns to wheel',
+    /Moon/.test(await page.locator('.insp__title').textContent() ?? '')
+    && (await moonShow.getAttribute('aria-pressed')) === 'true');
+  check('visual story: keyboard spotlight is immediate but remains visible', await page.evaluate(() => {
+    const wheel = document.querySelector('.xplr__wheelbox');
+    const target = document.querySelector('[data-spotlight-target="body:Moon"][data-spotlight-kind="body"]');
+    const entity = document.querySelector('g[data-entity="body:Moon"]');
+    return wheel?.getAttribute('data-spotlight-motion') === 'instant'
+      && target != null
+      && target.getAnimations({ subtree: true }).every((animation) => animation.playState !== 'running')
+      && entity != null
+      && getComputedStyle(entity).transitionDuration.split(',')
+        .every((duration) => duration.trim() === '0s');
+  }));
+
+  const houseTen = page.locator('[data-reading-house="10"] button');
+  await houseTen.click();
+  await page.waitForFunction(() => {
+    const wheel = document.querySelector('.xplr__wheelbox');
+    return wheel?.getAttribute('data-spotlight-id') === 'house:10'
+      && wheel?.getAttribute('data-spotlight-phase') === 'settled';
+  });
+  check('visual story: House 10 illuminates one wedge, not a generic point', await page.evaluate(() => (
+    document.querySelectorAll('[data-spotlight-target="house:10"][data-spotlight-kind="house"]').length === 1
+    && document.querySelector('g[data-entity="house:10"]')?.getAttribute('data-selected') === 'true'
+    && document.querySelectorAll('[data-spotlight-target]').length === 1
+  )));
+
+  const rapidStartRun = Number(await page.locator('.xplr__wheelbox').getAttribute('data-spotlight-run'));
+  await page.evaluate(() => {
+    const sun = document.querySelector('.reading-path__show[aria-label^="Show on chart: Sun in"]');
+    const house = document.querySelector('[data-reading-house="10"] button');
+    sun?.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, detail: 1 }));
+    house?.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, detail: 1 }));
+  });
+  await page.waitForFunction((previous) => {
+    const wheel = document.querySelector('.xplr__wheelbox');
+    return wheel?.getAttribute('data-spotlight-id') === 'house:10'
+      && wheel?.getAttribute('data-spotlight-phase') === 'settled'
+      && Number(wheel?.getAttribute('data-spotlight-run')) >= previous + 2;
+  }, rapidStartRun);
+  await wait(1500);
+  check('visual story: rapid retarget cancels the stale spotlight', await page.evaluate(() => (
+    document.querySelectorAll('[data-spotlight-target="house:10"]').length === 1
+    && document.querySelectorAll('[data-spotlight-target]').length === 1
+    && document.querySelector('.xplr__wheelbox')?.getAttribute('data-spotlight-id') === 'house:10'
+  )));
+
+  const aspectShow = page.locator('.reading-path__aspect-list .reading-path__show').first();
+  await aspectShow.click();
+  await page.waitForFunction(() => {
+    const wheel = document.querySelector('.xplr__wheelbox');
+    return wheel?.getAttribute('data-spotlight-id')?.startsWith('aspect:')
+      && wheel?.getAttribute('data-spotlight-phase') === 'settled';
+  });
+  check('visual story: an aspect traces one chord and its two endpoints', await page.evaluate(() => (
+    document.querySelectorAll('[data-spotlight-target][data-spotlight-kind="aspect"]').length === 1
+    && document.querySelectorAll('[data-spotlight-target] .wheel__focus-aspect-node').length === 2
+    && document.querySelectorAll('[data-spotlight-target]').length === 1
+  )));
+
+  // A named aspect chip inside the beginner inspector navigates to that
+  // connection and focuses its new heading.
+  await clickMark(page, 'g[data-entity="body:Mars"] circle');
+  const chip = page.locator('.insp__related-actions .insp__chip')
+    .filter({ hasText: /conjunction|sextile|square|trine|opposition/i }).first();
   if (await chip.count()) {
     await chip.click();
     const t2 = await page.locator('.insp__title').textContent();
-    check('inspector chip → aspect selection', /(conjunction|sextile|square|trine|opposition)/i.test(await page.url()) || (t2 ?? '').length > 0, t2 ?? '');
+    check('inspector chip → named aspect selection',
+      /(conjunction|sextile|square|trine|opposition)/i.test(t2 ?? '')
+      && (await page.url()).includes('sel=aspect'), t2 ?? '');
+    check('beginner inspector: aspect uses What / How / Where / Why', await hasBeginnerInspector(page));
+    check('beginner inspector: contextual navigation focuses the new heading',
+      await page.evaluate(() => document.activeElement?.hasAttribute('data-inspector-heading') ?? false));
   }
 
   // Escape clears via wheelbox keyboard.
@@ -192,11 +372,13 @@ try {
   await clickMark(page, 'g[data-entity="house:7"] text');
   const t5 = await page.locator('.insp__title').textContent();
   check('house numeral selectable', /7/.test(t5 ?? ''), t5 ?? '');
+  check('beginner inspector: house uses What / How / Where / Why', await hasBeginnerInspector(page));
 
   // Sign selection via its disc in the ring.
   await clickMark(page, 'g[data-entity="sign:leo"] image');
   const tSign = await page.locator('.insp__title').textContent();
   check('sign disc selectable', /Leo/i.test(tSign ?? ''), tSign ?? '');
+  check('beginner inspector: sign uses What / How / Where / Why', await hasBeginnerInspector(page));
 
   // Layer chip: toggling squares off removes square chords.
   await page.locator('.xplr-chip[data-aspect="square"]').click();
@@ -234,6 +416,7 @@ try {
   for (let i = 0; i < 12; i += 1) await page.keyboard.press('ArrowRight');
   const tAng = await page.locator('.insp__title').textContent();
   check('arrow cycle reaches ASC', /ASC/.test(tAng ?? ''), tAng ?? '');
+  check('beginner inspector: angle uses What / How / Where / Why', await hasBeginnerInspector(page));
   await page.keyboard.press('Escape');
 
   // Selecting an aspect then filtering its type off clears the selection.
@@ -254,11 +437,28 @@ try {
   await page.waitForSelector('.wheel--interactive', { timeout: 15000 });
   check('invalid ?sel survives (no crash)', (await page.locator('.calc__table').count()) === 1);
 
-  // North Node inspector has no placements link (page doesn't exist).
+  // North Node inspector explains the calculated point and its ordinary
+  // backward motion without pretending there is a placement page/aspect list.
   await page.goto('about:blank');
   await page.goto(`http://127.0.0.1:4399/birth-chart/?sel=body%3ANorth%20Node${kahlo}`, { waitUntil: 'networkidle' });
   await page.waitForSelector('.insp--card', { timeout: 15000 });
+  const nodeText = await page.locator('.insp__body').innerText();
+  check('North Node card has beginner What / How / Where / Why context', await hasBeginnerInspector(page));
+  check('North Node card frames growth as symbolic, not fixed destiny',
+    /calculated point/i.test(nodeText)
+    && /direction of growth/i.test(nodeText)
+    && /not a (prediction or )?fixed destiny/i.test(nodeText), nodeText);
+  check('North Node card explains normal node motion without planet-retrograde framing',
+    /nodes usually move backward/i.test(nodeText)
+    && /do not read this like a retrograde planet/i.test(nodeText), nodeText);
+  check('North Node card links to the glossary',
+    (await page.locator('.insp__more[href="/learn/glossary/#north-node"]').count()) === 1);
   check('North Node card has no 404 learn link', (await page.locator('.insp__more[href*="placements/north-node"]').count()) === 0);
+  check('North Node card does not invent node aspects', await page.evaluate(() => {
+    const labels = Array.from(document.querySelectorAll('.insp__related-actions button'))
+      .map((node) => node.textContent ?? '');
+    return labels.every((label) => !/conjunction|sextile|square|trine|opposition/i.test(label));
+  }));
 
   // Deep link: fresh load with ?sel=body:Venus.
   await page.goto('about:blank');
@@ -277,7 +477,7 @@ try {
   const esAspects = await esDetail.locator('.calc__aspects li').count();
   const esSummary = await esDetail.locator('summary').textContent();
   check('plain-first: ES summary line is exact',
-    esSummary === `Todo el detalle — ${esPlacements} posiciones · ${esAspects} aspectos · grados y dignidades`,
+    esSummary === `Ver los datos exactos — ${esPlacements} posiciones · ${esAspects} aspectos`,
     esSummary ?? '');
   check('communication read: absent from Spanish',
     await es.locator('.calc__comm').count() === 0
@@ -297,9 +497,12 @@ try {
   });
   await tp.goto(`http://127.0.0.1:4399/birth-chart/${kahlo}`, { waitUntil: 'networkidle' });
   await tp.waitForSelector('.wheel--interactive', { timeout: 15000 });
+  await revealFullGuide(tp);
 
   await tp.locator('[data-tour-start]').click();
   await tp.waitForSelector('[data-tour-card]', { timeout: 10000 }); // lazy chunk fetch
+  check('tour: wheel action dock is absent while the tour is open',
+    (await tp.locator('[data-wheel-actions]').count()) === 0);
   const kick1 = await tp.locator('[data-tour-kicker]').textContent();
   check('tour: starts at chapter 1', /Chapter 1 of \d/.test(kick1 ?? ''), kick1 ?? '');
   check('tour: one dot per chapter (full chart = 8)', (await tp.locator('[data-tour-dot]').count()) === 8);
@@ -371,7 +574,8 @@ try {
   await wait(200);
   check('tour: Escape exits to free exploration',
     (await tp.locator('[data-tour-card]').count()) === 0
-    && await tp.locator('.insp--hint').isVisible());
+    && await tp.locator('.insp--hint').isVisible()
+    && (await tp.locator('[data-wheel-actions]').count()) === 1);
 
   // No-time chart: horizon and houses give way to the honest chapter.
   // (Hop through about:blank — a bare fragment swap on the same path is a
@@ -379,6 +583,17 @@ try {
   await tp.goto('about:blank');
   await tp.goto(`http://127.0.0.1:4399/birth-chart/${kahloNoTime}`, { waitUntil: 'networkidle' });
   await tp.waitForSelector('.wheel--interactive', { timeout: 15000 });
+  check('visual story: no-time chart swaps houses for twelve sign groups', await tp.evaluate(() =>
+    document.querySelectorAll('[data-reading-house]').length === 0
+    && document.querySelectorAll('[data-reading-sign]').length === 12
+    && /Birth time is unknown/i.test(document.querySelector('.reading-path__no-time')?.textContent ?? '')));
+  await clickMark(tp, 'g[data-entity="body:Sun"] circle');
+  const noTimeInspector = await tp.locator('.insp__body').innerText();
+  check('beginner inspector: no-time body keeps context and names the missing house limit',
+    await hasBeginnerInspector(tp)
+    && /birth time is needed to place it in a house/i.test(noTimeInspector), noTimeInspector);
+  await tp.locator('.xplr__wheelbox').focus();
+  await tp.keyboard.press('Escape');
   await tp.locator('[data-tour-start]').click();
   await tp.waitForSelector('[data-tour-card]', { timeout: 10000 });
   const noTimeDots = await tp.locator('[data-tour-dot]').count();
@@ -395,7 +610,19 @@ try {
   const mob = await browser.newPage({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, hasTouch: true });
   await mob.goto(`http://127.0.0.1:4399/birth-chart/${kahlo}`, { waitUntil: 'networkidle' });
   await mob.waitForSelector('.wheel--interactive', { timeout: 15000 });
+  await revealFullGuide(mob);
   check('mobile: hint hidden', !(await mob.locator('.insp--hint').isVisible().catch(() => false)));
+  check('mobile: Guide + Share dock is full-width below the interactive chart', await mob.evaluate(() => {
+    const explorer = document.querySelector('.xplr')?.getBoundingClientRect();
+    const dock = document.querySelector('[data-wheel-actions]')?.getBoundingClientRect();
+    const buttons = Array.from(document.querySelectorAll('[data-wheel-actions] button'))
+      .map((button) => button.getBoundingClientRect());
+    if (!explorer || !dock || buttons.length !== 2) return false;
+    return dock.top >= explorer.bottom - 0.5
+      && buttons.every((button) => button.top >= dock.top
+        && button.bottom <= dock.bottom + 0.5
+        && button.width >= dock.width - 1);
+  }));
   {
     const el = mob.locator('g[data-entity="body:Sun"] circle').first();
     await el.evaluate((n) => n.closest('svg').scrollIntoView({ block: 'center' }));
@@ -429,6 +656,7 @@ try {
     await mob.mouse.click(box.x + box.width / 2, box.y + box.height / 2);
   }
   await mob.waitForSelector('[data-tour-card]', { timeout: 10000 });
+  check('mobile: wheel action dock hides during tour', (await mob.locator('[data-wheel-actions]').count()) === 0);
   await shot(mob, 'mobile-tour-sheet.png');
   const mobHandle = await mob.locator('[data-tour-card] .insp__handle').boundingBox();
   if (mobHandle) {
@@ -443,13 +671,50 @@ try {
     check('mobile: swipe left turns the tour page', false, 'no handle box');
   }
   await mob.locator('[data-tour-exit]').click();
-  check('mobile: tour exit closes the sheet', (await mob.locator('[data-tour-card]').count()) === 0);
+  check('mobile: tour exit closes the sheet and restores wheel actions',
+    (await mob.locator('[data-tour-card]').count()) === 0
+    && (await mob.locator('[data-wheel-actions]').count()) === 1);
   await mob.close();
 
   // ── Reduced motion: selection and tour transitions are instant ──
   const rm = await browser.newPage({ viewport: { width: 1440, height: 1000 }, reducedMotion: 'reduce' });
   await rm.goto(`http://127.0.0.1:4399/birth-chart/${kahlo}`, { waitUntil: 'networkidle' });
   await rm.waitForSelector('.wheel--interactive', { timeout: 15000 });
+  await revealFullGuide(rm);
+  check('reduced motion: story cards, connectors, and bars render in their final state', await rm.evaluate(() => {
+    const cards = Array.from(document.querySelectorAll('[data-reading-card]'));
+    const lines = Array.from(document.querySelectorAll('.reading-path__line'));
+    const bars = Array.from(document.querySelectorAll('.reading-path__bar-fill'));
+    const identity = (transform) => transform === 'none'
+      || transform === 'matrix(1, 0, 0, 1, 0, 0)';
+    const noTransition = (node) => getComputedStyle(node).transitionDuration
+      .split(',').every((duration) => duration.trim() === '0s');
+    return cards.length === 4
+      && cards.every((node) => {
+        const style = getComputedStyle(node);
+        return style.opacity === '1' && identity(style.transform);
+      })
+      && lines.every(noTransition)
+      && bars.every(noTransition);
+  }));
+  const rmSunShow = rm.locator('.reading-path__show[aria-label^="Show on chart: Sun in"]').first();
+  await rmSunShow.click();
+  await rm.waitForFunction(() => document.querySelector('.xplr__wheelbox')
+    ?.getAttribute('data-spotlight-id') === 'body:Sun');
+  check('reduced motion: pointer spotlight jumps to a stable halo with no movement', await rm.evaluate(() => {
+    const wheel = document.querySelector('.xplr__wheelbox');
+    const target = document.querySelector('[data-spotlight-target="body:Sun"]');
+    const entity = document.querySelector('g[data-entity="body:Sun"]');
+    if (!target) return false;
+    const style = getComputedStyle(target);
+    return wheel?.getAttribute('data-spotlight-motion') === 'instant'
+      && (style.transform === 'none' || style.transform === 'matrix(1, 0, 0, 1, 0, 0)')
+      && style.transitionDuration.split(',').every((duration) => duration.trim() === '0s')
+      && entity != null
+      && getComputedStyle(entity).transitionDuration.split(',')
+        .every((duration) => duration.trim() === '0s');
+  }));
+  await rm.keyboard.press('Escape');
   {
     const el = rm.locator('g[data-entity="body:Saturn"] circle').first();
     await el.evaluate((n) => n.closest('svg').scrollIntoView({ block: 'center' }));

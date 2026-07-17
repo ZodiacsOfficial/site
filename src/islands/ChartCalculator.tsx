@@ -18,6 +18,7 @@ import AspectGlyph from '../components/AspectGlyph';
 import Wheel from '../lib/wheel/Wheel';
 import Inspector from './explorer/Inspector';
 import LayerChips from './explorer/LayerChips';
+import ReadingPath, { type ReadingScrollBehavior } from './explorer/ReadingPath';
 import {
   EMPTY_FIRST_READING,
   readFirstReadingProgress,
@@ -34,7 +35,6 @@ import {
 import { formatLongitude, signBySlug, signForLongitude, signName } from '../lib/signs';
 import { bigThree } from '../lib/interpretations';
 import { chartWeather, natalAspectLine, planetInHouseLine, topAspects } from '../lib/natal';
-import { dignityFor, type Dignity } from '../lib/dignities';
 import { resolveLocalToUtc } from '../lib/time/localToUtc';
 import { houseOf } from '../lib/engine/houses';
 import { moonPhaseName } from '../lib/engine/lite';
@@ -78,6 +78,13 @@ const DETAIL_LABELS: Record<Locale, { lead: string; placements: string; aspects:
   it: { lead: 'Vedi i dati esatti — ', placements: ' posizioni · ', aspects: ' aspetti' },
 };
 const DETAIL_STORAGE_KEY = 'zodiacs.detail.v1';
+const WHEEL_ACTION_COPY = {
+  en: { guide: 'Take the guided tour', replay: 'Replay the tour' },
+  es: { guide: 'Hacer el recorrido guiado', replay: 'Repetir el recorrido' },
+  pt: { guide: 'Fazer o tour guiado', replay: 'Repetir o tour' },
+  fr: { guide: 'Faire la visite guidée', replay: 'Rejouer la visite' },
+  it: { guide: 'Inizia il tour guidato', replay: 'Ripeti il tour' },
+} as const satisfies Record<Locale, { guide: string; replay: string }>;
 function firstReadingChartKey(chart: Chart): string {
   return [
     chart.input.utc.toISOString(),
@@ -152,14 +159,14 @@ type A2hsHint = import('../lib/a2hs').A2hsHint;
 type PushOptInModule = typeof import('./PushOptIn');
 type PwaInstallModule = typeof import('./PwaInstallPrompt');
 
-const WEB_PUSH_ENABLED = import.meta.env.PUBLIC_WEB_PUSH_ENABLED === '1';
+interface ChartSpotlight {
+  id: string;
+  run: number;
+  phase: 'primed' | 'settled';
+  motion: 'animated' | 'instant';
+}
 
-const DIGNITY_KEY = {
-  domicile: 'dignityDomicile',
-  exaltation: 'dignityExaltation',
-  detriment: 'dignityDetriment',
-  fall: 'dignityFall',
-} as const satisfies Record<Dignity, string>;
+const WEB_PUSH_ENABLED = import.meta.env.PUBLIC_WEB_PUSH_ENABLED === '1';
 
 /** Does the scene still contain the selected entity? (Recompute survival.) */
 function sceneHas(scene: ChartSceneModel, ref: EntityRef): boolean {
@@ -217,6 +224,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   const saveButtonRef = useRef<HTMLButtonElement>(null);
   const saveNameRef = useRef<HTMLInputElement>(null);
   const saveOriginRef = useRef<'tour' | 'free'>('free');
+  const shareReturnRef = useRef<HTMLElement | null>(null);
   const focusAfterComputeRef = useRef(false);
 
   // ── Chart Explorer state (full mode) ──
@@ -225,9 +233,12 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   const [showHouses, setShowHouses] = useState(true);
   const [detailOpen, setDetailOpen] = useState(false);
   const [announce, setAnnounce] = useState('');
+  const [spotlight, setSpotlight] = useState<ChartSpotlight | null>(null);
   const selFromUrl = useRef(false);
   const wheelboxRef = useRef<HTMLDivElement>(null);
   const detailPreferenceRef = useRef<'open' | 'closed' | null>(null);
+  const spotlightRunRef = useRef(0);
+  const spotlightArrivalCleanupRef = useRef<(() => void) | null>(null);
 
   // ── Guided tour (lazy — the module never loads until asked for) ──
   const [tourMod, setTourMod] = useState<TourModule | null>(null);
@@ -265,6 +276,10 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   const viewCusps = showHouses
     ? (tourVisual?.cusps ?? chart?.houses?.cusps ?? null)
     : null;
+
+  useEffect(() => () => {
+    spotlightArrivalCleanupRef.current?.();
+  }, []);
 
   function track(name: string, props: Record<string, string>) {
     (window as unknown as {
@@ -344,12 +359,6 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
     track('first_reading_prompt', { action: 'explore' });
   }
 
-  function replayFirstReading() {
-    persistFirstReading('in_progress', 0);
-    track('next_action_clicked', { state: 'guide_complete', action: 'replay_guide' });
-    void startTour('quick');
-  }
-
   function completeFirstReading() {
     if (firstReading.status !== 'complete') {
       persistFirstReading('complete', 3);
@@ -406,7 +415,14 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
     setDetailOpen(true);
   }
 
+  function cancelSpotlightArrival() {
+    spotlightArrivalCleanupRef.current?.();
+    spotlightArrivalCleanupRef.current = null;
+  }
+
   function applySelect(ref: EntityRef | null) {
+    cancelSpotlightArrival();
+    setSpotlight(null);
     // Selecting a house someone can't see makes no sense — re-light the layer.
     if (ref?.kind === 'house') setShowHouses(true);
     // The data rows now live inside a closed-by-default disclosure. Re-light
@@ -427,6 +443,102 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
         if (document.activeElement === document.body) wheelboxRef.current?.focus();
       });
     }
+  }
+
+  function showOnChartFromReading(ref: EntityRef, behavior: ReadingScrollBehavior): void {
+    resetLens();
+    if (ref.kind === 'aspect') {
+      setAspectTypes((current) => current.includes(ref.type) ? current : [...current, ref.type]);
+    }
+    applySelect(ref);
+    const id = entityId(ref);
+    const run = ++spotlightRunRef.current;
+    const motion: ChartSpotlight['motion'] = behavior === 'smooth' ? 'animated' : 'instant';
+    setSpotlight({ id, run, phase: motion === 'animated' ? 'primed' : 'settled', motion });
+
+    let outerFrame = 0;
+    let watchFrame = 0;
+    let fallback = 0;
+    let cancelled = false;
+    let scrollEndHandler: (() => void) | null = null;
+    const detach = () => {
+      if (outerFrame) cancelAnimationFrame(outerFrame);
+      if (watchFrame) cancelAnimationFrame(watchFrame);
+      if (fallback) window.clearTimeout(fallback);
+      if (scrollEndHandler) window.removeEventListener('scrollend', scrollEndHandler);
+    };
+    const cleanup = () => {
+      cancelled = true;
+      detach();
+    };
+    spotlightArrivalCleanupRef.current = cleanup;
+
+    outerFrame = requestAnimationFrame(() => {
+      if (cancelled || spotlightRunRef.current !== run) return;
+      const wheel = wheelboxRef.current;
+      if (!wheel) {
+        cleanup();
+        return;
+      }
+      const target = Array.from(wheel.querySelectorAll<SVGElement>('[data-entity]'))
+        .find((node) => node.getAttribute('data-entity') === id) ?? wheel;
+      const mobile = matchMedia('(max-width: 959.5px)').matches;
+      const destinationY = () => window.innerHeight * (mobile ? 0.34 : 0.5);
+      const destinationTop = () => {
+        const rect = target.getBoundingClientRect();
+        return Math.max(0, window.scrollY + rect.top + rect.height / 2 - destinationY());
+      };
+      const arrived = () => {
+        const rect = target.getBoundingClientRect();
+        return Math.abs(rect.top + rect.height / 2 - destinationY()) <= 22;
+      };
+      const settle = (force = false) => {
+        if (cancelled || spotlightRunRef.current !== run || (!force && !arrived())) return false;
+        detach();
+        setSpotlight((current) => current?.run === run
+          ? { ...current, phase: 'settled' }
+          : current);
+        if (spotlightArrivalCleanupRef.current === cleanup) {
+          spotlightArrivalCleanupRef.current = null;
+        }
+        return true;
+      };
+
+      if (motion === 'instant') {
+        const root = document.documentElement;
+        const previous = root.style.scrollBehavior;
+        root.style.scrollBehavior = 'auto';
+        window.scrollTo({ top: destinationTop(), behavior: 'auto' });
+        root.style.scrollBehavior = previous;
+        wheel.focus({ preventScroll: true });
+        detach();
+        if (spotlightArrivalCleanupRef.current === cleanup) {
+          spotlightArrivalCleanupRef.current = null;
+        }
+        return;
+      }
+
+      window.scrollTo({ top: destinationTop(), behavior: 'smooth' });
+      wheel.focus({ preventScroll: true });
+      scrollEndHandler = () => { settle(); };
+      window.addEventListener('scrollend', scrollEndHandler, { passive: true });
+      const watchPosition = () => {
+        if (settle()) return;
+        if (!cancelled && spotlightRunRef.current === run) {
+          watchFrame = requestAnimationFrame(watchPosition);
+        }
+      };
+      watchFrame = requestAnimationFrame(watchPosition);
+      fallback = window.setTimeout(() => {
+        if (cancelled || spotlightRunRef.current !== run) return;
+        const root = document.documentElement;
+        const previous = root.style.scrollBehavior;
+        root.style.scrollBehavior = 'auto';
+        window.scrollTo({ top: destinationTop(), behavior: 'auto' });
+        root.style.scrollBehavior = previous;
+        settle(true);
+      }, 1400);
+    });
   }
 
   // A `?sel=` deep link applies once, after the first computed scene.
@@ -728,6 +840,9 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
 
   async function openShareDialog() {
     if (!chart || !shareInput) return;
+    shareReturnRef.current = document.activeElement instanceof HTMLElement
+      ? document.activeElement
+      : null;
     setCard('idle');
     try {
       const surface = await import('./PositionsShareSurface');
@@ -737,6 +852,15 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
       console.error(err);
       setCard('error');
     }
+  }
+
+  function closeShareDialog(): void {
+    setShareDialogOpen(false);
+    requestAnimationFrame(() => {
+      const returnTo = shareReturnRef.current;
+      if (returnTo?.isConnected) returnTo.focus();
+      else wheelboxRef.current?.focus();
+    });
   }
 
   const placements = useMemo(() => {
@@ -890,34 +1014,34 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
     void commitSave(explicitName, via);
   }
 
-  // The guided reading: planets only (nodes stay in the table), each with
-  // sign + dignity resolved once; aspects ranked; whole-chart weather.
+  // The visual story uses planets only (nodes stay in exact data), plus the
+  // strongest aspects and whole-chart balance derived once per result.
   const reading = useMemo(() => {
     if (!chart || mode !== 'full') return null;
-    const seenHouses = new Set<number>();
     const ps = placements
       .filter((p) => !p.body.includes('Node'))
       .map((p) => {
         const sign = signForLongitude(p.lon);
-        const firstInHouse = p.house != null && !seenHouses.has(p.house);
-        if (p.house != null) seenHouses.add(p.house);
         return {
-          ...p,
+          body: p.body,
+          lon: p.lon,
+          house: p.house,
+          retrograde: p.retrograde,
           signSlug: sign.slug,
-          signLabel: signName(sign, locale),
-          dignity: dignityFor(p.body, sign.slug),
-          firstInHouse,
         };
       });
     return {
       ps,
-      top: topAspects(chart.aspects, 4),
+      top: topAspects(
+        chart.aspects.filter((aspect) => !aspect.a.includes('Node') && !aspect.b.includes('Node')),
+        4,
+      ),
       weather: chartWeather(
         ps.map((p) => ({ body: p.body, lon: p.lon, retrograde: p.retrograde, sign: p.signSlug })),
         chart.houses ? (b) => ps.find((x) => x.body === b)?.house ?? null : undefined,
       ),
     };
-  }, [chart, placements, mode, locale]);
+  }, [chart, placements, mode]);
 
   const heroCards = useMemo(() => {
     if (!chart || !sun || !moon) return [];
@@ -941,6 +1065,13 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   const CommunicationRead = communicationSurface?.default;
   const PushOptIn = pushOptIn?.default;
   const PwaInstallPrompt = pwaInstallModule?.default;
+  const firstReadingPromptVisible = mode === 'full'
+    && firstReadingLoaded
+    && !tourOpen
+    && (firstReading.status === 'not_started' || firstReading.status === 'in_progress');
+  const hideWheelGuide = !firstReadingLoaded
+    || firstReading.status === 'not_started'
+    || firstReading.status === 'in_progress';
 
   return (
     <div class="calc">
@@ -1087,10 +1218,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
             })}
           </div>
 
-          {mode === 'full'
-            && firstReadingLoaded
-            && !tourOpen
-            && (firstReading.status === 'not_started' || firstReading.status === 'in_progress') && (
+          {firstReadingPromptVisible && (
             <aside class="calc__first-reading shell" aria-labelledby="first-reading-title" data-first-reading-prompt>
               <div class="core calc__first-reading-core">
                 <div class="calc__first-reading-copy">
@@ -1159,6 +1287,10 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                         role="group"
                         aria-label={t(locale, 'explorerLabel')}
                         onKeyDown={onWheelKeyDown}
+                        data-spotlight-id={spotlight?.id}
+                        data-spotlight-run={spotlight?.run}
+                        data-spotlight-motion={spotlight?.motion}
+                        data-spotlight-phase={spotlight?.phase}
                       >
                         <Wheel
                           bodies={chart.bodies.filter((b) => b.body !== 'South Node')}
@@ -1176,8 +1308,21 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                             emphasis: viewEmphasis,
                             onSelect: applySelect,
                             label: t(locale, 'explorerLabel'),
+                            spotlight,
                           }}
                         />
+                        {spotlight && selection && entityId(selection) === spotlight.id && (
+                          <div
+                            key={spotlight.run}
+                            class="xplr__spotlight-cue"
+                            data-motion={spotlight.motion}
+                            data-phase={spotlight.phase}
+                            aria-hidden="true"
+                          >
+                            <span>Highlighted on your chart</span>
+                            <strong>{describeSelection(selection)}</strong>
+                          </div>
+                        )}
                       </div>
                       {!tourOpen && (
                         <div class="calc__lens-rail" role="group" aria-label={LENS_LABELS[locale].rail}>
@@ -1276,6 +1421,41 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                       />
                     )}
                   </div>
+                  {!tourOpen && shareInput && (
+                    <div class="calc__wheel-actions" data-wheel-actions>
+                      {!hideWheelGuide && (
+                        <button
+                          class="btn btn--ghost"
+                          type="button"
+                          onClick={() => {
+                            track('next_action_clicked', {
+                              state: firstReading.status === 'complete' ? 'guide_complete' : 'chart_result',
+                              action: firstReading.status === 'complete' ? 'replay_guide' : 'full_tour',
+                            });
+                            void startTour('full');
+                          }}
+                          data-tour-start
+                        >
+                          <span>{firstReading.status === 'complete'
+                            ? WHEEL_ACTION_COPY[locale].replay
+                            : WHEEL_ACTION_COPY[locale].guide}</span>
+                          <span class="orb" aria-hidden="true">{firstReading.status === 'complete' ? '↻' : '→'}</span>
+                        </button>
+                      )}
+                      <button
+                        class="btn btn--ghost"
+                        type="button"
+                        onClick={() => void openShareDialog()}
+                        disabled={card === 'busy'}
+                        data-share-card
+                      >
+                        <span>{card === 'busy'
+                          ? t(locale, 'rendering')
+                          : card === 'saved' ? t(locale, 'cardSaved') : t(locale, 'shareChart')}</span>
+                        <span class="orb" aria-hidden="true">{card === 'saved' ? '✓' : '↗'}</span>
+                      </button>
+                    </div>
+                  )}
                   <p class="sr-only" role="status">{announce}</p>
                   <p class="calc__receipt mono">
                     {chart.input.utc.toISOString().replace('T', ' · ').slice(0, 21)} UTC
@@ -1286,79 +1466,21 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                 </div>
               </div>
 
-              {/* The guided reading leads; full data follows the action rows. */}
+              {/* A visual story leads; exact data remains available below. */}
               {showsEnglishInterpretation && reading && (
-                <section class="calc__read" aria-labelledby="calc-read-title">
-                  <h2 id="calc-read-title" class="calc__read-title">{t(locale, 'readInOrder')}</h2>
-                  <p class="calc__read-intro">{t(locale, 'readIntro')}</p>
-                  <ol class="calc__read-steps">
-                    <li class="calc__read-step">
-                      <h3>{t(locale, 'readBigThree')}</h3>
-                      <p>{t(locale, 'readBigThreeBody')}</p>
-                    </li>
-                    <li class="calc__read-step">
-                      <h3>{t(locale, 'readRooms')}</h3>
-                      {!chart.houses && <p class="calc__read-note">{t(locale, 'readNoHouses')}</p>}
-                      <ul class="calc__read-list">
-                        {reading.ps.map((p) => (
-                          <li
-                            key={p.body}
-                            data-selected={selection?.kind === 'body' && selection.body === p.body ? 'true' : undefined}
-                            style={selection?.kind === 'body' && selection.body === p.body ? `--sign:${signBySlug(p.signSlug).hue}` : undefined}
-                          >
-                            <p>
-                              <PlanetGlyph body={p.body} size={14} class="calc__pg" />{' '}
-                              {chart.houses && p.house
-                                ? planetInHouseLine(p.body, p.house, { withTheme: p.firstInHouse })
-                                : `${planetLabel(locale, p.body)} — ${p.signLabel}.`}
-                              {p.dignity && (
-                                <span class="calc__read-dignity mono"> · <AstroTerm
-                                  term={p.dignity}
-                                  label={t(locale, DIGNITY_KEY[p.dignity])}
-                                  surface="chart-reading"
-                                  whyItMatters="This traditional label describes how supported the planet is considered in this sign."
-                                /></span>
-                              )}
-                            </p>
-                            <a class="calc__read-more" href={`/learn/placements/${p.body.toLowerCase()}-in-${p.signSlug}/`}>
-                              {planetLabel(locale, p.body)} {t(locale, 'readIn')} {p.signLabel} →
-                            </a>
-                          </li>
-                        ))}
-                      </ul>
-                    </li>
-                    {reading.top.length > 0 && (
-                      <li class="calc__read-step">
-                        <h3>{t(locale, 'readAspects')}</h3>
-                        <ul class="calc__read-list">
-                          {reading.top.map((a) => (
-                            <li
-                              key={`${a.a}${a.b}${a.type}`}
-                              data-selected={selection?.kind === 'aspect' && selection.a === a.a && selection.b === a.b && selection.type === a.type ? 'true' : undefined}
-                            >
-                              <p>{natalAspectLine(a.a, a.type, a.b)}</p>
-                              <a class="calc__read-more" href={`/learn/aspects/${a.type}/`}>
-                                {aspectLabel(locale, a.type)} · {a.orb.toFixed(1)}° →
-                              </a>
-                            </li>
-                          ))}
-                        </ul>
-                      </li>
-                    )}
-                    <li class="calc__read-step">
-                      <h3>{t(locale, 'readWeather')}</h3>
-                      <ul class="calc__read-list">
-                        {reading.weather.lines.map((l) => (
-                          <li key={l}><p>{l}</p></li>
-                        ))}
-                      </ul>
-                    </li>
-                  </ol>
-                </section>
+                <ReadingPath
+                  placements={reading.ps}
+                  topAspects={reading.top}
+                  weather={reading.weather}
+                  risingLon={asc}
+                  housesKnown={chart.houses != null}
+                  selection={selection}
+                  onShowOnChart={showOnChartFromReading}
+                />
               )}
 
               {mode === 'full' && showsEnglishInterpretation && CommunicationRead && (
-                <CommunicationRead chart={chart} />
+                <CommunicationRead chart={chart} locale={locale} />
               )}
             </>
           )}
@@ -1452,41 +1574,6 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                 <span class="orb" aria-hidden="true">+</span>
               </summary>
               <div class="calc__more-body">
-                <div class="calc__more-actions">
-                  {firstReading.status === 'complete' && (
-                    <button
-                      class="btn btn--glass"
-                      type="button"
-                      onClick={replayFirstReading}
-                      data-tour-replay
-                    >
-                      <span>{t(locale, 'firstReadingReplay')}</span>
-                      <span class="orb">↻</span>
-                    </button>
-                  )}
-                  <button
-                    class="btn btn--glass"
-                    type="button"
-                    onClick={() => {
-                      track('next_action_clicked', { state: 'chart_result', action: 'full_tour' });
-                      void startTour('full');
-                    }}
-                    data-tour-start
-                  >
-                    <span>{t(locale, 'firstReadingFullTour')}</span>
-                    <span class="orb">→</span>
-                  </button>
-                  <button
-                    class="btn btn--glass"
-                    type="button"
-                    onClick={openShareDialog}
-                    disabled={card === 'busy'}
-                    data-share-card
-                  >
-                    <span>{card === 'busy' ? t(locale, 'rendering') : card === 'saved' ? t(locale, 'cardSaved') : t(locale, 'shareChart')}</span>
-                    <span class="orb">{card === 'saved' ? '✓' : '↗'}</span>
-                  </button>
-                </div>
                 {CopyLinkButton && (
                   <div class="calc__more-copy">
                     <CopyLinkButton
@@ -1655,7 +1742,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
           fullUrl={shareUrl()}
           card={card}
           onCardStateChange={setCard}
-          onClose={() => setShareDialogOpen(false)}
+          onClose={closeShareDialog}
         />
       )}
 

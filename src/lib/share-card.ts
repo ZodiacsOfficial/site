@@ -15,6 +15,7 @@ import {
   degreeInSign,
   elementLabel,
   modalityLabel,
+  signBySlug,
   signForLongitude,
   signName,
   type Element,
@@ -23,9 +24,10 @@ import {
 import type { Chart } from './engine/types';
 import type { Locale } from './i18n';
 import { shareCardFormat, shareCardText } from './share-card-copy';
+import { communicationRead } from './communication';
 
 export type CardOutcome = 'shared' | 'downloaded' | 'cancelled';
-export type ChartCardVariant = 'full' | 'big-three';
+export type ChartCardVariant = 'full' | 'big-three' | 'communication';
 
 export interface ShareCardOptions {
   /** The full wheel is the backwards-compatible default. */
@@ -169,6 +171,7 @@ export function chartCardReceipt(
 /** Download/share-sheet filename contains no input-derived data. */
 export function chartCardFilename(options: ShareCardOptions = {}): string {
   if (options.variant === 'big-three') return 'zodiacs-big-three.png';
+  if (options.variant === 'communication') return 'zodiacs-communication.png';
   return 'zodiacs-chart.png';
 }
 
@@ -181,6 +184,112 @@ function fitText(ctx: CanvasRenderingContext2D, text: string, maxWidth: number, 
     px -= 2;
   }
   return px;
+}
+
+const COMMUNICATION_ROLES = {
+  Mercury: 'How you phrase things',
+  Moon: 'What helps you feel heard',
+  Mars: 'How you handle friction',
+} as const;
+
+export interface CommunicationCardRow {
+  body: keyof typeof COMMUNICATION_ROLES;
+  role: string;
+  slug: string;
+  sign: string;
+  reading: string;
+}
+
+export interface CommunicationCardContent {
+  title: 'How I communicate';
+  rows: CommunicationCardRow[];
+  aspect: string | null;
+  receipt: string;
+}
+
+/** Keep social-card copy concise without ever consulting private chart input. */
+export function firstSentence(text: string): string {
+  const match = /[.!?](?:[”"']?)(?=\s|$)/.exec(text);
+  return match ? text.slice(0, match.index + match[0].length).trim() : text.trim();
+}
+
+export function communicationCardContent(
+  chart: Chart,
+  locale: Locale = 'en',
+): CommunicationCardContent {
+  const read = communicationRead(chart);
+  const placements = [
+    { body: 'Mercury' as const, slug: read.mercurySign, reading: read.mercury },
+    { body: 'Moon' as const, slug: read.moonSign, reading: read.moon },
+    { body: 'Mars' as const, slug: read.marsSign, reading: read.mars },
+  ];
+  const rows = placements.flatMap((placement) => {
+    if (!placement.slug || !placement.reading) return [];
+    const sign = signBySlug(placement.slug);
+    return [{
+      body: placement.body,
+      role: COMMUNICATION_ROLES[placement.body],
+      slug: placement.slug,
+      sign: signName(sign, locale),
+      reading: firstSentence(placement.reading),
+    }];
+  });
+  const tightest = read.aspects[0];
+  const aspect = tightest
+    ? `Mercury ${tightest.type} ${tightest.target} · ${firstSentence(tightest.text)}`
+    : null;
+  return {
+    title: 'How I communicate',
+    rows,
+    aspect,
+    receipt: chartCardReceipt(chart, locale),
+  };
+}
+
+function wrappedLines(
+  ctx: CanvasRenderingContext2D,
+  text: string,
+  maxWidth: number,
+  maxLines: number,
+): string[] {
+  const words = text.split(/\s+/).filter(Boolean);
+  const lines: string[] = [];
+  let line = '';
+  for (const word of words) {
+    const candidate = line ? `${line} ${word}` : word;
+    if (ctx.measureText(candidate).width <= maxWidth || !line) {
+      line = candidate;
+      continue;
+    }
+    lines.push(line);
+    line = word;
+    if (lines.length === maxLines - 1) break;
+  }
+  if (line && lines.length < maxLines) {
+    const consumed = lines.join(' ').split(/\s+/).filter(Boolean).length;
+    const remaining = words.slice(consumed).join(' ');
+    let finalLine = remaining || line;
+    while (ctx.measureText(finalLine).width > maxWidth && finalLine.length > 1) {
+      finalLine = finalLine.slice(0, -1).trimEnd();
+    }
+    if (finalLine !== remaining) finalLine = `${finalLine.replace(/[.,;:!?\s]+$/, '')}…`;
+    lines.push(finalLine);
+  }
+  return lines;
+}
+
+function drawWrappedText(
+  ctx: CanvasRenderingContext2D,
+  text: string,
+  x: number,
+  y: number,
+  maxWidth: number,
+  lineHeight: number,
+  maxLines: number,
+): void {
+  wrappedLines(ctx, text, maxWidth, maxLines).forEach((line, index) => {
+    ctx.fillText(line, x, y + index * lineHeight);
+  });
 }
 
 async function drawFullChartCard(
@@ -351,13 +460,104 @@ async function drawBigThreeCard(
   return blob;
 }
 
+async function drawCommunicationCard(
+  chart: Chart,
+  options: ShareCardOptions = {},
+): Promise<Blob> {
+  const locale = options.locale ?? 'en';
+  const content = communicationCardContent(chart, locale);
+
+  await document.fonts.ready;
+  await Promise.all([
+    document.fonts.load(`500 68px ${SERIF}`),
+    document.fonts.load(`500 48px ${SERIF}`),
+    document.fonts.load(`400 28px ${SERIF}`),
+    document.fonts.load(`400 24px ${MONO}`),
+  ]).catch(() => {});
+  const discs = await Promise.all(content.rows.map((row) => loadDisc(row.slug)));
+
+  const canvas = document.createElement('canvas');
+  canvas.width = W;
+  canvas.height = H;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) throw new Error('canvas unavailable');
+
+  ctx.fillStyle = BG;
+  ctx.fillRect(0, 0, W, H);
+  if (typeof ctx.roundRect === 'function') {
+    ctx.strokeStyle = HAIR;
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.roundRect(28.5, 28.5, W - 57, H - 57, 26);
+    ctx.stroke();
+  }
+
+  ctx.textBaseline = 'middle';
+  ctx.textAlign = 'left';
+  ctx.fillStyle = INK_2;
+  ctx.font = `400 24px ${MONO}`;
+  ctx.fillText('MERCURY · MOON · MARS', 72, 92);
+  ctx.fillStyle = INK_0;
+  ctx.font = `500 68px ${SERIF}`;
+  ctx.fillText(content.title, 72, 156);
+
+  const rowTop = 255;
+  const rowGap = 292;
+  content.rows.forEach((row, index) => {
+    const top = rowTop + index * rowGap;
+    const icon = discs[index];
+    if (icon) ctx.drawImage(icon, 72, top, 126, 126);
+
+    ctx.fillStyle = INK_2;
+    ctx.font = `400 23px ${MONO}`;
+    ctx.fillText(`${row.body.toUpperCase()} · ${row.role.toUpperCase()}`, 236, top + 16);
+    ctx.fillStyle = INK_0;
+    ctx.font = `500 48px ${SERIF}`;
+    ctx.fillText(row.sign, 236, top + 69);
+    ctx.fillStyle = INK_2;
+    ctx.font = `400 28px ${SERIF}`;
+    drawWrappedText(ctx, row.reading, 236, top + 126, W - 308, 35, 3);
+
+    if (index < content.rows.length - 1) {
+      ctx.strokeStyle = HAIR;
+      ctx.beginPath();
+      ctx.moveTo(72, top + 250.5);
+      ctx.lineTo(W - 72, top + 250.5);
+      ctx.stroke();
+    }
+  });
+
+  if (content.aspect) {
+    ctx.fillStyle = INK_2;
+    ctx.font = `400 23px ${MONO}`;
+    ctx.fillText('A STRONG MERCURY CONNECTION', 72, 1138);
+    ctx.font = `400 27px ${SERIF}`;
+    drawWrappedText(ctx, content.aspect, 72, 1183, W - 144, 33, 2);
+  }
+
+  ctx.fillStyle = INK_2;
+  ctx.font = `400 24px ${MONO}`;
+  ctx.textAlign = 'left';
+  ctx.fillText(content.receipt, 72, 1260);
+
+  ctx.font = `500 34px ${SERIF}`;
+  ctx.textAlign = SHARE_CARD_WORDMARK.align;
+  try { ctx.letterSpacing = '8px'; } catch {}
+  ctx.fillText('ZODIACS · ORG', SHARE_CARD_WORDMARK.x, SHARE_CARD_WORDMARK.y);
+  try { ctx.letterSpacing = '0px'; } catch {}
+
+  const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, 'image/png'));
+  if (!blob) throw new Error('png encode failed');
+  return blob;
+}
+
 export async function drawCard(
   chart: Chart,
   options: ShareCardOptions = {},
 ): Promise<Blob> {
-  return options.variant === 'big-three'
-    ? drawBigThreeCard(chart, options)
-    : drawFullChartCard(chart, options);
+  if (options.variant === 'big-three') return drawBigThreeCard(chart, options);
+  if (options.variant === 'communication') return drawCommunicationCard(chart, options);
+  return drawFullChartCard(chart, options);
 }
 
 export async function saveChartCard(

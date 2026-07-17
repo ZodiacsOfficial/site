@@ -398,6 +398,77 @@ a.shell:hover .core { border-color: color-mix(in oklab, var(--sign, var(--accent
     linear-gradient(180deg, var(--void-2) 0%, var(--void-1) 100%);
 }
 
+/* ── Recommended next action ─────────────────────────────────────
+   A shared hierarchy for stateful journeys: one clear white action,
+   optional outlined/quiet alternatives, and a plain-language reason. */
+.next-action { --sign: var(--accent); }
+.next-action__core {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: clamp(22px, 4vw, 54px);
+  padding: clamp(22px, 3.4vw, 34px);
+}
+.next-action__copy { min-width: 0; }
+.next-action__cue {
+  margin: 0 0 8px;
+  color: var(--faint);
+  font-size: 10px;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+.next-action__title {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: clamp(1.55rem, 1.3rem + 1vw, 2.1rem);
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  line-height: 1.08;
+}
+.next-action__body {
+  max-width: 58ch;
+  margin: 10px 0 0;
+  color: var(--text-2);
+  font-size: var(--text-sm);
+  line-height: 1.65;
+}
+.next-action__meta { margin-top: 16px; }
+.next-action__actions {
+  display: grid;
+  justify-items: end;
+  gap: 12px;
+  min-width: max-content;
+}
+.next-action__primary,
+.next-action__secondary {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+}
+.next-action__quiet {
+  color: var(--muted);
+  font-size: var(--text-sm);
+  text-underline-offset: 4px;
+  text-decoration-color: var(--hair-2);
+}
+.next-action__quiet:hover { color: var(--text); }
+
+@media (max-width: 719px) {
+  .next-action__core { grid-template-columns: 1fr; gap: 22px; }
+  .next-action__actions,
+  .next-action__primary,
+  .next-action__secondary {
+    min-width: 0;
+    width: 100%;
+    justify-items: stretch;
+    justify-content: flex-start;
+  }
+  .next-action__primary > .btn { width: 100%; justify-content: space-between; }
+  .next-action__secondary > .btn { width: 100%; justify-content: space-between; }
+}
+
 /* Light tile — the restrained alternative to a double-bezel, for grids of
    equal items (the twelve signs) where a card-per-item is repetition, not
    hierarchy. A single hairline, a whisper of the sign hue on hover. */

@@ -67,7 +67,16 @@ export default function DailyForYou({ sign, locale: rawLocale = 'en' }: Props) {
           </li>
         ))}
       </ul>
-      <a class="dfy__more" href={localizePath(locale, '/transits/')}>{t(locale, 'allTransits')} →</a>
+      <div class="dfy__actions">
+        <a class="btn btn--primary dfy__primary" href={localizePath(locale, '/today/')}>
+          <span>{t(locale, 'openDailyBrief')}</span>
+          <span class="orb" aria-hidden="true">→</span>
+        </a>
+        <a class="dfy__more" href={localizePath(locale, '/transits/')}>
+          <span>{t(locale, 'allTransits')}</span>
+          <span aria-hidden="true">→</span>
+        </a>
+      </div>
     </section>
   );
 }

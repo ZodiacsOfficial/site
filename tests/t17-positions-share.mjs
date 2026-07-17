@@ -329,6 +329,176 @@ try {
       assert.equal(cardIconRequests.every(({ path }) => /^\/assets\/zodiac-icons\/128\/[a-z-]+\.webp$/.test(path)), true,
         'share cards may request only canonical 128px zodiac icons');
 
+      await dialog.locator('.calc-share-dialog__close').click();
+      await dialog.waitFor({ state: 'detached', timeout: TIMEOUT });
+
+      const communicationButton = source.locator('[data-communication-share]');
+      assert.equal(await communicationButton.count(), 1,
+        'the communication insight must expose one contextual share action');
+      assert.equal((await communicationButton.innerText()).includes('Share this reading'), true,
+        'the contextual action must explain what is being shared');
+      assert.equal(await source.locator('.calc__comm-part').count(), 3,
+        'the shareable communication insight must contain Mercury, Moon, and Mars cards');
+
+      const communicationExpected = await source.locator('.calc__comm').evaluate((section) => {
+        const firstSentence = (value) => {
+          const text = value.trim();
+          const match = /[.!?](?:[\u201d"']?)(?=\s|$)/.exec(text);
+          return match ? text.slice(0, match.index + match[0].length).trim() : text;
+        };
+        const parts = Array.from(section.querySelectorAll('.calc__comm-part')).map((part) => ({
+          body: part.querySelector('.mono--label')?.textContent?.trim() ?? '',
+          role: part.querySelector('h3')?.textContent?.trim() ?? '',
+          sign: part.querySelector('.calc__comm-sign')?.textContent?.trim() ?? '',
+          reading: firstSentence(part.querySelector(':scope > p')?.textContent ?? ''),
+        }));
+        const aspects = Array.from(section.querySelectorAll('.calc__comm-aspects li')).map((item) => {
+          const label = item.querySelector('.calc__comm-aspect-label');
+          const orb = label?.querySelector('small')?.textContent?.trim() ?? '';
+          return (label?.textContent ?? '').replace(orb, '').replace(/\s+/g, ' ').trim();
+        });
+        return { parts, aspects };
+      });
+      assert.deepEqual(communicationExpected.parts.map(({ body }) => body), ['Mercury', 'Moon', 'Mars']);
+      assert.deepEqual(communicationExpected.parts.map(({ role }) => role), [
+        'How you phrase things',
+        'What helps you feel heard',
+        'How you handle friction',
+      ]);
+
+      await source.evaluate(() => {
+        globalThis.__t17CanvasText = [];
+        globalThis.__t17DownloadClicks = [];
+        globalThis.__t17ShareCalls = 0;
+        Object.defineProperty(Navigator.prototype, 'canShare', { configurable: true, value: () => false });
+      });
+      const communicationEventStart = (await events(source)).length;
+      const communicationDownloadPromise = source.waitForEvent('download', { timeout: TIMEOUT });
+      await communicationButton.click();
+      assert.equal(await communicationButton.isDisabled(), true,
+        'the communication share action must lock while its PNG is rendering');
+      const communicationDownload = await communicationDownloadPromise;
+      await source.waitForFunction((start) => globalThis.__t17Events.length === start + 2,
+        communicationEventStart, { timeout: TIMEOUT });
+      assert.equal(communicationDownload.suggestedFilename(), 'zodiacs-communication.png',
+        'the communication filename must contain no birth input');
+      assert.deepEqual(await pngDimensions(communicationDownload), { width: 1080, height: 1350 },
+        'communication card must export at 1080×1350');
+
+      const communicationRender = await source.evaluate(() => ({
+        text: globalThis.__t17CanvasText.slice(),
+        downloads: globalThis.__t17DownloadClicks.slice(),
+        events: globalThis.__t17Events.slice(),
+      }));
+      const communicationValues = communicationRender.text.map((entry) => entry.value);
+      const communicationText = communicationValues.join(' | ');
+      const normalizedCommunicationText = communicationValues.join(' ').replace(/\s+/g, ' ').toLowerCase();
+      assert.equal(communicationValues.filter((value) => value === 'How I communicate').length, 1,
+        'communication PNG must carry its personal title exactly once');
+      for (const part of communicationExpected.parts) {
+        assert.equal(communicationText.includes(`${part.body.toUpperCase()} · ${part.role.toUpperCase()}`), true,
+          `communication PNG must label ${part.body}'s role`);
+        assert.equal(communicationText.includes(part.sign), true,
+          `communication PNG must name the ${part.body} sign`);
+        const readingLead = part.reading.split(/\s+/).slice(0, 5).join(' ').toLowerCase();
+        assert.equal(normalizedCommunicationText.includes(readingLead), true,
+          `communication PNG must include concise ${part.body} reading copy`);
+      }
+      assert.equal(communicationValues.filter((value) => value === 'A STRONG MERCURY CONNECTION').length,
+        communicationExpected.aspects.length > 0 ? 1 : 0,
+        'communication PNG must reserve at most one slot for a Mercury aspect');
+      if (communicationExpected.aspects.length > 0) {
+        assert.equal(normalizedCommunicationText.includes(`mercury ${communicationExpected.aspects[0].toLowerCase()}`), true,
+          'communication PNG must use the tightest Mercury aspect');
+        for (const aspect of communicationExpected.aspects.slice(1)) {
+          assert.equal(normalizedCommunicationText.includes(`mercury ${aspect.toLowerCase()} ·`), false,
+            `communication PNG must omit the looser Mercury ${aspect} aspect`);
+        }
+      }
+      for (const privateValue of [
+        BIRTH.date,
+        BIRTH.time,
+        BIRTH.cityQuery,
+        'June 15, 1990',
+        'America/New_York',
+        '/birth-chart/',
+        'http://',
+        'https://',
+      ]) {
+        assert.equal(communicationText.includes(privateValue), false,
+          `communication PNG leaked ${privateValue}`);
+      }
+      assert.equal(communicationText.includes(`Engine ${ENGINE_VERSION}`), true,
+        'communication PNG must carry only its engine receipt');
+      const communicationWordmark = communicationRender.text.find((entry) => entry.value === 'ZODIACS · ORG');
+      assert.deepEqual(
+        { align: communicationWordmark?.align, x: communicationWordmark?.x, y: communicationWordmark?.y },
+        { align: 'right', x: 1016, y: 1304 },
+        'communication wordmark must occupy the bottom-right register',
+      );
+      assert.deepEqual(
+        communicationRender.events.slice(communicationEventStart).map(({ name, props }) => ({ name, props })),
+        [
+          { name: 'chart_share', props: { variant: 'communication_card' } },
+          { name: 'share_card_downloaded', props: { variant: 'communication_card' } },
+        ],
+        'communication analytics must contain only its approved, privacy-safe variant',
+      );
+
+      const communicationEventsBeforeCancel = (await events(source)).length;
+      await source.evaluate(() => {
+        globalThis.__t17DownloadClicks = [];
+        globalThis.__t17ShareCalls = 0;
+        Object.defineProperty(Navigator.prototype, 'canShare', { configurable: true, value: () => true });
+        Object.defineProperty(Navigator.prototype, 'share', {
+          configurable: true,
+          value: () => {
+            globalThis.__t17ShareCalls += 1;
+            return Promise.reject(new DOMException('cancelled', 'AbortError'));
+          },
+        });
+      });
+      await communicationButton.click();
+      await source.waitForFunction(() => {
+        const action = document.querySelector('[data-communication-share]');
+        return globalThis.__t17ShareCalls === 1
+          && action
+          && !action.textContent?.includes('Creating');
+      }, null, { timeout: TIMEOUT });
+      assert.equal((await events(source)).length, communicationEventsBeforeCancel,
+        'a cancelled communication share sheet must fire no analytics');
+      assert.equal(await source.evaluate(() => globalThis.__t17DownloadClicks.length), 0,
+        'a cancelled communication share sheet must not fall through to download');
+      assert.equal((await communicationButton.innerText()).includes('Share this reading'), true,
+        'a cancelled communication share must return the contextual action to idle');
+
+      const communicationEventsBeforeError = (await events(source)).length;
+      await source.evaluate(() => {
+        globalThis.__t17DownloadClicks = [];
+        globalThis.__t17ExpectedErrors = [];
+        globalThis.__t17OriginalConsoleError = console.error;
+        console.error = (...values) => {
+          globalThis.__t17ExpectedErrors.push(values.map(String).join(' '));
+        };
+        globalThis.__t17OriginalToBlob = HTMLCanvasElement.prototype.toBlob;
+        HTMLCanvasElement.prototype.toBlob = function (callback) { callback(null); };
+        Object.defineProperty(Navigator.prototype, 'canShare', { configurable: true, value: () => false });
+      });
+      await communicationButton.click();
+      const communicationError = source.locator('.calc__comm [role="alert"]');
+      await communicationError.waitFor({ state: 'visible', timeout: TIMEOUT });
+      assert.match(await communicationError.innerText(), /couldn.t create that image/i);
+      assert.equal((await events(source)).length, communicationEventsBeforeError,
+        'a failed communication export must fire no success analytics');
+      assert.equal(await source.evaluate(() => globalThis.__t17DownloadClicks.length), 0,
+        'a failed communication export must not start a download');
+      assert.match(await source.evaluate(() => globalThis.__t17ExpectedErrors.join(' ')), /png encode failed/i,
+        'the communication failure state must retain the rendering error for diagnostics');
+      await source.evaluate(() => {
+        HTMLCanvasElement.prototype.toBlob = globalThis.__t17OriginalToBlob;
+        console.error = globalThis.__t17OriginalConsoleError;
+      });
+
       const received = await trackedPage();
       await open(received, positionsUrl);
       const positions = received.locator('[data-positions-only]');
@@ -380,8 +550,10 @@ try {
       transcript.positionsRows = await positions.locator('tbody tr').count();
       transcript.cardFilename = fullCardDownload.suggestedFilename();
       transcript.bigThreeFilename = bigThreeDownload.suggestedFilename();
+      transcript.communicationFilename = communicationDownload.suggestedFilename();
       transcript.fullCardPng = await pngDimensions(fullCardDownload);
       transcript.bigThreePng = await pngDimensions(bigThreeDownload);
+      transcript.communicationPng = await pngDimensions(communicationDownload);
       transcript.fullCardMs = Math.round(fullCardEventAt - fullCardStart);
       transcript.bigThreeMs = Math.round(bigThreeEventAt - bigThreeStart);
       transcript.events = (await events(source)).map(({ name, props }) => ({ name, props }));

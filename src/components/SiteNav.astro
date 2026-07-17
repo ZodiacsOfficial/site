@@ -55,6 +55,14 @@ const registryLabel: Record<Locale, string> = {
       </button>
     )}
 
+    <a
+      class="nav__chip"
+      href="/registry/"
+      aria-current={path.startsWith('/registry/') ? 'page' : undefined}
+    >
+      {t(locale, 'navCollect')}
+    </a>
+
     <button class="nav__burger" type="button" data-menu-toggle aria-expanded="false" aria-controls="mobile-menu" aria-label={t(locale, 'navMenu')}>
       <span class="nav__burger-line"></span>
       <span class="nav__burger-line"></span>
@@ -118,7 +126,7 @@ const registryLabel: Record<Locale, string> = {
     </div>
     <div class="mobile-menu__group mobile-menu__group--quiet">
       <span class="mobile-menu__label">{moreLabel[locale]}</span>
-      <a class="mobile-menu__link" href={localizePath(locale, '/registry/')}>
+      <a class="mobile-menu__link" href="/registry/">
         {registryLabel[locale]}
       </a>
     </div>
@@ -221,6 +229,27 @@ const registryLabel: Record<Locale, string> = {
   /* Saved-charts link tints to accent once this device has saved a chart. */
   .nav__saved.has-saves { color: var(--accent); }
   .nav__saved.has-saves:hover { color: var(--accent); }
+
+  /* A quiet, desktop-only door into the Registry wing. */
+  .nav__chip {
+    display: none;
+    align-items: center;
+    height: 34px;
+    padding: 0 2px 0 16px;
+    border-left: 1px solid var(--hair-2);
+    font-family: var(--font-serif);
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-2);
+    text-decoration: none;
+    white-space: nowrap;
+    transition: color var(--dur-2) var(--ease);
+  }
+  .nav__chip:hover { color: var(--text); }
+  .nav__chip[aria-current='page'] { color: var(--text); }
+  @media (min-width: 820px) { .nav__chip { display: inline-flex; } }
 
   .nav__burger {
     display: inline-grid;

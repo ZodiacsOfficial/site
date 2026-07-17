@@ -8,6 +8,7 @@ import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import { BirthFields } from './BirthFields';
 import type { CopyLinkState } from './CopyLinkButton';
 import SignChip from './SignChip';
+import { NextActionCard } from '../components/NextActionCard';
 import { resolveSavedChart } from '../lib/profile/resolve';
 import { MAX_PAIRS, deletePair, hasPair, loadPairs, pairSideLabels, prunePairs, savePair } from '../lib/profile/pairs';
 import type { SavedPair, SavedPairSide } from '../lib/profile/pairs';
@@ -65,7 +66,13 @@ const PAIR_COPY_EN = {
   savedPairs: 'Saved comparisons',
   useMyChart: 'Use my chart — {handle}',
   dismissMyChart: 'Dismiss saved-chart suggestion',
+  saveCue: 'Up next',
+  savePairTitle: 'Keep this reading',
   savePair: 'Save this comparison',
+  savePairBenefit: 'Keep this reading together so you can return without entering both charts again.',
+  savedPairTitle: 'Comparison saved',
+  openSavedPairs: 'Open Saved charts',
+  reopenPairNote: 'Reopen this comparison anytime from Saved charts.',
   pairSaved: 'Comparison saved on this device.',
   pairExists: 'Already saved.',
   pairSaveFull: 'You can save up to {n} comparisons — remove one first.',
@@ -80,7 +87,13 @@ const PAIR_COPY = {
     savedPairs: 'Comparaciones guardadas',
     useMyChart: 'Usar mi carta — {handle}',
     dismissMyChart: 'Descartar sugerencia de carta guardada',
+    saveCue: 'A continuación',
+    savePairTitle: 'Conserva esta lectura',
     savePair: 'Guardar esta comparación',
+    savePairBenefit: 'Guarda esta lectura para volver sin ingresar ambas cartas de nuevo.',
+    savedPairTitle: 'Comparación guardada',
+    openSavedPairs: 'Abrir Cartas guardadas',
+    reopenPairNote: 'Vuelve a abrir esta comparación cuando quieras desde Cartas guardadas.',
     pairSaved: 'Comparación guardada en este dispositivo.',
     pairExists: 'Ya está guardada.',
     pairSaveFull: 'Puedes guardar hasta {n} comparaciones — elimina una primero.',
@@ -92,7 +105,13 @@ const PAIR_COPY = {
     savedPairs: 'Comparações salvas',
     useMyChart: 'Usar meu mapa — {handle}',
     dismissMyChart: 'Dispensar sugestão de mapa salvo',
+    saveCue: 'A seguir',
+    savePairTitle: 'Guarde esta leitura',
     savePair: 'Salvar esta comparação',
+    savePairBenefit: 'Guarde esta leitura para voltar sem inserir os dois mapas novamente.',
+    savedPairTitle: 'Comparação salva',
+    openSavedPairs: 'Abrir Mapas salvos',
+    reopenPairNote: 'Abra esta comparação novamente quando quiser em Mapas salvos.',
     pairSaved: 'Comparação salva neste dispositivo.',
     pairExists: 'Já está salva.',
     pairSaveFull: 'Você pode salvar até {n} comparações — remova uma primeiro.',
@@ -104,7 +123,13 @@ const PAIR_COPY = {
     savedPairs: 'Comparaisons enregistrées',
     useMyChart: 'Utiliser mon thème — {handle}',
     dismissMyChart: 'Fermer la suggestion de thème enregistré',
+    saveCue: 'À suivre',
+    savePairTitle: 'Garde cette lecture',
     savePair: 'Enregistrer cette comparaison',
+    savePairBenefit: 'Garde cette lecture pour y revenir sans saisir à nouveau les deux thèmes.',
+    savedPairTitle: 'Comparaison enregistrée',
+    openSavedPairs: 'Ouvrir Thèmes enregistrés',
+    reopenPairNote: 'Rouvre cette comparaison à tout moment depuis Thèmes enregistrés.',
     pairSaved: 'Comparaison enregistrée sur cet appareil.',
     pairExists: 'Déjà enregistrée.',
     pairSaveFull: 'Tu peux enregistrer jusqu’à {n} comparaisons — supprime-en une d’abord.',
@@ -116,7 +141,13 @@ const PAIR_COPY = {
     savedPairs: 'Confronti salvati',
     useMyChart: 'Usa il mio tema — {handle}',
     dismissMyChart: 'Chiudi il suggerimento del tema salvato',
+    saveCue: 'Prossimo passo',
+    savePairTitle: 'Conserva questa lettura',
     savePair: 'Salva questo confronto',
+    savePairBenefit: 'Conserva questa lettura per tornare senza inserire di nuovo entrambi i temi.',
+    savedPairTitle: 'Confronto salvato',
+    openSavedPairs: 'Apri Temi salvati',
+    reopenPairNote: 'Riapri questo confronto quando vuoi da Temi salvati.',
     pairSaved: 'Confronto salvato su questo dispositivo.',
     pairExists: 'Già salvato.',
     pairSaveFull: 'Puoi salvare fino a {n} confronti — prima rimuovine uno.',
@@ -130,6 +161,13 @@ const pc = (locale: Locale, key: keyof typeof PAIR_COPY_EN) => PAIR_COPY[locale]
 const pcf = (locale: Locale, key: keyof typeof PAIR_COPY_EN, values: Record<string, string | number>) =>
   pc(locale, key).replace(/\{(\w+)\}/g, (_, k: string) => String(values[k] ?? ''));
 const listLocale = (locale: Locale) => LOCALE_META[locale].intlLocale;
+
+export type PairSaveState = 'idle' | 'saved' | 'exists' | 'full' | 'error';
+
+/** One completed state covers both a save from this result and a pair that
+ *  was already present when the comparison opened. */
+export const pairSaveIsComplete = (state: PairSaveState, alreadyStored: boolean) =>
+  alreadyStored || state === 'saved' || state === 'exists';
 
 /** Short handle for sentences: chart names like "Cancer Sun · 1990-02-01" trim to "Cancer Sun". */
 const handleOf = (name: string) => name.split('·')[0].trim() || name;
@@ -356,7 +394,7 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
   const [invite, setInvite] = useState<ShareChartInput | null>(null);
   const [inviteState, setInviteState] = useState<CopyLinkState>('idle');
   const [pairs, setPairs] = useState<SavedPair[]>([]);
-  const [pairSave, setPairSave] = useState<'idle' | 'saved' | 'exists' | 'full' | 'error'>('idle');
+  const [pairSave, setPairSave] = useState<PairSaveState>('idle');
   const [pairAnnounce, setPairAnnounce] = useState('');
   const [restoreTick, setRestoreTick] = useState(0);
   const [quickFillDismissed, setQuickFillDismissed] = useState(false);
@@ -635,6 +673,10 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
   const sideRestorable = (side: SavedPairSide) =>
     side.kind === 'input' || charts.some((c) => c.id === side.chartId);
   const visiblePairs = pairs.filter((pair) => sideRestorable(pair.a) && sideRestorable(pair.b));
+  const resultPairAlreadyStored = result?.sides[0] && result.sides[1]
+    ? hasPair(pairs, result.sides[0], result.sides[1])
+    : false;
+  const pairSaveComplete = pairSaveIsComplete(pairSave, resultPairAlreadyStored);
   const pairName = (pair: SavedPair) => pairSideLabels(pair, charts).join(' × ');
   // Accessible names spell the glyph out: "Frida and Diego", not
   // "Frida multiplication sign Diego".
@@ -839,47 +881,81 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
           )}
 
           {(compatShareMod || (result.sides[0] && result.sides[1])) && (
-            <div class="calc__actions">
-              {compatShareMod && (
-                <compatShareMod.CompatibilityPairingCta
-                  a={{ label: result.a.label, bodies: result.a.bodies, asc: result.a.asc }}
-                  b={{ label: result.b.label, bodies: result.b.bodies, asc: result.b.asc }}
-                  locale={locale}
-                />
-              )}
-              {result.sides[0] && result.sides[1] && (
-                <button
-                  type="button" class="btn btn--ghost" data-save-pair onClick={onSavePair}
-                  disabled={pairSave === 'saved' || pairSave === 'exists'}
-                >
-                  <span>
-                    {pairSave === 'saved' || pairSave === 'exists'
-                      ? t(locale, 'chartSavedDevice')
-                      : pc(locale, 'savePair')}
-                  </span>
-                  <span class="orb">{pairSave === 'saved' || pairSave === 'exists' ? '✓' : '+'}</span>
-                </button>
-              )}
-              {compatShareMod && (
-                <compatShareMod.CompatibilityShareControl
-                  key={result.at}
-                  a={{ label: result.a.label, bodies: result.a.bodies, asc: result.a.asc }}
-                  b={{ label: result.b.label, bodies: result.b.bodies, asc: result.b.asc }}
-                  summary={result.summary}
-                  locale={locale}
-                />
-              )}
-            </div>
+            pairSaveComplete ? (
+              <div class="syn__result-actions">
+                {result.sides[0] && result.sides[1] && (
+                  <div class="syn__save-complete" data-pair-status>
+                    <div class="syn__save-status">
+                      <span class="syn__save-check" aria-hidden="true">✓</span>
+                      <span>
+                        <strong>{pc(locale, 'savedPairTitle')}</strong>
+                        <small>{pc(locale, 'reopenPairNote')}</small>
+                      </span>
+                    </div>
+                    <a class="btn btn--ghost" href={localizePath(locale, '/profile/')}>
+                      <span>{pc(locale, 'openSavedPairs')}</span>
+                      <span class="orb" aria-hidden="true">→</span>
+                    </a>
+                  </div>
+                )}
+                {compatShareMod && (
+                  <div class="calc__actions syn__result-secondary">
+                    <compatShareMod.CompatibilityPairingCta
+                      a={{ label: result.a.label, bodies: result.a.bodies, asc: result.a.asc }}
+                      b={{ label: result.b.label, bodies: result.b.bodies, asc: result.b.asc }}
+                      locale={locale}
+                    />
+                    <compatShareMod.CompatibilityShareControl
+                      key={result.at}
+                      a={{ label: result.a.label, bodies: result.a.bodies, asc: result.a.asc }}
+                      b={{ label: result.b.label, bodies: result.b.bodies, asc: result.b.asc }}
+                      summary={result.summary}
+                      locale={locale}
+                    />
+                  </div>
+                )}
+              </div>
+            ) : result.sides[0] && result.sides[1] ? (
+              <NextActionCard
+                className="syn__next-action"
+                cue={pc(locale, 'saveCue')}
+                title={pc(locale, 'savePairTitle')}
+                body={pc(locale, 'savePairBenefit')}
+                headingLevel={3}
+                primary={(
+                  <button
+                    type="button" class="btn btn--primary" data-save-pair onClick={onSavePair}
+                  >
+                    <span>{pc(locale, 'savePair')}</span>
+                    <span class="orb" aria-hidden="true">+</span>
+                  </button>
+                )}
+                secondary={compatShareMod ? (
+                  <>
+                    <compatShareMod.CompatibilityPairingCta
+                      a={{ label: result.a.label, bodies: result.a.bodies, asc: result.a.asc }}
+                      b={{ label: result.b.label, bodies: result.b.bodies, asc: result.b.asc }}
+                      locale={locale}
+                    />
+                    <compatShareMod.CompatibilityShareControl
+                      key={result.at}
+                      a={{ label: result.a.label, bodies: result.a.bodies, asc: result.a.asc }}
+                      b={{ label: result.b.label, bodies: result.b.bodies, asc: result.b.asc }}
+                      summary={result.summary}
+                      locale={locale}
+                    />
+                  </>
+                ) : undefined}
+              />
+            ) : null
           )}
           {/* Announcement rides the persistent status node above; these
               visible notes are for sighted users (alerts announce fine
               on insertion). */}
-          {pairSave !== 'idle' && (
-            pairSave === 'saved' || pairSave === 'exists'
-              ? <p class="calc__share-note" data-pair-status>{pc(locale, pairSave === 'saved' ? 'pairSaved' : 'pairExists')}</p>
-              : pairSave === 'full'
-                ? <p class="calc__error" role="alert" data-pair-status>{pcf(locale, 'pairSaveFull', { n: MAX_PAIRS })}</p>
-                : <p class="calc__error" role="alert" data-pair-status>{t(locale, 'chartSaveError')}</p>
+          {(pairSave === 'full' || pairSave === 'error') && (
+            pairSave === 'full'
+              ? <p class="calc__error" role="alert" data-pair-status>{pcf(locale, 'pairSaveFull', { n: MAX_PAIRS })}</p>
+              : <p class="calc__error" role="alert" data-pair-status>{t(locale, 'chartSaveError')}</p>
           )}
 
           {/* Invite: A's side rides in the link; B fills their own */}

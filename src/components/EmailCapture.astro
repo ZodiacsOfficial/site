@@ -2,7 +2,7 @@
 import SignIcon from './SignIcon.astro';
 import { hasEmailCaptureProvider } from '../lib/email/config';
 import { SIGNS, signName } from '../lib/signs';
-import { normalizeLocale, t, type Locale } from '../lib/i18n';
+import { normalizeLocale, t, tf, type Locale } from '../lib/i18n';
 
 interface Props {
   locale?: Locale;
@@ -18,7 +18,9 @@ const {
   sign: requestedSign,
 } = Astro.props;
 const locale = normalizeLocale(rawLocale);
-const selectedSign = SIGNS.some((sign) => sign.slug === requestedSign) ? requestedSign : undefined;
+const selectedSignData = SIGNS.find((sign) => sign.slug === requestedSign);
+const selectedSign = selectedSignData?.slug;
+const selectedSignName = selectedSignData ? signName(selectedSignData, locale) : undefined;
 // Astro's static frontmatter runs in Node; unprefixed provider secrets are
 // intentionally absent from `import.meta.env` client exposure.
 const enabled = hasEmailCaptureProvider(process.env);
@@ -30,12 +32,22 @@ const id = `email-${placement}-${locale}`;
     data-email-capture-shell
     data-placement={placement}
     data-reveal-on-chart={revealOnChart ? 'true' : undefined}
+    data-personalized-sign={selectedSign ? 'true' : undefined}
     hidden={revealOnChart}
     aria-labelledby={`${id}-title`}
   >
     <div class="email-capture__copy">
       <span class="email-capture__kicker">{t(locale, 'emailCaptureKicker')}</span>
-      <h2 id={`${id}-title`}>{t(locale, 'emailCaptureTitle')}</h2>
+      <h2
+        id={`${id}-title`}
+        data-email-title
+        data-default-title={t(locale, 'emailCaptureTitle')}
+        data-personal-title={t(locale, 'emailCapturePersonalTitle')}
+      >
+        {selectedSignName
+          ? tf(locale, 'emailCapturePersonalTitle', { sign: selectedSignName })
+          : t(locale, 'emailCaptureTitle')}
+      </h2>
       <p>{t(locale, 'emailCaptureCopy')}</p>
     </div>
 
@@ -71,7 +83,27 @@ const id = `email-${placement}-${locale}`;
         </button>
       </div>
 
-      <fieldset class="email-capture__signs">
+      <div
+        class="email-capture__sign-summary"
+        data-email-sign-summary
+        data-summary-template={t(locale, 'emailCaptureUsingSign')}
+        hidden={!selectedSignName}
+      >
+        <span data-email-sign-summary-copy>
+          {selectedSignName ? tf(locale, 'emailCaptureUsingSign', { sign: selectedSignName }) : ''}
+        </span>
+        <button
+          class="email-capture__change-sign"
+          type="button"
+          data-email-sign-change
+          aria-controls={`${id}-signs`}
+          aria-expanded="false"
+        >
+          {t(locale, 'emailCaptureChangeSign')}
+        </button>
+      </div>
+
+      <fieldset id={`${id}-signs`} class="email-capture__signs" data-email-signs hidden={Boolean(selectedSignName)}>
         <legend>{t(locale, 'emailCaptureSignLegend')}</legend>
         <label class="email-capture__skip">
           <input type="radio" name="sign" value="" checked={!selectedSign} />
@@ -80,7 +112,13 @@ const id = `email-${placement}-${locale}`;
         <div class="email-capture__sign-grid">
           {SIGNS.map((sign) => (
             <label class="email-capture__sign" title={signName(sign, locale)}>
-              <input type="radio" name="sign" value={sign.slug} checked={selectedSign === sign.slug} />
+              <input
+                type="radio"
+                name="sign"
+                value={sign.slug}
+                data-sign-name={signName(sign, locale)}
+                checked={selectedSign === sign.slug}
+              />
               <span class="email-capture__disc">
                 <SignIcon sign={sign.slug} size={24} alt="" />
               </span>
@@ -132,9 +170,77 @@ const id = `email-${placement}-${locale}`;
     const radios = Array.from(surface.querySelectorAll<HTMLInputElement>('input[name="sign"]'));
     const radio = radios.find((input) => input.value === sign);
     if (!radio) return;
+    surface.dataset.personalizedSign = 'true';
     radios.forEach((input) => {
       input.checked = input === radio;
       input.defaultChecked = input === radio;
+    });
+    renderCaptureSign(surface, radio, true);
+  }
+
+  function fillSignTemplate(template: string | undefined, signName: string) {
+    return (template ?? '').replace('{sign}', signName);
+  }
+
+  function renderCaptureSign(
+    surface: HTMLElement,
+    radio: HTMLInputElement | undefined,
+    collapse: boolean,
+  ) {
+    const title = surface.querySelector<HTMLElement>('[data-email-title]');
+    const summary = surface.querySelector<HTMLElement>('[data-email-sign-summary]');
+    const summaryCopy = surface.querySelector<HTMLElement>('[data-email-sign-summary-copy]');
+    const chooser = surface.querySelector<HTMLFieldSetElement>('[data-email-signs]');
+    const change = surface.querySelector<HTMLButtonElement>('[data-email-sign-change]');
+    if (!title || !summary || !summaryCopy || !chooser || !change) return;
+
+    const name = radio?.value ? radio.dataset.signName : undefined;
+    if (!name) {
+      title.textContent = title.dataset.defaultTitle ?? '';
+      summary.hidden = true;
+      chooser.hidden = false;
+      change.setAttribute('aria-expanded', 'true');
+      return;
+    }
+
+    title.textContent = fillSignTemplate(title.dataset.personalTitle, name);
+    summaryCopy.textContent = fillSignTemplate(summary.dataset.summaryTemplate, name);
+    summary.hidden = false;
+    chooser.hidden = collapse;
+    change.setAttribute('aria-expanded', String(!collapse));
+  }
+
+  function setupSignChooser(surface: HTMLElement) {
+    if (surface.dataset.signChooserEnhanced === 'true') return;
+    const chooser = surface.querySelector<HTMLFieldSetElement>('[data-email-signs]');
+    const summary = surface.querySelector<HTMLElement>('[data-email-sign-summary]');
+    const change = surface.querySelector<HTMLButtonElement>('[data-email-sign-change]');
+    if (!chooser || !summary || !change) return;
+    surface.dataset.signChooserEnhanced = 'true';
+
+    change.addEventListener('click', () => {
+      const selected = chooser.querySelector<HTMLInputElement>('input[name="sign"]:checked');
+      const opening = chooser.hidden;
+      renderCaptureSign(surface, selected ?? undefined, !opening);
+      if (opening) requestAnimationFrame(() => selected?.focus());
+    });
+
+    chooser.addEventListener('change', (event) => {
+      const radio = (event.target as HTMLElement).closest<HTMLInputElement>('input[name="sign"]');
+      if (!radio || surface.dataset.personalizedSign !== 'true') return;
+      const radios = Array.from(chooser.querySelectorAll<HTMLInputElement>('input[name="sign"]'));
+      radios.forEach((input) => { input.defaultChecked = input === radio; });
+      renderCaptureSign(surface, radio, Boolean(radio.value));
+      if (radio.value) change.focus({ preventScroll: true });
+    });
+
+    chooser.addEventListener('keydown', (event) => {
+      if (event.key !== 'Escape' || surface.dataset.personalizedSign !== 'true') return;
+      const selected = chooser.querySelector<HTMLInputElement>('input[name="sign"]:checked');
+      if (!selected?.value) return;
+      event.preventDefault();
+      renderCaptureSign(surface, selected, true);
+      change.focus({ preventScroll: true });
     });
   }
 
@@ -150,9 +256,19 @@ const id = `email-${placement}-${locale}`;
 
   window.addEventListener('zodiacs:chart-computed', revealChartCapture);
 
+  captureSurfaces.forEach(setupSignChooser);
+
   document.querySelectorAll<HTMLFormElement>('[data-email-capture]').forEach((form) => {
     if (form.dataset.enhanced === 'true') return;
     form.dataset.enhanced = 'true';
+    form.addEventListener('reset', () => {
+      queueMicrotask(() => {
+        const surface = form.closest<HTMLElement>('[data-email-capture-shell]');
+        if (!surface || surface.dataset.personalizedSign !== 'true') return;
+        const selected = form.querySelector<HTMLInputElement>('input[name="sign"]:checked');
+        renderCaptureSign(surface, selected ?? undefined, Boolean(selected?.value));
+      });
+    });
     form.addEventListener('submit', async (event) => {
       event.preventDefault();
       if (!form.reportValidity()) return;
@@ -238,7 +354,39 @@ const id = `email-${placement}-${locale}`;
   .email-capture__skip input:focus-visible + span { outline: 2px solid var(--ink-0); outline-offset: 3px; }
   .email-capture__submit { min-height: 46px; padding-inline: 18px; white-space: nowrap; }
   .email-capture__submit:disabled { cursor: wait; }
+  .email-capture__sign-summary {
+    display: flex;
+    min-height: 44px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    margin-top: 16px;
+    padding: 0 4px 0 12px;
+    border: 1px solid var(--hair-2);
+    border-radius: var(--r-full);
+    color: var(--text-2);
+    font-size: 13px;
+  }
+  .email-capture__sign-summary[hidden] { display: none; }
+  .email-capture__change-sign {
+    min-width: 72px;
+    min-height: 44px;
+    padding: 0 14px;
+    border: 0;
+    border-radius: var(--r-full);
+    background: rgba(198, 204, 218, 0.08);
+    color: var(--text);
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background var(--dur-1) var(--ease), transform 140ms cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .email-capture__change-sign:hover { background: rgba(198, 204, 218, 0.14); }
+  }
+  .email-capture__change-sign:active { transform: scale(0.97); }
   .email-capture__signs { margin: 16px 0 0; padding: 0; border: 0; }
+  .email-capture__signs[hidden] { display: none; }
   .email-capture__signs legend { margin-bottom: 9px; }
   .email-capture__skip { display: inline-flex; align-items: center; gap: 7px; margin: 0 0 10px; color: var(--muted); font-size: 12px; cursor: pointer; }
   .email-capture__skip input { accent-color: var(--ink-1); }
@@ -261,5 +409,8 @@ const id = `email-${placement}-${locale}`;
   .email-capture__status { margin: 10px 0 0; color: var(--faint); font-size: 11px; line-height: 1.5; }
   .email-capture__status:not(:empty) { color: var(--text-2); }
   .email-capture--footer { margin: 0 0 clamp(36px, 6vw, 60px); }
-  @media (prefers-reduced-motion: reduce) { .email-capture__disc { transition: none; } }
+  @media (prefers-reduced-motion: reduce) {
+    .email-capture__disc,
+    .email-capture__change-sign { transition: none; }
+  }
 </style>
