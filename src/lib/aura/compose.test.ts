@@ -324,7 +324,7 @@ describe('Registry Aura composition', () => {
 
     const example = composeAura({ heldSigns: ['cancer'], chart: chart(), visitedAt: VISIT, eventCatalog: catalog([]), illustrative: true });
     expect(example.auraSentence).toBe(
-      'Cancer is included in the illustrative wallet record. It is also in the example chart and in the sky of July 16, 2026 UTC.',
+      'Cancer is included in the sample record. It is also in the example chart and in the sky of July 16, 2026 UTC.',
     );
 
     const empty = composeAura({ heldSigns: [], chart: chart(), visitedAt: VISIT, eventCatalog: catalog([]) });
