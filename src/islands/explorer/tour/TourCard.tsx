@@ -30,6 +30,8 @@ interface Props {
   onFinish: () => void;
   prevDisabled: boolean;
   isLast: boolean;
+  shareLabel: string;
+  onShare: () => void;
   onExit: () => void;
   headingRef: MutableRef<HTMLHeadingElement | null>;
 }
@@ -37,6 +39,7 @@ interface Props {
 export default function TourCard({
   locale, variant, kicker, title, dotsLabel, exitLabel, finishLabel, nextLabel, paragraphs, feature, dots,
   onDot, onPrev, onNext, onFinish, prevDisabled, isLast, onExit, headingRef,
+  shareLabel, onShare,
 }: Props) {
   // The four-step first reading opens expanded on phones so the lesson and
   // its navigation are immediately legible. Longer tours retain the peek.
@@ -91,7 +94,19 @@ export default function TourCard({
           <span class="mono--label tour__kicker" data-tour-kicker>{kicker}</span>
           <h3 class="insp__title" tabIndex={-1} ref={headingRef} data-tour-heading>{title}</h3>
         </div>
-        <button class="insp__close" type="button" onClick={onExit} aria-label={exitLabel} data-tour-exit>×</button>
+        <div class="tour__head-actions">
+          <button
+            class="tour__share"
+            type="button"
+            onClick={onShare}
+            aria-label={shareLabel}
+            data-tour-share
+          >
+            <span>{shareLabel}</span>
+            <span aria-hidden="true">↗</span>
+          </button>
+          <button class="insp__close" type="button" onClick={onExit} aria-label={exitLabel} data-tour-exit>×</button>
+        </div>
       </div>
       <div class="insp__body" key={`${kicker}-${title}`}>
         <div class="tour__stage">

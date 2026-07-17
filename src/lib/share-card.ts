@@ -13,8 +13,6 @@ import { h, render } from 'preact';
 import Wheel from './wheel/Wheel';
 import {
   degreeInSign,
-  elementLabel,
-  modalityLabel,
   signBySlug,
   signForLongitude,
   signName,
@@ -25,14 +23,38 @@ import type { Chart } from './engine/types';
 import type { Locale } from './i18n';
 import { shareCardFormat, shareCardText } from './share-card-copy';
 import { communicationRead } from './communication';
+import { approachRead } from './approach';
+import { chartSignature, type ChartSignature } from './chart-signature';
 
 export type CardOutcome = 'shared' | 'downloaded' | 'cancelled';
-export type ChartCardVariant = 'full' | 'big-three' | 'communication';
+export type ChartCardVariant = 'full' | 'big-three' | 'communication' | 'signature' | 'approach';
+export type PrimaryShareCardVariant = Extract<ChartCardVariant, 'signature' | 'big-three' | 'full'>;
 
 export interface ShareCardOptions {
   /** The full wheel is the backwards-compatible default. */
   variant?: ChartCardVariant;
   locale?: Locale;
+  /** Forwarded to audience-facing Moon advice for no-time boundary days. */
+  moonAmbiguous?: boolean;
+}
+
+/**
+ * D9 keeps authored interpretation English-only. Translated chart pages still
+ * get a useful, fully localized primary share surface without rendering an
+ * English interpretation: Big Three when angles are available, otherwise the
+ * full chart.
+ */
+export function primaryShareCardVariant(locale: Locale, hasAngles: boolean): PrimaryShareCardVariant {
+  if (locale === 'en') return 'signature';
+  return hasAngles ? 'big-three' : 'full';
+}
+
+/** The authored chart-signature corpus is deliberately unavailable off EN. */
+export function authoredSignatureForLocale(
+  chart: Pick<Chart, 'bodies' | 'angles' | 'aspects'>,
+  locale: Locale,
+): ChartSignature | null {
+  return locale === 'en' ? chartSignature(chart, locale) : null;
 }
 
 export const SHARE_CARD_SCALE = 2;
@@ -172,6 +194,8 @@ export function chartCardReceipt(
 export function chartCardFilename(options: ShareCardOptions = {}): string {
   if (options.variant === 'big-three') return 'zodiacs-big-three.png';
   if (options.variant === 'communication') return 'zodiacs-communication.png';
+  if (options.variant === 'signature') return 'zodiacs-chart-signature.png';
+  if (options.variant === 'approach') return 'zodiacs-how-to-approach-me.png';
   return 'zodiacs-chart.png';
 }
 
@@ -246,6 +270,91 @@ export function communicationCardContent(
   };
 }
 
+export interface SignatureCardContent {
+  title: string;
+  kicker: string;
+  signature: ChartSignature | null;
+  bigThree: BigThreePlacement[];
+  receipt: string;
+}
+
+/** A positive chart-specific claim backed only by computed positions. */
+export function signatureCardContent(
+  chart: Chart,
+  locale: Locale = 'en',
+): SignatureCardContent {
+  return {
+    title: shareCardText(locale, 'signatureTitle'),
+    kicker: shareCardText(locale, 'signatureKicker'),
+    signature: authoredSignatureForLocale(chart, locale),
+    bigThree: bigThreePlacements(chart, locale),
+    receipt: chartCardReceipt(chart, locale),
+  };
+}
+
+export interface ApproachCardRow {
+  body: 'Rising' | 'Mercury' | 'Moon';
+  role: string;
+  slug: string;
+  sign: string;
+  reading: string;
+}
+
+export interface ApproachCardContent {
+  title: string;
+  kicker: string;
+  rows: ApproachCardRow[];
+  avoid: {
+    body: 'Mars';
+    role: string;
+    slug: string;
+    sign: string;
+    reading: string;
+  } | null;
+  notes: string[];
+  receipt: string;
+}
+
+/** Audience-facing card content; birth input is never consulted or returned. */
+export function approachCardContent(
+  chart: Chart,
+  options: Pick<ShareCardOptions, 'locale' | 'moonAmbiguous'> = {},
+): ApproachCardContent {
+  const locale = options.locale ?? 'en';
+  const read = approachRead(chart, { moonAmbiguous: options.moonAmbiguous });
+  const rows = [read.rising, read.mercury, read.moon].flatMap((part) => {
+    if (!part || part.body === 'Mars') return [];
+    const sign = signBySlug(part.sign);
+    return [{
+      body: part.body,
+      role: part.role,
+      slug: part.sign,
+      sign: signName(sign, locale),
+      reading: firstSentence(part.reading),
+    }];
+  });
+  const avoid = read.avoid
+    ? {
+      body: 'Mars' as const,
+      role: read.avoid.role,
+      slug: read.avoid.sign,
+      sign: signName(signBySlug(read.avoid.sign), locale),
+      reading: firstSentence(read.avoid.reading),
+    }
+    : null;
+  const notes: string[] = [];
+  if (!read.rising) notes.push(shareCardText(locale, 'approachBirthTimeNote'));
+  if (read.moonAmbiguous) notes.push(shareCardText(locale, 'approachMoonTimeNote'));
+  return {
+    title: shareCardText(locale, 'approachTitle'),
+    kicker: shareCardText(locale, 'approachKicker'),
+    rows,
+    avoid,
+    notes,
+    receipt: chartCardReceipt(chart, locale),
+  };
+}
+
 function wrappedLines(
   ctx: CanvasRenderingContext2D,
   text: string,
@@ -298,6 +407,7 @@ async function drawFullChartCard(
 ): Promise<Blob> {
   const locale = options.locale ?? 'en';
   const placements = bigThreePlacements(chart, locale);
+  const signature = authoredSignatureForLocale(chart, locale);
   const trio = placements.map((placement) => ({
     label: shareCardText(locale, placement.kind),
     slug: placement.slug,
@@ -362,17 +472,20 @@ async function drawFullChartCard(
   ctx.font = `500 ${px}px ${SERIF}`;
   ctx.fillText(line, W / 2, 1138);
 
-  const profile = dominantProfile(chart);
-  const element = profile.element ? elementLabel(profile.element, locale) : shareCardText(locale, 'balanced');
-  const modality = profile.modality ? modalityLabel(profile.modality, locale) : shareCardText(locale, 'balanced');
-  ctx.fillStyle = INK_2;
-  ctx.font = `400 24px ${MONO}`;
-  ctx.fillText(shareCardFormat(locale, 'dominant', { element, modality }), W / 2, 1192);
+  if (signature) {
+    const signatureTitle = `STANDOUT · ${signature.title}`;
+    const signaturePx = fitText(ctx, signatureTitle, W - 180, 24, 17, 400, MONO);
+    ctx.fillStyle = INK_2;
+    ctx.font = `400 ${signaturePx}px ${MONO}`;
+    ctx.fillText(signatureTitle.toUpperCase(), W / 2, 1183);
+    ctx.font = `400 25px ${SERIF}`;
+    drawWrappedText(ctx, signature.summary, W / 2, 1215, W - 240, 27, 2);
+  }
 
   // Receipt + footer.
   ctx.fillStyle = INK_2;
-  ctx.font = `400 26px ${MONO}`;
-  ctx.fillText(chartCardReceipt(chart, locale), W / 2, 1240);
+  ctx.font = `400 22px ${MONO}`;
+  ctx.fillText(chartCardReceipt(chart, locale), W / 2, 1272);
 
   // Wordmark — the display serif set as spaced small caps, an old-almanac /
   // inscriptional register rather than the techy monospace.
@@ -551,12 +664,238 @@ async function drawCommunicationCard(
   return blob;
 }
 
+async function drawSignatureCard(
+  chart: Chart,
+  options: ShareCardOptions = {},
+): Promise<Blob> {
+  const locale = options.locale ?? 'en';
+  const content = signatureCardContent(chart, locale);
+  if (!content.signature) {
+    return drawBigThreeCard(chart, { ...options, variant: 'big-three' });
+  }
+
+  await document.fonts.ready;
+  await Promise.all([
+    document.fonts.load(`500 68px ${SERIF}`),
+    document.fonts.load(`500 56px ${SERIF}`),
+    document.fonts.load(`400 30px ${SERIF}`),
+    document.fonts.load(`400 24px ${MONO}`),
+  ]).catch(() => {});
+  const [signatureDiscs, bigThreeDiscs] = await Promise.all([
+    Promise.all(content.signature.signSlugs.slice(0, 3).map(loadDisc)),
+    Promise.all(content.bigThree.map((placement) => loadDisc(placement.slug))),
+  ]);
+
+  const canvas = document.createElement('canvas');
+  canvas.width = W;
+  canvas.height = H;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) throw new Error('canvas unavailable');
+
+  ctx.fillStyle = BG;
+  ctx.fillRect(0, 0, W, H);
+  if (typeof ctx.roundRect === 'function') {
+    ctx.strokeStyle = HAIR;
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.roundRect(28.5, 28.5, W - 57, H - 57, 26);
+    ctx.stroke();
+  }
+
+  ctx.textBaseline = 'middle';
+  ctx.textAlign = 'left';
+  ctx.fillStyle = INK_2;
+  ctx.font = `400 24px ${MONO}`;
+  ctx.fillText(content.kicker, 72, 92);
+  ctx.fillStyle = INK_0;
+  ctx.font = `500 68px ${SERIF}`;
+  ctx.fillText(content.title, 72, 158);
+
+  if (typeof ctx.roundRect === 'function') {
+    ctx.fillStyle = 'rgba(198, 204, 218, 0.035)';
+    ctx.strokeStyle = HAIR;
+    ctx.beginPath();
+    ctx.roundRect(72.5, 220.5, W - 145, 570, 22);
+    ctx.fill();
+    ctx.stroke();
+  }
+
+  const shownDiscs = signatureDiscs.filter((disc): disc is ImageBitmap => disc != null);
+  const signatureDiscSize = 154;
+  const signatureGap = 24;
+  const discRowWidth = shownDiscs.length * signatureDiscSize
+    + Math.max(0, shownDiscs.length - 1) * signatureGap;
+  let signatureX = (W - discRowWidth) / 2;
+  for (const disc of shownDiscs) {
+    ctx.drawImage(disc, signatureX, 260, signatureDiscSize, signatureDiscSize);
+    signatureX += signatureDiscSize + signatureGap;
+  }
+
+  ctx.textAlign = 'center';
+  ctx.fillStyle = INK_2;
+  ctx.font = `400 22px ${MONO}`;
+  ctx.fillText(content.signature.eyebrow.toUpperCase(), W / 2, 465);
+  const titlePx = fitText(ctx, content.signature.title, W - 220, 56, 38, 500, SERIF);
+  ctx.fillStyle = INK_0;
+  ctx.font = `500 ${titlePx}px ${SERIF}`;
+  ctx.fillText(content.signature.title, W / 2, 528);
+  ctx.textAlign = 'left';
+  ctx.fillStyle = INK_2;
+  ctx.font = `400 30px ${SERIF}`;
+  drawWrappedText(ctx, content.signature.summary, 140, 602, W - 280, 39, 4);
+  if (content.signature.detail) {
+    ctx.textAlign = 'center';
+    ctx.fillStyle = INK_2;
+    const detailPx = fitText(ctx, content.signature.detail.toUpperCase(), W - 240, 22, 16, 400, MONO);
+    ctx.font = `400 ${detailPx}px ${MONO}`;
+    ctx.fillText(content.signature.detail.toUpperCase(), W / 2, 748);
+  }
+
+  ctx.textAlign = 'left';
+  ctx.fillStyle = INK_2;
+  ctx.font = `400 22px ${MONO}`;
+  ctx.fillText('CHART FINGERPRINT', 72, 856);
+  const bigThreeCount = content.bigThree.length;
+  const columnWidth = (W - 144) / Math.max(1, bigThreeCount);
+  content.bigThree.forEach((placement, index) => {
+    const center = 72 + columnWidth * index + columnWidth / 2;
+    const disc = bigThreeDiscs[index];
+    if (disc) ctx.drawImage(disc, center - 46, 900, 92, 92);
+    ctx.textAlign = 'center';
+    ctx.fillStyle = INK_0;
+    ctx.font = `500 34px ${SERIF}`;
+    ctx.fillText(placement.sign, center, 1024);
+    ctx.fillStyle = INK_2;
+    ctx.font = `400 20px ${MONO}`;
+    ctx.fillText(shareCardText(locale, placement.kind).toUpperCase(), center, 1067);
+  });
+
+  ctx.textAlign = 'left';
+  ctx.fillStyle = INK_2;
+  ctx.font = `400 24px ${MONO}`;
+  ctx.fillText(content.receipt, 72, 1260);
+  ctx.font = `500 34px ${SERIF}`;
+  ctx.textAlign = SHARE_CARD_WORDMARK.align;
+  try { ctx.letterSpacing = '8px'; } catch {}
+  ctx.fillText('ZODIACS · ORG', SHARE_CARD_WORDMARK.x, SHARE_CARD_WORDMARK.y);
+  try { ctx.letterSpacing = '0px'; } catch {}
+
+  const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, 'image/png'));
+  if (!blob) throw new Error('png encode failed');
+  return blob;
+}
+
+async function drawApproachCard(
+  chart: Chart,
+  options: ShareCardOptions = {},
+): Promise<Blob> {
+  const content = approachCardContent(chart, options);
+
+  await document.fonts.ready;
+  await Promise.all([
+    document.fonts.load(`500 68px ${SERIF}`),
+    document.fonts.load(`500 44px ${SERIF}`),
+    document.fonts.load(`400 28px ${SERIF}`),
+    document.fonts.load(`400 23px ${MONO}`),
+  ]).catch(() => {});
+  const rowDiscs = await Promise.all(content.rows.map((row) => loadDisc(row.slug)));
+  const avoidDisc = content.avoid ? await loadDisc(content.avoid.slug) : null;
+
+  const canvas = document.createElement('canvas');
+  canvas.width = W;
+  canvas.height = H;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) throw new Error('canvas unavailable');
+
+  ctx.fillStyle = BG;
+  ctx.fillRect(0, 0, W, H);
+  if (typeof ctx.roundRect === 'function') {
+    ctx.strokeStyle = HAIR;
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.roundRect(28.5, 28.5, W - 57, H - 57, 26);
+    ctx.stroke();
+  }
+
+  ctx.textBaseline = 'middle';
+  ctx.textAlign = 'left';
+  ctx.fillStyle = INK_2;
+  ctx.font = `400 23px ${MONO}`;
+  ctx.fillText(content.kicker, 72, 92);
+  ctx.fillStyle = INK_0;
+  ctx.font = `500 68px ${SERIF}`;
+  ctx.fillText(content.title, 72, 158);
+
+  const rowTop = 242;
+  const rowGap = 248;
+  content.rows.forEach((row, index) => {
+    const top = rowTop + index * rowGap;
+    const icon = rowDiscs[index];
+    if (icon) ctx.drawImage(icon, 72, top, 112, 112);
+    ctx.fillStyle = INK_2;
+    ctx.font = `400 22px ${MONO}`;
+    ctx.fillText(`${row.body.toUpperCase()} · ${row.role.toUpperCase()}`, 220, top + 13);
+    ctx.fillStyle = INK_0;
+    ctx.font = `500 44px ${SERIF}`;
+    ctx.fillText(row.sign, 220, top + 64);
+    ctx.fillStyle = INK_2;
+    ctx.font = `400 28px ${SERIF}`;
+    drawWrappedText(ctx, row.reading, 220, top + 116, W - 292, 35, 2);
+    ctx.strokeStyle = HAIR;
+    ctx.beginPath();
+    ctx.moveTo(72, top + 214.5);
+    ctx.lineTo(W - 72, top + 214.5);
+    ctx.stroke();
+  });
+
+  let cursor = rowTop + content.rows.length * rowGap;
+  if (content.avoid) {
+    const avoid = content.avoid;
+    if (typeof ctx.roundRect === 'function') {
+      ctx.fillStyle = 'rgba(198, 204, 218, 0.035)';
+      ctx.strokeStyle = HAIR;
+      ctx.beginPath();
+      ctx.roundRect(72.5, cursor - 8.5, W - 145, 158, 18);
+      ctx.fill();
+      ctx.stroke();
+    }
+    if (avoidDisc) ctx.drawImage(avoidDisc, 92, cursor + 17, 92, 92);
+    ctx.fillStyle = INK_2;
+    ctx.font = `400 21px ${MONO}`;
+    ctx.fillText(`${avoid.body.toUpperCase()} · ${avoid.role.toUpperCase()} · ${avoid.sign.toUpperCase()}`, 218, cursor + 18);
+    ctx.font = `400 27px ${SERIF}`;
+    drawWrappedText(ctx, avoid.reading, 218, cursor + 65, W - 306, 33, 2);
+    cursor += 174;
+  }
+
+  ctx.fillStyle = INK_2;
+  ctx.font = `400 20px ${MONO}`;
+  content.notes.forEach((note, index) => {
+    ctx.fillText(note, 72, cursor + index * 29);
+  });
+
+  ctx.fillStyle = INK_2;
+  ctx.font = `400 24px ${MONO}`;
+  ctx.fillText(content.receipt, 72, 1260);
+  ctx.font = `500 34px ${SERIF}`;
+  ctx.textAlign = SHARE_CARD_WORDMARK.align;
+  try { ctx.letterSpacing = '8px'; } catch {}
+  ctx.fillText('ZODIACS · ORG', SHARE_CARD_WORDMARK.x, SHARE_CARD_WORDMARK.y);
+  try { ctx.letterSpacing = '0px'; } catch {}
+
+  const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, 'image/png'));
+  if (!blob) throw new Error('png encode failed');
+  return blob;
+}
+
 export async function drawCard(
   chart: Chart,
   options: ShareCardOptions = {},
 ): Promise<Blob> {
   if (options.variant === 'big-three') return drawBigThreeCard(chart, options);
   if (options.variant === 'communication') return drawCommunicationCard(chart, options);
+  if (options.variant === 'signature') return drawSignatureCard(chart, options);
+  if (options.variant === 'approach') return drawApproachCard(chart, options);
   return drawFullChartCard(chart, options);
 }
 
@@ -564,8 +903,30 @@ export async function saveChartCard(
   chart: Chart,
   options: ShareCardOptions = {},
 ): Promise<CardOutcome> {
-  const blob = await drawCard(chart, options);
-  return savePngBlob(blob, chartCardFilename(options));
+  return savePreparedChartCard(await prepareChartCard(chart, options));
+}
+
+export interface PreparedChartCard {
+  blob: Blob;
+  filename: string;
+}
+
+/**
+ * Render before the final share tap. Calling savePreparedChartCard from that
+ * later tap reaches navigator.share synchronously, preserving iOS activation.
+ */
+export async function prepareChartCard(
+  chart: Chart,
+  options: ShareCardOptions = {},
+): Promise<PreparedChartCard> {
+  return {
+    blob: await drawCard(chart, options),
+    filename: chartCardFilename(options),
+  };
+}
+
+export function savePreparedChartCard(prepared: PreparedChartCard): Promise<CardOutcome> {
+  return savePngBlob(prepared.blob, prepared.filename);
 }
 
 export async function savePngBlob(blob: Blob, filename: string): Promise<CardOutcome> {

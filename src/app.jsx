@@ -1244,26 +1244,14 @@
               </h1>
               <div className="cine__foot">
                 <p className="cine__line">
-                  Belief is the oldest asset.
+                  The official public record for the twelve Zodiacs—verify each sign and explore its story.
                 </p>
                 <div className="cine__cta">
                   <a className="btn btn--primary" href="#official-twelve">
                     <span>Browse the Twelve</span>
                     <span className="arr">↗</span>
                   </a>
-                  {REGISTRY_AURA_ENABLED ? (
-                    <a className="btn" href="/registry/aura/">
-                      <span>{REGISTRY_AURA_HERO_COPY.cta}</span>
-                    </a>
-                  ) : (
-                    <a className="btn" href="/thesis/">
-                      <span>Why this exists</span>
-                    </a>
-                  )}
                 </div>
-                {REGISTRY_AURA_ENABLED && (
-                  <a className="cine__why" href="/thesis/">{REGISTRY_AURA_HERO_COPY.why}</a>
-                )}
               </div>
             </div>
           </div>
@@ -1580,6 +1568,11 @@
             liquidity, or future performance.
           </p>
 
+          <a className="reg__story-link" href="/thesis/">
+            <span>Read the Registry thesis</span>
+            <span aria-hidden="true">→</span>
+          </a>
+
           <div className="reg__facts">
             {facts.map((f, i) => (
               <div className="reg__fact" key={i}>
@@ -1804,7 +1797,7 @@
           ? ' market__change--up'
           : change < 0
             ? ' market__change--down'
-            : '';
+            : ' market__change--flat';
       const cells = pair ? [
         { k: 'Price USD', v: formatPriceUsd(pair.priceUsd), mono: true },
         { k: '24H Change', v: formatPercent(pair.priceChange24h), mono: true, className: changeClass },
@@ -2425,19 +2418,26 @@
                         const change = toFiniteNumber(row.change24h);
                         const changeClass = change === null
                           ? ''
-                          : change > 0 ? ' market__change--up' : change < 0 ? ' market__change--down' : '';
+                          : change > 0
+                            ? ' market__change--up'
+                            : change < 0
+                              ? ' market__change--down'
+                              : ' market__change--flat';
                         return (
                           <tr key={row.sign.ticker}>
                             <td className="standings__lot">
                               <a href={`/registry/${slug}/`}>
-                                <img
-                                  src={`/assets/icons/${slug}.png`}
-                                  alt=""
-                                  loading="lazy"
-                                  decoding="async"
-                                  width="18"
-                                  height="18"
-                                />
+                                <picture className="standings__disc" aria-hidden="true">
+                                  <source srcSet={`/assets/zodiac-icons/48/${slug}.avif`} type="image/avif" />
+                                  <img
+                                    src={`/assets/zodiac-icons/48/${slug}.webp`}
+                                    alt=""
+                                    loading="lazy"
+                                    decoding="async"
+                                    width="22"
+                                    height="22"
+                                  />
+                                </picture>
                                 <span className="standings__name">{row.sign.name}</span>
                                 <span className="standings__tick">{row.sign.ticker}</span>
                               </a>
@@ -2761,18 +2761,19 @@
       const reveal = useReveal();
       const cards = [
         {
-          t: 'Registry Match',
-          d: 'Check whether a public address contains Registry-listed Zodiacs on Solana or Base. A match is not proof of identity, control, or legal ownership.'
+          t: 'Verify a Zodiac',
+          d: 'Check whether a public address contains an official Registry-listed Zodiac on Solana or Base. A match is not proof of identity, control, or legal ownership.'
         },
         {
-          t: 'Symbolic Composition',
-          d: 'Turn signs found at a public address into element mix, modality mix, wheel coverage, and seasonal context.'
+          t: 'Read a collection',
+          d: 'See the element mix, modality mix, wheel coverage, and seasonal pattern formed by the signs at one public address.'
         },
         {
-          t: 'Built For Experiences',
-          d: 'Build profiles, receipts, seasonal moments, verifiers, and identity surfaces on app-neutral infrastructure.'
+          t: 'Build with the record',
+          d: 'Use verified Registry facts in profiles, receipts, seasonal moments, verifiers, and other products.'
         },
         ...(REGISTRY_AURA_ENABLED ? [{
+          kind: 'aura',
           t: REGISTRY_AURA_ENTRY_COPY.title,
           d: REGISTRY_AURA_ENTRY_COPY.description,
           href: REGISTRY_AURA_PATH,
@@ -2788,26 +2789,43 @@
           </div>
 
           <h2 className="idctx__statement">
-            Not just addresses.<br/>
-            <span className="it">A symbolic layer.</span>
+            From public records<br/>
+            <span className="it">to personal patterns.</span>
           </h2>
 
           <p className="idctx__copy">
-            The SDK turns public-address records into display-ready symbolic
-            context: signs found, element balance, modality balance, current
-            season, native and bridged representations, and wheel coverage.
-            Apps can use this foundation to build profiles, receipts, seasonal
-            experiences, and astrology-native interfaces without custody,
-            signing, or transactions.
+            Verify an official Zodiac, understand the pattern formed by a
+            public collection, or carry trusted Registry facts into another
+            product. Registry Aura adds a personal view by comparing that
+            collection with a saved birth chart and today’s sky.
           </p>
 
           <div className="idctx__grid">
-            {cards.map((card, i) => (
+            {cards.map((card, i) => card.kind === 'aura' ? (
+              <article className="idctx__card idctx__card--aura" key={card.t} data-registry-aura-entry>
+                <div className="idctx__aura-intro">
+                  <span className="idctx__num">{String(i + 1).padStart(2, '0')}</span>
+                  <h3 className="idctx__card-title">{card.t}</h3>
+                  <p className="idctx__card-copy">{card.d}</p>
+                </div>
+                <div className="idctx__aura-action">
+                  <div className="idctx__aura-flow" aria-label="Public collection, saved chart, and today’s sky">
+                    <span className="idctx__aura-step"><span aria-hidden="true">01</span>Public collection</span>
+                    <span className="idctx__aura-arrow" aria-hidden="true">→</span>
+                    <span className="idctx__aura-step"><span aria-hidden="true">02</span>Saved chart</span>
+                    <span className="idctx__aura-arrow" aria-hidden="true">→</span>
+                    <span className="idctx__aura-step"><span aria-hidden="true">03</span>Today’s sky</span>
+                  </div>
+                  <a className="idctx__card-link idctx__aura-link" href={card.href} onClick={() => trackAnalytics('aura_entry', { source: 'registry' })}>
+                    <span>{card.link}</span>
+                  </a>
+                </div>
+              </article>
+            ) : (
               <article className="idctx__card" key={card.t}>
                 <span className="idctx__num">{String(i + 1).padStart(2, '0')}</span>
                 <h3 className="idctx__card-title">{card.t}</h3>
                 <p className="idctx__card-copy">{card.d}</p>
-                {card.href && <a className="idctx__card-link" href={card.href} onClick={() => trackAnalytics('aura_entry', { source: 'registry' })}>{card.link}</a>}
               </article>
             ))}
           </div>
@@ -3388,7 +3406,7 @@
             <a href="/registry/zodiacs.registry.json">Record</a>
             <a href="#thesis">Thesis</a>
             <a href="/archive/">Archive</a>
-            <button className="assistant-link" type="button" data-assistant-open aria-haspopup="dialog">Ask the site</button>
+            <button className="assistant-link" type="button" data-assistant-open aria-haspopup="dialog">Ask Zodiacs</button>
             <a href="/disclosure/">{REGISTRY_DISCLOSURE_LABEL}</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

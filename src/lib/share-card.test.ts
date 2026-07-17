@@ -2,12 +2,16 @@ import { describe, expect, it } from 'vitest';
 import {
   SHARE_CARD_SCALE,
   SHARE_CARD_WORDMARK,
+  approachCardContent,
+  authoredSignatureForLocale,
   bigThreePlacements,
   chartCardFilename,
   chartCardReceipt,
   communicationCardContent,
   dominantProfile,
   firstSentence,
+  primaryShareCardVariant,
+  signatureCardContent,
 } from './share-card';
 import type { Chart } from './engine/types';
 
@@ -41,6 +45,11 @@ describe('chartCardFilename', () => {
 
   it('uses a generic filename for the communication card', () => {
     expect(chartCardFilename({ variant: 'communication' })).toBe('zodiacs-communication.png');
+  });
+
+  it('uses privacy-safe filenames for signature and approach cards', () => {
+    expect(chartCardFilename({ variant: 'signature' })).toBe('zodiacs-chart-signature.png');
+    expect(chartCardFilename({ variant: 'approach' })).toBe('zodiacs-how-to-approach-me.png');
   });
 });
 
@@ -101,5 +110,88 @@ describe('share-card content', () => {
     expect(content.aspect).toMatch(/^Mercury square Mars/);
     expect(content.receipt).toBe('Engine 9.9.9');
     expect(JSON.stringify(content)).not.toMatch(/1990|08:30|New York|latitude|longitude/i);
+  });
+
+  it('builds a positive evidence-backed signature card from positions only', () => {
+    const signatureChart = {
+      ...chart,
+      input: { utc: new Date('1990-06-15T08:30:00Z'), houseSystem: 'whole', timeKnown: true },
+      aspects: [],
+      engineVersion: '9.9.9',
+    } as Chart;
+    const content = signatureCardContent(signatureChart);
+
+    expect(content.title).toBe('My chart signature');
+    expect(content.signature).toMatchObject({
+      kind: 'dignity',
+      title: 'Sun in Aries',
+      signSlugs: ['aries'],
+    });
+    expect(content.bigThree.map(({ kind }) => kind)).toEqual(['sun', 'moon', 'rising']);
+    expect(content.receipt).toBe('Engine 9.9.9');
+    expect(JSON.stringify(content)).not.toMatch(/1990|08:30|New York|latitude|longitude|destiny|will happen/i);
+  });
+
+  it('keeps authored chart signatures English-only and selects localized structural primaries', () => {
+    const signatureChart = {
+      ...chart,
+      aspects: [],
+      engineVersion: '9.9.9',
+    } as Chart;
+
+    expect(primaryShareCardVariant('en', true)).toBe('signature');
+    expect(primaryShareCardVariant('en', false)).toBe('signature');
+    expect(authoredSignatureForLocale(signatureChart, 'en')).toMatchObject({
+      kind: 'dignity',
+      title: 'Sun in Aries',
+    });
+
+    for (const locale of ['es', 'pt', 'fr', 'it'] as const) {
+      expect(primaryShareCardVariant(locale, true)).toBe('big-three');
+      expect(primaryShareCardVariant(locale, false)).toBe('full');
+      expect(authoredSignatureForLocale(signatureChart, locale)).toBeNull();
+
+      const content = signatureCardContent(signatureChart, locale);
+      expect(content.signature).toBeNull();
+      expect(JSON.stringify(content)).not.toContain('Sun in Aries');
+      expect(JSON.stringify(content)).not.toContain('Your confidence grows when you take the lead');
+    }
+  });
+
+  it('builds audience-facing approach content and carries Moon ambiguity', () => {
+    const content = approachCardContent({
+      ...chart,
+      input: { utc: new Date('1990-06-15T08:30:00Z'), houseSystem: 'whole', timeKnown: true },
+      aspects: [],
+      engineVersion: '9.9.9',
+    } as Chart, { moonAmbiguous: true });
+
+    expect(content.title).toBe('How to approach me');
+    expect(content.rows.map(({ body, role, sign }) => ({ body, role, sign }))).toEqual([
+      { body: 'Rising', role: 'How to open', sign: 'Libra' },
+      { body: 'Mercury', role: 'How to say it', sign: 'Aries' },
+      { body: 'Moon', role: 'What builds trust', sign: 'Taurus' },
+    ]);
+    expect(content.avoid).toMatchObject({
+      body: 'Mars',
+      role: 'What to avoid under pressure',
+      sign: 'Leo',
+    });
+    expect(content.notes).toEqual(['My Moon may change signs without an exact birth time.']);
+    expect(content.rows.every(({ reading }) => firstSentence(reading) === reading)).toBe(true);
+    expect(JSON.stringify(content)).not.toMatch(/1990|08:30|New York|latitude|longitude/i);
+  });
+
+  it('makes a no-time approach card explicit instead of inventing a Rising sign', () => {
+    const content = approachCardContent({
+      ...chart,
+      angles: null,
+      input: { utc: new Date('1990-06-15T12:00:00Z'), houseSystem: 'whole', timeKnown: false },
+      aspects: [],
+      engineVersion: '9.9.9',
+    } as Chart);
+
+    expect(content.rows.map(({ body }) => body)).toEqual(['Mercury', 'Moon']);
+    expect(content.notes).toEqual(['Birth time would add my Rising sign.']);
   });
 });

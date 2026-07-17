@@ -155,6 +155,8 @@
 
       /* Vermilion — the dial's red; market-down and nothing else */
       --vermilion:     #D4603F;
+      --market-up:     #A9D4C4;
+      --market-flat:   #8E96AB;
 
       /* Warm parchment ink ramp, anchored to the hero film */
       --ink:           #EEF1F7;
@@ -416,9 +418,10 @@
     }
     .cine__line {
       margin: 0;
-      max-width: 44ch;
-      font-family: var(--serif); font-style: italic;
-      font-size: clamp(15px, 2.4vw, 20px);
+      max-width: 58ch;
+      font-family: 'Instrument Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+      font-style: normal;
+      font-size: clamp(14px, 2vw, 17px);
       line-height: 1.5;
       color: var(--ink-2);
       text-shadow: 0 1px 16px rgba(0,0,0,0.7);
@@ -426,23 +429,6 @@
     }
     .cine__cta {
       display: flex; flex-wrap: wrap; justify-content: center; gap: 12px;
-    }
-    /* Demoted thesis link once Registry Aura owns the secondary button:
-       a quiet serif footnote under the CTA row. */
-    .cine__why {
-      margin-top: calc(clamp(18px, 3vw, 26px) * -0.5);
-      font-family: var(--serif); font-style: italic;
-      font-size: 15px;
-      color: var(--ink-2);
-      text-decoration: underline;
-      text-decoration-color: rgba(198,204,218,0.4);
-      text-underline-offset: 4px;
-      text-shadow: 0 1px 16px rgba(0,0,0,0.7);
-      transition: color 0.2s ease, text-decoration-color 0.2s ease;
-    }
-    .cine__why:hover, .cine__why:focus-visible {
-      color: var(--ink);
-      text-decoration-color: currentColor;
     }
     /* Hero CTAs wear the lens over the footage — a frosted floor (rendered on
        Safari/iOS via -webkit-backdrop-filter) that the Chromium refraction lens
@@ -494,9 +480,6 @@
        square inner frame — these two CTAs now read as the main site's pills. */
     .cine__cta .btn .arr { width: 32px; height: 32px; border-radius: 50%; }
     .cine__cta .btn--primary::before { display: none; }
-    /* Part Y: the secondary CTA drops its orb to read as the main site's
-       text-only ghost button — centre the label and balance the padding. */
-    .cine__cta .btn:not(.btn--primary) { justify-content: center; padding: 0 22px; }
     @media (prefers-reduced-motion: reduce) {
       .cine__content, .cine__eyebrow, .cine__title, .cine__line { animation: none; }
     }
@@ -1193,6 +1176,33 @@
       color: var(--gold-bright);
       border-bottom-color: var(--gold);
     }
+    .reg__story-link {
+      width: fit-content;
+      min-height: 44px;
+      margin: -8px 0 28px;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-family: 'Instrument Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+      font-size: 14px;
+      font-weight: 550;
+      color: var(--ink);
+      text-decoration: none;
+      border-bottom: 1px solid var(--hair-3);
+      transition: color 220ms ease, border-color 220ms ease;
+    }
+    .reg__story-link:hover,
+    .reg__story-link:focus-visible {
+      color: var(--gold-bright);
+      border-bottom-color: currentColor;
+    }
+    .reg__story-link span:last-child {
+      transition: transform 220ms var(--ease);
+    }
+    .reg__story-link:hover span:last-child,
+    .reg__story-link:focus-visible span:last-child {
+      transform: translateX(3px);
+    }
 
     /* ── Identity context ───────────────────────────────────── */
     .idctx {
@@ -1200,7 +1210,7 @@
     }
     .idctx__statement {
       margin: 0 0 26px;
-      max-width: 11ch;
+      max-width: 18ch;
       font-family: var(--serif);
       font-size: clamp(37px, 10vw, 76px);
       line-height: 0.93;
@@ -1270,6 +1280,91 @@
       color: var(--ink);
       text-decoration: none;
       border-bottom: 1px solid var(--hair-3);
+    }
+    .idctx__card--aura {
+      display: grid;
+      gap: 24px;
+      padding: 22px 18px;
+      background:
+        radial-gradient(80% 160% at 100% 0%, rgba(169,212,196,0.09), transparent 62%),
+        linear-gradient(180deg, rgba(198,204,218,0.055), transparent 76%),
+        var(--bg);
+    }
+    .idctx__card--aura .idctx__num { margin-bottom: 20px; }
+    .idctx__aura-action {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 18px;
+    }
+    .idctx__aura-flow {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 7px;
+    }
+    .idctx__aura-step {
+      min-height: 42px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 11px;
+      border: 1px solid var(--hair-2);
+      background: rgba(198,204,218,0.035);
+      font-family: 'Instrument Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+      font-size: 13px;
+      color: var(--ink-2);
+    }
+    .idctx__aura-step > span {
+      font-family: var(--mono);
+      font-size: 8px;
+      letter-spacing: 0.16em;
+      color: var(--market-up);
+    }
+    .idctx__aura-arrow {
+      display: none;
+      color: var(--ink-mute);
+    }
+    .idctx__aura-link {
+      min-height: 44px;
+      margin-top: 0;
+      display: inline-flex;
+      align-items: center;
+      padding: 0 18px;
+      border: 1px solid var(--hair-3);
+      font-family: 'Instrument Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+      font-size: 14px;
+      font-weight: 550;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+      transition: color 220ms ease, border-color 220ms ease, background 220ms ease;
+    }
+    .idctx__aura-link:hover,
+    .idctx__aura-link:focus-visible {
+      color: var(--gold-bright);
+      border-color: var(--gold-bright);
+      background: rgba(198,204,218,0.07);
+    }
+    @media (min-width: 680px) {
+      .idctx__card--aura {
+        grid-column: 1 / -1;
+        grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.35fr);
+        align-items: center;
+        gap: 28px;
+        padding: 26px 24px;
+      }
+      .idctx__aura-flow {
+        grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr);
+        align-items: center;
+        gap: 8px;
+      }
+      .idctx__aura-step {
+        min-height: 64px;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+      }
+      .idctx__aura-arrow { display: inline; }
     }
     .idctx__example {
       border: 1px solid var(--hair-2);
@@ -2175,12 +2270,6 @@
       font-size: 11.5px;
       letter-spacing: 0.03em;
     }
-    .market__change--up {
-      color: var(--gold-bright);
-    }
-    .market__change--down {
-      color: var(--vermilion);
-    }
     .market__body {
       padding: 15px 16px 16px;
     }
@@ -2644,7 +2733,18 @@
       transition: color 320ms var(--ease);
     }
     .standings__lot a:hover { color: var(--gold-bright); }
-    .standings__lot img { display: block; }
+    .standings__disc {
+      display: block;
+      flex: 0 0 22px;
+      width: 22px;
+      height: 22px;
+    }
+    .standings__lot img {
+      display: block;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+    }
     .standings__name { font-family: var(--serif); font-size: 15px; }
     .standings__tick {
       font-family: var(--mono); font-size: 8.5px;
@@ -2663,6 +2763,11 @@
       text-align: left;
       font-size: 13px; color: var(--ink-dim);
     }
+    /* Direction colors follow both market-card and standings base rules so
+       the semantic state cannot be erased by a later generic value color. */
+    .market__change--up { color: var(--market-up); }
+    .market__change--down { color: var(--vermilion); }
+    .market__change--flat { color: var(--market-flat); }
     .standings__note {
       margin: 14px 0 0;
       font-family: var(--mono); font-size: 10px;
@@ -3229,6 +3334,21 @@
       color: var(--gold-bright);
       margin-bottom: 8px;
     }
+    .static-site__card--aura {
+      background:
+        radial-gradient(80% 160% at 100% 0%, rgba(169,212,196,0.09), transparent 62%),
+        rgba(14,10,7,0.88);
+    }
+    @media (min-width: 680px) {
+      .static-site__card--aura {
+        grid-column: 1 / -1;
+        display: grid;
+        grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.35fr);
+        align-items: center;
+        gap: 28px;
+        padding: 24px;
+      }
+    }
     .static-site__facts {
       display: grid;
       grid-template-columns: 1fr;
@@ -3460,11 +3580,10 @@
           <a class="cine__eyebrow" href="/disclosure/" data-i18n="disclosure.linkLabel">The Official Registry · Est. <span data-registry-established>MMXXIV</span> · provenance pending</a>
           <h1 class="cine__title">Twelve signs.<br><span class="it">One register.</span></h1>
           <div class="cine__foot">
-            <p class="cine__line">Belief is the oldest asset.</p>
+            <p class="cine__line">The official public record for the twelve Zodiacs—verify each sign and explore its story.</p>
             <div class="cine__cta">
               <a class="btn btn--primary" href="#official-twelve"><span>Browse the Twelve</span><span class="arr">↗</span></a>
-              <!-- registry-aura-hero:cta --><a class="btn" href="/thesis/"><span>Why this exists</span></a><!-- /registry-aura-hero:cta -->
-            </div><!-- registry-aura-hero:why -->
+            </div>
           </div>
         </div>
       </div>
@@ -3518,6 +3637,7 @@
           not prove identity, control, legal ownership, safety, value, liquidity,
           or future performance.
         </p>
+        <p><a href="/thesis/">Read the Registry thesis →</a></p>
         <div class="static-site__facts" aria-label="Registry facts">
           <div class="static-site__fact"><strong>Signs</strong>12 official Zodiacs</div>
           <div class="static-site__fact"><strong>Origin</strong>Native Solana SPL assets</div>
@@ -3602,23 +3722,23 @@
       <section class="static-site__section" id="identity">
         <h2>Identity Context</h2>
         <p>
-          Public blockchain records can become display-ready symbolic context:
-          signs found at an address, element balance, modality balance, current
-          season, and native or bridged representations. A lookup does not prove
-          that a person controls an address or legally owns an asset.
+          From public records to personal patterns. Verify an official Zodiac,
+          understand the pattern formed by a public collection, or carry trusted
+          Registry facts into another product. A lookup does not prove that a
+          person controls an address or legally owns an asset.
         </p>
         <div class="static-site__grid">
           <article class="static-site__card">
-            <h3>Public Record Lookup</h3>
-            <p>Check whether one public address contains Registry-listed Zodiacs on Solana or Base without treating the result as identity or ownership proof.</p>
+            <h3>Verify a Zodiac</h3>
+            <p>Check whether one public address contains an official Registry-listed Zodiac on Solana or Base without treating the result as identity or ownership proof.</p>
           </article>
           <article class="static-site__card">
-            <h3>Symbolic Composition</h3>
-            <p>Turn held signs into element mix, modality mix, wheel coverage, and seasonal context.</p>
+            <h3>Read a collection</h3>
+            <p>See the element mix, modality mix, wheel coverage, and seasonal pattern formed by the signs at one public address.</p>
           </article>
           <article class="static-site__card">
-            <h3>Built For Experiences</h3>
-            <p>Build profiles, receipts, seasonal moments, verifiers, and identity surfaces on app-neutral infrastructure.</p>
+            <h3>Build with the record</h3>
+            <p>Use verified Registry facts in profiles, receipts, seasonal moments, verifiers, and other products.</p>
           </article>
           <!-- registry-aura-entry:slot -->
         </div>
@@ -3713,7 +3833,7 @@
           <a href="https://astrofolio.xyz/" rel="noopener noreferrer">Astrofolio</a>
         </p>
         <p style="margin:0 0 14px">
-          <button class="assistant-link" type="button" data-assistant-open aria-haspopup="dialog">Ask the site</button>
+          <button class="assistant-link" type="button" data-assistant-open aria-haspopup="dialog">Ask Zodiacs</button>
         </p>
         <a href="/privacy/">Privacy</a> ·
         <a href="/terms/">Terms</a> ·

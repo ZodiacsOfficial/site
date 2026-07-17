@@ -23,11 +23,11 @@ const languageLinks = LOCALES.map((candidate) => ({
   meta: LOCALE_META[candidate],
 }));
 const FOOTER_COPY = {
-  en: { assistant: 'Ask the site', today: 'Today' },
-  es: { assistant: 'Pregúntale al sitio', today: 'Hoy (en inglés)' },
-  pt: { assistant: 'Pergunte ao site', today: 'Hoje (em inglês)' },
-  fr: { assistant: 'Poser une question au site', today: 'Aujourd’hui (en anglais)' },
-  it: { assistant: 'Chiedi al sito', today: 'Oggi (in inglese)' },
+  en: { assistant: 'Ask Zodiacs', today: 'Today' },
+  es: { assistant: 'Pregúntale a Zodiacs', today: 'Hoy (en inglés)' },
+  pt: { assistant: 'Pergunte ao Zodiacs', today: 'Hoje (em inglês)' },
+  fr: { assistant: 'Demander à Zodiacs', today: 'Aujourd’hui (en anglais)' },
+  it: { assistant: 'Chiedi a Zodiacs', today: 'Oggi (in inglese)' },
 } as const satisfies Record<Locale, { assistant: string; today: string }>;
 const privacyHref = localizePath(locale, '/privacy/');
 const consumerPath = stripLocale(Astro.url.pathname);

@@ -8,6 +8,11 @@ import {
 } from '../lib/communication';
 import type { Chart } from '../lib/engine/types';
 import type { Locale } from '../lib/i18n';
+import {
+  prepareChartCard,
+  savePreparedChartCard,
+  type PreparedChartCard,
+} from '../lib/share-card';
 import { aspectLabel } from '../lib/i18n/astrology';
 import { signBySlug, signName } from '../lib/signs';
 
@@ -16,11 +21,12 @@ interface Props {
   locale?: Locale;
 }
 
-type ShareState = 'idle' | 'busy' | 'saved' | 'error';
+type ShareState = 'preparing' | 'idle' | 'busy' | 'saved' | 'error';
 
 export default function CommunicationRead({ chart, locale = 'en' }: Props) {
   const read = useMemo(() => communicationRead(chart), [chart]);
-  const [shareState, setShareState] = useState<ShareState>('idle');
+  const [shareState, setShareState] = useState<ShareState>('preparing');
+  const [preparedCard, setPreparedCard] = useState<PreparedChartCard | null>(null);
   const parts = useMemo(() => [
     {
       body: 'Mercury' as const,
@@ -46,15 +52,30 @@ export default function CommunicationRead({ chart, locale = 'en' }: Props) {
   ], [read]);
 
   useEffect(() => {
-    setShareState('idle');
     trackAnalytics('comm_read_view');
   }, [chart]);
 
-  async function shareReading(): Promise<void> {
+  useEffect(() => {
+    let current = true;
+    setPreparedCard(null);
+    setShareState('preparing');
+    void prepareChartCard(chart, { variant: 'communication', locale }).then((prepared) => {
+      if (!current) return;
+      setPreparedCard(prepared);
+      setShareState('idle');
+    }).catch((error) => {
+      console.error(error);
+      if (current) setShareState('error');
+    });
+    return () => { current = false; };
+  }, [chart, locale]);
+
+  function shareReading(): void {
+    if (!preparedCard || shareState === 'preparing' || shareState === 'busy') return;
     setShareState('busy');
-    try {
-      const { saveChartCard } = await import('../lib/share-card');
-      const outcome = await saveChartCard(chart, { variant: 'communication', locale });
+    // The prepared Blob means navigator.share is reached in this exact tap
+    // task on iOS; no dynamic import or canvas render can consume activation.
+    void savePreparedChartCard(preparedCard).then((outcome) => {
       if (outcome === 'cancelled') {
         setShareState('idle');
         return;
@@ -62,10 +83,10 @@ export default function CommunicationRead({ chart, locale = 'en' }: Props) {
       trackAnalytics('chart_share', { variant: 'communication_card' });
       trackAnalytics('share_card_downloaded', { variant: 'communication_card' });
       setShareState('saved');
-    } catch (error) {
+    }).catch((error) => {
       console.error(error);
       setShareState('error');
-    }
+    });
   }
 
   return (
@@ -78,13 +99,18 @@ export default function CommunicationRead({ chart, locale = 'en' }: Props) {
         <button
           class="btn btn--ghost calc__comm-share"
           type="button"
-          onClick={() => void shareReading()}
-          disabled={shareState === 'busy'}
+          onClick={shareReading}
+          disabled={!preparedCard || shareState === 'preparing' || shareState === 'busy'}
+          aria-busy={shareState === 'preparing' || shareState === 'busy'}
+          data-card-state={shareState}
           data-communication-share
         >
-          <span>{shareState === 'busy'
-            ? 'Creating your card…'
-            : shareState === 'saved' ? 'Reading shared' : 'Share this reading'}</span>
+          <span>{shareState === 'preparing'
+            ? 'Preparing your card…'
+            : shareState === 'busy' ? 'Opening share…'
+            : shareState === 'saved' ? 'Reading shared'
+              : shareState === 'error' && !preparedCard ? 'Card unavailable'
+                : 'Share this reading'}</span>
           <span class="orb" aria-hidden="true">{shareState === 'saved' ? '✓' : '↗'}</span>
         </button>
       </header>
@@ -141,6 +167,7 @@ export default function CommunicationRead({ chart, locale = 'en' }: Props) {
       </div>
 
       <p class="calc__comm-privacy">Birth details stay off the image.</p>
+      {shareState === 'preparing' && <p class="sr-only" role="status">Preparing your communication card.</p>}
       {shareState === 'saved' && <p class="sr-only" role="status">Your communication card is ready.</p>}
       {shareState === 'error' && (
         <p class="calc__error" role="alert">We couldn’t create that image. Please try again.</p>

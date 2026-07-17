@@ -780,7 +780,7 @@ ${renderPressKit()}
           <a href="/disclosure/">${esc(EN['disclosure.linkLabel'])}</a>
           <a href="/sdk/">SDK</a>
           <a href="/registry/zodiacs.registry.json">Record</a>
-          <button class="assistant-link" type="button" data-assistant-open aria-haspopup="dialog">Ask the site</button>
+          <button class="assistant-link" type="button" data-assistant-open aria-haspopup="dialog">Ask Zodiacs</button>
         </div>
         <div>Read-only</div>
       </div>

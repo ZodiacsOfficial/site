@@ -245,7 +245,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
 
     for (const wingPath of ['/registry/', '/thesis/']) {
       await page.goto(`${baseURL}${wingPath}`, { waitUntil: 'networkidle' });
-      await page.getByRole('button', { name: 'Ask the site' }).click();
+      await page.getByRole('button', { name: 'Ask Zodiacs' }).click();
       await page.locator('.zassistant__panel').waitFor({ state: 'visible' });
       const wingClose = page.getByRole('button', { name: 'Close assistant' });
       const box = await wingClose.boundingBox();

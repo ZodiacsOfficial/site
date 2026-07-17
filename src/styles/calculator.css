@@ -261,6 +261,75 @@
 .calc__wheel-core { padding: clamp(16px, 3vw, 30px); }
 .calc__wheel svg { max-width: 560px; margin-inline: auto; }
 .calc__wheel--tour .xplr__wheelbox { scroll-margin-top: calc(84px + env(safe-area-inset-top)); }
+.xplr__aside {
+  min-width: 0;
+  display: grid;
+  align-content: start;
+  gap: 12px;
+}
+.chart-action-dock {
+  overflow: hidden;
+  border: 1px solid var(--hair-1);
+  border-radius: var(--r-lg);
+  background:
+    radial-gradient(circle at 100% 0%, color-mix(in oklab, var(--accent) 10%, transparent), transparent 48%),
+    linear-gradient(180deg, var(--void-2), var(--void-1));
+  box-shadow: inset 0 1px 0 rgba(238, 241, 247, 0.05);
+}
+.chart-action-dock__signature {
+  display: grid;
+  gap: 5px;
+  padding: 15px 16px 14px;
+  border-bottom: 1px solid var(--hair-1);
+}
+.chart-action-dock__signature strong {
+  color: var(--text);
+  font-family: var(--font-serif);
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.15;
+  text-wrap: balance;
+}
+.chart-action-dock__signature small {
+  color: var(--muted);
+  font-size: 11.5px;
+  line-height: 1.45;
+}
+.chart-action-dock__actions {
+  display: grid;
+  gap: 8px;
+  padding: 12px;
+}
+.chart-action-dock__actions .btn {
+  width: 100%;
+  min-height: 44px;
+  justify-content: space-between;
+  color: var(--text);
+  border-color: var(--hair-2);
+  background: rgba(198, 204, 218, 0.025);
+  transition: transform 140ms cubic-bezier(0.23, 1, 0.32, 1), border-color 160ms ease, background 160ms ease;
+}
+.chart-action-dock__actions .btn:active { transform: scale(0.98); }
+@media (hover: hover) and (pointer: fine) {
+  .chart-action-dock__actions .btn:hover {
+    border-color: var(--hair-3);
+    background: rgba(198, 204, 218, 0.07);
+  }
+}
+@media (max-width: 959.5px) {
+  .chart-action-dock { margin-top: 4px; }
+  .chart-action-dock--tour { display: none; }
+  .chart-action-dock__actions { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .chart-action-dock__actions .btn:last-child:nth-child(3) { grid-column: 1 / -1; }
+}
+@media (max-width: 520px) {
+  .chart-action-dock__actions { grid-template-columns: minmax(0, 1fr); }
+  .chart-action-dock__actions .btn:last-child:nth-child(3) { grid-column: auto; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .chart-action-dock__actions .btn { transition: none; }
+  .chart-action-dock__actions .btn:active { transform: none; }
+}
 .calc__wheel-actions {
   display: flex;
   flex-wrap: wrap;
@@ -557,6 +626,84 @@
   color: var(--faint);
   font-size: 12.5px;
   line-height: 1.6;
+}
+.calc-share-dialog__signature {
+  position: relative;
+  display: grid;
+  gap: 7px;
+  padding: 20px;
+  overflow: hidden;
+  border: 1px solid var(--hair-2);
+  border-radius: var(--r-lg);
+  background:
+    radial-gradient(circle at 92% 6%, color-mix(in srgb, var(--accent) 14%, transparent), transparent 42%),
+    linear-gradient(145deg, rgba(198, 204, 218, 0.06), rgba(198, 204, 218, 0.018));
+}
+.calc-share-dialog__signature::after {
+  position: absolute;
+  right: -24px;
+  bottom: -46px;
+  width: 150px;
+  height: 150px;
+  border: 1px solid var(--hair-1);
+  border-radius: 50%;
+  content: '';
+  pointer-events: none;
+}
+.calc-share-dialog__signature-discs {
+  display: flex;
+  margin-bottom: 7px;
+}
+.calc-share-dialog__signature-discs picture {
+  display: inline-flex;
+  border-radius: 50%;
+  box-shadow: 0 0 0 3px var(--void-2);
+}
+.calc-share-dialog__signature-discs picture + picture { margin-left: -8px; }
+.calc-share-dialog__signature-discs img { display: block; border-radius: 50%; }
+.calc-share-dialog__signature h3 {
+  margin: 0;
+  color: var(--text);
+  font-family: var(--font-serif);
+  font-size: clamp(1.55rem, 1.3rem + 0.9vw, 2rem);
+  font-weight: 500;
+}
+.calc-share-dialog__signature > strong {
+  position: relative;
+  z-index: 1;
+  max-width: 28ch;
+  color: var(--text-2);
+  font-size: 14px;
+  line-height: 1.4;
+}
+.calc-share-dialog__signature p {
+  position: relative;
+  z-index: 1;
+  max-width: 45ch;
+  margin: 2px 0 0;
+  color: var(--muted);
+  font-size: 12.5px;
+  line-height: 1.55;
+}
+.calc-share-dialog__signature small {
+  position: relative;
+  z-index: 1;
+  color: var(--faint);
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.calc-share-dialog__primary {
+  width: 100%;
+  min-height: 48px;
+  justify-content: space-between;
+}
+.calc-share-dialog__secondary {
+  display: grid;
+  gap: 11px;
+  padding-top: 17px;
+  border-top: 1px solid var(--hair-1);
 }
 .calc-share-dialog__cards { display: grid; gap: 8px; }
 .calc-share-dialog__card { justify-content: space-between; width: 100%; }
@@ -1032,6 +1179,206 @@
   gap: 12px;
 }
 .field__labelrow .field__label { flex: 1; }
+
+/* Approach read: first contact flows toward trust before the owner-facing
+   communication section. Motion draws that single sequence, then stops. */
+.calc__approach {
+  margin-top: 34px;
+  padding-top: 28px;
+  border-top: 1px solid var(--hair-2);
+}
+.calc__approach-head {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 18px;
+}
+.calc__approach-head > div { display: grid; gap: 5px; }
+.calc__approach-head h2 {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: clamp(1.7rem, 1.35rem + 1.25vw, 2.25rem);
+  letter-spacing: 0.005em;
+}
+.calc__approach-share { flex: 0 0 auto; }
+.calc__approach-intro {
+  max-width: 68ch;
+  margin: 10px 0 24px;
+  color: var(--text-2);
+  font-size: var(--text-sm);
+  line-height: 1.65;
+}
+.calc__approach-path {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 14px;
+  padding: 14px;
+  border: 1px solid var(--hair-1);
+  border-radius: var(--r-lg);
+  background: color-mix(in srgb, var(--void-2) 76%, transparent);
+}
+.calc__approach-node {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 6px 10px;
+  min-width: 0;
+  padding-right: 14px;
+}
+.calc__approach-node > small {
+  grid-column: 2;
+  color: var(--faint);
+  font-size: 10px;
+  line-height: 1.35;
+}
+.calc__approach-connector {
+  position: absolute;
+  z-index: 0;
+  top: 50%;
+  right: -8px;
+  width: 18px;
+  height: 1px;
+  background: linear-gradient(90deg, var(--hair-3), color-mix(in srgb, var(--accent) 48%, var(--hair-2)));
+  transform: scaleX(1);
+  transform-origin: left;
+  transition: transform 220ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+@starting-style { .calc__approach-connector { transform: scaleX(0); } }
+.calc__approach-sign {
+  display: inline-grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  color: var(--text-2);
+  font-size: 12px;
+}
+.calc__approach-sign picture { display: inline-flex; }
+.calc__approach-sign img {
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--sign) 28%, var(--hair-1));
+}
+.calc__approach-sign > span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.calc__approach-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+.calc__approach-part {
+  min-width: 0;
+  padding: 18px;
+  border: 1px solid var(--hair-1);
+  border-radius: var(--r-lg);
+  background:
+    radial-gradient(circle at 100% 0%, color-mix(in srgb, var(--accent) 8%, transparent), transparent 44%),
+    linear-gradient(180deg, var(--void-2), var(--void-1));
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 200ms var(--ease), transform 200ms var(--ease), border-color 160ms ease;
+}
+.calc__approach-part:nth-child(2) { transition-delay: 40ms, 40ms, 0ms; }
+.calc__approach-part:nth-child(3) { transition-delay: 80ms, 80ms, 0ms; }
+.calc__approach-part:nth-child(4) { transition-delay: 120ms, 120ms, 0ms; }
+@starting-style { .calc__approach-part { opacity: 0; transform: translateY(6px); } }
+.calc__approach-part-head {
+  display: grid;
+  grid-template-columns: 38px minmax(0, 1fr);
+  align-items: center;
+  gap: 10px;
+}
+.calc__approach-planet {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border: 1px solid var(--hair-2);
+  border-radius: 50%;
+  color: var(--text-2);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.04em;
+}
+.calc__approach-part-head > div { display: grid; gap: 3px; }
+.calc__approach-part h3 {
+  margin: 0;
+  color: var(--text);
+  font-size: 13px;
+  line-height: 1.25;
+}
+.calc__approach-part-head .calc__approach-sign {
+  grid-column: 1 / -1;
+  margin-top: 8px;
+}
+.calc__approach-part > p {
+  margin: 14px 0 0;
+  color: var(--text-2);
+  font-size: 12.5px;
+  line-height: 1.65;
+}
+.calc__approach-missing {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+  padding: 12px 14px;
+  border: 1px dashed var(--hair-2);
+  border-radius: var(--r-md);
+}
+.calc__approach-missing p { margin: 0; color: var(--muted); font-size: 12.5px; line-height: 1.55; }
+.calc__approach-missing strong { color: var(--text-2); }
+.calc__approach-warning {
+  margin: 14px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.55;
+}
+.calc__approach-privacy {
+  margin: 12px 0 0;
+  color: var(--faint);
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.04em;
+}
+@media (hover: hover) and (pointer: fine) {
+  .calc__approach-part:hover { border-color: var(--hair-3); }
+}
+@media (max-width: 959.5px) {
+  .calc__approach-path,
+  .calc__approach-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .calc__approach-node:nth-child(2) .calc__approach-connector { display: none; }
+}
+@media (max-width: 620px) {
+  .calc__approach-head { align-items: stretch; flex-direction: column; }
+  .calc__approach-share { width: 100%; justify-content: space-between; }
+  .calc__approach-path,
+  .calc__approach-grid { grid-template-columns: minmax(0, 1fr); }
+  .calc__approach-path { gap: 10px; }
+  .calc__approach-node { padding: 0 0 10px; }
+  .calc__approach-node > small { grid-column: 2; }
+  .calc__approach-connector {
+    top: auto;
+    right: auto;
+    bottom: -4px;
+    left: 18px;
+    width: 14px;
+    transform: rotate(90deg) scaleX(1);
+  }
+  @starting-style { .calc__approach-connector { transform: rotate(90deg) scaleX(0); } }
+  .calc__approach-part:nth-child(n) { transition-delay: 0ms; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .calc__approach-part,
+  .calc__approach-connector { transition: none; }
+  @starting-style { .calc__approach-part { opacity: 1; transform: none; } }
+}
 
 /* Communication read: a compact Mercury–Moon–Mars story. Motion explains
    sequence and connection once; the content never moves perpetually. */

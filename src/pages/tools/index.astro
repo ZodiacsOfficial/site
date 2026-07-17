@@ -13,6 +13,14 @@ const tools = [
     group: 'start',
   },
   {
+    href: '/birth-chart/someone-else/',
+    title: "Someone else's chart",
+    promise: 'Use birth details, the Big Three, or a Zodiacs link — with their permission.',
+    hue: 'var(--sign-pisces)',
+    kind: 'birth' as const,
+    group: 'start',
+  },
+  {
     href: '/today/',
     title: 'Today',
     promise: 'A plain-language daily brief once you have saved a chart.',
@@ -192,7 +200,7 @@ const jsonLd = [
                   <ToolGlyph kind="assistant" />
                   <h3>Not sure which tool you need?</h3>
                   <p>Ask about a term, a tool, or a chart saved on this device.</p>
-                  <span class="tool-card__go">Ask the site →</span>
+                  <span class="tool-card__go">Ask Zodiacs →</span>
                 </div>
               </button>
             </div>

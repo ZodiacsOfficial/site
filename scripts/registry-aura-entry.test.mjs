@@ -2,7 +2,6 @@ import { describe, expect, it } from 'vitest';
 import {
   REGISTRY_AURA_ENTRY_COPY,
   REGISTRY_AURA_ENTRY_SLOT,
-  REGISTRY_AURA_HERO_COPY,
   REGISTRY_AURA_PATH,
   injectRegistryAuraLanding,
   registryAuraChartAnalytics,
@@ -11,11 +10,10 @@ import {
   registryAuraSitemapEntry,
 } from '../src/lib/registry-aura-entry.mjs';
 
-const THESIS_CTA = '<a class="btn" href="/thesis/"><span>Why this exists</span></a>';
-const HERO = `<div class="cine__cta">
+const HERO = `<p class="cine__line">The official public record for the twelve Zodiacs—verify each sign and explore its story.</p>
+<div class="cine__cta">
 <a class="btn btn--primary" href="#official-twelve"><span>Browse the Twelve</span></a>
-<!-- registry-aura-hero:cta -->${THESIS_CTA}<!-- /registry-aura-hero:cta -->
-</div><!-- registry-aura-hero:why -->`;
+</div>`;
 
 const HTML = `<!doctype html><html><head>
 <meta name="zodiacs-registry-aura-enabled" content="0" />
@@ -31,9 +29,12 @@ describe('Registry Aura build flag', () => {
   it('adds and removes the no-JS landing entry idempotently', () => {
     const on = injectRegistryAuraLanding(HTML, { PUBLIC_REGISTRY_AURA_ENABLED: '1' }).output;
     expect(on).toContain('content="1"');
-    // Exactly two sanctioned Aura links while enabled: the hero CTA swap and
-    // the no-JS entry card. Anything else is a duplicate injection.
-    expect(on.match(new RegExp(`href="${REGISTRY_AURA_PATH}"`, 'g'))).toHaveLength(2);
+    // Aura discovery lives in one full-row Identity feature, never the hero.
+    expect(on.match(new RegExp(`href="${REGISTRY_AURA_PATH}"`, 'g'))).toHaveLength(1);
+    expect(on).toContain('class="static-site__card static-site__card--aura"');
+    expect(on).toContain('Public collection');
+    expect(on).toContain('Saved chart');
+    expect(on).toContain('Today’s sky');
     expect(on).toContain(REGISTRY_AURA_ENTRY_COPY.description);
     expect(on).toContain('no wallet needed');
     expect(injectRegistryAuraLanding(on, { PUBLIC_REGISTRY_AURA_ENABLED: '1' }).output).toBe(on);
@@ -45,15 +46,11 @@ describe('Registry Aura build flag', () => {
     expect(injectRegistryAuraLanding(off, {}).output).toBe(off);
   });
 
-  it('hands the hero secondary CTA to Aura while enabled and demotes the thesis to a text link', () => {
+  it('leaves the single-purpose hero unchanged in both flag states', () => {
     const on = injectRegistryAuraLanding(HTML, { PUBLIC_REGISTRY_AURA_ENABLED: '1' }).output;
-    expect(on).toContain(
-      `<!-- registry-aura-hero:cta --><a class="btn" href="${REGISTRY_AURA_PATH}"><span>${REGISTRY_AURA_HERO_COPY.cta}</span></a><!-- /registry-aura-hero:cta -->`,
-    );
-    expect(on).toContain(
-      `<!-- registry-aura-hero:why --><a class="cine__why" href="/thesis/">${REGISTRY_AURA_HERO_COPY.why}</a>`,
-    );
-    expect(on).not.toContain(THESIS_CTA);
+    expect(on).toContain(HERO);
+    expect(on.match(/class="btn btn--primary"/g)).toHaveLength(1);
+    expect(on).not.toContain('cine__why');
     expect(injectRegistryAuraLanding(on, { PUBLIC_REGISTRY_AURA_ENABLED: '1' }).output).toBe(on);
 
     const off = injectRegistryAuraLanding(on, {}).output;
@@ -61,12 +58,12 @@ describe('Registry Aura build flag', () => {
     expect(injectRegistryAuraLanding(off, {}).output).toBe(off);
   });
 
-  it('refuses to stamp a landing page missing the hero markers', () => {
-    const withoutCta = HTML.replace('<!-- registry-aura-hero:cta -->', '');
-    expect(() => injectRegistryAuraLanding(withoutCta, {})).toThrow(/hero/i);
+  it('refuses to stamp a landing page missing its build markers', () => {
+    const withoutMeta = HTML.replace('<meta name="zodiacs-registry-aura-enabled" content="0" />', '');
+    expect(() => injectRegistryAuraLanding(withoutMeta, {})).toThrow(/marker/i);
 
-    const withoutWhy = HTML.replace('<!-- registry-aura-hero:why -->', '');
-    expect(() => injectRegistryAuraLanding(withoutWhy, {})).toThrow(/hero/i);
+    const withoutEntry = HTML.replace(REGISTRY_AURA_ENTRY_SLOT, '');
+    expect(() => injectRegistryAuraLanding(withoutEntry, {})).toThrow(/entry slot/i);
   });
 
   it('allows only the named chart return context and always uses the fixed Aura path', () => {

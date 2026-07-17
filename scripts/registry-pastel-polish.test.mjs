@@ -33,24 +33,70 @@ describe('registry pastel polish', () => {
     expect(source).toContain('src={`/assets/zodiac-icons/128/${sign.asset.sign}.webp`}');
     expect(source).toContain('src={`/assets/zodiac-icons/48/${r.slug}.webp`}');
     expect(source).toContain('className="pulse__bar-k pulse__bar-k--sign"');
+    const standings = source.slice(
+      source.indexOf('function StandingsSection()'),
+      source.indexOf('// ---- Shelf viewer'),
+    );
+    expect(standings).toContain('srcSet={`/assets/zodiac-icons/48/${slug}.avif`}');
+    expect(standings).toContain('src={`/assets/zodiac-icons/48/${slug}.webp`}');
+    expect(standings).not.toContain('src={`/assets/icons/${slug}.png`}');
     expect(bundle).toContain('/assets/zodiac-icons/48/');
     expect(bundle).toContain('/assets/zodiac-icons/128/');
     expect(registry).toContain('@media (prefers-reduced-transparency: reduce)');
     expect(registry).toContain('@media (prefers-contrast: more)');
   });
 
-  it('routes both rendered hero variants to the thesis with the requested label', async () => {
+  it('keeps one explanatory hero action and moves the Registry story link into section one', async () => {
     const [source, registry] = await Promise.all([
       read('src/app.jsx'),
       read('public/registry/index.html'),
     ]);
 
-    // Owner-requested rename (2026-07-17): "The Thesis" reads cold to an
-    // everyday visitor; the button now answers the question they actually
-    // have. The destination is unchanged.
-    expect(source).toContain('<a className="btn" href="/thesis/">');
-    expect(source).toContain('<span>Why this exists</span>');
-    expect(registry).toContain('<a class="btn" href="/thesis/"><span>Why this exists</span></a>');
+    const hero = source.slice(source.indexOf('function CineHero()'), source.indexOf('function Hero('));
+    expect(hero).toContain('The official public record for the twelve Zodiacs—verify each sign and explore its story.');
+    expect(hero.match(/className="btn btn--primary"/g)).toHaveLength(1);
+    expect(hero).not.toContain('REGISTRY_AURA_HERO_COPY');
+    expect(hero).not.toContain('cine__why');
+    expect(source).toContain('<a className="reg__story-link" href="/thesis/">');
+    expect(source).toContain('<span>Read the Registry thesis</span>');
+    expect(registry).toContain('<p><a href="/thesis/">Read the Registry thesis →</a></p>');
+    expect(registry).not.toContain('registry-aura-hero:cta');
+    expect(registry).not.toContain('cine__why');
+  });
+
+  it('uses a full-row, plain-English Registry Aura feature band', async () => {
+    const [source, registry] = await Promise.all([
+      read('src/app.jsx'),
+      read('public/registry/index.html'),
+    ]);
+
+    expect(source).toContain("t: 'Verify a Zodiac'");
+    expect(source).toContain("t: 'Read a collection'");
+    expect(source).toContain("t: 'Build with the record'");
+    expect(source).toContain('className="idctx__card idctx__card--aura"');
+    expect(source).toContain('Public collection');
+    expect(source).toContain('Saved chart');
+    expect(source).toContain('Today’s sky');
+    expect(registry).toContain('.idctx__card--aura {');
+    expect(registry).toContain('grid-column: 1 / -1;');
+    expect(registry).toContain('.static-site__card--aura {');
+  });
+
+  it('paints market direction after generic values and includes an explicit flat state', async () => {
+    const [source, registry] = await Promise.all([
+      read('src/app.jsx'),
+      read('public/registry/index.html'),
+    ]);
+
+    expect(source.match(/market__change--flat/g)?.length).toBeGreaterThanOrEqual(2);
+    expect(registry).toContain('--market-up:     #A9D4C4;');
+    expect(registry).toContain('--market-flat:   #8E96AB;');
+    const valueRule = registry.indexOf('.standings__v {');
+    const directionRule = registry.indexOf('.market__change--up {', valueRule);
+    expect(valueRule).toBeGreaterThan(-1);
+    expect(directionRule).toBeGreaterThan(valueRule);
+    expect(registry.slice(directionRule)).toContain('.market__change--down { color: var(--vermilion); }');
+    expect(registry.slice(directionRule)).toContain('.market__change--flat { color: var(--market-flat); }');
   });
 
   it.each(signs)('renders the %s lot title with one decorative pastel disc', async (slug, name) => {

@@ -154,6 +154,29 @@ try {
           track(name, props) { globalThis.__t17Events.push({ name, props, at: performance.now() }); },
         };
       });
+      await source.waitForFunction(() => {
+        const approach = document.querySelector('[data-approach-share]');
+        const communication = document.querySelector('[data-communication-share]');
+        return approach?.getAttribute('data-card-state') === 'idle'
+          && communication?.getAttribute('data-card-state') === 'idle';
+      }, null, { timeout: TIMEOUT });
+      const contextualPrepared = await source.evaluate(() => {
+        const cardText = (title) => {
+          const all = globalThis.__t17CanvasText.slice();
+          const start = all.findLastIndex((entry) => entry.value === title);
+          if (start < 0) return [];
+          const relativeEnd = all.slice(start).findIndex((entry) => entry.value === 'ZODIACS · ORG');
+          return relativeEnd < 0 ? [] : all.slice(start, start + relativeEnd + 1);
+        };
+        return {
+          approach: cardText('How to approach me'),
+          communication: cardText('How I communicate'),
+        };
+      });
+      assert.ok(contextualPrepared.approach.length > 0,
+        'the approach image must be prepared before its final share tap');
+      assert.ok(contextualPrepared.communication.length > 0,
+        'the communication image must be prepared before its final share tap');
       const iconRequests = [];
       source.on('request', (request) => {
         const path = new URL(request.url()).pathname;
@@ -166,19 +189,104 @@ try {
       assert.equal(await source.locator('[data-share-link]').count(), 1, 'the legacy full-link hook must stay unique');
       assert.equal(await source.locator('[data-share-dialog]').count(), 0, 'dialog must stay unmounted until requested');
 
+      const moreActions = source.locator('[data-chart-more]');
+      if (!(await moreActions.getAttribute('open'))) await moreActions.locator('summary').click();
+      await moreActions.locator('[data-share-link]').click();
+      await source.waitForFunction(() => globalThis.__t17Clipboard.length === 1, null, { timeout: TIMEOUT });
+      const fullUrl = (await clipboard(source))[0];
+      const fullParsed = new URL(fullUrl);
+      assert.equal(fullParsed.hash.startsWith('#c=1.'), true, 'the explicit full-detail link must preserve v1 #c');
+
+      await source.evaluate(() => {
+        globalThis.__t17CanvasText = [];
+        globalThis.__t17DownloadClicks = [];
+        globalThis.__t17Events = [];
+      });
       await source.locator('[data-share-card]').click();
       const dialog = source.locator('[data-share-dialog]');
       await dialog.waitFor({ state: 'visible', timeout: TIMEOUT });
       assert.equal(await dialog.getAttribute('open') !== null, true, 'share dialog must be modal/open');
-      assert.equal((await dialog.locator('label').innerText()).trim(), 'Hide birth details');
-      assert.equal(await dialog.locator('[data-hide-birth-details]').isChecked(), false, 'birth details stay visible by default');
-      assert.equal(await dialog.getAttribute('data-share-mode'), 'details');
+      assert.equal(await dialog.getAttribute('data-share-mode'), 'signature');
+      assert.equal(await dialog.locator('[data-hide-birth-details]').count(), 0,
+        'the share sheet must not expose the retired birth-detail toggle');
+      assert.equal(await dialog.locator('[data-share-options]').count(), 0,
+        'the share sheet must not depend on a second options opener');
+      assert.equal(await dialog.locator('[data-share-signature]').count(), 1,
+        'the primary share preview must be the personalized chart signature');
 
-      await dialog.locator('[data-share-link]').click();
-      await source.waitForFunction(() => globalThis.__t17Clipboard.length === 1, null, { timeout: TIMEOUT });
-      const fullUrl = (await clipboard(source))[0];
-      const fullParsed = new URL(fullUrl);
-      assert.equal(fullParsed.hash.startsWith('#c=1.'), true, 'default link sharing must preserve v1 #c');
+      const signatureAction = dialog.locator('[data-share-card-action="signature"]');
+      await source.waitForFunction(() => {
+        const action = document.querySelector('[data-share-card-action="signature"]');
+        return action instanceof HTMLButtonElement && !action.disabled;
+      }, null, { timeout: TIMEOUT });
+      assert.equal(await source.evaluate(() => globalThis.__t17Events.length), 0,
+        'pre-rendering the signature must not count as a share');
+      const signaturePreview = await dialog.locator('[data-share-signature]').evaluate((section) => ({
+        heading: section.querySelector('h3')?.textContent?.trim() ?? '',
+        title: section.querySelector('strong')?.textContent?.trim() ?? '',
+        summary: section.querySelector('p')?.textContent?.trim() ?? '',
+      }));
+      assert.equal(signaturePreview.heading, 'My chart signature');
+
+      const signaturePrepared = await source.evaluate(() => ({
+        text: globalThis.__t17CanvasText.slice(),
+        at: performance.now(),
+      }));
+      const signaturePreparedText = signaturePrepared.text.map((entry) => entry.value).join(' | ');
+      assert.equal(signaturePreparedText.includes('My chart signature'), true,
+        'signature image must be rendered before the final share tap');
+      assert.equal(signaturePreparedText.includes(signaturePreview.title), true,
+        'signature image must match the personalized preview');
+      const signatureSummaryLead = signaturePreview.summary.split(/\s+/).slice(0, 5).join(' ').toLowerCase();
+      assert.equal(signaturePreparedText.replace(/\s+/g, ' ').toLowerCase().includes(signatureSummaryLead), true,
+        'signature image must carry its defensible chart-specific explanation');
+      assert.equal(signaturePreparedText.includes(`Engine ${ENGINE_VERSION}`), true,
+        'signature PNG must carry only its engine receipt');
+      const signatureWordmark = signaturePrepared.text.find((entry) => entry.value === 'ZODIACS · ORG');
+      assert.deepEqual(
+        { align: signatureWordmark?.align, x: signatureWordmark?.x, y: signatureWordmark?.y },
+        { align: 'right', x: 1016, y: 1304 },
+        'signature wordmark must occupy the bottom-right register',
+      );
+      for (const privateValue of [
+        BIRTH.date,
+        BIRTH.time,
+        BIRTH.cityQuery,
+        'June 15, 1990',
+        'America/New_York',
+        '/birth-chart/',
+        'http://',
+        'https://',
+      ]) {
+        assert.equal(signaturePreparedText.includes(privateValue), false,
+          `signature PNG leaked ${privateValue}`);
+      }
+
+      const signatureStart = await source.evaluate(() => performance.now());
+      const signatureDownloadPromise = source.waitForEvent('download', { timeout: TIMEOUT });
+      await signatureAction.click();
+      const signatureDownload = await signatureDownloadPromise;
+      await source.waitForFunction(() => globalThis.__t17Events.length === 2, null, { timeout: TIMEOUT });
+      assert.equal(signatureDownload.suggestedFilename(), 'zodiacs-chart-signature.png',
+        'signature filename must contain no birth input');
+      assert.deepEqual(await pngDimensions(signatureDownload), { width: 1080, height: 1350 },
+        'signature card must export at 1080×1350');
+      const signatureRender = await source.evaluate(() => ({
+        text: globalThis.__t17CanvasText.slice(),
+        downloads: globalThis.__t17DownloadClicks.slice(),
+        events: globalThis.__t17Events.slice(),
+      }));
+      const signatureDownloadAt = signatureRender.downloads.find((entry) => entry.filename === 'zodiacs-chart-signature.png')?.at;
+      const signatureEventAt = signatureRender.events.find((entry) => entry.name === 'share_card_downloaded')?.at;
+      assert.ok(signatureDownloadAt >= signatureStart, 'signature download must start from the final action');
+      assert.ok(signatureEventAt >= signatureDownloadAt,
+        'signature analytics must follow the completed share/download action');
+      assert.ok(signatureDownloadAt - signatureStart < 1000,
+        `prepared signature action took ${(signatureDownloadAt - signatureStart).toFixed(1)}ms; expected <1000ms`);
+      assert.deepEqual((await events(source)).map(({ name, props }) => ({ name, props })), [
+        { name: 'chart_share', props: { variant: 'signature_card' } },
+        { name: 'share_card_downloaded', props: { variant: 'signature_card' } },
+      ], 'signature analytics must fire only after the final action and contain no sensitive fields');
 
       const fullCardStart = await source.evaluate(() => {
         globalThis.__t17CanvasText = [];
@@ -187,15 +295,12 @@ try {
       });
       const fullCardDownloadPromise = source.waitForEvent('download', { timeout: TIMEOUT });
       await dialog.locator('[data-share-card-action="full"]').click();
-      assert.equal(await dialog.locator('[data-hide-birth-details]').isDisabled(), true,
-        'link-privacy control must be locked while a card export is in flight');
-      await source.waitForFunction(() => globalThis.__t17Events.length === 3, null, { timeout: TIMEOUT });
+      await source.waitForFunction(() => globalThis.__t17Events.length === 4, null, { timeout: TIMEOUT });
       await source.waitForFunction(() => {
-        const toggle = document.querySelector('[data-hide-birth-details]');
         const action = document.querySelector('[data-share-card-action="full"]');
-        return toggle instanceof HTMLInputElement
-          && !toggle.disabled
-          && !action?.textContent?.includes('Rendering');
+        return action instanceof HTMLButtonElement
+          && !action.disabled
+          && !action.textContent?.includes('Rendering');
       }, null, { timeout: TIMEOUT });
       const fullCardDownload = await fullCardDownloadPromise;
       assert.equal(fullCardDownload.suggestedFilename(), 'zodiacs-chart.png',
@@ -221,20 +326,19 @@ try {
         'full-chart wordmark must occupy the bottom-right register',
       );
       const fullCardDownloadAt = fullCardRender.downloads.find((entry) => entry.filename === 'zodiacs-chart.png')?.at;
-      const fullCardEventAt = fullCardRender.events.find((entry) => entry.name === 'share_card_downloaded')?.at;
+      const fullCardEventAt = fullCardRender.events.findLast((entry) => entry.name === 'share_card_downloaded')?.at;
       assert.ok(fullCardDownloadAt >= fullCardStart, 'full-chart download must start after the action');
       assert.ok(fullCardEventAt >= fullCardDownloadAt,
         'share_card_downloaded must fire only after the non-cancelled full-chart download starts');
       assert.ok(fullCardEventAt - fullCardStart < 1000,
         `full-chart PNG action took ${(fullCardEventAt - fullCardStart).toFixed(1)}ms; expected <1000ms`);
       assert.deepEqual((await events(source)).map(({ name, props }) => ({ name, props })), [
-        { name: 'chart_share', props: { variant: 'details_link' } },
+        { name: 'chart_share', props: { variant: 'signature_card' } },
+        { name: 'share_card_downloaded', props: { variant: 'signature_card' } },
         { name: 'chart_share', props: { variant: 'full_chart_card' } },
         { name: 'share_card_downloaded', props: { variant: 'full_chart_card' } },
-      ], 'default full-card analytics must fire exactly once and contain no sensitive fields');
+      ], 'signature and full-card analytics must each fire exactly once');
 
-      await dialog.locator('[data-hide-birth-details]').check();
-      assert.equal(await dialog.getAttribute('data-share-mode'), 'positions');
       const privacy = await dialog.locator('.calc-share-dialog__note').innerText();
       assert.match(privacy, /omits your birth date, time, and place/i);
       assert.match(privacy, /still be identifying/i);
@@ -250,9 +354,10 @@ try {
       for (const privateValue of [BIRTH.date, BIRTH.time, BIRTH.cityQuery, 'America/New_York', '40.7', '-74.0']) {
         assert.equal(wireText.includes(privateValue), false, `v2 wire leaked ${privateValue}`);
       }
-      await source.waitForFunction(() => globalThis.__t17Events.length === 4, null, { timeout: TIMEOUT });
+      await source.waitForFunction(() => globalThis.__t17Events.length === 5, null, { timeout: TIMEOUT });
       assert.deepEqual((await events(source)).map(({ name, props }) => ({ name, props })), [
-        { name: 'chart_share', props: { variant: 'details_link' } },
+        { name: 'chart_share', props: { variant: 'signature_card' } },
+        { name: 'share_card_downloaded', props: { variant: 'signature_card' } },
         { name: 'chart_share', props: { variant: 'full_chart_card' } },
         { name: 'share_card_downloaded', props: { variant: 'full_chart_card' } },
         { name: 'chart_share', props: { variant: 'positions_link' } },
@@ -266,7 +371,7 @@ try {
       const bigThreeDownloadPromise = source.waitForEvent('download', { timeout: TIMEOUT });
       await dialog.locator('[data-share-card-action="big-three"]').click();
       const bigThreeDownload = await bigThreeDownloadPromise;
-      await source.waitForFunction(() => globalThis.__t17Events.length === 6, null, { timeout: TIMEOUT });
+      await source.waitForFunction(() => globalThis.__t17Events.length === 7, null, { timeout: TIMEOUT });
       assert.equal(bigThreeDownload.suggestedFilename(), 'zodiacs-big-three.png');
       assert.deepEqual(await pngDimensions(bigThreeDownload), { width: 1080, height: 1350 },
         'big-three card must export at 2× the 540×675 design size');
@@ -292,7 +397,8 @@ try {
       assert.ok(bigThreeEventAt - bigThreeStart < 1000,
         `big-three PNG action took ${(bigThreeEventAt - bigThreeStart).toFixed(1)}ms; expected <1000ms`);
       assert.deepEqual((await events(source)).map(({ name, props }) => ({ name, props })), [
-        { name: 'chart_share', props: { variant: 'details_link' } },
+        { name: 'chart_share', props: { variant: 'signature_card' } },
+        { name: 'share_card_downloaded', props: { variant: 'signature_card' } },
         { name: 'chart_share', props: { variant: 'full_chart_card' } },
         { name: 'share_card_downloaded', props: { variant: 'full_chart_card' } },
         { name: 'chart_share', props: { variant: 'positions_link' } },
@@ -332,9 +438,113 @@ try {
       await dialog.locator('.calc-share-dialog__close').click();
       await dialog.waitFor({ state: 'detached', timeout: TIMEOUT });
 
+      const approachButton = source.locator('[data-approach-share]');
+      assert.equal(await approachButton.count(), 1,
+        'the approach insight must expose one contextual share action');
+      assert.equal(await approachButton.getAttribute('data-card-state'), 'idle',
+        'the approach image must be ready before its action is enabled');
+      assert.equal((await approachButton.innerText()).includes('Share how to approach me'), true,
+        'the approach action must explain who the shared guidance is for');
+      assert.equal(await source.locator('.calc__approach-part').count(), 4,
+        'the approach insight must cover Rising, Mercury, Moon, and Mars');
+      assert.equal(await source.evaluate(() => {
+        const approach = document.querySelector('[data-approach-read]');
+        const communication = document.querySelector('.calc__comm');
+        return Boolean(approach && communication
+          && (approach.compareDocumentPosition(communication) & Node.DOCUMENT_POSITION_FOLLOWING));
+      }), true, 'how to approach you must appear before how you communicate');
+
+      const approachExpected = await source.locator('.calc__approach').evaluate((section) => {
+        const firstSentence = (value) => {
+          const text = value.trim();
+          const match = /[.!?](?:[\u201d"']?)(?=\s|$)/.exec(text);
+          return match ? text.slice(0, match.index + match[0].length).trim() : text;
+        };
+        return Array.from(section.querySelectorAll('.calc__approach-part')).map((part) => ({
+          body: part.querySelector('.mono--label')?.textContent?.trim() ?? '',
+          role: part.querySelector('h3')?.textContent?.trim() ?? '',
+          sign: part.querySelector('.calc__approach-sign > span')?.textContent?.trim() ?? '',
+          reading: firstSentence(part.querySelector(':scope > p')?.textContent ?? ''),
+        }));
+      });
+      assert.deepEqual(approachExpected.map(({ body }) => body), ['Rising', 'Mercury', 'Moon', 'Mars']);
+      const approachValues = contextualPrepared.approach.map((entry) => entry.value);
+      const approachText = approachValues.join(' | ');
+      const normalizedApproachText = approachValues.join(' ').replace(/\s+/g, ' ').toLowerCase();
+      assert.equal(approachValues.filter((value) => value === 'How to approach me').length, 1,
+        'approach PNG must carry its audience-facing title exactly once');
+      for (const part of approachExpected) {
+        assert.equal(normalizedApproachText.includes(`${part.body} · ${part.role}`.toLowerCase()), true,
+          `approach PNG must label ${part.body}'s role`);
+        assert.equal(normalizedApproachText.includes(part.sign.toLowerCase()), true,
+          `approach PNG must name the ${part.body} sign`);
+        const readingLead = part.reading.split(/\s+/).slice(0, 5).join(' ').toLowerCase();
+        assert.equal(normalizedApproachText.includes(readingLead), true,
+          `approach PNG must include concise ${part.body} guidance`);
+      }
+      for (const privateValue of [
+        BIRTH.date,
+        BIRTH.time,
+        BIRTH.cityQuery,
+        'June 15, 1990',
+        'America/New_York',
+        '/birth-chart/',
+        'http://',
+        'https://',
+      ]) {
+        assert.equal(approachText.includes(privateValue), false,
+          `approach PNG leaked ${privateValue}`);
+      }
+      assert.equal(approachText.includes(`Engine ${ENGINE_VERSION}`), true,
+        'approach PNG must carry only its engine receipt');
+      const approachWordmark = contextualPrepared.approach.find((entry) => entry.value === 'ZODIACS · ORG');
+      assert.deepEqual(
+        { align: approachWordmark?.align, x: approachWordmark?.x, y: approachWordmark?.y },
+        { align: 'right', x: 1016, y: 1304 },
+        'approach wordmark must occupy the bottom-right register',
+      );
+
+      await source.evaluate(() => {
+        globalThis.__t17CanvasText = [];
+        globalThis.__t17DownloadClicks = [];
+        Object.defineProperty(Navigator.prototype, 'canShare', { configurable: true, value: () => false });
+      });
+      const approachEventStart = (await events(source)).length;
+      const approachTapStart = await source.evaluate(() => performance.now());
+      const approachDownloadPromise = source.waitForEvent('download', { timeout: TIMEOUT });
+      await approachButton.click();
+      const approachDownload = await approachDownloadPromise;
+      await source.waitForFunction((start) => globalThis.__t17Events.length === start + 2,
+        approachEventStart, { timeout: TIMEOUT });
+      assert.equal(approachDownload.suggestedFilename(), 'zodiacs-how-to-approach-me.png',
+        'the approach filename must contain no birth input');
+      assert.deepEqual(await pngDimensions(approachDownload), { width: 1080, height: 1350 },
+        'approach card must export at 1080×1350');
+      const approachSave = await source.evaluate(() => ({
+        canvasCount: globalThis.__t17CanvasText.length,
+        downloads: globalThis.__t17DownloadClicks.slice(),
+        events: globalThis.__t17Events.slice(),
+      }));
+      const approachDownloadAt = approachSave.downloads
+        .find((entry) => entry.filename === 'zodiacs-how-to-approach-me.png')?.at;
+      assert.equal(approachSave.canvasCount, 0,
+        'the final approach tap must save the prepared card without rendering again');
+      assert.ok(approachDownloadAt >= approachTapStart && approachDownloadAt - approachTapStart < 1000,
+        'the prepared approach download must start directly from the final tap');
+      assert.deepEqual(
+        approachSave.events.slice(approachEventStart).map(({ name, props }) => ({ name, props })),
+        [
+          { name: 'chart_share', props: { variant: 'approach_card' } },
+          { name: 'share_card_downloaded', props: { variant: 'approach_card' } },
+        ],
+        'approach analytics must contain only its approved, privacy-safe variant',
+      );
+
       const communicationButton = source.locator('[data-communication-share]');
       assert.equal(await communicationButton.count(), 1,
         'the communication insight must expose one contextual share action');
+      assert.equal(await communicationButton.getAttribute('data-card-state'), 'idle',
+        'the communication image must be ready before its action is enabled');
       assert.equal((await communicationButton.innerText()).includes('Share this reading'), true,
         'the contextual action must explain what is being shared');
       assert.equal(await source.locator('.calc__comm-part').count(), 3,
@@ -373,10 +583,9 @@ try {
         Object.defineProperty(Navigator.prototype, 'canShare', { configurable: true, value: () => false });
       });
       const communicationEventStart = (await events(source)).length;
+      const communicationTapStart = await source.evaluate(() => performance.now());
       const communicationDownloadPromise = source.waitForEvent('download', { timeout: TIMEOUT });
       await communicationButton.click();
-      assert.equal(await communicationButton.isDisabled(), true,
-        'the communication share action must lock while its PNG is rendering');
       const communicationDownload = await communicationDownloadPromise;
       await source.waitForFunction((start) => globalThis.__t17Events.length === start + 2,
         communicationEventStart, { timeout: TIMEOUT });
@@ -386,11 +595,18 @@ try {
         'communication card must export at 1080×1350');
 
       const communicationRender = await source.evaluate(() => ({
-        text: globalThis.__t17CanvasText.slice(),
+        canvasCount: globalThis.__t17CanvasText.length,
         downloads: globalThis.__t17DownloadClicks.slice(),
         events: globalThis.__t17Events.slice(),
       }));
-      const communicationValues = communicationRender.text.map((entry) => entry.value);
+      assert.equal(communicationRender.canvasCount, 0,
+        'the final communication tap must save the prepared card without rendering again');
+      const communicationDownloadAt = communicationRender.downloads
+        .find((entry) => entry.filename === 'zodiacs-communication.png')?.at;
+      assert.ok(communicationDownloadAt >= communicationTapStart
+        && communicationDownloadAt - communicationTapStart < 1000,
+      'the prepared communication download must start directly from the final tap');
+      const communicationValues = contextualPrepared.communication.map((entry) => entry.value);
       const communicationText = communicationValues.join(' | ');
       const normalizedCommunicationText = communicationValues.join(' ').replace(/\s+/g, ' ').toLowerCase();
       assert.equal(communicationValues.filter((value) => value === 'How I communicate').length, 1,
@@ -430,7 +646,8 @@ try {
       }
       assert.equal(communicationText.includes(`Engine ${ENGINE_VERSION}`), true,
         'communication PNG must carry only its engine receipt');
-      const communicationWordmark = communicationRender.text.find((entry) => entry.value === 'ZODIACS · ORG');
+      const communicationWordmark = contextualPrepared.communication
+        .find((entry) => entry.value === 'ZODIACS · ORG');
       assert.deepEqual(
         { align: communicationWordmark?.align, x: communicationWordmark?.x, y: communicationWordmark?.y },
         { align: 'right', x: 1016, y: 1304 },
@@ -447,24 +664,39 @@ try {
 
       const communicationEventsBeforeCancel = (await events(source)).length;
       await source.evaluate(() => {
+        globalThis.__t17CanvasText = [];
         globalThis.__t17DownloadClicks = [];
         globalThis.__t17ShareCalls = 0;
+        globalThis.__t17ShareAt = null;
+        globalThis.__t17ShareCanvasCount = null;
         Object.defineProperty(Navigator.prototype, 'canShare', { configurable: true, value: () => true });
         Object.defineProperty(Navigator.prototype, 'share', {
           configurable: true,
           value: () => {
             globalThis.__t17ShareCalls += 1;
+            globalThis.__t17ShareAt = performance.now();
+            globalThis.__t17ShareCanvasCount = globalThis.__t17CanvasText.length;
             return Promise.reject(new DOMException('cancelled', 'AbortError'));
           },
         });
       });
+      const communicationNativeTapStart = await source.evaluate(() => performance.now());
       await communicationButton.click();
       await source.waitForFunction(() => {
         const action = document.querySelector('[data-communication-share]');
         return globalThis.__t17ShareCalls === 1
           && action
-          && !action.textContent?.includes('Creating');
+          && action.getAttribute('data-card-state') === 'idle';
       }, null, { timeout: TIMEOUT });
+      const communicationNative = await source.evaluate(() => ({
+        at: globalThis.__t17ShareAt,
+        canvasCount: globalThis.__t17ShareCanvasCount,
+      }));
+      assert.ok(communicationNative.at >= communicationNativeTapStart
+        && communicationNative.at - communicationNativeTapStart < 1000,
+      'navigator.share must be invoked directly by the final communication tap');
+      assert.equal(communicationNative.canvasCount, 0,
+        'the native communication share must not await a click-time canvas render');
       assert.equal((await events(source)).length, communicationEventsBeforeCancel,
         'a cancelled communication share sheet must fire no analytics');
       assert.equal(await source.evaluate(() => globalThis.__t17DownloadClicks.length), 0,
@@ -472,9 +704,9 @@ try {
       assert.equal((await communicationButton.innerText()).includes('Share this reading'), true,
         'a cancelled communication share must return the contextual action to idle');
 
-      const communicationEventsBeforeError = (await events(source)).length;
-      await source.evaluate(() => {
-        globalThis.__t17DownloadClicks = [];
+      const preparationFailure = await trackedPage();
+      await open(preparationFailure, `${baseURL}/birth-chart/`);
+      await preparationFailure.evaluate(() => {
         globalThis.__t17ExpectedErrors = [];
         globalThis.__t17OriginalConsoleError = console.error;
         console.error = (...values) => {
@@ -482,22 +714,38 @@ try {
         };
         globalThis.__t17OriginalToBlob = HTMLCanvasElement.prototype.toBlob;
         HTMLCanvasElement.prototype.toBlob = function (callback) { callback(null); };
-        Object.defineProperty(Navigator.prototype, 'canShare', { configurable: true, value: () => false });
+        globalThis.zodiacsAnalytics = {
+          track(name, props) { globalThis.__t17Events.push({ name, props, at: performance.now() }); },
+        };
       });
-      await communicationButton.click();
-      const communicationError = source.locator('.calc__comm [role="alert"]');
+      await computeChart(preparationFailure);
+      const communicationErrorButton = preparationFailure.locator('[data-communication-share]');
+      await preparationFailure.waitForFunction(() => {
+        const action = document.querySelector('[data-communication-share]');
+        return action?.getAttribute('data-card-state') === 'error';
+      }, null, { timeout: TIMEOUT });
+      assert.equal(await communicationErrorButton.isDisabled(), true,
+        'a failed communication preparation must leave an unavailable action disabled');
+      assert.equal((await communicationErrorButton.innerText()).includes('Card unavailable'), true,
+        'a failed communication preparation must explain that the card is unavailable');
+      const communicationError = preparationFailure.locator('.calc__comm [role="alert"]');
       await communicationError.waitFor({ state: 'visible', timeout: TIMEOUT });
       assert.match(await communicationError.innerText(), /couldn.t create that image/i);
-      assert.equal((await events(source)).length, communicationEventsBeforeError,
-        'a failed communication export must fire no success analytics');
-      assert.equal(await source.evaluate(() => globalThis.__t17DownloadClicks.length), 0,
-        'a failed communication export must not start a download');
-      assert.match(await source.evaluate(() => globalThis.__t17ExpectedErrors.join(' ')), /png encode failed/i,
-        'the communication failure state must retain the rendering error for diagnostics');
-      await source.evaluate(() => {
+      assert.equal((await events(preparationFailure)).some(({ name }) => (
+        name === 'chart_share' || name === 'share_card_downloaded'
+      )), false, 'a failed pre-render must fire no share-success analytics');
+      assert.equal(await preparationFailure.evaluate(() => globalThis.__t17DownloadClicks.length), 0,
+        'a failed pre-render must not start a download');
+      assert.match(
+        await preparationFailure.evaluate(() => globalThis.__t17ExpectedErrors.join(' ')),
+        /png encode failed/i,
+        'the communication preparation failure must retain the rendering error for diagnostics',
+      );
+      await preparationFailure.evaluate(() => {
         HTMLCanvasElement.prototype.toBlob = globalThis.__t17OriginalToBlob;
         console.error = globalThis.__t17OriginalConsoleError;
       });
+      await preparationFailure.close();
 
       const received = await trackedPage();
       await open(received, positionsUrl);
@@ -544,8 +792,8 @@ try {
       assert.match(await invalid.locator('.calc__error').innerText(), /invalid or incomplete/i);
       assert.equal(await invalid.locator('[data-positions-only], .calc__result').count(), 0, 'invalid v2 must not render a result');
 
-      // Mobile uses the native share sheet from the original tap and keeps
-      // the richer, privacy-first action sheet behind an explicit option.
+      // Mobile uses the same deliberate two-step contract: open the compact
+      // sheet, prepare the signature, then invoke file sharing from the final tap.
       const mobileContext = await browser.newContext({
         viewport: { width: 390, height: 844 },
         colorScheme: 'dark',
@@ -555,10 +803,26 @@ try {
       });
       await mobileContext.addInitScript(() => {
         globalThis.__mobileSharePayload = null;
+        globalThis.__mobileShareCalls = 0;
+        Object.defineProperty(Navigator.prototype, 'canShare', {
+          configurable: true,
+          value: (payload) => Array.isArray(payload?.files) && payload.files.length === 1,
+        });
         Object.defineProperty(Navigator.prototype, 'share', {
           configurable: true,
           value: (payload) => {
-            globalThis.__mobileSharePayload = { ...payload, at: performance.now() };
+            globalThis.__mobileShareCalls += 1;
+            globalThis.__mobileSharePayload = {
+              title: payload?.title ?? null,
+              text: payload?.text ?? null,
+              url: payload?.url ?? null,
+              files: Array.from(payload?.files ?? []).map((file) => ({
+                name: file.name,
+                type: file.type,
+                size: file.size,
+              })),
+              at: performance.now(),
+            };
             return Promise.resolve();
           },
         });
@@ -570,42 +834,60 @@ try {
       });
       await open(mobile, `${baseURL}/birth-chart/`);
       await computeChart(mobile);
-      await mobile.locator('[data-share-options]').waitFor({ state: 'visible', timeout: TIMEOUT });
       await mobile.locator('[data-share-card]').click();
-      await mobile.waitForFunction(() => globalThis.__mobileSharePayload !== null, null, { timeout: TIMEOUT });
-      const mobilePayload = await mobile.evaluate(() => globalThis.__mobileSharePayload);
-      const mobileWire = v2Wire(mobilePayload.url);
-      assert.equal(await mobile.locator('[data-share-dialog]').count(), 0,
-        'successful native mobile share must not open the fallback sheet');
-      assert.equal(JSON.stringify(mobileWire.wire).includes(BIRTH.date), false,
-        'native mobile share must omit birth details');
-      await mobile.locator('[data-share-options]').click();
       const mobileSheet = mobile.locator('[data-share-dialog]');
       await mobileSheet.waitFor({ state: 'visible', timeout: TIMEOUT });
-      assert.equal(await mobileSheet.locator('[data-hide-birth-details]').isChecked(), true,
-        'mobile fallback sheet must be privacy-first');
+      assert.equal(await mobile.evaluate(() => globalThis.__mobileShareCalls), 0,
+        'opening the mobile share sheet must not immediately invoke native sharing');
+      assert.equal(await mobile.locator('[data-share-options]').count(), 0,
+        'mobile must not expose a separate share-options control');
+      const mobileSignatureAction = mobileSheet.locator('[data-share-card-action="signature"]');
+      await mobile.waitForFunction(() => {
+        const action = document.querySelector('[data-share-card-action="signature"]');
+        return action instanceof HTMLButtonElement && !action.disabled;
+      }, null, { timeout: TIMEOUT });
       const mobileSheetBox = await mobileSheet.boundingBox();
       assert.ok(mobileSheetBox && Math.abs(mobileSheetBox.y + mobileSheetBox.height - 844) < 2,
         `mobile share sheet must dock to the viewport bottom: ${JSON.stringify(mobileSheetBox)}`);
       assert.ok(mobileSheetBox.height < 844 && mobileSheetBox.width === 390,
         'mobile share sheet must fit the viewport without becoming a blank full-screen layer');
+      const mobileTapStart = await mobile.evaluate(() => performance.now());
+      await mobileSignatureAction.click();
+      await mobile.waitForFunction(() => globalThis.__mobileShareCalls === 1, null, { timeout: TIMEOUT });
+      const mobilePayload = await mobile.evaluate(() => globalThis.__mobileSharePayload);
+      assert.equal(mobilePayload.files.length, 1, 'the final mobile tap must share one prepared file');
+      assert.deepEqual(mobilePayload.files[0], {
+        name: 'zodiacs-chart-signature.png',
+        type: 'image/png',
+        size: mobilePayload.files[0].size,
+      });
+      assert.ok(mobilePayload.files[0].size > 0, 'the prepared mobile PNG must not be empty');
+      assert.equal(mobilePayload.url, null, 'mobile signature sharing must not leak a chart URL');
+      assert.ok(mobilePayload.at >= mobileTapStart && mobilePayload.at - mobileTapStart < 1000,
+        'the prepared native file share must be invoked directly by the final tap');
       await mobileContext.close();
 
       transcript.fullFragment = fullParsed.hash.slice(0, 5);
       transcript.positionsFragment = positionsParsed.hash.slice(0, 5);
       transcript.positionsWireKeys = Object.keys(wire).sort();
       transcript.positionsRows = await positions.locator('tbody tr').count();
+      transcript.signatureFilename = signatureDownload.suggestedFilename();
       transcript.cardFilename = fullCardDownload.suggestedFilename();
       transcript.bigThreeFilename = bigThreeDownload.suggestedFilename();
+      transcript.approachFilename = approachDownload.suggestedFilename();
       transcript.communicationFilename = communicationDownload.suggestedFilename();
+      transcript.signaturePng = await pngDimensions(signatureDownload);
       transcript.fullCardPng = await pngDimensions(fullCardDownload);
       transcript.bigThreePng = await pngDimensions(bigThreeDownload);
+      transcript.approachPng = await pngDimensions(approachDownload);
       transcript.communicationPng = await pngDimensions(communicationDownload);
+      transcript.signatureActionMs = Math.round(signatureDownloadAt - signatureStart);
       transcript.fullCardMs = Math.round(fullCardEventAt - fullCardStart);
       transcript.bigThreeMs = Math.round(bigThreeEventAt - bigThreeStart);
       transcript.events = (await events(source)).map(({ name, props }) => ({ name, props }));
       transcript.hashesStripped = { positions: true, full: true, ambiguous: true };
-      transcript.mobileNativeShare = 'positions-only';
+      transcript.mobileNativeShare = 'prepared-signature-image';
+      transcript.contextualNativeShare = 'prepared-communication-image';
     } finally {
       await context.close();
     }

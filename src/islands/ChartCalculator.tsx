@@ -10,6 +10,7 @@
  */
 import { useCallback, useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import { BirthFields } from './BirthFields';
+import ChartActionDock from './ChartActionDock';
 import AstroTerm from './AstroTerm';
 import type { CopyLinkState } from './CopyLinkButton';
 import SignChip from './SignChip';
@@ -35,14 +36,24 @@ import {
 import { formatLongitude, signBySlug, signForLongitude, signName } from '../lib/signs';
 import { bigThree } from '../lib/interpretations';
 import { chartWeather, natalAspectLine, planetInHouseLine, topAspects } from '../lib/natal';
+import { chartSignature } from '../lib/chart-signature';
 import { resolveLocalToUtc } from '../lib/time/localToUtc';
 import { houseOf } from '../lib/engine/houses';
 import { moonPhaseName } from '../lib/engine/lite';
 import { registryAuraChartAnalytics, registryAuraChartLink } from '../lib/registry-aura-entry.mjs';
 import { trackAnalytics } from '../lib/analytics';
-import { decodeChartLink, encodeChartLink, NAME_MAX } from '../lib/share';
+import { decodeChartLink, NAME_MAX } from '../lib/share';
 import type { ShareChartInput } from '../lib/share';
-import { encodePositionsLink, type PositionsShareChart } from '../lib/share-positions';
+import {
+  chartHandoffFragment,
+  compatibilityHandoffPath,
+  mineHandoffFromHash,
+  someoneElseHandoffPath,
+  subjectModeFromHash,
+  type MineHandoff,
+  type SubjectMode,
+} from '../lib/chart-handoff';
+import type { PositionsShareChart } from '../lib/share-positions';
 import type { TourVisual } from '../lib/scene/chapters';
 import { ENGINE_VERSION } from '../lib/engine/types';
 import type { Chart, HouseSystem } from '../lib/engine/types';
@@ -79,12 +90,22 @@ const DETAIL_LABELS: Record<Locale, { lead: string; placements: string; aspects:
 };
 const DETAIL_STORAGE_KEY = 'zodiacs.detail.v1';
 const WHEEL_ACTION_COPY = {
-  en: { guide: 'Take the guided tour', replay: 'Replay the tour', moreShare: 'More sharing options', shareNote: 'My chart positions — birth details not included.' },
-  es: { guide: 'Hacer el recorrido guiado', replay: 'Repetir el recorrido', moreShare: 'Más opciones para compartir', shareNote: 'Posiciones de mi carta — sin datos de nacimiento.' },
-  pt: { guide: 'Fazer o tour guiado', replay: 'Repetir o tour', moreShare: 'Mais opções de compartilhamento', shareNote: 'Posições do meu mapa — sem dados de nascimento.' },
-  fr: { guide: 'Faire la visite guidée', replay: 'Rejouer la visite', moreShare: 'Plus d’options de partage', shareNote: 'Positions de mon thème — sans données de naissance.' },
-  it: { guide: 'Inizia il tour guidato', replay: 'Ripeti il tour', moreShare: 'Altre opzioni di condivisione', shareNote: 'Posizioni del mio tema — senza dati di nascita.' },
-} as const satisfies Record<Locale, { guide: string; replay: string; moreShare: string; shareNote: string }>;
+  en: { actions: 'Chart actions', guide: 'Take the guided tour', replay: 'Replay the tour', another: 'Read another chart', signatureSelf: 'Your chart signature', signatureOther: 'Their chart signature', compareMine: 'Compare with mine', compareAdd: 'Add my chart to compare', shareOther: 'Share this chart' },
+  es: { actions: 'Acciones de la carta', guide: 'Hacer el recorrido guiado', replay: 'Repetir el recorrido', another: 'Leer otra carta', signatureSelf: 'La firma de tu carta', signatureOther: 'La firma de su carta', compareMine: 'Comparar con la mía', compareAdd: 'Añadir mi carta para comparar', shareOther: 'Compartir esta carta' },
+  pt: { actions: 'Ações do mapa', guide: 'Fazer o tour guiado', replay: 'Repetir o tour', another: 'Ler outro mapa', signatureSelf: 'A assinatura do seu mapa', signatureOther: 'A assinatura deste mapa', compareMine: 'Comparar com o meu', compareAdd: 'Adicionar meu mapa para comparar', shareOther: 'Compartilhar este mapa' },
+  fr: { actions: 'Actions du thème', guide: 'Faire la visite guidée', replay: 'Rejouer la visite', another: 'Lire un autre thème', signatureSelf: 'La signature de ton thème', signatureOther: 'La signature de son thème', compareMine: 'Comparer avec le mien', compareAdd: 'Ajouter mon thème pour comparer', shareOther: 'Partager ce thème' },
+  it: { actions: 'Azioni del tema', guide: 'Inizia il tour guidato', replay: 'Ripeti il tour', another: 'Leggi un altro tema', signatureSelf: 'La firma del tuo tema', signatureOther: 'La firma del suo tema', compareMine: 'Confronta con il mio', compareAdd: 'Aggiungi il mio tema per confrontare', shareOther: 'Condividi questo tema' },
+} as const satisfies Record<Locale, {
+  actions: string;
+  guide: string;
+  replay: string;
+  another: string;
+  signatureSelf: string;
+  signatureOther: string;
+  compareMine: string;
+  compareAdd: string;
+  shareOther: string;
+}>;
 function firstReadingChartKey(chart: Chart): string {
   return [
     chart.input.utc.toISOString(),
@@ -144,6 +165,49 @@ const PERSON_CHART_COPY = {
   fr: (name: string) => `Le thème de ${name}\u00a0: le «\u00a0tu\u00a0» ci-dessous désigne ${name}.`,
   it: (name: string) => `Il tema di ${name}: il «tu» qui sotto si riferisce a ${name}.`,
 } satisfies Record<Locale, (name: string) => string>;
+const OTHER_SUBJECT_COPY = {
+  en: {
+    unnamed: 'You’re reading someone else’s chart. “You” below means the person whose birth details you entered.',
+    named: (name: string) => `You’re reading ${name}’s chart. “You” below means ${name}.`,
+    heading: (name: string | null) => name ? `${name}’s birth chart` : 'Someone else’s birth chart',
+    submit: 'Update their chart',
+    privacy: 'The entire calculation happens in this browser; these birth details are not sent to a chart API.',
+  },
+  es: {
+    unnamed: 'Estás leyendo la carta de otra persona. El “tú” de abajo se refiere a la persona cuyos datos ingresaste.',
+    named: (name: string) => `Estás leyendo la carta de ${name}. El “tú” de abajo se refiere a ${name}.`,
+    heading: (name: string | null) => name ? `Carta natal de ${name}` : 'Carta natal de otra persona',
+    submit: 'Actualizar su carta',
+    privacy: 'Todo el cálculo ocurre en este navegador; estos datos de nacimiento no se envían a una API de cartas.',
+  },
+  pt: {
+    unnamed: 'Você está lendo o mapa de outra pessoa. O “você” abaixo se refere à pessoa cujos dados foram inseridos.',
+    named: (name: string) => `Você está lendo o mapa de ${name}. O “você” abaixo se refere a ${name}.`,
+    heading: (name: string | null) => name ? `Mapa astral de ${name}` : 'Mapa astral de outra pessoa',
+    submit: 'Atualizar o mapa dela',
+    privacy: 'Todo o cálculo acontece neste navegador; estes dados de nascimento não são enviados a uma API de mapas.',
+  },
+  fr: {
+    unnamed: 'Tu lis le thème d’une autre personne. Le « tu » ci-dessous désigne la personne dont tu as saisi les données.',
+    named: (name: string) => `Tu lis le thème de ${name}. Le « tu » ci-dessous désigne ${name}.`,
+    heading: (name: string | null) => name ? `Thème astral de ${name}` : 'Thème astral d’une autre personne',
+    submit: 'Mettre son thème à jour',
+    privacy: 'Le calcul se fait entièrement dans ce navigateur ; ces données de naissance ne sont pas envoyées à une API.',
+  },
+  it: {
+    unnamed: 'Stai leggendo il tema di un’altra persona. Il «tu» qui sotto indica la persona di cui hai inserito i dati.',
+    named: (name: string) => `Stai leggendo il tema di ${name}. Il «tu» qui sotto indica ${name}.`,
+    heading: (name: string | null) => name ? `Tema natale di ${name}` : 'Tema natale di un’altra persona',
+    submit: 'Aggiorna il suo tema',
+    privacy: 'L’intero calcolo avviene in questo browser; questi dati di nascita non vengono inviati a un’API.',
+  },
+} as const satisfies Record<Locale, {
+  unnamed: string;
+  named: (name: string) => string;
+  heading: (name: string | null) => string;
+  submit: string;
+  privacy: string;
+}>;
 const AUTO_NAME_SUN = {
   en: 'Sun',
   es: 'Sol',
@@ -155,6 +219,7 @@ type SavePrefillSource = 'link' | 'match' | 'auto';
 type CalendarSubscribeModule = typeof import('./CalendarSubscribe');
 type CopyLinkModule = typeof import('./CopyLinkButton');
 type CommunicationReadModule = typeof import('./CommunicationRead');
+type ApproachReadModule = typeof import('./ApproachRead');
 type A2hsHint = import('../lib/a2hs').A2hsHint;
 type PushOptInModule = typeof import('./PushOptIn');
 type PwaInstallModule = typeof import('./PwaInstallPrompt');
@@ -203,6 +268,8 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   const [card, setCard] = useState<'idle' | 'busy' | 'saved' | 'error'>('idle');
   const [fromLink, setFromLink] = useState(false);
   const [linkName, setLinkName] = useState<string | null>(null);
+  const [subjectMode, setSubjectMode] = useState<SubjectMode>('self');
+  const [mineHandoff, setMineHandoff] = useState<MineHandoff | null>(null);
   const [matchedName, setMatchedName] = useState<string | null>(null);
   const [savePromptOpen, setSavePromptOpen] = useState(false);
   const [saveDraft, setSaveDraft] = useState('');
@@ -213,8 +280,8 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   const [calendarSurface, setCalendarSurface] = useState<CalendarSubscribeModule | null>(null);
   const [copyLinkModule, setCopyLinkModule] = useState<CopyLinkModule | null>(null);
   const [communicationSurface, setCommunicationSurface] = useState<CommunicationReadModule | null>(null);
+  const [approachSurface, setApproachSurface] = useState<ApproachReadModule | null>(null);
   const [shareDialogOpen, setShareDialogOpen] = useState(false);
-  const [nativeShareAvailable, setNativeShareAvailable] = useState(false);
   const [a2hsHint, setA2hsHint] = useState<A2hsHint | null>(null);
   const [pushOptIn, setPushOptIn] = useState<PushOptInModule | null>(null);
   const [pwaInstallModule, setPwaInstallModule] = useState<PwaInstallModule | null>(null);
@@ -227,14 +294,6 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   const saveOriginRef = useRef<'tour' | 'free'>('free');
   const shareReturnRef = useRef<HTMLElement | null>(null);
   const focusAfterComputeRef = useRef(false);
-
-  useEffect(() => {
-    const mobile = window.matchMedia('(max-width: 959.5px)');
-    const sync = () => setNativeShareAvailable(mobile.matches && typeof navigator.share === 'function');
-    sync();
-    mobile.addEventListener?.('change', sync);
-    return () => mobile.removeEventListener?.('change', sync);
-  }, []);
 
   // ── Chart Explorer state (full mode) ──
   const [selection, setSelection] = useState<EntityRef | null>(null);
@@ -673,7 +732,10 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   // reduced, read-only view. Never choose between two conflicting formats.
   useEffect(() => {
     if (mode !== 'full') return;
-    const params = new URLSearchParams(window.location.hash.slice(1));
+    const hash = window.location.hash;
+    const params = new URLSearchParams(hash.slice(1));
+    const nextSubjectMode = subjectModeFromHash(hash);
+    const nextMineHandoff = mineHandoffFromHash(hash);
     const clearFragment = () => history.replaceState(null, '', window.location.pathname + window.location.search);
 
     if (params.has('c') && params.has('p')) {
@@ -704,6 +766,8 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
           setShareInput(null);
           setPositionsOnly(decoded);
           setShareSurface(surface);
+          setSubjectMode(nextSubjectMode);
+          setMineHandoff(nextMineHandoff);
           clearFragment();
         })
         .catch(() => {
@@ -732,6 +796,9 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
     runChart({
       date: decoded.date, time: decoded.time ?? '', timeKnown: decoded.timeKnown,
       city: linkCity, houseSystem: decoded.houseSystem,
+      name: decoded.name,
+      subjectMode: nextSubjectMode,
+      mine: nextMineHandoff,
     }, false);
   }, []);
 
@@ -753,6 +820,9 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
 
   interface RunInput {
     date: string; time: string; timeKnown: boolean; city: City; houseSystem: HouseSystem;
+    name?: string;
+    subjectMode?: SubjectMode;
+    mine?: MineHandoff | null;
   }
 
   async function runChart(input: RunInput, focusAfterCompute: boolean) {
@@ -769,6 +839,8 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
     setPositionsOnly(null);
     setShareDialogOpen(false);
     setMoonAmbiguous(false);
+    setSubjectMode(input.subjectMode ?? 'self');
+    setMineHandoff(input.mine ?? null);
     try {
       const engine = await loadEngine();
       const effectiveTime = input.timeKnown ? input.time : '12:00';
@@ -794,6 +866,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
         void import('./CopyLinkButton').then(setCopyLinkModule, () => {});
         if (showsEnglishInterpretation) {
           void import('./CommunicationRead').then(setCommunicationSurface, () => {});
+          void import('./ApproachRead').then(setApproachSurface, () => {});
         }
       }
       track('result_rendered', { mode });
@@ -816,6 +889,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
         tz: input.city.tz,
         place: input.city.name || undefined,
         houseSystem: input.houseSystem,
+        ...(input.name ? { name: input.name } : {}),
       });
 
       if (!input.timeKnown) {
@@ -840,25 +914,23 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
     e.preventDefault();
     if (!canCompute || !city) return;
     setFromLink(false);
-    setLinkName(null);
-    runChart({ date, time, timeKnown, city, houseSystem }, true);
+    if (subjectMode === 'self') setLinkName(null);
+    runChart({
+      date,
+      time,
+      timeKnown,
+      city,
+      houseSystem,
+      subjectMode,
+      mine: mineHandoff,
+      ...(subjectMode === 'other' && linkName ? { name: linkName } : {}),
+    }, true);
   }
 
   const shareUrl = () =>
-    `${window.location.origin}${localizePath(locale, '/birth-chart/')}#c=${encodeChartLink(shareInput!)}`;
-
-  const positionsShareUrl = (): string | null => {
-    if (!chart) return null;
-    const token = encodePositionsLink({
-      bodies: chart.bodies,
-      angles: chart.angles ? { asc: chart.angles.asc, mc: chart.angles.mc } : null,
-      houseSystem: chart.houses?.system ?? houseSystem,
-      engineVersion: chart.engineVersion,
-    });
-    return token
-      ? `${window.location.origin}${localizePath(locale, '/birth-chart/')}#p=${token}`
-      : null;
-  };
+    `${window.location.origin}${localizePath(locale, '/birth-chart/')}#${chartHandoffFragment(shareInput!, {
+      subjectMode,
+    })}`;
 
   async function openShareOptions() {
     if (!chart || !shareInput) return;
@@ -876,27 +948,11 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
     }
   }
 
-  async function shareChartFromAction() {
-    if (!chart || !shareInput) return;
-    const safeUrl = positionsShareUrl();
-    if (nativeShareAvailable && safeUrl) {
-      try {
-        // Keep this call in the original tap task. iOS discards user
-        // activation if a lazy import runs before navigator.share().
-        await navigator.share({
-          title: t(locale, 'shareChart'),
-          text: WHEEL_ACTION_COPY[locale].shareNote,
-          url: safeUrl,
-        });
-        (window as Window & { zodiacsAnalytics?: { track?: (name: string, props: { variant: string }) => void } })
-          .zodiacsAnalytics?.track?.('chart_share', { variant: 'positions_link' });
-        return;
-      } catch (error) {
-        if (error instanceof DOMException && error.name === 'AbortError') return;
-        console.error(error);
-      }
-    }
-    await openShareOptions();
+  function shareChartFromAction() {
+    // The sheet owns every share path. Its primary image is prepared after
+    // opening so the final button can invoke iOS file sharing directly from
+    // the user's second tap.
+    void openShareOptions();
   }
 
   function closeShareDialog(): void {
@@ -929,6 +985,15 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   const personName = linkName && !isAutoName(linkName)
     ? linkName
     : matchedName && !isAutoName(matchedName) ? matchedName : null;
+  const otherSubjectNotice = personName
+    ? OTHER_SUBJECT_COPY[locale].named(personName)
+    : OTHER_SUBJECT_COPY[locale].unnamed;
+  const compareWithMineHref = subjectMode === 'other' && shareInput
+    ? compatibilityHandoffPath(shareInput, mineHandoff)
+    : undefined;
+  const anotherChartHref = subjectMode === 'self' && shareInput
+    ? someoneElseHandoffPath(shareInput)
+    : '/birth-chart/someone-else/';
 
   useEffect(() => {
     if (!chart || !city) return;
@@ -1088,6 +1153,11 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
     };
   }, [chart, placements, mode]);
 
+  const signature = useMemo(
+    () => (chart && mode === 'full' ? chartSignature(chart, locale) : null),
+    [chart, locale, mode],
+  );
+
   const heroCards = useMemo(() => {
     if (!chart || !sun || !moon) return [];
     const cards: { kind: 'sun' | 'moon' | 'rising'; title: string; lon: number | null }[] =
@@ -1107,6 +1177,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   const ShareDialog = shareSurface?.ChartShareDialog;
   const CalendarSubscribe = calendarSurface?.default;
   const CopyLinkButton = copyLinkModule?.CopyLinkButton;
+  const ApproachRead = approachSurface?.default;
   const CommunicationRead = communicationSurface?.default;
   const PushOptIn = pushOptIn?.default;
   const PwaInstallPrompt = pwaInstallModule?.default;
@@ -1114,12 +1185,8 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
     && firstReadingLoaded
     && !tourOpen
     && (firstReading.status === 'not_started' || firstReading.status === 'in_progress');
-  const hideWheelGuide = !firstReadingLoaded
-    || firstReading.status === 'not_started'
-    || firstReading.status === 'in_progress';
-
   return (
-    <div class="calc">
+    <div class="calc" data-subject-mode={subjectMode}>
       <form class="calc__form shell" onSubmit={compute} aria-busy={busy}>
         <div class="core calc__core">
           <div class="calc__fields">
@@ -1177,23 +1244,34 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
               {busy ? t(locale, 'computing')
                 : mode === 'moon' ? t(locale, 'findMoonSign')
                 : mode === 'rising' ? t(locale, 'findRisingSign')
-                : t(locale, 'getBirthChart')}
+                : subjectMode === 'other'
+                  ? OTHER_SUBJECT_COPY[locale].submit
+                  : t(locale, 'getBirthChart')}
             </span>
             <span class="orb">↗</span>
           </button>
-          <p class="calc__privacy">{t(locale, 'privacyDevice')}</p>
+          <p class="calc__privacy">
+            {subjectMode === 'other' ? OTHER_SUBJECT_COPY[locale].privacy : t(locale, 'privacyDevice')}
+          </p>
           {error && <p class="calc__error" role="alert" tabIndex={-1} ref={errorRef}>{error}</p>}
         </div>
       </form>
 
       {positionsOnly && PositionsOnlyView && (
-        <PositionsOnlyView chart={positionsOnly} locale={locale} />
+        <>
+          {subjectMode === 'other' && (
+            <p class="notice" role="status" data-chart-subject>{otherSubjectNotice}</p>
+          )}
+          <PositionsOnlyView chart={positionsOnly} locale={locale} />
+        </>
       )}
 
       {chart && sun && moon && (
         <div class="calc__result" ref={resultRef}>
           <h2 class="sr-only" tabIndex={-1} ref={resultHeadingRef}>
-            {mode === 'moon'
+            {subjectMode === 'other'
+              ? OTHER_SUBJECT_COPY[locale].heading(personName)
+              : mode === 'moon'
               ? t(locale, 'yourMoonSign')
               : mode === 'rising'
                 ? t(locale, 'yourRisingSign')
@@ -1223,7 +1301,11 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
               {t(locale, 'fromLinkNotice')}
             </p>
           )}
-          {personName && (
+          {subjectMode === 'other' ? (
+            <p class="notice" role="status" data-chart-subject>
+              {otherSubjectNotice}
+            </p>
+          ) : personName && (
             <p class="notice" data-chart-person>
               {PERSON_CHART_COPY[locale](personName)}
             </p>
@@ -1364,7 +1446,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                             data-phase={spotlight.phase}
                             aria-hidden="true"
                           >
-                            <span>Highlighted on your chart</span>
+                            <span>Highlighted on this chart</span>
                             <strong>{describeSelection(selection)}</strong>
                           </div>
                         )}
@@ -1404,8 +1486,9 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                         />
                       )}
                     </div>
-                    {tourOpen && tourMod ? (
-                      <tourMod.ChartTour
+                    <div class="xplr__aside">
+                      {tourOpen && tourMod ? (
+                        <tourMod.ChartTour
                         scene={scene}
                         chart={chart}
                         locale={locale}
@@ -1453,64 +1536,64 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                           exitTour();
                           void openSavePrompt('tour');
                         }}
-                        onShare={shareChartFromAction}
-                        onExit={exitTour}
-                        returnFocus={() => wheelboxRef.current?.focus()}
-                      />
-                    ) : (
-                      <Inspector
-                        scene={scene}
-                        selection={selection}
-                        onSelect={applySelect}
-                        locale={locale}
-                      />
-                    )}
-                  </div>
-                  {!tourOpen && shareInput && (
-                    <div class="calc__wheel-actions" data-wheel-actions>
-                      {!hideWheelGuide && (
-                        <button
-                          class="btn btn--ghost"
-                          type="button"
-                          onClick={() => {
+                          onShare={shareChartFromAction}
+                          onExit={exitTour}
+                          returnFocus={() => wheelboxRef.current?.focus()}
+                        />
+                      ) : (
+                        <Inspector
+                          scene={scene}
+                          selection={selection}
+                          onSelect={applySelect}
+                          locale={locale}
+                        />
+                      )}
+                      {shareInput && (
+                        <ChartActionDock
+                          tourOpen={tourOpen}
+                          shareOnly={firstReadingPromptVisible}
+                          actionLabel={WHEEL_ACTION_COPY[locale].actions}
+                          signature={showsEnglishInterpretation && signature ? {
+                            headline: signature.title,
+                            evidence: signature.summary,
+                          } : null}
+                          signatureLabel={subjectMode === 'other'
+                            ? WHEEL_ACTION_COPY[locale].signatureOther
+                            : WHEEL_ACTION_COPY[locale].signatureSelf}
+                          guideLabel={firstReading.status === 'complete'
+                            ? WHEEL_ACTION_COPY[locale].replay
+                            : WHEEL_ACTION_COPY[locale].guide}
+                          shareLabel={subjectMode === 'other'
+                            ? WHEEL_ACTION_COPY[locale].shareOther
+                            : t(locale, 'shareChart')}
+                          shareStatusLabel={card === 'busy'
+                            ? t(locale, 'rendering')
+                            : card === 'saved'
+                              ? t(locale, 'cardSaved')
+                              : subjectMode === 'other'
+                                ? WHEEL_ACTION_COPY[locale].shareOther
+                                : t(locale, 'shareChart')}
+                          compareLabel={subjectMode === 'other'
+                            ? mineHandoff
+                              ? WHEEL_ACTION_COPY[locale].compareMine
+                              : WHEEL_ACTION_COPY[locale].compareAdd
+                            : undefined}
+                          compareHref={compareWithMineHref}
+                          anotherLabel={WHEEL_ACTION_COPY[locale].another}
+                          anotherHref={anotherChartHref}
+                          onGuide={() => {
                             track('next_action_clicked', {
                               state: firstReading.status === 'complete' ? 'guide_complete' : 'chart_result',
                               action: firstReading.status === 'complete' ? 'replay_guide' : 'full_tour',
                             });
                             void startTour('full');
                           }}
-                          data-tour-start
-                        >
-                          <span>{firstReading.status === 'complete'
-                            ? WHEEL_ACTION_COPY[locale].replay
-                            : WHEEL_ACTION_COPY[locale].guide}</span>
-                          <span class="orb" aria-hidden="true">{firstReading.status === 'complete' ? '↻' : '→'}</span>
-                        </button>
-                      )}
-                      <button
-                        class="btn btn--ghost"
-                        type="button"
-                        onClick={() => void shareChartFromAction()}
-                        disabled={card === 'busy'}
-                        data-share-card
-                      >
-                        <span>{card === 'busy'
-                          ? t(locale, 'rendering')
-                          : card === 'saved' ? t(locale, 'cardSaved') : t(locale, 'shareChart')}</span>
-                        <span class="orb" aria-hidden="true">{card === 'saved' ? '✓' : '↗'}</span>
-                      </button>
-                      {nativeShareAvailable && (
-                        <button
-                          class="calc__share-more"
-                          type="button"
-                          onClick={() => void openShareOptions()}
-                          data-share-options
-                        >
-                          {WHEEL_ACTION_COPY[locale].moreShare}
-                        </button>
+                          onShare={shareChartFromAction}
+                          shareDisabled={card === 'busy'}
+                        />
                       )}
                     </div>
-                  )}
+                  </div>
                   <p class="sr-only" role="status">{announce}</p>
                   <p class="calc__receipt mono">
                     {chart.input.utc.toISOString().replace('T', ' · ').slice(0, 21)} UTC
@@ -1532,6 +1615,10 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                   selection={selection}
                   onShowOnChart={showOnChartFromReading}
                 />
+              )}
+
+              {mode === 'full' && showsEnglishInterpretation && ApproachRead && (
+                <ApproachRead chart={chart} locale={locale} moonAmbiguous={moonAmbiguous} />
               )}
 
               {mode === 'full' && showsEnglishInterpretation && CommunicationRead && (
@@ -1794,7 +1881,6 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
           chart={chart}
           input={shareInput}
           locale={locale}
-          fullUrl={shareUrl()}
           card={card}
           onCardStateChange={setCard}
           onClose={closeShareDialog}

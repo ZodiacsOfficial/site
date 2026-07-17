@@ -5,6 +5,7 @@ import { localizePath } from '../../../lib/i18n';
 
 const tools = [
   { href: '/birth-chart/', title: 'Tema natale', promise: 'Il tuo Sole, la tua Luna, l’ascendente, i pianeti, le case e il loro significato.', hue: 'var(--sign-cancer)', kind: 'birth' as const },
+  { href: '/birth-chart/someone-else/', title: 'Tema di un’altra persona', promise: 'Usa i dati di nascita, i tre segni principali o un link Zodiacs, con il suo permesso.', hue: 'var(--sign-pisces)', kind: 'birth' as const, englishOnly: true },
   { href: '/today/', title: 'Oggi (in inglese)', promise: 'Il tuo ultimo tema salvato a confronto con il cielo di mezzogiorno, gradi compresi.', hue: 'var(--sign-cancer)', kind: 'transit' as const, englishOnly: true },
   { href: '/compatibility/', title: 'Compatibilità', promise: 'Confronta due temi e scopri dove si accordano, si scontrano e crescono.', hue: 'var(--sign-libra)', kind: 'compat' as const },
   { href: '/moon-sign/', title: 'Segno lunare', promise: 'Come vivi le emozioni e che cosa ti calma.', hue: 'var(--sign-pisces)', kind: 'moon' as const },
@@ -61,7 +62,7 @@ const jsonLd = [
       >
         <div class="core tinted tool-card">
           <ToolGlyph kind="assistant" />
-          <h3>Chiedi al sito</h3>
+          <h3>Chiedi a Zodiacs</h3>
           <p>Fai una domanda su uno strumento, un termine astrologico o un tema che hai salvato qui.</p>
           <span class="tool-card__go">Inizia una conversazione →</span>
         </div>

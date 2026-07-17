@@ -508,6 +508,27 @@ tr[data-selected='true'] td:last-child { border-radius: 0 8px 8px 0; }
     0 22px 55px -38px color-mix(in oklab, var(--accent) 40%, transparent);
 }
 .tour__heading { min-width: 0; padding-block: 2px; }
+.tour__head-actions {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 8px;
+}
+.tour__share {
+  display: none;
+  min-height: 44px;
+  align-items: center;
+  gap: 7px;
+  padding: 0 13px;
+  border: 1px solid var(--hair-2);
+  border-radius: var(--r-full);
+  color: var(--text-2);
+  font-size: 12px;
+  font-weight: 600;
+  transition: transform 140ms cubic-bezier(0.23, 1, 0.32, 1), border-color 160ms ease, color 160ms ease;
+}
+.tour__share:active { transform: scale(0.97); }
+.tour__share:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .tour__kicker {
   display: block;
   margin-bottom: 5px;
@@ -717,6 +738,7 @@ tr[data-selected='true'] td:last-child { border-radius: 0 8px 8px 0; }
 .insp__return:hover { color: var(--text); }
 
 @media (max-width: 959.5px) {
+  .tour__share { display: inline-flex; }
   .tour__nav {
     position: sticky;
     z-index: 2;
@@ -753,8 +775,10 @@ tr[data-selected='true'] td:last-child { border-radius: 0 8px 8px 0; }
   .tour__stage,
   .tour__dot::after,
   .tour__future-card--link { transition: none; }
+  .tour__share { transition: none; }
   .tour__future-card--link:active,
-  .tour__future-card--link:hover { transform: none; }
+  .tour__future-card--link:hover,
+  .tour__share:active { transform: none; }
 }
 
 /* ── Time-Lens rail: one wheel, four skies ──

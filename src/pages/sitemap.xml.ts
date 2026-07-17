@@ -44,6 +44,7 @@ const EVERGREEN_LASTMOD = new Map<string, string>([
     '/disclosure/',
     ...CHINESE_ZODIAC_PATHS,
   ].map((loc) => [loc, '2026-07-15'] as const),
+  ['/birth-chart/someone-else/', '2026-07-18'],
   ...[
     '/pt/', '/pt/birth-chart/', '/pt/compatibility/', '/pt/moon-sign/',
     '/pt/rising-sign/', '/pt/moon-phase/', '/pt/saturn-return/', '/pt/transits/',
@@ -101,6 +102,7 @@ export const GET: APIRoute = async () => {
   const evergreenUrls = [
     { loc: '/', priority: 1.0 },
     { loc: '/birth-chart/', priority: 0.95 },
+    { loc: '/birth-chart/someone-else/', priority: 0.75 },
     { loc: '/compatibility/', priority: 0.9 },
     { loc: '/moon-sign/', priority: 0.9 },
     { loc: '/rising-sign/', priority: 0.9 },

@@ -16,9 +16,10 @@
 import { chromium } from 'playwright-core';
 import { spawn } from 'node:child_process';
 import { setTimeout as wait } from 'node:timers/promises';
+import { findChromium, STABLE_CHROMIUM_ARGS } from './visual/browser.mjs';
 
 const OUT = process.env.OUT_DIR ?? null;
-const CHROMIUM = process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH ?? '/opt/pw-browsers/chromium';
+const CHROMIUM = process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH ?? await findChromium();
 const encodeChart = (data) => `#c=1.${Buffer.from(JSON.stringify(data)).toString('base64url')}`;
 const kahlo = encodeChart({
   d: '1907-07-06', z: 'America/Mexico_City', la: 19.35, lo: -99.16,
@@ -38,7 +39,10 @@ const shot = async (target, path, opts = {}) => {
 };
 
 try {
-  const browser = await chromium.launch({ executablePath: CHROMIUM });
+  const browser = await chromium.launch({
+    executablePath: CHROMIUM,
+    args: STABLE_CHROMIUM_ARGS,
+  });
 
   let navBreakpointsPass = true;
   const navBreakpointsDetail = [];
@@ -124,6 +128,7 @@ try {
   await page.goto(`http://127.0.0.1:4399/birth-chart/${kahlo}`, { waitUntil: 'networkidle' });
   await page.waitForSelector('.calc__result', { timeout: 15000 });
   await page.waitForSelector('.wheel--interactive', { timeout: 15000 });
+  await page.waitForSelector('.calc__approach', { timeout: 15000 });
   await page.waitForSelector('.calc__comm', { timeout: 15000 });
   await page.waitForFunction(() => window.__detailEvents.filter((event) => event.name === 'comm_read_view').length === 1);
 
@@ -131,41 +136,53 @@ try {
   const detailSummary = detail.locator('summary');
   const placementCount = await detail.locator('.calc__table tbody tr').count();
   const aspectCount = await detail.locator('.calc__aspects li').count();
-  check('first reading: prompt withholds guide but keeps one chart share available', await page.evaluate(() => {
+  check('first reading: prompt withholds guide and read-another but keeps one chart share available', await page.evaluate(() => {
     const prompt = document.querySelector('[data-first-reading-prompt]');
-    const dock = document.querySelector('[data-wheel-actions]');
+    const dock = document.querySelector('[data-chart-action-dock]');
     return Boolean(prompt && dock
       && !dock.querySelector('[data-tour-start]')
+      && !dock.querySelector('[data-read-another-chart]')
       && dock.querySelectorAll('[data-share-card]').length === 1
       && document.querySelectorAll('[data-share-card]').length === 1);
   }));
   await page.locator('[data-first-reading-dismiss]').click();
   await page.waitForSelector('[data-tour-start]', { timeout: 5000 });
-  check('first reading: dismissal reveals Guide + Share and one white next action', await page.evaluate(() => {
-    const dock = document.querySelector('[data-wheel-actions]');
+  check('first reading: dismissal reveals Guide + Share + Read another and one white next action', await page.evaluate(() => {
+    const dock = document.querySelector('[data-chart-action-dock]');
     return !document.querySelector('[data-first-reading-prompt]')
-      && dock?.querySelectorAll('button').length === 2
+      && dock?.querySelectorAll('.chart-action-dock__actions > .btn').length === 3
       && dock.querySelectorAll('[data-tour-start]').length === 1
       && dock.querySelectorAll('[data-share-card]').length === 1
+      && dock.querySelectorAll('[data-read-another-chart]').length === 1
+      && dock.querySelector('[data-read-another-chart]')?.getAttribute('href')?.startsWith('/birth-chart/someone-else/#mine=')
       && document.querySelectorAll('[data-primary-action]').length === 1;
   }));
-  check('wheel actions: guide/share openers are unique and absent from More ways', await page.evaluate(() =>
+  check('chart actions: guide/share/read-another openers are unique and absent from More ways', await page.evaluate(() =>
     document.querySelectorAll('[data-tour-start]').length === 1
     && document.querySelectorAll('[data-share-card]').length === 1
-    && !document.querySelector('[data-chart-more] [data-tour-start], [data-chart-more] [data-share-card]')));
-  check('plain-first: visual story and communication precede actions and full detail', await page.evaluate(() => {
+    && document.querySelectorAll('[data-read-another-chart]').length === 1
+    && !document.querySelector('[data-chart-more] [data-tour-start], [data-chart-more] [data-share-card], [data-chart-more] [data-read-another-chart]')));
+  check('plain-first: visual story, approach, and communication precede actions and full detail', await page.evaluate(() => {
     const wheel = document.querySelector('.calc__wheel');
     const read = document.querySelector('.reading-path');
+    const approach = document.querySelector('[data-approach-read]');
     const communication = document.querySelector('.calc__comm');
     const actions = document.querySelector('.calc__actions');
     const detailNode = document.querySelector('[data-detail]');
     const table = document.querySelector('.calc__table');
-    return Boolean(wheel && read && communication && actions && detailNode && table
+    return Boolean(wheel && read && approach && communication && actions && detailNode && table
       && (wheel.compareDocumentPosition(read) & Node.DOCUMENT_POSITION_FOLLOWING)
-      && (read.compareDocumentPosition(communication) & Node.DOCUMENT_POSITION_FOLLOWING)
+      && (read.compareDocumentPosition(approach) & Node.DOCUMENT_POSITION_FOLLOWING)
+      && (approach.compareDocumentPosition(communication) & Node.DOCUMENT_POSITION_FOLLOWING)
       && (communication.compareDocumentPosition(actions) & Node.DOCUMENT_POSITION_FOLLOWING)
       && (actions.compareDocumentPosition(detailNode) & Node.DOCUMENT_POSITION_FOLLOWING)
       && (read.compareDocumentPosition(table) & Node.DOCUMENT_POSITION_FOLLOWING));
+  }));
+  check('approach read: audience-facing roles and contextual share render', await page.evaluate(() => {
+    const roles = Array.from(document.querySelectorAll('.calc__approach-part h3'))
+      .map((node) => node.textContent?.trim());
+    return roles.join('|') === 'How to open|How to say it|What builds trust|What to avoid under pressure'
+      && document.querySelectorAll('[data-approach-share]').length === 1;
   }));
   check('visual story: all four cards render with houses, aspects, and balance bars', await page.evaluate(() => {
     const slugs = Array.from(document.querySelectorAll('[data-reading-card]'))
@@ -535,8 +552,14 @@ try {
 
   await tp.locator('[data-tour-start]').click();
   await tp.waitForSelector('[data-tour-card]', { timeout: 10000 }); // lazy chunk fetch
-  check('tour: wheel action dock is absent while the tour is open',
-    (await tp.locator('[data-wheel-actions]').count()) === 0);
+  check('tour: desktop dock persists with Share as its only action', await tp.evaluate(() => {
+    const dock = document.querySelector('[data-chart-action-dock]');
+    if (!dock || getComputedStyle(dock).display === 'none') return false;
+    const actions = dock.querySelectorAll('.chart-action-dock__actions > .btn');
+    return actions.length === 1
+      && dock.querySelectorAll('[data-share-card]').length === 1
+      && !dock.querySelector('[data-tour-start], [data-read-another-chart]');
+  }));
   const kick1 = await tp.locator('[data-tour-kicker]').textContent();
   check('tour: starts at chapter 1', /Chapter 1 of \d/.test(kick1 ?? ''), kick1 ?? '');
   check('tour: one dot per chapter (full chart = 8)', (await tp.locator('[data-tour-dot]').count()) === 8);
@@ -609,7 +632,8 @@ try {
   check('tour: Escape exits to free exploration',
     (await tp.locator('[data-tour-card]').count()) === 0
     && await tp.locator('.insp--hint').isVisible()
-    && (await tp.locator('[data-wheel-actions]').count()) === 1);
+    && (await tp.locator('[data-chart-action-dock]').count()) === 1
+    && (await tp.locator('[data-chart-action-dock] .chart-action-dock__actions > .btn').count()) === 3);
 
   // No-time chart: horizon and houses give way to the honest chapter.
   // (Hop through about:blank — a bare fragment swap on the same path is a
@@ -646,16 +670,18 @@ try {
   await mob.waitForSelector('.wheel--interactive', { timeout: 15000 });
   await revealFullGuide(mob);
   check('mobile: hint hidden', !(await mob.locator('.insp--hint').isVisible().catch(() => false)));
-  check('mobile: Guide + Share dock is full-width below the interactive chart', await mob.evaluate(() => {
-    const explorer = document.querySelector('.xplr')?.getBoundingClientRect();
-    const dock = document.querySelector('[data-wheel-actions]')?.getBoundingClientRect();
-    const buttons = Array.from(document.querySelectorAll('[data-wheel-actions] .btn'))
+  check('mobile: Guide + Share + Read another dock is full-width below the interactive chart', await mob.evaluate(() => {
+    const wheel = document.querySelector('.xplr__wheelbox')?.getBoundingClientRect();
+    const dock = document.querySelector('[data-chart-action-dock]')?.getBoundingClientRect();
+    const buttons = Array.from(document.querySelectorAll('[data-chart-action-dock] .chart-action-dock__actions > .btn'))
       .map((button) => button.getBoundingClientRect());
-    if (!explorer || !dock || buttons.length !== 2) return false;
-    return dock.top >= explorer.bottom - 0.5
+    if (!wheel || !dock || buttons.length !== 3) return false;
+    return dock.top >= wheel.bottom - 0.5
       && buttons.every((button) => button.top >= dock.top
         && button.bottom <= dock.bottom + 0.5
-        && button.width >= dock.width - 1);
+        && button.left >= dock.left
+        && button.right <= dock.right
+        && button.width >= dock.width - 26);
   }));
   {
     const el = mob.locator('g[data-entity="body:Sun"] circle').first();
@@ -690,7 +716,23 @@ try {
     await mob.mouse.click(box.x + box.width / 2, box.y + box.height / 2);
   }
   await mob.waitForSelector('[data-tour-card]', { timeout: 10000 });
-  check('mobile: wheel action dock hides during tour', (await mob.locator('[data-wheel-actions]').count()) === 0);
+  check('mobile: external dock hides during tour while sticky Share remains visible', await mob.evaluate(() => {
+    const dock = document.querySelector('[data-chart-action-dock]');
+    const share = document.querySelector('[data-tour-share]');
+    if (!dock || !share) return false;
+    const shareBox = share.getBoundingClientRect();
+    return getComputedStyle(dock).display === 'none'
+      && getComputedStyle(share).display !== 'none'
+      && shareBox.width >= 44
+      && shareBox.height >= 44;
+  }));
+  await mob.locator('[data-tour-share]').click();
+  await mob.waitForSelector('[data-share-dialog]', { timeout: 10000 });
+  check('mobile: tour Share opens the chart share sheet without ending the tour',
+    await mob.locator('[data-share-dialog]').getAttribute('open') !== null
+    && (await mob.locator('[data-tour-card]').count()) === 1);
+  await mob.locator('[data-share-dialog] .calc-share-dialog__close').click();
+  await mob.waitForSelector('[data-share-dialog]', { state: 'detached', timeout: 5000 });
   await shot(mob, 'mobile-tour-sheet.png');
   const mobHandle = await mob.locator('[data-tour-card] .insp__handle').boundingBox();
   if (mobHandle) {
@@ -707,7 +749,8 @@ try {
   await mob.locator('[data-tour-exit]').click();
   check('mobile: tour exit closes the sheet and restores wheel actions',
     (await mob.locator('[data-tour-card]').count()) === 0
-    && (await mob.locator('[data-wheel-actions]').count()) === 1);
+    && await mob.locator('[data-chart-action-dock]').isVisible()
+    && (await mob.locator('[data-chart-action-dock] .chart-action-dock__actions > .btn').count()) === 3);
   await mob.close();
 
   // ── Reduced motion: selection and tour transitions are instant ──

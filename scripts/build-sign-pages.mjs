@@ -816,7 +816,7 @@ ${SIGN_ORDER.map((s) => `        <a href="${signPath(s)}"${s === m.slug ? ' clas
           <a href="/privacy/">${esc(EN['disclosure.linkPrivacy'])}</a>
           <a href="/terms/">${esc(EN['disclosure.linkTerms'])}</a>
           <a href="/registry/zodiacs.registry.json">Record</a>
-          <button class="assistant-link" type="button" data-assistant-open aria-haspopup="dialog">Ask the site</button>
+          <button class="assistant-link" type="button" data-assistant-open aria-haspopup="dialog">Ask Zodiacs</button>
           <a href="https://astrofolio.xyz/" rel="noopener noreferrer">Astrofolio ↗</a>
         </div>
         <div>Registry lookup/display tools: read-only</div>

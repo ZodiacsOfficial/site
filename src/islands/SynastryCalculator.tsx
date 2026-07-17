@@ -441,6 +441,8 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
     // restore the stored pair and compare. Same-device ids, like ?a=&b=.
     const pairId = params.get('pair');
     const storedPair = pairId ? loadPairs().find((p) => p.id === pairId) : undefined;
+    let savedA = false;
+    let savedB = false;
     if (storedPair && sideRestorable(storedPair.a) && sideRestorable(storedPair.b)) {
       restorePair(storedPair);
     } else {
@@ -450,29 +452,45 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
       let linked = 0;
       if (idA && profile.charts.some((c) => c.id === idA)) {
         setSlotA((s) => ({ ...s, source: 'saved', savedId: idA }));
+        savedA = true;
         linked += 1;
       }
       if (idB && profile.charts.some((c) => c.id === idB)) {
         setSlotB((s) => ({ ...s, source: 'saved', savedId: idB }));
+        savedB = true;
         linked += 1;
       }
       if (linked === 2) setAutoRan(true);
     }
-    // #a= fragment: a chart shared from another device rides in the URL
-    // itself. It fills Person A; the fragment is then stripped so the
-    // birth details don't linger in the bar.
-    const token = new URLSearchParams(window.location.hash.slice(1)).get('a');
-    if (token) {
+    // #a= / #b= fragments carry one or both charts by value. This supports
+    // an invite with one open side and the permission-first other-person
+    // flow with both sides ready. Details and labels never enter the query.
+    const fragment = new URLSearchParams(window.location.hash.slice(1));
+    const valuesA = fragment.getAll('a');
+    const valuesB = fragment.getAll('b');
+    const tokenA = valuesA.length === 1 ? valuesA[0] : null;
+    const tokenB = valuesB.length === 1 ? valuesB[0] : null;
+    if (fragment.has('a') || fragment.has('b')) {
       void import('../lib/share').then((module) => {
         if (!active) return;
         setShareMod(module);
-        const decoded = module.decodeChartLink(token);
-        if (!decoded) return;
-        setSlotA({
-          ...emptySlot(),
-          source: 'link',
-          link: { input: decoded, label: decoded.name ?? t(locale, 'sharedChart'), received: true },
-        });
+        const decodedA = tokenA ? module.decodeChartLink(tokenA) : null;
+        const decodedB = tokenB ? module.decodeChartLink(tokenB) : null;
+        if (decodedA) {
+          setSlotA({
+            ...emptySlot(),
+            source: 'link',
+            link: { input: decodedA, label: decodedA.name ?? t(locale, 'personA'), received: true },
+          });
+        }
+        if (decodedB) {
+          setSlotB({
+            ...emptySlot(),
+            source: 'link',
+            link: { input: decodedB, label: decodedB.name ?? t(locale, 'personB'), received: true },
+          });
+        }
+        if ((savedA || decodedA) && (savedB || decodedB)) setAutoRan(true);
         history.replaceState(null, '', window.location.pathname + window.location.search);
       }).catch(() => {});
     }

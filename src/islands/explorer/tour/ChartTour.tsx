@@ -575,9 +575,6 @@ export default function ChartTour({
           <button class="btn btn--glass tour__btn" type="button" onClick={onSave}>
             <span>{t(locale, 'saveThisChart')}</span>
           </button>
-          <button class="btn btn--glass tour__btn" type="button" onClick={onShare}>
-            <span>{t(locale, 'shareChart')}</span>
-          </button>
         </div>
       );
       break;
@@ -669,6 +666,8 @@ export default function ChartTour({
       }}
       prevDisabled={at === 0}
       isLast={at === stops.length - 1}
+      shareLabel={t(locale, 'shareChart')}
+      onShare={onShare}
       onExit={() => {
         cancelTween();
         onVisual(null);

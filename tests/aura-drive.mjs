@@ -2195,31 +2195,36 @@ async function verifyEdgeStates(browser, baseURL) {
   await context.close();
 }
 
-// The flag-on build hands the landing hero's secondary button to Aura in
-// both render paths: the stamped static markup (no-JS visitors, first
-// paint) and the compiled React bundle (which branches on the stamped meta
-// at runtime). Asserted from the built files, not a live mount — the
-// landing loads React from unpkg, and CI must not depend on a CDN.
-async function verifyLandingHeroHandoff() {
+// The flag-on build keeps the cinematic hero single-purpose and exposes Aura
+// as a full-row Identity Context feature in both render paths. Asserted from
+// built files so this gate does not depend on the legacy React CDN.
+async function verifyLandingDiscovery() {
   const staticHtml = await readFile(
     resolve(root, "dist/registry/index.html"),
     "utf8",
   );
-  assert.ok(
-    staticHtml.includes(
-      '<a class="btn" href="/registry/aura/"><span>See where your collection meets your chart</span></a>',
-    ),
-    "static landing hero must carry the Aura CTA while the flag is on",
+  const staticHero = staticHtml.slice(
+    staticHtml.indexOf('<section class="cine"'),
+    staticHtml.indexOf('<main class="static-site">'),
   );
   assert.ok(
-    staticHtml.includes(
-      '<a class="cine__why" href="/thesis/">Why this exists</a>',
-    ),
-    "static landing hero must keep the thesis as a demoted text link",
+    staticHero.includes("The official public record for the twelve Zodiacs—verify each sign and explore its story."),
+    "static landing hero must explain the Registry",
+  );
+  assert.equal(
+    (staticHero.match(/class="btn btn--primary"/g) || []).length,
+    1,
+    "static landing hero must contain one primary action",
+  );
+  assert.ok(!staticHero.includes("/registry/aura/"), "Aura must not compete in the hero");
+  assert.ok(!staticHero.includes("cine__why"), "hero must not retain the demoted thesis treatment");
+  assert.ok(
+    staticHtml.includes('class="static-site__card static-site__card--aura"'),
+    "no-JS Identity Context must contain the full-row Aura feature",
   );
   assert.ok(
-    !staticHtml.includes('<a class="btn" href="/thesis/">'),
-    "the thesis button must not survive the flag-on stamp",
+    staticHtml.includes('<a class="idctx__card-link idctx__aura-link" href="/registry/aura/">Try the sample →</a>'),
+    "no-JS Aura feature must offer the low-friction sample CTA",
   );
 
   const bundle = await readFile(
@@ -2227,14 +2232,15 @@ async function verifyLandingHeroHandoff() {
     "utf8",
   );
   for (const marker of [
-    "See where your collection meets your chart",
-    "Why this exists",
-    "cine__why",
+    "The official public record for the twelve Zodiacs",
+    "Read the Registry thesis",
+    "idctx__card--aura",
+    "Try the sample",
     "/registry/aura/",
   ]) {
     assert.ok(
       bundle.includes(marker),
-      `compiled landing bundle must carry the hero handoff (missing ${JSON.stringify(marker)})`,
+      `compiled landing bundle must carry Registry discovery (missing ${JSON.stringify(marker)})`,
     );
   }
 }
@@ -2551,7 +2557,7 @@ async function verifyScrollChoreography(browser, baseURL) {
 
 await mkdir(proofRoot, { recursive: true });
 await verifyAuraBundleSafety();
-await verifyLandingHeroHandoff();
+await verifyLandingDiscovery();
 const executablePath = await findChromium();
 const browser = await chromium.launch({
   executablePath,
