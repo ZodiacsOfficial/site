@@ -61,7 +61,7 @@ function solanaAccount(mint: string, amount: string) {
 
 function sentRequests(fetcher: typeof fetch): RpcRequest[] {
   return (fetcher as unknown as ReturnType<typeof vi.fn>).mock.calls
-    .map(([, init]: [unknown, RequestInit]) => JSON.parse(String(init.body)) as RpcRequest);
+    .map((call) => JSON.parse(String((call[1] as RequestInit).body)) as RpcRequest);
 }
 
 describe('official holdings resolution', () => {
