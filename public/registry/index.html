@@ -427,6 +427,23 @@
     .cine__cta {
       display: flex; flex-wrap: wrap; justify-content: center; gap: 12px;
     }
+    /* Demoted thesis link once Registry Aura owns the secondary button:
+       a quiet serif footnote under the CTA row. */
+    .cine__why {
+      margin-top: calc(clamp(18px, 3vw, 26px) * -0.5);
+      font-family: var(--serif); font-style: italic;
+      font-size: 15px;
+      color: var(--ink-2);
+      text-decoration: underline;
+      text-decoration-color: rgba(198,204,218,0.4);
+      text-underline-offset: 4px;
+      text-shadow: 0 1px 16px rgba(0,0,0,0.7);
+      transition: color 0.2s ease, text-decoration-color 0.2s ease;
+    }
+    .cine__why:hover, .cine__why:focus-visible {
+      color: var(--ink);
+      text-decoration-color: currentColor;
+    }
     /* Hero CTAs wear the lens over the footage — a frosted floor (rendered on
        Safari/iOS via -webkit-backdrop-filter) that the Chromium refraction lens
        below upgrades. The square museum button form is kept; only the surface
@@ -3446,8 +3463,8 @@
             <p class="cine__line">Belief is the oldest asset.</p>
             <div class="cine__cta">
               <a class="btn btn--primary" href="#official-twelve"><span>Browse the Twelve</span><span class="arr">↗</span></a>
-              <a class="btn" href="/thesis/"><span>Why this exists</span></a>
-            </div>
+              <!-- registry-aura-hero:cta --><a class="btn" href="/thesis/"><span>Why this exists</span></a><!-- /registry-aura-hero:cta -->
+            </div><!-- registry-aura-hero:why -->
           </div>
         </div>
       </div>
