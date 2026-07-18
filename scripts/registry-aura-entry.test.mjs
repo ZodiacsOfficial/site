@@ -33,7 +33,7 @@ describe('Registry Aura build flag', () => {
     expect(on.match(new RegExp(`href="${REGISTRY_AURA_PATH}"`, 'g'))).toHaveLength(1);
     expect(on).toContain('class="static-site__card static-site__card--aura"');
     expect(on).toContain('Cabinet of Twelve');
-    expect(on).toContain('Dated talisman');
+    expect(on).toContain('Dated seal');
     expect(on).toContain('The record');
     expect(on).toContain(REGISTRY_AURA_ENTRY_COPY.description);
     expect(on).toContain('Explore the finished sample');
