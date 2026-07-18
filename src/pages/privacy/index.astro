@@ -75,9 +75,10 @@ const jsonLd = [
 
       <h2>Registry Aura and public wallet addresses</h2>
       <p>
-        Registry Aura reads a chart summary already saved in this browser, one
-        public wallet address, and the dated sky side by side. The chart and
-        symbolic reading are composed on your device. When you compose or
+        Registry Aura reads one public wallet address and the dated sky side by
+        side. If you choose to add a chart already saved in this browser, its
+        summary is an optional on-device comparison layer. The pattern and any
+        symbolic reflection are composed on your device. When you compose or
         refresh an Aura, our holdings endpoint receives the public address and
         forwards it to the configured blockchain-data provider to check which
         Zodiacs.org Registry entries are present. The configured provider is
@@ -124,7 +125,7 @@ const jsonLd = [
       <h2>Aura browser storage and sharing</h2>
       <p>
         By default, Aura keeps the public address, chain, Registry sign results,
-        lookup time, and selected chart identifier in this tab's session
+        lookup time, and optional selected chart identifier in this tab's session
         storage. It becomes ineligible for restoration after eight hours. The
         unchecked “Remember this address on this device” option stores the same
         fields in local storage and makes them ineligible after 24 hours.
@@ -135,13 +136,11 @@ const jsonLd = [
         infrastructure logs.
       </p>
       <p>
-        Aura share images are composed on your device. The default image omits
+        Aura share images are composed on your device. The image omits
         the public address, chain, chart name, birth fields, exact placements,
-        chart geometry, and the held-sign count and list. An optional,
-        session-only control can add the fact that the featured public sign
-        appears somewhere in the selected birth chart. If you enable it, that
-        fact becomes public to anyone who receives the image. A browser share
-        sheet or download sends the image to a destination you choose, whose
+        chart geometry, and the held-sign count and list. It does not include a
+        saved-chart fact. A browser share sheet or download sends the image to
+        a destination you choose, whose
         privacy terms then apply. Clearing Aura cannot recall copies that other
         people or services have saved or reposted.
       </p>

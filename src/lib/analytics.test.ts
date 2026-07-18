@@ -20,6 +20,9 @@ const REQUIRED_EVENTS = [
   'aura_entry',
   'aura_return',
   'aura_response',
+  'aura_cabinet_select',
+  'aura_cabinet_reveal',
+  'aura_talisman_personalize',
   'context_help_opened',
   'first_reading_prompt',
   'first_reading_step',
@@ -44,6 +47,12 @@ describe('analytics event contract', () => {
       held_signs: 'aries,leo',
       clicked_sign: 'leo',
     })).toEqual({ outcome: 'success', held_bucket: '2-5' });
+    expect(sanitizeAnalyticsProperties('aura_cabinet_reveal', {
+      outcome: 'played',
+      sign: 'aries',
+      finish: 'gold',
+      amount: '1000000',
+    })).toEqual({ outcome: 'played' });
   });
 
   it('sanitizes the payload at the actual browser emission boundary', () => {

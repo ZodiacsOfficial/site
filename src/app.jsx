@@ -1114,6 +1114,9 @@
               <a className="wnav__mark" href="/">
                 <span className="wnav__name">Zodiacs<span className="wnav__sep">·</span><span className="wnav__dim">org</span></span>
               </a>
+              <a className="wnav__search" href="/?search=1" aria-label="Search the site">
+                <svg width="14" height="14" viewBox="0 0 15 15" fill="none" aria-hidden="true"><circle cx="6.5" cy="6.5" r="4.75" stroke="currentColor" strokeWidth="1.4"/><path d="M10.5 10.5L13.5 13.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/></svg>
+              </a>
               <div className="wnav__links">
                 <button className="wnav__link wnav__signs-btn" type="button" aria-expanded={signsOpen} aria-controls="wnav-signs" onClick={() => setSignsOpen((v) => !v)}>Signs<svg width="8" height="5" viewBox="0 0 8 5" fill="none" aria-hidden="true"><path d="M1 1l3 3 3-3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/></svg></button>
                 <a className="wnav__link" href="/tools/">Tools</a>
@@ -1147,13 +1150,12 @@
                 <a className="wnav-menu__link" style={{ '--i': 1 }} href="/learn/">Learn</a>
                 <a className="wnav-menu__link" style={{ '--i': 2 }} href="/horoscopes/">Horoscopes</a>
                 <a className="wnav-menu__link" style={{ '--i': 3 }} href="/profile/">Saved charts</a>
-                <a className="wnav-menu__link" style={{ '--i': 4 }} href="/?search=1">Search ↗</a>
               </div>
               <div className="wnav-menu__group">
                 <span className="wnav-menu__label">The twelve</span>
                 <div className="wnav-menu__signs">
                   {NAV_SIGNS.map((s, i) => (
-                    <a className="wnav-menu__sign" key={s.slug} style={{ '--i': 5 + i, '--sign': s.hue }} href={`/${s.slug}/`} aria-label={s.name}>
+                    <a className="wnav-menu__sign" key={s.slug} style={{ '--i': 4 + i, '--sign': s.hue }} href={`/${s.slug}/`} aria-label={s.name}>
                       <picture className="wnav-disc wnav-disc--lg"><source srcSet={`/assets/zodiac-icons/128/${s.slug}.avif`} type="image/avif" /><img src={`/assets/zodiac-icons/128/${s.slug}.webp`} width="40" height="40" alt="" loading="lazy" decoding="async" /></picture>
                       <span>{s.name}</span>
                     </a>
@@ -1567,11 +1569,6 @@
             does not prove identity, control, legal ownership, safety, value,
             liquidity, or future performance.
           </p>
-
-          <a className="reg__story-link" href="/thesis/">
-            <span>Read the Registry thesis</span>
-            <span aria-hidden="true">→</span>
-          </a>
 
           <div className="reg__facts">
             {facts.map((f, i) => (
@@ -2796,8 +2793,8 @@
           <p className="idctx__copy">
             Verify an official Zodiac, understand the pattern formed by a
             public collection, or carry trusted Registry facts into another
-            product. Registry Aura adds a personal view by comparing that
-            collection with a saved birth chart and today’s sky.
+            product. For collectors, Registry Aura shows the twelve-sign
+            pattern at a public address; a saved chart is an optional layer.
           </p>
 
           <div className="idctx__grid">
@@ -2809,10 +2806,10 @@
                   <p className="idctx__card-copy">{card.d}</p>
                 </div>
                 <div className="idctx__aura-action">
-                  <div className="idctx__aura-flow" aria-label="Public collection, saved chart, and today’s sky">
+                  <div className="idctx__aura-flow" aria-label="Public collection, optional saved chart, and today’s sky">
                     <span className="idctx__aura-step"><span aria-hidden="true">01</span>Public collection</span>
                     <span className="idctx__aura-arrow" aria-hidden="true">→</span>
-                    <span className="idctx__aura-step"><span aria-hidden="true">02</span>Saved chart</span>
+                    <span className="idctx__aura-step"><span aria-hidden="true">02</span>Chart (optional)</span>
                     <span className="idctx__aura-arrow" aria-hidden="true">→</span>
                     <span className="idctx__aura-step"><span aria-hidden="true">03</span>Today’s sky</span>
                   </div>

@@ -133,15 +133,16 @@ describe('registry disclosure contract', () => {
     }
   });
 
-  it('states the presence-only boundary before Aura reads a wallet address', async () => {
+  it('keeps one quiet public-lookup note at the Accession Desk', async () => {
     const source = await readFile(resolve(repo, 'src/islands/RegistryAura.tsx'), 'utf8');
-    const boundary = (source.match(/<aside class="aura-entry__boundary"[\s\S]*?<\/aside>/)?.[0] ?? '')
+    const boundary = (source.match(/<details class="aura-wallet-connect aura-desk-details"[\s\S]*?<\/details>/)?.[0] ?? '')
       .replace(/\s+/g, ' ');
 
-    expect(boundary).toContain(
-      'Aura reduces the public wallet record to present/not-present for Registry-listed signs.',
-    );
-    expect(boundary).toContain('It does not show quantities, prices, holding history, or unrelated assets.');
+    expect(boundary).toContain('Aura sends the public address to its holdings provider');
+    expect(boundary).toContain('simply fills the public address field');
+    expect(boundary).toContain('nothing is signed');
+    expect(boundary).toContain('href="/privacy/"');
+    expect(boundary).toContain('href="/disclosure/"');
   });
 
   it('keeps the English privacy and terms pages explicit about Aura data and asset risk', async () => {

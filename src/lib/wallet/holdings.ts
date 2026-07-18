@@ -1,18 +1,28 @@
 import registryDocument from '../../../public/registry/zodiacs.registry.json' with { type: 'json' };
+import {
+  cabinetHoldingForAtomicAmount,
+  isCanonicalGoldCount,
+} from '../aura/cabinet-finish.js';
+import type {
+  AuraCabinetFinish,
+  AuraCabinetHolding,
+  AuraSign,
+} from '../aura/types.js';
 import type { WalletChain } from './types';
 import { validWalletProviderEndpoint, type WalletEnvironment } from './config.js';
 
 type Fetcher = typeof fetch;
 
 interface RegistryRepresentation {
-  sign: string;
+  sign: AuraSign;
   chain: WalletChain;
   address: string;
+  decimals: number;
   isOfficialRepresentation: boolean;
 }
 
 interface RegistryAsset {
-  sign: string;
+  sign: AuraSign;
   representations: RegistryRepresentation[];
 }
 
@@ -25,6 +35,56 @@ const OFFICIAL = REGISTRY_ASSETS
 export function normalizeOfficialHeldSigns(signs: readonly string[]): string[] {
   const held = new Set(signs);
   return ZODIAC_ORDER.filter((sign) => held.has(sign));
+}
+
+const FINISH_RANK: Record<AuraCabinetFinish, number> = {
+  pastel: 1,
+  bronze: 2,
+  silver: 3,
+  gold: 4,
+};
+
+function isCabinetFinish(value: unknown): value is AuraCabinetFinish {
+  return value === 'pastel' || value === 'bronze' || value === 'silver' || value === 'gold';
+}
+
+/** Canonicalizes provider output without ever retaining or exposing token amounts. */
+export function normalizeOfficialHoldings(
+  holdings: readonly unknown[],
+): AuraCabinetHolding[] {
+  const strongest = new Map<AuraSign, AuraCabinetHolding>();
+  for (const candidate of holdings) {
+    if (!candidate || typeof candidate !== 'object' || Array.isArray(candidate)) continue;
+    const { sign, finish, goldCount } = candidate as {
+      sign?: unknown;
+      finish?: unknown;
+      goldCount?: unknown;
+    };
+    if (typeof sign !== 'string'
+      || !ZODIAC_ORDER.includes(sign as AuraSign)
+      || !isCabinetFinish(finish)) continue;
+    const canonicalSign = sign as AuraSign;
+    let normalized: AuraCabinetHolding;
+    if (finish === 'gold') {
+      if (!isCanonicalGoldCount(goldCount)) continue;
+      normalized = { sign: canonicalSign, finish, goldCount };
+    } else {
+      if (goldCount !== undefined) continue;
+      normalized = { sign: canonicalSign, finish };
+    }
+    const current = strongest.get(canonicalSign);
+    if (!current
+      || FINISH_RANK[finish] > FINISH_RANK[current.finish]
+      || (normalized.finish === 'gold'
+        && current.finish === 'gold'
+        && BigInt(normalized.goldCount) > BigInt(current.goldCount))) {
+      strongest.set(canonicalSign, normalized);
+    }
+  }
+  return ZODIAC_ORDER.flatMap((sign) => {
+    const holding = strongest.get(sign);
+    return holding ? [holding] : [];
+  });
 }
 
 // Each per-asset call goes out as its own single-object request: public
@@ -86,12 +146,12 @@ async function mapWithConcurrency<T, R>(
   return results;
 }
 
-async function solanaHeldSigns(
+async function solanaHoldings(
   address: string,
   rpcUrl: string,
   fetcher: Fetcher,
   signal?: AbortSignal,
-): Promise<string[]> {
+): Promise<AuraCabinetHolding[]> {
   const official = OFFICIAL.filter((asset) => asset.chain === 'solana');
   const held = await mapWithConcurrency(official, SOLANA_CONCURRENCY, async (asset, index) => {
     const payload = await rpcCall(rpcUrl, fetcher, signal, {
@@ -109,24 +169,27 @@ async function solanaHeldSigns(
     for (const account of value) {
       const info = account?.account?.data?.parsed?.info;
       const amount = info?.tokenAmount?.amount;
+      const decimals = info?.tokenAmount?.decimals;
       if (info?.mint !== asset.address
         || typeof amount !== 'string'
-        || !/^\d+$/.test(amount)) {
+        || !/^\d+$/.test(amount)
+        || !Number.isInteger(decimals)
+        || decimals !== asset.decimals) {
         throw new Error('holdings unavailable');
       }
       balance += BigInt(amount);
     }
-    return balance > 0n ? [asset.sign] : [];
+    return cabinetHoldingForAtomicAmount(asset.sign, balance, asset.decimals);
   });
-  return normalizeOfficialHeldSigns(held.flat());
+  return normalizeOfficialHoldings(held);
 }
 
-async function baseHeldSigns(
+async function baseHoldings(
   address: string,
   rpcUrl: string,
   fetcher: Fetcher,
   signal?: AbortSignal,
-): Promise<string[]> {
+): Promise<AuraCabinetHolding[]> {
   const official = OFFICIAL.filter((asset) => asset.chain === 'base');
   const ownerWord = address.toLowerCase().replace(/^0x/, '').padStart(64, '0');
   const held = await Promise.all(official.map(async (asset, index) => {
@@ -138,27 +201,27 @@ async function baseHeldSigns(
     if (typeof result !== 'string' || !/^0x[0-9a-fA-F]+$/.test(result)) {
       throw new Error('holdings unavailable');
     }
-    return BigInt(result) > 0n ? [asset.sign] : [];
+    return cabinetHoldingForAtomicAmount(asset.sign, BigInt(result), asset.decimals);
   }));
-  return normalizeOfficialHeldSigns(held.flat());
+  return normalizeOfficialHoldings(held);
 }
 
-/** Best-effort, read-only balance context. Failure never changes identity. */
-export async function resolveOfficialHeldSigns(
+/** Best-effort, read-only cabinet context. Raw balances never cross this boundary. */
+export async function resolveOfficialHoldings(
   chain: WalletChain,
   address: string,
   env: WalletEnvironment,
   fetcher: Fetcher = fetch,
   signal?: AbortSignal,
-): Promise<string[] | undefined> {
+): Promise<AuraCabinetHolding[] | undefined> {
   try {
     const solanaRpcUrl = env.SOLANA_RPC_URL;
     const baseRpcUrl = env.BASE_RPC_URL;
     if (chain === 'solana' && solanaRpcUrl && validWalletProviderEndpoint(solanaRpcUrl, env)) {
-      return await solanaHeldSigns(address, solanaRpcUrl, fetcher, signal);
+      return await solanaHoldings(address, solanaRpcUrl, fetcher, signal);
     }
     if (chain === 'base' && baseRpcUrl && validWalletProviderEndpoint(baseRpcUrl, env)) {
-      return await baseHeldSigns(address, baseRpcUrl, fetcher, signal);
+      return await baseHoldings(address, baseRpcUrl, fetcher, signal);
     }
   } catch (error) {
     // Address-free by construction: the thrown messages are static strings
@@ -168,4 +231,16 @@ export async function resolveOfficialHeldSigns(
     return undefined;
   }
   return undefined;
+}
+
+/** Compatibility surface used by Wallet Birth, which only needs represented signs. */
+export async function resolveOfficialHeldSigns(
+  chain: WalletChain,
+  address: string,
+  env: WalletEnvironment,
+  fetcher: Fetcher = fetch,
+  signal?: AbortSignal,
+): Promise<string[] | undefined> {
+  const holdings = await resolveOfficialHoldings(chain, address, env, fetcher, signal);
+  return holdings?.map(({ sign }) => sign);
 }

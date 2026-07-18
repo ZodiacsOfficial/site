@@ -38,8 +38,9 @@ const SIGN_SET = new Set<string>(AURA_SIGN_ORDER);
 const NATAL_BODY_ORDER: readonly AuraNatalBody[] = ['Sun', 'Moon', 'Mercury', 'Venus', 'Mars'];
 const NATAL_BODY_SET = new Set<string>(NATAL_BODY_ORDER);
 
-export const AURA_METHOD_NOTE = 'The same selected chart, public wallet record, and dated sky produce the same words. This is a symbolic Zodiacs.org display convention — not a traditional astrological technique or proof that a person controls an address.';
-const AURA_METHOD_NOTE_EXAMPLE = 'The chart and record in this example are samples, shown so you can see how the dated sources are read side by side. No real address was looked up.';
+export const AURA_METHOD_NOTE = 'Built the same way every time from the represented Registry signs, today’s sky, and the selected chart echo.';
+const AURA_METHOD_NOTE_WITHOUT_CHART = 'Built the same way every time from the represented Registry signs and today’s sky. A saved chart can add an optional inner echo.';
+const AURA_METHOD_NOTE_EXAMPLE = 'A curator’s sample, made in advance. Four sample Zodiacs are shown — no real address was looked up.';
 
 function isAuraSign(value: string): value is AuraSign {
   return SIGN_SET.has(value);
@@ -72,6 +73,7 @@ function natalEvidenceForChart(
 ): { evidence: AuraNatalEvidence[]; uncertainties: AuraUncertainty[] } {
   const evidence: AuraNatalEvidence[] = [];
   const uncertainties: AuraUncertainty[] = [];
+  if (!input) return { evidence, uncertainties };
   const seenBodies = new Set<AuraNatalBody>();
 
   for (const point of input.summary.bodies) {
@@ -434,14 +436,15 @@ export function composeAura(input: ComposeAuraInput): AuraComposition {
       Math.abs(Date.parse(event.exactAt) - visitedAt.getTime()) <= AURA_EVENT_WINDOW_MS
     ))
     : [];
+  const skyEvidence: AuraActiveEvidence[] = [
+    sun,
+    moon,
+    ...activeTimedEvents.map(timedEventEvidence),
+  ];
+  skyEvidence.sort((a, b) => compareActiveEvidence(a, b, visitedAt.getTime()));
 
   const contextsWithoutReadings: ReadingContext[] = heldSigns.map((sign) => {
-    const activeNow: AuraActiveEvidence[] = [sun, moon]
-      .filter((evidence) => evidence.sign === sign);
-    activeNow.push(...activeTimedEvents
-      .filter((event) => event.sign === sign)
-      .map(timedEventEvidence));
-    activeNow.sort((a, b) => compareActiveEvidence(a, b, visitedAt.getTime()));
+    const activeNow = skyEvidence.filter((evidence) => evidence.sign === sign);
 
     return {
       sign,
@@ -465,8 +468,12 @@ export function composeAura(input: ComposeAuraInput): AuraComposition {
 
   return {
     asOf,
-    chart: { id: input.chart.id, name: input.chart.name, timeKnown: input.chart.birth.timeKnown },
+    chart: input.chart
+      ? { id: input.chart.id, name: input.chart.name, timeKnown: input.chart.birth.timeKnown }
+      : null,
     heldSigns,
+    chartEvidence: natal.evidence,
+    skyEvidence,
     signs: contexts,
     currentSky: {
       observedAt: asOf,
@@ -475,7 +482,11 @@ export function composeAura(input: ComposeAuraInput): AuraComposition {
     },
     focal,
     auraSentence: auraSentence(contexts, focal, asOf, illustrative),
-    methodNote: illustrative ? AURA_METHOD_NOTE_EXAMPLE : AURA_METHOD_NOTE,
+    methodNote: illustrative
+      ? AURA_METHOD_NOTE_EXAMPLE
+      : input.chart
+        ? AURA_METHOD_NOTE
+        : AURA_METHOD_NOTE_WITHOUT_CHART,
     uncertainties,
     eventData: {
       usable: eventValidation.usable,

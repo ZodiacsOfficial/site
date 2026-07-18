@@ -407,7 +407,6 @@ async function drawFullChartCard(
 ): Promise<Blob> {
   const locale = options.locale ?? 'en';
   const placements = bigThreePlacements(chart, locale);
-  const signature = authoredSignatureForLocale(chart, locale);
   const trio = placements.map((placement) => ({
     label: shareCardText(locale, placement.kind),
     slug: placement.slug,
@@ -471,16 +470,6 @@ async function drawFullChartCard(
   ctx.fillStyle = INK_0;
   ctx.font = `500 ${px}px ${SERIF}`;
   ctx.fillText(line, W / 2, 1138);
-
-  if (signature) {
-    const signatureTitle = `STANDOUT · ${signature.title}`;
-    const signaturePx = fitText(ctx, signatureTitle, W - 180, 24, 17, 400, MONO);
-    ctx.fillStyle = INK_2;
-    ctx.font = `400 ${signaturePx}px ${MONO}`;
-    ctx.fillText(signatureTitle.toUpperCase(), W / 2, 1183);
-    ctx.font = `400 25px ${SERIF}`;
-    drawWrappedText(ctx, signature.summary, W / 2, 1215, W - 240, 27, 2);
-  }
 
   // Receipt + footer.
   ctx.fillStyle = INK_2;

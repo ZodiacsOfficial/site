@@ -46,7 +46,7 @@ describe('registry pastel polish', () => {
     expect(registry).toContain('@media (prefers-contrast: more)');
   });
 
-  it('keeps one explanatory hero action and moves the Registry story link into section one', async () => {
+  it('keeps one explanatory hero action and one canonical thesis section', async () => {
     const [source, registry] = await Promise.all([
       read('src/app.jsx'),
       read('public/registry/index.html'),
@@ -57,9 +57,10 @@ describe('registry pastel polish', () => {
     expect(hero.match(/className="btn btn--primary"/g)).toHaveLength(1);
     expect(hero).not.toContain('REGISTRY_AURA_HERO_COPY');
     expect(hero).not.toContain('cine__why');
-    expect(source).toContain('<a className="reg__story-link" href="/thesis/">');
-    expect(source).toContain('<span>Read the Registry thesis</span>');
-    expect(registry).toContain('<p><a href="/thesis/">Read the Registry thesis →</a></p>');
+    expect(source).not.toContain('<a className="reg__story-link" href="/thesis/">');
+    expect(registry).not.toContain('<p><a href="/thesis/">Read the Registry thesis →</a></p>');
+    expect(source).toContain('id="thesis" className="phil reveal"');
+    expect(source).toContain('Read the full thesis — belief is the oldest asset');
     expect(registry).not.toContain('registry-aura-hero:cta');
     expect(registry).not.toContain('cine__why');
   });

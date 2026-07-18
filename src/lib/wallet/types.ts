@@ -1,3 +1,5 @@
+import type { AuraCabinetHolding } from '../aura/types';
+
 export type WalletChain = 'solana' | 'base';
 
 export type WalletBirthSource =
@@ -23,7 +25,10 @@ export interface WalletBirthProvider {
 
 export interface AuraHoldings {
   chain: WalletChain;
+  /** Canonical sign order retained for clients that predate cabinet finishes. */
   heldSigns: string[];
+  /** One privacy-safe material classification for each represented sign. */
+  holdings: AuraCabinetHolding[];
   /** Time the public balance check completed, always serialized as UTC. */
   checkedAt: string;
 }

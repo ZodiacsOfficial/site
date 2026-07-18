@@ -1,47 +1,42 @@
 .aura-page {
   width: min(100% - 32px, 1120px);
-  /* Shallow enough that the lede, both hero doors, and the example all
-     land inside a 1280x800 first screen (drive-asserted). */
-  padding-top: clamp(40px, 4.5vw, 56px);
+  /* Shallow enough that the thesis, both doors, and the case's first
+     register all land inside a 1280x800 first screen (drive-asserted). */
+  padding-top: clamp(26px, 3vw, 38px);
 }
 
+/* One line of thesis above the case itself: the hero stays shallow so the
+   stage cabinet's first register lands inside a 1280x800 first screen. */
 .aura-page__hero {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 1.25fr) minmax(260px, 0.75fr);
-  /* Row 1 hugs the lede so the doors sit right under the dek instead of
-     drifting to wherever the tall example card's height lands them. */
-  grid-template-rows: auto 1fr;
-  column-gap: clamp(32px, 7vw, 88px);
-  row-gap: clamp(18px, 2.5vw, 28px);
-  /* Top-aligned: the example card outgrew the lede (Alignment table +
-     braided reading), and end-alignment pushed the headline below the
-     fold on every desktop screen. */
-  align-items: start;
-  padding-bottom: clamp(40px, 6vw, 72px);
-  border-bottom: 1px solid var(--hair-2);
+  gap: clamp(9px, 1.4vw, 14px);
+  justify-items: start;
+  margin-bottom: clamp(16px, 2.4vw, 24px);
+  padding: clamp(20px, 3vw, 32px);
+  overflow: hidden;
+  border: 1px solid rgba(210, 219, 235, 0.14);
+  border-radius: clamp(22px, 3vw, 34px);
+  background:
+    linear-gradient(90deg, rgba(4, 5, 8, 0.86) 0%, rgba(4, 5, 8, 0.78) 42%, rgba(4, 5, 8, 0.9) 100%),
+    linear-gradient(180deg, rgba(4, 5, 8, 0.1), rgba(4, 5, 8, 0.84)),
+    url('/assets/art/zodiac-clock.jpg') center / cover no-repeat;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.018),
+    0 28px 90px rgba(0, 0, 0, 0.24);
+  animation: aura-gallery-arrive 220ms var(--ease-soft) both;
 }
 
-/* The tall example card owns the right rail; the lede and the two doors
-   share the left column, so name, pitch, and actions all land on the
-   first desktop screen. Under 760px the hero collapses to one column
-   and source order (lede, example, doors) takes over — the doors sit
-   after the example there, matching the V3 mobile proof. */
-.aura-page__demo {
-  grid-column: 2;
-  grid-row: 1 / span 2;
-}
-
-.aura-page__cta {
-  grid-column: 1;
-  grid-row: 2;
-  align-self: start;
+.aura-page__hero .kicker {
+  color: rgba(234, 216, 170, 0.86);
 }
 
 .aura-page__hero h1 {
-  max-width: 15ch;
-  margin: 8px 0 14px;
-  font-size: var(--text-hero);
+  max-width: 24ch;
+  margin: 4px 0 0;
+  font-size: clamp(1.9rem, 4.2vw, 3.1rem);
+  line-height: 1.03;
+  text-wrap: balance;
 }
 
 .aura-page__fit-note {
@@ -53,21 +48,22 @@
 }
 
 .aura-page__hero-copy {
-  max-width: 58ch;
+  max-width: 62ch;
   margin: 0;
-  color: var(--text-2);
+  color: rgba(230, 233, 241, 0.85);
   font-family: var(--font-serif);
   font-size: var(--text-lg);
-  line-height: 1.55;
+  line-height: 1.5;
 }
 
-.aura-page__demo {
-  display: grid;
-  gap: 14px;
-  padding: clamp(16px, 2.5vw, 24px);
-  border: 1px solid var(--hair-2);
-  border-radius: var(--r-lg);
-  background: rgba(10, 12, 17, 0.72);
+/* The stage: one cabinet, always on view — the sample until an accession
+   replaces it in place. */
+.aura-composer {
+  scroll-margin-top: 96px;
+}
+
+.aura-stage {
+  min-width: 0;
 }
 
 .aura-page__demo-cap {
@@ -307,24 +303,6 @@
   font-style: italic;
   font-size: var(--text-lg);
   line-height: 1.5;
-}
-
-/* Scroll choreography: sections marked data-wake rise as they enter the
-   viewport. The hiding state exists only under html.js (set by the wake
-   script) and motion-tolerant media, so no-JS and reduced-motion visitors
-   always see the finished page. */
-@media (prefers-reduced-motion: no-preference) {
-  html.js [data-wake] {
-    opacity: 0;
-    transform: translateY(14px);
-  }
-  html.js [data-wake].is-awake {
-    opacity: 1;
-    transform: translateY(0);
-    transition:
-      opacity 560ms var(--ease-soft) var(--wake-delay, 0ms),
-      transform 560ms var(--ease-soft) var(--wake-delay, 0ms);
-  }
 }
 
 /* Wallet buttons: the network mark leads, the wallet's own announced icon
@@ -965,7 +943,6 @@
 .aura-result {
   padding-top: clamp(50px, 8vw, 96px);
   border-top: 1px solid var(--hair-2);
-  animation: aura-finished-state 260ms var(--ease-soft) both;
 }
 
 /* Kickers follow the site rule: sentence-case serif italic, not mono-caps.
@@ -1715,143 +1692,9 @@
   gap: 8px;
 }
 
-/* Arrival: the lede inks in while the example card assembles itself —
-   glyph header first, then each band rises, the record discs pop, the
-   focal frame lands last. Runs once on load; transform/opacity only;
-   the settled frame is identical to the unanimated page. */
-.aura-page__hero .kicker {
-  animation: aura-rise 180ms var(--ease-soft) both;
-}
-.aura-page__hero h1 {
-  animation: aura-rise 200ms var(--ease-soft) 40ms both;
-}
-.aura-page__hero-copy,
-.aura-page__fit-note {
-  animation: aura-rise 200ms var(--ease-soft) 80ms both;
-}
-.aura-page__cta {
-  animation: aura-rise 200ms var(--ease-soft) 120ms both;
-}
-.aura-page__demo {
-  animation: aura-rise 220ms var(--ease-soft) 80ms both;
-}
-.aura-page__demo-read {
-  animation: aura-rise 200ms var(--ease-soft) 160ms both;
-}
-.aura-page__demo-stamp {
-  animation: aura-mark 180ms var(--ease-soft) 200ms both;
-}
-
-@keyframes aura-pop {
-  from {
-    opacity: 0;
-    transform: scale(0.94);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-/* A quiet asterism settles into the hero's open floor: the line traces
-   itself once, then each star arrives. Decorative only — hidden from
-   forced colors, static under reduced motion, and never looping. */
-.aura-constellation {
-  position: absolute;
-  left: 0;
-  bottom: clamp(16px, 4vw, 40px);
-  width: min(44%, 400px);
-  height: auto;
-  pointer-events: none;
-}
-
-.aura-constellation path:first-of-type {
-  stroke-dasharray: 620;
-  stroke-dashoffset: 620;
-  animation: aura-trace 1600ms var(--ease-soft) 750ms forwards;
-}
-
-.aura-constellation circle,
-.aura-constellation .aura-constellation__spark {
-  opacity: 0;
-  transform-box: fill-box;
-  transform-origin: center;
-  animation: aura-pop 340ms var(--ease-soft) both;
-}
-
-.aura-constellation circle:nth-of-type(1) { animation-delay: 950ms; }
-.aura-constellation circle:nth-of-type(2) { animation-delay: 1090ms; }
-.aura-constellation circle:nth-of-type(3) { animation-delay: 1230ms; }
-.aura-constellation circle:nth-of-type(4) { animation-delay: 1370ms; }
-.aura-constellation circle:nth-of-type(5) { animation-delay: 1510ms; }
-.aura-constellation circle:nth-of-type(6) { animation-delay: 1650ms; }
-.aura-constellation .aura-constellation__spark { animation-delay: 1800ms; }
-
-@keyframes aura-trace {
-  to {
-    stroke-dashoffset: 0;
-  }
-}
-
 /* The generic door points where it goes on devices with a real hover state. */
 @media (hover: hover) and (pointer: fine) {
   .aura-page__cta .btn:hover .orb { transform: translate(0, 2px); }
-}
-
-/* One finished-state choreography, run once per composition: the three
-   sources arrive separately, the Alignment settles, the focal caption lands,
-   then the sentence and reading. Transform/opacity only; nothing loops. */
-.aura-result__sources .aura-source--chart {
-  animation: aura-rise 200ms var(--ease-soft) both;
-}
-.aura-result__sources .aura-source--record {
-  animation: aura-rise 200ms var(--ease-soft) 50ms both;
-}
-.aura-result__sources .aura-source--sky {
-  animation: aura-rise 200ms var(--ease-soft) 100ms both;
-}
-.aura-result .aura-result__composition {
-  animation: aura-rise 220ms var(--ease-soft) 140ms both;
-}
-.aura-result .aura-algn__focal {
-  animation: aura-mark 180ms var(--ease-soft) 180ms both;
-}
-.aura-result .aura-result__fact {
-  animation: aura-rise 220ms var(--ease-soft) 220ms both;
-}
-.aura-result .aura-result__reading {
-  animation: aura-rise 220ms var(--ease-soft) 260ms both;
-}
-
-@keyframes aura-finished-state {
-  from {
-    opacity: 0;
-    transform: translateY(6px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes aura-rise {
-  from {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes aura-mark {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -1954,9 +1797,6 @@
   .aura-what__tiles {
     grid-template-columns: 1fr;
   }
-  .aura-constellation {
-    display: none;
-  }
   .aura-wallet-basics__choices,
   .aura-wallet-basics__safety {
     grid-template-columns: 1fr;
@@ -2029,57 +1869,13 @@
 
 @media (prefers-reduced-motion: reduce) {
   .aura-result {
-    animation: aura-reduced-fade 180ms ease-out 1 both;
-  }
-  /* The choreography collapses into the single fade above; every element and
-     the same content remain — reduced motion is never a lesser reading. */
-  .aura-result__sources .aura-source--chart,
-  .aura-result__sources .aura-source--record,
-  .aura-result__sources .aura-source--sky,
-  .aura-result .aura-result__composition,
-  .aura-result .aura-algn__focal,
-  .aura-result .aura-result__fact,
-  .aura-result .aura-result__reading,
-  .aura-page__hero .kicker,
-  .aura-page__hero h1,
-  .aura-page__hero-copy,
-  .aura-page__cta,
-  .aura-page__demo,
-  .aura-page__demo .aura-algn thead tr,
-  .aura-page__demo .aura-algn tbody tr:nth-child(1),
-  .aura-page__demo .aura-algn tbody tr:nth-child(2),
-  .aura-page__demo .aura-algn tbody tr:nth-child(3),
-  .aura-page__demo .aura-algn__disc,
-  .aura-page__demo .aura-algn__col.is-f,
-  .aura-page__demo .aura-algn__cell.is-f,
-  .aura-page__demo-read,
-  .aura-page__demo-stamp,
-  .aura-constellation circle,
-  .aura-constellation path,
-  .aura-constellation .aura-constellation__spark {
     animation: none;
-  }
-  .aura-constellation path:first-of-type {
-    stroke-dashoffset: 0;
-  }
-  .aura-constellation circle,
-  .aura-constellation .aura-constellation__spark {
-    opacity: 1;
   }
   .aura-algn[data-band-focus] .aura-algn__row {
     transition: none;
   }
   .aura-algn tbody:has(.aura-algn__row:hover) .aura-algn__row:not(:hover) {
     transition: none;
-  }
-}
-
-@keyframes aura-reduced-fade {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
   }
 }
 
@@ -2138,7 +1934,692 @@
     fill: CanvasText;
     stroke: CanvasText;
   }
-  .aura-constellation {
-    display: none;
+}
+
+/* Registry Aura foyer — a restrained gallery entrance to the collection. */
+.aura-page__sample-link {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  gap: 9px;
+  color: rgba(230, 233, 241, 0.78);
+  font-size: var(--text-sm);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(230, 233, 241, 0.24);
+}
+
+.aura-page__sample-link:focus-visible {
+  border-radius: 2px;
+  outline: 2px solid var(--ink-0);
+  outline-offset: 4px;
+}
+
+@keyframes aura-gallery-arrive {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.aura-page__sample h2,
+.aura-result__bars h3,
+.aura-result__connections h3,
+.aura-result__reflection h3 {
+  margin: 6px 0 0;
+  font-family: var(--font-serif);
+  font-weight: 500;
+}
+
+.aura-result__bars header > p:last-child {
+  margin: 9px 0 0;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+/* The lookup reads like a museum accession desk: one public identifier first,
+   with connection, retention, and methodology kept as secondary disclosures. */
+.aura-entry {
+  width: min(100%, 900px);
+  margin-inline: auto;
+  padding-block: clamp(56px, 8vw, 94px);
+  scroll-margin-top: 96px;
+}
+
+.aura-entry__intro {
+  align-items: start;
+  margin-bottom: 22px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--hair-2);
+}
+
+.aura-entry__intro h2 {
+  margin-top: 7px;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  line-height: 1.03;
+}
+
+.aura-entry__intro p {
+  max-width: 64ch;
+  color: var(--text-2);
+  line-height: 1.55;
+}
+
+.aura-entry__boundary {
+  display: block;
+  margin: 0 0 18px;
+  padding: 0;
+  overflow: hidden;
+  border-color: rgba(210, 219, 235, 0.14);
+  border-radius: 16px;
+  background: rgba(8, 10, 15, 0.6);
+}
+
+.aura-entry__boundary > summary {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  gap: 14px;
+  min-height: 52px;
+  align-items: center;
+  padding: 12px 16px;
+  color: var(--text-2);
+  cursor: pointer;
+  list-style: none;
+}
+
+.aura-entry__boundary > summary::-webkit-details-marker {
+  display: none;
+}
+
+.aura-entry__boundary > summary::after {
+  color: var(--faint);
+  font-family: var(--font-mono);
+  content: '+';
+}
+
+.aura-entry__boundary[open] > summary::after {
+  content: '−';
+}
+
+.aura-entry__boundary > summary span {
+  color: var(--muted);
+  font-size: var(--text-xs);
+}
+
+.aura-entry__boundary > summary:focus-visible {
+  outline: 2px solid var(--ink-0);
+  outline-offset: -4px;
+}
+
+.aura-entry__boundary-panel {
+  display: grid;
+  gap: 16px;
+  padding: 16px;
+  border-top: 1px solid var(--hair-2);
+}
+
+.aura-entry__boundary-lines {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.aura-entry__boundary-lines li {
+  min-width: 0;
+  padding: 13px 14px;
+  border: 1px solid var(--hair-1);
+  border-radius: 12px;
+  background: rgba(198, 204, 218, 0.025);
+}
+
+.aura-step {
+  width: min(100%, 900px);
+  padding: clamp(22px, 4vw, 36px);
+  border-color: rgba(210, 219, 235, 0.16);
+  border-radius: 20px;
+  background:
+    linear-gradient(135deg, rgba(198, 173, 120, 0.035), transparent 34%),
+    rgba(11, 14, 20, 0.9);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.02);
+}
+
+.aura-step__heading span {
+  width: auto;
+  min-width: 36px;
+  height: 26px;
+  padding-inline: 8px;
+  border-radius: 2px;
+  color: rgba(234, 216, 170, 0.78);
+}
+
+.aura-compose {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.aura-step {
+  margin-inline: auto;
+}
+
+.aura-field--address input {
+  min-height: 56px;
+  font-size: var(--text-base);
+}
+
+.aura-field--address input:focus-visible {
+  outline: 2px solid rgba(234, 216, 170, 0.72);
+  outline-offset: 2px;
+}
+
+.aura-wallet-connect,
+.aura-chart-option {
+  margin-top: 18px;
+  border: 1px solid var(--hair-2);
+  border-radius: var(--r-md);
+  background: rgba(6, 7, 10, 0.24);
+}
+
+.aura-wallet-connect > summary:focus-visible,
+.aura-chart-option > summary:focus-visible {
+  outline: 2px solid var(--ink-0);
+  outline-offset: -4px;
+}
+
+.aura-wallet-connect > summary,
+.aura-chart-option > summary {
+  display: flex;
+  min-height: 48px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 11px 14px;
+  color: var(--text-2);
+  cursor: pointer;
+  list-style: none;
+  font-size: var(--text-sm);
+  font-weight: 600;
+}
+
+.aura-wallet-connect > summary::-webkit-details-marker,
+.aura-chart-option > summary::-webkit-details-marker {
+  display: none;
+}
+
+.aura-wallet-connect > summary::after,
+.aura-chart-option > summary::after {
+  content: "+";
+  color: var(--faint);
+  font-family: var(--font-mono);
+  font-weight: 400;
+}
+
+.aura-wallet-connect[open] > summary::after,
+.aura-chart-option[open] > summary::after {
+  content: "−";
+}
+
+.aura-chart-option > summary span {
+  margin-right: auto;
+}
+
+.aura-chart-option > summary small {
+  color: var(--faint);
+  font-size: 10px;
+  font-weight: 450;
+}
+
+.aura-wallet-connect > :not(summary),
+.aura-chart-option > :not(summary) {
+  margin-inline: 14px;
+}
+
+.aura-wallet-connect > :last-child,
+.aura-chart-option > :last-child {
+  margin-bottom: 14px;
+}
+
+.aura-wallet-connect .aura-address-methods {
+  margin-top: 4px;
+}
+
+.aura-compose__submit .btn {
+  min-width: min(100%, 260px);
+  min-height: 44px;
+}
+
+.aura-entry__privacy {
+  max-width: 86ch;
+  margin-inline: auto;
+  color: var(--faint);
+  font-size: var(--text-xs);
+  line-height: 1.6;
+}
+
+.aura-entry__provenance {
+  padding-top: 16px;
+  border-top: 1px solid var(--hair-2);
+  color: var(--faint);
+  font-size: var(--text-xs);
+}
+
+.aura-entry__provenance > summary {
+  width: fit-content;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  cursor: pointer;
+  list-style: none;
+  color: var(--text-2);
+}
+
+.aura-entry__provenance > summary::-webkit-details-marker {
+  display: none;
+}
+
+.aura-entry__provenance > summary::after {
+  content: "+";
+  color: var(--faint);
+  font-family: var(--font-mono);
+}
+
+.aura-entry__provenance[open] > summary::after {
+  content: "−";
+}
+
+.aura-entry__provenance > summary:focus-visible {
+  outline: 2px solid var(--ink-0);
+  outline-offset: 3px;
+}
+
+.aura-entry__provenance > p {
+  max-width: 72ch;
+  margin: 2px 0 0;
+  line-height: 1.65;
+}
+
+.aura-result--presence {
+  display: grid;
+  gap: clamp(36px, 6vw, 68px);
+  animation-duration: 200ms;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.aura-result__presence-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
+  gap: clamp(24px, 5vw, 60px);
+  align-items: start;
+  padding: clamp(22px, 4vw, 38px);
+  border: 1px solid var(--hair-2);
+  border-radius: var(--r-lg);
+  background:
+    radial-gradient(circle at 84% 8%, rgba(166, 198, 230, 0.08), transparent 42%),
+    rgba(15, 18, 26, 0.72);
+}
+
+.aura-result__presence-head h2 {
+  max-width: 24ch;
+  margin: 8px 0 0;
+  font-family: var(--font-serif);
+  font-size: clamp(1.9rem, 4.5vw, 3.4rem);
+  font-weight: 500;
+  line-height: 1.08;
+}
+
+.aura-result__presence-meta {
+  display: grid;
+  margin: 0;
+  border-top: 1px solid var(--hair-2);
+}
+
+.aura-result__presence-meta > div {
+  display: grid;
+  grid-template-columns: 92px minmax(0, 1fr);
+  gap: 14px;
+  padding: 13px 0;
+  border-bottom: 1px solid var(--hair-2);
+}
+
+.aura-result__presence-meta dt {
+  color: var(--faint);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.aura-result__presence-meta dd {
+  margin: 0;
+  color: var(--text-2);
+  font-size: var(--text-sm);
+  line-height: 1.45;
+}
+
+.aura-result__bars {
+  display: grid;
+  gap: 22px;
+}
+
+.aura-result__bars > header {
+  width: min(100%, 760px);
+  margin-inline: auto;
+}
+
+.aura-result__bars h3,
+.aura-result__connections h3,
+.aura-result__reflection h3 {
+  font-size: clamp(1.65rem, 3.2vw, 2.55rem);
+}
+
+.aura-result__connections {
+  width: min(100%, 760px);
+  margin-inline: auto;
+}
+
+.aura-result__connections ol {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin: 18px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.aura-result__connections li {
+  display: flex;
+  min-width: 0;
+  gap: 12px;
+  align-items: center;
+  padding: 14px;
+  border: 1px solid var(--hair-2);
+  border-radius: var(--r-md);
+  background: rgba(15, 18, 26, 0.54);
+}
+
+.aura-result__connections img {
+  flex: 0 0 auto;
+  border-radius: 50%;
+}
+
+.aura-result__connections li div {
+  display: grid;
+  min-width: 0;
+  gap: 3px;
+}
+
+.aura-result__connections strong {
+  color: var(--text-2);
+}
+
+.aura-result__connections span {
+  color: var(--muted);
+  font-size: var(--text-xs);
+  line-height: 1.35;
+}
+
+.aura-result__reflection {
+  width: min(100%, 760px);
+  margin-inline: auto;
+  padding: clamp(22px, 4vw, 34px);
+  border: 1px solid var(--hair-2);
+  border-radius: var(--r-lg);
+  background: rgba(15, 18, 26, 0.46);
+}
+
+.aura-result__reflection > p:last-of-type {
+  margin: 14px 0 0;
+  color: var(--text-2);
+  font-family: var(--font-serif);
+  font-size: var(--text-lg);
+  font-style: italic;
+  line-height: 1.55;
+}
+
+.aura-result__reflection small {
+  display: block;
+  margin-top: 12px;
+  color: var(--faint);
+}
+
+.aura-result--presence .aura-result__share,
+.aura-result--presence .aura-result__actions,
+.aura-result--presence .aura-result__method,
+.aura-result--presence .aura-result__empty-recovery {
+  width: min(100%, 760px);
+  margin-inline: auto;
+}
+
+.aura-result--presence .aura-result__method {
+  padding: 0;
+}
+
+.aura-result--presence .aura-result__method > summary {
+  display: flex;
+  min-height: 48px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 11px 14px;
+  cursor: pointer;
+  list-style: none;
+  color: var(--text-2);
+  font-size: var(--text-sm);
+  font-weight: 600;
+}
+
+.aura-result--presence .aura-result__method > summary::-webkit-details-marker {
+  display: none;
+}
+
+.aura-result--presence .aura-result__method > summary::after {
+  content: "+";
+  color: var(--faint);
+  font-family: var(--font-mono);
+}
+
+.aura-result--presence .aura-result__method[open] > summary::after {
+  content: "−";
+}
+
+.aura-result--presence .aura-result__method > div {
+  padding: 0 14px 16px;
+}
+
+.aura-wallet-basics--compact {
+  margin-top: clamp(44px, 7vw, 76px);
+}
+
+.aura-wallet-basics__compact-body {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0;
+  border-top: 1px solid var(--hair-2);
+}
+
+.aura-wallet-basics__compact-body section {
+  padding: clamp(20px, 3vw, 30px);
+}
+
+.aura-wallet-basics__compact-body section + section {
+  border-left: 1px solid var(--hair-2);
+}
+
+.aura-wallet-basics__compact-body h3 {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: var(--text-xl);
+  font-weight: 500;
+}
+
+.aura-wallet-basics__compact-body p {
+  margin: 10px 0 0;
+  color: var(--muted);
+  font-size: var(--text-sm);
+  line-height: 1.58;
+}
+
+.aura-wallet-basics__compact-body .aura-wallet-basics__fine-print {
+  grid-column: 1 / -1;
+  margin: 0;
+  padding: 16px clamp(20px, 3vw, 30px);
+  border-top: 1px solid var(--hair-2);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .aura-page__sample-link:hover {
+    color: var(--text);
+    border-bottom-color: rgba(234, 216, 170, 0.62);
+  }
+
+  .aura-entry__boundary > summary:hover,
+  .aura-wallet-connect > summary:hover,
+  .aura-chart-option > summary:hover {
+    background: rgba(198, 204, 218, 0.035);
+  }
+}
+
+@media (max-width: 900px) {
+  .aura-page__hero--presence {
+    grid-template-columns: minmax(0, 1fr);
+    background:
+      linear-gradient(180deg, rgba(4, 5, 8, 0.74), rgba(4, 5, 8, 0.93) 62%),
+      url('/assets/art/zodiac-clock.jpg') center top / cover no-repeat;
+  }
+  .aura-page__hero--presence .aura-page__hero-lede {
+    position: static;
+  }
+  .aura-page__sample,
+  .aura-page__hero--presence .aura-page__cta {
+    grid-column: auto;
+    grid-row: auto;
+  }
+  .aura-page__sample {
+    margin-top: 8px;
+  }
+}
+
+@media (max-width: 700px) {
+  .aura-result__presence-head,
+  .aura-wallet-basics__compact-body {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .aura-wallet-basics__compact-body section + section {
+    border-top: 1px solid var(--hair-2);
+    border-left: 0;
+  }
+  .aura-result__connections ol {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .aura-entry__boundary-lines {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 520px) {
+  .aura-page__hero--presence {
+    gap: 28px;
+    padding: 18px 14px;
+    border-radius: 22px;
+  }
+
+  .aura-page__hero--presence h1 {
+    font-size: clamp(2.3rem, 12vw, 3.25rem);
+  }
+
+  .aura-page__hero--presence .aura-page__cta {
+    gap: 6px;
+  }
+
+  .aura-page__sample {
+    padding: 12px;
+  }
+
+  .aura-page__sample-intro {
+    display: grid;
+    gap: 5px;
+  }
+
+  .aura-page__sample .aura-collection-cabinet__niche {
+    grid-template-rows: auto minmax(48px, 1fr) auto auto;
+    min-height: 116px;
+  }
+
+  .aura-page__sample .aura-collection-cabinet__medallion {
+    width: 54px;
+    height: 54px;
+  }
+
+  .aura-entry {
+    padding-block: 52px 76px;
+  }
+
+  .aura-entry__intro,
+  .aura-entry__boundary > summary {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .aura-entry__boundary > summary {
+    position: relative;
+    gap: 4px;
+    padding-right: 42px;
+  }
+
+  .aura-entry__boundary > summary::after {
+    position: absolute;
+    top: 50%;
+    right: 16px;
+    transform: translateY(-50%);
+  }
+
+  .aura-step {
+    padding: 20px 16px;
+  }
+
+  .aura-result__presence-head {
+    padding: 20px 16px;
+  }
+  .aura-result__presence-meta > div {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 4px;
+  }
+  .aura-chart-option > summary {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+  .aura-wallet-connect .aura-address-methods {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aura-page__hero--presence .aura-page__hero-lede,
+  .aura-page__sample {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+
+  .aura-result--presence {
+    animation: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .aura-page__hero--presence {
+    background: Canvas;
+  }
+
+  .aura-page__trust-line,
+  .aura-page__sample,
+  .aura-wallet-connect,
+  .aura-chart-option,
+  .aura-result__presence-head,
+  .aura-result__connections li,
+  .aura-result__reflection {
+    border-color: CanvasText;
   }
 }

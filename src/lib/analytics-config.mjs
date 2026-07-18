@@ -18,6 +18,9 @@ export const ANALYTICS_EVENT_PROPS = Object.freeze({
   aura_entry: ['source'],
   aura_return: ['interval'],
   aura_response: ['value'],
+  aura_cabinet_select: [],
+  aura_cabinet_reveal: ['outcome'],
+  aura_talisman_personalize: ['state'],
 
   // Existing event names remain accepted so historical funnels do not break.
   result_rendered: ['mode'],

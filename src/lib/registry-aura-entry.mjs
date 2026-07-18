@@ -6,8 +6,8 @@ export const REGISTRY_AURA_ENTRY_SLOT = '<!-- registry-aura-entry:slot -->';
 
 export const REGISTRY_AURA_ENTRY_COPY = Object.freeze({
   title: 'Registry Aura',
-  description: 'Compare the official Zodiac signs at a public address with a saved birth chart and today’s sky. Start with the sample—no wallet needed.',
-  link: 'Try the sample →',
+  description: 'Open a public collection as a Cabinet of Twelve, seal it with today’s date, then read the record behind every edition.',
+  link: 'Explore the finished sample →',
 });
 
 // Kept as a build-time compatibility export for the generated legacy bundle.
@@ -29,9 +29,10 @@ export function registryAuraEnabled(env = {}) {
 export function registryAuraChartLink(search = '', env = {}) {
   if (!registryAuraEnabled(env)) return null;
   const params = search instanceof URLSearchParams ? search : new URLSearchParams(search);
+  if (params.get('return') !== REGISTRY_AURA_RETURN_KEY) return null;
   return {
     href: REGISTRY_AURA_PATH,
-    context: params.get('return') === REGISTRY_AURA_RETURN_KEY ? 'return' : 'discover',
+    context: 'return',
   };
 }
 
@@ -58,12 +59,12 @@ function renderNoJsEntry() {
               <p>${REGISTRY_AURA_ENTRY_COPY.description}</p>
             </div>
             <div class="idctx__aura-action">
-              <div class="idctx__aura-flow" aria-label="Public collection, saved chart, and today’s sky">
-                <span class="idctx__aura-step"><span aria-hidden="true">01</span>Public collection</span>
+              <div class="idctx__aura-flow" aria-label="Cabinet of Twelve, dated seal, and the collection’s record">
+                <span class="idctx__aura-step"><span aria-hidden="true">01</span>Cabinet of Twelve</span>
                 <span class="idctx__aura-arrow" aria-hidden="true">→</span>
-                <span class="idctx__aura-step"><span aria-hidden="true">02</span>Saved chart</span>
+                <span class="idctx__aura-step"><span aria-hidden="true">02</span>Dated seal</span>
                 <span class="idctx__aura-arrow" aria-hidden="true">→</span>
-                <span class="idctx__aura-step"><span aria-hidden="true">03</span>Today’s sky</span>
+                <span class="idctx__aura-step"><span aria-hidden="true">03</span>The record</span>
               </div>
               <a class="idctx__card-link idctx__aura-link" href="${REGISTRY_AURA_PATH}">${REGISTRY_AURA_ENTRY_COPY.link}</a>
             </div>

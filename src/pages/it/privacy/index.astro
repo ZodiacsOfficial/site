@@ -47,10 +47,12 @@ const jsonLd = [
 
       <h2>Registry Aura, Shelf e indirizzi pubblici</h2>
       <p>
-        Registry Aura legge affiancati il riepilogo di un tema salvato in questo
-        browser, un indirizzo pubblico del wallet e il cielo con la relativa
-        data. Il tema e la lettura simbolica vengono composti sul dispositivo.
-        Quando componi o aggiorni un Aura, il nostro endpoint delle disponibilità
+        Registry Aura legge affiancati un indirizzo pubblico del wallet e il
+        cielo con la relativa data. Se aggiungi un tema salvato in questo
+        browser, il suo riepilogo è un livello di confronto facoltativo che
+        rimane sul dispositivo. Il pattern e qualsiasi riflessione simbolica
+        vengono composti sul dispositivo. Quando componi o aggiorni un Aura,
+        il nostro endpoint delle disponibilità
         riceve l’indirizzo pubblico e lo inoltra al fornitore di dati blockchain
         configurato per verificare quali voci del Registro sono presenti. Il
         fornitore configurato è attualmente PublicNode, gestito da Allnodes. La
@@ -92,7 +94,7 @@ const jsonLd = [
       <p>
         Per impostazione predefinita, Aura salva l’indirizzo pubblico, la rete, i
         segni del Registro trovati, l’ora della consultazione e l’identificatore
-        del tema selezionato nella memoria di sessione di questa scheda, con una
+        facoltativo del tema selezionato nella memoria di sessione di questa scheda, con una
         validità di ripristino di otto ore. L’opzione non selezionata “Remember
         this address on this device” salva gli stessi campi nella memoria locale
         con una validità di ripristino di 24 ore. Dopo questi termini, le voci non
@@ -107,9 +109,7 @@ const jsonLd = [
         Le immagini Aura da condividere vengono composte sul tuo dispositivo.
         Per impostazione predefinita escludono indirizzo, rete, nome e dati del
         tema, posizioni esatte, geometria, numero e lista dei segni trovati.
-        Un’opzione facoltativa, valida solo per la sessione, può aggiungere il
-        fatto che il segno pubblico in evidenza compare in qualche punto del
-        tema selezionato. Se la attivi, quel fatto diventa pubblico.
+        Non includono alcun fatto proveniente da un tema salvato.
         L’applicazione scelta nel pannello di condivisione applica la propria
         informativa. Cancellare Aura non consente di ritirare copie salvate o
         ripubblicate da altre persone o servizi.

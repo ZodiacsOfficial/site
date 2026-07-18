@@ -1879,7 +1879,6 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
       {chart && shareInput && shareDialogOpen && ShareDialog && (
         <ShareDialog
           chart={chart}
-          input={shareInput}
           locale={locale}
           card={card}
           onCardStateChange={setCard}

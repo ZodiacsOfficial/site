@@ -145,6 +145,19 @@ try {
     };
 
     try {
+      // The positions-only codec remains a supported receiver, but the chart
+      // share sheet now intentionally offers one full-chart image only. Keep
+      // receiver coverage with a canonical fixture rather than surfacing a
+      // second sharing choice in that dialog.
+      const fixtureWire = {
+        b: [84, 210, 72, 100, 12, 105, 294, 278, 282, 225, 307, 127],
+        a: [166, 74],
+        h: 'w',
+        v: ENGINE_VERSION,
+      };
+      const fixtureToken = `2.${Buffer.from(JSON.stringify(fixtureWire)).toString('base64url')}`;
+      const positionsUrl = `${baseURL}/birth-chart/#p=${fixtureToken}`;
+      const { parsed: positionsParsed, token, wire } = v2Wire(positionsUrl);
       const source = await trackedPage();
       await open(source, `${baseURL}/birth-chart/`);
       await computeChart(source);
@@ -206,96 +219,45 @@ try {
       const dialog = source.locator('[data-share-dialog]');
       await dialog.waitFor({ state: 'visible', timeout: TIMEOUT });
       assert.equal(await dialog.getAttribute('open') !== null, true, 'share dialog must be modal/open');
-      assert.equal(await dialog.getAttribute('data-share-mode'), 'signature');
+      assert.equal(await dialog.getAttribute('data-share-mode'), 'full');
       assert.equal(await dialog.locator('[data-hide-birth-details]').count(), 0,
         'the share sheet must not expose the retired birth-detail toggle');
       assert.equal(await dialog.locator('[data-share-options]').count(), 0,
         'the share sheet must not depend on a second options opener');
-      assert.equal(await dialog.locator('[data-share-signature]').count(), 1,
-        'the primary share preview must be the personalized chart signature');
+      assert.equal(await dialog.locator('[data-share-signature]').count(), 0,
+        'the share sheet must not offer a chart-signature preview');
+      assert.equal(await dialog.locator('[data-share-card-action="signature"]').count(), 0,
+        'the share sheet must not offer a chart-signature card');
+      assert.equal(await dialog.locator('[data-share-card-action="big-three"]').count(), 0,
+        'the share sheet must not offer a Big Three card');
+      assert.equal(await dialog.locator('[data-share-link]').count(), 0,
+        'the image sheet must not mix in a positions-only link choice');
 
-      const signatureAction = dialog.locator('[data-share-card-action="signature"]');
+      const fullCardAction = dialog.locator('[data-share-card-action="full"]');
       await source.waitForFunction(() => {
-        const action = document.querySelector('[data-share-card-action="signature"]');
+        const action = document.querySelector('[data-share-card-action="full"]');
         return action instanceof HTMLButtonElement && !action.disabled;
       }, null, { timeout: TIMEOUT });
       assert.equal(await source.evaluate(() => globalThis.__t17Events.length), 0,
-        'pre-rendering the signature must not count as a share');
-      const signaturePreview = await dialog.locator('[data-share-signature]').evaluate((section) => ({
-        heading: section.querySelector('h3')?.textContent?.trim() ?? '',
-        title: section.querySelector('strong')?.textContent?.trim() ?? '',
-        summary: section.querySelector('p')?.textContent?.trim() ?? '',
-      }));
-      assert.equal(signaturePreview.heading, 'My chart signature');
-
-      const signaturePrepared = await source.evaluate(() => ({
+        'pre-rendering the full chart must not count as a share');
+      const preparedFull = await source.evaluate(() => ({
         text: globalThis.__t17CanvasText.slice(),
         at: performance.now(),
       }));
-      const signaturePreparedText = signaturePrepared.text.map((entry) => entry.value).join(' | ');
-      assert.equal(signaturePreparedText.includes('My chart signature'), true,
-        'signature image must be rendered before the final share tap');
-      assert.equal(signaturePreparedText.includes(signaturePreview.title), true,
-        'signature image must match the personalized preview');
-      const signatureSummaryLead = signaturePreview.summary.split(/\s+/).slice(0, 5).join(' ').toLowerCase();
-      assert.equal(signaturePreparedText.replace(/\s+/g, ' ').toLowerCase().includes(signatureSummaryLead), true,
-        'signature image must carry its defensible chart-specific explanation');
-      assert.equal(signaturePreparedText.includes(`Engine ${ENGINE_VERSION}`), true,
-        'signature PNG must carry only its engine receipt');
-      const signatureWordmark = signaturePrepared.text.find((entry) => entry.value === 'ZODIACS · ORG');
-      assert.deepEqual(
-        { align: signatureWordmark?.align, x: signatureWordmark?.x, y: signatureWordmark?.y },
-        { align: 'right', x: 1016, y: 1304 },
-        'signature wordmark must occupy the bottom-right register',
-      );
-      for (const privateValue of [
-        BIRTH.date,
-        BIRTH.time,
-        BIRTH.cityQuery,
-        'June 15, 1990',
-        'America/New_York',
-        '/birth-chart/',
-        'http://',
-        'https://',
-      ]) {
-        assert.equal(signaturePreparedText.includes(privateValue), false,
-          `signature PNG leaked ${privateValue}`);
-      }
+      const preparedFullText = preparedFull.text.map((entry) => entry.value).join(' | ');
+      assert.equal(preparedFullText.includes('A birth chart'), true,
+        'the full chart image must be rendered before the final share tap');
+      assert.equal(preparedFullText.includes('STANDOUT'), false,
+        'the full chart image must not bake in a chart-signature callout');
+      assert.equal(preparedFullText.includes('My chart signature'), false,
+        'the full chart image must not bake in the retired signature card');
+      assert.equal(preparedFullText.includes(`Engine ${ENGINE_VERSION}`), true,
+        'the full chart PNG must carry only its engine receipt');
 
-      const signatureStart = await source.evaluate(() => performance.now());
-      const signatureDownloadPromise = source.waitForEvent('download', { timeout: TIMEOUT });
-      await signatureAction.click();
-      const signatureDownload = await signatureDownloadPromise;
-      await source.waitForFunction(() => globalThis.__t17Events.length === 2, null, { timeout: TIMEOUT });
-      assert.equal(signatureDownload.suggestedFilename(), 'zodiacs-chart-signature.png',
-        'signature filename must contain no birth input');
-      assert.deepEqual(await pngDimensions(signatureDownload), { width: 1080, height: 1350 },
-        'signature card must export at 1080×1350');
-      const signatureRender = await source.evaluate(() => ({
-        text: globalThis.__t17CanvasText.slice(),
-        downloads: globalThis.__t17DownloadClicks.slice(),
-        events: globalThis.__t17Events.slice(),
-      }));
-      const signatureDownloadAt = signatureRender.downloads.find((entry) => entry.filename === 'zodiacs-chart-signature.png')?.at;
-      const signatureEventAt = signatureRender.events.find((entry) => entry.name === 'share_card_downloaded')?.at;
-      assert.ok(signatureDownloadAt >= signatureStart, 'signature download must start from the final action');
-      assert.ok(signatureEventAt >= signatureDownloadAt,
-        'signature analytics must follow the completed share/download action');
-      assert.ok(signatureDownloadAt - signatureStart < 1000,
-        `prepared signature action took ${(signatureDownloadAt - signatureStart).toFixed(1)}ms; expected <1000ms`);
-      assert.deepEqual((await events(source)).map(({ name, props }) => ({ name, props })), [
-        { name: 'chart_share', props: { variant: 'signature_card' } },
-        { name: 'share_card_downloaded', props: { variant: 'signature_card' } },
-      ], 'signature analytics must fire only after the final action and contain no sensitive fields');
-
-      const fullCardStart = await source.evaluate(() => {
-        globalThis.__t17CanvasText = [];
-        globalThis.__t17DownloadClicks = [];
-        return performance.now();
-      });
+      const fullCardStart = await source.evaluate(() => performance.now());
       const fullCardDownloadPromise = source.waitForEvent('download', { timeout: TIMEOUT });
-      await dialog.locator('[data-share-card-action="full"]').click();
-      await source.waitForFunction(() => globalThis.__t17Events.length === 4, null, { timeout: TIMEOUT });
+      await fullCardAction.click();
+      await source.waitForFunction(() => globalThis.__t17Events.length === 2, null, { timeout: TIMEOUT });
       await source.waitForFunction(() => {
         const action = document.querySelector('[data-share-card-action="full"]');
         return action instanceof HTMLButtonElement
@@ -333,78 +295,12 @@ try {
       assert.ok(fullCardEventAt - fullCardStart < 1000,
         `full-chart PNG action took ${(fullCardEventAt - fullCardStart).toFixed(1)}ms; expected <1000ms`);
       assert.deepEqual((await events(source)).map(({ name, props }) => ({ name, props })), [
-        { name: 'chart_share', props: { variant: 'signature_card' } },
-        { name: 'share_card_downloaded', props: { variant: 'signature_card' } },
         { name: 'chart_share', props: { variant: 'full_chart_card' } },
         { name: 'share_card_downloaded', props: { variant: 'full_chart_card' } },
-      ], 'signature and full-card analytics must each fire exactly once');
+      ], 'the single full-card action must fire exactly one privacy-safe analytics pair');
 
       const privacy = await dialog.locator('.calc-share-dialog__note').innerText();
-      assert.match(privacy, /omits your birth date, time, and place/i);
-      assert.match(privacy, /still be identifying/i);
-      assert.match(privacy, /not anonymous/i);
-
-      await dialog.locator('[data-share-link]').click();
-      await source.waitForFunction(() => globalThis.__t17Clipboard.length === 2, null, { timeout: TIMEOUT });
-      const positionsUrl = (await clipboard(source))[1];
-      const { parsed: positionsParsed, token, wire } = v2Wire(positionsUrl);
-      assert.equal(positionsParsed.pathname, '/birth-chart/');
-      assert.deepEqual(Object.keys(wire).sort(), ['a', 'b', 'h', 'v'], 'v2 wire must contain positions metadata only');
-      const wireText = JSON.stringify(wire);
-      for (const privateValue of [BIRTH.date, BIRTH.time, BIRTH.cityQuery, 'America/New_York', '40.7', '-74.0']) {
-        assert.equal(wireText.includes(privateValue), false, `v2 wire leaked ${privateValue}`);
-      }
-      await source.waitForFunction(() => globalThis.__t17Events.length === 5, null, { timeout: TIMEOUT });
-      assert.deepEqual((await events(source)).map(({ name, props }) => ({ name, props })), [
-        { name: 'chart_share', props: { variant: 'signature_card' } },
-        { name: 'share_card_downloaded', props: { variant: 'signature_card' } },
-        { name: 'chart_share', props: { variant: 'full_chart_card' } },
-        { name: 'share_card_downloaded', props: { variant: 'full_chart_card' } },
-        { name: 'chart_share', props: { variant: 'positions_link' } },
-      ], 'positions-link analytics must retain only its approved, non-sensitive variant');
-
-      const bigThreeStart = await source.evaluate(() => {
-        globalThis.__t17CanvasText = [];
-        globalThis.__t17DownloadClicks = [];
-        return performance.now();
-      });
-      const bigThreeDownloadPromise = source.waitForEvent('download', { timeout: TIMEOUT });
-      await dialog.locator('[data-share-card-action="big-three"]').click();
-      const bigThreeDownload = await bigThreeDownloadPromise;
-      await source.waitForFunction(() => globalThis.__t17Events.length === 7, null, { timeout: TIMEOUT });
-      assert.equal(bigThreeDownload.suggestedFilename(), 'zodiacs-big-three.png');
-      assert.deepEqual(await pngDimensions(bigThreeDownload), { width: 1080, height: 1350 },
-        'big-three card must export at 2× the 540×675 design size');
-      const bigThreeRender = await source.evaluate(() => ({
-        text: globalThis.__t17CanvasText.slice(),
-        downloads: globalThis.__t17DownloadClicks.slice(),
-        events: globalThis.__t17Events.slice(),
-      }));
-      const bigThreeText = bigThreeRender.text.map((entry) => entry.value).join(' | ');
-      for (const privateValue of [BIRTH.date, BIRTH.time, BIRTH.cityQuery, 'June 15, 1990', 'America/New_York']) {
-        assert.equal(bigThreeText.includes(privateValue), false, `big-three PNG leaked ${privateValue}`);
-      }
-      const bigThreeWordmark = bigThreeRender.text.find((entry) => entry.value === 'ZODIACS · ORG');
-      assert.deepEqual(
-        { align: bigThreeWordmark?.align, x: bigThreeWordmark?.x, y: bigThreeWordmark?.y },
-        { align: 'right', x: 1016, y: 1304 },
-        'big-three wordmark must occupy the bottom-right register',
-      );
-      const bigThreeDownloadAt = bigThreeRender.downloads.find((entry) => entry.filename === 'zodiacs-big-three.png')?.at;
-      const bigThreeEventAt = bigThreeRender.events.findLast((entry) => entry.name === 'share_card_downloaded')?.at;
-      assert.ok(bigThreeEventAt >= bigThreeDownloadAt,
-        'big-three analytics must follow the non-cancelled download');
-      assert.ok(bigThreeEventAt - bigThreeStart < 1000,
-        `big-three PNG action took ${(bigThreeEventAt - bigThreeStart).toFixed(1)}ms; expected <1000ms`);
-      assert.deepEqual((await events(source)).map(({ name, props }) => ({ name, props })), [
-        { name: 'chart_share', props: { variant: 'signature_card' } },
-        { name: 'share_card_downloaded', props: { variant: 'signature_card' } },
-        { name: 'chart_share', props: { variant: 'full_chart_card' } },
-        { name: 'share_card_downloaded', props: { variant: 'full_chart_card' } },
-        { name: 'chart_share', props: { variant: 'positions_link' } },
-        { name: 'chart_share', props: { variant: 'big_three_card' } },
-        { name: 'share_card_downloaded', props: { variant: 'big_three_card' } },
-      ], 'each completed card must fire its two approved analytics events exactly once');
+      assert.match(privacy, /not a name, birth date, time, place, coordinates, or chart link/i);
 
       const eventCountBeforeCancel = (await events(source)).length;
       await source.evaluate(() => {
@@ -419,9 +315,9 @@ try {
           },
         });
       });
-      await dialog.locator('[data-share-card-action="big-three"]').click();
+      await fullCardAction.click();
       await source.waitForFunction(() => {
-        const action = document.querySelector('[data-share-card-action="big-three"]');
+        const action = document.querySelector('[data-share-card-action="full"]');
         return globalThis.__t17ShareCalls === 1
           && action
           && !action.textContent?.includes('Rendering');
@@ -793,7 +689,7 @@ try {
       assert.equal(await invalid.locator('[data-positions-only], .calc__result').count(), 0, 'invalid v2 must not render a result');
 
       // Mobile uses the same deliberate two-step contract: open the compact
-      // sheet, prepare the signature, then invoke file sharing from the final tap.
+      // sheet, prepare the full chart, then invoke file sharing from the final tap.
       const mobileContext = await browser.newContext({
         viewport: { width: 390, height: 844 },
         colorScheme: 'dark',
@@ -841,9 +737,9 @@ try {
         'opening the mobile share sheet must not immediately invoke native sharing');
       assert.equal(await mobile.locator('[data-share-options]').count(), 0,
         'mobile must not expose a separate share-options control');
-      const mobileSignatureAction = mobileSheet.locator('[data-share-card-action="signature"]');
+      const mobileFullAction = mobileSheet.locator('[data-share-card-action="full"]');
       await mobile.waitForFunction(() => {
-        const action = document.querySelector('[data-share-card-action="signature"]');
+        const action = document.querySelector('[data-share-card-action="full"]');
         return action instanceof HTMLButtonElement && !action.disabled;
       }, null, { timeout: TIMEOUT });
       const mobileSheetBox = await mobileSheet.boundingBox();
@@ -852,17 +748,17 @@ try {
       assert.ok(mobileSheetBox.height < 844 && mobileSheetBox.width === 390,
         'mobile share sheet must fit the viewport without becoming a blank full-screen layer');
       const mobileTapStart = await mobile.evaluate(() => performance.now());
-      await mobileSignatureAction.click();
+      await mobileFullAction.click();
       await mobile.waitForFunction(() => globalThis.__mobileShareCalls === 1, null, { timeout: TIMEOUT });
       const mobilePayload = await mobile.evaluate(() => globalThis.__mobileSharePayload);
       assert.equal(mobilePayload.files.length, 1, 'the final mobile tap must share one prepared file');
       assert.deepEqual(mobilePayload.files[0], {
-        name: 'zodiacs-chart-signature.png',
+        name: 'zodiacs-chart.png',
         type: 'image/png',
         size: mobilePayload.files[0].size,
       });
       assert.ok(mobilePayload.files[0].size > 0, 'the prepared mobile PNG must not be empty');
-      assert.equal(mobilePayload.url, null, 'mobile signature sharing must not leak a chart URL');
+      assert.equal(mobilePayload.url, null, 'mobile chart sharing must not leak a chart URL');
       assert.ok(mobilePayload.at >= mobileTapStart && mobilePayload.at - mobileTapStart < 1000,
         'the prepared native file share must be invoked directly by the final tap');
       await mobileContext.close();
@@ -871,22 +767,16 @@ try {
       transcript.positionsFragment = positionsParsed.hash.slice(0, 5);
       transcript.positionsWireKeys = Object.keys(wire).sort();
       transcript.positionsRows = await positions.locator('tbody tr').count();
-      transcript.signatureFilename = signatureDownload.suggestedFilename();
       transcript.cardFilename = fullCardDownload.suggestedFilename();
-      transcript.bigThreeFilename = bigThreeDownload.suggestedFilename();
       transcript.approachFilename = approachDownload.suggestedFilename();
       transcript.communicationFilename = communicationDownload.suggestedFilename();
-      transcript.signaturePng = await pngDimensions(signatureDownload);
       transcript.fullCardPng = await pngDimensions(fullCardDownload);
-      transcript.bigThreePng = await pngDimensions(bigThreeDownload);
       transcript.approachPng = await pngDimensions(approachDownload);
       transcript.communicationPng = await pngDimensions(communicationDownload);
-      transcript.signatureActionMs = Math.round(signatureDownloadAt - signatureStart);
       transcript.fullCardMs = Math.round(fullCardEventAt - fullCardStart);
-      transcript.bigThreeMs = Math.round(bigThreeEventAt - bigThreeStart);
       transcript.events = (await events(source)).map(({ name, props }) => ({ name, props }));
       transcript.hashesStripped = { positions: true, full: true, ambiguous: true };
-      transcript.mobileNativeShare = 'prepared-signature-image';
+      transcript.mobileNativeShare = 'prepared-full-chart-image';
       transcript.contextualNativeShare = 'prepared-communication-image';
     } finally {
       await context.close();

@@ -6,8 +6,8 @@ import {
   type WalletEnvironment,
 } from '../src/lib/wallet/config.js';
 import {
-  normalizeOfficialHeldSigns,
-  resolveOfficialHeldSigns,
+  normalizeOfficialHoldings,
+  resolveOfficialHoldings,
 } from '../src/lib/wallet/holdings.js';
 import type {
   AuraHoldings,
@@ -26,7 +26,7 @@ export interface AuraHoldingsDependencies {
   env?: WalletEnvironment;
   now?: () => number;
   rateLimit?: AuraRateLimitHook;
-  resolveHeldSigns?: typeof resolveOfficialHeldSigns;
+  resolveHoldings?: typeof resolveOfficialHoldings;
   timeoutMs?: number;
 }
 
@@ -141,12 +141,12 @@ export async function checkAuraPlatformRateLimit(req: any): Promise<RateLimitRes
   return checkRateLimit(AURA_RATE_LIMIT_ID, { headers: req.headers });
 }
 
-async function heldSignsWithTimeout(
+async function holdingsWithTimeout(
   chain: 'solana' | 'base',
   address: string,
   env: WalletEnvironment,
   dependencies: AuraHoldingsDependencies,
-): Promise<string[] | undefined> {
+): ReturnType<typeof resolveOfficialHoldings> {
   const controller = new AbortController();
   let timer: ReturnType<typeof setTimeout> | undefined;
   const timeout = new Promise<undefined>((resolve) => {
@@ -155,7 +155,7 @@ async function heldSignsWithTimeout(
       resolve(undefined);
     }, boundedTimeout(dependencies.timeoutMs));
   });
-  const resolver = dependencies.resolveHeldSigns ?? resolveOfficialHeldSigns;
+  const resolver = dependencies.resolveHoldings ?? resolveOfficialHoldings;
   try {
     return await Promise.race([
       resolver(chain, address, env, fetch, controller.signal),
@@ -213,19 +213,21 @@ export async function handleAuraHoldings(
   }
 
   try {
-    const heldSigns = await heldSignsWithTimeout(
+    const resolvedHoldings = await holdingsWithTimeout(
       parsed.chain,
       parsed.address,
       env,
       dependencies,
     );
-    if (!Array.isArray(heldSigns)) {
+    if (!Array.isArray(resolvedHoldings)) {
       sendJson(res, 503, { error: 'unavailable' });
       return;
     }
+    const holdings = normalizeOfficialHoldings(resolvedHoldings);
     const value: AuraHoldings = {
       chain: parsed.chain,
-      heldSigns: normalizeOfficialHeldSigns(heldSigns),
+      heldSigns: holdings.map(({ sign }) => sign),
+      holdings,
       checkedAt: new Date((dependencies.now ?? Date.now)()).toISOString(),
     };
     sendJson(res, 200, value);

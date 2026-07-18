@@ -1,8 +1,21 @@
 import { useEffect, useRef, useState } from "preact/hooks";
 import { useProfile } from "../lib/hooks/useProfile";
 import type { SavedChart } from "../lib/profile/schema";
-import type { AuraComposition, AuraPersistenceRecord } from "../lib/aura/types";
+import {
+  AURA_SIGN_ORDER,
+  type AuraCabinetFinish,
+  type AuraCabinetHolding,
+  type AuraCabinetRevealMode,
+  type AuraComposition,
+  type AuraPersistenceRecord,
+  type AuraSign,
+} from "../lib/aura/types";
 import { normalizeHeldSigns } from "../lib/aura/normalize";
+import { AURA_EXAMPLE_HOLDINGS } from "../lib/aura/example";
+import {
+  AuraCollectionCabinet,
+  principalSign,
+} from "./aura/AuraCollectionCabinet";
 import {
   clearAllAuraPersistence,
   clearAuraPersistence,
@@ -22,8 +35,8 @@ import type {
 } from "../lib/wallet/types";
 import { trackAnalytics } from "../lib/analytics";
 import { auraHeldCountBucket } from "../lib/aura/analytics";
-import { auraSinceLastLine } from "../lib/aura/copy";
-import type { AuraShareFocus, AuraSharePublicInput } from "../lib/aura-share";
+import { auraDateStamp, auraSinceLastLine } from "../lib/aura/copy";
+import type { AuraShareActionOutcome } from "../lib/aura-share-card";
 import {
   AuraResult,
   type AuraAddressMode,
@@ -36,7 +49,9 @@ interface RegistryAuraProps {
 
 interface AuraResultState {
   composition: AuraComposition;
-  chart: SavedChart;
+  holdings: AuraCabinetHolding[];
+  revealMode: AuraCabinetRevealMode;
+  chart: SavedChart | null;
   chain: WalletChain;
   checkedAt: string;
   mode: AuraAddressMode;
@@ -50,6 +65,17 @@ interface AuraSharePreviewState {
 }
 
 type RequestState = "idle" | "busy" | "error";
+
+const CABINET_FINISHES = new Set<AuraCabinetFinish>([
+  "pastel",
+  "bronze",
+  "silver",
+  "gold",
+]);
+
+function validGoldCount(value: unknown): value is string {
+  return typeof value === "string" && /^[1-9]\d*$/.test(value);
+}
 
 function loadAuraComposer() {
   return import("../lib/aura/compose");
@@ -90,32 +116,6 @@ const ERROR_COPY: Record<
     "The public record returned an incomplete answer. Please try again later.",
 };
 
-function publicShareInput(composition: AuraComposition): AuraSharePublicInput {
-  return {
-    heldSigns: composition.heldSigns,
-    skyAt: composition.currentSky.observedAt,
-    currentSky: {
-      sun: composition.currentSky.sun.sign,
-      moon: composition.currentSky.moon.sign,
-    },
-    activeEvents: composition.signs.flatMap((context) =>
-      context.activeNow.flatMap((evidence) =>
-        evidence.source === "event"
-          ? [
-              {
-                kind: evidence.kind,
-                sign: evidence.sign,
-                exactAt: evidence.exactAt,
-                body: evidence.body ?? null,
-                eventType: evidence.eventType ?? null,
-              },
-            ]
-          : [],
-      ),
-    ),
-  };
-}
-
 function returnInterval(savedAt: string, now = Date.now()): string {
   const days = Math.max(0, now - Date.parse(savedAt)) / 86_400_000;
   if (days < 1) return "same-day";
@@ -133,15 +133,40 @@ function validHoldingsPayload(value: unknown): value is AuraHoldings {
     !payload.heldSigns.every((sign) => typeof sign === "string")
   )
     return false;
+  if (!Array.isArray(payload.holdings)) return false;
+  const seen = new Set<string>();
+  for (const entry of payload.holdings) {
+    if (!entry || typeof entry !== "object") return false;
+    const holding = entry as Partial<AuraCabinetHolding>;
+    if (
+      typeof holding.sign !== "string" ||
+      !AURA_SIGN_ORDER.includes(holding.sign as (typeof AURA_SIGN_ORDER)[number]) ||
+      typeof holding.finish !== "string" ||
+      !CABINET_FINISHES.has(holding.finish as AuraCabinetFinish) ||
+      seen.has(holding.sign)
+    ) return false;
+    if (
+      (holding.finish === "gold" && !validGoldCount(holding.goldCount)) ||
+      (holding.finish !== "gold" && holding.goldCount !== undefined)
+    ) return false;
+    seen.add(holding.sign);
+  }
   if (
     typeof payload.checkedAt !== "string" ||
     !Number.isFinite(Date.parse(payload.checkedAt))
   )
     return false;
   const normalized = normalizeHeldSigns(payload.heldSigns);
+  const holdingSigns = normalizeHeldSigns(
+    payload.holdings.map(({ sign }) => sign),
+  );
   return (
     normalized.length === payload.heldSigns.length &&
-    normalized.every((sign, index) => sign === payload.heldSigns?.[index])
+    normalized.every((sign, index) => sign === payload.heldSigns?.[index]) &&
+    holdingSigns.length === payload.holdings.length &&
+    holdingSigns.every((sign, index) => sign === payload.holdings?.[index]?.sign) &&
+    holdingSigns.length === normalized.length &&
+    holdingSigns.every((sign, index) => sign === normalized[index])
   );
 }
 
@@ -167,14 +192,19 @@ function samePersistedLookup(
     a.chain === b.chain &&
     a.checkedAt === b.checkedAt &&
     a.chartId === b.chartId &&
-    a.heldSigns.length === b.heldSigns.length &&
-    a.heldSigns.every((sign, index) => sign === b.heldSigns[index])
+    a.holdings.length === b.holdings.length &&
+    a.holdings.every((holding, index) => (
+      holding.sign === b.holdings[index]?.sign
+      && holding.finish === b.holdings[index]?.finish
+      && holding.goldCount === b.holdings[index]?.goldCount
+    ))
   );
 }
 
 export function RegistryAura({ availableChains }: RegistryAuraProps) {
   const { profile, ready: profileReady } = useProfile();
   const [selectedChartId, setSelectedChartId] = useState("");
+  const [selectedSign, setSelectedSign] = useState<AuraSign | null>(null);
   const [address, setAddress] = useState("");
   const [addressMode, setAddressMode] = useState<AuraAddressMode>("pasted");
   const [remember, setRemember] = useState(false);
@@ -185,11 +215,6 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
   const [shareState, setShareState] = useState<AuraShareState>("idle");
   const [sharePreview, setSharePreview] =
     useState<AuraSharePreviewState | null>(null);
-  const [shareChartFact, setShareChartFact] = useState(false);
-  const [shareFocusState, setShareFocusState] = useState<{
-    result: AuraResultState;
-    focus: AuraShareFocus | null;
-  } | null>(null);
   const [persistenceReady, setPersistenceReady] = useState(false);
   const [solanaWallets, setSolanaWallets] = useState<readonly StandardWallet[]>(
     [],
@@ -220,20 +245,16 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
   const restoredRef = useRef(false);
   const focusResultRef = useRef(false);
   const shareGenerationRef = useRef(0);
+  const preparedShareActionRef = useRef<
+    ((blob: Blob) => Promise<AuraShareActionOutcome>) | null
+  >(null);
+  const preparedDownloadActionRef = useRef<
+    ((blob: Blob) => "downloaded") | null
+  >(null);
 
   const chart = selectedChart(profile.charts, selectedChartId);
   const parsedAddress = parseWalletAddress(address);
   const detectedChain = parsedAddress?.chain ?? null;
-  const shareInput = result ? publicShareInput(result.composition) : null;
-  const shareFocus =
-    shareFocusState?.result === result ? shareFocusState.focus : null;
-  const shareChartFactEligible = Boolean(
-    shareFocus &&
-    result?.composition.signs.some(
-      (context) =>
-        context.sign === shareFocus.sign && context.natalEcho.length > 0,
-    ),
-  );
 
   const invalidateSharePreview = () => {
     shareGenerationRef.current += 1;
@@ -261,7 +282,6 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
     requestRef.current = null;
     clearStored();
     invalidateSharePreview();
-    setShareChartFact(false);
     setResult(null);
     setShareState("idle");
     setRequestState("idle");
@@ -314,16 +334,6 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
   }, []);
 
   useEffect(() => {
-    if (!profileReady) return;
-    if (
-      !selectedChartId ||
-      !profile.charts.some((candidate) => candidate.id === selectedChartId)
-    ) {
-      setSelectedChartId(profile.charts[0]?.id ?? "");
-    }
-  }, [profileReady, profile.charts, selectedChartId]);
-
-  useEffect(() => {
     if (!profileReady || restoredRef.current) return;
     restoredRef.current = true;
     const sessionStore = auraStorage("session");
@@ -356,24 +366,17 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
       ? (profile.charts.find((candidate) => candidate.id === cached.chartId) ??
         null)
       : null;
-    if (!cachedChart) {
-      setStatus(
-        "A recent address was restored. Choose a saved chart and compose again.",
-      );
-      setPersistenceReady(true);
-      return;
-    }
-
-    setSelectedChartId(cachedChart.id);
-    setShareChartFact(false);
+    setSelectedChartId(cachedChart?.id ?? "");
     void loadAuraComposer()
       .then(({ auraSkySigns, composeAura }) => {
         const composition = composeAura({
-          heldSigns: cached.heldSigns,
+          heldSigns: cached.holdings.map(({ sign }) => sign),
           chart: cachedChart,
           visitedAt: new Date(),
         });
         setResult({
+          holdings: [...cached.holdings],
+          revealMode: "settled",
           chart: cachedChart,
           chain: cached.chain,
           checkedAt: cached.checkedAt,
@@ -390,8 +393,8 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
         );
         setStatus(
           sinceLine
-            ? `A recent reading was restored from this device. ${sinceLine} Re-check to read the public record again.`
-            : "A recent reading was restored from this device. Re-check to read the public record again.",
+            ? `A recent collection was restored from this device. ${sinceLine} Re-check to read the public record again.`
+            : "A recent collection was restored from this device. Re-check to read the public record again.",
         );
         trackAnalytics("aura_return", {
           interval: returnInterval(cached.savedAt),
@@ -426,14 +429,12 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
   }, [result]);
 
   useEffect(() => {
-    setShareChartFact(false);
-  }, [result?.checkedAt, result?.chart.id]);
-
-  useEffect(() => {
     shareGenerationRef.current += 1;
     setSharePreview(null);
     setShareState("idle");
-  }, [result, shareChartFact, shareFocus?.sign, shareFocus?.reason]);
+    // A new accession opens on its principal work, not a stale selection.
+    setSelectedSign(null);
+  }, [result?.checkedAt]);
 
   useEffect(() => {
     const previewUrl = sharePreview?.url;
@@ -449,47 +450,17 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
     [],
   );
 
-  const shareFocusRequestRef = useRef(0);
-  const loadShareFocus = (focusResult: AuraResultState) => {
-    const token = ++shareFocusRequestRef.current;
-    void import("../lib/aura-share")
-      .then(({ selectAuraShareFocus }) => {
-        if (shareFocusRequestRef.current !== token) return;
-        setShareFocusState({
-          result: focusResult,
-          focus: selectAuraShareFocus(publicShareInput(focusResult.composition)),
-        });
-        setShareState("idle");
-      })
-      .catch(() => {
-        // A failed chunk load must stay recoverable: the share button turns
-        // into a retry instead of wedging on a disabled "Preparing card…".
-        if (shareFocusRequestRef.current !== token) return;
-        setShareFocusState({ result: focusResult, focus: null });
-        setShareState("error");
-      });
-  };
-
-  useEffect(() => {
-    if (!result) {
-      shareFocusRequestRef.current += 1;
-      setShareFocusState(null);
-      return;
-    }
-    loadShareFocus(result);
-  }, [result]);
-
   const persistLookup = (
     payload: AuraHoldings,
-    selected: SavedChart,
+    selected: SavedChart | null,
     inputAddress: string,
   ) => {
     const lookup = {
       address: inputAddress,
       chain: payload.chain,
-      heldSigns: normalizeHeldSigns(payload.heldSigns),
+      holdings: payload.holdings,
       checkedAt: payload.checkedAt,
-      chartId: selected.id,
+      chartId: selected?.id,
     } as const;
     const sessionStore = auraStorage("session");
     const localStore = auraStorage("local");
@@ -508,10 +479,6 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
   };
 
   const compose = async (refresh = false) => {
-    if (!chart) {
-      fail("Save a chart before composing an Aura.", "no-chart", refresh);
-      return;
-    }
     const parsed = parseWalletAddress(address);
     if (!parsed) {
       fail(ERROR_COPY.invalid_address, "invalid", refresh);
@@ -561,7 +528,11 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
         return;
       }
 
-      setStatus("Setting the chart and consulting the dated sky…");
+      setStatus(
+        chart
+          ? "Adding the chart echo and consulting the dated sky…"
+          : "Consulting the dated sky…",
+      );
       const { composeAura } = await loadAuraComposer();
       if (controller.signal.aborted || requestRef.current !== controller)
         return;
@@ -578,9 +549,10 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
           : "pasted";
       persistLookup(payload, chart, parsed.address);
       invalidateSharePreview();
-      setShareChartFact(false);
       setResult({
         composition,
+        holdings: payload.holdings,
+        revealMode: "animate",
         chart,
         chain: payload.chain,
         checkedAt: payload.checkedAt,
@@ -590,8 +562,8 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
       setRequestState("idle");
       setStatus(
         payload.heldSigns.length === 0
-          ? "Lookup complete. No Registry-listed Zodiac was found; no purchase is required."
-          : `Reading composed from ${payload.heldSigns.length} held ${payload.heldSigns.length === 1 ? "sign" : "signs"}.`,
+          ? "Collection opened. No Registry-listed Zodiacs were found."
+          : `${payload.heldSigns.length} official ${payload.heldSigns.length === 1 ? "Zodiac was" : "Zodiacs were"} found.`,
       );
       setShareState("idle");
       focusResultRef.current = true;
@@ -622,7 +594,6 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
     setAddressMode("connected");
     setConnectedWallet({ chain: session.chain, name: session.walletName });
     invalidateSharePreview();
-    setShareChartFact(false);
     setResult(null);
     setShareState("idle");
     setRequestState("idle");
@@ -699,8 +670,8 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
     clearStored();
     invalidateSharePreview();
     const wasExample = result?.mode === "example";
-    setShareChartFact(false);
     setResult(null);
+    setSelectedChartId("");
     setAddress("");
     setAddressMode("pasted");
     setConnectedWallet(null);
@@ -710,7 +681,7 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
     setError("");
     setStatus(
       wasExample
-        ? "Example closed."
+        ? "Sample closed."
         : "Aura data was cleared from this device.",
     );
     setShareState("idle");
@@ -720,6 +691,20 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
         : exampleButtonRef.current;
       (wasExample ? exampleTarget : addressInputRef.current)?.focus();
       if (wasExample) exampleOriginRef.current = null;
+    });
+  };
+
+  const openCollectionDesk = () => {
+    clearAura();
+    requestAnimationFrame(() => {
+      const desk = document.getElementById("aura-desk");
+      const reduce = typeof matchMedia === "function"
+        && matchMedia("(prefers-reduced-motion: reduce)").matches;
+      desk?.scrollIntoView({
+        block: "start",
+        behavior: reduce ? "auto" : "smooth",
+      });
+      addressInputRef.current?.focus({ preventScroll: true });
     });
   };
 
@@ -738,13 +723,18 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
       );
       return;
     }
-    const [{ AURA_EXAMPLE_CHART, AURA_EXAMPLE_HELD_SIGNS }, { composeAura }] =
+    const [{
+      AURA_EXAMPLE_CHART,
+      AURA_EXAMPLE_HELD_SIGNS,
+      AURA_EXAMPLE_HOLDINGS,
+    }, { composeAura }] =
       modules;
     const now = new Date();
     setError("");
     invalidateSharePreview();
-    setShareChartFact(false);
     setResult({
+      holdings: AURA_EXAMPLE_HOLDINGS,
+      revealMode: "animate",
       chart: AURA_EXAMPLE_CHART,
       chain: "solana",
       checkedAt: now.toISOString(),
@@ -756,7 +746,7 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
         illustrative: true,
       }),
     });
-    setStatus("Example ready — the chart and record in it are samples.");
+    setStatus("Curator’s sample opened.");
     setError("");
     setShareState("idle");
     focusResultRef.current = true;
@@ -773,8 +763,51 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
     return () => trigger.removeEventListener("click", openExample);
   }, []);
 
+  const updateSelectedChart = (nextId: string) => {
+    const nextChart = selectedChart(profile.charts, nextId);
+    setSelectedChartId(nextId);
+    invalidateSharePreview();
+    if (!result || result.mode === "example") return;
+    trackAnalytics("aura_talisman_personalize", {
+      state: nextChart ? "added" : "removed",
+    });
+
+    void loadAuraComposer()
+      .then(({ composeAura }) => {
+        setResult((current) => {
+          if (!current || current.mode === "example") return current;
+          return {
+            ...current,
+            chart: nextChart,
+            composition: composeAura({
+              heldSigns: current.composition.heldSigns,
+              chart: nextChart,
+              visitedAt: current.composition.asOf,
+            }),
+          };
+        });
+        const parsed = parseWalletAddress(address);
+        if (parsed && parsed.chain === result.chain) {
+          persistLookup({
+            chain: result.chain,
+            heldSigns: result.composition.heldSigns,
+            holdings: result.holdings,
+            checkedAt: result.checkedAt,
+          }, nextChart, parsed.address);
+        }
+        setStatus(
+          nextChart
+            ? "The chart echo was added. The collection stayed in place."
+            : "The chart echo was removed. The collection and dated sky remain.",
+        );
+      })
+      .catch(() => {
+        setError("The chart echo could not be updated on this device.");
+      });
+  };
+
   const createSharePreview = async () => {
-    if (!result || !shareInput || !shareFocus) return;
+    if (!result || result.composition.heldSigns.length === 0) return;
     const generation = shareGenerationRef.current + 1;
     shareGenerationRef.current = generation;
     setShareState("busy");
@@ -782,27 +815,19 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
       const {
         auraShareAccessibleDescription,
         canShareAuraCardBlob,
+        downloadAuraCardBlob,
         drawAuraShareCard,
+        shareAuraCardBlob,
       } = await import("../lib/aura-share-card");
-      const next =
-        result.composition.signs.find(
-          (context) => context.sign === shareFocus.sign,
-        )?.nextActivation ?? null;
       const cardInput = {
-        focus: shareFocus,
+        heldSigns: result.composition.heldSigns,
+        holdings: result.holdings,
         checkedAt: result.checkedAt,
-        skyAt: shareInput.skyAt,
-        currentSky: shareInput.currentSky,
-        nextEvent: next
-          ? {
-              kind: next.kind,
-              sign: next.sign,
-              at: next.at,
-              body: next.body,
-              eventType: next.eventType,
-            }
-          : null,
-        includeChartFact: shareChartFact && shareChartFactEligible,
+        skyAt: result.composition.currentSky.observedAt,
+        currentSky: {
+          sun: result.composition.currentSky.sun.sign,
+          moon: result.composition.currentSky.moon.sign,
+        },
       } as const;
       const accessibleDescription = auraShareAccessibleDescription(cardInput);
       const blob = await drawAuraShareCard(cardInput);
@@ -817,7 +842,10 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
         shareSupported: canShareAuraCardBlob(blob),
         accessibleDescription,
       });
+      preparedShareActionRef.current = shareAuraCardBlob;
+      preparedDownloadActionRef.current = downloadAuraCardBlob;
       setShareState("idle");
+      trackAnalytics("aura_share", { outcome: "preview" });
     } catch {
       if (shareGenerationRef.current === generation) setShareState("error");
     }
@@ -825,13 +853,20 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
 
   const shareReviewedCard = async () => {
     if (!sharePreview) return;
+    const sharePreparedBlob = preparedShareActionRef.current;
+    if (!sharePreparedBlob) {
+      setShareState("error");
+      return;
+    }
     const generation = shareGenerationRef.current;
     const blob = sharePreview.blob;
     setShareState("busy");
     try {
-      const { shareAuraCardBlob } = await import("../lib/aura-share-card");
+      // Invoke the already-loaded share helper before the first await. On iOS,
+      // this preserves the final button tap's user activation for navigator.share.
+      const outcomePromise = sharePreparedBlob(blob);
+      const outcome = await outcomePromise;
       if (shareGenerationRef.current !== generation) return;
-      const outcome = await shareAuraCardBlob(blob);
       if (shareGenerationRef.current === generation) {
         setShareState(outcome === "cancelled" ? "idle" : outcome);
       }
@@ -844,13 +879,17 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
 
   const downloadReviewedCard = async () => {
     if (!sharePreview) return;
+    const downloadPreparedBlob = preparedDownloadActionRef.current;
+    if (!downloadPreparedBlob) {
+      setShareState("error");
+      return;
+    }
     const generation = shareGenerationRef.current;
     const blob = sharePreview.blob;
     setShareState("busy");
     try {
-      const { downloadAuraCardBlob } = await import("../lib/aura-share-card");
       if (shareGenerationRef.current !== generation) return;
-      const outcome = downloadAuraCardBlob(blob);
+      const outcome = downloadPreparedBlob(blob);
       if (shareGenerationRef.current === generation) setShareState(outcome);
       trackAnalytics("aura_share", { outcome });
     } catch {
@@ -863,18 +902,56 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
     invalidateSharePreview();
   };
 
-  const respond = (value: "meaningful" | "not-yet") => {
-    trackAnalytics("aura_response", { value });
-  };
+  const stagedHoldings = result?.holdings ?? AURA_EXAMPLE_HOLDINGS;
+  const stagedIllustrative = !result || result.mode === "example";
+  const stagedRevealMode: AuraCabinetRevealMode = result?.revealMode ?? "settled";
+  const activeSign =
+    selectedSign ?? principalSign(stagedHoldings) ?? AURA_SIGN_ORDER[0];
+  const stageKicker = stagedIllustrative
+    ? "Curator’s sample"
+    : result!.mode === "restored"
+      ? "Collection restored"
+      : "Collection opened";
+  const stageRecordedNote = stagedIllustrative
+    ? "Curator’s sample — no address was looked up."
+    : `Recorded ${auraDateStamp(result!.checkedAt)} · ${result!.chain === "solana" ? "Solana" : "Base"}`;
+  const stagePlateDate = stagedIllustrative
+    ? null
+    : auraDateStamp(result!.checkedAt);
 
   return (
-    <div id="aura-composer" class="aura-entry">
+    <div id="aura-composer" class="aura-composer">
+      <section class="aura-stage" aria-label="The collection cabinet">
+        <AuraCollectionCabinet
+          key={result?.checkedAt ?? "sample"}
+          holdings={stagedHoldings}
+          revealMode={stagedRevealMode}
+          selectedSign={activeSign}
+          onSelect={(sign) => {
+            setSelectedSign(sign);
+            trackAnalytics("aura_cabinet_select");
+          }}
+          onRevealOutcome={
+            stagedRevealMode === "animate"
+              ? (outcome) => trackAnalytics("aura_cabinet_reveal", { outcome })
+              : undefined
+          }
+          illustrative={stagedIllustrative}
+          kicker={stageKicker}
+          recordedNote={stageRecordedNote}
+          plateDate={stagePlateDate}
+          headingRef={resultHeadingRef}
+        />
+      </section>
+
+      <section class="aura-desk aura-entry" id="aura-desk" aria-labelledby="aura-desk-title">
       <div class="aura-entry__intro">
         <div>
-          <h2>Create your collector reading</h2>
+          <span class="kicker">The collection desk</span>
+          <h2 id="aura-desk-title">Open a public collection.</h2>
           <p>
-            Choose a saved chart, add one public address, and Aura will explain
-            the signs they share with today’s sky. Your chart stays on this device.
+            Enter one public Solana or Base address. Aura checks only for the
+            Twelve, then displays what it finds in the cabinet above.
           </p>
         </div>
         {persistenceReady && !result && !address && (
@@ -884,59 +961,10 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
             type="button"
             onClick={(event) => void showExample(event.currentTarget)}
           >
-            Try the example — no wallet needed
+            Watch the sample reveal
           </button>
         )}
       </div>
-
-      <aside class="aura-entry__boundary" aria-labelledby="aura-boundary-title">
-        <strong id="aura-boundary-title">Before you compose</strong>
-        <ul class="aura-entry__boundary-lines">
-          <li>
-            Read-only. Symbolic. Never an investment signal, and no purchase is
-            required.
-          </li>
-          <li>
-            A public address and its history are public, and may become linked
-            to a person. Only the address is sent.
-          </li>
-          <li>
-            “Official” means listed in this Registry — not approval, identity,
-            safety, or value.
-          </li>
-        </ul>
-        <details class="aura-fineprint">
-          <summary>The fine print, in full</summary>
-          <div>
-            <p>
-              Registry Aura is a read-only symbolic display—not a price
-              prediction or a recommendation to buy, sell, or hold a Zodiac. No
-              purchase is required. Digital assets are speculative, may become
-              illiquid, and may lose all market value.
-            </p>
-            <p>
-              A public address and its on-chain history are public and may
-              become linked to a person. Aura does not include birth or chart
-              data in the address or provider request. Wallet software may
-              expose the public accounts you authorize; Aura uses and sends one
-              compatible address through Zodiacs.org to the configured
-              blockchain data provider, which may also process routine request
-              metadata.
-            </p>
-            <p>
-              “Official Zodiac” means its mint or contract matches a Zodiac
-              listed by this Registry. It does not mean government approval,
-              verified identity or control, financial safety, liquidity, or
-              value.
-            </p>
-            <p>
-              Aura reduces the public wallet record to present/not-present for
-              Registry-listed signs. It does not show quantities, prices,
-              holding history, or unrelated assets.
-            </p>
-          </div>
-        </details>
-      </aside>
 
       <form
         class="aura-compose"
@@ -946,77 +974,54 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
         }}
         aria-busy={requestState === "busy"}
       >
-        <section class="aura-step" aria-labelledby="aura-chart-step">
-          <div class="aura-step__heading">
-            <span>1</span>
-            <h3 id="aura-chart-step">Choose whose chart to read</h3>
-          </div>
-          {!profileReady ? (
-            <p class="aura-step__note">
-              Checking this browser for saved charts…
-            </p>
-          ) : profile.charts.length ? (
-            <div class="aura-field">
-              <label for="aura-chart">Choose a chart</label>
-              <select
-                id="aura-chart"
-                value={selectedChartId}
-                onChange={(event) => {
-                  requestRef.current?.abort();
-                  requestRef.current = null;
-                  clearStored();
-                  setRequestState("idle");
-                  setShareChartFact(false);
+        <section class="aura-step" aria-label="Public address lookup">
+          <div class="aura-field aura-field--address">
+            <label for="aura-address">Public Solana or Base address</label>
+            <input
+              ref={addressInputRef}
+              id="aura-address"
+              name="address"
+              type="text"
+              value={address}
+              readOnly={addressMode === "connected"}
+              autoComplete="off"
+              autoCapitalize="none"
+              spellcheck={false}
+              placeholder="Paste one public address"
+              aria-describedby="aura-address-note aura-status"
+              onInput={(event) => {
+                requestRef.current?.abort();
+                requestRef.current = null;
+                clearStored();
+                setRequestState("idle");
+                setAddress(event.currentTarget.value);
+                setAddressMode("pasted");
+                if (result) {
                   setResult(null);
-                  setSelectedChartId(event.currentTarget.value);
-                }}
-              >
-                {profile.charts.map((candidate) => (
-                  <option key={candidate.id} value={candidate.id}>
-                    {candidate.name} · {candidate.birth.date}
-                  </option>
-                ))}
-              </select>
-              <p class="aura-field__note">
-                Only the saved summary is read. Birth fields never enter the
-                address request.
-              </p>
-            </div>
-          ) : (
-            <div class="aura-chart-missing">
-              <p>No saved chart is available on this device.</p>
-              <p class="aura-field__note">
-                Charts are saved by the calculator and stay in this browser.
-                Nothing about them is sent to Registry Aura’s lookup.
-              </p>
-              <a
-                class="btn btn--primary"
-                href="/birth-chart/?return=registry-aura"
-                onClick={() =>
-                  trackAnalytics("aura_calculator", { direction: "outbound" })
+                  setSelectedChartId("");
                 }
-              >
-                Calculate and save a chart
-              </a>
-              <p class="aura-field__note">
-                You will be brought back here afterward.
-              </p>
-            </div>
-          )}
-        </section>
-
-        <section class="aura-step" aria-labelledby="aura-address-step">
-          <div class="aura-step__heading">
-            <span>2</span>
-            <h3 id="aura-address-step">Add one public wallet address</h3>
+                setError("");
+              }}
+            />
+            <p id="aura-address-note" class="aura-field__note">
+              {detectedChain
+                ? `Ready to read this ${detectedChain === "solana" ? "Solana" : "Base"} public collection.`
+                : "The network is recognized as you type."}
+            </p>
           </div>
-          <p class="aura-step__note aura-step__note--before-wallet">
-            Connect an installed wallet or paste a public address — both are
-            the same read-only lookup. Solana and Base are separate networks;
-            use the address on the network where the Zodiac appears. Aura
-            checks one network at a time.{" "}
-            <a href="#wallet-basics">New to wallets? Read the guide first.</a>
-          </p>
+
+          <div class="aura-compose__submit">
+            <button
+              class="btn btn--primary"
+              type="submit"
+              disabled={!parsedAddress || requestState === "busy"}
+            >
+              {requestState === "busy" ? "Opening…" : "Open collection"}
+            </button>
+          </div>
+
+          <details class="aura-wallet-connect aura-desk-details">
+            <summary>Wallet, storage, and method</summary>
           {connectedWallet && (
             <p class="aura-connected">
               <span>
@@ -1160,7 +1165,7 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
                 ) : (
                   <p role="status">
                     No compatible Solana wallet was found in this browser. You
-                    can paste a public address or review the wallet guide above.
+                    can paste a public address instead.
                   </p>
                 )}
               </div>
@@ -1195,48 +1200,16 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
                 ) : (
                   <p role="status">
                     No compatible Base wallet was found in this browser. You can
-                    paste a public address or review the wallet guide above.
+                    paste a public address instead.
                   </p>
                 )}
               </div>
             )}
           </div>
-
-          <div class="aura-method-divider">or paste</div>
-          <div class="aura-field">
-            <label for="aura-address">Public Solana or Base address</label>
-            <input
-              ref={addressInputRef}
-              id="aura-address"
-              name="address"
-              type="text"
-              value={address}
-              readOnly={addressMode === "connected"}
-              autoComplete="off"
-              autoCapitalize="none"
-              spellcheck={false}
-              placeholder="Paste one public address"
-              aria-describedby="aura-address-note aura-status"
-              onInput={(event) => {
-                requestRef.current?.abort();
-                requestRef.current = null;
-                clearStored();
-                setRequestState("idle");
-                setAddress(event.currentTarget.value);
-                setAddressMode("pasted");
-                if (result) {
-                  setShareChartFact(false);
-                  setResult(null);
-                }
-                setError("");
-              }}
-            />
-            <p id="aura-address-note" class="aura-field__note">
-              {detectedChain
-                ? `Reads as a ${detectedChain === "solana" ? "Solana" : "Base"} address.`
-                : "Solana or Base — it's recognized as you type."}
+            <p class="aura-field__note">
+              Connecting a wallet simply fills the public address field —
+              nothing is signed, and nothing can move.
             </p>
-          </div>
 
           <label class="aura-remember">
             <input
@@ -1257,68 +1230,33 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
                     saveAuraPersistence(localStore, "local", {
                       address: parsed.address,
                       chain: result.chain,
-                      heldSigns: result.composition.heldSigns,
+                      holdings: result.holdings,
                       checkedAt: result.checkedAt,
-                      chartId: result.chart.id,
+                      chartId: result.chart?.id,
                     });
                   }
                 }
               }}
             />
             <span>
-              Remember this address on this device{" "}
-              <small>
-                (off by default; eligible for restoration for 24 hours)
-              </small>
+              Remember this address for 24 hours
             </span>
           </label>
-          <details class="aura-fineprint aura-storage-details">
-            <summary>How this is stored</summary>
-            <p id="aura-storage-note" class="aura-field__note aura-storage-note">
-              By default, Aura stores the public address, network, held-sign
-              result, check time, selected chart ID, and save/expiry times in this
-              tab's session storage and restores them for 8 hours. Remembering
-              saves those same fields in local browser storage and restores them
-              for 24 hours. Expired records are deleted when Aura next reads them;
-              until then, clear site data if you do not want the browser to retain
-              the expired bytes.
-            </p>
-          </details>
-
-          <p class="aura-sky-stamp">
-            <strong>The sky — already here.</strong> Computed on this device
-            for the moment you read.
+          <p id="aura-storage-note" class="aura-field__note aura-storage-note">
+            This tab keeps the lookup for up to 8 hours. Choose Remember for up
+            to 24 hours.
           </p>
-
-          <div class="aura-compose__submit">
-            <div class="aura-step__heading">
-              <span>3</span>
-              <h3>See which signs overlap</h3>
-            </div>
-            <p>
-              Aura will name the shared signs, explain why each one matters in
-              the chart, and show what is emphasizing it today.
-            </p>
-            <button
-              class="btn btn--primary"
-              type="submit"
-              disabled={!chart || requestState === "busy"}
-            >
-              {requestState === "busy" ? "Reading…" : "Create my Aura"}
-            </button>
-          </div>
+          <p class="aura-field__note aura-desk-method">
+            The lookup is read-only: Aura sends the public address to its
+            holdings provider and checks only for the Twelve. Today’s Sun and
+            Moon are computed on this device.{" "}
+            <a href="/privacy/">Privacy</a> ·{" "}
+            <a href="/disclosure/">Disclosure</a>
+          </p>
+          </details>
         </section>
       </form>
 
-      <p class="aura-entry__privacy">
-        Read-only means no message signature, token approval, transaction, or
-        network switch is requested. Connecting may ask you to authorize access
-        to public accounts; Aura selects, uses, and forwards one compatible
-        public address. The configured blockchain data provider may also process
-        routine request metadata. Aura does not include chart or birth data in
-        that request. Read the <a href="/disclosure/">Disclosure</a>,{" "}
-        <a href="/privacy/">Privacy Policy</a>, and <a href="/terms/">Terms</a>.
-      </p>
       <p
         id="aura-status"
         class="aura-status"
@@ -1335,44 +1273,39 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
             type="button"
             onClick={(event) => void showExample(event.currentTarget)}
           >
-            See the example instead
+            See the sample instead
           </button>
         </div>
       )}
+      </section>
 
       {result && (
         <AuraResult
-          key={`${result.checkedAt}:${result.chart.id}`}
+          key={result.checkedAt}
           composition={result.composition}
+          holdings={result.holdings}
           chart={result.chart}
           chain={result.chain}
           checkedAt={result.checkedAt}
           addressMode={result.mode}
-          headingRef={resultHeadingRef}
+          selectedSign={activeSign}
           refreshing={requestState === "busy"}
           shareState={shareState}
-          shareReady={shareFocus !== null}
           sharePreviewUrl={sharePreview?.url ?? null}
           shareSupported={sharePreview?.shareSupported ?? false}
           shareAccessibleDescription={sharePreview?.accessibleDescription ?? ""}
-          shareFocusSign={shareFocus?.sign ?? null}
-          shareChartFact={shareChartFact}
-          shareChartFactEligible={shareChartFactEligible}
+          profileReady={profileReady}
+          availableCharts={profile.charts}
+          selectedChartId={selectedChartId}
           onRefresh={() => void compose(true)}
           onClear={clearAura}
+          onOpenCollection={openCollectionDesk}
           onShowExample={showExample}
+          onSelectChart={updateSelectedChart}
           onCreateSharePreview={() => void createSharePreview()}
-          onRetryShareSetup={() => {
-            if (result) loadShareFocus(result);
-          }}
           onSharePreview={() => void shareReviewedCard()}
           onDownloadPreview={() => void downloadReviewedCard()}
           onCloseSharePreview={closeSharePreview}
-          onShareChartFactChange={(checked) => {
-            invalidateSharePreview();
-            setShareChartFact(checked);
-          }}
-          onResponse={respond}
         />
       )}
     </div>

@@ -43,11 +43,17 @@ async function invoke(
 
 describe('Aura holdings endpoint', () => {
   it('returns Base holdings without echoing the address or provider URL', async () => {
-    const resolveHeldSigns = vi.fn().mockResolvedValue([
-      'pisces', 'aries', 'aries', 'not-a-sign', 'taurus',
+    const resolveHoldings = vi.fn().mockResolvedValue([
+      { sign: 'pisces', finish: 'pastel' },
+      { sign: 'aries', finish: 'bronze' },
+      { sign: 'aries', finish: 'gold', goldCount: '2' },
+      { sign: 'aries', finish: 'gold', goldCount: '3' },
+      { sign: 'leo', finish: 'gold', goldCount: '0' },
+      { sign: 'not-a-sign', finish: 'silver' },
+      { sign: 'taurus', finish: 'silver' },
     ]);
     const response = await invoke(request(JSON.stringify({ address: BASE_ADDRESS })), {
-      resolveHeldSigns,
+      resolveHoldings,
       now: () => Date.parse('2026-07-16T00:00:00.000Z'),
     });
 
@@ -55,26 +61,36 @@ describe('Aura holdings endpoint', () => {
     expect(JSON.parse(response.body)).toEqual({
       chain: 'base',
       heldSigns: ['aries', 'taurus', 'pisces'],
+      holdings: [
+        { sign: 'aries', finish: 'gold', goldCount: '3' },
+        { sign: 'taurus', finish: 'silver' },
+        { sign: 'pisces', finish: 'pastel' },
+      ],
       checkedAt: '2026-07-16T00:00:00.000Z',
     });
     expect(response.body).not.toContain(BASE_ADDRESS);
     expect(response.body).not.toContain('base-rpc.test');
+    expect(response.body).not.toMatch(/amount|balance|provider/i);
+    expect(Object.keys(JSON.parse(response.body).holdings[0])).toEqual([
+      'sign', 'finish', 'goldCount',
+    ]);
+    expect(Object.keys(JSON.parse(response.body).holdings[1])).toEqual(['sign', 'finish']);
     expect(response.headers.get('Cache-Control')).toBe('private, no-store');
     expect(response.headers.get('X-Content-Type-Options')).toBe('nosniff');
-    expect(resolveHeldSigns).toHaveBeenCalledWith(
+    expect(resolveHoldings).toHaveBeenCalledWith(
       'base', BASE_ADDRESS, ENV, expect.any(Function), expect.any(AbortSignal),
     );
   });
 
   it('returns successful empty Solana holdings as an empty list', async () => {
     const response = await invoke(request({ address: SOLANA_ADDRESS }), {
-      resolveHeldSigns: vi.fn().mockResolvedValue([]),
+      resolveHoldings: vi.fn().mockResolvedValue([]),
       now: () => 0,
     });
 
     expect(response.statusCode).toBe(200);
     expect(JSON.parse(response.body)).toEqual({
-      chain: 'solana', heldSigns: [], checkedAt: '1970-01-01T00:00:00.000Z',
+      chain: 'solana', heldSigns: [], holdings: [], checkedAt: '1970-01-01T00:00:00.000Z',
     });
   });
 
@@ -85,50 +101,50 @@ describe('Aura holdings endpoint', () => {
     ['oversized parsed body', request({ address: BASE_ADDRESS, padding: 'x'.repeat(300) })],
     ['oversized raw body', request(JSON.stringify({ address: BASE_ADDRESS, padding: 'é'.repeat(120) }))],
   ])('rejects %s with the stable invalid-address response', async (_label, req) => {
-    const resolveHeldSigns = vi.fn();
-    const response = await invoke(req, { resolveHeldSigns });
+    const resolveHoldings = vi.fn();
+    const response = await invoke(req, { resolveHoldings });
     expect(response.statusCode).toBe(400);
     expect(JSON.parse(response.body)).toEqual({ error: 'invalid_address' });
-    expect(resolveHeldSigns).not.toHaveBeenCalled();
+    expect(resolveHoldings).not.toHaveBeenCalled();
   });
 
   it('enforces a declared body cap before parsing', async () => {
     const req = request();
     req.headers = { ...req.headers, 'content-length': '257' };
-    const resolveHeldSigns = vi.fn();
-    const response = await invoke(req, { resolveHeldSigns });
+    const resolveHoldings = vi.fn();
+    const response = await invoke(req, { resolveHoldings });
     expect(response.statusCode).toBe(400);
     expect(JSON.parse(response.body)).toEqual({ error: 'invalid_address' });
-    expect(resolveHeldSigns).not.toHaveBeenCalled();
+    expect(resolveHoldings).not.toHaveBeenCalled();
   });
 
   it('rejects cross-origin requests', async () => {
     const req = request();
     req.headers = { origin: 'https://attacker.test', host: 'zodiacs.org' };
-    const resolveHeldSigns = vi.fn();
-    const response = await invoke(req, { resolveHeldSigns });
+    const resolveHoldings = vi.fn();
+    const response = await invoke(req, { resolveHoldings });
     expect(response.statusCode).toBe(403);
     expect(JSON.parse(response.body)).toEqual({ error: 'forbidden' });
-    expect(resolveHeldSigns).not.toHaveBeenCalled();
+    expect(resolveHoldings).not.toHaveBeenCalled();
   });
 
   it('rejects a same-host origin on a different port', async () => {
     const req = request();
     req.headers = { origin: 'https://zodiacs.org:8443', host: 'zodiacs.org' };
-    const response = await invoke(req, { resolveHeldSigns: vi.fn() });
+    const response = await invoke(req, { resolveHoldings: vi.fn() });
     expect(response.statusCode).toBe(403);
     expect(JSON.parse(response.body)).toEqual({ error: 'forbidden' });
   });
 
   it('is disabled unless the independent flag and at least one RPC are configured', async () => {
-    const resolveHeldSigns = vi.fn();
+    const resolveHoldings = vi.fn();
     const response = await invoke(request(), {
       env: { BASE_RPC_URL: 'https://base-rpc.test' },
-      resolveHeldSigns,
+      resolveHoldings,
     });
     expect(response.statusCode).toBe(404);
     expect(JSON.parse(response.body)).toEqual({ error: 'disabled' });
-    expect(resolveHeldSigns).not.toHaveBeenCalled();
+    expect(resolveHoldings).not.toHaveBeenCalled();
   });
 
   it('returns unavailable when the detected chain has no holdings RPC', async () => {
@@ -138,26 +154,26 @@ describe('Aura holdings endpoint', () => {
         PUBLIC_REGISTRY_AURA_ENABLED: '1',
         SOLANA_RPC_URL: 'https://solana-rpc.test',
       },
-      resolveHeldSigns: vi.fn(),
+      resolveHoldings: vi.fn(),
     });
     expect(response.statusCode).toBe(503);
     expect(JSON.parse(response.body)).toEqual({ error: 'unavailable' });
   });
 
   it('uses an injected platform rate-limit hook before any lookup', async () => {
-    const resolveHeldSigns = vi.fn();
+    const resolveHoldings = vi.fn();
     const response = await invoke(request(), {
       rateLimit: vi.fn().mockResolvedValue({ rateLimited: true }),
-      resolveHeldSigns,
+      resolveHoldings,
     });
     expect(response.statusCode).toBe(429);
     expect(JSON.parse(response.body)).toEqual({ error: 'rate_limited' });
-    expect(resolveHeldSigns).not.toHaveBeenCalled();
+    expect(resolveHoldings).not.toHaveBeenCalled();
   });
 
   it('accepts a platform hook attached to the request', async () => {
     const req = { ...request(), rateLimit: vi.fn().mockResolvedValue(true) };
-    const response = await invoke(req, { resolveHeldSigns: vi.fn() });
+    const response = await invoke(req, { resolveHoldings: vi.fn() });
     expect(response.statusCode).toBe(429);
     expect(JSON.parse(response.body)).toEqual({ error: 'rate_limited' });
     expect(req.rateLimit).toHaveBeenCalledOnce();
@@ -166,7 +182,7 @@ describe('Aura holdings endpoint', () => {
   it('fails closed when the platform rate-limit hook is unavailable', async () => {
     const response = await invoke(request(), {
       rateLimit: vi.fn().mockRejectedValue(new Error('limiter unavailable')),
-      resolveHeldSigns: vi.fn(),
+      resolveHoldings: vi.fn(),
     });
     expect(response.statusCode).toBe(503);
     expect(JSON.parse(response.body)).toEqual({ error: 'unavailable' });
@@ -175,7 +191,7 @@ describe('Aura holdings endpoint', () => {
   it('fails closed when the platform rate-limit rule is not configured', async () => {
     const response = await invoke(request(), {
       rateLimit: vi.fn().mockResolvedValue({ rateLimited: false, error: 'not-found' }),
-      resolveHeldSigns: vi.fn(),
+      resolveHoldings: vi.fn(),
     });
     expect(response.statusCode).toBe(503);
     expect(JSON.parse(response.body)).toEqual({ error: 'unavailable' });
@@ -200,8 +216,8 @@ describe('Aura holdings endpoint', () => {
   it.each([
     ['provider failure', vi.fn().mockResolvedValue(undefined)],
     ['provider exception', vi.fn().mockRejectedValue(new Error('provider unavailable'))],
-  ])('returns unavailable for %s', async (_label, resolveHeldSigns) => {
-    const response = await invoke(request(), { resolveHeldSigns });
+  ])('returns unavailable for %s', async (_label, resolveHoldings) => {
+    const response = await invoke(request(), { resolveHoldings });
     expect(response.statusCode).toBe(503);
     expect(JSON.parse(response.body)).toEqual({ error: 'unavailable' });
     expect(response.body).not.toContain(BASE_ADDRESS);
@@ -229,7 +245,7 @@ describe('Aura holdings endpoint', () => {
 
   it('aborts and returns unavailable when the provider times out', async () => {
     let observedSignal: AbortSignal | undefined;
-    const resolveHeldSigns = vi.fn((
+    const resolveHoldings = vi.fn((
       _chain,
       _address,
       _env,
@@ -239,7 +255,7 @@ describe('Aura holdings endpoint', () => {
       observedSignal = signal;
       signal?.addEventListener('abort', () => resolve(undefined), { once: true });
     }));
-    const response = await invoke(request(), { resolveHeldSigns, timeoutMs: 5 });
+    const response = await invoke(request(), { resolveHoldings, timeoutMs: 5 });
     expect(response.statusCode).toBe(503);
     expect(JSON.parse(response.body)).toEqual({ error: 'unavailable' });
     expect(observedSignal?.aborted).toBe(true);
@@ -247,7 +263,7 @@ describe('Aura holdings endpoint', () => {
 
   it('rejects unsupported methods and advertises POST', async () => {
     const req = { ...request(), method: 'GET' };
-    const response = await invoke(req, { resolveHeldSigns: vi.fn() });
+    const response = await invoke(req, { resolveHoldings: vi.fn() });
     expect(response.statusCode).toBe(405);
     expect(JSON.parse(response.body)).toEqual({ error: 'method' });
     expect(response.headers.get('Allow')).toBe('POST');

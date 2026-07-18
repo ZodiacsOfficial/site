@@ -90,6 +90,29 @@ describe('Registry Aura composition', () => {
     });
   });
 
+  it('composes a complete collection-and-sky result without a saved chart', () => {
+    const result = composeAura({
+      heldSigns: ['cancer', 'leo'],
+      chart: null,
+      visitedAt: VISIT,
+      eventCatalog: catalog([]),
+    });
+
+    expect(result.chart).toBeNull();
+    expect(result.chartEvidence).toEqual([]);
+    expect(result.skyEvidence.map((evidence) => evidence.body)).toEqual([
+      'Moon',
+      'Sun',
+    ]);
+    expect(result.signs).toHaveLength(2);
+    expect(result.methodNote).toContain('A saved chart can add an optional inner echo');
+    expect(result.uncertainties).not.toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ scope: 'chart' }),
+      ]),
+    );
+  });
+
   it('uses an inclusive ±24-hour event window and exposes the next activation', () => {
     const now = VISIT.getTime();
     const exact = (offset: number) => new Date(now + offset).toISOString();

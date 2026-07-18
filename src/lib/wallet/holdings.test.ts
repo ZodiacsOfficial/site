@@ -1,7 +1,9 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import {
   normalizeOfficialHeldSigns,
+  normalizeOfficialHoldings,
   resolveOfficialHeldSigns,
+  resolveOfficialHoldings,
 } from './holdings';
 
 const ADDRESS = '0x0000000000000000000000000000000000000001';
@@ -49,11 +51,11 @@ function solanaResult(request: RpcRequest, value: unknown = []) {
   return { jsonrpc: '2.0', id: request.id, result: { value } };
 }
 
-function solanaAccount(mint: string, amount: string) {
+function solanaAccount(mint: string, amount: string, decimals = 6) {
   return {
     account: {
       data: {
-        parsed: { info: { mint, tokenAmount: { amount } } },
+        parsed: { info: { mint, tokenAmount: { amount, decimals } } },
       },
     },
   };
@@ -81,6 +83,23 @@ describe('official holdings resolution', () => {
     ])).toEqual(['aries', 'taurus', 'pisces']);
   });
 
+  it('normalizes cabinet holdings to zodiac order and the strongest valid finish', () => {
+    expect(normalizeOfficialHoldings([
+      { sign: 'pisces', finish: 'pastel' },
+      { sign: 'aries', finish: 'bronze' },
+      { sign: 'aries', finish: 'gold', goldCount: '2' },
+      { sign: 'aries', finish: 'gold', goldCount: '12' },
+      { sign: 'leo', finish: 'gold' },
+      { sign: 'virgo', finish: 'gold', goldCount: '01' },
+      { sign: 'libra', finish: 'silver', goldCount: '1' },
+      { sign: 'taurus', finish: 'invalid' },
+      { sign: 'unknown', finish: 'silver' },
+    ])).toEqual([
+      { sign: 'aries', finish: 'gold', goldCount: '12' },
+      { sign: 'pisces', finish: 'pastel' },
+    ]);
+  });
+
   it('resolves Base holdings from twelve individual balance calls', async () => {
     const fetcher = singleFetcher((request) => baseResult(
       request,
@@ -94,6 +113,33 @@ describe('official holdings resolution', () => {
     expect(requests).toHaveLength(12);
     expect(new Set(requests.map((request) => request.id)).size).toBe(12);
     expect(requests.every((request) => request.method === 'eth_call')).toBe(true);
+  });
+
+  it('classifies exact Base balances without returning amounts', async () => {
+    const largeGoldCount = 12_345_678_901_234_567_890n;
+    const atomicById = new Map([
+      [1, 1n],
+      [2, 10_000n * 1_000_000n],
+      [3, 100_000n * 1_000_000n],
+      [4, 3_999_999n * 1_000_000n + 999_999n],
+      [5, largeGoldCount * 1_000_000n * 1_000_000n + 999_999n],
+    ]);
+    const fetcher = singleFetcher((request) => baseResult(
+      request,
+      `0x${(atomicById.get(request.id) ?? 0n).toString(16)}`,
+    ));
+
+    const holdings = await resolveOfficialHoldings('base', ADDRESS, ENV, fetcher);
+    expect(holdings).toEqual([
+      { sign: 'aries', finish: 'pastel' },
+      { sign: 'taurus', finish: 'bronze' },
+      { sign: 'gemini', finish: 'silver' },
+      { sign: 'cancer', finish: 'gold', goldCount: '3' },
+      { sign: 'leo', finish: 'gold', goldCount: largeGoldCount.toString() },
+    ]);
+    expect(holdings?.every((holding) => (
+      !('amount' in holding) && !('balance' in holding)
+    ))).toBe(true);
   });
 
   it('treats all-zero Base balances as a successful empty lookup', async () => {
@@ -135,6 +181,44 @@ describe('official holdings resolution', () => {
         && typeof request.params[1].mint === 'string'
         && !('programId' in request.params[1])
     ))).toBe(true);
+  });
+
+  it('sums all Solana token accounts before assigning a finish', async () => {
+    const fetcher = singleFetcher((request) => solanaResult(
+      request,
+      request.id === 1
+        ? [
+          solanaAccount(request.params[1].mint, '5000000000'),
+          solanaAccount(request.params[1].mint, '5000000000'),
+        ]
+        : [],
+    ));
+
+    await expect(resolveOfficialHoldings(
+      'solana',
+      '11111111111111111111111111111111',
+      SOLANA_ENV,
+      fetcher,
+    )).resolves.toEqual([{ sign: 'aries', finish: 'bronze' }]);
+  });
+
+  it('computes Gold multiplicity after summing all Solana token accounts', async () => {
+    const fetcher = singleFetcher((request) => solanaResult(
+      request,
+      request.id === 1
+        ? [
+          solanaAccount(request.params[1].mint, '1500000000000'),
+          solanaAccount(request.params[1].mint, '2500000999999'),
+        ]
+        : [],
+    ));
+
+    await expect(resolveOfficialHoldings(
+      'solana',
+      '11111111111111111111111111111111',
+      SOLANA_ENV,
+      fetcher,
+    )).resolves.toEqual([{ sign: 'aries', finish: 'gold', goldCount: '4' }]);
   });
 
   it('treats empty Solana responses as a successful empty lookup', async () => {
@@ -200,6 +284,19 @@ describe('official holdings resolution', () => {
     ['malformed balance', (request: RpcRequest) => solanaResult(
       request,
       request.id === 4 ? [solanaAccount(request.params[1].mint, '1.5')] : [],
+    )],
+    ['missing decimals', (request: RpcRequest) => solanaResult(
+      request,
+      request.id === 4
+        ? [{ account: { data: { parsed: { info: {
+          mint: request.params[1].mint,
+          tokenAmount: { amount: '1' },
+        } } } } }]
+        : [],
+    )],
+    ['mismatched decimals', (request: RpcRequest) => solanaResult(
+      request,
+      request.id === 4 ? [solanaAccount(request.params[1].mint, '1', 9)] : [],
     )],
     ['array payload', (request: RpcRequest) => [solanaResult(request)]],
   ])('fails closed when any Solana response carries a %s', async (_label, respond) => {
