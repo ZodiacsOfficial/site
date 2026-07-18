@@ -49,9 +49,11 @@ const jsonLd = [
 
       <h2>Registry Aura, Shelf et adresses publiques</h2>
       <p>
-        Registry Aura lit côte à côte le résumé d’un thème enregistré dans ce
-        navigateur, une adresse publique de portefeuille et le ciel daté. Le
-        thème et la lecture symbolique sont composés sur ton appareil. Lorsque
+        Registry Aura lit côte à côte une adresse publique de portefeuille et
+        le ciel daté. Si tu ajoutes un thème enregistré dans ce navigateur, son
+        résumé devient une couche de comparaison facultative qui reste sur ton
+        appareil. Le motif et toute réflexion symbolique sont composés sur ton
+        appareil. Lorsque
         tu composes ou actualises un Aura, notre service de consultation des avoirs reçoit
         l’adresse publique et la transmet au fournisseur de données blockchain
         configuré afin de vérifier quelles entrées du Registre sont présentes.
@@ -93,7 +95,7 @@ const jsonLd = [
       <h2>Stockage et partage d’Aura</h2>
       <p>
         Par défaut, Aura enregistre l’adresse publique, le réseau, les signes du
-        Registre trouvés, l’heure de consultation et l’identifiant du thème
+        Registre trouvés, l’heure de consultation et l’identifiant facultatif du thème
         sélectionné dans le stockage de session de cet onglet, avec une durée de
         restauration de huit heures. L’option non cochée « Remember this address
         on this device » enregistre les mêmes champs dans le stockage local avec
@@ -109,10 +111,8 @@ const jsonLd = [
         Les images Aura à partager sont composées sur ton appareil. Par défaut,
         elles excluent l’adresse, le réseau, le nom et les données du thème, les
         positions exactes, la géométrie ainsi que le nombre et la liste des
-        signes trouvés. Une option facultative, valable uniquement pour la
-        session, peut ajouter le fait que le signe public mis en avant apparaît
-        quelque part dans le thème sélectionné. Si tu l’actives, ce fait devient
-        public. L’application choisie dans la feuille de partage applique ensuite
+        signes trouvés. Elles n’incluent aucun fait provenant d’un thème
+        enregistré. L’application choisie dans la feuille de partage applique ensuite
         sa propre politique. Effacer Aura ne permet pas de rappeler les copies
         enregistrées ou republiées par d’autres personnes ou services.
       </p>

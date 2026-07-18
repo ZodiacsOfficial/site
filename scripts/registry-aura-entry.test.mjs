@@ -32,11 +32,11 @@ describe('Registry Aura build flag', () => {
     // Aura discovery lives in one full-row Identity feature, never the hero.
     expect(on.match(new RegExp(`href="${REGISTRY_AURA_PATH}"`, 'g'))).toHaveLength(1);
     expect(on).toContain('class="static-site__card static-site__card--aura"');
-    expect(on).toContain('Public collection');
-    expect(on).toContain('Saved chart');
-    expect(on).toContain('Today’s sky');
+    expect(on).toContain('Cabinet of Twelve');
+    expect(on).toContain('Dated talisman');
+    expect(on).toContain('Accession ledger');
     expect(on).toContain(REGISTRY_AURA_ENTRY_COPY.description);
-    expect(on).toContain('no wallet needed');
+    expect(on).toContain('Explore the finished sample');
     expect(injectRegistryAuraLanding(on, { PUBLIC_REGISTRY_AURA_ENABLED: '1' }).output).toBe(on);
 
     const off = injectRegistryAuraLanding(on, {}).output;
@@ -72,10 +72,7 @@ describe('Registry Aura build flag', () => {
       href: REGISTRY_AURA_PATH,
       context: 'return',
     });
-    expect(registryAuraChartLink('?return=https://evil.example', enabled)).toEqual({
-      href: REGISTRY_AURA_PATH,
-      context: 'discover',
-    });
+    expect(registryAuraChartLink('?return=https://evil.example', enabled)).toBeNull();
     expect(registryAuraChartLink('?return=registry-aura', {})).toBeNull();
   });
 

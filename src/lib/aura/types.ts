@@ -18,6 +18,23 @@ export const AURA_SIGN_ORDER = [
 export type AuraSign = (typeof AURA_SIGN_ORDER)[number];
 export type AuraChain = 'solana' | 'base';
 export type AuraPersistenceMode = 'session' | 'local';
+export type AuraCabinetFinish = 'pastel' | 'bronze' | 'silver' | 'gold';
+export type AuraCabinetRevealMode = 'animate' | 'settled';
+
+interface AuraCabinetHoldingBase {
+  sign: AuraSign;
+}
+
+export type AuraCabinetHolding =
+  | (AuraCabinetHoldingBase & {
+    finish: Exclude<AuraCabinetFinish, 'gold'>;
+    goldCount?: never;
+  })
+  | (AuraCabinetHoldingBase & {
+    finish: 'gold';
+    /** Canonical positive decimal count of complete one-million-token Gold editions. */
+    goldCount: string;
+  });
 
 export type AuraNatalBody = 'Sun' | 'Moon' | 'Mercury' | 'Venus' | 'Mars';
 export type AuraNatalAngle = 'Ascendant' | 'Midheaven';
@@ -188,8 +205,12 @@ export interface AuraCurrentSky {
 
 export interface AuraComposition {
   asOf: string;
-  chart: Pick<SavedChart, 'id' | 'name'> & { timeKnown: boolean };
+  chart: (Pick<SavedChart, 'id' | 'name'> & { timeKnown: boolean }) | null;
   heldSigns: AuraSign[];
+  /** Complete optional chart evidence, including signs not held in the collection. */
+  chartEvidence: AuraNatalEvidence[];
+  /** Complete dated sky evidence, including signs not held in the collection. */
+  skyEvidence: AuraActiveEvidence[];
   signs: AuraSignContext[];
   currentSky: AuraCurrentSky;
   focal: AuraFocalSelection | null;
@@ -213,7 +234,8 @@ export interface AuraEventValidation {
 
 export interface ComposeAuraInput {
   heldSigns: readonly string[];
-  chart: SavedChart;
+  /** Optional personalization layer. Collection + dated sky remain complete without it. */
+  chart?: SavedChart | null;
   visitedAt: Date | string;
   eventCatalog?: AuraEventCatalog;
   freshness?: AuraEventFreshnessOptions;
@@ -224,13 +246,13 @@ export interface ComposeAuraInput {
 export interface AuraPersistedLookup {
   address: string;
   chain: AuraChain;
-  heldSigns: readonly AuraSign[];
+  holdings: readonly AuraCabinetHolding[];
   checkedAt: string;
   chartId?: string;
 }
 
 export interface AuraPersistenceRecord extends AuraPersistedLookup {
-  version: 1;
+  version: 3;
   savedAt: string;
   expiresAt: string;
 }

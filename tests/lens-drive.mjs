@@ -67,6 +67,25 @@ await withPreview({ port: 4406 }, async (baseURL) => {
     const rail = page.locator('.calc__lens-rail');
     await rail.waitFor({ timeout: 30_000 });
     check('rail renders with four lenses', await page.locator('[data-lens-btn]').count() === 4);
+    const railBox = await rail.boundingBox();
+    const lensBoxes = await page.locator('[data-lens-btn]').evaluateAll((buttons) => (
+      buttons.map((button) => {
+        const box = button.getBoundingClientRect();
+        return { top: box.top, height: box.height };
+      })
+    ));
+    const railOverflow = await rail.evaluate((element) => ({
+      clientWidth: element.clientWidth,
+      scrollWidth: element.scrollWidth,
+    }));
+    check('mobile rail stays on one stable row',
+      railBox !== null
+      && railBox.height < 60
+      && lensBoxes.every((box) => Math.abs(box.top - lensBoxes[0].top) < 1 && box.height >= 44),
+      JSON.stringify({ railBox, lensBoxes }));
+    check('English mobile labels fit without sideways scrolling',
+      railOverflow.scrollWidth <= railOverflow.clientWidth + 1,
+      JSON.stringify(railOverflow));
     check('natal is the active default', await page.locator('[data-lens-btn="natal"]').getAttribute('aria-pressed') === 'true');
     check('lens chunk does not load before a lens is chosen', !lensChunkRequested(requests));
     // Interactive natal chords render a wide invisible hit twin per chord.

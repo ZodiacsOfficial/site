@@ -1,13 +1,13 @@
 ---
 import Base from '../../../layouts/Base.astro';
 import { RegistryAura } from '../../../islands/RegistryAura';
-import { AlignmentGrid } from '../../../islands/aura/AlignmentGrid';
 import { registryAuraEnabled } from '../../../lib/registry-aura-entry.mjs';
-import { configuredAuraChains, type WalletEnvironment } from '../../../lib/wallet/config';
-import { composeAura } from '../../../lib/aura/compose';
-import { AURA_EXAMPLE_CHART, AURA_EXAMPLE_HELD_SIGNS } from '../../../lib/aura/example';
-import { auraDateStamp, auraFocalReason } from '../../../lib/aura/copy';
-import { signBySlug } from '../../../lib/signs';
+import {
+  configuredAuraChains,
+  type WalletEnvironment,
+} from '../../../lib/wallet/config';
+import '../../../islands/aura/ZodiacMedallion.css';
+import '../../../islands/aura/AuraCollectionCabinet.css';
 import '../../../styles/registry-aura.css';
 
 const environment: WalletEnvironment = {
@@ -25,24 +25,9 @@ if (availableChains.length === 0) {
   throw new Error('Registry Aura is enabled but no Solana or Base RPC provider is configured.');
 }
 
-// The first-screen example is composed at build time from the same engine the
-// island uses: real markup with no JavaScript required, honestly stamped with
-// its build-time sky date. Composition runs server-side only.
-const exampleBuiltAt = new Date();
-const exampleComposition = composeAura({
-  heldSigns: AURA_EXAMPLE_HELD_SIGNS,
-  chart: AURA_EXAMPLE_CHART,
-  visitedAt: exampleBuiltAt,
-  illustrative: true,
-});
-const exampleFocalContext = exampleComposition.focal
-  ? (exampleComposition.signs.find(
-      (context) => context.sign === exampleComposition.focal?.sign,
-    ) ?? null)
-  : null;
-const exampleFocalSign = exampleFocalContext ? signBySlug(exampleFocalContext.sign) : null;
-const title = 'Registry Aura — Chart, Record, and Sky | Zodiacs.org';
-const description = 'Read a locally saved birth chart, the official Zodiacs found at one public wallet address, and the dated sky side by side. Read-only and composed in your browser.';
+const title = 'Registry Aura — The Collector’s Cabinet | Zodiacs.org';
+const description =
+  'Open any public Solana or Base address and see its Registry Zodiacs as a collection — twelve niches, four verified editions, sealed with today’s date.';
 const jsonLd = [
   {
     '@type': 'BreadcrumbList',
@@ -74,373 +59,35 @@ const jsonLd = [
 >
   <section class="section container aura-page">
     <header class="aura-page__hero">
-      <div class="aura-page__hero-lede">
-        <em class="kicker">For Zodiac collectors · Registry Aura</em>
-        <h1 class="display">See where your collection meets your chart.</h1>
-        <p class="aura-page__hero-copy">
-          If a public wallet holds any of the twelve official Zodiacs, Aura
-          compares those signs with your saved birth chart and today’s sky.
-          It explains the overlaps as a symbolic reading — never a wallet
-          score or price prediction.
-        </p>
-        <p class="aura-page__fit-note">
-          No Zodiac collection? Your regular birth chart and horoscopes work without this.
-        </p>
-      </div>
-      <section class="aura-page__demo" aria-labelledby="aura-demo-title">
-        <p class="aura-page__demo-cap" id="aura-demo-title">
-          <strong>A 30-second example.</strong> The chart, wallet record, and
-          reading are samples. Nothing of yours is read.
-        </p>
-        <ol class="aura-page__example-flow" aria-label="How Registry Aura creates a reading">
-          <li><span>Your chart</span><strong>What a sign means personally</strong></li>
-          <li><span>Your collection</span><strong>Which official Zodiac is present</strong></li>
-          <li><span>Today’s sky</span><strong>What may be emphasizing it now</strong></li>
-        </ol>
-        {exampleFocalSign && exampleFocalContext && (
-          <div class="aura-page__demo-read">
-            <img
-              src={`/assets/zodiac-icons/128/${exampleFocalSign.slug}.webp`}
-              width="64"
-              height="64"
-              alt=""
-            />
-            <div>
-              <h2>{exampleFocalSign.name}</h2>
-              <p>{exampleFocalContext.reading.lead}</p>
-              <p class="aura-page__demo-detail">{exampleFocalContext.reading.detail}</p>
-              <small>
-                Why: {auraFocalReason(exampleFocalContext, exampleComposition.currentSky.observedAt, true)}
-              </small>
-            </div>
-          </div>
-        )}
-        <details class="aura-page__proof">
-          <summary>See how this reading was made</summary>
-          <AlignmentGrid
-            composition={exampleComposition}
-            chart={AURA_EXAMPLE_CHART}
-            checkedAt={exampleBuiltAt.toISOString()}
-            illustrative
-            wheel={false}
-          />
-        </details>
-        <p class="aura-page__demo-stamp">
-          Example sky computed {auraDateStamp(exampleBuiltAt.toISOString())} (site build).
-        </p>
-      </section>
+      <em class="kicker">Registry Aura · The Collector’s Cabinet</em>
+      <h1 class="display">Twelve niches. Four materials. One public address.</h1>
+      <p class="aura-page__hero-copy">
+        Open any Solana or Base address and see its Registry Zodiacs as a
+        collection — each sign in its verified edition, sealed with today’s
+        date.
+      </p>
       <div class="aura-page__cta">
-        <a id="aura-primer-example" class="btn btn--primary" href="#aura-composer">
-          <span>Try the example — no wallet needed</span>
+        <a class="btn btn--primary" href="#aura-desk">
+          <span>Open a collection</span>
           <span class="orb" aria-hidden="true">↓</span>
         </a>
-        <a class="btn btn--ghost aura-page__create" href="#aura-composer">
-          <span>Create my Aura</span>
+        <a
+          id="aura-primer-example"
+          class="aura-page__sample-link"
+          href="#aura-composer"
+        >
+          Watch the sample reveal <span aria-hidden="true">→</span>
         </a>
-        <a class="aura-page__exit" href="/birth-chart/">Not a collector? Explore your birth chart →</a>
       </div>
-      <svg class="aura-constellation" viewBox="0 0 320 170" aria-hidden="true">
-        <path d="M18 140 L78 96 L150 112 L196 54 L252 84 L300 26 M78 96 L120 22" fill="none" stroke="rgba(198, 204, 218, 0.28)" stroke-width="1" />
-        <circle cx="18" cy="140" r="2.4" fill="var(--sign-aries)" />
-        <circle cx="78" cy="96" r="3" fill="var(--sign-cancer)" />
-        <circle cx="150" cy="112" r="2.2" fill="var(--sign-taurus)" />
-        <circle cx="252" cy="84" r="2.6" fill="var(--sign-gemini)" />
-        <circle cx="300" cy="26" r="2.2" fill="var(--sign-leo)" />
-        <circle cx="120" cy="22" r="2" fill="var(--sign-pisces)" />
-        <path class="aura-constellation__spark" d="M196 46.5l2 5 5 2-5 2-2 5-2-5-5-2 5-2z" fill="var(--sign-libra)" />
-      </svg>
-      <script is:inline>
-        // When a chart is already saved in this browser, the primary door
-        // greets it by name (and wears its Sun-sign disc). Local read only —
-        // nothing leaves the device; blocked storage keeps the generic door.
-        (() => {
-          try {
-            const raw = localStorage.getItem("zodiacs.profile.v1");
-            if (!raw) return;
-            const chart = JSON.parse(raw)?.charts?.[0];
-            const name = typeof chart?.name === "string" ? chart.name.trim() : "";
-            const door = document.querySelector(".aura-page__create");
-            if (!name || !door) return;
-            const label = name.length > 28 ? `${name.slice(0, 27)}…` : name;
-            door.textContent = "";
-            const text = document.createElement("span");
-            text.textContent = `Continue with “${label}”`;
-            door.append(text);
-            const sun = chart?.summary?.bodies?.find?.((body) => body?.body === "Sun");
-            if (Number.isFinite(sun?.lon)) {
-              const signs = ["aries", "taurus", "gemini", "cancer", "leo", "virgo", "libra", "scorpio", "sagittarius", "capricorn", "aquarius", "pisces"];
-              const slug = signs[Math.floor((((sun.lon % 360) + 360) % 360) / 30)];
-              const orb = document.createElement("span");
-              orb.className = "orb";
-              const disc = document.createElement("img");
-              disc.src = `/assets/zodiac-icons/48/${slug}.webp`;
-              disc.width = 18;
-              disc.height = 18;
-              disc.alt = "";
-              orb.append(disc);
-              door.append(orb);
-            }
-          } catch {
-            // Malformed profile or blocked storage: the generic door stands.
-          }
-        })();
-      </script>
     </header>
 
-    <section id="what-is-aura" class="aura-what" aria-labelledby="what-is-aura-title">
-      <header data-wake>
-        <h2 id="what-is-aura-title">What is Registry Aura?</h2>
-        <p>
-          A collector reading that finds the signs shared by your chart,
-          an official Zodiac collection at one public address, and the sky
-          today — then explains why that overlap may feel meaningful.
-        </p>
-      </header>
-      <ol class="aura-what__tiles">
-        <li class="aura-what__tile" data-band="chart" data-wake>
-          <span class="aura-what__mark" aria-hidden="true">
-            <svg class="aura-what__icon" viewBox="0 0 28 28" width="28" height="28">
-              <circle cx="14" cy="14" r="11" fill="none" stroke="var(--sign-taurus)" stroke-width="1.5" />
-              <circle cx="14" cy="14" r="5.5" fill="none" stroke="var(--sign-taurus)" stroke-width="1" opacity="0.5" />
-              <line x1="3" y1="14" x2="8.5" y2="14" stroke="var(--sign-taurus)" stroke-width="1" opacity="0.5" />
-              <circle cx="14" cy="3" r="2.1" fill="var(--sign-leo)" />
-              <circle cx="23.5" cy="19.5" r="2.1" fill="var(--sign-gemini)" />
-              <circle cx="6" cy="21" r="2.1" fill="var(--sign-aries)" />
-            </svg>
-          </span>
-          <h3>You</h3>
-          <p>
-            Your saved birth chart shows what each sign represents personally.
-            It stays on this device.
-          </p>
-        </li>
-        <li class="aura-what__tile" data-band="record" data-wake style="--wake-delay: 110ms">
-          <span class="aura-what__mark" aria-hidden="true">
-            <svg class="aura-what__icon" viewBox="0 0 28 28" width="28" height="28">
-              <circle cx="14" cy="3.5" r="1.9" fill="var(--sign-aries)" />
-              <circle cx="19.25" cy="4.91" r="1.9" fill="var(--sign-taurus)" />
-              <circle cx="23.09" cy="8.75" r="1.9" fill="var(--sign-gemini)" />
-              <circle cx="24.5" cy="14" r="1.9" fill="var(--sign-cancer)" />
-              <circle cx="23.09" cy="19.25" r="1.9" fill="var(--sign-leo)" />
-              <circle cx="19.25" cy="23.09" r="1.9" fill="var(--sign-virgo)" />
-              <circle cx="14" cy="24.5" r="1.9" fill="var(--sign-libra)" />
-              <circle cx="8.75" cy="23.09" r="1.9" fill="var(--sign-scorpio)" />
-              <circle cx="4.91" cy="19.25" r="1.9" fill="var(--sign-sagittarius)" />
-              <circle cx="3.5" cy="14" r="1.9" fill="var(--sign-capricorn)" />
-              <circle cx="4.91" cy="8.75" r="1.9" fill="var(--sign-aquarius)" />
-              <circle cx="8.75" cy="4.91" r="1.9" fill="var(--sign-pisces)" />
-            </svg>
-          </span>
-          <h3>Your collection</h3>
-          <p>
-            One public address shows which of the twelve official Zodiacs are
-            present. Quantities, prices, and unrelated assets are ignored.
-          </p>
-        </li>
-        <li class="aura-what__tile" data-band="sky" data-wake style="--wake-delay: 220ms">
-          <span class="aura-what__mark" aria-hidden="true">
-            <svg class="aura-what__icon" viewBox="0 0 28 28" width="28" height="28">
-              <circle cx="10" cy="13" r="4.2" fill="none" stroke="var(--sign-sagittarius)" stroke-width="1.5" />
-              <circle cx="10" cy="13" r="1.3" fill="var(--sign-sagittarius)" />
-              <g stroke="var(--sign-sagittarius)" stroke-width="1" opacity="0.7">
-                <line x1="10" y1="5.4" x2="10" y2="7.4" />
-                <line x1="10" y1="18.6" x2="10" y2="20.6" />
-                <line x1="2.4" y1="13" x2="4.4" y2="13" />
-                <line x1="15.6" y1="13" x2="17.6" y2="13" />
-              </g>
-              <path d="M22.5 8.5a6 6 0 1 0 3.4 9.8 5 5 0 0 1-3.4-9.8Z" fill="var(--sign-scorpio)" opacity="0.9" />
-              <path d="M20.8 4.2l.9 2.2 2.2.9-2.2.9-.9 2.2-.9-2.2-2.2-.9 2.2-.9z" fill="var(--sign-cancer)" opacity="0.9" />
-            </svg>
-          </span>
-          <h3>What is active now</h3>
-          <p>
-            Where the Sun, Moon, and planets actually are — computed on this
-            device for the moment you read.
-          </p>
-        </li>
-      </ol>
-      <p class="aura-what__close" data-wake>
-        Aura does not change your chart or judge your wallet. It simply finds
-        shared signs and turns the overlap into a dated, explainable reflection.
-      </p>
-    </section>
-
-    <details id="wallet-basics" class="aura-wallet-basics">
-      <summary class="aura-wallet-basics__header" data-wake>
-        <div>
-          <h2>New to wallets?</h2>
-        </div>
-        <p>
-          Open the two-minute safety guide. Aura only needs one public address — never a recovery phrase, signature, or transaction.
-        </p>
-      </summary>
-
-      <dl class="aura-wallet-basics__choices" data-wake style="--wake-delay: 110ms">
-        <div>
-          <dt>Connect</dt>
-          <dd>Wallet software may expose the public accounts you authorize; Aura uses one compatible address.</dd>
-        </div>
-        <div>
-          <dt>Paste</dt>
-          <dd>Look up any public address without connecting a wallet.</dd>
-        </div>
-        <div>
-          <dt>Example</dt>
-          <dd>The example shows a finished reading with a sample chart and record. No wallet, balance, purchase, or birth chart is needed.</dd>
-        </div>
-      </dl>
-
-      <aside class="aura-wallet-basics__safety" aria-label="Important wallet safety" data-wake style="--wake-delay: 200ms">
-        <strong>Aura never needs your wallet secrets.</strong>
-        <p>
-          Never type a recovery phrase, private key, wallet password, or PIN into Registry Aura. Aura never asks you to sign a message, approve or send a transaction, swap an asset, or switch networks. If a wallet prompt asks for any of those while using Aura, cancel it.
-        </p>
-      </aside>
-
-      <div class="aura-wallet-basics__guide" aria-label="Two-minute wallet guide">
-        <details>
-          <summary>
-            <span aria-hidden="true">01</span>
-            <span><strong>What is a wallet?</strong><small>Public addresses and secret keys are very different.</small></span>
-          </summary>
-          <div class="aura-wallet-basics__answer">
-            <p>A wallet does not hold coins like a physical wallet holds cash. Assets and activity remain recorded on a blockchain; the wallet manages the keys that let someone control an account.</p>
-            <dl class="aura-wallet-basics__definitions">
-              <div>
-                <dt>Public address</dt>
-                <dd>A shareable identifier used to receive assets and view public blockchain activity. It is not a password, but it is not private: its holdings and history may be visible and could become connected with an identity.</dd>
-              </div>
-              <div>
-                <dt>Recovery phrase or private key</dt>
-                <dd>The secret that can control a wallet. Anyone who obtains it may be able to take its assets. Never give it to a website, message, support account, or person.</dd>
-              </div>
-            </dl>
-            <p>A public address does not prove who a person is, and connecting one is not proof of identity or ownership.</p>
-          </div>
-        </details>
-
-        <details>
-          <summary>
-            <span aria-hidden="true">02</span>
-            <span><strong>What happens when I connect or paste?</strong><small>Both paths perform the same read-only lookup.</small></span>
-          </summary>
-          <div class="aura-wallet-basics__answer">
-            <p><strong>Connect</strong> opens an installed wallet after you click. Wallet software may expose the public accounts you authorize; Aura selects and uses one compatible address. <strong>Paste</strong> lets you inspect one public address without connecting. The resulting Registry lookup is the same.</p>
-            <p>Solana and Base are separate public networks, and Aura checks one address on one network at a time. Use the public address on the network where the Zodiac appears; an address from the other network will not find it.</p>
-            <p>The wallet record never changes the birth chart. Aura does not include chart or birth data in its address lookup; only the selected public address is sent to the configured blockchain data provider, which may also process routine request metadata.</p>
-            <p>Here, an <strong>official Zodiac</strong> means a token whose mint or contract matches a Zodiac listed by this Registry. It does not mean government approval, verified identity or control, financial safety, liquidity, or value.</p>
-            <p>A newly installed empty wallet will not create a Zodiac or make one appear. If you do not already use a wallet, begin with the example—there is no reason to buy or move anything just to understand Aura.</p>
-          </div>
-        </details>
-
-        <details>
-          <summary>
-            <span aria-hidden="true">03</span>
-            <span><strong>How do I install a wallet safely?</strong><small>Start from the provider’s real website, never an unexpected link.</small></span>
-          </summary>
-          <div class="aura-wallet-basics__answer">
-            <ol>
-              <li>Choose the public record you intend to use: Solana or Base. Zodiacs.org does not make or operate wallets.</li>
-              <li>Begin at the provider’s official website and follow its link to the browser extension store or official app store. Check the exact domain, spelling, and listed publisher. Avoid sponsored search ads, direct-message links, and pages asking you to “verify” or “restore” a wallet.</li>
-              <li>Install the wallet and follow its own instructions to create an account. If it gives you a recovery phrase, record it exactly using the provider’s backup guidance and keep it private and offline.</li>
-              <li>Return to Registry Aura and choose Connect, or copy the public address from the wallet and paste it. If a mobile browser cannot detect the wallet, open zodiacs.org in the wallet’s built-in browser when available, or paste the address instead.</li>
-            </ol>
-            <div class="aura-wallet-basics__install-links">
-              <p><strong>Solana example</strong> Phantom is one compatible third-party option. <a href="https://phantom.com/download" target="_blank" rel="noopener noreferrer external">Open Phantom’s official download page ↗</a></p>
-              <p><strong>Base choices</strong> Ethereum.org maintains a neutral comparison tool. Use its “New to crypto,” “Browser,” and “Base” filters. <a href="https://ethereum.org/wallets/find-wallet" target="_blank" rel="noopener noreferrer external">Compare wallets on ethereum.org ↗</a></p>
-            </div>
-            <p class="aura-wallet-basics__fine-print">Wallet apps and installation sites are independent third parties with their own terms, privacy practices, fees, and security risks. These links are provided for orientation, not endorsement. Zodiacs.org cannot protect or recover wallet assets or secrets. Compatibility can vary by browser, device, and provider.</p>
-          </div>
-        </details>
-
-        <details>
-          <summary>
-            <span aria-hidden="true">04</span>
-            <span><strong>How do I stay safe?</strong><small>Slow down, protect the backup, and read every prompt.</small></span>
-          </summary>
-          <div class="aura-wallet-basics__answer">
-            <ul>
-              <li>Keep recovery phrases and private keys private and preferably offline. Avoid screenshots, cloud notes, email, and chat.</li>
-              <li>Use a strong device passcode and keep the browser, operating system, and wallet updated.</li>
-              <li>A connection request is different from a signing request. Signing, token approval, or a transaction can authorize an action even when a page says it is “free.”</li>
-              <li>Be suspicious of urgency, giveaways, surprise airdrops, impersonated support, screen-sharing requests, and anyone offering to “sync,” “validate,” or recover a wallet.</li>
-              <li>For meaningful assets, consider a hardware wallet. It reduces some online exposure but does not replace careful backups and prompt review.</li>
-            </ul>
-            <p>If both a wallet and its valid backup are lost, access may be impossible to recover. Registry Aura and wallet support cannot recover a secret phrase for you.</p>
-            <p><a href="https://ethereum.org/security/" target="_blank" rel="noopener noreferrer external">Read Ethereum.org’s security and scam-prevention guide ↗</a></p>
-          </div>
-        </details>
-
-        <details>
-          <summary>
-            <span aria-hidden="true">05</span>
-            <span><strong>How do I disconnect or clear Aura?</strong><small>End the connection and remove browser-saved information.</small></span>
-          </summary>
-          <div class="aura-wallet-basics__answer">
-            <p>Use <strong>Disconnect</strong> in Aura to clear the composed result and ask the wallet to disconnect where the provider supports it. You can also remove the site from the wallet’s Connected sites or permissions settings.</p>
-            <p>Use <strong>Forget address / Clear Aura data</strong> to remove Aura information saved in this browser. This does not erase public blockchain history or cancel token approvals granted to other services; review and revoke those separately in the relevant wallet or approval tool.</p>
-          </div>
-        </details>
-      </div>
-    </details>
-
     <RegistryAura client:load availableChains={availableChains} />
+
     <noscript>
-      <p class="aura-status" data-error="true">Registry Aura needs JavaScript to read local chart data and compose the result on this device.</p>
+      <p class="aura-status" data-error="true">
+        The sample cabinet above works without JavaScript. Enable JavaScript to
+        open a live collection.
+      </p>
     </noscript>
   </section>
-  <script is:inline>
-    // A link to the wallet guide opens the outer disclosure before the
-    // browser moves focus to it. The guide stays collapsed for everyone else.
-    (() => {
-      const guide = document.getElementById("wallet-basics");
-      if (!(guide instanceof HTMLDetailsElement)) return;
-      const sync = () => {
-        if (location.hash === "#wallet-basics") guide.open = true;
-      };
-      sync();
-      addEventListener("hashchange", sync);
-    })();
-    // Sections wake as they enter the viewport. The hiding styles apply
-    // only under html.js + motion-tolerant media, so visitors without
-    // JavaScript or with reduced motion always see the full page at once.
-    (() => {
-      document.documentElement.classList.add("js");
-      const nodes = [...document.querySelectorAll("[data-wake]")];
-      if (!nodes.length) return;
-      if (
-        !("IntersectionObserver" in window)
-        || matchMedia("(prefers-reduced-motion: reduce)").matches
-      ) {
-        for (const node of nodes) node.classList.add("is-awake");
-        return;
-      }
-      const observer = new IntersectionObserver(
-        (entries) => {
-          for (const entry of entries) {
-            if (!entry.isIntersecting) continue;
-            entry.target.classList.add("is-awake");
-            observer.unobserve(entry.target);
-          }
-        },
-        { rootMargin: "0px 0px -8% 0px", threshold: 0.15 },
-      );
-      for (const node of nodes) observer.observe(node);
-    })();
-    // Holding a source tile lifts its band in the hero example — the tiles
-    // and the table point at each other.
-    (() => {
-      const demo = document.querySelector(".aura-page__demo .aura-algn");
-      if (!demo) return;
-      for (const tile of document.querySelectorAll(".aura-what__tile[data-band]")) {
-        const band = tile.getAttribute("data-band");
-        const hold = () => demo.setAttribute("data-band-focus", band);
-        const release = () => demo.removeAttribute("data-band-focus");
-        tile.addEventListener("mouseenter", hold);
-        tile.addEventListener("mouseleave", release);
-        tile.addEventListener("focusin", hold);
-        tile.addEventListener("focusout", release);
-      }
-    })();
-  </script>
 </Base>

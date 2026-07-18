@@ -1,12 +1,16 @@
 import type { SavedChart } from '../profile/schema';
-import type { AuraSign } from './types';
+import type { AuraCabinetHolding, AuraSign } from './types';
 
-export const AURA_EXAMPLE_HELD_SIGNS: AuraSign[] = [
-  'cancer',
-  'leo',
-  'scorpio',
-  'aquarius',
+export const AURA_EXAMPLE_HOLDINGS: AuraCabinetHolding[] = [
+  { sign: 'cancer', finish: 'pastel' },
+  { sign: 'leo', finish: 'bronze' },
+  { sign: 'scorpio', finish: 'silver' },
+  { sign: 'aquarius', finish: 'gold', goldCount: '3' },
 ];
+
+export const AURA_EXAMPLE_HELD_SIGNS: AuraSign[] = AURA_EXAMPLE_HOLDINGS.map(
+  ({ sign }) => sign,
+);
 
 export const AURA_EXAMPLE_CHART: SavedChart = {
   id: 'registry-aura-example',

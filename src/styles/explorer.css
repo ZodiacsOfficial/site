@@ -784,19 +784,25 @@ tr[data-selected='true'] td:last-child { border-radius: 0 8px 8px 0; }
 /* ── Time-Lens rail: one wheel, four skies ──
    A view switcher, not a data filter — so body type, not mono chips. */
 .calc__lens-rail {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 2px;
   margin-top: 14px;
   padding: 3px;
-  width: fit-content;
+  width: 100%;
+  max-width: 560px;
   border: 1px solid var(--hair-1);
   border-radius: var(--r-full);
 }
 .calc__lens-btn {
-  padding: 5px 13px;
+  min-width: 0;
+  min-height: 44px;
+  padding: 7px 4px;
   border-radius: var(--r-full);
-  font-size: var(--text-sm);
+  font-size: clamp(11px, 3vw, var(--text-sm));
+  line-height: 1.12;
+  text-align: center;
+  text-wrap: balance;
   color: var(--muted);
   transition: color var(--dur-1) var(--ease), background var(--dur-1) var(--ease);
 }

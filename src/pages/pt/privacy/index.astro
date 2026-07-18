@@ -47,9 +47,11 @@ const jsonLd = [
 
       <h2>Registry Aura, Shelf e endereços públicos</h2>
       <p>
-        Registry Aura lê lado a lado o resumo de um mapa salvo neste navegador,
-        um endereço público de carteira e o céu datado. O mapa e a leitura
-        simbólica são compostos no seu dispositivo. Ao compor ou atualizar um
+        Registry Aura lê lado a lado um endereço público de carteira e o céu
+        datado. Se você adicionar um mapa salvo neste navegador, o resumo dele
+        será uma camada comparativa opcional que permanece no dispositivo. O
+        padrão e qualquer reflexão simbólica são compostos no seu dispositivo.
+        Ao compor ou atualizar um
         Aura, nosso endpoint de ativos recebe o endereço público e o encaminha
         ao provedor de dados de blockchain configurado para verificar quais
         entradas do Registro estão presentes. O provedor configurado é
@@ -89,7 +91,7 @@ const jsonLd = [
       <h2>Armazenamento e compartilhamento do Aura</h2>
       <p>
         Por padrão, Aura salva o endereço público, a rede, os signos do Registro
-        encontrados, o horário da consulta e o identificador do mapa selecionado
+        encontrados, o horário da consulta e o identificador opcional do mapa selecionado
         no armazenamento de sessão desta aba, com validade de restauração de
         oito horas. A opção desmarcada “Remember this address on this device”
         salva os mesmos campos no armazenamento local com validade de
@@ -103,10 +105,8 @@ const jsonLd = [
       <p>
         As imagens de compartilhamento do Aura são compostas no seu dispositivo.
         Por padrão, elas omitem endereço, rede, nome e dados do mapa, posições
-        exatas, geometria e a quantidade ou lista de signos encontrados. Um
-        controle opcional, válido apenas durante a sessão, pode acrescentar que
-        o signo público em destaque aparece em algum lugar do mapa selecionado.
-        Se você ativá-lo, esse fato se torna público. O aplicativo escolhido na
+        exatas, geometria e a quantidade ou lista de signos encontrados. Nenhum
+        fato de um mapa salvo é incluído. O aplicativo escolhido na
         folha de compartilhamento aplica sua própria política. Limpar o Aura não
         recolhe cópias que outras pessoas ou serviços salvaram ou republicaram.
       </p>

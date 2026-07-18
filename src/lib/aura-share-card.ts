@@ -1,90 +1,92 @@
 import { signBySlug } from "./signs";
-import { loadDisc } from "./share-card";
-import { groundedAuraReflection } from "./aura/readings";
+import { assertAuraShareSign, auraShareDateMs } from "./aura-share";
 import {
-  AURA_SHARE_BODIES,
-  AURA_SHARE_EVENT_KINDS,
-  assertAuraShareSign,
-  auraShareDateMs,
-  isAuraShareFocus,
-  type AuraShareFocus,
-  type AuraShareFocusReason,
-} from "./aura-share";
+  talismanGeometry,
+  talismanGoldCountLabel,
+  type AuraTalismanGeometry,
+} from "./aura/talisman";
 import {
-  type AuraActivationKind,
+  AURA_SIGN_ORDER,
+  type AuraCabinetFinish,
+  type AuraCabinetHolding,
   type AuraSign,
 } from "./aura/types";
 
-export interface AuraShareNextEvent {
-  kind: AuraActivationKind;
-  sign: AuraSign;
-  at: string;
-  body: string | null;
-  eventType: string | null;
-}
-
 /**
- * The complete card input. It intentionally cannot carry an address, chart
- * identity, natal body, held count, user-authored copy, or page focal sign.
- * The current sky is a public fact, identical for every visitor at `skyAt`.
+ * The complete export surface. It deliberately has nowhere to put an address,
+ * wallet balance, holding quantity, chart, name, birth detail, or authored
+ * reading. The sky is a dated public fact shared by every visitor.
  */
 export interface AuraShareCardInput {
-  focus: AuraShareFocus;
+  heldSigns: readonly AuraSign[];
+  holdings?: readonly AuraCabinetHolding[];
   checkedAt: string;
   skyAt: string;
-  currentSky: { sun: AuraSign; moon: AuraSign };
-  nextEvent: AuraShareNextEvent | null;
-  includeChartFact: boolean;
+  currentSky: {
+    sun: AuraSign;
+    moon: AuraSign;
+  };
+}
+
+export interface AuraShareSign {
+  slug: AuraSign;
+  index: number;
+  name: string;
+  glyph: string;
+  hue: string;
+  finish: AuraCabinetFinish;
+  goldCountLabel: string | null;
+  goldTallyArcs: 0 | 1 | 2;
+}
+
+export interface AuraShareSkyMark {
+  body: "Sun" | "Moon";
+  glyph: "☉" | "☾";
+  sign: AuraShareSign;
+  x: number;
+  y: number;
 }
 
 export interface AuraShareSnapshot {
-  focal: {
-    slug: AuraSign;
-    name: string;
-    hue: string;
-    glyph: string;
-    reason: AuraShareFocusReason;
-  };
+  represented: readonly AuraShareSign[];
+  geometry: AuraTalismanGeometry;
   checkedDate: string;
   skyDate: string;
-  sky: { sun: string; moon: string };
-  /** The public event that selected the focus, dated; exact-event focus only. */
-  activeFact: string | null;
-  chartFact: string | null;
-  reflection: string;
-  nextSky: string | null;
-  /** The painted mini-ledger rows, uppercase, in order. */
-  ledger: string[];
+  sky: {
+    sun: AuraShareSign;
+    moon: AuraShareSign;
+  };
+  skyMarks: readonly [AuraShareSkyMark, AuraShareSkyMark];
+  methodNote: string;
+  editionNote: string;
 }
 
-export const AURA_SHARE_FILENAME = "zodiacs-registry-aura.png";
+export const AURA_SHARE_FILENAME = "zodiacs-collection-talisman.png";
 export type AuraShareActionOutcome =
-  "shared" | "downloaded" | "cancelled" | "unavailable";
+  | "shared"
+  | "downloaded"
+  | "cancelled"
+  | "unavailable";
 
 const W = 1080;
 const H = 1350;
 const BG = "#060709";
+const PANEL = "#0C0F15";
 const INK = "#EEF1F7";
-const MUTED = "#A2A9BA";
-const HAIR = "rgba(198, 204, 218, 0.17)";
+const MUTED = "#9CA5B8";
+const ETCHED = "rgba(197, 205, 220, 0.22)";
+const HAIR = "rgba(205, 212, 226, 0.16)";
+const BRASS = "#B79A65";
+const MATERIAL_COLORS: Record<Exclude<AuraCabinetFinish, "pastel">, string> = {
+  bronze: "#B87449",
+  silver: "#C4CEDA",
+  gold: "#DEB75E",
+};
 const SERIF = '"EB Garamond", Georgia, serif';
 const MONO = '"JetBrains Mono", ui-monospace, Menlo, monospace';
-const ACTIVATION_KIND = new Set<AuraActivationKind>([
-  "ingress",
-  "lunation",
-  "station",
-  "eclipse",
-  "moon-ingress",
-]);
-const FOCUS_REASON = new Set<AuraShareFocusReason>([
-  "exact-event",
-  "moon",
-  "sun",
-  "zodiac-order",
-]);
-const STATION_DETAIL = new Set(["retrograde", "direct"]);
-const LUNATION_DETAIL = new Set(["new", "full"]);
-const ECLIPSE_DETAIL = /^(?:partial|total|annular|penumbral|hybrid) (?:solar|lunar)$/;
+const METHOD_NOTE =
+  "A dated composition of the represented Zodiac set, today’s Sun, and today’s Moon.";
+const EDITION_NOTE = "Public edition · collection + dated sky";
 const CARD_DATE = new Intl.DateTimeFormat("en", {
   year: "numeric",
   month: "short",
@@ -92,170 +94,159 @@ const CARD_DATE = new Intl.DateTimeFormat("en", {
   timeZone: "UTC",
 });
 
-function validDate(value: string, field: string): Date {
-  return new Date(auraShareDateMs(value, field));
+function cardDate(value: string, field: string): string {
+  return `${CARD_DATE.format(new Date(auraShareDateMs(value, field)))} UTC`;
 }
 
-function cardDate(value: string): string {
-  return `${CARD_DATE.format(validDate(value, "date"))} UTC`;
-}
-
-/**
- * Builds a public calendar-event label from structured, allowlisted parts.
- * Bodies come from the committed catalogs; free strings can never reach paint.
- */
-function eventLabel(
-  kind: AuraActivationKind,
-  sign: AuraSign,
-  body: string | null,
-  eventType: string | null,
-): string {
-  const name = signBySlug(sign).name;
-  if (body != null && !AURA_SHARE_BODIES.has(body)) {
-    throw new TypeError("The calendar line's body must be a known body.");
-  }
-  switch (kind) {
-    case "ingress":
-      if (!body) throw new TypeError("An ingress calendar line requires its structured body.");
-      return `${body} enters ${name}`;
-    case "moon-ingress":
-      if (body != null && body !== "Moon") {
-        throw new TypeError("A Moon ingress calendar line cannot carry another body.");
-      }
-      return `Moon enters ${name}`;
-    case "station":
-      if (!body) throw new TypeError("A station calendar line requires its structured body.");
-      if (!eventType || !STATION_DETAIL.has(eventType)) {
-        throw new TypeError("A station calendar line requires its direction.");
-      }
-      return `${body} stations ${eventType}`;
-    case "lunation":
-      if (!eventType || !LUNATION_DETAIL.has(eventType)) {
-        throw new TypeError("A lunation calendar line requires its phase.");
-      }
-      return `${eventType[0].toUpperCase()}${eventType.slice(1)} Moon in ${name}`;
-    case "eclipse":
-      if (eventType == null) return `Eclipse in ${name}`;
-      if (!ECLIPSE_DETAIL.test(eventType)) {
-        throw new TypeError("An eclipse calendar line has an unknown detail.");
-      }
-      return `${eventType[0].toUpperCase()}${eventType.slice(1)} eclipse in ${name}`;
-  }
-}
-
-/** The card's complete serializable surface, reduced to one public focal sign. */
-export function auraShareSnapshot(
-  input: AuraShareCardInput,
-): AuraShareSnapshot {
-  if (typeof input.includeChartFact !== "boolean") {
-    throw new TypeError("includeChartFact must be a boolean.");
-  }
-  validDate(input.checkedAt, "checkedAt");
-  const focus = input.focus;
-  if (!isAuraShareFocus(focus) || !FOCUS_REASON.has(focus.reason)) {
-    throw new TypeError("focus must be a validated public Aura focus.");
-  }
-  const sign = signBySlug(focus.sign);
-  if (focus.reason === "exact-event") {
-    if (!focus.eventKind || !AURA_SHARE_EVENT_KINDS.has(focus.eventKind)) {
-      throw new TypeError(
-        "An exact-event focus requires a supported event kind.",
-      );
-    }
-    validDate(focus.eventAt ?? "", "focus.eventAt");
-  } else if (
-    focus.eventKind !== null ||
-    focus.eventAt !== null ||
-    focus.eventBody !== null ||
-    focus.eventDetail !== null
-  ) {
-    throw new TypeError("Only an exact-event focus may carry event details.");
-  }
-  assertAuraShareSign(input.currentSky?.sun, "currentSky.sun");
-  assertAuraShareSign(input.currentSky?.moon, "currentSky.moon");
-  const sunName = signBySlug(input.currentSky.sun).name;
-  const moonName = signBySlug(input.currentSky.moon).name;
-
-  const activeFact =
-    focus.reason === "exact-event" && focus.eventKind
-      ? `${eventLabel(focus.eventKind, focus.sign, focus.eventBody, focus.eventDetail)} · ${cardDate(focus.eventAt ?? "")}`
-      : null;
-
-  let nextSky: string | null = null;
-  if (input.nextEvent) {
-    if (!ACTIVATION_KIND.has(input.nextEvent.kind)) {
-      throw new TypeError(
-        "nextEvent.kind must be a supported activation kind.",
-      );
-    }
-    assertAuraShareSign(input.nextEvent.sign, "nextEvent.sign");
-    if (input.nextEvent.sign !== focus.sign) {
-      throw new TypeError("nextEvent.sign must match the public focal sign.");
-    }
-    nextSky = `Next · ${eventLabel(
-      input.nextEvent.kind,
-      input.nextEvent.sign,
-      input.nextEvent.body,
-      input.nextEvent.eventType,
-    )} · ${cardDate(input.nextEvent.at)}`;
-  }
-
-  const checkedDate = cardDate(input.checkedAt);
-  const skyDate = cardDate(input.skyAt);
-  const chartFact = input.includeChartFact
-    ? `${sign.name} also appears in the selected birth chart`
-    : null;
-  // Layout budget: with both optional facts in the ledger (five rows) the
-  // Next line would collide with the method line, so it is deterministically
-  // omitted — from the description too, keeping text and raster identical.
-  if (activeFact && chartFact) nextSky = null;
-  const ledger = [
-    "PRIVATE BIRTH CHART · READ ON A DEVICE, NEVER SHOWN",
-    `${sign.name.toUpperCase()} FOUND AT A PUBLIC WALLET ADDRESS · CHECKED ${checkedDate.toUpperCase()}`,
-    `SKY · SUN IN ${sunName.toUpperCase()} · MOON IN ${moonName.toUpperCase()} · ${skyDate.toUpperCase()}`,
-    ...(activeFact ? [activeFact.toUpperCase()] : []),
-    ...(chartFact ? [chartFact.toUpperCase()] : []),
-  ];
-
+function shareSign(
+  slug: AuraSign,
+  holding?: AuraCabinetHolding,
+): AuraShareSign {
+  const sign = signBySlug(slug);
+  const finish = holding?.finish ?? "pastel";
+  const goldCount = holding?.finish === "gold" ? BigInt(holding.goldCount) : 0n;
   return {
-    focal: {
-      slug: focus.sign,
-      name: sign.name,
-      hue: sign.hue,
-      glyph: sign.glyph,
-      reason: focus.reason,
-    },
-    checkedDate,
-    skyDate,
-    sky: { sun: sunName, moon: moonName },
-    activeFact,
-    chartFact,
-    reflection: groundedAuraReflection(focus.sign),
-    nextSky,
-    ledger,
+    slug,
+    index: AURA_SIGN_ORDER.indexOf(slug),
+    name: sign.name,
+    glyph: sign.glyph,
+    hue: sign.hue,
+    finish,
+    // A single Masterwork needs no count; the label appears from ×2 upward.
+    goldCountLabel: goldCount > 1n ? talismanGoldCountLabel(goldCount) : null,
+    goldTallyArcs: goldCount >= 3n ? 2 : goldCount >= 2n ? 1 : 0,
   };
 }
 
-/** Complete generated-text equivalent of the raster preview for assistive technology. */
-export function auraShareAccessibleDescription(
-  input: AuraShareCardInput,
-): string {
+function canonicalHeldSigns(value: unknown): AuraSign[] {
+  if (!Array.isArray(value)) {
+    throw new TypeError("heldSigns must be an array of canonical zodiac signs.");
+  }
+  const represented = new Set<AuraSign>();
+  value.forEach((sign, index) => {
+    assertAuraShareSign(sign, `heldSigns[${index}]`);
+    represented.add(sign);
+  });
+  const canonical = AURA_SIGN_ORDER.filter((sign) => represented.has(sign));
+  if (canonical.length === 0) {
+    throw new TypeError("A collection talisman requires at least one represented sign.");
+  }
+  return canonical;
+}
+
+function canonicalHoldings(
+  value: unknown,
+  heldSigns: readonly AuraSign[],
+): AuraCabinetHolding[] {
+  if (value === undefined) {
+    return heldSigns.map((sign) => ({ sign, finish: "pastel" }));
+  }
+  if (!Array.isArray(value)) {
+    throw new TypeError("holdings must be an array of classified Zodiac editions.");
+  }
+  const held = new Set(heldSigns);
+  const seen = new Set<AuraSign>();
+  const normalized: AuraCabinetHolding[] = [];
+  value.forEach((entry, index) => {
+    if (!entry || typeof entry !== "object") {
+      throw new TypeError(`holdings[${index}] must be a classified Zodiac edition.`);
+    }
+    const holding = entry as Partial<AuraCabinetHolding> & { goldCount?: unknown };
+    assertAuraShareSign(holding.sign, `holdings[${index}].sign`);
+    if (!held.has(holding.sign) || seen.has(holding.sign)) {
+      throw new TypeError("holdings must match the canonical represented Zodiac set.");
+    }
+    if (!["pastel", "bronze", "silver", "gold"].includes(String(holding.finish))) {
+      throw new TypeError(`holdings[${index}].finish is not a supported material edition.`);
+    }
+    if (holding.finish === "gold") {
+      if (typeof holding.goldCount !== "string" || !/^[1-9]\d*$/.test(holding.goldCount)) {
+        throw new TypeError(`holdings[${index}].goldCount must be a positive integer string.`);
+      }
+      normalized.push({
+        sign: holding.sign,
+        finish: "gold",
+        goldCount: holding.goldCount,
+      });
+    } else {
+      normalized.push({
+        sign: holding.sign,
+        finish: holding.finish as "pastel" | "bronze" | "silver",
+      });
+    }
+    seen.add(holding.sign);
+  });
+  if (normalized.length !== heldSigns.length) {
+    throw new TypeError("holdings must classify every represented Zodiac sign.");
+  }
+  const bySign = new Map(normalized.map((holding) => [holding.sign, holding]));
+  return heldSigns.map((sign) => bySign.get(sign)!);
+}
+
+function pointForSign(sign: AuraSign, radius: number): { x: number; y: number } {
+  const index = AURA_SIGN_ORDER.indexOf(sign);
+  const radians = (index * 30 + 15 - 90) * (Math.PI / 180);
+  return {
+    x: Number((0.5 + Math.cos(radians) * radius).toFixed(6)),
+    y: Number((0.5 + Math.sin(radians) * radius).toFixed(6)),
+  };
+}
+
+/** Reduces input to the complete privacy-safe, deterministic painted model. */
+export function auraShareSnapshot(input: AuraShareCardInput): AuraShareSnapshot {
+  if (!input || typeof input !== "object") {
+    throw new TypeError("A talisman share input is required.");
+  }
+  const heldSigns = canonicalHeldSigns(input.heldSigns);
+  const holdings = canonicalHoldings(input.holdings, heldSigns);
+  const checkedDate = cardDate(input.checkedAt, "checkedAt");
+  const skyDate = cardDate(input.skyAt, "skyAt");
+  assertAuraShareSign(input.currentSky?.sun, "currentSky.sun");
+  assertAuraShareSign(input.currentSky?.moon, "currentSky.moon");
+
+  const holdingBySign = new Map(holdings.map((holding) => [holding.sign, holding]));
+  const represented = heldSigns.map((sign) => shareSign(sign, holdingBySign.get(sign)));
+  const sun = shareSign(input.currentSky.sun);
+  const moon = shareSign(input.currentSky.moon);
+  return {
+    represented,
+    geometry: talismanGeometry(heldSigns, holdings),
+    checkedDate,
+    skyDate,
+    sky: { sun, moon },
+    skyMarks: [
+      {
+        body: "Sun",
+        glyph: "☉",
+        sign: sun,
+        ...pointForSign(sun.slug, 0.235),
+      },
+      {
+        body: "Moon",
+        glyph: "☾",
+        sign: moon,
+        ...pointForSign(moon.slug, 0.235),
+      },
+    ],
+    methodNote: METHOD_NOTE,
+    editionNote: EDITION_NOTE,
+  };
+}
+
+/** Complete generated-text equivalent of the raster preview. */
+export function auraShareAccessibleDescription(input: AuraShareCardInput): string {
   const snapshot = auraShareSnapshot(input);
   return [
-    `Registry Aura card dated ${snapshot.skyDate}.`,
-    "Private birth chart, public wallet address, and dated sky are read side by side.",
-    `${snapshot.focal.name}.`,
-    `Found at a public wallet address, checked ${snapshot.checkedDate}.`,
-    `Sky: Sun in ${snapshot.sky.sun}, Moon in ${snapshot.sky.moon}.`,
-    snapshot.activeFact ? `${snapshot.activeFact}.` : null,
-    snapshot.chartFact ? `${snapshot.chartFact}.` : null,
-    `Symbolic reading: ${snapshot.reflection}`,
-    "A symbolic reading — not a wallet score or investment signal.",
-    snapshot.nextSky ? `${snapshot.nextSky}.` : null,
-    "Composed on this device. zodiacs.org/registry/aura.",
-  ]
-    .filter((line): line is string => Boolean(line))
-    .join(" ");
+    `Registry Aura collection talisman dated ${snapshot.skyDate}.`,
+    `Represented Zodiac set: ${snapshot.represented.map((sign) => (
+      `${sign.name}, ${sign.finish}${sign.goldCountLabel ? ` ${sign.goldCountLabel}` : ""}`
+    )).join("; ")}.`,
+    `Dated sky marks: Sun in ${snapshot.sky.sun.name}; Moon in ${snapshot.sky.moon.name}.`,
+    snapshot.methodNote,
+    snapshot.editionNote,
+    `Registry record checked ${snapshot.checkedDate}.`,
+    "Composed on this device. Zodiacs · Org.",
+  ].join(" ");
 }
 
 function wrapLines(
@@ -268,8 +259,6 @@ function wrapLines(
   const lines: string[] = [];
   let line = "";
   let index = 0;
-  // Fill every allowed line to maxWidth — including the last one — and only
-  // then decide whether anything was actually left over to ellipsize.
   while (index < words.length && lines.length < maxLines) {
     const next = line ? `${line} ${words[index]}` : words[index];
     if (line && context.measureText(next).width > maxWidth) {
@@ -281,146 +270,251 @@ function wrapLines(
     }
   }
   if (line && lines.length < maxLines) lines.push(line);
-  if (index < words.length && lines.length) {
+  if (index < words.length && lines.length > 0) {
     lines[lines.length - 1] = `${lines.at(-1)?.replace(/[.,;:]?$/, "")}…`;
   }
   return lines;
 }
 
-export async function drawAuraShareCard(
-  input: AuraShareCardInput,
-): Promise<Blob> {
+function sealPoint(
+  point: { x: number; y: number },
+  size: number,
+  left: number,
+  top: number,
+): { x: number; y: number } {
+  return { x: left + point.x * size, y: top + point.y * size };
+}
+
+function line(
+  context: CanvasRenderingContext2D,
+  from: { x: number; y: number },
+  to: { x: number; y: number },
+): void {
+  context.beginPath();
+  context.moveTo(from.x, from.y);
+  context.lineTo(to.x, to.y);
+  context.stroke();
+}
+
+function circle(
+  context: CanvasRenderingContext2D,
+  x: number,
+  y: number,
+  radius: number,
+): void {
+  context.beginPath();
+  context.arc(x, y, radius, 0, Math.PI * 2);
+}
+
+function materialColor(sign: Pick<AuraShareSign, "finish" | "hue">): string {
+  return sign.finish === "pastel" ? sign.hue : MATERIAL_COLORS[sign.finish];
+}
+
+function drawSeal(
+  context: CanvasRenderingContext2D,
+  snapshot: AuraShareSnapshot,
+): void {
+  const size = 690;
+  const left = (W - size) / 2;
+  const top = 215;
+  const center = sealPoint({ x: 0.5, y: 0.5 }, size, left, top);
+
+  context.strokeStyle = HAIR;
+  context.lineWidth = 1;
+  [300, 186, 96].forEach((radius) => {
+    circle(context, center.x, center.y, radius);
+    context.stroke();
+  });
+  if (snapshot.geometry.fullTwelve) {
+    context.strokeStyle = BRASS;
+    context.lineWidth = 3;
+    circle(context, center.x, center.y, 316);
+    context.stroke();
+  }
+
+  context.strokeStyle = "rgba(222, 226, 237, 0.42)";
+  context.lineWidth = 3;
+  snapshot.geometry.collectionSegments.forEach((segment) => {
+    line(
+      context,
+      sealPoint(segment.from, size, left, top),
+      sealPoint(segment.to, size, left, top),
+    );
+  });
+
+  snapshot.geometry.outerNodes.forEach((node) => {
+    const point = sealPoint(node, size, left, top);
+    circle(context, point.x, point.y, node.represented ? 25 : 16);
+    if (node.represented) {
+      context.fillStyle = node.finish && node.finish !== "pastel"
+        ? MATERIAL_COLORS[node.finish]
+        : node.hue;
+      context.fill();
+      context.fillStyle = BG;
+      context.textAlign = "center";
+      context.textBaseline = "middle";
+      context.font = `500 25px ${SERIF}`;
+      context.fillText(`${node.glyph}︎`, point.x, point.y + 1);
+      if (node.goldTallyArcs > 0) {
+        context.strokeStyle = "#F3D995";
+        context.lineWidth = 2.5;
+        for (let index = 0; index < node.goldTallyArcs; index += 1) {
+          context.beginPath();
+          context.arc(
+            point.x,
+            point.y,
+            31 + index * 5,
+            -Math.PI / 2 + index * Math.PI,
+            Math.PI / 5 + index * Math.PI,
+          );
+          context.stroke();
+        }
+      }
+      if (node.goldCountLabel && node.goldCount !== "1") {
+        context.fillStyle = INK;
+        context.font = `650 12px ${MONO}`;
+        context.fillText(node.goldCountLabel, point.x + 31, point.y + 25);
+      }
+    } else {
+      context.strokeStyle = ETCHED;
+      context.lineWidth = 1;
+      context.stroke();
+    }
+  });
+
+  snapshot.skyMarks.forEach((mark) => {
+    const point = sealPoint(mark, size, left, top);
+    context.fillStyle = PANEL;
+    circle(context, point.x, point.y, 27);
+    context.fill();
+    context.strokeStyle = mark.sign.hue;
+    context.lineWidth = 2;
+    context.stroke();
+    context.fillStyle = INK;
+    context.textAlign = "center";
+    context.textBaseline = "middle";
+    context.font = `500 25px ${SERIF}`;
+    context.fillText(mark.glyph, point.x, point.y + 1);
+  });
+
+  context.fillStyle = MUTED;
+  context.textAlign = "center";
+  context.font = `500 18px ${MONO}`;
+  context.fillText("DATED PUBLIC SKY", center.x, center.y - 12);
+  context.fillStyle = INK;
+  context.font = `500 22px ${MONO}`;
+  context.fillText(snapshot.skyDate.toUpperCase(), center.x, center.y + 22);
+}
+
+function drawRepresentedSet(
+  context: CanvasRenderingContext2D,
+  snapshot: AuraShareSnapshot,
+): void {
+  const columns = Math.min(6, snapshot.represented.length);
+  const gap = columns > 1 ? Math.min(152, 890 / (columns - 1)) : 0;
+  const rows = Math.ceil(snapshot.represented.length / 6);
+  const startY = rows === 1 ? 978 : 925;
+  snapshot.represented.forEach((sign, index) => {
+    const row = Math.floor(index / 6);
+    const rowItems = Math.min(6, snapshot.represented.length - row * 6);
+    const rowWidth = (rowItems - 1) * gap;
+    const x = W / 2 - rowWidth / 2 + (index % 6) * gap;
+    const y = startY + row * 90;
+    context.fillStyle = materialColor(sign);
+    circle(context, x, y, 22);
+    context.fill();
+    context.fillStyle = BG;
+    context.textAlign = "center";
+    context.font = `500 22px ${SERIF}`;
+    context.fillText(`${sign.glyph}︎`, x, y + 1);
+    context.fillStyle = INK;
+    context.font = `500 18px ${MONO}`;
+    context.fillText(sign.name.toUpperCase(), x, y + 44);
+    context.fillStyle = MUTED;
+    context.font = `500 13px ${MONO}`;
+    context.fillText(
+      `${sign.finish.toUpperCase()}${sign.goldCountLabel ? ` ${sign.goldCountLabel}` : ""}`,
+      x,
+      y + 65,
+    );
+  });
+}
+
+export async function drawAuraShareCard(input: AuraShareCardInput): Promise<Blob> {
   const snapshot = auraShareSnapshot(input);
-  const bitmap = await loadDisc(snapshot.focal.slug);
-  await document.fonts.ready;
-  await Promise.all([
-    document.fonts.load(`500 116px ${SERIF}`),
-    document.fonts.load(`italic 400 48px ${SERIF}`),
-    document.fonts.load(`500 22px ${MONO}`),
-    document.fonts.load(`400 24px ${MONO}`),
-  ]).catch(() => {});
+  if (typeof document.fonts !== "undefined") {
+    await document.fonts.ready;
+    await Promise.all([
+      document.fonts.load(`500 62px ${SERIF}`),
+      document.fonts.load(`500 24px ${MONO}`),
+      document.fonts.load(`400 29px ${SERIF}`),
+    ]).catch(() => {});
+  }
 
   const canvas = document.createElement("canvas");
   canvas.width = W;
   canvas.height = H;
   const context = canvas.getContext("2d");
-  if (!context) {
-    bitmap?.close?.();
-    throw new Error("canvas_unavailable");
-  }
+  if (!context) throw new Error("canvas_unavailable");
 
-  try {
-    context.fillStyle = BG;
-    context.fillRect(0, 0, W, H);
-    if (typeof context.roundRect === "function") {
-      context.strokeStyle = HAIR;
-      context.lineWidth = 1;
-      context.beginPath();
-      context.roundRect(28.5, 28.5, W - 57, H - 57, 26);
-      context.stroke();
-    }
-
-    context.textBaseline = "middle";
-    context.textAlign = "left";
-    context.fillStyle = INK;
-    context.font = `500 34px ${SERIF}`;
-    context.fillText("REGISTRY AURA", 66, 88);
-    context.textAlign = "right";
-    context.fillStyle = MUTED;
-    context.font = `500 24px ${MONO}`;
-    context.fillText(snapshot.skyDate.toUpperCase(), W - 66, 88);
-
-    // The artwork is the mass of the card; meaning first, mechanism last.
-    const disc = 400;
-    const discX = (W - disc) / 2;
-    const discY = 150;
-    if (bitmap) {
-      context.drawImage(bitmap, discX, discY, disc, disc);
-    } else {
-      context.fillStyle = snapshot.focal.hue;
-      context.beginPath();
-      context.arc(W / 2, discY + disc / 2, disc / 2, 0, Math.PI * 2);
-      context.fill();
-      context.fillStyle = BG;
-      context.font = `500 225px ${SERIF}`;
-      context.textAlign = "center";
-      // U+FE0E keeps the glyph in text presentation; platform emoji fonts
-      // otherwise hijack the zodiac code points and ignore fillStyle.
-      context.fillText(`${snapshot.focal.glyph}︎`, W / 2, discY + disc / 2 + 8);
-    }
-    context.strokeStyle = HAIR;
-    context.lineWidth = 2;
-    context.beginPath();
-    context.arc(W / 2, discY + disc / 2, disc / 2 + 24, 0, Math.PI * 2);
-    context.stroke();
-
-    context.textAlign = "center";
-    context.fillStyle = INK;
-    context.font = `500 116px ${SERIF}`;
-    context.fillText(snapshot.focal.name, W / 2, 642);
-
-    context.font = `italic 400 48px ${SERIF}`;
-    wrapLines(context, snapshot.reflection, 940, 3).forEach((line, index) => {
-      context.fillText(line, W / 2, 728 + index * 64);
-    });
-
-    const ledgerTop = 924;
-    const rowHeight = 52;
+  context.fillStyle = BG;
+  context.fillRect(0, 0, W, H);
+  if (typeof context.roundRect === "function") {
     context.strokeStyle = HAIR;
     context.lineWidth = 1;
     context.beginPath();
-    context.moveTo(66, ledgerTop);
-    context.lineTo(W - 66, ledgerTop);
+    context.roundRect(28.5, 28.5, W - 57, H - 57, 26);
     context.stroke();
-    context.textAlign = "left";
-    snapshot.ledger.forEach((row, index) => {
-      context.fillStyle = index === 1 ? snapshot.focal.hue : MUTED;
-      context.font = `500 22px ${MONO}`;
-      context.fillText(row, 90, ledgerTop + rowHeight * index + 32);
-    });
-    const ledgerBottom = ledgerTop + rowHeight * snapshot.ledger.length + 10;
-    context.beginPath();
-    context.moveTo(66, ledgerBottom);
-    context.lineTo(W - 66, ledgerBottom);
-    context.stroke();
-
-    if (snapshot.nextSky) {
-      context.textAlign = "center";
-      context.fillStyle = INK;
-      context.font = `400 24px ${MONO}`;
-      context.fillText(
-        snapshot.nextSky.toUpperCase(),
-        W / 2,
-        ledgerBottom + 44,
-      );
-    }
-
-    context.textAlign = "center";
-    context.fillStyle = INK;
-    context.font = `italic 400 27px ${SERIF}`;
-    context.fillText(
-      "A symbolic reading — not a wallet score or investment signal.",
-      W / 2,
-      1240,
-    );
-
-    context.textAlign = "left";
-    context.fillStyle = MUTED;
-    context.font = `400 20px ${MONO}`;
-    context.fillText("COMPOSED ON THIS DEVICE", 66, 1286);
-    context.textAlign = "right";
-    context.fillStyle = INK;
-    context.font = `500 24px ${MONO}`;
-    context.fillText("ZODIACS.ORG/REGISTRY/AURA", W - 66, 1286);
-
-    const blob = await new Promise<Blob | null>((resolve) =>
-      canvas.toBlob(resolve, "image/png"),
-    );
-    if (!blob) throw new Error("png_encode_failed");
-    return blob;
-  } finally {
-    bitmap?.close?.();
   }
+
+  context.textBaseline = "middle";
+  context.textAlign = "left";
+  context.fillStyle = MUTED;
+  context.font = `500 20px ${MONO}`;
+  context.fillText("REGISTRY AURA · DATED EDITION", 66, 76);
+  context.textAlign = "right";
+  context.fillText(snapshot.skyDate.toUpperCase(), W - 66, 76);
+
+  context.textAlign = "center";
+  context.fillStyle = INK;
+  context.font = `500 62px ${SERIF}`;
+  context.fillText("Collection talisman", W / 2, 145);
+  context.fillStyle = MUTED;
+  context.font = `500 20px ${MONO}`;
+  context.fillText("THE REPRESENTED TWELVE · THE SUN · THE MOON", W / 2, 195);
+
+  drawSeal(context, snapshot);
+
+  context.fillStyle = MUTED;
+  context.font = `500 18px ${MONO}`;
+  context.textAlign = "center";
+  context.fillText("REPRESENTED ZODIACS", W / 2, 892);
+  drawRepresentedSet(context, snapshot);
+
+  context.strokeStyle = HAIR;
+  context.lineWidth = 1;
+  line(context, { x: 66, y: 1105 }, { x: W - 66, y: 1105 });
+  context.fillStyle = INK;
+  context.font = `400 29px ${SERIF}`;
+  wrapLines(context, snapshot.methodNote, 890, 2).forEach((text, index) => {
+    context.fillText(text, W / 2, 1152 + index * 38);
+  });
+  context.fillStyle = MUTED;
+  context.font = `500 17px ${MONO}`;
+  context.fillText(snapshot.editionNote.toUpperCase(), W / 2, 1242);
+
+  context.textAlign = "left";
+  context.fillText(`REGISTRY CHECKED ${snapshot.checkedDate.toUpperCase()}`, 66, 1290);
+  context.textAlign = "right";
+  context.fillStyle = INK;
+  context.font = `500 21px ${MONO}`;
+  context.fillText("ZODIACS · ORG", W - 66, 1290);
+
+  const blob = await new Promise<Blob | null>((resolve) =>
+    canvas.toBlob(resolve, "image/png"),
+  );
+  if (!blob) throw new Error("png_encode_failed");
+  return blob;
 }
 
 export function canShareAuraCardBlob(blob: Blob): boolean {
@@ -436,7 +530,7 @@ export function canShareAuraCardBlob(blob: Blob): boolean {
   }
 }
 
-/** Shares the already-reviewed PNG without adding a caption, title, or URL. */
+/** Shares the reviewed PNG without adding a caption, title, text, or URL. */
 export async function shareAuraCardBlob(
   blob: Blob,
 ): Promise<AuraShareActionOutcome> {

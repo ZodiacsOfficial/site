@@ -1,0 +1,389 @@
+.aura-talisman {
+  --aura-talisman-ink: #e9e5df;
+  --aura-talisman-muted: #9299ac;
+  --aura-talisman-line: rgb(214 222 236 / 16%);
+  margin: 0;
+  color: var(--aura-talisman-ink);
+}
+
+.aura-talisman__header {
+  max-width: 42rem;
+  margin-bottom: clamp(0.9rem, 2vw, 1.35rem);
+}
+
+.aura-talisman__kicker {
+  margin: 0 0 0.7rem;
+  color: var(--aura-talisman-muted);
+  font: 500 0.67rem/1.3 var(--font-mono, monospace);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.aura-talisman__header h3 {
+  margin: 0;
+  font: 400 clamp(2rem, 5vw, 3.65rem)/0.98 var(--font-display, serif);
+  letter-spacing: -0.025em;
+}
+
+.aura-talisman__header > p:last-child {
+  margin: 1rem 0 0;
+  color: #b7bdca;
+  font-size: 1rem;
+  line-height: 1.65;
+}
+
+.aura-talisman__frame {
+  position: relative;
+  display: grid;
+  place-items: center;
+  padding: clamp(0.75rem, 3vw, 1.5rem);
+  overflow: hidden;
+  border: 1px solid rgb(215 222 232 / 17%);
+  border-radius: clamp(1.25rem, 3vw, 2rem);
+  background:
+    radial-gradient(circle at 50% 45%, rgb(111 119 148 / 13%), transparent 48%),
+    linear-gradient(145deg, rgb(20 23 31 / 96%), rgb(7 9 14 / 98%));
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 5%),
+    inset 0 0 80px rgb(0 0 0 / 36%),
+    0 26px 80px rgb(0 0 0 / 22%);
+}
+
+.aura-talisman__frame::before {
+  position: absolute;
+  inset: 0.45rem;
+  border: 1px solid rgb(226 231 239 / 6%);
+  border-radius: calc(clamp(1.25rem, 3vw, 2rem) - 0.35rem);
+  content: '';
+  pointer-events: none;
+}
+
+.aura-talisman__svg {
+  display: block;
+  width: min(100%, 42rem);
+  height: auto;
+  overflow: visible;
+}
+
+.aura-talisman__field {
+  fill: none;
+  stroke: var(--aura-talisman-line);
+  stroke-width: 1.5;
+}
+
+.aura-talisman__field path {
+  stroke-dasharray: 2 16;
+}
+
+.aura-talisman__complete-halo {
+  fill: none;
+  stroke: rgb(224 210 168 / 55%);
+  stroke-width: 3;
+}
+
+.aura-talisman__segments {
+  fill: none;
+  stroke: rgb(231 224 203 / 72%);
+  stroke-linecap: round;
+  stroke-width: 5;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.aura-talisman__segments line {
+  vector-effect: non-scaling-stroke;
+}
+
+.aura-talisman__chart-echo {
+  fill: #e5e9f2;
+  opacity: 0.7;
+  stroke: rgb(7 9 14 / 80%);
+  stroke-width: 4;
+  transition:
+    opacity 180ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 180ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.aura-talisman__sky-mark circle {
+  fill: #11151e;
+  stroke: rgb(225 230 239 / 56%);
+  stroke-width: 2;
+}
+
+.aura-talisman__sky-mark--sun circle {
+  fill: #d7c28f;
+  stroke: #f0dfb2;
+}
+
+.aura-talisman__sky-mark text {
+  fill: #0c0f15;
+  font: 600 29px/1 serif;
+  text-anchor: middle;
+}
+
+.aura-talisman__sky-mark--moon text {
+  fill: #e5e9f2;
+}
+
+.aura-talisman__node {
+  color: var(--aura-talisman-muted);
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.aura-talisman__selection {
+  fill: none;
+  opacity: 0;
+  stroke: #fff8e6;
+  stroke-dasharray: 2 8;
+  stroke-linecap: round;
+  stroke-width: 2;
+  vector-effect: non-scaling-stroke;
+}
+
+.aura-talisman__node-ring {
+  fill: rgb(5 7 11 / 92%);
+  stroke: rgb(205 213 226 / 18%);
+  stroke-width: 2;
+}
+
+.aura-talisman__node-face {
+  fill: rgb(18 21 29 / 96%);
+  stroke: rgb(206 214 226 / 13%);
+  stroke-width: 1.5;
+}
+
+.aura-talisman__node > text {
+  fill: currentColor;
+  font: 500 36px/1 serif;
+  text-anchor: middle;
+}
+
+.aura-talisman__node.is-represented {
+  color: #11141a;
+}
+
+.aura-talisman__node.is-represented .aura-talisman__node-ring {
+  fill: color-mix(in srgb, var(--aura-talisman-hue) 20%, #080a0f);
+  stroke: color-mix(in srgb, var(--aura-talisman-hue) 56%, white);
+  stroke-width: 3;
+}
+
+.aura-talisman__node.is-represented .aura-talisman__node-face {
+  fill: var(--aura-talisman-hue);
+  stroke: rgb(255 255 255 / 34%);
+}
+
+.aura-talisman__node.is-bronze .aura-talisman__node-face {
+  fill: url("#aura-talisman-bronze");
+}
+
+.aura-talisman__node.is-silver .aura-talisman__node-face {
+  fill: url("#aura-talisman-silver");
+}
+
+.aura-talisman__node.is-gold .aura-talisman__node-face {
+  fill: url("#aura-talisman-gold");
+}
+
+.aura-talisman__node.is-bronze .aura-talisman__node-ring {
+  fill: rgb(70 37 25 / 72%);
+  stroke: #c78457;
+}
+
+.aura-talisman__node.is-silver .aura-talisman__node-ring {
+  fill: rgb(45 51 61 / 78%);
+  stroke: #c8d1dd;
+}
+
+.aura-talisman__node.is-gold .aura-talisman__node-ring {
+  fill: rgb(71 48 20 / 76%);
+  stroke: #e1bf72;
+}
+
+.aura-talisman__node.is-selected .aura-talisman__node-ring {
+  stroke: #fff8e6;
+  stroke-width: 5;
+}
+
+.aura-talisman__node.is-selected .aura-talisman__selection {
+  opacity: 0.92;
+}
+
+.aura-talisman__gold-tally {
+  fill: none;
+  stroke: #f3d995;
+  stroke-linecap: round;
+  stroke-width: 3;
+  transform: rotate(-90deg);
+  vector-effect: non-scaling-stroke;
+}
+
+.aura-talisman__count rect {
+  fill: #0b0d12;
+  stroke: #f1d58b;
+  stroke-width: 1.5;
+}
+
+.aura-talisman__count text {
+  fill: #f6e7b8;
+  font: 650 14px/1 var(--font-mono, monospace);
+  letter-spacing: 0;
+  text-anchor: middle;
+}
+
+.aura-talisman__center circle {
+  fill: rgb(7 9 14 / 96%);
+  stroke: rgb(215 222 234 / 22%);
+  stroke-width: 2;
+}
+
+.aura-talisman__center text {
+  fill: #d9d4c9;
+  font-family: var(--font-mono, monospace);
+  text-anchor: middle;
+}
+
+.aura-talisman__center-mark {
+  font-size: 18px;
+  letter-spacing: 0.24em;
+}
+
+.aura-talisman__center-date {
+  fill: var(--aura-talisman-muted) !important;
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.aura-talisman__complete-ring {
+  fill: none;
+  stroke: rgb(224 210 168 / 34%);
+  stroke-dasharray: 3 9;
+  stroke-width: 1.5;
+}
+
+.aura-talisman__label {
+  display: grid;
+  padding: clamp(1.25rem, 3vw, 2rem) 0 0;
+}
+
+.aura-talisman__label dl {
+  display: grid;
+  gap: 0;
+  margin: 0;
+  border-top: 1px solid var(--aura-talisman-line);
+}
+
+.aura-talisman__label dl > div {
+  display: grid;
+  grid-template-columns: 6.75rem minmax(0, 1fr);
+  gap: 1rem;
+  padding: 0.7rem 0;
+  border-bottom: 1px solid var(--aura-talisman-line);
+}
+
+.aura-talisman__label dt,
+.aura-talisman__label dd {
+  margin: 0;
+}
+
+.aura-talisman__label dt {
+  color: var(--aura-talisman-muted);
+  font: 500 0.67rem/1.4 var(--font-mono, monospace);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.aura-talisman__label dd {
+  color: #c5cad5;
+  font-size: 0.86rem;
+  line-height: 1.45;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .aura-talisman__segments {
+    animation: aura-talisman-segments-in 220ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .aura-talisman__node {
+    animation: aura-talisman-node-in 180ms cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-delay: calc(var(--aura-talisman-index) * 30ms);
+  }
+}
+
+@keyframes aura-talisman-segments-in {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes aura-talisman-node-in {
+  from {
+    opacity: 0;
+    transform: scale(0.94);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aura-talisman__segments,
+  .aura-talisman__node,
+  .aura-talisman__chart-echo {
+    animation: none;
+    transition-duration: 1ms;
+    transform: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .aura-talisman__frame {
+    padding: 0.25rem;
+  }
+
+  .aura-talisman__label {
+    grid-template-columns: 1fr;
+  }
+
+  .aura-talisman__label dl > div {
+    grid-template-columns: 6rem minmax(0, 1fr);
+  }
+}
+
+@media (forced-colors: active) {
+  .aura-talisman__frame,
+  .aura-talisman__node-ring,
+  .aura-talisman__node-face,
+  .aura-talisman__sky-mark circle,
+  .aura-talisman__center circle {
+    forced-color-adjust: auto;
+  }
+
+  .aura-talisman__segments,
+  .aura-talisman__complete-halo,
+  .aura-talisman__complete-ring,
+  .aura-talisman__selection,
+  .aura-talisman__gold-tally,
+  .aura-talisman__node-ring,
+  .aura-talisman__node-face {
+    stroke: CanvasText;
+  }
+
+  .aura-talisman__count rect {
+    border-color: CanvasText;
+    background: Canvas;
+    fill: Canvas;
+    stroke: CanvasText;
+    color: CanvasText;
+  }
+}

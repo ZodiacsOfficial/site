@@ -1,613 +1,357 @@
-import { useRef, useState } from "preact/hooks";
-import type { RefObject } from "preact";
-import { signBySlug } from "../../lib/signs";
+import { useRef } from "preact/hooks";
 import type { SavedChart } from "../../lib/profile/schema";
-import type {
-  AuraActiveEvidence,
-  AuraComposition,
-  AuraNextActivation,
-  AuraSign,
-  AuraSignContext,
+import { trackAnalytics } from "../../lib/analytics";
+import {
+  AURA_SIGN_ORDER,
+  type AuraCabinetHolding,
+  type AuraComposition,
+  type AuraSign,
 } from "../../lib/aura/types";
 import type { WalletChain } from "../../lib/wallet/types";
+import { auraDateStamp, auraDateTime } from "../../lib/aura/copy";
 import {
-  auraCalendarLine,
-  auraDateStamp,
-  auraDateTime,
-  auraFocalReason,
-  auraRecordSubject,
-  auraRelativeDayNote,
-} from "../../lib/aura/copy";
-import { AlignmentGrid } from "./AlignmentGrid";
+  FINISH_META,
+  exactGoldCount,
+  normalizedGoldCount,
+} from "./AuraCollectionCabinet";
 import { AuraSharePreview } from "./AuraSharePreview";
+import { AuraTalisman } from "./AuraTalisman";
+import { ZodiacMedallion } from "./ZodiacMedallion";
+import { signBySlug } from "../../lib/signs";
+import "./AuraResultGallery.css";
 
 export type AuraAddressMode = "pasted" | "connected" | "restored" | "example";
 export type AuraShareState =
-  "idle" | "busy" | "shared" | "downloaded" | "unavailable" | "error";
+  | "idle"
+  | "busy"
+  | "shared"
+  | "downloaded"
+  | "unavailable"
+  | "error";
 
 export interface AuraResultProps {
   composition: AuraComposition;
-  chart: SavedChart;
+  holdings: readonly AuraCabinetHolding[];
+  chart: SavedChart | null;
   chain: WalletChain;
   checkedAt: string;
   addressMode: AuraAddressMode;
-  headingRef: RefObject<HTMLHeadingElement>;
+  selectedSign: AuraSign;
   refreshing: boolean;
   shareState: AuraShareState;
-  shareReady: boolean;
   sharePreviewUrl: string | null;
   shareSupported: boolean;
   shareAccessibleDescription: string;
-  shareFocusSign: AuraSign | null;
-  shareChartFactEligible: boolean;
-  shareChartFact: boolean;
+  profileReady: boolean;
+  availableCharts: SavedChart[];
+  selectedChartId: string;
   onRefresh(): void;
   onClear(): void;
+  onOpenCollection?(): void;
   onShowExample(origin?: HTMLElement | null): void | Promise<void>;
+  onSelectChart(id: string): void;
   onCreateSharePreview(): void;
-  onRetryShareSetup(): void;
   onSharePreview(): void;
   onDownloadPreview(): void;
   onCloseSharePreview(): void;
-  onShareChartFactChange(checked: boolean): void;
-  onResponse(value: "meaningful" | "not-yet"): void;
-}
-
-function nextActivation(
-  composition: AuraComposition,
-): AuraNextActivation | null {
-  return (
-    composition.signs
-      .flatMap((context) =>
-        context.nextActivation ? [context.nextActivation] : [],
-      )
-      .sort((a, b) => a.beginsAt.localeCompare(b.beginsAt))[0] ?? null
-  );
-}
-
-function skyEvidenceText(evidence: AuraActiveEvidence): string {
-  if (evidence.source === "sky") {
-    return `${evidence.body} in ${signBySlug(evidence.sign).name} · sky of ${auraDateStamp(evidence.observedAt)}`;
-  }
-  return `${evidence.label} · exact ${auraDateTime(evidence.exactAt)} · inside the ±24-hour sky-event window`;
-}
-
-interface EvidencePlateProps {
-  context: AuraSignContext;
-  checkedAt: string;
-  skyAt: string;
-  mode: AuraAddressMode;
-}
-
-function EvidencePlate({
-  context,
-  checkedAt,
-  skyAt,
-  mode,
-}: EvidencePlateProps) {
-  const sign = signBySlug(context.sign);
-  const skyDate = auraDateStamp(skyAt);
-  return (
-    <details class="aura-plate" style={{ "--aura-sign": sign.hue }}>
-      <summary>
-        <img
-          src={`/assets/zodiac-icons/48/${sign.slug}.webp`}
-          width="44"
-          height="44"
-          alt=""
-        />
-        <span class="aura-plate__title">
-          <strong>{sign.name}</strong>
-          <small>Open evidence</small>
-        </span>
-        <span
-          class="aura-plate__signals"
-          role="group"
-          aria-label={`${sign.name} facts`}
-        >
-          <span>
-            {mode === "example"
-              ? "Included in the example record"
-              : "Found at this address"}
-          </span>
-          {context.natalEcho.length > 0 && (
-            <span>In the selected birth chart</span>
-          )}
-          {context.activeNow.length > 0 && <span>In the sky of {skyDate}</span>}
-        </span>
-      </summary>
-      <div class="aura-plate__body">
-        <section class="aura-register">
-          <h4>Record</h4>
-          <p>
-            {auraRecordSubject(mode)} {sign.name}.
-            {mode === "example"
-              ? " No real address was looked up."
-              : ` Checked ${auraDateTime(checkedAt)}.`}
-          </p>
-        </section>
-        {context.natalEcho.length > 0 && (
-          <section class="aura-register">
-            <h4>Chart</h4>
-            <ul>
-              {context.natalEcho.map((evidence) => (
-                <li key={evidence.id}>{evidence.label}</li>
-              ))}
-            </ul>
-          </section>
-        )}
-        {context.activeNow.length > 0 && (
-          <section class="aura-register">
-            <h4>Sky</h4>
-            <ul>
-              {context.activeNow.map((evidence) => (
-                <li key={evidence.id}>{skyEvidenceText(evidence)}</li>
-              ))}
-            </ul>
-          </section>
-        )}
-        <section class="aura-register aura-register--reading">
-          <h4>Reading</h4>
-          <p>{context.reading.text}</p>
-        </section>
-        {context.uncertainties.length > 0 && (
-          <section class="aura-register aura-register--uncertainty">
-            <h4>Limits</h4>
-            <ul>
-              {context.uncertainties.map((item) => (
-                <li key={`${item.code}-${item.value ?? ""}`}>{item.message}</li>
-              ))}
-            </ul>
-          </section>
-        )}
-        <a class="aura-plate__record-link" href={`/registry/${sign.slug}/`}>
-          View the Registry record →
-        </a>
-      </div>
-    </details>
-  );
 }
 
 export function AuraResult({
   composition,
+  holdings,
   chart,
   chain,
   checkedAt,
   addressMode,
-  headingRef,
+  selectedSign,
   refreshing,
   shareState,
-  shareReady,
   sharePreviewUrl,
   shareSupported,
   shareAccessibleDescription,
-  shareFocusSign,
-  shareChartFactEligible,
-  shareChartFact,
+  profileReady,
+  availableCharts,
+  selectedChartId,
   onRefresh,
   onClear,
+  onOpenCollection,
   onShowExample,
+  onSelectChart,
   onCreateSharePreview,
-  onRetryShareSetup,
   onSharePreview,
   onDownloadPreview,
   onCloseSharePreview,
-  onShareChartFactChange,
-  onResponse,
 }: AuraResultProps) {
-  const [response, setResponse] = useState<"meaningful" | "not-yet" | null>(
-    null,
-  );
   const shareCreateButtonRef = useRef<HTMLButtonElement>(null);
-  const focalContext = composition.focal
-    ? (composition.signs.find(
-        (context) => context.sign === composition.focal?.sign,
-      ) ?? null)
-    : null;
-  const focalSign = focalContext ? signBySlug(focalContext.sign) : null;
-  const next = nextActivation(composition);
-  const noHoldings = composition.heldSigns.length === 0;
   const illustrative = addressMode === "example";
-  const skyAt = composition.currentSky.observedAt;
-  const skyDate = auraDateStamp(skyAt);
+  const noHoldings = composition.heldSigns.length === 0;
+  const skyDate = auraDateStamp(composition.currentSky.observedAt);
   const checkedDate = auraDateStamp(checkedAt);
-  const checkedNote = illustrative ? null : auraRelativeDayNote(checkedAt, skyAt);
+  const holdingBySign = new Map(holdings.map((holding) => [holding.sign, holding]));
+  const ledgerRows = AURA_SIGN_ORDER.flatMap((sign) => {
+    const holding = holdingBySign.get(sign);
+    return holding ? [{ sign, holding }] : [];
+  });
+  const reservedCount = AURA_SIGN_ORDER.length - ledgerRows.length;
+  const chainName = chain === "solana" ? "Solana" : "Base";
 
-  const answer = (value: "meaningful" | "not-yet") => {
-    if (response) return;
-    setResponse(value);
-    onResponse(value);
-  };
+  if (noHoldings && !illustrative) {
+    return (
+      <section class="aura-result aura-result--gallery" aria-label="Opened collection">
+        <div class="aura-result__empty-recovery">
+          <h3>The case is open. Its niches are reserved.</h3>
+          <p>
+            No Registry-listed Zodiacs were found at this address. The Twelve
+            wait in canonical order.
+          </p>
+          <div>
+            <button class="btn btn--primary" type="button" onClick={onClear}>
+              Try another address
+            </button>
+            <button
+              class="btn btn--ghost"
+              type="button"
+              onClick={(event) => void onShowExample(event.currentTarget)}
+            >
+              View the sample
+            </button>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
-    <section class="aura-result" aria-labelledby="aura-result-title">
-      <div class="aura-result__sources">
-        <header>
-          <p class="aura-result__kicker">Chart · Record · Sky</p>
-          <h2 id="aura-result-title" ref={headingRef} tabIndex={-1}>
-            {illustrative
-              ? "The example, read side by side"
-              : "Three sources, read side by side"}
-          </h2>
-        </header>
-        <div class="aura-source-docket">
-          <section
-            class="aura-source aura-source--chart"
-            data-aura-source="chart"
-          >
-            <span class="aura-source__stamp">
-              {illustrative ? "Sample" : "Local"}
-            </span>
-            <h3>{illustrative ? "Example chart" : "Selected birth chart"}</h3>
-            <p>
-              {illustrative
-                ? "A sample chart, made in advance"
-                : "Read on this device; never sent"}
-            </p>
-            <small>
-              {illustrative
-                ? "None of your saved charts were touched"
-                : chart.birth.timeKnown
-                  ? "Recorded birth time"
-                  : "Unknown time · sign-level estimates only"}
-            </small>
-          </section>
-          <section
-            class="aura-source aura-source--record"
-            data-aura-source="record"
-          >
-            <span class="aura-source__stamp">
-              {illustrative
-                ? "Sample record"
-                : `Checked ${checkedDate}${checkedNote ? ` · ${checkedNote}` : ""}`}
-            </span>
-            <h3>Public wallet address</h3>
-            <p>
-              {composition.heldSigns.length}{" "}
-              {illustrative ? "sample" : "official"}{" "}
-              {composition.heldSigns.length === 1 ? "Zodiac" : "Zodiacs"}
-              {illustrative ? " shown" : " found"}
-            </p>
-            <small>
-              {illustrative
-                ? "No real address was looked up"
-                : `${chain === "solana" ? "Solana" : "Base"} public record${checkedNote ? " · Re-check to update" : ""}`}
-            </small>
-          </section>
-          <section class="aura-source aura-source--sky" data-aura-source="sky">
-            <span class="aura-source__stamp">{skyDate}</span>
-            <h3>The sky</h3>
-            <p>
-              Sun in {signBySlug(composition.currentSky.sun.sign).name} · Moon
-              in {signBySlug(composition.currentSky.moon.sign).name}
-            </p>
-            <small>Computed for this visit</small>
-          </section>
-        </div>
-        <p class="aura-source-docket__join">
-          These sources are read side by side. The wallet record never changes
-          the birth chart; it only determines which held signs receive a
-          reading.
-        </p>
-      </div>
-
-      <div class="aura-result__composition">
-        <AlignmentGrid
-          chart={chart}
+    <section class="aura-result aura-result--gallery" aria-label="Opened collection">
+      <div class="aura-result__room aura-result__room--talisman" id="aura-talisman-room">
+        <AuraTalisman
           composition={composition}
-          checkedAt={checkedAt}
-          illustrative={illustrative}
+          holdings={holdings}
+          includeChart={Boolean(chart)}
+          selectedSign={selectedSign}
+          heading={illustrative
+            ? "The sample’s dated seal."
+            : "The collection’s dated seal."}
         />
-      </div>
-
-      <section
-        class="aura-result__fact"
-        data-aura-fact="true"
-        aria-labelledby="aura-fact-title"
-      >
-        <p class="aura-result__kicker">Where they meet</p>
-        <h3 id="aura-fact-title">{composition.auraSentence}</h3>
-        {focalSign && (
-          <p>
-            For this reading, that {focalSign.name}{" "}
-            {illustrative
-              ? "included in this example"
-              : "found at this address"}{" "}
-            becomes a talisman for this visit — a symbolic focus, not a score
-            or an ownership claim.
-          </p>
-        )}
-        {noHoldings && !illustrative && (
-          <div class="aura-result__empty-recovery">
-            <h4>The lookup found no Registry-listed Zodiac</h4>
+        <section class="aura-result__personalize" aria-labelledby="aura-personalize-title">
+          <div>
+            <p class="aura-result__kicker">Chart echo · optional</p>
+            <h3 id="aura-personalize-title">Add your chart’s echo.</h3>
             <p>
-              This does not mean the address is empty; Aura checks only the
-              Zodiac mints and contracts listed by this Registry. You do not
-              need to buy one. Check that this is the intended public address
-              and network, re-check the record, try another address, or use the
-              example to see how Aura works.
+              Faint inner marks from a chart saved on this device. They never
+              change the public collection, and they stay out of the saved seal.
             </p>
-            <div>
-              <button class="btn btn--ghost" type="button" onClick={onClear}>
-                Try another address
-              </button>
-              <button
-                class="btn btn--ghost"
-                type="button"
-                onClick={(event) => void onShowExample(event.currentTarget)}
+          </div>
+
+          {illustrative ? (
+            <p class="aura-result__personalize-note">
+              The sample includes a pre-made chart echo.
+            </p>
+          ) : !profileReady ? (
+            <p class="aura-result__personalize-note" role="status">
+              Checking for saved charts on this device…
+            </p>
+          ) : availableCharts.length > 0 ? (
+            <div class="aura-result__chart-control">
+              <label for="aura-result-chart">Saved chart</label>
+              <select
+                id="aura-result-chart"
+                value={selectedChartId}
+                onChange={(event) => onSelectChart(event.currentTarget.value)}
               >
-                Try the example — no wallet needed
-              </button>
+                <option value="">No chart — collection and sky only</option>
+                {availableCharts.map((savedChart) => (
+                  <option key={savedChart.id} value={savedChart.id}>
+                    {savedChart.name}
+                  </option>
+                ))}
+              </select>
+              <small>
+                {chart
+                  ? `${chart.name} adds the inner echo marks.`
+                  : "Collection and sky only."}
+              </small>
             </div>
-          </div>
-        )}
-      </section>
-
-      <section
-        class="aura-result__reading"
-        data-aura-reading="true"
-        aria-labelledby="aura-reading-title"
-      >
-        <header>
-          <p class="aura-result__kicker">Symbolic reading</p>
-          <div class="aura-result__reading-head">
-            {focalSign && (
-              <img
-                class="aura-result__disc"
-                src={`/assets/zodiac-icons/128/${focalSign.slug}.webp`}
-                width="96"
-                height="96"
-                alt=""
-              />
-            )}
-            <h3 id="aura-reading-title">
-              {focalSign ? focalSign.name : "The chart stands on its own"}
-            </h3>
-          </div>
-        </header>
-        <p class="aura-result__reflection">
-          {focalContext?.reading.lead ??
-            "No official Zodiac was found at this address. The chart remains its own record without a carried sign; no absence is assigned meaning."}
-        </p>
-        {focalContext && (
-          <p class="aura-result__reading-detail">
-            {focalContext.reading.detail}
-          </p>
-        )}
-        <div class="aura-result__timing">
-          <section>
-            <h4>Why this sign</h4>
-            <p>{auraFocalReason(focalContext, skyAt, illustrative)}</p>
-          </section>
-          <section>
-            <h4>Next on the calendar</h4>
-            <p>{auraCalendarLine(next)}</p>
-          </section>
-        </div>
-      </section>
-
-      <section
-        class="aura-evidence"
-        data-aura-evidence="true"
-        aria-labelledby="aura-evidence-title"
-      >
-        <header>
-          <p class="kicker">Chart · Record · Sky · Reading</p>
-          <h3 id="aura-evidence-title">The evidence, sign by sign</h3>
-          <p>
-            Each source keeps its own label. Open a sign when you want the
-            receipts.
-          </p>
-        </header>
-        {composition.signs.map((context) => (
-          <EvidencePlate
-            key={context.sign}
-            context={context}
-            checkedAt={checkedAt}
-            skyAt={skyAt}
-            mode={addressMode}
-          />
-        ))}
-        {noHoldings && (
-          <details class="aura-plate">
-            <summary>
-              <span class="aura-plate__title">
-                <strong>Public record</strong>
-                <small>Open evidence</small>
-              </span>
-              <span class="aura-plate__signals">
-                <span>Record</span>
-              </span>
-            </summary>
-            <div class="aura-plate__body">
-              <section class="aura-register">
-                <h4>Record</h4>
-                <p>
-                  No official Zodiac was found at this address at{" "}
-                  {auraDateTime(checkedAt)}.
-                </p>
-              </section>
-              <section class="aura-register aura-register--reading">
-                <h4>Reading</h4>
-                <p>
-                  The chart stands on its own; no absence is assigned meaning.
-                </p>
-              </section>
+          ) : (
+            <div class="aura-result__personalize-empty">
+              <p>No saved chart is available on this device yet.</p>
+              <a
+                class="btn btn--ghost"
+                href="/birth-chart/?return=registry-aura"
+                onClick={() => trackAnalytics("aura_calculator")}
+              >
+                Create a birth chart
+              </a>
             </div>
-          </details>
-        )}
-      </section>
-
-      {!noHoldings && !illustrative && (
-        <section
-          class="aura-result__share"
-          data-aura-share-disclosure="true"
-          aria-labelledby="aura-share-title"
-        >
-          <div>
-            <h3 id="aura-share-title">Make a social card</h3>
-            {shareFocusSign && (
-              <p>
-                The card features {signBySlug(shareFocusSign).name}, chosen
-                from the public record and dated sky — never from the chart.
-              </p>
-            )}
-            <p>
-              The card shows one held sign, dated public-record and sky facts,
-              and a symbolic reflection. It never shows birth details or the
-              address.
-            </p>
-            <p class="aura-result__share-warning">
-              Once shared, other people and apps may save or repost the image.
-              Clearing Aura cannot remove those copies. If you add the optional
-              chart fact below, that disclosure becomes public too.
-            </p>
-          </div>
-          {shareChartFactEligible && (
-            <label class="aura-share-chart-fact">
-              <input
-                type="checkbox"
-                checked={shareChartFact}
-                onChange={(event) =>
-                  onShareChartFactChange(event.currentTarget.checked)
-                }
-              />
-              <span>
-                <strong>Add “In the selected birth chart”</strong>
-                <small>
-                  This publicly reveals that this sign appears somewhere in the
-                  selected birth chart. Sharing several chart matches can reveal
-                  more of the chart.
-                </small>
-              </span>
-            </label>
           )}
-          <button
-            ref={shareCreateButtonRef}
-            class="btn btn--primary"
-            type="button"
-            onClick={
-              !shareReady && shareState === "error"
-                ? onRetryShareSetup
-                : onCreateSharePreview
-            }
-            disabled={
-              shareState === "busy" ||
-              (!shareReady && shareState !== "error")
-            }
-          >
-            {!shareReady
-              ? shareState === "error"
-                ? "Retry card setup"
-                : "Preparing card…"
-              : shareState === "busy"
-                ? "Creating preview…"
-                : sharePreviewUrl
-                  ? "Recreate card preview"
-                  : "Create card preview"}
-          </button>
-          {sharePreviewUrl && (
-            <AuraSharePreview
-              previewUrl={sharePreviewUrl}
-              shareSupported={shareSupported}
-              accessibleDescription={shareAccessibleDescription}
-              busy={shareState === "busy"}
-              returnFocusRef={shareCreateButtonRef}
-              onShare={onSharePreview}
-              onDownload={onDownloadPreview}
-              onClose={onCloseSharePreview}
-            />
-          )}
-          <p class="aura-result__share-status" role="status">
-            {shareState === "busy" &&
-              (sharePreviewUrl
-                ? "Working with the reviewed card…"
-                : "Creating the card preview…")}
-            {shareState === "shared" && "Aura card opened in your share sheet."}
-            {shareState === "downloaded" && "Aura card downloaded."}
-            {shareState === "unavailable" &&
-              "Sharing is not available in this browser. You can download the reviewed PNG instead."}
-            {shareState === "error" &&
-              "The card could not be made on this device."}
-          </p>
         </section>
-      )}
-
-      <div class="aura-result__actions">
-        {addressMode !== "example" && (
-          <button
-            class="btn btn--ghost"
-            type="button"
-            onClick={onRefresh}
-            disabled={refreshing}
-          >
-            {refreshing ? "Re-checking…" : "Re-check the address"}
-          </button>
-        )}
-        <button class="btn btn--ghost" type="button" onClick={onClear}>
-          {addressMode === "example" ? "Close example" : "Clear this reading"}
-        </button>
-        {addressMode !== "example" && (
-          <p class="aura-result__actions-note">
-            Clearing forgets the address and result on this device.
-          </p>
-        )}
       </div>
 
-      {composition.uncertainties.length > 0 && (
-        <aside class="aura-result__limits" aria-labelledby="aura-limits-title">
-          <h3 id="aura-limits-title">What this reading leaves open</h3>
-          <ul>
-            {composition.uncertainties.map((item) => (
-              <li key={`${item.code}-${item.value ?? ""}`}>{item.message}</li>
-            ))}
-          </ul>
-        </aside>
-      )}
+      <section
+        class="aura-result__room aura-result__room--provenance"
+        id="aura-records-room"
+        aria-labelledby="aura-ledger-title"
+      >
+        <header>
+          <p class="aura-result__kicker">Provenance</p>
+          <h3 id="aura-ledger-title">The collection’s record.</h3>
+          <p>What was verified, where, and when.</p>
+        </header>
 
-      <aside class="aura-result__method" aria-labelledby="aura-method-title">
-        <h3 id="aura-method-title">How to read Registry Aura</h3>
-        <p>{composition.methodNote}</p>
-      </aside>
-
-      {!illustrative && (
-        <div
-          class="aura-result__response"
-          role="group"
-          aria-labelledby="aura-response-question"
-        >
-          <p id="aura-response-question">
-            Did this reflection feel meaningful?
-          </p>
+        <dl class="aura-ledger__meta">
           <div>
-            <button
-              type="button"
-              class="btn btn--ghost"
-              aria-disabled={response !== null}
-              aria-pressed={response === "meaningful"}
-              onClick={() => answer("meaningful")}
-            >
-              Meaningful
-            </button>
-            <button
-              type="button"
-              class="btn btn--ghost"
-              aria-disabled={response !== null}
-              aria-pressed={response === "not-yet"}
-              onClick={() => answer("not-yet")}
-            >
-              Not yet
-            </button>
+            <dt>Public collection</dt>
+            <dd>
+              {illustrative
+                ? "Curator’s sample — no address was looked up"
+                : `${chainName} · checked ${checkedDate}`}
+            </dd>
           </div>
-          {response && (
-            <p role="status">
-              Response recorded as “
-              {response === "meaningful" ? "Meaningful" : "Not yet"}.” Thank
-              you. Your response contains no sign, chart, or address data.
+          <div>
+            <dt>Dated sky</dt>
+            <dd>{skyDate} · computed on this device</dd>
+          </div>
+          {!illustrative && (
+            <div class="aura-ledger__refresh">
+              <dt>Lookup</dt>
+              <dd>
+                <button type="button" onClick={onRefresh} disabled={refreshing}>
+                  {refreshing ? "Re-checking…" : "Re-check collection"}
+                </button>
+              </dd>
+            </div>
+          )}
+        </dl>
+
+        <ol class="aura-ledger" aria-label="Record of represented signs">
+          {ledgerRows.map(({ sign, holding }) => {
+            const record = signBySlug(sign);
+            const meta = FINISH_META[holding.finish];
+            const goldCount = holding.finish === "gold"
+              ? normalizedGoldCount(holding.goldCount)
+              : null;
+            return (
+              <li key={sign} data-aura-ledger-sign={sign}>
+                <ZodiacMedallion sign={sign} className="aura-ledger__disc" />
+                <div class="aura-ledger__identity">
+                  <strong>{record.name}</strong>
+                  <span>{meta.numeral} · {meta.name}</span>
+                </div>
+                <div class="aura-ledger__facts">
+                  <span>{meta.range}</span>
+                  {goldCount && goldCount > 1n && (
+                    <span>
+                      ×{exactGoldCount(goldCount.toString())} sculptures
+                    </span>
+                  )}
+                </div>
+                <a class="aura-ledger__record" href={`/registry/${sign}/`}>
+                  Registry record <span aria-hidden="true">→</span>
+                </a>
+              </li>
+            );
+          })}
+        </ol>
+        {reservedCount > 0 && (
+          <p class="aura-ledger__reserved">
+            {reservedCount === 1
+              ? "One niche remains reserved."
+              : `${reservedCount} niches remain reserved.`}
+          </p>
+        )}
+
+        <details class="aura-result__method">
+          <summary>Method</summary>
+          <div>
+            <p>{composition.methodNote}</p>
+            <p>
+              {illustrative
+                ? "Prepared in advance — nothing was checked against a live address."
+                : `Collection checked ${auraDateTime(checkedAt)}.`}
+            </p>
+            {composition.uncertainties.length > 0 && (
+              <ul>
+                {composition.uncertainties.map((item) => (
+                  <li key={`${item.code}-${item.value ?? ""}`}>{item.message}</li>
+                ))}
+              </ul>
+            )}
+          </div>
+        </details>
+      </section>
+
+      <section
+        class="aura-result__closing"
+        data-aura-share-disclosure={illustrative ? undefined : "true"}
+        aria-labelledby="aura-closing-title"
+      >
+        <div>
+          <p class="aura-result__kicker">Continue through the Registry</p>
+          <h3 id="aura-closing-title">
+            {illustrative ? "Open your own cabinet." : "Keep this edition."}
+          </h3>
+          {!illustrative && (
+            <p class="aura-result__closing-note">
+              The seal carries the represented signs, their editions, and
+              today’s sky — never the address.
             </p>
           )}
         </div>
-      )}
+        <div class="aura-result__actions">
+          {illustrative ? (
+            <button
+              class="btn btn--primary"
+              type="button"
+              onClick={onOpenCollection ?? onClear}
+            >
+              Open my collection
+            </button>
+          ) : (
+            <>
+              <button
+                ref={shareCreateButtonRef}
+                class="btn btn--primary"
+                type="button"
+                onClick={onCreateSharePreview}
+                disabled={shareState === "busy"}
+              >
+                {shareState === "busy"
+                  ? "Creating preview…"
+                  : sharePreviewUrl
+                    ? "Recreate the seal"
+                    : "Save the seal"}
+              </button>
+              <button class="btn btn--ghost" type="button" onClick={onClear}>
+                Open another collection
+              </button>
+            </>
+          )}
+          <a class="btn btn--ghost" href="/registry/">Browse the Registry</a>
+        </div>
+        {sharePreviewUrl && !illustrative && (
+          <AuraSharePreview
+            previewUrl={sharePreviewUrl}
+            shareSupported={shareSupported}
+            accessibleDescription={shareAccessibleDescription}
+            busy={shareState === "busy"}
+            returnFocusRef={shareCreateButtonRef}
+            onShare={onSharePreview}
+            onDownload={onDownloadPreview}
+            onClose={onCloseSharePreview}
+          />
+        )}
+        {!illustrative && (
+          <p class="aura-result__share-status" role="status">
+            {shareState === "busy" && "Preparing the preview…"}
+            {shareState === "shared" && "Seal opened in your share sheet."}
+            {shareState === "downloaded" && "Seal PNG downloaded."}
+            {shareState === "unavailable" &&
+              "Sharing is unavailable in this browser. Download the PNG instead."}
+            {shareState === "error" &&
+              "The seal image could not be made on this device."}
+          </p>
+        )}
+      </section>
     </section>
   );
 }

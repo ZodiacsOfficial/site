@@ -45,11 +45,15 @@ const registryLabel: Record<Locale, string> = {
       <a class="nav__link nav__saved" href={localizePath(locale, '/profile/')} aria-current={path.startsWith(localizePath(locale, '/profile/')) ? 'page' : undefined} data-profile-glyph>{t(locale, 'navSavedCharts')}</a>
     </div>
 
-    {locale === 'en' && (
+    {locale === 'en' ? (
       <button class="nav__search" type="button" data-search-open aria-label="Search the site" aria-haspopup="dialog">
         <svg width="14" height="14" viewBox="0 0 15 15" fill="none" aria-hidden="true"><circle cx="6.5" cy="6.5" r="4.75" stroke="currentColor" stroke-width="1.4"/><path d="M10.5 10.5L13.5 13.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
         <kbd class="nav__search-kbd mono" aria-hidden="true">/</kbd>
       </button>
+    ) : (
+      <a class="nav__search" href="/?search=1" aria-label="Search the site">
+        <svg width="14" height="14" viewBox="0 0 15 15" fill="none" aria-hidden="true"><circle cx="6.5" cy="6.5" r="4.75" stroke="currentColor" stroke-width="1.4"/><path d="M10.5 10.5L13.5 13.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+      </a>
     )}
 
     <a
@@ -177,6 +181,11 @@ const registryLabel: Record<Locale, string> = {
   }
   .nav__sep { color: var(--muted); margin: 0 4px; }
   .nav__dim { color: var(--text-2); font-weight: 500; }
+  @media (max-width: 819.5px) {
+    /* On phones the persistent search control occupies the wordmark's
+       former "org" position: ZODIACS · [search]. */
+    .nav__dim { display: none; }
+  }
 
   .nav__links { display: none; align-items: center; gap: 2px; }
   @media (min-width: 820px) { .nav__links { display: inline-flex; } }
@@ -206,6 +215,7 @@ const registryLabel: Record<Locale, string> = {
     background: none;
     color: var(--text-2);
     cursor: pointer;
+    text-decoration: none;
     transition: color var(--dur-1) var(--ease), background var(--dur-2) var(--ease);
   }
   .nav__search:hover { color: var(--text); background: rgba(198, 204, 218, 0.07); }
@@ -232,10 +242,10 @@ const registryLabel: Record<Locale, string> = {
     display: inline-flex;
     align-items: center;
     min-height: 34px;
-    padding: 0 8px;
-    border-radius: var(--r-full);
+    padding: 0 2px 0 16px;
+    border-left: 1px solid var(--hair-2);
     font-family: var(--font-serif);
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 400;
     letter-spacing: 0.08em;
     text-transform: uppercase;
@@ -248,10 +258,6 @@ const registryLabel: Record<Locale, string> = {
   .nav__chip[aria-current='page'] { color: var(--text); }
   @media (min-width: 820px) {
     .nav__chip {
-      padding: 0 2px 0 16px;
-      border-left: 1px solid var(--hair-2);
-      border-radius: 0;
-      font-size: 13px;
       letter-spacing: 0.14em;
     }
   }

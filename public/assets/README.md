@@ -10,6 +10,8 @@ reverse-engineer filenames from `index.html`.
 - `sdk/zodiac-icons/circle/<sign>.png` - SDK brand kit circle icons.
 - `nuggets/<sign>.png` - primary sculptural sign figures.
 - `nuggets/thumb/<sign>.png` - smaller figure thumbnails for grid and mobile UI.
+- `cabinet-materials/<material>/<sign>.{avif,webp}` - normalized 256px
+  Bronze, Silver, and Gold Cabinet of Twelve editions with a shared 14% inset.
 - `og/share.png` - 1200 x 630 social sharing image.
 - `manifest.json` - machine-readable inventory of every PNG, including dimensions and byte sizes.
 
@@ -46,6 +48,7 @@ Do not rename these files without updating:
 | `sdk/zodiac-icons/circle` | 12 | PNG | SDK brand kit circle icons, 1024 x 1024 |
 | `nuggets` | 12 | PNG | Primary figure artwork, original display assets |
 | `nuggets/thumb` | 12 | PNG | Thumbnail variants, max dimension around 320 px |
+| `cabinet-materials` | 72 | AVIF/WebP | Deterministic Bronze, Silver, and Gold derivatives for the collector cabinet |
 | `og` | 1 | PNG | Social preview image, 1200 x 630 |
 
 ## Validation
@@ -54,6 +57,12 @@ Run this from the repo root:
 
 ```bash
 node scripts/validate-assets.mjs
+```
+
+Rebuild Cabinet of Twelve material derivatives with:
+
+```bash
+npm run data:cabinet-materials
 ```
 
 The validator checks that every manifest entry exists, is a PNG, and matches the

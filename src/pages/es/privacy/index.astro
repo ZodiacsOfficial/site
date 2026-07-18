@@ -47,9 +47,11 @@ const jsonLd = [
 
       <h2>Registry Aura, Shelf y direcciones públicas</h2>
       <p>
-        Registry Aura lee en paralelo el resumen de una carta guardada en este
-        navegador, una dirección pública de billetera y el cielo fechado. La
-        carta y la lectura simbólica se componen en tu dispositivo. Al componer
+        Registry Aura lee en paralelo una dirección pública de billetera y el
+        cielo fechado. Si eliges añadir una carta guardada en este navegador,
+        su resumen es una capa comparativa opcional que permanece en el
+        dispositivo. El patrón y cualquier reflexión simbólica se componen en
+        tu dispositivo. Al componer
         o actualizar un Aura, nuestro endpoint de tenencias recibe la dirección
         pública y la reenvía al proveedor de datos de blockchain configurado
         para comprobar qué entradas del Registro están presentes. El proveedor
@@ -91,7 +93,7 @@ const jsonLd = [
       <p>
         De forma predeterminada, Aura guarda la dirección pública, la red, los
         signos del Registro encontrados, la hora de consulta y el identificador
-        de la carta seleccionada en el almacenamiento de sesión de esta pestaña,
+        opcional de la carta seleccionada en el almacenamiento de sesión de esta pestaña,
         con una vigencia de restauración de ocho horas. La opción desmarcada
         «Recordar esta dirección en este dispositivo» guarda los mismos campos
         en el almacenamiento local con una vigencia de restauración de 24 horas.
@@ -106,9 +108,7 @@ const jsonLd = [
         Las imágenes para compartir se componen en tu dispositivo. De forma
         predeterminada omiten dirección, red, nombre y datos de la carta,
         posiciones exactas, geometría y la cantidad o lista de signos hallados.
-        Un control opcional, válido solo durante la sesión, puede añadir que el
-        signo público destacado aparece en algún lugar de la carta seleccionada.
-        Si lo activas, ese dato pasa a ser público. La aplicación de destino
+        No incluyen ningún dato de una carta guardada. La aplicación de destino
         elegida en la hoja de compartir aplica sus propias condiciones. Borrar
         Aura no puede retirar copias guardadas o republicadas por otras personas
         o servicios.

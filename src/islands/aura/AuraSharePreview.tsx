@@ -40,13 +40,12 @@ export function AuraSharePreview({
       aria-describedby="aura-share-preview-note"
     >
       <header>
-        <p class="aura-result__kicker">Exactly what will be shared</p>
+        <p class="aura-result__kicker">Artwork preview</p>
         <h4 id="aura-share-preview-title" ref={headingRef} tabIndex={-1}>
-          Review your card
+          Review your talisman
         </h4>
         <p id="aura-share-preview-note">
-          This image was composed on this device. Inspect it before sharing or
-          downloading it.
+          The represented signs, their material editions, and the dated sky.
         </p>
       </header>
       <figure>
@@ -57,7 +56,7 @@ export function AuraSharePreview({
           src={previewUrl}
           width="1080"
           height="1350"
-          alt="Preview of the Registry Aura card that will be shared"
+          alt="Preview of the Registry Aura dated collection talisman"
           aria-describedby="aura-share-preview-card-description"
           draggable={false}
         />
@@ -72,7 +71,7 @@ export function AuraSharePreview({
             }}
             aria-disabled={busy}
           >
-            Share card
+            Share image
           </button>
         )}
         <button
