@@ -512,13 +512,14 @@ if (sitemapLocs.has('/registry/aura/') !== registryAuraBuildEnabled) {
   fail('sitemap.xml: Registry Aura inclusion does not match the Registry build marker');
 }
 
-// Coordinated indexing baseline (2026-07-15): compatibility prose remains
+// Coordinated indexing baseline (2026-07-19): compatibility prose remains
 // English-only under D9, while birthdays, Chinese zodiac, and the Registry
-// disclosure ship on every locale rail. Keep exact counts so sitemap drift
-// fails loudly.
+// disclosure ship on every locale rail. The shareable birth-chart page
+// (/birth-chart/someone-else/) joined the index with the cabinet release.
+// Keep exact counts so sitemap drift fails loudly.
 const registryAuraIndexed = sitemapLocs.has('/registry/aura/');
 const sitemapPolicy = {
-  total: 2318 + Number(registryAuraIndexed),
+  total: 2319 + Number(registryAuraIndexed),
   compatibilityPairs: 78,
   birthdays: 1830,
   chineseZodiac: 65,

@@ -34,7 +34,7 @@ describe('Registry Aura build flag', () => {
     expect(on).toContain('class="static-site__card static-site__card--aura"');
     expect(on).toContain('Cabinet of Twelve');
     expect(on).toContain('Dated talisman');
-    expect(on).toContain('Accession ledger');
+    expect(on).toContain('The record');
     expect(on).toContain(REGISTRY_AURA_ENTRY_COPY.description);
     expect(on).toContain('Explore the finished sample');
     expect(injectRegistryAuraLanding(on, { PUBLIC_REGISTRY_AURA_ENABLED: '1' }).output).toBe(on);
