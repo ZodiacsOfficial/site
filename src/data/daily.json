@@ -1,58 +1,58 @@
 {
-  "date": "2026-07-17",
+  "date": "2026-07-18",
   "bodies": [
     {
       "body": "Moon",
-      "lon": 156.94,
+      "lon": 170.61,
       "sign": "virgo",
-      "degree": 6.9,
+      "degree": 20.6,
       "retrograde": false
     },
     {
       "body": "Sun",
-      "lon": 114.94,
+      "lon": 115.89,
       "sign": "cancer",
-      "degree": 24.9,
+      "degree": 25.9,
       "retrograde": false
     },
     {
       "body": "Mercury",
-      "lon": 108.08,
+      "lon": 107.6,
       "sign": "cancer",
-      "degree": 18.1,
+      "degree": 17.6,
       "retrograde": true
     },
     {
       "body": "Venus",
-      "lon": 158.58,
+      "lon": 159.67,
       "sign": "virgo",
-      "degree": 8.6,
+      "degree": 9.7,
       "retrograde": false
     },
     {
       "body": "Mars",
-      "lon": 73.15,
+      "lon": 73.84,
       "sign": "gemini",
-      "degree": 13.1,
+      "degree": 13.8,
       "retrograde": false
     },
     {
       "body": "Jupiter",
-      "lon": 123.75,
+      "lon": 123.97,
       "sign": "leo",
-      "degree": 3.8,
+      "degree": 4,
       "retrograde": false
     },
     {
       "body": "Saturn",
-      "lon": 14.67,
+      "lon": 14.69,
       "sign": "aries",
       "degree": 14.7,
       "retrograde": false
     },
     {
       "body": "Uranus",
-      "lon": 64.47,
+      "lon": 64.51,
       "sign": "gemini",
       "degree": 4.5,
       "retrograde": false
@@ -66,7 +66,7 @@
     },
     {
       "body": "Pluto",
-      "lon": 304.51,
+      "lon": 304.49,
       "sign": "aquarius",
       "degree": 4.5,
       "retrograde": true
@@ -74,7 +74,19 @@
   ],
   "moon": {
     "phase": "Waxing Crescent",
-    "illumination": 0.129
+    "illumination": 0.212
   },
-  "events": []
+  "events": [
+    {
+      "kind": "aspect",
+      "a": "Uranus",
+      "b": "Pluto",
+      "type": "trine",
+      "at": "2026-07-18T04:39:44.443Z",
+      "aSign": "gemini",
+      "aDegree": 4.5,
+      "bSign": "aquarius",
+      "bDegree": 4.5
+    }
+  ]
 }
