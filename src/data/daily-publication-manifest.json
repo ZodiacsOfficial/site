@@ -31,13 +31,13 @@
   "generation": {
     "mode": "deterministic-template",
     "generatorId": "zodiacs.daily-renderer.v1.1",
-    "generatorSha256": "4feb18d7e6f4746389fcf1b3e691825c1b6a5dde5af84cdd58a2e2ad624e2e5c",
+    "generatorSha256": "7453ba6d8fc1c1b9a1fdf751a03ce6497b663358956034c99b2ce91c95a8b52c",
     "model": null,
     "freeformModelOutput": false
   },
   "verification": {
     "verifierId": "zodiacs.daily-verifier.v2",
-    "verifierSha256": "32f4de9e262b69aa5b590945f4d8f821ec7a9c379ba9f0b54e0720f5a8e20065",
+    "verifierSha256": "df20e28cf692e1c279221d6be5bbe10868d48576613ff41b96b47cf1d0d00d89",
     "independentFromGenerator": false,
     "astronomyAudit": {
       "implementation": "zodiacs.daily-fact-audit.v1",
