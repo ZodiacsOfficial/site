@@ -101,19 +101,19 @@ const ERROR_COPY: Record<
   string
 > = {
   invalid_address:
-    "That does not read as a complete Solana or Base public address.",
+    "That doesn’t look like a complete wallet address. Check it and try again.",
   forbidden:
     "The lookup was refused because the request did not come from this site.",
-  disabled: "Registry Aura lookups are not enabled in this environment.",
-  method: "The public-record lookup could not be started.",
+  disabled: "Collection lookups are not enabled in this environment.",
+  method: "The lookup could not be started. Please try again.",
   rate_limited:
-    "The public record has been checked often from this connection. Please wait and try again.",
+    "This address has been checked a lot from this connection. Give it a minute and try again.",
   unavailable:
-    "The blockchain data provider did not return a complete answer. No absence has been inferred.",
+    "The blockchain provider didn’t answer completely, so nothing was marked missing. Try again in a moment — or open the sample.",
   network:
-    "The public record could not be reached. Check your connection and try again.",
+    "The lookup couldn’t reach the public record. Check your connection and try again.",
   malformed:
-    "The public record returned an incomplete answer. Please try again later.",
+    "The public record sent back an incomplete answer. Please try again shortly.",
 };
 
 function returnInterval(savedAt: string, now = Date.now()): string {
@@ -290,7 +290,7 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
       setAddress(nextAddress);
       setAddressMode("connected");
       setStatus(
-        "The connected account changed. Compose a fresh Aura for this address.",
+        "The connected account changed. Open the collection again for this address.",
       );
     } else {
       sessionRef.current?.dispose();
@@ -298,7 +298,7 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
       setAddress("");
       setAddressMode("pasted");
       setConnectedWallet(null);
-      setStatus("The wallet disconnected. The composed Aura was cleared.");
+      setStatus("The wallet disconnected. The opened collection was cleared.");
     }
     requestAnimationFrame(() => addressInputRef.current?.focus());
   };
@@ -403,7 +403,7 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
       })
       .catch(() => {
         setError(
-          "The saved Aura could not be restored. Clear its data and compose again.",
+          "The saved collection could not be restored. Clear its data and try again.",
         );
         setPersistenceReady(true);
       });
@@ -599,7 +599,7 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
     setRequestState("idle");
     clearStored();
     setStatus(
-      `${session.walletName} connected. Aura will use one compatible public address for this composition.`,
+      `${session.walletName} connected. One compatible public address will be used.`,
     );
     setError("");
   };
@@ -682,7 +682,7 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
     setStatus(
       wasExample
         ? "Sample closed."
-        : "Aura data was cleared from this device.",
+        : "Saved data was cleared from this device.",
     );
     setShareState("idle");
     requestAnimationFrame(() => {
@@ -751,17 +751,6 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
     setShareState("idle");
     focusResultRef.current = true;
   };
-
-  useEffect(() => {
-    const trigger = document.getElementById("aura-primer-example");
-    if (!(trigger instanceof HTMLAnchorElement)) return;
-    const openExample = (event: Event) => {
-      event.preventDefault();
-      void showExample(trigger);
-    };
-    trigger.addEventListener("click", openExample);
-    return () => trigger.removeEventListener("click", openExample);
-  }, []);
 
   const updateSelectedChart = (nextId: string) => {
     const nextChart = selectedChart(profile.charts, nextId);
@@ -921,51 +910,17 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
 
   return (
     <div id="aura-composer" class="aura-composer">
-      <section class="aura-stage" aria-label="The collection cabinet">
-        <AuraCollectionCabinet
-          key={result?.checkedAt ?? "sample"}
-          holdings={stagedHoldings}
-          revealMode={stagedRevealMode}
-          selectedSign={activeSign}
-          onSelect={(sign) => {
-            setSelectedSign(sign);
-            trackAnalytics("aura_cabinet_select");
-          }}
-          onRevealOutcome={
-            stagedRevealMode === "animate"
-              ? (outcome) => trackAnalytics("aura_cabinet_reveal", { outcome })
-              : undefined
-          }
-          illustrative={stagedIllustrative}
-          kicker={stageKicker}
-          recordedNote={stageRecordedNote}
-          plateDate={stagePlateDate}
-          headingRef={resultHeadingRef}
-        />
-      </section>
-
-      <section class="aura-desk aura-entry" id="aura-desk" aria-labelledby="aura-desk-title">
-      <div class="aura-entry__intro">
-        <div>
-          <span class="kicker">The collection desk</span>
-          <h2 id="aura-desk-title">Open a public collection.</h2>
-          <p>
-            Enter one public Solana or Base address. Aura checks only for the
-            Twelve, then displays what it finds in the cabinet above.
+      <header class="aura-page__hero">
+        <div class="aura-page__hero-lede">
+          <em class="kicker">The Registry</em>
+          <h1 class="display">See your Zodiac collection.</h1>
+          <p class="aura-page__hero-copy">
+            Every Zodiac you hold takes its place in the Cabinet of Twelve —
+            and the more of a sign you hold, the finer its edition: pastel,
+            bronze, silver, or gold.
           </p>
         </div>
-        {persistenceReady && !result && !address && (
-          <button
-            ref={exampleButtonRef}
-            class="btn btn--ghost aura-example-button"
-            type="button"
-            onClick={(event) => void showExample(event.currentTarget)}
-          >
-            Watch the sample reveal
-          </button>
-        )}
-      </div>
-
+      <section class="aura-desk" id="aura-desk" aria-label="Open your collection">
       <form
         class="aura-compose"
         onSubmit={(event) => {
@@ -974,10 +929,10 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
         }}
         aria-busy={requestState === "busy"}
       >
-        <section class="aura-step" aria-label="Public address lookup">
-          <div class="aura-field aura-field--address">
-            <label for="aura-address">Public Solana or Base address</label>
-            <input
+          <div class="aura-desk__band">
+            <div class="aura-field aura-field--address">
+              <label for="aura-address">Wallet address</label>
+              <input
               ref={addressInputRef}
               id="aura-address"
               name="address"
@@ -987,7 +942,7 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
               autoComplete="off"
               autoCapitalize="none"
               spellcheck={false}
-              placeholder="Paste one public address"
+              placeholder="Paste your wallet address"
               aria-describedby="aura-address-note aura-status"
               onInput={(event) => {
                 requestRef.current?.abort();
@@ -1003,23 +958,33 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
                 setError("");
               }}
             />
-            <p id="aura-address-note" class="aura-field__note">
-              {detectedChain
-                ? `Ready to read this ${detectedChain === "solana" ? "Solana" : "Base"} public collection.`
-                : "The network is recognized as you type."}
-            </p>
-          </div>
-
-          <div class="aura-compose__submit">
+            </div>
             <button
-              class="btn btn--primary"
+              class="btn btn--primary aura-desk__open"
               type="submit"
               disabled={!parsedAddress || requestState === "busy"}
             >
-              {requestState === "busy" ? "Opening…" : "Open collection"}
+              {requestState === "busy" ? "Opening…" : "Show my collection"}
             </button>
           </div>
-
+          <div class="aura-desk__meta">
+            <p id="aura-address-note" class="aura-field__note">
+              {detectedChain
+                ? `Ready — this reads as a ${detectedChain === "solana" ? "Solana" : "Base"} address.`
+                : "Works with Solana and Base wallets — the network is recognized as you type."}
+            </p>
+            {persistenceReady && !result && !address && (
+              <button
+                id="aura-primer-example"
+                ref={exampleButtonRef}
+                class="aura-desk__sample"
+                type="button"
+                onClick={(event) => void showExample(event.currentTarget)}
+              >
+                Watch a sample first <span aria-hidden="true">→</span>
+              </button>
+            )}
+          </div>
           <details class="aura-wallet-connect aura-desk-details">
             <summary>Wallet, storage, and method</summary>
           {connectedWallet && (
@@ -1247,14 +1212,13 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
             to 24 hours.
           </p>
           <p class="aura-field__note aura-desk-method">
-            The lookup is read-only: Aura sends the public address to its
+            The lookup is read-only: it sends the public address to its
             holdings provider and checks only for the Twelve. Today’s Sun and
             Moon are computed on this device.{" "}
             <a href="/privacy/">Privacy</a> ·{" "}
             <a href="/disclosure/">Disclosure</a>
           </p>
           </details>
-        </section>
       </form>
 
       <p
@@ -1277,6 +1241,30 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
           </button>
         </div>
       )}
+      </section>
+      </header>
+
+      <section class="aura-stage" aria-label="The collection cabinet">
+        <AuraCollectionCabinet
+          key={result?.checkedAt ?? "sample"}
+          holdings={stagedHoldings}
+          revealMode={stagedRevealMode}
+          selectedSign={activeSign}
+          onSelect={(sign) => {
+            setSelectedSign(sign);
+            trackAnalytics("aura_cabinet_select");
+          }}
+          onRevealOutcome={
+            stagedRevealMode === "animate"
+              ? (outcome) => trackAnalytics("aura_cabinet_reveal", { outcome })
+              : undefined
+          }
+          illustrative={stagedIllustrative}
+          kicker={stageKicker}
+          recordedNote={stageRecordedNote}
+          plateDate={stagePlateDate}
+          headingRef={resultHeadingRef}
+        />
       </section>
 
       {result && (

@@ -57,7 +57,7 @@ function TalismanArtwork({ model }: { model: AuraTalismanModel }) {
       data-aura-talisman-mode={model.collectionMode}
       data-aura-talisman-full={model.fullTwelve ? 'true' : 'false'}
     >
-      <title>Registry Aura collection talisman</title>
+      <title>The Cabinet of Twelve — collection seal</title>
       <desc>{summary}</desc>
 
       <defs aria-hidden="true">
@@ -185,7 +185,7 @@ function TalismanArtwork({ model }: { model: AuraTalismanModel }) {
 
       <g class="aura-talisman__center" aria-hidden="true">
         <circle cx="500" cy="500" r="86" />
-        <text class="aura-talisman__center-mark" x="500" y="491">AURA</text>
+        <text class="aura-talisman__center-mark" x="500" y="491">THE TWELVE</text>
         <text
           class="aura-talisman__center-date"
           x="500"
@@ -227,7 +227,7 @@ export function AuraTalisman({
       data-aura-talisman
     >
       <header class="aura-talisman__header">
-        <p class="aura-talisman__kicker">Registry Aura · {date} UTC</p>
+        <p class="aura-talisman__kicker">The Cabinet of Twelve · {date} UTC</p>
         <h3>{heading}</h3>
         <p>{description}</p>
       </header>
@@ -240,7 +240,7 @@ export function AuraTalisman({
         <dl>
           <div>
             <dt>Collection</dt>
-            <dd>{model.collectionPoints.length} of the Twelve represented</dd>
+            <dd>{model.collectionPoints.length} of the Twelve</dd>
           </div>
           <div>
             <dt>Dated sky</dt>

@@ -25,21 +25,21 @@ if (availableChains.length === 0) {
   throw new Error('Registry Aura is enabled but no Solana or Base RPC provider is configured.');
 }
 
-const title = 'Registry Aura — The Collector’s Cabinet | Zodiacs.org';
+const title = 'See your Zodiac collection — The Cabinet of Twelve | Zodiacs.org';
 const description =
-  'Open any public Solana or Base address and see its Registry Zodiacs as a collection — twelve niches, four verified editions, sealed with today’s date.';
+  'Paste a Solana or Base wallet address and see every Zodiac you hold as a collection — each sign in its edition, from pastel to gold, sealed with today’s date.';
 const jsonLd = [
   {
     '@type': 'BreadcrumbList',
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Zodiacs.org', item: 'https://zodiacs.org/' },
       { '@type': 'ListItem', position: 2, name: 'The Registry', item: 'https://zodiacs.org/registry/' },
-      { '@type': 'ListItem', position: 3, name: 'Registry Aura', item: 'https://zodiacs.org/registry/aura/' },
+      { '@type': 'ListItem', position: 3, name: 'The Cabinet of Twelve', item: 'https://zodiacs.org/registry/aura/' },
     ],
   },
   {
     '@type': 'WebApplication',
-    name: 'Registry Aura',
+    name: 'The Cabinet of Twelve',
     url: 'https://zodiacs.org/registry/aura/',
     description,
     applicationCategory: 'LifestyleApplication',
@@ -58,35 +58,12 @@ const jsonLd = [
   clientUi
 >
   <section class="section container aura-page">
-    <header class="aura-page__hero">
-      <em class="kicker">Registry Aura · The Collector’s Cabinet</em>
-      <h1 class="display">Twelve niches. Four materials. One public address.</h1>
-      <p class="aura-page__hero-copy">
-        Open any Solana or Base address and see its Registry Zodiacs as a
-        collection — each sign in its verified edition, sealed with today’s
-        date.
-      </p>
-      <div class="aura-page__cta">
-        <a class="btn btn--primary" href="#aura-desk">
-          <span>Open a collection</span>
-          <span class="orb" aria-hidden="true">↓</span>
-        </a>
-        <a
-          id="aura-primer-example"
-          class="aura-page__sample-link"
-          href="#aura-composer"
-        >
-          Watch the sample reveal <span aria-hidden="true">→</span>
-        </a>
-      </div>
-    </header>
-
     <RegistryAura client:load availableChains={availableChains} />
 
     <noscript>
       <p class="aura-status" data-error="true">
         The sample cabinet above works without JavaScript. Enable JavaScript to
-        open a live collection.
+        open your own collection.
       </p>
     </noscript>
   </section>

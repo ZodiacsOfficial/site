@@ -67,6 +67,9 @@ const BANNED_PAGE_TEXT = [
   /accession/i,
   /hallmark/i,
   /deterministic/i,
+  /\bniches?\b/i,
+  // The product is the Cabinet of Twelve; "aura" stays internal.
+  /\baura\b/i,
 ];
 
 function normalized(value) {
@@ -192,6 +195,16 @@ async function waitForStageSettled(page) {
   return cabinet;
 }
 
+async function waitForStageRevealStart(page) {
+  // The stage remounts on a fresh accession; wait until the new cabinet has
+  // actually left "settled" so the settled-wait below cannot pass on the
+  // previous cabinet.
+  await page.waitForFunction(() => (
+    document.querySelector('.aura-stage .aura-collection-cabinet')
+      ?.getAttribute('data-aura-cabinet-stage') !== 'settled'
+  ));
+}
+
 async function waitForStageKicker(page, expected) {
   await page.waitForFunction((text) => (
     document.querySelector('.aura-stage .aura-collection-cabinet__kicker')
@@ -296,16 +309,18 @@ async function verifyNoJavaScriptSample(browser, baseURL) {
   await page.goto(`${baseURL}/registry/aura/`, { waitUntil: 'domcontentloaded' });
 
   assert.equal(
-    normalized(await page.locator('.aura-page__hero .kicker').innerText()),
-    'Registry Aura · The Collector’s Cabinet',
+    normalized(await page.locator('.aura-page__hero .kicker').innerText()).toLowerCase(),
+    'the registry',
   );
   assert.equal(
     normalized(await page.locator('h1').innerText()),
-    'Twelve niches. Four materials. One public address.',
+    'See your Zodiac collection.',
   );
+  // The address box server-renders inside the hero band, consumer-labelled.
+  assert.equal(await page.locator('#aura-address').count(), 1);
   assert.equal(
-    normalized(await page.locator('#aura-primer-example').innerText()),
-    'Watch the sample reveal →',
+    normalized(await page.locator('label[for="aura-address"]').innerText()),
+    'Wallet address',
   );
 
   // The stage server-renders the curator's sample: no JavaScript, full case.
@@ -372,6 +387,7 @@ async function verifySampleAndLiveCollection(browser, baseURL) {
 
   await installCabinetStageRecorder(page);
   await page.locator('#aura-primer-example').click();
+  await waitForStageRevealStart(page);
   await waitForStageKicker(page, 'Curator’s sample');
   const sampleCabinet = await waitForStageSettled(page);
   assertUpgradeSequence(await recordedCabinetStages(page), 'the explicitly opened sample');
@@ -401,7 +417,8 @@ async function verifySampleAndLiveCollection(browser, baseURL) {
 
   await installCabinetStageRecorder(page);
   await page.locator('#aura-address').fill(address);
-  await page.getByRole('button', { name: 'Open collection', exact: true }).click();
+  await page.getByRole('button', { name: 'Show my collection', exact: true }).click();
+  await waitForStageRevealStart(page);
   await waitForStageKicker(page, 'Collection opened');
   const liveCabinet = await waitForStageSettled(page);
   assert.equal(lookups, 1);
@@ -422,7 +439,7 @@ async function verifySampleAndLiveCollection(browser, baseURL) {
     /The collection’s dated seal\./,
   );
   assert.equal(await provenance.locator('[data-aura-ledger-sign]').count(), 4);
-  assert.match(normalized(await provenance.innerText()), /8 niches remain reserved\./);
+  assert.match(normalized(await provenance.innerText()), /8 places remain reserved\./);
   assert.match(normalized(await provenance.innerText()), /Solana · checked July 16, 2026/);
   // The record keeps the exact figure in plain words.
   assert.match(normalized(await provenance.innerText()), /×3 sculptures/i);
@@ -507,7 +524,8 @@ async function verifySampleAndLiveCollection(browser, baseURL) {
   const paintedText = painted.join(' ');
   const paintedLower = paintedText.toLowerCase();
   for (const expected of [
-    'collection talisman',
+    'collection seal',
+    'the cabinet of twelve',
     'cancer',
     'leo',
     'scorpio',
@@ -628,12 +646,22 @@ async function verifyDesktopFold(browser, baseURL) {
   const cabinet = stageCabinet(page);
   await assertSettledEditions(cabinet, 'the desktop static sample');
   await assertCabinetCraft(cabinet, 'the 1280px static sample');
-  // Desktop docks the placard beside the case so selection never scrolls.
+  // The case owns the full width; its label hangs beneath it.
   const frame = await page.locator('.aura-stage .aura-collection-cabinet__frame').boundingBox();
   const placard = await page.locator('.aura-stage .aura-collection-cabinet__placard').boundingBox();
   assert.ok(
-    frame && placard && placard.x > frame.x + frame.width - 1,
-    'the desktop placard must dock beside the case',
+    frame && placard && placard.y >= frame.y + frame.height - 1,
+    'the placard must sit beneath the full-width case',
+  );
+  assert.ok(
+    frame && frame.width > 1000,
+    `the case must own the container width (got ${frame && Math.round(frame.width)}px)`,
+  );
+  // The address box itself lands inside the first screen.
+  const addressBox = await page.locator('#aura-address').boundingBox();
+  assert.ok(
+    addressBox && addressBox.y + addressBox.height <= 800,
+    'the wallet-address box must sit inside the first screen',
   );
   assert.equal(
     await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth),
