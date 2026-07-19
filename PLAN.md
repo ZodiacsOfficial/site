@@ -183,18 +183,19 @@ Implementation is **85 of 85 required routes pre-rendered**: the hub plus seven 
 - [x] Server-rendered `/today/` and horoscope pages remain complete without JavaScript; saved-chart behavior is progressive enhancement.
 - [x] Route, length, voice, fact-reference, distinctness, schema, sitemap, RSS, OG, and named-vector checks pass.
 - [x] All seven surfaces pass browser QA at 360px and 1280px, including server-rendered sky facts, sign-feed discovery, reduced-motion behavior, pastel icon identity, and no-JavaScript coverage.
-- [x] Three-run mobile Lighthouse gates pass every Phase 1 template: performance 97–99, accessibility 100, SEO 100, LCP ≤2.495s, CLS ≤0.013, and TBT ≤68ms. `/today/` is mandatory in the runner and the weakest—not the median—of all three runs controls the gate.
+- [x] Three-run mobile Lighthouse gates pass every Phase 1 template: performance 97–99, accessibility 100, SEO 100, LCP ≤2.415s, CLS ≤0.013, and TBT 0ms. `/today/` is mandatory in the runner and the weakest—not the median—of all three runs controls the gate.
 - [x] Static build, Astro check, dist integrity, schema validation, and bundle budgets pass; the build pre-renders 3,419 pages.
 - [x] The scheduled workflow has bounded timeouts, unconditional live-edition and IndexNow checks, immutable operation receipts, and incident reporting. A separate operations verifier rejects manual runs, missing steps/artifacts, gaps, and failures.
 - [x] Scope guard: this Phase 1 closeout changed no Registry source, generated Registry asset, SDK page, sign guide, Learn copy, or locale tree. Earlier owner-directed Registry work remains separate from this closeout.
 
 ### External Phase 1 close gates
 
-- [x] The 85-route release is live. Production checks established public `200` responses, self-canonicals, sitemap membership, robots permission, and no `noindex` directive for all twelve 2027 pages; the live horoscope canonicals were submitted for discovery through IndexNow. These facts establish technical indexability and discovery submission, not literal inclusion in a search engine's index.
+- [x] The existing 85-route release is live. Production checks established public `200` responses, self-canonicals, sitemap membership, robots permission, and no `noindex` directive for all twelve 2027 pages; the live horoscope canonicals were submitted for discovery through IndexNow. This proves the live route baseline, not deployment of the final Phase 1 closeout SHA or literal inclusion in a search engine's index.
+- [ ] Publish the final Phase 1 closeout SHA after all required checks pass, verify that exact release in production, resubmit its canonical URLs through IndexNow, and record the UTC cutover. No scheduled run before that cutover may count.
 - [ ] Obtain independent search-index inclusion evidence for each of the twelve 2027 canonical URLs, using search-engine-owned inspection/indexing evidence rather than inferring inclusion from a successful crawl, sitemap membership, or IndexNow acceptance.
 - [ ] After the final Phase 1 closeout release establishes a commit SHA and UTC cutover, log three consecutive eligible scheduled Daily Sky publications on the live site without manual intervention. Each must be a `schedule`-triggered run after the cutover, succeed through exact production verification and IndexNow, publish its immutable receipt artifact, and represent the next consecutive UTC edition date. Pre-cutover runs, manual dispatches, failed/gapped dates, and no-receipt runs do not count.
 
-Two external Phase 1 gates remain: independent search-index inclusion evidence for all twelve 2027 URLs and the three-date operational proof. Phase 2 remains locked until both pass; Phase 1 is not complete merely because the routes are indexable, discovery was submitted, and one-day checks are green.
+The final release cutover is still pending. After it lands, two independent external Phase 1 evidence gates remain: search-engine-owned inclusion evidence for all twelve 2027 URLs and the three-date operational proof. Phase 2 remains locked until both pass; Phase 1 is not complete merely because the routes are indexable, discovery was submitted, and one-day checks are green.
 
 ## Release evidence required at every phase close
 

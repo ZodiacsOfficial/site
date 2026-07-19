@@ -29,6 +29,8 @@ interface Props {
   glass?: boolean;
   /** Embed this page's one-locale UI catalog before hydrating client islands. */
   clientUi?: boolean;
+  /** Inline this route's emitted CSS at postbuild for latency-sensitive entry pages. */
+  inlineCriticalCss?: boolean;
 }
 
 const props = Astro.props;
@@ -43,7 +45,10 @@ const plausibleEnabled = Boolean(plausibleScriptUrl && !props.noindex);
 const FAVICON = "data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23060709'/%3E%3Cg%3E%3Ccircle cx='32' cy='10' r='3.4' fill='%23DE8E79'/%3E%3Ccircle cx='43' cy='12.9' r='3.4' fill='%23B9D4BE'/%3E%3Ccircle cx='51.1' cy='21' r='3.4' fill='%23B29DD0'/%3E%3Ccircle cx='54' cy='32' r='3.4' fill='%23B6D4E4'/%3E%3Ccircle cx='51.1' cy='43' r='3.4' fill='%23E0A9B4'/%3E%3Ccircle cx='43' cy='51.1' r='3.4' fill='%23B7D9B0'/%3E%3Ccircle cx='32' cy='54' r='3.4' fill='%23D3A9DE'/%3E%3Ccircle cx='21' cy='51.1' r='3.4' fill='%23B9DCE8'/%3E%3Ccircle cx='12.9' cy='43' r='3.4' fill='%23E0B080'/%3E%3Ccircle cx='10' cy='32' r='3.4' fill='%23C0DEA8'/%3E%3Ccircle cx='12.9' cy='21' r='3.4' fill='%23AE8FC9'/%3E%3Ccircle cx='21' cy='12.9' r='3.4' fill='%23A9D4C4'/%3E%3C/g%3E%3C/svg%3E";
 ---
 <!doctype html>
-<html lang={LOCALE_META[locale].htmlLang}>
+<html
+  lang={LOCALE_META[locale].htmlLang}
+  data-inline-critical-css={props.inlineCriticalCss ? '' : undefined}
+>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
@@ -60,11 +65,6 @@ const FAVICON = "data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/sv
         }
       } catch (e) {}
     </script>
-    {clientUi && (
-      <script is:inline define:vars={{ uiLocale: locale, uiMessages: clientUi }}>
-        globalThis.__ZDX_UI__ = { locale: uiLocale, messages: uiMessages };
-      </script>
-    )}
     <script is:inline>
       // Capture Chromium's one-shot install event before calculator islands
       // hydrate. The prompt itself stays hidden until two successful charts.
@@ -102,13 +102,9 @@ const FAVICON = "data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/sv
       type="font/woff2"
       crossorigin
     />
-    <link
-      rel="preload"
-      href="/fonts/jetbrains-mono-latin-wght-normal.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
+    <!-- The mono face is decorative metadata, never the LCP typeface. Let CSS
+         discover it after the sans/serif faces instead of making its 39KB
+         preload compete with the first meaningful paint on mobile. -->
     <SEO {...props} />
     {locale === 'en' && (
       <script is:inline>
@@ -175,6 +171,13 @@ const FAVICON = "data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/sv
     <slot name="head" />
   </head>
   <body>
+    <!-- Keep the route catalog ahead of every island, but out of <head> so
+         its ~20KB inline payload cannot delay CSS and LCP-font discovery. -->
+    {clientUi && (
+      <script is:inline define:vars={{ uiLocale: locale, uiMessages: clientUi }}>
+        globalThis.__ZDX_UI__ = { locale: uiLocale, messages: uiMessages };
+      </script>
+    )}
     <a href="#main" class="skip">{t(locale, 'skipContent')}</a>
     <div class="orbs" aria-hidden="true"></div>
     <div class="dust" aria-hidden="true"></div>

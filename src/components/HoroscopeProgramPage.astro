@@ -136,7 +136,7 @@ const periodLinks = Object.entries(SURFACE_META).map(([key, item]) => ({
 const skyMarkers = reading.skyStrip.markers;
 ---
 <Base
-  clientUi={hasEnhancement}
+  inlineCriticalCss={surface === 'today'}
   title={`${sign.name} ${reading.title} — ${reading.label} | Zodiacs.org`}
   description={reading.description}
   path={path}

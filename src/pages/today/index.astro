@@ -14,7 +14,7 @@ const sunSignLines = Object.fromEntries(
 );
 ---
 <Base
-  clientUi
+  inlineCriticalCss
   title="Today — Your Daily Astrology Brief | Zodiacs.org"
   description="Choose your Sun sign for a clear daily note, or privately compare today’s sky with a birth chart saved on this device."
   path="/today/"
@@ -33,7 +33,10 @@ const sunSignLines = Object.fromEntries(
       </p>
     </header>
 
-    <TodayBrief client:load sunSignLines={sunSignLines} />
+    <!-- The complete no-chart brief is server-rendered. This island owns all
+         of its copy, so it needs neither the full client UI catalog nor eager
+         hydration; personalization can wait until the first paint is idle. -->
+    <TodayBrief client:idle sunSignLines={sunSignLines} />
 
     {daily.eventsCoverage === 'unavailable' && (
       <p class="today-coverage-note">

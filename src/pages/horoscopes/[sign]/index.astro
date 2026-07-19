@@ -4,6 +4,7 @@ import DailyForYou from '../../../islands/DailyForYou';
 import programData from '../../../data/horoscope-program.json';
 import { pageReadingFromProgram } from '../../../lib/horoscope-page-data';
 import type { HoroscopeProgram } from '../../../lib/horoscope-program';
+import { UI } from '../../../lib/i18n';
 import { SIGNS, signBySlug } from '../../../lib/signs';
 
 export function getStaticPaths() {
@@ -17,7 +18,15 @@ const { signSlug } = Astro.props;
 const sign = signBySlug(signSlug);
 const program = programData as HoroscopeProgram;
 const reading = pageReadingFromProgram(program, sign.slug, 'today');
+const labels = {
+  forYourChart: UI.en.forYourChart,
+  whyThisReading: UI.en.whyThisReading,
+  natal: UI.en.natal,
+  orb: UI.en.orb,
+  openDailyBrief: UI.en.openDailyBrief,
+  allTransits: UI.en.allTransits,
+};
 ---
 <HoroscopeProgramPage signSlug={sign.slug} surface="today" reading={reading}>
-  <DailyForYou slot="enhancement" client:idle sign={sign.slug} />
+  <DailyForYou slot="enhancement" client:idle sign={sign.slug} labels={labels} />
 </HoroscopeProgramPage>

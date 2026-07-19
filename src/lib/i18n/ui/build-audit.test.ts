@@ -13,7 +13,31 @@ function htmlFiles(directory: string): string[] {
 }
 
 describe.skipIf(!existsSync(distRoot))('built client UI payloads', () => {
-  it('installs one locale catalog before every Astro island hydrates', () => {
+  it('inlines CSS only on the latency-sensitive Phase 1 entry pages', () => {
+    const criticalPaths = [
+      'today/index.html',
+      ...[
+        'aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo',
+        'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces',
+      ].map((sign) => `horoscopes/${sign}/index.html`),
+    ];
+
+    for (const path of criticalPaths) {
+      const html = readFileSync(join(distRoot, path), 'utf8');
+      expect(html, path).toContain('<style data-zdx-critical=');
+      expect(html, path).not.toMatch(/<link\b[^>]*\brel=["']stylesheet["']/i);
+      expect(html, path).not.toContain('data-inline-critical-css');
+    }
+
+    const tomorrow = readFileSync(
+      join(distRoot, 'horoscopes', 'aries', 'tomorrow', 'index.html'),
+      'utf8',
+    );
+    expect(tomorrow).toMatch(/<link\b[^>]*\brel=["']stylesheet["']/i);
+    expect(tomorrow).not.toContain('<style data-zdx-critical=');
+  });
+
+  it('installs one locale catalog before every island that uses shared UI copy', () => {
     const hydratedPages = htmlFiles(distRoot)
       .map((path) => ({ path, html: readFileSync(path, 'utf8') }))
       .filter(({ html }) => html.includes('<astro-island'));
@@ -21,7 +45,10 @@ describe.skipIf(!existsSync(distRoot))('built client UI payloads', () => {
     expect(hydratedPages.length).toBeGreaterThan(0);
     for (const { path, html } of hydratedPages) {
       const installs = html.match(/globalThis\.__ZDX_UI__/g) ?? [];
-      if (html.includes('data-standalone-widget')) {
+      const relativePath = relative(distRoot, path);
+      const ownsItsCopy = relativePath === 'today/index.html'
+        || /^horoscopes\/[^/]+\/index\.html$/.test(relativePath);
+      if (html.includes('data-standalone-widget') || ownsItsCopy) {
         expect(installs, relative(distRoot, path)).toHaveLength(0);
         continue;
       }

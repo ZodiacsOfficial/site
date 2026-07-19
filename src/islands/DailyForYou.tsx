@@ -11,7 +11,6 @@ import { TRANSIT_ORB, transitLine } from '../lib/transits';
 import PlanetGlyph from '../components/PlanetGlyph';
 import EvidenceDisclosure from './EvidenceDisclosure';
 import { signBySlug, signForLongitude } from '../lib/signs';
-import { localizePath, normalizeLocale, t, type Locale } from '../lib/i18n';
 import daily from '../data/daily.json';
 
 /** Each transiting body's current-sign hue, for the leading receipt glyph. */
@@ -19,13 +18,31 @@ const SKY_HUE: Record<string, string> = Object.fromEntries(
   daily.bodies.map((b) => [b.body, signBySlug(b.sign).hue]),
 );
 
-interface Props { sign?: string; locale?: Locale }
+interface Labels {
+  forYourChart: string;
+  whyThisReading: string;
+  natal: string;
+  orb: string;
+  openDailyBrief: string;
+  allTransits: string;
+}
+
+interface Props {
+  sign?: string;
+  labels: Labels;
+  todayHref?: string;
+  transitsHref?: string;
+}
 
 /** The transit-worthy movers; the natal side keeps every stored body. */
 const MOVERS = new Set(['Sun', 'Mercury', 'Venus', 'Mars', 'Jupiter', 'Saturn']);
 
-export default function DailyForYou({ sign, locale: rawLocale = 'en' }: Props) {
-  const locale = normalizeLocale(rawLocale);
+export default function DailyForYou({
+  sign,
+  labels,
+  todayHref = '/today/',
+  transitsHref = '/transits/',
+}: Props) {
   const { profile } = useProfile();
   const chart = [...profile.charts]
     .sort((a, b) => b.updatedAt.localeCompare(a.updatedAt))
@@ -52,9 +69,9 @@ export default function DailyForYou({ sign, locale: rawLocale = 'en' }: Props) {
   const handle = chart.name.split('·')[0].trim() || chart.name;
 
   return (
-    <section class="dfy" aria-label={t(locale, 'forYourChart')}>
+    <section class="dfy" aria-label={labels.forYourChart}>
       <div class="dfy__head">
-        <h2>{t(locale, 'forYourChart')}</h2>
+        <h2>{labels.forYourChart}</h2>
         <span class="mono dfy__stamp">{handle} · {daily.date}</span>
       </div>
       <ul class="dfy__lines">
@@ -64,23 +81,23 @@ export default function DailyForYou({ sign, locale: rawLocale = 'en' }: Props) {
           </li>
         ))}
       </ul>
-      <EvidenceDisclosure label={t(locale, 'whyThisReading')}>
+      <EvidenceDisclosure label={labels.whyThisReading}>
         <ul class="evidence-disclosure__list">
           {hits.map((a) => (
             <li class="mono evidence-disclosure__receipt" key={`${a.a}-${a.b}-${a.type}`}>
               <PlanetGlyph body={a.a} hue={SKY_HUE[a.a]} size={13} class="rcpt-glyph" />
-              <span>{a.a} {a.type} {t(locale, 'natal')} {a.b} · {t(locale, 'orb')} {a.orb.toFixed(1)}°</span>
+              <span>{a.a} {a.type} {labels.natal} {a.b} · {labels.orb} {a.orb.toFixed(1)}°</span>
             </li>
           ))}
         </ul>
       </EvidenceDisclosure>
       <div class="dfy__actions">
-        <a class="btn btn--primary dfy__primary" href={localizePath(locale, '/today/')}>
-          <span>{t(locale, 'openDailyBrief')}</span>
+        <a class="btn btn--primary dfy__primary" href={todayHref}>
+          <span>{labels.openDailyBrief}</span>
           <span class="orb" aria-hidden="true">→</span>
         </a>
-        <a class="dfy__more" href={localizePath(locale, '/transits/')}>
-          <span>{t(locale, 'allTransits')}</span>
+        <a class="dfy__more" href={transitsHref}>
+          <span>{labels.allTransits}</span>
           <span aria-hidden="true">→</span>
         </a>
       </div>
