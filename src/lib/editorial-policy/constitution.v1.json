@@ -1,0 +1,236 @@
+{
+  "schema": "zodiacs.editorial-constitution.v1",
+  "id": "org.zodiacs.daily.en",
+  "version": "1.1.0",
+  "purpose": "Publish useful daily astrology from checkable sky facts without presenting an invented human editor.",
+  "identity": {
+    "publicName": "Zodiacs.org Editorial System",
+    "authorType": "Organization",
+    "disclosureUrl": "https://zodiacs.org/about/#editorial-system",
+    "humanBylineAllowed": false,
+    "aiDisclosureRequired": true
+  },
+  "roles": [
+    {
+      "id": "facts",
+      "kind": "deterministic",
+      "mayPublish": false
+    },
+    {
+      "id": "generator",
+      "kind": "ai-or-deterministic-template-selector",
+      "mayPublish": false
+    },
+    {
+      "id": "fact-auditor",
+      "kind": "independent",
+      "mayPublish": false,
+      "veto": true
+    },
+    {
+      "id": "copy-verifier",
+      "kind": "deterministic-regeneration-and-policy",
+      "mayPublish": false,
+      "veto": true
+    },
+    {
+      "id": "gate",
+      "kind": "deterministic",
+      "mayPublish": true,
+      "failClosed": true
+    }
+  ],
+  "generation": {
+    "allowedModes": [
+      "deterministic-template"
+    ],
+    "freeformModelOutputMayPublish": false,
+    "generatorMayApproveOwnOutput": false
+  },
+  "facts": {
+    "requiredBodies": [
+      "Moon",
+      "Sun",
+      "Mercury",
+      "Venus",
+      "Mars",
+      "Jupiter",
+      "Saturn",
+      "Uranus",
+      "Neptune",
+      "Pluto"
+    ],
+    "allowedEventKinds": [
+      "ingress",
+      "lunation",
+      "station",
+      "aspect"
+    ],
+    "requireEvidenceRefs": true,
+    "requireExactDayEvents": true
+  },
+  "surfaces": {
+    "daily-hub-headline": {
+      "minWords": 6,
+      "maxWords": 34,
+      "maxChars": 220,
+      "maxExclamations": 0,
+      "requireSolarHouseScope": true
+    },
+    "daily-reading-line": {
+      "minWords": 6,
+      "maxWords": 40,
+      "maxChars": 260,
+      "maxExclamations": 0
+    },
+    "today-sun-sign-line": {
+      "minWords": 6,
+      "maxWords": 30,
+      "maxChars": 190,
+      "maxExclamations": 0
+    }
+  },
+  "reading": {
+    "minLines": 1,
+    "maxLines": 4,
+    "maxLeadingEvents": 2,
+    "dedupeSolarHouses": true
+  },
+  "distinctness": {
+    "normalization": "nfkc-unicode-words-v1",
+    "shingleWords": 3,
+    "maxPairwiseJaccard": 0.4,
+    "maxTodayPairwiseJaccard": 0.4,
+    "maxReadingPairwiseJaccard": 0.8,
+    "maxExactDuplicates": 0
+  },
+  "provenance": {
+    "hash": "sha256-canonical-json-v1",
+    "requirePolicyVersion": true,
+    "requireRendererVersion": true,
+    "requireTemplateId": true,
+    "requireEvidenceRefs": true,
+    "staleContentMayBeRelabeled": false,
+    "missingEventsCoverageMustBeDisclosed": true
+  },
+  "allowedTemplateIds": [
+    "body-house.v1",
+    "ingress-house.v1",
+    "lunation-house.v1",
+    "station-house.v1",
+    "aspect-collective.v1",
+    "today-moon-theme.v1"
+  ],
+  "lexicon": {
+    "banned": [
+      {
+        "id": "ai-delve",
+        "pattern": "\\bdelve\\b",
+        "flags": "iu"
+      },
+      {
+        "id": "ai-unlock",
+        "pattern": "\\bunlock\\b",
+        "flags": "iu"
+      },
+      {
+        "id": "ai-embark",
+        "pattern": "\\bembark\\b",
+        "flags": "iu"
+      },
+      {
+        "id": "ai-tapestry",
+        "pattern": "\\btapestr(?:y|ies)\\b",
+        "flags": "iu"
+      },
+      {
+        "id": "ai-vibrant",
+        "pattern": "\\bvibrant\\b",
+        "flags": "iu"
+      },
+      {
+        "id": "ai-elevate",
+        "pattern": "\\belevat(?:e|es|ed|ing|ion)\\b",
+        "flags": "iu"
+      },
+      {
+        "id": "ai-empower",
+        "pattern": "\\bempower(?:s|ed|ing|ment)?\\b",
+        "flags": "iu"
+      },
+      {
+        "id": "ai-harness",
+        "pattern": "\\bharness(?:es|ed|ing)?\\b",
+        "flags": "iu"
+      },
+      {
+        "id": "ai-todays-world",
+        "pattern": "\\bin today[’']s world\\b",
+        "flags": "iu"
+      },
+      {
+        "id": "smug-properly",
+        "pattern": "\\b(?:done|computed) properly\\b",
+        "flags": "iu"
+      },
+      {
+        "id": "smug-receipts",
+        "pattern": "\\bshows? (?:its|their) work\\b",
+        "flags": "iu"
+      },
+      {
+        "id": "smug-human",
+        "pattern": "\\blike a human(?: wrote it)?\\b",
+        "flags": "iu"
+      },
+      {
+        "id": "smug-mush",
+        "pattern": "\\bno mush\\b",
+        "flags": "iu"
+      },
+      {
+        "id": "smug-vibes",
+        "pattern": "\\bnot vibes\\b",
+        "flags": "iu"
+      },
+      {
+        "id": "smug-speaks-human",
+        "pattern": "\\bspeaks? human\\b",
+        "flags": "iu"
+      }
+    ],
+    "unsafe": [
+      {
+        "id": "medical",
+        "pattern": "\\b(?:diagnos(?:e|is)|cure|medication|pregnan(?:t|cy)|fertility)\\b",
+        "flags": "iu"
+      },
+      {
+        "id": "financial-action",
+        "pattern": "\\b(?:buy|sell|trade|invest(?:ment|ing)?)\\b",
+        "flags": "iu"
+      },
+      {
+        "id": "legal-outcome",
+        "pattern": "\\b(?:lawsuit|legal outcome|guilty|innocent)\\b",
+        "flags": "iu"
+      },
+      {
+        "id": "certainty",
+        "pattern": "\\b(?:guaranteed|destined|inevitable|will definitely|certain to)\\b",
+        "flags": "iu"
+      },
+      {
+        "id": "clickbait",
+        "pattern": "\\b(?:must read|before it[’']s too late|urgent warning)\\b",
+        "flags": "iu"
+      }
+    ]
+  },
+  "fallback": {
+    "mode": "deterministic-template",
+    "factsFailure": "hold-current-dated-edition",
+    "missingEvents": "positions-only-with-disclosure",
+    "mayBypassGate": false
+  }
+}

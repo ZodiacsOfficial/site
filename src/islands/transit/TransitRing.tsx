@@ -34,6 +34,7 @@ import { formatDate, formatDateTime } from '../../lib/i18n/dates';
 import { aspectLabel, planetLabel } from '../../lib/i18n/astrology';
 import { showsEnglishOnlyInterpretation, t, type Locale } from '../../lib/i18n';
 import CalendarSubscribe, { type CalendarPositionsSource } from '../CalendarSubscribe';
+import EvidenceDisclosure from '../EvidenceDisclosure';
 
 export interface TransitSky {
   body: string;
@@ -85,14 +86,18 @@ const COPY = {
     fwd1m: '+1 month',
     outerRing: 'Outer ring: the sky then. Inner wheel: your birth chart.',
     tapHint: 'Tap a moving planet or a connecting line to read it.',
-    noContacts: 'No planet-to-planet transits within',
-    ofExact: 'of exact',
     moonOmitted: 'the Moon moves too fast to list, but you can watch it circle',
     announce: 'Sky for',
     scanning: 'Computing the exact dates of the slow transits…',
     marksLabel: 'Exact slow-transit dates in this window',
     nextUp: 'Next to go exact:',
     noSlowExact: 'No slow transits go exact in this window.',
+    activeOne: 'active transit',
+    activeMany: 'active transits',
+    noActive: 'No active planet-to-planet transits at this moment.',
+    exactDetails: 'Exact sky and contacts',
+    skyPositions: 'Sky positions',
+    contactOrbs: 'Contact orbs',
   },
   es: {
     skyRingLabel: 'el cielo en tránsito',
@@ -103,14 +108,18 @@ const COPY = {
     fwd1m: '+1 mes',
     outerRing: 'Anillo exterior: el cielo de entonces. Rueda interior: tu carta natal.',
     tapHint: 'Toca un planeta en movimiento o una línea de conexión para leer ese tránsito.',
-    noContacts: 'Sin tránsitos planeta a planeta a menos de',
-    ofExact: 'de exactitud',
     moonOmitted: 'la Luna se mueve demasiado rápido para aparecer en la lista, pero puedes verla girar',
     announce: 'Cielo del',
     scanning: 'Calculando las fechas exactas de los tránsitos lentos…',
     marksLabel: 'Fechas exactas de tránsitos lentos en esta ventana',
     nextUp: 'Próximos en alcanzar la exactitud:',
     noSlowExact: 'Ningún tránsito lento alcanza la exactitud en esta ventana.',
+    activeOne: 'tránsito activo',
+    activeMany: 'tránsitos activos',
+    noActive: 'No hay tránsitos activos entre planetas en este momento.',
+    exactDetails: 'Cielo y contactos exactos',
+    skyPositions: 'Posiciones del cielo',
+    contactOrbs: 'Orbes de los contactos',
   },
   pt: {
     skyRingLabel: 'o céu em trânsito',
@@ -121,14 +130,18 @@ const COPY = {
     fwd1m: '+1 mês',
     outerRing: 'Anel externo: o céu desse momento. Roda interna: seu mapa astral.',
     tapHint: 'Toque em um planeta em movimento ou em uma linha de conexão para ler esse trânsito.',
-    noContacts: 'Nenhum trânsito entre planetas a menos de',
-    ofExact: 'do ponto exato',
     moonOmitted: 'a Lua se move rápido demais para aparecer na lista, mas você pode acompanhá-la na roda',
     announce: 'Céu de',
     scanning: 'Calculando as datas exatas dos trânsitos lentos…',
     marksLabel: 'Datas exatas dos trânsitos lentos nesta janela',
     nextUp: 'Próximos a chegar ao ponto exato:',
     noSlowExact: 'Nenhum trânsito lento chega ao ponto exato nesta janela.',
+    activeOne: 'trânsito ativo',
+    activeMany: 'trânsitos ativos',
+    noActive: 'Não há trânsitos ativos entre planetas neste momento.',
+    exactDetails: 'Céu e contatos exatos',
+    skyPositions: 'Posições do céu',
+    contactOrbs: 'Orbes dos contatos',
   },
   fr: {
     skyRingLabel: 'le ciel en transit',
@@ -139,14 +152,18 @@ const COPY = {
     fwd1m: '+1 mois',
     outerRing: 'Anneau extérieur : le ciel à cette date. Roue intérieure : ton thème natal.',
     tapHint: 'Touche une planète en mouvement ou une ligne de liaison pour lire ce transit.',
-    noContacts: 'Aucun transit de planète à planète à moins de',
-    ofExact: 'du point exact',
     moonOmitted: 'la Lune va trop vite pour figurer dans la liste, mais tu peux la suivre sur la roue',
     announce: 'Ciel du',
     scanning: 'Calcul des dates exactes des transits lents…',
     marksLabel: 'Dates exactes des transits lents dans cette période',
     nextUp: 'Prochains passages exacts :',
     noSlowExact: 'Aucun transit lent ne devient exact dans cette période.',
+    activeOne: 'transit actif',
+    activeMany: 'transits actifs',
+    noActive: 'Aucun transit actif entre planètes en ce moment.',
+    exactDetails: 'Ciel et contacts exacts',
+    skyPositions: 'Positions du ciel',
+    contactOrbs: 'Orbes des contacts',
   },
   it: {
     skyRingLabel: 'il cielo in transito',
@@ -157,14 +174,18 @@ const COPY = {
     fwd1m: '+1 mese',
     outerRing: 'Anello esterno: il cielo in quel momento. Ruota interna: il tuo tema natale.',
     tapHint: 'Tocca un pianeta in movimento o una linea di collegamento per leggere quel transito.',
-    noContacts: 'Nessun transito tra pianeti entro',
-    ofExact: 'dal punto esatto',
     moonOmitted: 'la Luna si muove troppo in fretta per comparire nell’elenco, ma puoi seguirla sulla ruota',
     announce: 'Cielo del',
     scanning: 'Calcolo delle date esatte dei transiti lenti…',
     marksLabel: 'Date esatte dei transiti lenti in questo intervallo',
     nextUp: 'Prossimi passaggi esatti:',
     noSlowExact: 'Nessun transito lento diventa esatto in questo intervallo.',
+    activeOne: 'transito attivo',
+    activeMany: 'transiti attivi',
+    noActive: 'Nessun transito attivo tra pianeti in questo momento.',
+    exactDetails: 'Cielo e contatti esatti',
+    skyPositions: 'Posizioni del cielo',
+    contactOrbs: 'Orbi dei contatti',
   },
 } as const;
 
@@ -450,17 +471,6 @@ export default function TransitRing({ locale, natal, computeSky, nowMs, focusReq
         <p class="field__help">{c.scrubHint} {c.tapHint}</p>
       </div>
 
-      {/* Every transiting body's position at the scrubbed instant — the
-          accessible, text-first readout (the ring's marks are pointer
-          extras). Includes the Moon. */}
-      <div class="trans__sky">
-        {overlay.bodies.map((b) => (
-          <span class="trans__pos mono" key={b.body}>
-            <PlanetGlyph body={b.body} size={13} class="pg-inline" /> {formatLongitude(b.lon, locale)}{b.retrograde ? ' ℞' : ''}
-          </span>
-        ))}
-      </div>
-
       {/* Live announcement of the scrubbed instant, once it settles. */}
       <p class="sr-only" role="status">{announced}</p>
 
@@ -473,36 +483,34 @@ export default function TransitRing({ locale, natal, computeSky, nowMs, focusReq
         <div class="tring__focus" role="status">
           {focusedPoint && (
             <>
+              {showInterpretation && (
+                <p class="tring__focus-read">{transitLine(focusedPoint.transitBody, focusedPoint.aspect, focusedPoint.natalPoint)}</p>
+              )}
               <span
-                class="tring__focus-receipt mono"
+                class="tring__focus-name"
                 data-transit-search-focus
                 data-transit-angle-focus={focusedPoint.natalPoint === 'ASC' || focusedPoint.natalPoint === 'MC' ? '' : undefined}
               >
                 <PlanetGlyph body={focusedPoint.transitBody} size={13} class="pg-inline" /> {planetLabel(locale, focusedPoint.transitBody)}
                 {' '}<AspectGlyph type={focusedPoint.aspect} size={13} class="pg-inline" /> {aspectLabel(locale, focusedPoint.aspect)}
                 {' '}<NatalPointLabel locale={locale} point={focusedPoint.natalPoint} />
-                {' · '}{t(locale, 'orb')} {focusedPoint.orb.toFixed(1)}°
               </span>
-              {showInterpretation && (
-                <p class="tring__focus-read">{transitLine(focusedPoint.transitBody, focusedPoint.aspect, focusedPoint.natalPoint)}</p>
-              )}
             </>
           )}
           {selectedAspect && (
             <>
-              <span class="tring__focus-receipt mono">
-                <PlanetGlyph body={selectedAspect.outer} size={13} class="pg-inline" /> {planetLabel(locale, selectedAspect.outer)}
-                {' '}<AspectGlyph type={selectedAspect.type} size={13} class="pg-inline" /> {aspectLabel(locale, selectedAspect.type)}
-                {' '}<NatalPointLabel locale={locale} point={selectedAspect.inner} />
-                {' · '}{t(locale, 'orb')} {selectedAspect.orb.toFixed(1)}°
-              </span>
               {showInterpretation && (
                 <p class="tring__focus-read">{transitLine(selectedAspect.outer, selectedAspect.type, selectedAspect.inner)}</p>
               )}
+              <span class="tring__focus-name">
+                <PlanetGlyph body={selectedAspect.outer} size={13} class="pg-inline" /> {planetLabel(locale, selectedAspect.outer)}
+                {' '}<AspectGlyph type={selectedAspect.type} size={13} class="pg-inline" /> {aspectLabel(locale, selectedAspect.type)}
+                {' '}<NatalPointLabel locale={locale} point={selectedAspect.inner} />
+              </span>
             </>
           )}
           {!focusedPoint && !selectedAspect && selectedBody && (
-            <span class="tring__focus-receipt mono">
+            <span class="tring__focus-name">
               <PlanetGlyph body={selectedBody.body} size={13} class="pg-inline" /> {planetLabel(locale, selectedBody.body)}
               {' · '}{formatLongitude(selectedBody.lon, locale)}{selectedBody.retrograde ? ' ℞' : ''}
             </span>
@@ -513,9 +521,8 @@ export default function TransitRing({ locale, natal, computeSky, nowMs, focusReq
       {/* The active transits at `when` — the accessible, reduced-motion view. */}
       <p class="syn__tally mono">
         {overlay.aspects.length === 0
-          ? `${c.noContacts} ${TRANSIT_ORB}° ${c.ofExact}`
-          : `${overlay.aspects.length} ${overlay.aspects.length === 1 ? t(locale, 'activeTransitWithin') : t(locale, 'activeTransitsWithin')} ${TRANSIT_ORB}° ${c.ofExact}`}
-        {' · '}{c.moonOmitted}
+          ? c.noActive
+          : `${overlay.aspects.length} ${overlay.aspects.length === 1 ? c.activeOne : c.activeMany}`}
       </p>
 
       <div class="syn__aspects">
@@ -531,16 +538,40 @@ export default function TransitRing({ locale, natal, computeSky, nowMs, focusReq
                 setSel((prev) => (prev === id ? null : id));
               }}
             >
-              <span class="syn__aspect-receipt mono">
-                <PlanetGlyph body={a.outer} size={13} class="pg-inline" /> {planetLabel(locale, a.outer)} <AspectGlyph type={a.type} size={13} class="pg-inline" /> {aspectLabel(locale, a.type)} <NatalPointLabel locale={locale} point={a.inner} /> · {t(locale, 'orb')} {a.orb.toFixed(1)}°
-              </span>
               {showInterpretation && (
                 <span class="syn__aspect-read">{transitLine(a.outer, a.type, a.inner)}</span>
               )}
+              <span class="syn__aspect-name">
+                <PlanetGlyph body={a.outer} size={13} class="pg-inline" /> {planetLabel(locale, a.outer)} <AspectGlyph type={a.type} size={13} class="pg-inline" /> {aspectLabel(locale, a.type)} <NatalPointLabel locale={locale} point={a.inner} />
+              </span>
             </button>
           );
         })}
       </div>
+
+      <EvidenceDisclosure label={c.exactDetails} className="tring__details">
+        <h3>{c.skyPositions}</h3>
+        <div class="trans__sky">
+          {overlay.bodies.map((b) => (
+            <span class="trans__pos mono" key={b.body}>
+              <PlanetGlyph body={b.body} size={13} class="pg-inline" /> {planetLabel(locale, b.body)} · {formatLongitude(b.lon, locale)}{b.retrograde ? ' ℞' : ''}
+            </span>
+          ))}
+        </div>
+        {overlay.aspects.length > 0 && (
+          <>
+            <h3>{c.contactOrbs}</h3>
+            <div class="tring__exact-contacts">
+              {overlay.aspects.map((a) => (
+                <span class="syn__aspect-receipt mono" key={overlayAspectId(a)}>
+                  <PlanetGlyph body={a.outer} size={13} class="pg-inline" /> {planetLabel(locale, a.outer)} <AspectGlyph type={a.type} size={13} class="pg-inline" /> {aspectLabel(locale, a.type)} <NatalPointLabel locale={locale} point={a.inner} /> · {t(locale, 'orb')} {a.orb.toFixed(1)}°
+                </span>
+              ))}
+            </div>
+          </>
+        )}
+        <p class="field__help">{c.moonOmitted}.</p>
+      </EvidenceDisclosure>
     </div>
   );
 }

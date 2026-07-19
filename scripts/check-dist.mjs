@@ -22,18 +22,44 @@
  *   9. Source sky, transit, and daily snapshots cover the build date.
  */
 import { readFile, readdir, stat } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { dirname, resolve, join, relative, sep } from 'node:path';
 import {
   extractPageMetadata, htmlFileToPath, isEnglishHtml,
   searchIndexShapeFailures, shouldIndexPath,
 } from './search-index-lib.mjs';
+import { backstageCopyMatches } from './consumer-copy-lib.mjs';
 
 const repo = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const root = resolve(repo, 'dist');
 const failures = [];
 const fail = (msg) => { failures.push(msg); };
 let searchIndexCount = 0;
+const ZODIAC_SIGN_SLUGS = [
+  'aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo',
+  'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces',
+];
+
+function canonicalValue(value) {
+  if (Array.isArray(value)) return value.map(canonicalValue);
+  if (value && typeof value === 'object') {
+    return Object.fromEntries(
+      Object.entries(value)
+        .sort(([left], [right]) => (left < right ? -1 : left > right ? 1 : 0))
+        .map(([key, nested]) => [key, canonicalValue(nested)]),
+    );
+  }
+  return value;
+}
+
+function canonicalJson(value) {
+  return JSON.stringify(canonicalValue(value));
+}
+
+function sha256(value) {
+  return createHash('sha256').update(value).digest('hex');
+}
 
 async function exists(path) {
   try { await stat(path); return true; } catch { return false; }
@@ -97,6 +123,7 @@ if (!rss.startsWith('<?xml')) fail('rss.xml: missing XML declaration');
 // ---- 3b. New-wing RSS feeds --------------------------------------------------
 for (const { file, minItems } of [
   { file: 'feeds/horoscopes.xml', minItems: 12 },
+  ...ZODIAC_SIGN_SLUGS.map((sign) => ({ file: `feeds/horoscopes/${sign}.xml`, minItems: 1 })),
   { file: 'feeds/daily-sky.xml', minItems: 1 },
   { file: 'feeds/almanac.xml', minItems: 1 },
 ]) {
@@ -212,6 +239,142 @@ for (const file of files) {
     const fragment = value.includes('#') ? value.split('#')[1] : null;
     if (fragment && target.endsWith('.html') && !(await hasId(target, fragment))) {
       fail(`${rel}: missing fragment target ${value}`);
+    }
+  }
+}
+
+// Consumer pages should lead with the answer, not publication plumbing. Closed
+// evidence disclosures and explicit method/trust destinations remain inspectable.
+for (const file of files) {
+  const html = idCache.get(file) ?? (await readFile(file, 'utf8'));
+  const pagePath = htmlFileToPath(relative(root, file));
+  for (const phrase of backstageCopyMatches(html, pagePath)) {
+    fail(`${pagePath}: default-visible copy exposes backstage language (${phrase})`);
+  }
+}
+
+// /today/ must be useful in the initial HTML. Saved-chart comparison is a
+// client enhancement, never a loading gate in front of the twelve Sun signs.
+const dailyPublicationManifest = JSON.parse(await readFile(
+  resolve(repo, 'src/data/daily-publication-manifest.json'),
+  'utf8',
+));
+{
+  const manifest = dailyPublicationManifest;
+  const sourcePublication = JSON.parse(await readFile(
+    resolve(repo, 'src/data/daily-publication.json'),
+    'utf8',
+  ));
+  const policyRaw = await readFile(
+    resolve(repo, 'src/lib/editorial-policy/constitution.v1.json'),
+    'utf8',
+  );
+  const expectedPublicationSha256 = sha256(canonicalJson(sourcePublication));
+  const expectedPolicySha256 = sha256(policyRaw);
+
+  if (manifest.publication?.canonicalSha256 !== expectedPublicationSha256) {
+    fail('daily-publication: committed manifest publication SHA-256 does not match the source publication');
+  }
+  if (manifest.policy?.sha256 !== expectedPolicySha256) {
+    fail('daily-publication: committed manifest policy SHA-256 does not match the source constitution');
+  }
+
+  const todayPath = resolve(root, 'today/index.html');
+  if (!(await exists(todayPath))) {
+    fail('today: missing /today/');
+  } else {
+    const todayHtml = idCache.get(todayPath) ?? (await readFile(todayPath, 'utf8'));
+    const signSlugs = ZODIAC_SIGN_SLUGS;
+    const renderedSigns = [
+      ...todayHtml.matchAll(/data-today-sun-sign="([^"]+)"/g),
+    ].map((match) => match[1]);
+    if (
+      renderedSigns.length !== signSlugs.length
+      || signSlugs.some((slug) => !renderedSigns.includes(slug))
+    ) {
+      fail(`today: initial HTML has ${renderedSigns.length}/12 Sun-sign readings`);
+    }
+    const usefulLines = [
+      ...todayHtml.matchAll(/<p class="today-sign-reading__line">[^<]{20,}<\/p>/g),
+    ];
+    if (usefulLines.length !== signSlugs.length) {
+      fail(`today: initial HTML has ${usefulLines.length}/12 useful reading lines`);
+    }
+    const pickerIcons = [...todayHtml.matchAll(/class="today-sign__icon"/g)];
+    const readingIcons = [...todayHtml.matchAll(/class="today-sign-reading__icon"/g)];
+    if (pickerIcons.length !== signSlugs.length) {
+      fail(`today: initial HTML has ${pickerIcons.length}/12 pastel picker icons`);
+    }
+    if (readingIcons.length !== signSlugs.length) {
+      fail(`today: initial HTML has ${readingIcons.length}/12 pastel reading icons`);
+    }
+    for (const slug of signSlugs) {
+      if (
+        !todayHtml.includes(`href="#today-sun-sign-${slug}"`)
+        || !todayHtml.includes(`id="today-sun-sign-${slug}"`)
+      ) {
+        fail(`today: initial HTML is missing the ${slug} no-JavaScript anchor`);
+      }
+      if (!todayHtml.includes(`href="/horoscopes/${slug}/"`)) {
+        fail(`today: initial HTML is missing the ${slug} horoscope link`);
+      }
+      if (
+        !todayHtml.includes(`/assets/zodiac-icons/48/${slug}.avif`)
+        || !todayHtml.includes(`/assets/zodiac-icons/48/${slug}.webp`)
+      ) {
+        fail(`today: initial HTML is missing the ${slug} pastel icon assets`);
+      }
+    }
+    if (!todayHtml.includes('data-today-state="sun-sign"')) {
+      fail('today: initial HTML is missing the useful Sun-sign state');
+    }
+    if (!todayHtml.includes(`data-daily-date="${manifest.date}"`)) {
+      fail(`today: rendered date does not match verified manifest ${manifest.date}`);
+    }
+    if (!todayHtml.includes(`data-generation-mode="${manifest.generation?.mode}"`)) {
+      fail(`today: rendered generation mode does not match ${manifest.generation?.mode}`);
+    }
+    if (!todayHtml.includes('/data/daily-publication.json')) {
+      fail('today: initial HTML does not link to the public publication record');
+    }
+    for (const loadingCopy of [
+      'Reading the saved chart on this device',
+      'Checking for your saved sign',
+    ]) {
+      if (todayHtml.includes(loadingCopy)) {
+        fail(`today: initial HTML is blocked by loading copy — ${loadingCopy}`);
+      }
+    }
+  }
+
+  const publicRecordPath = resolve(root, 'data/daily-publication.json');
+  if (!(await exists(publicRecordPath))) {
+    fail('daily-publication: public provenance record is missing');
+  } else {
+    const publicRecord = JSON.parse(await readFile(publicRecordPath, 'utf8'));
+    if (canonicalJson(publicRecord.manifest) !== canonicalJson(manifest)) {
+      fail('daily-publication: public record manifest does not match the complete committed manifest');
+    }
+    if (canonicalJson(publicRecord.publication) !== canonicalJson(sourcePublication)) {
+      fail('daily-publication: public record publication does not match the complete source publication');
+    }
+    if (
+      publicRecord.publication !== undefined
+      && sha256(canonicalJson(publicRecord.publication)) !== manifest.publication?.canonicalSha256
+    ) {
+      fail('daily-publication: public record publication SHA-256 does not match the committed manifest');
+    }
+    if (publicRecord.publication?.signs?.length !== 12) {
+      fail('daily-publication: public record does not contain twelve sign editions');
+    }
+    if (!publicRecord.inputs?.dailyFacts
+      || sha256(canonicalJson(publicRecord.inputs.dailyFacts)) !== manifest.facts?.canonicalSha256) {
+      fail('daily-publication: public daily input does not reproduce the committed canonical facts hash');
+    }
+    if (manifest.facts?.eventsSourceCanonicalSha256
+      && (!publicRecord.inputs?.transitSource
+        || sha256(canonicalJson(publicRecord.inputs.transitSource)) !== manifest.facts.eventsSourceCanonicalSha256)) {
+      fail('daily-publication: public transit input does not reproduce the committed canonical source hash');
     }
   }
 }
@@ -479,6 +642,16 @@ for (const block of sitemap.matchAll(/<url>([\s\S]*?)<\/url>/g)) {
     fail(`sitemap.xml: ${loc} has invalid or missing lastmod`);
   }
 }
+{
+  const todayBlock = [...sitemap.matchAll(/<url>([\s\S]*?)<\/url>/g)]
+    .find((match) => match[1].includes('<loc>https://zodiacs.org/today/</loc>'))?.[1];
+  const todayLastmod = todayBlock?.match(/<lastmod>([^<]+)<\/lastmod>/)?.[1];
+  if (todayLastmod !== dailyPublicationManifest.date) {
+    fail(
+      `sitemap.xml: /today/ lastmod ${todayLastmod ?? 'missing'} does not match daily publication ${dailyPublicationManifest.date}`,
+    );
+  }
+}
 
 function attr(tag, name) {
   return tag.match(new RegExp(`\\b${name}=(?:"([^"]*)"|'([^']*)')`, 'i'))?.slice(1).find(Boolean) ?? null;
@@ -515,15 +688,17 @@ if (sitemapLocs.has('/registry/aura/') !== registryAuraBuildEnabled) {
 // Coordinated indexing baseline (2026-07-19): compatibility prose remains
 // English-only under D9, while birthdays, Chinese zodiac, and the Registry
 // disclosure ship on every locale rail. The shareable birth-chart page
-// (/birth-chart/someone-else/) joined the index with the cabinet release.
+// (/birth-chart/someone-else/) joined the index with the cabinet release. The
+// seven-surface horoscope program contributes 84 English-only sign pages.
 // Keep exact counts so sitemap drift fails loudly.
 const registryAuraIndexed = sitemapLocs.has('/registry/aura/');
 const sitemapPolicy = {
-  total: 2319 + Number(registryAuraIndexed),
+  total: 2392 + Number(registryAuraIndexed),
   compatibilityPairs: 78,
   birthdays: 1830,
   chineseZodiac: 65,
   disclosures: 5,
+  horoscopePages: 84,
   translatedBlocks: 2025,
 };
 const indexedFamilies = [
@@ -531,6 +706,12 @@ const indexedFamilies = [
   { label: 'birthdays', pattern: /^\/(?:(?:es|pt|fr|it)\/)?birthday\/[a-z]+-\d{1,2}\/$/, expected: sitemapPolicy.birthdays, localized: true },
   { label: 'Chinese zodiac', pattern: /^\/(?:(?:es|pt|fr|it)\/)?learn\/chinese-zodiac(?:\/[a-z]+)?\/$/, expected: sitemapPolicy.chineseZodiac, localized: true },
   { label: 'disclosures', pattern: /^\/(?:(?:es|pt|fr|it)\/)?disclosure\/$/, expected: sitemapPolicy.disclosures, localized: true },
+  {
+    label: 'horoscope program pages',
+    pattern: /^\/horoscopes\/(?:aries|taurus|gemini|cancer|leo|virgo|libra|scorpio|sagittarius|capricorn|aquarius|pisces)(?:\/(?:tomorrow|weekly|monthly|love|career|2027))?\/$/,
+    expected: sitemapPolicy.horoscopePages,
+    localized: false,
+  },
   { label: 'Registry Aura', pattern: /^\/registry\/aura\/$/, expected: Number(registryAuraIndexed), localized: false },
 ];
 

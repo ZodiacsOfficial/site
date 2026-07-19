@@ -1,6 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import ChartCalculator from '../../islands/ChartCalculator';
+import EvidenceDisclosure from '../../components/EvidenceDisclosure.astro';
 import '../../styles/calculator.css';
 
 const faq = [
@@ -14,7 +15,7 @@ const faq = [
   },
   {
     q: 'Why is my moon sign different from what another site said?',
-    a: 'Almost always a time-zone problem: careless calculators convert your birth time incorrectly, especially for older dates or places with historical clock changes. We resolve the full history of your birthplace’s time zone — including pre-standardization local time — and show you the computed UTC instant so you can check the work.',
+    a: 'A time-zone difference is often the cause, especially for older dates or places with historical clock changes. This calculator uses the clock history of your birthplace and shows the exact time used in the chart details.',
   },
   {
     q: 'Sun, moon, and rising — what’s the difference?',
@@ -44,7 +45,7 @@ const jsonLd = [
 <Base
   clientUi
   title="Moon Sign Calculator — What Is My Moon Sign? | Zodiacs.org"
-  description="Find your moon sign free, in seconds — how you feel, what soothes you, what you need. Computed on your device with astronomical accuracy, no signup."
+  description="Find your moon sign free, in seconds — how you feel, what soothes you, and what you need to feel safe. No signup."
   path="/moon-sign/"
   image="/assets/og/v2/tool/moon-sign.png"
   imageAlt="Free moon sign calculator — Zodiacs.org"
@@ -75,18 +76,22 @@ const jsonLd = [
         or three days into needing a hug you haven't asked for.
       </p>
       <p>
-        The Moon moves fast — about 13° a day, a full sign every two and a half
-        days — which is why it splits people born in the same week into
-        genuinely different emotional temperaments, and why a sloppy <a href="/learn/glossary/#time-zone">time-zone</a>{' '}
-        conversion can put you a whole sign off. We compute yours from the
-        actual instant, against the full history of your birthplace's clocks.
-      </p>
-      <p>
         Once you know your moon sign, read its guide — every sign's guide has
         a section on what that <a href="/learn/glossary/#placement">placement</a> means for the Moon specifically. Then{' '}
         <a href="/birth-chart/">get your birth chart</a>: sun, moon, and rising
         together are the real summary of you.
       </p>
+      <EvidenceDisclosure
+        label="Why birth time can change the answer"
+        description="Moon speed and historical clock changes"
+      >
+        <p>
+          The Moon moves about 13° a day, so people born hours apart can have
+          different Moon signs near a boundary. The calculation uses the birth
+          instant and the historical <a href="/learn/glossary/#time-zone">time zone</a>{' '}
+          of the birthplace.
+        </p>
+      </EvidenceDisclosure>
     </div>
   </section>
 

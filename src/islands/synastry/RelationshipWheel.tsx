@@ -32,6 +32,7 @@ import {
   synastryCorpusLine,
 } from './synastryLines';
 import './relationship.css';
+import EvidenceDisclosure from '../EvidenceDisclosure';
 
 export interface WheelPerson {
   label: string;
@@ -64,6 +65,9 @@ const COPY = {
     wheel: 'Wheel',
     grid: 'Grid',
     composite: 'Composite',
+    exactDetails: 'Exact relationship details',
+    outerPositions: 'Outer-ring positions',
+    contactOrbs: 'Contact orbs',
   },
   es: {
     caption: 'Rueda interior: {a}. Anillo exterior: {b}. Las líneas entre ambos marcan dónde se tocan sus cartas.',
@@ -78,6 +82,9 @@ const COPY = {
     wheel: 'Rueda',
     grid: 'Cuadrícula',
     composite: 'Compuesta',
+    exactDetails: 'Detalles exactos de la relación',
+    outerPositions: 'Posiciones del anillo exterior',
+    contactOrbs: 'Orbes de los contactos',
   },
   pt: {
     caption: 'Roda interna: {a}. Anel externo: {b}. As linhas entre eles mostram onde os mapas se encontram.',
@@ -92,6 +99,9 @@ const COPY = {
     wheel: 'Roda',
     grid: 'Grade',
     composite: 'Composito',
+    exactDetails: 'Detalhes exatos da relação',
+    outerPositions: 'Posições do anel externo',
+    contactOrbs: 'Orbes dos contatos',
   },
   fr: {
     caption: 'Roue intérieure\u00a0: {a}. Anneau extérieur\u00a0: {b}. Les lignes entre les deux indiquent où les thèmes se rejoignent.',
@@ -106,6 +116,9 @@ const COPY = {
     wheel: 'Roue',
     grid: 'Grille',
     composite: 'Composite',
+    exactDetails: 'Détails exacts de la relation',
+    outerPositions: 'Positions de l’anneau extérieur',
+    contactOrbs: 'Orbes des contacts',
   },
   it: {
     caption: 'Ruota interna: {a}. Anello esterno: {b}. Le linee tra i due indicano dove i temi entrano in contatto.',
@@ -120,6 +133,9 @@ const COPY = {
     wheel: 'Ruota',
     grid: 'Griglia',
     composite: 'Composito',
+    exactDetails: 'Dettagli esatti della relazione',
+    outerPositions: 'Posizioni dell’anello esterno',
+    contactOrbs: 'Orbi dei contatti',
   },
 } as const;
 
@@ -343,12 +359,6 @@ export default function RelationshipWheel({ locale, a, b, summary }: Relationshi
             <div class="tring__focus" role="status">
               {selectedContact && focusedReading && (
                 <>
-                  <span class="tring__focus-receipt mono">
-                    {a.label}: <RelationshipContactPoint locale={locale} name={selectedContact.a} />
-                    {' '}<AspectGlyph type={selectedContact.type} size={13} class="pg-inline" /> {aspectLabel(locale, selectedContact.type)}
-                    {' '}{b.label}: <RelationshipContactPoint locale={locale} name={selectedContact.b} />
-                    {' · '}{t(locale, 'orb')} {selectedContact.orb.toFixed(1)}°
-                  </span>
                   {locale === 'en' && (
                     <p
                       class="tring__focus-read"
@@ -358,22 +368,21 @@ export default function RelationshipWheel({ locale, a, b, summary }: Relationshi
                       {focusedReading.text}
                     </p>
                   )}
+                  <span class="tring__focus-name">
+                    {a.label}: <RelationshipContactPoint locale={locale} name={selectedContact.a} />
+                    {' '}<AspectGlyph type={selectedContact.type} size={13} class="pg-inline" /> {aspectLabel(locale, selectedContact.type)}
+                    {' '}{b.label}: <RelationshipContactPoint locale={locale} name={selectedContact.b} />
+                  </span>
                 </>
               )}
               {!selectedContact && selectedBody && (
-                <span class="tring__focus-receipt mono">
+                <span class="tring__focus-name">
                   {outer.label}: <PlanetGlyph body={selectedBody.body} size={13} class="pg-inline" /> {planetLabel(locale, selectedBody.body)}
                   {' · '}{formatLongitude(selectedBody.lon, locale)}{selectedBody.retrograde ? ' ℞' : ''}
                 </span>
               )}
             </div>
           )}
-
-          <p class="syn__tally mono">
-            {summary.aspects.length} {c.tally} ·
-            {' '}{summary.easeful} {c.easeful} ({aspectLabel(locale, 'trine')}/{aspectLabel(locale, 'sextile')}) ·
-            {' '}{summary.charged} {c.charged} ({aspectLabel(locale, 'square')}/{aspectLabel(locale, 'opposition')})
-          </p>
 
           <span class="mono--label">{c.loudest}</span>
           <div class="syn__aspects">
@@ -387,9 +396,6 @@ export default function RelationshipWheel({ locale, a, b, summary }: Relationshi
                   key={id}
                   onClick={() => setSel((previous) => (previous === id ? null : id))}
                 >
-                  <span class="syn__aspect-receipt mono">
-                    <PlanetGlyph body={aspect.a} size={13} class="pg-inline" /> {a.label}: {planetLabel(locale, aspect.a)} <AspectGlyph type={aspect.type} size={13} class="pg-inline" /> {aspectLabel(locale, aspect.type)} <PlanetGlyph body={aspect.b} size={13} class="pg-inline" /> {b.label}: {planetLabel(locale, aspect.b)} · {t(locale, 'orb')} {aspect.orb.toFixed(1)}°
-                  </span>
                   {locale === 'en' && (
                     <span
                       class="syn__aspect-read"
@@ -399,10 +405,19 @@ export default function RelationshipWheel({ locale, a, b, summary }: Relationshi
                       {reading.text}
                     </span>
                   )}
+                  <span class="syn__aspect-name">
+                    <PlanetGlyph body={aspect.a} size={13} class="pg-inline" /> {a.label}: {planetLabel(locale, aspect.a)} <AspectGlyph type={aspect.type} size={13} class="pg-inline" /> {aspectLabel(locale, aspect.type)} <PlanetGlyph body={aspect.b} size={13} class="pg-inline" /> {b.label}: {planetLabel(locale, aspect.b)}
+                  </span>
                 </button>
               );
             })}
           </div>
+
+          <p class="syn__tally mono">
+            {summary.aspects.length} {c.tally} ·
+            {' '}{summary.easeful} {c.easeful} ({aspectLabel(locale, 'trine')}/{aspectLabel(locale, 'sextile')}) ·
+            {' '}{summary.charged} {c.charged} ({aspectLabel(locale, 'square')}/{aspectLabel(locale, 'opposition')})
+          </p>
 
           {mercurySignA && mercurySignB && mercuryPairKey && (
             <div
@@ -416,11 +431,6 @@ export default function RelationshipWheel({ locale, a, b, summary }: Relationshi
                   <p class="rcomm__intro syn__aspect-read">Mercury against Mercury is the shape of your conversations; Mercury against Moon and Mars is whether talking feels like comfort or combat.</p>
                 </>
               )}
-              <p class="rcomm__receipt syn__aspect-receipt mono">
-                {planetLabel(locale, 'Mercury')}: {signName(mercurySignA, locale)}
-                {' · '}
-                {planetLabel(locale, 'Mercury')}: {signName(mercurySignB, locale)}
-              </p>
               {locale === 'en' && (
                 <>
                   <p class="rcomm__framing syn__aspect-read">{MERCURY_ELEMENT_PAIRS[mercuryPairKey]}</p>
@@ -431,13 +441,12 @@ export default function RelationshipWheel({ locale, a, b, summary }: Relationshi
                         if (!reading) return null;
                         return (
                           <div class="rcomm__contact syn__aspect" role="listitem" data-communication-contact key={canonicalId(contact)}>
-                            <span class="rcomm__contact-receipt syn__aspect-receipt mono">
+                            <span class="rcomm__contact-read syn__aspect-read" data-curated-line>{reading}</span>
+                            <span class="syn__aspect-name">
                               {a.label}: <RelationshipContactPoint locale={locale} name={contact.a} />
                               {' '}<AspectGlyph type={contact.type} size={13} class="pg-inline" /> {aspectLabel(locale, contact.type)}
                               {' '}{b.label}: <RelationshipContactPoint locale={locale} name={contact.b} />
-                              {' · '}{t(locale, 'orb')} {contact.orb.toFixed(1)}°
                             </span>
-                            <span class="rcomm__contact-read syn__aspect-read" data-curated-line>{reading}</span>
                           </div>
                         );
                       })}
@@ -447,8 +456,35 @@ export default function RelationshipWheel({ locale, a, b, summary }: Relationshi
                   )}
                 </>
               )}
+              <p class="rcomm__receipt syn__aspect-receipt mono">
+                {planetLabel(locale, 'Mercury')}: {signName(mercurySignA, locale)}
+                {' · '}
+                {planetLabel(locale, 'Mercury')}: {signName(mercurySignB, locale)}
+              </p>
             </div>
           )}
+
+          <EvidenceDisclosure label={c.exactDetails} className="rwheel__details">
+            <h3>{c.contactOrbs}</h3>
+            <div class="tring__exact-contacts">
+              {summary.aspects.map((aspect) => (
+                <span class="syn__aspect-receipt mono" key={`exact-${canonicalId(aspect)}`}>
+                  {a.label}: <PlanetGlyph body={aspect.a} size={13} class="pg-inline" /> {planetLabel(locale, aspect.a)}
+                  {' '}<AspectGlyph type={aspect.type} size={13} class="pg-inline" /> {aspectLabel(locale, aspect.type)}
+                  {' '}{b.label}: <PlanetGlyph body={aspect.b} size={13} class="pg-inline" /> {planetLabel(locale, aspect.b)}
+                  {' · '}{t(locale, 'orb')} {aspect.orb.toFixed(1)}°
+                </span>
+              ))}
+            </div>
+            <h3>{c.outerPositions}</h3>
+            <div class="trans__sky">
+              {overlay.bodies.map((point) => (
+                <span class="trans__pos mono" key={`outer-${point.body}`}>
+                  <PlanetGlyph body={point.body} size={13} class="pg-inline" /> {planetLabel(locale, point.body)} · {formatLongitude(point.lon, locale)}{point.retrograde ? ' ℞' : ''}
+                </span>
+              ))}
+            </div>
+          </EvidenceDisclosure>
 
           <div class="syn__balances">
             {[{ person: a, balance: summary.elements.a }, { person: b, balance: summary.elements.b }].map(({ person, balance }) => (

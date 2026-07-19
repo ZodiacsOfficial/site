@@ -28,19 +28,19 @@ TOOLS AND UTILITIES
 These lines use each live page’s meta description to state what it computes or provides:
 - /baby-zodiac/ — Enter a due date: the near-certain sun sign (cusp caveats computed, not guessed), the week's possible moon signs, and what has to wait for the birth minute. Free.
 - /birth-chart/ — Calculate your free birth chart: sun, moon, rising, planets, houses, and what they mean — private in your browser and explained in plain language.
-- /birthday/ — Pick your birthday and get the receipts: sun sign verified across 1940–2030, exact degree spans, decans with traditional rulers, and year-by-year cusp tables.
+- /birthday/ — Choose your birthday for a date-specific reading of character, relationships, work, and growth, with an exact Sun-sign answer when the birth year matters.
 - /compatibility/ — Free astrology compatibility calculator: compare two birth charts privately in your browser, with clear readings and guides to all 78 sign pairings.
 - /eclipses/ — Every solar and lunar eclipse through 2028 with exact peak times and zodiac signs — including the August 12, 2026 total solar eclipse over Iceland and Spain.
 - /full-moon-calendar/ — Every full moon in 2026 and 2027: exact date and universal time, the Moon's zodiac sign and degree, and the traditional name — Wolf to Cold, blue moon included.
 - /mercury-retrograde/ — Every Mercury retrograde through 2027, computed from the planet's real motion: exact dates, station positions, and what the window actually asks of you.
-- /moon-phase/ — Tonight's moon phase, computed live — and the moon of any date you care about: phase, illumination, and moon sign, free and on your device.
-- /moon-sign/ — Find your moon sign free, in seconds — how you feel, what soothes you, what you need. Computed on your device with astronomical accuracy, no signup.
-- /profile/ — Save birth charts privately on this device, then sign in when you want them on every device.
+- /moon-phase/ — See tonight's moon phase or look up any date you care about: phase, illumination, and moon sign, free.
+- /moon-sign/ — Find your moon sign free, in seconds — how you feel, what soothes you, and what you need to feel safe. No signup.
+- /profile/ — Open your saved birth charts, see what is active today, and keep the people and patterns you return to in one place.
 - /retrogrades/ — Which planets are retrograde right now, and when the next windows run: Mercury through Pluto for 2026–2027, station dates and positions computed exactly.
-- /rising-sign/ — Calculate your rising sign (ascendant) free with your birth time and place — how people first read you, plus your chart ruler. Computed on your device, no signup.
+- /rising-sign/ — Find your rising sign free with your birth time and place — how people first read you, plus the planet that rules your chart.
 - /saturn-return/ — Find your exact Saturn return dates free: every crossing, retrograde passes included, computed from Saturn's real motion on your device. Just needs your birth date.
-- /solar-return/ — Cast the exact chart of the moment the Sun returns to its birth position — any year, any location, computed in your browser.
-- /transits/ — Today's transits to your natal planets, within 3° of exact — and a slider that moves the sky up to a year forward or back. Free, computed on your device.
+- /solar-return/ — See the themes shaping your personal year with a solar return chart for any year and location. Free and private by default.
+- /transits/ — See what is active in your birth chart today, then move the date up to a year forward or back to watch each transit build and release.
 - /widgets/ — Embed a moon phase, current sky, or private mini birth chart on any site. Sandboxed iframe and script modes, free with the Zodiacs.org credit intact.
 
 LEARN-HUB TOPICS
@@ -58,8 +58,9 @@ PAGE INVENTORY — EVERGREEN PAGES AND HUBS
 - /about/ — Who runs Zodiacs.org and why.
 - /almanac/ — Long-form notes on the month's computed…
 - /birth-chart/someone-else/ — Open someone else’s astrology chart with…
+- /corrections/ — Material corrections to astronomical…
 - /disclosure/ — Plain-language operator…
-- /feeds/ — Follow the computed daily sky, monthly…
+- /feeds/ — Follow daily horoscopes, the current sky…
 - /horoscopes/ — July 2026 horoscopes for every sign…
 - /learn/ — Astrology in plain language.
 - /learn/aspects/ — The five major aspects of a birth chart…
@@ -75,7 +76,7 @@ PAGE INVENTORY — EVERGREEN PAGES AND HUBS
 - /privacy/ — How zodiacs.org handles birth charts…
 - /terms/ — Terms for the zodiacs.org astrology…
 - /today/ — Choose your Sun sign for a clear daily…
-- /tools/ — Free astrology calculators, no signup.
+- /tools/ — Free astrology tools, no signup.
 
 PAGE INVENTORY — THE TWELVE SIGN GUIDES
 - /aquarius/ — Aquarius (Jan 20.

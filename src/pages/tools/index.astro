@@ -144,13 +144,13 @@ const jsonLd = [
     '@type': 'CollectionPage',
     name: 'Free astrology tools',
     url: 'https://zodiacs.org/tools/',
-    description: 'Free astrology calculators computed on your device: birth chart, compatibility, moon sign, rising sign, transits, and the sky calendars.',
+    description: 'Free birth charts, compatibility, moon and rising signs, transits, returns, and sky calendars — no signup required.',
   },
 ];
 ---
 <Base
   title="Free Astrology Tools & Calculators | Zodiacs.org"
-  description="Free astrology calculators, no signup: birth chart, compatibility, moon sign, rising sign, transits, eclipses, and more — computed on your device with astronomical accuracy."
+  description="Free astrology tools, no signup: birth chart, compatibility, moon sign, rising sign, transits, returns, eclipses, and more."
   path="/tools/"
   image="/assets/og/v2/tool/tools.png"
   imageAlt="Free astrology tools — Zodiacs.org"
@@ -161,7 +161,7 @@ const jsonLd = [
       <h1 class="display tools-title">Free astrology tools</h1>
       <p>
         Find your <AstroTerm term="birth-chart" label="birth chart" surface="tools-index" />, <AstroTerm term="moon-sign" label="moon sign" surface="tools-index" />, <AstroTerm term="rising-sign" label="rising sign" surface="tools-index" />, compatibility, and what
-        the sky is doing now. Charts are calculated privately in your browser.
+        the sky is doing now. Start with the question you want answered.
       </p>
     </div>
 
@@ -207,9 +207,11 @@ const jsonLd = [
           )}
         </>
       ))}
-    </div>
+      </div>
 
-    <div class="tools-upcoming">
+      <p class="tools-privacy"><strong>Private by default.</strong> Birth-chart calculations stay in your browser. <a href="/privacy/">Privacy and method →</a></p>
+
+      <div class="tools-upcoming">
       <em class="kicker">And for the month ahead</em>
       <ul>
         <li>
@@ -233,6 +235,14 @@ const jsonLd = [
     font-size: var(--text-xl);
     line-height: 1.1;
   }
+  .tools-privacy {
+    margin: 0;
+    color: var(--faint);
+    font-size: var(--text-sm);
+    line-height: 1.6;
+  }
+  .tools-privacy strong { color: var(--text-2); }
+  .tools-privacy a { color: var(--muted); }
   .tools-grid {
     display: grid;
     gap: 14px;

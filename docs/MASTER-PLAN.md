@@ -146,7 +146,7 @@ The metaphor operationalized: Wikipedia wins because every entity has **one stab
 1. **Provenance pass (Codex C1).** Every Article node gains `datePublished`, `publisher → #org`, `mainEntityOfPage`, `inLanguage`. Every calendar page gains `Dataset` markup (the wing already has it; the consumer surfaces — the *actually citable* ones — don't) plus per-event `Event` nodes with `startDate` for the next 12 months. Sitemap `lastmod` extended to the 67 evergreen URLs. Heading IDs on every learn article (the how-to-read tutorial currently has zero anchors).
 2. **Sources system (Codex C1 + human editorial policy).** A `sources` frontmatter field on guides/learn/calendar templates rendering a compact "Sources" line (MUL.APIN editions, Ptolemy, NASA eclipse catalog, IANA tzdb, Astronomy Engine) with `citation` schema. This single change converts the site's biggest weakness at near-zero cost — the content audit's verdict was explicit: the gap between "excellent content" and "citable reference" is metadata, not writing.
 3. **The Living Correspondence Chart** (`/learn/zodiac-dates/`) — the page Wikipedia can't build: the canonical master table (sign / glyph / Unicode / element / modality / polarity / rulers / house / both hemispheres' seasons) **plus computed year-exact ingress instants** from the already-generated `ingresses.json`, updated annually by the existing refresh cycle, with Dataset markup and a CSV download. Wikipedia footnotes its own imprecision ("Approximate… Start Dates[11]"); this page publishes the exact instants. Target: become the reference URL for "zodiac dates YYYY". Owner: Codex (template is deterministic); Fable reviews the table design.
-4. **Authorship & review** (human + Codex). A named editorial identity (even one person) with an `/about/`-anchored Person entity, `author`/`reviewedBy` on Articles, and a visible "Reviewed · date" line. Without this, E-E-A-T stays capped regardless of content quality.
+4. **Authorship & review** (AI-native). Use the real Zodiacs.org Organization as author, disclose the AI editorial system on `/about/`, and expose versioned provenance, sources, correction history, and fail-closed checks. Never invent a Person entity to simulate human review.
 5. **Glossary + search** (REFERENCE gate). `/learn/glossary/` — ~120 terms, one paragraph + one receipt each, `DefinedTermSet` schema, anchor per term; becomes the internal-link substrate ("orb", "cusp", "applying" link to definitions sitewide). Search ships as a lazy client-side index over titles/descriptions/terms following the existing cities-shard pattern (no new deps) — Pagefind only if the hand-rolled index proves insufficient.
 6. **Cluster hygiene** (Codex C1/C4): consolidate the 8 discovery doorways into `/sdk/` sections with 301s (human approval); keep birthdays but monitor indexation as its own GSC cohort; hubs get real `<h1>`s and 200-word intros (aspects hub is 104 words).
 
@@ -511,7 +511,7 @@ Layered per the brief's separation. LLM visibility here is the *output* of citab
 
 **1. Technical discoverability (Codex C1, week 1):** automate IndexNow in `daily-horoscopes.yml`/`transits-monthly.yml` (key already deployed, dormant [M]); 308 `www.` → apex and no-slash → slash redirects in `vercel.json` (canonicals currently carry the whole load [M]); `lastmod` for the 67 evergreen URLs via a shared `getLastmod()`; hub `<h1>`s; heading IDs on all learn articles; `/feeds/` index page; feed autodiscovery sitewide; `twitter:image:alt` + `max-image-preview:large`; square Organization logo; ES-stub canonicals → EN (noindex+self-canonical is contradictory signaling [M]); reverse-sitemap CI check.
 
-**2. Editorial authority (human + Codex):** named editor + `Person` entity with `author`/`reviewedBy` on Articles; `datePublished` sitewide; sources system (§6.2); visible "Reviewed" lines; fix the 4 voice violations [M P15]; compatibility FAQ made visible (also fixes its 272-word thinness); pairs collection gains `faq` (78 PAA-target pages currently schema-less [M]).
+**2. Editorial authority (AI-native):** Organization authorship + a public editorial-system disclosure; versioned source and publication manifests; `datePublished` sitewide; sources and correction systems (§6.2); visible production-method lines; fix the 4 voice violations [M P15]; compatibility FAQ made visible (also fixes its 272-word thinness); pairs collection gains `faq` (78 PAA-target pages currently schema-less [M]).
 
 **3. Unique information/data (the moat):** Dataset + Event markup on the four calendars; the Living Correspondence Chart; per-page CSV/JSON downloads for calendar tables (data files already exist in `src/data/` [M]); keep the daily computed-freshness pipeline exactly as is — it is the rarest signal in the niche [M content audit inference 3].
 
@@ -836,7 +836,7 @@ skip to C5/C6 and return.
 | D5 | Wing footer presence on consumer pages | **Keep Registry column but reduce to 2 links (Registry, SDK) + disclaimer** / keep 4 links / registry chip only | C4 (partial) |
 | D6 | Glass on primary CTAs | **Solid ink stays the one primary per page; glass = secondary/contextual standard** / glass primaries everywhere (G2 + solid orb) — see it in context after T-13 before deciding | T-14 |
 | D7 | Horoscope archives | **Keep replace-in-place (status quo)** / add /horoscopes/{sign}/{yyyy-mm}/ archives (long-tail + LLM corpus, but a growing thin-page surface) | Gate 5 |
-| D8 | Editorial identity | Name a human editor/reviewer (even pseudonymous-but-consistent) for author/reviewedBy — **required for the authority ceiling**; who? | §6.4, Gate 5 |
+| D8 | Editorial identity | Use accurate Organization authorship plus an AI editorial-system disclosure, evidence manifests, and correction log; no fictional human byline. | §6.4, Gate 5 |
 | D9 | ES investment level | **Quality-first then horoscopes+pairs clusters** / EN-only freeze / full parity push | C5 scope, Gate 5 |
 | D10 | Hero video budget | **Approve AV1 tier + saveData guard** / replace video with poster-only on mobile / leave | T-26 |
 
@@ -853,7 +853,7 @@ skip to C5/C6 and return.
 | D5 | Consumer footer wing column trimmed to Registry + SDK + disclaimer |
 | D6 | Solid ink stays the one primary CTA per page; glass is the secondary/contextual standard |
 | D7 | Horoscopes stay replace-in-place; no archives |
-| D8 | Pen-name editorial persona — owner delegated the choice; **Rowan Vale** chosen and shipped (`src/lib/editorial.ts`) |
+| D8 | AI-only operating decision — fictional Person authorship retired; **Zodiacs.org Editorial System** disclosed and Organization authorship shipped (`src/lib/editorial.ts`) |
 | D9 | **Amendment:** ES freezes after quality fixes — C5 is quality-only and Gate 5's ES cluster growth is cut until English proves out |
 | D10 | Hero video: AV1 tier + data-saver guard approved |
 

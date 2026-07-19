@@ -102,6 +102,12 @@ function validateArticle(node, label) {
     if (!(field in node)) failures.push(`${label}: Article is missing ${field}`);
   }
   if (!node.author || !node.publisher) failures.push(`${label}: Article needs author and publisher`);
+  if (node.author?.['@id'] !== 'https://zodiacs.org/#org') {
+    failures.push(`${label}: Article author must be the disclosed Zodiacs.org Organization`);
+  }
+  if (hasType(node.author, 'Person')) {
+    failures.push(`${label}: AI-operated publication must not emit a fictional Person author`);
+  }
 }
 
 function validateApplication(node, label) {

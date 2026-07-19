@@ -2,6 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import ChartCalculator from '../../islands/ChartCalculator';
 import EmailCapture from '../../components/EmailCapture.astro';
+import EvidenceDisclosure from '../../components/EvidenceDisclosure.astro';
 import '../../styles/calculator.css';
 import '../../styles/explorer.css';
 
@@ -102,14 +103,21 @@ const jsonLd = [
         productively, oppositions negotiate.
       </p>
       <p>
-        Every chart lists the exact time and place it was calculated from, its
-        coordinates, and its <a href="/learn/glossary/#house-system">house system</a>, so nothing is taken on faith. The
-        positions are tested against NASA JPL reference data on every change.
-        Here is <a href="/methodology/">exactly how it is computed</a>. Prefer
-        to learn the method before running your numbers?
+        Prefer to learn the shape of a chart before running your numbers?{' '}
         <a href="/learn/how-to-read-a-birth-chart/">How to read a birth
         chart</a> walks the same four steps the results do.
       </p>
+      <EvidenceDisclosure
+        label="How this chart is calculated"
+        description="Coordinates, house system, and astronomical checks"
+      >
+        <p>
+          Every chart lists the exact time and place used, its coordinates, and
+          its <a href="/learn/glossary/#house-system">house system</a>. Planetary
+          positions are checked against astronomical reference data.
+        </p>
+        <p class="evidence-disclosure__links"><a href="/methodology/">Read the full methodology →</a></p>
+      </EvidenceDisclosure>
     </div>
   </section>
 

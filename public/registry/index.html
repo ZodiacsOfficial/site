@@ -1910,22 +1910,34 @@
           rgba(0,0,0,0.5) 100%);
       position: relative;
     }
-    .strip-wrap::before,
-    .strip-wrap::after {
+    .strip__head { display: none; }
+    .strip__viewport { position: relative; }
+    .strip__viewport::before,
+    .strip__viewport::after {
       content: "";
       position: absolute; top: 0; bottom: 0;
-      width: 36px;
+      width: 44px;
       pointer-events: none;
       z-index: 2;
+      opacity: 0;
+      transition: opacity 180ms cubic-bezier(0.23, 1, 0.32, 1);
     }
-    .strip-wrap::before {
+    .strip__viewport::before {
       left: 0;
-      background: linear-gradient(90deg, var(--bg) 0%, transparent 100%);
+      background: linear-gradient(90deg,
+        rgba(6,7,9,0.98) 0%,
+        rgba(6,7,9,0.76) 42%,
+        transparent 100%);
     }
-    .strip-wrap::after {
+    .strip__viewport::after {
       right: 0;
-      background: linear-gradient(270deg, var(--bg) 0%, transparent 100%);
+      background: linear-gradient(270deg,
+        rgba(6,7,9,0.98) 0%,
+        rgba(6,7,9,0.76) 42%,
+        transparent 100%);
     }
+    .strip__viewport.can-scroll-left::before,
+    .strip__viewport.can-scroll-right::after { opacity: 1; }
 
     .strip {
       display: flex;
@@ -1936,6 +1948,7 @@
       scroll-snap-type: x proximity;
       scrollbar-width: none;
       -webkit-overflow-scrolling: touch;
+      overscroll-behavior-x: contain;
     }
     .strip::-webkit-scrollbar { display: none; }
 
@@ -1949,8 +1962,9 @@
       background: transparent;
       border: 0;
       padding: 0;
+      cursor: pointer;
       scroll-snap-align: center;
-      transition: transform 220ms var(--ease);
+      transition: transform 140ms cubic-bezier(0.23, 1, 0.32, 1);
     }
     /* Tight cool spotlight on the active disc — contained halo, no
        breathing scale, no spill onto neighbours. Crossfade is handled
@@ -1970,7 +1984,7 @@
       opacity: 0;
       pointer-events: none;
       z-index: 0;
-      transition: opacity 720ms var(--ease);
+      transition: opacity 180ms ease;
     }
     .strip__glyph img {
       position: relative;
@@ -1980,9 +1994,13 @@
       border-radius: 50%;
       opacity: 0.76;
       filter: brightness(0.92);
-      transition: opacity 720ms var(--ease), filter 720ms var(--ease);
+      transition: opacity 180ms ease, filter 180ms ease;
     }
-    .strip__glyph:hover img { opacity: 0.92; filter: brightness(1.02); }
+    .strip__icon { display: block; }
+    .strip__name { display: none; }
+    @media (hover: hover) and (pointer: fine) {
+      .strip__glyph:hover img { opacity: 0.92; filter: brightness(1.02); }
+    }
     .strip__glyph:active { transform: scale(0.92); }
 
     .strip__glyph.is-active::before {
@@ -2006,15 +2024,6 @@
       color: var(--ink-mute);
       transition: color 420ms var(--ease);
     }
-    .strip-wrap.is-autoplay .strip__sub { color: var(--gold-deep); }
-    .strip__sub .chev {
-      color: var(--ink-dim);
-      font-family: var(--serif);
-      font-size: 14px;
-      opacity: 0.7;
-      transition: opacity 320ms var(--ease), transform 420ms var(--ease);
-    }
-    .strip__sub:hover .chev { opacity: 1; }
 
     /* ── Museum label / detail panel ───────────────────────────── */
 
@@ -3378,10 +3387,10 @@
 
     /* ── Transitions on active content ─────────────────────────── */
 
-    .fade-key { animation: fadeInUp 520ms var(--ease) both; }
-    @keyframes fadeInUp {
-      0%   { opacity: 0; transform: translateY(6px); filter: blur(3px); }
-      100% { opacity: 1; transform: translateY(0);   filter: blur(0);   }
+    .fade-key { animation: record-swap 180ms cubic-bezier(0.23, 1, 0.32, 1) both; }
+    @keyframes record-swap {
+      0%   { opacity: 0; }
+      100% { opacity: 1; }
     }
 
     /* Scroll-driven entry — IntersectionObserver-controlled */
@@ -3438,15 +3447,93 @@
         display: grid;
         grid-template-columns: minmax(0, 1.04fr) minmax(0, 0.96fr);
         column-gap: 84px;
-        align-items: center;
+        align-items: start;
         padding: 104px 72px 100px;
       }
       .hero > * { grid-column: 1; min-width: 0; }
-      .hero > .card { grid-column: 2; grid-row: 1 / span 5; align-self: center; }
+      .hero > .card { grid-column: 2; grid-row: 1 / span 5; align-self: start; }
       .hero__eyebrow { justify-self: start; }
       .hero__headline { font-size: clamp(64px, 6.4vw, 86px); margin-bottom: 26px; }
       .hero__sub { font-size: 19px; max-width: 42ch; margin-bottom: 40px; }
       .glyph-stage { height: 400px; }
+
+      /* Desktop gets a complete catalogue index, not a clipped mobile rail.
+         Every sign stays visible and directly selectable; no scroll-jail,
+         decorative arrows, or hidden choices. */
+      .strip-wrap {
+        align-self: start;
+        padding: 18px 0 16px;
+        border-color: var(--hair-2);
+        background: transparent;
+      }
+      .strip__head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 14px;
+        font-family: var(--mono);
+        font-size: 9px;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--ink-mute);
+      }
+      .strip__status {
+        color: var(--ink-2);
+        letter-spacing: 0.16em;
+        white-space: nowrap;
+      }
+      .strip__viewport::before,
+      .strip__viewport::after { display: none; }
+      .strip {
+        display: grid;
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+        gap: 8px;
+        padding: 0;
+        overflow: visible;
+        scroll-snap-type: none;
+      }
+      .strip__glyph {
+        width: 100%;
+        height: 68px;
+        grid-template-rows: 34px auto;
+        align-content: center;
+        gap: 5px;
+        border: 1px solid transparent;
+        border-radius: 2px;
+        transition:
+          transform 140ms cubic-bezier(0.23, 1, 0.32, 1),
+          border-color 180ms ease,
+          background-color 180ms ease;
+      }
+      .strip__glyph::before {
+        inset: auto;
+        top: 5px;
+        left: 50%;
+        width: 40px;
+        height: 40px;
+        transform: translateX(-50%);
+      }
+      .strip__glyph img { width: 30px; height: 30px; }
+      .strip__name {
+        display: block;
+        position: relative;
+        z-index: 1;
+        overflow: hidden;
+        font-family: var(--mono);
+        font-size: 8px;
+        letter-spacing: 0.08em;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        color: var(--ink-dim);
+      }
+      .strip__glyph.is-active {
+        border-color: var(--hair-2);
+        background: rgba(238,241,247,0.055);
+        box-shadow: inset 0 1px 0 rgba(238,241,247,0.08);
+      }
+      .strip__glyph.is-active .strip__name { color: var(--ink); }
+      .strip__sub { display: none; }
 
       .hero__cta--below {
         flex-direction: row;

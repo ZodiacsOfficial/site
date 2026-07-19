@@ -1,6 +1,17 @@
 ---
 import Base from '../../layouts/Base.astro';
+import EvidenceDisclosure from '../../components/EvidenceDisclosure.astro';
 import TodayBrief from '../../islands/today/TodayBrief';
+import dailyData from '../../data/daily.json';
+import publicationData from '../../data/daily-publication.json';
+import type { Daily } from '../../lib/daily';
+import type { DailyPublication } from '../../lib/daily-publication';
+
+const daily = dailyData as Daily;
+const publication = publicationData as DailyPublication;
+const sunSignLines = Object.fromEntries(
+  publication.signs.map((entry) => [entry.sign, entry.todayLine.text]),
+);
 ---
 <Base
   clientUi
@@ -8,7 +19,11 @@ import TodayBrief from '../../islands/today/TodayBrief';
   description="Choose your Sun sign for a clear daily note, or privately compare today’s sky with a birth chart saved on this device."
   path="/today/"
 >
-  <section class="section--tight container container--narrow today-page">
+  <section
+    class="section--tight container container--narrow today-page"
+    data-daily-date={publication.date}
+    data-generation-mode={publication.generation.mode}
+  >
     <header class="today-hero">
       <em class="kicker">Your daily brief</em>
       <h1 class="display">Today</h1>
@@ -18,8 +33,33 @@ import TodayBrief from '../../islands/today/TodayBrief';
       </p>
     </header>
 
-    <TodayBrief client:load />
+    <TodayBrief client:load sunSignLines={sunSignLines} />
 
+    {daily.eventsCoverage === 'unavailable' && (
+      <p class="today-coverage-note">
+        Today’s reading uses planetary positions only; exact-event timing
+        isn’t available for this date.
+      </p>
+    )}
+
+    <EvidenceDisclosure
+      class="today-provenance"
+      variant="panel"
+      label="Behind today’s reading"
+      description="Sky details, limitations, and editorial standards"
+    >
+      <p>
+        Each reading is tied to the recorded sky for{' '}
+        <time datetime={publication.date}>{publication.date}</time>. Automated
+        checks verify the sky facts, keep the twelve signs meaningfully distinct,
+        and screen restricted advice before an edition is published.
+      </p>
+      <p class="evidence-disclosure__links today-provenance__links">
+        <a href="/methodology/#daily-publication">How daily publication works</a>
+        <a href="/data/daily-publication.json">View this edition’s record</a>
+        <a href="/corrections/">Corrections</a>
+      </p>
+    </EvidenceDisclosure>
   </section>
 </Base>
 
@@ -38,6 +78,15 @@ import TodayBrief from '../../islands/today/TodayBrief';
     line-height: 1.55;
     text-wrap: pretty;
   }
+  .today-coverage-note {
+    margin: 18px 0 0;
+    padding: 12px 14px;
+    border-left: 2px solid var(--hair-2);
+    color: var(--faint);
+    font-size: var(--text-xs);
+    line-height: 1.65;
+  }
+  .today-provenance { margin-top: 18px; }
   .today-card__core { padding: clamp(22px, 5vw, 38px); }
   .today-card__head {
     display: flex;
@@ -120,16 +169,19 @@ import TodayBrief from '../../islands/today/TodayBrief';
     font-size: 10.5px;
     line-height: 1.65;
   }
-  .today-private,
-  .today-loading {
+  .today-private {
     margin: 0;
     color: var(--faint);
     font-size: 12px;
     line-height: 1.7;
   }
-  .today-loading { min-height: 180px; display: grid; align-items: center; }
   .today-fallback { display: grid; gap: 24px; padding-top: 24px; }
   .today-fallback__intro p { max-width: 56ch; }
+  .today-fallback__intro .today-fallback__status {
+    margin-top: 10px;
+    color: var(--faint);
+    font-size: 12px;
+  }
   .today-sign-picker {
     min-width: 0;
     margin: 0;
@@ -154,6 +206,7 @@ import TodayBrief from '../../islands/today/TodayBrief';
     background: var(--void-1);
     cursor: pointer;
     font: inherit;
+    text-decoration: none;
     text-align: center;
     transition: border-color 160ms cubic-bezier(0.23, 1, 0.32, 1),
       background 160ms cubic-bezier(0.23, 1, 0.32, 1),
@@ -167,7 +220,17 @@ import TodayBrief from '../../islands/today/TodayBrief';
     color: var(--text);
     background: color-mix(in oklab, var(--sign) 10%, var(--void-1));
   }
-  .today-sign__glyph { color: var(--sign); font-size: 22px; line-height: 1; }
+  .today-sign__icon {
+    display: block;
+    width: 34px;
+    height: 34px;
+  }
+  .today-sign__icon img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
   .today-sign__name { margin-top: 6px; font-size: 12px; font-weight: 650; line-height: 1; }
   .today-sign__dates {
     margin-top: 5px;
@@ -177,7 +240,11 @@ import TodayBrief from '../../islands/today/TodayBrief';
     white-space: nowrap;
   }
   .today-fallback__result { min-height: 38px; }
-  .today-fallback__prompt { margin: 0; color: var(--faint); font-size: var(--text-sm); }
+  .today-sign-readings {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
   .today-sign-reading {
     display: grid;
     justify-items: start;
@@ -201,6 +268,43 @@ import TodayBrief from '../../islands/today/TodayBrief';
     font-size: clamp(1rem, 0.96rem + 0.25vw, 1.12rem);
     line-height: 1.65;
     text-wrap: pretty;
+  }
+  .today-sign-reading__title {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+  }
+  .today-sign-reading__icon {
+    display: block;
+    flex: 0 0 auto;
+    width: 28px;
+    height: 28px;
+  }
+  .today-sign-reading__icon img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+  .today-sign-reading--compact {
+    align-content: start;
+    gap: 9px;
+    padding: clamp(16px, 3vw, 20px);
+  }
+  .today-sign-reading--compact h3 { font-size: var(--text-lg); }
+  .today-sign-reading--compact .today-sign-reading__line {
+    font-size: var(--text-sm);
+    line-height: 1.6;
+  }
+  .today-sign-reading__more {
+    color: var(--text-2);
+    font-size: 12px;
+    font-weight: 650;
+    text-underline-offset: 3px;
+  }
+  .today-sign-reading__more:hover { color: var(--text); }
+  .today-sign-reading:target {
+    border-color: color-mix(in oklab, var(--sign) 75%, var(--hair-2));
   }
   .today-sign-reading .btn { margin-top: 2px; }
   .today-fallback__personalize {
@@ -243,6 +347,7 @@ import TodayBrief from '../../islands/today/TodayBrief';
     .today-lines li { padding-left: 14px; }
     .today-sign-picker__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     .today-sign { min-height: 76px; }
+    .today-sign-readings { grid-template-columns: 1fr; }
     .today-fallback__personalize { align-items: flex-start; flex-direction: column; }
     .today-fallback__personalize .btn { width: 100%; justify-content: space-between; }
   }

@@ -143,7 +143,7 @@ export default function SolarReturnCalculator() {
           </div>
 
           <button class="btn btn--primary calc__submit" type="submit" disabled={!ready || busy || (differentPlace && !(saved && !saved.birth.place) && !castCity)}><span>{busy ? 'Computing…' : 'Cast solar return'}</span><span class="orb">↗</span></button>
-          <p class="calc__privacy">Calculated privately on this device. Nothing is uploaded.</p>
+          <p class="calc__privacy"><strong>Private by default.</strong> The chart is calculated on this device; nothing is uploaded.</p>
           {error && <p class="calc__error" role="alert" tabIndex={-1} ref={errorRef}>{error}</p>}
         </div>
       </form>

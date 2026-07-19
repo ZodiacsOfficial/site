@@ -1,0 +1,95 @@
+---
+import Base from '../../layouts/Base.astro';
+import corrections from '../../data/corrections.json';
+
+interface CorrectionEntry {
+  id: string;
+  correctedAt: string;
+  page: string;
+  editionDate?: string;
+  summary: string;
+  before: string;
+  after: string;
+}
+
+const entries = corrections.entries as CorrectionEntry[];
+
+const jsonLd = [
+  {
+    '@type': 'CollectionPage',
+    name: 'Zodiacs.org correction log',
+    url: 'https://zodiacs.org/corrections/',
+    description: 'Material corrections to astronomical facts, astrology explanations, and daily editions published by Zodiacs.org.',
+    datePublished: `${corrections.launched}T00:00:00.000Z`,
+    publisher: { '@id': 'https://zodiacs.org/#org' },
+  },
+];
+---
+<Base
+  title="Correction Log | Zodiacs.org"
+  description="Material corrections to astronomical facts, astrology explanations, and daily editions published by Zodiacs.org."
+  path="/corrections/"
+  jsonLd={jsonLd}
+>
+  <section class="section container container--narrow">
+    <em class="kicker">Correction log</em>
+    <h1 class="method-title display">What changed, and why.</h1>
+
+    <div class="prose">
+      <p class="lede">
+        Material errors are recorded here instead of being silently replaced.
+        Each entry names the affected page or edition, the incorrect claim,
+        the correction, and the date the corrected version shipped.
+      </p>
+
+      {entries.length === 0 ? (
+        <section class="corrections-empty" aria-label="No recorded corrections">
+          <h2>No material corrections recorded</h2>
+          <p>
+            This public log began on <time datetime={corrections.launched}>{corrections.launched}</time>.
+            Publication failures that never reached the site are not corrections;
+            errors caught before publication do not appear here.
+          </p>
+        </section>
+      ) : (
+        <ol class="corrections-list">
+          {entries.map((entry) => (
+            <li id={entry.id}>
+              <h2>{entry.summary}</h2>
+              <p class="mono">
+                Corrected <time datetime={entry.correctedAt}>{entry.correctedAt.slice(0, 10)}</time>
+                {' · '}<a href={entry.page}>{entry.page}</a>
+                {entry.editionDate ? ` · edition ${entry.editionDate}` : ''}
+              </p>
+              <p><strong>Before:</strong> {entry.before}</p>
+              <p><strong>After:</strong> {entry.after}</p>
+            </li>
+          ))}
+        </ol>
+      )}
+
+      <h2>Report a problem</h2>
+      <p>
+        Send the page URL and the specific claim to{' '}
+        <a href="mailto:hello@zodiacs.org">hello@zodiacs.org</a>. For a daily
+        edition, include its date and, when possible, the evidence ID from the{' '}
+        <a href="/data/daily-publication.json">publication record</a>.
+      </p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .method-title { margin: 14px 0 24px; font-size: var(--text-2xl); line-height: 1.04; }
+  .prose .lede { font-size: var(--text-lg); color: var(--text); }
+  .corrections-empty {
+    margin-block: 28px;
+    padding: 20px 22px;
+    border: 1px solid var(--hair-1);
+    border-radius: var(--r-md);
+  }
+  .corrections-empty h2 { margin-top: 0; }
+  .corrections-list { display: grid; gap: 24px; padding-left: 1.3em; }
+  .corrections-list li { padding-left: 8px; }
+  .corrections-list h2 { margin-top: 0; }
+</style>

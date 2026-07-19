@@ -54,7 +54,7 @@ const fmtTime = (d: Date) =>
 
 const status = next
   ? `The next full moon is the ${next.name} Moon on ${fmtDay(next.at)}, at ${next.position}.`
-  : 'The committed data window has run out — refresh the sky data.';
+  : 'Later full moon dates are not available yet.';
 
 const asOf = formatShortDate('en', buildNow);
 

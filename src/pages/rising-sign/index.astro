@@ -2,6 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import ChartCalculator from '../../islands/ChartCalculator';
 import SignIcon from '../../components/SignIcon.astro';
+import EvidenceDisclosure from '../../components/EvidenceDisclosure.astro';
 import { SIGNS } from '../../lib/signs';
 import '../../styles/calculator.css';
 
@@ -50,7 +51,7 @@ const jsonLd = [
 <Base
   clientUi
   title="Rising Sign Calculator — What Is My Rising Sign? | Zodiacs.org"
-  description="Calculate your rising sign (ascendant) free with your birth time and place — how people first read you, plus your chart ruler. Computed on your device, no signup."
+  description="Find your rising sign free with your birth time and place — how people first read you, plus the planet that rules your chart."
   path="/rising-sign/"
   image="/assets/og/v2/tool/rising-sign.png"
   imageAlt="Free rising sign calculator — Zodiacs.org"
@@ -83,18 +84,23 @@ const jsonLd = [
         for, and why we won't guess it without one.
       </p>
       <p>
-        We compute yours from the actual rotation of the Earth at your birth
-        instant and birthplace — sidereal time, the obliquity of the <a href="/learn/glossary/#ecliptic">ecliptic</a>,
-        the real spherical trigonometry — and test that math against the sky
-        itself: at sunrise, a correct ascendant matches the Sun's position.
-        <a href="/methodology/">Details here.</a>
-      </p>
-      <p>
         Your rising sign also chooses your <em><a href="/learn/glossary/#chart-ruler">chart ruler</a></em> — the planet
         that rules that sign — whose own placement becomes a headline of your
         chart. The calculator names it for you; the full picture lives in{' '}
         <a href="/birth-chart/">your complete birth chart</a>.
       </p>
+      <EvidenceDisclosure
+        label="How the ascendant is calculated"
+        description="Earth rotation, birthplace, and the horizon"
+      >
+        <p>
+          The calculation uses the Earth’s rotation at your birth instant and
+          birthplace, including sidereal time, the obliquity of the{' '}
+          <a href="/learn/glossary/#ecliptic">ecliptic</a>, and spherical trigonometry.
+          Sunrise checks provide a practical validation against the Sun’s position.
+        </p>
+        <p class="evidence-disclosure__links"><a href="/methodology/">Read the full methodology →</a></p>
+      </EvidenceDisclosure>
     </div>
   </section>
 

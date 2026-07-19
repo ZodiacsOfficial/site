@@ -1,92 +1,96 @@
 {
-  "date": "2026-07-18",
+  "schema": "zodiacs.daily-facts.v1",
+  "date": "2026-07-19",
+  "snapshotAt": "2026-07-19T12:00:00.000Z",
   "bodies": [
     {
       "body": "Moon",
-      "lon": 170.61,
-      "sign": "virgo",
-      "degree": 20.6,
+      "lon": 183.84939613370057,
+      "sign": "libra",
+      "degree": 3.8493961337005658,
       "retrograde": false
     },
     {
       "body": "Sun",
-      "lon": 115.89,
+      "lon": 116.84864118032061,
       "sign": "cancer",
-      "degree": 25.9,
+      "degree": 26.848641180320612,
       "retrograde": false
     },
     {
       "body": "Mercury",
-      "lon": 107.6,
+      "lon": 107.19377597206153,
       "sign": "cancer",
-      "degree": 17.6,
+      "degree": 17.19377597206153,
       "retrograde": true
     },
     {
       "body": "Venus",
-      "lon": 159.67,
+      "lon": 160.76306134399692,
       "sign": "virgo",
-      "degree": 9.7,
+      "degree": 10.763061343996924,
       "retrograde": false
     },
     {
       "body": "Mars",
-      "lon": 73.84,
+      "lon": 74.5294275754922,
       "sign": "gemini",
-      "degree": 13.8,
+      "degree": 14.529427575492207,
       "retrograde": false
     },
     {
       "body": "Jupiter",
-      "lon": 123.97,
+      "lon": 124.19489221447554,
       "sign": "leo",
-      "degree": 4,
+      "degree": 4.194892214475544,
       "retrograde": false
     },
     {
       "body": "Saturn",
-      "lon": 14.69,
+      "lon": 14.701734642626036,
       "sign": "aries",
-      "degree": 14.7,
+      "degree": 14.701734642626036,
       "retrograde": false
     },
     {
       "body": "Uranus",
-      "lon": 64.51,
+      "lon": 64.55080035023337,
       "sign": "gemini",
-      "degree": 4.5,
+      "degree": 4.550800350233374,
       "retrograde": false
     },
     {
       "body": "Neptune",
-      "lon": 4.39,
+      "lon": 4.382556394642393,
       "sign": "aries",
-      "degree": 4.4,
+      "degree": 4.382556394642393,
       "retrograde": true
     },
     {
       "body": "Pluto",
-      "lon": 304.49,
+      "lon": 304.467056265167,
       "sign": "aquarius",
-      "degree": 4.5,
+      "degree": 4.4670562651670025,
       "retrograde": true
     }
   ],
   "moon": {
     "phase": "Waxing Crescent",
-    "illumination": 0.212
+    "illumination": 0.306
   },
+  "eventsCoverage": "complete",
+  "eventsSource": "src/data/transits-2026-07.json",
   "events": [
     {
       "kind": "aspect",
-      "a": "Uranus",
-      "b": "Pluto",
-      "type": "trine",
-      "at": "2026-07-18T04:39:44.443Z",
+      "a": "Mars",
+      "b": "Saturn",
+      "type": "sextile",
+      "at": "2026-07-19T18:05:52.329Z",
       "aSign": "gemini",
-      "aDegree": 4.5,
-      "bSign": "aquarius",
-      "bDegree": 4.5
+      "aDegree": 14.7,
+      "bSign": "aries",
+      "bDegree": 14.7
     }
   ]
 }

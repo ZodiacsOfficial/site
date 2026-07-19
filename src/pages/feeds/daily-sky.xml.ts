@@ -24,7 +24,7 @@ export const GET: APIRoute = () => {
     .slice(0, 3)
     .map((e) => {
       if (e.kind === 'ingress') return `${e.planet} enters ${cap(e.sign ?? '')}`;
-      if (e.kind === 'station') return `${e.planet} stations ${e.retrograde ? 'retrograde' : 'direct'}`;
+      if (e.kind === 'station') return `${e.planet} stations ${e.type === 'retrograde' ? 'retrograde' : 'direct'}`;
       if (e.kind === 'lunation') return `${e.type} in ${cap(e.sign ?? '')}`;
       if (e.kind === 'aspect') return `${e.a} ${e.type} ${e.b}`;
       return null;
@@ -33,6 +33,9 @@ export const GET: APIRoute = () => {
 
   const description = [
     `Moon phase: ${daily.moon.phase}.`,
+    daily.eventsCoverage === 'unavailable'
+      ? 'Exact-event coverage is unavailable for this date; positions remain available.'
+      : '',
     eventBits.length ? `Today: ${eventBits.join('; ')}.` : '',
     retro.length ? `Retrograde: ${retro.join(', ')}.` : '',
     `Positions at 12:00 UTC — ${positions}.`,

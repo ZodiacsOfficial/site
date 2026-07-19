@@ -161,76 +161,107 @@ const jsonLd = [
         <h1 class="display">Born on {label}</h1>
       </div>
 
-      <dl class="bday-panel mono">
+      <p class="bday__lede">{entry.data.description}</p>
+
+      <p class="bday__identity">
+        <span class="mono">Sun sign</span>
         {sign ? (
-          <div class="bday-panel__row">
-            <dt>Sun sign</dt>
-            <dd><strong><a href={`/${sign.slug}/`}>{sign.name}</a></strong> — every year, {yearFrom}–{yearTo}</dd>
-          </div>
+          <>
+            <strong><a href={`/${sign.slug}/`}>{sign.name}</a></strong>
+            <span>{sign.essence}</span>
+          </>
         ) : cusp && (
           <>
-            <div class="bday-panel__row">
-              <dt>Sun sign</dt>
-              <dd>
-                <strong><a href={`/${cusp.a.slug}/`}>{cusp.a.name}</a></strong> or <strong><a href={`/${cusp.b.slug}/`}>{cusp.b.name}</a></strong> — the {cusp.a.name}–{cusp.b.name} boundary lands here
-              </dd>
-            </div>
-            <div class="bday-panel__row">
-              <dt>{yearFrom}–{yearTo}</dt>
-              <dd>whole day {cusp.a.name} in {cusp.wholeA} years · whole day {cusp.b.name} in {cusp.wholeB} · split at the ingress in {cusp.split}</dd>
-            </div>
-            {nowReading && (
+            <strong>
+              <a href={`/${cusp.a.slug}/`}>{cusp.a.name}</a>{' '}or{' '}
+              <a href={`/${cusp.b.slug}/`}>{cusp.b.name}</a>
+            </strong>
+            <span>Your birth year and time decide.</span>
+          </>
+        )}
+      </p>
+
+      <details class="bday-facts">
+        <summary>
+          <span>
+            <strong>Exact date &amp; cusp check</strong>
+            <small>{cusp ? 'Sun sign by year, degrees, decan, and this year’s sky' : 'Sun degrees, decan, and this year’s sky'}</small>
+          </span>
+          <span class="bday-facts__mark" aria-hidden="true"></span>
+        </summary>
+        <div class="bday-facts__body">
+          <dl class="bday-panel mono">
+            {sign ? (
               <div class="bday-panel__row">
-                <dt>In {data.now.year}</dt>
+                <dt>Sun sign</dt>
+                <dd><strong><a href={`/${sign.slug}/`}>{sign.name}</a></strong> — every year, {yearFrom}–{yearTo}</dd>
+              </div>
+            ) : cusp && (
+              <>
+                <div class="bday-panel__row">
+                  <dt>Sun sign</dt>
+                  <dd>
+                    <strong><a href={`/${cusp.a.slug}/`}>{cusp.a.name}</a></strong> or <strong><a href={`/${cusp.b.slug}/`}>{cusp.b.name}</a></strong> — the {cusp.a.name}–{cusp.b.name} boundary lands here
+                  </dd>
+                </div>
+                <div class="bday-panel__row">
+                  <dt>{yearFrom}–{yearTo}</dt>
+                  <dd>whole day {cusp.a.name} in {cusp.wholeA} years · whole day {cusp.b.name} in {cusp.wholeB} · split at the ingress in {cusp.split}</dd>
+                </div>
+                {nowReading && (
+                  <div class="bday-panel__row">
+                    <dt>In {data.now.year}</dt>
+                    <dd>
+                      {nowReading.kind === 'whole'
+                        ? `${nowReading.sign.name} all day`
+                        : `${nowReading.before.name} until ${nowReading.atUtc} UTC, then ${nowReading.after.name}`}
+                    </dd>
+                  </div>
+                )}
+              </>
+            )}
+            <div class="bday-panel__row">
+              <dt>Sun degrees</dt>
+              <dd>{spanLabel} · noon UTC, {yearFrom}–{yearTo}</dd>
+            </div>
+            {decan && sign && (
+              <div class="bday-panel__row">
+                <dt>Decan</dt>
                 <dd>
-                  {nowReading.kind === 'whole'
-                    ? `${nowReading.sign.name} all day`
-                    : `${nowReading.before.name} until ${nowReading.atUtc} UTC, then ${nowReading.after.name}`}
+                  {decan.lo === decan.hi
+                    ? <>{decanOrdinal(decan.lo)} decan of {sign.name} — traditional ruler <strong>{decan.ruler}</strong></>
+                    : <>{decanOrdinal(decan.lo)}–{decanOrdinal(decan.hi)} decan of {sign.name} — the {decan.lo * 10}° line falls inside this date's span (rulers {decan.ruler} / {decan.hiRuler})</>}
                 </dd>
               </div>
             )}
-          </>
-        )}
-        <div class="bday-panel__row">
-          <dt>Sun degrees</dt>
-          <dd>{spanLabel} · noon UTC, {yearFrom}–{yearTo}</dd>
-        </div>
-        {decan && sign && (
-          <div class="bday-panel__row">
-            <dt>Decan</dt>
-            <dd>
-              {decan.lo === decan.hi
-                ? <>{decanOrdinal(decan.lo)} decan of {sign.name} — traditional ruler <strong>{decan.ruler}</strong></>
-                : <>{decanOrdinal(decan.lo)}–{decanOrdinal(decan.hi)} decan of {sign.name} — the {decan.lo * 10}° line falls inside this date's span (rulers {decan.ruler} / {decan.hiRuler})</>}
-            </dd>
-          </div>
-        )}
-        {cusp && (
-          <div class="bday-panel__row">
-            <dt>Decan</dt>
-            <dd>last decan of {cusp.a.name} or first of {cusp.b.name} — the ingress decides</dd>
-          </div>
-        )}
-        <div class="bday-panel__row">
-          <dt>This year</dt>
-          <dd>{label}, {data.now.year}: Sun {formatLongitude(data.now.lon)} · Moon in {moonSign.name} at noon UTC</dd>
-        </div>
-      </dl>
+            {cusp && (
+              <div class="bday-panel__row">
+                <dt>Decan</dt>
+                <dd>last decan of {cusp.a.name} or first of {cusp.b.name} — the ingress decides</dd>
+              </div>
+            )}
+            <div class="bday-panel__row">
+              <dt>This year</dt>
+              <dd>{label}, {data.now.year}: Sun {formatLongitude(data.now.lon)} · Moon in {moonSign.name} at noon UTC</dd>
+            </div>
+          </dl>
 
-      {cusp && (
-        <details class="bday-years mono">
-          <summary>The year-by-year table, {yearFrom}–{yearTo}</summary>
-          <div class="bday-years__grid">
-            {Object.entries(data.cusp!.years).map(([year, v]) => (
-              <span class="bday-years__cell">
-                <span class="bday-years__year">{year}</span>
-                {v === 'a' ? cusp.a.name : v === 'b' ? cusp.b.name : `${cusp.a.name} → ${cusp.b.name} ${v} UTC`}
-              </span>
-            ))}
-          </div>
-          <p class="bday-years__note">Times are universal time — convert your birth time before reading your year.</p>
-        </details>
-      )}
+          {cusp && (
+            <details class="bday-years mono">
+              <summary>The year-by-year table, {yearFrom}–{yearTo}</summary>
+              <div class="bday-years__grid">
+                {Object.entries(data.cusp!.years).map(([year, v]) => (
+                  <span class="bday-years__cell">
+                    <span class="bday-years__year">{year}</span>
+                    {v === 'a' ? cusp.a.name : v === 'b' ? cusp.b.name : `${cusp.a.name} → ${cusp.b.name} ${v} UTC`}
+                  </span>
+                ))}
+              </div>
+              <p class="bday-years__note">Times are universal time — convert your birth time before reading your year.</p>
+            </details>
+          )}
+        </div>
+      </details>
     </header>
 
     <div class="prose reveal">
@@ -244,7 +275,7 @@ const jsonLd = [
     <div class="bday__cta shell tinted reveal">
       <div class="core tinted bday__cta-core">
         <strong>The date gives you the Sun. The rest takes a chart.</strong>
-        <p>Moon, rising, houses, aspects — computed from your exact birth moment, on your device, free.</p>
+        <p>See the Moon, rising sign, houses, and aspects that make the reading unmistakably yours — free, with no signup.</p>
         <a class="btn btn--primary" href="/birth-chart/"><span>Get your free birth chart</span><span class="orb">↗</span></a>
       </div>
     </div>
@@ -290,6 +321,57 @@ const jsonLd = [
     flex-basis: 100%;
   }
   @media (min-width: 700px) { .bday-lockup h1 { flex-basis: auto; } }
+
+  .bday__lede {
+    margin: 0;
+    max-width: 62ch;
+    color: var(--text-2);
+    font-size: var(--text-lg);
+    line-height: 1.6;
+    text-wrap: pretty;
+  }
+  .bday__identity {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 5px 12px;
+    margin: 0;
+    color: var(--text-2);
+    font-size: var(--text-sm);
+  }
+  .bday__identity > .mono {
+    color: var(--faint);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .bday__identity strong { font-size: var(--text-md); }
+  .bday__identity a { color: var(--text); text-decoration-color: var(--hair-2); }
+
+  .bday-facts {
+    width: 100%;
+    max-width: 640px;
+    padding: 3px 16px;
+    border: 1px solid var(--hair-1);
+    border-radius: var(--r-md);
+    background: var(--void-1);
+  }
+  .bday-facts > summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 11px 0;
+    cursor: pointer;
+    list-style: none;
+  }
+  .bday-facts > summary::-webkit-details-marker { display: none; }
+  .bday-facts > summary > span:first-child { display: grid; gap: 2px; }
+  .bday-facts > summary strong { color: var(--text); font-size: var(--text-sm); }
+  .bday-facts > summary small { color: var(--faint); font-size: var(--text-xs); }
+  .bday-facts__mark::before { content: '+'; color: var(--muted); font-family: var(--font-mono); }
+  .bday-facts[open] .bday-facts__mark::before { content: '−'; }
+  .bday-facts__body { display: grid; gap: 14px; padding: 2px 0 13px; }
 
   .bday-panel { margin: 0; display: grid; width: 100%; max-width: 640px; }
   .bday-panel__row {

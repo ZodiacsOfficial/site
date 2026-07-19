@@ -1,8 +1,8 @@
 import type { Locale } from '../lib/i18n';
 
 export const PWA_PROMPT_EN = {
-  heading: 'Keep your tools close?',
-  body: 'Install Zodiacs for a faster return to your private, browser-computed tools.',
+  heading: 'Keep Zodiacs close?',
+  body: 'Install Zodiacs for a faster return to your charts, daily astrology, and saved tools.',
   ios: 'On iPhone or iPad, tap Share, then Add to Home Screen.',
   install: 'Install Zodiacs',
   dismiss: 'No, do not ask again',

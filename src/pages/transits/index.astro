@@ -36,7 +36,7 @@ const jsonLd = [
     name: 'Transit tracker — the sky moving over your chart',
     url: 'https://zodiacs.org/transits/',
     description:
-      'The sky moving over your birth chart: transits within 3 degrees of exact, at today’s date or any date up to a year forward or back.',
+      'See what is active in your birth chart today, then move the date to watch each influence build, peak, and release.',
   },
   {
     '@type': 'FAQPage',
@@ -51,7 +51,7 @@ const jsonLd = [
 <Base
   clientUi
   title="Transit Tracker — The Sky Moving Over Your Birth Chart | Zodiacs.org"
-  description="Today's transits to your natal planets, within 3° of exact — and a slider that moves the sky up to a year forward or back. Free, computed on your device."
+  description="See what is active in your birth chart today, then move the date up to a year forward or back to watch each transit build and release."
   path="/transits/"
   image="/assets/og/v2/tool/transits.png"
   imageAlt="Transit tracker — Zodiacs.org"
@@ -60,12 +60,11 @@ const jsonLd = [
 >
   <section class="section--tight container container--narrow">
     <div class="tool-hero reveal">
-      <h1 class="display">The sky, against your chart.</h1>
+      <h1 class="display">What is active in your chart?</h1>
       <p>
-        Today&rsquo;s planets <a href="/learn/glossary/#aspect">aspected</a> to your natal ones, within 3&deg; of
-        exact &mdash; and a slider that moves the sky up to a year forward
-        or back, so you can watch a <a href="/learn/glossary/#transit">transit</a> form, peak, and separate. Pick
-        a saved chart or enter birth details; nothing leaves your device.
+        Start with today&rsquo;s strongest themes, then move the date up to a year
+        forward or back to watch each <a href="/learn/glossary/#transit">transit</a> build, peak, and release.
+        Pick a saved chart or enter your birth details.
       </p>
     </div>
     <TransitTracker client:load />
@@ -79,16 +78,16 @@ const jsonLd = [
       <div class="section-head reveal">
         <h2>The sky in {label}</h2>
         <p>
-          The month&rsquo;s events as our engine computed them &mdash;{' '}
-          <a href="/learn/glossary/#ingress">ingresses</a>, <a href="/learn/glossary/#lunation">lunations</a>, <a href="/learn/glossary/#station">stations</a>, and exact aspects. Times are
-          universal time. These are the same receipts the{' '}
-          <a href="/horoscopes/">monthly horoscopes</a> are written against.
+          Key dates this month: <a href="/learn/glossary/#ingress">ingresses</a>,{' '}
+          <a href="/learn/glossary/#lunation">lunations</a>, <a href="/learn/glossary/#station">stations</a>, and major{' '}
+          <a href="/learn/glossary/#aspect">aspects</a>.
+          Use them with the <a href="/horoscopes/">monthly horoscopes</a> or keep them as a calendar.
         </p>
       </div>
       <ul class="trn-events reveal">
         {events.map((e) => (
           <li>
-            <span class="trn-events__date mono">{dayLabel(e.at)}</span>
+              <span class="trn-events__date mono">{dayLabel(e.at)}</span>
             <span class="trn-events__label">
               <PlanetGlyph body={e.body} hue={e.hue} size={14} class="rcpt-glyph" />{e.label}
             </span>

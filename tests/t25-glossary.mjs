@@ -37,7 +37,8 @@ for (const [type, node] of [['Article', article], ['DefinedTermSet', termSet]]) 
   );
 }
 
-assert.equal(article.author['@id'], 'https://zodiacs.org/about/#editor');
+assert.equal(article.author['@id'], 'https://zodiacs.org/#org');
+assert.equal(article.author['@type'], 'Organization');
 assert.equal(article.mainEntity['@id'], termSet['@id']);
 assert.ok(breadcrumbs, 'BreadcrumbList node must exist');
 assert.equal(breadcrumbs.itemListElement.length, 3);

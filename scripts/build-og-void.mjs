@@ -10,7 +10,8 @@
  *   disclosure.png         Registry disclosure
  *   tool/{key}.png         calculators + hubs
  *   pair/{a}-{b}.png       all 78 compatibility pairings
- *   horoscope/{slug}.png   the 12 horoscope pages (month-free, evergreen)
+ *   horoscope/{slug}.png   one evergreen family card per sign, shared by
+ *                          daily, weekly, monthly, topical, and yearly pages
  *   placements/{planet}.png  one per planet, shared by its 12 placement pages
  *   rising/{slug}.png      the 12 rising-sign profiles
  *   almanac/{slug}.png     the Almanac hub + published articles
@@ -20,6 +21,7 @@
  * or any HTML owned by the wing generators.
  *
  *   npm run data:og
+ *   npm run data:og -- --only-horoscopes  # refresh the horoscope family
  *
  * Deterministic and offline: fonts and disc art are inlined as data:
  * URIs; Chromium comes from playwright-core (PLAYWRIGHT_MODULE and
@@ -399,6 +401,7 @@ for (const dir of ['', 'sign', 'registry', 'tool', 'pair', 'horoscope', 'placeme
 
 const browser = await chromium.launch({ executablePath });
 const page = await browser.newPage({ viewport: { width: 1200, height: 630 }, deviceScaleFactor: 1 });
+const onlyHoroscopes = process.argv.includes('--only-horoscopes');
 
 let total = 0;
 let count = 0;
@@ -435,49 +438,57 @@ if (process.argv.includes('--only-almanac')) {
   process.exit(0);
 }
 
-console.log('Rendering Cosmic Void OG cards…');
-await shoot(thesisCard(), 'thesis.png');
-if (process.argv.includes('--only-thesis')) {
-  console.log(`Done: ${count} card(s), ${(total / 1024).toFixed(0)}KB.`);
-  await browser.close();
-  process.exit(0);
-}
-// Keep the established global fallback byte-stable unless a deliberate
-// fallback refresh is explicitly requested.
-if (process.argv.includes('--include-fallback')) await shoot(shareCard(), 'share.png');
-await shoot(almanacCard({
-  title: 'The Almanac',
-  sub: "What's actually happening up there each month, and what the tradition makes of it.",
-  path: '/almanac/',
-  hub: true,
-}), 'almanac/index.png');
-for (const entry of almanacEntries) {
-  await shoot(almanacCard({
-    title: entry.title,
-    sub: entry.description,
-    path: `/almanac/${entry.slug}/`,
-  }), `almanac/${entry.slug}.png`);
-}
-for (const s of SIGNS) await shoot(signCard(s), `sign/${s.slug}.png`);
-for (let i = 0; i < SIGNS.length; i += 1) {
-  await shoot(registryLotCard(SIGNS[i], i), `registry/${SIGNS[i].slug}.png`);
-}
-await shoot(registryCard(), 'registry.png');
-await shoot(disclosureCard(), 'disclosure.png');
-for (const t of TOOLS) await shoot(toolCard(t), `tool/${t.key}.png`);
-for (let i = 0; i < SIGNS.length; i += 1) {
-  for (let j = i; j < SIGNS.length; j += 1) {
-    await shoot(pairCard(SIGNS[i], SIGNS[j]), `pair/${SIGNS[i].slug}-${SIGNS[j].slug}.png`);
-  }
-}
-for (const s of SIGNS) await shoot(horoscopeCard(s), `horoscope/${s.slug}.png`);
-for (const s of SIGNS) await shoot(risingCard(s), `rising/${s.slug}.png`);
 const PLANET_GLYPHS = {
   sun: '☉', moon: '☽', mercury: '☿', venus: '♀', mars: '♂',
   jupiter: '♃', saturn: '♄', uranus: '♅', neptune: '♆', pluto: '♇',
 };
-for (const [planetKey, glyph] of Object.entries(PLANET_GLYPHS)) {
-  await shoot(placementCard(planetKey, glyph), `placements/${planetKey}.png`);
+
+console.log(onlyHoroscopes ? 'Rendering horoscope-family cards…' : 'Rendering Cosmic Void OG cards…');
+if (onlyHoroscopes) {
+  const horoscopeTool = TOOLS.find((tool) => tool.key === 'horoscopes');
+  if (!horoscopeTool) throw new Error('Missing horoscopes tool-card copy');
+  await shoot(toolCard(horoscopeTool), 'tool/horoscopes.png');
+  for (const s of SIGNS) await shoot(horoscopeCard(s), `horoscope/${s.slug}.png`);
+} else {
+  await shoot(thesisCard(), 'thesis.png');
+  if (process.argv.includes('--only-thesis')) {
+    console.log(`Done: ${count} card(s), ${(total / 1024).toFixed(0)}KB.`);
+    await browser.close();
+    process.exit(0);
+  }
+  // Keep the established global fallback byte-stable unless a deliberate
+  // fallback refresh is explicitly requested.
+  if (process.argv.includes('--include-fallback')) await shoot(shareCard(), 'share.png');
+  await shoot(almanacCard({
+    title: 'The Almanac',
+    sub: "What's actually happening up there each month, and what the tradition makes of it.",
+    path: '/almanac/',
+    hub: true,
+  }), 'almanac/index.png');
+  for (const entry of almanacEntries) {
+    await shoot(almanacCard({
+      title: entry.title,
+      sub: entry.description,
+      path: `/almanac/${entry.slug}/`,
+    }), `almanac/${entry.slug}.png`);
+  }
+  for (const s of SIGNS) await shoot(signCard(s), `sign/${s.slug}.png`);
+  for (let i = 0; i < SIGNS.length; i += 1) {
+    await shoot(registryLotCard(SIGNS[i], i), `registry/${SIGNS[i].slug}.png`);
+  }
+  await shoot(registryCard(), 'registry.png');
+  await shoot(disclosureCard(), 'disclosure.png');
+  for (const t of TOOLS) await shoot(toolCard(t), `tool/${t.key}.png`);
+  for (let i = 0; i < SIGNS.length; i += 1) {
+    for (let j = i; j < SIGNS.length; j += 1) {
+      await shoot(pairCard(SIGNS[i], SIGNS[j]), `pair/${SIGNS[i].slug}-${SIGNS[j].slug}.png`);
+    }
+  }
+  for (const s of SIGNS) await shoot(horoscopeCard(s), `horoscope/${s.slug}.png`);
+  for (const s of SIGNS) await shoot(risingCard(s), `rising/${s.slug}.png`);
+  for (const [planetKey, glyph] of Object.entries(PLANET_GLYPHS)) {
+    await shoot(placementCard(planetKey, glyph), `placements/${planetKey}.png`);
+  }
 }
 
 // ── Pinterest pins — 1000×1500, the 2:3 ratio pins want ──────────────
@@ -552,13 +563,16 @@ function pinHowTo() {
 }
 
 await page.setViewportSize({ width: 1000, height: 1500 });
-for (const s of SIGNS) await shoot(pinSign(s), `pin/${s.slug}.png`);
+if (!onlyHoroscopes) {
+  for (const s of SIGNS) await shoot(pinSign(s), `pin/${s.slug}.png`);
+}
 for (const s of SIGNS) await shoot(pinHoroscope(s), `pin/horoscope-${s.slug}.png`);
-await shoot(pinHowTo(), 'pin/how-to-read-a-birth-chart.png');
+if (!onlyHoroscopes) await shoot(pinHowTo(), 'pin/how-to-read-a-birth-chart.png');
 
 const requiredCards = [
   ...SIGNS.map((s) => `sign/${s.slug}.png`),
   ...SIGNS.map((s) => `registry/${s.slug}.png`),
+  ...SIGNS.map((s) => `horoscope/${s.slug}.png`),
   ...TOOLS.map((tool) => `tool/${tool.key}.png`),
   'registry.png',
   'thesis.png',

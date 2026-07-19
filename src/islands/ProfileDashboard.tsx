@@ -11,6 +11,7 @@ import { useProfile } from '../lib/hooks/useProfile';
 import { findInterAspects } from '../lib/engine/synastry';
 import { TRANSIT_ORB, transitLine } from '../lib/transits';
 import PlanetGlyph from '../components/PlanetGlyph';
+import EvidenceDisclosure from './EvidenceDisclosure';
 import { houseLine, wholeSignHouseFromAsc, type DailyBody } from '../lib/daily';
 import { type EclipseRecord } from '../lib/upcoming';
 import {
@@ -209,10 +210,6 @@ export default function ProfileDashboard({ locale: rawLocale = 'en' }: Props) {
               {today.houseLines.map((l) => (
                 <li key={l.receipt}>
                   <p>{l.text}</p>
-                  <span class="mono pfd__receipt">
-                    {l.body && <PlanetGlyph body={l.body} hue={l.hue} size={13} class="rcpt-glyph" />}
-                    {l.receipt}
-                  </span>
                 </li>
               ))}
             </ul>
@@ -222,15 +219,29 @@ export default function ProfileDashboard({ locale: rawLocale = 'en' }: Props) {
               {today.hits.map((a) => (
                 <li key={`${a.a}-${a.b}-${a.type}`}>
                   <p>{transitLine(a.a, a.type, a.b)}</p>
-                  <span class="mono pfd__receipt">
-                    <PlanetGlyph body={a.a} hue={SKY_HUE[a.a]} size={13} class="rcpt-glyph" />
-                    {a.a} {a.type} {t(locale, 'natal')} {a.b} · {t(locale, 'orb')} {a.orb.toFixed(1)}°
-                  </span>
                 </li>
               ))}
             </ul>
           ) : (
             <p class="pfd__quiet">{t(locale, 'pfdQuietSky')}</p>
+          )}
+          {today && (today.houseLines.length > 0 || today.hits.length > 0) && (
+            <EvidenceDisclosure label={t(locale, 'whyThisReading')}>
+              <ul class="evidence-disclosure__list">
+                {today.houseLines.map((l) => (
+                  <li class="mono evidence-disclosure__receipt" key={l.receipt}>
+                    {l.body && <PlanetGlyph body={l.body} hue={l.hue} size={13} class="rcpt-glyph" />}
+                    <span>{l.receipt}</span>
+                  </li>
+                ))}
+                {today.hits.map((a) => (
+                  <li class="mono evidence-disclosure__receipt" key={`${a.a}-${a.b}-${a.type}`}>
+                    <PlanetGlyph body={a.a} hue={SKY_HUE[a.a]} size={13} class="rcpt-glyph" />
+                    <span>{a.a} {a.type} {t(locale, 'natal')} {a.b} · {t(locale, 'orb')} {a.orb.toFixed(1)}°</span>
+                  </li>
+                ))}
+              </ul>
+            </EvidenceDisclosure>
           )}
           <a class="pfd__more" href={localizePath(locale, '/transits/')}>{t(locale, 'allTransits')} →</a>
         </div>
@@ -240,17 +251,13 @@ export default function ProfileDashboard({ locale: rawLocale = 'en' }: Props) {
         <div class="core pfd__core">
           <div class="pfd__head">
             <h2>{t(locale, 'pfdYearAhead')}</h2>
-            <span class="mono pfd__stamp">{t(locale, 'pfdYearNote')}</span>
+            <span class="mono pfd__stamp">{chart.name}</span>
           </div>
           {timeline.length > 0 ? (
             <ul class="pfd__lines">
               {timeline.map((ev) => (
                 <li key={`${ev.kind}-${ev.at}-${ev.receipt}`}>
                   <p>{ev.line}</p>
-                  <span class="mono pfd__receipt">
-                    {ev.body && <PlanetGlyph body={ev.body} size={13} class="rcpt-glyph" />}
-                    {ev.receipt}
-                  </span>
                 </li>
               ))}
             </ul>
@@ -261,6 +268,19 @@ export default function ProfileDashboard({ locale: rawLocale = 'en' }: Props) {
           )}
           {timeline.length > 0 && yearBusy && (
             <p class="pfd__quiet">{t(locale, 'pfdYearBusy')}</p>
+          )}
+          {timeline.length > 0 && (
+            <EvidenceDisclosure label={t(locale, 'whyThisReading')}>
+              <p>{t(locale, 'pfdYearNote')}</p>
+              <ul class="evidence-disclosure__list">
+                {timeline.map((ev) => (
+                  <li class="mono evidence-disclosure__receipt" key={`${ev.kind}-${ev.at}-${ev.receipt}`}>
+                    {ev.body && <PlanetGlyph body={ev.body} size={13} class="rcpt-glyph" />}
+                    <span>{ev.receipt}</span>
+                  </li>
+                ))}
+              </ul>
+            </EvidenceDisclosure>
           )}
         </div>
       </div>

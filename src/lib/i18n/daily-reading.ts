@@ -188,7 +188,7 @@ function eventLineEs(event: DailyEvent, sunSign: string): DailyLine | null {
       : 'marca una culminación en';
     return {
       text: `${name} en tu ${ORDINAL_ES[house]} casa: ${meaning} ${HOUSE_THEME_ES[house]}.`,
-      receipt: `${name} ${event.degree}° ${signLabel(event.sign)} · ${utcTime(event.at)}`,
+      receipt: `${name} ${event.degree?.toFixed(1)}° ${signLabel(event.sign)} · ${utcTime(event.at)}`,
       body: 'Moon',
       hue: signBySlug(event.sign).hue,
     };
@@ -201,7 +201,7 @@ function eventLineEs(event: DailyEvent, sunSign: string): DailyLine | null {
     const meaning = retrograde ? 'pone en revisión' : 'vuelve a poner en movimiento';
     return {
       text: `${planet} ${direction} en tu ${ORDINAL_ES[house]} casa: ${meaning} ${HOUSE_THEME_ES[house]}.`,
-      receipt: `${planet} ${direction} ${event.degree}° ${signLabel(event.sign)} · ${utcTime(event.at)}`,
+      receipt: `${planet} ${direction} ${event.degree?.toFixed(1)}° ${signLabel(event.sign)} · ${utcTime(event.at)}`,
       body: event.planet,
       hue: signBySlug(event.sign).hue,
     };
@@ -252,7 +252,7 @@ function eventLinePt(event: DailyEvent, sunSign: string): DailyLine | null {
       : 'marca uma culminação';
     return {
       text: `${name} na sua ${ORDINAL_PT[house]} casa: ${meaning} ${emPt(HOUSE_THEME_PT[house])}.`,
-      receipt: `${name} ${event.degree}° ${signLabelPt(event.sign)} · ${utcTime(event.at)}`,
+      receipt: `${name} ${event.degree?.toFixed(1)}° ${signLabelPt(event.sign)} · ${utcTime(event.at)}`,
       body: 'Moon',
       hue: signBySlug(event.sign).hue,
     };
@@ -265,7 +265,7 @@ function eventLinePt(event: DailyEvent, sunSign: string): DailyLine | null {
     const meaning = retrograde ? 'coloca em revisão' : 'volta a colocar em movimento';
     return {
       text: `${planet} ${direction} na sua ${ORDINAL_PT[house]} casa: ${meaning} ${HOUSE_THEME_PT[house]}.`,
-      receipt: `${planet} ${direction} ${event.degree}° ${signLabelPt(event.sign)} · ${utcTime(event.at)}`,
+      receipt: `${planet} ${direction} ${event.degree?.toFixed(1)}° ${signLabelPt(event.sign)} · ${utcTime(event.at)}`,
       body: event.planet,
       hue: signBySlug(event.sign).hue,
     };
@@ -316,7 +316,7 @@ function eventLineFr(event: DailyEvent, sunSign: string): DailyLine | null {
       : 'marque un aboutissement';
     return {
       text: `La ${name} dans ta ${ORDINAL_FR[house]} maison ${meaning} : ${HOUSE_THEME_FR[house]}.`,
-      receipt: `${name} ${event.degree}° ${signLabelFr(event.sign)} · ${utcTime(event.at)}`,
+      receipt: `${name} ${event.degree?.toFixed(1)}° ${signLabelFr(event.sign)} · ${utcTime(event.at)}`,
       body: 'Moon',
       hue: signBySlug(event.sign).hue,
     };
@@ -329,7 +329,7 @@ function eventLineFr(event: DailyEvent, sunSign: string): DailyLine | null {
     const meaning = retrograde ? 'invite à revoir' : 'remet en mouvement';
     return {
       text: `${planet} ${direction} dans ta ${ORDINAL_FR[house]} maison : ${meaning} ${HOUSE_THEME_FR[house]}.`,
-      receipt: `${planet} ${direction} ${event.degree}° ${signLabelFr(event.sign)} · ${utcTime(event.at)}`,
+      receipt: `${planet} ${direction} ${event.degree?.toFixed(1)}° ${signLabelFr(event.sign)} · ${utcTime(event.at)}`,
       body: event.planet,
       hue: signBySlug(event.sign).hue,
     };
@@ -380,7 +380,7 @@ function eventLineIt(event: DailyEvent, sunSign: string): DailyLine | null {
       : 'segna un compimento';
     return {
       text: `La ${name} nella tua ${ORDINAL_IT[house]} casa ${meaning}: ${HOUSE_THEME_IT[house]}.`,
-      receipt: `${name} ${event.degree}° ${signLabelIt(event.sign)} · ${utcTime(event.at)}`,
+      receipt: `${name} ${event.degree?.toFixed(1)}° ${signLabelIt(event.sign)} · ${utcTime(event.at)}`,
       body: 'Moon',
       hue: signBySlug(event.sign).hue,
     };
@@ -393,7 +393,7 @@ function eventLineIt(event: DailyEvent, sunSign: string): DailyLine | null {
     const meaning = retrograde ? 'porta a rivedere' : 'rimette in moto';
     return {
       text: `${planet} ${direction} nella tua ${ORDINAL_IT[house]} casa: ${meaning} ${HOUSE_THEME_IT[house]}.`,
-      receipt: `${planet} ${direction} ${event.degree}° ${signLabelIt(event.sign)} · ${utcTime(event.at)}`,
+      receipt: `${planet} ${direction} ${event.degree?.toFixed(1)}° ${signLabelIt(event.sign)} · ${utcTime(event.at)}`,
       body: event.planet,
       hue: signBySlug(event.sign).hue,
     };

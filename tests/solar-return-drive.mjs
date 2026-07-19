@@ -44,6 +44,16 @@ try {
   check('saved chart computes', await page.locator('[data-return-instant]').count() === 1);
   check('saved calculation finishes within 45 seconds', savedRuntime < 45_000, `${savedRuntime} ms`);
   check('engine and lazy result load only on compute', fetched.some((path) => /full\.[\w-]+\.js$/.test(path)) && fetched.some((path) => /SolarReturnResult\.[\w-]+\.js$/.test(path)) && fetched.some((path) => /TransitRing\.[\w-]+\.js$/.test(path)));
+  const returnDetails = page.locator('[data-solar-return-result] [data-evidence-disclosure]');
+  check('exact return details are closed by default', await returnDetails.getAttribute('open') === null);
+  check('the reading precedes the exact-data disclosure', await page.evaluate(() => {
+    const result = document.querySelector('[data-solar-return-result]');
+    const reading = result?.querySelector('[data-sr-corpus]');
+    const details = result?.querySelector('[data-evidence-disclosure]');
+    return Boolean(reading && details && (reading.compareDocumentPosition(details) & Node.DOCUMENT_POSITION_FOLLOWING));
+  }));
+  await returnDetails.locator('summary').click();
+  check('the disclosed basis names the interpreted ascendant and Sun house', (await page.locator('[data-sr-reading-basis]').textContent())?.includes('Ascendant') && (await page.locator('[data-sr-reading-basis]').textContent())?.includes('Sun in house'));
   check('located result has wheel and houses', await page.locator('.wheel').count() === 1 && await page.getByRole('columnheader', { name: 'House' }).count() === 1);
   const placementBodies = await page.locator('.calc__table tbody td:first-child').allTextContents();
   check('placements table includes both lunar nodes', placementBodies.includes('North Node') && placementBodies.includes('South Node'), placementBodies.join(', '));
@@ -78,6 +88,7 @@ try {
   await page.getByRole('button', { name: 'Cast solar return' }).click();
   await page.waitForFunction(() => document.querySelector('[data-solar-return-result]')?.getAttribute('data-sr-no-place') === 'true', null, { timeout: 45_000 });
   check('time-known saved chart without place stays planets-only', await page.getByRole('columnheader', { name: 'House' }).count() === 0 && await page.locator('[data-noon-notice]').count() === 0);
+  check('planets-only return still leads with a useful reading', await page.locator('[data-sr-corpus="planets-only"]').count() === 1);
 
   await page.locator('#sr-source').selectOption('kahlo-no-place');
   await page.getByRole('button', { name: 'Cast solar return' }).click();
@@ -85,6 +96,7 @@ try {
   check('no-time copy is exact', await page.locator('[data-noon-notice]').textContent() === 'Computed from a noon chart — the return instant can shift a few hours with your exact birth time, and houses need it.');
   check('saved no-place is explicitly planets-only', (await page.locator('.notice').allTextContents()).some((text) => text.includes('saved chart has no stored birthplace')));
   check('no-time/no-place has no house column', await page.getByRole('columnheader', { name: 'House' }).count() === 0);
+  check('no-time/no-place still has a reading before the method details', await page.locator('[data-sr-corpus="planets-only"]').count() === 1);
 
   await page.locator('#sr-source').selectOption('');
   await page.locator('#sr-date').fill('1907-07-06');

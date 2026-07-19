@@ -108,7 +108,7 @@ export const PT_ADDITIONS = Object.freeze({
   'footerWidgets': 'Widgets',
 
   // WS2c — OG and social-card art
-  'og.compatibility.data': '{aElement} e {bElement} · {aModality} e {bModality}',
+  'og.compatibility.data': 'O que funciona · o que pesa · o que faz durar',
   'og.compatibility.kicker': 'Compatibilidade',
   'og.compatibility.title': '{a}<br/>e {b}',
   'og.disclosure.alt': 'Divulgações do Registro — fatos verificados e confirmações pendentes do operador.',

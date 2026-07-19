@@ -66,8 +66,8 @@ export const OG_EN = Object.freeze({
     alt: 'Registry disclosure — verified facts and pending operator confirmations.',
   },
   horoscope: {
-    kicker: 'Monthly horoscope',
-    subtitle: 'Monthly horoscopes grounded in real moon phases, retrogrades, and major transits.',
+    kicker: 'Horoscope',
+    subtitle: 'Daily through yearly readings with clear themes and one useful next move.',
   },
   rising: {
     kicker: 'Rising signs',
@@ -83,7 +83,7 @@ export const OG_EN = Object.freeze({
   compatibility: {
     kicker: 'Compatibility',
     title: '{a}<br/>and {b}',
-    data: '{aElement} and {bElement} · {aModality} and {bModality}',
+    data: 'What works · what strains · what makes it last',
   },
   planetNames: Object.freeze({
     sun: 'Sun',
@@ -102,9 +102,9 @@ export const OG_EN = Object.freeze({
       kicker: 'Sign guide',
     },
     horoscope: {
-      kicker: 'Monthly horoscope',
-      title: '{sign}, this month',
-      subtitle: 'Grounded in the real sky: moon phases, retrogrades, and major transits, each with its date.',
+      kicker: 'Horoscope',
+      title: '{sign}, your forecast',
+      subtitle: 'Daily, weekly, monthly, love, career, and yearly readings in plain language.',
     },
     howTo: {
       kicker: 'Learn astrology',
@@ -118,24 +118,24 @@ export const OG_EN = Object.freeze({
     },
   },
   tools: Object.freeze([
-    { key: 'birth-chart', path: '/birth-chart/', kicker: 'Free calculator', title: 'Your birth chart', sub: 'Sun, moon, rising, houses, and aspects — computed on your device.' },
+    { key: 'birth-chart', path: '/birth-chart/', kicker: 'Free calculator', title: 'Your birth chart', sub: 'See your Sun, Moon, rising sign, houses, and the patterns that connect them.' },
     { key: 'moon-sign', path: '/moon-sign/', kicker: 'Free calculator', title: 'Your moon sign', sub: 'How you feel and what soothes you — from your date, time, and place of birth.' },
     { key: 'rising-sign', path: '/rising-sign/', kicker: 'Free calculator', title: 'Your rising sign', sub: 'How people first read you — from your birth time and place.' },
     { key: 'moon-phase', path: '/moon-phase/', kicker: 'Free calculator', title: 'The moon, any night', sub: 'Tonight’s phase, and the moon of any date that matters to you.' },
     { key: 'saturn-return', path: '/saturn-return/', kicker: 'Free calculator', title: 'Your Saturn return', sub: 'The exact dates, every pass and retrograde loop included.' },
-    { key: 'mercury-retrograde', path: '/mercury-retrograde/', kicker: 'The calendar', title: 'Mercury retrograde', sub: 'Every window through 2027, computed from the planet’s real motion.' },
+    { key: 'mercury-retrograde', path: '/mercury-retrograde/', kicker: 'The calendar', title: 'Mercury retrograde', sub: 'Every window through 2027, with station dates and the themes to watch.' },
     { key: 'compatibility', path: '/compatibility/', kicker: 'Compatibility', title: 'Two charts, compared', sub: 'Whole-chart synastry — plus guides to all 78 sign pairings.' },
-    { key: 'horoscopes', path: '/horoscopes/', kicker: 'Monthly horoscopes', title: 'All twelve signs', sub: 'Grounded in real moon phases, retrogrades, and major transits.' },
+    { key: 'horoscopes', path: '/horoscopes/', kicker: 'Horoscopes', title: 'All twelve signs', sub: 'Daily through yearly readings with clear themes and one useful next move.' },
     { key: 'learn', path: '/learn/', kicker: 'Learn astrology', title: 'Read your chart', sub: 'The signs, the planets, the houses, and the aspects, in plain language.' },
     { key: 'how-to-read-a-birth-chart', path: '/learn/how-to-read-a-birth-chart/', kicker: 'Learn astrology', title: 'How to read a birth chart', sub: 'Big three, planets room by room, the working aspects, then the weather — in order.' },
-    { key: 'tools', path: '/tools/', kicker: 'Free astrology tools', title: 'Calculators, no signup', sub: 'Birth chart, compatibility, moon sign, and more — computed on your device.' },
+    { key: 'tools', path: '/tools/', kicker: 'Free astrology tools', title: 'Calculators, no signup', sub: 'Birth chart, compatibility, moon sign, rising sign, and more — free to use.' },
     { key: 'transits', path: '/transits/', kicker: 'Free tracker', title: 'Your transits, today', sub: 'The current sky aspected to your birth chart, within 3° of exact.' },
     { key: 'eclipses', path: '/eclipses/', kicker: 'The calendar', title: 'Eclipses, dated', sub: 'Every solar and lunar eclipse through 2028, with exact peak times and signs.' },
     { key: 'full-moon-calendar', path: '/full-moon-calendar/', kicker: 'The calendar', title: 'Every full moon', sub: 'Exact instants through 2027, with each moon’s sign, degree, and name.' },
-    { key: 'retrogrades', path: '/retrogrades/', kicker: 'The calendar', title: 'Every retrograde', sub: 'All eight planets, 2026–2027, computed station to station.' },
+    { key: 'retrogrades', path: '/retrogrades/', kicker: 'The calendar', title: 'Every retrograde', sub: 'All eight planets, with every station window through 2027.' },
     { key: 'baby-zodiac', path: '/baby-zodiac/', kicker: 'Free calculator', title: 'What sign will the baby be?', sub: 'The due date’s near-certain Sun, the week’s possible Moons, and what waits for the clock.' },
-    { key: 'birthday', path: '/birthday/', kicker: 'Birthday astrology', title: 'Every date, computed', sub: 'Sun sign checked across ninety-one years, degree spans, decans, and cusp tables.' },
-    { key: 'today', path: '/today/', kicker: 'Your daily brief', title: 'Today, against your chart', sub: 'The noon sky compared privately with the latest chart saved on this device.' },
+    { key: 'birthday', path: '/birthday/', kicker: 'Birthday astrology', title: 'Your birthday, read closely', sub: 'Character, love, work, growth, and an exact cusp answer when the year matters.' },
+    { key: 'today', path: '/today/', kicker: 'Your daily brief', title: 'Today, against your chart', sub: 'A personal daily focus drawn from the latest chart saved on this device.' },
   ]),
 });
 

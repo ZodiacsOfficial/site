@@ -1297,7 +1297,13 @@
       const solanaMint = sign.representations.solana.address;
 
       return (
-        <article ref={reveal} className="card reveal" aria-label={`Featured sign · ${sign.name}`}>
+        <article
+          ref={reveal}
+          id="featured-sign"
+          className="card reveal"
+          aria-label={`Featured sign · ${sign.name}`}
+          data-featured-sign={sign.asset.sign}
+        >
           <span className="card__corner card__corner--tl" />
           <span className="card__corner card__corner--tr" />
           <span className="card__corner card__corner--bl" />
@@ -1395,79 +1401,46 @@
       );
     }
 
-    // Auto-advance cadence (ms) — must match the CSS @keyframes
-    // `strip-countdown` duration. Keep them in lockstep or the visual
-    // ring desyncs from the actual hand-off.
-    const SELECTOR_CYCLE_MS = 4000;
-
     function Selector({ active, setActive }) {
       const ref = useRef(null);
       const mounted = useRef(false);
-      const [autoplay, setAutoplay] = useState(true);
+      const activeIndex = Math.max(0, SIGNS.findIndex(s => s.ticker === active));
+      const activeSign = SIGNS[activeIndex];
+      const [edges, setEdges] = useState({ left: false, right: false });
 
-      // Honour OS-level reduced-motion: disable autoplay outright.
-      useEffect(() => {
-        const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
-        if (mq.matches) setAutoplay(false);
-        const onChange = () => mq.matches && setAutoplay(false);
-        mq.addEventListener?.('change', onChange);
-        return () => mq.removeEventListener?.('change', onChange);
-      }, []);
-
-      // Pause autoplay while the tab is backgrounded.
-      const [tabVisible, setTabVisible] = useState(
-        typeof document !== 'undefined' ? document.visibilityState === 'visible' : true
-      );
-      useEffect(() => {
-        const onVis = () => setTabVisible(document.visibilityState === 'visible');
-        document.addEventListener('visibilitychange', onVis);
-        return () => document.removeEventListener('visibilitychange', onVis);
-      }, []);
-
-      // Pause autoplay when the strip scrolls off-screen, so the
-      // featured card doesn't quietly change underneath a user who
-      // has scrolled down to read the museum label or catalog.
-      const [stripVisible, setStripVisible] = useState(true);
-      useEffect(() => {
-        const node = ref.current?.parentElement; // .strip-wrap
-        if (!node || typeof IntersectionObserver === 'undefined') return;
-        const io = new IntersectionObserver(
-          ([entry]) => setStripVisible(entry.isIntersecting),
-          { threshold: 0.4 }
-        );
-        io.observe(node);
-        return () => io.disconnect();
-      }, []);
-
-      // Drive the rotation. Each active ticker change resets the timer,
-      // so the countdown ring always starts fresh on the new sign.
-      const running = autoplay && tabVisible && stripVisible;
-      useEffect(() => {
-        if (!running) return;
-        const id = setTimeout(() => {
-          const idx = SIGNS.findIndex(s => s.ticker === active);
-          const next = SIGNS[(idx + 1) % SIGNS.length].ticker;
-          setActive(next);
-        }, SELECTOR_CYCLE_MS);
-        return () => clearTimeout(id);
-      }, [active, running, setActive]);
-
-      // First manual interaction stops autoplay for the session. Both
-      // direct taps and drag/scroll of the strip count as "user took
-      // control", and from then on the page respects the user's pick.
-      const stopAutoplay = () => setAutoplay(false);
-
-      useEffect(() => {
+      const updateEdges = useCallback(() => {
         const strip = ref.current;
         if (!strip) return;
-        const handler = () => stopAutoplay();
-        strip.addEventListener('pointerdown', handler, { once: true, passive: true });
-        strip.addEventListener('wheel',       handler, { once: true, passive: true });
-        return () => {
-          strip.removeEventListener('pointerdown', handler);
-          strip.removeEventListener('wheel',       handler);
+        const max = Math.max(0, strip.scrollWidth - strip.clientWidth);
+        const next = {
+          left: strip.scrollLeft > 2,
+          right: strip.scrollLeft < max - 2,
         };
+        setEdges((previous) => (
+          previous.left === next.left && previous.right === next.right
+            ? previous
+            : next
+        ));
       }, []);
+
+      // Edge fades only appear while content is genuinely clipped. Desktop
+      // switches to a complete grid, so both resolve false there.
+      useEffect(() => {
+        const strip = ref.current;
+        if (!strip) return undefined;
+        const observer = typeof ResizeObserver === 'undefined'
+          ? null
+          : new ResizeObserver(updateEdges);
+        observer?.observe(strip);
+        strip.addEventListener('scroll', updateEdges, { passive: true });
+        window.addEventListener('resize', updateEdges);
+        requestAnimationFrame(updateEdges);
+        return () => {
+          observer?.disconnect();
+          strip.removeEventListener('scroll', updateEdges);
+          window.removeEventListener('resize', updateEdges);
+        };
+      }, [updateEdges]);
 
       // Horizontal-only centering — never touch page vertical scroll.
       useEffect(() => {
@@ -1478,51 +1451,103 @@
           el.offsetLeft - strip.clientWidth / 2 + el.clientWidth / 2;
         strip.scrollTo({
           left: Math.max(0, target),
-          behavior: mounted.current ? 'smooth' : 'auto',
+          behavior: mounted.current
+            && !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+            ? 'smooth'
+            : 'auto',
         });
         mounted.current = true;
-      }, [active]);
+        requestAnimationFrame(updateEdges);
+      }, [active, updateEdges]);
 
       const handlePick = (ticker) => {
-        stopAutoplay();
         setActive(ticker);
       };
 
+      const chooseIndex = (index, focus = false) => {
+        const next = SIGNS[Math.max(0, Math.min(SIGNS.length - 1, index))];
+        if (!next) return;
+        setActive(next.ticker);
+        if (focus) {
+          requestAnimationFrame(() => {
+            ref.current
+              ?.querySelector(`[data-sign="${next.asset.sign}"]`)
+              ?.focus({ preventScroll: true });
+          });
+        }
+      };
+
+      const handleKeyDown = (event) => {
+        if (event.altKey || event.ctrlKey || event.metaKey) return;
+        let nextIndex = null;
+        if (event.key === 'ArrowRight') nextIndex = activeIndex + 1;
+        if (event.key === 'ArrowLeft') nextIndex = activeIndex - 1;
+        if (event.key === 'ArrowDown') nextIndex = activeIndex + 6;
+        if (event.key === 'ArrowUp') nextIndex = activeIndex - 6;
+        if (event.key === 'Home') nextIndex = 0;
+        if (event.key === 'End') nextIndex = SIGNS.length - 1;
+        if (nextIndex === null) return;
+        event.preventDefault();
+        chooseIndex(nextIndex, true);
+      };
+
       return (
-        <section
-          className={'strip-wrap' + (running ? ' is-autoplay' : '')}
-          aria-label="Zodiac selector"
-        >
-          <div className="strip" ref={ref}>
-            {SIGNS.map(s => {
-              const isActive = active === s.ticker;
-              return (
-                <button
-                  key={s.ticker}
-                  className={'strip__glyph' + (isActive ? ' is-active' : '')}
-                  onClick={() => handlePick(s.ticker)}
-                  aria-pressed={isActive}
-                  aria-label={s.name}
-                  title={s.name}
-                >
-                  <img
-                    src={`/assets/zodiac-icons/48/${s.asset.sign}.webp`}
-                    width="28"
-                    height="28"
-                    alt=""
-                    loading="lazy"
-                    decoding="async"
-                  />
-                </button>
-              );
-            })}
+        <section className="strip-wrap" aria-label="Zodiac selector">
+          <div className="strip__head" aria-hidden="true">
+            <span>Choose a sign</span>
+            <span className="strip__status">
+              {String(activeIndex + 1).padStart(2, '0')} / 12 · {activeSign.name}
+            </span>
+          </div>
+          <div
+            className={
+              'strip__viewport'
+              + (edges.left ? ' can-scroll-left' : '')
+              + (edges.right ? ' can-scroll-right' : '')
+            }
+          >
+            <div
+              className="strip"
+              id="zodiac-sign-strip"
+              ref={ref}
+              role="group"
+              aria-label="Choose the featured zodiac sign"
+              onKeyDown={handleKeyDown}
+            >
+              {SIGNS.map(s => {
+                const isActive = active === s.ticker;
+                return (
+                  <button
+                    key={s.ticker}
+                    id={`zodiac-tab-${s.asset.sign}`}
+                    data-sign={s.asset.sign}
+                    className={'strip__glyph' + (isActive ? ' is-active' : '')}
+                    onClick={() => handlePick(s.ticker)}
+                    aria-pressed={isActive}
+                    aria-controls="featured-sign"
+                    aria-label={s.name}
+                    title={s.name}
+                    tabIndex={isActive ? 0 : -1}
+                  >
+                    <picture className="strip__icon" aria-hidden="true">
+                      <source srcSet={`/assets/zodiac-icons/48/${s.asset.sign}.avif`} type="image/avif" />
+                      <img
+                        src={`/assets/zodiac-icons/48/${s.asset.sign}.webp`}
+                        width="28"
+                        height="28"
+                        alt=""
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </picture>
+                    <span className="strip__name">{s.name}</span>
+                  </button>
+                );
+              })}
+            </div>
           </div>
           <div className="strip__sub">
-            <span className="chev" aria-hidden="true">‹</span>
-            <span>
-              {running ? 'Auto-rotating · tap to pin' : 'Scroll or drag to explore'}
-            </span>
-            <span className="chev" aria-hidden="true">›</span>
+            Swipe or scroll to choose
           </div>
         </section>
       );
@@ -3436,7 +3461,9 @@
     // Root
     // ──────────────────────────────────────────────────────────────
     function Zodiacs() {
-      const [activeTicker, setActiveTicker] = useState('LEO');
+      const [activeTicker, setActiveTicker] = useState(
+        () => currentSeason()?.sign.ticker ?? SIGNS[0].ticker
+      );
       const sign = useMemo(
         () => SIGNS.find(s => s.ticker === activeTicker) ?? SIGNS[0],
         [activeTicker]

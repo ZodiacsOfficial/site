@@ -40,6 +40,13 @@ jobs:
       - name: Smoke dry run
         run: npm run push:daily -- --dry-run --fixture --date 2026-07-13 --limit 1
 
+      - name: Require today's verified publication
+        run: npm run editorial:daily:verify -- --date "$(date -u +%F)"
+
+      - name: Require the same edition in production
+        if: github.event_name != 'schedule' || vars.PUSH_ENABLED == 'true'
+        run: npm run editorial:daily:verify-live
+
       # Scheduled sends remain off until the owner completes the VAPID and
       # Supabase setup. A manual workflow_dispatch always reaches this step.
       - name: Run daily push

@@ -1,12 +1,35 @@
 import { useEffect, useMemo, useState } from 'preact/hooks';
-import dailyData from '../../data/daily.json';
-import type { Daily } from '../../lib/daily';
 import { SIGNS, type Sign } from '../../lib/signs';
-import { sunSignTodayLine } from './sun-sign-reading';
 
 export const TODAY_SUN_SIGN_STORAGE_KEY = 'zodiacs:today-sun-sign:v1';
 
 type NextAction = 'choose-sun-sign' | 'open-horoscope' | 'get-birth-chart';
+
+interface Props {
+  noChartConfirmed?: boolean;
+  sunSignLines: Record<string, string>;
+}
+
+interface PastelSignIconProps {
+  sign: Sign;
+  size: number;
+  className: string;
+}
+
+function PastelSignIcon({ sign, size, className }: PastelSignIconProps) {
+  return (
+    <picture class={className} aria-hidden="true">
+      <source srcset={`/assets/zodiac-icons/48/${sign.slug}.avif`} type="image/avif" />
+      <img
+        src={`/assets/zodiac-icons/48/${sign.slug}.webp`}
+        width={size}
+        height={size}
+        alt=""
+        decoding="async"
+      />
+    </picture>
+  );
+}
 
 function trackNextAction(state: 'no-chart' | 'sun-sign', action: NextAction): void {
   if (typeof window === 'undefined') return;
@@ -35,21 +58,27 @@ function saveSign(slug: string): void {
   }
 }
 
-export default function SunSignFallback() {
+export default function SunSignFallback({ noChartConfirmed = false, sunSignLines }: Props) {
   const [selected, setSelected] = useState<string | null>(null);
-  const [ready, setReady] = useState(false);
   const [hasInteracted, setHasInteracted] = useState(false);
 
   useEffect(() => {
     setSelected(readSavedSign());
-    setReady(true);
   }, []);
 
   const active = useMemo<Sign | null>(
     () => SIGNS.find((sign) => sign.slug === selected) ?? null,
     [selected],
   );
-  const dailyLine = active ? sunSignTodayLine(active.slug, dailyData as Daily) : null;
+  const dailyLine = active ? sunSignLines[active.slug] ?? null : null;
+  const allReadings = useMemo(
+    () => SIGNS.map((sign) => ({
+      sign,
+      line: sunSignLines[sign.slug]
+        ?? 'Today’s note is temporarily unavailable.',
+    })),
+    [sunSignLines],
+  );
 
   const chooseSign = (slug: string) => {
     setSelected(slug);
@@ -66,40 +95,56 @@ export default function SunSignFallback() {
           This is usually the zodiac sign you know from your birthday. Choose it for one
           clear note about today — no birth time needed.
         </p>
+        {noChartConfirmed && (
+          <p class="today-fallback__status">
+            No saved chart on this device. Your Sun sign still gives you a useful starting point.
+          </p>
+        )}
       </div>
 
-      <fieldset class="today-sign-picker">
-        <legend class="sr-only">Choose your Sun sign</legend>
+      <nav class="today-sign-picker" aria-label="Choose your Sun sign">
         <div class="today-sign-picker__grid">
           {SIGNS.map((sign) => (
-            <button
+            <a
               key={sign.slug}
-              type="button"
+              href={`#today-sun-sign-${sign.slug}`}
               class={`today-sign${selected === sign.slug ? ' today-sign--selected' : ''}`}
               style={`--sign:${sign.hue}`}
-              aria-pressed={selected === sign.slug}
-              aria-controls="today-sun-sign-reading"
-              onClick={() => chooseSign(sign.slug)}
+              aria-current={selected === sign.slug ? 'true' : undefined}
+              onClick={(event) => {
+                if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
+                  return;
+                }
+                // Let the native fragment jump finish before the result grid
+                // narrows to the selected sign. Modified clicks stay native.
+                window.setTimeout(() => chooseSign(sign.slug), 0);
+              }}
             >
-              <span class="today-sign__glyph" aria-hidden="true">{sign.glyph}</span>
+              <PastelSignIcon sign={sign} size={34} className="today-sign__icon" />
               <span class="today-sign__name">{sign.name}</span>
               <span class="today-sign__dates">{sign.dates}</span>
-            </button>
+            </a>
           ))}
         </div>
-      </fieldset>
+      </nav>
 
       <div
         id="today-sun-sign-reading"
         class="today-fallback__result"
         aria-live={hasInteracted ? 'polite' : undefined}
       >
-        {!ready ? (
-          <p class="today-fallback__prompt">Checking for your saved sign…</p>
-        ) : active && dailyLine ? (
-          <section class="today-sign-reading" style={`--sign:${active.hue}`}>
+        {active && dailyLine ? (
+          <section
+            id={`today-sun-sign-${active.slug}`}
+            class="today-sign-reading"
+            style={`--sign:${active.hue}`}
+            data-today-sun-sign={active.slug}
+          >
             <p class="kicker">Your quick read</p>
-            <h3>{active.name} today</h3>
+            <h3 class="today-sign-reading__title">
+              <PastelSignIcon sign={active} size={28} className="today-sign-reading__icon" />
+              <span>{active.name} today</span>
+            </h3>
             <p class="today-sign-reading__line">{dailyLine}</p>
             <a
               class="btn btn--primary"
@@ -111,7 +156,31 @@ export default function SunSignFallback() {
             </a>
           </section>
         ) : (
-          <p class="today-fallback__prompt">Choose a sign above to reveal today’s note.</p>
+          <div class="today-sign-readings" data-today-all-signs>
+            {allReadings.map(({ sign, line }) => (
+              <article
+                key={sign.slug}
+                id={`today-sun-sign-${sign.slug}`}
+                class="today-sign-reading today-sign-reading--compact"
+                style={`--sign:${sign.hue}`}
+                data-today-sun-sign={sign.slug}
+              >
+                <p class="kicker">{sign.dates}</p>
+                <h3 class="today-sign-reading__title">
+                  <PastelSignIcon sign={sign} size={28} className="today-sign-reading__icon" />
+                  <span>{sign.name} today</span>
+                </h3>
+                <p class="today-sign-reading__line">{line}</p>
+                <a
+                  class="today-sign-reading__more"
+                  href={`/horoscopes/${sign.slug}/`}
+                  onClick={() => trackNextAction('sun-sign', 'open-horoscope')}
+                >
+                  Read the full {sign.name} horoscope <span aria-hidden="true">→</span>
+                </a>
+              </article>
+            ))}
+          </div>
         )}
       </div>
 

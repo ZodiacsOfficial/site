@@ -4,6 +4,7 @@
  * full engine for a precise longitude.
  */
 import { useEffect, useRef, useState } from 'preact/hooks';
+import EvidenceDisclosure from './EvidenceDisclosure';
 import PlaceSearch from './PlaceSearch';
 import SignChip from './SignChip';
 import {
@@ -164,12 +165,16 @@ export default function MoonPhaseTool({ locale: rawLocale = 'en' }: { locale?: L
                 ? `${Math.round(moonIllumination(now) * 100)}% ${t(locale, 'illuminated')} · ${t(locale, 'moonIn')} ${signName(signForLongitude(moonLongitude(now)), locale)}`
                 : '—'}
             </span>
-            <span class="mono mp__meta mp__meta--faint">
-              {now ? `${formatDateTime(locale, now, {
-                year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit',
-                timeZone: 'UTC', hour12: false,
-              })} UTC` : ' '}
-            </span>
+            {now && (
+              <EvidenceDisclosure label={t(locale, 'howWeCompute')}>
+                <span class="mono mp__meta mp__meta--faint">
+                  {formatDateTime(locale, now, {
+                    year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit',
+                    timeZone: 'UTC', hour12: false,
+                  })} UTC
+                </span>
+              </EvidenceDisclosure>
+            )}
           </div>
         </div>
       </div>
@@ -225,7 +230,10 @@ export default function MoonPhaseTool({ locale: rawLocale = 'en' }: { locale?: L
                     <> {t(locale, 'or')} <SignChip lon={result.altLon} locale={locale} /></>
                   )}
                 </span>
-                <span class="mono mp__meta mp__meta--faint">{formatLongitude(result.lon, locale)}</span>
+                <EvidenceDisclosure label={t(locale, 'howWeCompute')}>
+                  <span class="mono mp__meta mp__meta--faint">{formatLongitude(result.lon, locale)}</span>
+                  {result.caption !== '' && result.altLon === null && <p>{result.caption}</p>}
+                </EvidenceDisclosure>
               </div>
             </div>
           </div>
@@ -233,9 +241,6 @@ export default function MoonPhaseTool({ locale: rawLocale = 'en' }: { locale?: L
             <p class="notice" role="status">
               {t(locale, 'moonChangedNotice')}
             </p>
-          )}
-          {result.caption !== '' && result.altLon === null && (
-            <p class="field__help">{result.caption}</p>
           )}
           <div class="calc__actions">
             <a class="btn btn--ghost" href={localizePath(locale, '/birth-chart/')}>

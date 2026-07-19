@@ -40,7 +40,8 @@ for (const [type, node] of [['Article', article], ['Dataset', dataset]]) {
   );
 }
 
-assert.equal(article.author['@id'], 'https://zodiacs.org/about/#editor');
+assert.equal(article.author['@id'], 'https://zodiacs.org/#org');
+assert.equal(article.author['@type'], 'Organization');
 assert.equal(article.mainEntity['@id'], dataset['@id']);
 assert.ok(
   new Date(dataset.dateCreated) <= new Date(dataset.datePublished),

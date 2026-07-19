@@ -12,6 +12,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'preact/hooks'
 import { BirthFields } from './BirthFields';
 import ChartActionDock from './ChartActionDock';
 import AstroTerm from './AstroTerm';
+import EvidenceDisclosure from './EvidenceDisclosure';
 import type { CopyLinkState } from './CopyLinkButton';
 import SignChip from './SignChip';
 import PlanetGlyph from '../components/PlanetGlyph';
@@ -171,35 +172,35 @@ const OTHER_SUBJECT_COPY = {
     named: (name: string) => `You’re reading ${name}’s chart. “You” below means ${name}.`,
     heading: (name: string | null) => name ? `${name}’s birth chart` : 'Someone else’s birth chart',
     submit: 'Update their chart',
-    privacy: 'The entire calculation happens in this browser; these birth details are not sent to a chart API.',
+    privacy: 'Private by default. Their birth details stay in this browser.',
   },
   es: {
     unnamed: 'Estás leyendo la carta de otra persona. El “tú” de abajo se refiere a la persona cuyos datos ingresaste.',
     named: (name: string) => `Estás leyendo la carta de ${name}. El “tú” de abajo se refiere a ${name}.`,
     heading: (name: string | null) => name ? `Carta natal de ${name}` : 'Carta natal de otra persona',
     submit: 'Actualizar su carta',
-    privacy: 'Todo el cálculo ocurre en este navegador; estos datos de nacimiento no se envían a una API de cartas.',
+    privacy: 'Privado de forma predeterminada. Sus datos de nacimiento permanecen en este navegador.',
   },
   pt: {
     unnamed: 'Você está lendo o mapa de outra pessoa. O “você” abaixo se refere à pessoa cujos dados foram inseridos.',
     named: (name: string) => `Você está lendo o mapa de ${name}. O “você” abaixo se refere a ${name}.`,
     heading: (name: string | null) => name ? `Mapa astral de ${name}` : 'Mapa astral de outra pessoa',
     submit: 'Atualizar o mapa dela',
-    privacy: 'Todo o cálculo acontece neste navegador; estes dados de nascimento não são enviados a uma API de mapas.',
+    privacy: 'Privado por padrão. Os dados de nascimento dessa pessoa permanecem neste navegador.',
   },
   fr: {
     unnamed: 'Tu lis le thème d’une autre personne. Le « tu » ci-dessous désigne la personne dont tu as saisi les données.',
     named: (name: string) => `Tu lis le thème de ${name}. Le « tu » ci-dessous désigne ${name}.`,
     heading: (name: string | null) => name ? `Thème astral de ${name}` : 'Thème astral d’une autre personne',
     submit: 'Mettre son thème à jour',
-    privacy: 'Le calcul se fait entièrement dans ce navigateur ; ces données de naissance ne sont pas envoyées à une API.',
+    privacy: 'Privé par défaut. Ses données de naissance restent dans ce navigateur.',
   },
   it: {
     unnamed: 'Stai leggendo il tema di un’altra persona. Il «tu» qui sotto indica la persona di cui hai inserito i dati.',
     named: (name: string) => `Stai leggendo il tema di ${name}. Il «tu» qui sotto indica ${name}.`,
     heading: (name: string | null) => name ? `Tema natale di ${name}` : 'Tema natale di un’altra persona',
     submit: 'Aggiorna il suo tema',
-    privacy: 'L’intero calcolo avviene in questo browser; questi dati di nascita non vengono inviati a un’API.',
+    privacy: 'Privato per impostazione predefinita. I suoi dati di nascita restano in questo browser.',
   },
 } as const satisfies Record<Locale, {
   unnamed: string;
@@ -1401,6 +1402,17 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
           })()}
 
           {/* Wheel + inspector + placements (full mode) — the Chart Explorer */}
+          {mode !== 'full' && chart && (
+            <EvidenceDisclosure label={DETAIL_LABELS[locale].lead.replace(/\s*—\s*$/, '')}>
+              <p class="calc__receipt mono" data-chart-receipt>
+                {chart.input.utc.toISOString().replace('T', ' · ').slice(0, 21)} UTC
+                {city ? ` · ${city.lat.toFixed(2)}°, ${city.lon.toFixed(2)}°` : ''}
+                {chart.houses ? ` · ${chart.houses.system === 'whole' ? t(locale, 'wholeSignHouses') : t(locale, 'placidusHouses')}` : ''}
+                {' · '}{t(locale, 'engine')}{chart.engineVersion}
+              </p>
+            </EvidenceDisclosure>
+          )}
+
           {mode === 'full' && scene && (
             <>
               <div class={`calc__wheel shell${tourOpen ? ' calc__wheel--tour' : ''}`}>
@@ -1595,12 +1607,6 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                     </div>
                   </div>
                   <p class="sr-only" role="status">{announce}</p>
-                  <p class="calc__receipt mono">
-                    {chart.input.utc.toISOString().replace('T', ' · ').slice(0, 21)} UTC
-                    {city ? ` · ${city.lat.toFixed(2)}°, ${city.lon.toFixed(2)}°` : ''}
-                    {chart.houses ? ` · ${chart.houses.system === 'whole' ? t(locale, 'wholeSignHouses') : t(locale, 'placidusHouses')}` : ''}
-                    {' · '}{t(locale, 'engine')}{chart.engineVersion}
-                  </p>
                 </div>
               </div>
 
@@ -1789,11 +1795,18 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
             <details
               class="calc__detail"
               data-detail
+              data-evidence-disclosure
               open={detailOpen}
               onToggle={onDetailToggle}
             >
               <summary class="calc__detail-summary">{DETAIL_LABELS[locale].lead}<span class="mono">{placements.length}</span>{DETAIL_LABELS[locale].placements}<span class="mono">{chart.aspects.length}</span>{DETAIL_LABELS[locale].aspects}</summary>
               <div class="calc__detail-body">
+                <p class="calc__receipt mono" data-chart-receipt>
+                  {chart.input.utc.toISOString().replace('T', ' · ').slice(0, 21)} UTC
+                  {city ? ` · ${city.lat.toFixed(2)}°, ${city.lon.toFixed(2)}°` : ''}
+                  {chart.houses ? ` · ${chart.houses.system === 'whole' ? t(locale, 'wholeSignHouses') : t(locale, 'placidusHouses')}` : ''}
+                  {' · '}{t(locale, 'engine')}{chart.engineVersion}
+                </p>
                 <div class="calc__table-wrap">
                   <table class="calc__table">
                     <thead>

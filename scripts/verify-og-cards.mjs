@@ -7,7 +7,7 @@
  * sources, and the frozen global fallback.
  */
 import { createHash } from 'node:crypto';
-import { readFile } from 'node:fs/promises';
+import { readFile, readdir, stat } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
 import sharp from 'sharp';
@@ -23,6 +23,10 @@ const signSlugs = [
 const expected = [
   ...signSlugs.map((slug) => `sign/${slug}.png`),
   ...signSlugs.map((slug) => `registry/${slug}.png`),
+  // One sign-specific evergreen card intentionally serves the complete
+  // horoscope family for that sign. This keeps every route branded without
+  // adding 72 near-duplicate PNGs to the generated-asset bundle.
+  ...signSlugs.map((slug) => `horoscope/${slug}.png`),
   ...OG_EN.tools.map((tool) => `tool/${tool.key}.png`),
   'registry.png',
   'thesis.png',
@@ -31,6 +35,15 @@ const expected = [
 
 const failures = [];
 const hashes = new Map();
+
+async function directoryBytes(directory) {
+  let bytes = 0;
+  for (const entry of await readdir(directory, { withFileTypes: true })) {
+    const path = resolve(directory, entry.name);
+    bytes += entry.isDirectory() ? await directoryBytes(path) : (await stat(path)).size;
+  }
+  return bytes;
+}
 
 async function validatePng(relativePath, { unique = true } = {}) {
   const absolutePath = resolve(out, relativePath);
@@ -83,10 +96,14 @@ try {
   failures.push(`manifest.json: ${error instanceof Error ? error.message : 'missing or invalid'}`);
 }
 
+const bundleBytes = await directoryBytes(out);
+const bundleMb = bundleBytes / 1024 / 1024;
+if (bundleMb > 10) failures.push(`v2 asset bundle: ${bundleMb.toFixed(2)}MB exceeds the 10MB budget`);
+
 if (failures.length) {
   console.error(`verify-og-cards: ${failures.length} failure(s)`);
   for (const failure of failures) console.error(`  - ${failure}`);
   process.exit(1);
 }
 
-console.log(`verify-og-cards: OK — ${expected.length} unique page cards + frozen fallback, all 1200x630 PNG`);
+console.log(`verify-og-cards: OK — ${expected.length} unique page cards + frozen fallback, all 1200x630 PNG; v2 bundle ${bundleMb.toFixed(2)}MB`);

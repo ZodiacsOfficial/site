@@ -101,7 +101,9 @@ const eventNodes = upcomingWindows.map((window) => {
     '@type': 'Event',
     '@id': `https://zodiacs.org/retrogrades/#${id}`,
     name: `${window.planet} retrograde`,
-    description: `${window.planet} appears retrograde from ${from} to ${to ?? 'the end of the committed data window'}; station positions ${window.stationRx ?? 'not available at the clamped horizon'} and ${window.stationDirect ?? 'not yet available'}.`,
+    description: to
+      ? `${window.planet} appears retrograde from ${from} to ${to}; station positions ${window.stationRx ?? 'not yet available'} and ${window.stationDirect ?? 'not yet available'}.`
+      : `${window.planet} appears retrograde from ${from}. A later end date is not yet available; the retrograde station is ${window.stationRx ?? 'not yet available'}.`,
     startDate: from,
     ...(to ? { endDate: to } : {}),
     eventStatus: 'https://schema.org/EventScheduled',

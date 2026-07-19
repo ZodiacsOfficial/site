@@ -249,7 +249,17 @@ const suppressFooterEmailCapture = /^\/(?:birth-chart|horoscopes|profile)(?:\/|$
   .footer__base-links > *:not(:last-child)::after { content: '·'; margin: 0 10px; color: var(--faint); }
   .footer__languages { display: inline-flex; flex-wrap: wrap; align-items: center; }
   .footer__language-option { display: inline-flex; align-items: center; white-space: nowrap; }
+  .footer__language-option > a {
+    display: inline-flex;
+    min-height: 24px;
+    align-items: center;
+  }
   .footer__language-separator { margin: 0 10px; color: var(--faint); }
   .footer__base a { color: var(--muted); text-decoration: none; }
+  .footer__base-links > span:not(.footer__languages) a {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 2px;
+  }
   .footer__base a:hover { color: var(--text); }
 </style>

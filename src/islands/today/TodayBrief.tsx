@@ -56,7 +56,11 @@ function contactReceipt(contact: TodayContact): string {
 
 const WEB_PUSH_ENABLED = import.meta.env.PUBLIC_WEB_PUSH_ENABLED === '1';
 
-export default function TodayBrief() {
+interface Props {
+  sunSignLines: Record<string, string>;
+}
+
+export default function TodayBrief({ sunSignLines }: Props) {
   const { profile, ready } = useProfile();
   const [streak, setStreak] = useState<number | null>(null);
   const [pushModule, setPushModule] = useState<PushOptInModule | null>(null);
@@ -89,22 +93,15 @@ export default function TodayBrief() {
       nearest: nearestTodayContact(natal, daily.bodies),
     };
   }, [chart, transitsModule]);
-
-  if (!ready) {
-    return (
-      <section class="today-card shell tinted" style="--sign:var(--sign-cancer)" aria-busy="true">
-        <div class="today-card__core core tinted">
-          <p class="today-loading">Reading the saved chart on this device…</p>
-        </div>
-      </section>
-    );
-  }
+  const personalized = ready && chart && reading && transitsModule
+    ? { chart, reading, transits: transitsModule }
+    : null;
 
   return (
     <section
       class="today-card shell tinted"
       style="--sign:var(--sign-cancer)"
-      data-today-state={chart ? 'chart' : 'empty'}
+      data-today-state={personalized ? 'chart' : ready && !chart ? 'empty' : 'sun-sign'}
     >
       <div class="today-card__core core tinted">
         <header class="today-card__head">
@@ -120,23 +117,21 @@ export default function TodayBrief() {
           )}
         </header>
 
-        {!chart ? (
-          <SunSignFallback />
-        ) : !reading || !transitsModule ? (
-          <p class="today-loading">Reading today's sky…</p>
+        {!personalized ? (
+          <SunSignFallback noChartConfirmed={ready && !chart} sunSignLines={sunSignLines} />
         ) : (
           <div class="today-reading">
             <div class="today-reading__head">
-              <h2>For {chart.name || 'your latest chart'}</h2>
+              <h2>For {personalized.chart.name || 'your latest chart'}</h2>
               <p>A few themes from today’s sky, compared with your saved birth chart.</p>
             </div>
 
-            {reading.contacts.length > 0 ? (
+            {personalized.reading.contacts.length > 0 ? (
               <ol class="today-lines">
-                {reading.contacts.map((contact) => (
+                {personalized.reading.contacts.map((contact) => (
                   <li key={`${contact.transiting}-${contact.type}-${contact.natal}`}>
                     <p class="today-lines__sentence">
-                      {transitsModule.transitLine(contact.transiting, contact.type, contact.natal)}
+                      {personalized.transits.transitLine(contact.transiting, contact.type, contact.natal)}
                     </p>
                   </li>
                 ))}
@@ -161,16 +156,16 @@ export default function TodayBrief() {
                   planet positions. Active contacts are major aspects within 3° of exact. The
                   positions use a noon-UTC snapshot for the date shown.
                 </p>
-                {reading.contacts.length > 0 ? (
+                {personalized.reading.contacts.length > 0 ? (
                   <ul>
-                    {reading.contacts.map((contact) => (
+                    {personalized.reading.contacts.map((contact) => (
                       <li key={`${contact.transiting}-${contact.type}-${contact.natal}`}>
                         {contactReceipt(contact)}
                       </li>
                     ))}
                   </ul>
-                ) : reading.nearest ? (
-                  <p class="mono">Nearest contact: {contactReceipt(reading.nearest)}</p>
+                ) : personalized.reading.nearest ? (
+                  <p class="mono">Nearest contact: {contactReceipt(personalized.reading.nearest)}</p>
                 ) : null}
               </div>
             </details>

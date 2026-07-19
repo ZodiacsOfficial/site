@@ -77,7 +77,7 @@ const it = {
   rightNow: "In questo momento",
   enterBirthDetails: "Inserisci i dati di nascita…",
   privacyDevice:
-    "L’intero calcolo avviene nel tuo browser; data, ora e luogo di nascita non vengono inviati a un’API per il calcolo del tema.",
+    "Privato per impostazione predefinita. I tuoi dati di nascita restano in questo browser.",
   placePlaceholder: "Inizia a digitare una città…",
   placeChange: "Cambia luogo di nascita",
   placeNoResults: "Nessun luogo trovato",
@@ -146,8 +146,9 @@ const it = {
   today: "oggi",
   todayBySignTitle: "Il cielo di oggi, segno per segno",
   todayBySignPrompt:
-    "Tocca il tuo segno solare per leggere l’interpretazione di oggi — calcolata dal cielo reale, senza bisogno dell’ora di nascita.",
+    "Tocca il tuo segno solare per una lettura chiara di oggi — non serve l’ora di nascita.",
   todaySolarNote: "letto dalle case solari del tuo segno",
+  whyThisReading: 'Perché questa lettura',
   todayHoroscopeLink: "oroscopo",
   or: "oppure",
   chartSavedBeforeLink: "Salvato tra i tuoi temi. Accedi",
@@ -260,7 +261,7 @@ const it = {
     "Il Fondo Cielo — il punto più basso della ruota, opposto al Medio Cielo. Casa, radici, vita privata.",
   layersLabel: "Livelli del tema",
   layerHouses: "Case",
-  editedBy: "A cura di",
+  editedBy: "Pubblicato da",
   tourStart: "Inizia il tour",
   firstReadingLabel: "La tua lettura in 2 minuti",
   firstReadingTitle: "Cosa dice il tuo tema di te — e di ciò che viene dopo?",
@@ -276,7 +277,7 @@ const it = {
   chartActionsMore: "Altri modi per usare questo tema",
   seeTodaySky: "Vedi il cielo di oggi",
   contextHelpCue: "Tocca i termini sottolineati con puntini per una spiegazione semplice.",
-  editorialHow: "come vengono calcolati questi dati",
+  editorialHow: "standard editoriali",
   dstGapNotice:
     "Quell’ora cadeva nel salto dell’ora legale, quindi non è mai esistita davvero — l’abbiamo spostata in avanti oltre quel salto, secondo la convenzione standard.",
   dstFoldNotice:

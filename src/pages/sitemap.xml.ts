@@ -10,9 +10,12 @@ import { LEGACY_URLS } from '../lib/legacy/urls';
 import { DEFAULT_LOCALE, LOCALES, LOCALE_META, alternatePaths } from '../lib/i18n';
 import { CHINESE_ZODIAC_PATHS } from '../lib/programmatic-paths';
 import { registryAuraSitemapEntry } from '../lib/registry-aura-entry.mjs';
+import { SIGNS } from '../lib/signs';
 import daily from '../data/daily.json';
+import horoscopeProgram from '../data/horoscope-program.json';
 
 const SITE = 'https://zodiacs.org';
+const YEARLY_HOROSCOPE_LASTMOD = '2026-07-19';
 // Keep these dates source-controlled: build environments may have shallow or
 // absent Git history. When an evergreen page's rendered source changes, update
 // its entry here in the same commit.
@@ -23,7 +26,7 @@ const EVERGREEN_LASTMOD = new Map<string, string>([
     '/eclipses/', '/full-moon-calendar/', '/retrogrades/', '/today/', '/learn/', '/tools/',
     '/profile/', '/learn/how-to-read-a-birth-chart/', '/learn/communication/', '/learn/zodiac-dates/', '/learn/glossary/', '/learn/planets/',
     '/learn/houses/', '/learn/aspects/', '/learn/placements/', '/birthday/',
-    '/baby-zodiac/', '/widgets/', '/methodology/', '/about/', '/privacy/',
+    '/baby-zodiac/', '/widgets/', '/methodology/', '/about/', '/corrections/', '/privacy/',
     '/terms/', '/feeds/', '/almanac/',
     '/es/', '/es/birth-chart/', '/es/compatibility/', '/es/moon-sign/',
     '/es/rising-sign/', '/es/moon-phase/', '/es/saturn-return/', '/es/transits/',
@@ -35,8 +38,8 @@ const EVERGREEN_LASTMOD = new Map<string, string>([
       '/privacy/', '/es/privacy/',
     ].includes(loc)
       ? '2026-07-14'
-      : ['/today/'].includes(loc)
-      ? '2026-07-13'
+      : ['/today/', '/about/', '/methodology/', '/corrections/'].includes(loc)
+      ? '2026-07-19'
       : ['/', '/learn/zodiac-dates/', '/learn/glossary/'].includes(loc) ? '2026-07-11' : '2026-07-10',
   ] as const),
   ...LEGACY_URLS.map((url) => [url.path, '2026-07-10'] as const),
@@ -94,6 +97,11 @@ export const GET: APIRoute = async () => {
   const birthdays = await getCollection('birthdays', ({ data }) => !data.draft);
   const almanac = await getCollection('almanac', ({ data }) => !data.draft);
   const latestMonth = horoscopes.map((h) => h.data.month).sort().at(-1);
+  const latestMonthlyBySign = new Map(
+    horoscopes
+      .filter((entry) => entry.data.month === latestMonth)
+      .map((entry) => [entry.data.sign, entry] as const),
+  );
   const registryAuraEntry = registryAuraSitemapEntry({
     PUBLIC_REGISTRY_AURA_ENABLED:
       import.meta.env.PUBLIC_REGISTRY_AURA_ENABLED ?? process.env.PUBLIC_REGISTRY_AURA_ENABLED,
@@ -138,30 +146,41 @@ export const GET: APIRoute = async () => {
     })),
     { loc: '/methodology/', priority: 0.6 },
     { loc: '/about/', priority: 0.55 },
+    { loc: '/corrections/', priority: 0.4 },
     { loc: '/privacy/', priority: 0.4 },
     { loc: '/es/privacy/', priority: 0.4 },
     { loc: '/terms/', priority: 0.4 },
     { loc: '/feeds/', priority: 0.55 },
     { loc: '/almanac/', priority: 0.75 },
-  ].map((url) => ({ ...url, lastmod: getLastmod(url.loc) }));
+  ].map((url) => ({
+    ...url,
+    lastmod: url.loc === '/today/' ? daily.date : getLastmod(url.loc),
+  }));
 
   const urls: { loc: string; priority: number; lastmod?: string }[] = [
     ...evergreenUrls,
     ...(registryAuraEntry ? [registryAuraEntry] : []),
-    { loc: '/horoscopes/', priority: 0.8, lastmod: daily.date },
+    { loc: '/horoscopes/', priority: 0.8, lastmod: horoscopeProgram.anchorDate },
     ...guides.map((g) => ({
       loc: `/${g.data.sign}/`,
       priority: 0.9,
       lastmod: g.data.updated.toISOString().slice(0, 10),
     })),
-    ...horoscopes
-      .filter((h) => h.data.month === latestMonth)
-      .map((h) => ({
-        loc: `/horoscopes/${h.data.sign}/`,
-        priority: 0.7,
-        // The daily block refreshes these pages every morning.
-        lastmod: daily.date,
-      })),
+    ...SIGNS.flatMap((sign) => {
+      const root = `/horoscopes/${sign.slug}/`;
+      const monthly = latestMonthlyBySign.get(sign.slug);
+      if (!monthly) throw new Error(`Missing latest monthly horoscope for ${sign.slug}`);
+      const monthlyLastmod = monthly.data.updated.toISOString().slice(0, 10);
+      return [
+        { loc: root, priority: 0.8, lastmod: horoscopeProgram.anchorDate },
+        { loc: `${root}tomorrow/`, priority: 0.72, lastmod: horoscopeProgram.anchorDate },
+        { loc: `${root}weekly/`, priority: 0.74, lastmod: horoscopeProgram.anchorDate },
+        { loc: `${root}monthly/`, priority: 0.72, lastmod: monthlyLastmod },
+        { loc: `${root}love/`, priority: 0.7, lastmod: horoscopeProgram.anchorDate },
+        { loc: `${root}career/`, priority: 0.7, lastmod: horoscopeProgram.anchorDate },
+        { loc: `${root}2027/`, priority: 0.68, lastmod: YEARLY_HOROSCOPE_LASTMOD },
+      ];
+    }),
     ...pairs.map((p) => ({
       loc: `/compatibility/${p.id}/`,
       priority: 0.75,

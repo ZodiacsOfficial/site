@@ -1,12 +1,12 @@
 ---
 import Base from '../../layouts/Base.astro';
+import EvidenceDisclosure from '../../components/EvidenceDisclosure.astro';
 import SignIcon from '../../components/SignIcon.astro';
 import { SIGNS, signBySlug } from '../../lib/signs';
 import { MONTH_NAMES, MONTH_SLUGS, DAYS_IN_MONTH, birthdaySlug, type BirthdayEntry } from '../../lib/birthdays';
 import birthdays from '../../data/birthdays.json';
 
 const days = birthdays.days as Record<string, BirthdayEntry>;
-const [yearFrom, yearTo] = birthdays.yearRange as [number, number];
 
 // Per month: the signs it passes through and which days sit on the boundary.
 const months = MONTH_NAMES.map((name, i) => {
@@ -26,13 +26,11 @@ const months = MONTH_NAMES.map((name, i) => {
   return { name, m, list, signs: signs.map((s) => signBySlug(s)) };
 });
 
-const cuspCount = Object.values(days).filter((d) => d.cusp).length;
-
 const jsonLd = [
   {
     '@type': 'CollectionPage',
     name: 'Birthday astrology, date by date',
-    description: 'A page for every calendar date: the sun sign checked across ninety-one years, degree spans, decans, and per-year cusp tables where the sign boundary lands.',
+    description: 'A date-specific astrology reading for every birthday, with character, relationships, work, growth, Sun sign, and exact cusp answers when the year matters.',
     url: 'https://zodiacs.org/birthday/',
     hasPart: SIGNS.map((s) => ({ '@type': 'Thing', name: `${s.name} birthdays` })),
   },
@@ -46,8 +44,8 @@ const jsonLd = [
 ];
 ---
 <Base
-  title="Birthday astrology: every date, computed"
-  description="Pick your birthday and get the receipts: sun sign verified across 1940–2030, exact degree spans, decans with traditional rulers, and year-by-year cusp tables."
+  title="Birthday Astrology by Date — Signs, Traits & Cusp Answers"
+  description="Choose your birthday for a date-specific reading of character, relationships, work, and growth, with an exact Sun-sign answer when the birth year matters."
   path="/birthday/"
   image="/assets/og/v2/tool/birthday.png"
   imageAlt="Birthday astrology — Zodiacs.org"
@@ -56,14 +54,20 @@ const jsonLd = [
   <div class="container bday-hub">
     <header class="bday-hub__hero reveal">
       <em class="kicker">Birthdays</em>
-      <h1 class="display">Every date in the calendar, computed.</h1>
+      <h1 class="display">Your birthday, read closely.</h1>
       <p class="bday-hub__lede">
-        A page for each of the 366 dates: the <a href="/learn/glossary/#sun-sign">sun sign</a> checked against every year
-        from {yearFrom} to {yearTo}, the <a href="/learn/glossary/#sun">Sun</a>'s exact <a href="/learn/glossary/#degree">degree</a> span, the <a href="/learn/glossary/#decan">decan</a> and its
-        traditional ruler, and — on the {cuspCount} dates where a sign boundary can
-        land — a year-by-year table of when the Sun actually crossed. If you were
-        born near a <a href="/learn/glossary/#cusp">cusp</a>, your year and birth time decide; the tables show both.
+        Choose a date for a distinct reading of character, love, work, and growth.
+        You’ll also get the <a href="/learn/glossary/#sun-sign">Sun sign</a> and{' '}
+        <a href="/learn/glossary/#decan">decan</a>; if the birthday falls on a{' '}
+        <a href="/learn/glossary/#cusp">sign boundary</a>, the page checks the birth year too.
       </p>
+      <EvidenceDisclosure label="What each birthday page verifies">
+        <p>
+          Each date also tracks the <a href="/learn/glossary/#sun">Sun</a>’s exact{' '}
+          <a href="/learn/glossary/#degree">degree</a> span and shows a year-by-year answer when
+          the sign changes during that day.
+        </p>
+      </EvidenceDisclosure>
     </header>
 
     {months.map(({ name, m, list, signs }) => (
@@ -100,9 +104,9 @@ const jsonLd = [
     ))}
 
     <p class="bday-hub__note mono reveal">
-      Cusp dates are marked with a hollow dot — the Sun can change signs during those days,
-      and their pages carry the full year table. Positions computed with the same engine as
-      the <a href="/birth-chart/">birth chart calculator</a>.
+      A hollow dot marks a date whose Sun sign can change with the year. Open it for the
+      exact answer; if the change happened during that day, your birth time settles it.
+      The same date and time can be used in the <a href="/birth-chart/">birth chart calculator</a>.
     </p>
   </div>
 </Base>

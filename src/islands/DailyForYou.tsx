@@ -9,6 +9,7 @@ import { useProfile } from '../lib/hooks/useProfile';
 import { findInterAspects } from '../lib/engine/synastry';
 import { TRANSIT_ORB, transitLine } from '../lib/transits';
 import PlanetGlyph from '../components/PlanetGlyph';
+import EvidenceDisclosure from './EvidenceDisclosure';
 import { signBySlug, signForLongitude } from '../lib/signs';
 import { localizePath, normalizeLocale, t, type Locale } from '../lib/i18n';
 import daily from '../data/daily.json';
@@ -60,13 +61,19 @@ export default function DailyForYou({ sign, locale: rawLocale = 'en' }: Props) {
         {hits.map((a) => (
           <li key={`${a.a}-${a.b}-${a.type}`}>
             <p>{transitLine(a.a, a.type, a.b)}</p>
-            <span class="mono dfy__receipt">
-              <PlanetGlyph body={a.a} hue={SKY_HUE[a.a]} size={13} class="rcpt-glyph" />
-              {a.a} {a.type} {t(locale, 'natal')} {a.b} · {t(locale, 'orb')} {a.orb.toFixed(1)}°
-            </span>
           </li>
         ))}
       </ul>
+      <EvidenceDisclosure label={t(locale, 'whyThisReading')}>
+        <ul class="evidence-disclosure__list">
+          {hits.map((a) => (
+            <li class="mono evidence-disclosure__receipt" key={`${a.a}-${a.b}-${a.type}`}>
+              <PlanetGlyph body={a.a} hue={SKY_HUE[a.a]} size={13} class="rcpt-glyph" />
+              <span>{a.a} {a.type} {t(locale, 'natal')} {a.b} · {t(locale, 'orb')} {a.orb.toFixed(1)}°</span>
+            </li>
+          ))}
+        </ul>
+      </EvidenceDisclosure>
       <div class="dfy__actions">
         <a class="btn btn--primary dfy__primary" href={localizePath(locale, '/today/')}>
           <span>{t(locale, 'openDailyBrief')}</span>

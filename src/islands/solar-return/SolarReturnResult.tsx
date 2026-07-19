@@ -4,7 +4,8 @@ import type { WheelProps } from '../../lib/wheel/Wheel';
 import { houseOf } from '../../lib/engine/houses';
 import { formatLongitude, signForLongitude } from '../../lib/signs';
 import type { SolarReturnResultData } from './compute';
-import { SR_COPY } from './copy';
+import { planetsOnlyReturnReading, SR_COPY } from './copy';
+import EvidenceDisclosure from '../EvidenceDisclosure';
 
 export interface SolarReturnResultProps { result: SolarReturnResultData; Wheel: ComponentType<WheelProps> }
 
@@ -13,6 +14,9 @@ export function SolarReturnResult({ result, Wheel }: SolarReturnResultProps) {
   const sun = chart.bodies.find((body) => body.body === 'Sun')!;
   const sunHouse = chart.houses ? houseOf(sun.lon, chart.houses.cusps) : null;
   const ascSign = chart.angles ? signForLongitude(chart.angles.asc) : null;
+  const planetsOnly = !ascSign && !sunHouse
+    ? planetsOnlyReturnReading(chart.bodies, chart.aspects)
+    : null;
   const headingRef = useRef<HTMLHeadingElement>(null);
 
   useEffect(() => {
@@ -24,16 +28,19 @@ export function SolarReturnResult({ result, Wheel }: SolarReturnResultProps) {
 
   return (
     <div class="sr-result" data-solar-return-result data-sr-asc={chart.angles?.asc ?? undefined} data-sr-sun={sun.lon} data-sr-no-time={result.noTime} data-sr-no-place={result.noPlace}>
-      <section class="shell sr-result__receipt" aria-label="Solar return receipt">
+      <section class="shell sr-result__reading" aria-labelledby="solar-return-reading-title">
         <div class="core sr-result__core">
           <span class="mono--label">Your {result.returnYear} return</span>
-          <h2 ref={headingRef} tabIndex={-1}>{formatLongitude(sun.lon)} Sun</h2>
-          <p class="mono" data-return-instant>
-            UTC · {chart.input.utc.toISOString().slice(0, 19).replace('T', ' · ')}
-            <br />Your time · {chart.input.utc.toLocaleString(undefined, {
-              year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', timeZoneName: 'short',
-            })}
-          </p>
+          <h2 id="solar-return-reading-title" ref={headingRef} tabIndex={-1}>Your year, at a glance</h2>
+          {ascSign && (
+            <p class="sr-result__line" data-sr-corpus="asc">{SR_COPY.asc[ascSign.slug as keyof typeof SR_COPY.asc]}</p>
+          )}
+          {sunHouse && <p class="sr-result__line" data-sr-corpus="sun-house">{SR_COPY.sunHouse[sunHouse]}</p>}
+          {planetsOnly && (
+            <p class="sr-result__line" data-sr-corpus="planets-only">
+              {planetsOnly.text}
+            </p>
+          )}
         </div>
       </section>
 
@@ -55,13 +62,32 @@ export function SolarReturnResult({ result, Wheel }: SolarReturnResultProps) {
         </div>
       </section>
 
-      {ascSign && (
-        <p class="sr-result__line" data-sr-corpus="asc">{SR_COPY.asc[ascSign.slug as keyof typeof SR_COPY.asc]}</p>
-      )}
-      {sunHouse && <p class="sr-result__line" data-sr-corpus="sun-house">{SR_COPY.sunHouse[sunHouse]}</p>}
+      <div class="calc__actions">
+        <a class="btn btn--ghost" href="/birth-chart/">Open your full birth chart →</a>
+        <a class="btn btn--ghost" href="/transits/">See today’s transits →</a>
+      </div>
 
-      <section class="shell">
-        <div class="core sr-result__core">
+      <EvidenceDisclosure label="Return chart details" variant="panel" className="shell sr-result__details">
+        <div class="sr-result__details-content">
+          <p class="sr-result__instant mono" data-return-instant>
+            Sun · {formatLongitude(sun.lon)}
+            <br />UTC · {chart.input.utc.toISOString().slice(0, 19).replace('T', ' · ')}
+            <br />Your time · {chart.input.utc.toLocaleString(undefined, {
+              year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', timeZoneName: 'short',
+            })}
+          </p>
+          {planetsOnly && (
+            <p class="sr-result__instant mono" data-sr-planets-only-receipt>
+              Reading basis · {planetsOnly.receipt}
+            </p>
+          )}
+          {(ascSign || sunHouse) && (
+            <p class="sr-result__instant mono" data-sr-reading-basis>
+              Reading basis
+              {ascSign && chart.angles ? ` · Ascendant ${formatLongitude(chart.angles.asc)}` : ''}
+              {sunHouse ? ` · Sun in house ${sunHouse}` : ''}
+            </p>
+          )}
           <h2>Return placements</h2>
           <div class="calc__table-wrap">
             <table class="calc__table">
@@ -77,12 +103,7 @@ export function SolarReturnResult({ result, Wheel }: SolarReturnResultProps) {
             </table>
           </div>
         </div>
-      </section>
-
-      <div class="calc__actions">
-        <a class="btn btn--ghost" href="/birth-chart/">Open your full birth chart →</a>
-        <a class="btn btn--ghost" href="/transits/">See today’s transits →</a>
-      </div>
+      </EvidenceDisclosure>
     </div>
   );
 }

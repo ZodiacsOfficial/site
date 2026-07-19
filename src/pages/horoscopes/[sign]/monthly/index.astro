@@ -1,0 +1,46 @@
+---
+import { getCollection, render } from 'astro:content';
+import HoroscopeProgramPage from '../../../../components/HoroscopeProgramPage.astro';
+import { SIGN_SLUGS, signBySlug } from '../../../../lib/signs';
+import { eventList, monthLabel } from '../../../../lib/horoscopes';
+
+export async function getStaticPaths() {
+  const all = await getCollection('horoscopes', ({ data }) => !data.draft);
+  const latestMonth = all.map((entry) => entry.data.month).sort().at(-1);
+  if (!latestMonth) throw new Error('Horoscopes collection is empty.');
+  const current = all.filter((entry) => entry.data.month === latestMonth);
+  const slugs = current.map((entry) => entry.data.sign).sort();
+  if (JSON.stringify(slugs) !== JSON.stringify([...SIGN_SLUGS].sort())) {
+    throw new Error(`Horoscope month ${latestMonth} must cover exactly the 12 signs; found: ${slugs.join(', ')}`);
+  }
+  return current.map((entry) => ({
+    params: { sign: entry.data.sign },
+    props: { signSlug: entry.data.sign, entry },
+  }));
+}
+
+const { signSlug, entry } = Astro.props;
+const sign = signBySlug(signSlug);
+const label = monthLabel(entry.data.month);
+const events = eventList(entry.data.month);
+const { Content } = await render(entry);
+const firstEvent = events.at(0);
+const lastEvent = events.at(-1);
+
+const reading = {
+  label,
+  title: 'monthly horoscope',
+  description: `${sign.name} monthly horoscope for ${label}: the month’s turning points in love, work, home, and personal growth.`,
+  intro: `The choices and turning points shaping ${sign.name}’s ${label}.`,
+  sections: [],
+  action: `Mark the two dates in this reading that touch the decision already taking most of your attention.`,
+  sourceNote: events.length > 0
+    ? `This month’s astrology follows ${events.length} dated sky events from ${firstEvent?.at.slice(0, 10)} through ${lastEvent?.at.slice(0, 10)}. Times use UTC, interpreted through solar houses for ${sign.name}.`
+    : `This edition follows the ${entry.data.month} horoscope for ${sign.name}. No separate dated event table was available for the month.`,
+  datePublished: entry.data.published.toISOString(),
+  dateModified: entry.data.updated.toISOString(),
+};
+---
+<HoroscopeProgramPage signSlug={sign.slug} surface="monthly" reading={reading}>
+  <Content slot="editorial" />
+</HoroscopeProgramPage>

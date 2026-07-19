@@ -8,7 +8,7 @@ const jsonLd = [
     headline: 'How zodiacs.org computes your chart',
     url: 'https://zodiacs.org/methodology/',
     datePublished: '2026-07-05T10:36:57Z',
-    dateModified: '2026-07-07T02:22:38+07:00',
+    dateModified: '2026-07-19T12:00:00Z',
     author: EDITOR_AUTHOR,
     publisher: { '@id': 'https://zodiacs.org/#org' },
     mainEntityOfPage: { '@type': 'WebPage', '@id': 'https://zodiacs.org/methodology/' },
@@ -122,6 +122,45 @@ const jsonLd = [
         <li>Unknown birth times get a noon chart: planets are exact to the day, but rising sign and houses genuinely require the clock, and we won't pretend otherwise.</li>
         <li>Supported birth years: 1800–2199.</li>
       </ul>
+
+      <h2 id="daily-publication">Daily publication system</h2>
+      <p>
+        Zodiacs.org is maintained through automated editorial systems rather
+        than a traditional human editorial staff. A model is not allowed to
+        invent a sky fact or approve its own output. The daily system starts with a
+        deterministic noon-UTC snapshot: body positions, lunar phase, and any
+        exact events covered by that month’s committed transit file. Missing
+        event coverage is labeled as unavailable rather than presented as a
+        quiet day.
+      </p>
+      <p>
+        Today’s short readings are rendered from versioned local sentence
+        templates. Every published line carries stable evidence IDs for its
+        source position or event and, where relevant, the derived solar house.
+        A separately implemented astronomy audit recomputes positions, lunar
+        state, event geometry, and the monthly day slice. A deterministic copy
+        check then rebuilds all twelve readings, checks their IDs, rejects unsafe
+        certainty and restricted advice, tests sign-to-sign distinctness, and
+        compares hashes. That copy check intentionally reuses the versioned
+        renderer and is not described as an independent second implementation.
+        The same process is replayed across the previous 30 days on every run.
+      </p>
+      <p>
+        Those evidence IDs establish the astronomical input and the derived
+        whole-sign solar house. Phrases about a house’s life themes are
+        versioned editorial conventions, not astronomical measurements; the
+        template ID identifies that interpretive layer instead of disguising it
+        as an observed fact.
+      </p>
+      <p>
+        AI agents may propose new templates or a constrained selection system in
+        a future edition, but free-form model text cannot pass the current release
+        gate. The <a href="/data/editorial-constitution.json">editorial constitution</a>
+        is public. The exact policy version, generation mode, source hashes, and
+        verification result for the live edition are available in the{' '}
+        <a href="/data/daily-publication.json">daily publication record</a>.
+        Material fixes appear in the <a href="/corrections/">correction log</a>.
+      </p>
 
       <p>
         Found a discrepancy? We treat accuracy reports as bugs. The sky is

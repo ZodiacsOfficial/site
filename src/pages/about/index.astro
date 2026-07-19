@@ -1,31 +1,16 @@
 ---
 import Base from '../../layouts/Base.astro';
-import { EDITOR_PERSON } from '../../lib/editorial';
+import { EDITOR_ORGANIZATION } from '../../lib/editorial';
 import { EN } from '../../strings/en.mjs';
 
 const jsonLd = [
-  EDITOR_PERSON as unknown as Record<string, unknown>,
+  EDITOR_ORGANIZATION as unknown as Record<string, unknown>,
   {
     '@type': 'AboutPage',
     name: 'About Zodiacs.org',
     url: 'https://zodiacs.org/about/',
     description:
       'Who runs Zodiacs.org and why: a free astrology reference where charts are computed accurately, explained plainly, and kept private on your device.',
-  },
-  {
-    '@type': 'Organization',
-    '@id': 'https://zodiacs.org/#org',
-    name: 'Zodiacs',
-    alternateName: 'Zodiacs.org',
-    url: 'https://zodiacs.org/',
-    logo: {
-      '@type': 'ImageObject',
-      url: 'https://zodiacs.org/assets/app-icons/icon-512.png',
-      width: 512,
-      height: 512,
-    },
-    email: 'hello@zodiacs.org',
-    description: 'A free astrology platform with an on-device chart engine and a collector’s registry wing.',
   },
 ];
 ---
@@ -57,20 +42,17 @@ const jsonLd = [
         read what they mean in ordinary words.
       </p>
       <p>
-        So nothing is asserted without its receipt: a horoscope line comes with
-        the transit and the time it is exact; a sign on a cusp date comes with
-        the year it actually changed. You never have to take a number on faith,
-        because the number is printed next to the sentence.
+        The reading comes first. Exact degrees, dated sky facts, and sources stay
+        close by for anyone who wants to check them, without turning every page
+        into a technical report.
       </p>
 
-      <h2>How the charts are computed</h2>
+      <h2>Accuracy without the homework</h2>
       <p>
-        Positions come from an open-source astronomical engine accurate to about
-        an arcminute, and every change to it must pass an automated accuracy
-        gate against NASA JPL reference data before it ships. The whole method —
-        the ephemeris, the house systems, how historical time zones are handled —
-        is written out on the <a href="/methodology/">methodology page</a>. If
-        you want to check us, you can.
+        When a date, degree, or birth time matters, it is calculated against the
+        actual sky and checked before it appears. If you want the ephemeris,
+        house systems, historical time-zone handling, and accuracy limits, the{' '}
+        <a href="/methodology/">full methodology is public</a>.
       </p>
 
       <h2>Your data stays yours</h2>
@@ -106,27 +88,41 @@ const jsonLd = [
         <a href="/disclosure/">{EN['disclosure.aboutLink']}</a>.
       </p>
 
-      <h2>Who runs it</h2>
+      <h2 id="editorial-system">How Zodiacs.org is maintained</h2>
       <p>
-        Zodiacs.org is an independent project, not a venture-backed company or a
-        content mill. It is maintained by a small team who care about getting
-        the astronomy right and the writing honest. There is no upsell here and
-        no premium tier gating the basics — the calculators are free because the
-        cost of running them, once the math is on your device, is close to
-        nothing.
+        Zodiacs.org is an independent project maintained by automated systems,
+        without a traditional human editorial staff. Articles use the
+        Zodiacs.org organizational byline; there is no invented editor, biography,
+        or set of credentials behind it. The calculators remain free because the
+        core math runs on your device.
       </p>
 
-      <h2 id="editor">The editor</h2>
-      <p>
-        The site's pages are edited under one name, <strong>Rowan Vale</strong> —
-        the byline you'll see at the foot of every guide and article. It is an
-        editorial identity rather than a public figure, and it makes one
-        promise instead of claiming credentials: every computed figure is
-        checked against NASA JPL reference data before it ships, sources are
-        cited, and interpretive claims are labeled as tradition, not fact.
-        When a page is wrong, <a href="#contact">say so</a> — corrections
-        outrank everything else in the queue.
-      </p>
+      <details class="about-operations">
+        <summary>
+          <span>
+            <strong>Open the publication details</strong>
+            <small>Automation, checks, and public records</small>
+          </span>
+          <span class="about-operations__mark" aria-hidden="true"></span>
+        </summary>
+        <div class="about-operations__body">
+          <p>
+            AI agents can propose writing, design, and code, but free-form model
+            prose cannot publish itself. Daily editions begin with structured sky
+            facts and versioned local templates. A separate astronomy audit
+            recalculates the sky, while policy checks reject unsupported facts,
+            unsafe certainty, and incomplete editions before publication.
+          </p>
+          <p>
+            The current daily edition exposes its facts, generation mode, policy
+            version, hashes, and verification result in a{' '}
+            <a href="/data/daily-publication.json">public publication record</a>.
+            The <a href="/data/editorial-constitution.json">rulebook is machine-readable</a>, the{' '}
+            <a href="/methodology/#daily-publication">daily method is documented</a>, and the{' '}
+            <a href="/corrections/">correction log</a> records material changes.
+          </p>
+        </div>
+      </details>
 
       <h2>Get in touch</h2>
       <p id="contact">
@@ -147,5 +143,29 @@ const jsonLd = [
 <style>
   .method-title { margin: 6px 0 8px; }
   .prose .lede { font-size: var(--text-lg); color: var(--text); }
+  .about-operations {
+    margin-top: 14px;
+    padding: 3px 18px;
+    border: 1px solid var(--hair-1);
+    border-radius: var(--r-md);
+    background: var(--void-1);
+  }
+  .about-operations summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 13px 0;
+    cursor: pointer;
+    list-style: none;
+  }
+  .about-operations summary::-webkit-details-marker { display: none; }
+  .about-operations summary > span:first-child { display: grid; gap: 2px; }
+  .about-operations summary strong { color: var(--text); font-size: var(--text-sm); }
+  .about-operations summary small { color: var(--faint); font-size: var(--text-xs); }
+  .about-operations__mark::before { content: '+'; color: var(--muted); font-family: var(--font-mono); }
+  .about-operations[open] .about-operations__mark::before { content: '−'; }
+  .about-operations__body { padding: 2px 0 4px; }
+  .about-operations__body p:first-child { margin-top: 0; }
   .about-cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 36px; }
 </style>

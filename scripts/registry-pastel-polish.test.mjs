@@ -46,6 +46,28 @@ describe('registry pastel polish', () => {
     expect(registry).toContain('@media (prefers-contrast: more)');
   });
 
+  it('uses a complete user-controlled desktop index and honest mobile overflow cues', async () => {
+    const [source, bundle, registry] = await Promise.all([
+      read('src/app.jsx'),
+      read('public/assets/app.js'),
+      read('public/registry/index.html'),
+    ]);
+
+    expect(source).toContain('className="strip__name"');
+    expect(source).toContain("() => currentSeason()?.sign.ticker ?? SIGNS[0].ticker");
+    expect(source).toContain("if (event.key === 'ArrowDown') nextIndex = activeIndex + 6;");
+    expect(source).toContain('Swipe or scroll to choose');
+    expect(source).not.toContain('SELECTOR_CYCLE_MS');
+    expect(source).not.toContain('Auto-rotating · tap to pin');
+    expect(source).not.toContain('Scroll or drag to explore');
+    expect(bundle).not.toContain('Auto-rotating');
+    expect(bundle).not.toContain('Scroll or drag');
+    expect(registry).toContain('grid-template-columns: repeat(6, minmax(0, 1fr));');
+    expect(registry).toContain('.strip__viewport.can-scroll-left::before');
+    expect(registry).toContain('.strip__viewport.can-scroll-right::after');
+    expect(registry).toContain('.strip__sub { display: none; }');
+  });
+
   it('keeps one explanatory hero action and one canonical thesis section', async () => {
     const [source, registry] = await Promise.all([
       read('src/app.jsx'),

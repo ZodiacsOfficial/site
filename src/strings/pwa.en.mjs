@@ -1,8 +1,8 @@
 /** English source catalogue for install metadata rendered by the OS. */
 export const PWA_MANIFEST_EN = Object.freeze({
-  name: 'Zodiacs — astrology computed on your device',
+  name: 'Zodiacs — birth charts and daily astrology',
   shortName: 'Zodiacs',
-  description: 'Birth charts, compatibility, and transits — free, exact, and kept on your device.',
+  description: 'Birth charts, daily horoscopes, compatibility, and sign guides — free and private on your device.',
 });
 
 /** English source catalogue for the flag-off future notification surface. */

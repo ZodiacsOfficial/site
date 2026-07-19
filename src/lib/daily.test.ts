@@ -6,6 +6,7 @@
 import { describe, expect, it } from 'vitest';
 import { dailyHeadline, dailyReading, solarHouse } from './daily';
 import type { Daily } from './daily';
+import { SIGN_SLUGS } from './signs';
 
 const FIXTURE: Daily = {
   date: '2026-07-06',
@@ -19,6 +20,19 @@ const FIXTURE: Daily = {
   moon: { phase: 'Last Quarter', illumination: 0.44 },
   events: [
     { kind: 'station', at: '2026-07-07T11:21:04.854Z', planet: 'Neptune', type: 'retrograde', sign: 'aries', degree: 4.4 },
+  ],
+};
+
+const ASPECT_FIXTURE: Daily = {
+  ...FIXTURE,
+  events: [
+    {
+      kind: 'aspect',
+      at: '2026-07-06T04:39:44.443Z',
+      a: 'Uranus',
+      b: 'Pluto',
+      type: 'trine',
+    },
   ],
 };
 
@@ -70,6 +84,52 @@ describe('dailyReading', () => {
 
   it('headline matches the reading', () => {
     expect(dailyHeadline('taurus', FIXTURE)).toBe(dailyReading('taurus', FIXTURE).headline);
+  });
+
+  it('keeps a collective aspect in the full reading but gives every hub card a distinct headline', () => {
+    const headlines = SIGN_SLUGS.map((sign) => dailyHeadline(sign, ASPECT_FIXTURE));
+    expect(new Set(headlines).size).toBe(12);
+    expect(headlines.every((headline) => headline.includes('house'))).toBe(true);
+    expect(headlines.every((headline) => !headline.includes('sky-wide weather'))).toBe(true);
+
+    const reading = dailyReading('aries', ASPECT_FIXTURE);
+    expect(reading.headline).toContain('Uranus trine Pluto');
+    expect(reading.headline).toContain('sky-wide weather');
+    expect(dailyHeadline('aries', ASPECT_FIXTURE)).toBe(
+      reading.lines.find((line) => line.house !== undefined)?.text,
+    );
+    expect(dailyHeadline('aries', ASPECT_FIXTURE)).not.toBe(reading.headline);
+  });
+
+  it('looks past two collective events for the first sign-specific headline', () => {
+    const twoAspects: Daily = {
+      ...ASPECT_FIXTURE,
+      events: [
+        ASPECT_FIXTURE.events[0],
+        {
+          kind: 'aspect',
+          at: '2026-07-06T18:10:00.000Z',
+          a: 'Venus',
+          b: 'Mars',
+          type: 'square',
+        },
+      ],
+    };
+    const reading = dailyReading('taurus', twoAspects);
+    expect(reading.lines.slice(0, 2).map((line) => line.house)).toEqual([undefined, undefined]);
+    expect(reading.lines[2]?.body).toBe('Moon');
+    expect(dailyHeadline('taurus', twoAspects)).toBe(reading.lines[2]?.text);
+  });
+
+  it('falls through to another planet when the Moon is unavailable', () => {
+    const noMoon: Daily = {
+      ...ASPECT_FIXTURE,
+      bodies: ASPECT_FIXTURE.bodies.filter((body) => body.body !== 'Moon'),
+    };
+    const reading = dailyReading('gemini', noMoon);
+    const mercury = reading.lines.find((line) => line.body === 'Mercury');
+    expect(mercury?.house).toBeDefined();
+    expect(dailyHeadline('gemini', noMoon)).toBe(mercury?.text);
   });
 
   it('fixture snapshot: aries reads as written', () => {

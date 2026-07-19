@@ -1,33 +1,40 @@
 ---
 import Base from '../../layouts/Base.astro';
+import { SIGNS } from '../../lib/signs';
 
 const feeds = [
   {
     href: '/feeds/daily-sky.xml',
     title: 'Daily sky',
-    description: 'The current Moon, planetary positions, and same-day sky events, refreshed from the committed daily calculation.',
+    description: 'Today’s Moon phase, planetary positions, retrogrades, and timed sky events in one feed.',
   },
   {
     href: '/feeds/horoscopes.xml',
-    title: 'Monthly horoscopes',
-    description: 'The latest horoscope for all twelve signs, with each month written against its computed transit dates.',
+    title: 'Daily horoscopes',
+    description: 'A clear daily focus and one useful move for all twelve signs.',
   },
   {
     href: '/feeds/almanac.xml',
     title: 'The Almanac',
-    description: 'New long-form notes on the computed sky and what the astrological tradition makes of it.',
+    description: 'New long-form essays about the current sky and how astrology reads it.',
   },
 ];
+
+const signFeeds = SIGNS.map((sign) => ({
+  href: `/feeds/horoscopes/${sign.slug}.xml`,
+  title: `${sign.name} horoscope`,
+}));
+const allFeeds = [...feeds, ...signFeeds];
 
 const jsonLd = [
   {
     '@type': 'CollectionPage',
     name: 'Zodiacs.org RSS feeds',
     url: 'https://zodiacs.org/feeds/',
-    description: 'RSS feeds for the computed daily sky, monthly horoscopes, and the Almanac.',
+    description: 'Follow daily horoscopes, the current sky, and new Almanac essays in any RSS reader.',
     mainEntity: {
       '@type': 'ItemList',
-      itemListElement: feeds.map((feed, index) => ({
+      itemListElement: allFeeds.map((feed, index) => ({
         '@type': 'ListItem',
         position: index + 1,
         name: feed.title,
@@ -39,7 +46,7 @@ const jsonLd = [
 ---
 <Base
   title="RSS Feeds — Daily Sky, Horoscopes & Almanac | Zodiacs.org"
-  description="Follow the computed daily sky, monthly horoscopes, and long-form Almanac through Zodiacs.org RSS feeds."
+  description="Follow daily horoscopes, the current sky, and new long-form Almanac essays through Zodiacs.org RSS feeds."
   path="/feeds/"
   jsonLd={jsonLd}
 >
@@ -47,10 +54,9 @@ const jsonLd = [
     <em class="kicker">RSS feeds</em>
     <h1 class="display">Follow the sky on your own terms.</h1>
     <p class="feeds__lede">
-      Subscribe in any RSS reader. The daily feed follows the computed sky;
-      the horoscope feed changes when a new month is published, and the Almanac
-      feed changes when a new article appears. None needs
-      an account or a notification permission.
+      Subscribe in any RSS reader. Follow the whole sky, get one concise reading
+      for every sign, or choose just yours. The Almanac feed updates when a new
+      essay appears. No account or notification permission needed.
     </p>
 
     <div class="feeds__list">
@@ -63,6 +69,21 @@ const jsonLd = [
           <span class="feeds__go" aria-hidden="true">RSS →</span>
         </a>
       ))}
+    </div>
+
+    <div class="feeds__signs">
+      <div class="feeds__signs-head">
+        <em class="kicker">One sign only</em>
+        <p>Choose a sun sign for a quieter, single-item daily feed.</p>
+      </div>
+      <div class="feeds__sign-grid">
+        {signFeeds.map((feed) => (
+          <a class="tile feeds__sign" href={feed.href} type="application/rss+xml">
+            <span>{feed.title}</span>
+            <span aria-hidden="true">RSS →</span>
+          </a>
+        ))}
+      </div>
     </div>
   </section>
 </Base>
@@ -83,4 +104,21 @@ const jsonLd = [
   .feeds__item strong { font-size: var(--text-lg); }
   .feeds__item p { margin: 6px 0 0; color: var(--text-2); font-size: var(--text-sm); line-height: 1.6; }
   .feeds__go { flex: none; align-self: center; color: var(--faint); font-family: var(--font-mono); font-size: 11px; }
+  .feeds__signs { display: grid; gap: 14px; margin-top: 18px; padding-top: 24px; border-top: 1px solid var(--hair-2); }
+  .feeds__signs-head { display: grid; gap: 6px; }
+  .feeds__signs-head p { margin: 0; color: var(--muted); font-size: var(--text-sm); }
+  .feeds__sign-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .feeds__sign {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 13px 14px;
+    color: var(--text-2);
+    font-size: var(--text-sm);
+    text-decoration: none;
+  }
+  .feeds__sign span:last-child { color: var(--faint); font-family: var(--font-mono); font-size: 10px; }
+  @media (min-width: 720px) {
+    .feeds__sign-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  }
 </style>

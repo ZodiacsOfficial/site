@@ -1,0 +1,32 @@
+---
+import '../styles/evidence-disclosure.css';
+
+interface Props {
+  label: string;
+  description?: string;
+  variant?: 'quiet' | 'panel';
+  class?: string;
+}
+
+const {
+  label,
+  description,
+  variant = 'quiet',
+  class: className,
+} = Astro.props;
+---
+<details
+  class:list={['evidence-disclosure', `evidence-disclosure--${variant}`, className]}
+  data-evidence-disclosure
+  data-evidence-variant={variant}
+>
+  <summary>
+    <span class="evidence-disclosure__summary">
+      <strong>{label}</strong>
+      {description && <small>{description}</small>}
+    </span>
+  </summary>
+  <div class="evidence-disclosure__body">
+    <slot />
+  </div>
+</details>

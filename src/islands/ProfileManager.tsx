@@ -15,6 +15,7 @@ import type { Session } from '@supabase/supabase-js';
 import type * as Sync from '../lib/profile/sync';
 import { localizePath, normalizeLocale, t, tf, type Locale, type UiKey } from '../lib/i18n';
 import { formatDate, intlLocale } from '../lib/i18n/dates';
+import EvidenceDisclosure from './EvidenceDisclosure';
 
 /** "Cancer Sun · 1907-07-06" → "Cancer Sun" for compact CTAs. */
 const handle = (name: string) => name.split('·')[0].trim() || name;
@@ -67,6 +68,7 @@ export const PF_BOOK_COPY = {
       : `${n} charts saved — yours and the people you read for.`,
     add: "Add someone's chart",
     privacy: 'Saved on this device. Nothing is uploaded unless you turn sync on.',
+    details: 'Birth details',
   },
   es: {
     count: (n: number) => n === 1
@@ -74,6 +76,7 @@ export const PF_BOOK_COPY = {
       : `${n} cartas guardadas: la tuya y las de las personas para quienes haces lecturas.`,
     add: 'Añade la carta de alguien',
     privacy: 'Guardado en este dispositivo. No se sube nada salvo que actives la sincronización.',
+    details: 'Datos de nacimiento',
   },
   pt: {
     count: (n: number) => n === 1
@@ -81,6 +84,7 @@ export const PF_BOOK_COPY = {
       : `${n} mapas salvos: o seu e os das pessoas para quem você faz leituras.`,
     add: 'Adicionar o mapa de alguém',
     privacy: 'Salvo neste dispositivo. Nada é enviado, a menos que você ative a sincronização.',
+    details: 'Dados de nascimento',
   },
   fr: {
     count: (n: number) => n === 1
@@ -88,6 +92,7 @@ export const PF_BOOK_COPY = {
       : `${n} thèmes enregistrés : le tien et ceux que tu interprètes pour d’autres personnes.`,
     add: 'Ajouter le thème de quelqu’un',
     privacy: 'Enregistré sur cet appareil. Rien n’est envoyé tant que tu n’actives pas la synchronisation.',
+    details: 'Données de naissance',
   },
   it: {
     count: (n: number) => n === 1
@@ -95,6 +100,7 @@ export const PF_BOOK_COPY = {
       : `${n} temi salvati: il tuo e quelli che interpreti per altre persone.`,
     add: 'Aggiungi il tema di qualcuno',
     privacy: 'Salvato su questo dispositivo. Non viene caricato nulla, a meno che tu non attivi la sincronizzazione.',
+    details: 'Dati di nascita',
   },
 } as const;
 const HAS_PROFILE_SYNC = Boolean(
@@ -370,9 +376,9 @@ export default function ProfileManager({ locale: rawLocale = 'en' }: { locale?: 
     return (
       <div class="pf">
         <p class="sr-only" role="status">{pairAnnounce}</p>
-        {syncPanel}
         {/* Inline-side pairs need no saved charts — still show them. */}
         {pairsBlock}
+        {syncPanel}
       </div>
     );
   }
@@ -380,7 +386,6 @@ export default function ProfileManager({ locale: rawLocale = 'en' }: { locale?: 
   return (
     <div class="pf">
       <p class="sr-only" role="status">{pairAnnounce}</p>
-      {syncPanel}
       <p class="pf-count mono">
         {PF_BOOK_COPY[locale].count(profile.charts.length)}
       </p>
@@ -448,15 +453,17 @@ export default function ProfileManager({ locale: rawLocale = 'en' }: { locale?: 
                 </div>
               </header>
 
-              <p class="pf-chart__birth mono">
-                {formatDate(locale, `${chart.birth.date}T12:00:00Z`, {
-                  year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC',
-                })}
-                {chart.birth.time ? ` · ${chart.birth.time}` : ` · ${t(locale, 'timeUnknown')}`}
-                {chart.birth.place ? ` · ${chart.birth.place.name}, ${chart.birth.place.country}` : ''}
-              </p>
-
               <ChipRow chart={chart} locale={locale} />
+
+              <EvidenceDisclosure label={PF_BOOK_COPY[locale].details} className="pf-chart__details">
+                <p class="pf-chart__birth mono">
+                  {formatDate(locale, `${chart.birth.date}T12:00:00Z`, {
+                    year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC',
+                  })}
+                  {chart.birth.time ? ` · ${chart.birth.time}` : ` · ${t(locale, 'timeUnknown')}`}
+                  {chart.birth.place ? ` · ${chart.birth.place.name}, ${chart.birth.place.country}` : ''}
+                </p>
+              </EvidenceDisclosure>
             </div>
           </article>
         ))}
@@ -490,6 +497,8 @@ export default function ProfileManager({ locale: rawLocale = 'en' }: { locale?: 
       <div class="pf-foot">
         <a class="btn btn--ghost" href={localizePath(locale, '/birth-chart/')}><span>{PF_BOOK_COPY[locale].add}</span><span class="orb">+</span></a>
       </div>
+
+      {syncPanel}
     </div>
   );
 }

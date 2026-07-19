@@ -135,6 +135,10 @@ const tools = [
         var v = document.querySelector('[data-hero-video]');
         if (!v) return;
         var connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+        // The poster is the complete mobile hero. Loading video after paint can
+        // replace it as the LCP candidate and penalize the very device that
+        // benefits least from background motion.
+        var compactViewport = window.matchMedia('(max-width: 719px)').matches;
         var constrained = connection && (
           connection.saveData ||
           ['slow-2g', '2g'].indexOf(connection.effectiveType) !== -1
@@ -154,7 +158,7 @@ const tools = [
           if (p && p.catch) p.catch(function () {});
         };
         var play = function () {
-          if (constrained) return;
+          if (compactViewport || constrained) return;
           attachSources();
           tryPlay();
         };

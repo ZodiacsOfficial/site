@@ -1,35 +1,40 @@
 /**
- * The editorial identity — one name, stated once, used everywhere.
+ * Accurate editorial identity for the Zodiacs.org publication.
  *
- * Rowan Vale is Zodiacs.org's editorial persona (owner decision D8): a
- * consistent editor with a bio page and review dates, so people and crawlers
- * can attach the site's content to a stable author entity. The bio claims
- * only what is true — the editorial METHOD (computed figures checked against
- * JPL reference data, sources cited, interpretation labeled as tradition) —
- * never personal astrology credentials. Keep it that way.
+ * Articles are authored by the Zodiacs.org organization. The visible byline
+ * links to the system disclosure; no fictional Person entity or credentials
+ * are emitted for search engines or readers.
  */
 
-export const EDITOR_NAME = 'Rowan Vale';
-export const EDITOR_ID = 'https://zodiacs.org/about/#editor';
+export const EDITOR_NAME = 'Zodiacs.org Editorial System';
+export const EDITOR_ID = 'https://zodiacs.org/#org';
+export const EDITOR_PATH = '/about/#editorial-system';
 
-/** Full Person node — rendered once, on /about/. */
-export const EDITOR_PERSON = {
-  '@type': 'Person',
+/** Full Organization node — rendered once, on /about/. */
+export const EDITOR_ORGANIZATION = {
+  '@type': 'Organization',
   '@id': EDITOR_ID,
-  name: EDITOR_NAME,
-  url: EDITOR_ID,
+  name: 'Zodiacs',
+  alternateName: 'Zodiacs.org',
+  url: 'https://zodiacs.org/',
+  logo: {
+    '@type': 'ImageObject',
+    url: 'https://zodiacs.org/assets/app-icons/icon-512.png',
+    width: 512,
+    height: 512,
+  },
+  email: 'hello@zodiacs.org',
   description:
-    'Editor of Zodiacs.org. Every computed figure on the site is checked '
-    + 'against NASA JPL reference data before publication; sources are cited, '
-    + 'and interpretive claims are labeled as tradition rather than fact.',
-  worksFor: { '@id': 'https://zodiacs.org/#org' },
+    'A free astrology reference for birth charts, daily horoscopes, sign guides, '
+    + 'and clear interpretation, with private on-device tools.',
+  publishingPrinciples: 'https://zodiacs.org/about/#editorial-system',
   knowsAbout: ['astrology', 'astronomical computation', 'the tropical zodiac', 'house systems'],
 } as const;
 
-/** Compact author reference — embedded by every Article emitter. */
+/** Compact Organization author reference embedded by Article emitters. */
 export const EDITOR_AUTHOR = {
-  '@type': 'Person',
+  '@type': 'Organization',
   '@id': EDITOR_ID,
-  name: EDITOR_NAME,
-  url: EDITOR_ID,
+  name: 'Zodiacs.org',
+  publishingPrinciples: 'https://zodiacs.org/about/#editorial-system',
 } as const;

@@ -51,6 +51,16 @@ jobs:
         run: |
           ! grep -RIniE 'done properly|computed properly|shows? (its|their) work|like a human( wrote it)?|no mush|not vibes|speaks human|como es debido|sin paja' src/content src/pages src/components src/islands
 
+      - name: Authorship stays transparent
+        run: |
+          ! grep -RInE 'Rowan Vale|about/#editor([^i]|$)|"@type"[[:space:]]*:[[:space:]]*"Person"' src
+
+      - name: Verify daily editorial package
+        run: npm run editorial:daily:verify
+
+      - name: Replay 30 daily editions
+        run: npm run editorial:daily:replay
+
       - name: Build
         run: npm run build
 
@@ -65,6 +75,9 @@ jobs:
 
       - name: Link & artifact integrity over dist
         run: node scripts/check-dist.mjs
+
+      - name: Today SSR and personalization
+        run: npm run test:today:browser
 
       - name: Structured data validation
         run: npm run schema:check

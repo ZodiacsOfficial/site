@@ -2,8 +2,8 @@ name: Monthly Transits
 
 # On the 25th, computes NEXT month's transit events (ingresses,
 # lunations, stations, exact aspects) into src/data/transits-YYYY-MM.json
-# and opens an issue reminding whoever writes the horoscopes that twelve
-# entries are due. The horoscope pages themselves always render the
+# and opens an issue for the AI editorial run that prepares twelve entries.
+# The horoscope pages themselves always render the
 # latest month present and warn (never fail) when stale — this workflow
 # keeps the treadmill visible, it does not write prose.
 
@@ -39,6 +39,15 @@ jobs:
           echo "month=$MONTH" >> "$GITHUB_OUTPUT"
           node scripts/build-transits.mjs "$MONTH"
 
+      - name: Verify physics, schema, and deterministic regeneration
+        run: |
+          FILE="src/data/transits-${{ steps.month.outputs.month }}.json"
+          FIRST=$(sha256sum "$FILE" | cut -d ' ' -f1)
+          npm run editorial:transits:verify -- --month "${{ steps.month.outputs.month }}"
+          node scripts/build-transits.mjs "${{ steps.month.outputs.month }}"
+          SECOND=$(sha256sum "$FILE" | cut -d ' ' -f1)
+          test "$FIRST" = "$SECOND"
+
       - name: Commit if new
         id: commit
         run: |
@@ -55,38 +64,6 @@ jobs:
           git push
           echo "committed=true" >> "$GITHUB_OUTPUT"
 
-      - name: Notify IndexNow
-        if: steps.commit.outputs.committed == 'true'
-        run: |
-          node --input-type=module <<'NODE'
-          import { readFile, readdir } from 'node:fs/promises';
-
-          const keyFiles = (await readdir('public')).filter((name) => /^d21e17e6-.*\.txt$/.test(name));
-          if (keyFiles.length !== 1) throw new Error(`Expected one IndexNow key file, found ${keyFiles.length}`);
-          const keyFile = keyFiles[0];
-          const key = (await readFile(`public/${keyFile}`, 'utf8')).trim();
-          if (keyFile !== `${key}.txt`) throw new Error('IndexNow key filename and body do not match');
-
-          const signs = ['aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo', 'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces'];
-          const paths = [
-            '/', '/horoscopes/', ...signs.map((sign) => `/horoscopes/${sign}/`),
-            '/transits/', '/feeds/', '/feeds/daily-sky.xml', '/feeds/horoscopes.xml',
-          ];
-          const response = await fetch('https://api.indexnow.org/indexnow', {
-            method: 'POST',
-            headers: { 'content-type': 'application/json; charset=utf-8' },
-            body: JSON.stringify({
-              host: 'zodiacs.org',
-              key,
-              keyLocation: `https://zodiacs.org/${keyFile}`,
-              urlList: paths.map((path) => `https://zodiacs.org${path}`),
-            }),
-          });
-          const body = await response.text();
-          console.log(`IndexNow: ${response.status}${body ? ` — ${body}` : ''}`);
-          if (![200, 202].includes(response.status)) process.exit(1);
-          NODE
-
       - name: Open the horoscope reminder issue
         if: steps.commit.outputs.committed == 'true'
         env:
@@ -95,7 +72,7 @@ jobs:
           ISSUE_BODY: |
             The computed sky for __LABEL__ is committed at `src/data/transits-__MONTH__.json`.
 
-            Twelve entries are due before the 1st, one per sign, at `src/content/horoscopes/__MONTH__-{sign}.mdx`:
+            The AI editorial run must prepare twelve entries before the 1st, one per sign, at `src/content/horoscopes/__MONTH__-{sign}.mdx`:
 
             - [ ] aries
             - [ ] taurus

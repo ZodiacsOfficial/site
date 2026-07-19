@@ -1,0 +1,71 @@
+{
+  "schema": "zodiacs.daily-publication-manifest.v1",
+  "date": "2026-07-19",
+  "snapshotAt": "2026-07-19T12:00:00.000Z",
+  "status": "verified",
+  "policy": {
+    "id": "org.zodiacs.daily.en",
+    "version": "1.1.0",
+    "sha256": "b08c8fdbfacf471545bc857a237a3c89a3f39a4329f91b8c42adac495b7380d4"
+  },
+  "facts": {
+    "path": "src/data/daily.json",
+    "fileSha256": "7be12b6132ea681fc64f60193a3798b18aaded86dbf9a6939c3465c714b09cf7",
+    "canonicalSha256": "d13e9e9dca13f19ecbb4a47b5b56f4de97c5c01ee98f177374cf38b2eb4f6328",
+    "factCount": 47,
+    "eventsCoverage": "complete",
+    "eventsSource": "src/data/transits-2026-07.json",
+    "eventsSourceSha256": "d3143366945f42cc4e04f3dcec4a70742047204b1412f2319797eff8fec72e43",
+    "eventsSourceCanonicalSha256": "958baa045f5e3811337cf865de61012af423b734511eb04ade9deafe7b0f4001",
+    "engine": {
+      "name": "astronomy-engine",
+      "version": "2.1.19"
+    }
+  },
+  "publication": {
+    "path": "src/data/daily-publication.json",
+    "canonicalSha256": "80701c42ae5f89bc7ad20448c7ab4847ecbe7cc2cf74e252b98843720a344de4",
+    "signCount": 12,
+    "outputCount": 72
+  },
+  "generation": {
+    "mode": "deterministic-template",
+    "generatorId": "zodiacs.daily-renderer.v1.1",
+    "generatorSha256": "4feb18d7e6f4746389fcf1b3e691825c1b6a5dde5af84cdd58a2e2ad624e2e5c",
+    "model": null,
+    "freeformModelOutput": false
+  },
+  "verification": {
+    "verifierId": "zodiacs.daily-verifier.v2",
+    "verifierSha256": "127a4fb3f95f251a22dbcf58c7e18f9eb665a0af3d0b5fdf92a81922e29e5689",
+    "independentFromGenerator": false,
+    "astronomyAudit": {
+      "implementation": "zodiacs.daily-fact-audit.v1",
+      "independentFromSnapshotBuilder": true,
+      "status": "passed"
+    },
+    "rendererCheck": {
+      "kind": "deterministic-regeneration-and-policy",
+      "independentImplementation": false,
+      "status": "passed"
+    },
+    "deterministicStatus": "passed",
+    "aiReview": {
+      "required": false,
+      "status": "not-run",
+      "reason": "The edition is reproduced byte-for-byte from versioned local templates; model-authored free text is not publishable."
+    }
+  },
+  "checks": {
+    "signCount": 12,
+    "factAudit": "independent-recomputation-passed",
+    "exactRender": "passed",
+    "distinctness": "passed",
+    "voiceAndSafety": "passed"
+  },
+  "fallback": {
+    "missingEvents": "positions-only-with-disclosure",
+    "factsFailure": "hold-current-dated-edition",
+    "staleContentMayBeRelabeled": false
+  }
+}

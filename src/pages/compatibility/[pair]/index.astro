@@ -91,38 +91,47 @@ const jsonLd = [
     </header>
 
     <div class="container container--narrow pair-body">
-      <section class="pair-panel reveal" aria-label="Computed pairing facts">
-        <div class="pair-panel__signs">
-          {[a, b].map((s, i) => (
-            <a class="pair-panel__sign tile" href={`/${s.slug}/`} style={`--sign:${s.hue}`}>
-              <SignIcon sign={s.slug} size={44} class="pair-panel__sign-icon" />
-              <span class="pair-panel__sign-name">{s.name}{same ? ` ${i === 0 ? 'A' : 'B'}` : ''}</span>
-              <span class="pair-panel__sign-meta mono">{s.dates}</span>
-              <span class="pair-panel__sign-meta mono">
-                {ELEMENT_LABEL[s.element]} · {MODALITY_LABEL[s.modality]} · {s.ruler}
-              </span>
-            </a>
-          ))}
-        </div>
-        <dl class="pair-panel__rows">
-          <div class="pair-panel__row">
-            <dt><span class="mono--label">Elements</span> {facts.element.label}</dt>
-            <dd>{facts.element.note}</dd>
-          </div>
-          <div class="pair-panel__row">
-            <dt><span class="mono--label">Modes</span> {facts.modality.label}</dt>
-            <dd>{facts.modality.note}</dd>
-          </div>
-          <div class="pair-panel__row">
-            <dt><span class="mono--label">Polarity</span></dt>
-            <dd>{facts.polarity}</dd>
-          </div>
-        </dl>
-      </section>
-
       <div class="prose reveal">
         <Content />
       </div>
+
+      <details class="pair-basis reveal">
+        <summary>
+          <span>
+            <strong>Why this pairing reads this way</strong>
+            <small>Elements, modes, polarity, and each sign’s basic pattern</small>
+          </span>
+          <span class="pair-basis__mark" aria-hidden="true"></span>
+        </summary>
+        <section class="pair-panel" aria-label="The astrology behind this pairing">
+          <div class="pair-panel__signs">
+            {[a, b].map((s, i) => (
+              <a class="pair-panel__sign tile" href={`/${s.slug}/`} style={`--sign:${s.hue}`}>
+                <SignIcon sign={s.slug} size={44} class="pair-panel__sign-icon" />
+                <span class="pair-panel__sign-name">{s.name}{same ? ` ${i === 0 ? 'A' : 'B'}` : ''}</span>
+                <span class="pair-panel__sign-meta mono">{s.dates}</span>
+                <span class="pair-panel__sign-meta mono">
+                  {ELEMENT_LABEL[s.element]} · {MODALITY_LABEL[s.modality]} · {s.ruler}
+                </span>
+              </a>
+            ))}
+          </div>
+          <dl class="pair-panel__rows">
+            <div class="pair-panel__row">
+              <dt><span class="mono--label">Elements</span> {facts.element.label}</dt>
+              <dd>{facts.element.note}</dd>
+            </div>
+            <div class="pair-panel__row">
+              <dt><span class="mono--label">Modes</span> {facts.modality.label}</dt>
+              <dd>{facts.modality.note}</dd>
+            </div>
+            <div class="pair-panel__row">
+              <dt><span class="mono--label">Polarity</span></dt>
+              <dd>{facts.polarity}</dd>
+            </div>
+          </dl>
+        </section>
+      </details>
 
       <section class="pair-faq reveal">
         <div class="section-head">
@@ -217,7 +226,29 @@ const jsonLd = [
 
   .pair-body { display: grid; gap: clamp(30px, 5vw, 52px); padding-bottom: clamp(36px, 6vw, 72px); }
 
-  .pair-panel { display: grid; gap: 18px; }
+  .pair-basis {
+    padding: 3px 18px;
+    border: 1px solid var(--hair-1);
+    border-radius: var(--r-md);
+    background: var(--void-1);
+  }
+  .pair-basis > summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 13px 0;
+    cursor: pointer;
+    list-style: none;
+  }
+  .pair-basis > summary::-webkit-details-marker { display: none; }
+  .pair-basis > summary > span:first-child { display: grid; gap: 2px; }
+  .pair-basis > summary strong { color: var(--text); font-size: var(--text-sm); }
+  .pair-basis > summary small { color: var(--faint); font-size: var(--text-xs); }
+  .pair-basis__mark::before { content: '+'; color: var(--muted); font-family: var(--font-mono); }
+  .pair-basis[open] .pair-basis__mark::before { content: '−'; }
+
+  .pair-panel { display: grid; gap: 18px; padding: 2px 0 15px; }
   .pair-panel__signs {
     display: grid;
     gap: 12px;

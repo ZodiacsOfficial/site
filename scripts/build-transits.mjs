@@ -116,7 +116,9 @@ for (const [targetLon, type] of [[0, 'new'], [180, 'full']]) {
         type,
         at: found.date.toISOString(),
         sign: signAt(lon),
-        degree: Math.round(degreeIn(lon) * 10) / 10,
+        // Keep the physical coordinate. Presentation rounds later, avoiding
+        // impossible pairs such as 30.0 degrees in the preceding sign.
+        degree: degreeIn(lon),
       });
     }
     cursor = found.AddDays(1);
@@ -140,7 +142,7 @@ for (const planet of PLANETS) {
           at: at.toISOString(),
           type: retro ? 'retrograde' : 'direct',
           sign: signAt(lon),
-          degree: Math.round(degreeIn(lon) * 10) / 10,
+          degree: degreeIn(lon),
         });
       }
       prevRetro = retro;
@@ -182,9 +184,9 @@ for (const [a, b] of pairs) {
             type: ASPECTS.find((x) => x.angle === Math.abs(target)).type,
             at: at.toISOString(),
             aSign: signAt(lonA),
-            aDegree: Math.round(degreeIn(lonA) * 10) / 10,
+            aDegree: degreeIn(lonA),
             bSign: signAt(lonB),
-            bDegree: Math.round(degreeIn(lonB) * 10) / 10,
+            bDegree: degreeIn(lonB),
           });
         }
       }
@@ -197,7 +199,6 @@ for (const [a, b] of pairs) {
 const byTime = (x, y) => x.at.localeCompare(y.at);
 const payload = {
   month,
-  generatedAt: new Date().toISOString(),
   ingresses: ingresses.sort(byTime),
   lunations: lunations.sort(byTime),
   stations: stations.sort(byTime),

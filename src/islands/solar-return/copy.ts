@@ -1,3 +1,77 @@
+import type { Aspect, BodyPosition } from '../../lib/engine/types';
+import { signForLongitude } from '../../lib/signs';
+
+const RETURN_ROLE: Record<string, string> = {
+  Sun: 'your sense of direction',
+  Mercury: 'your thinking and decisions',
+  Venus: 'your values and relationships',
+  Mars: 'your effort and initiative',
+  Jupiter: 'growth and opportunity',
+  Saturn: 'your standards and commitments',
+  Uranus: 'freedom and change',
+  Neptune: 'your imagination and ideals',
+  Pluto: 'power and renewal',
+};
+
+const JUPITER_FOCUS: Record<string, string> = {
+  aries: 'decisive experiments and the courage to begin',
+  taurus: 'patient building and resources that last',
+  gemini: 'learning, exchange, and better questions',
+  cancer: 'care, belonging, and stronger foundations',
+  leo: 'creative visibility and wholehearted expression',
+  virgo: 'useful skills, healthier systems, and steady practice',
+  libra: 'collaboration, negotiation, and fairer agreements',
+  scorpio: 'honest renewal and the wise use of shared resources',
+  sagittarius: 'study, travel, and beliefs tested in experience',
+  capricorn: 'disciplined ambition and work that compounds',
+  aquarius: 'alliances, original ideas, and a more useful future',
+  pisces: 'imagination, compassion, and restorative space',
+};
+
+export interface PlanetsOnlyReturnReading {
+  text: string;
+  receipt: string;
+}
+
+export function planetsOnlyReturnReading(
+  bodies: ReadonlyArray<Pick<BodyPosition, 'body' | 'lon'>>,
+  aspects: ReadonlyArray<Pick<Aspect, 'a' | 'b' | 'type' | 'orb'>>,
+): PlanetsOnlyReturnReading {
+  const strongest = [...aspects]
+    .filter((aspect) => ![aspect.a, aspect.b].some((body) => body === 'Moon' || body.includes('Node')))
+    .sort((left, right) => left.orb - right.orb)[0];
+
+  if (strongest) {
+    const left = RETURN_ROLE[strongest.a] ?? strongest.a.toLowerCase();
+    const right = RETURN_ROLE[strongest.b] ?? strongest.b.toLowerCase();
+    const supportive = strongest.type === 'trine' || strongest.type === 'sextile';
+    const concentrated = strongest.type === 'conjunction';
+    const text = supportive
+      ? `This year opens a useful channel between ${left} and ${right}. What comes easily still needs to be noticed and used.`
+      : concentrated
+        ? `This year concentrates ${left} and ${right} into one agenda. Give that combination a deliberate outlet instead of letting it run on instinct.`
+        : `This year asks you to negotiate between ${left} and ${right}. Progress comes from giving both pressures a job instead of declaring one the winner.`;
+    return {
+      text,
+      receipt: `${strongest.a} ${strongest.type} ${strongest.b} · ${strongest.orb.toFixed(1)}° orb`,
+    };
+  }
+
+  const jupiter = bodies.find((body) => body.body === 'Jupiter');
+  if (jupiter) {
+    const sign = signForLongitude(jupiter.lon);
+    return {
+      text: `Growth this year favors ${JUPITER_FOCUS[sign.slug]}. Choose the opportunity that makes this quality more usable in ordinary life.`,
+      receipt: `Jupiter in ${sign.name}`,
+    };
+  }
+
+  return {
+    text: 'Use this planets-only return as a broad annual reset: choose one priority to renew, give it a repeatable practice, and watch what gathers momentum after your birthday.',
+    receipt: 'Planets-only solar return · houses and angles unavailable',
+  };
+}
+
 export const SR_COPY = {
   noon: 'Computed from a noon chart — the return instant can shift a few hours with your exact birth time, and houses need it.',
   noPlace: 'This saved chart has no stored birthplace, so the return is shown planets-only.',

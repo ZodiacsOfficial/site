@@ -65,7 +65,7 @@ const fmtTime = (d: Date) =>
 
 const status = next
   ? `The next eclipse is a ${next.label.toLowerCase()} eclipse on ${fmtDay(next.at)}, in ${next.sign.name}.`
-  : 'The committed data window has run out — refresh the eclipse data.';
+  : 'Later eclipse dates are not available yet.';
 
 const asOf = formatShortDate('en', buildNow);
 
@@ -74,13 +74,13 @@ const faq = [
     q: 'When is the next solar eclipse?',
     a: nextSolar
       ? `A ${nextSolar.kind} solar eclipse peaks on ${fmtDay(nextSolar.at)}, with the Sun in ${nextSolar.sign.name}. Solar eclipses are only visible from a limited track — for the August 12, 2026 total eclipse, totality crosses Greenland, western Iceland, and northern Spain.`
-      : 'The committed data window has run out.',
+      : 'Later solar eclipse dates are not available yet.',
   },
   {
     q: 'When is the next lunar eclipse?',
     a: nextLunar
       ? `A ${nextLunar.kind} lunar eclipse peaks on ${fmtDay(nextLunar.at)}, with the Moon in ${nextLunar.sign.name}. Unlike solar eclipses, a lunar eclipse is visible from the entire night side of Earth at once.`
-      : 'The committed data window has run out.',
+      : 'Later lunar eclipse dates are not available yet.',
   },
   {
     q: 'What is the difference between a solar and a lunar eclipse?',

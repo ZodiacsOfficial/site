@@ -81,7 +81,9 @@ const eventNodes = upcomingWindows.map((window) => {
     '@type': 'Event',
     '@id': `https://zodiacs.org/mercury-retrograde/#${id}`,
     name: 'Mercury retrograde',
-    description: `Mercury appears retrograde from ${from} to ${to ?? 'the end of the committed data window'}, stationing at ${window.stationRx} and ${window.stationDirect ?? 'a position beyond the current horizon'}.`,
+    description: to
+      ? `Mercury appears retrograde from ${from} to ${to}, stationing at ${window.stationRx} and ${window.stationDirect ?? 'a direct station not yet available'}.`
+      : `Mercury appears retrograde from ${from}. A later end date and direct station are not yet available; the retrograde station is ${window.stationRx}.`,
     startDate: from,
     ...(to ? { endDate: to } : {}),
     eventStatus: 'https://schema.org/EventScheduled',

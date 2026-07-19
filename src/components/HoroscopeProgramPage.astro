@@ -1,0 +1,465 @@
+---
+import Base from '../layouts/Base.astro';
+import EmailCapture from './EmailCapture.astro';
+import Faq from './Faq.astro';
+import ShareRow from './ShareRow.astro';
+import SignIcon from './SignIcon.astro';
+import { EDITOR_AUTHOR } from '../lib/editorial';
+import { SIGNS, signBySlug } from '../lib/signs';
+import type {
+  HoroscopePageSurface as HoroscopeSurface,
+  HoroscopeProgramPageReading,
+} from '../lib/horoscope-page-data';
+
+interface Props {
+  signSlug: string;
+  surface: HoroscopeSurface;
+  reading: HoroscopeProgramPageReading;
+}
+
+const { signSlug, surface, reading } = Astro.props;
+const sign = signBySlug(signSlug);
+
+const SURFACE_META = {
+  today: {
+    slug: '',
+    nav: 'Daily',
+    kicker: 'Daily horoscope',
+    faq: 'Your daily horoscope highlights the themes most likely to matter today, with one practical way to work with them.',
+  },
+  tomorrow: {
+    slug: 'tomorrow',
+    nav: 'Tomorrow',
+    kicker: 'Next-day outlook',
+    faq: 'It gives you an early look at tomorrow’s emotional tone, priorities, and one useful way to prepare.',
+  },
+  weekly: {
+    slug: 'weekly',
+    nav: 'Weekly',
+    kicker: 'Seven-day outlook',
+    faq: 'A weekly horoscope widens the frame from one day to the choices and themes that can develop across seven days.',
+  },
+  monthly: {
+    slug: 'monthly',
+    nav: 'Monthly',
+    kicker: 'Monthly outlook',
+    faq: 'A monthly horoscope follows the month’s dated lunations, stations, ingresses, and major aspects through the solar houses of your sun sign.',
+  },
+  love: {
+    slug: 'love',
+    nav: 'Love',
+    kicker: 'Relationships',
+    faq: 'A love horoscope narrows the current sky to relating, attraction, boundaries, and repair. Your Venus, Moon, Mars, and seventh house add much more personal detail.',
+  },
+  career: {
+    slug: 'career',
+    nav: 'Career',
+    kicker: 'Work and direction',
+    faq: 'A career horoscope narrows the current sky to work, reputation, money, collaboration, and decision-making. Your full chart can change where those themes land.',
+  },
+  year: {
+    slug: '2027',
+    nav: '2027',
+    kicker: 'Year ahead',
+    faq: 'A year-ahead sun-sign horoscope is a broad map of the year’s major cycles. A birth time allows a personal chart to place those cycles in your actual houses.',
+  },
+} as const;
+
+const meta = SURFACE_META[surface];
+const path = meta.slug
+  ? `/horoscopes/${sign.slug}/${meta.slug}/`
+  : `/horoscopes/${sign.slug}/`;
+const canonicalUrl = `https://zodiacs.org${path}`;
+const hasEditorial = Astro.slots.has('editorial');
+const hasEnhancement = Astro.slots.has('enhancement');
+
+const faq = [
+  {
+    q: `What does this ${sign.name} ${meta.nav.toLowerCase()} horoscope cover?`,
+    a: meta.faq,
+  },
+  {
+    q: `Is this reading only for a ${sign.name} sun sign?`,
+    a: `Start with your ${sign.name} sun sign. If you know your rising sign, read that too; your full birth chart gives the most personal picture.`,
+  },
+  {
+    q: `How should ${sign.name} use this reading?`,
+    a: `Take the part that feels useful, turn it into one question or action, and let your own judgment lead.`,
+  },
+];
+
+const jsonLd = [
+  {
+    '@type': 'Article',
+    headline: `${sign.name} ${reading.title} — ${reading.label}`,
+    description: reading.description,
+    url: canonicalUrl,
+    datePublished: reading.datePublished,
+    dateModified: reading.dateModified,
+    author: EDITOR_AUTHOR,
+    publisher: { '@id': 'https://zodiacs.org/#org' },
+    mainEntityOfPage: { '@type': 'WebPage', '@id': canonicalUrl },
+    inLanguage: 'en',
+    image: `https://zodiacs.org/assets/og/v2/horoscope/${sign.slug}.png`,
+    about: [
+      { '@type': 'Thing', name: `${sign.name} (astrology)` },
+      { '@type': 'Thing', name: `${meta.nav} horoscope` },
+    ],
+  },
+  {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Zodiacs.org', item: 'https://zodiacs.org/' },
+      { '@type': 'ListItem', position: 2, name: 'Horoscopes', item: 'https://zodiacs.org/horoscopes/' },
+      { '@type': 'ListItem', position: 3, name: sign.name, item: `https://zodiacs.org/horoscopes/${sign.slug}/` },
+      ...(meta.slug ? [{ '@type': 'ListItem', position: 4, name: meta.nav, item: canonicalUrl }] : []),
+    ],
+  },
+  {
+    '@type': 'FAQPage',
+    mainEntity: faq.map(({ q, a }) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: { '@type': 'Answer', text: a },
+    })),
+  },
+];
+
+const periodLinks = Object.entries(SURFACE_META).map(([key, item]) => ({
+  key,
+  label: item.nav,
+  href: item.slug
+    ? `/horoscopes/${sign.slug}/${item.slug}/`
+    : `/horoscopes/${sign.slug}/`,
+}));
+---
+<Base
+  clientUi={hasEnhancement}
+  title={`${sign.name} ${reading.title} — ${reading.label} | Zodiacs.org`}
+  description={reading.description}
+  path={path}
+  image={`/assets/og/v2/horoscope/${sign.slug}.png`}
+  imageAlt={`${sign.name} ${meta.nav.toLowerCase()} horoscope — Zodiacs.org`}
+  type="article"
+  jsonLd={jsonLd}
+>
+  <article class="program container container--narrow" style={`--sign:${sign.hue}`}>
+    <nav class="program__crumbs mono" aria-label="Breadcrumb">
+      <a href="/horoscopes/">Horoscopes</a><span aria-hidden="true">/</span>
+      {meta.slug ? (
+        <>
+          <a href={`/horoscopes/${sign.slug}/`}>{sign.name}</a><span aria-hidden="true">/</span>
+          <span aria-current="page">{meta.nav}</span>
+        </>
+      ) : <span aria-current="page">{sign.name}</span>}
+    </nav>
+
+    <header class="program__hero reveal">
+      <SignIcon sign={sign.slug} size={88} loading="eager" class="program__icon" />
+      <div class="program__hero-copy">
+        <em class="kicker">{meta.kicker} · {reading.label}</em>
+        <h1 class="display">{sign.name} {reading.title}</h1>
+        <p>{reading.description}</p>
+        <span class="program__dates mono">{sign.dates} · {sign.element} · {sign.modality} · ruled by {sign.ruler}</span>
+      </div>
+    </header>
+
+    <nav class="program__periods" aria-label={`${sign.name} horoscope periods`}>
+      {periodLinks.map((item) => (
+        <a
+          href={item.href}
+          aria-current={item.key === surface ? 'page' : undefined}
+          class:list={{ program__period: true, 'program__period--active': item.key === surface }}
+        >
+          {item.label}
+        </a>
+      ))}
+    </nav>
+
+    <section class="program__reading reveal" aria-labelledby="reading-heading">
+      <div class="program__reading-head">
+        <span class="mono">The reading</span>
+        <h2 id="reading-heading">{reading.intro}</h2>
+      </div>
+
+      {hasEditorial && (
+        <div class="program__editorial prose">
+          <slot name="editorial" />
+        </div>
+      )}
+
+      {hasEnhancement && <slot name="enhancement" />}
+
+      {reading.sections.length > 0 && (
+        <div class="program__sections">
+          {reading.sections.map((section) => (
+            <section class="program__section">
+              <h3>{section.heading}</h3>
+              <p>{section.body}</p>
+            </section>
+          ))}
+        </div>
+      )}
+
+      <aside class="program__action">
+        <span class="mono">One useful move</span>
+        <p>{reading.action}</p>
+      </aside>
+    </section>
+
+    <details class="program__basis">
+      <summary>
+        <span class="program__basis-summary">
+          <strong>Behind this reading</strong>
+          <small>Exact sky, dates, and method</small>
+        </span>
+        <span class="program__basis-open" aria-hidden="true">+</span>
+        <span class="program__basis-close" aria-hidden="true">−</span>
+      </summary>
+      <div class="program__basis-body">
+        <p>{reading.sourceNote}</p>
+        {reading.sections.some((section) => section.receipt) && (
+          <ul class="program__basis-receipts">
+            {reading.sections.filter((section) => section.receipt).map((section) => (
+              <li>
+                <strong>{section.heading}</strong>
+                <span class="mono">{section.receipt}</span>
+              </li>
+            ))}
+          </ul>
+        )}
+        <div class="program__basis-links">
+          <a href="/methodology/">Read our method and sources →</a>
+          <a href={`/feeds/horoscopes/${sign.slug}.xml`} type="application/rss+xml">Follow {sign.name} by RSS →</a>
+        </div>
+      </div>
+    </details>
+
+    <EmailCapture placement="horoscopes" sign={sign.slug} />
+
+    <section class="program__faq reveal" aria-label={`${sign.name} ${meta.nav.toLowerCase()} horoscope questions`}>
+      <Faq items={faq} heading={`${sign.name} ${meta.nav.toLowerCase()} horoscope, answered`} />
+    </section>
+
+    <ShareRow text={`${sign.name} ${reading.title} — ${reading.label}`} url={canonicalUrl} />
+
+    <nav class="program__signs reveal" aria-label={`Other signs for ${meta.nav.toLowerCase()} horoscopes`}>
+      <span class="program__signs-head">The other eleven signs</span>
+      <div class="program__sign-grid">
+        {SIGNS.filter((other) => other.slug !== sign.slug).map((other) => (
+          <a
+            href={meta.slug ? `/horoscopes/${other.slug}/${meta.slug}/` : `/horoscopes/${other.slug}/`}
+            style={`--other-sign:${other.hue}`}
+          >
+            <SignIcon sign={other.slug} size={20} />
+            <span>{other.name}</span>
+          </a>
+        ))}
+      </div>
+    </nav>
+  </article>
+</Base>
+
+<style>
+  .program {
+    display: grid;
+    gap: clamp(26px, 5vw, 44px);
+    padding-block: clamp(22px, 5vw, 52px) clamp(42px, 7vw, 76px);
+  }
+  .program__crumbs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    color: var(--faint);
+    font-size: 10px;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+  }
+  .program__crumbs a { color: inherit; text-decoration: none; }
+  .program__crumbs a:hover { color: var(--text); }
+
+  .program__hero { display: flex; align-items: center; gap: clamp(18px, 4vw, 32px); }
+  :global(.program__icon) {
+    width: clamp(66px, 9vw, 88px);
+    filter: drop-shadow(0 16px 36px color-mix(in oklab, var(--sign) 28%, transparent));
+  }
+  .program__hero-copy { min-width: 0; }
+  .program__hero h1 {
+    margin: 10px 0 12px;
+    font-size: clamp(2.25rem, 1.6rem + 3vw, 4rem);
+    line-height: 0.98;
+    text-wrap: balance;
+  }
+  .program__hero p {
+    max-width: 61ch;
+    margin: 0 0 12px;
+    color: var(--text-2);
+    font-size: var(--text-lg);
+    line-height: 1.55;
+    text-wrap: pretty;
+  }
+  .program__dates { color: var(--faint); font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; }
+
+  .program__periods {
+    display: flex;
+    gap: 7px;
+    overflow-x: auto;
+    padding: 4px 0 8px;
+    scrollbar-width: thin;
+  }
+  .program__period {
+    flex: 0 0 auto;
+    padding: 7px 12px;
+    border: 1px solid var(--hair-1);
+    border-radius: var(--r-full);
+    color: var(--muted);
+    font-size: 12px;
+    text-decoration: none;
+  }
+  .program__period:hover { color: var(--text); border-color: var(--hair-2); }
+  .program__period--active {
+    color: var(--text);
+    border-color: color-mix(in oklab, var(--sign) 48%, transparent);
+    background: color-mix(in oklab, var(--sign) 11%, transparent);
+  }
+
+  .program__reading { display: grid; gap: clamp(24px, 4vw, 34px); }
+  .program__reading-head { display: grid; gap: 9px; max-width: 66ch; }
+  .program__reading-head > span,
+  .program__action > span {
+    color: var(--faint);
+    font-size: 10px;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+  }
+  .program__reading-head h2 {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: clamp(1.65rem, 1.3rem + 1.5vw, 2.45rem);
+    font-weight: 500;
+    line-height: 1.18;
+    text-wrap: balance;
+  }
+  .program__editorial { max-width: 68ch; }
+  .program__sections { display: grid; gap: 12px; }
+  .program__section {
+    padding: clamp(18px, 3vw, 24px);
+    border: 1px solid var(--hair-1);
+    border-radius: var(--r-md);
+    background: color-mix(in oklab, var(--sign) 3%, var(--void-1));
+  }
+  .program__section h3 { margin: 0 0 8px; font-size: var(--text-lg); letter-spacing: -0.01em; }
+  .program__section p { margin: 0; color: var(--text-2); line-height: 1.68; text-wrap: pretty; }
+  .program__action {
+    display: grid;
+    gap: 8px;
+    padding: clamp(18px, 3vw, 24px);
+    border-left: 2px solid var(--sign);
+    background: color-mix(in oklab, var(--sign) 7%, transparent);
+  }
+  .program__action p { margin: 0; font-family: var(--font-serif); font-size: var(--text-xl); line-height: 1.35; }
+
+  .program__basis {
+    border-block: 1px solid var(--hair-1);
+  }
+  .program__basis summary {
+    display: flex;
+    min-height: 48px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 12px 2px;
+    color: var(--muted);
+    cursor: pointer;
+    list-style: none;
+  }
+  .program__basis summary::-webkit-details-marker { display: none; }
+  .program__basis summary:focus-visible {
+    outline: 2px solid color-mix(in oklab, var(--sign) 65%, white);
+    outline-offset: 4px;
+    border-radius: var(--r-sm);
+  }
+  .program__basis-summary { display: grid; gap: 2px; }
+  .program__basis-summary strong { color: var(--text-2); font-size: var(--text-sm); }
+  .program__basis-summary small { color: var(--faint); font-size: 11px; }
+  .program__basis-open,
+  .program__basis-close { color: var(--faint); font-size: 20px; line-height: 1; }
+  .program__basis-close,
+  .program__basis[open] .program__basis-open { display: none; }
+  .program__basis[open] .program__basis-close { display: inline; }
+  .program__basis-body {
+    display: grid;
+    gap: 16px;
+    padding: 4px 2px 20px;
+    border-top: 1px solid var(--hair-1);
+  }
+  .program__basis-body > p { margin: 0; max-width: 68ch; color: var(--muted); font-size: var(--text-sm); line-height: 1.6; }
+  .program__basis-receipts {
+    display: grid;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .program__basis-receipts li {
+    color: var(--faint);
+    font-size: 10px;
+    line-height: 1.5;
+    letter-spacing: 0.04em;
+  }
+  .program__basis-receipts li { display: grid; gap: 2px; }
+  .program__basis-receipts strong { color: var(--muted); font-family: var(--font-sans); font-size: 11px; letter-spacing: 0; }
+  .program__basis-links { display: flex; flex-wrap: wrap; gap: 7px 18px; }
+  .program__basis-links a { color: var(--text-2); font-size: var(--text-sm); }
+  @media (hover: hover) and (pointer: fine) {
+    .program__basis summary:hover { color: var(--text); }
+  }
+
+  .program :global(.email-capture) { margin: 0; }
+  .program :global(.dfy) {
+    display: grid;
+    gap: 12px;
+    padding: clamp(16px, 3vw, 22px);
+    border: 1px solid color-mix(in oklab, var(--sign) 30%, transparent);
+    border-radius: var(--r-md);
+    background: color-mix(in oklab, var(--sign) 4%, transparent);
+  }
+  .program :global(.dfy__head) { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 16px; }
+  .program :global(.dfy__head h2) { margin: 0; font-size: var(--text-lg); font-weight: 620; letter-spacing: -0.01em; }
+  .program :global(.dfy__stamp) { color: var(--faint); font-size: 11px; letter-spacing: 0.05em; }
+  .program :global(.dfy__lines) { display: grid; gap: 11px; margin: 0; padding: 0; list-style: none; }
+  .program :global(.dfy__lines p) { margin: 0 0 3px; color: var(--text-2); font-size: var(--text-sm); line-height: 1.55; }
+  .program :global(.dfy__receipt) { color: var(--muted); font-size: 11px; letter-spacing: 0.04em; }
+  .program :global(.dfy__actions) { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; margin-top: 2px; }
+  .program :global(.dfy__primary) { font-size: var(--text-sm); }
+  .program :global(.dfy__more) { display: inline-flex; align-items: center; gap: 6px; color: var(--muted); font-size: var(--text-sm); text-decoration: none; }
+  .program :global(.dfy__more:hover) { color: var(--text); }
+  .program__faq { display: grid; gap: 14px; }
+  .program__signs { display: grid; gap: 12px; padding-top: 18px; border-top: 1px solid var(--hair-1); }
+  .program__signs-head { color: var(--text); font-size: var(--text-sm); font-weight: 600; }
+  .program__sign-grid { display: flex; flex-wrap: wrap; gap: 8px; }
+  .program__sign-grid a {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 4px 10px 4px 4px;
+    border: 1px solid color-mix(in oklab, var(--other-sign) 35%, transparent);
+    border-radius: var(--r-full);
+    background: color-mix(in oklab, var(--other-sign) 8%, transparent);
+    color: var(--text);
+    font-size: 13px;
+    text-decoration: none;
+  }
+  .program__sign-grid a:hover { background: color-mix(in oklab, var(--other-sign) 15%, transparent); }
+
+  @media (min-width: 720px) {
+    .program__sections { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .program__section:last-child:nth-child(odd) { grid-column: 1 / -1; }
+  }
+  @media (max-width: 560px) {
+    .program__hero { align-items: flex-start; }
+    .program__hero p { font-size: var(--text-base); }
+    .program :global(.dfy__actions) { align-items: stretch; }
+    .program :global(.dfy__primary) { width: 100%; justify-content: space-between; }
+  }
+</style>

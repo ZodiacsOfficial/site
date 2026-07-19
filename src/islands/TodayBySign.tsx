@@ -7,6 +7,7 @@
 import { useState } from 'preact/hooks';
 import { SIGNS, signName } from '../lib/signs';
 import PlanetGlyph from '../components/PlanetGlyph';
+import EvidenceDisclosure from './EvidenceDisclosure';
 import type { Daily } from '../lib/daily';
 import { localizePath, normalizeLocale, t, type Locale } from '../lib/i18n';
 import { formatDate } from '../lib/i18n/dates';
@@ -58,19 +59,25 @@ export default function TodayBySign({ locale: rawLocale = 'en' }: Props) {
           <div class="tbs__read" style={`--sign:${active.hue}`}>
             <div class="tbs__read-head">
               <strong>{signName(active, locale)} · {t(locale, 'today')}</strong>
-              <span class="mono tbs__read-stamp">{t(locale, 'todaySolarNote')}</span>
             </div>
             <ul class="tbs__lines">
               {reading.lines.map((l) => (
                 <li key={l.receipt}>
                   <p>{l.text}</p>
-                  <span class="mono tbs__receipt">
-                    {l.body && <PlanetGlyph body={l.body} hue={l.hue} size={13} class="rcpt-glyph" />}
-                    {l.receipt}
-                  </span>
                 </li>
               ))}
             </ul>
+            <EvidenceDisclosure label={t(locale, 'whyThisReading')}>
+              <p>{t(locale, 'todaySolarNote')}.</p>
+              <ul class="evidence-disclosure__list">
+                {reading.lines.map((l) => (
+                  <li class="mono evidence-disclosure__receipt" key={l.receipt}>
+                    {l.body && <PlanetGlyph body={l.body} hue={l.hue} size={13} class="rcpt-glyph" />}
+                    <span>{l.receipt}</span>
+                  </li>
+                ))}
+              </ul>
+            </EvidenceDisclosure>
             <a class="tbs__more" href={localizePath(locale, `/horoscopes/${active.slug}/`)} hreflang="en">
               {signName(active, locale)} {t(locale, 'todayHoroscopeLink')} →
             </a>

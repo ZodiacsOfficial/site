@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
+import EvidenceDisclosure from './EvidenceDisclosure';
 import { BirthFields } from './BirthFields';
 import type { City } from '../lib/geo/search';
 import { pairSlug } from '../lib/compat';
@@ -342,7 +343,7 @@ export default function SomeoneElseChart() {
             <header>
               <span class="other-chart__step">Most complete</span>
               <h2>Use their birth details</h2>
-              <p>This hands the information to the regular chart calculator, which computes everything privately in this browser.</p>
+              <p>Get their full chart — houses, angles, aspects, and a guided reading — or compare it with yours.</p>
             </header>
             <div class="other-chart__birth-fields">
               <BirthFields
@@ -394,7 +395,9 @@ export default function SomeoneElseChart() {
                 <span>{comparisonMine ? 'Compare with mine' : 'Add my chart to compare'}</span>
               </button>
             </div>
-            <p class="other-chart__privacy">The handoff uses a URL fragment, which is not sent to the site’s server. The chart removes it from the address bar after reading it.</p>
+            <EvidenceDisclosure label="How their information is handled">
+              <p>The handoff uses a URL fragment, which is not sent to the site’s server. The chart removes it from the address bar after reading it.</p>
+            </EvidenceDisclosure>
           </div>
         </form>
       )}
