@@ -1,0 +1,336 @@
+/* ────────────────────────────────────────────────────────────────────
+   Sky events — shared styles for /events/ and the per-event pages.
+   Cosmic Void vocabulary only: void surfaces, hairlines, the twelve
+   pastel hues as the only chroma, serif display, mono receipts.
+   ──────────────────────────────────────────────────────────────────── */
+
+/* ── Family mark (timeline + page heros) ─────────────────────────── */
+.evmark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 24px;
+  block-size: 24px;
+  flex: 0 0 auto;
+  color: var(--sign, var(--ink-2));
+}
+.evmark svg { display: block; }
+.evmark--rx {
+  font-family: var(--font-mono);
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1;
+}
+
+/* ── Event page hero ─────────────────────────────────────────────── */
+.event-hero { max-width: 66ch; }
+.event-hero .kicker { color: var(--muted); text-decoration: none; }
+.event-hero .kicker:hover { color: var(--text); }
+.event-hero h1 {
+  margin: 12px 0 10px;
+  font-size: clamp(2.3rem, 1.6rem + 3vw, 3.6rem);
+  line-height: 1.03;
+}
+.event-hero__when {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px 14px;
+  margin: 0 0 22px;
+  color: var(--text-2);
+  font-size: var(--text-lg);
+}
+.event-hero__when .mono { color: var(--muted); font-size: 0.82em; letter-spacing: 0.04em; }
+.event-hero__lead {
+  margin: 0;
+  font-size: var(--text-lg);
+  line-height: 1.62;
+  color: var(--text);
+  text-wrap: pretty;
+  max-width: 62ch;
+}
+
+/* ── Facts band (the quiet what/when card) ───────────────────────── */
+.event-facts__core {
+  padding: clamp(18px, 3.5vw, 26px);
+  display: grid;
+  gap: 14px 28px;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+}
+.event-facts__item { display: grid; gap: 5px; align-content: start; }
+.event-facts__item dt { margin: 0; }
+.event-facts__item dd {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text);
+  font-size: var(--text-base);
+  letter-spacing: -0.005em;
+}
+.event-facts__item dd.mono { font-size: var(--text-sm); color: var(--text-2); }
+
+/* ── Body sections ───────────────────────────────────────────────── */
+.event-section { margin-block: clamp(34px, 6vw, 56px); }
+.event-section > h2 {
+  margin: 0 0 16px;
+  font-family: var(--font-serif);
+  font-size: var(--text-xl);
+  font-weight: 500;
+  letter-spacing: 0.002em;
+  line-height: 1.1;
+}
+.event-reflect { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; max-width: 60ch; }
+.event-reflect li {
+  padding: 14px 18px;
+  border: 1px solid var(--hair-1);
+  border-left: 2px solid var(--sign, var(--hair-3));
+  border-radius: var(--r-sm);
+  background: var(--void-1);
+  color: var(--text-2);
+  line-height: 1.6;
+  font-size: var(--text-base);
+}
+
+/* Visible, consequential limitations — quiet but not hidden. */
+.event-limits {
+  margin: clamp(26px, 5vw, 40px) 0 0;
+  padding: 14px 18px;
+  border: 1px solid var(--hair-2);
+  border-radius: var(--r-md);
+  color: var(--muted);
+  font-size: var(--text-sm);
+  line-height: 1.6;
+  max-width: 62ch;
+}
+.event-limits p { margin: 0; }
+.event-limits p + p { margin-top: 8px; }
+
+/* ── Sign-by-sign notes ──────────────────────────────────────────── */
+.event-signs { display: grid; gap: 8px; }
+@media (min-width: 760px) { .event-signs { grid-template-columns: 1fr 1fr; gap: 10px; } }
+.event-signs__item {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 4px 12px;
+  align-items: start;
+  padding: 14px 16px;
+  border: 1px solid var(--hair-1);
+  border-radius: var(--r-md);
+  background: var(--void-1);
+}
+.event-signs__item .sign-icon { grid-row: 1 / span 2; margin-top: 2px; }
+.event-signs__name {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  font-weight: 550;
+  color: var(--text);
+}
+.event-signs__name a { color: inherit; text-decoration: none; }
+.event-signs__name a:hover { text-decoration: underline; text-underline-offset: 3px; }
+.event-signs__house { font-size: 10.5px; color: var(--faint); letter-spacing: 0.07em; text-transform: uppercase; }
+.event-signs__note { margin: 0; color: var(--text-2); font-size: var(--text-sm); line-height: 1.6; }
+
+/* ── Related-event navigation ────────────────────────────────────── */
+.event-pair {
+  display: grid;
+  gap: 12px;
+  margin: 0 0 18px;
+}
+@media (min-width: 640px) { .event-pair { grid-template-columns: 1fr 1fr; } }
+.event-pair__link {
+  display: grid;
+  gap: 6px;
+  padding: 16px 18px;
+  text-decoration: none;
+  color: inherit;
+}
+.event-pair__link[data-direction='next'] { text-align: right; }
+.event-pair__reason { font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint); }
+.event-pair__title { font-weight: 550; color: var(--text); line-height: 1.35; }
+.event-pair__date { font-size: var(--text-sm); color: var(--muted); }
+
+.event-near { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.event-near li { border: 1px solid var(--hair-1); border-radius: var(--r-md); background: var(--void-1); }
+.event-near a {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 3px 12px;
+  align-items: start;
+  padding: 13px 16px;
+  text-decoration: none;
+  color: inherit;
+}
+.event-near a:hover .event-near__title { text-decoration: underline; text-underline-offset: 3px; }
+.event-near .evmark { grid-row: 1 / span 2; margin-top: 1px; }
+.event-near__title { font-weight: 550; color: var(--text); font-size: var(--text-base); line-height: 1.4; }
+.event-near__reason { margin: 0; color: var(--muted); font-size: var(--text-sm); line-height: 1.55; }
+
+.event-crossref { margin: 0 0 18px; }
+.event-crossref .core { padding: 16px 18px; display: grid; gap: 4px; }
+.event-crossref a { font-weight: 550; color: var(--text); }
+.event-crossref p { margin: 0; color: var(--muted); font-size: var(--text-sm); }
+
+/* ── Connections (keep following) ────────────────────────────────── */
+.event-follow { display: flex; flex-wrap: wrap; gap: 8px; padding: 0; margin: 0; list-style: none; }
+.event-follow a {
+  display: inline-block;
+  padding: 9px 16px;
+  border: 1px solid var(--hair-2);
+  border-radius: var(--r-full);
+  color: var(--text-2);
+  text-decoration: none;
+  font-size: var(--text-sm);
+  transition: color var(--dur-1) var(--ease), border-color var(--dur-1) var(--ease);
+}
+.event-follow a:hover { color: var(--text); border-color: var(--hair-3); }
+
+/* ── Hub: now band ───────────────────────────────────────────────── */
+.evhub-now__core { padding: clamp(20px, 4vw, 30px); display: grid; gap: 12px; }
+.evhub-now__line { font-size: var(--text-lg); letter-spacing: -0.01em; max-width: 58ch; }
+.evhub-now__line a { color: inherit; }
+.evhub-now__sub { font-size: 11.5px; color: var(--faint); letter-spacing: 0.05em; }
+.evhub-now__sub a { color: var(--muted); }
+.evhub-now__sub a:hover { color: var(--text); }
+
+/* ── Hub: next-up tiles ──────────────────────────────────────────── */
+.evhub-next { display: grid; gap: 12px; }
+@media (min-width: 800px) { .evhub-next { grid-template-columns: repeat(3, 1fr); } }
+.evhub-next__tile { display: grid; gap: 8px; align-content: start; padding: 18px; text-decoration: none; color: inherit; }
+.evhub-next__head { display: flex; align-items: center; gap: 10px; }
+.evhub-next__date { font-size: 11px; color: var(--faint); letter-spacing: 0.06em; }
+.evhub-next__title { font-weight: 550; color: var(--text); line-height: 1.35; }
+.evhub-next__line { margin: 0; color: var(--muted); font-size: var(--text-sm); line-height: 1.55; }
+
+/* ── Hub: filter chips (enhancement only; hidden without JS) ─────── */
+.evhub-filter { display: none; flex-wrap: wrap; gap: 8px; margin: 0 0 22px; }
+.evhub-filter.is-ready { display: flex; }
+.evhub-filter button {
+  appearance: none;
+  cursor: pointer;
+  background: transparent;
+  border: 1px solid var(--hair-2);
+  border-radius: var(--r-full);
+  color: var(--muted);
+  font: 500 var(--text-sm) var(--font-sans);
+  padding: 8px 16px;
+  min-height: 40px;
+  transition: color var(--dur-1) var(--ease), border-color var(--dur-1) var(--ease);
+}
+.evhub-filter button:hover { color: var(--text); border-color: var(--hair-3); }
+.evhub-filter button[aria-pressed='true'] {
+  color: var(--text);
+  border-color: var(--sign, var(--hair-3));
+  background: var(--void-2);
+}
+
+/* ── Hub: timeline ───────────────────────────────────────────────── */
+.evhub-month { margin-block: clamp(26px, 5vw, 44px); }
+.evhub-month > h2,
+.evhub-month summary h2 {
+  display: inline;
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: var(--text-xl);
+  font-weight: 500;
+  letter-spacing: 0.002em;
+}
+.evhub-month > h2 { display: block; margin-bottom: 14px; }
+.evhub-rows { display: grid; gap: 6px; margin: 0; padding: 0; list-style: none; }
+.evhub-row { border: 1px solid var(--hair-1); border-radius: var(--r-md); background: var(--void-1); }
+.evhub-row[hidden] { display: none; }
+.evhub-row__in {
+  display: grid;
+  grid-template-columns: 74px auto 1fr;
+  gap: 4px 14px;
+  align-items: start;
+  padding: 12px 16px;
+  text-decoration: none;
+  color: inherit;
+}
+.evhub-row__in:is(a):hover .evhub-row__title { text-decoration: underline; text-underline-offset: 3px; }
+.evhub-row__date { color: var(--faint); font-size: 11.5px; letter-spacing: 0.05em; padding-top: 3px; }
+.evhub-row .evmark { grid-row: 1 / span 2; margin-top: 0; }
+.evhub-row__title { font-weight: 550; color: var(--text); line-height: 1.4; }
+.evhub-row__family {
+  margin-left: 10px;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--faint);
+  white-space: nowrap;
+}
+.evhub-row__line { grid-column: 3; margin: 0; color: var(--muted); font-size: var(--text-sm); line-height: 1.55; }
+.evhub-row--past { opacity: 0.62; }
+@media (max-width: 560px) {
+  .evhub-row__in { grid-template-columns: auto 1fr; }
+  .evhub-row__date { grid-column: 1 / -1; padding-top: 0; }
+  .evhub-row .evmark { grid-row: auto; }
+  .evhub-row__line { grid-column: 1 / -1; }
+}
+
+/* Earlier months fold away in a native disclosure. */
+.evhub-earlier > summary {
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding: 6px 0;
+}
+.evhub-earlier > summary::-webkit-details-marker { display: none; }
+.evhub-earlier > summary::after {
+  content: 'Show';
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  border: 1px solid var(--hair-2);
+  border-radius: var(--r-full);
+  padding: 4px 12px;
+}
+.evhub-earlier[open] > summary::after { content: 'Hide'; }
+.evhub-earlier > summary:hover::after { color: var(--text); border-color: var(--hair-3); }
+.evhub-earlier > summary:focus-visible {
+  outline: 2px solid var(--ink-1);
+  outline-offset: 3px;
+  border-radius: var(--r-sm);
+}
+
+/* ── Hub: family key / by-type cards ─────────────────────────────── */
+.evhub-types { display: grid; gap: 10px; }
+@media (min-width: 700px) { .evhub-types { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 1040px) { .evhub-types { grid-template-columns: repeat(3, 1fr); } }
+.evhub-type { display: grid; grid-template-columns: auto 1fr; gap: 4px 12px; align-content: start; padding: 16px 18px; }
+.evhub-type .evmark { grid-row: 1 / span 2; margin-top: 2px; }
+.evhub-type__name { font-weight: 550; color: var(--text); }
+.evhub-type__what { margin: 0; color: var(--muted); font-size: var(--text-sm); line-height: 1.55; }
+.evhub-type__what a { color: var(--text-2); }
+.evhub-type__what a:hover { color: var(--text); }
+
+/* Fixture banner — sample pages only. */
+.event-sample {
+  margin: 0 0 26px;
+  padding: 12px 16px;
+  border: 1px dashed var(--hair-3);
+  border-radius: var(--r-md);
+  color: var(--muted);
+  font-size: var(--text-sm);
+}
+
+/* Keyboard focus stays visible on every interactive piece. */
+.evhub-row__in:focus-visible,
+.event-pair__link:focus-visible,
+.event-near a:focus-visible,
+.evhub-next__tile:focus-visible,
+.event-follow a:focus-visible,
+.evhub-filter button:focus-visible {
+  outline: 2px solid var(--ink-1);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .evhub-filter button,
+  .event-follow a { transition: none; }
+}

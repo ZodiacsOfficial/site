@@ -1,0 +1,22 @@
+---
+/**
+ * Ingress and exact-aspect pages under the hub family: slow-planet sign
+ * changes and slow-pair alignments, e.g.
+ * /events/saturn-enters-aries-2026-02-14/ and
+ * /events/jupiter-trine-saturn-2026-08-31/.
+ */
+import EventPageLayout from '../../components/events/EventPageLayout.astro';
+import { eventsCatalog } from '../../lib/events/catalog';
+
+export async function getStaticPaths() {
+  return eventsCatalog().pages
+    .filter((event) => event.facts.family === 'ingress' || event.facts.family === 'aspect')
+    .map((event) => ({
+      params: { slug: event.facts.id },
+      props: { event },
+    }));
+}
+
+const { event } = Astro.props;
+---
+<EventPageLayout event={event} />

@@ -1,0 +1,55 @@
+---
+/**
+ * Sign-by-sign notes for a lunation or eclipse — twelve short readings
+ * derived through whole-sign solar houses, the same convention the daily
+ * horoscopes use: your Sun sign is the first house, and the event lands
+ * in the house counted from there. Anchored per sign for deep links.
+ */
+import SignIcon from '../SignIcon.astro';
+import { ORDINAL } from '../../lib/daily';
+import { signBySlug } from '../../lib/signs';
+import type { EventSignNote } from '../../lib/events/types';
+
+interface Props {
+  notes: EventSignNote[];
+  /** What the notes are about, for the intro line ("this full moon"). */
+  subject: string;
+}
+
+const { notes, subject } = Astro.props;
+---
+<section class="event-section" aria-labelledby="sign-by-sign">
+  <h2 id="sign-by-sign">Sign by sign</h2>
+  <p class="event-signs__how">
+    Read your Sun sign — or your <a href="/rising-sign/">rising sign</a>, if
+    you know it, for a closer fit. The house named is where {subject} lands
+    when your sign anchors the wheel.
+  </p>
+  <ul class="event-signs">
+    {notes.map((note) => {
+      const sign = signBySlug(note.sign);
+      return (
+        <li class="event-signs__item" id={`for-${note.sign}`}>
+          <SignIcon sign={note.sign} size={30} />
+          <span class="event-signs__name">
+            <a href={`/${note.sign}/`}>{sign.name}</a>
+            <span class="event-signs__house">{ORDINAL[note.house]} house</span>
+          </span>
+          <p class="event-signs__note">{note.note}</p>
+        </li>
+      );
+    })}
+  </ul>
+</section>
+
+<style>
+  .event-signs__how {
+    margin: 0 0 18px;
+    color: var(--muted);
+    font-size: var(--text-sm);
+    max-width: 58ch;
+    line-height: 1.6;
+  }
+  .event-signs__how a { color: var(--text-2); }
+  .event-signs__how a:hover { color: var(--text); }
+</style>

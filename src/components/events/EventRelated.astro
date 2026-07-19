@@ -1,0 +1,83 @@
+---
+/**
+ * Related-event navigation: the special cross-reference (an eclipse is a
+ * lunation; a station belongs to a cycle), the previous/next comparable
+ * pair, and the nearby events that color this one — every link with its
+ * reason written next to it.
+ */
+import EventMark from './EventMark.astro';
+import { eventDay, windowLabel } from '../../lib/events/format';
+import type { CatalogEvent, EventLink } from '../../lib/events/types';
+
+interface Props {
+  event: CatalogEvent;
+  resolve: (id: string) => CatalogEvent | undefined;
+}
+
+const { event, resolve } = Astro.props;
+const { relations } = event;
+
+const dateOf = (other: CatalogEvent): string => other.facts.at
+  ? eventDay(other.facts.at)
+  : windowLabel(other.facts.start!, other.facts.end ?? null);
+
+/** Titles carry a date suffix for catalog-wide uniqueness; the tiles print
+ * the date separately, so the suffix comes off here. */
+const shortTitle = (other: CatalogEvent): string => other.facts.title.replace(/ — .*$/, '');
+
+const crossrefs: { link: EventLink; target: CatalogEvent }[] = [];
+for (const link of [relations.eclipse, relations.lunation, relations.cycle]) {
+  const target = link && resolve(link.id);
+  if (link && target) crossrefs.push({ link, target });
+}
+
+const previous = relations.previous && resolve(relations.previous.id);
+const next = relations.next && resolve(relations.next.id);
+const nearby = relations.nearby
+  .map((link) => ({ link, target: resolve(link.id) }))
+  .filter((entry): entry is { link: EventLink; target: CatalogEvent } => Boolean(entry.target));
+---
+{crossrefs.map(({ link, target }) => (
+  <aside class="event-crossref shell tinted" style={`--sign:var(--sign-${target.facts.signs[0] ?? 'aquarius'})`}>
+    <div class="core tinted">
+      <a href={target.facts.path}>{target.facts.title}</a>
+      <p>{link.reason}.</p>
+    </div>
+  </aside>
+))}
+
+{(previous || next) && (
+  <nav class="event-pair" aria-label="Previous and next comparable events">
+    {previous && (
+      <a class="event-pair__link tile" href={previous.facts.path} data-direction="previous" rel="prev">
+        <span class="event-pair__reason">{relations.previous!.reason}</span>
+        <span class="event-pair__title">{shortTitle(previous)}</span>
+        <span class="event-pair__date">{dateOf(previous)}</span>
+      </a>
+    )}
+    {next && (
+      <a class="event-pair__link tile" href={next.facts.path} data-direction="next" rel="next">
+        <span class="event-pair__reason">{relations.next!.reason}</span>
+        <span class="event-pair__title">{shortTitle(next)}</span>
+        <span class="event-pair__date">{dateOf(next)}</span>
+      </a>
+    )}
+  </nav>
+)}
+
+{nearby.length > 0 && (
+  <section class="event-section" aria-labelledby="nearby-head">
+    <h2 id="nearby-head">Around this date</h2>
+    <ul class="event-near">
+      {nearby.map(({ link, target }) => (
+        <li>
+          <a href={target.facts.path}>
+            <EventMark facts={target.facts} />
+            <span class="event-near__title">{shortTitle(target)} · {dateOf(target)}</span>
+            <p class="event-near__reason">{link.reason}.</p>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+)}
