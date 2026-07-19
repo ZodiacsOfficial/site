@@ -33,6 +33,18 @@ if (process.env.LIGHTHOUSE_INCLUDE_BASELINE === '1') {
 if (process.env.LIGHTHOUSE_INCLUDE_AURA === '1') {
   routes.push({ name: 'registry-aura', path: '/registry/aura/' });
 }
+// Phase 2 sky-events templates (opt-in until the family joins the release
+// gate; the routes are pinned by src/lib/events/catalog.test.ts).
+if (process.env.LIGHTHOUSE_INCLUDE_EVENTS === '1') {
+  routes.push(
+    { name: 'events-hub', path: '/events/' },
+    { name: 'event-full-moon', path: '/full-moon/2026-07-29/' },
+    { name: 'event-eclipse', path: '/eclipses/2026-08-12/' },
+    { name: 'event-retrograde', path: '/mercury-retrograde/2026-06-29/' },
+    { name: 'event-ingress', path: '/events/saturn-enters-aries-2026-02-14/' },
+    { name: 'event-aspect', path: '/events/jupiter-trine-saturn-2026-08-31/' },
+  );
+}
 const budgets = {
   score: 0.95,
   lcp: 2_500,
