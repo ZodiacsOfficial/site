@@ -5,7 +5,7 @@ export const REGISTRY_AURA_META_NAME = 'zodiacs-registry-aura-enabled';
 export const REGISTRY_AURA_ENTRY_SLOT = '<!-- registry-aura-entry:slot -->';
 
 export const REGISTRY_AURA_ENTRY_COPY = Object.freeze({
-  title: 'Registry Aura',
+  title: 'The Cabinet of Twelve',
   description: 'Open a public collection as a Cabinet of Twelve, seal it with today’s date, then read the record behind every edition.',
   link: 'Explore the finished sample →',
 });
@@ -13,7 +13,7 @@ export const REGISTRY_AURA_ENTRY_COPY = Object.freeze({
 // Kept as a build-time compatibility export for the generated legacy bundle.
 // Aura discovery now lives in the Identity Context feature band, not the hero.
 export const REGISTRY_AURA_HERO_COPY = Object.freeze({
-  cta: 'Registry Aura',
+  cta: 'The Cabinet of Twelve',
   why: 'The story behind the Registry',
 });
 

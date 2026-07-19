@@ -68,6 +68,8 @@ const BANNED_PAGE_TEXT = [
   /hallmark/i,
   /deterministic/i,
   /\bniches?\b/i,
+  // The product is the Cabinet of Twelve; "aura" stays internal.
+  /\baura\b/i,
 ];
 
 function normalized(value) {
@@ -522,7 +524,8 @@ async function verifySampleAndLiveCollection(browser, baseURL) {
   const paintedText = painted.join(' ');
   const paintedLower = paintedText.toLowerCase();
   for (const expected of [
-    'collection talisman',
+    'collection seal',
+    'the cabinet of twelve',
     'cancer',
     'leo',
     'scorpio',
