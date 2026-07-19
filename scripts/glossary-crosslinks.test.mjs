@@ -15,6 +15,7 @@ const ASTRO_LINK_COUNTS = new Map(Object.entries({
   'src/pages/birthday/index.astro': 5,
   'src/pages/compatibility/index.astro': 2,
   'src/pages/eclipses/index.astro': 3,
+  'src/pages/events/index.astro': 5,
   'src/pages/full-moon-calendar/index.astro': 5,
   'src/pages/learn/aspects/index.astro': 5,
   'src/pages/learn/houses/index.astro': 5,
@@ -123,7 +124,7 @@ describe('glossary crosslinks', () => {
       }
     }
 
-    expect(linkedFiles).toHaveLength(151);
-    expect(linkCount).toBe(229);
+    expect(linkedFiles).toHaveLength(152);
+    expect(linkCount).toBe(234);
   });
 });

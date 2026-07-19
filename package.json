@@ -54,6 +54,7 @@
     "test:phase1:evidence": "vitest run scripts/phase1-acceptance-evidence.test.mjs",
     "test:phase1:frames": "node tests/phase1-frame-drive.mjs",
     "test:phase1:scope": "node scripts/phase1-scope-guard.mjs",
+    "test:events:browser": "node tests/events-drive.mjs",
     "test:widgets:browser": "node tests/widgets-drive.mjs",
     "test:widgets:lighthouse": "node tests/visual/widget-lighthouse.mjs",
     "data:search-ui": "node scripts/build-search-ui.mjs",
