@@ -182,6 +182,9 @@ for (const [a, b] of pairs) {
             a,
             b,
             type: ASPECTS.find((x) => x.angle === Math.abs(target)).type,
+            // These records are refined exact hits, not sampled near-aspects.
+            // Expose that contract explicitly rather than implying an orb.
+            orb: 0,
             at: at.toISOString(),
             aSign: signAt(lonA),
             aDegree: degreeIn(lonA),

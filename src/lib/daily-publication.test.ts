@@ -43,6 +43,25 @@ describe('daily editorial publication', () => {
       degree: expect.any(Number),
       retrograde: false,
     });
+    const exactAspect = publication.facts.find((fact) => fact.eventKind === 'aspect');
+    expect(exactAspect).toMatchObject({ kind: 'sky-event', orb: 0 });
+  });
+
+  it('requires exact-hit aspects to expose zero orb and rejects approximations', () => {
+    const missing = clone(daily) as any;
+    delete missing.events[0].orb;
+    expect(validateDailyFacts(missing).map((failure) => failure.ruleId))
+      .toContain('FACT-EVENT-ORB');
+
+    const approximate = clone(daily) as any;
+    approximate.events[0].orb = 0.25;
+    expect(validateDailyFacts(approximate).map((failure) => failure.ruleId))
+      .toContain('FACT-EVENT-ORB');
+
+    const publishedApproximation = clone(publication) as any;
+    publishedApproximation.facts.find((fact: { eventKind?: string }) => fact.eventKind === 'aspect').orb = 0.25;
+    expect(validateDailyPublication(daily, publishedApproximation).map((failure) => failure.ruleId))
+      .toContain('FACT-ASPECT-ORB');
   });
 
   it('keeps all hub headlines exact and below the similarity ceiling', () => {
@@ -206,6 +225,7 @@ describe('daily editorial publication', () => {
         a: 'Mars',
         b: 'Saturn',
         type: 'sextile',
+        orb: 0,
         aSign: 'gemini',
         aDegree: -0.1,
         bDegree: 14.7,

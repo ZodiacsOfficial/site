@@ -29,7 +29,7 @@
     },
     {
       "id": "copy-verifier",
-      "kind": "deterministic-regeneration-and-policy",
+      "kind": "independent-serialized-copy-policy",
       "mayPublish": false,
       "veto": true
     },

@@ -11,7 +11,7 @@ import { readFile, readdir, stat } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
 import sharp from 'sharp';
-import { OG_EN } from '../src/strings/seo.en.mjs';
+import { HOROSCOPE_OG_SURFACES, OG_EN } from '../src/strings/seo.en.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const out = resolve(root, 'public/assets/og/v2');
@@ -19,14 +19,16 @@ const signSlugs = [
   'aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo',
   'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces',
 ];
+const horoscopeCardPath = (slug, surface) => (
+  `horoscope/${slug}${surface.suffix ? `-${surface.suffix}` : ''}.png`
+);
 
 const expected = [
   ...signSlugs.map((slug) => `sign/${slug}.png`),
   ...signSlugs.map((slug) => `registry/${slug}.png`),
-  // One sign-specific evergreen card intentionally serves the complete
-  // horoscope family for that sign. This keeps every route branded without
-  // adding 72 near-duplicate PNGs to the generated-asset bundle.
-  ...signSlugs.map((slug) => `horoscope/${slug}.png`),
+  ...signSlugs.flatMap((slug) => HOROSCOPE_OG_SURFACES.map((surface) => (
+    horoscopeCardPath(slug, surface)
+  ))),
   ...OG_EN.tools.map((tool) => `tool/${tool.key}.png`),
   'registry.png',
   'thesis.png',
@@ -98,7 +100,7 @@ try {
 
 const bundleBytes = await directoryBytes(out);
 const bundleMb = bundleBytes / 1024 / 1024;
-if (bundleMb > 10) failures.push(`v2 asset bundle: ${bundleMb.toFixed(2)}MB exceeds the 10MB budget`);
+if (bundleMb > 15) failures.push(`v2 asset bundle: ${bundleMb.toFixed(2)}MB exceeds the 15MB budget`);
 
 if (failures.length) {
   console.error(`verify-og-cards: ${failures.length} failure(s)`);

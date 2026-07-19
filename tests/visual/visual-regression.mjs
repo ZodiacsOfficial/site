@@ -70,6 +70,13 @@ async function settlePage(page, { result }) {
   if (result) {
     await page.locator('.calc__result').waitFor({ state: 'visible', timeout: 30_000 });
     await page.waitForFunction(() => document.querySelector('.calc__form')?.getAttribute('aria-busy') === 'false');
+    // The complete English reading loads these two below-the-fold surfaces
+    // through dynamic imports after the chart result becomes available. Wait
+    // for both so a cold first capture cannot establish a truncated baseline.
+    await Promise.all([
+      page.locator('.calc__approach').waitFor({ state: 'visible', timeout: 30_000 }),
+      page.locator('.calc__comm').waitFor({ state: 'visible', timeout: 30_000 }),
+    ]);
   }
 
   // Trigger lazy images, client:visible islands, and every reveal observer.

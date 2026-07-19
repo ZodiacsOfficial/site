@@ -6,13 +6,19 @@
  *
  * Point ZODIACS_TEST_BASE_URL at an existing preview to skip spawning one.
  */
-import { mkdir } from 'node:fs/promises';
+import { mkdir, readFile } from 'node:fs/promises';
 import { chromium } from 'playwright-core';
 import { findChromium, STABLE_CHROMIUM_ARGS } from './visual/browser.mjs';
 import { withPreview } from './visual/preview-server.mjs';
 
 const OUT = process.env.OUT_DIR ?? null;
 const CHROMIUM = await findChromium();
+const DAILY = JSON.parse(await readFile(new URL('../src/data/daily.json', import.meta.url), 'utf8'));
+const PROGRAM = JSON.parse(await readFile(new URL('../src/data/horoscope-program.json', import.meta.url), 'utf8'));
+const tomorrowDate = PROGRAM.signs[0].readings.tomorrow.period.from;
+const TOMORROW_MOON_PHASE = PROGRAM.evidence.find((receipt) => (
+  receipt.id === `fact:${tomorrowDate}:body:moon:1200z`
+))?.moonPhase;
 
 const PERIODS = [
   ['Daily', ''],
@@ -67,11 +73,22 @@ async function checkStaticHtml(baseURL, route) {
     canonical,
   );
   check(`${route.key}: shared reading is server-rendered`, html.includes('class="program__reading'));
+  check(`${route.key}: sky strip is server-rendered`, html.includes('class="program__sky"'));
+  if (route.key === 'daily') {
+    check(`${route.key}: sky strip includes the current Moon phase`, html.includes(DAILY.moon.phase));
+  }
+  if (route.key === 'tomorrow') {
+    check(`${route.key}: sky strip includes tomorrow’s Moon phase`, html.includes(TOMORROW_MOON_PHASE));
+  }
   check(
     `${route.key}: pastel hero icon is present in initial HTML`,
     html.includes(`/assets/zodiac-icons/400/${route.sign}.webp`),
   );
   check(`${route.key}: period navigation is present in initial HTML`, html.includes('class="program__periods"'));
+  check(
+    `${route.key}: sign feed is discoverable in the document head`,
+    new RegExp(`<link[^>]+rel="alternate"[^>]+type="application/rss\\+xml"[^>]+href="/feeds/horoscopes/${route.sign}\\.xml"`).test(html),
+  );
 }
 
 async function inspectRenderedPage(page, route, viewportKey) {
@@ -102,6 +119,51 @@ async function inspectRenderedPage(page, route, viewportKey) {
     `${route.key} ${viewportKey}: hero uses the pastel zodiac asset`,
     iconPath === `/assets/zodiac-icons/400/${route.sign}.webp`,
     iconPath ?? 'missing',
+  );
+
+  const signFeed = page.locator(
+    `head link[rel="alternate"][type="application/rss+xml"][href="/feeds/horoscopes/${route.sign}.xml"]`,
+  );
+  check(
+    `${route.key} ${viewportKey}: head advertises the matching sign feed`,
+    await signFeed.count() === 1,
+  );
+
+  const skyStrip = page.locator('.program__sky');
+  check(
+    `${route.key} ${viewportKey}: quiet sky strip has concise fact markers`,
+    await skyStrip.count() === 1
+      && await skyStrip.locator('.program__sky-marker').count() >= 1
+      && await skyStrip.locator('.program__sky-marker').count() <= 2,
+  );
+  if (route.key === 'daily') {
+    check(
+      `${route.key} ${viewportKey}: sky strip exposes the current Moon phase`,
+      (await skyStrip.innerText()).includes(DAILY.moon.phase),
+      await skyStrip.innerText(),
+    );
+  }
+  if (route.key === 'tomorrow') {
+    check(
+      `${route.key} ${viewportKey}: sky strip exposes tomorrow’s Moon phase`,
+      (await skyStrip.innerText()).includes(TOMORROW_MOON_PHASE),
+      await skyStrip.innerText(),
+    );
+  }
+  const markerCopy = await skyStrip.locator('.program__sky-marker').evaluateAll((markers) => markers.map((marker) => ({
+    label: (marker.querySelector('.mono')?.textContent ?? '').trim(),
+    value: (marker.querySelector('time, strong')?.textContent ?? '').trim(),
+  })));
+  check(
+    `${route.key} ${viewportKey}: marker values do not repeat their labels`,
+    markerCopy.every(({ label, value }) => !value.toLocaleLowerCase('en').startsWith(`${label.toLocaleLowerCase('en')} `)),
+    JSON.stringify(markerCopy),
+  );
+  const skyAnimation = await skyStrip.evaluate((node) => getComputedStyle(node, '::before').animationName);
+  check(
+    `${route.key} ${viewportKey}: reduced motion removes the sky-line drift`,
+    skyAnimation === 'none',
+    skyAnimation,
   );
 
   const periodLinks = await page.locator('.program__periods a').evaluateAll((links) => links.map((link) => ({
@@ -202,6 +264,11 @@ async function inspectNoJavaScript(browser, baseURL, route) {
       await readingNode.isVisible() && countWords(readingText) >= route.minWords,
     );
     check(
+      `${route.key} no-JavaScript: sky facts remain visible`,
+      await page.locator('.program__sky').isVisible()
+        && await page.locator('.program__sky-marker').count() >= 1,
+    );
+    check(
       `${route.key} no-JavaScript: native period links remain available`,
       await page.locator('.program__periods a').count() === PERIODS.length,
     );
@@ -215,6 +282,48 @@ async function inspectNoJavaScript(browser, baseURL, route) {
     check(
       `${route.key} no-JavaScript: page is not a loading shell`,
       readingText.length > 0 && !/\bloading\b/i.test(readingText),
+    );
+  } finally {
+    await context.close();
+  }
+}
+
+async function inspectKeyboardAndDefaultMotion(browser, baseURL) {
+  const route = ROUTES[0];
+  const context = await browser.newContext({
+    baseURL,
+    reducedMotion: 'no-preference',
+    viewport: { width: 1280, height: 900 },
+  });
+  const page = await context.newPage();
+  try {
+    await page.goto(route.path, { waitUntil: 'networkidle' });
+    const skyStrip = page.locator('.program__sky');
+    const skyAnimation = await skyStrip.evaluate((node) => getComputedStyle(node, '::before').animationName);
+    check(
+      'daily keyboard: default motion keeps the restrained sky-line drift',
+      skyAnimation !== 'none',
+      skyAnimation,
+    );
+
+    const summary = page.locator('.program__basis summary');
+    await summary.focus();
+    await page.keyboard.press('Enter');
+    check(
+      'daily keyboard: Enter opens the native evidence disclosure',
+      await page.locator('.program__basis').evaluate((node) => node.hasAttribute('open')),
+    );
+
+    const tomorrow = page.locator('.program__periods a', { hasText: 'Tomorrow' });
+    await tomorrow.focus();
+    await Promise.all([
+      page.waitForURL('**/horoscopes/aries/tomorrow/'),
+      page.keyboard.press('Enter'),
+    ]);
+    check(
+      'daily keyboard: Enter follows the period navigation',
+      new URL(page.url()).pathname === '/horoscopes/aries/tomorrow/',
+      page.url(),
     );
   } finally {
     await context.close();
@@ -260,6 +369,7 @@ await withPreview({ port: 4409 }, async (baseURL) => {
     }
 
     for (const route of ROUTES) await inspectNoJavaScript(browser, baseURL, route);
+    await inspectKeyboardAndDefaultMotion(browser, baseURL);
   } finally {
     await browser.close();
   }

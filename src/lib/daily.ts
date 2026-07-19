@@ -29,6 +29,8 @@ export interface DailyEvent {
   aDegree?: number;
   bSign?: string;
   bDegree?: number;
+  /** Exact-hit aspect catalogs use zero; approximate aspects are not accepted. */
+  orb?: 0;
 }
 
 export interface Daily {

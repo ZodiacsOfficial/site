@@ -5,9 +5,9 @@
   "cases": [
     { "date": "2026-06-20", "coverage": "unavailable", "eventKinds": [], "factsSha256": "184b9a174f4ea4c0fd70e6c48757a070505d5e41c3b10e116bbcc638e3a0bc45", "publicationSha256": "40ca28eecff7c3487d13d34e791d0538ca6f0ce421ba347da4e43a8de44182db" },
     { "date": "2026-07-01", "coverage": "complete", "eventKinds": [], "factsSha256": "ad64092bff08de64edc0f02811a1a5b649d2af12adbbc6165acf76f23a983743", "publicationSha256": "469a1dba12fa08f1273fe3d96d87ed51cb58a8b7253f1392d5d8e222c68938d7" },
-    { "date": "2026-07-07", "coverage": "complete", "eventKinds": ["station"], "factsSha256": "dd19fbfaa4a207901250464b1b8f3d04414c9073856cc509bca142603ce09236", "publicationSha256": "54d1ab08ff0a88d56476885d6be7f0b248cfd5770e8cad1395fd72157d014894" },
+    { "date": "2026-07-07", "coverage": "complete", "eventKinds": ["station"], "factsSha256": "250ff15393c4054fb9db1f41716ca42318df9be502a284d9a341849b4e1ac1ff", "publicationSha256": "625a39802921114a891e98632c84aad19917d0d9fb235b76cb785ee5f461ec28" },
     { "date": "2026-07-09", "coverage": "complete", "eventKinds": ["ingress"], "factsSha256": "399accc04347ddc6f7d34a1a59417313d3d367079dea0411be4ce13e92ad0e0b", "publicationSha256": "e802ec6d4c12d5e2e71222cc4a5a6b6a9fb99c8e13899be0de1c340701f12693" },
-    { "date": "2026-07-14", "coverage": "complete", "eventKinds": ["lunation"], "factsSha256": "a181d5256b9c9f418bc6f959bf0db016bb1bc371e4ab6b6e148dad218d9fd70f", "publicationSha256": "fc6c432690835fb52e358e640eea09cef6cfc948fd13a5abb97fcbf43b48938f" },
-    { "date": "2026-07-19", "coverage": "complete", "eventKinds": ["aspect"], "factsSha256": "d13e9e9dca13f19ecbb4a47b5b56f4de97c5c01ee98f177374cf38b2eb4f6328", "publicationSha256": "80701c42ae5f89bc7ad20448c7ab4847ecbe7cc2cf74e252b98843720a344de4" }
+    { "date": "2026-07-14", "coverage": "complete", "eventKinds": ["lunation"], "factsSha256": "5807ec893dde58312c9690ec6266c790d144caba9e880cd0b1c47495df2363fc", "publicationSha256": "0394b3c78f5b37a00024268084a43a3bfa6c3d52c9ad5912b05ce6c7b39271e9" },
+    { "date": "2026-07-19", "coverage": "complete", "eventKinds": ["aspect"], "factsSha256": "c748bb0b4c646a5f6351da6da6981fce10cb48f292942916d0ced9bdd222da85", "publicationSha256": "325c5de83857b9cadd0857ee6ef10382501f5e7306480481c8b81721387a2c68" }
   ]
 }

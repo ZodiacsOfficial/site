@@ -69,6 +69,7 @@ const meta = SURFACE_META[surface];
 const path = meta.slug
   ? `/horoscopes/${sign.slug}/${meta.slug}/`
   : `/horoscopes/${sign.slug}/`;
+const ogImage = `/assets/og/v2/horoscope/${sign.slug}${meta.slug ? `-${meta.slug}` : ''}.png`;
 const canonicalUrl = `https://zodiacs.org${path}`;
 const hasEditorial = Astro.slots.has('editorial');
 const hasEnhancement = Astro.slots.has('enhancement');
@@ -79,8 +80,8 @@ const faq = [
     a: meta.faq,
   },
   {
-    q: `Is this reading only for a ${sign.name} sun sign?`,
-    a: `Start with your ${sign.name} sun sign. If you know your rising sign, read that too; your full birth chart gives the most personal picture.`,
+    q: `Is this reading only for people with ${sign.name} as their Sun sign?`,
+    a: `Start with ${sign.name} as your Sun sign. If you know your rising sign, read that too; your full birth chart gives the most personal picture.`,
   },
   {
     q: `How should ${sign.name} use this reading?`,
@@ -100,7 +101,7 @@ const jsonLd = [
     publisher: { '@id': 'https://zodiacs.org/#org' },
     mainEntityOfPage: { '@type': 'WebPage', '@id': canonicalUrl },
     inLanguage: 'en',
-    image: `https://zodiacs.org/assets/og/v2/horoscope/${sign.slug}.png`,
+    image: `https://zodiacs.org${ogImage}`,
     about: [
       { '@type': 'Thing', name: `${sign.name} (astrology)` },
       { '@type': 'Thing', name: `${meta.nav} horoscope` },
@@ -132,16 +133,21 @@ const periodLinks = Object.entries(SURFACE_META).map(([key, item]) => ({
     ? `/horoscopes/${sign.slug}/${item.slug}/`
     : `/horoscopes/${sign.slug}/`,
 }));
+const skyMarkers = reading.skyStrip.markers;
 ---
 <Base
   clientUi={hasEnhancement}
   title={`${sign.name} ${reading.title} — ${reading.label} | Zodiacs.org`}
   description={reading.description}
   path={path}
-  image={`/assets/og/v2/horoscope/${sign.slug}.png`}
+  image={ogImage}
   imageAlt={`${sign.name} ${meta.nav.toLowerCase()} horoscope — Zodiacs.org`}
   type="article"
   jsonLd={jsonLd}
+  rssFeed={{
+    href: `/feeds/horoscopes/${sign.slug}.xml`,
+    title: `Zodiacs.org — ${sign.name} daily horoscope`,
+  }}
 >
   <article class="program container container--narrow" style={`--sign:${sign.hue}`}>
     <nav class="program__crumbs mono" aria-label="Breadcrumb">
@@ -175,6 +181,25 @@ const periodLinks = Object.entries(SURFACE_META).map(([key, item]) => ({
         </a>
       ))}
     </nav>
+
+    {skyMarkers.length > 0 && (
+      <aside class="program__sky" aria-label={reading.skyStrip.label}>
+        <div class="program__sky-heading">
+          <span class="program__sky-dot" aria-hidden="true"></span>
+          <span class="mono">{reading.skyStrip.label}</span>
+        </div>
+        <div class="program__sky-markers">
+          {skyMarkers.map((marker) => (
+            <p class="program__sky-marker">
+              <span class="mono">{marker.label}</span>
+              {marker.datetime
+                ? <time datetime={marker.datetime}>{marker.value}</time>
+                : <strong>{marker.value}</strong>}
+            </p>
+          ))}
+        </div>
+      </aside>
+    )}
 
     <section class="program__reading reveal" aria-labelledby="reading-heading">
       <div class="program__reading-head">
@@ -323,6 +348,78 @@ const periodLinks = Object.entries(SURFACE_META).map(([key, item]) => ({
     background: color-mix(in oklab, var(--sign) 11%, transparent);
   }
 
+  .program__sky {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(112px, 0.42fr) minmax(0, 1.58fr);
+    align-items: center;
+    gap: 14px clamp(20px, 4vw, 38px);
+    overflow: hidden;
+    padding: 14px clamp(14px, 3vw, 20px);
+    border-block: 1px solid var(--hair-1);
+    background: color-mix(in oklab, var(--sign) 3%, transparent);
+  }
+  .program__sky::before {
+    position: absolute;
+    inset: -1px auto auto 0;
+    width: clamp(72px, 18%, 150px);
+    height: 1px;
+    background: linear-gradient(90deg, transparent, color-mix(in oklab, var(--sign) 72%, white), transparent);
+    content: '';
+    opacity: 0.72;
+    transform: translateX(-110%);
+    animation: program-sky-drift 12s linear infinite;
+    pointer-events: none;
+  }
+  .program__sky-heading {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--muted);
+    font-size: 9px;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .program__sky-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--sign);
+    box-shadow: 0 0 12px color-mix(in oklab, var(--sign) 45%, transparent);
+  }
+  .program__sky-markers {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px clamp(16px, 3vw, 28px);
+  }
+  .program__sky-marker {
+    display: grid;
+    min-width: 0;
+    gap: 3px;
+    margin: 0;
+  }
+  .program__sky-marker > span {
+    color: var(--faint);
+    font-size: 8px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .program__sky-marker time,
+  .program__sky-marker strong {
+    overflow-wrap: anywhere;
+    color: var(--text-2);
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 1.45;
+  }
+  @keyframes program-sky-drift {
+    0% { opacity: 0; transform: translateX(-110%); }
+    12% { opacity: 0.72; }
+    76% { opacity: 0.72; }
+    100% { opacity: 0; transform: translateX(760%); }
+  }
+
   .program__reading { display: grid; gap: clamp(24px, 4vw, 34px); }
   .program__reading-head { display: grid; gap: 9px; max-width: 66ch; }
   .program__reading-head > span,
@@ -459,7 +556,19 @@ const periodLinks = Object.entries(SURFACE_META).map(([key, item]) => ({
   @media (max-width: 560px) {
     .program__hero { align-items: flex-start; }
     .program__hero p { font-size: var(--text-base); }
+    .program__sky { grid-template-columns: 1fr; }
+    .program__sky-markers { gap-inline: 14px; }
     .program :global(.dfy__actions) { align-items: stretch; }
     .program :global(.dfy__primary) { width: 100%; justify-content: space-between; }
+  }
+  @media (max-width: 380px) {
+    .program__sky-markers { grid-template-columns: 1fr; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .program__sky::before {
+      animation: none;
+      opacity: 0.5;
+      transform: none;
+    }
   }
 </style>

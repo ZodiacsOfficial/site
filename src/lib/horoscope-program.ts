@@ -370,8 +370,16 @@ export function validateHoroscopeProgramInput(
       if (!CANONICAL_EVENT_KINDS.has(event.kind)) {
         failures.push(violation('INPUT-EVENT-KIND', `${path}.kind`, `unsupported event kind ${String(event.kind)}`));
       }
-      if (!isInstant(event.at) || event.at.slice(0, 4) !== '2027') {
-        failures.push(violation('INPUT-EVENT-INSTANT', `${path}.at`, 'yearly event must use a canonical ISO instant in 2027'));
+      const isYearInstant = isInstant(event.at) && event.at.slice(0, 4) === '2027';
+      const isAdjacentStationBoundary = event.kind === 'station'
+        && isInstant(event.at)
+        && (event.at.slice(0, 4) === '2026' || event.at.slice(0, 4) === '2028');
+      if (!isYearInstant && !isAdjacentStationBoundary) {
+        failures.push(violation(
+          'INPUT-EVENT-INSTANT',
+          `${path}.at`,
+          'yearly event must use a canonical 2027 instant; station boundaries may use adjacent 2026/2028 instants',
+        ));
       }
       for (const [key, value] of [['sign', event.sign], ['aSign', event.aSign], ['bSign', event.bSign]] as const) {
         if (value !== undefined && !CANONICAL_SIGNS.has(value)) {
@@ -395,6 +403,13 @@ export function validateHoroscopeProgramInput(
       }
       if (event.kind === 'aspect' && (!event.a || !event.b || !event.type || !event.aSign || !event.bSign)) {
         failures.push(violation('INPUT-EVENT-ASPECT', path, 'aspect requires both bodies, type, and both signs'));
+      }
+      if (event.kind === 'aspect' && event.orb !== 0) {
+        failures.push(violation(
+          'INPUT-EVENT-ASPECT-ORB',
+          `${path}.orb`,
+          'exact aspect must explicitly use a zero-degree orb',
+        ));
       }
       for (const [key, value] of [['degree', event.degree], ['aDegree', event.aDegree], ['bDegree', event.bDegree]] as const) {
         if (value !== undefined && (!Number.isFinite(value) || value < 0 || value >= 30)) {
@@ -423,6 +438,7 @@ class EvidenceCatalog {
       body: body.body,
       sign: body.sign,
       degree: body.degree,
+      moonPhase: body.body === 'Moon' ? daily.moon.phase : undefined,
       retrograde: body.retrograde,
     });
     const house = solarHouse(body.sign, sunSign);
@@ -459,8 +475,12 @@ class EvidenceCatalog {
       at: event.at,
       body: event.planet ?? event.a ?? (event.kind === 'eclipse' || event.kind === 'lunation' ? 'Moon' : undefined),
       eventKind: event.kind,
+      eventType: event.type,
+      a: event.a,
+      b: event.b,
       sign: event.sign,
       degree: event.degree,
+      orb: event.orb,
       retrograde: event.retrograde,
     });
     const refs = [eventId];
@@ -483,6 +503,7 @@ class EvidenceCatalog {
         body: placement.body,
         eventKind: event.kind,
         sign: placement.sign,
+        orb: event.orb,
         sunSign,
         house,
       });
@@ -756,8 +777,17 @@ function weeklySurface(sign: HoroscopeSign, days: Daily[], catalog: EvidenceCata
 }
 
 function hasYearCoverage(events: readonly HoroscopeProgramEvent[]): boolean {
-  const kinds = new Set(events.map((event) => event.kind));
-  return events.length >= 6 && kinds.has('ingress') && kinds.has('eclipse') && kinds.has('station');
+  const inYear = events.filter((event) => event.at.startsWith('2027-'));
+  const kinds = new Set(inYear.map((event) => event.kind));
+  const stationTypes = new Set(
+    events.filter((event) => event.kind === 'station').map((event) => event.type),
+  );
+  return inYear.length >= 6
+    && kinds.has('ingress')
+    && kinds.has('eclipse')
+    && kinds.has('station')
+    && stationTypes.has('retrograde')
+    && stationTypes.has('direct');
 }
 
 function chooseEvent(
@@ -824,8 +854,17 @@ function yearlySurface(
   events: readonly HoroscopeProgramEvent[],
   catalog: EvidenceCatalog,
 ): HoroscopeReading {
-  const ordered = [...events].sort((left, right) => left.at.localeCompare(right.at));
+  // Adjacent-year station boundaries keep overlapping retrograde periods
+  // complete in the fact catalog. Reader copy remains a 2027 edition.
+  const ordered = events
+    .filter((event) => event.at.startsWith('2027-'))
+    .sort((left, right) => left.at.localeCompare(right.at));
   const passages: HoroscopePassage[] = [];
+  // Register the complete catalog, including 2026/2028 station boundaries,
+  // even though only in-year events are narrated below.
+  for (const event of events) {
+    catalog.event(event, sign, { sourceId: event.sourceId ?? 'input:yearlyEvents' });
+  }
   const first = ordered[0];
   const last = ordered[ordered.length - 1];
   const openingRefs = [
@@ -911,7 +950,7 @@ export function buildHoroscopeProgram(input: BuildHoroscopeProgramInput): Horosc
       : fallbackReading('weekly', sign, { from: week.from, through: week.through }, `only ${weekDays.length} of 7 ISO-week snapshots were supplied`);
     const yearlyReading = yearComplete
       ? yearlySurface(sign, yearlyEvents, catalog)
-      : fallbackReading('yearly-2027', sign, { from: '2027-01-01', through: '2027-12-31' }, 'the 2027 catalog does not yet include at least six major events with ingress, eclipse, and station coverage');
+      : fallbackReading('yearly-2027', sign, { from: '2027-01-01', through: '2027-12-31' }, 'the 2027 catalog does not yet include at least six major events with ingress, eclipse, and retrograde/direct station coverage');
     return {
       sign,
       readings: {
@@ -987,6 +1026,28 @@ export function validateHoroscopeProgram(program: HoroscopeProgram): HoroscopePr
       && (!receipt.sourceFactId || !evidenceIds.has(receipt.sourceFactId)
         || !receipt.sunSign || !receipt.house || receipt.house < 1 || receipt.house > 12)) {
       failures.push(violation('EVIDENCE-DERIVATION', `program.evidence[${index}]`, 'solar-house receipt must link a known fact, sign, and house'));
+    }
+    if (receipt.eventKind === 'aspect' && receipt.orb !== 0) {
+      failures.push(violation(
+        'EVIDENCE-ASPECT-ORB',
+        `program.evidence[${index}].orb`,
+        'exact aspect receipt must explicitly expose a zero-degree orb',
+      ));
+    }
+    if (receipt.kind === 'body-position' && receipt.body === 'Moon' && !receipt.moonPhase) {
+      failures.push(violation(
+        'EVIDENCE-MOON-PHASE',
+        `program.evidence[${index}].moonPhase`,
+        'Moon position receipt must expose its edition phase',
+      ));
+    }
+    if (receipt.kind === 'sky-event' && receipt.eventKind === 'aspect'
+      && (!receipt.a || !receipt.b || !receipt.eventType)) {
+      failures.push(violation(
+        'EVIDENCE-ASPECT-SHAPE',
+        `program.evidence[${index}]`,
+        'aspect receipt must expose both bodies and aspect type',
+      ));
     }
   }
 

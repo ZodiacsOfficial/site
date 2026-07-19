@@ -114,10 +114,12 @@ New work reuses these tokens. It introduces no new decorative color, chrome lang
 - One shared route/data contract renders Today, Tomorrow, Weekly, Monthly, Love, Career, and 2027 without duplicating computation or UI logic.
 - Daily, tomorrow, love, and career are UTC editions. Weekly uses ISO weeks and changes Monday at 00:00 UTC. Every page prints its edition date or week and the computation basis.
 - Daily facts and solar-house mappings remain deterministic. The same source events must drive prose receipts, sky strip, feeds, schema dates, event links, and verification.
-- The deterministic phrase-library renderer remains the no-key fallback. A model-assisted build is permitted only when it consumes the facts record, emits structured evidence references, passes an independent fact audit and copy verifier, and produces the same signed manifest contract. `DAILY_PROSE_ENABLED` stays off until those checks exist.
-- The existing daily workflow is extended rather than duplicated. It generates today/tomorrow/love/career every day and weekly content on Mondays, then proves the live edition before IndexNow notification.
+- The deterministic phrase-library renderer remains the no-key publishing mode. A model-assisted build is permitted only when it consumes the facts record, emits structured evidence references, passes the independent copy/fact verifier, and produces the same signed manifest contract. The verifier is deliberately separate from the builders and generator validators; `DAILY_PROSE_ENABLED` remains off unless that complete contract passes.
+- Exact-aspect records describe refined exact-hit instants, so their explicit orb is `0`: at the recorded UTC exactitude there is no residual angular separation. Missing or non-zero orbs fail closed through the transit, daily, publication, and horoscope-program gates; sampled near-aspects would require a different fact type rather than a misleading non-zero value on an exact hit.
+- The existing daily workflow is extended rather than duplicated. It generates today/tomorrow/love/career every day and weekly content on Mondays, then always proves the exact edition in production and notifies IndexNow—even on a safe no-op retry where the edition commit already exists. Each successful run leaves an immutable receipt artifact; failures open or update an operational incident.
 - Yearly pages are derived from a committed 2027 catalog of major ingresses, eclipses, and retrograde periods mapped to solar houses. They must be live and indexable before 2026-10-01.
-- A quiet sky strip uses existing ticker patterns and no more than one subtle line of motion. It cannot delay LCP.
+- A quiet sky strip uses existing ticker patterns, at most two fact markers, and no more than one subtle line of motion. It cannot delay LCP, and reduced motion receives a meaningful static state. Discarding any third marker is the Phase 1 restraint/accessory removal.
+- Every sign × period route has its own OG card: daily, tomorrow, weekly, monthly, love, career, and 2027. The 84 horoscope cards bring the generated v2 asset set to about 12.46MB, so its generated-output ceiling is raised from 10MB to 15MB. This adds no runtime dependency or client bundle cost.
 
 ### Phase 2 — Event Pages
 
@@ -165,29 +167,34 @@ New work reuses these tokens. It introduces no new decorative color, chrome lang
 
 ## Current Phase 1 status
 
-Local implementation is **85 of 85 required routes pre-rendered**: the hub plus seven surfaces for each of the twelve signs. The deterministic phrase-library renderer remains the deliberate no-key publishing mode; model-assisted prose stays disabled until its independent fact-audit contract exists.
+Implementation is **85 of 85 required routes pre-rendered**: the hub plus seven surfaces for each of the twelve signs. The deterministic phrase-library renderer remains the deliberate no-key publishing mode. The independent verifier now checks facts, evidence, structure, periods, length, voice, safety, meaning-first openings, and distinctness without importing the renderer, builders, or generator validators.
 
 ### Locally complete and verified
 
 - [x] Deterministic daily sky snapshot with positions, Moon phase, events, UTC receipts, and whole-sign solar-house translation.
-- [x] Versioned publication schema, editorial constitution, evidence references, manifest hashes, fail-closed verification, and pairwise-distinctness gates.
+- [x] Versioned publication schema, editorial constitution, evidence references, manifest hashes, independent copy/fact verification, fail-closed exact replay, and pairwise-distinctness gates. The final semantic audit independently reconciles phase, body, sign, aspect, date, and solar-house claims in the prose to their cited fact records.
 - [x] Full Moon on 2026-07-29 and Mercury retrograde on 2026-07-18 regression vectors.
+- [x] Exact-hit aspects carry an explicit zero-degree orb and exact UTC time; missing/non-zero exact orbs fail closed. The 2027 catalog includes every retrograde period overlapping the year and both station boundaries, including adjacent-year boundaries needed to describe the complete cycle.
 - [x] Daily-first `/horoscopes/{sign}/` canonicals and separate tomorrow, weekly, monthly, love, career, and 2027 routes for all twelve signs.
 - [x] All prose-length contracts pass: daily/tomorrow 90–140, weekly 200–300, love/career 60–100, and yearly 1,200–1,800 words.
-- [x] Shared sky strip, breadcrumbs, period navigation, FAQ where useful, unique metadata, canonicals, Article/Breadcrumb schema, sitemap entries, OG assets, and source notes.
+- [x] Shared sky strip with no more than two evidence-derived markers, breadcrumbs, period navigation, FAQ where useful, unique metadata, canonicals, Article/Breadcrumb schema, sitemap entries, and source notes.
+- [x] Unique OG cards for all 84 sign × period pages. The generated v2 card set remains below its documented 15MB ceiling; the larger generated-asset allowance adds no runtime dependency.
 - [x] Twelve distinct hub teasers and twelve per-sign daily RSS feeds with feed discovery.
 - [x] Server-rendered `/today/` and horoscope pages remain complete without JavaScript; saved-chart behavior is progressive enhancement.
 - [x] Route, length, voice, fact-reference, distinctness, schema, sitemap, RSS, OG, and named-vector checks pass.
-- [x] All seven surfaces pass browser QA at 360px and 1280px, with no-JavaScript coverage and 224 assertions.
-- [x] Three-run mobile Lighthouse gates pass every new template: performance 98–99, accessibility 100, SEO 100, CLS ≤0.002, and TBT 0ms.
+- [x] All seven surfaces pass browser QA at 360px and 1280px, including server-rendered sky facts, sign-feed discovery, reduced-motion behavior, pastel icon identity, and no-JavaScript coverage.
+- [x] Three-run mobile Lighthouse gates pass every Phase 1 template: performance 97–99, accessibility 100, SEO 100, LCP ≤2.495s, CLS ≤0.013, and TBT ≤68ms. `/today/` is mandatory in the runner and the weakest—not the median—of all three runs controls the gate.
 - [x] Static build, Astro check, dist integrity, schema validation, and bundle budgets pass; the build pre-renders 3,419 pages.
+- [x] The scheduled workflow has bounded timeouts, unconditional live-edition and IndexNow checks, immutable operation receipts, and incident reporting. A separate operations verifier rejects manual runs, missing steps/artifacts, gaps, and failures.
+- [x] Scope guard: this Phase 1 closeout changed no Registry source, generated Registry asset, SDK page, sign guide, Learn copy, or locale tree. Earlier owner-directed Registry work remains separate from this closeout.
 
 ### External Phase 1 close gates
 
-- [ ] Deploy the 85 routes, confirm that all twelve 2027 pages are publicly indexable, and submit the live canonicals for discovery.
-- [ ] Log three consecutive scheduled daily publications on the live site without manual intervention.
+- [x] The 85-route release is live. Production checks established public `200` responses, self-canonicals, sitemap membership, robots permission, and no `noindex` directive for all twelve 2027 pages; the live horoscope canonicals were submitted for discovery through IndexNow. These facts establish technical indexability and discovery submission, not literal inclusion in a search engine's index.
+- [ ] Obtain independent search-index inclusion evidence for each of the twelve 2027 canonical URLs, using search-engine-owned inspection/indexing evidence rather than inferring inclusion from a successful crawl, sitemap membership, or IndexNow acceptance.
+- [ ] After the final Phase 1 closeout release establishes a commit SHA and UTC cutover, log three consecutive eligible scheduled Daily Sky publications on the live site without manual intervention. Each must be a `schedule`-triggered run after the cutover, succeed through exact production verification and IndexNow, publish its immutable receipt artifact, and represent the next consecutive UTC edition date. Pre-cutover runs, manual dispatches, failed/gapped dates, and no-receipt runs do not count.
 
-Phase 2 remains locked until both external gates are complete. Local code readiness alone does not open Phase 2.
+Two external Phase 1 gates remain: independent search-index inclusion evidence for all twelve 2027 URLs and the three-date operational proof. Phase 2 remains locked until both pass; Phase 1 is not complete merely because the routes are indexable, discovery was submitted, and one-day checks are green.
 
 ## Release evidence required at every phase close
 
@@ -211,6 +218,18 @@ Keep clean data and route seams for these; do not implement them inside this pro
 
 ## Change log
 
+### 2026-07-19 — Phase 1 closeout hardening; external evidence pending
+
+- Added the independent copy/fact verifier and fail-closed zero-orb contract for refined exact-aspect hits; completed the 2027 retrograde catalog with both station boundaries for every period overlapping the year.
+- Added the restrained sky strip to every horoscope period, with at most two fact markers, one subtle line of motion, and a reduced-motion static state. The third possible marker was deliberately removed as the phase's accessory.
+- Replaced the shared-per-sign horoscope card shortcut with 84 unique sign × period OG cards. The generated v2 set is about 12.46MB under a documented 15MB generated-asset ceiling, with no new runtime dependency.
+- Hardened the scheduled publisher against no-op retries and silent failures: exact live verification and IndexNow are unconditional, successful runs upload immutable receipts, and failures create or update an incident. Added an independent verifier for three consecutive eligible schedule-triggered runs after the final release cutover.
+- Changed scheduled publication to check out the current default branch, rebase when the remote advances, and retry a raced push rather than overwriting intervening work. This lets reruns tied to an older event SHA recover idempotently.
+- Added an operations verifier that downloads each operation-receipt artifact and validates its JSON schema, recorded commit, edition hashes, exact-live-verification result, and IndexNow acceptance. No receipt can count until a post-closeout scheduled run uploads it; the verifier then requires three consecutive eligible dates.
+- Independently reconciled the horoscope prose's phase, body, sign, aspect, date, and solar-house statements against their cited fact records, beyond structural evidence-reference validation.
+- Established live technical indexability and discovery-submission evidence for all 85 routes, including all twelve 2027 canonicals. Literal search-index inclusion is a separate open evidence gate, alongside the inherently time-based three-scheduled-edition proof; Phase 2 remains locked.
+- Preserved the program boundary: this closeout made no Registry changes.
+
 ### 2026-07-19 — Meaning-first presentation sweep
 
 - Adopted the site-wide reader hierarchy: interpretation first, useful action second, optional astrological rationale third, and exact evidence or production method in a native closed disclosure.
@@ -219,7 +238,7 @@ Keep clean data and route seams for these; do not implement them inside this pro
 - Kept uncertainty, privacy, permission, and share-exposure notices visible. Exact positions, aspect orbs, timestamps, publication provenance, and automation details remain inspectable by keyboard, touch, and no-JavaScript users; direct planet-selection actions still return the requested longitude immediately.
 - Added a production copy gate that rejects backstage language on default-visible consumer pages while allowing explicit Methodology/trust routes and closed evidence disclosures. Replaced the reader-facing “AI-operated” label with calm, truthful organizational language.
 - Verified a 3,419-page production build, dist integrity, schema, bundle budgets, share cards, 30-day editorial replay, 372 horoscope evidence receipts, and 45 independently checked transit events. Browser acceptance passed 28/28 Today checks and 29/29 Solar Return checks, including mobile, offline, reduced-motion, no-JavaScript, no-time, and no-place states.
-- Full Vitest currently passes 935/936 tests. The sole failure is a pre-existing Kahlo scene snapshot drift in untouched engine/scene code (sub-`1e-13` floating differences plus the existing North Node speed delta); all tests added or affected by this sweep pass.
+- At that checkpoint, full Vitest passed 935/936 tests; the remaining cross-platform Kahlo scene snapshot drift was subsequently normalized at display precision while retaining exact engine-to-scene parity assertions in the Phase 1 closeout.
 
 ### 2026-07-19 — Phase 1 locally complete; operational gate pending
 
@@ -227,7 +246,7 @@ Keep clean data and route seams for these; do not implement them inside this pro
 - Moved the preserved monthly readings to `/monthly/` and made each root sign URL the daily canonical.
 - Added the full daily-through-yearly template family, twelve sign feeds, schema, sitemap coverage, OG assets, workflow integration, and IndexNow route coverage.
 - Passed desktop, mobile, no-JavaScript, accessibility, performance, SEO, content-depth, distinctness, and deterministic-regeneration gates.
-- Kept Phase 2 locked pending a live deployment/indexability check and three consecutive scheduled daily runs.
+- Kept Phase 2 locked pending search-index inclusion evidence for all twelve 2027 URLs and three consecutive scheduled daily runs. Live publication, technical indexability, and discovery submission have since passed, but neither proves search-index inclusion.
 
 ### 2026-07-19 — Phase 0 complete; Phase 1 active
 

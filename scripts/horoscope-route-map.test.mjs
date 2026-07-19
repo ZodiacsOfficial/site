@@ -37,6 +37,9 @@ describe('Phase 1 horoscope URL contract', () => {
 
     expect(urls).toHaveLength(84);
     expect(new Set(urls).size).toBe(84);
+    const phaseOneRoutes = ['/horoscopes/', ...urls];
+    expect(phaseOneRoutes).toHaveLength(85);
+    expect(new Set(phaseOneRoutes).size).toBe(85);
     expect(urls).toContain('/horoscopes/aries/');
     expect(urls).toContain('/horoscopes/aries/tomorrow/');
     expect(urls).toContain('/horoscopes/libra/love/');
@@ -63,6 +66,9 @@ describe('Phase 1 horoscope URL contract', () => {
     expect(source).toContain('reading: HoroscopeProgramPageReading');
     expect(source).toContain("Astro.slots.has('editorial')");
     expect(source).toContain("Astro.slots.has('enhancement')");
+    expect(source).toContain('class="program__sky"');
+    expect(source).toContain('rssFeed={{');
+    expect(source).toContain('prefers-reduced-motion: reduce');
     expect(source).not.toContain('client:');
   });
 });

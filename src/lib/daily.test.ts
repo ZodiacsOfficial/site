@@ -32,6 +32,7 @@ const ASPECT_FIXTURE: Daily = {
       a: 'Uranus',
       b: 'Pluto',
       type: 'trine',
+      orb: 0,
     },
   ],
 };
@@ -112,6 +113,7 @@ describe('dailyReading', () => {
           a: 'Venus',
           b: 'Mars',
           type: 'square',
+          orb: 0,
         },
       ],
     };

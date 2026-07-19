@@ -61,7 +61,14 @@ function signAt(windows: readonly IngressWindow[], planet: string, at: string): 
   return window.sign;
 }
 
-async function yearlyEvents(): Promise<HoroscopeProgramEvent[]> {
+const YEAR_START = '2027-01-01T00:00:00.000Z';
+const YEAR_END = '2028-01-01T00:00:00.000Z';
+
+function overlaps2027(event: SkyRetrograde): boolean {
+  return event.from < YEAR_END && (event.to === null || event.to > YEAR_START);
+}
+
+export async function yearlyEvents(): Promise<HoroscopeProgramEvent[]> {
   const ingresses = await readJson<{ windows: IngressWindow[] }>('src/data/ingresses.json');
   const sky = await readJson<{ retrogrades: SkyRetrograde[] }>('src/data/sky.json');
   const eclipses = await readJson<{ eclipses: EclipseRecord[] }>('src/data/eclipses.json');
@@ -89,16 +96,34 @@ async function yearlyEvents(): Promise<HoroscopeProgramEvent[]> {
     }));
 
   const stationEvents: HoroscopeProgramEvent[] = sky.retrogrades
-    .filter((event) => event.from.startsWith('2027-'))
-    .map((event) => ({
-      kind: 'station',
-      planet: event.planet,
-      type: 'retrograde',
-      retrograde: true,
-      sign: signAt(ingresses.windows, event.planet, event.from),
-      at: event.from,
-      sourceId: 'src/data/sky.json',
-    }));
+    .filter(overlaps2027)
+    .flatMap((event) => {
+      if (event.to === null) {
+        throw new Error(
+          `Retrograde period ${event.planet} from ${event.from} overlaps 2027 but has no direct-station boundary`,
+        );
+      }
+      return [
+        {
+          kind: 'station' as const,
+          planet: event.planet,
+          type: 'retrograde',
+          retrograde: true,
+          sign: signAt(ingresses.windows, event.planet, event.from),
+          at: event.from,
+          sourceId: 'src/data/sky.json',
+        },
+        {
+          kind: 'station' as const,
+          planet: event.planet,
+          type: 'direct',
+          retrograde: false,
+          sign: signAt(ingresses.windows, event.planet, event.to),
+          at: event.to,
+          sourceId: 'src/data/sky.json',
+        },
+      ];
+    });
 
   return [...majorIngresses, ...eclipseEvents, ...stationEvents]
     .sort((left, right) => left.at.localeCompare(right.at));

@@ -2,7 +2,7 @@
 import { getCollection, render } from 'astro:content';
 import HoroscopeProgramPage from '../../../../components/HoroscopeProgramPage.astro';
 import { SIGN_SLUGS, signBySlug } from '../../../../lib/signs';
-import { eventList, monthLabel } from '../../../../lib/horoscopes';
+import { dayLabel, eventList, monthLabel, type TransitEvent } from '../../../../lib/horoscopes';
 
 export async function getStaticPaths() {
   const all = await getCollection('horoscopes', ({ data }) => !data.draft);
@@ -26,6 +26,9 @@ const events = eventList(entry.data.month);
 const { Content } = await render(entry);
 const firstEvent = events.at(0);
 const lastEvent = events.at(-1);
+const skyEvents = [firstEvent, lastEvent]
+  .filter((event): event is TransitEvent => Boolean(event))
+  .filter((event, index, all) => all.findIndex((candidate) => candidate.at === event.at) === index);
 
 const reading = {
   label,
@@ -34,6 +37,16 @@ const reading = {
   intro: `The choices and turning points shaping ${sign.name}’s ${label}.`,
   sections: [],
   action: `Mark the two dates in this reading that touch the decision already taking most of your attention.`,
+  skyStrip: {
+    label: `${label} sky`,
+    markers: skyEvents.length > 0
+      ? skyEvents.map((event, index) => ({
+          label: index === 0 ? 'First marker' : 'Last marker',
+          value: `${dayLabel(event.at)} · ${event.label}`,
+          datetime: event.at,
+        }))
+      : [{ label: 'Edition', value: label }],
+  },
   sourceNote: events.length > 0
     ? `This month’s astrology follows ${events.length} dated sky events from ${firstEvent?.at.slice(0, 10)} through ${lastEvent?.at.slice(0, 10)}. Times use UTC, interpreted through solar houses for ${sign.name}.`
     : `This edition follows the ${entry.data.month} horoscope for ${sign.name}. No separate dated event table was available for the month.`,

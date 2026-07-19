@@ -240,6 +240,8 @@ export interface DailyFactRecord {
   aDegree?: number;
   bSign?: string;
   bDegree?: number;
+  /** Explicit zero-degree orb for an exact aspect fact. */
+  orb?: 0;
 }
 
 export interface DailyPublishedSign {
@@ -356,6 +358,7 @@ function factCatalog(daily: Daily, signs: DailyPublishedSign[]): DailyFactRecord
       aDegree: event.aDegree,
       bSign: event.bSign,
       bDegree: event.bDegree,
+      orb: event.orb,
     });
     if (event.sign) {
       for (const sunSign of SIGN_SLUGS) {
@@ -666,6 +669,13 @@ export function validateDailyFacts(daily: Daily): EditorialViolation[] {
       requireEventDegree(event.aDegree, `${path}.aDegree`, failures);
       requireEventSign(event.bSign, `${path}.bSign`, failures);
       requireEventDegree(event.bDegree, `${path}.bDegree`, failures);
+      if (event.orb !== 0) {
+        failures.push(violation(
+          'FACT-EVENT-ORB',
+          `${path}.orb`,
+          'exact aspect must explicitly use a zero-degree orb',
+        ));
+      }
     }
   });
   return failures;
@@ -720,6 +730,15 @@ export function validateDailyPublication(
   if (factIds.size !== publication.facts.length) {
     failures.push(violation('FACT-DUPLICATE-ID', 'publication.facts', 'fact IDs must be unique'));
   }
+  publication.facts.forEach((fact, index) => {
+    if (fact.kind === 'sky-event' && fact.eventKind === 'aspect' && fact.orb !== 0) {
+      failures.push(violation(
+        'FACT-ASPECT-ORB',
+        `publication.facts[${index}].orb`,
+        'exact aspect fact must explicitly expose a zero-degree orb',
+      ));
+    }
+  });
 
   publication.signs.forEach((entry, signIndex) => {
     const path = `publication.signs[${signIndex}]`;

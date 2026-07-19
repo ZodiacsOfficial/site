@@ -11,6 +11,19 @@ export const SOCIAL_PROFILES = Object.freeze([
   'https://t.me/astrofoliosol',
 ]);
 
+// English-only build descriptors for the Phase 1 route family. Keeping this
+// array outside OG_EN prevents the additive-locale manifest from mistaking a
+// collection of build instructions for one translatable string.
+export const HOROSCOPE_OG_SURFACES = Object.freeze([
+  { key: 'today', suffix: '', kicker: 'Daily horoscope', subtitle: 'What matters today, with one useful move.' },
+  { key: 'tomorrow', suffix: 'tomorrow', kicker: 'Tomorrow’s horoscope', subtitle: 'An early look at tomorrow’s tone and priorities.' },
+  { key: 'weekly', suffix: 'weekly', kicker: 'Weekly horoscope', subtitle: 'The choices and themes developing across seven days.' },
+  { key: 'monthly', suffix: 'monthly', kicker: 'Monthly horoscope', subtitle: 'The month’s turning points, read in sequence.' },
+  { key: 'love', suffix: 'love', kicker: 'Love horoscope', subtitle: 'Relationships, reciprocity, boundaries, and repair.' },
+  { key: 'career', suffix: 'career', kicker: 'Career horoscope', subtitle: 'Work, resources, collaboration, and direction.' },
+  { key: 'year', suffix: '2027', kicker: '2027 horoscope', subtitle: 'The year’s major cycles and practical checkpoints.' },
+]);
+
 export const OG_EN = Object.freeze({
   fallbackAlt: 'Zodiacs.org — free birth charts, sign guides, and astrology tools.',
   site: 'zodiacs.org',

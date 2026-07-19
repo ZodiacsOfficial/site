@@ -13,6 +13,7 @@ import {
 import type { Daily } from '../src/lib/daily';
 import { computeDailySnapshot } from './daily-snapshot-lib.mjs';
 import { auditDailyAstronomy } from './daily-fact-audit.mjs';
+import { verifyDailyPublicationCopy } from './independent-copy-verifier';
 
 export const REPO_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 export const DAILY_PATH = resolve(REPO_ROOT, 'src/data/daily.json');
@@ -55,20 +56,25 @@ export interface DailyPublicationManifest {
     freeformModelOutput: false;
   };
   verification: {
-    verifierId: 'zodiacs.daily-verifier.v2';
+    verifierId: 'zodiacs.daily-verifier.v3';
     verifierSha256: string;
-    independentFromGenerator: false;
+    independentFromGenerator: true;
     astronomyAudit: {
       implementation: 'zodiacs.daily-fact-audit.v1';
       independentFromSnapshotBuilder: true;
       status: 'passed';
     };
-    rendererCheck: {
-      kind: 'deterministic-regeneration-and-policy';
+    copyCheck: {
+      implementation: 'zodiacs.independent-copy-verifier.v1';
+      kind: 'structure-fact-reference-length-voice-distinctness';
+      independentImplementation: true;
+      status: 'passed';
+    };
+    deterministicReplay: {
+      kind: 'exact-regeneration';
       independentImplementation: false;
       status: 'passed';
     };
-    deterministicStatus: 'passed';
     aiReview: {
       required: false;
       status: 'not-run';
@@ -79,6 +85,7 @@ export interface DailyPublicationManifest {
     signCount: 12;
     factAudit: 'independent-recomputation-passed';
     exactRender: 'passed';
+    factReferences: 'independent-verification-passed';
     distinctness: 'passed';
     voiceAndSafety: 'passed';
   };
@@ -137,14 +144,10 @@ async function generatorSha256(): Promise<string> {
 async function verifierSha256(): Promise<string> {
   const sources = await Promise.all([
     readFile(resolve(REPO_ROOT, 'scripts/daily-fact-audit.mjs'), 'utf8'),
-    readFile(resolve(REPO_ROOT, 'scripts/daily-publication-files.ts'), 'utf8'),
-    readFile(resolve(REPO_ROOT, 'scripts/verify-daily-publication.ts'), 'utf8'),
-    readFile(resolve(REPO_ROOT, 'scripts/verify-transits.mjs'), 'utf8'),
-    readFile(resolve(REPO_ROOT, 'src/lib/daily-publication.ts'), 'utf8'),
+    readFile(resolve(REPO_ROOT, 'scripts/independent-copy-verifier.ts'), 'utf8'),
     readFile(resolve(REPO_ROOT, 'src/lib/editorial-policy/constitution.v1.json'), 'utf8'),
-    readFile(resolve(REPO_ROOT, 'package-lock.json'), 'utf8'),
   ]);
-  return sha256(sources.join('\n-- zodiacs verifier boundary --\n'));
+  return sha256(sources.join('\n-- zodiacs independent verifier boundary --\n'));
 }
 
 export function formatViolations(violations: EditorialViolation[]): string {
@@ -165,6 +168,7 @@ export async function expectedDailyPackage(): Promise<{
   const recomputed = await computeDailySnapshot(daily.date, REPO_ROOT) as Daily;
   const violations = [
     ...validateDailyPublication(daily, publication),
+    ...verifyDailyPublicationCopy(publication),
     ...await auditDailyAstronomy(daily, REPO_ROOT),
   ];
   if (canonicalJson(daily) !== canonicalJson(recomputed)) {
@@ -218,22 +222,27 @@ export async function expectedDailyPackage(): Promise<{
       freeformModelOutput: false,
     },
     verification: {
-      verifierId: 'zodiacs.daily-verifier.v2',
+      verifierId: 'zodiacs.daily-verifier.v3',
       verifierSha256: await verifierSha256(),
-      // Exact copy reproduction currently reuses the renderer. This is kept
-      // false deliberately; only the astronomy implementation is independent.
-      independentFromGenerator: false,
+      // Copy approval is a read-side veto implemented without importing the
+      // renderer. Exact regeneration remains a separate provenance diagnostic.
+      independentFromGenerator: true,
       astronomyAudit: {
         implementation: 'zodiacs.daily-fact-audit.v1',
         independentFromSnapshotBuilder: true,
         status: 'passed',
       },
-      rendererCheck: {
-        kind: 'deterministic-regeneration-and-policy',
+      copyCheck: {
+        implementation: 'zodiacs.independent-copy-verifier.v1',
+        kind: 'structure-fact-reference-length-voice-distinctness',
+        independentImplementation: true,
+        status: 'passed',
+      },
+      deterministicReplay: {
+        kind: 'exact-regeneration',
         independentImplementation: false,
         status: 'passed',
       },
-      deterministicStatus: 'passed',
       aiReview: {
         required: false,
         status: 'not-run',
@@ -244,6 +253,7 @@ export async function expectedDailyPackage(): Promise<{
       signCount: 12,
       factAudit: 'independent-recomputation-passed',
       exactRender: 'passed',
+      factReferences: 'independent-verification-passed',
       distinctness: 'passed',
       voiceAndSafety: 'passed',
     },

@@ -86,11 +86,12 @@
       "a": "Mars",
       "b": "Saturn",
       "type": "sextile",
+      "orb": 0,
       "at": "2026-07-19T18:05:52.329Z",
       "aSign": "gemini",
-      "aDegree": 14.7,
+      "aDegree": 14.704841846738475,
       "bSign": "aries",
-      "bDegree": 14.7
+      "bDegree": 14.704841563179741
     }
   ]
 }

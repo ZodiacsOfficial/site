@@ -77,8 +77,8 @@ function assertMonthlyShape(monthly, month, source) {
       if (key === 'stations' && (!event.planet || !event.sign || !['retrograde', 'direct'].includes(event.type))) {
         throw new Error(`${label} requires planet, sign, and retrograde/direct type`);
       }
-      if (key === 'aspects' && (!event.a || !event.b || !event.type)) {
-        throw new Error(`${label} requires a, b, and type`);
+      if (key === 'aspects' && (!event.a || !event.b || !event.type || event.orb !== 0)) {
+        throw new Error(`${label} requires a, b, type, and an explicit zero-degree orb`);
       }
     }
   }

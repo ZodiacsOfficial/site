@@ -10,8 +10,7 @@
  *   disclosure.png         Registry disclosure
  *   tool/{key}.png         calculators + hubs
  *   pair/{a}-{b}.png       all 78 compatibility pairings
- *   horoscope/{slug}.png   one evergreen family card per sign, shared by
- *                          daily, weekly, monthly, topical, and yearly pages
+ *   horoscope/{slug}[-{surface}].png  unique daily-through-yearly cards
  *   placements/{planet}.png  one per planet, shared by its 12 placement pages
  *   rising/{slug}.png      the 12 rising-sign profiles
  *   almanac/{slug}.png     the Almanac hub + published articles
@@ -41,7 +40,9 @@ const OUT = resolve(root, 'public/assets/og/v2');
 const { SIGNS, ELEMENT_LABEL, MODALITY_LABEL } = await import(
   pathToFileURL(resolve(root, 'src/lib/signs.ts')).href
 );
-const { OG_EN } = await import(pathToFileURL(resolve(root, 'src/strings/seo.en.mjs')).href);
+const { HOROSCOPE_OG_SURFACES, OG_EN } = await import(
+  pathToFileURL(resolve(root, 'src/strings/seo.en.mjs')).href
+);
 
 const { chromium } = await import(process.env.PLAYWRIGHT_MODULE ?? 'playwright-core');
 const executablePath =
@@ -319,21 +320,26 @@ function placementCard(planetKey, glyph) {
   return shell(body, 'zodiacs.org/learn/placements/');
 }
 
-function horoscopeCard(s) {
+function horoscopeCard(s, surface) {
   const title = signName(s);
   const body = `
   <div class="stage">
     <div class="left">
-      <span class="kicker">${OG_EN.horoscope.kicker}</span>
+      <span class="kicker">${surface.kicker}</span>
       <div class="display" style="font-size: ${nameSize(title)}px;">${title}</div>
-      <div class="sub" style="font-size: 26px; color: ${MUTED};">${OG_EN.horoscope.subtitle}</div>
+      <div class="sub" style="font-size: 26px; color: ${MUTED};">${surface.subtitle}</div>
       <div class="data">${s.dates}</div>
     </div>
     <img class="disc" src="${DISCS[s.slug]}" width="340" height="340"
          style="box-shadow: 0 30px 90px ${s.hue}40;" />
   </div>`;
-  return shell(body, `zodiacs.org/horoscopes/${s.slug}/`);
+  const pagePath = surface.suffix ? `${s.slug}/${surface.suffix}/` : `${s.slug}/`;
+  return shell(body, `zodiacs.org/horoscopes/${pagePath}`);
 }
+
+const horoscopeCardPath = (sign, surface) => (
+  `horoscope/${sign.slug}${surface.suffix ? `-${surface.suffix}` : ''}.png`
+);
 
 function risingCard(s) {
   const title = signName(s);
@@ -448,7 +454,11 @@ if (onlyHoroscopes) {
   const horoscopeTool = TOOLS.find((tool) => tool.key === 'horoscopes');
   if (!horoscopeTool) throw new Error('Missing horoscopes tool-card copy');
   await shoot(toolCard(horoscopeTool), 'tool/horoscopes.png');
-  for (const s of SIGNS) await shoot(horoscopeCard(s), `horoscope/${s.slug}.png`);
+  for (const s of SIGNS) {
+    for (const surface of HOROSCOPE_OG_SURFACES) {
+      await shoot(horoscopeCard(s, surface), horoscopeCardPath(s, surface));
+    }
+  }
 } else {
   await shoot(thesisCard(), 'thesis.png');
   if (process.argv.includes('--only-thesis')) {
@@ -484,7 +494,11 @@ if (onlyHoroscopes) {
       await shoot(pairCard(SIGNS[i], SIGNS[j]), `pair/${SIGNS[i].slug}-${SIGNS[j].slug}.png`);
     }
   }
-  for (const s of SIGNS) await shoot(horoscopeCard(s), `horoscope/${s.slug}.png`);
+  for (const s of SIGNS) {
+    for (const surface of HOROSCOPE_OG_SURFACES) {
+      await shoot(horoscopeCard(s, surface), horoscopeCardPath(s, surface));
+    }
+  }
   for (const s of SIGNS) await shoot(risingCard(s), `rising/${s.slug}.png`);
   for (const [planetKey, glyph] of Object.entries(PLANET_GLYPHS)) {
     await shoot(placementCard(planetKey, glyph), `placements/${planetKey}.png`);
@@ -572,7 +586,7 @@ if (!onlyHoroscopes) await shoot(pinHowTo(), 'pin/how-to-read-a-birth-chart.png'
 const requiredCards = [
   ...SIGNS.map((s) => `sign/${s.slug}.png`),
   ...SIGNS.map((s) => `registry/${s.slug}.png`),
-  ...SIGNS.map((s) => `horoscope/${s.slug}.png`),
+  ...SIGNS.flatMap((s) => HOROSCOPE_OG_SURFACES.map((surface) => horoscopeCardPath(s, surface))),
   ...TOOLS.map((tool) => `tool/${tool.key}.png`),
   'registry.png',
   'thesis.png',
@@ -592,7 +606,7 @@ await browser.close();
 
 const mb = total / 1024 / 1024;
 console.log(`Done — ${count} cards, ${mb.toFixed(2)}MB → public/assets/og/v2/`);
-if (mb > 10) {
-  console.error('ABORT: v2 card set exceeds the 10MB budget — tighten the palette (colors: 128) and rerun.');
+if (mb > 15) {
+  console.error('ABORT: generated v2 card set exceeds the 15MB budget — tighten the palette and rerun.');
   process.exit(1);
 }

@@ -5,7 +5,7 @@ import {
   formatViolations,
   readActualPackage,
 } from './daily-publication-files';
-import { validateDailyPublication } from '../src/lib/daily-publication';
+import { verifyDailyPublicationCopy } from './independent-copy-verifier';
 
 const requestedDateIndex = process.argv.indexOf('--date');
 const requestedDate = requestedDateIndex >= 0 ? process.argv[requestedDateIndex + 1] : null;
@@ -13,7 +13,7 @@ const expected = await expectedDailyPackage();
 const actual = await readActualPackage();
 const failures = [
   ...expected.violations,
-  ...validateDailyPublication(expected.daily, actual.publication),
+  ...verifyDailyPublicationCopy(actual.publication),
 ];
 
 if (requestedDate && requestedDate !== expected.daily.date) {
@@ -52,5 +52,5 @@ if (unique.length) {
 }
 console.log(
   `verify-daily-publication: PASS — ${expected.daily.date}, 12 signs, `
-  + `${expected.publication.facts.length} facts, hashes match`,
+  + `${expected.publication.facts.length} facts, independent copy checks and hashes match`,
 );

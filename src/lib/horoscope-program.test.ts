@@ -44,6 +44,7 @@ const yearlyEvents: HoroscopeProgramEvent[] = [
   { kind: 'eclipse', type: 'solar', sign: 'aquarius', degree: 17.6, at: '2027-02-06T15:59:00.000Z', sourceId: 'fixture:2027-events' },
   { kind: 'eclipse', type: 'lunar', sign: 'virgo', degree: 2.1, at: '2027-02-20T23:12:00.000Z', sourceId: 'fixture:2027-events' },
   { kind: 'station', planet: 'Mercury', type: 'retrograde', sign: 'pisces', degree: 11.2, at: '2027-03-10T09:00:00.000Z', sourceId: 'fixture:2027-events' },
+  { kind: 'station', planet: 'Mercury', type: 'direct', retrograde: false, sign: 'aquarius', degree: 27.1, at: '2027-04-01T09:00:00.000Z', sourceId: 'fixture:2027-events' },
   { kind: 'ingress', planet: 'Jupiter', sign: 'virgo', at: '2027-07-26T03:00:00.000Z', sourceId: 'fixture:2027-events' },
   { kind: 'station', planet: 'Saturn', type: 'retrograde', sign: 'aries', degree: 27.4, at: '2027-08-09T12:00:00.000Z', sourceId: 'fixture:2027-events' },
   { kind: 'eclipse', type: 'solar', sign: 'leo', degree: 9.8, at: '2027-08-02T10:07:00.000Z', sourceId: 'fixture:2027-events' },
@@ -53,6 +54,7 @@ const yearlyEvents: HoroscopeProgramEvent[] = [
     a: 'Jupiter',
     b: 'Saturn',
     type: 'trine',
+    orb: 0,
     aSign: 'virgo',
     aDegree: 18.1,
     bSign: 'taurus',
@@ -131,6 +133,7 @@ describe('horoscope program domain', () => {
     expect(catalogReceipts).toHaveLength(yearlyEvents.length);
     expect(new Set(catalogReceipts.map((receipt) => receipt.at)))
       .toEqual(new Set(yearlyEvents.map((event) => event.at)));
+    expect(catalogReceipts.find((receipt) => receipt.eventKind === 'aspect')?.orb).toBe(0);
     for (const entry of program.signs) {
       const yearly = entry.readings['yearly-2027'];
       expect(yearly.wordCount).toBeGreaterThanOrEqual(1_200);
@@ -182,6 +185,18 @@ describe('horoscope program domain', () => {
     expect(validateHoroscopeProgram(program)).toEqual([]);
   });
 
+  it('holds the yearly edition when station coverage has no direct boundary', () => {
+    const missingDirect: BuildHoroscopeProgramInput = {
+      ...input,
+      yearlyEvents: yearlyEvents.filter((event) => !(event.kind === 'station' && event.type === 'direct')),
+    };
+    const program = buildHoroscopeProgram(missingDirect);
+    expect(program.coverage.yearly2027).toBe('insufficient');
+    expect(program.signs.every((entry) => (
+      entry.readings['yearly-2027'].status === 'insufficient-evidence'
+    ))).toBe(true);
+  });
+
   it('fails closed on invalid facts, malformed yearly events, and output tampering', () => {
     const malformed = clone(input);
     malformed.dailySnapshots[0].bodies[0].sign = 'ophiuchus';
@@ -190,6 +205,16 @@ describe('horoscope program domain', () => {
     expect(inputFailures).toContain('INPUT-FACT-SIGN');
     expect(inputFailures).toContain('INPUT-EVENT-INSTANT');
     expect(() => buildHoroscopeProgram(malformed)).toThrow(HoroscopeProgramInputError);
+
+    const missingExactOrb = clone(input) as any;
+    delete missingExactOrb.yearlyEvents.find((event: HoroscopeProgramEvent) => event.kind === 'aspect').orb;
+    expect(validateHoroscopeProgramInput(missingExactOrb).map((failure) => failure.ruleId))
+      .toContain('INPUT-EVENT-ASPECT-ORB');
+
+    const approximateAspect = clone(input) as any;
+    approximateAspect.yearlyEvents.find((event: HoroscopeProgramEvent) => event.kind === 'aspect').orb = 0.5;
+    expect(validateHoroscopeProgramInput(approximateAspect).map((failure) => failure.ruleId))
+      .toContain('INPUT-EVENT-ASPECT-ORB');
 
     const program = clone(buildHoroscopeProgram(input)) as HoroscopeProgram;
     program.signs[1].readings.today.text = program.signs[0].readings.today.text;

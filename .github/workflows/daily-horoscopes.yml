@@ -16,11 +16,19 @@ jobs:
   daily:
     name: Compute today's sky
     runs-on: ubuntu-latest
+    timeout-minutes: 25
     permissions:
       contents: write
+      issues: write
     steps:
       - name: Checkout
         uses: actions/checkout@v6
+        with:
+          # A rerun is tied to the original event SHA. Resolve the current
+          # default branch instead so a pushed-but-timed-out attempt becomes
+          # an idempotent recovery run.
+          ref: ${{ github.event.repository.default_branch }}
+          fetch-depth: 0
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -50,6 +58,8 @@ jobs:
 
       - name: Commit if changed
         id: commit
+        env:
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
         run: |
           FILES=(
             "src/data/daily.json"
@@ -57,24 +67,49 @@ jobs:
             "src/data/daily-publication-manifest.json"
             "src/data/horoscope-program.json"
           )
+          changed=false
           if git diff --quiet -- "${FILES[@]}"; then
             echo "Daily publication package unchanged"
-            echo "committed=false" >> "$GITHUB_OUTPUT"
-            exit 0
+          else
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add "${FILES[@]}"
+            git commit -m "Daily sky: $(node -p "require('./src/data/daily.json').date")"
+            changed=true
           fi
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add "${FILES[@]}"
-          git commit -m "Daily sky: $(node -p "require('./src/data/daily.json').date")"
-          git push
-          echo "committed=true" >> "$GITHUB_OUTPUT"
 
-      - name: Notify IndexNow
-        if: steps.commit.outputs.committed == 'true'
+          # Reconcile any main-branch movement, including a prior attempt
+          # whose push succeeded before its runner lost the response. Bound
+          # the loop so ordinary concurrent pushes recover without hanging.
+          pushed=false
+          for attempt in 1 2 3; do
+            git fetch origin "$DEFAULT_BRANCH"
+            git rebase "origin/$DEFAULT_BRANCH"
+            if git push origin "HEAD:$DEFAULT_BRANCH"; then
+              pushed=true
+              break
+            fi
+            echo "Push attempt $attempt lost a race; refreshing default branch"
+          done
+          if [ "$pushed" != true ]; then
+            echo "Could not publish after three reconciled push attempts" >&2
+            exit 1
+          fi
+
+          echo "committed=$changed" >> "$GITHUB_OUTPUT"
+          echo "commit_sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+
+      # This must run even when the package is unchanged. A retry after a push
+      # may otherwise go green while the production deploy is still stale.
+      - name: Require exact edition in production
         env:
           LIVE_DAILY_URL: https://zodiacs.org/data/daily-publication.json
+        run: node scripts/verify-live-daily.mjs --url "$LIVE_DAILY_URL" --timeout 600
+
+      # IndexNow accepts repeat submissions. Keeping this unconditional makes
+      # a recovery run repair discovery after a prior network/deploy timeout.
+      - name: Notify IndexNow
         run: |
-          node scripts/verify-live-daily.mjs --url "$LIVE_DAILY_URL" --timeout 600
           node --input-type=module <<'NODE'
           import { readFile, readdir } from 'node:fs/promises';
 
@@ -102,6 +137,7 @@ jobs:
           const response = await fetch('https://api.indexnow.org/indexnow', {
             method: 'POST',
             headers: { 'content-type': 'application/json; charset=utf-8' },
+            signal: AbortSignal.timeout(15_000),
             body: JSON.stringify({
               host: 'zodiacs.org',
               key,
@@ -113,3 +149,80 @@ jobs:
           console.log(`IndexNow: ${response.status}${body ? ` — ${body}` : ''}`);
           if (![200, 202].includes(response.status)) process.exit(1);
           NODE
+
+      - name: Write immutable operation receipt
+        env:
+          RECEIPT_PATH: ${{ runner.temp }}/daily-publication-${{ env.TARGET_DATE }}.json
+          RUN_ID: ${{ github.run_id }}
+          RUN_ATTEMPT: ${{ github.run_attempt }}
+          EVENT_NAME: ${{ github.event_name }}
+          RUN_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          COMMIT_SHA: ${{ steps.commit.outputs.commit_sha }}
+        run: |
+          node --input-type=module <<'NODE'
+          import { appendFile, readFile, writeFile } from 'node:fs/promises';
+
+          const manifest = JSON.parse(await readFile('src/data/daily-publication-manifest.json', 'utf8'));
+          const receipt = {
+            schema: 'zodiacs.daily-operation-receipt.v1',
+            targetDate: process.env.TARGET_DATE,
+            event: process.env.EVENT_NAME,
+            runId: Number(process.env.RUN_ID),
+            runAttempt: Number(process.env.RUN_ATTEMPT),
+            runUrl: process.env.RUN_URL,
+            commitSha: process.env.COMMIT_SHA,
+            publicationCanonicalSha256: manifest.publication.canonicalSha256,
+            factsCanonicalSha256: manifest.facts.canonicalSha256,
+            liveVerification: 'exact-match',
+            indexNow: 'accepted',
+            completedAt: new Date().toISOString(),
+          };
+          await writeFile(process.env.RECEIPT_PATH, `${JSON.stringify(receipt, null, 2)}\n`);
+          await appendFile(process.env.GITHUB_STEP_SUMMARY, [
+            `## Daily publication ${receipt.targetDate}`,
+            '',
+            `- Trigger: \`${receipt.event}\``,
+            `- Commit: \`${receipt.commitSha}\``,
+            `- Publication hash: \`${receipt.publicationCanonicalSha256}\``,
+            '- Production: exact committed edition verified',
+            '- IndexNow: accepted',
+            '',
+          ].join('\n'));
+          NODE
+
+      - name: Upload operation receipt
+        uses: actions/upload-artifact@v4
+        with:
+          name: daily-publication-${{ env.TARGET_DATE }}-${{ github.run_id }}
+          path: ${{ runner.temp }}/daily-publication-${{ env.TARGET_DATE }}.json
+          if-no-files-found: error
+          retention-days: 90
+
+      - name: Close resolved daily-publication incident
+        # Manual smoke tests must never claim that unattended publishing has
+        # recovered; the incident lifecycle belongs only to scheduled runs.
+        if: github.event_name == 'schedule' && success()
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          issue_number=$(gh issue list --state open --search '"[Daily publication] Scheduled run failed" in:title' --json number --jq '.[0].number // empty')
+          if [ -n "$issue_number" ]; then
+            gh issue close "$issue_number" --comment "Recovered on ${TARGET_DATE}: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+          fi
+
+      - name: Record daily-publication incident
+        if: github.event_name == 'schedule' && failure()
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          title='[Daily publication] Scheduled run failed'
+          run_url="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+          body="The ${TARGET_DATE:-unknown-date} publication did not complete. Run: ${run_url}"
+          issue_number=$(gh issue list --state open --search '"[Daily publication] Scheduled run failed" in:title' --json number --jq '.[0].number // empty')
+          if [ -n "$issue_number" ]; then
+            gh issue comment "$issue_number" --body "$body"
+          else
+            gh issue create --title "$title" --body "$body"
+          fi

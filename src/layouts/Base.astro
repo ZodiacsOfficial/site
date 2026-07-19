@@ -23,6 +23,8 @@ interface Props {
   jsonLd?: Record<string, unknown>[];
   locale?: Locale;
   sources?: SourceLink[];
+  /** Optional route-specific RSS autodiscovery in addition to the global feeds. */
+  rssFeed?: { href: string; title: string };
   /** Include the liquid-glass lens defs so `.btn--glass` refracts on Chromium. */
   glass?: boolean;
   /** Embed this page's one-locale UI catalog before hydrating client islands. */
@@ -78,6 +80,14 @@ const FAVICON = "data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/sv
     <link rel="alternate" type="application/rss+xml" title="Zodiacs.org — the sky, daily" href="/feeds/daily-sky.xml" />
     <link rel="alternate" type="application/rss+xml" title="Zodiacs.org daily horoscopes" href="/feeds/horoscopes.xml" />
     <link rel="alternate" type="application/rss+xml" title="The Zodiacs.org Almanac" href="/feeds/almanac.xml" />
+    {props.rssFeed && (
+      <link
+        rel="alternate"
+        type="application/rss+xml"
+        title={props.rssFeed.title}
+        href={props.rssFeed.href}
+      />
+    )}
     <link
       rel="preload"
       href="/fonts/instrument-sans-latin-wght-normal.woff2"

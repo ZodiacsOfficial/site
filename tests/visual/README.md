@@ -14,10 +14,12 @@ After `npm run build`:
 - `npm run test:visual:update` regenerates the committed baselines. The harness
   fixes the clock, locale, time zone, device scale, media playback, animation
   duration, and font-rendering flags for stable captures.
-- `npm run test:lighthouse` takes the median of three desktop Lighthouse runs
-  per route and enforces LCP ≤ 2.0 s, CLS ≤ 0.05, and TBT ≤ 150 ms. Set
-  `LIGHTHOUSE_RUNS=1` for a faster local smoke test. Reports are written to
-  `tests/visual/artifacts/lighthouse/`.
+- `npm run test:lighthouse` runs mobile Lighthouse three times across Today,
+  the horoscope hub, and all seven Phase 1 sign-period templates. Every run
+  must pass: the gate uses the weakest category score and the worst metric,
+  enforcing performance, accessibility, and SEO ≥ 95; LCP ≤ 2.5 s; CLS ≤
+  0.05; and TBT ≤ 200 ms. Set `LIGHTHOUSE_RUNS=1` for a faster local smoke
+  test. Reports are written to `tests/visual/artifacts/lighthouse/`.
 
 Both commands start and stop a preferred fixed-port preview server, falling
 back to a free local port when another test already owns it. An already-running

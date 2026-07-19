@@ -22,6 +22,10 @@ await mkdir(dirname(out), { recursive: true });
 
 const FROM = new Date('2026-01-01T00:00:00Z');
 const TO = new Date('2028-01-01T00:00:00Z');
+// A 2027 retrograde can station direct after the display horizon. Scan far
+// enough to close every window that begins before TO, while keeping new 2028
+// windows and lunations outside the committed two-year catalog.
+const STATION_SCAN_TO = new Date('2028-04-01T00:00:00Z');
 const PLANETS = ['Mercury', 'Venus', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto'];
 
 function lonAt(body, date) {
@@ -57,20 +61,22 @@ const retrogrades = [];
 for (const body of PLANETS) {
   let prevRetro = speedAt(body, FROM) < 0;
   let openStart = prevRetro ? FROM : null;
-  for (let t = FROM.getTime() + 86400_000; t <= TO.getTime(); t += 86400_000) {
+  for (let t = FROM.getTime() + 86400_000; t <= STATION_SCAN_TO.getTime(); t += 86400_000) {
     const date = new Date(t);
     const retro = speedAt(body, date) < 0;
     if (retro !== prevRetro) {
       const boundary = refine(body, new Date(t - 86400_000), date, retro);
       if (retro) openStart = boundary;
       else {
-        retrogrades.push({ planet: body, from: openStart?.toISOString() ?? FROM.toISOString(), to: boundary.toISOString() });
+        if ((openStart?.getTime() ?? FROM.getTime()) < TO.getTime()) {
+          retrogrades.push({ planet: body, from: openStart?.toISOString() ?? FROM.toISOString(), to: boundary.toISOString() });
+        }
         openStart = null;
       }
       prevRetro = retro;
     }
   }
-  if (openStart) retrogrades.push({ planet: body, from: openStart.toISOString(), to: null });
+  if (openStart && openStart < TO) retrogrades.push({ planet: body, from: openStart.toISOString(), to: null });
   console.log(`${body}: scanned`);
 }
 retrogrades.sort((a, b) => a.from.localeCompare(b.from));
@@ -92,6 +98,7 @@ const payload = {
   generatedAt: new Date().toISOString(),
   from: FROM.toISOString(),
   to: TO.toISOString(),
+  stationBoundaryScanTo: STATION_SCAN_TO.toISOString(),
   retrogrades,
   moons,
 };

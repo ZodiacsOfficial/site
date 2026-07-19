@@ -34,6 +34,8 @@ export interface HoroscopeProgramEvent {
   aDegree?: number;
   bSign?: string;
   bDegree?: number;
+  /** Exact-hit aspect catalogs use zero; approximate aspects are not accepted. */
+  orb?: 0;
 }
 
 export interface BuildHoroscopeProgramInput {
@@ -46,7 +48,9 @@ export interface BuildHoroscopeProgramInput {
   dailySnapshots: readonly Daily[];
   /**
    * Major 2027 events. A publishable yearly surface requires coverage that
-   * includes an ingress, an eclipse, and a station/retrograde event.
+   * includes an ingress, an eclipse, and retrograde/direct station boundaries.
+   * A station boundary may sit in adjacent 2026/2028 when its retrograde
+   * period overlaps 2027; other event kinds remain strictly in-year.
    */
   yearlyEvents?: readonly HoroscopeProgramEvent[];
 }
@@ -65,8 +69,15 @@ export interface HoroscopeEvidenceReceipt {
   at: string;
   body?: string;
   eventKind?: ProgramEventKind;
+  eventType?: string;
+  a?: string;
+  b?: string;
   sign?: string;
   degree?: number;
+  /** Present on Moon position receipts so daily strips and auditors use the edition's own phase. */
+  moonPhase?: string;
+  /** Explicit zero-degree orb for an exact aspect fact. */
+  orb?: 0;
   retrograde?: boolean;
   sunSign?: HoroscopeSign;
   house?: number;

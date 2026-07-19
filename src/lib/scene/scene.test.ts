@@ -26,6 +26,17 @@ const kahlo = () => computeChart({
   flags: ['lmt'],
 });
 
+/**
+ * Astronomy Engine can differ by a few last-place bits between libc/CPU
+ * combinations. Exact engine-to-scene parity is asserted above; the broad
+ * presentation snapshot should remain portable while still detecting a
+ * change larger than one ten-millionth of a degree.
+ */
+const stableSnapshot = <T>(value: T): T => JSON.parse(JSON.stringify(
+  value,
+  (_key, item) => typeof item === 'number' ? Number(item.toFixed(7)) : item,
+)) as T;
+
 describe('buildSceneModel parity', () => {
   it('preserves every engine longitude exactly', () => {
     const chart = kahlo();
@@ -82,7 +93,7 @@ describe('buildSceneModel parity', () => {
   });
 
   it('matches the committed Kahlo scene snapshot', () => {
-    expect(buildSceneModel(kahlo())).toMatchSnapshot();
+    expect(stableSnapshot(buildSceneModel(kahlo()))).toMatchSnapshot();
   });
 });
 

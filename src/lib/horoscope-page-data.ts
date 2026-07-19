@@ -9,6 +9,12 @@ import { signBySlug } from './signs';
 
 export type HoroscopePageSurface = 'today' | 'tomorrow' | 'weekly' | 'monthly' | 'love' | 'career' | 'year';
 
+export interface HoroscopeSkyMarker {
+  label: string;
+  value: string;
+  datetime?: string;
+}
+
 export interface HoroscopeProgramPageReading {
   label: string;
   title: string;
@@ -20,6 +26,10 @@ export interface HoroscopeProgramPageReading {
     receipt?: string;
   }>;
   action: string;
+  skyStrip: {
+    label: string;
+    markers: HoroscopeSkyMarker[];
+  };
   sourceNote: string;
   datePublished: string;
   dateModified: string;
@@ -60,6 +70,15 @@ const ACTION: Record<Exclude<HoroscopePageSurface, 'monthly'>, string> = {
   year: 'Put a review point after each major marker and record what actually changed before assigning the year a story.',
 };
 
+const SKY_STRIP_LABEL: Record<Exclude<HoroscopePageSurface, 'monthly'>, string> = {
+  today: 'Today’s sky',
+  tomorrow: 'Tomorrow’s sky',
+  weekly: 'This week’s sky',
+  love: 'Relationship sky',
+  career: 'Work sky',
+  year: '2027 sky markers',
+};
+
 const cap = (value: string) => value.charAt(0).toUpperCase() + value.slice(1);
 
 function dateLabel(date: string, short = false): string {
@@ -93,6 +112,51 @@ function receiptLine(
     .filter((receipt) => receipt.kind !== 'solar-house')
     .map((receipt) => receipt.label);
   return [...new Set(labels)].slice(0, 2).join(' · ') || undefined;
+}
+
+function skyStripFor(
+  reading: HoroscopeReading,
+  surface: Exclude<HoroscopePageSurface, 'monthly'>,
+  receipts: ReadonlyMap<string, HoroscopeEvidenceReceipt>,
+): HoroscopeProgramPageReading['skyStrip'] {
+  const direct = [...new Map(
+    reading.passages
+      .flatMap((passage) => passage.evidenceRefs)
+      .map((ref) => receipts.get(ref))
+      .filter((receipt): receipt is HoroscopeEvidenceReceipt => (
+        Boolean(receipt) && receipt?.kind !== 'solar-house'
+      ))
+      .map((receipt) => [receipt.id, receipt] as const),
+  ).values()];
+  const moon = direct.find((receipt) => receipt.kind === 'body-position' && receipt.body === 'Moon');
+  const event = direct.find((receipt) => receipt.kind === 'sky-event');
+  const first = moon ?? direct[0];
+  const second = event && event.id !== first?.id
+    ? event
+    : direct.find((receipt) => receipt.id !== first?.id);
+  const selected = [first, second].filter((receipt): receipt is HoroscopeEvidenceReceipt => Boolean(receipt));
+
+  return {
+    label: SKY_STRIP_LABEL[surface],
+    markers: selected.map((receipt) => {
+      const markerLabel = receipt.kind === 'sky-event'
+        ? (surface === 'today' || surface === 'tomorrow' ? 'Exact' : 'Dated marker')
+        : receipt.body ?? 'Position';
+      const positionValue = receipt.body && receipt.label.startsWith(`${receipt.body} `)
+        ? receipt.label.slice(receipt.body.length + 1)
+        : receipt.label;
+      const value = receipt.body === 'Moon'
+        && (surface === 'today' || surface === 'tomorrow')
+        && receipt.moonPhase
+        ? `${receipt.moonPhase} · ${positionValue}`
+        : positionValue;
+      return {
+        label: markerLabel,
+        value,
+        datetime: receipt.at,
+      };
+    }),
+  };
 }
 
 function yearHeading(
@@ -169,6 +233,7 @@ export function pageReadingFromProgram(
     body: passage.text,
     receipt: receiptLine(passage.evidenceRefs, receipts),
   }));
+  const skyStrip = skyStripFor(reading, surface, receipts);
   const datePublished = surface === 'year'
     ? '2026-07-19T00:00:00.000Z'
     : surface === 'weekly'
@@ -176,6 +241,8 @@ export function pageReadingFromProgram(
       : `${program.anchorDate}T00:15:00.000Z`;
   const dateModified = surface === 'year'
     ? datePublished
+    : surface === 'weekly'
+      ? datePublished
     : `${program.anchorDate}T00:15:00.000Z`;
   const sourceNote = surface === 'year'
     ? `The dates and positions here come from the 2027 eclipse, ingress, and retrograde calendar. Each event is read through ${signData.name} solar houses; all times use UTC.`
@@ -189,6 +256,7 @@ export function pageReadingFromProgram(
     intro: introFor(signData.name, surface),
     sections,
     action: ACTION[surface],
+    skyStrip,
     sourceNote,
     datePublished,
     dateModified,

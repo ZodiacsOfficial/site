@@ -447,9 +447,10 @@
       "a": "Mars",
       "b": "Saturn",
       "aSign": "gemini",
-      "aDegree": 14.7,
+      "aDegree": 14.704841846738475,
       "bSign": "aries",
-      "bDegree": 14.7
+      "bDegree": 14.704841563179741,
+      "orb": 0
     }
   ],
   "signs": [

@@ -53,7 +53,7 @@ describe('daily snapshot source coverage', () => {
       type: 'full',
       at: '2026-07-29T14:36:19.011Z',
       sign: 'aquarius',
-      degree: 6.5,
+      degree: expect.closeTo(6.508141588268472, 10),
     }));
   });
 

@@ -30,6 +30,7 @@ const localPublication = JSON.parse(await readFile(new URL('../src/data/daily-pu
 async function check() {
   const response = await fetch(`${endpoint}${endpoint.includes('?') ? '&' : '?'}proof=${Date.now()}`, {
     headers: { 'cache-control': 'no-cache' },
+    signal: AbortSignal.timeout(15_000),
   });
   if (!response.ok) throw new Error(`production record returned HTTP ${response.status}`);
   const remote = await response.json();

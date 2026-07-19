@@ -79,6 +79,9 @@ jobs:
       - name: Today SSR and personalization
         run: npm run test:today:browser
 
+      - name: Horoscope templates, SSR, and responsive behavior
+        run: OUT_DIR=tests/visual/artifacts/horoscope-program npm run test:horoscopes:browser
+
       - name: Structured data validation
         run: npm run schema:check
 
@@ -97,13 +100,14 @@ jobs:
       - name: Widget Lighthouse thresholds
         run: npm run test:widgets:lighthouse
 
-      - name: Upload browser regression artifacts
-        if: failure()
+      - name: Upload Phase 1 browser and performance evidence
+        if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: browser-regression-artifacts
+          name: phase-1-browser-performance-${{ github.run_id }}
           path: tests/visual/artifacts/
           if-no-files-found: ignore
+          retention-days: 90
 
   legacy-drift:
     name: Legacy wing drift

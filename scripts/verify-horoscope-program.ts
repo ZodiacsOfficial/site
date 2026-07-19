@@ -4,13 +4,16 @@ import {
   HOROSCOPE_PROGRAM_PATH,
   expectedHoroscopeProgram,
 } from './horoscope-program-files';
+import { verifyHoroscopeProgramCopy } from './independent-copy-verifier';
 
 const actual = JSON.parse(await readFile(HOROSCOPE_PROGRAM_PATH, 'utf8')) as HoroscopeProgram;
 const { program: expected, violations } = await expectedHoroscopeProgram(actual.anchorDate);
+const copyViolations = verifyHoroscopeProgramCopy(actual);
+const failures = [...violations, ...copyViolations];
 
-if (violations.length) {
-  console.error(`verify-horoscope-program: ${violations.length} policy violation(s)`);
-  for (const failure of violations) {
+if (failures.length) {
+  console.error(`verify-horoscope-program: ${failures.length} policy violation(s)`);
+  for (const failure of failures) {
     console.error(`  ${failure.ruleId} ${failure.path}: ${failure.message}`);
   }
   process.exit(1);
@@ -22,5 +25,5 @@ if (JSON.stringify(actual) !== JSON.stringify(expected)) {
 
 console.log(
   `verify-horoscope-program: OK — ${actual.anchorDate}, ${actual.signs.length} signs, `
-  + `${actual.evidence.length} evidence receipts`,
+  + `${actual.evidence.length} evidence receipts; independent copy checks and replay match`,
 );

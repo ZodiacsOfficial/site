@@ -11,6 +11,7 @@ const visualRoot = dirname(fileURLToPath(import.meta.url));
 const artifactRoot = resolve(visualRoot, 'artifacts/lighthouse');
 const runCount = Number(process.env.LIGHTHOUSE_RUNS ?? 3);
 const routes = [
+  { name: 'today', path: '/today/' },
   { name: 'horoscopes', path: '/horoscopes/' },
   { name: 'horoscope-daily', path: '/horoscopes/aries/' },
   { name: 'horoscope-tomorrow', path: '/horoscopes/aries/tomorrow/' },
@@ -27,7 +28,6 @@ if (process.env.LIGHTHOUSE_INCLUDE_BASELINE === '1') {
     { name: 'home', path: '/' },
     { name: 'birth-chart', path: '/birth-chart/' },
     { name: 'aries', path: '/aries/' },
-    { name: 'today', path: '/today/' },
   );
 }
 if (process.env.LIGHTHOUSE_INCLUDE_AURA === '1') {
@@ -56,19 +56,16 @@ function categoryScore(lhr, categoryId) {
   return value;
 }
 
-function median(values) {
-  const sorted = [...values].sort((a, b) => a - b);
-  return sorted[Math.floor(sorted.length / 2)];
-}
-
-function summarize(results) {
+function gateSummary(results) {
   return {
-    performance: median(results.map((result) => result.performance)),
-    accessibility: median(results.map((result) => result.accessibility)),
-    seo: median(results.map((result) => result.seo)),
-    lcp: median(results.map((result) => result.lcp)),
-    cls: median(results.map((result) => result.cls)),
-    tbt: median(results.map((result) => result.tbt)),
+    // The brief requires three passing runs, so report and gate the weakest
+    // result rather than allowing a median to hide one failed run.
+    performance: Math.min(...results.map((result) => result.performance)),
+    accessibility: Math.min(...results.map((result) => result.accessibility)),
+    seo: Math.min(...results.map((result) => result.seo)),
+    lcp: Math.max(...results.map((result) => result.lcp)),
+    cls: Math.max(...results.map((result) => result.cls)),
+    tbt: Math.max(...results.map((result) => result.tbt)),
   };
 }
 
@@ -121,7 +118,7 @@ try {
         );
       }
 
-      const values = summarize(results);
+      const values = gateSummary(results);
       const failed = values.performance < budgets.score
         || values.accessibility < budgets.score
         || values.seo < budgets.score

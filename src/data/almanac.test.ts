@@ -50,8 +50,18 @@ describe('Almanac launch corpus', () => {
       { planet: 'Mercury', at: '2026-08-25T11:04:19.358Z', sign: 'virgo', retrograde: false },
     ]);
     expect(august.lunations).toEqual([
-      { type: 'new', at: '2026-08-12T17:37:11.343Z', sign: 'leo', degree: 20 },
-      { type: 'full', at: '2026-08-28T04:19:06.085Z', sign: 'pisces', degree: 4.9 },
+      {
+        type: 'new',
+        at: '2026-08-12T17:37:11.343Z',
+        sign: 'leo',
+        degree: expect.closeTo(20.03849195796829, 10),
+      },
+      {
+        type: 'full',
+        at: '2026-08-28T04:19:06.085Z',
+        sign: 'pisces',
+        degree: expect.closeTo(4.907734717365997, 10),
+      },
     ]);
     expect(augustEclipses).toEqual([
       {
@@ -67,11 +77,12 @@ describe('Almanac launch corpus', () => {
       a: 'Jupiter',
       b: 'Saturn',
       type: 'trine',
+      orb: 0,
       at: '2026-08-31T22:05:16.185Z',
       aSign: 'leo',
-      aDegree: 13.7,
+      aDegree: expect.closeTo(13.682395222312152, 10),
       bSign: 'aries',
-      bDegree: 13.7,
+      bDegree: expect.closeTo(13.682394995605307, 10),
     });
     for (const receipt of [
       'new moon is exact on August 12 at 17:37:11 UTC, at 20° Leo',
