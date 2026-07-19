@@ -61,7 +61,7 @@ export interface AuraShareSnapshot {
   editionNote: string;
 }
 
-export const AURA_SHARE_FILENAME = "zodiacs-collection-talisman.png";
+export const AURA_SHARE_FILENAME = "zodiacs-collection-seal.png";
 export type AuraShareActionOutcome =
   | "shared"
   | "downloaded"
@@ -237,7 +237,7 @@ export function auraShareSnapshot(input: AuraShareCardInput): AuraShareSnapshot 
 export function auraShareAccessibleDescription(input: AuraShareCardInput): string {
   const snapshot = auraShareSnapshot(input);
   return [
-    `Registry Aura collection talisman dated ${snapshot.skyDate}.`,
+    `Cabinet of Twelve collection seal dated ${snapshot.skyDate}.`,
     `Represented Zodiac set: ${snapshot.represented.map((sign) => (
       `${sign.name}, ${sign.finish}${sign.goldCountLabel ? ` ${sign.goldCountLabel}` : ""}`
     )).join("; ")}.`,
@@ -471,14 +471,14 @@ export async function drawAuraShareCard(input: AuraShareCardInput): Promise<Blob
   context.textAlign = "left";
   context.fillStyle = MUTED;
   context.font = `500 20px ${MONO}`;
-  context.fillText("REGISTRY AURA · DATED EDITION", 66, 76);
+  context.fillText("THE CABINET OF TWELVE · DATED EDITION", 66, 76);
   context.textAlign = "right";
   context.fillText(snapshot.skyDate.toUpperCase(), W - 66, 76);
 
   context.textAlign = "center";
   context.fillStyle = INK;
   context.font = `500 62px ${SERIF}`;
-  context.fillText("Collection talisman", W / 2, 145);
+  context.fillText("Collection seal", W / 2, 145);
   context.fillStyle = MUTED;
   context.font = `500 20px ${MONO}`;
   context.fillText("THE REPRESENTED TWELVE · THE SUN · THE MOON", W / 2, 195);

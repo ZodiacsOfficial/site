@@ -104,7 +104,7 @@ const ERROR_COPY: Record<
     "That doesn’t look like a complete wallet address. Check it and try again.",
   forbidden:
     "The lookup was refused because the request did not come from this site.",
-  disabled: "Registry Aura lookups are not enabled in this environment.",
+  disabled: "Collection lookups are not enabled in this environment.",
   method: "The lookup could not be started. Please try again.",
   rate_limited:
     "This address has been checked a lot from this connection. Give it a minute and try again.",
@@ -290,7 +290,7 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
       setAddress(nextAddress);
       setAddressMode("connected");
       setStatus(
-        "The connected account changed. Compose a fresh Aura for this address.",
+        "The connected account changed. Open the collection again for this address.",
       );
     } else {
       sessionRef.current?.dispose();
@@ -298,7 +298,7 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
       setAddress("");
       setAddressMode("pasted");
       setConnectedWallet(null);
-      setStatus("The wallet disconnected. The composed Aura was cleared.");
+      setStatus("The wallet disconnected. The opened collection was cleared.");
     }
     requestAnimationFrame(() => addressInputRef.current?.focus());
   };
@@ -403,7 +403,7 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
       })
       .catch(() => {
         setError(
-          "The saved Aura could not be restored. Clear its data and compose again.",
+          "The saved collection could not be restored. Clear its data and try again.",
         );
         setPersistenceReady(true);
       });
@@ -599,7 +599,7 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
     setRequestState("idle");
     clearStored();
     setStatus(
-      `${session.walletName} connected. Aura will use one compatible public address for this composition.`,
+      `${session.walletName} connected. One compatible public address will be used.`,
     );
     setError("");
   };
@@ -682,7 +682,7 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
     setStatus(
       wasExample
         ? "Sample closed."
-        : "Aura data was cleared from this device.",
+        : "Saved data was cleared from this device.",
     );
     setShareState("idle");
     requestAnimationFrame(() => {
@@ -1212,7 +1212,7 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
             to 24 hours.
           </p>
           <p class="aura-field__note aura-desk-method">
-            The lookup is read-only: Aura sends the public address to its
+            The lookup is read-only: it sends the public address to its
             holdings provider and checks only for the Twelve. Today’s Sun and
             Moon are computed on this device.{" "}
             <a href="/privacy/">Privacy</a> ·{" "}

@@ -138,7 +138,7 @@ describe('registry disclosure contract', () => {
     const boundary = (source.match(/<details class="aura-wallet-connect aura-desk-details"[\s\S]*?<\/details>/)?.[0] ?? '')
       .replace(/\s+/g, ' ');
 
-    expect(boundary).toContain('Aura sends the public address to its holdings provider');
+    expect(boundary).toContain('sends the public address to its holdings provider');
     expect(boundary).toContain('simply fills the public address field');
     expect(boundary).toContain('nothing is signed');
     expect(boundary).toContain('href="/privacy/"');

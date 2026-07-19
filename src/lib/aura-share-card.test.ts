@@ -258,7 +258,7 @@ describe("Registry Aura collection talisman snapshot", () => {
   it("provides a complete privacy-safe text equivalent without a URL", () => {
     const description = auraShareAccessibleDescription(input);
     for (const required of [
-      "Registry Aura collection talisman dated Jul 16, 2026 UTC",
+      "Cabinet of Twelve collection seal dated Jul 16, 2026 UTC",
       "Represented Zodiac set: Aries, pastel; Cancer, silver; Leo, gold ×3",
       "Sun in Leo; Moon in Cancer",
       "A dated composition of the represented Zodiac set, today’s Sun, and today’s Moon",
@@ -280,8 +280,8 @@ describe("Registry Aura talisman PNG", () => {
     expect(harness.canvas).toMatchObject({ width: 1080, height: 1350 });
     const text = harness.painted.map((entry) => entry.text).join(" ");
     for (const required of [
-      "REGISTRY AURA · DATED EDITION",
-      "Collection talisman",
+      "THE CABINET OF TWELVE · DATED EDITION",
+      "Collection seal",
       "DATED PUBLIC SKY",
       "JUL 16, 2026 UTC",
       "REPRESENTED ZODIACS",
@@ -338,7 +338,7 @@ describe("Registry Aura talisman share and download", () => {
   it("uses the required constant filename and shares only the reviewed PNG", async () => {
     const harness = installCanvas();
     const blob = await drawAuraShareCard(input);
-    expect(AURA_SHARE_FILENAME).toBe("zodiacs-collection-talisman.png");
+    expect(AURA_SHARE_FILENAME).toBe("zodiacs-collection-seal.png");
     expect(canShareAuraCardBlob(blob)).toBe(true);
     await expect(shareAuraCardBlob(blob)).resolves.toBe("shared");
     const payload = harness.share.mock.calls[0][0] as ShareData;
