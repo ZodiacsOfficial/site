@@ -104,13 +104,13 @@ const ASSET_TIMEOUT_MS = 1_200;
 
 /** Reveal beats, in milliseconds from the moment the case becomes visible. */
 const REVEAL_BEATS: readonly [AuraCabinetRevealStage, number][] = [
-  ['pastel', 120],
-  ['bronze', 420],
-  ['silver', 640],
-  ['gold', 860],
-  ['strike', 1_160],
+  ['pastel', 300],
+  ['bronze', 1_150],
+  ['silver', 1_900],
+  ['gold', 2_650],
+  ['strike', 3_500],
 ];
-const REVEAL_SETTLE_MS = 1_600;
+const REVEAL_SETTLE_MS = 4_100;
 
 function catalogueNumber(index: number): string {
   return String(index + 1).padStart(2, '0');
@@ -472,7 +472,8 @@ export function AuraCollectionCabinet({
           </h2>
         </div>
         <p class="aura-collection-cabinet__count" aria-live="polite">
-          <strong>{representedSigns.length}</strong> of the Twelve represented.
+          <strong>{representedSigns.length}</strong> of the Twelve{' '}
+          {illustrative ? 'in this sample' : 'in this collection'}.
         </p>
       </header>
 
@@ -499,7 +500,7 @@ export function AuraCollectionCabinet({
               const strikesOverflow = goldCount !== null && goldCount > 4n;
               const status = represented
                 ? `represented as ${FINISH_META[finish!].name}${goldCount ? `, ${exactGoldCount(goldCount.toString())} gold ${goldCount === 1n ? 'sculpture' : 'sculptures'}` : ''}`
-                : 'niche reserved — no holding found';
+                : 'place reserved — no holding found';
 
               return (
                 <li
@@ -606,7 +607,7 @@ export function AuraCollectionCabinet({
             <small>
               {activeHolding
                 ? `${FINISH_META[activeHolding.finish].name}${activeGoldCount ? ` · ×${exactGoldCount(activeGoldCount.toString())}` : ''}`
-                : 'Niche reserved'}
+                : 'Place reserved'}
             </small>
           </div>
 
@@ -648,8 +649,8 @@ export function AuraCollectionCabinet({
             ) : (
               <p class="aura-collection-cabinet__material-note">
                 {illustrative
-                  ? `${active.name}’s niche is reserved in this sample.`
-                  : `${active.name}’s niche is reserved. No Registry holding was found at this address.`}
+                  ? `${active.name}’s place is reserved in this sample.`
+                  : `${active.name}’s place is reserved. No Registry holding was found at this address.`}
               </p>
             )}
             {recordedNote && (

@@ -30,7 +30,7 @@ describe('AuraCollectionCabinet', () => {
       .toBeLessThan(markup.indexOf('data-aura-cabinet-sign="taurus"'));
     expect(markup.indexOf('data-aura-cabinet-sign="aquarius"'))
       .toBeLessThan(markup.indexOf('data-aura-cabinet-sign="pisces"'));
-    expect(markup).toContain('3</strong> of the Twelve represented.');
+    expect(markup).toContain('3</strong> of the Twelve in this collection.');
     expect(markup).toContain('data-aura-cabinet-sign="aries" data-aura-cabinet-represented="true"');
     expect(markup).toContain('data-aura-cabinet-sign="taurus" data-aura-cabinet-represented="false"');
     expect(markup).toContain('data-aura-cabinet-finish="silver"');
@@ -51,7 +51,7 @@ describe('AuraCollectionCabinet', () => {
     expect(markup).toContain('gold sculptures');
     // Absence is a reserved niche, never a shouted deficiency.
     expect(markup).not.toContain('NOT REPRESENTED');
-    expect(markup).toContain('niche reserved — no holding found');
+    expect(markup).toContain('place reserved — no holding found');
     expect(markup).not.toContain('/assets/nuggets/thumb/');
     expect(markup).toContain('Nº 02');
   });
@@ -101,7 +101,7 @@ describe('AuraCollectionCabinet', () => {
 
     expect(markup).toContain('class="aura-collection-cabinet is-complete"');
     expect(markup).toContain('data-aura-cabinet-complete="true"');
-    expect(markup).toContain('12</strong> of the Twelve represented.');
+    expect(markup).toContain('12</strong> of the Twelve in this collection.');
     expect(markup).toContain('data-aura-cabinet-case-plate');
     expect(markup).toContain('The Complete Twelve');
     expect(markup).toContain('recorded July 18, 2026');
@@ -215,13 +215,13 @@ describe('AuraCollectionCabinet', () => {
     // The struck rims draw from the same metal ramps as the seal artwork.
     expect(css).toContain('--aura-cabinet-bronze-ring: conic-gradient(');
     expect(css).toContain('--aura-cabinet-silver-ring: conic-gradient(');
-    expect(css).toContain('calc(var(--aura-cabinet-index) * 24ms)');
-    expect(css).toContain('calc(var(--aura-cabinet-index) * 18ms)');
+    expect(css).toContain('calc(var(--aura-cabinet-index) * 40ms)');
+    expect(css).toContain('calc(var(--aura-cabinet-index) * 30ms)');
     expect(css).toContain('aura-cabinet-gold-light-pass');
     // The gold beat dims the rest of the room, one time, by light alone.
     expect(css).toMatch(/data-aura-cabinet-stage="gold"[^{]*:not\(\[data-aura-cabinet-finish="gold"\]\)/);
     expect(css).toMatch(/\.aura-collection-cabinet__strike-roundel\s*\{[^}]*opacity:\s*0;/s);
-    expect(css).toContain('calc(var(--aura-strike-index) * 60ms)');
+    expect(css).toContain('calc(var(--aura-strike-index) * 120ms)');
     expect(css).toContain('.aura-collection-cabinet__case-plate');
     expect(css).toContain('@media (hover: hover) and (pointer: fine)');
     expect(css).toContain('@media (prefers-reduced-motion: reduce)');
@@ -231,12 +231,12 @@ describe('AuraCollectionCabinet', () => {
     // below the legibility floor.
     expect(css).not.toContain('text-overflow: ellipsis');
     expect(css).not.toMatch(/font-size:\s*0\.[0-5]\d*rem/);
-    expect(source).toContain("['pastel', 120]");
-    expect(source).toContain("['bronze', 420]");
-    expect(source).toContain("['silver', 640]");
-    expect(source).toContain("['gold', 860]");
-    expect(source).toContain("['strike', 1_160]");
-    expect(source).toContain('REVEAL_SETTLE_MS = 1_600');
+    expect(source).toContain("['pastel', 300]");
+    expect(source).toContain("['bronze', 1_150]");
+    expect(source).toContain("['silver', 1_900]");
+    expect(source).toContain("['gold', 2_650]");
+    expect(source).toContain("['strike', 3_500]");
+    expect(source).toContain('REVEAL_SETTLE_MS = 4_100');
     expect(source).toContain('typeof IntersectionObserver');
     expect(source).toContain("document.addEventListener('visibilitychange'");
     // A visitor's click or keypress mid-reveal settles the case immediately.

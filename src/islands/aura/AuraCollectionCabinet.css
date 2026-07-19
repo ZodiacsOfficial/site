@@ -41,7 +41,7 @@
   align-items: end;
   justify-content: space-between;
   gap: 24px;
-  margin-bottom: 18px;
+  margin-bottom: 12px;
 }
 
 .aura-collection-cabinet__kicker,
@@ -71,7 +71,7 @@
 
 .aura-collection-cabinet__header h2 {
   font-family: var(--font-display, "EB Garamond", Georgia, serif);
-  font-size: clamp(1.75rem, 4vw, 2.6rem);
+  font-size: clamp(1.45rem, 2.6vw, 1.95rem);
   font-weight: 400;
   line-height: 0.98;
 }
@@ -91,9 +91,8 @@
 
 .aura-collection-cabinet__body {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) clamp(280px, 29%, 330px);
+  grid-template-columns: minmax(0, 1fr);
   gap: 14px;
-  align-items: start;
 }
 
 .aura-collection-cabinet__frame {
@@ -175,7 +174,7 @@
   row-gap: 5px;
   width: 100%;
   min-width: 44px;
-  aspect-ratio: 4 / 5;
+  aspect-ratio: 12 / 13;
   /* The niche is a size container so the object can claim a guaranteed
      square from its height, whatever the text rows need. */
   container-type: size;
@@ -192,7 +191,7 @@
   font: inherit;
   cursor: pointer;
   isolation: isolate;
-  transition: filter 220ms var(--aura-cabinet-ease-out);
+  transition: filter 480ms var(--aura-cabinet-ease-out);
 }
 
 .aura-collection-cabinet__niche::before {
@@ -332,8 +331,8 @@
   opacity: 0;
   transform: scale(0.985);
   transition:
-    opacity 200ms var(--aura-cabinet-ease-out),
-    transform 200ms var(--aura-cabinet-ease-out);
+    opacity 320ms var(--aura-cabinet-ease-out),
+    transform 320ms var(--aura-cabinet-ease-out);
   will-change: opacity, transform;
 }
 
@@ -356,8 +355,8 @@
 /* Each material wave sweeps the case in zodiac order. */
 .aura-collection-cabinet[data-aura-cabinet-stage="pastel"]
   .aura-collection-cabinet__material--pastel.is-current {
-  transition-delay: calc(var(--aura-cabinet-index) * 24ms);
-  transition-duration: 140ms;
+  transition-delay: calc(var(--aura-cabinet-index) * 40ms);
+  transition-duration: 280ms;
 }
 
 .aura-collection-cabinet[data-aura-cabinet-stage="bronze"]
@@ -366,7 +365,7 @@
   .aura-collection-cabinet__material--silver.is-current,
 .aura-collection-cabinet[data-aura-cabinet-stage="gold"]
   .aura-collection-cabinet__material--gold.is-current {
-  transition-delay: calc(var(--aura-cabinet-index) * 18ms);
+  transition-delay: calc(var(--aura-cabinet-index) * 30ms);
 }
 
 .aura-collection-cabinet__medallion {
@@ -566,7 +565,7 @@
 }
 
 .aura-collection-cabinet[data-aura-cabinet-stage="strike"] .aura-collection-cabinet__strike-roundel {
-  transition-delay: calc(var(--aura-strike-index) * 60ms);
+  transition-delay: calc(var(--aura-strike-index) * 120ms);
 }
 
 .aura-collection-cabinet[data-aura-cabinet-stage="strike"] .aura-collection-cabinet__multiplicity-badge,
@@ -576,7 +575,7 @@
 }
 
 .aura-collection-cabinet[data-aura-cabinet-stage="strike"] .aura-collection-cabinet__multiplicity-badge {
-  transition-delay: 200ms;
+  transition-delay: 320ms;
 }
 
 .aura-collection-cabinet__material--gold::after {
@@ -613,8 +612,8 @@
 
 .aura-collection-cabinet[data-aura-cabinet-stage="gold"]
   .aura-collection-cabinet__material--gold.is-current::after {
-  animation: aura-cabinet-gold-light-pass 260ms var(--aura-cabinet-ease-out) both;
-  animation-delay: calc(var(--aura-cabinet-index) * 18ms);
+  animation: aura-cabinet-gold-light-pass 420ms var(--aura-cabinet-ease-out) both;
+  animation-delay: calc(var(--aura-cabinet-index) * 30ms);
 }
 
 /* Absence is a reserved space, not a labeled deficiency: an incised glyph. */
@@ -636,7 +635,7 @@
   min-width: 0;
   color: rgba(241, 238, 231, 0.9);
   font-family: var(--font-display, "EB Garamond", Georgia, serif);
-  font-size: clamp(0.85rem, 1.4vw, 1rem);
+  font-size: clamp(0.9rem, 1.3vw, 1.1rem);
   line-height: 1.08;
 }
 
@@ -701,9 +700,8 @@
 }
 
 .aura-collection-cabinet__placard {
-  position: sticky;
-  top: 96px;
   display: grid;
+  grid-template-columns: minmax(190px, 230px) minmax(0, 1fr);
   align-content: start;
   min-width: 0;
   border: 1px solid rgba(210, 219, 235, 0.17);
@@ -714,11 +712,10 @@
 
 .aura-collection-cabinet__placard-index {
   display: grid;
-  grid-template-columns: auto 1fr auto;
-  gap: 12px;
-  align-items: center;
-  padding: 14px 18px;
-  border-bottom: 1px solid rgba(210, 219, 235, 0.12);
+  align-content: start;
+  gap: 10px;
+  padding: 18px;
+  border-right: 1px solid rgba(210, 219, 235, 0.12);
 }
 
 .aura-collection-cabinet__placard-index span {
@@ -737,7 +734,6 @@
   color: rgba(203, 210, 225, 0.68);
   font-size: 0.62rem;
   line-height: 1.5;
-  text-align: right;
 }
 
 .aura-collection-cabinet__placard-copy {
@@ -916,13 +912,17 @@
   }
 }
 
-@media (max-width: 899px) {
-  .aura-collection-cabinet__body {
+@media (max-width: 719px) {
+  .aura-collection-cabinet__placard {
     grid-template-columns: 1fr;
   }
 
-  .aura-collection-cabinet__placard {
-    position: static;
+  .aura-collection-cabinet__placard-index {
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    border-right: 0;
+    border-bottom: 1px solid rgba(210, 219, 235, 0.12);
+    padding: 14px 16px;
   }
 }
 
@@ -930,6 +930,10 @@
   .aura-collection-cabinet__header {
     display: grid;
     gap: 9px;
+  }
+
+  .aura-collection-cabinet__niche {
+    aspect-ratio: 4 / 5;
   }
 
   .aura-collection-cabinet__count {
