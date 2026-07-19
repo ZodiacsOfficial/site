@@ -73,7 +73,7 @@ describe("AuraResult rooms", () => {
     expect(markup.match(/data-aura-ledger-sign=/g)).toHaveLength(4);
     expect(markup).toContain("Under 10,000 held");
     expect(markup).toContain("Registry record");
-    expect(markup).toContain("8 niches remain reserved.");
+    expect(markup).toContain("8 places remain reserved.");
     expect(markup).toContain("Save the seal");
     expect(markup).toContain("Open another collection");
     expect(markup).toContain("Browse the Registry");
@@ -87,7 +87,7 @@ describe("AuraResult rooms", () => {
   it("keeps an empty public collection on recovery actions without rooms", () => {
     const markup = renderResult([]);
 
-    expect(markup).toContain("The case is open. Its niches are reserved.");
+    expect(markup).toContain("The case is open. Its places are reserved.");
     expect(markup).toContain("No Registry-listed Zodiacs were found at this address.");
     expect(markup).toContain("Try another address");
     expect(markup).toContain("View the sample");

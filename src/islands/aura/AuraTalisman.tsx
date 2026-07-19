@@ -240,7 +240,7 @@ export function AuraTalisman({
         <dl>
           <div>
             <dt>Collection</dt>
-            <dd>{model.collectionPoints.length} of the Twelve represented</dd>
+            <dd>{model.collectionPoints.length} of the Twelve</dd>
           </div>
           <div>
             <dt>Dated sky</dt>

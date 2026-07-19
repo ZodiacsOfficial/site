@@ -99,7 +99,7 @@ export function AuraResult({
     return (
       <section class="aura-result aura-result--gallery" aria-label="Opened collection">
         <div class="aura-result__empty-recovery">
-          <h3>The case is open. Its niches are reserved.</h3>
+          <h3>The case is open. Its places are reserved.</h3>
           <p>
             No Registry-listed Zodiacs were found at this address. The Twelve
             wait in canonical order.
@@ -255,8 +255,8 @@ export function AuraResult({
         {reservedCount > 0 && (
           <p class="aura-ledger__reserved">
             {reservedCount === 1
-              ? "One niche remains reserved."
-              : `${reservedCount} niches remain reserved.`}
+              ? "One place remains reserved."
+              : `${reservedCount} places remain reserved.`}
           </p>
         )}
 
