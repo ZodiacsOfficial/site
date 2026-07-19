@@ -170,11 +170,13 @@ export const GET: APIRoute = async () => {
       const root = `/horoscopes/${sign.slug}/`;
       const monthly = latestMonthlyBySign.get(sign.slug);
       if (!monthly) throw new Error(`Missing latest monthly horoscope for ${sign.slug}`);
+      const signProgram = horoscopeProgram.signs.find((entry) => entry.sign === sign.slug);
+      if (!signProgram) throw new Error(`Missing horoscope program for ${sign.slug}`);
       const monthlyLastmod = monthly.data.updated.toISOString().slice(0, 10);
       return [
         { loc: root, priority: 0.8, lastmod: horoscopeProgram.anchorDate },
         { loc: `${root}tomorrow/`, priority: 0.72, lastmod: horoscopeProgram.anchorDate },
-        { loc: `${root}weekly/`, priority: 0.74, lastmod: horoscopeProgram.anchorDate },
+        { loc: `${root}weekly/`, priority: 0.74, lastmod: signProgram.readings.weekly.period.from },
         { loc: `${root}monthly/`, priority: 0.72, lastmod: monthlyLastmod },
         { loc: `${root}love/`, priority: 0.7, lastmod: horoscopeProgram.anchorDate },
         { loc: `${root}career/`, priority: 0.7, lastmod: horoscopeProgram.anchorDate },

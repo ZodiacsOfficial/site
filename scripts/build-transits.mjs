@@ -7,15 +7,14 @@
  *
  *   node scripts/build-transits.mjs 2026-07   →  src/data/transits-2026-07.json
  *
- * Same positional math as build-sky.mjs: apparent geocentric tropical
- * longitudes of date. Events are refined to the minute by bisection.
+ * All positions come through the site's vendored @zodiacs/engine package.
+ * Events are refined to the minute by bisection over that engine's values.
  */
 import { mkdir, writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
-import {
-  MakeTime, GeoVector, RotateVector, Rotation_EQJ_ECT, EclipticGeoMoon, SearchMoonPhase,
-} from 'astronomy-engine';
+import { degreeInSign, normalizeLongitude, signForLongitude } from '@zodiacs/engine';
+import { bodyLongitude, longitudeSpeed } from '@zodiacs/engine/internal';
 
 const month = process.argv[2];
 if (!/^\d{4}-(0[1-9]|1[0-2])$/.test(month ?? '')) {
@@ -28,13 +27,16 @@ const FROM = new Date(Date.UTC(year, mon - 1, 1));
 const TO = new Date(Date.UTC(year, mon, 1));
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-const out = resolve(root, `src/data/transits-${month}.json`);
+const outputIndex = process.argv.indexOf('--output');
+const requestedOutput = outputIndex >= 0 ? process.argv[outputIndex + 1] : null;
+if (outputIndex >= 0 && !requestedOutput) {
+  throw new Error('--output requires a file path');
+}
+const out = requestedOutput
+  ? resolve(process.cwd(), requestedOutput)
+  : resolve(root, `src/data/transits-${month}.json`);
 await mkdir(dirname(out), { recursive: true });
 
-const SIGN_SLUGS = [
-  'aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo',
-  'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces',
-];
 const PLANETS = ['Sun', 'Mercury', 'Venus', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto'];
 const FAST = ['Sun', 'Mercury', 'Venus', 'Mars'];
 const SLOW = ['Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto'];
@@ -46,28 +48,20 @@ const ASPECTS = [
   { type: 'opposition', angle: 180 },
 ];
 
-const norm = (x) => ((x % 360) + 360) % 360;
 /** Wrap to (−180, 180]. */
 const wrap180 = (x) => {
-  const w = norm(x);
+  const w = normalizeLongitude(x);
   return w > 180 ? w - 360 : w;
 };
-const signAt = (lon) => SIGN_SLUGS[Math.floor(norm(lon) / 30)];
-const degreeIn = (lon) => norm(lon) % 30;
+const signAt = (lon) => signForLongitude(lon).slug;
+const degreeIn = (lon) => degreeInSign(lon);
 
 function lonAt(body, date) {
-  const t = MakeTime(date);
-  if (body === 'Moon') return norm(EclipticGeoMoon(t).lon);
-  const vec = GeoVector(body, t, true);
-  const ecl = RotateVector(Rotation_EQJ_ECT(t), vec);
-  return norm((Math.atan2(ecl.y, ecl.x) * 180) / Math.PI);
+  return bodyLongitude(body, date);
 }
 
 function speedAt(body, date) {
-  const h = 0.25; // days
-  const before = lonAt(body, new Date(date.getTime() - h * 86400_000));
-  const after = lonAt(body, new Date(date.getTime() + h * 86400_000));
-  return wrap180(after - before) / (2 * h);
+  return longitudeSpeed(body, date);
 }
 
 /** Bisect a boolean predicate flip between lo (false) and hi (true). */
@@ -80,16 +74,41 @@ function refine(lo, hi, flipped) {
 }
 
 const DAY = 86400_000;
+const HOUR = 3_600_000;
+
+/** Find exact lunar elongations without bypassing the site engine. */
+function searchLunations(target) {
+  const found = [];
+  const phaseError = (date) => wrap180(lonAt('Moon', date) - lonAt('Sun', date) - target);
+  let previousDate = new Date(FROM.getTime() - DAY);
+  let previous = phaseError(previousDate);
+  for (let time = FROM.getTime(); time <= TO.getTime(); time += DAY) {
+    const date = new Date(time);
+    const current = phaseError(date);
+    // The <90° guard rejects the artificial sign flip at the ±180° seam.
+    if (Math.sign(current) !== Math.sign(previous)
+      && Math.abs(current) < 90 && Math.abs(previous) < 90) {
+      const rising = current > previous;
+      const at = refine(previousDate, date, (candidate) => (phaseError(candidate) > 0) === rising);
+      if (at >= FROM && at < TO) found.push(at);
+    }
+    previousDate = date;
+    previous = current;
+  }
+  return found;
+}
 
 // ── Ingresses: sign-index changes, either direction ──────────────────
 const ingresses = [];
 for (const planet of PLANETS) {
   let prev = signAt(lonAt(planet, FROM));
-  for (let t = FROM.getTime() + DAY; t <= TO.getTime(); t += DAY) {
+  // A planet can cross a cusp, station just beyond it, and cross back before
+  // the next midnight. Hourly brackets preserve both sub-day ingresses.
+  for (let t = FROM.getTime() + HOUR; t <= TO.getTime(); t += HOUR) {
     const date = new Date(t);
     const sign = signAt(lonAt(planet, date));
     if (sign !== prev) {
-      const at = refine(new Date(t - DAY), date, (d) => signAt(lonAt(planet, d)) !== prev);
+      const at = refine(new Date(t - HOUR), date, (d) => signAt(lonAt(planet, d)) !== prev);
       if (at >= FROM && at < TO) {
         ingresses.push({
           planet,
@@ -106,22 +125,16 @@ for (const planet of PLANETS) {
 // ── Lunations: new + full moons with sign + degree ────────────────────
 const lunations = [];
 for (const [targetLon, type] of [[0, 'new'], [180, 'full']]) {
-  let cursor = MakeTime(new Date(FROM.getTime() - DAY));
-  while (true) {
-    const found = SearchMoonPhase(targetLon, cursor, 40);
-    if (!found || found.date >= TO) break;
-    if (found.date >= FROM) {
-      const lon = lonAt('Moon', found.date);
-      lunations.push({
-        type,
-        at: found.date.toISOString(),
-        sign: signAt(lon),
-        // Keep the physical coordinate. Presentation rounds later, avoiding
-        // impossible pairs such as 30.0 degrees in the preceding sign.
-        degree: degreeIn(lon),
-      });
-    }
-    cursor = found.AddDays(1);
+  for (const at of searchLunations(targetLon)) {
+    const lon = lonAt('Moon', at);
+    lunations.push({
+      type,
+      at: at.toISOString(),
+      sign: signAt(lon),
+      // Keep the physical coordinate. Presentation rounds later, avoiding
+      // impossible pairs such as 30.0 degrees in the preceding sign.
+      degree: degreeIn(lon),
+    });
   }
 }
 
@@ -210,5 +223,5 @@ const payload = {
 await writeFile(out, JSON.stringify(payload, null, 2) + '\n');
 console.log(
   `Done — ${ingresses.length} ingresses, ${lunations.length} lunations, ` +
-  `${stations.length} stations, ${aspects.length} exact aspects → src/data/transits-${month}.json`,
+  `${stations.length} stations, ${aspects.length} exact aspects → ${out}`,
 );

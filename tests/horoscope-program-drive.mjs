@@ -15,6 +15,47 @@ const OUT = process.env.OUT_DIR ?? null;
 const CHROMIUM = await findChromium();
 const DAILY = JSON.parse(await readFile(new URL('../src/data/daily.json', import.meta.url), 'utf8'));
 const PROGRAM = JSON.parse(await readFile(new URL('../src/data/horoscope-program.json', import.meta.url), 'utf8'));
+const LONG_CHART_NAME = 'AChartNameThatKeepsGoingWithoutAnyBreakOpportunityForTheEntireMobileViewport';
+const RETURNING_PROFILE = {
+  version: 1,
+  settings: { houseSystem: 'whole' },
+  charts: [{
+    id: 'phase1-returning-aries',
+    name: 'Fixture chart',
+    createdAt: '2026-07-11T00:00:00.000Z',
+    updatedAt: '2026-07-11T00:00:00.000Z',
+    birth: { date: '1990-01-01', time: '12:00', timeKnown: true, place: null },
+    summary: {
+      engineVersion: 'fixture',
+      utcISO: '1990-01-01T12:00:00.000Z',
+      houseSystem: 'whole',
+      bodies: DAILY.bodies.map((body) => ({
+        body: body.body,
+        lon: body.body === 'Sun' ? 20.2 : body.lon,
+        retrograde: body.retrograde === true,
+      })),
+      angles: { asc: 290, mc: 200 },
+      flags: [],
+    },
+  }],
+};
+const THREE_HIT_MOBILE_PROFILE = {
+  ...RETURNING_PROFILE,
+  charts: [{ ...RETURNING_PROFILE.charts[0], id: 'phase1-mobile-active', name: LONG_CHART_NAME }],
+};
+const QUIET_MOBILE_PROFILE = {
+  ...RETURNING_PROFILE,
+  charts: [{
+    ...RETURNING_PROFILE.charts[0],
+    id: 'phase1-mobile-quiet',
+    name: LONG_CHART_NAME,
+    summary: {
+      ...RETURNING_PROFILE.charts[0].summary,
+      bodies: [{ body: 'Sun', lon: 0, retrograde: false }],
+      angles: null,
+    },
+  }],
+};
 const tomorrowDate = PROGRAM.signs[0].readings.tomorrow.period.from;
 const TOMORROW_MOON_PHASE = PROGRAM.evidence.find((receipt) => (
   receipt.id === `fact:${tomorrowDate}:body:moon:1200z`
@@ -58,6 +99,184 @@ function countWords(value) {
 
 function safeName(value) {
   return value.replace(/[^a-z0-9-]+/gi, '-').replace(/^-|-$/g, '').toLowerCase();
+}
+
+async function installLayoutShiftObserver(page) {
+  await page.addInitScript(() => {
+    globalThis.__zdxProgramLayoutShifts = [];
+    new PerformanceObserver((list) => {
+      for (const entry of list.getEntries()) {
+        if (!entry.hadRecentInput) globalThis.__zdxProgramLayoutShifts.push(entry.value);
+      }
+    }).observe({ type: 'layout-shift', buffered: true });
+  });
+}
+
+async function inspectReturningDailyForYou(browser, baseURL) {
+  const context = await browser.newContext({
+    baseURL,
+    reducedMotion: 'no-preference',
+    viewport: { width: 1280, height: 1400 },
+  });
+  const page = await context.newPage();
+  try {
+    await installLayoutShiftObserver(page);
+    await page.addInitScript((value) => {
+      localStorage.setItem('zodiacs.profile.v1', JSON.stringify(value));
+    }, RETURNING_PROFILE);
+    await page.goto('/horoscopes/aries/', { waitUntil: 'networkidle' });
+    await page.waitForSelector('.dfy:not(.dfy--placeholder)');
+    const evidence = await page.evaluate(() => new Promise((resolveEvidence) => {
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        const block = document.querySelector('.dfy:not(.dfy--placeholder)');
+        resolveEvidence({
+          cls: globalThis.__zdxProgramLayoutShifts.reduce((sum, value) => sum + value, 0),
+          height: block?.getBoundingClientRect().height ?? 0,
+          prepaintHint: document.documentElement.hasAttribute('data-dfy-saved-chart'),
+        });
+      }));
+    }));
+    check(
+      'daily returning chart: DailyForYou hydration has exactly zero CLS',
+      evidence.cls === 0,
+      `${evidence.cls} · ${evidence.height}px block`,
+    );
+    check(
+      'daily returning chart: matching Sun-sign prepaint hint is present',
+      evidence.prepaintHint,
+      String(evidence.prepaintHint),
+    );
+    check(
+      'daily returning chart: personalized lines replace the placeholder',
+      await page.locator('.dfy--placeholder').count() === 0
+        && await page.locator('.dfy__lines li').count() === 3,
+    );
+  } finally {
+    await context.close();
+  }
+}
+
+async function inspectReturningDailyForYouMobile(browser, baseURL, fixtureProfile, state, expectedContacts) {
+  const context = await browser.newContext({
+    baseURL,
+    reducedMotion: 'no-preference',
+    viewport: { width: 360, height: 1800 },
+    deviceScaleFactor: 2,
+    hasTouch: true,
+  });
+  const page = await context.newPage();
+  try {
+    await installLayoutShiftObserver(page);
+    await page.addInitScript((value) => {
+      localStorage.setItem('zodiacs.profile.v1', JSON.stringify(value));
+    }, fixtureProfile);
+    await page.goto('/horoscopes/aries/', { waitUntil: 'networkidle' });
+    await page.waitForSelector(`.dfy${state === 'quiet' ? ':has(.dfy__quiet)' : ':has(.dfy__lines)'}`);
+    const evidence = await page.evaluate(() => new Promise((resolveEvidence) => {
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        const block = document.querySelector('.dfy:not(.dfy--placeholder)');
+        const stamp = block.querySelector('.dfy__stamp');
+        const body = block.querySelector('.dfy__body');
+        const bodyLast = body.lastElementChild;
+        const blockStyle = getComputedStyle(block);
+        const stampStyle = getComputedStyle(stamp);
+        resolveEvidence({
+          cls: globalThis.__zdxProgramLayoutShifts.reduce((sum, value) => sum + value, 0),
+          pageWidth: Math.max(document.documentElement.scrollWidth, document.body.scrollWidth),
+          viewportWidth: innerWidth,
+          blockHeight: block.getBoundingClientRect().height,
+          blockMinHeight: blockStyle.minHeight,
+          bodyBottomGap: body.getBoundingClientRect().bottom - bodyLast.getBoundingClientRect().bottom,
+          bodyClientHeight: body.clientHeight,
+          bodyScrollHeight: body.scrollHeight,
+          stampTitle: stamp.getAttribute('title'),
+          stampText: stamp.textContent.trim(),
+          stampOverflow: stampStyle.overflow,
+          stampTextOverflow: stampStyle.textOverflow,
+          stampRight: stamp.getBoundingClientRect().right,
+          blockRight: block.getBoundingClientRect().right,
+        });
+      }));
+    }));
+    check(`DailyForYou 360px ${state}: hydration has exactly zero CLS`, evidence.cls === 0, JSON.stringify(evidence));
+    check(
+      `DailyForYou 360px ${state}: resolved card has no outer fallback reservation or dead body tail`,
+      evidence.blockMinHeight === 'auto'
+        && Math.abs(evidence.bodyBottomGap) <= 1
+        && evidence.bodyScrollHeight <= evidence.bodyClientHeight + 1,
+      JSON.stringify(evidence),
+    );
+    check(
+      `DailyForYou 360px ${state}: long saved-chart name is accessibly contained`,
+      evidence.stampTitle === `${LONG_CHART_NAME} · ${DAILY.date}`
+        && evidence.stampText === `Saved chart · ${DAILY.date}`
+        && evidence.stampOverflow === 'hidden'
+        && evidence.stampTextOverflow === 'ellipsis'
+        && evidence.stampRight <= evidence.blockRight + 0.5,
+      JSON.stringify(evidence),
+    );
+    check(
+      `DailyForYou 360px ${state}: page has no horizontal overflow`,
+      evidence.pageWidth <= evidence.viewportWidth,
+      `${evidence.pageWidth}/${evidence.viewportWidth}`,
+    );
+    check(
+      `DailyForYou 360px ${state}: expected contact state renders`,
+      await page.locator('.dfy__lines li').count() === expectedContacts
+        && (state === 'quiet' ? await page.locator('.dfy__quiet').isVisible() : true),
+    );
+    if (OUT) await page.screenshot({ path: `${OUT}/daily-for-you-returning-${state}-360.png`, fullPage: true });
+  } finally {
+    await context.close();
+  }
+}
+
+async function inspectHubFocusRing(browser, baseURL) {
+  const context = await browser.newContext({ baseURL, viewport: { width: 360, height: 800 } });
+  const page = await context.newPage();
+  try {
+    await page.goto('/horoscopes/', { waitUntil: 'networkidle' });
+    const summary = page.locator('.horo-method summary');
+    await summary.focus();
+    const ring = await summary.evaluate((node) => {
+      const style = getComputedStyle(node);
+      return { color: style.outlineColor, style: style.outlineStyle, width: style.outlineWidth };
+    });
+    const focusRingPass = ring.color === 'rgb(238, 241, 247)'
+      && ring.style !== 'none'
+      && Number.parseFloat(ring.width) >= 2;
+    check(
+      'horoscopes hub: focus-visible disclosure uses the high-contrast ink ring',
+      focusRingPass,
+      JSON.stringify(ring),
+    );
+  } finally {
+    await context.close();
+  }
+}
+
+async function inspectDailyForYouChunkFailure(browser, baseURL) {
+  const context = await browser.newContext({
+    baseURL,
+    reducedMotion: 'no-preference',
+    viewport: { width: 1280, height: 900 },
+  });
+  const page = await context.newPage();
+  try {
+    await page.addInitScript((value) => {
+      localStorage.setItem('zodiacs.profile.v1', JSON.stringify(value));
+    }, RETURNING_PROFILE);
+    await page.route(/DailyForYou[^/]*\.js(?:\?.*)?$/u, (route) => route.abort());
+    await page.goto('/horoscopes/aries/', { waitUntil: 'networkidle' });
+    const fallback = page.locator('.dfy--placeholder');
+    check(
+      'daily island failure: the reserved saved-chart fallback stays visible and useful',
+      await fallback.isVisible()
+        && (await fallback.innerText()).includes('Your Sun-sign reading is ready above'),
+    );
+  } finally {
+    await context.close();
+  }
 }
 
 async function checkStaticHtml(baseURL, route) {
@@ -370,6 +589,11 @@ await withPreview({ port: 4409 }, async (baseURL) => {
 
     for (const route of ROUTES) await inspectNoJavaScript(browser, baseURL, route);
     await inspectKeyboardAndDefaultMotion(browser, baseURL);
+    await inspectReturningDailyForYou(browser, baseURL);
+    await inspectReturningDailyForYouMobile(browser, baseURL, THREE_HIT_MOBILE_PROFILE, 'active', 3);
+    await inspectReturningDailyForYouMobile(browser, baseURL, QUIET_MOBILE_PROFILE, 'quiet', 0);
+    await inspectDailyForYouChunkFailure(browser, baseURL);
+    await inspectHubFocusRing(browser, baseURL);
   } finally {
     await browser.close();
   }

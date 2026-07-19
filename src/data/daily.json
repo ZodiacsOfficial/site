@@ -12,9 +12,9 @@
     },
     {
       "body": "Sun",
-      "lon": 116.84864118032061,
+      "lon": 116.84864118032067,
       "sign": "cancer",
-      "degree": 26.848641180320612,
+      "degree": 26.84864118032067,
       "retrograde": false
     },
     {
@@ -26,9 +26,9 @@
     },
     {
       "body": "Venus",
-      "lon": 160.76306134399692,
+      "lon": 160.7630613439968,
       "sign": "virgo",
-      "degree": 10.763061343996924,
+      "degree": 10.76306134399681,
       "retrograde": false
     },
     {
@@ -76,7 +76,7 @@
   ],
   "moon": {
     "phase": "Waxing Crescent",
-    "illumination": 0.306
+    "illumination": 0.305
   },
   "eventsCoverage": "complete",
   "eventsSource": "src/data/transits-2026-07.json",

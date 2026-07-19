@@ -24,7 +24,7 @@ export const GET: APIRoute = ({ params }) => {
 
   const canonical = `${SITE}/horoscopes/${sign.slug}/`;
   const self = `${SITE}/feeds/horoscopes/${sign.slug}.xml`;
-  const pub = new Date(`${horoscopeProgram.anchorDate}T12:00:00Z`).toUTCString();
+  const pub = new Date(`${horoscopeProgram.anchorDate}T00:00:00Z`).toUTCString();
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>

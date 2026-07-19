@@ -1,9 +1,10 @@
 import { describe, expect, it } from 'vitest';
-import type { SavedChart } from '../profile/schema';
+import type { Profile, SavedChart } from '../profile/schema';
 import { TRANSIT_ORB, transitLine } from '../transits';
 import {
   natalPointsForChart,
   nearestTodayContact,
+  newestSavedChart,
   nextTodayStreak,
   rankTodayContacts,
   selectTodayContacts,
@@ -26,6 +27,24 @@ const chart = {
 } satisfies SavedChart;
 
 describe('today contact selection', () => {
+  it('ignores a newer malformed local entry when choosing the saved chart', () => {
+    const stored = {
+      version: 1,
+      settings: { houseSystem: 'whole' },
+      charts: [
+        chart,
+        {
+          id: 'newer-malformed',
+          name: 'Malformed',
+          createdAt: '2026-07-02T00:00:00.000Z',
+          updatedAt: '2026-07-02T00:00:00.000Z',
+        },
+      ],
+    } as unknown as Profile;
+
+    expect(newestSavedChart(stored)?.id).toBe(chart.id);
+  });
+
   it('ranks a pinned sky against a known natal point and reuses transit sentences', () => {
     const natal = [{ body: 'Sun', lon: 100 }];
     const sky = [
@@ -79,6 +98,13 @@ describe('today UTC streak', () => {
       { version: 1, count: 4, lastOpenedUtcDay: '2026-07-10' },
       at('2026-07-11T00:00:01Z'),
     ).count).toBe(5);
+  });
+
+  it('keeps a 365-day streak as a safe integer', () => {
+    expect(nextTodayStreak(
+      { version: 1, count: 364, lastOpenedUtcDay: '2026-07-10' },
+      at('2026-07-11T00:00:01Z'),
+    ).count).toBe(365);
   });
 
   it('resets after a missed day or a backward clock change', () => {

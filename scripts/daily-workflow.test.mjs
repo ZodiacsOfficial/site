@@ -23,9 +23,33 @@ describe('daily publication operations', () => {
     expect(workflow).not.toContain("steps.commit.outputs.committed == 'true'");
     expect(workflow).toContain('ref: ${{ github.event.repository.default_branch }}');
     expect(workflow).toContain('fetch-depth: 0');
-    expect(workflow).toContain('for attempt in 1 2 3; do');
-    expect(workflow).toContain('git rebase "origin/$DEFAULT_BRANCH"');
+    expect(workflow).toContain('VERIFIED_BASE_SHA=$(git rev-parse HEAD)');
+    expect(workflow).toContain('remote_sha=$(git rev-parse "origin/$DEFAULT_BRANCH")');
+    expect(workflow).toContain('if [ "$remote_sha" != "$VERIFIED_BASE_SHA" ]; then');
+    expect(workflow).toContain('rerun the complete workflow');
+    expect(workflow).not.toContain('git rebase');
+    expect(workflow).not.toContain('for attempt in 1 2 3; do');
     expect(workflow).toContain('git push origin "HEAD:$DEFAULT_BRANCH"');
+  });
+
+  it('declares the daily and Monday-weekly publication boundary at 00:00 UTC', async () => {
+    const [workflow, pageData, hub, plan, setup] = await Promise.all([
+      read('.github/workflows/daily-horoscopes.yml'),
+      read('src/lib/horoscope-page-data.ts'),
+      read('src/pages/horoscopes/index.astro'),
+      read('PLAN.md'),
+      read('SETUP.md'),
+    ]);
+
+    expect(workflow).toContain('- cron: "0 0 * * *" # daily, 00:00 UTC');
+    expect(workflow).not.toMatch(/cron:\s*["'](?:[1-9]|[1-5]\d)\s+0\s+\*\s+\*\s+\*["']/);
+    expect(workflow).toContain('npm run editorial:horoscopes:build -- --date "$TARGET_DATE"');
+    for (const [name, source] of Object.entries({ pageData, hub, plan, setup })) {
+      expect(source, name).not.toContain('00:15 UTC');
+      expect(source, name).not.toContain('T00:15:00.000Z');
+    }
+    expect(pageData).toContain('`${program.anchorDate}T00:00:00.000Z`');
+    expect(hub).toContain('`${program.anchorDate}T00:00:00.000Z`');
   });
 
   it('bounds network waits and preserves auditable success and failure evidence', async () => {
@@ -37,7 +61,9 @@ describe('daily publication operations', () => {
     expect(workflow).toContain('timeout-minutes: 25');
     expect(workflow).toContain('signal: AbortSignal.timeout(15_000)');
     expect(liveVerifier).toContain('signal: AbortSignal.timeout(15_000)');
-    expect(workflow).toContain("schema: 'zodiacs.daily-operation-receipt.v1'");
+    expect(workflow).toContain("schema: 'zodiacs.daily-operation-receipt.v2'");
+    expect(workflow).toContain('horoscopeProgramSha256: canonicalSha256(horoscopeProgram)');
+    expect(liveVerifier).toContain('production horoscope program is not the committed program');
     expect(workflow).toContain('actions/upload-artifact@v4');
     expect(workflow).toContain('retention-days: 90');
     expect(workflow).toContain('- name: Record daily-publication incident');

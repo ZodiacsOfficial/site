@@ -38,7 +38,6 @@
   text-decoration-color: color-mix(in oklab, var(--sign, var(--accent)) 55%, transparent);
   text-decoration-thickness: 1px;
   text-underline-offset: 3px;
-  transition: text-decoration-color var(--dur-1) var(--ease);
 }
 .prose a:hover { text-decoration-color: var(--sign, var(--accent)); }
 

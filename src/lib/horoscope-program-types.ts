@@ -85,6 +85,8 @@ export interface HoroscopeEvidenceReceipt {
 }
 
 export interface HoroscopePassage {
+  /** Reader-facing section label when the prose renderer owns the editorial structure. */
+  heading?: string;
   text: string;
   /** Stable IDs in `HoroscopeProgram.evidence`. */
   evidenceRefs: string[];
@@ -120,7 +122,7 @@ export interface HoroscopeProgram {
   policy: {
     id: 'org.zodiacs.horoscope-program.en';
     version: '1.0.0';
-    rendererVersion: 'zodiacs.horoscope-program-renderer.v3';
+    rendererVersion: 'zodiacs.horoscope-program-renderer.v5';
     mode: 'deterministic-template';
     model: null;
   };

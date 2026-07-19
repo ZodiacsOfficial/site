@@ -1,11 +1,12 @@
 name: Daily Sky
 
-# Shortly after midnight UTC, compute one facts + copy + provenance package.
+# At midnight UTC, compute one facts + copy + provenance package. GitHub may
+# start scheduled jobs later, but the declared publication boundary is exact.
 # Nothing is pushed until deterministic verification and a 30-day replay pass.
 
 on:
   schedule:
-    - cron: "15 0 * * *" # daily, 00:15 UTC
+    - cron: "0 0 * * *" # daily, 00:00 UTC
   workflow_dispatch:
 
 concurrency:
@@ -40,7 +41,9 @@ jobs:
         run: npm ci
 
       - name: Resolve explicit UTC target
-        run: echo "TARGET_DATE=$(date -u +%F)" >> "$GITHUB_ENV"
+        run: |
+          echo "TARGET_DATE=$(date -u +%F)" >> "$GITHUB_ENV"
+          echo "VERIFIED_BASE_SHA=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
 
       - name: Compute today
         run: |
@@ -78,21 +81,17 @@ jobs:
             changed=true
           fi
 
-          # Reconcile any main-branch movement, including a prior attempt
-          # whose push succeeded before its runner lost the response. Bound
-          # the loop so ordinary concurrent pushes recover without hanging.
-          pushed=false
-          for attempt in 1 2 3; do
-            git fetch origin "$DEFAULT_BRANCH"
-            git rebase "origin/$DEFAULT_BRANCH"
-            if git push origin "HEAD:$DEFAULT_BRANCH"; then
-              pushed=true
-              break
-            fi
-            echo "Push attempt $attempt lost a race; refreshing default branch"
-          done
-          if [ "$pushed" != true ]; then
-            echo "Could not publish after three reconciled push attempts" >&2
+          # Generated artifacts are valid only for the exact source revision
+          # that passed the verifiers above. Never rebase them onto code that
+          # those verifiers did not exercise; fail and rerun the whole job.
+          git fetch origin "$DEFAULT_BRANCH"
+          remote_sha=$(git rev-parse "origin/$DEFAULT_BRANCH")
+          if [ "$remote_sha" != "$VERIFIED_BASE_SHA" ]; then
+            echo "Default branch advanced after verification; rerun the complete workflow" >&2
+            exit 1
+          fi
+          if ! git push origin "HEAD:$DEFAULT_BRANCH"; then
+            echo "Default branch advanced during publish; rerun the complete workflow" >&2
             exit 1
           fi
 
@@ -160,11 +159,23 @@ jobs:
           COMMIT_SHA: ${{ steps.commit.outputs.commit_sha }}
         run: |
           node --input-type=module <<'NODE'
+          import { createHash } from 'node:crypto';
           import { appendFile, readFile, writeFile } from 'node:fs/promises';
 
           const manifest = JSON.parse(await readFile('src/data/daily-publication-manifest.json', 'utf8'));
+          const horoscopeProgram = JSON.parse(await readFile('src/data/horoscope-program.json', 'utf8'));
+          const canonical = (value) => {
+            if (Array.isArray(value)) return value.map(canonical);
+            if (value && typeof value === 'object') {
+              return Object.fromEntries(Object.keys(value).sort().map((key) => [key, canonical(value[key])]));
+            }
+            return value;
+          };
+          const canonicalSha256 = (value) => createHash('sha256')
+            .update(JSON.stringify(canonical(value)))
+            .digest('hex');
           const receipt = {
-            schema: 'zodiacs.daily-operation-receipt.v1',
+            schema: 'zodiacs.daily-operation-receipt.v2',
             targetDate: process.env.TARGET_DATE,
             event: process.env.EVENT_NAME,
             runId: Number(process.env.RUN_ID),
@@ -173,6 +184,7 @@ jobs:
             commitSha: process.env.COMMIT_SHA,
             publicationCanonicalSha256: manifest.publication.canonicalSha256,
             factsCanonicalSha256: manifest.facts.canonicalSha256,
+            horoscopeProgramSha256: canonicalSha256(horoscopeProgram),
             liveVerification: 'exact-match',
             indexNow: 'accepted',
             completedAt: new Date().toISOString(),
@@ -184,6 +196,7 @@ jobs:
             `- Trigger: \`${receipt.event}\``,
             `- Commit: \`${receipt.commitSha}\``,
             `- Publication hash: \`${receipt.publicationCanonicalSha256}\``,
+            `- Horoscope program hash: \`${receipt.horoscopeProgramSha256}\``,
             '- Production: exact committed edition verified',
             '- IndexNow: accepted',
             '',

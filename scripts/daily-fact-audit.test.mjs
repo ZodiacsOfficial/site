@@ -16,13 +16,16 @@ describe('independent daily fact audit', () => {
     expect(month.events.length).toBeGreaterThan(0);
   });
 
-  it('rejects a fabricated but internally plausible longitude', async () => {
+  it('rejects fabricated coordinates and retrograde state', async () => {
     const candidate = clone(daily);
     candidate.bodies[0].lon += 1;
     candidate.bodies[0].degree += 1;
+    const mercury = candidate.bodies.find((body) => body.body === 'Mercury');
+    mercury.retrograde = !mercury.retrograde;
     const rules = (await auditDailyAstronomy(candidate, repoRoot)).map((item) => item.ruleId);
     expect(rules).toContain('ASTRO-BODY-LONGITUDE');
     expect(rules).toContain('ASTRO-BODY-COORDINATE');
+    expect(rules).toContain('ASTRO-BODY-DIRECTION');
   });
 
   it('rejects fabricated lunar metadata and a changed monthly day slice', async () => {

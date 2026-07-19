@@ -134,14 +134,82 @@ describe('horoscope program domain', () => {
     expect(new Set(catalogReceipts.map((receipt) => receipt.at)))
       .toEqual(new Set(yearlyEvents.map((event) => event.at)));
     expect(catalogReceipts.find((receipt) => receipt.eventKind === 'aspect')?.orb).toBe(0);
+    const catalogIds = new Set(catalogReceipts.map((receipt) => receipt.id));
     for (const entry of program.signs) {
       const yearly = entry.readings['yearly-2027'];
       expect(yearly.wordCount).toBeGreaterThanOrEqual(1_200);
       expect(yearly.wordCount).toBeLessThanOrEqual(1_800);
       expect(yearly.text).toContain('Jupiter entering Virgo');
       expect(yearly.text).toContain('solar eclipse in Aquarius');
-      expect(yearly.text).toContain('Saturn stationing retrograde');
+      expect(yearly.text).toContain('Saturn stations retrograde');
+      expect(yearly.text).not.toMatch(/brings .+ into focus around|A station marks a change of pace|Stations can concentrate attention/iu);
+      expect(yearly.text).not.toMatch(/\bwhat .+? has taught you\b/iu);
+
+      const headings = yearly.passages.map((item) => item.heading);
+      expect(yearly.passages.length).toBeGreaterThanOrEqual(8);
+      expect(headings.every(Boolean)).toBe(true);
+      expect(new Set(headings).size).toBe(headings.length);
+      expect(headings[0]).toBe(`The shape of ${entry.sign.charAt(0).toUpperCase()}${entry.sign.slice(1)}’s 2027`);
+      expect(headings).toContain('Love, friendship, and clear terms');
+      expect(headings).toContain('Work, money, and sustainable authority');
+      expect(headings.at(-1)).toBe('A three-date plan for the year');
+
+      for (const heading of [
+        'Love, friendship, and clear terms',
+        'Work, money, and sustainable authority',
+        'Home, rest, and the private load',
+        'Your own direction',
+      ]) {
+        const theme = yearly.passages.find((item) => item.heading === heading)?.text ?? '';
+        const checkpoints = [...theme.matchAll(/\b(?:January|February|March|April|May|June|July|August|September|October|November|December) \d{1,2}\b/gu)]
+          .map((match) => Date.parse(`${match[0]}, 2027 UTC`));
+        expect(checkpoints, `${entry.sign}/${heading}`).toHaveLength(2);
+        expect(checkpoints, `${entry.sign}/${heading} runs backward`).toEqual([...checkpoints].sort((a, b) => a - b));
+      }
+
+      const citedCatalogIds = new Set(yearly.passages.flatMap((item) => item.evidenceRefs));
+      expect([...catalogIds].every((id) => citedCatalogIds.has(id))).toBe(true);
     }
+  });
+
+  it('deduplicates repeated house areas in the yearly opening comparison', () => {
+    const collision = buildHoroscopeProgram({
+      ...input,
+      yearlyEvents: [
+        {
+          kind: 'eclipse',
+          type: 'solar',
+          sign: 'virgo',
+          degree: 9,
+          at: '2027-01-06T12:00:00.000Z',
+          sourceId: 'fixture:repeated-opening-house',
+        },
+        ...yearlyEvents,
+      ],
+    });
+    const opening = collision.signs.find(({ sign }) => sign === 'aries')
+      ?.readings['yearly-2027'].passages[0].text ?? '';
+
+    expect(opening).toContain('compare routines and workload with what is actually happening');
+    expect(opening).not.toContain('routines and workload, routines and workload');
+  });
+
+  it('does not treat 2027 daily events as missing yearly-catalog coverage', () => {
+    const program = clone(buildHoroscopeProgram(input)) as HoroscopeProgram;
+    program.evidence.push({
+      id: 'fact:2027-01-02:event:ingress:2027-01-02T03:00:00.000Z:venus-aquarius',
+      kind: 'sky-event',
+      sourceId: 'src/data/transits-2027-01.json',
+      label: 'Venus enters Aquarius',
+      at: '2027-01-02T03:00:00.000Z',
+      body: 'Venus',
+      eventKind: 'ingress',
+      eventType: 'aquarius',
+      sign: 'aquarius',
+    });
+
+    expect(validateHoroscopeProgram(program).map((failure) => failure.ruleId))
+      .not.toContain('EVIDENCE-YEAR-COVERAGE');
   });
 
   it('keeps all twelve readings pairwise distinct, including the long 2027 edition', () => {
@@ -195,6 +263,34 @@ describe('horoscope program domain', () => {
     expect(program.signs.every((entry) => (
       entry.readings['yearly-2027'].status === 'insufficient-evidence'
     ))).toBe(true);
+  });
+
+  it('changes the weekly edition at the Sunday-to-Monday UTC boundary', () => {
+    const rolloverDates = Array.from({ length: 14 }, (_, index) => {
+      const date = new Date('2026-07-13T00:00:00.000Z');
+      date.setUTCDate(date.getUTCDate() + index);
+      return date.toISOString().slice(0, 10);
+    });
+    const rolloverSnapshots = rolloverDates.map(fixtureDay);
+    const sunday = buildHoroscopeProgram({
+      anchorDate: '2026-07-19',
+      dailySnapshots: rolloverSnapshots,
+      yearlyEvents,
+    });
+    const monday = buildHoroscopeProgram({
+      anchorDate: '2026-07-20',
+      dailySnapshots: rolloverSnapshots,
+      yearlyEvents,
+    });
+
+    expect(sunday.signs[0].readings.weekly.period).toMatchObject({
+      from: '2026-07-13',
+      through: '2026-07-19',
+    });
+    expect(monday.signs[0].readings.weekly.period).toMatchObject({
+      from: '2026-07-20',
+      through: '2026-07-26',
+    });
   });
 
   it('fails closed on invalid facts, malformed yearly events, and output tampering', () => {

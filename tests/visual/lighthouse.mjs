@@ -36,7 +36,8 @@ if (process.env.LIGHTHOUSE_INCLUDE_AURA === '1') {
 const budgets = {
   score: 0.95,
   lcp: 2_500,
-  cls: 0.05,
+  // The brief says zero CLS, so any positive raw Lighthouse value fails.
+  cls: 0,
   tbt: 200,
 };
 
@@ -137,6 +138,6 @@ try {
 
 if (failures > 0) {
   throw new Error(
-    `${failures} route${failures === 1 ? '' : 's'} missed the Phase 1 Lighthouse gate: performance, accessibility, and SEO ≥95; LCP ≤2.50s; CLS ≤0.05; TBT ≤200ms.`,
+    `${failures} route${failures === 1 ? '' : 's'} missed the Phase 1 Lighthouse gate: performance, accessibility, and SEO ≥95; LCP ≤2.50s; CLS =0; TBT ≤200ms.`,
   );
 }

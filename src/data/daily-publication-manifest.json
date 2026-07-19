@@ -1,5 +1,5 @@
 {
-  "schema": "zodiacs.daily-publication-manifest.v1",
+  "schema": "zodiacs.daily-publication-manifest.v2",
   "date": "2026-07-19",
   "snapshotAt": "2026-07-19T12:00:00.000Z",
   "status": "verified",
@@ -10,38 +10,41 @@
   },
   "facts": {
     "path": "src/data/daily.json",
-    "fileSha256": "b17d418dc86464e94b264bdb3cfa5b60e665b25d817291c2ffa5ac7d223bd677",
-    "canonicalSha256": "c748bb0b4c646a5f6351da6da6981fce10cb48f292942916d0ced9bdd222da85",
+    "fileSha256": "777f5af842c2b5360e4ca3576b2b961da75d35347d612cc38d95e434b2c25dc6",
+    "canonicalSha256": "0ff3c5edbe3e66e1b8a640d29af895db34e6303d331540b818e92788d298a047",
     "factCount": 47,
     "eventsCoverage": "complete",
     "eventsSource": "src/data/transits-2026-07.json",
-    "eventsSourceSha256": "482652e6f5118a1bd1eb420ac704d479c5a8f9a29a1a10e58dad49a3280098f1",
-    "eventsSourceCanonicalSha256": "21d52e3ba96c39ea9a0feb9c8850a1651c6bbb6e42ad4a0730953219d0358e1f",
+    "eventsSourceSha256": "7945be47b8d297563ad3cc24a76810d531b775bc4f358af9be8c4096622bcd92",
+    "eventsSourceCanonicalSha256": "591a82f89512a64add27c56c664b73b677d0700edbe57064d878a0ef329c055c",
     "engine": {
-      "name": "astronomy-engine",
-      "version": "2.1.19"
+      "name": "@zodiacs/engine",
+      "version": "0.1.0"
     }
   },
   "publication": {
     "path": "src/data/daily-publication.json",
-    "canonicalSha256": "325c5de83857b9cadd0857ee6ef10382501f5e7306480481c8b81721387a2c68",
+    "canonicalSha256": "12979a54415a825b89edf9636f1d4bd9c878c9630c3625dec321d024b44162b8",
     "signCount": 12,
     "outputCount": 72
   },
   "generation": {
     "mode": "deterministic-template",
     "generatorId": "zodiacs.daily-renderer.v1.1",
-    "generatorSha256": "630faacb0c5019decdea3c07aeaff3806d7bd138fdc89baacc71996b6f20a86a",
+    "generatorSha256": "3fb383fa04935d183b11ab914aa95b7cb2be209f19a18e6ebf4af940a0e5d374",
     "model": null,
     "freeformModelOutput": false
   },
   "verification": {
-    "verifierId": "zodiacs.daily-verifier.v3",
-    "verifierSha256": "452aed34f24d1c3a0a1bb844134955e4c53307e673210d77a2cfd0f3f266261e",
-    "independentFromGenerator": true,
+    "verifierId": "zodiacs.daily-verifier.v4",
+    "verifierSha256": "ee24d5adbbc7d8fa5dbb7d8818ee99717392b10888fd7ad5fa07bf40da2aff15",
+    "copyVerifierIndependentFromGenerator": true,
     "astronomyAudit": {
-      "implementation": "zodiacs.daily-fact-audit.v1",
+      "implementation": "zodiacs.daily-fact-audit.v2",
+      "kind": "site-engine-parity-and-event-physics",
+      "sourceOfTruth": "@zodiacs/engine",
       "independentFromSnapshotBuilder": true,
+      "independentAstronomyImplementation": false,
       "status": "passed"
     },
     "copyCheck": {
@@ -63,7 +66,7 @@
   },
   "checks": {
     "signCount": 12,
-    "factAudit": "independent-recomputation-passed",
+    "factAudit": "site-engine-parity-and-event-physics-passed",
     "exactRender": "passed",
     "factReferences": "independent-verification-passed",
     "distinctness": "passed",

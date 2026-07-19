@@ -92,6 +92,18 @@ const PROGRAM_DISTINCTNESS_LIMITS: Record<ProgramSurface, number> = {
   'yearly-2027': 0.72,
 };
 
+// A useful house-level instruction may recur where the same topic returns,
+// but no exact editorial sentence may become a near-universal sign template.
+// Three lets a canonical house instruction recur in a small number of useful
+// contexts without allowing it to become a cross-surface sign template.
+const PROGRAM_MAX_EXACT_SENTENCE_SIGN_REUSE = 3;
+const PROGRAM_MIN_REUSE_SENTENCE_WORDS = 6;
+const PROGRAM_INTRA_ACTION_JACCARD_LIMIT = 0.5;
+// Same-sign adjacent editions share receipts and a solar-house vocabulary,
+// but their rendered advice must be at least as distinct as two daily signs.
+const PROGRAM_TODAY_TOMORROW_JACCARD_LIMIT = 0.4;
+const PROGRAM_ACTION_CLAUSE_OPENING = /^(?:ask|build|check|choose|clarify|close|compare|confirm|consider|decide|define|draft|finish|give|keep|leave|let|list|look|make|mark|measure|name|notice|offer|pause|pick|protect|put|record|remove|repair|reserve|review|say|separate|set|stabilize|start|state|test|treat|turn|use|watch|write)\b/iu;
+
 const PROGRAM_BANNED = [
   /\bdelve\b/iu,
   /\bunlock\b/iu,
@@ -167,6 +179,43 @@ function normalizedWords(text: string): string[] {
 
 function normalizedText(text: string): string {
   return normalizedWords(text).join(' ');
+}
+
+function independentSentences(text: string): string[] {
+  return text
+    .split(/(?<=[.!?])\s+/u)
+    .map((sentence) => sentence.trim())
+    .filter((sentence) => independentWordCount(sentence) >= PROGRAM_MIN_REUSE_SENTENCE_WORDS);
+}
+
+function independentActionClauses(text: string): string[] {
+  return text
+    .split(/[.!?;—:]+(?:\s+|$)/u)
+    .map((clause) => clause.trim())
+    .filter((clause) => (
+      independentWordCount(clause) >= 5
+      && PROGRAM_ACTION_CLAUSE_OPENING.test(clause)
+    ));
+}
+
+function intraReadingActionViolations(
+  text: string,
+  path: string,
+): IndependentCopyViolation[] {
+  const actions = independentActionClauses(text);
+  const failures: IndependentCopyViolation[] = [];
+  for (let left = 0; left < actions.length; left += 1) {
+    for (let right = left + 1; right < actions.length; right += 1) {
+      const score = independentShingleJaccard(actions[left], actions[right], 1);
+      if (score <= PROGRAM_INTRA_ACTION_JACCARD_LIMIT) continue;
+      failures.push(failure(
+        'COPY-DIST-INTRA-ACTION',
+        path,
+        `action clauses repeat within one reading (unigram Jaccard ${score.toFixed(3)} > ${PROGRAM_INTRA_ACTION_JACCARD_LIMIT}): ${actions[left]} / ${actions[right]}`,
+      ));
+    }
+  }
+  return failures;
 }
 
 export function independentShingleJaccard(leftText: string, rightText: string, width = 3): number {
@@ -984,6 +1033,12 @@ export function verifyHoroscopeProgramCopy(programValue: unknown): IndependentCo
         if (count < bounds.min || count > bounds.max) {
           failures.push(failure('COPY-LENGTH-WORDS', `${readingPath}.text`, `${count} words is outside ${bounds.min}-${bounds.max}`));
         }
+        // Long-form yearly chapters deliberately revisit dated evidence in
+        // chronological and thematic sections. Short-form editions should
+        // never repeat or closely paraphrase an action inside one reading.
+        if (surface !== 'yearly-2027') {
+          failures.push(...intraReadingActionViolations(joined, `${readingPath}.text`));
+        }
         surfaceTexts.get(surface)?.push({ sign, text: joined });
       } else if (!isNonEmptyString(reading.fallbackReason)) {
         failures.push(failure('COPY-STRUCT-FALLBACK', `${readingPath}.fallbackReason`, 'insufficient reading requires an explicit reason'));
@@ -1005,6 +1060,50 @@ export function verifyHoroscopeProgramCopy(programValue: unknown): IndependentCo
         }
       }
     }
+  }
+
+  const todayReadings = surfaceTexts.get('today') ?? [];
+  const tomorrowReadings = surfaceTexts.get('tomorrow') ?? [];
+  for (const sign of SIGN_SLUGS) {
+    const today = todayReadings.find((candidate) => candidate.sign === sign);
+    const tomorrow = tomorrowReadings.find((candidate) => candidate.sign === sign);
+    if (!today || !tomorrow) continue;
+    const score = independentShingleJaccard(today.text, tomorrow.text, 3);
+    if (score <= PROGRAM_TODAY_TOMORROW_JACCARD_LIMIT) continue;
+    failures.push(failure(
+      'COPY-DIST-TODAY-TOMORROW',
+      `program.signs.${sign}.readings.today/tomorrow`,
+      `same-sign trigram Jaccard ${score.toFixed(3)} exceeds ${PROGRAM_TODAY_TOMORROW_JACCARD_LIMIT}`,
+    ));
+  }
+
+  const sentenceUses = new Map<string, {
+    sentence: string;
+    signs: Set<string>;
+    readings: Set<string>;
+  }>();
+  for (const surface of PROGRAM_SURFACES) {
+    for (const candidate of surfaceTexts.get(surface) ?? []) {
+      for (const sentence of independentSentences(candidate.text)) {
+        const normalized = normalizedText(sentence);
+        const use = sentenceUses.get(normalized) ?? {
+          sentence,
+          signs: new Set<string>(),
+          readings: new Set<string>(),
+        };
+        use.signs.add(candidate.sign);
+        use.readings.add(`${candidate.sign}/${surface}`);
+        sentenceUses.set(normalized, use);
+      }
+    }
+  }
+  for (const use of sentenceUses.values()) {
+    if (use.signs.size <= PROGRAM_MAX_EXACT_SENTENCE_SIGN_REUSE) continue;
+    failures.push(failure(
+      'COPY-DIST-SENTENCE-REUSE',
+      'program.signs.*.readings.*.text',
+      `exact sentence appears for ${use.signs.size} signs across ${use.readings.size} readings; maximum is ${PROGRAM_MAX_EXACT_SENTENCE_SIGN_REUSE}: ${use.sentence}`,
+    ));
   }
   return sortedUnique(failures);
 }

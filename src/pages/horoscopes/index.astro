@@ -3,7 +3,7 @@ import Base from '../../layouts/Base.astro';
 import SignIcon from '../../components/SignIcon.astro';
 import EmailCapture from '../../components/EmailCapture.astro';
 import programData from '../../data/horoscope-program.json';
-import { pageReadingFromProgram } from '../../lib/horoscope-page-data';
+import { horoscopeHubTeaser, pageReadingFromProgram } from '../../lib/horoscope-page-data';
 import type { HoroscopeProgram } from '../../lib/horoscope-program';
 import { SIGNS } from '../../lib/signs';
 
@@ -15,15 +15,9 @@ const dateLabel = new Intl.DateTimeFormat('en-US', {
   timeZone: 'UTC',
 }).format(new Date(`${program.anchorDate}T12:00:00.000Z`));
 
-const teaser = (text: string) => {
-  if (text.length <= 176) return text;
-  const shortened = text.slice(0, 176).replace(/\s+\S*$/u, '');
-  return `${shortened}…`;
-};
-
 const cards = SIGNS.map((sign) => {
   const reading = pageReadingFromProgram(program, sign.slug, 'today');
-  return { sign, reading, teaser: teaser(reading.sections[0]?.body ?? reading.intro) };
+  return { sign, reading, teaser: horoscopeHubTeaser(reading.sections[0]?.body ?? reading.intro) };
 });
 
 const jsonLd = [
@@ -32,7 +26,7 @@ const jsonLd = [
     name: `Daily horoscopes — ${dateLabel}`,
     url: 'https://zodiacs.org/horoscopes/',
     description: `Daily horoscopes for all twelve signs on ${dateLabel}, with a clear theme and one useful move for each sign.`,
-    dateModified: `${program.anchorDate}T00:15:00.000Z`,
+    dateModified: `${program.anchorDate}T00:00:00.000Z`,
   },
   {
     '@type': 'ItemList',
@@ -47,6 +41,7 @@ const jsonLd = [
 ];
 ---
 <Base
+  stableTypography
   title={`Daily Horoscopes — ${dateLabel}, All 12 Signs | Zodiacs.org`}
   description={`Daily horoscopes for all twelve signs on ${dateLabel}, with a clear theme and one useful move for each sign.`}
   path="/horoscopes/"
@@ -55,7 +50,7 @@ const jsonLd = [
   jsonLd={jsonLd}
 >
   <section class="section--tight container container--narrow">
-    <div class="horo-hero reveal">
+    <div class="horo-hero">
       <em class="kicker">Daily edition · {dateLabel}</em>
       <h1 class="display">Daily horoscopes</h1>
       <p>
@@ -65,7 +60,7 @@ const jsonLd = [
       <span class="horo-hero__stamp mono">Updated daily · {dateLabel}</span>
     </div>
 
-    <div class="horo-grid reveal">
+    <div class="horo-grid">
       {cards.map(({ sign, reading, teaser }) => (
         <a class="tile horo-card" href={`/horoscopes/${sign.slug}/`} style={`--sign:${sign.hue}`}>
           <SignIcon sign={sign.slug} size={48} class="horo-card__icon" />
@@ -82,14 +77,15 @@ const jsonLd = [
 
     <EmailCapture placement="horoscopes" />
 
-    <p class="horo-note reveal">
+    <p class="horo-note">
       Want a more personal view? <a href="/birth-chart/">Get your free birth chart</a>.
     </p>
 
     <details class="horo-method">
       <summary>Behind these readings</summary>
       <p>
-        Sun-sign horoscopes give the broad view. See the
+        This is the {dateLabel} UTC edition; the underlying positions use the
+        recorded noon-UTC sky. Sun-sign horoscopes give the broad view. See the
         <a href="/methodology/">astrology, sources, and checks behind each edition</a>.
       </p>
     </details>
@@ -160,7 +156,7 @@ const jsonLd = [
   .horo-note a { color: var(--text); }
   .horo-method { margin-top: 12px; border-top: 1px solid var(--hair-1); color: var(--muted); font-size: var(--text-sm); }
   .horo-method summary { min-height: 44px; padding: 11px 0; color: var(--muted); cursor: pointer; }
-  .horo-method summary:focus-visible { outline: 2px solid var(--hair-3); outline-offset: 3px; }
+  .horo-method summary:focus-visible { outline: 2px solid var(--ink-0); outline-offset: 3px; }
   .horo-method p { margin: 0 0 14px; }
   .horo-method a { color: var(--text); }
 

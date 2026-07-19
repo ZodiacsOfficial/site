@@ -6,10 +6,12 @@ import { WEB_APPLICATION_PATHS } from '../src/strings/seo.en.mjs';
 
 const repo = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const dist = resolve(repo, 'dist');
-const signSlugs = new Set([
+const SITE_ORIGIN = 'https://zodiacs.org';
+const SIGN_SLUGS = [
   'aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo',
   'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces',
-]);
+];
+const signSlugs = new Set(SIGN_SLUGS);
 const failures = [];
 let documentCount = 0;
 let nodeCount = 0;
@@ -31,16 +33,31 @@ function attr(html, name, value) {
   });
 }
 
-function canonicalPath(html) {
-  const href = html.match(/<link\b[^>]*rel=(?:"canonical"|'canonical')[^>]*href=(?:"([^"]+)"|'([^']+)')/i)
-    ?.slice(1).find(Boolean)
-    ?? html.match(/<link\b[^>]*href=(?:"([^"]+)"|'([^']+)')[^>]*rel=(?:"canonical"|'canonical')/i)
-      ?.slice(1).find(Boolean);
-  if (!href) return null;
+function canonicalHrefs(html) {
+  return [...html.matchAll(/<link\b[^>]*>/gi)].flatMap((match) => {
+    const tag = match[0];
+    const rel = tag.match(/\brel=(?:"([^"]*)"|'([^']*)')/i)?.slice(1).find((value) => value !== undefined);
+    if (!rel?.toLowerCase().split(/\s+/u).includes('canonical')) return [];
+    const href = tag.match(/\bhref=(?:"([^"]*)"|'([^']*)')/i)?.slice(1).find((value) => value !== undefined);
+    return [href ?? ''];
+  });
+}
+
+function siteUrl(value, label, field, expected, { allowHash = false } = {}) {
   try {
-    const url = new URL(href, 'https://zodiacs.org');
-    return url.origin === 'https://zodiacs.org' ? url.pathname : null;
+    if (typeof value !== 'string' || !value) throw new Error('empty');
+    const url = new URL(value);
+    if (
+      url.origin !== SITE_ORIGIN
+      || url.username
+      || url.password
+      || url.search
+      || (!allowHash && url.hash)
+    ) throw new Error('not a canonical same-origin URL');
+    if (expected && url.href !== expected) throw new Error(`expected ${expected}`);
+    return url;
   } catch {
+    failures.push(`${label}: ${field} must be ${expected ?? `an absolute ${SITE_ORIGIN} URL`}`);
     return null;
   }
 }
@@ -81,25 +98,41 @@ function validateBreadcrumb(node, label, pathname) {
       failures.push(`${label}: invalid breadcrumb item at position ${index + 1}`);
     }
     const target = item.item ?? item.url;
-    try {
-      if (new URL(target).origin !== 'https://zodiacs.org') throw new Error('foreign origin');
-    } catch {
-      failures.push(`${label}: breadcrumb ${index + 1} has an invalid item URL`);
-    }
+    siteUrl(target, label, `breadcrumb ${index + 1} item`, undefined, { allowHash: true });
   });
   const lastTarget = items.at(-1)?.item ?? items.at(-1)?.url;
-  try {
-    if (new URL(lastTarget).pathname !== pathname) {
-      failures.push(`${label}: final breadcrumb does not resolve to ${pathname}`);
-    }
-  } catch {
-    // The malformed target was already reported above.
-  }
+  siteUrl(lastTarget, label, 'final breadcrumb item', `${SITE_ORIGIN}${pathname}`);
 }
 
-function validateArticle(node, label) {
-  for (const field of ['headline', 'url', 'image']) {
-    if (!(field in node)) failures.push(`${label}: Article is missing ${field}`);
+function validateArticle(node, label, canonicalUrl, { requireDates = false } = {}) {
+  for (const field of ['headline', 'description', 'inLanguage']) {
+    if (typeof node[field] !== 'string' || !node[field].trim()) {
+      failures.push(`${label}: Article is missing ${field}`);
+    }
+  }
+  siteUrl(node.url, label, 'Article.url', canonicalUrl);
+  siteUrl(node.image, label, 'Article.image', undefined);
+  if (
+    !node.mainEntityOfPage
+    || !hasType(node.mainEntityOfPage, 'WebPage')
+    || node.mainEntityOfPage['@id'] !== canonicalUrl
+  ) {
+    failures.push(`${label}: Article.mainEntityOfPage must identify ${canonicalUrl}`);
+  }
+  for (const field of ['datePublished', 'dateModified']) {
+    if (
+      (requireDates || node[field] !== undefined)
+      && (typeof node[field] !== 'string' || !Number.isFinite(Date.parse(node[field])))
+    ) {
+      failures.push(`${label}: Article has an invalid ${field}`);
+    }
+  }
+  if (
+    Number.isFinite(Date.parse(node.datePublished))
+    && Number.isFinite(Date.parse(node.dateModified))
+    && Date.parse(node.dateModified) < Date.parse(node.datePublished)
+  ) {
+    failures.push(`${label}: Article.dateModified predates datePublished`);
   }
   if (!node.author || !node.publisher) failures.push(`${label}: Article needs author and publisher`);
   if (node.author?.['@id'] !== 'https://zodiacs.org/#org') {
@@ -108,6 +141,58 @@ function validateArticle(node, label) {
   if (hasType(node.author, 'Person')) {
     failures.push(`${label}: AI-operated publication must not emit a fictional Person author`);
   }
+  if (node.publisher?.['@id'] !== 'https://zodiacs.org/#org') {
+    failures.push(`${label}: Article publisher must identify the Zodiacs.org Organization`);
+  }
+}
+
+function validateFaq(node, label, expectedCount) {
+  const questions = node?.mainEntity;
+  if (!Array.isArray(questions) || questions.length !== expectedCount) {
+    failures.push(`${label}: FAQPage must contain exactly ${expectedCount} questions`);
+    return;
+  }
+  const names = new Set();
+  questions.forEach((question, index) => {
+    if (!hasType(question, 'Question') || typeof question.name !== 'string' || !question.name.trim()) {
+      failures.push(`${label}: FAQ question ${index + 1} has an invalid Question shape`);
+    } else if (names.has(question.name.trim())) {
+      failures.push(`${label}: FAQ question ${index + 1} duplicates an earlier question`);
+    } else {
+      names.add(question.name.trim());
+    }
+    const answer = question.acceptedAnswer;
+    if (!hasType(answer, 'Answer') || typeof answer.text !== 'string' || !answer.text.trim()) {
+      failures.push(`${label}: FAQ question ${index + 1} needs a non-empty accepted Answer`);
+    }
+  });
+}
+
+function validateHoroscopeItemList(node, label) {
+  const items = node?.itemListElement;
+  if (node?.numberOfItems !== SIGN_SLUGS.length || !Array.isArray(items) || items.length !== SIGN_SLUGS.length) {
+    failures.push(`${label}: horoscope hub ItemList must contain all twelve signs`);
+    return;
+  }
+  const urls = new Set();
+  items.forEach((item, index) => {
+    const sign = SIGN_SLUGS[index];
+    const expectedUrl = `${SITE_ORIGIN}/horoscopes/${sign}/`;
+    const expectedName = `${sign.charAt(0).toUpperCase()}${sign.slice(1)} daily horoscope`;
+    if (
+      !hasType(item, 'ListItem')
+      || item.position !== index + 1
+      || item.name !== expectedName
+    ) {
+      failures.push(`${label}: horoscope ItemList entry ${index + 1} has an invalid shape or order`);
+    }
+    const parsed = siteUrl(item.url ?? item.item, label, `ItemList entry ${index + 1} URL`, expectedUrl);
+    if (parsed && urls.has(parsed.href)) {
+      failures.push(`${label}: horoscope ItemList entry ${index + 1} duplicates a URL`);
+    } else if (parsed) {
+      urls.add(parsed.href);
+    }
+  });
 }
 
 function validateApplication(node, label) {
@@ -121,8 +206,24 @@ function validateApplication(node, label) {
 for (const file of await htmlFiles(dist)) {
   const html = await readFile(file, 'utf8');
   const label = relative(dist, file).split(sep).join('/');
-  const pathname = canonicalPath(html);
-  if (!pathname || attr(html, 'name', 'robots')) continue;
+  if (attr(html, 'name', 'robots')) continue;
+  const builtPath = label === 'index.html'
+    ? '/'
+    : label.endsWith('/index.html')
+      ? `/${label.slice(0, -'index.html'.length)}`
+      : `/${label}`;
+  const canonicals = canonicalHrefs(html);
+  if (canonicals.length !== 1) {
+    failures.push(`${label}: indexable page needs exactly one canonical URL (found ${canonicals.length})`);
+  }
+  const href = canonicals[0];
+  if (!href) {
+    continue;
+  }
+  const canonical = siteUrl(href, label, 'canonical URL', `${SITE_ORIGIN}${builtPath}`);
+  if (!canonical) continue;
+  const pathname = canonical.pathname;
+  const canonicalUrl = canonical.href;
 
   const documents = structuredDocuments(html, label);
   const nodes = nodesOf(documents);
@@ -150,16 +251,50 @@ for (const file of await htmlFiles(dist)) {
   }
 
   const topLevelSlug = pathname.split('/').filter(Boolean);
-  const needsArticle = topLevelSlug.length === 1 && signSlugs.has(topLevelSlug[0]);
+  const horoscopeContent = new RegExp(
+    `^/horoscopes/(?:${[...signSlugs].join('|')})(?:/(?:tomorrow|weekly|monthly|love|career|2027))?/$`,
+  ).test(pathname);
+  const needsArticle = (topLevelSlug.length === 1 && signSlugs.has(topLevelSlug[0]))
+    || horoscopeContent;
   const learnContent = pathname.startsWith('/learn/')
     && (pathname === '/learn/how-to-read-a-birth-chart/'
       || pathname === '/learn/zodiac-dates/'
       || pathname === '/learn/glossary/'
       || topLevelSlug.length >= 3);
   if (needsArticle || learnContent) {
-    const article = nodes.find((node) => hasType(node, 'Article'));
-    if (!article) failures.push(`${label}: sign/learn content is missing Article`);
-    else validateArticle(article, label);
+    const articles = nodes.filter((node) => hasType(node, 'Article'));
+    if (articles.length !== 1) {
+      failures.push(`${label}: sign/learn content needs exactly one Article (found ${articles.length})`);
+    } else validateArticle(articles[0], label, canonicalUrl, { requireDates: horoscopeContent });
+  }
+
+  if (horoscopeContent) {
+    const faqs = nodes.filter((node) => hasType(node, 'FAQPage'));
+    if (faqs.length !== 1) {
+      failures.push(`${label}: horoscope content needs exactly one FAQPage (found ${faqs.length})`);
+    } else validateFaq(faqs[0], label, 3);
+  }
+
+  if (pathname === '/horoscopes/') {
+    const collections = nodes.filter((node) => hasType(node, 'CollectionPage'));
+    const lists = nodes.filter((node) => hasType(node, 'ItemList'));
+    if (collections.length !== 1) {
+      failures.push(`${label}: horoscope hub needs exactly one CollectionPage (found ${collections.length})`);
+    } else {
+      const [collection] = collections;
+      siteUrl(collection.url, label, 'CollectionPage.url', canonicalUrl);
+      for (const field of ['name', 'description']) {
+        if (typeof collection[field] !== 'string' || !collection[field].trim()) {
+          failures.push(`${label}: CollectionPage is missing ${field}`);
+        }
+      }
+      if (typeof collection.dateModified !== 'string' || !Number.isFinite(Date.parse(collection.dateModified))) {
+        failures.push(`${label}: CollectionPage has an invalid dateModified`);
+      }
+    }
+    if (lists.length !== 1) {
+      failures.push(`${label}: horoscope hub needs exactly one ItemList (found ${lists.length})`);
+    } else validateHoroscopeItemList(lists[0], label);
   }
 
   if (WEB_APPLICATION_PATHS.includes(pathname)) {

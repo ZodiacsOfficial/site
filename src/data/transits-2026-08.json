@@ -3,31 +3,31 @@
   "ingresses": [
     {
       "planet": "Venus",
-      "at": "2026-08-06T19:13:47.544Z",
+      "at": "2026-08-06T19:13:47.478Z",
       "sign": "libra",
       "retrograde": false
     },
     {
       "planet": "Mercury",
-      "at": "2026-08-09T16:28:10.080Z",
+      "at": "2026-08-09T16:28:10.070Z",
       "sign": "leo",
       "retrograde": false
     },
     {
       "planet": "Mars",
-      "at": "2026-08-11T08:31:01.577Z",
+      "at": "2026-08-11T08:31:01.563Z",
       "sign": "cancer",
       "retrograde": false
     },
     {
       "planet": "Sun",
-      "at": "2026-08-23T02:19:04.060Z",
+      "at": "2026-08-23T02:19:04.011Z",
       "sign": "virgo",
       "retrograde": false
     },
     {
       "planet": "Mercury",
-      "at": "2026-08-25T11:04:19.358Z",
+      "at": "2026-08-25T11:04:19.304Z",
       "sign": "virgo",
       "retrograde": false
     }
@@ -35,15 +35,15 @@
   "lunations": [
     {
       "type": "new",
-      "at": "2026-08-12T17:37:11.343Z",
+      "at": "2026-08-12T17:36:35.369Z",
       "sign": "leo",
-      "degree": 20.03849195796829
+      "degree": 20.0324835212694
     },
     {
       "type": "full",
-      "at": "2026-08-28T04:19:06.085Z",
+      "at": "2026-08-28T04:18:24.894Z",
       "sign": "pisces",
-      "degree": 4.907734717365997
+      "degree": 4.901646811859564
     }
   ],
   "stations": [],

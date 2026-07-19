@@ -43,24 +43,24 @@ describe('Almanac launch corpus', () => {
     expect(august.month).toBe('2026-08');
     expect(august.stations).toEqual([]);
     expect(august.ingresses).toEqual([
-      { planet: 'Venus', at: '2026-08-06T19:13:47.544Z', sign: 'libra', retrograde: false },
-      { planet: 'Mercury', at: '2026-08-09T16:28:10.080Z', sign: 'leo', retrograde: false },
-      { planet: 'Mars', at: '2026-08-11T08:31:01.577Z', sign: 'cancer', retrograde: false },
-      { planet: 'Sun', at: '2026-08-23T02:19:04.060Z', sign: 'virgo', retrograde: false },
-      { planet: 'Mercury', at: '2026-08-25T11:04:19.358Z', sign: 'virgo', retrograde: false },
+      { planet: 'Venus', at: '2026-08-06T19:13:47.478Z', sign: 'libra', retrograde: false },
+      { planet: 'Mercury', at: '2026-08-09T16:28:10.070Z', sign: 'leo', retrograde: false },
+      { planet: 'Mars', at: '2026-08-11T08:31:01.563Z', sign: 'cancer', retrograde: false },
+      { planet: 'Sun', at: '2026-08-23T02:19:04.011Z', sign: 'virgo', retrograde: false },
+      { planet: 'Mercury', at: '2026-08-25T11:04:19.304Z', sign: 'virgo', retrograde: false },
     ]);
     expect(august.lunations).toEqual([
       {
         type: 'new',
-        at: '2026-08-12T17:37:11.343Z',
+        at: '2026-08-12T17:36:35.369Z',
         sign: 'leo',
-        degree: expect.closeTo(20.03849195796829, 10),
+        degree: expect.closeTo(20.0324835212694, 10),
       },
       {
         type: 'full',
-        at: '2026-08-28T04:19:06.085Z',
+        at: '2026-08-28T04:18:24.894Z',
         sign: 'pisces',
-        degree: expect.closeTo(4.907734717365997, 10),
+        degree: expect.closeTo(4.901646811859564, 10),
       },
     ]);
     expect(augustEclipses).toEqual([
@@ -85,10 +85,10 @@ describe('Almanac launch corpus', () => {
       bDegree: expect.closeTo(13.682394995605307, 10),
     });
     for (const receipt of [
-      'new moon is exact on August 12 at 17:37:11 UTC, at 20° Leo',
+      'new moon is exact on August 12 at 17:36:35 UTC, at 20° Leo',
       'total solar eclipse reaches its global peak at 17:45:46 UTC',
       'partial lunar eclipse peaks on August 28 at 04:12:49 UTC, obscuring 96.6%',
-      'full moon itself is exact at 04:19:06 UTC, at 4.9° Pisces',
+      'full moon itself is exact at 04:18:24 UTC, at 4.9° Pisces',
       'crosses 0°00′ Libra on August 6 at 19:13 UTC',
       'crosses 0°00′ Leo on August 9 at 16:28 UTC',
       'crosses 0°00′ Cancer on August 11 at 08:31 UTC',

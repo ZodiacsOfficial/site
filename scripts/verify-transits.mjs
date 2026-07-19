@@ -31,4 +31,4 @@ for (const candidate of months) {
   }
   eventCount += result.events.length;
 }
-console.log(`verify-transits: PASS — ${months.length} month(s), ${eventCount} events independently checked`);
+console.log(`verify-transits: PASS — ${months.length} month(s), ${eventCount} events checked against the site engine`);

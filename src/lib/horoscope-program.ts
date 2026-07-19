@@ -46,7 +46,7 @@ export type {
 } from './horoscope-program-types';
 
 export const HOROSCOPE_PROGRAM_SCHEMA = 'zodiacs.horoscope-program.v1' as const;
-export const HOROSCOPE_PROGRAM_RENDERER = 'zodiacs.horoscope-program-renderer.v3' as const;
+export const HOROSCOPE_PROGRAM_RENDERER = 'zodiacs.horoscope-program-renderer.v5' as const;
 
 export const HOROSCOPE_WORD_BOUNDS: Record<HoroscopeSurface, { min: number; max: number }> = {
   today: { min: 90, max: 140 },
@@ -251,23 +251,298 @@ const CAREER_ACTION: Record<number, string> = {
   12: 'finish background work and protect concentration from unnecessary display',
 };
 
-const YEAR_QUESTIONS: Record<number, string> = {
-  1: 'What version of your role is ready to become visible through repeated action?',
-  2: 'Which resources deserve firmer terms, and which measures of worth are no longer useful?',
-  3: 'What needs to be said, learned, documented, or carried across a short distance?',
-  4: 'What would make the private base steadier enough to support the rest of the year?',
-  5: 'Which pleasure, creative work, or affection deserves protected time rather than leftover time?',
-  6: 'Where can a routine become kinder, clearer, and easier to repeat?',
-  7: 'Which agreement becomes healthier when both sides can see its terms?',
-  8: 'What shared obligation, intimacy, or resource needs a more explicit arrangement?',
-  9: 'Which belief should be tested through study, travel, teaching, or direct experience?',
-  10: 'What standard do you want your public work and reputation to demonstrate?',
-  11: 'Which people and future plans are capable of becoming a durable alliance?',
-  12: 'What can close, rest, or move behind the scenes without being treated as failure?',
+const DAILY_CHECKPOINT: Record<number, Record<'today' | 'tomorrow', string>> = {
+  1: {
+    today: 'Choose one visible first move and make it before asking the room for permission',
+    tomorrow: 'Write down the first move tonight so tomorrow begins with your own position',
+  },
+  2: {
+    today: 'Put a number beside the cost and decide what you will not spend to force the result',
+    tomorrow: 'Set tomorrow’s spending limit in time, money, or attention before the request arrives',
+  },
+  3: {
+    today: 'Put the message in writing, then choose the smallest first move that matches it',
+    tomorrow: 'Draft the question tonight and leave tomorrow enough room for a real answer',
+  },
+  4: {
+    today: 'Name the condition home needs and protect it before volunteering more of your day',
+    tomorrow: 'Clear one domestic obligation tonight so tomorrow has a usable private base',
+  },
+  5: {
+    today: 'Reserve a real block for the person, pleasure, or draft before it becomes optional',
+    tomorrow: 'Choose tomorrow’s creative or affectionate invitation and give it an actual time',
+  },
+  6: {
+    today: 'Remove one repeated snag from the routine before adding another task',
+    tomorrow: 'Prepare the tool, boundary, or handoff that will make tomorrow’s workload lighter',
+  },
+  7: {
+    today: 'State the unsettled term plainly and leave enough silence for the other side to answer',
+    tomorrow: 'Decide which agreement needs a direct question before tomorrow fills with assumptions',
+  },
+  8: {
+    today: 'List what is shared, owed, and private before making the next commitment',
+    tomorrow: 'Separate your obligation from someone else’s before tomorrow’s joint decision',
+  },
+  9: {
+    today: 'Test the larger idea against one source, journey, class, or lived example',
+    tomorrow: 'Choose the question tomorrow’s study or conversation must answer in practice',
+  },
+  10: {
+    today: 'Finish the work you are prepared to make visible and name the standard it meets',
+    tomorrow: 'Pick the result you can show tomorrow and close the gap that still weakens it',
+  },
+  11: {
+    today: 'Ask which invitation has a real next step and decline the one that only creates motion',
+    tomorrow: 'Confirm one future plan with a time, owner, or next step before tomorrow begins',
+  },
+  12: {
+    today: 'Close one open loop and protect a quiet block from new demands',
+    tomorrow: 'Leave one unfinished matter off tomorrow’s public agenda so it can settle in private',
+  },
+};
+
+const DAILY_SAME_HOUSE_FOLLOW_UP: Record<number, string> = {
+  1: 'After making the first move, check whether it made your position clearer before adding another',
+  2: 'After setting the limit, compare the actual cost with the capacity you meant to protect',
+  3: 'Once the message is sent, use the reply to decide which question still needs an answer',
+  4: 'Once the home condition is named, notice whether the boundary changes the demand placed on it',
+  5: 'After reserving the time, decide what would make the invitation or draft worth continuing',
+  6: 'After fixing the snag, watch whether the routine becomes easier before adding more work',
+  7: 'Once the unsettled term is stated, let the answer determine whether the agreement can proceed',
+  8: 'After separating the obligations, decide which commitment is actually yours to make',
+  9: 'Once the practical question is chosen, let the answer revise the larger idea if necessary',
+  10: 'After closing the visible gap, ask whether the result is ready for the standard it will face',
+  11: 'Once the next step has an owner and time, judge the future plan by whether it moves',
+  12: 'After closing the open loop, notice whether the quiet restores capacity or reveals another ending',
+};
+
+const TOMORROW_MOON_ACTION: Record<number, string> = {
+  1: 'Set out the first move you want to make before outside reactions set the tone',
+  2: 'Decide tonight what tomorrow can cost in money, time, and attention',
+  3: 'Draft the message or question now, then read it once for what is still unclear',
+  4: 'Restore one part of the private base so tomorrow does not begin in borrowed urgency',
+  5: 'Give tomorrow’s pleasure, affection, or creative work a protected time',
+  6: 'Prepare the routine, tool, or handoff that will remove friction from the next workday',
+  7: 'Identify the agreement that needs a direct answer before the day gathers speed',
+  8: 'Separate the shared obligation from the part that remains yours alone',
+  9: 'Choose the source, class, journey, or conversation that can test the larger idea',
+  10: 'Finish one visible result tonight so tomorrow can begin with a real standard',
+  11: 'Confirm which invitation or future plan has an owner and an actual next step',
+  12: 'Clear space for one private conclusion before new demands enter the day',
+};
+
+const TOMORROW_DECISION: Record<number, string> = {
+  1: 'Leave room to revise the opening move once new information arrives',
+  2: 'Choose the resource limit the plan must respect before it can proceed',
+  3: 'Name who needs the message, what they need to know, and when they need it',
+  4: 'Decide which home condition is essential and which preference can remain flexible',
+  5: 'Pick the invitation, person, or draft you will meet with full attention',
+  6: 'Define the smallest workflow change you can observe over a complete day',
+  7: 'Choose the term you will ask the other side to confirm or revise',
+  8: 'Write down what is owed, what is shared, and what requires consent',
+  9: 'Turn the larger belief into one question tomorrow can answer through experience',
+  10: 'Select the finished work or responsibility you are willing to stand behind publicly',
+  11: 'Give the group plan a next action, an owner, and a time for review',
+  12: 'Protect a quiet interval long enough to distinguish recovery from avoidance',
+};
+
+const WEEKLY_CHECKPOINT: Record<number, string> = {
+  1: 'At the exact contact, compare the move you intended with the one you are actually making',
+  2: 'At the exact contact, compare the available resources with what the plan now costs',
+  3: 'At the exact contact, reread the message and correct the instruction or assumption that changed',
+  4: 'At the exact contact, check whether the private conditions still support the week outside them',
+  5: 'At the exact contact, notice whether pleasure or creative work received time rather than good intentions',
+  6: 'At the exact contact, inspect the recurring snag instead of treating effort as the only variable',
+  7: 'At the exact contact, compare the spoken agreement with what each person is actually doing',
+  8: 'At the exact contact, reconcile what is shared, owed, private, and still unresolved',
+  9: 'At the exact contact, test the larger claim against a source or experience that could revise it',
+  10: 'At the exact contact, judge the visible work by the standard you said it would meet',
+  11: 'At the exact contact, ask whether the group or future plan has acquired a real next step',
+  12: 'At the exact contact, notice what quiet resolved and what still needs a deliberate ending',
+};
+
+const LOVE_RESPONSE: Record<number, string> = {
+  1: 'Say what you prefer once, then notice whether the response leaves room for both people',
+  2: 'Judge the response by consistent effort and shared values, not by reassurance alone',
+  3: 'Ask the specific question and let the answer replace the version you rehearsed in advance',
+  4: 'Notice whether the response makes the shared space safer and more workable',
+  5: 'Offer the affection or invitation directly, then let the response set the next pace',
+  6: 'Watch what the response changes in the small routines through which care is delivered',
+  7: 'Compare what was offered with what was returned instead of translating the response into a hidden riddle',
+  8: 'Let the response clarify what can be shared, what stays private, and what needs a firmer term',
+  9: 'Listen for the belief behind the response without abandoning the position you actually hold',
+  10: 'Notice whether the response can coexist with the public obligations already on the table',
+  11: 'Ask whether the response supports both the friendship and the future being discussed',
+  12: 'Let the response belong to the other person instead of turning empathy into responsibility for it',
+};
+
+const CAREER_REVIEW: Record<number, string> = {
+  1: 'Make the opening move revisitable by naming what would justify the next one',
+  2: 'Keep the choice revisitable by recording its real cost in money, time, and capacity',
+  3: 'Put the choice in a brief another person can question before the message hardens into policy',
+  4: 'Choose a work rhythm you can revise without destabilizing the private base beneath it',
+  5: 'Give the draft a review point before visibility turns an experiment into a fixed promise',
+  6: 'Change one part of the workflow and watch the repeatable result before scaling it',
+  7: 'Write the role, term, and review date so the agreement can change through evidence',
+  8: 'Record shared costs and ownership now so revision does not become a dispute later',
+  9: 'Define which new evidence from training, travel, or a wider field would change the choice',
+  10: 'Set a visible review standard before treating this professional direction as permanent',
+  11: 'Give the collaboration an owner and next checkpoint so the network can improve it',
+  12: 'Protect a private review interval before unfinished work is made public',
+};
+
+const HOUSE_SECTION: Record<number, string> = {
+  1: 'identity and first moves',
+  2: 'money and self-worth',
+  3: 'messages and learning',
+  4: 'home and family',
+  5: 'creativity, pleasure, and romance',
+  6: 'routines and workload',
+  7: 'partnerships and agreements',
+  8: 'shared commitments and intimacy',
+  9: 'study and wider horizons',
+  10: 'career and visibility',
+  11: 'friends and future plans',
+  12: 'rest and closure',
+};
+
+const HOUSE_DECISION: Record<number, string> = {
+  1: 'Decide what you want to begin, and what you are willing to be known for beginning.',
+  2: 'Put a number beside the cost, the available capacity, and the value you expect in return.',
+  3: 'Write the message plainly, confirm the route, and ask the question that would prevent avoidable confusion.',
+  4: 'Name the condition your home or family life needs before you volunteer another piece of your time.',
+  5: 'Reserve time for the person, pleasure, or creative draft before the calendar treats it as optional.',
+  6: 'Remove one repeated snag from the routine before adding another promise to the week.',
+  7: 'State the term that is still vague and give the other person a real chance to answer it.',
+  8: 'List what is shared, what is owed, and what must remain private before making the next commitment.',
+  9: 'Choose the course, journey, publication, or conversation that could test the larger idea in real life.',
+  10: 'Choose the finished work, standard, or responsibility you are prepared to make visible.',
+  11: 'Notice which invitation has a real next step and which future plan survives an honest calendar check.',
+  12: 'Close one open loop, protect a quiet block, and let unfinished background work stay out of public view.',
+};
+
+interface YearEditorialProfile {
+  opening: string;
+  pacing: string;
+  relationships: string;
+  work: string;
+  privateLife: string;
+  close: string;
+}
+
+const YEAR_EDITORIAL: Record<HoroscopeSign, YearEditorialProfile> = {
+  aries: {
+    opening: 'This is not a year for proving how quickly you can move. It is a year for deciding which direction deserves your force, then building enough support to stay with it.',
+    pacing: 'Move in defined rounds: act, check the result, and adjust before the next push.',
+    relationships: 'Directness is one of your strengths, but speed can turn a conversation into a conclusion before the other person has entered it.',
+    work: 'Initiative matters most when the target, authority, and finish line are visible to everyone involved.',
+    privateLife: 'Recovery is part of the structure, especially when urgency makes every request sound equally important.',
+    close: 'End the year with fewer active fronts and a clearer reason for each one that remains.',
+  },
+  taurus: {
+    opening: 'Your 2027 is less about defending the familiar than deciding what is genuinely worth keeping. Stability becomes useful when it can absorb one deliberate change without losing its center.',
+    pacing: 'Give each adjustment a place to land before deciding whether the next one is necessary.',
+    relationships: 'Consistency still matters, but it needs to include honest updates when a need, limit, or shared value has changed.',
+    work: 'Durable progress comes from knowing what the plan consumes as well as what it promises to produce.',
+    privateLife: 'Comfort should restore you, not quietly preserve an arrangement that asks too much.',
+    close: 'Finish with a smaller set of commitments that feel solid because they have been tested, not merely repeated.',
+  },
+  gemini: {
+    opening: 'The volume of information is not the story of your year. The story is what happens when you edit the noise into a question, a decision, and language another person can use.',
+    pacing: 'Collect less indiscriminately and leave time to compare what the evidence is actually saying.',
+    relationships: 'Curiosity creates closeness when it is followed by listening rather than a quick change of subject.',
+    work: 'Your best idea needs a brief, an owner, and a handoff before its cleverness becomes useful to a team.',
+    privateLife: 'A quieter base will help you tell the difference between genuine interest and nervous motion.',
+    close: 'Keep the conversations that changed your mind and release the ones that only kept you busy.',
+  },
+  cancer: {
+    opening: '2027 asks you to define security in present-tense terms. Memory can inform the choice, but the home, bond, or responsibility must also support the life you are living now.',
+    pacing: 'Let private priorities set the pace, then make outside commitments from the capacity that remains.',
+    relationships: 'Care becomes clearer when you name the need underneath it and stop asking another person to infer the boundary.',
+    work: 'Preparation is valuable, but there comes a point when the finished work needs a public place and a direct ask.',
+    privateLife: 'Protecting your inner life does not require preserving every family role or emotional habit unchanged.',
+    close: 'Carry forward the forms of belonging that can hold both tenderness and an honest limit.',
+  },
+  leo: {
+    opening: 'The question in 2027 is not whether you can command attention. It is what your attention is in service of, and whether the work underneath the presentation deserves a longer life.',
+    pacing: 'Choose a center for each season and allow supporting work to remain supporting work.',
+    relationships: 'Warmth lands differently when admiration travels both ways and neither person has to perform for reassurance.',
+    work: 'Visibility helps when it reveals authorship, preparation, and a standard you can continue to meet after the first response.',
+    privateLife: 'Not every meaningful act needs an audience; private creative time may protect the quality of what you later share.',
+    close: 'Measure the year by the contribution you would still value if the applause arrived late or not at all.',
+  },
+  virgo: {
+    opening: 'Your 2027 does not need a total overhaul. It needs precise edits where the same friction keeps returning, followed by enough patience to see whether the new process can live outside the notebook.',
+    pacing: 'Make one useful correction at a time and resist turning every unfinished edge into an emergency.',
+    relationships: 'Care is easier to receive when help is offered as help, not hidden inside an unsolicited review.',
+    work: 'The strongest operational improvement is the one another person can understand, repeat, and maintain without you standing over it.',
+    privateLife: 'Leave some room unoptimized so rest, affection, and ordinary mess can exist without becoming another assignment.',
+    close: 'Keep the systems that made life kinder and retire the ones that merely made you more vigilant.',
+  },
+  libra: {
+    opening: 'Balance in 2027 will come from decisions, not from keeping every option in negotiation. The year rewards agreements whose terms are visible enough to test in ordinary life.',
+    pacing: 'Make the fair offer once, notice the response, and let that information shape the next move.',
+    relationships: 'Reciprocity becomes real when your own preference is on the table before you begin accommodating someone else’s.',
+    work: 'Collaboration improves when credit, responsibility, timing, and the right to revise are named early.',
+    privateLife: 'Peace at home cannot depend on your ability to absorb every tension before anyone else notices it.',
+    close: 'End the year with agreements that can survive clarity and with fewer negotiations that exist only to postpone a choice.',
+  },
+  scorpio: {
+    opening: '2027 favors depth that changes an actual arrangement. Insight matters, but the decisive step is a fact confirmed, a boundary stated, a responsibility reassigned, or trust rebuilt through visible behavior.',
+    pacing: 'Follow the consequential thread and leave the surrounding silences alone until they produce real information.',
+    relationships: 'Measured disclosure will tell you more than a hidden test, especially when intimacy and shared resources overlap.',
+    work: 'Concentrated effort has more leverage than trying to anticipate and control every variable around the work.',
+    privateLife: 'Privacy should protect restoration and discernment, not become a place where an avoidable decision waits indefinitely.',
+    close: 'Keep what became more honest under examination and stop feeding mysteries that never became facts.',
+  },
+  sagittarius: {
+    opening: 'The horizon matters in 2027, but the route deserves equal attention. A belief becomes useful when it can survive contact with a deadline, a budget, a journey, or another person’s informed question.',
+    pacing: 'Pair every large direction with a checkpoint close enough to change the route while it still matters.',
+    relationships: 'Honesty works best when timing and tone are treated as part of the truth rather than optional packaging.',
+    work: 'A promising direction needs a defined audience, practical sequence, and measure of progress before expansion helps.',
+    privateLife: 'Freedom may require a quieter place to think and a few chosen commitments that reduce needless improvisation.',
+    close: 'Take forward the commitments that widened your life in practice, not only the ideas that sounded expansive.',
+  },
+  capricorn: {
+    opening: 'The strongest structure in 2027 is not the one carrying the most weight. It is the one that makes the essential work repeatable, exposes an outdated duty, and includes recovery before exhaustion writes the schedule.',
+    pacing: 'Build the minimum sound structure first, then add only what proves it belongs there.',
+    relationships: 'Commitment feels warmer when effort and affection are both visible, rather than one being used as evidence for the other.',
+    work: 'Authority grows through a standard you can maintain and delegate, not through becoming the permanent exception to every limit.',
+    privateLife: 'A private counterweight is practical infrastructure; home, sleep, and unclaimed time keep ambition from becoming brittle.',
+    close: 'Finish with a structure that can hold your ambition without requiring you to disappear inside its maintenance.',
+  },
+  aquarius: {
+    opening: 'Originality is not the finish line of your 2027. The useful future is the one that survives a prototype, serves real people, and becomes clear enough for someone else to question or repeat.',
+    pacing: 'Test the new idea in public-sized pieces, then revise from observed use rather than theory alone.',
+    relationships: 'Independence and closeness can coexist when expectations are explicit and neither person must guess what distance means.',
+    work: 'Innovation earns trust through legible choices, useful documentation, and room for collaborators to improve the design.',
+    privateLife: 'Solitude should restore your capacity to participate, not become an automatic answer to every difficult exchange.',
+    close: 'Keep the alliances and experiments that became more useful through contact with reality.',
+  },
+  pisces: {
+    opening: 'Sensitivity becomes directional in 2027 when it has a form. A feeling, image, or intuition needs a boundary, a concrete question, and a place in the day before it can guide a choice.',
+    pacing: 'Make enough quiet to hear the signal, then translate it into one request, draft, boundary, or pause.',
+    relationships: 'Empathy supports connection when it does not require you to become responsible for what another person will not name.',
+    work: 'Imagination travels farther when the scope, deadline, and handoff are clear enough to protect the original idea.',
+    privateLife: 'Rest needs an edge around it so that retreat restores you instead of dissolving the distinction between your needs and everyone else’s.',
+    close: 'Carry forward the forms that gave your sensitivity somewhere honest and useful to go.',
+  },
 };
 
 function cap(value: string): string {
   return value.charAt(0).toUpperCase() + value.slice(1);
+}
+
+function uncap(value: string): string {
+  return value.charAt(0).toLocaleLowerCase('en') + value.slice(1);
+}
+
+function readerList(values: readonly string[]): string {
+  const unique = [...new Set(values)];
+  if (unique.length <= 1) return unique[0] ?? '';
+  if (unique.length === 2) return `${unique[0]} and ${unique[1]}`;
+  return `${unique.slice(0, -1).join(', ')}, and ${unique.at(-1)}`;
 }
 
 export function horoscopeWordCount(text: string): number {
@@ -559,8 +834,12 @@ function eventSentence(event: HoroscopeProgramEvent, sign: HoroscopeSign): strin
   return `${eventName(event)} brings ${HOUSE_THEME[house]} into focus.`;
 }
 
-function passage(text: string, evidenceRefs: string[]): HoroscopePassage {
-  return { text: text.replace(/\s+/g, ' ').trim(), evidenceRefs: [...new Set(evidenceRefs)] };
+function passage(text: string, evidenceRefs: string[], heading?: string): HoroscopePassage {
+  return {
+    ...(heading ? { heading } : {}),
+    text: text.replace(/\s+/g, ' ').trim(),
+    evidenceRefs: [...new Set(evidenceRefs)],
+  };
 }
 
 function reading(
@@ -620,6 +899,10 @@ function padReading(
     `If a theme does not match your circumstances, let it pass instead of bending the day to fit it.`,
     `Bring the symbolism down to one honest question you can act on.`,
   ];
+  const initialCount = horoscopeWordCount(passages.map((item) => item.text).join(' '));
+  if (surface === 'yearly-2027' && initialCount < min) {
+    throw new Error(`Yearly renderer produced ${initialCount} words; editorial copy may not be padded with generic filler`);
+  }
   let index = 0;
   while (horoscopeWordCount(passages.map((item) => item.text).join(' ')) < min) {
     const target = passages[index % Math.max(passages.length, 1)];
@@ -650,20 +933,35 @@ function dailySurface(
   const moonHouse = solarHouse(moon.sign, sign);
   const secondaryHouse = solarHouse(secondary.sign, sign);
   const dayWord = surface === 'today' ? 'Today' : 'Tomorrow';
-  const passages = [
-    passage(
-      `${dayWord}, ${HOUSE_ACTION[moonHouse]}. For ${cap(sign)}, ${profile.daily}. The ${daily.moon.phase.toLocaleLowerCase('en')} Moon brings ${HOUSE_THEME[moonHouse]} into the picture.`,
-      catalog.position(daily, moon, sign),
-    ),
-    passage(
-      `${cap(HOUSE_ACTION[secondaryHouse])}. Give the situation room to show you what it needs instead of forcing one symbol into a verdict. ${secondary.body}${secondary.retrograde ? ' retrograde' : ''} in ${cap(secondary.sign)} adds emphasis to ${HOUSE_THEME[secondaryHouse]}.`,
-      catalog.position(daily, secondary, sign),
-    ),
-  ];
+  const passages = surface === 'today'
+    ? [
+        passage(
+          `${dayWord}, ${HOUSE_ACTION[moonHouse]}. For ${cap(sign)}, ${profile.daily}. The ${daily.moon.phase.toLocaleLowerCase('en')} Moon puts ${HOUSE_THEME[moonHouse]} on the day’s agenda.`,
+          catalog.position(daily, moon, sign),
+        ),
+        passage(
+          `${HOUSE_DECISION[secondaryHouse].replace(/[.]$/u, '')}; ${secondary.body}${secondary.retrograde ? ' retrograde' : ''} in ${cap(secondary.sign)} gives ${HOUSE_THEME[secondaryHouse]} a second vote in the decision.`,
+          catalog.position(daily, secondary, sign),
+        ),
+      ]
+    : [
+        passage(
+          `${TOMORROW_MOON_ACTION[moonHouse]}. Use the lead time to ${profile.test}. As the ${daily.moon.phase.toLocaleLowerCase('en')} Moon develops, tomorrow’s foreground shifts toward ${HOUSE_THEME[moonHouse]}.`,
+          catalog.position(daily, moon, sign),
+        ),
+        passage(
+          `${TOMORROW_DECISION[secondaryHouse]}; ${secondary.body}${secondary.retrograde ? ' retrograde' : ''} in ${cap(secondary.sign)} is one of the conditions shaping ${HOUSE_THEME[secondaryHouse]}.`,
+          catalog.position(daily, secondary, sign),
+        ),
+      ];
   const exact = daily.events[0] as HoroscopeProgramEvent | undefined;
   if (exact) {
+    const exactHouse = eventHouses(exact, sign)[0];
+    const checkpoint = exactHouse === secondaryHouse
+      ? DAILY_SAME_HOUSE_FOLLOW_UP[exactHouse]
+      : DAILY_CHECKPOINT[exactHouse][surface];
     passages.push(passage(
-      `Let this be the day’s pivot: test one real conversation, task, or choice before drawing a larger conclusion. ${eventSentence(exact, sign)}`,
+      `${checkpoint}. ${eventSentence(exact, sign)}`,
       catalog.event(exact, sign, { date: daily.date, sourceId: daily.eventsSource ?? `daily-snapshot:${daily.date}` }),
     ));
   } else {
@@ -692,7 +990,7 @@ function loveSurface(sign: HoroscopeSign, daily: Daily, catalog: EvidenceCatalog
       catalog.position(daily, venus, sign),
     ),
     passage(
-      `${cap(LOVE_ACTION[moonHouse])}. Let the other person’s response be information, not a riddle you must solve in advance. The Moon shifts the emotional weather toward ${HOUSE_THEME[moonHouse]}.`,
+      `${cap(LOVE_ACTION[moonHouse])}. ${LOVE_RESPONSE[moonHouse]}. The Moon shifts the emotional weather toward ${HOUSE_THEME[moonHouse]}.`,
       catalog.position(daily, moon, sign),
     ),
   ]);
@@ -705,7 +1003,7 @@ function careerSurface(sign: HoroscopeSign, daily: Daily, catalog: EvidenceCatal
   const primaryHouse = solarHouse(primary.sign, sign);
   const sunHouse = solarHouse(sun.sign, sign);
   const sunLead = sunHouse === primaryHouse
-    ? `Use this as the standard: ${SIGN_REGISTER[sign].career}.`
+    ? `Keep ${HOUSE_SECTION[sunHouse]} anchored to one observable result.`
     : `${cap(CAREER_ACTION[sunHouse])}.`;
   return reading('career', sign, { from: daily.date, through: daily.date }, `${cap(sign)} career horoscope for ${dateLabel(daily.date)}`, [
     passage(
@@ -713,7 +1011,7 @@ function careerSurface(sign: HoroscopeSign, daily: Daily, catalog: EvidenceCatal
       catalog.position(daily, primary, sign),
     ),
     passage(
-      `${sunLead} Build around choices you can revisit instead of treating the mood as a promised professional result. The Sun widens the frame to ${HOUSE_THEME[sunHouse]}.`,
+      `${sunLead} ${CAREER_REVIEW[sunHouse]}. The Sun widens the frame to ${HOUSE_THEME[sunHouse]}.`,
       catalog.position(daily, sun, sign),
     ),
   ]);
@@ -743,22 +1041,28 @@ function weeklySurface(sign: HoroscopeSign, days: Daily[], catalog: EvidenceCata
   const endHouse = solarHouse(endMoon.sign, sign);
   const passages = [
     passage(
-      `${cap(SIGN_REGISTER[sign].weekly)}. Start by choosing one practical way to ${HOUSE_ACTION[startHouse]}, then make room for ${HOUSE_THEME[middleHouse]} by Thursday. The Moon’s movement connects the two parts of the week.`,
-      [...catalog.position(start, startMoon, sign), ...catalog.position(middle, middleMoon, sign)],
+      `${cap(SIGN_REGISTER[sign].weekly)}. The week opens with ${HOUSE_THEME[startHouse]}, moves through ${HOUSE_THEME[middleHouse]} by Thursday, and closes on ${HOUSE_THEME[endHouse]}. Give ${HOUSE_SECTION[startHouse]} the first concrete move instead of asking one choice to settle all three areas at once.`,
+      [
+        ...catalog.position(start, startMoon, sign),
+        ...catalog.position(middle, middleMoon, sign),
+        ...catalog.position(end, endMoon, sign),
+      ],
     ),
     passage(
-      `Early in the week, turn toward ${HOUSE_THEME[startHouse]}. ${cap(HOUSE_ACTION[startHouse])}. Keep the adjustment small enough to notice what it changes.`,
+      `Early in the week, turn toward ${HOUSE_THEME[startHouse]}: ${HOUSE_ACTION[startHouse]}, then ${uncap(HOUSE_DECISION[startHouse]).replace(/[.]$/u, '')}. Keep the ${HOUSE_SECTION[startHouse]} adjustment small enough to see what it changes before adding another.`,
       catalog.position(start, startMoon, sign),
     ),
     passage(
-      `By midweek, attention shifts to ${HOUSE_THEME[middleHouse]}. ${cap(HOUSE_ACTION[middleHouse])}.`,
+      `By midweek, attention shifts to ${HOUSE_THEME[middleHouse]}: ${HOUSE_ACTION[middleHouse]}, then ${uncap(HOUSE_DECISION[middleHouse]).replace(/[.]$/u, '')}.`,
       catalog.position(middle, middleMoon, sign),
     ),
   ];
   const exact = uniqueWeekEvents(days)[0];
   if (exact) {
+    const exactHouses = eventHouses(exact.event, sign);
+    const exactContext = eventSentence(exact.event, sign).replace(/[.]$/u, '');
     passages.push(passage(
-      `Treat the week’s turning point as a moment to notice what changes, not a deadline for forcing a result. ${eventSentence(exact.event, sign)}`,
+      `${WEEKLY_CHECKPOINT[exactHouses[0]]}. ${exactContext}; ${uncap(HOUSE_DECISION[exactHouses[0]]).replace(/[.]$/u, '')}.`,
       catalog.event(exact.event, sign, { date: exact.daily.date, sourceId: exact.daily.eventsSource ?? `daily-snapshot:${exact.daily.date}` }),
     ));
   } else {
@@ -770,7 +1074,7 @@ function weeklySurface(sign: HoroscopeSign, days: Daily[], catalog: EvidenceCata
     ));
   }
   passages.push(passage(
-    `The week closes by returning attention to ${HOUSE_THEME[endHouse]}. ${cap(HOUSE_ACTION[endHouse])}. For ${cap(sign)}, the useful review is to ${SIGN_REGISTER[sign].test}.`,
+    `The week closes with ${HOUSE_THEME[endHouse]}: ${HOUSE_ACTION[endHouse]}, then ${uncap(HOUSE_DECISION[endHouse]).replace(/[.]$/u, '')}. For ${cap(sign)}, the final review is to ${SIGN_REGISTER[sign].test}.`,
     catalog.position(end, endMoon, sign),
   ));
   return reading('weekly', sign, { from: start.date, through: end.date }, `${cap(sign)} weekly horoscope, ${dateLabel(start.date)}–${dateLabel(end.date)}`, passages);
@@ -790,62 +1094,189 @@ function hasYearCoverage(events: readonly HoroscopeProgramEvent[]): boolean {
     && stationTypes.has('direct');
 }
 
-function chooseEvent(
+function chooseEvents(
   events: readonly HoroscopeProgramEvent[],
   sign: HoroscopeSign,
   preferredHouses: readonly number[],
+  limit: number,
   offset: number,
-): HoroscopeProgramEvent {
+): HoroscopeProgramEvent[] {
   const preferred = events.filter((event) => eventHouses(event, sign).some((house) => preferredHouses.includes(house)));
-  const candidates = preferred.length ? preferred : [...events];
-  return candidates[offset % candidates.length];
+  const candidates = preferred.length >= limit ? preferred : [...preferred, ...events.filter((event) => !preferred.includes(event))];
+  const rotated = candidates.map((_, index) => candidates[(offset + index) % candidates.length]);
+  const selected: HoroscopeProgramEvent[] = [];
+  const selectedHouses = new Set<number>();
+  for (const event of rotated) {
+    const primaryHouse = eventHouses(event, sign)[0];
+    if (selectedHouses.has(primaryHouse)) continue;
+    selected.push(event);
+    selectedHouses.add(primaryHouse);
+    if (selected.length === Math.min(limit, candidates.length)) {
+      return selected.sort((left, right) => left.at.localeCompare(right.at));
+    }
+  }
+  for (const event of rotated) {
+    if (!selected.includes(event)) selected.push(event);
+    if (selected.length === Math.min(limit, candidates.length)) break;
+  }
+  return selected.sort((left, right) => left.at.localeCompare(right.at));
 }
 
-function yearEventPassage(
+function dominantYearHouses(
+  events: readonly HoroscopeProgramEvent[],
+  sign: HoroscopeSign,
+): number[] {
+  const counts = new Map<number, number>();
+  for (const event of events) for (const house of eventHouses(event, sign)) {
+    counts.set(house, (counts.get(house) ?? 0) + 1);
+  }
+  return [...counts.entries()]
+    .sort((left, right) => right[1] - left[1] || left[0] - right[0])
+    .map(([house]) => house);
+}
+
+function shortDateLabel(at: string): string {
+  const parsed = new Date(at);
+  return `${MONTHS[parsed.getUTCMonth()]} ${parsed.getUTCDate()}`;
+}
+
+function yearEventBeat(
   event: HoroscopeProgramEvent,
   sign: HoroscopeSign,
   slot: number,
-  catalog: EvidenceCatalog,
-): HoroscopePassage {
+): string {
   const houses = eventHouses(event, sign);
   const primary = houses[0];
-  const secondary = houses[1];
-  const placement = secondary
-    ? `${cap(eventName(event))} connects ${HOUSE_THEME[primary]} with ${HOUSE_THEME[secondary]} around ${dateLabel(event.at)}.`
-    : `${cap(eventName(event))} brings ${HOUSE_THEME[primary]} into focus around ${dateLabel(event.at)}.`;
-  const profile = SIGN_REGISTER[sign];
-  const approaches = [
-    `For ${cap(sign)}, the test is to ${profile.test}.`,
-    `The ${cap(sign)} lens is that ${profile.daily}.`,
-    `Across the year, ${profile.year}.`,
-    `In practice, ${profile.weekly}.`,
+  const theme = houses.length > 1
+    ? `${HOUSE_THEME[primary]} and ${HOUSE_THEME[houses[1]]}`
+    : HOUSE_THEME[primary];
+  const date = dateLabel(event.at);
+  const actionSource = slot % 2 === 0 ? HOUSE_ACTION[primary] : HOUSE_DECISION[primary];
+  const action = actionSource.charAt(0).toLocaleLowerCase('en')
+    + actionSource.slice(1).replace(/[.]$/u, '');
+  if (event.kind === 'eclipse') {
+    const noun = event.type === 'solar' ? 'a beginning worth defining' : 'a result or limit worth naming';
+    return slot % 2 === 0
+      ? `Use ${eventName(event)} on ${date} as a checkpoint for ${theme}: look for ${noun}, then ${action}.`
+      : `Mark ${date} for a review of ${theme} with ${eventName(event)}; identify ${noun} and ${action}.`;
+  }
+  if (event.kind === 'ingress') {
+    return slot % 2 === 0
+      ? `A longer chapter starts on ${date} as ${event.planet} enters ${cap(event.sign ?? '')}, shifting the plan around ${theme}; ${action}.`
+      : `From ${date}, ${event.planet} enters ${cap(event.sign ?? '')} and keeps ${theme} in the longer-range plan, so ${action}.`;
+  }
+  if (event.kind === 'station') {
+    const station = `${event.planet} stations ${event.type} in ${cap(event.sign ?? '')}`;
+    if (event.type === 'retrograde') {
+      const variants = [
+        `${date} begins a review of ${theme} as ${station}; ${action}.`,
+        `Circle ${date} for a second look at ${theme}: ${station}, so ${action}.`,
+        `A slower pass through ${theme} starts on ${date}, when ${station}; ${action}.`,
+      ];
+      return variants[slot % variants.length];
+    }
+    const variants = [
+      `Use ${date} to decide what can resume around ${theme}: ${station}, so ${action}.`,
+      `A progress check for ${theme} arrives on ${date}, when ${station}; ${action}.`,
+      `By ${date}, movement around ${theme} deserves a second look as ${station}; ${action}.`,
+    ];
+    return variants[slot % variants.length];
+  }
+  if (event.kind === 'lunation') {
+    return `${cap(theme)} gets a short review window on ${date} with ${eventName(event)}; ${action}.`;
+  }
+  return `${date} links ${theme} through ${eventName(event)}; compare what changes in both areas, then ${action}.`;
+}
+
+const YEAR_PHASES = [
+  { fromMonth: 0, throughMonth: 2, label: 'January–March' },
+  { fromMonth: 3, throughMonth: 5, label: 'April–June' },
+  { fromMonth: 6, throughMonth: 8, label: 'July–September' },
+  { fromMonth: 9, throughMonth: 11, label: 'October–December' },
+] as const;
+
+function yearPhasePassage(
+  sign: HoroscopeSign,
+  events: readonly HoroscopeProgramEvent[],
+  phaseIndex: number,
+  catalog: EvidenceCatalog,
+): HoroscopePassage {
+  const houses = dominantYearHouses(events, sign);
+  const primary = houses[0];
+  const secondary = houses[1] ?? primary;
+  const profile = YEAR_EDITORIAL[sign];
+  const singleTheme = secondary === primary;
+  const leads = singleTheme ? [
+    `The first quarter is for sorting the competing priorities inside ${HOUSE_SECTION[primary]} instead of letting the loudest one set the whole pace. ${profile.pacing}`,
+    `Spring tests what can move in ${HOUSE_SECTION[primary]} without weakening the structure around it; make one decision concrete enough to revisit.`,
+    `The third quarter puts several close-set checkpoints inside ${HOUSE_SECTION[primary]}; give that area first claim on your attention and keep it in one coherent plan.`,
+    `The final quarter consolidates what you have learned about ${HOUSE_SECTION[primary]}; keep only the response you can maintain instead of staging a last-minute reinvention.`,
+  ] : [
+    `The first quarter is for sorting ${HOUSE_SECTION[primary]} from ${HOUSE_SECTION[secondary]} instead of letting whichever feels urgent set the whole pace. ${profile.pacing}`,
+    `Spring tests how ${HOUSE_SECTION[primary]} can move without weakening ${HOUSE_SECTION[secondary]}; make one decision concrete enough to revisit.`,
+    `The third quarter puts several close-set checkpoints between ${HOUSE_SECTION[primary]} and ${HOUSE_SECTION[secondary]}; give the first area priority without losing sight of the second.`,
+    `The final quarter consolidates what you have learned about ${HOUSE_SECTION[primary]} in relation to ${HOUSE_SECTION[secondary]}; keep only the response you can maintain instead of staging a last-minute reinvention.`,
   ];
-  const eventPractice: Record<HoroscopeProgramEvent['kind'], string[]> = {
-    aspect: [
-      'An exact aspect is a timing marker, so test it against what is observable rather than stretching it across the whole year.',
-      'Treat the aspect as a short checkpoint inside the longer sequence, not as the year’s final verdict.',
-    ],
-    ingress: [
-      'An ingress changes the emphasis over months; let the pattern reveal itself over time.',
-      'Because an ingress opens a longer chapter, review the pattern later instead of forcing an immediate conclusion.',
-    ],
-    lunation: [
-      'A lunation offers a short review window; ordinary context still decides what can begin, end, or change.',
-      'Keep the lunation’s symbolic window proportionate to the choices and constraints already in view.',
-    ],
-    station: [
-      'A station marks a change of pace; allow the surrounding days to show what actually needs review.',
-      'Stations can concentrate attention around a process, but what needs review may reveal itself gradually.',
-    ],
-    eclipse: [
-      'An eclipse can sharpen attention around the date without guaranteeing a rupture or reversal.',
-      'Use the eclipse as a visible checkpoint while leaving room for events to be ordinary, gradual, or unrelated.',
-    ],
-  };
-  const practice = eventPractice[event.kind][slot % eventPractice[event.kind].length];
+  const refs = events.flatMap((event) => (
+    catalog.event(event, sign, { sourceId: event.sourceId ?? 'input:yearlyEvents' })
+  ));
+  const beats = events.map((event, index) => yearEventBeat(event, sign, phaseIndex * 7 + index));
   return passage(
-    `${YEAR_QUESTIONS[primary]} ${approaches[slot % approaches.length]} ${placement} ${practice}`,
-    catalog.event(event, sign, { sourceId: event.sourceId ?? 'input:yearlyEvents' }),
+    `${leads[phaseIndex]} ${beats.join(' ')}`,
+    refs,
+    `${YEAR_PHASES[phaseIndex].label} · ${cap(HOUSE_SECTION[primary])}`,
+  );
+}
+
+function yearThemePassage(
+  sign: HoroscopeSign,
+  heading: string,
+  profileLead: string,
+  events: readonly HoroscopeProgramEvent[],
+  action: Readonly<Record<number, string>>,
+  variant: number,
+  catalog: EvidenceCatalog,
+): HoroscopePassage {
+  const [first, second = first] = events;
+  const firstHouse = eventHouses(first, sign)[0];
+  const secondHouse = eventHouses(second, sign)[0];
+  const refs = [...events.flatMap((event) => (
+    catalog.event(event, sign, { sourceId: event.sourceId ?? 'input:yearlyEvents' })
+  ))];
+  const firstAction = variant % 2 === 0
+    ? (action[firstHouse] ?? HOUSE_ACTION[firstHouse])
+    : HOUSE_DECISION[firstHouse].replace(/[.]$/u, '');
+  const secondAction = variant % 2 === 0
+    ? HOUSE_DECISION[secondHouse].replace(/[.]$/u, '')
+    : (action[secondHouse] ?? HOUSE_ACTION[secondHouse]);
+  const observableLead = [
+    `For ${HOUSE_SECTION[firstHouse]}, start with what can be observed: a request, changed term, protected time, or respected limit.`,
+    `Measure the capacity, ownership, deadline, and finished handoff attached to ${HOUSE_SECTION[firstHouse]}.`,
+    `While handling ${HOUSE_SECTION[firstHouse]}, protect the private base through sleep, usable rooms, shared obligations, and unclaimed quiet.`,
+    `Treat ${HOUSE_SECTION[firstHouse]} as personal practice by choosing one behavior you can try more than once.`,
+  ][variant % 4];
+  const interval = [
+    `Between the dates, note what was asked, agreed, and done around ${HOUSE_SECTION[secondHouse]}; do not score the relationship by one intense day.`,
+    `Between them, record what ${HOUSE_SECTION[secondHouse]} consumed, who could repeat the work, and whether the priority survived the calendar.`,
+    `Between them, notice what restores capacity around ${HOUSE_SECTION[secondHouse]} and what only postpones a harder conversation.`,
+    `After each marker, compare the ${HOUSE_SECTION[secondHouse]} choice with real circumstances, including a quiet or delayed result.`,
+  ][variant % 4];
+  const standard = [
+    `For ${cap(sign)}, judge reciprocity by follow-through, not by the charge of a single day.`,
+    `For ${cap(sign)}, a plan is sustainable only while capacity and ownership stay visible.`,
+    `For ${cap(sign)}, a sound private structure leaves you more available to your life.`,
+    `For ${cap(sign)}, keep the experiment only if it works under ordinary conditions.`,
+  ][variant % 4];
+  const contextualLead = `${profileLead.replace(/[.]$/u, '')}—${uncap(observableLead)}`;
+  const firstCheckpoint = `The first checkpoint arrives on ${dateLabel(first.at)} with ${eventName(first)}, mapped to ${HOUSE_THEME[firstHouse]}; ${uncap(firstAction).replace(/[.]$/u, '')}.`;
+  const secondCheckpoint = second === first
+    ? ''
+    : `A second checkpoint arrives on ${dateLabel(second.at)} with ${eventName(second)}, mapped to ${HOUSE_THEME[secondHouse]}; ${uncap(secondAction).replace(/[.]$/u, '')}.`;
+  const contextualInterval = `${interval.replace(/[.]$/u, '')}—${uncap(standard)}`;
+  return passage(
+    `${contextualLead} ${firstCheckpoint} ${secondCheckpoint} ${contextualInterval}`,
+    refs,
+    heading,
   );
 }
 
@@ -867,44 +1298,76 @@ function yearlySurface(
   }
   const first = ordered[0];
   const last = ordered[ordered.length - 1];
+  const ingress = ordered.find((event) => event.kind === 'ingress') ?? ordered[Math.floor(ordered.length / 2)];
   const openingRefs = [
     ...catalog.event(first, sign, { sourceId: first.sourceId ?? 'input:yearlyEvents' }),
+    ...catalog.event(ingress, sign, { sourceId: ingress.sourceId ?? 'input:yearlyEvents' }),
     ...catalog.event(last, sign, { sourceId: last.sourceId ?? 'input:yearlyEvents' }),
   ];
+  const firstHouse = eventHouses(first, sign)[0];
+  const ingressHouse = eventHouses(ingress, sign)[0];
+  const lastHouse = eventHouses(last, sign)[0];
+  const openingAreas = readerList([
+    HOUSE_SECTION[firstHouse],
+    HOUSE_SECTION[ingressHouse],
+    HOUSE_SECTION[lastHouse],
+  ]);
   passages.push(passage(
-    `${cap(sign)} enters 2027 with one clear through-line: ${SIGN_REGISTER[sign].year}. Use the year’s turning points to plan, reflect, and decide where your attention belongs, without treating any one moment as a verdict. The sequence begins with ${eventName(first)} in ${MONTHS[new Date(first.at).getUTCMonth()]} and closes with ${eventName(last)} in ${MONTHS[new Date(last.at).getUTCMonth()]}.`,
+    `${YEAR_EDITORIAL[sign].opening} The practical through-line is simple: ${SIGN_REGISTER[sign].year}. Your first dated checkpoint for ${HOUSE_SECTION[firstHouse]} is ${eventName(first)} on ${shortDateLabel(first.at)}. ${eventName(ingress)} on ${shortDateLabel(ingress.at)} changes the longer-range emphasis around ${HOUSE_SECTION[ingressHouse]}, while ${eventName(last)} on ${shortDateLabel(last.at)} gives ${HOUSE_SECTION[lastHouse]} a final review point. None of those dates assigns an outcome; compare ${openingAreas} with what is actually happening, then keep the choice that fits your circumstances.`,
     openingRefs,
+    `The shape of ${cap(sign)}’s 2027`,
   ));
 
-  const chronologicalSlots = Math.max(8, ordered.length);
-  for (let index = 0; index < chronologicalSlots; index += 1) {
-    passages.push(yearEventPassage(ordered[index % ordered.length], sign, index, catalog));
+  for (const [phaseIndex, phase] of YEAR_PHASES.entries()) {
+    const phaseEvents = ordered.filter((event) => {
+      const month = new Date(event.at).getUTCMonth();
+      return month >= phase.fromMonth && month <= phase.throughMonth;
+    });
+    if (phaseEvents.length) passages.push(yearPhasePassage(sign, phaseEvents, phaseIndex, catalog));
   }
 
-  const loveEvent = chooseEvent(ordered, sign, [5, 7, 8, 11], SIGN_SLUGS.indexOf(sign));
-  const loveHouse = eventHouses(loveEvent, sign)[0];
-  passages.push(passage(
-    `For relationships, look closely at reciprocity, boundaries, attention, and the choices people can actually discuss. ${cap(LOVE_ACTION[loveHouse])}; ${SIGN_REGISTER[sign].love}. Around ${dateLabel(loveEvent.at)}, ${eventName(loveEvent)} brings ${HOUSE_THEME[loveHouse]} forward. Revisit the question afterward rather than judging the whole year by one charged moment.`,
-    catalog.event(loveEvent, sign, { sourceId: loveEvent.sourceId ?? 'input:yearlyEvents' }),
+  const signOffset = SIGN_SLUGS.indexOf(sign);
+  passages.push(yearThemePassage(
+    sign,
+    'Love, friendship, and clear terms',
+    YEAR_EDITORIAL[sign].relationships,
+    chooseEvents(ordered, sign, [5, 7, 8, 11], 2, signOffset),
+    LOVE_ACTION,
+    0,
+    catalog,
+  ));
+  passages.push(yearThemePassage(
+    sign,
+    'Work, money, and sustainable authority',
+    YEAR_EDITORIAL[sign].work,
+    chooseEvents(ordered, sign, [2, 6, 10, 11], 2, signOffset + 2),
+    CAREER_ACTION,
+    1,
+    catalog,
+  ));
+  passages.push(yearThemePassage(
+    sign,
+    'Home, rest, and the private load',
+    YEAR_EDITORIAL[sign].privateLife,
+    chooseEvents(ordered, sign, [1, 4, 12], 2, signOffset + 4),
+    HOUSE_ACTION,
+    2,
+    catalog,
+  ));
+  passages.push(yearThemePassage(
+    sign,
+    'Your own direction',
+    `Personal growth is most useful when it changes a choice you can see; for ${cap(sign)}, ${SIGN_REGISTER[sign].daily}.`,
+    chooseEvents(ordered, sign, [1, 5, 9], 2, signOffset + 6),
+    HOUSE_ACTION,
+    3,
+    catalog,
   ));
 
-  const careerEvent = chooseEvent(ordered, sign, [2, 6, 10, 11], SIGN_SLUGS.indexOf(sign) + 2);
-  const careerHouse = eventHouses(careerEvent, sign)[0];
   passages.push(passage(
-    `For work and resources, begin with capacity, responsibilities, collaborators, and the difference between visible urgency and work that will still matter a month later. ${cap(CAREER_ACTION[careerHouse])}; ${SIGN_REGISTER[sign].career}. Around ${dateLabel(careerEvent.at)}, ${eventName(careerEvent)} emphasizes ${HOUSE_THEME[careerHouse]}. Treat the timing as planning context rather than financial instruction.`,
-    catalog.event(careerEvent, sign, { sourceId: careerEvent.sourceId ?? 'input:yearlyEvents' }),
-  ));
-
-  const privateEvent = chooseEvent(ordered, sign, [1, 4, 12], SIGN_SLUGS.indexOf(sign) + 4);
-  const privateHouse = eventHouses(privateEvent, sign)[0];
-  passages.push(passage(
-    `The year needs a private counterweight: ${HOUSE_ACTION[privateHouse]}. Keep your boundaries, relationships, and existing commitments in view as you respond. Around ${dateLabel(privateEvent.at)}, ${eventName(privateEvent)} brings ${HOUSE_THEME[privateHouse]} into focus and may help you notice a shift in emphasis.`,
-    catalog.event(privateEvent, sign, { sourceId: privateEvent.sourceId ?? 'input:yearlyEvents' }),
-  ));
-
-  passages.push(passage(
-    `Read the year in sequence rather than as a single verdict. Keep a dated note when ${eventName(first)} arrives, then compare it with what is happening by ${eventName(last)}. For ${cap(sign)}, the through-line is to ${SIGN_REGISTER[sign].test}. The dates offer a rhythm; your choices and circumstances write the actual story.`,
+    `${YEAR_EDITORIAL[sign].close} Put three events in your calendar now—${eventName(first)} on ${shortDateLabel(first.at)}, ${eventName(ingress)} on ${shortDateLabel(ingress.at)}, and ${eventName(last)} on ${shortDateLabel(last.at)}—as a working plan for this principle: ${SIGN_REGISTER[sign].year}. At each one, write what changed, what did not, and what you will do next; for ${cap(sign)}, the year’s practice is to ${SIGN_REGISTER[sign].test}, with the dates providing structure while your decisions and circumstances remain the substance.`,
     openingRefs,
+    'A three-date plan for the year',
   ));
 
   return reading('yearly-2027', sign, { from: '2027-01-01', through: '2027-12-31' }, `${cap(sign)} 2027 horoscope`, passages);
@@ -1050,6 +1513,14 @@ export function validateHoroscopeProgram(program: HoroscopeProgram): HoroscopePr
       ));
     }
   }
+  const yearlyEventIds = new Set(program.evidence
+    // Daily receipts in a 2027 edition also have 2027 instants, but they are
+    // deliberately scoped to that day/week. Only IDs minted by the yearly
+    // catalog belong to the all-events yearly coverage contract.
+    .filter((receipt) => receipt.kind === 'sky-event'
+      && receipt.id.startsWith('fact:2027:event:')
+      && receipt.at.startsWith('2027-'))
+    .map((receipt) => receipt.id));
 
   for (const [signIndex, signProgram] of program.signs.entries()) {
     for (const surface of SURFACES) {
@@ -1078,6 +1549,16 @@ export function validateHoroscopeProgram(program: HoroscopeProgram): HoroscopePr
           failures.push(violation('VOICE-BACKSTAGE', `${path}.text`, 'reader copy must not expose publishing or verification plumbing'));
         }
         item.passages.forEach((entry, passageIndex) => {
+          if (entry.heading !== undefined) {
+            if (!entry.heading.trim()) {
+              failures.push(violation(
+                'STRUCT-HEADING',
+                `${path}.passages[${passageIndex}].heading`,
+                'section heading may not be empty',
+              ));
+            }
+            failures.push(...voiceViolations(entry.heading, `${path}.passages[${passageIndex}].heading`));
+          }
           const firstSentence = entry.text.split(/(?<=[.!?])\s/u, 1)[0] ?? entry.text;
           if (KITCHEN_FIRST_OPENING.test(firstSentence)) {
             failures.push(violation(
@@ -1087,6 +1568,26 @@ export function validateHoroscopeProgram(program: HoroscopeProgram): HoroscopePr
             ));
           }
         });
+        if (surface === 'yearly-2027') {
+          const headings = item.passages.map((entry) => entry.heading?.trim()).filter(Boolean) as string[];
+          if (headings.length !== item.passages.length || new Set(headings).size !== headings.length
+            || item.passages.length < 8) {
+            failures.push(violation(
+              'STRUCT-YEAR-SECTIONS',
+              `${path}.passages`,
+              'yearly reading requires at least eight uniquely headed editorial sections',
+            ));
+          }
+          const referenced = new Set(item.passages.flatMap((entry) => entry.evidenceRefs));
+          const missingEvents = [...yearlyEventIds].filter((id) => !referenced.has(id));
+          if (missingEvents.length) {
+            failures.push(violation(
+              'EVIDENCE-YEAR-COVERAGE',
+              `${path}.passages`,
+              `${missingEvents.length} catalog event(s) are not cited by the yearly reading`,
+            ));
+          }
+        }
       } else if (!item.fallbackReason || item.passages.some((entry) => entry.evidenceRefs.length)) {
         failures.push(violation('FALLBACK-SHAPE', path, 'insufficient readings need a reason and may not imply evidence'));
       }

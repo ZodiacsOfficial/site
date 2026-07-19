@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'preact/hooks';
 import dailyData from '../../data/daily.json';
 import { useProfile } from '../../lib/hooks/useProfile';
-import { signForLongitude } from '../../lib/signs';
+import { SIGNS, signForLongitude } from '../../lib/signs';
 import {
   natalPointsForChart,
   nearestTodayContact,
@@ -65,6 +65,7 @@ export default function TodayBrief({ sunSignLines }: Props) {
   const [streak, setStreak] = useState<number | null>(null);
   const [pushModule, setPushModule] = useState<PushOptInModule | null>(null);
   const [transitsModule, setTransitsModule] = useState<TransitsModule | null>(null);
+  const [transitsFailed, setTransitsFailed] = useState(false);
 
   useEffect(() => {
     let returning = false;
@@ -74,7 +75,11 @@ export default function TodayBrief({ sunSignLines }: Props) {
       returning = false;
     }
     setStreak(recordTodayOpen(window.localStorage).count);
-    void import('../../lib/transits').then(setTransitsModule).catch(() => {});
+    void import('../../lib/transits')
+      .then(setTransitsModule)
+      .catch(() => {
+        setTransitsFailed(true);
+      });
     if (returning && WEB_PUSH_ENABLED) {
       void import('../PushOptIn').then(setPushModule).catch(() => {});
     }
@@ -84,18 +89,34 @@ export default function TodayBrief({ sunSignLines }: Props) {
   }, []);
 
   const chart = useMemo(() => newestSavedChart(profile), [profile]);
+  const chartSunSign = useMemo(() => {
+    const sun = chart?.summary?.bodies?.find((body) => (
+      body?.body === 'Sun' && Number.isFinite(body.lon)
+    ));
+    return sun ? signForLongitude(sun.lon) : null;
+  }, [chart]);
   const PushOptIn = pushModule?.default;
   const reading = useMemo(() => {
     if (!chart || !transitsModule) return null;
-    const natal = natalPointsForChart(chart);
-    return {
-      contacts: selectTodayContacts(natal, daily.bodies, transitsModule.TRANSIT_ORB, 3),
-      nearest: nearestTodayContact(natal, daily.bodies),
-    };
+    try {
+      const natal = natalPointsForChart(chart);
+      return {
+        contacts: selectTodayContacts(natal, daily.bodies, transitsModule.TRANSIT_ORB, 3),
+        nearest: nearestTodayContact(natal, daily.bodies),
+      };
+    } catch {
+      return null;
+    }
   }, [chart, transitsModule]);
+  const hasSavedChartHint = typeof document !== 'undefined'
+    && document.documentElement.hasAttribute('data-today-saved-chart');
+  const comparisonUnavailable = transitsFailed
+    || (ready && chart === null && hasSavedChartHint)
+    || (ready && chart !== null && transitsModule !== null && reading === null);
   const personalized = ready && chart && reading && transitsModule
     ? { chart, reading, transits: transitsModule }
     : null;
+  const streakDisplay = streak !== null && streak > 999 ? '999+' : (streak ?? 1);
 
   return (
     <section
@@ -109,41 +130,122 @@ export default function TodayBrief({ sunSignLines }: Props) {
             <p class="today-card__date">{dateLabel(daily.date)}</p>
             <p class="today-card__time">Your daily astrology snapshot</p>
           </div>
-          {streak !== null && (
-            <p class="today-streak" aria-label={`${streak} day streak`}>
-              <strong class="today-streak__count">{streak}</strong>
-              <span>{streak === 1 ? 'day' : 'days'}</span>
-            </p>
-          )}
+          {/* The fixed two-column shell is present during SSR, so recording the
+              local streak never changes header geometry after hydration. */}
+          <p
+            class="today-streak"
+            data-ready={streak !== null ? '' : undefined}
+            aria-label={streak !== null ? `${streak} day streak` : undefined}
+            aria-hidden={streak === null ? 'true' : undefined}
+          >
+            <strong class="today-streak__count">{streakDisplay}</strong>
+            <span>{streak === null || streak === 1 ? 'day' : 'days'}</span>
+          </p>
         </header>
 
         {!personalized ? (
-          <SunSignFallback noChartConfirmed={ready && !chart} sunSignLines={sunSignLines} />
+          <>
+            <div class="today-returning-chart-placeholder today-reading" aria-label="Saved-chart fallback">
+              <div class="today-reading__head">
+                <h2>For your saved chart</h2>
+                <p>Today’s sky, compared with the latest chart saved on this device.</p>
+              </div>
+              <div class="today-reading__body today-reading__body--fallback">
+                <p
+                  class={`today-returning-chart-status${comparisonUnavailable ? ' is-visible' : ''}`}
+                  aria-hidden={comparisonUnavailable ? undefined : 'true'}
+                >
+                  Your saved-chart comparison is temporarily unavailable. Your Sun-sign baseline is ready below.
+                </p>
+                <div class="today-returning-sun-baselines" data-nosnippet>
+                  {SIGNS.map((sign) => (
+                    <section
+                      class="today-returning-sun-baseline"
+                      data-today-chart-sun={sign.slug}
+                      style={`--sign:${sign.hue}`}
+                    >
+                      <p class="kicker">{sign.name} Sun-sign baseline</p>
+                      <p>{sunSignLines[sign.slug]}</p>
+                      <a href={`/horoscopes/${sign.slug}/`}>
+                        Read the full {sign.name} horoscope <span aria-hidden="true">→</span>
+                      </a>
+                    </section>
+                  ))}
+                  <nav class="today-returning-sign-links" aria-label="Open a Sun-sign horoscope">
+                    {SIGNS.map((sign) => <a href={`/horoscopes/${sign.slug}/`}>{sign.name}</a>)}
+                  </nav>
+                </div>
+              </div>
+              <p class="today-private">
+                Your saved chart and this comparison stay in this browser.
+              </p>
+              <details class="today-method-details">
+                <summary>How this comparison works</summary>
+                <div class="today-method-details__body">
+                  <p>
+                    The saved-chart layer runs privately in this browser. If it cannot load,
+                    the complete Sun-sign reading remains available here.
+                  </p>
+                </div>
+              </details>
+            </div>
+            <SunSignFallback
+              noChartConfirmed={ready && !chart}
+              comparisonUnavailable={comparisonUnavailable}
+              sunSignLines={sunSignLines}
+            />
+          </>
         ) : (
-          <div class="today-reading">
+          <div
+            class={`today-reading today-reading--resolved${personalized.reading.contacts.length > 0 ? ' today-reading--active' : ' today-reading--quiet'}`}
+          >
             <div class="today-reading__head">
-              <h2>For {personalized.chart.name || 'your latest chart'}</h2>
+              <h2 aria-label={`For ${personalized.chart.name || 'your latest chart'}`}>
+                <span>For</span>{' '}
+                <span
+                  class="today-reading__chart-name"
+                  title={personalized.chart.name || undefined}
+                >
+                  {personalized.chart.name || 'your latest chart'}
+                </span>
+              </h2>
               <p>A few themes from today’s sky, compared with your saved birth chart.</p>
             </div>
 
-            {personalized.reading.contacts.length > 0 ? (
-              <ol class="today-lines">
-                {personalized.reading.contacts.map((contact) => (
-                  <li key={`${contact.transiting}-${contact.type}-${contact.natal}`}>
-                    <p class="today-lines__sentence">
-                      {personalized.transits.transitLine(contact.transiting, contact.type, contact.natal)}
-                    </p>
-                  </li>
-                ))}
-              </ol>
-            ) : (
-              <div class="today-quiet" data-today-quiet>
-                <p>
-                  Today looks quieter against your chart. There is less pressure to act on
-                  anything immediately.
-                </p>
-              </div>
-            )}
+            <div class="today-reading__body">
+              {personalized.reading.contacts.length > 0 ? (
+                <ol class="today-lines">
+                  {personalized.reading.contacts.map((contact) => (
+                    <li key={`${contact.transiting}-${contact.type}-${contact.natal}`}>
+                      <p class="today-lines__sentence">
+                        {personalized.transits.transitLine(contact.transiting, contact.type, contact.natal)}
+                      </p>
+                    </li>
+                  ))}
+                </ol>
+              ) : (
+                <div class="today-quiet" data-today-quiet>
+                  <p>
+                    Today looks quieter against your chart. There is less pressure to act on
+                    anything immediately.
+                  </p>
+                  {chartSunSign ? (
+                    <section class="today-quiet__baseline" style={`--sign:${chartSunSign.hue}`}>
+                      <p class="kicker">{chartSunSign.name} Sun-sign baseline</p>
+                      <p>{sunSignLines[chartSunSign.slug]}</p>
+                      <a href={`/horoscopes/${chartSunSign.slug}/`}>
+                        Read the full {chartSunSign.name} horoscope <span aria-hidden="true">→</span>
+                      </a>
+                    </section>
+                  ) : (
+                    <div class="today-quiet__baseline">
+                      <strong>What was checked</strong>
+                      <p>No major contact falls within 3° of the valid points in this saved chart.</p>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
 
             <p class="today-private">
               Your saved chart and this comparison stay in this browser.

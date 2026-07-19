@@ -1,6 +1,7 @@
 import publication from '../../data/daily-publication.json';
 import manifest from '../../data/daily-publication-manifest.json';
 import dailyFacts from '../../data/daily.json';
+import horoscopeProgram from '../../data/horoscope-program.json';
 
 const transitSources = import.meta.glob('../../data/transits-*.json', {
   eager: true,
@@ -13,7 +14,7 @@ const transitSource = manifest.facts.eventsSource
 export const prerender = true;
 
 export function GET() {
-  return new Response(`${JSON.stringify({ manifest, inputs: { dailyFacts, transitSource }, publication }, null, 2)}\n`, {
+  return new Response(`${JSON.stringify({ manifest, inputs: { dailyFacts, transitSource, horoscopeProgram }, publication }, null, 2)}\n`, {
     headers: {
       'content-type': 'application/json; charset=utf-8',
       'cache-control': 'public, max-age=300, must-revalidate',

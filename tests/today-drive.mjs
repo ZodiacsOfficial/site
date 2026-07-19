@@ -49,12 +49,144 @@ const profile = {
   }],
 };
 
+const LONG_CHART_NAME = 'AChartNameThatKeepsGoingWithoutAnyBreakOpportunityForTheEntireMobileViewport';
+const threeHitMobileProfile = {
+  ...profile,
+  charts: [{ ...profile.charts[0], id: 'today-drive-mobile-active', name: LONG_CHART_NAME }],
+};
+const quietMobileProfile = {
+  ...profile,
+  charts: [{
+    ...profile.charts[0],
+    id: 'today-drive-mobile-quiet',
+    name: LONG_CHART_NAME,
+    summary: {
+      ...profile.charts[0].summary,
+      bodies: [{ body: 'Sun', lon: 0, retrograde: false }],
+      angles: null,
+    },
+  }],
+};
+
 const results = [];
 const check = (name, ok, detail = '') => results.push({ name, ok, detail });
 
+async function observeLayoutShifts(page) {
+  await page.addInitScript(() => {
+    globalThis.__zdxLayoutShifts = [];
+    new PerformanceObserver((list) => {
+      for (const entry of list.getEntries()) {
+        if (!entry.hadRecentInput) globalThis.__zdxLayoutShifts.push(entry.value);
+      }
+    }).observe({ type: 'layout-shift', buffered: true });
+  });
+}
+
+async function measuredCls(page) {
+  await page.evaluate(() => new Promise((resolvePaint) => {
+    requestAnimationFrame(() => requestAnimationFrame(() => resolvePaint()));
+  }));
+  return page.evaluate(() => globalThis.__zdxLayoutShifts.reduce((sum, value) => sum + value, 0));
+}
+
+async function inspectReturningMobile(BASE, browser, fixtureProfile, state, expectedContacts) {
+  const page = await browser.newPage({
+    // Tall enough that content after the card participates in the CLS impact
+    // region; a placeholder collapse cannot hide below the fold.
+    viewport: { width: 360, height: 1800 },
+    deviceScaleFactor: 2,
+    hasTouch: true,
+  });
+  await observeLayoutShifts(page);
+  await page.addInitScript(({ savedProfile }) => {
+    const yesterday = new Date(Date.now() - 86_400_000).toISOString().slice(0, 10);
+    localStorage.setItem('zodiacs.profile.v1', JSON.stringify(savedProfile));
+    localStorage.setItem('zodiacs.today.v1', JSON.stringify({
+      version: 1,
+      count: 364,
+      lastOpenedUtcDay: yesterday,
+    }));
+  }, { savedProfile: fixtureProfile });
+  await page.goto(`${BASE}/today/`, { waitUntil: 'networkidle' });
+  await page.waitForSelector(`.today-reading--${state}`);
+  const evidence = await page.evaluate(() => new Promise((resolveEvidence) => {
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      const reading = document.querySelector('.today-reading--resolved');
+      const chartName = document.querySelector('.today-reading__chart-name');
+      const body = reading.querySelector('.today-reading__body');
+      const bodyLast = body.querySelector('.today-lines li:last-child, .today-quiet__baseline');
+      const details = reading.querySelector('.today-method-details');
+      const streak = document.querySelector('.today-streak');
+      const count = document.querySelector('.today-streak__count');
+      const unit = document.querySelector('.today-streak > span');
+      const readingStyle = getComputedStyle(reading);
+      const chartNameStyle = getComputedStyle(chartName);
+      resolveEvidence({
+        cls: globalThis.__zdxLayoutShifts.reduce((sum, value) => sum + value, 0),
+        pageWidth: Math.max(document.documentElement.scrollWidth, document.body.scrollWidth),
+        viewportWidth: innerWidth,
+        readingHeight: reading.getBoundingClientRect().height,
+        readingMinHeight: readingStyle.minHeight,
+        bodyBottomGap: body.getBoundingClientRect().bottom - bodyLast.getBoundingClientRect().bottom,
+        readingBottomGap: reading.getBoundingClientRect().bottom - details.getBoundingClientRect().bottom,
+        chartNameTitle: chartName.getAttribute('title'),
+        chartNameOverflow: chartNameStyle.overflow,
+        chartNameTextOverflow: chartNameStyle.textOverflow,
+        chartNameRight: chartName.getBoundingClientRect().right,
+        headingRight: chartName.parentElement.getBoundingClientRect().right,
+        streakText: count.textContent.trim(),
+        streakLabel: streak.getAttribute('aria-label'),
+        countRight: count.getBoundingClientRect().right,
+        unitLeft: unit.getBoundingClientRect().left,
+      });
+    }));
+  }));
+  check(`360px returning ${state}: hydration has exactly zero CLS`, evidence.cls === 0, JSON.stringify(evidence));
+  check(
+    `360px returning ${state}: resolved reading has no outer fallback reservation or dead tail`,
+    evidence.readingMinHeight === '0px'
+      && evidence.bodyBottomGap <= 1
+      && evidence.readingBottomGap <= 1,
+    JSON.stringify(evidence),
+  );
+  check(
+    `360px returning ${state}: long saved-chart name stays inside its heading`,
+    evidence.chartNameTitle === LONG_CHART_NAME
+      && evidence.chartNameOverflow === 'hidden'
+      && evidence.chartNameTextOverflow === 'ellipsis'
+      && evidence.chartNameRight <= evidence.headingRight + 0.5,
+    JSON.stringify(evidence),
+  );
+  check(
+    `360px returning ${state}: page has no horizontal overflow`,
+    evidence.pageWidth <= evidence.viewportWidth,
+    `${evidence.pageWidth}/${evidence.viewportWidth}`,
+  );
+  check(
+    `360px returning ${state}: a 365-day streak has a collision-free digit lane`,
+    evidence.streakText === '365'
+      && evidence.streakLabel === '365 day streak'
+      && evidence.countRight <= evidence.unitLeft,
+    JSON.stringify(evidence),
+  );
+  check(
+    `360px returning ${state}: expected contact state renders`,
+    await page.locator('.today-lines li').count() === expectedContacts
+      && (state === 'quiet'
+        ? await page.locator('[data-today-quiet] .today-quiet__baseline').isVisible()
+          && await page.getByText('Aries Sun-sign baseline', { exact: true }).isVisible()
+        : true),
+  );
+  if (OUT) await page.screenshot({ path: `${OUT}/today-returning-${state}-360.png`, fullPage: true });
+  await page.close();
+}
+
 async function drive(BASE, browser) {
   if (OUT) await mkdir(OUT, { recursive: true });
-  const desktop = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
+  // The tall viewport keeps the SSR reading grid inside the impact region, so
+  // a returning-user collapse cannot hide below the fold and evade CLS.
+  const desktop = await browser.newPage({ viewport: { width: 1440, height: 1400 } });
+  await observeLayoutShifts(desktop);
   await desktop.addInitScript((value) => {
     localStorage.setItem('zodiacs.profile.v1', JSON.stringify(value));
   }, profile);
@@ -65,8 +197,11 @@ async function drive(BASE, browser) {
   });
   await desktop.goto(`${BASE}/today/`, { waitUntil: 'networkidle' });
   await desktop.waitForSelector('[data-today-state="chart"]');
+  const savedChartHeight = await desktop.locator('.today-reading').evaluate((node) => node.getBoundingClientRect().height);
+  const savedChartCls = await measuredCls(desktop);
+  check('saved-chart hydration has exactly zero CLS', savedChartCls === 0, `${savedChartCls} · ${savedChartHeight}px reading`);
   check('saved chart renders a real brief', await desktop.locator('.today-lines li').count() >= 2);
-  check('saved chart replaces the Sun-sign baseline', await desktop.locator('[data-today-sun-sign]').count() === 0);
+  check('saved chart replaces the Sun-sign baseline', await desktop.locator('#today-sun-sign-reading [data-today-sun-sign]').count() === 0);
   check('brief makes no backend requests', apiRequests === 0, `${apiRequests} requests`);
   await desktop.context().setOffline(true);
   check('rendered brief remains available offline', await desktop.locator('.today-lines').isVisible());
@@ -74,11 +209,135 @@ async function drive(BASE, browser) {
   if (OUT) await desktop.screenshot({ path: `${OUT}/today-1440.png`, fullPage: true });
   await desktop.close();
 
-  const empty = await browser.newPage({ viewport: { width: 900, height: 800 } });
+  const failedMainIsland = await browser.newPage({ viewport: { width: 900, height: 1400 } });
+  await observeLayoutShifts(failedMainIsland);
+  await failedMainIsland.route('**/_astro/TodayBrief.*.js', (route) => route.abort());
+  await failedMainIsland.addInitScript((value) => {
+    localStorage.setItem('zodiacs.profile.v1', JSON.stringify(value));
+  }, profile);
+  await failedMainIsland.goto(`${BASE}/today/`, { waitUntil: 'networkidle' });
+  const savedChartFallback = failedMainIsland.locator('.today-returning-chart-placeholder');
+  check(
+    'failed Today island keeps a useful Aries Sun-sign baseline in the reserved shell',
+    await savedChartFallback.isVisible()
+      && await failedMainIsland.locator('[data-today-chart-sun="aries"]').isVisible()
+      && await failedMainIsland.getByText('Aries Sun-sign baseline', { exact: true }).isVisible()
+      && await failedMainIsland.locator('[data-today-chart-sun="aries"] a[href="/horoscopes/aries/"]').isVisible(),
+  );
+  const failedMainCls = await measuredCls(failedMainIsland);
+  check('failed Today island fallback has exactly zero CLS', failedMainCls === 0, String(failedMainCls));
+  await failedMainIsland.close();
+
+  const failedTransits = await browser.newPage({ viewport: { width: 900, height: 1400 } });
+  await observeLayoutShifts(failedTransits);
+  const failedTransitsErrors = [];
+  failedTransits.on('pageerror', (error) => failedTransitsErrors.push(error.message));
+  await failedTransits.route('**/_astro/transits.*.js', (route) => route.abort());
+  await failedTransits.addInitScript((value) => {
+    localStorage.setItem('zodiacs.profile.v1', JSON.stringify(value));
+  }, profile);
+  await failedTransits.goto(`${BASE}/today/`, { waitUntil: 'networkidle' });
+  await failedTransits.waitForFunction(() => (
+    document.querySelector('.today-returning-chart-status.is-visible')
+      && getComputedStyle(document.querySelector('.today-returning-chart-placeholder')).display !== 'none'
+  ));
+  check(
+    'failed transit chunk keeps the compact Sun-sign baseline in the reserved shell',
+    await failedTransits.locator('.today-returning-chart-placeholder').isVisible()
+      && await failedTransits.locator('[data-today-chart-sun="aries"]').isVisible()
+      && !await failedTransits.locator('.today-fallback').isVisible(),
+  );
+  check(
+    'failed transit chunk explains the fallback without a broken page',
+    await failedTransits.locator('.today-returning-chart-placeholder')
+      .getByText('saved-chart comparison is temporarily unavailable', { exact: false }).isVisible()
+      && failedTransitsErrors.length === 0,
+    failedTransitsErrors.join(' | '),
+  );
+  const failedTransitsCls = await measuredCls(failedTransits);
+  check('failed transit chunk has exactly zero CLS', failedTransitsCls === 0, String(failedTransitsCls));
+  await failedTransits.close();
+
+  const invalidProfile = await browser.newPage({ viewport: { width: 900, height: 1000 } });
+  const invalidProfileErrors = [];
+  invalidProfile.on('pageerror', (error) => invalidProfileErrors.push(error.message));
+  await invalidProfile.addInitScript(() => {
+    localStorage.setItem('zodiacs.profile.v1', JSON.stringify({
+      version: 1,
+      settings: { houseSystem: 'whole' },
+      charts: [{ id: 'invalid-local-chart' }],
+    }));
+  });
+  await invalidProfile.goto(`${BASE}/today/`, { waitUntil: 'networkidle' });
+  await invalidProfile.waitForFunction(() => getComputedStyle(document.querySelector('.today-fallback')).display !== 'none');
+  check(
+    'invalid local profile never traps Today behind the chart placeholder',
+    !await invalidProfile.locator('html').getAttribute('data-today-saved-chart')
+      && await invalidProfile.locator('.today-fallback').isVisible()
+      && invalidProfileErrors.length === 0,
+    invalidProfileErrors.join(' | '),
+  );
+  await invalidProfile.close();
+
+  const hintedInvalidProfile = await browser.newPage({
+    viewport: { width: 360, height: 1800 },
+    deviceScaleFactor: 2,
+    hasTouch: true,
+  });
+  await observeLayoutShifts(hintedInvalidProfile);
+  const hintedInvalidErrors = [];
+  hintedInvalidProfile.on('pageerror', (error) => hintedInvalidErrors.push(error.message));
+  await hintedInvalidProfile.addInitScript((validProfile) => {
+    localStorage.setItem('zodiacs.profile.v1', JSON.stringify({
+      ...validProfile,
+      charts: [
+        validProfile.charts[0],
+        {
+          id: 'newer-malformed-local-chart',
+          name: 'Malformed newer chart',
+          createdAt: '2026-07-12T00:00:00.000Z',
+          updatedAt: '2026-07-12T00:00:00.000Z',
+        },
+      ],
+    }));
+  }, profile);
+  await hintedInvalidProfile.goto(`${BASE}/today/`, { waitUntil: 'networkidle' });
+  await hintedInvalidProfile.waitForSelector('[data-today-state="chart"]');
+  const hintedInvalidCls = await measuredCls(hintedInvalidProfile);
+  check(
+    'hint-passing malformed newer chart falls back to the valid saved chart without collapsing',
+    await hintedInvalidProfile.locator('html').getAttribute('data-today-saved-chart') === ''
+      && await hintedInvalidProfile.locator('.today-reading--resolved').isVisible()
+      && hintedInvalidErrors.length === 0,
+    hintedInvalidErrors.join(' | '),
+  );
+  check(
+    'hint-passing malformed profile has exactly zero CLS at tall 360px',
+    hintedInvalidCls === 0,
+    String(hintedInvalidCls),
+  );
+  await hintedInvalidProfile.close();
+
+  const returningSign = await browser.newPage({ viewport: { width: 900, height: 1400 } });
+  await observeLayoutShifts(returningSign);
+  await returningSign.addInitScript(() => {
+    localStorage.setItem('zodiacs:today-sun-sign:v1', 'leo');
+  });
+  await returningSign.goto(`${BASE}/today/`, { waitUntil: 'networkidle' });
+  await returningSign.waitForFunction(() => document.querySelectorAll('#today-sun-sign-reading [data-today-sun-sign]').length === 1);
+  const returningSignCls = await measuredCls(returningSign);
+  check('stored Sun-sign hydration has exactly zero CLS', returningSignCls === 0, String(returningSignCls));
+  check('stored Sun sign restores the Leo reading', await returningSign.locator('#today-sun-sign-reading [data-today-sun-sign="leo"]').count() === 1);
+  await returningSign.close();
+
+  const empty = await browser.newPage({ viewport: { width: 900, height: 1400 } });
+  await observeLayoutShifts(empty);
   await empty.goto(`${BASE}/today/`, { waitUntil: 'networkidle' });
   await empty.waitForSelector('[data-today-state="empty"]');
+  const emptyCls = await measuredCls(empty);
+  check('empty Today hydration has exactly zero CLS', emptyCls === 0, String(emptyCls));
   check('no-chart state is honest', await empty.getByText('No saved chart on this device.').isVisible());
-  check('no-chart state renders all twelve sign notes', await empty.locator('[data-today-sun-sign]').count() === 12);
+  check('no-chart state renders all twelve sign notes', await empty.locator('#today-sun-sign-reading [data-today-sun-sign]').count() === 12);
   check(
     'sign picker uses all twelve pastel icon assets',
     await empty.locator('.today-sign-picker .today-sign__icon img[src^="/assets/zodiac-icons/48/"]').count() === 12,
@@ -97,9 +356,9 @@ async function drive(BASE, browser) {
   check('public provenance link remains available', await empty.locator('a[href="/data/daily-publication.json"]').count() === 1);
   if (OUT) await empty.screenshot({ path: `${OUT}/today-empty-900.png`, fullPage: true });
   await empty.locator('a[href="#today-sun-sign-leo"]').click();
-  await empty.waitForFunction(() => document.querySelectorAll('[data-today-sun-sign]').length === 1);
-  check('enhanced sign link narrows to one note', await empty.locator('[data-today-sun-sign="leo"]').count() === 1);
-  check('selected sign keeps its pastel icon', await empty.locator('[data-today-sun-sign="leo"] .today-sign-reading__icon img[src$="/leo.webp"]').count() === 1);
+  await empty.waitForFunction(() => document.querySelectorAll('#today-sun-sign-reading [data-today-sun-sign]').length === 1);
+  check('enhanced sign link narrows to one note', await empty.locator('#today-sun-sign-reading [data-today-sun-sign="leo"]').count() === 1);
+  check('selected sign keeps its pastel icon', await empty.locator('#today-sun-sign-reading [data-today-sun-sign="leo"] .today-sign-reading__icon img[src$="/leo.webp"]').count() === 1);
   const selectedHash = await empty.evaluate(() => location.hash);
   check('enhanced sign link keeps native hash navigation', selectedHash === '#today-sun-sign-leo', selectedHash);
   await empty.close();
@@ -109,8 +368,8 @@ async function drive(BASE, browser) {
     javaScriptEnabled: false,
   });
   await noJs.goto(`${BASE}/today/`, { waitUntil: 'networkidle' });
-  check('no-JavaScript page renders all twelve sign notes', await noJs.locator('[data-today-sun-sign]').count() === 12);
-  check('no-JavaScript sign notes link to full horoscopes', await noJs.locator('[data-today-sun-sign] a[href^="/horoscopes/"]').count() === 12);
+  check('no-JavaScript page renders all twelve sign notes', await noJs.locator('#today-sun-sign-reading [data-today-sun-sign]').count() === 12);
+  check('no-JavaScript sign notes link to full horoscopes', await noJs.locator('#today-sun-sign-reading [data-today-sun-sign] a[href^="/horoscopes/"]').count() === 12);
   check('no-JavaScript page has no loading gate', await noJs.locator('.today-loading').count() === 0);
   const noJsEdition = noJs.locator('.today-provenance');
   check('no-JavaScript page keeps native edition details', await noJsEdition.count() === 1);
@@ -181,6 +440,9 @@ async function drive(BASE, browser) {
   check('375px layout has no horizontal overflow', width.page <= width.viewport, `${width.page}/${width.viewport}`);
   if (OUT) await mobile.screenshot({ path: `${OUT}/today-375.png`, fullPage: true });
   await mobile.close();
+
+  await inspectReturningMobile(BASE, browser, threeHitMobileProfile, 'active', 3);
+  await inspectReturningMobile(BASE, browser, quietMobileProfile, 'quiet', 0);
 }
 
 await withPreview({ port: 4398 }, async (BASE) => {
