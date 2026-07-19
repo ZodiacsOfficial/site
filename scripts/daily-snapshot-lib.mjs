@@ -5,48 +5,10 @@
  */
 import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
-import {
-  MakeTime, GeoVector, RotateVector, Rotation_EQJ_ECT, EclipticGeoMoon, Illumination, Body,
-} from 'astronomy-engine';
+import { moonPhase, positions } from '@zodiacs/engine';
 
-const SIGN_SLUGS = [
-  'aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo',
-  'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces',
-];
-const PLANETS = ['Sun', 'Mercury', 'Venus', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto'];
+const DAILY_BODIES = ['Moon', 'Sun', 'Mercury', 'Venus', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto'];
 const TRANSIT_ARRAYS = ['ingresses', 'lunations', 'stations', 'aspects'];
-
-const norm = (value) => ((value % 360) + 360) % 360;
-const wrap180 = (value) => {
-  const wrapped = norm(value);
-  return wrapped > 180 ? wrapped - 360 : wrapped;
-};
-
-function longitudeAt(body, when) {
-  const time = MakeTime(when);
-  if (body === 'Moon') return norm(EclipticGeoMoon(time).lon);
-  const vector = GeoVector(Body[body], time, true);
-  const ecliptic = RotateVector(Rotation_EQJ_ECT(time), vector);
-  return norm((Math.atan2(ecliptic.y, ecliptic.x) * 180) / Math.PI);
-}
-
-function speedAt(body, when) {
-  const halfWindowMs = 0.01 * 86_400_000;
-  const before = longitudeAt(body, new Date(when.getTime() - halfWindowMs));
-  const after = longitudeAt(body, new Date(when.getTime() + halfWindowMs));
-  return wrap180(after - before) / 0.02;
-}
-
-function phaseName(angle) {
-  if (angle < 22.5 || angle >= 337.5) return 'New Moon';
-  if (angle < 67.5) return 'Waxing Crescent';
-  if (angle < 112.5) return 'First Quarter';
-  if (angle < 157.5) return 'Waxing Gibbous';
-  if (angle < 202.5) return 'Full Moon';
-  if (angle < 247.5) return 'Waning Gibbous';
-  if (angle < 292.5) return 'Last Quarter';
-  return 'Waning Crescent';
-}
 
 function assertMonthlyShape(monthly, month, source) {
   if (!monthly || typeof monthly !== 'object' || monthly.month !== month) {
@@ -100,26 +62,22 @@ export async function computeDailySnapshot(date, repoRoot) {
   const dayStart = new Date(`${date}T00:00:00.000Z`);
   const dayEnd = new Date(dayStart.getTime() + 86_400_000);
 
-  const exactLongitudes = new Map();
-  const bodies = ['Moon', ...PLANETS].map((body) => {
-    const longitude = longitudeAt(body, noon);
-    exactLongitudes.set(body, longitude);
+  // The public site engine is the facts source of truth. Keep only the ten
+  // bodies published by the daily schema; nodes remain available to charts.
+  const enginePositions = new Map(positions(noon).map((position) => [position.body, position]));
+  const bodies = DAILY_BODIES.map((body) => {
+    const position = enginePositions.get(body);
+    if (!position) throw new Error(`@zodiacs/engine omitted required daily body ${body}`);
     return {
       body,
-      // Keep the computed double for sign-boundary and personalized-aspect
-      // checks; display copy rounds separately.
-      lon: longitude,
-      sign: SIGN_SLUGS[Math.floor(norm(longitude) / 30)],
-      degree: norm(longitude) % 30,
-      // A centered derivative avoids mislabeling a body when a station falls
-      // inside a forward-only sampling window.
-      retrograde: body === 'Moon' ? false : speedAt(body, noon) < 0,
+      lon: position.lon,
+      sign: position.sign,
+      degree: position.degree,
+      retrograde: position.retrograde,
     };
   });
 
-  // Phase comes from the unrounded longitudes, not the display precision.
-  const phaseAngle = norm(exactLongitudes.get('Moon') - exactLongitudes.get('Sun'));
-  const illumination = Illumination(Body.Moon, MakeTime(noon));
+  const phase = moonPhase(noon);
 
   const month = date.slice(0, 7);
   const relativeSource = `src/data/transits-${month}.json`;
@@ -159,8 +117,8 @@ export async function computeDailySnapshot(date, repoRoot) {
     snapshotAt: `${date}T12:00:00.000Z`,
     bodies,
     moon: {
-      phase: phaseName(phaseAngle),
-      illumination: Math.round(illumination.phase_fraction * 1000) / 1000,
+      phase: phase.name,
+      illumination: Math.round(phase.illumination * 1000) / 1000,
     },
     eventsCoverage,
     eventsSource: eventsCoverage === 'complete' ? relativeSource : null,

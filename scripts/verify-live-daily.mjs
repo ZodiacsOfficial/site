@@ -26,6 +26,7 @@ const canonicalJson = (value) => JSON.stringify(canonical(value));
 const sha256 = (value) => createHash('sha256').update(value).digest('hex');
 const localManifest = JSON.parse(await readFile(new URL('../src/data/daily-publication-manifest.json', import.meta.url), 'utf8'));
 const localPublication = JSON.parse(await readFile(new URL('../src/data/daily-publication.json', import.meta.url), 'utf8'));
+const localHoroscopeProgram = JSON.parse(await readFile(new URL('../src/data/horoscope-program.json', import.meta.url), 'utf8'));
 
 async function check() {
   const response = await fetch(`${endpoint}${endpoint.includes('?') ? '&' : '?'}proof=${Date.now()}`, {
@@ -47,6 +48,12 @@ async function check() {
   if (sha256(canonicalJson(remote.inputs?.dailyFacts)) !== localManifest.facts.canonicalSha256) {
     throw new Error('production daily input hash disagrees with the committed manifest');
   }
+  if (canonicalJson(remote.inputs?.horoscopeProgram) !== canonicalJson(localHoroscopeProgram)) {
+    throw new Error('production horoscope program is not the committed program');
+  }
+  if (remote.inputs.horoscopeProgram.anchorDate !== localManifest.date) {
+    throw new Error('production horoscope program is not anchored to the daily edition');
+  }
   if (localManifest.facts.eventsSourceCanonicalSha256
     && sha256(canonicalJson(remote.inputs?.transitSource)) !== localManifest.facts.eventsSourceCanonicalSha256) {
     throw new Error('production transit input hash disagrees with the committed manifest');
@@ -58,7 +65,7 @@ let lastError;
 do {
   try {
     await check();
-    console.log(`verify-live-daily: PASS — production serves ${localManifest.date} with matching inputs and hashes`);
+    console.log(`verify-live-daily: PASS — production serves ${localManifest.date} with matching daily and horoscope inputs`);
     process.exit(0);
   } catch (error) {
     lastError = error;

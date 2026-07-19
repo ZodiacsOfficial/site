@@ -189,11 +189,7 @@ input, select { font: inherit; }
   border: 1px solid var(--hair-2);
   color: var(--text);
   background: rgba(198, 204, 218, 0.05);
-  transition:
-    border-color 160ms cubic-bezier(0.23, 1, 0.32, 1),
-    background 160ms cubic-bezier(0.23, 1, 0.32, 1),
-    color 160ms cubic-bezier(0.23, 1, 0.32, 1),
-    transform 140ms cubic-bezier(0.23, 1, 0.32, 1);
+  transition: transform 140ms cubic-bezier(0.23, 1, 0.32, 1);
 }
 .btn:has(.orb) { padding-right: 10px; }
 .btn:active { transform: scale(0.97); }
@@ -208,7 +204,7 @@ input, select { font: inherit; }
   border: 1px solid var(--hair-2);
   font-size: 14px;
   line-height: 1;
-  transition: transform 160ms cubic-bezier(0.23, 1, 0.32, 1), background 160ms cubic-bezier(0.23, 1, 0.32, 1);
+  transition: transform 160ms cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -385,10 +381,13 @@ input, select { font: inherit; }
   height: 100%;
 }
 
-/* Interactive card variant */
-a.shell { display: block; text-decoration: none; transition: border-color var(--dur-2) var(--ease), transform var(--dur-2) var(--ease); }
-a.shell:hover { border-color: color-mix(in oklab, var(--sign, var(--accent)) 45%, transparent); transform: translateY(-2px); }
-a.shell:hover .core { border-color: color-mix(in oklab, var(--sign, var(--accent)) 28%, transparent); }
+/* Interactive card variant. Paint changes are immediate; only the small
+   positional response is animated, and only on a real hover-capable pointer. */
+a.shell { display: block; text-decoration: none; transition: transform var(--dur-1) var(--ease); }
+@media (hover: hover) and (pointer: fine) {
+  a.shell:hover { border-color: color-mix(in oklab, var(--sign, var(--accent)) 45%, transparent); transform: translateY(-2px); }
+  a.shell:hover .core { border-color: color-mix(in oklab, var(--sign, var(--accent)) 28%, transparent); }
+}
 
 /* Sign-tinted wash (set --sign on the element) */
 .tinted .core,
@@ -478,12 +477,14 @@ a.shell:hover .core { border-color: color-mix(in oklab, var(--sign, var(--accent
   border-radius: var(--r-lg);
   background: rgba(198, 204, 218, 0.015);
   text-decoration: none;
-  transition: border-color var(--dur-2) var(--ease), background var(--dur-2) var(--ease), transform var(--dur-2) var(--ease);
+  transition: transform var(--dur-1) var(--ease);
 }
-.tile:hover {
-  border-color: color-mix(in oklab, var(--sign, var(--accent)) 42%, transparent);
-  background: color-mix(in oklab, var(--sign, var(--accent)) 6%, transparent);
-  transform: translateY(-2px);
+@media (hover: hover) and (pointer: fine) {
+  .tile:hover {
+    border-color: color-mix(in oklab, var(--sign, var(--accent)) 42%, transparent);
+    background: color-mix(in oklab, var(--sign, var(--accent)) 6%, transparent);
+    transform: translateY(-2px);
+  }
 }
 
 /* ── Mono data text ("sky receipts") ───────────────────────────── */
@@ -504,23 +505,24 @@ a.shell:hover .core { border-color: color-mix(in oklab, var(--sign, var(--accent
 /* ── Scroll reveal ─────────────────────────────────────────────── */
 .reveal {
   opacity: 0;
-  transform: translateY(20px);
-  filter: blur(5px);
+  transform: translateY(12px);
   transition:
-    opacity var(--dur-3) var(--ease),
-    transform var(--dur-3) var(--ease),
-    filter var(--dur-3) var(--ease);
+    opacity 240ms cubic-bezier(0.23, 1, 0.32, 1),
+    transform 240ms cubic-bezier(0.23, 1, 0.32, 1);
   transition-delay: var(--reveal-delay, 0ms);
-  will-change: opacity, transform, filter;
+  will-change: opacity, transform;
 }
-.reveal.is-in { opacity: 1; transform: translateY(0); filter: blur(0); }
+.reveal.is-in { opacity: 1; transform: translateY(0); }
 @media (prefers-reduced-motion: reduce) {
   .reveal {
     transition: none !important;
     opacity: 1 !important;
     transform: none !important;
-    filter: none !important;
   }
+  a.shell,
+  .tile { transition: none; }
+  a.shell:hover,
+  .tile:hover { transform: none; }
 }
 
 /* ── Hairline divider ──────────────────────────────────────────── */

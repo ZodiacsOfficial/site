@@ -52,6 +52,53 @@
   font-display: swap;
 }
 
+/* Phase 1 reader surfaces have a strict zero-layout-shift contract. These
+   route-scoped aliases reuse the same files but decline a late face swap if a
+   font misses first paint. Existing pages retain the established `swap`
+   behavior and visual baselines through the unaliased families above. */
+@font-face {
+  font-family: 'Instrument Sans Phase1';
+  src: url('/fonts/instrument-sans-latin-wght-normal.woff2') format('woff2-variations');
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: optional;
+}
+@font-face {
+  font-family: 'Instrument Sans Phase1';
+  src: url('/fonts/instrument-sans-latin-wght-italic.woff2') format('woff2-variations');
+  font-weight: 400 700;
+  font-style: italic;
+  font-display: optional;
+}
+@font-face {
+  font-family: 'JetBrains Mono Phase1';
+  src: url('/fonts/jetbrains-mono-latin-wght-normal.woff2') format('woff2-variations');
+  font-weight: 300 600;
+  font-style: normal;
+  font-display: optional;
+}
+@font-face {
+  font-family: 'EB Garamond Phase1';
+  src: url('/fonts/eb-garamond-latin-400-normal.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: optional;
+}
+@font-face {
+  font-family: 'EB Garamond Phase1';
+  src: url('/fonts/eb-garamond-latin-500-normal.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: optional;
+}
+@font-face {
+  font-family: 'EB Garamond Phase1';
+  src: url('/fonts/eb-garamond-latin-400-italic.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: optional;
+}
+
 /* Metric-matched local fallbacks so the swap when a webfont arrives doesn't
    rewrap text that's already on screen (overrides = target metric ÷
    size-adjust, one face per fallback family à la capsize/fontaine).
@@ -193,4 +240,10 @@
   --z-overlay: 50;
 
   color-scheme: dark;
+}
+
+:root[data-stable-typography] {
+  --font-serif: 'EB Garamond Phase1', 'EB Garamond Fallback', 'EB Garamond Fallback Android', 'EB Garamond Fallback Times', 'Iowan Old Style', Georgia, serif;
+  --font-sans: 'Instrument Sans Phase1', 'Instrument Sans Fallback', 'Instrument Sans Fallback Android', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono Phase1', ui-monospace, Menlo, Consolas, monospace;
 }

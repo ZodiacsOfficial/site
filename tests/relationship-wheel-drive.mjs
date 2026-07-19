@@ -9,12 +9,13 @@
  *   npm run build
  *   OUT_DIR=/tmp/shots node tests/relationship-wheel-drive.mjs
  */
+import { mkdir } from 'node:fs/promises';
 import { chromium } from 'playwright-core';
 import { spawn } from 'node:child_process';
 import { setTimeout as wait } from 'node:timers/promises';
+import { findChromium, STABLE_CHROMIUM_ARGS } from './visual/browser.mjs';
 
 const OUT = process.env.OUT_DIR ?? null;
-const CHROMIUM = process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH ?? '/opt/pw-browsers/chromium';
 const PORT = 4399;
 const BASE = `http://127.0.0.1:${PORT}`;
 const CURATED_SUN_MOON = 'One of you runs on purpose, the other on feeling, and here they agree — what one wants to do is what the other wants to come home to. This is the classic ease that makes a relationship feel inevitable in retrospect.';
@@ -59,12 +60,16 @@ const preview = spawn(
   { stdio: 'ignore' },
 );
 await wait(2500);
+if (OUT) await mkdir(OUT, { recursive: true });
 const results = [];
 const check = (name, ok, detail = '') => { results.push({ name, ok, detail }); };
 const shot = async (t, p, o = {}) => { if (OUT) await t.screenshot({ path: `${OUT}/${p}`, ...o }).catch(() => {}); };
 
 try {
-  const browser = await chromium.launch({ executablePath: CHROMIUM });
+  const browser = await chromium.launch({
+    executablePath: await findChromium(),
+    args: STABLE_CHROMIUM_ARGS,
+  });
   const page = await browser.newPage({ viewport: { width: 1440, height: 1200 }, deviceScaleFactor: 1 });
   await page.addInitScript((prof) => {
     localStorage.setItem('zodiacs.profile.v1', JSON.stringify(prof));
@@ -97,9 +102,13 @@ try {
   check('an uncurated top contact keeps the role-composed fallback verbatim',
     (await page.locator('.syn__aspect-read[data-fallback-line]').first().textContent())?.trim() === FALLBACK_NEPTUNE_URANUS);
   const communication = page.locator('[data-communication-read]');
-  check('communication read follows top contacts and precedes balances', await communication.evaluate((node) =>
-    node.previousElementSibling?.matches('.syn__aspects') === true
-      && node.nextElementSibling?.matches('.syn__balances') === true));
+  check('communication read follows top contacts and precedes balances', await communication.evaluate((node) => {
+    const siblings = [...(node.parentElement?.children ?? [])];
+    const contacts = siblings.findIndex((sibling) => sibling.matches('.syn__aspects'));
+    const current = siblings.indexOf(node);
+    const balances = siblings.findIndex((sibling) => sibling.matches('.syn__balances'));
+    return contacts >= 0 && contacts < current && current < balances;
+  }));
   check('Frida and Diego pin the fire-fire Mercury pairing',
     await communication.getAttribute('data-mercury-elements') === 'fire-fire'
       && (await communication.locator('.rcomm__receipt').textContent())?.trim() === 'Mercury: Leo · Mercury: Sagittarius'

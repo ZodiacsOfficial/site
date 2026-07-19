@@ -413,8 +413,8 @@
       "body": "Sun",
       "sign": "cancer",
       "at": "2026-07-19T12:00:00.000Z",
-      "longitude": 116.84864118032061,
-      "degree": 26.848641180320612,
+      "longitude": 116.84864118032067,
+      "degree": 26.84864118032067,
       "retrograde": false
     },
     {
@@ -433,8 +433,8 @@
       "body": "Venus",
       "sign": "virgo",
       "at": "2026-07-19T12:00:00.000Z",
-      "longitude": 160.76306134399692,
-      "degree": 10.763061343996924,
+      "longitude": 160.7630613439968,
+      "degree": 10.76306134399681,
       "retrograde": false
     },
     {

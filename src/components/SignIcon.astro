@@ -12,10 +12,18 @@ interface Props {
   size?: number;
   alt?: string;
   loading?: 'lazy' | 'eager';
+  fetchPriority?: 'high' | 'low' | 'auto';
   class?: string;
 }
 
-const { sign, size = 24, alt = '', loading = 'lazy', class: className } = Astro.props;
+const {
+  sign,
+  size = 24,
+  alt = '',
+  loading = 'lazy',
+  fetchPriority,
+  class: className,
+} = Astro.props;
 const s = signBySlug(sign);
 const tier = size <= 24 ? 48 : size <= 64 ? 128 : 400;
 ---
@@ -27,11 +35,20 @@ const tier = size <= 24 ? 48 : size <= 64 ? 128 : 400;
     height={size}
     alt={alt}
     loading={loading}
+    fetchpriority={fetchPriority}
     decoding="async"
   />
 </picture>
 
 <style>
-  .sign-icon { display: inline-block; flex: 0 0 auto; width: var(--sign-size); max-width: 100%; line-height: 0; }
-  .sign-icon img { width: 100%; height: auto; border-radius: 50%; }
+  .sign-icon {
+    display: inline-block;
+    flex: 0 0 auto;
+    width: var(--sign-size);
+    height: auto;
+    max-width: 100%;
+    aspect-ratio: 1;
+    line-height: 0;
+  }
+  .sign-icon img { display: block; width: 100%; height: auto; aspect-ratio: 1; border-radius: 50%; }
 </style>

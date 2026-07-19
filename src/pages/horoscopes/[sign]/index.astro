@@ -28,5 +28,5 @@ const labels = {
 };
 ---
 <HoroscopeProgramPage signSlug={sign.slug} surface="today" reading={reading}>
-  <DailyForYou slot="enhancement" client:idle sign={sign.slug} labels={labels} />
+  <DailyForYou slot="enhancement" client:visible sign={sign.slug} labels={labels} />
 </HoroscopeProgramPage>

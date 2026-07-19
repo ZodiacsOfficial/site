@@ -137,6 +137,7 @@ const skyMarkers = reading.skyStrip.markers;
 ---
 <Base
   inlineCriticalCss={surface === 'today'}
+  stableTypography
   title={`${sign.name} ${reading.title} — ${reading.label} | Zodiacs.org`}
   description={reading.description}
   path={path}
@@ -149,6 +150,30 @@ const skyMarkers = reading.skyStrip.markers;
     title: `Zodiacs.org — ${sign.name} daily horoscope`,
   }}
 >
+  {surface === 'today' && (
+    <script slot="head" is:inline define:vars={{ dailyEnhancementSign: sign.slug }}>
+      /* Route-local first-paint hint for DailyForYou. Only the current sign is
+         tested, and no chart data is copied out of local storage. */
+      try {
+        var rawProfile = localStorage.getItem('zodiacs.profile.v1');
+        var profile = rawProfile ? JSON.parse(rawProfile) : null;
+        var signNames = ['aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo', 'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces'];
+        var matchingChart = profile && profile.version === 1 && Array.isArray(profile.charts)
+          && profile.charts.some(function (chart) {
+            if (!chart || typeof chart.name !== 'string' || typeof chart.updatedAt !== 'string') return false;
+            var bodies = chart && chart.summary && chart.summary.bodies;
+            if (!Array.isArray(bodies)) return false;
+            var sun = bodies.find(function (body) {
+              return body && body.body === 'Sun' && Number.isFinite(body.lon);
+            });
+            if (!sun) return false;
+            var longitude = ((sun.lon % 360) + 360) % 360;
+            return signNames[Math.floor(longitude / 30)] === dailyEnhancementSign;
+          });
+        if (matchingChart) document.documentElement.setAttribute('data-dfy-saved-chart', '');
+      } catch (error) {}
+    </script>
+  )}
   <article class="program container container--narrow" style={`--sign:${sign.hue}`}>
     <nav class="program__crumbs mono" aria-label="Breadcrumb">
       <a href="/horoscopes/">Horoscopes</a><span aria-hidden="true">/</span>
@@ -160,8 +185,8 @@ const skyMarkers = reading.skyStrip.markers;
       ) : <span aria-current="page">{sign.name}</span>}
     </nav>
 
-    <header class="program__hero reveal">
-      <SignIcon sign={sign.slug} size={88} loading="eager" class="program__icon" />
+    <header class="program__hero">
+      <SignIcon sign={sign.slug} size={88} loading="eager" fetchPriority="high" class="program__icon" />
       <div class="program__hero-copy">
         <em class="kicker">{meta.kicker} · {reading.label}</em>
         <h1 class="display">{sign.name} {reading.title}</h1>
@@ -201,7 +226,7 @@ const skyMarkers = reading.skyStrip.markers;
       </aside>
     )}
 
-    <section class="program__reading reveal" aria-labelledby="reading-heading">
+    <section class="program__reading" aria-labelledby="reading-heading">
       <div class="program__reading-head">
         <span class="mono">The reading</span>
         <h2 id="reading-heading">{reading.intro}</h2>
@@ -226,10 +251,6 @@ const skyMarkers = reading.skyStrip.markers;
         </div>
       )}
 
-      <aside class="program__action">
-        <span class="mono">One useful move</span>
-        <p>{reading.action}</p>
-      </aside>
     </section>
 
     <details class="program__basis">
@@ -262,13 +283,13 @@ const skyMarkers = reading.skyStrip.markers;
 
     <EmailCapture placement="horoscopes" sign={sign.slug} />
 
-    <section class="program__faq reveal" aria-label={`${sign.name} ${meta.nav.toLowerCase()} horoscope questions`}>
+    <section class="program__faq" aria-label={`${sign.name} ${meta.nav.toLowerCase()} horoscope questions`}>
       <Faq items={faq} heading={`${sign.name} ${meta.nav.toLowerCase()} horoscope, answered`} />
     </section>
 
     <ShareRow text={`${sign.name} ${reading.title} — ${reading.label}`} url={canonicalUrl} />
 
-    <nav class="program__signs reveal" aria-label={`Other signs for ${meta.nav.toLowerCase()} horoscopes`}>
+    <nav class="program__signs" aria-label={`Other signs for ${meta.nav.toLowerCase()} horoscopes`}>
       <span class="program__signs-head">The other eleven signs</span>
       <div class="program__sign-grid">
         {SIGNS.filter((other) => other.slug !== sign.slug).map((other) => (
@@ -306,6 +327,7 @@ const skyMarkers = reading.skyStrip.markers;
   .program__hero { display: flex; align-items: center; gap: clamp(18px, 4vw, 32px); }
   :global(.program__icon) {
     width: clamp(66px, 9vw, 88px);
+    height: clamp(66px, 9vw, 88px);
     filter: drop-shadow(0 16px 36px color-mix(in oklab, var(--sign) 28%, transparent));
   }
   .program__hero-copy { min-width: 0; }
@@ -422,8 +444,7 @@ const skyMarkers = reading.skyStrip.markers;
 
   .program__reading { display: grid; gap: clamp(24px, 4vw, 34px); }
   .program__reading-head { display: grid; gap: 9px; max-width: 66ch; }
-  .program__reading-head > span,
-  .program__action > span {
+  .program__reading-head > span {
     color: var(--faint);
     font-size: 10px;
     letter-spacing: 0.11em;
@@ -447,15 +468,6 @@ const skyMarkers = reading.skyStrip.markers;
   }
   .program__section h3 { margin: 0 0 8px; font-size: var(--text-lg); letter-spacing: -0.01em; }
   .program__section p { margin: 0; color: var(--text-2); line-height: 1.68; text-wrap: pretty; }
-  .program__action {
-    display: grid;
-    gap: 8px;
-    padding: clamp(18px, 3vw, 24px);
-    border-left: 2px solid var(--sign);
-    background: color-mix(in oklab, var(--sign) 7%, transparent);
-  }
-  .program__action p { margin: 0; font-family: var(--font-serif); font-size: var(--text-xl); line-height: 1.35; }
-
   .program__basis {
     border-block: 1px solid var(--hair-1);
   }
@@ -521,9 +533,66 @@ const skyMarkers = reading.skyStrip.markers;
     border-radius: var(--r-md);
     background: color-mix(in oklab, var(--sign) 4%, transparent);
   }
-  .program :global(.dfy__head) { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 16px; }
-  .program :global(.dfy__head h2) { margin: 0; font-size: var(--text-lg); font-weight: 620; letter-spacing: -0.01em; }
-  .program :global(.dfy__stamp) { color: var(--faint); font-size: 11px; letter-spacing: 0.05em; }
+  .program :global(.dfy--placeholder) { display: none; visibility: hidden; }
+  .program :global(.dfy__placeholder-copy),
+  .program :global(.dfy__quiet p) { margin: 0; color: var(--muted); font-size: var(--text-sm); line-height: 1.6; }
+  :global(:root[data-dfy-saved-chart]) .program :global(.dfy--placeholder) {
+    display: grid;
+    visibility: visible;
+  }
+  .program :global(.dfy__body) {
+    display: grid;
+    height: 260px;
+    min-width: 0;
+    align-content: space-between;
+    gap: 12px;
+  }
+  .program :global(.dfy:has(.evidence-disclosure[open]) .dfy__body) {
+    height: auto;
+    min-height: 260px;
+  }
+  .program :global(.dfy__fallback-points),
+  .program :global(.dfy__quiet ul) {
+    display: grid;
+    gap: 7px;
+    margin: 0;
+    padding-left: 18px;
+    color: var(--faint);
+    font-size: 12px;
+    line-height: 1.55;
+  }
+  .program :global(.dfy__quiet) { display: grid; gap: 14px; }
+  .program :global(.dfy__quiet-baseline) {
+    display: grid;
+    gap: 5px;
+    padding: 12px 14px;
+    border-left: 2px solid var(--sign);
+    background: color-mix(in oklab, var(--sign) 5%, transparent);
+  }
+  .program :global(.dfy__quiet-baseline strong) { color: var(--text-2); font-size: var(--text-sm); }
+  .program :global(.dfy__quiet-baseline p) { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.55; }
+  .program :global(.dfy__quiet-baseline a) { color: var(--text-2); font-size: 12px; }
+  .program :global(.dfy__quiet-receipt) { margin: 0; color: var(--faint); font-size: 11px; line-height: 1.6; }
+  .program :global(.dfy__head) {
+    display: grid;
+    grid-template-columns: max-content minmax(0, 1fr);
+    min-width: 0;
+    align-items: baseline;
+    gap: 16px;
+  }
+  .program :global(.dfy__head h2) { min-width: 0; margin: 0; font-size: var(--text-lg); font-weight: 620; letter-spacing: -0.01em; }
+  .program :global(.dfy__stamp) {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    overflow: hidden;
+    color: var(--faint);
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
   .program :global(.dfy__lines) { display: grid; gap: 11px; margin: 0; padding: 0; list-style: none; }
   .program :global(.dfy__lines p) { margin: 0 0 3px; color: var(--text-2); font-size: var(--text-sm); line-height: 1.55; }
   .program :global(.dfy__receipt) { color: var(--muted); font-size: 11px; letter-spacing: 0.04em; }
@@ -560,6 +629,11 @@ const skyMarkers = reading.skyStrip.markers;
     .program__sky-markers { gap-inline: 14px; }
     .program :global(.dfy__actions) { align-items: stretch; }
     .program :global(.dfy__primary) { width: 100%; justify-content: space-between; }
+    .program :global(.dfy__body) { height: 292px; }
+    .program :global(.dfy:has(.evidence-disclosure[open]) .dfy__body) {
+      height: auto;
+      min-height: 292px;
+    }
   }
   @media (max-width: 380px) {
     .program__sky-markers { grid-template-columns: 1fr; }

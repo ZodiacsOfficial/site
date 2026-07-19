@@ -15,7 +15,7 @@ const esc = (value: string) =>
   value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
 export const GET: APIRoute = () => {
-  const pub = new Date(`${horoscopeProgram.anchorDate}T12:00:00Z`).toUTCString();
+  const pub = new Date(`${horoscopeProgram.anchorDate}T00:00:00Z`).toUTCString();
   const bySign = new Map(horoscopeProgram.signs.map((entry) => [entry.sign, entry] as const));
   const items = SIGNS.map((sign) => {
     const reading = bySign.get(sign.slug)?.readings.today;

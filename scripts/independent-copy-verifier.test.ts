@@ -23,7 +23,14 @@ describe('independent copy verifier', () => {
   it('records independent copy approval separately from same-renderer replay', () => {
     const copyRole = constitution.roles.find((role) => role.id === 'copy-verifier');
     expect(copyRole?.kind).toBe('independent-serialized-copy-policy');
-    expect(dailyManifest.verification.independentFromGenerator).toBe(true);
+    expect(dailyManifest.verification.copyVerifierIndependentFromGenerator).toBe(true);
+    expect(dailyManifest.verification.astronomyAudit).toMatchObject({
+      kind: 'site-engine-parity-and-event-physics',
+      sourceOfTruth: '@zodiacs/engine',
+      independentFromSnapshotBuilder: true,
+      independentAstronomyImplementation: false,
+      status: 'passed',
+    });
     expect(dailyManifest.verification.copyCheck).toMatchObject({
       implementation: 'zodiacs.independent-copy-verifier.v1',
       independentImplementation: true,
@@ -90,6 +97,86 @@ describe('independent copy verifier', () => {
     expect(ids).toContain('COPY-VOICE-BANNED');
     expect(ids).toContain('COPY-VOICE-EXCLAMATION');
     expect(ids).toContain('COPY-DIST-EXACT');
+  });
+
+  it('caps exact sentence reuse across signs and surfaces', () => {
+    type MutableProgram = {
+      signs: Array<{
+        readings: Record<string, {
+          passages: Array<{ text: string }>;
+          text: string;
+          wordCount: number;
+        }>;
+      }>;
+    };
+    const addSharedSentence = (program: MutableProgram, signCount: number): void => {
+      for (const signProgram of program.signs.slice(0, signCount)) {
+        const reading = signProgram.readings.today;
+        reading.passages[0].text = `Write one concrete next step before noon. ${reading.passages[0].text}`;
+        reading.text = reading.passages.map((passage) => passage.text).join('\n\n');
+        reading.wordCount = independentWordCount(reading.text);
+      }
+    };
+
+    const allowed = structuredClone(horoscopeProgram) as unknown as MutableProgram;
+    addSharedSentence(allowed, 3);
+    expect(ruleIds(verifyHoroscopeProgramCopy(allowed)))
+      .not.toContain('COPY-DIST-SENTENCE-REUSE');
+
+    const blocked = structuredClone(horoscopeProgram) as unknown as MutableProgram;
+    addSharedSentence(blocked, 4);
+    expect(ruleIds(verifyHoroscopeProgramCopy(blocked)))
+      .toContain('COPY-DIST-SENTENCE-REUSE');
+  });
+
+  it('rejects near-duplicate actions inside one short-form reading', () => {
+    const tampered = structuredClone(horoscopeProgram) as unknown as {
+      signs: Array<{
+        sign: string;
+        readings: Record<string, {
+          passages: Array<{ text: string }>;
+          text: string;
+          wordCount: number;
+        }>;
+      }>;
+    };
+    const reading = tampered.signs.find((entry) => entry.sign === 'aquarius')?.readings.today;
+    expect(reading).toBeDefined();
+    if (!reading) return;
+    reading.passages[2].text = reading.passages[2].text.replace(
+      /^[^.]+\./u,
+      'Reserve a real block for the person, pleasure, or draft before it becomes optional.',
+    );
+    reading.text = reading.passages.map((passage) => passage.text).join('\n\n');
+    reading.wordCount = independentWordCount(reading.text);
+
+    expect(ruleIds(verifyHoroscopeProgramCopy(tampered)))
+      .toContain('COPY-DIST-INTRA-ACTION');
+  });
+
+  it('rejects a tomorrow edition that merely relabels today', () => {
+    const tampered = structuredClone(horoscopeProgram) as unknown as {
+      signs: Array<{
+        sign: string;
+        readings: Record<string, {
+          passages: Array<{ text: string }>;
+          text: string;
+          wordCount: number;
+        }>;
+      }>;
+    };
+    const signProgram = tampered.signs.find((entry) => entry.sign === 'aries');
+    expect(signProgram).toBeDefined();
+    if (!signProgram) return;
+    const today = signProgram.readings.today;
+    const tomorrow = signProgram.readings.tomorrow;
+    tomorrow.passages = structuredClone(today.passages);
+    tomorrow.passages[0].text = tomorrow.passages[0].text.replace(/^Today,/u, 'Tomorrow,');
+    tomorrow.text = tomorrow.passages.map((passage) => passage.text).join('\n\n');
+    tomorrow.wordCount = independentWordCount(tomorrow.text);
+
+    expect(ruleIds(verifyHoroscopeProgramCopy(tampered)))
+      .toContain('COPY-DIST-TODAY-TOMORROW');
   });
 
   it('independently reconciles prose claims to phase, sign, aspect, house, and event receipts', () => {

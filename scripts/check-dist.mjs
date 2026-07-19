@@ -33,6 +33,7 @@ import { backstageCopyMatches } from './consumer-copy-lib.mjs';
 
 const repo = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const root = resolve(repo, 'dist');
+const SITE_ORIGIN = 'https://zodiacs.org';
 const failures = [];
 const fail = (msg) => { failures.push(msg); };
 let searchIndexCount = 0;
@@ -40,6 +41,16 @@ const ZODIAC_SIGN_SLUGS = [
   'aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo',
   'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces',
 ];
+const PHASE1_HOROSCOPE_PATHS = ZODIAC_SIGN_SLUGS.flatMap((sign) => [
+  `/horoscopes/${sign}/`,
+  `/horoscopes/${sign}/tomorrow/`,
+  `/horoscopes/${sign}/weekly/`,
+  `/horoscopes/${sign}/monthly/`,
+  `/horoscopes/${sign}/love/`,
+  `/horoscopes/${sign}/career/`,
+  `/horoscopes/${sign}/2027/`,
+]);
+const PHASE1_READER_PATHS = new Set(['/today/', '/horoscopes/', ...PHASE1_HOROSCOPE_PATHS]);
 
 function canonicalValue(value) {
   if (Array.isArray(value)) return value.map(canonicalValue);
@@ -243,6 +254,115 @@ for (const file of files) {
   }
 }
 
+// Phase 1's pages must be discoverable by starting at / and following actual
+// HTML links. An inbound-only gate can be fooled by a disconnected cycle.
+const builtPageByFile = new Map(files.map((file) => [
+  file,
+  htmlFileToPath(relative(root, file)),
+]));
+const phase1Graph = new Map([...builtPageByFile.values()].map((path) => [path, new Set()]));
+const phase1Inbound = new Map([...PHASE1_READER_PATHS].map((path) => [path, new Set()]));
+const phase1Metadata = [];
+for (const file of files) {
+  const html = idCache.get(file) ?? (await readFile(file, 'utf8'));
+  const sourcePath = builtPageByFile.get(file);
+  for (const match of html.matchAll(/<a\b[^>]*\bhref=(?:"([^"]+)"|'([^']+)')[^>]*>/gi)) {
+    const value = match[1] ?? match[2];
+    if (/^(?:mailto:|tel:|data:|javascript:|#|\/\/)/i.test(value)) continue;
+    try {
+      const url = new URL(value, `${SITE_ORIGIN}${sourcePath}`);
+      if (url.origin !== SITE_ORIGIN) continue;
+      const target = targetPath(url.pathname);
+      const linkedPath = target ? builtPageByFile.get(target) : undefined;
+      if (!linkedPath || linkedPath === sourcePath) continue;
+      phase1Graph.get(sourcePath)?.add(linkedPath);
+      phase1Inbound.get(linkedPath)?.add(sourcePath);
+    } catch {
+      // Malformed internal links are reported by the forward resolver above.
+    }
+  }
+
+  if (PHASE1_READER_PATHS.has(sourcePath)) {
+    const metadata = extractPageMetadata(html);
+    const rawOgImage = [...html.matchAll(/<meta\b[^>]*>/gi)]
+      .map((match) => match[0])
+      .find((tag) => /\bproperty=(?:"og:image"|'og:image')/i.test(tag))
+      ?.match(/\bcontent=(?:"([^"]+)"|'([^']+)')/i)?.slice(1).find(Boolean);
+    let ogImage;
+    if (rawOgImage) {
+      try {
+        const parsed = new URL(rawOgImage, SITE_ORIGIN);
+        if (parsed.origin !== SITE_ORIGIN) throw new Error('foreign origin');
+        // Query strings and fragments do not make the underlying local image
+        // distinct. Collapse them before URL and byte-level comparisons.
+        ogImage = `${SITE_ORIGIN}${parsed.pathname}`;
+      } catch {
+        fail(`phase1-metadata: ${sourcePath} has a non-canonical local og:image (${rawOgImage})`);
+      }
+    }
+    phase1Metadata.push({ path: sourcePath, ...metadata, ogImage });
+  }
+}
+
+const reachableFromRoot = new Set();
+const crawlQueue = ['/'];
+while (crawlQueue.length > 0) {
+  const page = crawlQueue.shift();
+  if (reachableFromRoot.has(page)) continue;
+  reachableFromRoot.add(page);
+  for (const linked of phase1Graph.get(page) ?? []) {
+    if (!reachableFromRoot.has(linked)) crawlQueue.push(linked);
+  }
+}
+for (const path of PHASE1_READER_PATHS) {
+  if (!reachableFromRoot.has(path)) {
+    fail(`phase1-links: ${path} is not reachable from / through built HTML links`);
+  }
+}
+for (const [path, inbound] of phase1Inbound) {
+  if (inbound.size === 0) fail(`phase1-links: ${path} has no inbound internal link`);
+}
+if (phase1Metadata.length !== PHASE1_READER_PATHS.size) {
+  fail(`phase1-metadata: found ${phase1Metadata.length}/${PHASE1_READER_PATHS.size} reader pages`);
+}
+for (const field of ['title', 'description', 'ogImage']) {
+  const values = new Map();
+  for (const metadata of phase1Metadata) {
+    const value = metadata[field];
+    if (!value) {
+      fail(`phase1-metadata: ${metadata.path} is missing ${field}`);
+      continue;
+    }
+    const previous = values.get(value);
+    if (previous) fail(`phase1-metadata: ${metadata.path} duplicates ${field} from ${previous}`);
+    else values.set(value, metadata.path);
+  }
+}
+
+// Different URLs can still serve byte-identical cards. Every Phase 1 reader
+// surface needs a genuinely distinct local OG artifact, not a relabeled copy.
+const ogImageHashes = new Map();
+for (const metadata of phase1Metadata) {
+  if (!metadata.ogImage) continue;
+  const imageUrl = new URL(metadata.ogImage);
+  const imagePath = targetPath(imageUrl.pathname);
+  if (!imagePath || !isInsideDist(imagePath) || !(await exists(imagePath))) {
+    fail(`phase1-metadata: ${metadata.path} og:image does not resolve locally (${metadata.ogImage})`);
+    continue;
+  }
+  try {
+    const digest = sha256(await readFile(imagePath));
+    const previous = ogImageHashes.get(digest);
+    if (previous) {
+      fail(`phase1-metadata: ${metadata.path} reuses the og:image bytes from ${previous}`);
+    } else {
+      ogImageHashes.set(digest, metadata.path);
+    }
+  } catch (error) {
+    fail(`phase1-metadata: ${metadata.path} og:image is unreadable — ${error.message}`);
+  }
+}
+
 // Consumer pages should lead with the answer, not publication plumbing. Closed
 // evidence disclosures and explicit method/trust destinations remain inspectable.
 for (const file of files) {
@@ -263,6 +383,10 @@ const dailyPublicationManifest = JSON.parse(await readFile(
   const manifest = dailyPublicationManifest;
   const sourcePublication = JSON.parse(await readFile(
     resolve(repo, 'src/data/daily-publication.json'),
+    'utf8',
+  ));
+  const sourceHoroscopeProgram = JSON.parse(await readFile(
+    resolve(repo, 'src/data/horoscope-program.json'),
     'utf8',
   ));
   const policyRaw = await readFile(
@@ -370,6 +494,12 @@ const dailyPublicationManifest = JSON.parse(await readFile(
     if (!publicRecord.inputs?.dailyFacts
       || sha256(canonicalJson(publicRecord.inputs.dailyFacts)) !== manifest.facts?.canonicalSha256) {
       fail('daily-publication: public daily input does not reproduce the committed canonical facts hash');
+    }
+    if (canonicalJson(publicRecord.inputs?.horoscopeProgram) !== canonicalJson(sourceHoroscopeProgram)) {
+      fail('daily-publication: public horoscope program does not match the complete committed program');
+    }
+    if (publicRecord.inputs?.horoscopeProgram?.anchorDate !== manifest.date) {
+      fail('daily-publication: public horoscope program is not anchored to the verified daily edition');
     }
     if (manifest.facts?.eventsSourceCanonicalSha256
       && (!publicRecord.inputs?.transitSource
@@ -650,6 +780,22 @@ for (const block of sitemap.matchAll(/<url>([\s\S]*?)<\/url>/g)) {
     fail(
       `sitemap.xml: /today/ lastmod ${todayLastmod ?? 'missing'} does not match daily publication ${dailyPublicationManifest.date}`,
     );
+  }
+}
+{
+  const sourceHoroscopeProgram = JSON.parse(await readFile(
+    resolve(repo, 'src/data/horoscope-program.json'),
+    'utf8',
+  ));
+  for (const sign of sourceHoroscopeProgram.signs) {
+    const loc = `https://zodiacs.org/horoscopes/${sign.sign}/weekly/`;
+    const block = [...sitemap.matchAll(/<url>([\s\S]*?)<\/url>/g)]
+      .find((match) => match[1].includes(`<loc>${loc}</loc>`))?.[1];
+    const lastmod = block?.match(/<lastmod>([^<]+)<\/lastmod>/)?.[1];
+    const expected = sign.readings?.weekly?.period?.from;
+    if (lastmod !== expected) {
+      fail(`sitemap.xml: /horoscopes/${sign.sign}/weekly/ lastmod ${lastmod ?? 'missing'} does not match weekly period ${expected ?? 'missing'}`);
+    }
   }
 }
 

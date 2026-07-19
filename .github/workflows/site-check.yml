@@ -8,6 +8,11 @@ on:
   # must receive the same regression gates as main.
   pull_request:
   workflow_dispatch:
+    inputs:
+      scope_base:
+        description: Commit SHA or ref to compare for the protected-scope guard
+        required: true
+        type: string
 
 jobs:
   build-check:
@@ -16,12 +21,19 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
 
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: npm
+
+      - name: Phase 1 protected-scope guard
+        env:
+          PHASE1_SCOPE_BASE: ${{ github.event_name == 'workflow_dispatch' && inputs.scope_base || github.event.pull_request.base.sha || github.event.before }}
+        run: npm run test:phase1:scope
 
       - name: Install
         run: npm ci
@@ -70,6 +82,9 @@ jobs:
       - name: Engine accuracy vectors
         run: npm test
 
+      - name: Phase 1 exact-width acceptance evidence
+        run: npm run test:phase1:evidence
+
       - name: Weekly digest smoke
         run: npm run digest:weekly -- --dry-run --fixture --week-start 2026-07-13 --limit 1
 
@@ -81,6 +96,15 @@ jobs:
 
       - name: Horoscope templates, SSR, and responsive behavior
         run: OUT_DIR=tests/visual/artifacts/horoscope-program npm run test:horoscopes:browser
+
+      - name: Existing compatibility regression drive
+        run: OUT_DIR=tests/visual/artifacts/compatibility npm run test:compatibility:browser
+
+      - name: Existing Registry selector regression drive
+        run: OUT_DIR=tests/visual/artifacts/registry npm run test:registry-selector:browser
+
+      - name: Phase 1 mobile frame cadence
+        run: npm run test:phase1:frames
 
       - name: Structured data validation
         run: npm run schema:check

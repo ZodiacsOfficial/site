@@ -1,26 +1,23 @@
 /**
- * Independent astronomy audit for committed daily facts and monthly events.
+ * Site-engine parity and event-physics audit for committed daily facts and
+ * monthly events.
  *
- * This intentionally does not import the daily snapshot builder. It repeats
- * the small set of astronomical checks from the published inputs so a defect
- * in the writer cannot automatically bless its own output.
+ * This intentionally does not import the daily snapshot builder. It is an
+ * independent read-side implementation, but it deliberately shares the
+ * vendored @zodiacs/engine package as Phase 1's astronomical source of truth.
+ * It therefore proves engine parity, not agreement with a second ephemeris.
  */
 import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import {
-  Body,
-  EclipticGeoMoon,
-  GeoVector,
-  Illumination,
-  MakeTime,
-  RotateVector,
-  Rotation_EQJ_ECT,
-} from 'astronomy-engine';
+  degreeInSign,
+  moonPhase,
+  normalizeLongitude,
+  positions,
+  signForLongitude,
+} from '@zodiacs/engine';
+import { bodyLongitude, longitudeSpeed } from '@zodiacs/engine/internal';
 
-const SIGNS = [
-  'aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo',
-  'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces',
-];
 const BODIES = ['Moon', 'Sun', 'Mercury', 'Venus', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto'];
 const PLANETS = BODIES.filter((name) => name !== 'Moon');
 const ASPECT_ANGLES = new Map([
@@ -37,40 +34,20 @@ const EVENT_ARRAYS = [
   ['aspects', 'aspect'],
 ];
 
-const norm = (value) => ((value % 360) + 360) % 360;
 const wrap180 = (value) => {
-  const wrapped = norm(value);
+  const wrapped = normalizeLongitude(value);
   return wrapped > 180 ? wrapped - 360 : wrapped;
 };
-const signAt = (longitude) => SIGNS[Math.floor(norm(longitude) / 30)];
-const degreeAt = (longitude) => norm(longitude) % 30;
+const signAt = (longitude) => signForLongitude(longitude).slug;
+const degreeAt = (longitude) => degreeInSign(longitude);
 const near = (left, right, tolerance) => Math.abs(left - right) <= tolerance;
 
 function longitudeAt(body, when) {
-  const time = MakeTime(when);
-  if (body === 'Moon') return norm(EclipticGeoMoon(time).lon);
-  const vector = GeoVector(Body[body], time, true);
-  const ecliptic = RotateVector(Rotation_EQJ_ECT(time), vector);
-  return norm((Math.atan2(ecliptic.y, ecliptic.x) * 180) / Math.PI);
+  return bodyLongitude(body, when);
 }
 
-/** Centered numerical derivative, close to instantaneous speed at `when`. */
 function speedAt(body, when) {
-  const halfWindowMs = 0.01 * 86_400_000;
-  const before = longitudeAt(body, new Date(when.getTime() - halfWindowMs));
-  const after = longitudeAt(body, new Date(when.getTime() + halfWindowMs));
-  return wrap180(after - before) / 0.02;
-}
-
-function phaseName(angle) {
-  if (angle < 22.5 || angle >= 337.5) return 'New Moon';
-  if (angle < 67.5) return 'Waxing Crescent';
-  if (angle < 112.5) return 'First Quarter';
-  if (angle < 157.5) return 'Waxing Gibbous';
-  if (angle < 202.5) return 'Full Moon';
-  if (angle < 247.5) return 'Waning Gibbous';
-  if (angle < 292.5) return 'Last Quarter';
-  return 'Waning Crescent';
+  return longitudeSpeed(body, when);
 }
 
 const failure = (ruleId, path, message) => ({ ruleId, path, message });
@@ -197,25 +174,30 @@ export async function auditDailyAstronomy(daily, repoRoot) {
     return [failure('ASTRO-DATE', 'daily.date', 'daily date is not a real UTC day')];
   }
 
+  const enginePositions = new Map(positions(noon).map((position) => [position.body, position]));
   const exact = new Map();
   for (const body of daily.bodies ?? []) {
     if (!BODIES.includes(body.body)) continue;
-    const longitude = longitudeAt(body.body, noon);
-    exact.set(body.body, longitude);
-    if (!near(body.lon, longitude, 1e-9)) {
-      failures.push(failure('ASTRO-BODY-LONGITUDE', `daily.bodies.${body.body}.lon`, 'longitude differs from independent recomputation'));
+    const enginePosition = enginePositions.get(body.body);
+    if (!enginePosition) {
+      failures.push(failure('ASTRO-BODY-MISSING', `daily.bodies.${body.body}`, '@zodiacs/engine omitted the body'));
+      continue;
     }
-    if (body.sign !== signAt(longitude) || !near(body.degree, degreeAt(longitude), 1e-9)) {
-      failures.push(failure('ASTRO-BODY-COORDINATE', `daily.bodies.${body.body}`, 'sign/degree differs from independent recomputation'));
+    exact.set(body.body, enginePosition.lon);
+    if (!near(body.lon, enginePosition.lon, 1e-9)) {
+      failures.push(failure('ASTRO-BODY-LONGITUDE', `daily.bodies.${body.body}.lon`, 'longitude differs from the site engine'));
     }
-    if (body.retrograde !== (body.body !== 'Moon' && speedAt(body.body, noon) < 0)) {
+    if (body.sign !== enginePosition.sign || !near(body.degree, enginePosition.degree, 1e-9)) {
+      failures.push(failure('ASTRO-BODY-COORDINATE', `daily.bodies.${body.body}`, 'sign/degree differs from the site engine'));
+    }
+    if (body.retrograde !== enginePosition.retrograde) {
       failures.push(failure('ASTRO-BODY-DIRECTION', `daily.bodies.${body.body}.retrograde`, 'retrograde state differs from centered speed'));
     }
   }
   if (exact.has('Moon') && exact.has('Sun')) {
-    const phase = phaseName(norm(exact.get('Moon') - exact.get('Sun')));
-    const illumination = Math.round(Illumination(Body.Moon, MakeTime(noon)).phase_fraction * 1000) / 1000;
-    if (daily.moon?.phase !== phase) failures.push(failure('ASTRO-MOON-PHASE', 'daily.moon.phase', `expected ${phase}`));
+    const phase = moonPhase(noon);
+    const illumination = Math.round(phase.illumination * 1000) / 1000;
+    if (daily.moon?.phase !== phase.name) failures.push(failure('ASTRO-MOON-PHASE', 'daily.moon.phase', `expected ${phase.name}`));
     if (daily.moon?.illumination !== illumination) {
       failures.push(failure('ASTRO-MOON-ILLUMINATION', 'daily.moon.illumination', `expected ${illumination}`));
     }

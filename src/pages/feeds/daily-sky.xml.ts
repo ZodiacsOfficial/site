@@ -43,7 +43,7 @@ export const GET: APIRoute = () => {
     .filter(Boolean)
     .join(' ');
 
-  const pub = new Date(`${daily.date}T12:00:00Z`).toUTCString();
+  const pub = new Date(`${daily.date}T00:00:00Z`).toUTCString();
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>

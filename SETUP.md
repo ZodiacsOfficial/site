@@ -262,7 +262,7 @@ All schedules are UTC.
 
 | Workflow | Schedule | Current behavior | Gate |
 | --- | --- | --- | --- |
-| `.github/workflows/daily-horoscopes.yml` | Daily 00:15 | Builds facts/publication, verifies, replays 30 days, commits changes, waits for live edition, pings IndexNow. | Always on. Extend in Phase 1 for all daily cuts and Monday weekly generation. |
+| `.github/workflows/daily-horoscopes.yml` | Daily 00:00 | Builds facts/publication, verifies, replays 30 days, commits changes, waits for live edition, pings IndexNow. GitHub may start the runner after the declared boundary. | Always on. Phase 1 covers all daily cuts and Monday weekly generation. |
 | `.github/workflows/weekly-digest.yml` | Monday 06:00 | Fixture smoke always; real send only when `DIGEST_ENABLED=true`. | Off by default. |
 | `.github/workflows/pulse-refresh.yml` | Monday 06:17 | Refreshes Wikipedia/Trends pulse data and commits changes. | Existing, best effort. |
 | `.github/workflows/distribution-refresh.yml` | Monday 06:31 | Refreshes Registry ownership distribution and commits changes. | Existing Registry operation. |

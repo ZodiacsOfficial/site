@@ -17,9 +17,18 @@ After `npm run build`:
 - `npm run test:lighthouse` runs mobile Lighthouse three times across Today,
   the horoscope hub, and all seven Phase 1 sign-period templates. Every run
   must pass: the gate uses the weakest category score and the worst metric,
-  enforcing performance, accessibility, and SEO ≥ 95; LCP ≤ 2.5 s; CLS ≤
-  0.05; and TBT ≤ 200 ms. Set `LIGHTHOUSE_RUNS=1` for a faster local smoke
+  enforcing performance, accessibility, and SEO ≥ 95; LCP ≤ 2.5 s; raw
+  Lighthouse CLS = 0; and TBT ≤ 200 ms. Set
+  `LIGHTHOUSE_RUNS=1` for a faster local smoke
   test. Reports are written to `tests/visual/artifacts/lighthouse/`.
+- `npm run test:phase1:frames` measures the running horoscope sky animation
+  across three 180-frame windows at 4× CPU slowdown on a 390px mobile
+  viewport. It first proves the runner can sustain a 60Hz-class baseline,
+  then every animation trial must retain at least 98% of that calibrated
+  cadence (capped at 60fps) while meeting absolute median, p95, and long-frame
+  budgets. This is an automated mid-range-mobile proxy, not a claim that
+  headless Chromium is a physical device; the raw timing report is written to
+  `tests/visual/artifacts/frame-cadence/`.
 
 Both commands start and stop a preferred fixed-port preview server, falling
 back to a free local port when another test already owns it. An already-running

@@ -25,7 +25,6 @@ export interface HoroscopeProgramPageReading {
     body: string;
     receipt?: string;
   }>;
-  action: string;
   skyStrip: {
     label: string;
     markers: HoroscopeSkyMarker[];
@@ -61,15 +60,6 @@ const SECTION_HEADS: Record<Exclude<HoroscopePageSurface, 'monthly' | 'year'>, s
   career: ['Where to focus', 'What supports progress'],
 };
 
-const ACTION: Record<Exclude<HoroscopePageSurface, 'monthly'>, string> = {
-  today: 'Choose the decision already asking for your attention, then make the smallest honest move that changes it.',
-  tomorrow: 'Leave one choice open until tomorrow’s facts arrive, while preparing the part that is already yours to do.',
-  weekly: 'Name the week’s priority before the calendar fills itself, and review it again at the final Moon checkpoint.',
-  love: 'Replace one assumption with one direct, kind question, then leave enough silence for the answer to be real.',
-  career: 'Turn one broad intention into a named owner, a next step, and a time when the work will be checked.',
-  year: 'Put a review point after each major marker and record what actually changed before assigning the year a story.',
-};
-
 const SKY_STRIP_LABEL: Record<Exclude<HoroscopePageSurface, 'monthly'>, string> = {
   today: 'Today’s sky',
   tomorrow: 'Tomorrow’s sky',
@@ -80,6 +70,13 @@ const SKY_STRIP_LABEL: Record<Exclude<HoroscopePageSurface, 'monthly'>, string> 
 };
 
 const cap = (value: string) => value.charAt(0).toUpperCase() + value.slice(1);
+
+/** Reader-card excerpt used by the hub and its distinctness gate. */
+export function horoscopeHubTeaser(text: string, maxLength = 176): string {
+  if (text.length <= maxLength) return text;
+  const shortened = text.slice(0, maxLength).replace(/\s+\S*$/u, '');
+  return `${shortened}…`;
+}
 
 function dateLabel(date: string, short = false): string {
   return new Intl.DateTimeFormat('en-US', {
@@ -142,7 +139,9 @@ function skyStripFor(
       const markerLabel = receipt.kind === 'sky-event'
         ? (surface === 'today' || surface === 'tomorrow' ? 'Exact' : 'Dated marker')
         : receipt.body ?? 'Position';
-      const positionValue = receipt.body && receipt.label.startsWith(`${receipt.body} `)
+      const positionValue = receipt.kind === 'body-position'
+        && receipt.body
+        && receipt.label.startsWith(`${receipt.body} `)
         ? receipt.label.slice(receipt.body.length + 1)
         : receipt.label;
       const value = receipt.body === 'Moon'
@@ -228,7 +227,8 @@ export function pageReadingFromProgram(
   const label = periodLabel(reading, surface);
   const heads = surface === 'year' ? null : SECTION_HEADS[surface];
   const sections = reading.passages.map((passage, index) => ({
-    heading: heads?.[index]
+    heading: passage.heading
+      ?? heads?.[index]
       ?? yearHeading(passage.evidenceRefs, receipts, index, reading.passages.length),
     body: passage.text,
     receipt: receiptLine(passage.evidenceRefs, receipts),
@@ -238,12 +238,12 @@ export function pageReadingFromProgram(
     ? '2026-07-19T00:00:00.000Z'
     : surface === 'weekly'
       ? `${reading.period.from}T00:00:00.000Z`
-      : `${program.anchorDate}T00:15:00.000Z`;
+      : `${program.anchorDate}T00:00:00.000Z`;
   const dateModified = surface === 'year'
     ? datePublished
     : surface === 'weekly'
       ? datePublished
-    : `${program.anchorDate}T00:15:00.000Z`;
+    : `${program.anchorDate}T00:00:00.000Z`;
   const sourceNote = surface === 'year'
     ? `The dates and positions here come from the 2027 eclipse, ingress, and retrograde calendar. Each event is read through ${signData.name} solar houses; all times use UTC.`
     : surface === 'weekly'
@@ -255,7 +255,6 @@ export function pageReadingFromProgram(
     description: descriptionFor(signData.name, surface, label),
     intro: introFor(signData.name, surface),
     sections,
-    action: ACTION[surface],
     skyStrip,
     sourceNote,
     datePublished,

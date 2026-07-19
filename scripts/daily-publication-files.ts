@@ -2,6 +2,7 @@ import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
+import { ENGINE_VERSION } from '@zodiacs/engine';
 import {
   DAILY_EDITORIAL_CONSTITUTION,
   DAILY_RENDERER_VERSION,
@@ -22,7 +23,7 @@ export const MANIFEST_PATH = resolve(REPO_ROOT, 'src/data/daily-publication-mani
 export const POLICY_PATH = resolve(REPO_ROOT, 'src/lib/editorial-policy/constitution.v1.json');
 
 export interface DailyPublicationManifest {
-  schema: 'zodiacs.daily-publication-manifest.v1';
+  schema: 'zodiacs.daily-publication-manifest.v2';
   date: string;
   snapshotAt: string;
   status: 'verified';
@@ -40,7 +41,7 @@ export interface DailyPublicationManifest {
     eventsSource: string | null;
     eventsSourceSha256: string | null;
     eventsSourceCanonicalSha256: string | null;
-    engine: { name: 'astronomy-engine'; version: string };
+    engine: { name: '@zodiacs/engine'; version: string };
   };
   publication: {
     path: 'src/data/daily-publication.json';
@@ -56,12 +57,15 @@ export interface DailyPublicationManifest {
     freeformModelOutput: false;
   };
   verification: {
-    verifierId: 'zodiacs.daily-verifier.v3';
+    verifierId: 'zodiacs.daily-verifier.v4';
     verifierSha256: string;
-    independentFromGenerator: true;
+    copyVerifierIndependentFromGenerator: true;
     astronomyAudit: {
-      implementation: 'zodiacs.daily-fact-audit.v1';
+      implementation: 'zodiacs.daily-fact-audit.v2';
+      kind: 'site-engine-parity-and-event-physics';
+      sourceOfTruth: '@zodiacs/engine';
       independentFromSnapshotBuilder: true;
+      independentAstronomyImplementation: false;
       status: 'passed';
     };
     copyCheck: {
@@ -83,7 +87,7 @@ export interface DailyPublicationManifest {
   };
   checks: {
     signCount: 12;
-    factAudit: 'independent-recomputation-passed';
+    factAudit: 'site-engine-parity-and-event-physics-passed';
     exactRender: 'passed';
     factReferences: 'independent-verification-passed';
     distinctness: 'passed';
@@ -119,14 +123,6 @@ export function sha256(value: string | Uint8Array): string {
 async function readJson<T>(path: string): Promise<{ raw: string; value: T }> {
   const raw = await readFile(path, 'utf8');
   return { raw, value: JSON.parse(raw) as T };
-}
-
-async function engineVersion(): Promise<string> {
-  const pkg = JSON.parse(await readFile(resolve(REPO_ROOT, 'node_modules/astronomy-engine/package.json'), 'utf8')) as {
-    version?: string;
-  };
-  if (!pkg.version) throw new Error('astronomy-engine package version is unavailable');
-  return pkg.version;
 }
 
 async function generatorSha256(): Promise<string> {
@@ -188,7 +184,7 @@ export async function expectedDailyPackage(): Promise<{
     : null;
 
   const manifest: DailyPublicationManifest = {
-    schema: 'zodiacs.daily-publication-manifest.v1',
+    schema: 'zodiacs.daily-publication-manifest.v2',
     date: daily.date,
     snapshotAt: daily.snapshotAt ?? `${daily.date}T12:00:00.000Z`,
     status: 'verified',
@@ -206,7 +202,7 @@ export async function expectedDailyPackage(): Promise<{
       eventsSource: daily.eventsSource ?? null,
       eventsSourceSha256,
       eventsSourceCanonicalSha256,
-      engine: { name: 'astronomy-engine', version: await engineVersion() },
+      engine: { name: '@zodiacs/engine', version: ENGINE_VERSION },
     },
     publication: {
       path: 'src/data/daily-publication.json',
@@ -222,14 +218,19 @@ export async function expectedDailyPackage(): Promise<{
       freeformModelOutput: false,
     },
     verification: {
-      verifierId: 'zodiacs.daily-verifier.v3',
+      verifierId: 'zodiacs.daily-verifier.v4',
       verifierSha256: await verifierSha256(),
       // Copy approval is a read-side veto implemented without importing the
-      // renderer. Exact regeneration remains a separate provenance diagnostic.
-      independentFromGenerator: true,
+      // renderer. The astronomy audit is separate from the snapshot builder,
+      // but deliberately shares the site's authoritative engine rather than
+      // claiming to be a second astronomical implementation.
+      copyVerifierIndependentFromGenerator: true,
       astronomyAudit: {
-        implementation: 'zodiacs.daily-fact-audit.v1',
+        implementation: 'zodiacs.daily-fact-audit.v2',
+        kind: 'site-engine-parity-and-event-physics',
+        sourceOfTruth: '@zodiacs/engine',
         independentFromSnapshotBuilder: true,
+        independentAstronomyImplementation: false,
         status: 'passed',
       },
       copyCheck: {
@@ -251,7 +252,7 @@ export async function expectedDailyPackage(): Promise<{
     },
     checks: {
       signCount: 12,
-      factAudit: 'independent-recomputation-passed',
+      factAudit: 'site-engine-parity-and-event-physics-passed',
       exactRender: 'passed',
       factReferences: 'independent-verification-passed',
       distinctness: 'passed',

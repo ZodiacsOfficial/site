@@ -15,10 +15,50 @@ const sunSignLines = Object.fromEntries(
 ---
 <Base
   inlineCriticalCss
+  stableTypography
   title="Today — Your Daily Astrology Brief | Zodiacs.org"
   description="Choose your Sun sign for a clear daily note, or privately compare today’s sky with a birth chart saved on this device."
   path="/today/"
 >
+  <script slot="head" is:inline>
+    /* Local-only return-state hint. It carries no chart data: the boolean and
+       validated sign let CSS establish the correct first-paint geometry
+       before the idle island reads storage. */
+    (function () {
+      try {
+        var sign = localStorage.getItem('zodiacs:today-sun-sign:v1');
+        if (/^(aries|taurus|gemini|cancer|leo|virgo|libra|scorpio|sagittarius|capricorn|aquarius|pisces)$/.test(sign || '')) {
+          document.documentElement.setAttribute('data-today-sun-sign', sign);
+        }
+        var rawProfile = localStorage.getItem('zodiacs.profile.v1');
+        var profile = rawProfile ? JSON.parse(rawProfile) : null;
+        var charts = profile && profile.version === 1 && Array.isArray(profile.charts)
+          ? profile.charts.filter(function (chart) {
+              return chart && chart.summary && Array.isArray(chart.summary.bodies)
+                && chart.summary.bodies.some(function (body) { return Number.isFinite(body && body.lon); });
+            })
+          : [];
+        var latestChart = charts.reduce(function (latest, chart) {
+          if (!latest) return chart;
+          var chartStamp = typeof chart.updatedAt === 'string' ? chart.updatedAt : (chart.createdAt || '');
+          var latestStamp = typeof latest.updatedAt === 'string' ? latest.updatedAt : (latest.createdAt || '');
+          return chartStamp > latestStamp ? chart : latest;
+        }, null);
+        var hasUsableChart = latestChart !== null;
+        if (hasUsableChart) {
+          document.documentElement.setAttribute('data-today-saved-chart', '');
+          var sun = latestChart.summary.bodies.find(function (body) {
+            return body && body.body === 'Sun' && Number.isFinite(body.lon);
+          });
+          if (sun) {
+            var signNames = ['aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo', 'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces'];
+            var longitude = ((sun.lon % 360) + 360) % 360;
+            document.documentElement.setAttribute('data-today-chart-sun-sign', signNames[Math.floor(longitude / 30)]);
+          }
+        }
+      } catch (error) {}
+    })();
+  </script>
   <section
     class="section--tight container container--narrow today-page"
     data-daily-date={publication.date}
@@ -53,7 +93,8 @@ const sunSignLines = Object.fromEntries(
     >
       <p>
         Each reading is tied to the recorded sky for{' '}
-        <time datetime={publication.date}>{publication.date}</time>. Automated
+        <time datetime={publication.date}>{publication.date}</time>, the UTC
+        edition date; planetary positions use a noon-UTC snapshot. Automated
         checks verify the sky facts, keep the twelve signs meaningfully distinct,
         and screen restricted advice before an edition is published.
       </p>
@@ -109,27 +150,68 @@ const sunSignLines = Object.fromEntries(
   .today-card__time { margin: 4px 0 0; color: var(--faint); font-size: 11px; }
   .today-streak {
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-columns: minmax(4ch, auto) 29px;
     align-items: baseline;
     gap: 5px;
+    min-width: calc(4ch + 34px);
     margin: 0;
     color: var(--muted);
     font-size: 12px;
     white-space: nowrap;
+    visibility: hidden;
   }
+  .today-streak[data-ready] { visibility: visible; }
   .today-streak__count {
+    display: block;
+    min-width: 4ch;
     color: var(--sign-cancer);
     font-family: var(--font-serif);
     font-size: 28px;
     font-weight: 500;
+    font-variant-numeric: lining-nums tabular-nums;
     line-height: 1;
+    text-align: right;
     animation: today-streak-in 220ms var(--ease-soft) both;
   }
   @keyframes today-streak-in {
     from { opacity: 0.35; transform: translateY(4px); }
     to { opacity: 1; transform: translateY(0); }
   }
-  .today-reading { display: grid; gap: 24px; padding-top: 24px; }
+  .today-reading { display: grid; min-width: 0; gap: 24px; padding-top: 24px; }
+  .today-returning-chart-placeholder { display: none; align-content: start; }
+  :root[data-today-saved-chart] .today-fallback { display: none; }
+  :root[data-today-saved-chart] .today-returning-chart-placeholder { display: grid; }
+  .today-reading__body {
+    display: grid;
+    grid-template-rows: minmax(0, 1fr);
+    min-height: 300px;
+    min-width: 0;
+    gap: 18px;
+  }
+  .today-reading__body--fallback {
+    grid-template-rows: auto auto;
+    align-content: space-between;
+  }
+  .today-returning-chart-status { margin: 0; color: var(--muted); font-size: var(--text-sm); visibility: hidden; }
+  .today-returning-chart-status.is-visible { visibility: visible; }
+  .today-returning-sun-baseline { display: none; gap: 8px; }
+  .today-returning-sun-baseline p { margin: 0; max-width: 58ch; }
+  .today-returning-sun-baseline > a { color: var(--sign); font-size: var(--text-sm); font-weight: 650; }
+  .today-returning-sign-links { display: flex; flex-wrap: wrap; gap: 8px 14px; }
+  .today-returning-sign-links a { color: var(--text-2); font-size: var(--text-sm); }
+  :root[data-today-chart-sun-sign] .today-returning-sign-links { display: none; }
+  :root[data-today-chart-sun-sign="aries"] [data-today-chart-sun="aries"],
+  :root[data-today-chart-sun-sign="taurus"] [data-today-chart-sun="taurus"],
+  :root[data-today-chart-sun-sign="gemini"] [data-today-chart-sun="gemini"],
+  :root[data-today-chart-sun-sign="cancer"] [data-today-chart-sun="cancer"],
+  :root[data-today-chart-sun-sign="leo"] [data-today-chart-sun="leo"],
+  :root[data-today-chart-sun-sign="virgo"] [data-today-chart-sun="virgo"],
+  :root[data-today-chart-sun-sign="libra"] [data-today-chart-sun="libra"],
+  :root[data-today-chart-sun-sign="scorpio"] [data-today-chart-sun="scorpio"],
+  :root[data-today-chart-sun-sign="sagittarius"] [data-today-chart-sun="sagittarius"],
+  :root[data-today-chart-sun-sign="capricorn"] [data-today-chart-sun="capricorn"],
+  :root[data-today-chart-sun-sign="aquarius"] [data-today-chart-sun="aquarius"],
+  :root[data-today-chart-sun-sign="pisces"] [data-today-chart-sun="pisces"] { display: grid; }
   .today-reading__head h2,
   .today-fallback__intro h2 {
     margin: 0;
@@ -137,6 +219,18 @@ const sunSignLines = Object.fromEntries(
     font-size: var(--text-xl);
     font-weight: 620;
     letter-spacing: -0.02em;
+  }
+  .today-reading__head { min-width: 0; }
+  .today-reading__head h2 { min-width: 0; }
+  .today-reading__head h2:has(.today-reading__chart-name) {
+    display: flex;
+    gap: 0.24em;
+  }
+  .today-reading__chart-name {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
   .today-reading__head p,
   .today-fallback__intro p {
@@ -184,7 +278,9 @@ const sunSignLines = Object.fromEntries(
     margin-top: 10px;
     color: var(--faint);
     font-size: 12px;
+    visibility: hidden;
   }
+  .today-fallback__status.is-visible { visibility: visible; }
   .today-sign-picker {
     min-width: 0;
     margin: 0;
@@ -211,9 +307,7 @@ const sunSignLines = Object.fromEntries(
     font: inherit;
     text-decoration: none;
     text-align: center;
-    transition: border-color 160ms cubic-bezier(0.23, 1, 0.32, 1),
-      background 160ms cubic-bezier(0.23, 1, 0.32, 1),
-      transform 120ms cubic-bezier(0.23, 1, 0.32, 1);
+    transition: transform 120ms cubic-bezier(0.23, 1, 0.32, 1);
   }
   .today-sign:hover { border-color: color-mix(in oklab, var(--sign) 65%, var(--hair-2)); }
   .today-sign:active { transform: scale(0.97); }
@@ -247,6 +341,23 @@ const sunSignLines = Object.fromEntries(
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 10px;
+  }
+  :root[data-today-sun-sign]:not([data-today-saved-chart]) .today-sign-readings {
+    grid-template-columns: 1fr;
+  }
+  :root[data-today-sun-sign="aries"] .today-sign-readings > :not([data-today-sun-sign="aries"]),
+  :root[data-today-sun-sign="taurus"] .today-sign-readings > :not([data-today-sun-sign="taurus"]),
+  :root[data-today-sun-sign="gemini"] .today-sign-readings > :not([data-today-sun-sign="gemini"]),
+  :root[data-today-sun-sign="cancer"] .today-sign-readings > :not([data-today-sun-sign="cancer"]),
+  :root[data-today-sun-sign="leo"] .today-sign-readings > :not([data-today-sun-sign="leo"]),
+  :root[data-today-sun-sign="virgo"] .today-sign-readings > :not([data-today-sun-sign="virgo"]),
+  :root[data-today-sun-sign="libra"] .today-sign-readings > :not([data-today-sun-sign="libra"]),
+  :root[data-today-sun-sign="scorpio"] .today-sign-readings > :not([data-today-sun-sign="scorpio"]),
+  :root[data-today-sun-sign="sagittarius"] .today-sign-readings > :not([data-today-sun-sign="sagittarius"]),
+  :root[data-today-sun-sign="capricorn"] .today-sign-readings > :not([data-today-sun-sign="capricorn"]),
+  :root[data-today-sun-sign="aquarius"] .today-sign-readings > :not([data-today-sun-sign="aquarius"]),
+  :root[data-today-sun-sign="pisces"] .today-sign-readings > :not([data-today-sun-sign="pisces"]) {
+    display: none;
   }
   .today-sign-reading {
     display: grid;
@@ -326,8 +437,18 @@ const sunSignLines = Object.fromEntries(
     line-height: 1.5;
   }
   .today-fallback__personalize .btn { flex: 0 0 auto; }
-  .today-quiet { padding-top: 24px; }
+  .today-quiet { display: grid; align-content: space-between; gap: 24px; }
   .today-quiet p { margin: 0; color: var(--text-2); line-height: 1.65; }
+  .today-quiet__baseline {
+    padding: 18px;
+    border: 1px solid var(--hair-1);
+    border-radius: var(--r-md);
+    background: color-mix(in oklab, var(--sign-cancer) 5%, transparent);
+  }
+  .today-quiet__baseline > .kicker { margin: 0 0 10px; color: var(--sign); font-size: var(--text-base); }
+  .today-quiet__baseline > strong { color: var(--text-2); font-size: var(--text-sm); }
+  .today-quiet__baseline > p:not(.kicker) { color: var(--muted); font-size: var(--text-sm); }
+  .today-quiet__baseline > a { display: inline-block; margin-top: 10px; color: var(--sign, var(--text-2)); font-size: var(--text-sm); font-weight: 650; }
   .today-method-details {
     border-top: 1px solid var(--hair-1);
     padding-top: 16px;
@@ -346,6 +467,7 @@ const sunSignLines = Object.fromEntries(
   .today-method-details__body ul { display: grid; gap: 6px; margin: 10px 0 0; padding-left: 18px; }
   .today-method-details__body li { overflow-wrap: anywhere; font-family: var(--font-mono); font-size: 10.5px; }
   @media (max-width: 480px) {
+    .today-reading__body { min-height: 480px; }
     .today-card__head { align-items: center; }
     .today-lines li { padding-left: 14px; }
     .today-sign-picker__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }

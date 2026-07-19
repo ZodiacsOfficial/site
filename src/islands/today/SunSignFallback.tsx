@@ -7,6 +7,7 @@ type NextAction = 'choose-sun-sign' | 'open-horoscope' | 'get-birth-chart';
 
 interface Props {
   noChartConfirmed?: boolean;
+  comparisonUnavailable?: boolean;
   sunSignLines: Record<string, string>;
 }
 
@@ -58,12 +59,19 @@ function saveSign(slug: string): void {
   }
 }
 
-export default function SunSignFallback({ noChartConfirmed = false, sunSignLines }: Props) {
+export default function SunSignFallback({
+  noChartConfirmed = false,
+  comparisonUnavailable = false,
+  sunSignLines,
+}: Props) {
   const [selected, setSelected] = useState<string | null>(null);
   const [hasInteracted, setHasInteracted] = useState(false);
+  const [restoredSelection, setRestoredSelection] = useState(false);
 
   useEffect(() => {
-    setSelected(readSavedSign());
+    const saved = readSavedSign();
+    setSelected(saved);
+    setRestoredSelection(saved !== null);
   }, []);
 
   const active = useMemo<Sign | null>(
@@ -83,6 +91,7 @@ export default function SunSignFallback({ noChartConfirmed = false, sunSignLines
   const chooseSign = (slug: string) => {
     setSelected(slug);
     setHasInteracted(true);
+    setRestoredSelection(false);
     saveSign(slug);
     trackNextAction('no-chart', 'choose-sun-sign');
   };
@@ -95,11 +104,16 @@ export default function SunSignFallback({ noChartConfirmed = false, sunSignLines
           This is usually the zodiac sign you know from your birthday. Choose it for one
           clear note about today — no birth time needed.
         </p>
-        {noChartConfirmed && (
-          <p class="today-fallback__status">
-            No saved chart on this device. Your Sun sign still gives you a useful starting point.
-          </p>
-        )}
+        {/* Keep this line in the server layout. Revealing it after local profile
+            lookup must not push the sign picker down after first paint. */}
+        <p
+          class={`today-fallback__status${noChartConfirmed || comparisonUnavailable ? ' is-visible' : ''}`}
+          aria-hidden={noChartConfirmed || comparisonUnavailable ? undefined : 'true'}
+        >
+          {comparisonUnavailable
+            ? 'Your saved-chart comparison is temporarily unavailable. Your Sun sign still gives you a useful starting point.'
+            : 'No saved chart on this device. Your Sun sign still gives you a useful starting point.'}
+        </p>
       </div>
 
       <nav class="today-sign-picker" aria-label="Choose your Sun sign">
@@ -133,7 +147,28 @@ export default function SunSignFallback({ noChartConfirmed = false, sunSignLines
         class="today-fallback__result"
         aria-live={hasInteracted ? 'polite' : undefined}
       >
-        {active && dailyLine ? (
+        {active && dailyLine && restoredSelection && !hasInteracted ? (
+          <section
+            id={`today-sun-sign-${active.slug}`}
+            class="today-sign-reading today-sign-reading--compact"
+            style={`--sign:${active.hue}`}
+            data-today-sun-sign={active.slug}
+          >
+            <p class="kicker">{active.dates}</p>
+            <h3 class="today-sign-reading__title">
+              <PastelSignIcon sign={active} size={28} className="today-sign-reading__icon" />
+              <span>{active.name} today</span>
+            </h3>
+            <p class="today-sign-reading__line">{dailyLine}</p>
+            <a
+              class="today-sign-reading__more"
+              href={`/horoscopes/${active.slug}/`}
+              onClick={() => trackNextAction('sun-sign', 'open-horoscope')}
+            >
+              Read the full {active.name} horoscope <span aria-hidden="true">→</span>
+            </a>
+          </section>
+        ) : active && dailyLine ? (
           <section
             id={`today-sun-sign-${active.slug}`}
             class="today-sign-reading"

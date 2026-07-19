@@ -200,7 +200,6 @@ const registryLabel: Record<Locale, string> = {
     font-weight: 500;
     color: var(--text-2);
     text-decoration: none;
-    transition: color var(--dur-1) var(--ease), background var(--dur-2) var(--ease);
   }
   .nav__link:hover { color: var(--text); background: rgba(198, 204, 218, 0.07); }
   .nav__link[aria-current='page'] { color: var(--text); }
@@ -216,7 +215,6 @@ const registryLabel: Record<Locale, string> = {
     color: var(--text-2);
     cursor: pointer;
     text-decoration: none;
-    transition: color var(--dur-1) var(--ease), background var(--dur-2) var(--ease);
   }
   .nav__search:hover { color: var(--text); background: rgba(198, 204, 218, 0.07); }
   .nav__search-kbd {
@@ -229,7 +227,7 @@ const registryLabel: Record<Locale, string> = {
     color: var(--faint);
   }
   @media (min-width: 820px) { .nav__search-kbd { display: inline-block; } }
-  .nav__dropdown-btn svg { transition: transform var(--dur-2) var(--ease); }
+  .nav__dropdown-btn svg { transition: transform var(--dur-1) var(--ease); }
   .nav__dropdown-btn[aria-expanded='true'] svg { transform: rotate(180deg); }
 
   /* Saved-charts link tints to accent once this device has saved a chart. */
@@ -252,7 +250,6 @@ const registryLabel: Record<Locale, string> = {
     color: var(--text-2);
     text-decoration: none;
     white-space: nowrap;
-    transition: color var(--dur-2) var(--ease);
   }
   .nav__chip:hover { color: var(--text); }
   .nav__chip[aria-current='page'] { color: var(--text); }
@@ -278,7 +275,7 @@ const registryLabel: Record<Locale, string> = {
     height: 1.5px;
     border-radius: 2px;
     background: var(--text-2);
-    transition: transform var(--dur-2) var(--ease), opacity var(--dur-1) var(--ease);
+    transition: transform var(--dur-1) var(--ease), opacity var(--dur-1) var(--ease);
   }
   /* Three bars collapse into an X: top and bottom cross at the centre,
      the middle bar fades out. */
@@ -300,7 +297,7 @@ const registryLabel: Record<Locale, string> = {
     padding: 10px;
     opacity: 0;
     transform: translateY(-6px) scale(0.99);
-    transition: opacity var(--dur-2) var(--ease), transform var(--dur-2) var(--ease);
+    transition: opacity var(--dur-1) var(--ease), transform var(--dur-1) var(--ease);
   }
   .nav-menu.is-open { opacity: 1; transform: none; }
   .tools-menu { width: min(100% - 32px, 720px); }
@@ -317,7 +314,6 @@ const registryLabel: Record<Locale, string> = {
     border-radius: var(--r-md);
     color: var(--text);
     text-decoration: none;
-    transition: background var(--dur-1) var(--ease);
   }
   .tools-menu__item:hover,
   .tools-menu__item:focus-visible { background: rgba(198, 204, 218, 0.07); }
@@ -347,7 +343,6 @@ const registryLabel: Record<Locale, string> = {
     padding: 10px 12px;
     border-radius: var(--r-md);
     text-decoration: none;
-    transition: background var(--dur-1) var(--ease);
   }
   .signs-menu__item:hover { background: color-mix(in oklab, var(--sign) 12%, transparent); }
   .signs-menu__item :global(.sign-icon) { grid-row: span 2; }
@@ -452,22 +447,9 @@ const registryLabel: Record<Locale, string> = {
     border-bottom: 1px solid var(--hair);
   }
   .mobile-menu__sign:last-child { border-bottom: 0; }
-  .mobile-menu.is-open .mobile-menu__link,
-  .mobile-menu.is-open .mobile-menu__tool,
-  .mobile-menu.is-open .mobile-menu__sign,
-  .mobile-menu.is-open .mobile-menu__label {
-    animation: menu-in 640ms var(--ease) both;
-    animation-delay: calc(40ms * var(--i, 0));
-  }
-  @keyframes menu-in {
-    from { opacity: 0; transform: translateY(14px); filter: blur(4px); }
-    to { opacity: 1; transform: none; filter: none; }
-  }
   @media (prefers-reduced-motion: reduce) {
-    .mobile-menu.is-open .mobile-menu__link,
-    .mobile-menu.is-open .mobile-menu__tool,
-    .mobile-menu.is-open .mobile-menu__sign,
-    .mobile-menu.is-open .mobile-menu__label { animation: none; }
+    .nav__dropdown-btn svg,
+    .nav__burger-line,
     .nav-menu { transition: none; }
   }
 </style>
@@ -508,7 +490,7 @@ const registryLabel: Record<Locale, string> = {
         requestAnimationFrame(() => panel.classList.add('is-open'));
       } else {
         panel.classList.remove('is-open');
-        hideTimer = window.setTimeout(() => { panel.hidden = true; }, 240);
+        hideTimer = window.setTimeout(() => { panel.hidden = true; }, 190);
       }
     }
 

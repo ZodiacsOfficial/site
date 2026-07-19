@@ -40,10 +40,19 @@ export interface TodayStreak {
 
 /** The most recently changed chart wins; timestamps are stored as ISO text. */
 export function newestSavedChart(profile: Profile): SavedChart | null {
-  return profile.charts.reduce<SavedChart | null>((latest, chart) => {
+  return profile.charts.filter((chart) => (
+    chart != null
+    && chart.summary != null
+    && Array.isArray(chart.summary.bodies)
+    && chart.summary.bodies.some((body) => body != null && Number.isFinite(body.lon))
+  )).reduce<SavedChart | null>((latest, chart) => {
     if (!latest) return chart;
-    const chartStamp = chart.updatedAt || chart.createdAt;
-    const latestStamp = latest.updatedAt || latest.createdAt;
+    const chartStamp = typeof chart.updatedAt === 'string'
+      ? chart.updatedAt
+      : (typeof chart.createdAt === 'string' ? chart.createdAt : '');
+    const latestStamp = typeof latest.updatedAt === 'string'
+      ? latest.updatedAt
+      : (typeof latest.createdAt === 'string' ? latest.createdAt : '');
     return chartStamp > latestStamp ? chart : latest;
   }, null);
 }

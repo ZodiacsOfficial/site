@@ -31,6 +31,8 @@ interface Props {
   clientUi?: boolean;
   /** Inline this route's emitted CSS at postbuild for latency-sensitive entry pages. */
   inlineCriticalCss?: boolean;
+  /** Use optional font aliases so a cold font can never shift this page. */
+  stableTypography?: boolean;
 }
 
 const props = Astro.props;
@@ -48,6 +50,7 @@ const FAVICON = "data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/sv
 <html
   lang={LOCALE_META[locale].htmlLang}
   data-inline-critical-css={props.inlineCriticalCss ? '' : undefined}
+  data-stable-typography={props.stableTypography ? '' : undefined}
 >
   <head>
     <meta charset="utf-8" />
