@@ -37,7 +37,7 @@
   },
   "verification": {
     "verifierId": "zodiacs.daily-verifier.v2",
-    "verifierSha256": "127a4fb3f95f251a22dbcf58c7e18f9eb665a0af3d0b5fdf92a81922e29e5689",
+    "verifierSha256": "32f4de9e262b69aa5b590945f4d8f821ec7a9c379ba9f0b54e0720f5a8e20065",
     "independentFromGenerator": false,
     "astronomyAudit": {
       "implementation": "zodiacs.daily-fact-audit.v1",
