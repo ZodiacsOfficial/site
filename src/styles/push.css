@@ -27,6 +27,31 @@
 }
 .push-optin__dismiss:hover { color: var(--text); }
 
+/* The returning-visit prompt arrives after Today hydrates. Keep that one-time
+   contextual offer out of document flow so it cannot lengthen or shift the
+   already-resolved daily reading. Chart-save confirmation remains inline. */
+.push-optin[data-push-context='today-return'] {
+  position: fixed;
+  inset-inline: 12px;
+  bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+  z-index: var(--z-overlay, 50);
+  width: auto;
+  max-width: 680px;
+  max-height: calc(100dvh - 24px);
+  margin: 0 auto;
+  overflow: auto;
+  background: var(--void-1);
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.42);
+}
+
+.push-optin--profile {
+  margin-top: 0;
+  padding-inline: 0;
+  border-width: 1px 0 0;
+  border-radius: 0;
+  background: transparent;
+}
+
 @media (max-width: 560px) {
   .push-optin { grid-template-columns: 1fr; }
   .push-optin__actions { flex-wrap: wrap; }

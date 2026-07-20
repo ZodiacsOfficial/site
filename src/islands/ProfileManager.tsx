@@ -30,6 +30,8 @@ import {
 } from '../lib/profile/daily-email-client';
 import EvidenceDisclosure from './EvidenceDisclosure';
 
+type PushOptInModule = typeof import('./PushOptIn');
+
 /** "Cancer Sun · 1907-07-06" → "Cancer Sun" for compact CTAs. */
 const handle = (name: string) => name.split('·')[0].trim() || name;
 
@@ -156,6 +158,7 @@ const HAS_PROFILE_SYNC = Boolean(
   import.meta.env.PUBLIC_SUPABASE_URL &&
   (import.meta.env.PUBLIC_SUPABASE_PUBLISHABLE_KEY || import.meta.env.PUBLIC_SUPABASE_ANON_KEY)
 );
+const WEB_PUSH_ENABLED = import.meta.env.PUBLIC_WEB_PUSH_ENABLED === '1';
 
 function dailyChartIdentity(chart: SavedChart): string {
   const date = formatDate('en', `${chart.birth.date}T12:00:00Z`, {
@@ -250,6 +253,7 @@ export default function ProfileManager({
   const [dailyEditingChart, setDailyEditingChart] = useState(false);
   const [dailyMessage, setDailyMessage] = useState('');
   const [dailyError, setDailyError] = useState(false);
+  const [pushModule, setPushModule] = useState<PushOptInModule | null>(null);
 
   function resetDailyState() {
     setSyncedChartIds([]);
@@ -309,6 +313,15 @@ export default function ProfileManager({
       setDailyLoading(false);
     }
   }
+
+  useEffect(() => {
+    if (!WEB_PUSH_ENABLED || locale !== 'en') return;
+    let live = true;
+    void import('./PushOptIn').then((module) => {
+      if (live) setPushModule(module);
+    }).catch(() => {});
+    return () => { live = false; };
+  }, [locale]);
 
   useEffect(() => {
     let unsubscribe = () => {};
@@ -907,6 +920,10 @@ export default function ProfileManager({
       </div>
     </aside>
   );
+  const ProfilePushOptIn = pushModule?.default;
+  const pushPanel = ProfilePushOptIn && (
+    <ProfilePushOptIn locale={locale} context="profile" />
+  );
 
   if (profile.charts.length === 0) {
     return (
@@ -915,6 +932,7 @@ export default function ProfileManager({
         {/* Inline-side pairs need no saved charts — still show them. */}
         {pairsBlock}
         {syncPanel}
+        {pushPanel}
       </div>
     );
   }
@@ -1033,6 +1051,7 @@ export default function ProfileManager({
       </div>
 
       {syncPanel}
+      {pushPanel}
     </div>
   );
 }

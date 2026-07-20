@@ -202,6 +202,9 @@ jobs:
       - name: Build (push flags on, fixture key only)
         run: npm run build
 
+      - name: Today returning layout (push flags on)
+        run: npm run test:today:browser
+
       - name: Browser acceptance drive
         run: npm run test:phase3:push
 

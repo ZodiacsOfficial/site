@@ -42,6 +42,11 @@ async function openFixture(browser, baseURL, {
   permissionResult = 'denied',
   ios = false,
   standalone = false,
+  preSubscribed = false,
+  path = '/today/',
+  postStatus = 200,
+  deleteStatus = 200,
+  unsubscribeResult = true,
   apiRequests = [],
 } = {}) {
   const context = await browser.newContext({
@@ -63,7 +68,7 @@ async function openFixture(browser, baseURL, {
       body: request.postDataJSON(),
     });
     await route.fulfill({
-      status: 200,
+      status: request.method() === 'DELETE' ? deleteStatus : postStatus,
       contentType: 'application/json',
       body: JSON.stringify({ ok: true }),
     });
@@ -75,9 +80,12 @@ async function openFixture(browser, baseURL, {
     initialPermission,
     requestedPermission,
     installed,
+    startsSubscribed,
+    browserUnsubscribeResult,
   }) => {
     localStorage.clear();
     localStorage.setItem('zodiacs.profile.v1', JSON.stringify(savedProfile));
+    if (startsSubscribed) localStorage.setItem('zodiacs.push.v1', 'subscribed');
     if (hasReturned) {
       localStorage.setItem('zodiacs.today.v1', JSON.stringify({
         version: 1,
@@ -96,6 +104,12 @@ async function openFixture(browser, baseURL, {
       applicationServerKeyBytes: 0,
     };
     window.__pushDrive = state;
+    window.__pushDriveLayoutShifts = [];
+    new PerformanceObserver((list) => {
+      for (const entry of list.getEntries()) {
+        if (!entry.hadRecentInput) window.__pushDriveLayoutShifts.push(entry.value);
+      }
+    }).observe({ type: 'layout-shift', buffered: true });
 
     const subscription = {
       endpoint: 'https://push.fixture.test/subscription/sky-alerts',
@@ -110,11 +124,11 @@ async function openFixture(browser, baseURL, {
       }),
       unsubscribe: async () => {
         state.unsubscribeCalls += 1;
-        activeSubscription = null;
-        return true;
+        if (browserUnsubscribeResult) activeSubscription = null;
+        return browserUnsubscribeResult;
       },
     };
-    let activeSubscription = null;
+    let activeSubscription = startsSubscribed ? subscription : null;
     const registration = {
       pushManager: {
         getSubscription: async () => {
@@ -169,11 +183,13 @@ async function openFixture(browser, baseURL, {
     initialPermission: permission,
     requestedPermission: permissionResult,
     installed: standalone,
+    startsSubscribed: preSubscribed,
+    browserUnsubscribeResult: unsubscribeResult,
   });
 
   const page = await context.newPage();
-  await page.goto(`${baseURL}/today/`, { waitUntil: 'networkidle' });
-  await page.waitForSelector('[data-today-state="chart"]');
+  await page.goto(`${baseURL}${path}`, { waitUntil: 'networkidle' });
+  if (path === '/today/') await page.waitForSelector('[data-today-state="chart"]');
   return { context, page };
 }
 
@@ -203,6 +219,41 @@ await withPreview({ port: Number(process.env.PUSH_DRIVE_PORT ?? 4399) }, async (
 
     const denied = await openFixture(browser, baseURL, { returning: true });
     await denied.page.waitForSelector('[data-push-optin][data-push-context="today-return"]');
+    await denied.page.evaluate(() => new Promise((resolvePaint) => {
+      requestAnimationFrame(() => requestAnimationFrame(resolvePaint));
+    }));
+    const returningLayout = await denied.page.evaluate(() => {
+      const prompt = document.querySelector('[data-push-optin][data-push-context="today-return"]');
+      const reading = document.querySelector('.today-reading--resolved');
+      const details = reading?.querySelector('.today-method-details');
+      const rect = prompt?.getBoundingClientRect();
+      return {
+        cls: window.__pushDriveLayoutShifts.reduce((sum, value) => sum + value, 0),
+        position: prompt ? getComputedStyle(prompt).position : null,
+        promptTop: rect?.top ?? null,
+        promptRight: rect?.right ?? null,
+        promptBottom: rect?.bottom ?? null,
+        promptLeft: rect?.left ?? null,
+        viewportWidth: innerWidth,
+        viewportHeight: innerHeight,
+        pageWidth: Math.max(document.documentElement.scrollWidth, document.body.scrollWidth),
+        readingBottomGap: reading && details
+          ? reading.getBoundingClientRect().bottom - details.getBoundingClientRect().bottom
+          : null,
+      };
+    });
+    check('returning Today offer is stable and fully contained',
+      returningLayout.cls === 0
+        && returningLayout.position === 'fixed'
+        && returningLayout.readingBottomGap !== null
+        && Math.abs(returningLayout.readingBottomGap) <= 1
+        && returningLayout.pageWidth <= returningLayout.viewportWidth
+        && returningLayout.promptTop !== null
+        && returningLayout.promptTop >= 0
+        && returningLayout.promptRight <= returningLayout.viewportWidth
+        && returningLayout.promptBottom <= returningLayout.viewportHeight
+        && returningLayout.promptLeft >= 0,
+      JSON.stringify(returningLayout));
     check('returning visit shows the event-only sky-alert affordance',
       await denied.page.getByText('Sky alerts, when they’re earned?').isVisible()
         && await denied.page.getByText('Most days, nothing.', { exact: false }).isVisible()
@@ -223,6 +274,169 @@ await withPreview({ port: Number(process.env.PUSH_DRIVE_PORT ?? 4399) }, async (
         && afterAccept.subscribeCalls === 0,
       JSON.stringify(afterAccept));
     await denied.context.close();
+
+    const existing = await openFixture(browser, baseURL, {
+      returning: true,
+      permission: 'granted',
+      preSubscribed: true,
+    });
+    await existing.page.waitForFunction(() => window.__pushDrive.getSubscriptionCalls > 0);
+    check('an existing subscriber gets no returning-visit acquisition card',
+      await existing.page.locator('[data-push-optin]').count() === 0);
+    const existingCalls = await existing.page.evaluate(() => window.__pushDrive);
+    check('existing-subscriber silence makes no permission or enrollment request',
+      existingCalls.permissionCalls === 0
+        && existingCalls.subscribeCalls === 0
+        && existingCalls.getSubscriptionCalls === 1,
+      JSON.stringify(existingCalls));
+    await existing.context.close();
+
+    const profileRequests = [];
+    const profileSettings = await openFixture(browser, baseURL, {
+      permission: 'granted',
+      preSubscribed: true,
+      path: '/profile/',
+      apiRequests: profileRequests,
+    });
+    await profileSettings.page.waitForSelector('[data-push-optin][data-push-context="profile"]');
+    check('Profile exposes the exact active Sky Alerts status row',
+      await profileSettings.page.getByText(
+        'Sky alerts · On — the dates that matter, by notification.',
+        { exact: true },
+      ).isVisible()
+        && await profileSettings.page.getByRole('button', { name: 'Turn off' }).isVisible());
+    await profileSettings.page.getByRole('button', { name: 'Turn off' }).click();
+    await profileSettings.page.getByText(
+      'Sky alerts · Off — the dates that matter, by notification.',
+      { exact: true },
+    ).waitFor();
+    const profileOff = await profileSettings.page.evaluate(() => ({
+      calls: window.__pushDrive,
+      preference: localStorage.getItem('zodiacs.push.v1'),
+    }));
+    check('Profile revokes browser and server consent while keeping the Off row reachable',
+      profileOff.calls.unsubscribeCalls === 1
+        && profileOff.preference === 'dismissed'
+        && profileRequests.length === 1
+        && profileRequests[0].method === 'DELETE'
+        && profileRequests[0].body?.endpoint === 'https://push.fixture.test/subscription/sky-alerts'
+        && await profileSettings.page.getByRole('button', { name: 'Turn on sky alerts' }).isVisible(),
+      JSON.stringify({ profileOff, profileRequests }));
+    check('Profile status and reversal never trigger native permission by themselves',
+      profileOff.calls.permissionCalls === 0 && profileOff.calls.subscribeCalls === 0,
+      JSON.stringify(profileOff.calls));
+    await profileSettings.context.close();
+
+    const serverFailureRequests = [];
+    const serverFailure = await openFixture(browser, baseURL, {
+      permission: 'granted',
+      preSubscribed: true,
+      path: '/profile/',
+      deleteStatus: 503,
+      apiRequests: serverFailureRequests,
+    });
+    await serverFailure.page.waitForSelector('[data-push-optin][data-push-context="profile"]');
+    await serverFailure.page.getByRole('button', { name: 'Turn off' }).click();
+    await serverFailure.page.getByText('Sky alerts are unavailable right now.', { exact: false }).waitFor();
+    const serverFailureState = await serverFailure.page.evaluate(() => ({
+      calls: window.__pushDrive,
+      preference: localStorage.getItem('zodiacs.push.v1'),
+    }));
+    check('Profile never reports Off when server revocation fails',
+      await serverFailure.page.getByText(
+        'Sky alerts · On — the dates that matter, by notification.',
+        { exact: true },
+      ).isVisible()
+        && await serverFailure.page.getByRole('button', { name: 'Turn off' }).isVisible()
+        && serverFailureState.preference === 'subscribed'
+        && serverFailureState.calls.unsubscribeCalls === 0
+        && serverFailureRequests.length === 1,
+      JSON.stringify({ serverFailureState, serverFailureRequests }));
+    await serverFailure.context.close();
+
+    const browserFailureRequests = [];
+    const browserFailure = await openFixture(browser, baseURL, {
+      permission: 'granted',
+      preSubscribed: true,
+      path: '/profile/',
+      unsubscribeResult: false,
+      apiRequests: browserFailureRequests,
+    });
+    await browserFailure.page.waitForSelector('[data-push-optin][data-push-context="profile"]');
+    await browserFailure.page.getByRole('button', { name: 'Turn off' }).click();
+    await browserFailure.page.getByText('Sky alerts are unavailable right now.', { exact: false }).waitFor();
+    const browserFailureState = await browserFailure.page.evaluate(() => ({
+      calls: window.__pushDrive,
+      preference: localStorage.getItem('zodiacs.push.v1'),
+    }));
+    check('Profile never reports Off when browser revocation fails',
+      await browserFailure.page.getByText(
+        'Sky alerts · On — the dates that matter, by notification.',
+        { exact: true },
+      ).isVisible()
+        && await browserFailure.page.getByRole('button', { name: 'Turn off' }).isVisible()
+        && browserFailureState.preference === 'subscribed'
+        && browserFailureState.calls.unsubscribeCalls === 1
+        && browserFailureRequests.length === 1,
+      JSON.stringify({ browserFailureState, browserFailureRequests }));
+    await browserFailure.context.close();
+
+    const enrollmentRollbackRequests = [];
+    const enrollmentRollback = await openFixture(browser, baseURL, {
+      permissionResult: 'granted',
+      path: '/profile/',
+      postStatus: 503,
+      apiRequests: enrollmentRollbackRequests,
+    });
+    await enrollmentRollback.page.waitForSelector('[data-push-optin][data-push-context="profile"]');
+    await enrollmentRollback.page.getByRole('button', { name: 'Turn on sky alerts' }).click();
+    await enrollmentRollback.page.getByText('Sky alerts are unavailable right now.', { exact: false }).waitFor();
+    const enrollmentRollbackState = await enrollmentRollback.page.evaluate(() => ({
+      calls: window.__pushDrive,
+      preference: localStorage.getItem('zodiacs.push.v1'),
+    }));
+    check('Profile reports Off with a retry when failed enrollment rolls back cleanly',
+      await enrollmentRollback.page.getByText(
+        'Sky alerts · Off — the dates that matter, by notification.',
+        { exact: true },
+      ).isVisible()
+        && await enrollmentRollback.page.getByRole('button', { name: 'Turn on sky alerts' }).isVisible()
+        && enrollmentRollbackState.preference === 'dismissed'
+        && enrollmentRollbackState.calls.subscribeCalls === 1
+        && enrollmentRollbackState.calls.unsubscribeCalls === 1
+        && enrollmentRollbackRequests.length === 1
+        && enrollmentRollbackRequests[0].method === 'POST',
+      JSON.stringify({ enrollmentRollbackState, enrollmentRollbackRequests }));
+    await enrollmentRollback.context.close();
+
+    const enrollmentRollbackFailureRequests = [];
+    const enrollmentRollbackFailure = await openFixture(browser, baseURL, {
+      permissionResult: 'granted',
+      path: '/profile/',
+      postStatus: 503,
+      unsubscribeResult: false,
+      apiRequests: enrollmentRollbackFailureRequests,
+    });
+    await enrollmentRollbackFailure.page.waitForSelector('[data-push-optin][data-push-context="profile"]');
+    await enrollmentRollbackFailure.page.getByRole('button', { name: 'Turn on sky alerts' }).click();
+    await enrollmentRollbackFailure.page.getByText('Sky alerts are unavailable right now.', { exact: false }).waitFor();
+    const enrollmentRollbackFailureState = await enrollmentRollbackFailure.page.evaluate(() => ({
+      calls: window.__pushDrive,
+      preference: localStorage.getItem('zodiacs.push.v1'),
+    }));
+    check('Profile reports On when failed enrollment leaves the browser subscription active',
+      await enrollmentRollbackFailure.page.getByText(
+        'Sky alerts · On — the dates that matter, by notification.',
+        { exact: true },
+      ).isVisible()
+        && await enrollmentRollbackFailure.page.getByRole('button', { name: 'Turn off' }).isVisible()
+        && enrollmentRollbackFailureState.preference === 'subscribed'
+        && enrollmentRollbackFailureState.calls.subscribeCalls === 1
+        && enrollmentRollbackFailureState.calls.unsubscribeCalls === 1
+        && enrollmentRollbackFailureRequests.length === 1
+        && enrollmentRollbackFailureRequests[0].method === 'POST',
+      JSON.stringify({ enrollmentRollbackFailureState, enrollmentRollbackFailureRequests }));
+    await enrollmentRollbackFailure.context.close();
 
     const ios = await openFixture(browser, baseURL, { returning: true, ios: true });
     await ios.page.waitForSelector('[data-push-optin]');
