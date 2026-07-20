@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Proof — PWA install and sky-alerts storyboard</title>
+<link rel="stylesheet" href="proof.css">
+</head>
+<body>
+<header class="proof-head">
+  <h1>Install and sky-alerts choreography</h1>
+  <p>Install keeps the shipped card and copy (earned after the second chart;
+  either outcome is final). Push is re-founded as “Sky alerts” — §3.6 copy —
+  and the native permission prompt appears only after the reader presses the
+  offer’s button. Caps are promised in the copy and enforced by delivery.</p>
+</header>
+
+<div class="note"><strong>Install · state 1 — eligible</strong> (after the
+second successful chart; existing copy, kept)
+<div class="crit">install eligible · earned moment · one offer, dismissal final</div></div>
+<div class="board board--1280">
+  <p class="board__tag">install offer</p>
+  <aside class="storycard">
+    <div class="icons">
+      <img src="assets/aries.webp" alt=""><img src="assets/taurus.webp" alt=""><img src="assets/gemini.webp" alt=""><img src="assets/cancer.webp" alt=""><img src="assets/leo.webp" alt=""><img src="assets/virgo.webp" alt=""><img src="assets/libra.webp" alt=""><img src="assets/scorpio.webp" alt=""><img src="assets/sagittarius.webp" alt=""><img src="assets/capricorn.webp" alt=""><img src="assets/aquarius.webp" alt=""><img src="assets/pisces.webp" alt="">
+    </div>
+    <div><strong>Keep Zodiacs close?</strong><br>
+    <p>Install Zodiacs for a faster return to your charts, daily astrology,
+    and saved tools.</p></div>
+    <div class="actions">
+      <button class="btn" type="button">Install Zodiacs</button>
+      <button class="dismiss" type="button">No, do not ask again</button>
+    </div>
+  </aside>
+  <p class="crit" style="margin-top:10px">states 2–4: unsupported → never
+  renders · already installed (standalone) → never renders · dismissed or
+  either sheet outcome → final, never re-asked</p>
+</div>
+
+<div class="note"><strong>Install · state 5 — iOS install-first</strong>
+(no install event; instruction replaces the button)</div>
+<div class="board board--360">
+  <p class="board__tag">iOS</p>
+  <aside class="storycard">
+    <div><strong>Keep Zodiacs close?</strong><br>
+    <p>On iPhone or iPad, tap Share, then Add to Home Screen.</p></div>
+    <div class="actions"><button class="dismiss" type="button">No, do not ask again</button></div>
+  </aside>
+</div>
+
+<div class="note"><strong>Sky alerts · the offer</strong> (contextual: after a
+chart save or a return to /today/; once, claim-based). The native prompt has
+not appeared yet.
+<div class="crit">permission default · no native prompt without a deliberate action · cap promised</div></div>
+<div class="board board--360">
+  <p class="board__tag">offer card</p>
+  <aside class="storycard">
+    <div><strong>Sky alerts, when they’re earned?</strong><br>
+    <p>A notification only for the dates that matter — full moons, eclipses,
+    retrograde turns. Most days, nothing.</p>
+    <p style="color:var(--faint);font-size:12.5px">Never more than one a day,
+    or two a week.</p></div>
+    <div class="actions">
+      <button class="btn" type="button">Turn on sky alerts</button>
+      <button class="dismiss" type="button">Not now</button>
+    </div>
+  </aside>
+  <div class="arrow">↓ only after “Turn on sky alerts”</div>
+  <div class="os-prompt" role="img" aria-label="Schematic of the browser's own permission prompt">
+    zodiacs.org wants to<br><strong>Show notifications</strong>
+    <div class="os-actions"><button class="os-btn">Block</button><button class="os-btn">Allow</button></div>
+    <p style="margin:10px 0 0;font-size:11px;color:var(--faint)">(the
+    browser’s native prompt — schematic)</p>
+  </div>
+</div>
+
+<div class="note"><strong>Sky alerts · resolution states</strong></div>
+<div class="board board--360">
+  <p class="board__tag">granted → subscribed</p>
+  <aside class="storycard">
+    <p>Sky alerts are on — only the dates that matter, never more than one a
+    day.</p>
+    <div class="actions"><button class="btn" type="button">Turn off</button></div>
+  </aside>
+  <p class="board__tag" style="margin-top:16px">denied</p>
+  <aside class="storycard">
+    <p>Notifications are blocked in this browser, so sky alerts can’t reach
+    you. Your browser’s site settings can change that whenever you like.</p>
+  </aside>
+  <p class="board__tag" style="margin-top:16px">error</p>
+  <aside class="storycard">
+    <p>Sky alerts are unavailable right now. Try again later.</p>
+  </aside>
+  <p class="board__tag" style="margin-top:16px">expired → re-offer (only path back)</p>
+  <aside class="storycard">
+    <p>Your sky alerts lapsed with this browser’s subscription. Turn them
+    back on?</p>
+    <div class="actions">
+      <button class="btn" type="button">Turn on sky alerts</button>
+      <button class="dismiss" type="button">Not now</button>
+    </div>
+  </aside>
+  <p class="board__tag" style="margin-top:16px">unsubscribed / removed</p>
+  <aside class="storycard">
+    <p style="color:var(--faint)">(the card collapses to nothing — the quiet
+    profile status row is where the channel remains visible: “Sky alerts ·
+    Off — the dates that matter, by notification.”)</p>
+  </aside>
+</div>
+
+<div class="note"><strong>iOS install-first push sequence</strong> — alerts
+require the Home-Screen app; the offer defers to install, then waits for the
+first contextual visit from the installed app.
+<div class="crit">iOS install-first · no dead-end permission ask</div></div>
+<div class="board board--360">
+  <p class="board__tag">iOS sequence</p>
+  <aside class="storycard">
+    <p>On iPhone and iPad, alerts work only after you add Zodiacs to your
+    Home Screen. Install first, then return here.</p>
+    <div class="actions"><button class="dismiss" type="button">Not now</button></div>
+  </aside>
+  <div class="arrow">↓ installed, next contextual visit</div>
+  <aside class="storycard">
+    <div><strong>Sky alerts, when they’re earned?</strong><br>
+    <p>A notification only for the dates that matter — full moons, eclipses,
+    retrograde turns. Most days, nothing.</p></div>
+    <div class="actions"><button class="btn" type="button">Turn on sky alerts</button>
+    <button class="dismiss" type="button">Not now</button></div>
+  </aside>
+</div>
+
+<div class="note"><strong>Notification copy examples</strong> (committed
+events; each opens the page that answers it; caps: ≤1/day, ≤2/week; no
+quiet-day notifications exist)
+<div class="crit">verified events only · no clickbait · chart-tier personal is high-signal only</div></div>
+<div class="board board--600">
+  <p class="board__tag">notification set</p>
+  <div class="plain">Full moon tonight
+The Buck Moon peaks in Aquarius at 14:35 UTC. Where it lands for you:
+→ /full-moon/2026-07-29/
+
+Total solar eclipse today
+The Moon covers the Sun at 20° Leo, 17:45 UTC — the year's most
+emphatic new moon.
+→ /eclipses/2026-08-12/
+
+Mercury turns direct today
+The review window closes at 22:56 UTC. Stalled plans start moving.
+→ /mercury-retrograde/2026-06-29/
+
+Jupiter reaches your natal Mercury          (chart-tier only)
+Exact this week for Frida Kahlo. Your brief has the reading.
+→ /today/</div>
+</div>
+</body>
+</html>

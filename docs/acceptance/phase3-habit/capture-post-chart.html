@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Proof — post-chart capture states</title>
+<link rel="stylesheet" href="proof.css">
+</head>
+<body>
+<header class="proof-head">
+  <h1>Post-chart-result placement — six states</h1>
+  <p>Rendered after a full chart computes, below the reading and receipts.
+  The computed Sun sign preselects the sun-sign capture; the personal-brief
+  panel appears only for synced charts. A device-only chart never sees a
+  personal-email implication. Handoff §2.2, strings §3.1–3.2.</p>
+</header>
+
+<div class="note"><strong>State 1 · device-only chart</strong> (and state 2 —
+signed-in-but-unsynced renders identically). Sun-sign capture with the computed
+sign preselected, plus the one quiet device-only note.
+<div class="crit">device-only never enters email · note is text, not a control · one primary action</div></div>
+
+<div class="board board--1280">
+  <p class="board__tag">1280 · device-only</p>
+  <div class="ctx"><h2>Your birth chart</h2><p>(chart wheel, reading, and
+  receipts render above — this sketch stands in for them.)</p></div>
+  <section class="email-capture">
+    <div>
+      <span class="kickline">Free daily forecast</span>
+      <h2>Your Cancer day ahead.</h2>
+      <p class="copy">Each morning, the day’s reading for your sign — one
+      email, free, unsubscribe anytime.</p>
+    </div>
+    <form>
+      <div class="ec-row">
+        <div>
+          <label class="ec-label" for="pc1">Email address</label>
+          <input class="ec-input" id="pc1" type="email" placeholder="you@example.com">
+        </div>
+        <button class="btn btn--primary" type="button">Start my daily</button>
+      </div>
+      <div class="ec-summary"><span>Using your Sun sign: Cancer</span><button type="button">Change</button></div>
+      <p class="ec-privacy">We store your email and your chosen sign — nothing
+      else. Never your birth details.</p>
+      <p class="ec-privacy">Prefer a brief matched to this exact chart? That
+      exists only for account-synced charts — syncing is always your call, and
+      this chart stays on your device until you make it.
+      <a class="quiet-link" href="#">How chart sync works</a></p>
+    </form>
+  </section>
+</div>
+
+<div class="note"><strong>State 3 · synced chart, no daily preference</strong> —
+the personal-brief offer panel leads; the sun-sign capture remains available
+beneath as the lighter alternative (rendered collapsed here).
+<div class="crit">consent lives in profile, not here · tiers unmistakably different</div></div>
+
+<div class="board board--360">
+  <p class="board__tag">360 · synced, eligible</p>
+  <div class="panel">
+    <h3>This chart can have its own daily brief.</h3>
+    <p>A personal morning email for Frida Kahlo — where each day’s sky touches
+    its saved placements, not just its Sun sign.</p>
+    <div class="actions"><a class="btn btn--primary" href="#">Set it up in your profile</a></div>
+  </div>
+</div>
+
+<div class="board board--1280">
+  <p class="board__tag">1280 · synced, eligible</p>
+  <div class="panel" style="max-width:720px">
+    <h3>This chart can have its own daily brief.</h3>
+    <p>A personal morning email for Frida Kahlo — where each day’s sky touches
+    its saved placements, not just its Sun sign.</p>
+    <div class="actions"><a class="btn btn--primary" href="#">Set it up in your profile</a></div>
+  </div>
+</div>
+
+<div class="note"><strong>State 4 · pending confirmation</strong></div>
+<div class="board board--360">
+  <p class="board__tag">360 · pending</p>
+  <div class="panel">
+    <h3>Almost on.</h3>
+    <p>Confirm from the email we sent to f…@example.com and the daily brief
+    begins.</p>
+    <div class="actions"><button class="btn" type="button">Resend the link</button></div>
+  </div>
+</div>
+
+<div class="note"><strong>State 5 · active for this chart</strong> — quiet
+confirmation; no form, no second call to action.
+<div class="crit">single daily per address · capture never re-offered on top</div></div>
+<div class="board board--360">
+  <p class="board__tag">360 · active</p>
+  <div class="panel">
+    <p class="statusline">The personal daily brief is on for Frida Kahlo.
+    <a class="quiet-link" href="#">Manage it in your profile.</a></p>
+  </div>
+</div>
+<div class="board board--1280">
+  <p class="board__tag">1280 · active</p>
+  <div class="panel" style="max-width:720px">
+    <p class="statusline">The personal daily brief is on for Frida Kahlo.
+    <a class="quiet-link" href="#">Manage it in your profile.</a></p>
+  </div>
+</div>
+
+<div class="note"><strong>State 6 · selected chart deleted</strong> — delivery
+stopped; nothing is auto-selected, including the chart on screen.
+<div class="crit">no silent substitution · explicit re-selection only</div></div>
+<div class="board board--360">
+  <p class="board__tag">360 · paused</p>
+  <div class="panel">
+    <h3>Your daily brief is paused.</h3>
+    <p>The chart it read was deleted, so delivery stopped. Choose another
+    synced chart whenever you’re ready — nothing is chosen for you.</p>
+    <div class="actions"><a class="btn btn--primary" href="#">Choose in your profile</a></div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Proof — daily horoscope capture</title>
+<link rel="stylesheet" href="proof.css">
+</head>
+<body>
+<header class="proof-head">
+  <h1>Daily horoscope capture</h1>
+  <p>Placement: after the reading on /horoscopes/ pages (sign preselected on
+  per-sign pages; chooser open on the hub). The capture stays visually
+  subordinate to the reading. Strings: handoff §3.1. States below cover the
+  full §2.5 lifecycle.</p>
+</header>
+
+<div class="note"><strong>Context + default (per-sign page, sign preselected)</strong>
+The reading owns the display type; the capture is a quiet hairline card below it.
+<div class="crit">capture subordinate to content · one primary action · pastel icon identity</div></div>
+
+<div class="board board--1280">
+  <p class="board__tag">1280 · placement in context</p>
+  <div class="ctx">
+    <h2>Leo daily horoscope</h2>
+    <p>The Moon spends today in your third house — errands, siblings, messages,
+    and the near neighborhood. … (the reading, sky strip, and FAQ render above;
+    this sketch stands in for them.)</p>
+  </div>
+  <section class="email-capture" aria-label="Daily email signup">
+    <div>
+      <span class="kickline">Free daily forecast</span>
+      <h2>Your Leo day ahead.</h2>
+      <p class="copy">Each morning, the day’s reading for your sign — one email,
+      free, unsubscribe anytime.</p>
+    </div>
+    <form>
+      <div class="ec-row">
+        <div>
+          <label class="ec-label" for="em1">Email address</label>
+          <input class="ec-input" id="em1" type="email" placeholder="you@example.com">
+        </div>
+        <button class="btn btn--primary" type="button">Start my daily</button>
+      </div>
+      <div class="ec-summary"><span>Using your Sun sign: Leo</span><button type="button">Change</button></div>
+      <p class="ec-privacy">We store your email and your chosen sign — nothing else.
+      Never your birth details.</p>
+      <p class="ec-status" role="status"></p>
+    </form>
+  </section>
+</div>
+
+<div class="note"><strong>Hub variant — chooser open, sign required</strong>
+No “skip the sign” option exists for the daily; the legend drops “(optional)”.
+<div class="crit">sign-required capture · 44px touch discs · canonical pastel icons</div></div>
+
+<div class="board board--360">
+  <p class="board__tag">360 · hub, chooser open</p>
+  <section class="email-capture" aria-label="Daily email signup">
+    <div>
+      <span class="kickline">Free daily forecast</span>
+      <h2>Your day ahead.</h2>
+      <p class="copy">Each morning, the day’s reading for your sign — one email,
+      free, unsubscribe anytime.</p>
+    </div>
+    <form>
+      <div class="ec-row">
+        <div>
+          <label class="ec-label" for="em2">Email address</label>
+          <input class="ec-input" id="em2" type="email" placeholder="you@example.com">
+        </div>
+        <button class="btn btn--primary" type="button">Start my daily</button>
+      </div>
+      <fieldset class="ec-signs">
+        <legend class="ec-label">Your Sun sign</legend>
+        <div class="ec-grid">
+          <label class="ec-sign"><input type="radio" name="s" checked><img src="assets/aries.webp" width="24" height="24" alt=""><span>Aries</span></label>
+          <label class="ec-sign"><input type="radio" name="s"><img src="assets/taurus.webp" width="24" height="24" alt=""><span>Taurus</span></label>
+          <label class="ec-sign"><input type="radio" name="s"><img src="assets/gemini.webp" width="24" height="24" alt=""><span>Gemini</span></label>
+          <label class="ec-sign"><input type="radio" name="s"><img src="assets/cancer.webp" width="24" height="24" alt=""><span>Cancer</span></label>
+          <label class="ec-sign"><input type="radio" name="s"><img src="assets/leo.webp" width="24" height="24" alt=""><span>Leo</span></label>
+          <label class="ec-sign"><input type="radio" name="s"><img src="assets/virgo.webp" width="24" height="24" alt=""><span>Virgo</span></label>
+          <label class="ec-sign"><input type="radio" name="s"><img src="assets/libra.webp" width="24" height="24" alt=""><span>Libra</span></label>
+          <label class="ec-sign"><input type="radio" name="s"><img src="assets/scorpio.webp" width="24" height="24" alt=""><span>Scorpio</span></label>
+          <label class="ec-sign"><input type="radio" name="s"><img src="assets/sagittarius.webp" width="24" height="24" alt=""><span>Sagittarius</span></label>
+          <label class="ec-sign"><input type="radio" name="s"><img src="assets/capricorn.webp" width="24" height="24" alt=""><span>Capricorn</span></label>
+          <label class="ec-sign"><input type="radio" name="s"><img src="assets/aquarius.webp" width="24" height="24" alt=""><span>Aquarius</span></label>
+          <label class="ec-sign"><input type="radio" name="s"><img src="assets/pisces.webp" width="24" height="24" alt=""><span>Pisces</span></label>
+        </div>
+      </fieldset>
+      <p class="ec-privacy">We store your email and your chosen sign — nothing else.
+      Never your birth details.</p>
+      <p class="ec-status" role="status"></p>
+    </form>
+  </section>
+</div>
+
+<div class="note"><strong>Lifecycle states (status line renders in the live region)</strong>
+Same card; only the status line and button change. No red, no new chrome.
+<div class="crit">§2.5 states 3–11 final copy · provider-unavailable keeps values · no shame copy</div></div>
+
+<div class="board board--360">
+  <p class="board__tag">360 · state strip</p>
+
+  <div class="panel"><span class="kickline">3 · invalid email</span>
+    <p class="ec-status">That email address doesn’t look complete.</p></div>
+
+  <div class="panel"><span class="kickline">4 · missing sign (hub/footer only)</span>
+    <p class="ec-status">Pick your sign first — the daily is written per sign.</p></div>
+
+  <div class="panel"><span class="kickline">5 · submitting</span>
+    <div class="actions"><button class="btn btn--primary btn--busy" disabled>Starting…</button></div></div>
+
+  <div class="panel"><span class="kickline">6 · confirmation sent</span>
+    <p class="ec-status">Check your email — nothing starts until you confirm.</p></div>
+
+  <div class="panel"><span class="kickline">7 · duplicate pending request</span>
+    <p class="ec-status">Another confirmation link is on its way. The newest link is
+    the one that works.</p></div>
+
+  <div class="panel"><span class="kickline">8 · already subscribed</span>
+    <p class="ec-status">This address already gets the daily. The next one arrives
+    tomorrow morning.</p></div>
+
+  <div class="panel"><span class="kickline">11 · provider unavailable</span>
+    <p class="ec-status">Couldn’t start the subscription. Please try again.</p></div>
+</div>
+</body>
+</html>

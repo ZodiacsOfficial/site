@@ -1,0 +1,186 @@
+/* Phase 3 habit proofs — self-contained token values (Cosmic Void).
+   Values mirror src/styles/tokens.css; fonts load from the repo's own
+   /public/fonts via relative paths with faithful fallbacks. */
+@font-face {
+  font-family: 'EB Garamond';
+  src: url('../../../public/fonts/eb-garamond-latin-500-normal.woff2') format('woff2');
+  font-weight: 500; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'EB Garamond';
+  src: url('../../../public/fonts/eb-garamond-latin-400-italic.woff2') format('woff2');
+  font-weight: 400; font-style: italic; font-display: swap;
+}
+@font-face {
+  font-family: 'Instrument Sans';
+  src: url('../../../public/fonts/instrument-sans-latin-wght-normal.woff2') format('woff2-variations');
+  font-weight: 400 700; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('../../../public/fonts/jetbrains-mono-latin-wght-normal.woff2') format('woff2-variations');
+  font-weight: 300 600; font-style: normal; font-display: swap;
+}
+
+:root {
+  --void-0: #060709; --void-1: #0A0C11; --void-2: #0F121A;
+  --ink-0: #EEF1F7; --ink-1: #C6CCDA; --ink-2: #8E96AB; --ink-3: #7A8397;
+  --hair-1: rgba(198, 204, 218, 0.08);
+  --hair-2: rgba(198, 204, 218, 0.16);
+  --hair-3: rgba(198, 204, 218, 0.28);
+  --text: var(--ink-0); --text-2: var(--ink-1); --muted: var(--ink-2); --faint: var(--ink-3);
+  --font-serif: 'EB Garamond', 'Iowan Old Style', Georgia, serif;
+  --font-sans: 'Instrument Sans', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, Menlo, Consolas, monospace;
+  --r-sm: 8px; --r-md: 14px; --r-lg: 22px; --r-full: 999px;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  background: var(--void-0);
+  color: var(--text);
+  font: 400 16px/1.6 var(--font-sans);
+  padding: 28px clamp(14px, 3vw, 40px) 80px;
+}
+
+/* ── Annotation rail ── */
+.proof-head { max-width: 900px; margin: 0 0 26px; }
+.proof-head h1 { margin: 0 0 8px; font: 500 clamp(1.7rem, 4vw, 2.3rem)/1.1 var(--font-serif); }
+.proof-head p { margin: 0; color: var(--muted); max-width: 72ch; }
+.note {
+  margin: 34px 0 12px;
+  padding: 10px 14px;
+  border-left: 2px solid var(--hair-3);
+  color: var(--muted);
+  font-size: 13px;
+  max-width: 78ch;
+}
+.note strong { color: var(--text-2); font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; display: block; margin-bottom: 4px; }
+.note em { color: var(--faint); font-style: normal; }
+.crit { color: var(--faint); font-size: 12px; }
+.crit::before { content: 'proves · '; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; }
+
+/* ── Artboards ── */
+.board { border: 1px dashed var(--hair-3); border-radius: 6px; padding: 18px; margin: 0 0 8px; background: var(--void-0); }
+.board--360 { max-width: 360px; }
+.board--1280 { max-width: 1280px; }
+.board--600 { max-width: 600px; padding: 0; }
+.board--320 { max-width: 320px; padding: 0; }
+.board__tag { font: 500 10px/1 var(--font-mono); letter-spacing: 0.12em; text-transform: uppercase; color: var(--faint); margin: 0 0 10px; }
+.board--600 .board__tag, .board--320 .board__tag { padding: 12px 14px 0; }
+
+/* ── Page-context sketches (the content the capture sits under) ── */
+.ctx { color: var(--faint); border: 1px solid var(--hair-1); border-radius: var(--r-md); padding: 16px 18px; margin-bottom: 18px; }
+.ctx h2 { margin: 0 0 6px; font: 500 1.5rem/1.15 var(--font-serif); color: var(--muted); }
+.ctx p { margin: 0; font-size: 14px; max-width: 60ch; }
+
+/* ── The capture component (mirrors .email-capture) ── */
+.email-capture {
+  display: grid; gap: 22px;
+  margin: 30px 0;
+  padding: clamp(22px, 4vw, 34px);
+  border: 1px solid var(--hair-2);
+  border-radius: var(--r-lg);
+  background: var(--void-1);
+}
+@media (min-width: 860px) {
+  .board--1280 .email-capture { grid-template-columns: minmax(180px, 0.7fr) minmax(0, 1.3fr); align-items: start; }
+}
+.email-capture .kickline { font: 500 10px/1 var(--font-mono); letter-spacing: 0.15em; text-transform: uppercase; color: var(--faint); }
+.email-capture h2 { margin: 8px 0 6px; font: 500 clamp(1.35rem, 2.5vw, 1.7rem)/1.08 var(--font-serif); }
+.email-capture .copy { margin: 0; max-width: 38ch; color: var(--muted); font-size: 14px; }
+.ec-label { display: block; font: 500 10px/1 var(--font-mono); letter-spacing: 0.15em; text-transform: uppercase; color: var(--faint); margin: 0 0 7px; }
+.ec-row { display: grid; gap: 9px; }
+@media (min-width: 540px) { .ec-row { grid-template-columns: minmax(0, 1fr) auto; align-items: end; } }
+.ec-input {
+  min-width: 0; width: 100%;
+  padding: 11px 13px;
+  border: 1px solid var(--hair-2); border-radius: var(--r-sm);
+  background: var(--void-0); color: var(--text); font: inherit;
+}
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 46px; padding: 0 18px;
+  border: 1px solid var(--hair-3); border-radius: var(--r-full);
+  background: transparent; color: var(--text);
+  font: 600 15px/1 var(--font-sans); cursor: pointer; text-decoration: none;
+  white-space: nowrap;
+}
+.btn--primary { background: var(--ink-0); border-color: var(--ink-0); color: var(--void-0); }
+.btn--busy { opacity: 0.6; cursor: wait; }
+.btn:disabled { opacity: 0.55; }
+.ec-signs { margin: 16px 0 0; padding: 0; border: 0; }
+.ec-signs legend { padding: 0; margin-bottom: 9px; }
+.ec-grid { display: flex; flex-wrap: wrap; gap: 6px; }
+.ec-sign { position: relative; display: grid; min-width: 44px; justify-items: center; gap: 3px; cursor: pointer; }
+.ec-sign img { display: block; border-radius: 50%; padding: 2px; border: 1px solid transparent; opacity: 0.58; }
+.ec-sign input { position: absolute; opacity: 0; pointer-events: none; }
+.ec-sign input:checked + img { opacity: 1; border-color: var(--ink-1); transform: translateY(-1px); }
+.ec-sign span { max-width: 58px; overflow: hidden; color: var(--faint); font-size: 9px; line-height: 1.2; text-overflow: ellipsis; white-space: nowrap; }
+.ec-sign input:checked ~ span { color: var(--text-2); }
+.ec-summary {
+  display: flex; min-height: 44px; align-items: center; justify-content: space-between; gap: 14px;
+  margin-top: 16px; padding: 0 4px 0 12px;
+  border: 1px solid var(--hair-2); border-radius: var(--r-full);
+  color: var(--text-2); font-size: 13px;
+}
+.ec-summary button { min-width: 72px; min-height: 40px; border: 0; border-radius: var(--r-full); background: rgba(198,204,218,0.08); color: var(--text); font: 600 13px/1 var(--font-sans); cursor: pointer; }
+.ec-privacy, .ec-status { margin: 10px 0 0; color: var(--faint); font-size: 11px; line-height: 1.5; }
+.ec-status:not(:empty) { color: var(--text-2); }
+.focus-demo { outline: 2px solid var(--ink-0); outline-offset: 3px; }
+
+/* ── Panels (post-chart / profile states) ── */
+.panel { border: 1px solid var(--hair-2); border-radius: var(--r-lg); background: var(--void-1); padding: 24px; display: grid; gap: 10px; }
+.panel h3 { margin: 0; font: 500 1.35rem/1.12 var(--font-serif); }
+.panel p { margin: 0; color: var(--muted); font-size: 14px; max-width: 56ch; }
+.panel .quiet-link { color: var(--text-2); font-size: 13px; text-decoration: underline; text-underline-offset: 3px; }
+.panel .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 6px; }
+.statusline { color: var(--text-2); font-size: 13px; }
+.banner { border: 1px solid var(--hair-3); border-radius: var(--r-md); padding: 12px 16px; color: var(--text-2); font-size: 13.5px; background: var(--void-2); }
+.radio-row { display: grid; grid-template-columns: auto 1fr; gap: 4px 12px; align-items: start; padding: 12px 14px; border: 1px solid var(--hair-1); border-radius: var(--r-md); cursor: pointer; }
+.radio-row input { margin-top: 5px; accent-color: #C6CCDA; width: 18px; height: 18px; }
+.radio-row strong { font-weight: 550; }
+.radio-row .sub { grid-column: 2; color: var(--faint); font-size: 12.5px; }
+.select {
+  width: 100%; max-width: 340px; min-height: 44px; padding: 10px 12px;
+  border: 1px solid var(--hair-2); border-radius: var(--r-sm);
+  background: var(--void-0); color: var(--text); font: inherit;
+}
+.hr { border: 0; border-top: 1px solid var(--hair-1); margin: 26px 0; }
+
+/* ── Cards for install/push storyboard ── */
+.storycard {
+  display: grid; gap: 12px;
+  border: 1px solid var(--hair-2); border-radius: var(--r-lg);
+  background: var(--void-1); padding: 18px 20px; max-width: 560px;
+}
+.storycard strong { font-weight: 600; }
+.storycard p { margin: 0; color: var(--muted); font-size: 14px; }
+.storycard .icons { display: flex; gap: 2px; }
+.storycard .icons img { width: 22px; height: 22px; }
+.storycard .actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.dismiss { background: none; border: 0; color: var(--faint); font: 500 13px/1 var(--font-sans); min-height: 44px; padding: 0 10px; cursor: pointer; }
+.os-prompt { border: 1px solid var(--hair-3); background: var(--void-2); border-radius: 12px; padding: 16px; max-width: 360px; color: var(--text-2); font-size: 13.5px; }
+.os-prompt .os-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 12px; }
+.os-prompt .os-btn { border: 1px solid var(--hair-3); background: transparent; color: var(--text); border-radius: 8px; padding: 8px 14px; font: 500 13px/1 var(--font-sans); }
+.arrow { color: var(--faint); font-size: 20px; margin: 6px 0; }
+
+/* ── Email artboards ── */
+.mail { background: #060709; color: #C6CCDA; font: 400 15px/1.65 -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; padding: 28px 22px; border: 1px solid var(--hair-1); }
+.mail a { color: #EEF1F7; }
+.mail .m-id { display: flex; align-items: center; gap: 10px; }
+.mail .m-id img { width: 44px; height: 44px; border-radius: 50%; }
+.mail .m-kick { font: 500 11px/1.4 ui-monospace, Menlo, monospace; letter-spacing: 0.14em; text-transform: uppercase; color: #7A8397; }
+.mail .m-mark { margin-left: auto; color: #8E96AB; font-size: 13px; text-decoration: none; }
+.mail h1 { margin: 22px 0 14px; font: 500 24px/1.25 Georgia, 'Times New Roman', serif; color: #EEF1F7; }
+.mail p { margin: 0 0 14px; }
+.mail .m-event { border-top: 1px solid #26282E; padding-top: 14px; margin-top: 6px; color: #C6CCDA; }
+.mail .m-btn { display: inline-block; background: #EEF1F7; color: #060709; text-decoration: none; font-weight: 600; font-size: 15px; padding: 13px 22px; border-radius: 999px; margin: 8px 0 4px; }
+.mail .m-why { color: #7A8397; font: 400 11px/1.6 ui-monospace, Menlo, monospace; margin: 16px 0 0; }
+.mail .m-foot { border-top: 1px solid #26282E; margin-top: 26px; padding-top: 14px; color: #7A8397; font-size: 12px; line-height: 1.7; }
+.mail .m-foot a { color: #8E96AB; }
+.mail .m-sub { color: #7A8397; font-size: 12px; margin: 2px 0 0; }
+.plain { background: var(--void-1); border: 1px solid var(--hair-1); border-radius: var(--r-md); padding: 18px; font: 400 12.5px/1.7 var(--font-mono); color: var(--text-2); white-space: pre-wrap; overflow-x: auto; max-width: 640px; }
+
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }

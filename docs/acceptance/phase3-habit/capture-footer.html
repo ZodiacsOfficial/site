@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Proof — footer capture</title>
+<link rel="stylesheet" href="proof.css">
+</head>
+<body>
+<header class="proof-head">
+  <h1>Footer capture — lowest emphasis</h1>
+  <p>Above SiteFooter on high-intent pages (already suppressed on
+  /birth-chart, /horoscopes, and /profile so no page carries two captures).
+  Sun-sign daily only; never the chart tier. It must not compete with the
+  footer’s navigation. Strings: §3.1 footer variants.</p>
+</header>
+
+<div class="note"><strong>Footer placement</strong> — one-line title, email row,
+collapsed sign summary, privacy line. No kicker, no personal panel.
+<div class="crit">lowest emphasis · does not compete with navigation · sun-sign only</div></div>
+
+<div class="board board--1280">
+  <p class="board__tag">1280</p>
+  <section class="email-capture">
+    <div>
+      <h2>The daily, by email.</h2>
+      <p class="copy">Your sign’s reading each morning. Free, unsubscribe
+      anytime.</p>
+    </div>
+    <form>
+      <div class="ec-row">
+        <div>
+          <label class="ec-label" for="f1">Email address</label>
+          <input class="ec-input" id="f1" type="email" placeholder="you@example.com">
+        </div>
+        <button class="btn btn--primary" type="button">Start my daily</button>
+      </div>
+      <div class="ec-summary"><span>Using your Sun sign: Aries</span><button type="button">Change</button></div>
+      <p class="ec-privacy">We store your email and your chosen sign — nothing
+      else. Never your birth details.</p>
+    </form>
+  </section>
+  <div class="ctx"><p>(SiteFooter navigation renders below — tools, learn,
+  the twelve, registry — untouched by this phase.)</p></div>
+</div>
+
+<div class="board board--360">
+  <p class="board__tag">360</p>
+  <section class="email-capture">
+    <div>
+      <h2>The daily, by email.</h2>
+      <p class="copy">Your sign’s reading each morning. Free, unsubscribe
+      anytime.</p>
+    </div>
+    <form>
+      <div class="ec-row">
+        <div>
+          <label class="ec-label" for="f2">Email address</label>
+          <input class="ec-input" id="f2" type="email" placeholder="you@example.com">
+        </div>
+        <button class="btn btn--primary" type="button">Start my daily</button>
+      </div>
+      <div class="ec-summary"><span>Using your Sun sign: Aries</span><button type="button">Change</button></div>
+      <p class="ec-privacy">We store your email and your chosen sign — nothing
+      else. Never your birth details.</p>
+    </form>
+  </section>
+</div>
+</body>
+</html>

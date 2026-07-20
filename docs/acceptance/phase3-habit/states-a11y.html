@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Proof — accessibility, fallback, and stress states</title>
+<link rel="stylesheet" href="proof.css">
+</head>
+<body>
+<header class="proof-head">
+  <h1>Accessibility, fallback, and stress states</h1>
+  <p>Keyboard focus, reduced motion, no-JavaScript, feature-off, and
+  long-content stress, per handoff §5 and the Phase 3 design constraints.</p>
+</header>
+
+<div class="note"><strong>Keyboard focus</strong> — the existing 2px ink
+outline at 3px offset, on every interactive control. Shown frozen on the
+submit button and a sign disc.
+<div class="crit">clear visible focus · 44px targets</div></div>
+<div class="board board--360">
+  <p class="board__tag">focus states (frozen)</p>
+  <section class="email-capture">
+    <form>
+      <div class="ec-row">
+        <div>
+          <label class="ec-label" for="a1">Email address</label>
+          <input class="ec-input" id="a1" type="email" placeholder="you@example.com">
+        </div>
+        <button class="btn btn--primary focus-demo" type="button">Start my daily</button>
+      </div>
+      <fieldset class="ec-signs">
+        <legend class="ec-label">Your Sun sign</legend>
+        <div class="ec-grid">
+          <label class="ec-sign"><input type="radio" name="af" checked><img class="focus-demo" style="border-radius:50%" src="assets/leo.webp" width="24" height="24" alt=""><span>Leo</span></label>
+          <label class="ec-sign"><input type="radio" name="af"><img src="assets/virgo.webp" width="24" height="24" alt=""><span>Virgo</span></label>
+        </div>
+      </fieldset>
+    </form>
+  </section>
+</div>
+
+<div class="note"><strong>Reduced motion</strong> — the only motion anywhere is
+the 180ms disc/press feedback; under prefers-reduced-motion it is removed
+(this stylesheet disables transitions the same way the component CSS does).
+No orchestrated animation exists in this phase — nothing to storyboard.
+<div class="crit">reduced motion honored · no orchestrated animation</div></div>
+
+<div class="note"><strong>No JavaScript</strong> — the capture is a plain
+form POST; submitting lands on the pending page. Nothing requires script.
+<div class="crit">no-JS fallback complete</div></div>
+<div class="board board--360">
+  <p class="board__tag">no-JS · post-submit page (server-rendered)</p>
+  <div class="panel">
+    <h3>Check your email.</h3>
+    <p>Use the confirmation link we sent — the daily starts after you
+    confirm.</p>
+  </div>
+</div>
+
+<div class="note"><strong>Feature off</strong> — no provider configured: the
+capture markup is absent entirely; the page ends with its content and the
+footer. Push flag off: the offer never renders. Shown as the page without
+the capture — absence is the state.
+<div class="crit">feature-off leaves pages complete</div></div>
+<div class="board board--360">
+  <p class="board__tag">feature off (capture absent)</p>
+  <div class="ctx">
+    <h2>Leo daily horoscope</h2>
+    <p>(reading … FAQ …)</p>
+  </div>
+  <div class="ctx"><p>(footer navigation — nothing between the content and
+  the footer; no empty card, no placeholder)</p></div>
+</div>
+
+<div class="note"><strong>Long-content stress</strong> — 60-character chart
+name and a long masked address; one-line ellipsis, no layout break, full
+value available on the profile control itself.
+<div class="crit">long email + long chart name never break layout</div></div>
+<div class="board board--360">
+  <p class="board__tag">stress</p>
+  <div class="panel">
+    <p class="statusline" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">
+    On · reading Magdalena Carmen Frida Kahlo y Calderón de la Barca Hurtado ·
+    arriving around 7:00, Europe/Lisbon</p>
+    <p class="statusline" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">
+    We sent a link to m…@extraordinarily-long-company-domain-name.example.com.</p>
+  </div>
+  <div class="mail" style="padding:18px 14px;margin-top:14px">
+    <div class="m-id">
+      <div><div class="m-kick" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:200px">For Magdalena Carmen Frida Kahlo y Calderón · Monday, July 20</div></div>
+      <a class="m-mark" href="#">Zodiacs.org</a>
+    </div>
+    <p style="margin-top:12px;font-size:13px;color:#7A8397">(email identity
+    row truncates the same way — the footer carries the full name)</p>
+  </div>
+</div>
+</body>
+</html>
