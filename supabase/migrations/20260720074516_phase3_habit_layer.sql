@@ -846,7 +846,10 @@ create table public.daily_email_deliveries (
 create index daily_email_deliveries_status_edition_idx
   on public.daily_email_deliveries (status, edition_date);
 
-create table public.push_subscriptions (
+-- Phase 1 shipped a narrower server-owned push table before the Phase 3
+-- delivery contract existed. Upgrade that exact shape in place so existing
+-- browser consent is preserved; fresh projects still create the final shape.
+create table if not exists public.push_subscriptions (
   endpoint text primary key,
   p256dh text not null,
   auth text not null,
@@ -871,6 +874,85 @@ create table public.push_subscriptions (
   constraint push_subscriptions_lang_valid
     check (lang in ('en', 'es', 'pt', 'fr', 'it'))
 );
+
+alter table public.push_subscriptions
+  add column if not exists updated_at timestamptz;
+
+-- Legacy rows may have a nullable language and no update clock. Preserve the
+-- subscription/key material and use the row's original creation time as the
+-- first stable snapshot timestamp consumed by the delivery guard migration.
+update public.push_subscriptions
+set lang = 'en'
+where lang is null;
+
+alter table public.push_subscriptions
+  alter column lang set default 'en',
+  alter column lang set not null;
+
+update public.push_subscriptions
+set updated_at = created_at
+where updated_at is null;
+
+alter table public.push_subscriptions
+  alter column updated_at set default now(),
+  alter column updated_at set not null;
+
+do $$
+begin
+  if not exists (
+    select 1
+    from pg_catalog.pg_constraint
+    where conrelid = 'public.push_subscriptions'::regclass
+      and conname = 'push_subscriptions_endpoint_valid'
+  ) then
+    alter table public.push_subscriptions
+      add constraint push_subscriptions_endpoint_valid
+      check (
+        octet_length(endpoint) between 1 and 2048
+        and endpoint ~ '^https://'
+      );
+  end if;
+
+  if not exists (
+    select 1
+    from pg_catalog.pg_constraint
+    where conrelid = 'public.push_subscriptions'::regclass
+      and conname = 'push_subscriptions_p256dh_valid'
+  ) then
+    alter table public.push_subscriptions
+      add constraint push_subscriptions_p256dh_valid
+      check (
+        octet_length(p256dh) between 1 and 512
+        and p256dh ~ '^[A-Za-z0-9_-]+={0,2}$'
+      );
+  end if;
+
+  if not exists (
+    select 1
+    from pg_catalog.pg_constraint
+    where conrelid = 'public.push_subscriptions'::regclass
+      and conname = 'push_subscriptions_auth_valid'
+  ) then
+    alter table public.push_subscriptions
+      add constraint push_subscriptions_auth_valid
+      check (
+        octet_length(auth) between 1 and 512
+        and auth ~ '^[A-Za-z0-9_-]+={0,2}$'
+      );
+  end if;
+
+  if not exists (
+    select 1
+    from pg_catalog.pg_constraint
+    where conrelid = 'public.push_subscriptions'::regclass
+      and conname = 'push_subscriptions_lang_valid'
+  ) then
+    alter table public.push_subscriptions
+      add constraint push_subscriptions_lang_valid
+      check (lang in ('en', 'es', 'pt', 'fr', 'it'));
+  end if;
+end;
+$$;
 
 create trigger daily_chart_preferences_touch_updated_at
 before update on public.daily_chart_preferences

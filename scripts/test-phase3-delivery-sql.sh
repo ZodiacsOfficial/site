@@ -6,6 +6,7 @@ export LC_ALL=C
 phase3_script_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd -P)"
 phase3_repo_root="$(cd -- "${phase3_script_dir}/.." && pwd -P)"
 phase3_database="zodiacs_phase3_test"
+phase3_legacy_database="zodiacs_phase3_legacy_test"
 phase3_container_name="zodiacs-phase3-sql-$$-${RANDOM}-$(date -u +%s)"
 phase3_container_id=""
 
@@ -64,13 +65,14 @@ fi
 
 run_phase3_sql_file() {
   local phase3_sql_file="$1"
-  echo "SQL test: ${phase3_sql_file#"${phase3_repo_root}/"}"
+  local phase3_target_database="${2:-${phase3_database}}"
+  echo "SQL test (${phase3_target_database}): ${phase3_sql_file#"${phase3_repo_root}/"}"
   docker exec --interactive "${phase3_container_id}" \
     psql \
       --no-psqlrc \
       --set ON_ERROR_STOP=1 \
       --username postgres \
-      --dbname "${phase3_database}" \
+      --dbname "${phase3_target_database}" \
     < "${phase3_sql_file}"
 }
 
@@ -89,5 +91,39 @@ done
 run_phase3_sql_file "${phase3_repo_root}/supabase/tests/phase3_habit_layer.sql"
 run_phase3_sql_file "${phase3_repo_root}/supabase/tests/phase3_delivery_guards.sql"
 run_phase3_sql_file "${phase3_repo_root}/supabase/tests/phase3_delivery_guards_concurrency.sql"
+
+# Reproduce the exact narrower push_subscriptions shape that reached
+# production before Phase 3, including representative rows. This second
+# database proves the migration upgrades in place rather than relying only on
+# the fresh-schema path above.
+docker exec "${phase3_container_id}" \
+  createdb \
+    --username postgres \
+    "${phase3_legacy_database}"
+
+run_phase3_sql_file \
+  "${phase3_repo_root}/supabase/tests/bootstrap.sql" \
+  "${phase3_legacy_database}"
+
+for phase3_migration in \
+  "${phase3_repo_root}/supabase/migrations/20260706000000_profile_sync.sql" \
+  "${phase3_repo_root}/supabase/migrations/20260706130517_chart_deletions.sql" \
+  "${phase3_repo_root}/supabase/migrations/20260707125552_weekly_digest_opt_in.sql"
+do
+  run_phase3_sql_file "${phase3_migration}" "${phase3_legacy_database}"
+done
+
+run_phase3_sql_file \
+  "${phase3_repo_root}/supabase/tests/phase3_legacy_push_fixture.sql" \
+  "${phase3_legacy_database}"
+run_phase3_sql_file \
+  "${phase3_repo_root}/supabase/migrations/20260720074516_phase3_habit_layer.sql" \
+  "${phase3_legacy_database}"
+run_phase3_sql_file \
+  "${phase3_repo_root}/supabase/migrations/20260720145526_phase3_delivery_guards.sql" \
+  "${phase3_legacy_database}"
+run_phase3_sql_file \
+  "${phase3_repo_root}/supabase/tests/phase3_legacy_push_upgrade.sql" \
+  "${phase3_legacy_database}"
 
 echo "PostgreSQL 17 Phase 3 SQL tests passed."
