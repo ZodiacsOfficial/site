@@ -1,10 +1,11 @@
-import { createHash } from 'node:crypto';
+import { createHash, randomUUID } from 'node:crypto';
 import { hasDailyChartEmailProvider, hasDailyChartPreferenceAccess } from '../../src/lib/email/daily-config.js';
 import { isIanaTimezone } from '../../src/lib/email/daily-chart-token.js';
 import { createDailyChartOptInToken } from '../../src/lib/email/daily-chart-token.js';
 import { isAllowedEmailCaptureRequest } from '../../src/lib/email/request.js';
 import {
   authenticateEmailUser,
+  claimDailyChartConfirmationSend,
   deleteDailyChartPreference,
   deletePendingDailyChartPreference,
   getDailyChartPreference,
@@ -19,7 +20,6 @@ import { sendDailyChartConfirmation } from '../../src/lib/email/daily-resend.js'
 import { dailyRecipientHash } from '../../src/lib/daily-email/identity.js';
 
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
-const CHART_RESEND_DEBOUNCE_MS = 60_000;
 
 function sendJson(res: any, status: number, body: Record<string, unknown>): void {
   res.statusCode = status;
@@ -67,6 +67,20 @@ function isResendBody(input: unknown): boolean {
 function maskedEmail(email: string): string {
   const at = email.indexOf('@');
   return at > 0 ? `${email[0]}…${email.slice(at)}` : 'this address';
+}
+
+async function claimConfirmationSend(
+  userId: string,
+  res: any,
+): Promise<boolean> {
+  const claim = await claimDailyChartConfirmationSend(userId, randomUUID());
+  if (claim.outcome === 'claimed') return true;
+  res.setHeader('Retry-After', String(claim.retryAfterSeconds));
+  sendJson(res, 429, {
+    error: 'rate_limited',
+    retryAfterSeconds: claim.retryAfterSeconds,
+  });
+  return false;
 }
 
 export default async function handler(req: any, res: any): Promise<void> {
@@ -170,6 +184,7 @@ export default async function handler(req: any, res: any): Promise<void> {
         user.email,
         process.env.DAILY_EMAIL_RECIPIENT_HASH_SECRET ?? '',
       );
+      if (!await claimConfirmationSend(user.id, res)) return;
       const token = createDailyChartOptInToken({
         userId: user.id,
         chartId: existing.chartId,
@@ -184,18 +199,8 @@ export default async function handler(req: any, res: any): Promise<void> {
         recipientHash,
         tokenHash,
         existing.timezone,
-        {
-          notUpdatedAfter: new Date(Date.now() - CHART_RESEND_DEBOUNCE_MS).toISOString(),
-        },
       );
       if (!replaced) {
-        const latest = await getDailyChartPreference(user.id);
-        if (latest?.pending
-          && latest.confirmationTokenHash === existing.confirmationTokenHash) {
-          res.setHeader('Retry-After', String(CHART_RESEND_DEBOUNCE_MS / 1000));
-          sendJson(res, 429, { error: 'rate_limited' });
-          return;
-        }
         sendJson(res, 409, { error: 'not_pending' });
         return;
       }
@@ -266,6 +271,7 @@ export default async function handler(req: any, res: any): Promise<void> {
       });
       return;
     }
+    if (!await claimConfirmationSend(user.id, res)) return;
     // An account email change is a new recipient and therefore a new consent
     // boundary. It never transfers confirmed consent to the new address.
     const token = createDailyChartOptInToken({

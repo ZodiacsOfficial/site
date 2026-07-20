@@ -26,6 +26,18 @@ export interface OwnedDailyChart {
   name: string;
 }
 
+export type DailyChartConfirmationSendClaim =
+  | {
+    outcome: 'claimed';
+    claimedAt: string;
+    retryAfterSeconds: 0;
+  }
+  | {
+    outcome: 'capped_60s' | 'capped_24h';
+    nextAllowedAt: string;
+    retryAfterSeconds: number;
+  };
+
 function value(env: Environment, key: string): string {
   const candidate = env[key];
   return typeof candidate === 'string' ? candidate.trim() : '';
@@ -141,6 +153,75 @@ export async function getOwnedDailyChart(
     ? rawName.replace(/[\r\n\t]+/gu, ' ').replace(/\s{2,}/gu, ' ').trim().slice(0, 120)
     : '';
   return { id: chartId, name: name || 'Saved chart' };
+}
+
+/**
+ * Claims one durable confirmation-email attempt before any pending preference
+ * or token is changed. The database owns both the exact rolling windows and
+ * idempotency for a retried claim token; provider failure never refunds it.
+ */
+export async function claimDailyChartConfirmationSend(
+  userId: string,
+  claimToken: string,
+  env: Environment = process.env,
+  fetcher: Fetch = fetch,
+): Promise<DailyChartConfirmationSendClaim> {
+  if (!UUID.test(userId) || !UUID.test(claimToken)) {
+    throw new Error('Daily chart confirmation claim identifiers are invalid.');
+  }
+  const input = `${supabaseOrigin(env)}/rest/v1/rpc/claim_daily_chart_confirmation_send`;
+  const init = {
+    method: 'POST',
+    headers: serviceHeaders(env),
+    body: JSON.stringify({
+      candidate_user_id: userId,
+      candidate_claim_token: claimToken,
+    }),
+  } satisfies RequestInit;
+  let response: Response;
+  try {
+    response = await fetcher(input, init);
+  } catch {
+    // A transport can lose the committed response. Retry exactly once with
+    // the same UUID; the RPC returns the original claim without double-counting.
+    response = await fetcher(input, init);
+  }
+  if (!response.ok) {
+    throw new Error(`Daily chart confirmation claim failed (${response.status})`);
+  }
+  const value = await response.json() as unknown;
+  if (!value || typeof value !== 'object' || Array.isArray(value)) {
+    throw new Error('Daily chart confirmation claim returned an invalid state.');
+  }
+  const row = value as {
+    outcome?: unknown;
+    claimed_at?: unknown;
+    next_allowed_at?: unknown;
+    retry_after_seconds?: unknown;
+  };
+  if (row.outcome === 'claimed'
+    && typeof row.claimed_at === 'string'
+    && Number.isFinite(Date.parse(row.claimed_at))
+    && row.retry_after_seconds === 0) {
+    return {
+      outcome: 'claimed',
+      claimedAt: row.claimed_at,
+      retryAfterSeconds: 0,
+    };
+  }
+  if ((row.outcome === 'capped_60s' || row.outcome === 'capped_24h')
+    && typeof row.next_allowed_at === 'string'
+    && Number.isFinite(Date.parse(row.next_allowed_at))
+    && Number.isInteger(row.retry_after_seconds)
+    && (row.retry_after_seconds as number) > 0
+    && (row.retry_after_seconds as number) <= 86_400) {
+    return {
+      outcome: row.outcome,
+      nextAllowedAt: row.next_allowed_at,
+      retryAfterSeconds: row.retry_after_seconds as number,
+    };
+  }
+  throw new Error('Daily chart confirmation claim returned an invalid state.');
 }
 
 export async function getDailyChartPreference(

@@ -7,14 +7,17 @@ import { createDailyChartOptInToken } from './daily-chart-token';
 import { createDailyUnsubscribeToken } from './daily-unsubscribe-token';
 import { createEmailOptInToken } from './opt-in-token';
 import { createDailySunOptInToken } from './daily-sun-token';
+import { claimDailyChartConfirmationSend } from './daily-server';
 import { dailyRecipientHash } from '../daily-email/identity';
 
 const ORIGINAL_ENV = { ...process.env };
 const SECRET = 'test-secret-that-is-at-least-thirty-two-characters';
 const USER_ID = '110e8400-e29b-41d4-a716-446655440000';
 const CHART_ID = '220e8400-e29b-41d4-a716-446655440000';
+const CLAIM_TOKEN = '330e8400-e29b-41d4-a716-446655440000';
 const CONTACT_ID = 'contact_12345678';
 const RECIPIENT_HASH = dailyRecipientHash('person@example.com', SECRET);
+const CLAIMED_AT = '2026-07-20T12:00:00.000Z';
 const SIGNS = [
   'aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo',
   'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces',
@@ -65,6 +68,60 @@ function json(body: unknown, status = 200): Response {
     headers: { 'content-type': 'application/json' },
   });
 }
+
+function claimedChartSend(): Response {
+  return json({ outcome: 'claimed', claimed_at: CLAIMED_AT, retry_after_seconds: 0 });
+}
+
+describe('daily chart confirmation send claim', () => {
+  it('retries one thrown transport failure with the same idempotency token', async () => {
+    configure();
+    const fetcher = vi.fn()
+      .mockRejectedValueOnce(new TypeError('response lost'))
+      .mockResolvedValueOnce(claimedChartSend());
+
+    await expect(claimDailyChartConfirmationSend(
+      USER_ID,
+      CLAIM_TOKEN,
+      process.env,
+      fetcher,
+    )).resolves.toEqual({
+      outcome: 'claimed',
+      claimedAt: CLAIMED_AT,
+      retryAfterSeconds: 0,
+    });
+    expect(fetcher).toHaveBeenCalledTimes(2);
+    const bodies = fetcher.mock.calls.map(([, init]) => JSON.parse(String(init?.body)));
+    expect(bodies).toEqual([
+      { candidate_user_id: USER_ID, candidate_claim_token: CLAIM_TOKEN },
+      { candidate_user_id: USER_ID, candidate_claim_token: CLAIM_TOKEN },
+    ]);
+  });
+
+  it('does not retry a non-success response and rejects malformed success state', async () => {
+    configure();
+    const rejected = vi.fn().mockResolvedValue(json({}, 503));
+    await expect(claimDailyChartConfirmationSend(
+      USER_ID,
+      CLAIM_TOKEN,
+      process.env,
+      rejected,
+    )).rejects.toThrow(/claim failed \(503\)/u);
+    expect(rejected).toHaveBeenCalledOnce();
+
+    const malformed = vi.fn().mockResolvedValue(json({
+      outcome: 'capped_24h',
+      next_allowed_at: 'not-an-instant',
+      retry_after_seconds: 900,
+    }));
+    await expect(claimDailyChartConfirmationSend(
+      USER_ID,
+      CLAIM_TOKEN,
+      process.env,
+      malformed,
+    )).rejects.toThrow(/invalid state/u);
+  });
+});
 
 describe('daily sun confirmation', () => {
   it('keeps GET read-only and assigns exactly one sign segment after POST', async () => {
@@ -301,6 +358,7 @@ describe('daily chart preference', () => {
         return json([{ id: CHART_ID, payload: { name: 'My chart' } }]);
       }
       if (url.includes('/rest/v1/daily_chart_preferences?') && !init?.method) return json([]);
+      if (url.endsWith('/rest/v1/rpc/claim_daily_chart_confirmation_send')) return claimedChartSend();
       if (url.includes('/rest/v1/daily_chart_preferences?') && init?.method === 'POST') return json({}, 201);
       if (url === 'https://api.resend.com/emails' && init?.method === 'POST') return json({ id: 'email_1' }, 200);
       throw new Error(`Unexpected request: ${init?.method ?? 'GET'} ${url}`);
@@ -334,6 +392,23 @@ describe('daily chart preference', () => {
     expect(emailBody.text).toContain('personal daily brief for My chart');
     expect(emailBody.text).toContain('/api/email/confirm?token=');
     expect(emailBody).not.toHaveProperty('html');
+    const claimIndex = fetcher.mock.calls.findIndex(([url]) => (
+      String(url).endsWith('/rest/v1/rpc/claim_daily_chart_confirmation_send')
+    ));
+    const preferenceIndex = fetcher.mock.calls.findIndex(([url, init]) => (
+      String(url).includes('/rest/v1/daily_chart_preferences?') && init?.method === 'POST'
+    ));
+    const providerIndex = fetcher.mock.calls.findIndex(([url]) => (
+      String(url) === 'https://api.resend.com/emails'
+    ));
+    expect(claimIndex).toBeGreaterThan(-1);
+    expect(claimIndex).toBeLessThan(preferenceIndex);
+    expect(preferenceIndex).toBeLessThan(providerIndex);
+    const claimBody = JSON.parse(String(fetcher.mock.calls[claimIndex]?.[1]?.body));
+    expect(claimBody.candidate_user_id).toBe(USER_ID);
+    expect(claimBody.candidate_claim_token).toMatch(
+      /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/iu,
+    );
   });
 
   it('does not mislabel a pending request after the account email changes', async () => {
@@ -454,6 +529,7 @@ describe('daily chart preference', () => {
       if (url.includes('/rest/v1/charts?') && !init?.method) {
         return json([{ id: CHART_ID, payload: { name: 'My chart' } }]);
       }
+      if (url.endsWith('/rest/v1/rpc/claim_daily_chart_confirmation_send')) return claimedChartSend();
       if (url.includes('/rest/v1/daily_chart_preferences?') && init?.method === 'PATCH') {
         return json([{}]);
       }
@@ -476,7 +552,7 @@ describe('daily chart preference', () => {
       String(url).includes('/daily_chart_preferences?') && init?.method === 'PATCH'
     ));
     expect(String(replacement?.[0])).toContain(`confirmation_token_hash=eq.${previousTokenHash}`);
-    expect(String(replacement?.[0])).toContain('updated_at=lte.');
+    expect(String(replacement?.[0])).not.toContain('updated_at=');
     const replacementBody = JSON.parse(String(replacement?.[1]?.body));
     expect(replacementBody).toMatchObject({
       chart_id: CHART_ID,
@@ -519,6 +595,7 @@ describe('daily chart preference', () => {
       if (url.includes('/rest/v1/charts?') && !init?.method) {
         return json([{ id: CHART_ID, payload: { name: 'My chart' } }]);
       }
+      if (url.endsWith('/rest/v1/rpc/claim_daily_chart_confirmation_send')) return claimedChartSend();
       if (url.includes('/rest/v1/daily_chart_preferences?') && init?.method === 'PATCH') {
         return json([]);
       }
@@ -552,8 +629,12 @@ describe('daily chart preference', () => {
       if (url.includes('/rest/v1/charts?') && !init?.method) {
         return json([{ id: CHART_ID, payload: { name: 'My chart' } }]);
       }
-      if (url.includes('/rest/v1/daily_chart_preferences?') && init?.method === 'PATCH') {
-        return json([]);
+      if (url.endsWith('/rest/v1/rpc/claim_daily_chart_confirmation_send')) {
+        return json({
+          outcome: 'capped_60s',
+          next_allowed_at: '2026-07-20T12:00:37.000Z',
+          retry_after_seconds: 37,
+        });
       }
       throw new Error(`Unexpected request: ${init?.method ?? 'GET'} ${url}`);
     });
@@ -563,8 +644,96 @@ describe('daily chart preference', () => {
       method: 'POST', headers: SITE_HEADERS, body: { action: 'resend' },
     }, response);
     expect(response.statusCode).toBe(429);
-    expect(JSON.parse(response.body)).toEqual({ error: 'rate_limited' });
-    expect(response.headers.get('Retry-After')).toBe('60');
+    expect(JSON.parse(response.body)).toEqual({
+      error: 'rate_limited',
+      retryAfterSeconds: 37,
+    });
+    expect(response.headers.get('Retry-After')).toBe('37');
+    expect(fetcher.mock.calls.some(([url, init]) => (
+      String(url).includes('/daily_chart_preferences?') && init?.method === 'PATCH'
+    ))).toBe(false);
+    expect(fetcher.mock.calls.some(([url]) => String(url) === 'https://api.resend.com/emails')).toBe(false);
+  });
+
+  it('applies the exact 24-hour account ceiling after an Auth email change', async () => {
+    configure();
+    const fetcher = vi.fn(async (input: string | URL | Request, init?: RequestInit) => {
+      const url = String(input);
+      if (url.endsWith('/auth/v1/user')) {
+        return json({ id: USER_ID, email: 'new-address@example.com' });
+      }
+      if (url.includes('/rest/v1/charts?')) {
+        return json([{ id: CHART_ID, payload: { name: 'My chart' } }]);
+      }
+      if (url.includes('/rest/v1/daily_chart_preferences?') && !init?.method) {
+        return json([{
+          chart_id: CHART_ID,
+          recipient_hash: RECIPIENT_HASH,
+          confirmation_token_hash: null,
+          timezone: 'UTC',
+          confirmed_at: '2026-07-01T00:00:00.000Z',
+        }]);
+      }
+      if (url.endsWith('/rest/v1/rpc/claim_daily_chart_confirmation_send')) {
+        return json({
+          outcome: 'capped_24h',
+          next_allowed_at: '2026-07-21T06:00:00.000Z',
+          retry_after_seconds: 64_800,
+        });
+      }
+      throw new Error(`Unexpected request: ${init?.method ?? 'GET'} ${url}`);
+    });
+    vi.stubGlobal('fetch', fetcher);
+    const response = responseRecorder();
+
+    await chartPreferenceHandler({
+      method: 'POST', headers: SITE_HEADERS,
+      body: { chartId: CHART_ID, timezone: 'UTC' },
+    }, response);
+
+    expect(response.statusCode).toBe(429);
+    expect(response.headers.get('Retry-After')).toBe('64800');
+    expect(JSON.parse(response.body)).toEqual({
+      error: 'rate_limited',
+      retryAfterSeconds: 64_800,
+    });
+    const claim = fetcher.mock.calls.find(([url]) => (
+      String(url).endsWith('/rest/v1/rpc/claim_daily_chart_confirmation_send')
+    ));
+    expect(JSON.parse(String(claim?.[1]?.body))).toMatchObject({ candidate_user_id: USER_ID });
+    expect(fetcher.mock.calls.some(([url, init]) => (
+      String(url).includes('/daily_chart_preferences?') && init?.method === 'PATCH'
+    ))).toBe(false);
+    expect(fetcher.mock.calls.some(([url]) => String(url) === 'https://api.resend.com/emails')).toBe(false);
+  });
+
+  it('fails closed when the durable claim response is malformed', async () => {
+    configure();
+    const fetcher = vi.fn(async (input: string | URL | Request, init?: RequestInit) => {
+      const url = String(input);
+      if (url.endsWith('/auth/v1/user')) return json({ id: USER_ID, email: 'person@example.com' });
+      if (url.includes('/rest/v1/charts?')) {
+        return json([{ id: CHART_ID, payload: { name: 'My chart' } }]);
+      }
+      if (url.includes('/rest/v1/daily_chart_preferences?') && !init?.method) return json([]);
+      if (url.endsWith('/rest/v1/rpc/claim_daily_chart_confirmation_send')) {
+        return json({ outcome: 'claimed', retry_after_seconds: 0 });
+      }
+      throw new Error(`Unexpected request: ${init?.method ?? 'GET'} ${url}`);
+    });
+    vi.stubGlobal('fetch', fetcher);
+    const response = responseRecorder();
+
+    await chartPreferenceHandler({
+      method: 'POST', headers: SITE_HEADERS,
+      body: { chartId: CHART_ID, timezone: 'UTC' },
+    }, response);
+
+    expect(response.statusCode).toBe(502);
+    expect(JSON.parse(response.body)).toEqual({ error: 'unavailable' });
+    expect(fetcher.mock.calls.some(([url, init]) => (
+      String(url).includes('/daily_chart_preferences?') && init?.method === 'POST'
+    ))).toBe(false);
     expect(fetcher.mock.calls.some(([url]) => String(url) === 'https://api.resend.com/emails')).toBe(false);
   });
 
@@ -587,6 +756,7 @@ describe('daily chart preference', () => {
       if (url.includes('/rest/v1/charts?') && !init?.method) {
         return json([{ id: CHART_ID, payload: { name: 'My chart' } }]);
       }
+      if (url.endsWith('/rest/v1/rpc/claim_daily_chart_confirmation_send')) return claimedChartSend();
       if (url.includes('/rest/v1/daily_chart_preferences?') && init?.method === 'PATCH') {
         patchCount += 1;
         return json([{}]);
@@ -616,6 +786,9 @@ describe('daily chart preference', () => {
       timezone: 'UTC',
     });
     expect(String(patches[1]?.[0])).toContain(`confirmation_token_hash=eq.${replacementBody.confirmation_token_hash}`);
+    expect(fetcher.mock.calls.filter(([url]) => (
+      String(url).endsWith('/rest/v1/rpc/claim_daily_chart_confirmation_send')
+    ))).toHaveLength(1);
   });
 
   it('applies chart and timezone changes immediately after chart-tier consent is confirmed', async () => {
@@ -635,6 +808,7 @@ describe('daily chart preference', () => {
           confirmed_at: '2026-07-01T00:00:00.000Z',
         }]);
       }
+      if (url.endsWith('/rest/v1/rpc/claim_daily_chart_confirmation_send')) return claimedChartSend();
       if (url.includes('/rest/v1/daily_chart_preferences?') && init?.method === 'PATCH') {
         return json([{}]);
       }
@@ -662,6 +836,9 @@ describe('daily chart preference', () => {
       chart_id: CHART_ID,
       timezone: 'Asia/Bangkok',
     });
+    expect(fetcher.mock.calls.some(([url]) => (
+      String(url).endsWith('/rest/v1/rpc/claim_daily_chart_confirmation_send')
+    ))).toBe(false);
     expect(fetcher.mock.calls.some(([url]) => String(url) === 'https://api.resend.com/emails')).toBe(false);
   });
 
@@ -682,6 +859,7 @@ describe('daily chart preference', () => {
           confirmed_at: '2026-07-01T00:00:00.000Z',
         }]);
       }
+      if (url.endsWith('/rest/v1/rpc/claim_daily_chart_confirmation_send')) return claimedChartSend();
       if (url.includes('/rest/v1/daily_chart_preferences?') && init?.method === 'PATCH') {
         return json([]);
       }
@@ -697,6 +875,9 @@ describe('daily chart preference', () => {
     expect(JSON.parse(response.body)).toEqual({ error: 'preference_changed' });
     expect(fetcher.mock.calls.some(([url, init]) => (
       String(url).includes('/daily_chart_preferences?') && init?.method === 'POST'
+    ))).toBe(false);
+    expect(fetcher.mock.calls.some(([url]) => (
+      String(url).endsWith('/rest/v1/rpc/claim_daily_chart_confirmation_send')
     ))).toBe(false);
   });
 
@@ -720,6 +901,7 @@ describe('daily chart preference', () => {
           confirmed_at: '2026-07-01T00:00:00.000Z',
         }]);
       }
+      if (url.endsWith('/rest/v1/rpc/claim_daily_chart_confirmation_send')) return claimedChartSend();
       if (url.includes('/rest/v1/daily_chart_preferences?') && init?.method === 'PATCH') {
         return json([{}]);
       }
@@ -760,6 +942,10 @@ describe('daily chart preference', () => {
     expect(JSON.parse(String(confirmationEmail?.[1]?.body))).toMatchObject({
       to: ['new-address@example.com'],
     });
+    const claim = fetcher.mock.calls.find(([url]) => (
+      String(url).endsWith('/rest/v1/rpc/claim_daily_chart_confirmation_send')
+    ));
+    expect(JSON.parse(String(claim?.[1]?.body))).toMatchObject({ candidate_user_id: USER_ID });
   });
 
   it('does not recreate consent when Stop wins a changed-recipient confirmation race', async () => {
@@ -781,6 +967,7 @@ describe('daily chart preference', () => {
           confirmed_at: '2026-07-01T00:00:00.000Z',
         }]);
       }
+      if (url.endsWith('/rest/v1/rpc/claim_daily_chart_confirmation_send')) return claimedChartSend();
       if (url.includes('/rest/v1/daily_chart_preferences?') && init?.method === 'PATCH') {
         return json([]);
       }

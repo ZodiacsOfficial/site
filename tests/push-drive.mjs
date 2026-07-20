@@ -1,6 +1,7 @@
 /**
  * Drive the contextual push affordance without granting notification
- * permission or registering a service worker.
+ * permission. The app-shell worker still registers once on page load; the
+ * opt-in must not trigger an additional registration before permission.
  *
  *   npm run build
  *   node tests/push-drive.mjs
@@ -60,7 +61,7 @@ async function stubPush(page, { returning = false } = {}) {
         getRegistration: async () => null,
         register: async () => {
           window.__pushDrive.registrationCalls += 1;
-          throw new Error('The drive must not register before an explicit accept.');
+          throw new Error('The drive stubs the expected app-shell registration.');
         },
       },
     });
@@ -82,8 +83,8 @@ try {
   check('first /today/ visit does not show the push affordance',
     await first.locator('[data-push-optin]').count() === 0);
   const firstCalls = await first.evaluate(() => window.__pushDrive);
-  check('first visit makes no permission or registration call',
-    firstCalls.permissionCalls === 0 && firstCalls.registrationCalls === 0,
+  check('first visit makes no permission call and only registers the app shell',
+    firstCalls.permissionCalls === 0 && firstCalls.registrationCalls === 1,
     JSON.stringify(firstCalls));
   await first.close();
 
@@ -91,18 +92,20 @@ try {
   await stubPush(returning, { returning: true });
   await returning.goto(`${BASE}/today/`, { waitUntil: 'networkidle' });
   await returning.waitForSelector('[data-push-optin][data-push-context="today-return"]');
-  check('returning visit shows only the contextual affordance',
-    await returning.getByText('Get a daily note?').isVisible());
+  check('returning visit shows the event-only sky-alert affordance',
+    await returning.getByText('Sky alerts, when they’re earned?').isVisible()
+      && await returning.getByText('Most days, nothing.', { exact: false }).isVisible()
+      && await returning.getByText('Never more than one a day, or two a week.').isVisible());
   const beforeAccept = await returning.evaluate(() => window.__pushDrive);
   check('native permission is not requested on page load',
-    beforeAccept.permissionCalls === 0 && beforeAccept.registrationCalls === 0,
+    beforeAccept.permissionCalls === 0 && beforeAccept.registrationCalls === 1,
     JSON.stringify(beforeAccept));
-  const accept = returning.getByRole('button', { name: 'Turn on daily notes' });
+  const accept = returning.getByRole('button', { name: 'Turn on sky alerts' });
   await accept.click();
-  await returning.getByText('Notifications are blocked in this browser.').waitFor();
+  await returning.getByText('Notifications are blocked in this browser, so sky alerts can’t reach you.', { exact: false }).waitFor();
   const afterAccept = await returning.evaluate(() => window.__pushDrive);
   check('permission is requested only after the explicit accept',
-    afterAccept.permissionCalls === 1 && afterAccept.registrationCalls === 0,
+    afterAccept.permissionCalls === 1 && afterAccept.registrationCalls === 1,
     JSON.stringify(afterAccept));
   await returning.close();
 
@@ -114,9 +117,11 @@ try {
   await ios.goto(`${BASE}/today/`, { waitUntil: 'networkidle' });
   await ios.waitForSelector('[data-push-optin]');
   check('iOS explains Home Screen installation before push',
-    await ios.getByText('notifications work only after you add this site to your Home Screen', { exact: false }).isVisible());
+    await ios.getByText('alerts work only after you add Zodiacs to your Home Screen', { exact: false }).isVisible());
   const iosCalls = await ios.evaluate(() => window.__pushDrive);
-  check('iOS install caveat makes no permission request', iosCalls.permissionCalls === 0, JSON.stringify(iosCalls));
+  check('iOS install caveat makes no permission request or extra registration',
+    iosCalls.permissionCalls === 0 && iosCalls.registrationCalls === 1,
+    JSON.stringify(iosCalls));
   await ios.close();
 
   await browser.close();
