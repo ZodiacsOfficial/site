@@ -2,6 +2,7 @@ import { createHash } from 'node:crypto';
 import { describe, expect, it } from 'vitest';
 import {
   canonicalSha256,
+  downloadOperationReceipt,
   latestConsecutiveEvidence,
   operationReceiptFailures,
   repositoryEvidenceFailures,
@@ -90,6 +91,19 @@ function repositoryFixture() {
 }
 
 describe('Phase 1 operation evidence', () => {
+  it('requests receipt artifacts with GitHub\'s supported API media type', async () => {
+    const calls = [];
+    await expect(downloadOperationReceipt('ZodiacsOfficial/site', { id: 123 }, async (...args) => {
+      calls.push(args);
+      throw new Error('request captured');
+    })).rejects.toThrow('request captured');
+    expect(calls).toEqual([[
+      'ZodiacsOfficial/site',
+      '/actions/artifacts/123/zip',
+      'application/vnd.github+json',
+    ]]);
+  });
+
   it('requires all generation, live, discovery, and receipt steps', () => {
     expect(REQUIRED_STEPS).toEqual(expect.arrayContaining([
       'Resolve explicit UTC target',
