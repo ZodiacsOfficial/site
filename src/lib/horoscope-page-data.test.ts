@@ -39,6 +39,12 @@ function shingleSimilarity(left: string, right: string): number {
   return union === 0 ? 1 : intersection / union;
 }
 
+function directEvidence(surface: 'today' | 'tomorrow') {
+  const reading = program.signs.find(({ sign }) => sign === 'aries')?.readings[surface];
+  const references = new Set(reading?.passages.flatMap((passage) => passage.evidenceRefs) ?? []);
+  return program.evidence.filter((receipt) => references.has(receipt.id));
+}
+
 describe('horoscope page sky strip', () => {
   it('does not inject a generic page-layer action after the evidence-backed reading', () => {
     for (const { sign } of program.signs) {
@@ -67,19 +73,27 @@ describe('horoscope page sky strip', () => {
 
   it('pairs the current Moon position with the exact daily event', () => {
     const reading = pageReadingFromProgram(program, 'aries', 'today');
+    const receipts = directEvidence('today');
+    const moon = receipts.find((receipt) => receipt.kind === 'body-position' && receipt.body === 'Moon');
+    const event = receipts.find((receipt) => receipt.kind === 'sky-event');
 
     expect(reading.skyStrip.markers[0]).toMatchObject({ label: 'Moon' });
-    expect(reading.skyStrip.markers[0].value).toContain('Waxing Crescent');
+    expect(moon?.moonPhase).toBeTruthy();
+    expect(reading.skyStrip.markers[0].value).toContain(moon?.moonPhase);
     expect(reading.skyStrip.markers[0].value).not.toMatch(/^Moon\b/);
     expect(reading.skyStrip.markers[1]).toMatchObject({ label: 'Exact' });
-    expect(reading.skyStrip.markers[1].value).toMatch(/\bMars\b.*\bSaturn\b/u);
+    expect(event).toBeTruthy();
+    expect(reading.skyStrip.markers[1]).toMatchObject({ value: event?.label, datetime: event?.at });
   });
 
   it('uses tomorrow’s own Moon phase without repeating the marker label', () => {
     const reading = pageReadingFromProgram(program, 'aries', 'tomorrow');
+    const moon = directEvidence('tomorrow')
+      .find((receipt) => receipt.kind === 'body-position' && receipt.body === 'Moon');
 
     expect(reading.skyStrip.markers[0]).toMatchObject({ label: 'Moon' });
-    expect(reading.skyStrip.markers[0].value).toContain('First Quarter');
+    expect(moon?.moonPhase).toBeTruthy();
+    expect(reading.skyStrip.markers[0].value).toContain(moon?.moonPhase);
     expect(reading.skyStrip.markers[0].value).not.toMatch(/^Moon\b/);
   });
 

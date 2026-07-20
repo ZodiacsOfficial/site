@@ -6,11 +6,11 @@
     "script": "tests/phase1-acceptance-drive.mjs",
     "contractVersion": 3
   },
-  "capturedAt": "2026-07-20T04:42:17.460Z",
+  "capturedAt": "2026-07-20T04:47:02.782Z",
   "browser": "Chromium 150.0.7871.125",
   "dailyDate": "2026-07-20",
   "publicationCanonicalSha256": "f39b950c6366974b78e5823adb2eb23a52c474addfcba9c9466e945b22bf5460",
-  "templateSourceSha256": "58bd6aefa32d0396382da9d3928162c3109381dd995e1ada55b6556b0e377e8a",
+  "templateSourceSha256": "9d7d5710753652d54c04c47ad6e0445a4e158bdb5c4817d91f1e9c6766c81754",
   "renderPayloadSha256": {
     "daily": "81e21a81dacf365261295c43758813a831816d1c5c9797a2f3cb2273addc8cb5",
     "dailyPublication": "361b64eef149c916ac29ae247e8c675c80dbee924f60fccd5f7e404360c3e5c5",
@@ -19,8 +19,8 @@
   },
   "buildReceipt": {
     "schema": "zodiacs.phase1-build-receipt.v1",
-    "builtAt": "2026-07-20T04:41:28.021Z",
-    "templateSourceSha256": "58bd6aefa32d0396382da9d3928162c3109381dd995e1ada55b6556b0e377e8a",
+    "builtAt": "2026-07-20T04:46:50.040Z",
+    "templateSourceSha256": "9d7d5710753652d54c04c47ad6e0445a4e158bdb5c4817d91f1e9c6766c81754",
     "dailyDate": "2026-07-20",
     "publicationCanonicalSha256": "f39b950c6366974b78e5823adb2eb23a52c474addfcba9c9466e945b22bf5460",
     "renderPayloadSha256": {
@@ -88,7 +88,7 @@
         "file": "horoscopes-hub-360.png",
         "width": 360,
         "height": 5287,
-        "sha256": "fd5b549c2957a3f48d8bfe8973aebb07fb958383036b0777bf89554e289c43fb"
+        "sha256": "7f01a078d7f68ad8d8ab3a932cdb8c37af9617c11208698103909b89bc08231e"
       },
       "layout": {
         "clientWidth": 360,
@@ -134,7 +134,7 @@
         "file": "daily-360.png",
         "width": 360,
         "height": 3917,
-        "sha256": "d9c7b7225003e06e7a980916b30dfe35cbeeda2f16f21faf3dbab56d89a7c0e2"
+        "sha256": "1cc8fd98a964afb301fe2a9182d97d6602f8da229d70ee98651ad801154e0759"
       },
       "layout": {
         "clientWidth": 360,
@@ -226,7 +226,7 @@
         "file": "weekly-360.png",
         "width": 360,
         "height": 4543,
-        "sha256": "661e4a76e46eb15cb5bff21eba00fadcf82a2c803faf3d1815ac8a2ef772248c"
+        "sha256": "e8ce0122c469bba166fdd8777b5cecad56604c7ca4e31fb4b05086da2f6a28f6"
       },
       "layout": {
         "clientWidth": 360,
@@ -318,7 +318,7 @@
         "file": "love-360.png",
         "width": 360,
         "height": 3339,
-        "sha256": "2829f2ef993cbe4b53f5a262e93d2848bb8dcb3ae7a80b2c10c9edefa4ed6e8d"
+        "sha256": "9ee9ad690cd0f0f51679d317e9f0e8ef2244fe2d3688903501efd696c3e51734"
       },
       "layout": {
         "clientWidth": 360,
