@@ -1,5 +1,5 @@
 /*
- * Computes every solar and lunar eclipse over a three-year window into
+ * Computes every solar and lunar eclipse over the complete 2026–2030 window into
  * committed JSON the /eclipses/ page renders as receipts.
  *
  *   npm run data:eclipses   →  src/data/eclipses.json
@@ -28,11 +28,21 @@ import {
 } from 'astronomy-engine';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-const out = resolve(root, 'src/data/eclipses.json');
+const outputIndex = process.argv.indexOf('--output');
+const requestedOutput = outputIndex >= 0 ? process.argv[outputIndex + 1] : null;
+if (outputIndex >= 0 && !requestedOutput) throw new Error('--output requires a file path');
+const generatedAtIndex = process.argv.indexOf('--generated-at');
+const requestedGeneratedAt = generatedAtIndex >= 0 ? process.argv[generatedAtIndex + 1] : null;
+if (generatedAtIndex >= 0 && !requestedGeneratedAt) throw new Error('--generated-at requires an ISO instant');
+const generatedAt = requestedGeneratedAt ?? new Date().toISOString();
+if (new Date(generatedAt).toISOString() !== generatedAt) {
+  throw new Error('--generated-at must be a canonical ISO instant');
+}
+const out = requestedOutput ? resolve(process.cwd(), requestedOutput) : resolve(root, 'src/data/eclipses.json');
 await mkdir(dirname(out), { recursive: true });
 
 const FROM = new Date('2026-01-01T00:00:00Z');
-const TO = new Date('2029-01-01T00:00:00Z');
+const TO = new Date('2031-01-01T00:00:00Z');
 
 // Mirrors src/lib/signs.ts SIGN_SLUGS order (scripts can't import the TS
 // module; build-transits.mjs sets the precedent).
@@ -112,9 +122,9 @@ for (const e of eclipses) {
     problems.push(`missing obscuration for ${e.kind} solar at ${e.peak}`);
   }
 }
-// 2026–2028 should hold roughly 4–7 eclipses/year including penumbral.
-if (eclipses.length < 10 || eclipses.length > 24) {
-  problems.push(`implausible count ${eclipses.length} for a 3-year window`);
+// 2026–2030 should hold roughly 4–7 eclipses/year including penumbral.
+if (eclipses.length < 18 || eclipses.length > 36) {
+  problems.push(`implausible count ${eclipses.length} for a 5-year window`);
 }
 // Hard anchor: the total solar eclipse of 2026-08-12 (peaks over the
 // North Atlantic; totality crosses Iceland and Spain).
@@ -127,11 +137,11 @@ if (problems.length > 0) {
 }
 
 const payload = {
-  generatedAt: new Date().toISOString(),
+  generatedAt,
   from: FROM.toISOString(),
   to: TO.toISOString(),
   eclipses,
 };
 await writeFile(out, JSON.stringify(payload, null, 2) + '\n');
 const solarCount = eclipses.filter((e) => e.type === 'solar').length;
-console.log(`Done — ${solarCount} solar + ${eclipses.length - solarCount} lunar eclipses → src/data/eclipses.json`);
+console.log(`Done — ${solarCount} solar + ${eclipses.length - solarCount} lunar eclipses → ${out}`);

@@ -15,6 +15,9 @@ import { HOROSCOPE_OG_SURFACES, OG_EN } from '../src/strings/seo.en.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const out = resolve(root, 'public/assets/og/v2');
+const eventsPublication = JSON.parse(
+  await readFile(resolve(root, 'src/data/events-publication.json'), 'utf8'),
+);
 const signSlugs = [
   'aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo',
   'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces',
@@ -30,6 +33,8 @@ const expected = [
     horoscopeCardPath(slug, surface)
   ))),
   ...OG_EN.tools.map((tool) => `tool/${tool.key}.png`),
+  ...(eventsPublication.hub.indexEligible ? ['events/index.png'] : []),
+  ...eventsPublication.pages.map((event) => `events/${event.id}.png`),
   'registry.png',
   'thesis.png',
   'disclosure.png',

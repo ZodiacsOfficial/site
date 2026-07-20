@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-07-07T11:37:35.984Z",
+  "generatedAt": "2026-07-20T03:24:25.761Z",
   "from": "2026-01-01T00:00:00.000Z",
-  "to": "2029-01-01T00:00:00.000Z",
+  "to": "2031-01-01T00:00:00.000Z",
   "eclipses": [
     {
       "type": "solar",
@@ -130,6 +130,94 @@
       "degree": 10.6,
       "obscuration": 1,
       "totalMinutes": 72
+    },
+    {
+      "type": "solar",
+      "kind": "partial",
+      "peak": "2029-01-14T17:12:28.816Z",
+      "sign": "capricorn",
+      "lon": 294.83,
+      "degree": 24.8
+    },
+    {
+      "type": "solar",
+      "kind": "partial",
+      "peak": "2029-06-12T04:04:55.151Z",
+      "sign": "gemini",
+      "lon": 81.49,
+      "degree": 21.5
+    },
+    {
+      "type": "lunar",
+      "kind": "total",
+      "peak": "2029-06-26T03:22:06.538Z",
+      "sign": "capricorn",
+      "lon": 274.83,
+      "degree": 4.8,
+      "obscuration": 1,
+      "totalMinutes": 103
+    },
+    {
+      "type": "solar",
+      "kind": "partial",
+      "peak": "2029-07-11T15:36:03.870Z",
+      "sign": "cancer",
+      "lon": 109.62,
+      "degree": 19.6
+    },
+    {
+      "type": "solar",
+      "kind": "partial",
+      "peak": "2029-12-05T15:02:39.906Z",
+      "sign": "sagittarius",
+      "lon": 253.77,
+      "degree": 13.8
+    },
+    {
+      "type": "lunar",
+      "kind": "total",
+      "peak": "2029-12-20T22:41:54.610Z",
+      "sign": "gemini",
+      "lon": 89.31,
+      "degree": 29.3,
+      "obscuration": 1,
+      "totalMinutes": 55
+    },
+    {
+      "type": "solar",
+      "kind": "annular",
+      "peak": "2030-06-01T06:27:58.051Z",
+      "sign": "gemini",
+      "lon": 70.84,
+      "degree": 10.8,
+      "obscuration": 0.892
+    },
+    {
+      "type": "lunar",
+      "kind": "partial",
+      "peak": "2030-06-15T18:33:14.732Z",
+      "sign": "sagittarius",
+      "lon": 264.64,
+      "degree": 24.6,
+      "obscuration": 0.471
+    },
+    {
+      "type": "solar",
+      "kind": "total",
+      "peak": "2030-11-25T06:50:19.626Z",
+      "sign": "sagittarius",
+      "lon": 243.04,
+      "degree": 3,
+      "obscuration": 1
+    },
+    {
+      "type": "lunar",
+      "kind": "penumbral",
+      "peak": "2030-12-09T22:27:32.805Z",
+      "sign": "gemini",
+      "lon": 77.8,
+      "degree": 17.8,
+      "obscuration": 0
     }
   ]
 }

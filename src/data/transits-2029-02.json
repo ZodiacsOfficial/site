@@ -1,0 +1,211 @@
+{
+  "month": "2029-02",
+  "ingresses": [
+    {
+      "planet": "Venus",
+      "at": "2029-02-01T01:03:25.532Z",
+      "sign": "aquarius",
+      "retrograde": false
+    },
+    {
+      "planet": "Mercury",
+      "at": "2029-02-13T17:51:49.001Z",
+      "sign": "aquarius",
+      "retrograde": false
+    },
+    {
+      "planet": "Sun",
+      "at": "2029-02-18T09:07:49.371Z",
+      "sign": "pisces",
+      "retrograde": false
+    },
+    {
+      "planet": "Venus",
+      "at": "2029-02-25T00:03:24.169Z",
+      "sign": "pisces",
+      "retrograde": false
+    }
+  ],
+  "lunations": [
+    {
+      "type": "new",
+      "at": "2029-02-13T10:31:23.385Z",
+      "sign": "aquarius",
+      "degree": 25.008216934827715
+    },
+    {
+      "type": "full",
+      "at": "2029-02-28T17:10:06.416Z",
+      "sign": "virgo",
+      "degree": 10.399926585473054
+    }
+  ],
+  "stations": [
+    {
+      "planet": "Jupiter",
+      "at": "2029-02-10T13:08:37.564Z",
+      "type": "retrograde",
+      "sign": "libra",
+      "degree": 27.423819949812696
+    },
+    {
+      "planet": "Mars",
+      "at": "2029-02-14T08:13:38.590Z",
+      "type": "retrograde",
+      "sign": "libra",
+      "degree": 13.922215556614447
+    },
+    {
+      "planet": "Uranus",
+      "at": "2029-02-16T10:49:47.758Z",
+      "type": "direct",
+      "sign": "gemini",
+      "degree": 10.205322196656311
+    }
+  ],
+  "aspects": [
+    {
+      "a": "Venus",
+      "b": "Saturn",
+      "type": "square",
+      "orb": 0,
+      "at": "2029-02-05T06:16:03.719Z",
+      "aSign": "aquarius",
+      "aDegree": 5.284609298769624,
+      "bSign": "taurus",
+      "bDegree": 5.284608848752953
+    },
+    {
+      "a": "Venus",
+      "b": "Neptune",
+      "type": "sextile",
+      "orb": 0,
+      "at": "2029-02-06T11:58:47.406Z",
+      "aSign": "aquarius",
+      "aDegree": 6.835885082145069,
+      "bSign": "aries",
+      "bDegree": 6.835884001381999
+    },
+    {
+      "a": "Venus",
+      "b": "Pluto",
+      "type": "conjunction",
+      "orb": 0,
+      "at": "2029-02-08T00:42:44.784Z",
+      "aSign": "aquarius",
+      "aDegree": 8.753614569862748,
+      "bSign": "aquarius",
+      "bDegree": 8.75361379323408
+    },
+    {
+      "a": "Venus",
+      "b": "Uranus",
+      "type": "trine",
+      "orb": 0,
+      "at": "2029-02-09T04:57:52.008Z",
+      "aSign": "aquarius",
+      "aDegree": 10.228501040901392,
+      "bSign": "gemini",
+      "bDegree": 10.228500847451187
+    },
+    {
+      "a": "Mercury",
+      "b": "Jupiter",
+      "type": "square",
+      "orb": 0,
+      "at": "2029-02-11T11:57:54.425Z",
+      "aSign": "capricorn",
+      "aDegree": 27.422375707040374,
+      "bSign": "libra",
+      "bDegree": 27.42237520012452
+    },
+    {
+      "a": "Sun",
+      "b": "Jupiter",
+      "type": "trine",
+      "orb": 0,
+      "at": "2029-02-15T18:50:42.525Z",
+      "aSign": "aquarius",
+      "aDegree": 27.379981100041505,
+      "bSign": "libra",
+      "bDegree": 27.37998066674254
+    },
+    {
+      "a": "Mercury",
+      "b": "Saturn",
+      "type": "square",
+      "orb": 0,
+      "at": "2029-02-18T15:49:08.180Z",
+      "aSign": "aquarius",
+      "aDegree": 6.166034004932385,
+      "bSign": "taurus",
+      "bDegree": 6.1660338365733764
+    },
+    {
+      "a": "Mercury",
+      "b": "Neptune",
+      "type": "sextile",
+      "orb": 0,
+      "at": "2029-02-19T10:53:02.134Z",
+      "aSign": "aquarius",
+      "aDegree": 7.22029131932004,
+      "bSign": "aries",
+      "bDegree": 7.220290523731251
+    },
+    {
+      "a": "Mercury",
+      "b": "Pluto",
+      "type": "conjunction",
+      "orb": 0,
+      "at": "2029-02-20T20:58:37.354Z",
+      "aSign": "aquarius",
+      "aDegree": 9.141167117496366,
+      "bSign": "aquarius",
+      "bDegree": 9.141166281403343
+    },
+    {
+      "a": "Mercury",
+      "b": "Uranus",
+      "type": "trine",
+      "orb": 0,
+      "at": "2029-02-21T15:44:56.208Z",
+      "aSign": "aquarius",
+      "aDegree": 10.217550697447678,
+      "bSign": "gemini",
+      "bDegree": 10.217549800138386
+    },
+    {
+      "a": "Venus",
+      "b": "Jupiter",
+      "type": "trine",
+      "orb": 0,
+      "at": "2029-02-22T18:04:40.809Z",
+      "aSign": "aquarius",
+      "aDegree": 27.187557692048813,
+      "bSign": "libra",
+      "bDegree": 27.187556915639334
+    },
+    {
+      "a": "Sun",
+      "b": "Saturn",
+      "type": "sextile",
+      "orb": 0,
+      "at": "2029-02-25T00:10:57.036Z",
+      "aSign": "pisces",
+      "aDegree": 6.675284330185605,
+      "bSign": "taurus",
+      "bDegree": 6.675284162026401
+    },
+    {
+      "a": "Sun",
+      "b": "Uranus",
+      "type": "square",
+      "orb": 0,
+      "at": "2029-02-28T14:05:37.470Z",
+      "aSign": "pisces",
+      "aDegree": 10.271335057798751,
+      "bSign": "gemini",
+      "bDegree": 10.271334150496727
+    }
+  ]
+}

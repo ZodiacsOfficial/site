@@ -10,7 +10,7 @@ import '../../styles/events.css';
 import EventMark from '../../components/events/EventMark.astro';
 import EvidenceDisclosure from '../../components/EvidenceDisclosure.astro';
 import { eventsCatalog } from '../../lib/events/catalog';
-import { EVENTS_INDEX_ELIGIBLE } from '../../lib/events/types';
+import { eventsPublication } from '../../lib/events/publication';
 import { FAMILY_LABEL, eventDay, timelineLine } from '../../lib/events/format';
 import { formatDate, formatShortDate } from '../../lib/i18n/dates';
 import { signBySlug } from '../../lib/signs';
@@ -18,19 +18,16 @@ import type { CatalogEvent } from '../../lib/events/types';
 
 const catalog = eventsCatalog();
 const buildNow = new Date();
-const rangeFrom = new Date(catalog.range.from).getTime();
-const rangeTo = new Date(catalog.range.to).getTime();
+const rangeFrom = new Date(eventsPublication.window.from).getTime();
+const rangeTo = new Date(eventsPublication.window.to).getTime();
+const publicTimelineIds = new Set(eventsPublication.timeline.map((event) => event.id));
 
 const anchorTime = (event: CatalogEvent) =>
   new Date(event.facts.at ?? event.facts.start ?? 0).getTime();
 
 /** Timeline rows: dated moments inside the catalog window. Cycles are
  * represented by their stations; everything else appears directly. */
-const timeline = catalog.events.filter((event) => {
-  if (event.facts.family === 'retrograde') return false;
-  const at = anchorTime(event);
-  return at >= rangeFrom && at < rangeTo;
-});
+const timeline = catalog.events.filter((event) => publicTimelineIds.has(event.facts.id));
 
 const upcoming = timeline.filter((event) => anchorTime(event) >= buildNow.getTime());
 const nextUp = upcoming.slice(0, 3);
@@ -38,6 +35,8 @@ const nextEvent = upcoming[0];
 
 const activeCycles = catalog.events.filter((event) =>
   event.facts.family === 'retrograde'
+  && new Date(event.facts.start!).getTime() < rangeTo
+  && (!event.facts.end || new Date(event.facts.end).getTime() >= rangeFrom)
   && new Date(event.facts.start!).getTime() <= buildNow.getTime()
   && (!event.facts.end || new Date(event.facts.end).getTime() >= buildNow.getTime()));
 
@@ -73,7 +72,7 @@ const dayLabel = (event: CatalogEvent) => formatDate('en', new Date(event.facts.
 
 const hue = nextEvent?.facts.signs[0] ? signBySlug(nextEvent.facts.signs[0]).hue : 'var(--sign-aquarius)';
 const asOf = formatShortDate('en', buildNow);
-const pageIds = new Set(catalog.pages.map((page) => page.facts.id));
+const pageIds = new Set(eventsPublication.pages.map((page) => page.id));
 
 const filters = [
   { key: 'all', label: 'Everything' },
@@ -154,13 +153,16 @@ const sources = [
 ];
 ---
 <Base
+  stableTypography
   title="Astrology Events 2026 & 2027 — Full Moons, Eclipses, Retrogrades, Dated | Zodiacs.org"
   description="Every notable sky event of 2026 and 2027, exact to the minute: full and new moons, eclipses, retrogrades and their stations, slow-planet sign changes, and rare exact alignments — with what each one means."
   path="/events/"
+  image={eventsPublication.hub.card}
   imageAlt="Sky events — Zodiacs.org"
-  noindex={!EVENTS_INDEX_ELIGIBLE}
+  noindex={!eventsPublication.hub.indexEligible}
   jsonLd={jsonLd}
   sources={sources}
+  rssFeed={{ href: '/feeds/events.xml', title: 'Zodiacs.org — sky events' }}
 >
   <noscript>
     <style>
@@ -343,8 +345,8 @@ const sources = [
       class="reveal"
     >
       <p>
-        Events cover {catalog.range.from.slice(0, 4)} through the end of{' '}
-        {String(Number(catalog.range.to.slice(0, 4)) - 1)}, drawn from the
+        Events cover {eventsPublication.window.from.slice(0, 4)} through the end of{' '}
+        {String(Number(eventsPublication.window.to.slice(0, 4)) - 1)}, drawn from the
         site's committed sky catalogs — the same astronomy behind the{' '}
         <a href="/almanac/">Almanac</a>, the <a href="/retrogrades/">retrograde tables</a>,
         and the <a href="/eclipses/">eclipse calendar</a>. Instants are

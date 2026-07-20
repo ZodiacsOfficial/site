@@ -51,6 +51,13 @@ if (facts.family === 'lunation' || facts.family === 'eclipse') {
 }
 
 if (facts.family === 'retrograde') {
+  if (facts.preShadowStart) {
+    rows.push({
+      label: 'Pre-shadow begins',
+      value: `${eventDay(facts.preShadowStart)} · ${eventClock(facts.preShadowStart)}`,
+      mono: true,
+    });
+  }
   rows.push({
     label: 'Stations retrograde',
     value: facts.clamped
@@ -63,6 +70,13 @@ if (facts.family === 'retrograde') {
     value: facts.end ? `${eventDay(facts.end)} · ${eventClock(facts.end)}` : 'past the data horizon',
     mono: Boolean(facts.end),
   });
+  if (facts.postShadowEnd) {
+    rows.push({
+      label: 'Post-shadow ends',
+      value: `${eventDay(facts.postShadowEnd)} · ${eventClock(facts.postShadowEnd)}`,
+      mono: true,
+    });
+  }
   rows.push(facts.signs.length === 1
     ? { label: 'Entirely within', value: signName(facts.signs[0]), sign: facts.signs[0] }
     : { label: 'Crosses back from', value: facts.signs.map(signName).join(' into '), sign: facts.signs[facts.signs.length - 1] });

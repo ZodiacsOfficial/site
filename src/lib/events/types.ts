@@ -50,6 +50,10 @@ export interface EventFacts {
   start?: string;
   /** Span end; null = past the data horizon (honest unknown, not a fact). */
   end?: string | null;
+  /** Direct-motion crossing of the eventual direct-station longitude. */
+  preShadowStart?: string | null;
+  /** Direct-motion crossing of the retrograde-station longitude. */
+  postShadowEnd?: string | null;
   /** True when a span was clipped at the catalog boundary, not stationed. */
   clamped?: boolean;
   /** Bodies involved, engine names ('Moon', 'Sun', 'Mercury', …). */
@@ -153,10 +157,3 @@ export const PAGE_FAMILIES: readonly EventFamily[] = [
   'ingress',
   'aspect',
 ];
-
-/**
- * Branch-wide indexing policy. Deliberately false until the deterministic
- * 2026–2030 catalog with verified relations lands; the integration pass
- * flips this alongside sitemap membership and the check-dist baseline.
- */
-export const EVENTS_INDEX_ELIGIBLE = false;

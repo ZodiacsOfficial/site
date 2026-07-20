@@ -3,7 +3,7 @@
   "rendererVersion": "zodiacs.daily-renderer.v1.1",
   "policyVersion": "1.1.0",
   "cases": [
-    { "date": "2026-06-20", "coverage": "unavailable", "eventKinds": [], "factsSha256": "1fcea17aef274b9b3d674e16b72322b46f34c612d7eba02082faae36caaa259d", "publicationSha256": "f0a38cf6e1093a295043efdcc315dc2c52948d31808cf0f9d0297f35bf19983a" },
+    { "date": "2026-06-20", "coverage": "complete", "eventKinds": [], "factsSha256": "48a0bf825cc3899b8a1891eddf034ac73f018753632eff4e37f5d608de560e6e", "publicationSha256": "f0a38cf6e1093a295043efdcc315dc2c52948d31808cf0f9d0297f35bf19983a" },
     { "date": "2026-07-01", "coverage": "complete", "eventKinds": [], "factsSha256": "cd72138e94255155d4c4e85fa1b5e9c4c01d37a5c0bd20915376f590311b6ec8", "publicationSha256": "78c14448d324df83bb7569c0871aafe8d5c1b118080406e6047255d2d0db795c" },
     { "date": "2026-07-07", "coverage": "complete", "eventKinds": ["station"], "factsSha256": "c1c447fb762d15ede10b3e14004cf36002c705a4112efaaf68df15299ae1039f", "publicationSha256": "625a39802921114a891e98632c84aad19917d0d9fb235b76cb785ee5f461ec28" },
     { "date": "2026-07-09", "coverage": "complete", "eventKinds": ["ingress"], "factsSha256": "c478751700db408ba5e808d4fa603695c1d574fc8ffdb3e4463d6d9829443cb7", "publicationSha256": "86ddb7b0f1fbe1645f5b328aedbfdf53ee4c7833cc1cac7a822b8add08ddb6b9" },

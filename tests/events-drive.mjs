@@ -9,10 +9,11 @@
  * Verifies, per the Phase 2 frontend contract: meaning before machinery,
  * closed-by-default evidence, real no-JavaScript rendering (computed
  * opacity, not element presence), keyboard operability, reduced motion,
- * mobile/desktop overflow, resolvable related-event links, branch-wide
- * noindex, and fixture isolation from sitemap and search index.
+ * mobile/desktop overflow, resolvable related-event links, exact publication
+ * allowlisting across metadata/search/sitemap/RSS, daily cross-links, and
+ * fixture isolation.
  */
-import { mkdir } from 'node:fs/promises';
+import { mkdir, readFile } from 'node:fs/promises';
 import { chromium } from 'playwright-core';
 import { findChromium, STABLE_CHROMIUM_ARGS } from './visual/browser.mjs';
 import { withPreview } from './visual/preview-server.mjs';
@@ -23,6 +24,44 @@ if (OUT) await mkdir(OUT, { recursive: true });
 
 const results = [];
 const check = (name, ok, detail = '') => results.push({ name, ok, detail });
+const eventsPublication = JSON.parse(await readFile(
+  new URL('../src/data/events-publication.json', import.meta.url),
+  'utf8',
+));
+const dailyPublication = JSON.parse(await readFile(
+  new URL('../src/data/daily-publication.json', import.meta.url),
+  'utf8',
+));
+const publishedPaths = new Set([
+  ...(eventsPublication.hub.indexEligible ? [eventsPublication.hub.path] : []),
+  ...eventsPublication.pages.map((event) => event.path),
+]);
+const isPhase2EventPath = (path) => (
+  path === '/events/'
+  || /^\/events\/(?!preview(?:\/|$))[a-z0-9-]+\/$/.test(path)
+  || /^\/(?:full-moon|new-moon|eclipses|(?:mercury|venus|mars)-retrograde)\/\d{4}-\d{2}-\d{2}\/$/.test(path)
+);
+const exactSet = (actual, expected) => (
+  actual.size === expected.size && [...actual].every((value) => expected.has(value))
+);
+
+function expectedDailyLinks(date) {
+  const start = new Date(`${date}T00:00:00.000Z`).getTime();
+  const end = start + 6 * 86_400_000;
+  const candidates = eventsPublication.pages
+    .filter((event) => {
+      const anchor = new Date(event.anchor).getTime();
+      return anchor >= start && anchor < end;
+    })
+    .sort((left, right) => left.anchor.localeCompare(right.anchor) || left.id.localeCompare(right.id));
+  const eclipseDays = new Set(candidates
+    .filter((event) => event.family === 'eclipse')
+    .map((event) => event.anchor.slice(0, 10)));
+  return candidates
+    .filter((event) => event.family !== 'lunation' || !eclipseDays.has(event.anchor.slice(0, 10)))
+    .slice(0, 3)
+    .map((event) => event.path);
+}
 
 // Routes pinned by src/lib/events/catalog.test.ts against the committed data.
 const HUB = '/events/';
@@ -62,6 +101,12 @@ await withPreview({ port: 4412 }, async (BASE) => {
       trackErrors(page, errors);
       await page.goto(`${BASE}${HUB}`, { waitUntil: 'networkidle' });
       check('hub: h1 is Sky events', await page.locator('h1').innerText() === 'Sky events');
+      check('hub: publication receipt makes the route indexable',
+        !(await page.locator('meta[name="robots"]').getAttribute('content'))?.includes('noindex'));
+      check('hub: self-canonical URL',
+        await page.locator('link[rel="canonical"]').getAttribute('href') === `https://zodiacs.org${HUB}`);
+      check('hub: event RSS is discoverable',
+        await page.locator('link[rel="alternate"][href="/feeds/events.xml"]').count() === 1);
       check('hub: now band renders one status line', await page.locator('.evhub-now__line').count() === 1);
       check('hub: three next-up tiles', await page.locator('.evhub-next__tile').count() === 3);
       check('hub: month sections render', await page.locator('[data-event-month]').count() > 12);
@@ -170,7 +215,7 @@ await withPreview({ port: 4412 }, async (BASE) => {
       await page.close();
     }
 
-    // ── Every event page: hierarchy, disclosure, noindex, overflow ───
+    // ── Every event page: hierarchy, disclosure, indexing, overflow ──
     for (const route of EVENT_PAGES) {
       const errors = [];
       const page = await browser.newPage({ viewport: { width: 1280, height: 900 }, reducedMotion: 'reduce' });
@@ -187,8 +232,13 @@ await withPreview({ port: 4412 }, async (BASE) => {
       const disclosure = page.locator('[data-evidence-disclosure]');
       check(`${route}: evidence disclosure closed by default`,
         await disclosure.count() === 1 && !(await disclosure.evaluate((node) => node.open)));
-      check(`${route}: noindex while the catalog is unverified`,
-        (await page.locator('meta[name="robots"]').getAttribute('content'))?.includes('noindex') === true);
+      check(`${route}: included in the publication receipt`, publishedPaths.has(route));
+      check(`${route}: published page is indexable`,
+        !(await page.locator('meta[name="robots"]').getAttribute('content'))?.includes('noindex'));
+      check(`${route}: self-canonical URL`,
+        await page.locator('link[rel="canonical"]').getAttribute('href') === `https://zodiacs.org${route}`);
+      check(`${route}: event RSS is discoverable`,
+        await page.locator('link[rel="alternate"][href="/feeds/events.xml"]').count() === 1);
       check(`${route}: kicker links back to the hub`,
         await page.locator('.event-hero .kicker[href="/events/"]').count() === 1);
       check(`${route}: desktop has no horizontal overflow`, (await overflow(page)) <= 0);
@@ -265,16 +315,23 @@ await withPreview({ port: 4412 }, async (BASE) => {
       await page.close();
     }
 
-    // ── Retrograde page: window facts without fake stations ──────────
+    // ── Retrograde page: complete station and shadow window ──────
     {
       const page = await browser.newPage({ viewport: { width: 1280, height: 900 }, reducedMotion: 'reduce' });
       await page.goto(`${BASE}${MERCURY_RX}`, { waitUntil: 'networkidle' });
       const facts = await page.locator('.event-facts__core').innerText();
+      const normalizedFacts = facts.toLowerCase();
       check('mercury rx: both stations dated in the facts band',
         facts.includes('June 29, 2026') && facts.includes('July 23, 2026'));
       check('mercury rx: cycle named entirely within Cancer', facts.toLowerCase().includes('cancer'));
-      check('mercury rx: shadow-period limitation visible',
-        (await page.locator('[data-event-limits]').innerText()).toLowerCase().includes('shadow'));
+      const limitationCount = await page.locator('[data-event-limits]').count();
+      check('mercury rx: verified shadow boundaries replace the old limitation',
+        normalizedFacts.includes('pre-shadow begins')
+        && facts.includes('June 13, 2026')
+        && normalizedFacts.includes('post-shadow ends')
+        && facts.includes('August 7, 2026')
+        && limitationCount === 0,
+        `limitations=${limitationCount} facts=${JSON.stringify(facts)}`);
       if (OUT) await page.screenshot({ path: `${OUT}/mercury-retrograde-1280.png`, fullPage: true });
       const mobile = await browser.newPage({ viewport: { width: 360, height: 800 }, deviceScaleFactor: 2, hasTouch: true, reducedMotion: 'reduce' });
       await mobile.goto(`${BASE}${MERCURY_RX}`, { waitUntil: 'networkidle' });
@@ -295,7 +352,7 @@ await withPreview({ port: 4412 }, async (BASE) => {
       await page.close();
     }
 
-    // ── Fixtures: labeled, noindex, out of sitemap and search ────────
+    // ── Publication boundaries, RSS, daily links, fixture isolation ──
     {
       const page = await browser.newPage({ viewport: { width: 1280, height: 900 }, reducedMotion: 'reduce' });
       await page.goto(`${BASE}${FIXTURE_RICH}`, { waitUntil: 'networkidle' });
@@ -312,18 +369,65 @@ await withPreview({ port: 4412 }, async (BASE) => {
       check('preview index: lists every fixture with its banner',
         await page.locator('.preview-list a').count() === 3
         && (await page.locator('[data-event-sample]').innerText()).includes('sample data'));
-      await page.close();
-
       const sitemap = await (await fetch(`${BASE}/sitemap.xml`)).text();
-      const leaked = ['/events/', '/full-moon/2026', '/new-moon/2026', '/eclipses/2026',
-        '/mercury-retrograde/2026', '/venus-retrograde/2026', '/mars-retrograde/2027']
-        .filter((needle) => sitemap.includes(needle));
-      check('sitemap: no event route ships while unverified', leaked.length === 0, leaked.join(' '));
+      const sitemapEventPaths = new Set(
+        [...sitemap.matchAll(/<loc>https:\/\/zodiacs\.org([^<]+)<\/loc>/g)]
+          .map((match) => match[1])
+          .filter(isPhase2EventPath),
+      );
+      check(
+        'sitemap: exact publication allowlist',
+        exactSet(sitemapEventPaths, publishedPaths),
+        `actual=${sitemapEventPaths.size} expected=${publishedPaths.size}`,
+      );
 
-      const searchIndex = await (await fetch(`${BASE}/search-index.json`)).text();
-      const searchLeaks = ['/events/', '/full-moon/2026-07-29/', '/eclipses/2026-08-12/']
-        .filter((needle) => searchIndex.includes(needle));
-      check('search index: no event route while unverified', searchLeaks.length === 0, searchLeaks.join(' '));
+      const searchIndex = await (await fetch(`${BASE}/search-index.json`)).json();
+      const searchEventPaths = new Set(searchIndex
+        .map((entry) => entry.path)
+        .filter((path) => !path.includes('#') && isPhase2EventPath(path)));
+      check(
+        'search index: exact publication allowlist',
+        exactSet(searchEventPaths, publishedPaths),
+        `actual=${searchEventPaths.size} expected=${publishedPaths.size}`,
+      );
+
+      const eventsFeed = await (await fetch(`${BASE}/feeds/events.xml`)).text();
+      const feedIds = new Set(
+        [...eventsFeed.matchAll(/<guid isPermaLink="false">https:\/\/zodiacs\.org\/feeds\/events\/([^<]+)<\/guid>/g)]
+          .map((match) => match[1]),
+      );
+      const feedPaths = new Set(
+        [...eventsFeed.matchAll(/<item>[\s\S]*?<link>([^<]+)<\/link>[\s\S]*?<\/item>/g)]
+          .map((match) => {
+            const url = new URL(match[1]);
+            return `${url.pathname}${url.hash}`;
+          }),
+      );
+      const expectedFeedPaths = new Set(eventsPublication.timeline.map((event) => event.path));
+      check(
+        'events RSS: exact timeline ids',
+        exactSet(feedIds, new Set(eventsPublication.timeline.map((event) => event.id))),
+        `actual=${feedIds.size} expected=${eventsPublication.timeline.length}`,
+      );
+      check(
+        'events RSS: exact timeline links',
+        exactSet(feedPaths, expectedFeedPaths),
+        `actual=${feedPaths.size} expected=${expectedFeedPaths.size}`,
+      );
+
+      const expectedLinks = expectedDailyLinks(dailyPublication.date);
+      for (const route of ['/today/', '/horoscopes/aries/']) {
+        await page.goto(`${BASE}${route}`, { waitUntil: 'networkidle' });
+        const actualLinks = await page.locator('[data-daily-event-links] a').evaluateAll((anchors) => (
+          anchors.map((anchor) => anchor.getAttribute('href'))
+        ));
+        check(
+          `${route}: exact next-five-day event links`,
+          JSON.stringify(actualLinks) === JSON.stringify(expectedLinks),
+          `actual=${actualLinks.join(',')} expected=${expectedLinks.join(',')}`,
+        );
+      }
+      await page.close();
     }
   } finally {
     await browser.close();

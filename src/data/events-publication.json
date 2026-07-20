@@ -1,0 +1,3690 @@
+{
+  "schema": "zodiacs.events-publication.v1",
+  "locale": "en",
+  "window": {
+    "from": "2026-01-01T00:00:00.000Z",
+    "to": "2028-01-01T00:00:00.000Z"
+  },
+  "lastModified": "2026-07-20",
+  "hub": {
+    "path": "/events/",
+    "title": "Sky events",
+    "card": "/assets/og/v2/events/index.png",
+    "indexEligible": true
+  },
+  "pages": [
+    {
+      "id": "full-moon-2026-01-03",
+      "path": "/full-moon/2026-01-03/",
+      "title": "Full moon in Cancer — January 3, 2026",
+      "anchor": "2026-01-03T10:02:50.012Z",
+      "family": "lunation",
+      "subtype": "full",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "cancer"
+      ],
+      "summary": "The Wolf Moon — the Moon stands opposite the Sun in Cancer.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/full-moon-2026-01-03.png"
+    },
+    {
+      "id": "new-moon-2026-01-18",
+      "path": "/new-moon/2026-01-18/",
+      "title": "New moon in Capricorn — January 18, 2026",
+      "anchor": "2026-01-18T19:51:55.886Z",
+      "family": "lunation",
+      "subtype": "new",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "capricorn"
+      ],
+      "summary": "Sun and Moon meet in Capricorn; the month's quiet reset.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/new-moon-2026-01-18.png"
+    },
+    {
+      "id": "saturn-sextile-uranus-2026-01-20",
+      "path": "/events/saturn-sextile-uranus-2026-01-20/",
+      "title": "Saturn sextile Uranus — January 20, 2026",
+      "anchor": "2026-01-20T05:44:10.286Z",
+      "family": "aspect",
+      "subtype": "sextile",
+      "bodies": [
+        "Saturn",
+        "Uranus"
+      ],
+      "signs": [
+        "pisces",
+        "taurus"
+      ],
+      "summary": "Saturn and Uranus reach an exact sextile.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/saturn-sextile-uranus-2026-01-20.png"
+    },
+    {
+      "id": "neptune-enters-aries-2026-01-26",
+      "path": "/events/neptune-enters-aries-2026-01-26/",
+      "title": "Neptune enters Aries — January 26, 2026",
+      "anchor": "2026-01-26T14:30:38.567Z",
+      "family": "ingress",
+      "subtype": "ingress",
+      "bodies": [
+        "Neptune"
+      ],
+      "signs": [
+        "aries"
+      ],
+      "summary": "Neptune moves into Aries from Pisces.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/neptune-enters-aries-2026-01-26.png"
+    },
+    {
+      "id": "full-moon-2026-02-01",
+      "path": "/full-moon/2026-02-01/",
+      "title": "Full moon in Leo — February 1, 2026",
+      "anchor": "2026-02-01T22:09:11.676Z",
+      "family": "lunation",
+      "subtype": "full",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "leo"
+      ],
+      "summary": "The Snow Moon — the Moon stands opposite the Sun in Leo.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/full-moon-2026-02-01.png"
+    },
+    {
+      "id": "saturn-enters-aries-2026-02-14",
+      "path": "/events/saturn-enters-aries-2026-02-14/",
+      "title": "Saturn enters Aries — February 14, 2026",
+      "anchor": "2026-02-14T00:39:31.850Z",
+      "family": "ingress",
+      "subtype": "ingress",
+      "bodies": [
+        "Saturn"
+      ],
+      "signs": [
+        "aries"
+      ],
+      "summary": "Saturn moves into Aries from Pisces.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/saturn-enters-aries-2026-02-14.png"
+    },
+    {
+      "id": "new-moon-2026-02-17",
+      "path": "/new-moon/2026-02-17/",
+      "title": "New moon in Aquarius — February 17, 2026",
+      "anchor": "2026-02-17T12:01:06.411Z",
+      "family": "lunation",
+      "subtype": "new",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "aquarius"
+      ],
+      "summary": "Sun and Moon meet in Aquarius; the month's quiet reset.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/new-moon-2026-02-17.png"
+    },
+    {
+      "id": "eclipse-2026-02-17",
+      "path": "/eclipses/2026-02-17/",
+      "title": "Annular solar eclipse in Aquarius — February 17, 2026",
+      "anchor": "2026-02-17T12:11:53.939Z",
+      "family": "eclipse",
+      "subtype": "solar",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "aquarius"
+      ],
+      "summary": "A new moon crosses the Sun's face in Aquarius.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/eclipse-2026-02-17.png"
+    },
+    {
+      "id": "saturn-conjunction-neptune-2026-02-20",
+      "path": "/events/saturn-conjunction-neptune-2026-02-20/",
+      "title": "Saturn conjunction Neptune — February 20, 2026",
+      "anchor": "2026-02-20T18:29:16.795Z",
+      "family": "aspect",
+      "subtype": "conjunction",
+      "bodies": [
+        "Saturn",
+        "Neptune"
+      ],
+      "signs": [
+        "aries",
+        "aries"
+      ],
+      "summary": "Saturn and Neptune reach an exact conjunction.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/saturn-conjunction-neptune-2026-02-20.png"
+    },
+    {
+      "id": "mercury-retrograde-2026-02-26",
+      "path": "/mercury-retrograde/2026-02-26/",
+      "title": "Mercury retrograde — February 2026",
+      "anchor": "2026-02-26T06:47:13.153Z",
+      "family": "retrograde",
+      "subtype": "cycle",
+      "bodies": [
+        "Mercury"
+      ],
+      "signs": [
+        "pisces"
+      ],
+      "summary": "Mercury appears to reverse through Pisces.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/mercury-retrograde-2026-02-26.png"
+    },
+    {
+      "id": "eclipse-2026-03-03",
+      "path": "/eclipses/2026-03-03/",
+      "title": "Total lunar eclipse in Virgo — March 3, 2026",
+      "anchor": "2026-03-03T11:33:40.289Z",
+      "family": "eclipse",
+      "subtype": "lunar",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "virgo"
+      ],
+      "summary": "A full moon passes through Earth's shadow in Virgo.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/eclipse-2026-03-03.png"
+    },
+    {
+      "id": "full-moon-2026-03-03",
+      "path": "/full-moon/2026-03-03/",
+      "title": "Full moon in Virgo — March 3, 2026",
+      "anchor": "2026-03-03T11:37:51.752Z",
+      "family": "lunation",
+      "subtype": "full",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "virgo"
+      ],
+      "summary": "The Worm Moon — the Moon stands opposite the Sun in Virgo.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/full-moon-2026-03-03.png"
+    },
+    {
+      "id": "new-moon-2026-03-19",
+      "path": "/new-moon/2026-03-19/",
+      "title": "New moon in Pisces — March 19, 2026",
+      "anchor": "2026-03-19T01:23:27.869Z",
+      "family": "lunation",
+      "subtype": "new",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "pisces"
+      ],
+      "summary": "Sun and Moon meet in Pisces; the month's quiet reset.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/new-moon-2026-03-19.png"
+    },
+    {
+      "id": "saturn-sextile-pluto-2026-03-28",
+      "path": "/events/saturn-sextile-pluto-2026-03-28/",
+      "title": "Saturn sextile Pluto — March 28, 2026",
+      "anchor": "2026-03-28T22:34:30.097Z",
+      "family": "aspect",
+      "subtype": "sextile",
+      "bodies": [
+        "Saturn",
+        "Pluto"
+      ],
+      "signs": [
+        "aries",
+        "aquarius"
+      ],
+      "summary": "Saturn and Pluto reach an exact sextile.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/saturn-sextile-pluto-2026-03-28.png"
+    },
+    {
+      "id": "full-moon-2026-04-02",
+      "path": "/full-moon/2026-04-02/",
+      "title": "Full moon in Libra — April 2, 2026",
+      "anchor": "2026-04-02T02:11:54.521Z",
+      "family": "lunation",
+      "subtype": "full",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "libra"
+      ],
+      "summary": "The Pink Moon — the Moon stands opposite the Sun in Libra.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/full-moon-2026-04-02.png"
+    },
+    {
+      "id": "new-moon-2026-04-17",
+      "path": "/new-moon/2026-04-17/",
+      "title": "New moon in Aries — April 17, 2026",
+      "anchor": "2026-04-17T11:51:46.025Z",
+      "family": "lunation",
+      "subtype": "new",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "aries"
+      ],
+      "summary": "Sun and Moon meet in Aries; the month's quiet reset.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/new-moon-2026-04-17.png"
+    },
+    {
+      "id": "uranus-enters-gemini-2026-04-26",
+      "path": "/events/uranus-enters-gemini-2026-04-26/",
+      "title": "Uranus enters Gemini — April 26, 2026",
+      "anchor": "2026-04-26T01:01:14.904Z",
+      "family": "ingress",
+      "subtype": "ingress",
+      "bodies": [
+        "Uranus"
+      ],
+      "signs": [
+        "gemini"
+      ],
+      "summary": "Uranus moves into Gemini from Taurus.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/uranus-enters-gemini-2026-04-26.png"
+    },
+    {
+      "id": "full-moon-2026-05-01",
+      "path": "/full-moon/2026-05-01/",
+      "title": "Full moon in Scorpio — May 1, 2026",
+      "anchor": "2026-05-01T17:23:03.837Z",
+      "family": "lunation",
+      "subtype": "full",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "scorpio"
+      ],
+      "summary": "The Flower Moon — the Moon stands opposite the Sun in Scorpio.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/full-moon-2026-05-01.png"
+    },
+    {
+      "id": "new-moon-2026-05-16",
+      "path": "/new-moon/2026-05-16/",
+      "title": "New moon in Taurus — May 16, 2026",
+      "anchor": "2026-05-16T20:00:58.227Z",
+      "family": "lunation",
+      "subtype": "new",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "taurus"
+      ],
+      "summary": "Sun and Moon meet in Taurus; the month's quiet reset.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/new-moon-2026-05-16.png"
+    },
+    {
+      "id": "full-moon-2026-05-31",
+      "path": "/full-moon/2026-05-31/",
+      "title": "Full moon in Sagittarius — May 31, 2026",
+      "anchor": "2026-05-31T08:45:04.009Z",
+      "family": "lunation",
+      "subtype": "full",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "sagittarius"
+      ],
+      "summary": "A blue moon — the Moon stands opposite the Sun in Sagittarius.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/full-moon-2026-05-31.png"
+    },
+    {
+      "id": "new-moon-2026-06-15",
+      "path": "/new-moon/2026-06-15/",
+      "title": "New moon in Gemini — June 15, 2026",
+      "anchor": "2026-06-15T02:54:05.277Z",
+      "family": "lunation",
+      "subtype": "new",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "gemini"
+      ],
+      "summary": "Sun and Moon meet in Gemini; the month's quiet reset.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/new-moon-2026-06-15.png"
+    },
+    {
+      "id": "mercury-retrograde-2026-06-29",
+      "path": "/mercury-retrograde/2026-06-29/",
+      "title": "Mercury retrograde — June 2026",
+      "anchor": "2026-06-29T17:37:12.860Z",
+      "family": "retrograde",
+      "subtype": "cycle",
+      "bodies": [
+        "Mercury"
+      ],
+      "signs": [
+        "cancer"
+      ],
+      "summary": "Mercury appears to reverse through Cancer.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/mercury-retrograde-2026-06-29.png"
+    },
+    {
+      "id": "full-moon-2026-06-29",
+      "path": "/full-moon/2026-06-29/",
+      "title": "Full moon in Capricorn — June 29, 2026",
+      "anchor": "2026-06-29T23:56:33.675Z",
+      "family": "lunation",
+      "subtype": "full",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "capricorn"
+      ],
+      "summary": "The Strawberry Moon — the Moon stands opposite the Sun in Capricorn.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/full-moon-2026-06-29.png"
+    },
+    {
+      "id": "jupiter-enters-leo-2026-06-30",
+      "path": "/events/jupiter-enters-leo-2026-06-30/",
+      "title": "Jupiter enters Leo — June 30, 2026",
+      "anchor": "2026-06-30T05:56:15.135Z",
+      "family": "ingress",
+      "subtype": "ingress",
+      "bodies": [
+        "Jupiter"
+      ],
+      "signs": [
+        "leo"
+      ],
+      "summary": "Jupiter moves into Leo from Cancer.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/jupiter-enters-leo-2026-06-30.png"
+    },
+    {
+      "id": "new-moon-2026-07-14",
+      "path": "/new-moon/2026-07-14/",
+      "title": "New moon in Cancer — July 14, 2026",
+      "anchor": "2026-07-14T09:43:29.938Z",
+      "family": "lunation",
+      "subtype": "new",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "cancer"
+      ],
+      "summary": "Sun and Moon meet in Cancer; the month's quiet reset.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/new-moon-2026-07-14.png"
+    },
+    {
+      "id": "uranus-sextile-neptune-2026-07-15",
+      "path": "/events/uranus-sextile-neptune-2026-07-15/",
+      "title": "Uranus sextile Neptune — July 15, 2026",
+      "anchor": "2026-07-15T22:22:54.580Z",
+      "family": "aspect",
+      "subtype": "sextile",
+      "bodies": [
+        "Uranus",
+        "Neptune"
+      ],
+      "signs": [
+        "gemini",
+        "aries"
+      ],
+      "summary": "Uranus and Neptune reach an exact sextile.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/uranus-sextile-neptune-2026-07-15.png"
+    },
+    {
+      "id": "uranus-trine-pluto-2026-07-18",
+      "path": "/events/uranus-trine-pluto-2026-07-18/",
+      "title": "Uranus trine Pluto — July 18, 2026",
+      "anchor": "2026-07-18T04:39:44.443Z",
+      "family": "aspect",
+      "subtype": "trine",
+      "bodies": [
+        "Uranus",
+        "Pluto"
+      ],
+      "signs": [
+        "gemini",
+        "aquarius"
+      ],
+      "summary": "Uranus and Pluto reach an exact trine.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/uranus-trine-pluto-2026-07-18.png"
+    },
+    {
+      "id": "jupiter-trine-neptune-2026-07-20",
+      "path": "/events/jupiter-trine-neptune-2026-07-20/",
+      "title": "Jupiter trine Neptune — July 20, 2026",
+      "anchor": "2026-07-20T07:47:52.896Z",
+      "family": "aspect",
+      "subtype": "trine",
+      "bodies": [
+        "Jupiter",
+        "Neptune"
+      ],
+      "signs": [
+        "leo",
+        "aries"
+      ],
+      "summary": "Jupiter and Neptune reach an exact trine.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/jupiter-trine-neptune-2026-07-20.png"
+    },
+    {
+      "id": "jupiter-opposition-pluto-2026-07-20",
+      "path": "/events/jupiter-opposition-pluto-2026-07-20/",
+      "title": "Jupiter opposition Pluto — July 20, 2026",
+      "anchor": "2026-07-20T14:45:43.725Z",
+      "family": "aspect",
+      "subtype": "opposition",
+      "bodies": [
+        "Jupiter",
+        "Pluto"
+      ],
+      "signs": [
+        "leo",
+        "aquarius"
+      ],
+      "summary": "Jupiter and Pluto reach an exact opposition.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/jupiter-opposition-pluto-2026-07-20.png"
+    },
+    {
+      "id": "jupiter-sextile-uranus-2026-07-21",
+      "path": "/events/jupiter-sextile-uranus-2026-07-21/",
+      "title": "Jupiter sextile Uranus — July 21, 2026",
+      "anchor": "2026-07-21T11:13:07.443Z",
+      "family": "aspect",
+      "subtype": "sextile",
+      "bodies": [
+        "Jupiter",
+        "Uranus"
+      ],
+      "signs": [
+        "leo",
+        "gemini"
+      ],
+      "summary": "Jupiter and Uranus reach an exact sextile.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/jupiter-sextile-uranus-2026-07-21.png"
+    },
+    {
+      "id": "neptune-sextile-pluto-2026-07-24",
+      "path": "/events/neptune-sextile-pluto-2026-07-24/",
+      "title": "Neptune sextile Pluto — July 24, 2026",
+      "anchor": "2026-07-24T23:09:32.221Z",
+      "family": "aspect",
+      "subtype": "sextile",
+      "bodies": [
+        "Neptune",
+        "Pluto"
+      ],
+      "signs": [
+        "aries",
+        "aquarius"
+      ],
+      "summary": "Neptune and Pluto reach an exact sextile.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/neptune-sextile-pluto-2026-07-24.png"
+    },
+    {
+      "id": "full-moon-2026-07-29",
+      "path": "/full-moon/2026-07-29/",
+      "title": "Full moon in Aquarius — July 29, 2026",
+      "anchor": "2026-07-29T14:35:36.043Z",
+      "family": "lunation",
+      "subtype": "full",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "aquarius"
+      ],
+      "summary": "The Buck Moon — the Moon stands opposite the Sun in Aquarius.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/full-moon-2026-07-29.png"
+    },
+    {
+      "id": "new-moon-2026-08-12",
+      "path": "/new-moon/2026-08-12/",
+      "title": "New moon in Leo — August 12, 2026",
+      "anchor": "2026-08-12T17:36:35.369Z",
+      "family": "lunation",
+      "subtype": "new",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "leo"
+      ],
+      "summary": "Sun and Moon meet in Leo; the month's quiet reset.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/new-moon-2026-08-12.png"
+    },
+    {
+      "id": "eclipse-2026-08-12",
+      "path": "/eclipses/2026-08-12/",
+      "title": "Total solar eclipse in Leo — August 12, 2026",
+      "anchor": "2026-08-12T17:45:46.794Z",
+      "family": "eclipse",
+      "subtype": "solar",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "leo"
+      ],
+      "summary": "A new moon crosses the Sun's face in Leo.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/eclipse-2026-08-12.png"
+    },
+    {
+      "id": "eclipse-2026-08-28",
+      "path": "/eclipses/2026-08-28/",
+      "title": "Partial lunar eclipse in Pisces — August 28, 2026",
+      "anchor": "2026-08-28T04:12:49.076Z",
+      "family": "eclipse",
+      "subtype": "lunar",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "pisces"
+      ],
+      "summary": "A full moon passes through Earth's shadow in Pisces.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/eclipse-2026-08-28.png"
+    },
+    {
+      "id": "full-moon-2026-08-28",
+      "path": "/full-moon/2026-08-28/",
+      "title": "Full moon in Pisces — August 28, 2026",
+      "anchor": "2026-08-28T04:18:24.894Z",
+      "family": "lunation",
+      "subtype": "full",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "pisces"
+      ],
+      "summary": "The Sturgeon Moon — the Moon stands opposite the Sun in Pisces.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/full-moon-2026-08-28.png"
+    },
+    {
+      "id": "jupiter-trine-saturn-2026-08-31",
+      "path": "/events/jupiter-trine-saturn-2026-08-31/",
+      "title": "Jupiter trine Saturn — August 31, 2026",
+      "anchor": "2026-08-31T22:05:16.185Z",
+      "family": "aspect",
+      "subtype": "trine",
+      "bodies": [
+        "Jupiter",
+        "Saturn"
+      ],
+      "signs": [
+        "leo",
+        "aries"
+      ],
+      "summary": "Jupiter and Saturn reach an exact trine.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/jupiter-trine-saturn-2026-08-31.png"
+    },
+    {
+      "id": "new-moon-2026-09-11",
+      "path": "/new-moon/2026-09-11/",
+      "title": "New moon in Virgo — September 11, 2026",
+      "anchor": "2026-09-11T03:26:50.210Z",
+      "family": "lunation",
+      "subtype": "new",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "virgo"
+      ],
+      "summary": "Sun and Moon meet in Virgo; the month's quiet reset.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/new-moon-2026-09-11.png"
+    },
+    {
+      "id": "neptune-sextile-pluto-2026-09-16",
+      "path": "/events/neptune-sextile-pluto-2026-09-16/",
+      "title": "Neptune sextile Pluto — September 16, 2026",
+      "anchor": "2026-09-16T08:31:12.865Z",
+      "family": "aspect",
+      "subtype": "sextile",
+      "bodies": [
+        "Neptune",
+        "Pluto"
+      ],
+      "signs": [
+        "aries",
+        "aquarius"
+      ],
+      "summary": "Neptune and Pluto reach an exact sextile.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/neptune-sextile-pluto-2026-09-16.png"
+    },
+    {
+      "id": "full-moon-2026-09-26",
+      "path": "/full-moon/2026-09-26/",
+      "title": "Full moon in Aries — September 26, 2026",
+      "anchor": "2026-09-26T16:48:53.293Z",
+      "family": "lunation",
+      "subtype": "full",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "aries"
+      ],
+      "summary": "The Corn Moon — the Moon stands opposite the Sun in Aries.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/full-moon-2026-09-26.png"
+    },
+    {
+      "id": "venus-retrograde-2026-10-03",
+      "path": "/venus-retrograde/2026-10-03/",
+      "title": "Venus retrograde — October 2026",
+      "anchor": "2026-10-03T07:09:55.019Z",
+      "family": "retrograde",
+      "subtype": "cycle",
+      "bodies": [
+        "Venus"
+      ],
+      "signs": [
+        "libra",
+        "scorpio"
+      ],
+      "summary": "Venus appears to reverse through Libra and Scorpio.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/venus-retrograde-2026-10-03.png"
+    },
+    {
+      "id": "new-moon-2026-10-10",
+      "path": "/new-moon/2026-10-10/",
+      "title": "New moon in Libra — October 10, 2026",
+      "anchor": "2026-10-10T15:49:55.806Z",
+      "family": "lunation",
+      "subtype": "new",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "libra"
+      ],
+      "summary": "Sun and Moon meet in Libra; the month's quiet reset.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/new-moon-2026-10-10.png"
+    },
+    {
+      "id": "mercury-retrograde-2026-10-24",
+      "path": "/mercury-retrograde/2026-10-24/",
+      "title": "Mercury retrograde — October 2026",
+      "anchor": "2026-10-24T07:14:20.009Z",
+      "family": "retrograde",
+      "subtype": "cycle",
+      "bodies": [
+        "Mercury"
+      ],
+      "signs": [
+        "scorpio"
+      ],
+      "summary": "Mercury appears to reverse through Scorpio.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/mercury-retrograde-2026-10-24.png"
+    },
+    {
+      "id": "full-moon-2026-10-26",
+      "path": "/full-moon/2026-10-26/",
+      "title": "Full moon in Taurus — October 26, 2026",
+      "anchor": "2026-10-26T04:11:38.674Z",
+      "family": "lunation",
+      "subtype": "full",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "taurus"
+      ],
+      "summary": "The Hunter’s Moon — the Moon stands opposite the Sun in Taurus.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/full-moon-2026-10-26.png"
+    },
+    {
+      "id": "new-moon-2026-11-09",
+      "path": "/new-moon/2026-11-09/",
+      "title": "New moon in Scorpio — November 9, 2026",
+      "anchor": "2026-11-09T07:01:58.843Z",
+      "family": "lunation",
+      "subtype": "new",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "scorpio"
+      ],
+      "summary": "Sun and Moon meet in Scorpio; the month's quiet reset.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/new-moon-2026-11-09.png"
+    },
+    {
+      "id": "full-moon-2026-11-24",
+      "path": "/full-moon/2026-11-24/",
+      "title": "Full moon in Gemini — November 24, 2026",
+      "anchor": "2026-11-24T14:53:28.775Z",
+      "family": "lunation",
+      "subtype": "full",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "gemini"
+      ],
+      "summary": "The Beaver Moon — the Moon stands opposite the Sun in Gemini.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/full-moon-2026-11-24.png"
+    },
+    {
+      "id": "uranus-trine-pluto-2026-11-29",
+      "path": "/events/uranus-trine-pluto-2026-11-29/",
+      "title": "Uranus trine Pluto — November 29, 2026",
+      "anchor": "2026-11-29T11:27:00.564Z",
+      "family": "aspect",
+      "subtype": "trine",
+      "bodies": [
+        "Uranus",
+        "Pluto"
+      ],
+      "signs": [
+        "gemini",
+        "aquarius"
+      ],
+      "summary": "Uranus and Pluto reach an exact trine.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/uranus-trine-pluto-2026-11-29.png"
+    },
+    {
+      "id": "new-moon-2026-12-09",
+      "path": "/new-moon/2026-12-09/",
+      "title": "New moon in Sagittarius — December 9, 2026",
+      "anchor": "2026-12-09T00:51:45.724Z",
+      "family": "lunation",
+      "subtype": "new",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "sagittarius"
+      ],
+      "summary": "Sun and Moon meet in Sagittarius; the month's quiet reset.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/new-moon-2026-12-09.png"
+    },
+    {
+      "id": "full-moon-2026-12-24",
+      "path": "/full-moon/2026-12-24/",
+      "title": "Full moon in Cancer — December 24, 2026",
+      "anchor": "2026-12-24T01:28:10.162Z",
+      "family": "lunation",
+      "subtype": "full",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "cancer"
+      ],
+      "summary": "The Cold Moon — the Moon stands opposite the Sun in Cancer.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/full-moon-2026-12-24.png"
+    },
+    {
+      "id": "new-moon-2027-01-07",
+      "path": "/new-moon/2027-01-07/",
+      "title": "New moon in Capricorn — January 7, 2027",
+      "anchor": "2027-01-07T20:24:19.643Z",
+      "family": "lunation",
+      "subtype": "new",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "capricorn"
+      ],
+      "summary": "Sun and Moon meet in Capricorn; the month's quiet reset.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/new-moon-2027-01-07.png"
+    },
+    {
+      "id": "mars-retrograde-2027-01-10",
+      "path": "/mars-retrograde/2027-01-10/",
+      "title": "Mars retrograde — January 2027",
+      "anchor": "2027-01-10T13:01:05.038Z",
+      "family": "retrograde",
+      "subtype": "cycle",
+      "bodies": [
+        "Mars"
+      ],
+      "signs": [
+        "leo",
+        "virgo"
+      ],
+      "summary": "Mars appears to reverse through Leo and Virgo.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/mars-retrograde-2027-01-10.png"
+    },
+    {
+      "id": "uranus-sextile-neptune-2027-01-15",
+      "path": "/events/uranus-sextile-neptune-2027-01-15/",
+      "title": "Uranus sextile Neptune — January 15, 2027",
+      "anchor": "2027-01-15T07:21:17.351Z",
+      "family": "aspect",
+      "subtype": "sextile",
+      "bodies": [
+        "Uranus",
+        "Neptune"
+      ],
+      "signs": [
+        "gemini",
+        "aries"
+      ],
+      "summary": "Uranus and Neptune reach an exact sextile.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/uranus-sextile-neptune-2027-01-15.png"
+    },
+    {
+      "id": "full-moon-2027-01-22",
+      "path": "/full-moon/2027-01-22/",
+      "title": "Full moon in Leo — January 22, 2027",
+      "anchor": "2027-01-22T12:17:15.075Z",
+      "family": "lunation",
+      "subtype": "full",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "leo"
+      ],
+      "summary": "The Wolf Moon — the Moon stands opposite the Sun in Leo.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/full-moon-2027-01-22.png"
+    },
+    {
+      "id": "new-moon-2027-02-06",
+      "path": "/new-moon/2027-02-06/",
+      "title": "New moon in Aquarius — February 6, 2027",
+      "anchor": "2027-02-06T15:56:02.062Z",
+      "family": "lunation",
+      "subtype": "new",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "aquarius"
+      ],
+      "summary": "Sun and Moon meet in Aquarius; the month's quiet reset.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/new-moon-2027-02-06.png"
+    },
+    {
+      "id": "eclipse-2027-02-06",
+      "path": "/eclipses/2027-02-06/",
+      "title": "Annular solar eclipse in Aquarius — February 6, 2027",
+      "anchor": "2027-02-06T15:59:32.957Z",
+      "family": "eclipse",
+      "subtype": "solar",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "aquarius"
+      ],
+      "summary": "A new moon crosses the Sun's face in Aquarius.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/eclipse-2027-02-06.png"
+    },
+    {
+      "id": "mercury-retrograde-2027-02-09",
+      "path": "/mercury-retrograde/2027-02-09/",
+      "title": "Mercury retrograde — February 2027",
+      "anchor": "2027-02-09T17:35:36.620Z",
+      "family": "retrograde",
+      "subtype": "cycle",
+      "bodies": [
+        "Mercury"
+      ],
+      "signs": [
+        "aquarius",
+        "pisces"
+      ],
+      "summary": "Mercury appears to reverse through Aquarius and Pisces.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/mercury-retrograde-2027-02-09.png"
+    },
+    {
+      "id": "eclipse-2027-02-20",
+      "path": "/eclipses/2027-02-20/",
+      "title": "Penumbral lunar eclipse in Virgo — February 20, 2027",
+      "anchor": "2027-02-20T23:12:44.142Z",
+      "family": "eclipse",
+      "subtype": "lunar",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "virgo"
+      ],
+      "summary": "A full moon passes through Earth's shadow in Virgo.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/eclipse-2027-02-20.png"
+    },
+    {
+      "id": "full-moon-2027-02-20",
+      "path": "/full-moon/2027-02-20/",
+      "title": "Full moon in Virgo — February 20, 2027",
+      "anchor": "2027-02-20T23:23:31.110Z",
+      "family": "lunation",
+      "subtype": "full",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "virgo"
+      ],
+      "summary": "The Snow Moon — the Moon stands opposite the Sun in Virgo.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/full-moon-2027-02-20.png"
+    },
+    {
+      "id": "new-moon-2027-03-08",
+      "path": "/new-moon/2027-03-08/",
+      "title": "New moon in Pisces — March 8, 2027",
+      "anchor": "2027-03-08T09:29:24.458Z",
+      "family": "lunation",
+      "subtype": "new",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "pisces"
+      ],
+      "summary": "Sun and Moon meet in Pisces; the month's quiet reset.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/new-moon-2027-03-08.png"
+    },
+    {
+      "id": "full-moon-2027-03-22",
+      "path": "/full-moon/2027-03-22/",
+      "title": "Full moon in Libra — March 22, 2027",
+      "anchor": "2027-03-22T10:43:41.666Z",
+      "family": "lunation",
+      "subtype": "full",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "libra"
+      ],
+      "summary": "The Worm Moon — the Moon stands opposite the Sun in Libra.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/full-moon-2027-03-22.png"
+    },
+    {
+      "id": "jupiter-trine-saturn-2027-04-03",
+      "path": "/events/jupiter-trine-saturn-2027-04-03/",
+      "title": "Jupiter trine Saturn — April 3, 2027",
+      "anchor": "2027-04-03T13:22:56.723Z",
+      "family": "aspect",
+      "subtype": "trine",
+      "bodies": [
+        "Jupiter",
+        "Saturn"
+      ],
+      "signs": [
+        "leo",
+        "aries"
+      ],
+      "summary": "Jupiter and Saturn reach an exact trine.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/jupiter-trine-saturn-2027-04-03.png"
+    },
+    {
+      "id": "new-moon-2027-04-06",
+      "path": "/new-moon/2027-04-06/",
+      "title": "New moon in Aries — April 6, 2027",
+      "anchor": "2027-04-06T23:51:05.486Z",
+      "family": "lunation",
+      "subtype": "new",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "aries"
+      ],
+      "summary": "Sun and Moon meet in Aries; the month's quiet reset.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/new-moon-2027-04-06.png"
+    },
+    {
+      "id": "full-moon-2027-04-20",
+      "path": "/full-moon/2027-04-20/",
+      "title": "Full moon in Scorpio — April 20, 2027",
+      "anchor": "2027-04-20T22:27:05.233Z",
+      "family": "lunation",
+      "subtype": "full",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "scorpio"
+      ],
+      "summary": "The Pink Moon — the Moon stands opposite the Sun in Scorpio.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/full-moon-2027-04-20.png"
+    },
+    {
+      "id": "new-moon-2027-05-06",
+      "path": "/new-moon/2027-05-06/",
+      "title": "New moon in Taurus — May 6, 2027",
+      "anchor": "2027-05-06T10:58:33.371Z",
+      "family": "lunation",
+      "subtype": "new",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "taurus"
+      ],
+      "summary": "Sun and Moon meet in Taurus; the month's quiet reset.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/new-moon-2027-05-06.png"
+    },
+    {
+      "id": "full-moon-2027-05-20",
+      "path": "/full-moon/2027-05-20/",
+      "title": "Full moon in Scorpio — May 20, 2027",
+      "anchor": "2027-05-20T10:58:57.926Z",
+      "family": "lunation",
+      "subtype": "full",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "scorpio"
+      ],
+      "summary": "The Flower Moon — the Moon stands opposite the Sun in Scorpio.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/full-moon-2027-05-20.png"
+    },
+    {
+      "id": "new-moon-2027-06-04",
+      "path": "/new-moon/2027-06-04/",
+      "title": "New moon in Gemini — June 4, 2027",
+      "anchor": "2027-06-04T19:40:16.001Z",
+      "family": "lunation",
+      "subtype": "new",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "gemini"
+      ],
+      "summary": "Sun and Moon meet in Gemini; the month's quiet reset.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/new-moon-2027-06-04.png"
+    },
+    {
+      "id": "uranus-sextile-neptune-2027-06-06",
+      "path": "/events/uranus-sextile-neptune-2027-06-06/",
+      "title": "Uranus sextile Neptune — June 6, 2027",
+      "anchor": "2027-06-06T12:03:30.772Z",
+      "family": "aspect",
+      "subtype": "sextile",
+      "bodies": [
+        "Uranus",
+        "Neptune"
+      ],
+      "signs": [
+        "gemini",
+        "aries"
+      ],
+      "summary": "Uranus and Neptune reach an exact sextile.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/uranus-sextile-neptune-2027-06-06.png"
+    },
+    {
+      "id": "mercury-retrograde-2027-06-10",
+      "path": "/mercury-retrograde/2027-06-10/",
+      "title": "Mercury retrograde — June 2027",
+      "anchor": "2027-06-10T18:19:08.290Z",
+      "family": "retrograde",
+      "subtype": "cycle",
+      "bodies": [
+        "Mercury"
+      ],
+      "signs": [
+        "gemini",
+        "cancer"
+      ],
+      "summary": "Mercury appears to reverse through Gemini and Cancer.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/mercury-retrograde-2027-06-10.png"
+    },
+    {
+      "id": "uranus-trine-pluto-2027-06-15",
+      "path": "/events/uranus-trine-pluto-2027-06-15/",
+      "title": "Uranus trine Pluto — June 15, 2027",
+      "anchor": "2027-06-15T08:01:25.829Z",
+      "family": "aspect",
+      "subtype": "trine",
+      "bodies": [
+        "Uranus",
+        "Pluto"
+      ],
+      "signs": [
+        "gemini",
+        "aquarius"
+      ],
+      "summary": "Uranus and Pluto reach an exact trine.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/uranus-trine-pluto-2027-06-15.png"
+    },
+    {
+      "id": "full-moon-2027-06-19",
+      "path": "/full-moon/2027-06-19/",
+      "title": "Full moon in Sagittarius — June 19, 2027",
+      "anchor": "2027-06-19T00:44:17.894Z",
+      "family": "lunation",
+      "subtype": "full",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "sagittarius"
+      ],
+      "summary": "The Strawberry Moon — the Moon stands opposite the Sun in Sagittarius.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/full-moon-2027-06-19.png"
+    },
+    {
+      "id": "neptune-sextile-pluto-2027-06-28",
+      "path": "/events/neptune-sextile-pluto-2027-06-28/",
+      "title": "Neptune sextile Pluto — June 28, 2027",
+      "anchor": "2027-06-28T20:34:21.803Z",
+      "family": "aspect",
+      "subtype": "sextile",
+      "bodies": [
+        "Neptune",
+        "Pluto"
+      ],
+      "signs": [
+        "aries",
+        "aquarius"
+      ],
+      "summary": "Neptune and Pluto reach an exact sextile.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/neptune-sextile-pluto-2027-06-28.png"
+    },
+    {
+      "id": "new-moon-2027-07-04",
+      "path": "/new-moon/2027-07-04/",
+      "title": "New moon in Cancer — July 4, 2027",
+      "anchor": "2027-07-04T03:01:58.815Z",
+      "family": "lunation",
+      "subtype": "new",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "cancer"
+      ],
+      "summary": "Sun and Moon meet in Cancer; the month's quiet reset.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/new-moon-2027-07-04.png"
+    },
+    {
+      "id": "jupiter-trine-saturn-2027-07-11",
+      "path": "/events/jupiter-trine-saturn-2027-07-11/",
+      "title": "Jupiter trine Saturn — July 11, 2027",
+      "anchor": "2027-07-11T22:45:48.310Z",
+      "family": "aspect",
+      "subtype": "trine",
+      "bodies": [
+        "Jupiter",
+        "Saturn"
+      ],
+      "signs": [
+        "leo",
+        "aries"
+      ],
+      "summary": "Jupiter and Saturn reach an exact trine.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/jupiter-trine-saturn-2027-07-11.png"
+    },
+    {
+      "id": "full-moon-2027-07-18",
+      "path": "/full-moon/2027-07-18/",
+      "title": "Full moon in Capricorn — July 18, 2027",
+      "anchor": "2027-07-18T15:44:51.512Z",
+      "family": "lunation",
+      "subtype": "full",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "capricorn"
+      ],
+      "summary": "The Buck Moon — the Moon stands opposite the Sun in Capricorn.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/full-moon-2027-07-18.png"
+    },
+    {
+      "id": "eclipse-2027-07-18",
+      "path": "/eclipses/2027-07-18/",
+      "title": "Penumbral lunar eclipse in Capricorn — July 18, 2027",
+      "anchor": "2027-07-18T16:02:54.880Z",
+      "family": "eclipse",
+      "subtype": "lunar",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "capricorn"
+      ],
+      "summary": "A full moon passes through Earth's shadow in Capricorn.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/eclipse-2027-07-18.png"
+    },
+    {
+      "id": "jupiter-enters-virgo-2027-07-26",
+      "path": "/events/jupiter-enters-virgo-2027-07-26/",
+      "title": "Jupiter enters Virgo — July 26, 2027",
+      "anchor": "2027-07-26T04:45:20.439Z",
+      "family": "ingress",
+      "subtype": "ingress",
+      "bodies": [
+        "Jupiter"
+      ],
+      "signs": [
+        "virgo"
+      ],
+      "summary": "Jupiter moves into Virgo from Leo.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/jupiter-enters-virgo-2027-07-26.png"
+    },
+    {
+      "id": "new-moon-2027-08-02",
+      "path": "/new-moon/2027-08-02/",
+      "title": "New moon in Leo — August 2, 2027",
+      "anchor": "2027-08-02T10:05:08.275Z",
+      "family": "lunation",
+      "subtype": "new",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "leo"
+      ],
+      "summary": "Sun and Moon meet in Leo; the month's quiet reset.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/new-moon-2027-08-02.png"
+    },
+    {
+      "id": "eclipse-2027-08-02",
+      "path": "/eclipses/2027-08-02/",
+      "title": "Total solar eclipse in Leo — August 2, 2027",
+      "anchor": "2027-08-02T10:06:34.636Z",
+      "family": "eclipse",
+      "subtype": "solar",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "leo"
+      ],
+      "summary": "A new moon crosses the Sun's face in Leo.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/eclipse-2027-08-02.png"
+    },
+    {
+      "id": "eclipse-2027-08-17",
+      "path": "/eclipses/2027-08-17/",
+      "title": "Penumbral lunar eclipse in Aquarius — August 17, 2027",
+      "anchor": "2027-08-17T07:13:44.931Z",
+      "family": "eclipse",
+      "subtype": "lunar",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "aquarius"
+      ],
+      "summary": "A full moon passes through Earth's shadow in Aquarius.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/eclipse-2027-08-17.png"
+    },
+    {
+      "id": "full-moon-2027-08-17",
+      "path": "/full-moon/2027-08-17/",
+      "title": "Full moon in Aquarius — August 17, 2027",
+      "anchor": "2027-08-17T07:28:35.460Z",
+      "family": "lunation",
+      "subtype": "full",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "aquarius"
+      ],
+      "summary": "The Sturgeon Moon — the Moon stands opposite the Sun in Aquarius.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/full-moon-2027-08-17.png"
+    },
+    {
+      "id": "new-moon-2027-08-31",
+      "path": "/new-moon/2027-08-31/",
+      "title": "New moon in Virgo — August 31, 2027",
+      "anchor": "2027-08-31T17:41:06.127Z",
+      "family": "lunation",
+      "subtype": "new",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "virgo"
+      ],
+      "summary": "Sun and Moon meet in Virgo; the month's quiet reset.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/new-moon-2027-08-31.png"
+    },
+    {
+      "id": "jupiter-square-uranus-2027-09-10",
+      "path": "/events/jupiter-square-uranus-2027-09-10/",
+      "title": "Jupiter square Uranus — September 10, 2027",
+      "anchor": "2027-09-10T16:36:52.892Z",
+      "family": "aspect",
+      "subtype": "square",
+      "bodies": [
+        "Jupiter",
+        "Uranus"
+      ],
+      "signs": [
+        "virgo",
+        "gemini"
+      ],
+      "summary": "Jupiter and Uranus reach an exact square.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/jupiter-square-uranus-2027-09-10.png"
+    },
+    {
+      "id": "full-moon-2027-09-15",
+      "path": "/full-moon/2027-09-15/",
+      "title": "Full moon in Pisces — September 15, 2027",
+      "anchor": "2027-09-15T23:03:26.129Z",
+      "family": "lunation",
+      "subtype": "full",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "pisces"
+      ],
+      "summary": "The Corn Moon — the Moon stands opposite the Sun in Pisces.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/full-moon-2027-09-15.png"
+    },
+    {
+      "id": "new-moon-2027-09-30",
+      "path": "/new-moon/2027-09-30/",
+      "title": "New moon in Libra — September 30, 2027",
+      "anchor": "2027-09-30T02:35:58.290Z",
+      "family": "lunation",
+      "subtype": "new",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "libra"
+      ],
+      "summary": "Sun and Moon meet in Libra; the month's quiet reset.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/new-moon-2027-09-30.png"
+    },
+    {
+      "id": "mercury-retrograde-2027-10-07",
+      "path": "/mercury-retrograde/2027-10-07/",
+      "title": "Mercury retrograde — October 2027",
+      "anchor": "2027-10-07T14:39:07.557Z",
+      "family": "retrograde",
+      "subtype": "cycle",
+      "bodies": [
+        "Mercury"
+      ],
+      "signs": [
+        "libra",
+        "scorpio"
+      ],
+      "summary": "Mercury appears to reverse through Libra and Scorpio.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/mercury-retrograde-2027-10-07.png"
+    },
+    {
+      "id": "full-moon-2027-10-15",
+      "path": "/full-moon/2027-10-15/",
+      "title": "Full moon in Aries — October 15, 2027",
+      "anchor": "2027-10-15T13:46:52.664Z",
+      "family": "lunation",
+      "subtype": "full",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "aries"
+      ],
+      "summary": "The Hunter’s Moon — the Moon stands opposite the Sun in Aries.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/full-moon-2027-10-15.png"
+    },
+    {
+      "id": "neptune-sextile-pluto-2027-10-16",
+      "path": "/events/neptune-sextile-pluto-2027-10-16/",
+      "title": "Neptune sextile Pluto — October 16, 2027",
+      "anchor": "2027-10-16T18:03:50.794Z",
+      "family": "aspect",
+      "subtype": "sextile",
+      "bodies": [
+        "Neptune",
+        "Pluto"
+      ],
+      "signs": [
+        "aries",
+        "aquarius"
+      ],
+      "summary": "Neptune and Pluto reach an exact sextile.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/neptune-sextile-pluto-2027-10-16.png"
+    },
+    {
+      "id": "new-moon-2027-10-29",
+      "path": "/new-moon/2027-10-29/",
+      "title": "New moon in Scorpio — October 29, 2027",
+      "anchor": "2027-10-29T13:36:25.865Z",
+      "family": "lunation",
+      "subtype": "new",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "scorpio"
+      ],
+      "summary": "Sun and Moon meet in Scorpio; the month's quiet reset.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/new-moon-2027-10-29.png"
+    },
+    {
+      "id": "full-moon-2027-11-14",
+      "path": "/full-moon/2027-11-14/",
+      "title": "Full moon in Taurus — November 14, 2027",
+      "anchor": "2027-11-14T03:25:46.434Z",
+      "family": "lunation",
+      "subtype": "full",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "taurus"
+      ],
+      "summary": "The Beaver Moon — the Moon stands opposite the Sun in Taurus.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/full-moon-2027-11-14.png"
+    },
+    {
+      "id": "new-moon-2027-11-28",
+      "path": "/new-moon/2027-11-28/",
+      "title": "New moon in Sagittarius — November 28, 2027",
+      "anchor": "2027-11-28T03:24:17.774Z",
+      "family": "lunation",
+      "subtype": "new",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "sagittarius"
+      ],
+      "summary": "Sun and Moon meet in Sagittarius; the month's quiet reset.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/new-moon-2027-11-28.png"
+    },
+    {
+      "id": "full-moon-2027-12-13",
+      "path": "/full-moon/2027-12-13/",
+      "title": "Full moon in Gemini — December 13, 2027",
+      "anchor": "2027-12-13T16:08:41.191Z",
+      "family": "lunation",
+      "subtype": "full",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "gemini"
+      ],
+      "summary": "The Cold Moon — the Moon stands opposite the Sun in Gemini.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/full-moon-2027-12-13.png"
+    },
+    {
+      "id": "new-moon-2027-12-27",
+      "path": "/new-moon/2027-12-27/",
+      "title": "New moon in Capricorn — December 27, 2027",
+      "anchor": "2027-12-27T20:12:11.909Z",
+      "family": "lunation",
+      "subtype": "new",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "capricorn"
+      ],
+      "summary": "Sun and Moon meet in Capricorn; the month's quiet reset.",
+      "lastModified": "2026-07-20",
+      "card": "/assets/og/v2/events/new-moon-2027-12-27.png"
+    }
+  ],
+  "timeline": [
+    {
+      "id": "full-moon-2026-01-03",
+      "path": "/full-moon/2026-01-03/",
+      "title": "Full moon in Cancer — January 3, 2026",
+      "anchor": "2026-01-03T10:02:50.012Z",
+      "family": "lunation",
+      "subtype": "full",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "cancer"
+      ],
+      "summary": "The Wolf Moon — the Moon stands opposite the Sun in Cancer.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "new-moon-2026-01-18",
+      "path": "/new-moon/2026-01-18/",
+      "title": "New moon in Capricorn — January 18, 2026",
+      "anchor": "2026-01-18T19:51:55.886Z",
+      "family": "lunation",
+      "subtype": "new",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "capricorn"
+      ],
+      "summary": "Sun and Moon meet in Capricorn; the month's quiet reset.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "saturn-sextile-uranus-2026-01-20",
+      "path": "/events/saturn-sextile-uranus-2026-01-20/",
+      "title": "Saturn sextile Uranus — January 20, 2026",
+      "anchor": "2026-01-20T05:44:10.286Z",
+      "family": "aspect",
+      "subtype": "sextile",
+      "bodies": [
+        "Saturn",
+        "Uranus"
+      ],
+      "signs": [
+        "pisces",
+        "taurus"
+      ],
+      "summary": "Saturn and Uranus reach an exact sextile.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "neptune-enters-aries-2026-01-26",
+      "path": "/events/neptune-enters-aries-2026-01-26/",
+      "title": "Neptune enters Aries — January 26, 2026",
+      "anchor": "2026-01-26T14:30:38.567Z",
+      "family": "ingress",
+      "subtype": "ingress",
+      "bodies": [
+        "Neptune"
+      ],
+      "signs": [
+        "aries"
+      ],
+      "summary": "Neptune moves into Aries from Pisces.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "full-moon-2026-02-01",
+      "path": "/full-moon/2026-02-01/",
+      "title": "Full moon in Leo — February 1, 2026",
+      "anchor": "2026-02-01T22:09:11.676Z",
+      "family": "lunation",
+      "subtype": "full",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "leo"
+      ],
+      "summary": "The Snow Moon — the Moon stands opposite the Sun in Leo.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "uranus-stations-direct-2026-02-04",
+      "path": "/retrogrades/#retrograde-uranus-2026-01-01",
+      "title": "Uranus stations direct — February 4, 2026",
+      "anchor": "2026-02-04T02:17:17.109Z",
+      "family": "station",
+      "subtype": "direct",
+      "bodies": [
+        "Uranus"
+      ],
+      "signs": [
+        "taurus"
+      ],
+      "summary": "Uranus stands still, then resumes forward motion.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "saturn-enters-aries-2026-02-14",
+      "path": "/events/saturn-enters-aries-2026-02-14/",
+      "title": "Saturn enters Aries — February 14, 2026",
+      "anchor": "2026-02-14T00:39:31.850Z",
+      "family": "ingress",
+      "subtype": "ingress",
+      "bodies": [
+        "Saturn"
+      ],
+      "signs": [
+        "aries"
+      ],
+      "summary": "Saturn moves into Aries from Pisces.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "new-moon-2026-02-17",
+      "path": "/new-moon/2026-02-17/",
+      "title": "New moon in Aquarius — February 17, 2026",
+      "anchor": "2026-02-17T12:01:06.411Z",
+      "family": "lunation",
+      "subtype": "new",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "aquarius"
+      ],
+      "summary": "Sun and Moon meet in Aquarius; the month's quiet reset.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "eclipse-2026-02-17",
+      "path": "/eclipses/2026-02-17/",
+      "title": "Annular solar eclipse in Aquarius — February 17, 2026",
+      "anchor": "2026-02-17T12:11:53.939Z",
+      "family": "eclipse",
+      "subtype": "solar",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "aquarius"
+      ],
+      "summary": "A new moon crosses the Sun's face in Aquarius.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "saturn-conjunction-neptune-2026-02-20",
+      "path": "/events/saturn-conjunction-neptune-2026-02-20/",
+      "title": "Saturn conjunction Neptune — February 20, 2026",
+      "anchor": "2026-02-20T18:29:16.795Z",
+      "family": "aspect",
+      "subtype": "conjunction",
+      "bodies": [
+        "Saturn",
+        "Neptune"
+      ],
+      "signs": [
+        "aries",
+        "aries"
+      ],
+      "summary": "Saturn and Neptune reach an exact conjunction.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "mercury-stations-retrograde-2026-02-26",
+      "path": "/mercury-retrograde/2026-02-26/",
+      "title": "Mercury stations retrograde — February 26, 2026",
+      "anchor": "2026-02-26T06:47:13.153Z",
+      "family": "station",
+      "subtype": "retrograde",
+      "bodies": [
+        "Mercury"
+      ],
+      "signs": [
+        "pisces"
+      ],
+      "summary": "Mercury slows to a standstill and turns retrograde.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "eclipse-2026-03-03",
+      "path": "/eclipses/2026-03-03/",
+      "title": "Total lunar eclipse in Virgo — March 3, 2026",
+      "anchor": "2026-03-03T11:33:40.289Z",
+      "family": "eclipse",
+      "subtype": "lunar",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "virgo"
+      ],
+      "summary": "A full moon passes through Earth's shadow in Virgo.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "full-moon-2026-03-03",
+      "path": "/full-moon/2026-03-03/",
+      "title": "Full moon in Virgo — March 3, 2026",
+      "anchor": "2026-03-03T11:37:51.752Z",
+      "family": "lunation",
+      "subtype": "full",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "virgo"
+      ],
+      "summary": "The Worm Moon — the Moon stands opposite the Sun in Virgo.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "jupiter-stations-direct-2026-03-11",
+      "path": "/retrogrades/#retrograde-jupiter-2026-01-01",
+      "title": "Jupiter stations direct — March 11, 2026",
+      "anchor": "2026-03-11T03:26:43.125Z",
+      "family": "station",
+      "subtype": "direct",
+      "bodies": [
+        "Jupiter"
+      ],
+      "signs": [
+        "cancer"
+      ],
+      "summary": "Jupiter stands still, then resumes forward motion.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "new-moon-2026-03-19",
+      "path": "/new-moon/2026-03-19/",
+      "title": "New moon in Pisces — March 19, 2026",
+      "anchor": "2026-03-19T01:23:27.869Z",
+      "family": "lunation",
+      "subtype": "new",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "pisces"
+      ],
+      "summary": "Sun and Moon meet in Pisces; the month's quiet reset.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "mercury-stations-direct-2026-03-20",
+      "path": "/mercury-retrograde/2026-02-26/",
+      "title": "Mercury stations direct — March 20, 2026",
+      "anchor": "2026-03-20T19:34:55.312Z",
+      "family": "station",
+      "subtype": "direct",
+      "bodies": [
+        "Mercury"
+      ],
+      "signs": [
+        "pisces"
+      ],
+      "summary": "Mercury stands still, then resumes forward motion.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "saturn-sextile-pluto-2026-03-28",
+      "path": "/events/saturn-sextile-pluto-2026-03-28/",
+      "title": "Saturn sextile Pluto — March 28, 2026",
+      "anchor": "2026-03-28T22:34:30.097Z",
+      "family": "aspect",
+      "subtype": "sextile",
+      "bodies": [
+        "Saturn",
+        "Pluto"
+      ],
+      "signs": [
+        "aries",
+        "aquarius"
+      ],
+      "summary": "Saturn and Pluto reach an exact sextile.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "full-moon-2026-04-02",
+      "path": "/full-moon/2026-04-02/",
+      "title": "Full moon in Libra — April 2, 2026",
+      "anchor": "2026-04-02T02:11:54.521Z",
+      "family": "lunation",
+      "subtype": "full",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "libra"
+      ],
+      "summary": "The Pink Moon — the Moon stands opposite the Sun in Libra.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "new-moon-2026-04-17",
+      "path": "/new-moon/2026-04-17/",
+      "title": "New moon in Aries — April 17, 2026",
+      "anchor": "2026-04-17T11:51:46.025Z",
+      "family": "lunation",
+      "subtype": "new",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "aries"
+      ],
+      "summary": "Sun and Moon meet in Aries; the month's quiet reset.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "uranus-enters-gemini-2026-04-26",
+      "path": "/events/uranus-enters-gemini-2026-04-26/",
+      "title": "Uranus enters Gemini — April 26, 2026",
+      "anchor": "2026-04-26T01:01:14.904Z",
+      "family": "ingress",
+      "subtype": "ingress",
+      "bodies": [
+        "Uranus"
+      ],
+      "signs": [
+        "gemini"
+      ],
+      "summary": "Uranus moves into Gemini from Taurus.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "full-moon-2026-05-01",
+      "path": "/full-moon/2026-05-01/",
+      "title": "Full moon in Scorpio — May 1, 2026",
+      "anchor": "2026-05-01T17:23:03.837Z",
+      "family": "lunation",
+      "subtype": "full",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "scorpio"
+      ],
+      "summary": "The Flower Moon — the Moon stands opposite the Sun in Scorpio.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "pluto-stations-retrograde-2026-05-06",
+      "path": "/retrogrades/#retrograde-pluto-2026-05-06",
+      "title": "Pluto stations retrograde — May 6, 2026",
+      "anchor": "2026-05-06T15:44:37.587Z",
+      "family": "station",
+      "subtype": "retrograde",
+      "bodies": [
+        "Pluto"
+      ],
+      "signs": [
+        "aquarius"
+      ],
+      "summary": "Pluto slows to a standstill and turns retrograde.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "new-moon-2026-05-16",
+      "path": "/new-moon/2026-05-16/",
+      "title": "New moon in Taurus — May 16, 2026",
+      "anchor": "2026-05-16T20:00:58.227Z",
+      "family": "lunation",
+      "subtype": "new",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "taurus"
+      ],
+      "summary": "Sun and Moon meet in Taurus; the month's quiet reset.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "full-moon-2026-05-31",
+      "path": "/full-moon/2026-05-31/",
+      "title": "Full moon in Sagittarius — May 31, 2026",
+      "anchor": "2026-05-31T08:45:04.009Z",
+      "family": "lunation",
+      "subtype": "full",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "sagittarius"
+      ],
+      "summary": "A blue moon — the Moon stands opposite the Sun in Sagittarius.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "new-moon-2026-06-15",
+      "path": "/new-moon/2026-06-15/",
+      "title": "New moon in Gemini — June 15, 2026",
+      "anchor": "2026-06-15T02:54:05.277Z",
+      "family": "lunation",
+      "subtype": "new",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "gemini"
+      ],
+      "summary": "Sun and Moon meet in Gemini; the month's quiet reset.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "mercury-stations-retrograde-2026-06-29",
+      "path": "/mercury-retrograde/2026-06-29/",
+      "title": "Mercury stations retrograde — June 29, 2026",
+      "anchor": "2026-06-29T17:37:12.860Z",
+      "family": "station",
+      "subtype": "retrograde",
+      "bodies": [
+        "Mercury"
+      ],
+      "signs": [
+        "cancer"
+      ],
+      "summary": "Mercury slows to a standstill and turns retrograde.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "full-moon-2026-06-29",
+      "path": "/full-moon/2026-06-29/",
+      "title": "Full moon in Capricorn — June 29, 2026",
+      "anchor": "2026-06-29T23:56:33.675Z",
+      "family": "lunation",
+      "subtype": "full",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "capricorn"
+      ],
+      "summary": "The Strawberry Moon — the Moon stands opposite the Sun in Capricorn.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "jupiter-enters-leo-2026-06-30",
+      "path": "/events/jupiter-enters-leo-2026-06-30/",
+      "title": "Jupiter enters Leo — June 30, 2026",
+      "anchor": "2026-06-30T05:56:15.135Z",
+      "family": "ingress",
+      "subtype": "ingress",
+      "bodies": [
+        "Jupiter"
+      ],
+      "signs": [
+        "leo"
+      ],
+      "summary": "Jupiter moves into Leo from Cancer.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "neptune-stations-retrograde-2026-07-07",
+      "path": "/retrogrades/#retrograde-neptune-2026-07-07",
+      "title": "Neptune stations retrograde — July 7, 2026",
+      "anchor": "2026-07-07T11:21:05.184Z",
+      "family": "station",
+      "subtype": "retrograde",
+      "bodies": [
+        "Neptune"
+      ],
+      "signs": [
+        "aries"
+      ],
+      "summary": "Neptune slows to a standstill and turns retrograde.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "new-moon-2026-07-14",
+      "path": "/new-moon/2026-07-14/",
+      "title": "New moon in Cancer — July 14, 2026",
+      "anchor": "2026-07-14T09:43:29.938Z",
+      "family": "lunation",
+      "subtype": "new",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "cancer"
+      ],
+      "summary": "Sun and Moon meet in Cancer; the month's quiet reset.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "uranus-sextile-neptune-2026-07-15",
+      "path": "/events/uranus-sextile-neptune-2026-07-15/",
+      "title": "Uranus sextile Neptune — July 15, 2026",
+      "anchor": "2026-07-15T22:22:54.580Z",
+      "family": "aspect",
+      "subtype": "sextile",
+      "bodies": [
+        "Uranus",
+        "Neptune"
+      ],
+      "signs": [
+        "gemini",
+        "aries"
+      ],
+      "summary": "Uranus and Neptune reach an exact sextile.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "uranus-trine-pluto-2026-07-18",
+      "path": "/events/uranus-trine-pluto-2026-07-18/",
+      "title": "Uranus trine Pluto — July 18, 2026",
+      "anchor": "2026-07-18T04:39:44.443Z",
+      "family": "aspect",
+      "subtype": "trine",
+      "bodies": [
+        "Uranus",
+        "Pluto"
+      ],
+      "signs": [
+        "gemini",
+        "aquarius"
+      ],
+      "summary": "Uranus and Pluto reach an exact trine.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "jupiter-trine-neptune-2026-07-20",
+      "path": "/events/jupiter-trine-neptune-2026-07-20/",
+      "title": "Jupiter trine Neptune — July 20, 2026",
+      "anchor": "2026-07-20T07:47:52.896Z",
+      "family": "aspect",
+      "subtype": "trine",
+      "bodies": [
+        "Jupiter",
+        "Neptune"
+      ],
+      "signs": [
+        "leo",
+        "aries"
+      ],
+      "summary": "Jupiter and Neptune reach an exact trine.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "jupiter-opposition-pluto-2026-07-20",
+      "path": "/events/jupiter-opposition-pluto-2026-07-20/",
+      "title": "Jupiter opposition Pluto — July 20, 2026",
+      "anchor": "2026-07-20T14:45:43.725Z",
+      "family": "aspect",
+      "subtype": "opposition",
+      "bodies": [
+        "Jupiter",
+        "Pluto"
+      ],
+      "signs": [
+        "leo",
+        "aquarius"
+      ],
+      "summary": "Jupiter and Pluto reach an exact opposition.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "jupiter-sextile-uranus-2026-07-21",
+      "path": "/events/jupiter-sextile-uranus-2026-07-21/",
+      "title": "Jupiter sextile Uranus — July 21, 2026",
+      "anchor": "2026-07-21T11:13:07.443Z",
+      "family": "aspect",
+      "subtype": "sextile",
+      "bodies": [
+        "Jupiter",
+        "Uranus"
+      ],
+      "signs": [
+        "leo",
+        "gemini"
+      ],
+      "summary": "Jupiter and Uranus reach an exact sextile.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "mercury-stations-direct-2026-07-23",
+      "path": "/mercury-retrograde/2026-06-29/",
+      "title": "Mercury stations direct — July 23, 2026",
+      "anchor": "2026-07-23T22:56:19.394Z",
+      "family": "station",
+      "subtype": "direct",
+      "bodies": [
+        "Mercury"
+      ],
+      "signs": [
+        "cancer"
+      ],
+      "summary": "Mercury stands still, then resumes forward motion.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "neptune-sextile-pluto-2026-07-24",
+      "path": "/events/neptune-sextile-pluto-2026-07-24/",
+      "title": "Neptune sextile Pluto — July 24, 2026",
+      "anchor": "2026-07-24T23:09:32.221Z",
+      "family": "aspect",
+      "subtype": "sextile",
+      "bodies": [
+        "Neptune",
+        "Pluto"
+      ],
+      "signs": [
+        "aries",
+        "aquarius"
+      ],
+      "summary": "Neptune and Pluto reach an exact sextile.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "saturn-stations-retrograde-2026-07-26",
+      "path": "/retrogrades/#retrograde-saturn-2026-07-26",
+      "title": "Saturn stations retrograde — July 26, 2026",
+      "anchor": "2026-07-26T19:57:37.177Z",
+      "family": "station",
+      "subtype": "retrograde",
+      "bodies": [
+        "Saturn"
+      ],
+      "signs": [
+        "aries"
+      ],
+      "summary": "Saturn slows to a standstill and turns retrograde.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "full-moon-2026-07-29",
+      "path": "/full-moon/2026-07-29/",
+      "title": "Full moon in Aquarius — July 29, 2026",
+      "anchor": "2026-07-29T14:35:36.043Z",
+      "family": "lunation",
+      "subtype": "full",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "aquarius"
+      ],
+      "summary": "The Buck Moon — the Moon stands opposite the Sun in Aquarius.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "new-moon-2026-08-12",
+      "path": "/new-moon/2026-08-12/",
+      "title": "New moon in Leo — August 12, 2026",
+      "anchor": "2026-08-12T17:36:35.369Z",
+      "family": "lunation",
+      "subtype": "new",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "leo"
+      ],
+      "summary": "Sun and Moon meet in Leo; the month's quiet reset.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "eclipse-2026-08-12",
+      "path": "/eclipses/2026-08-12/",
+      "title": "Total solar eclipse in Leo — August 12, 2026",
+      "anchor": "2026-08-12T17:45:46.794Z",
+      "family": "eclipse",
+      "subtype": "solar",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "leo"
+      ],
+      "summary": "A new moon crosses the Sun's face in Leo.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "eclipse-2026-08-28",
+      "path": "/eclipses/2026-08-28/",
+      "title": "Partial lunar eclipse in Pisces — August 28, 2026",
+      "anchor": "2026-08-28T04:12:49.076Z",
+      "family": "eclipse",
+      "subtype": "lunar",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "pisces"
+      ],
+      "summary": "A full moon passes through Earth's shadow in Pisces.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "full-moon-2026-08-28",
+      "path": "/full-moon/2026-08-28/",
+      "title": "Full moon in Pisces — August 28, 2026",
+      "anchor": "2026-08-28T04:18:24.894Z",
+      "family": "lunation",
+      "subtype": "full",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "pisces"
+      ],
+      "summary": "The Sturgeon Moon — the Moon stands opposite the Sun in Pisces.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "jupiter-trine-saturn-2026-08-31",
+      "path": "/events/jupiter-trine-saturn-2026-08-31/",
+      "title": "Jupiter trine Saturn — August 31, 2026",
+      "anchor": "2026-08-31T22:05:16.185Z",
+      "family": "aspect",
+      "subtype": "trine",
+      "bodies": [
+        "Jupiter",
+        "Saturn"
+      ],
+      "signs": [
+        "leo",
+        "aries"
+      ],
+      "summary": "Jupiter and Saturn reach an exact trine.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "uranus-stations-retrograde-2026-09-10",
+      "path": "/retrogrades/#retrograde-uranus-2026-09-10",
+      "title": "Uranus stations retrograde — September 10, 2026",
+      "anchor": "2026-09-10T18:40:44.238Z",
+      "family": "station",
+      "subtype": "retrograde",
+      "bodies": [
+        "Uranus"
+      ],
+      "signs": [
+        "gemini"
+      ],
+      "summary": "Uranus slows to a standstill and turns retrograde.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "new-moon-2026-09-11",
+      "path": "/new-moon/2026-09-11/",
+      "title": "New moon in Virgo — September 11, 2026",
+      "anchor": "2026-09-11T03:26:50.210Z",
+      "family": "lunation",
+      "subtype": "new",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "virgo"
+      ],
+      "summary": "Sun and Moon meet in Virgo; the month's quiet reset.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "neptune-sextile-pluto-2026-09-16",
+      "path": "/events/neptune-sextile-pluto-2026-09-16/",
+      "title": "Neptune sextile Pluto — September 16, 2026",
+      "anchor": "2026-09-16T08:31:12.865Z",
+      "family": "aspect",
+      "subtype": "sextile",
+      "bodies": [
+        "Neptune",
+        "Pluto"
+      ],
+      "signs": [
+        "aries",
+        "aquarius"
+      ],
+      "summary": "Neptune and Pluto reach an exact sextile.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "full-moon-2026-09-26",
+      "path": "/full-moon/2026-09-26/",
+      "title": "Full moon in Aries — September 26, 2026",
+      "anchor": "2026-09-26T16:48:53.293Z",
+      "family": "lunation",
+      "subtype": "full",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "aries"
+      ],
+      "summary": "The Corn Moon — the Moon stands opposite the Sun in Aries.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "venus-stations-retrograde-2026-10-03",
+      "path": "/venus-retrograde/2026-10-03/",
+      "title": "Venus stations retrograde — October 3, 2026",
+      "anchor": "2026-10-03T07:09:55.019Z",
+      "family": "station",
+      "subtype": "retrograde",
+      "bodies": [
+        "Venus"
+      ],
+      "signs": [
+        "scorpio"
+      ],
+      "summary": "Venus slows to a standstill and turns retrograde.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "new-moon-2026-10-10",
+      "path": "/new-moon/2026-10-10/",
+      "title": "New moon in Libra — October 10, 2026",
+      "anchor": "2026-10-10T15:49:55.806Z",
+      "family": "lunation",
+      "subtype": "new",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "libra"
+      ],
+      "summary": "Sun and Moon meet in Libra; the month's quiet reset.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "pluto-stations-direct-2026-10-16",
+      "path": "/retrogrades/#retrograde-pluto-2026-05-06",
+      "title": "Pluto stations direct — October 16, 2026",
+      "anchor": "2026-10-16T02:23:34.159Z",
+      "family": "station",
+      "subtype": "direct",
+      "bodies": [
+        "Pluto"
+      ],
+      "signs": [
+        "aquarius"
+      ],
+      "summary": "Pluto stands still, then resumes forward motion.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "mercury-stations-retrograde-2026-10-24",
+      "path": "/mercury-retrograde/2026-10-24/",
+      "title": "Mercury stations retrograde — October 24, 2026",
+      "anchor": "2026-10-24T07:14:20.009Z",
+      "family": "station",
+      "subtype": "retrograde",
+      "bodies": [
+        "Mercury"
+      ],
+      "signs": [
+        "scorpio"
+      ],
+      "summary": "Mercury slows to a standstill and turns retrograde.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "full-moon-2026-10-26",
+      "path": "/full-moon/2026-10-26/",
+      "title": "Full moon in Taurus — October 26, 2026",
+      "anchor": "2026-10-26T04:11:38.674Z",
+      "family": "lunation",
+      "subtype": "full",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "taurus"
+      ],
+      "summary": "The Hunter’s Moon — the Moon stands opposite the Sun in Taurus.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "new-moon-2026-11-09",
+      "path": "/new-moon/2026-11-09/",
+      "title": "New moon in Scorpio — November 9, 2026",
+      "anchor": "2026-11-09T07:01:58.843Z",
+      "family": "lunation",
+      "subtype": "new",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "scorpio"
+      ],
+      "summary": "Sun and Moon meet in Scorpio; the month's quiet reset.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "mercury-stations-direct-2026-11-13",
+      "path": "/mercury-retrograde/2026-10-24/",
+      "title": "Mercury stations direct — November 13, 2026",
+      "anchor": "2026-11-13T15:52:57.245Z",
+      "family": "station",
+      "subtype": "direct",
+      "bodies": [
+        "Mercury"
+      ],
+      "signs": [
+        "scorpio"
+      ],
+      "summary": "Mercury stands still, then resumes forward motion.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "venus-stations-direct-2026-11-14",
+      "path": "/venus-retrograde/2026-10-03/",
+      "title": "Venus stations direct — November 14, 2026",
+      "anchor": "2026-11-14T00:21:00.351Z",
+      "family": "station",
+      "subtype": "direct",
+      "bodies": [
+        "Venus"
+      ],
+      "signs": [
+        "libra"
+      ],
+      "summary": "Venus stands still, then resumes forward motion.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "full-moon-2026-11-24",
+      "path": "/full-moon/2026-11-24/",
+      "title": "Full moon in Gemini — November 24, 2026",
+      "anchor": "2026-11-24T14:53:28.775Z",
+      "family": "lunation",
+      "subtype": "full",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "gemini"
+      ],
+      "summary": "The Beaver Moon — the Moon stands opposite the Sun in Gemini.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "uranus-trine-pluto-2026-11-29",
+      "path": "/events/uranus-trine-pluto-2026-11-29/",
+      "title": "Uranus trine Pluto — November 29, 2026",
+      "anchor": "2026-11-29T11:27:00.564Z",
+      "family": "aspect",
+      "subtype": "trine",
+      "bodies": [
+        "Uranus",
+        "Pluto"
+      ],
+      "signs": [
+        "gemini",
+        "aquarius"
+      ],
+      "summary": "Uranus and Pluto reach an exact trine.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "new-moon-2026-12-09",
+      "path": "/new-moon/2026-12-09/",
+      "title": "New moon in Sagittarius — December 9, 2026",
+      "anchor": "2026-12-09T00:51:45.724Z",
+      "family": "lunation",
+      "subtype": "new",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "sagittarius"
+      ],
+      "summary": "Sun and Moon meet in Sagittarius; the month's quiet reset.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "saturn-stations-direct-2026-12-10",
+      "path": "/retrogrades/#retrograde-saturn-2026-07-26",
+      "title": "Saturn stations direct — December 10, 2026",
+      "anchor": "2026-12-10T23:23:24.931Z",
+      "family": "station",
+      "subtype": "direct",
+      "bodies": [
+        "Saturn"
+      ],
+      "signs": [
+        "aries"
+      ],
+      "summary": "Saturn stands still, then resumes forward motion.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "neptune-stations-direct-2026-12-12",
+      "path": "/retrogrades/#retrograde-neptune-2026-07-07",
+      "title": "Neptune stations direct — December 12, 2026",
+      "anchor": "2026-12-12T22:13:35.184Z",
+      "family": "station",
+      "subtype": "direct",
+      "bodies": [
+        "Neptune"
+      ],
+      "signs": [
+        "aries"
+      ],
+      "summary": "Neptune stands still, then resumes forward motion.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "jupiter-stations-retrograde-2026-12-13",
+      "path": "/retrogrades/#retrograde-jupiter-2026-12-13",
+      "title": "Jupiter stations retrograde — December 13, 2026",
+      "anchor": "2026-12-13T00:58:53.203Z",
+      "family": "station",
+      "subtype": "retrograde",
+      "bodies": [
+        "Jupiter"
+      ],
+      "signs": [
+        "leo"
+      ],
+      "summary": "Jupiter slows to a standstill and turns retrograde.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "full-moon-2026-12-24",
+      "path": "/full-moon/2026-12-24/",
+      "title": "Full moon in Cancer — December 24, 2026",
+      "anchor": "2026-12-24T01:28:10.162Z",
+      "family": "lunation",
+      "subtype": "full",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "cancer"
+      ],
+      "summary": "The Cold Moon — the Moon stands opposite the Sun in Cancer.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "new-moon-2027-01-07",
+      "path": "/new-moon/2027-01-07/",
+      "title": "New moon in Capricorn — January 7, 2027",
+      "anchor": "2027-01-07T20:24:19.643Z",
+      "family": "lunation",
+      "subtype": "new",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "capricorn"
+      ],
+      "summary": "Sun and Moon meet in Capricorn; the month's quiet reset.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "mars-stations-retrograde-2027-01-10",
+      "path": "/mars-retrograde/2027-01-10/",
+      "title": "Mars stations retrograde — January 10, 2027",
+      "anchor": "2027-01-10T13:01:05.038Z",
+      "family": "station",
+      "subtype": "retrograde",
+      "bodies": [
+        "Mars"
+      ],
+      "signs": [
+        "virgo"
+      ],
+      "summary": "Mars slows to a standstill and turns retrograde.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "uranus-sextile-neptune-2027-01-15",
+      "path": "/events/uranus-sextile-neptune-2027-01-15/",
+      "title": "Uranus sextile Neptune — January 15, 2027",
+      "anchor": "2027-01-15T07:21:17.351Z",
+      "family": "aspect",
+      "subtype": "sextile",
+      "bodies": [
+        "Uranus",
+        "Neptune"
+      ],
+      "signs": [
+        "gemini",
+        "aries"
+      ],
+      "summary": "Uranus and Neptune reach an exact sextile.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "full-moon-2027-01-22",
+      "path": "/full-moon/2027-01-22/",
+      "title": "Full moon in Leo — January 22, 2027",
+      "anchor": "2027-01-22T12:17:15.075Z",
+      "family": "lunation",
+      "subtype": "full",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "leo"
+      ],
+      "summary": "The Wolf Moon — the Moon stands opposite the Sun in Leo.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "new-moon-2027-02-06",
+      "path": "/new-moon/2027-02-06/",
+      "title": "New moon in Aquarius — February 6, 2027",
+      "anchor": "2027-02-06T15:56:02.062Z",
+      "family": "lunation",
+      "subtype": "new",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "aquarius"
+      ],
+      "summary": "Sun and Moon meet in Aquarius; the month's quiet reset.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "eclipse-2027-02-06",
+      "path": "/eclipses/2027-02-06/",
+      "title": "Annular solar eclipse in Aquarius — February 6, 2027",
+      "anchor": "2027-02-06T15:59:32.957Z",
+      "family": "eclipse",
+      "subtype": "solar",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "aquarius"
+      ],
+      "summary": "A new moon crosses the Sun's face in Aquarius.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "uranus-stations-direct-2027-02-08",
+      "path": "/retrogrades/#retrograde-uranus-2026-09-10",
+      "title": "Uranus stations direct — February 8, 2027",
+      "anchor": "2027-02-08T12:23:12.187Z",
+      "family": "station",
+      "subtype": "direct",
+      "bodies": [
+        "Uranus"
+      ],
+      "signs": [
+        "gemini"
+      ],
+      "summary": "Uranus stands still, then resumes forward motion.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "mercury-stations-retrograde-2027-02-09",
+      "path": "/mercury-retrograde/2027-02-09/",
+      "title": "Mercury stations retrograde — February 9, 2027",
+      "anchor": "2027-02-09T17:35:36.620Z",
+      "family": "station",
+      "subtype": "retrograde",
+      "bodies": [
+        "Mercury"
+      ],
+      "signs": [
+        "pisces"
+      ],
+      "summary": "Mercury slows to a standstill and turns retrograde.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "eclipse-2027-02-20",
+      "path": "/eclipses/2027-02-20/",
+      "title": "Penumbral lunar eclipse in Virgo — February 20, 2027",
+      "anchor": "2027-02-20T23:12:44.142Z",
+      "family": "eclipse",
+      "subtype": "lunar",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "virgo"
+      ],
+      "summary": "A full moon passes through Earth's shadow in Virgo.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "full-moon-2027-02-20",
+      "path": "/full-moon/2027-02-20/",
+      "title": "Full moon in Virgo — February 20, 2027",
+      "anchor": "2027-02-20T23:23:31.110Z",
+      "family": "lunation",
+      "subtype": "full",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "virgo"
+      ],
+      "summary": "The Snow Moon — the Moon stands opposite the Sun in Virgo.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "mercury-stations-direct-2027-03-03",
+      "path": "/mercury-retrograde/2027-02-09/",
+      "title": "Mercury stations direct — March 3, 2027",
+      "anchor": "2027-03-03T12:35:34.422Z",
+      "family": "station",
+      "subtype": "direct",
+      "bodies": [
+        "Mercury"
+      ],
+      "signs": [
+        "aquarius"
+      ],
+      "summary": "Mercury stands still, then resumes forward motion.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "new-moon-2027-03-08",
+      "path": "/new-moon/2027-03-08/",
+      "title": "New moon in Pisces — March 8, 2027",
+      "anchor": "2027-03-08T09:29:24.458Z",
+      "family": "lunation",
+      "subtype": "new",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "pisces"
+      ],
+      "summary": "Sun and Moon meet in Pisces; the month's quiet reset.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "full-moon-2027-03-22",
+      "path": "/full-moon/2027-03-22/",
+      "title": "Full moon in Libra — March 22, 2027",
+      "anchor": "2027-03-22T10:43:41.666Z",
+      "family": "lunation",
+      "subtype": "full",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "libra"
+      ],
+      "summary": "The Worm Moon — the Moon stands opposite the Sun in Libra.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "mars-stations-direct-2027-04-01",
+      "path": "/mars-retrograde/2027-01-10/",
+      "title": "Mars stations direct — April 1, 2027",
+      "anchor": "2027-04-01T14:10:38.964Z",
+      "family": "station",
+      "subtype": "direct",
+      "bodies": [
+        "Mars"
+      ],
+      "signs": [
+        "leo"
+      ],
+      "summary": "Mars stands still, then resumes forward motion.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "jupiter-trine-saturn-2027-04-03",
+      "path": "/events/jupiter-trine-saturn-2027-04-03/",
+      "title": "Jupiter trine Saturn — April 3, 2027",
+      "anchor": "2027-04-03T13:22:56.723Z",
+      "family": "aspect",
+      "subtype": "trine",
+      "bodies": [
+        "Jupiter",
+        "Saturn"
+      ],
+      "signs": [
+        "leo",
+        "aries"
+      ],
+      "summary": "Jupiter and Saturn reach an exact trine.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "new-moon-2027-04-06",
+      "path": "/new-moon/2027-04-06/",
+      "title": "New moon in Aries — April 6, 2027",
+      "anchor": "2027-04-06T23:51:05.486Z",
+      "family": "lunation",
+      "subtype": "new",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "aries"
+      ],
+      "summary": "Sun and Moon meet in Aries; the month's quiet reset.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "jupiter-stations-direct-2027-04-13",
+      "path": "/retrogrades/#retrograde-jupiter-2026-12-13",
+      "title": "Jupiter stations direct — April 13, 2027",
+      "anchor": "2027-04-13T02:13:13.212Z",
+      "family": "station",
+      "subtype": "direct",
+      "bodies": [
+        "Jupiter"
+      ],
+      "signs": [
+        "leo"
+      ],
+      "summary": "Jupiter stands still, then resumes forward motion.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "full-moon-2027-04-20",
+      "path": "/full-moon/2027-04-20/",
+      "title": "Full moon in Scorpio — April 20, 2027",
+      "anchor": "2027-04-20T22:27:05.233Z",
+      "family": "lunation",
+      "subtype": "full",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "scorpio"
+      ],
+      "summary": "The Pink Moon — the Moon stands opposite the Sun in Scorpio.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "new-moon-2027-05-06",
+      "path": "/new-moon/2027-05-06/",
+      "title": "New moon in Taurus — May 6, 2027",
+      "anchor": "2027-05-06T10:58:33.371Z",
+      "family": "lunation",
+      "subtype": "new",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "taurus"
+      ],
+      "summary": "Sun and Moon meet in Taurus; the month's quiet reset.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "pluto-stations-retrograde-2027-05-08",
+      "path": "/retrogrades/#retrograde-pluto-2027-05-08",
+      "title": "Pluto stations retrograde — May 8, 2027",
+      "anchor": "2027-05-08T12:14:45.937Z",
+      "family": "station",
+      "subtype": "retrograde",
+      "bodies": [
+        "Pluto"
+      ],
+      "signs": [
+        "aquarius"
+      ],
+      "summary": "Pluto slows to a standstill and turns retrograde.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "full-moon-2027-05-20",
+      "path": "/full-moon/2027-05-20/",
+      "title": "Full moon in Scorpio — May 20, 2027",
+      "anchor": "2027-05-20T10:58:57.926Z",
+      "family": "lunation",
+      "subtype": "full",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "scorpio"
+      ],
+      "summary": "The Flower Moon — the Moon stands opposite the Sun in Scorpio.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "new-moon-2027-06-04",
+      "path": "/new-moon/2027-06-04/",
+      "title": "New moon in Gemini — June 4, 2027",
+      "anchor": "2027-06-04T19:40:16.001Z",
+      "family": "lunation",
+      "subtype": "new",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "gemini"
+      ],
+      "summary": "Sun and Moon meet in Gemini; the month's quiet reset.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "uranus-sextile-neptune-2027-06-06",
+      "path": "/events/uranus-sextile-neptune-2027-06-06/",
+      "title": "Uranus sextile Neptune — June 6, 2027",
+      "anchor": "2027-06-06T12:03:30.772Z",
+      "family": "aspect",
+      "subtype": "sextile",
+      "bodies": [
+        "Uranus",
+        "Neptune"
+      ],
+      "signs": [
+        "gemini",
+        "aries"
+      ],
+      "summary": "Uranus and Neptune reach an exact sextile.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "mercury-stations-retrograde-2027-06-10",
+      "path": "/mercury-retrograde/2027-06-10/",
+      "title": "Mercury stations retrograde — June 10, 2027",
+      "anchor": "2027-06-10T18:19:08.290Z",
+      "family": "station",
+      "subtype": "retrograde",
+      "bodies": [
+        "Mercury"
+      ],
+      "signs": [
+        "cancer"
+      ],
+      "summary": "Mercury slows to a standstill and turns retrograde.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "uranus-trine-pluto-2027-06-15",
+      "path": "/events/uranus-trine-pluto-2027-06-15/",
+      "title": "Uranus trine Pluto — June 15, 2027",
+      "anchor": "2027-06-15T08:01:25.829Z",
+      "family": "aspect",
+      "subtype": "trine",
+      "bodies": [
+        "Uranus",
+        "Pluto"
+      ],
+      "signs": [
+        "gemini",
+        "aquarius"
+      ],
+      "summary": "Uranus and Pluto reach an exact trine.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "full-moon-2027-06-19",
+      "path": "/full-moon/2027-06-19/",
+      "title": "Full moon in Sagittarius — June 19, 2027",
+      "anchor": "2027-06-19T00:44:17.894Z",
+      "family": "lunation",
+      "subtype": "full",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "sagittarius"
+      ],
+      "summary": "The Strawberry Moon — the Moon stands opposite the Sun in Sagittarius.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "neptune-sextile-pluto-2027-06-28",
+      "path": "/events/neptune-sextile-pluto-2027-06-28/",
+      "title": "Neptune sextile Pluto — June 28, 2027",
+      "anchor": "2027-06-28T20:34:21.803Z",
+      "family": "aspect",
+      "subtype": "sextile",
+      "bodies": [
+        "Neptune",
+        "Pluto"
+      ],
+      "signs": [
+        "aries",
+        "aquarius"
+      ],
+      "summary": "Neptune and Pluto reach an exact sextile.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "new-moon-2027-07-04",
+      "path": "/new-moon/2027-07-04/",
+      "title": "New moon in Cancer — July 4, 2027",
+      "anchor": "2027-07-04T03:01:58.815Z",
+      "family": "lunation",
+      "subtype": "new",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "cancer"
+      ],
+      "summary": "Sun and Moon meet in Cancer; the month's quiet reset.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "mercury-stations-direct-2027-07-04",
+      "path": "/mercury-retrograde/2027-06-10/",
+      "title": "Mercury stations direct — July 4, 2027",
+      "anchor": "2027-07-04T19:40:02.489Z",
+      "family": "station",
+      "subtype": "direct",
+      "bodies": [
+        "Mercury"
+      ],
+      "signs": [
+        "gemini"
+      ],
+      "summary": "Mercury stands still, then resumes forward motion.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "neptune-stations-retrograde-2027-07-09",
+      "path": "/retrogrades/#retrograde-neptune-2027-07-09",
+      "title": "Neptune stations retrograde — July 9, 2027",
+      "anchor": "2027-07-09T22:50:11.571Z",
+      "family": "station",
+      "subtype": "retrograde",
+      "bodies": [
+        "Neptune"
+      ],
+      "signs": [
+        "aries"
+      ],
+      "summary": "Neptune slows to a standstill and turns retrograde.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "jupiter-trine-saturn-2027-07-11",
+      "path": "/events/jupiter-trine-saturn-2027-07-11/",
+      "title": "Jupiter trine Saturn — July 11, 2027",
+      "anchor": "2027-07-11T22:45:48.310Z",
+      "family": "aspect",
+      "subtype": "trine",
+      "bodies": [
+        "Jupiter",
+        "Saturn"
+      ],
+      "signs": [
+        "leo",
+        "aries"
+      ],
+      "summary": "Jupiter and Saturn reach an exact trine.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "full-moon-2027-07-18",
+      "path": "/full-moon/2027-07-18/",
+      "title": "Full moon in Capricorn — July 18, 2027",
+      "anchor": "2027-07-18T15:44:51.512Z",
+      "family": "lunation",
+      "subtype": "full",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "capricorn"
+      ],
+      "summary": "The Buck Moon — the Moon stands opposite the Sun in Capricorn.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "eclipse-2027-07-18",
+      "path": "/eclipses/2027-07-18/",
+      "title": "Penumbral lunar eclipse in Capricorn — July 18, 2027",
+      "anchor": "2027-07-18T16:02:54.880Z",
+      "family": "eclipse",
+      "subtype": "lunar",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "capricorn"
+      ],
+      "summary": "A full moon passes through Earth's shadow in Capricorn.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "jupiter-enters-virgo-2027-07-26",
+      "path": "/events/jupiter-enters-virgo-2027-07-26/",
+      "title": "Jupiter enters Virgo — July 26, 2027",
+      "anchor": "2027-07-26T04:45:20.439Z",
+      "family": "ingress",
+      "subtype": "ingress",
+      "bodies": [
+        "Jupiter"
+      ],
+      "signs": [
+        "virgo"
+      ],
+      "summary": "Jupiter moves into Virgo from Leo.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "new-moon-2027-08-02",
+      "path": "/new-moon/2027-08-02/",
+      "title": "New moon in Leo — August 2, 2027",
+      "anchor": "2027-08-02T10:05:08.275Z",
+      "family": "lunation",
+      "subtype": "new",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "leo"
+      ],
+      "summary": "Sun and Moon meet in Leo; the month's quiet reset.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "eclipse-2027-08-02",
+      "path": "/eclipses/2027-08-02/",
+      "title": "Total solar eclipse in Leo — August 2, 2027",
+      "anchor": "2027-08-02T10:06:34.636Z",
+      "family": "eclipse",
+      "subtype": "solar",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "leo"
+      ],
+      "summary": "A new moon crosses the Sun's face in Leo.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "saturn-stations-retrograde-2027-08-09",
+      "path": "/retrogrades/#retrograde-saturn-2027-08-09",
+      "title": "Saturn stations retrograde — August 9, 2027",
+      "anchor": "2027-08-09T17:52:18.573Z",
+      "family": "station",
+      "subtype": "retrograde",
+      "bodies": [
+        "Saturn"
+      ],
+      "signs": [
+        "aries"
+      ],
+      "summary": "Saturn slows to a standstill and turns retrograde.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "eclipse-2027-08-17",
+      "path": "/eclipses/2027-08-17/",
+      "title": "Penumbral lunar eclipse in Aquarius — August 17, 2027",
+      "anchor": "2027-08-17T07:13:44.931Z",
+      "family": "eclipse",
+      "subtype": "lunar",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "aquarius"
+      ],
+      "summary": "A full moon passes through Earth's shadow in Aquarius.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "full-moon-2027-08-17",
+      "path": "/full-moon/2027-08-17/",
+      "title": "Full moon in Aquarius — August 17, 2027",
+      "anchor": "2027-08-17T07:28:35.460Z",
+      "family": "lunation",
+      "subtype": "full",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "aquarius"
+      ],
+      "summary": "The Sturgeon Moon — the Moon stands opposite the Sun in Aquarius.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "new-moon-2027-08-31",
+      "path": "/new-moon/2027-08-31/",
+      "title": "New moon in Virgo — August 31, 2027",
+      "anchor": "2027-08-31T17:41:06.127Z",
+      "family": "lunation",
+      "subtype": "new",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "virgo"
+      ],
+      "summary": "Sun and Moon meet in Virgo; the month's quiet reset.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "jupiter-square-uranus-2027-09-10",
+      "path": "/events/jupiter-square-uranus-2027-09-10/",
+      "title": "Jupiter square Uranus — September 10, 2027",
+      "anchor": "2027-09-10T16:36:52.892Z",
+      "family": "aspect",
+      "subtype": "square",
+      "bodies": [
+        "Jupiter",
+        "Uranus"
+      ],
+      "signs": [
+        "virgo",
+        "gemini"
+      ],
+      "summary": "Jupiter and Uranus reach an exact square.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "uranus-stations-retrograde-2027-09-15",
+      "path": "/retrogrades/#retrograde-uranus-2027-09-15",
+      "title": "Uranus stations retrograde — September 15, 2027",
+      "anchor": "2027-09-15T09:15:03.075Z",
+      "family": "station",
+      "subtype": "retrograde",
+      "bodies": [
+        "Uranus"
+      ],
+      "signs": [
+        "gemini"
+      ],
+      "summary": "Uranus slows to a standstill and turns retrograde.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "full-moon-2027-09-15",
+      "path": "/full-moon/2027-09-15/",
+      "title": "Full moon in Pisces — September 15, 2027",
+      "anchor": "2027-09-15T23:03:26.129Z",
+      "family": "lunation",
+      "subtype": "full",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "pisces"
+      ],
+      "summary": "The Corn Moon — the Moon stands opposite the Sun in Pisces.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "new-moon-2027-09-30",
+      "path": "/new-moon/2027-09-30/",
+      "title": "New moon in Libra — September 30, 2027",
+      "anchor": "2027-09-30T02:35:58.290Z",
+      "family": "lunation",
+      "subtype": "new",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "libra"
+      ],
+      "summary": "Sun and Moon meet in Libra; the month's quiet reset.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "mercury-stations-retrograde-2027-10-07",
+      "path": "/mercury-retrograde/2027-10-07/",
+      "title": "Mercury stations retrograde — October 7, 2027",
+      "anchor": "2027-10-07T14:39:07.557Z",
+      "family": "station",
+      "subtype": "retrograde",
+      "bodies": [
+        "Mercury"
+      ],
+      "signs": [
+        "scorpio"
+      ],
+      "summary": "Mercury slows to a standstill and turns retrograde.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "full-moon-2027-10-15",
+      "path": "/full-moon/2027-10-15/",
+      "title": "Full moon in Aries — October 15, 2027",
+      "anchor": "2027-10-15T13:46:52.664Z",
+      "family": "lunation",
+      "subtype": "full",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "aries"
+      ],
+      "summary": "The Hunter’s Moon — the Moon stands opposite the Sun in Aries.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "neptune-sextile-pluto-2027-10-16",
+      "path": "/events/neptune-sextile-pluto-2027-10-16/",
+      "title": "Neptune sextile Pluto — October 16, 2027",
+      "anchor": "2027-10-16T18:03:50.794Z",
+      "family": "aspect",
+      "subtype": "sextile",
+      "bodies": [
+        "Neptune",
+        "Pluto"
+      ],
+      "signs": [
+        "aries",
+        "aquarius"
+      ],
+      "summary": "Neptune and Pluto reach an exact sextile.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "pluto-stations-direct-2027-10-18",
+      "path": "/retrogrades/#retrograde-pluto-2027-05-08",
+      "title": "Pluto stations direct — October 18, 2027",
+      "anchor": "2027-10-18T03:51:06.503Z",
+      "family": "station",
+      "subtype": "direct",
+      "bodies": [
+        "Pluto"
+      ],
+      "signs": [
+        "aquarius"
+      ],
+      "summary": "Pluto stands still, then resumes forward motion.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "mercury-stations-direct-2027-10-28",
+      "path": "/mercury-retrograde/2027-10-07/",
+      "title": "Mercury stations direct — October 28, 2027",
+      "anchor": "2027-10-28T14:11:09.286Z",
+      "family": "station",
+      "subtype": "direct",
+      "bodies": [
+        "Mercury"
+      ],
+      "signs": [
+        "libra"
+      ],
+      "summary": "Mercury stands still, then resumes forward motion.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "new-moon-2027-10-29",
+      "path": "/new-moon/2027-10-29/",
+      "title": "New moon in Scorpio — October 29, 2027",
+      "anchor": "2027-10-29T13:36:25.865Z",
+      "family": "lunation",
+      "subtype": "new",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "scorpio"
+      ],
+      "summary": "Sun and Moon meet in Scorpio; the month's quiet reset.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "full-moon-2027-11-14",
+      "path": "/full-moon/2027-11-14/",
+      "title": "Full moon in Taurus — November 14, 2027",
+      "anchor": "2027-11-14T03:25:46.434Z",
+      "family": "lunation",
+      "subtype": "full",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "taurus"
+      ],
+      "summary": "The Beaver Moon — the Moon stands opposite the Sun in Taurus.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "new-moon-2027-11-28",
+      "path": "/new-moon/2027-11-28/",
+      "title": "New moon in Sagittarius — November 28, 2027",
+      "anchor": "2027-11-28T03:24:17.774Z",
+      "family": "lunation",
+      "subtype": "new",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "sagittarius"
+      ],
+      "summary": "Sun and Moon meet in Sagittarius; the month's quiet reset.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "full-moon-2027-12-13",
+      "path": "/full-moon/2027-12-13/",
+      "title": "Full moon in Gemini — December 13, 2027",
+      "anchor": "2027-12-13T16:08:41.191Z",
+      "family": "lunation",
+      "subtype": "full",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "gemini"
+      ],
+      "summary": "The Cold Moon — the Moon stands opposite the Sun in Gemini.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "neptune-stations-direct-2027-12-15",
+      "path": "/retrogrades/#retrograde-neptune-2027-07-09",
+      "title": "Neptune stations direct — December 15, 2027",
+      "anchor": "2027-12-15T09:42:46.844Z",
+      "family": "station",
+      "subtype": "direct",
+      "bodies": [
+        "Neptune"
+      ],
+      "signs": [
+        "aries"
+      ],
+      "summary": "Neptune stands still, then resumes forward motion.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "saturn-stations-direct-2027-12-24",
+      "path": "/retrogrades/#retrograde-saturn-2027-08-09",
+      "title": "Saturn stations direct — December 24, 2027",
+      "anchor": "2027-12-24T02:49:28.505Z",
+      "family": "station",
+      "subtype": "direct",
+      "bodies": [
+        "Saturn"
+      ],
+      "signs": [
+        "aries"
+      ],
+      "summary": "Saturn stands still, then resumes forward motion.",
+      "lastModified": "2026-07-20"
+    },
+    {
+      "id": "new-moon-2027-12-27",
+      "path": "/new-moon/2027-12-27/",
+      "title": "New moon in Capricorn — December 27, 2027",
+      "anchor": "2027-12-27T20:12:11.909Z",
+      "family": "lunation",
+      "subtype": "new",
+      "bodies": [
+        "Moon",
+        "Sun"
+      ],
+      "signs": [
+        "capricorn"
+      ],
+      "summary": "Sun and Moon meet in Capricorn; the month's quiet reset.",
+      "lastModified": "2026-07-20"
+    }
+  ]
+}

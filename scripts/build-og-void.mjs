@@ -43,6 +43,9 @@ const { SIGNS, ELEMENT_LABEL, MODALITY_LABEL } = await import(
 const { HOROSCOPE_OG_SURFACES, OG_EN } = await import(
   pathToFileURL(resolve(root, 'src/strings/seo.en.mjs')).href
 );
+const EVENTS_PUBLICATION = JSON.parse(
+  await readFile(resolve(root, 'src/data/events-publication.json'), 'utf8'),
+);
 
 const { chromium } = await import(process.env.PLAYWRIGHT_MODULE ?? 'playwright-core');
 const executablePath =
@@ -164,6 +167,11 @@ const format = (template, values) => Object.entries(values).reduce(
   (copy, [name, value]) => copy.replaceAll(`{${name}}`, String(value)),
   template,
 );
+const escapeHtml = (value) => String(value)
+  .replaceAll('&', '&amp;')
+  .replaceAll('<', '&lt;')
+  .replaceAll('>', '&gt;')
+  .replaceAll('"', '&quot;');
 
 // ── Card renderers ────────────────────────────────────────────────────
 function shareCard() {
@@ -371,6 +379,56 @@ function almanacCard({ title, sub, path, hub = false }) {
   return shell(body, `zodiacs.org${path}`);
 }
 
+const EVENT_FAMILY = {
+  lunation: { label: 'Moon calendar', glyph: '☽' },
+  eclipse: { label: 'Eclipse season', glyph: '◐' },
+  retrograde: { label: 'Retrograde', glyph: '℞' },
+  ingress: { label: 'Sign change', glyph: '→' },
+  aspect: { label: 'Exact alignment', glyph: '✦' },
+  station: { label: 'Planetary station', glyph: '℞' },
+};
+
+function eventHubCard() {
+  const body = `
+  <div class="stage">
+    <div class="left" style="max-width: 720px;">
+      <span class="kicker">The sky, dated</span>
+      <div class="display" style="font-size: 84px;">Sky events</div>
+      <div class="sub" style="font-size: 25px; color: ${MUTED}; max-width: 690px;">Full moons, eclipses, retrogrades, sign changes, and rare alignments through 2027.</div>
+    </div>
+    ${wheelMark(250, 22)}
+  </div>`;
+  return shell(body, 'zodiacs.org/events/');
+}
+
+function eventCard(event) {
+  const family = EVENT_FAMILY[event.family] ?? { label: 'Sky event', glyph: '✦' };
+  const sign = SIGNS.find((candidate) => candidate.slug === event.signs?.[0]);
+  const instant = new Date(event.anchor);
+  const date = new Intl.DateTimeFormat('en-US', {
+    month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC',
+  }).format(instant);
+  const clock = instant.toLocaleTimeString('en-US', {
+    hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'UTC',
+  });
+  const cardTitle = event.title.replace(/\s+[—–]\s+.*\b20(?:26|27)\s*$/, '');
+  const title = escapeHtml(cardTitle);
+  const size = cardTitle.length > 62 ? 52 : cardTitle.length > 46 ? 58 : cardTitle.length > 32 ? 66 : 74;
+  const accent = sign
+    ? `<img class="disc" src="${DISCS[sign.slug]}" width="224" height="224" style="box-shadow:0 34px 90px ${sign.hue}38" />`
+    : wheelMark(224, 20);
+  const body = `
+  <div class="stage">
+    <div class="left" style="max-width: 760px;">
+      <span class="kicker"><span style="font-style:normal;color:${sign?.hue ?? INK2};margin-right:12px">${family.glyph}</span>${family.label}</span>
+      <div class="display" style="font-size:${size}px;">${title}</div>
+      <div class="data">${escapeHtml(date)} · ${escapeHtml(clock)} UTC</div>
+    </div>
+    ${accent}
+  </div>`;
+  return shell(body, `zodiacs.org${escapeHtml(event.path)}`);
+}
+
 function frontmatterField(source, name) {
   const frontmatter = source.match(/^---\r?\n([\s\S]*?)\r?\n---/)?.[1] ?? '';
   const raw = frontmatter.match(new RegExp(`^${name}:\\s*(.+)$`, 'm'))?.[1]?.trim();
@@ -401,7 +459,7 @@ const almanacEntries = (await Promise.all(
 const TOOLS = OG_EN.tools;
 
 // ── Render loop ───────────────────────────────────────────────────────
-for (const dir of ['', 'sign', 'registry', 'tool', 'pair', 'horoscope', 'placements', 'rising', 'almanac', 'pin']) {
+for (const dir of ['', 'sign', 'registry', 'tool', 'pair', 'horoscope', 'placements', 'rising', 'almanac', 'events', 'pin']) {
   await mkdir(resolve(OUT, dir), { recursive: true });
 }
 
@@ -417,7 +475,22 @@ async function shoot(html, outPath) {
   await page.evaluate(() => document.fonts.ready);
   await page.waitForTimeout(120);
   const raw = await page.screenshot({ type: 'png' });
-  const buf = await sharp(raw).png({ palette: true, compressionLevel: 9, effort: 8 }).toBuffer();
+  const firstPass = await sharp(raw)
+    .png({ palette: true, compressionLevel: 9, effort: 8 })
+    .toBuffer();
+  // The event family adds one unique card per published page. A dedicated
+  // 64-colour palette keeps type edges and the canonical pastel sign art
+  // crisp while cutting this repeated family enough to preserve the complete
+  // v2 bundle's 15MiB ceiling.
+  const buf = outPath.startsWith('events/')
+    ? await sharp(firstPass).png({
+        palette: true,
+        colors: 64,
+        dither: 0.6,
+        compressionLevel: 9,
+        effort: 10,
+      }).toBuffer()
+    : firstPass;
   await writeFile(resolve(OUT, outPath), buf);
   total += buf.length;
   count += 1;
@@ -502,6 +575,12 @@ if (onlyHoroscopes) {
   for (const s of SIGNS) await shoot(risingCard(s), `rising/${s.slug}.png`);
   for (const [planetKey, glyph] of Object.entries(PLANET_GLYPHS)) {
     await shoot(placementCard(planetKey, glyph), `placements/${planetKey}.png`);
+  }
+  if (EVENTS_PUBLICATION.hub.indexEligible) {
+    await shoot(eventHubCard(), 'events/index.png');
+    for (const event of EVENTS_PUBLICATION.pages) {
+      await shoot(eventCard(event), `events/${event.id}.png`);
+    }
   }
 }
 
@@ -588,6 +667,8 @@ const requiredCards = [
   ...SIGNS.map((s) => `registry/${s.slug}.png`),
   ...SIGNS.flatMap((s) => HOROSCOPE_OG_SURFACES.map((surface) => horoscopeCardPath(s, surface))),
   ...TOOLS.map((tool) => `tool/${tool.key}.png`),
+  ...(EVENTS_PUBLICATION.hub.indexEligible ? ['events/index.png'] : []),
+  ...EVENTS_PUBLICATION.pages.map((event) => `events/${event.id}.png`),
   'registry.png',
   'thesis.png',
   'disclosure.png',

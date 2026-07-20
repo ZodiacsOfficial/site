@@ -1,0 +1,177 @@
+{
+  "month": "2030-05",
+  "ingresses": [
+    {
+      "planet": "Venus",
+      "at": "2030-05-02T06:37:25.720Z",
+      "sign": "aries",
+      "retrograde": false
+    },
+    {
+      "planet": "Mercury",
+      "at": "2030-05-15T01:29:13.739Z",
+      "sign": "taurus",
+      "retrograde": false
+    },
+    {
+      "planet": "Mars",
+      "at": "2030-05-19T09:28:19.490Z",
+      "sign": "gemini",
+      "retrograde": false
+    },
+    {
+      "planet": "Sun",
+      "at": "2030-05-20T23:40:59.803Z",
+      "sign": "gemini",
+      "retrograde": false
+    },
+    {
+      "planet": "Venus",
+      "at": "2030-05-28T03:32:55.996Z",
+      "sign": "taurus",
+      "retrograde": false
+    }
+  ],
+  "lunations": [
+    {
+      "type": "new",
+      "at": "2030-05-02T14:12:06.799Z",
+      "sign": "taurus",
+      "degree": 12.228954386109876
+    },
+    {
+      "type": "full",
+      "at": "2030-05-17T11:19:01.505Z",
+      "sign": "scorpio",
+      "degree": 26.615937451524587
+    }
+  ],
+  "stations": [
+    {
+      "planet": "Mercury",
+      "at": "2030-05-06T20:17:56.741Z",
+      "type": "direct",
+      "sign": "aries",
+      "degree": 27.43664541712718
+    },
+    {
+      "planet": "Pluto",
+      "at": "2030-05-12T23:10:44.897Z",
+      "type": "retrograde",
+      "sign": "aquarius",
+      "degree": 12.060190884436793
+    }
+  ],
+  "aspects": [
+    {
+      "a": "Sun",
+      "b": "Pluto",
+      "type": "square",
+      "orb": 0,
+      "at": "2030-05-02T09:23:30.890Z",
+      "aSign": "taurus",
+      "aDegree": 12.034407795555012,
+      "bSign": "aquarius",
+      "bDegree": 12.034407198627378
+    },
+    {
+      "a": "Neptune",
+      "b": "Pluto",
+      "type": "sextile",
+      "orb": 0,
+      "at": "2030-05-04T13:20:57.823Z",
+      "aSign": "aries",
+      "aDegree": 12.04384444897704,
+      "bSign": "aquarius",
+      "bDegree": 12.043844433128015
+    },
+    {
+      "a": "Mars",
+      "b": "Jupiter",
+      "type": "opposition",
+      "orb": 0,
+      "at": "2030-05-09T22:00:22.273Z",
+      "aSign": "taurus",
+      "aDegree": 23.221705137411845,
+      "bSign": "scorpio",
+      "bDegree": 23.221704777264563
+    },
+    {
+      "a": "Venus",
+      "b": "Pluto",
+      "type": "sextile",
+      "orb": 0,
+      "at": "2030-05-12T18:10:04.466Z",
+      "aSign": "aries",
+      "aDegree": 12.060181552821405,
+      "bSign": "aquarius",
+      "bDegree": 12.060181043062812
+    },
+    {
+      "a": "Venus",
+      "b": "Neptune",
+      "type": "conjunction",
+      "orb": 0,
+      "at": "2030-05-12T23:24:54.743Z",
+      "aSign": "aries",
+      "aDegree": 12.313204893067962,
+      "bSign": "aries",
+      "bDegree": 12.313204261689975
+    },
+    {
+      "a": "Sun",
+      "b": "Jupiter",
+      "type": "opposition",
+      "orb": 0,
+      "at": "2030-05-13T11:32:29.495Z",
+      "aSign": "taurus",
+      "aDegree": 22.76835762473388,
+      "bSign": "scorpio",
+      "bDegree": 22.76835674302106
+    },
+    {
+      "a": "Mars",
+      "b": "Saturn",
+      "type": "conjunction",
+      "orb": 0,
+      "at": "2030-05-16T13:57:15.670Z",
+      "aSign": "taurus",
+      "aDegree": 27.996028636806614,
+      "bSign": "taurus",
+      "bDegree": 27.99602814295423
+    },
+    {
+      "a": "Venus",
+      "b": "Uranus",
+      "type": "sextile",
+      "orb": 0,
+      "at": "2030-05-17T06:47:26.089Z",
+      "aSign": "aries",
+      "aDegree": 17.309215857972447,
+      "bSign": "gemini",
+      "bDegree": 17.309215792383327
+    },
+    {
+      "a": "Sun",
+      "b": "Saturn",
+      "type": "conjunction",
+      "orb": 0,
+      "at": "2030-05-19T06:22:15.908Z",
+      "aSign": "taurus",
+      "aDegree": 28.343440516721103,
+      "bSign": "taurus",
+      "bDegree": 28.34343990573211
+    },
+    {
+      "a": "Mercury",
+      "b": "Pluto",
+      "type": "square",
+      "orb": 0,
+      "at": "2030-05-27T13:13:00.330Z",
+      "aSign": "taurus",
+      "aDegree": 12.013426642158947,
+      "bSign": "aquarius",
+      "bDegree": 12.013425617458324
+    }
+  ]
+}

@@ -51,6 +51,34 @@ const PHASE1_HOROSCOPE_PATHS = ZODIAC_SIGN_SLUGS.flatMap((sign) => [
   `/horoscopes/${sign}/2027/`,
 ]);
 const PHASE1_READER_PATHS = new Set(['/today/', '/horoscopes/', ...PHASE1_HOROSCOPE_PATHS]);
+const eventsPublication = JSON.parse(
+  await readFile(resolve(repo, 'src/data/events-publication.json'), 'utf8'),
+);
+const publishedEventPaths = new Set([
+  ...(eventsPublication.hub?.indexEligible ? [eventsPublication.hub.path] : []),
+  ...(eventsPublication.pages ?? []).map((event) => event.path),
+]);
+const isPhase2EventPath = (path) => (
+  path === '/events/'
+  || /^\/events\/(?!preview(?:\/|$))[a-z0-9-]+\/$/.test(path)
+  || /^\/(?:full-moon|new-moon|eclipses|(?:mercury|venus|mars)-retrograde)\/\d{4}-\d{2}-\d{2}\/$/.test(path)
+);
+let eventsFeedIds = new Set();
+let eventsFeedLinks = new Set();
+let indexedSearchPaths = new Set();
+
+if (eventsPublication.schema !== 'zodiacs.events-publication.v1') {
+  fail('events-publication: unsupported or missing schema');
+}
+if (!/^\d{4}-\d{2}-\d{2}$/.test(eventsPublication.lastModified ?? '')) {
+  fail('events-publication: invalid lastModified');
+}
+if (new Set((eventsPublication.pages ?? []).map((event) => event.id)).size !== (eventsPublication.pages ?? []).length) {
+  fail('events-publication: duplicate page id');
+}
+if (new Set((eventsPublication.pages ?? []).map((event) => event.path)).size !== (eventsPublication.pages ?? []).length) {
+  fail('events-publication: duplicate page path');
+}
 
 function canonicalValue(value) {
   if (Array.isArray(value)) return value.map(canonicalValue);
@@ -70,6 +98,15 @@ function canonicalJson(value) {
 
 function sha256(value) {
   return createHash('sha256').update(value).digest('hex');
+}
+
+function requireExactSet(label, actual, expected) {
+  for (const value of expected) {
+    if (!actual.has(value)) fail(`${label}: missing ${value}`);
+  }
+  for (const value of actual) {
+    if (!expected.has(value)) fail(`${label}: unexpected ${value}`);
+  }
 }
 
 async function exists(path) {
@@ -137,6 +174,7 @@ for (const { file, minItems } of [
   ...ZODIAC_SIGN_SLUGS.map((sign) => ({ file: `feeds/horoscopes/${sign}.xml`, minItems: 1 })),
   { file: 'feeds/daily-sky.xml', minItems: 1 },
   { file: 'feeds/almanac.xml', minItems: 1 },
+  { file: 'feeds/events.xml', minItems: eventsPublication.timeline?.length ?? 0 },
 ]) {
   const path = resolve(root, file);
   if (!(await exists(path))) {
@@ -148,6 +186,26 @@ for (const { file, minItems } of [
   if (!xml.includes('<rss version="2.0"')) fail(`${file}: not RSS 2.0`);
   const items = (xml.match(/<item>/g) || []).length;
   if (items < minItems) fail(`${file}: ${items} items, expected >= ${minItems}`);
+  if (file === 'feeds/events.xml') {
+    if (items !== (eventsPublication.timeline?.length ?? 0)) {
+      fail(`${file}: ${items} items vs publication receipt ${eventsPublication.timeline?.length ?? 0}`);
+    }
+    eventsFeedIds = new Set(
+      [...xml.matchAll(/<guid isPermaLink="false">https:\/\/zodiacs\.org\/feeds\/events\/([^<]+)<\/guid>/g)]
+        .map((match) => match[1]),
+    );
+    eventsFeedLinks = new Set(
+      [...xml.matchAll(/<item>[\s\S]*?<link>([^<]+)<\/link>[\s\S]*?<\/item>/g)]
+        .map((match) => {
+          const url = new URL(match[1]);
+          return `${url.pathname}${url.hash}`;
+        }),
+    );
+    const expectedIds = new Set((eventsPublication.timeline ?? []).map((event) => event.id));
+    const expectedLinks = new Set((eventsPublication.timeline ?? []).map((event) => event.path));
+    requireExactSet(`${file} ids`, eventsFeedIds, expectedIds);
+    requireExactSet(`${file} links`, eventsFeedLinks, expectedLinks);
+  }
   for (const m of xml.matchAll(/<link>([^<]+)<\/link>/g)) {
     if (!m[1].startsWith('https://zodiacs.org/')) fail(`${file}: non-absolute link ${m[1]}`);
   }
@@ -669,6 +727,12 @@ if (!(await exists(searchIndexPath))) {
           .filter((entry) => typeof entry?.path === 'string' && !entry.path.includes('#'))
           .map((entry) => entry.path),
       );
+      indexedSearchPaths = indexedPaths;
+      requireExactSet(
+        'search-index Phase 2 event routes',
+        new Set([...indexedPaths].filter(isPhase2EventPath)),
+        publishedEventPaths,
+      );
       for (const file of files) {
         const rel = relative(root, file).split(sep).join('/');
         const pagePath = htmlFileToPath(rel);
@@ -839,12 +903,13 @@ if (sitemapLocs.has('/registry/aura/') !== registryAuraBuildEnabled) {
 // Keep exact counts so sitemap drift fails loudly.
 const registryAuraIndexed = sitemapLocs.has('/registry/aura/');
 const sitemapPolicy = {
-  total: 2392 + Number(registryAuraIndexed),
+  total: 2392 + Number(registryAuraIndexed) + publishedEventPaths.size,
   compatibilityPairs: 78,
   birthdays: 1830,
   chineseZodiac: 65,
   disclosures: 5,
   horoscopePages: 84,
+  eventPages: publishedEventPaths.size,
   translatedBlocks: 2025,
 };
 const indexedFamilies = [
@@ -858,8 +923,20 @@ const indexedFamilies = [
     expected: sitemapPolicy.horoscopePages,
     localized: false,
   },
+  {
+    label: 'Phase 2 event pages',
+    pattern: /^(?:\/events\/(?:[a-z0-9-]+\/)?|\/(?:full-moon|new-moon|eclipses|(?:mercury|venus|mars)-retrograde)\/\d{4}-\d{2}-\d{2}\/)$/,
+    expected: sitemapPolicy.eventPages,
+    localized: false,
+  },
   { label: 'Registry Aura', pattern: /^\/registry\/aura\/$/, expected: Number(registryAuraIndexed), localized: false },
 ];
+
+requireExactSet(
+  'sitemap.xml Phase 2 event routes',
+  new Set([...sitemapLocs].filter(isPhase2EventPath)),
+  publishedEventPaths,
+);
 
 if (sitemapLocs.size !== sitemapPolicy.total) {
   fail(`sitemap.xml: ${sitemapLocs.size} locs vs coordinated baseline ${sitemapPolicy.total}`);
@@ -895,6 +972,53 @@ for (const hreflang of ['en', 'es', 'pt-BR', 'fr', 'it', 'x-default']) {
   const count = [...sitemap.matchAll(new RegExp(`hreflang="${hreflang}"`, 'g'))].length;
   if (count !== sitemapPolicy.translatedBlocks) {
     fail(`sitemap.xml: ${count} ${hreflang} alternates vs locale-rail baseline ${sitemapPolicy.translatedBlocks}`);
+  }
+}
+
+// The publication receipt is the single launch allowlist. Every generated
+// Phase 2 route must land on exactly one side of the boundary: published and
+// discoverable everywhere, or withheld from every discovery surface.
+const previewEventPath = (path) => /^\/events\/preview(?:\/|$)/.test(path);
+for (const event of eventsPublication.timeline ?? []) {
+  const url = new URL(event.path, SITE_ORIGIN);
+  if (publishedEventPaths.has(url.pathname)) continue;
+  const target = targetPath(url.pathname);
+  if (!sitemapLocs.has(url.pathname) || !target || !(await exists(target))) {
+    fail(`events-publication: timeline ${event.id} links outside the public index — ${event.path}`);
+    continue;
+  }
+  if (url.hash && !(await hasId(target, decodeURIComponent(url.hash.slice(1))))) {
+    fail(`events-publication: timeline ${event.id} has no anchor target — ${event.path}`);
+  }
+}
+for (const path of publishedEventPaths) {
+  const target = targetPath(path);
+  if (!target || !(await exists(target))) {
+    fail(`events-publication: published route has no built HTML — ${path}`);
+  }
+}
+for (const file of files) {
+  const html = idCache.get(file) ?? (await readFile(file, 'utf8'));
+  const pagePath = htmlFileToPath(relative(root, file));
+  if (!isPhase2EventPath(pagePath) && !previewEventPath(pagePath)) continue;
+
+  const published = publishedEventPaths.has(pagePath);
+  const noindex = hasNoindex(html);
+  const canonical = canonicalHref(html);
+  if (published) {
+    if (noindex) fail(`events-publication: published route is noindex — ${pagePath}`);
+    if (canonical !== `${SITE_ORIGIN}${pagePath}`) {
+      fail(`events-publication: ${pagePath} is not self-canonical — ${canonical ?? 'missing'}`);
+    }
+    if (!sitemapLocs.has(pagePath)) fail(`events-publication: sitemap is missing ${pagePath}`);
+    if (!indexedSearchPaths.has(pagePath)) fail(`events-publication: search is missing ${pagePath}`);
+    if (!html.includes('href="/feeds/events.xml"')) {
+      fail(`events-publication: ${pagePath} has no events-feed autodiscovery link`);
+    }
+  } else {
+    if (!noindex) fail(`events-publication: withheld route is indexable — ${pagePath}`);
+    if (sitemapLocs.has(pagePath)) fail(`events-publication: withheld route leaked into sitemap — ${pagePath}`);
+    if (indexedSearchPaths.has(pagePath)) fail(`events-publication: withheld route leaked into search — ${pagePath}`);
   }
 }
 

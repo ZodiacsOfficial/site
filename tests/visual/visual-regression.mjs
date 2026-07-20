@@ -38,9 +38,20 @@ const routes = [
   { name: 'home', path: '/' },
   { name: 'birth-chart-kahlo', path: '/birth-chart/', result: true },
   { name: 'aries', path: '/aries/' },
+  { name: 'events-hub', path: '/events/', normalizeEventsHub: true },
+  { name: 'event-full-moon', path: '/full-moon/2026-07-29/' },
 ];
+const routeFilter = new Set(
+  (process.env.VISUAL_ROUTES ?? '').split(',').map((name) => name.trim()).filter(Boolean),
+);
+const selectedRoutes = routeFilter.size > 0
+  ? routes.filter((route) => routeFilter.has(route.name))
+  : routes;
+if (selectedRoutes.length === 0) {
+  throw new Error(`VISUAL_ROUTES did not match a visual route: ${[...routeFilter].join(', ')}`);
+}
 
-const cases = routes.flatMap((route) => [
+const cases = selectedRoutes.flatMap((route) => [
   ...viewports.map((viewport) => ({ ...route, viewport, reducedMotion: 'no-preference' })),
   { ...route, viewport: viewports[0], reducedMotion: 'reduce', suffix: 'reduced-motion' },
 ]);
@@ -63,9 +74,25 @@ function fileStem(testCase) {
   return `${testCase.name}-${testCase.viewport.name}${motion}`;
 }
 
-async function settlePage(page, { result }) {
+async function settlePage(page, { result, normalizeEventsHub }) {
   await page.waitForLoadState('networkidle');
-  await page.evaluate(() => document.fonts.ready);
+  const loadFonts = () => page.evaluate(async () => {
+    await Promise.all([...document.fonts].map((font) => font.load().catch(() => undefined)));
+    await document.fonts.ready;
+  });
+  await loadFonts();
+
+  if (normalizeEventsHub) {
+    await page.evaluate(() => {
+      document.querySelector('.evhub-earlier')?.setAttribute('open', '');
+    });
+    await page.addStyleTag({
+      content: `
+        .evhub-now, .evhub-next, .evhub-earlier > summary { display: none !important; }
+        .evhub-earlier { display: contents !important; }
+      `,
+    });
+  }
 
   if (result) {
     await page.locator('.calc__result').waitFor({ state: 'visible', timeout: 30_000 });
@@ -91,16 +118,28 @@ async function settlePage(page, { result }) {
     await wait(100);
     window.scrollTo(0, 0);
     await wait(100);
-    await Promise.all(
-      [...document.images]
-        .filter((image) => image.complete)
-        .map((image) => image.decode?.().catch(() => undefined)),
-    );
+    await Promise.race([
+      Promise.all([...document.images].map(async (image) => {
+        if (!image.complete) {
+          await new Promise((resolveImage) => {
+            image.addEventListener('load', resolveImage, { once: true });
+            image.addEventListener('error', resolveImage, { once: true });
+          });
+        }
+        await image.decode?.().catch(() => undefined);
+      })),
+      wait(5_000),
+    ]);
     for (const video of document.querySelectorAll('video')) {
       video.pause();
       try { video.currentTime = 0; } catch { /* poster remains deterministic */ }
     }
   });
+  // Long editorial pages can introduce below-the-fold font faces only after
+  // the lazy-loading sweep. Wait once more so fallback metrics cannot become
+  // a platform baseline by racing the final screenshot.
+  await loadFonts();
+  await page.waitForTimeout(100);
 }
 
 async function capture(browser, baseURL, testCase) {
@@ -153,6 +192,15 @@ async function capture(browser, baseURL, testCase) {
         transition-duration: 0s !important;
       }
       html { scroll-behavior: auto !important; }
+      /* Production reader pages use optional faces to prevent late swaps.
+         Screenshots instead pin the equivalent loaded brand faces, avoiding
+         a loopback-speed race between an optional face and its platform
+         fallback while preserving the same intended typography. */
+      html[data-stable-typography] {
+        --font-serif: 'EB Garamond', Georgia, serif !important;
+        --font-sans: 'Instrument Sans', system-ui, sans-serif !important;
+        --font-mono: 'JetBrains Mono', ui-monospace, monospace !important;
+      }
       .reveal {
         filter: none !important;
         opacity: 1 !important;

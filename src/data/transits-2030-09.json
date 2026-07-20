@@ -1,0 +1,183 @@
+{
+  "month": "2030-09",
+  "ingresses": [
+    {
+      "planet": "Venus",
+      "at": "2030-09-04T14:50:47.046Z",
+      "sign": "virgo",
+      "retrograde": false
+    },
+    {
+      "planet": "Sun",
+      "at": "2030-09-22T23:27:14.963Z",
+      "sign": "libra",
+      "retrograde": false
+    },
+    {
+      "planet": "Venus",
+      "at": "2030-09-28T18:33:52.969Z",
+      "sign": "libra",
+      "retrograde": false
+    }
+  ],
+  "lunations": [
+    {
+      "type": "full",
+      "at": "2030-09-11T21:17:49.270Z",
+      "sign": "pisces",
+      "degree": 19.18442255004129
+    },
+    {
+      "type": "new",
+      "at": "2030-09-27T09:54:31.754Z",
+      "sign": "libra",
+      "degree": 4.346488532921285
+    }
+  ],
+  "stations": [
+    {
+      "planet": "Mercury",
+      "at": "2030-09-08T09:22:13.024Z",
+      "type": "direct",
+      "sign": "virgo",
+      "degree": 1.1077543259478944
+    },
+    {
+      "planet": "Saturn",
+      "at": "2030-09-20T21:37:35.299Z",
+      "type": "retrograde",
+      "sign": "gemini",
+      "degree": 8.946865010729994
+    },
+    {
+      "planet": "Uranus",
+      "at": "2030-09-28T08:21:53.469Z",
+      "type": "retrograde",
+      "sign": "gemini",
+      "degree": 22.893649155838887
+    }
+  ],
+  "aspects": [
+    {
+      "a": "Mars",
+      "b": "Neptune",
+      "type": "trine",
+      "orb": 0,
+      "at": "2030-09-04T21:35:11.516Z",
+      "aSign": "leo",
+      "aDegree": 12.756087209684665,
+      "bSign": "aries",
+      "bDegree": 12.756086903042046
+    },
+    {
+      "a": "Venus",
+      "b": "Saturn",
+      "type": "square",
+      "orb": 0,
+      "at": "2030-09-11T18:48:07.206Z",
+      "aSign": "virgo",
+      "aDegree": 8.871427491728923,
+      "bSign": "gemini",
+      "bDegree": 8.871426746184568
+    },
+    {
+      "a": "Sun",
+      "b": "Uranus",
+      "type": "square",
+      "orb": 0,
+      "at": "2030-09-15T15:01:48.598Z",
+      "aSign": "virgo",
+      "aDegree": 22.82271000001856,
+      "bSign": "gemini",
+      "bDegree": 22.82270944261478
+    },
+    {
+      "a": "Sun",
+      "b": "Jupiter",
+      "type": "sextile",
+      "orb": 0,
+      "at": "2030-09-15T23:24:36.286Z",
+      "aSign": "virgo",
+      "aDegree": 23.162877177566656,
+      "bSign": "scorpio",
+      "bDegree": 23.16287641503527
+    },
+    {
+      "a": "Mercury",
+      "b": "Saturn",
+      "type": "square",
+      "orb": 0,
+      "at": "2030-09-18T22:44:11.246Z",
+      "aSign": "virgo",
+      "aDegree": 8.94336895486947,
+      "bSign": "gemini",
+      "bDegree": 8.943368414563622
+    },
+    {
+      "a": "Mars",
+      "b": "Uranus",
+      "type": "sextile",
+      "orb": 0,
+      "at": "2030-09-20T22:42:03.942Z",
+      "aSign": "leo",
+      "aDegree": 22.869565746466264,
+      "bSign": "gemini",
+      "bDegree": 22.869565418594675
+    },
+    {
+      "a": "Venus",
+      "b": "Uranus",
+      "type": "square",
+      "orb": 0,
+      "at": "2030-09-23T01:26:19.420Z",
+      "aSign": "virgo",
+      "aDegree": 22.881384981821384,
+      "bSign": "gemini",
+      "bDegree": 22.88138475923222
+    },
+    {
+      "a": "Mars",
+      "b": "Jupiter",
+      "type": "square",
+      "orb": 0,
+      "at": "2030-09-23T08:22:48.592Z",
+      "aSign": "leo",
+      "aDegree": 24.371760740598006,
+      "bSign": "scorpio",
+      "bDegree": 24.371760447807674
+    },
+    {
+      "a": "Venus",
+      "b": "Jupiter",
+      "type": "sextile",
+      "orb": 0,
+      "at": "2030-09-24T09:37:51.449Z",
+      "aSign": "virgo",
+      "aDegree": 24.551535160266326,
+      "bSign": "scorpio",
+      "bDegree": 24.551534587053652
+    },
+    {
+      "a": "Mercury",
+      "b": "Uranus",
+      "type": "square",
+      "orb": 0,
+      "at": "2030-09-27T12:10:50.939Z",
+      "aSign": "virgo",
+      "aDegree": 22.89334276635566,
+      "bSign": "gemini",
+      "bDegree": 22.893341941302594
+    },
+    {
+      "a": "Mercury",
+      "b": "Jupiter",
+      "type": "sextile",
+      "orb": 0,
+      "at": "2030-09-28T20:51:41.082Z",
+      "aSign": "virgo",
+      "aDegree": 25.3339599783302,
+      "bSign": "scorpio",
+      "bDegree": 25.333959609207
+    }
+  ]
+}

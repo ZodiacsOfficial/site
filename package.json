@@ -9,7 +9,7 @@
   "scripts": {
     "predev": "node scripts/sync-registry-establishment.mjs && node scripts/configure-registry-aura.mjs && node scripts/configure-legacy-analytics.mjs && node scripts/build-widget-loader.mjs",
     "dev": "astro dev",
-    "prebuild": "npm run editorial:daily:verify && npm run editorial:daily:replay && npm run editorial:daily:freshness && npm run editorial:horoscopes:verify && npm run editorial:transits:verify-all && node scripts/sync-registry-establishment.mjs && node scripts/configure-registry-aura.mjs && node scripts/configure-legacy-analytics.mjs && node scripts/build-widget-loader.mjs && npm run data:og:verify",
+    "prebuild": "npm run editorial:daily:verify && npm run editorial:daily:replay && npm run editorial:daily:freshness && npm run editorial:horoscopes:verify && npm run editorial:transits:verify-all && npm run data:events:verify && node scripts/sync-registry-establishment.mjs && node scripts/configure-registry-aura.mjs && node scripts/configure-legacy-analytics.mjs && node scripts/build-widget-loader.mjs && npm run data:og:verify",
     "build": "astro build && vite-node --script scripts/build-search-index.mjs && node scripts/build-search-ui.mjs && node scripts/build-assistant-ui.mjs && node scripts/build-webmcp.mjs",
     "postbuild": "node scripts/inline-critical-styles.mjs && node scripts/build-service-worker.mjs && node scripts/verify-widgets.mjs && node scripts/check-dist.mjs && npm run schema:check && node scripts/report-bundles.mjs --fail && node scripts/write-phase1-build-receipt.mjs",
     "preview": "astro preview",
@@ -32,6 +32,8 @@
     "data:sky": "node scripts/build-sky.mjs",
     "data:daily": "node scripts/build-daily.mjs && npm run editorial:daily:build && npm run editorial:horoscopes:build",
     "data:transits": "node scripts/build-transits.mjs",
+    "data:events:build": "vite-node --script scripts/build-events-publication.ts",
+    "data:events:verify": "vite-node --script scripts/verify-events-publication.ts",
     "data:og": "node --experimental-strip-types scripts/build-og-void.mjs",
     "data:og:verify": "node scripts/verify-og-cards.mjs",
     "data:ingresses": "node scripts/build-ingresses.mjs",

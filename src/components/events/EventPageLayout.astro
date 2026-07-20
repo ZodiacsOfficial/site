@@ -17,6 +17,7 @@ import EventFactsBand from './EventFactsBand.astro';
 import EventRelated from './EventRelated.astro';
 import EventSignNotes from './EventSignNotes.astro';
 import { eventsCatalog } from '../../lib/events/catalog';
+import { publishedEventById } from '../../lib/events/publication';
 import {
   eventClock, eventDay, eventDayLong, metaDescription, metaTitle, moonNameLabel,
 } from '../../lib/events/format';
@@ -29,6 +30,7 @@ interface Props {
 
 const { event } = Astro.props;
 const { facts, interpretation } = event;
+const published = publishedEventById.get(facts.id);
 const catalog = eventsCatalog();
 const resolve = (id: string) => catalog.byId.get(id);
 
@@ -136,19 +138,33 @@ const followLinks: { href: string; label: string }[] = [
   { href: '/today/', label: 'Today\'s sky' },
 ];
 
+const canonicalUrl = `https://zodiacs.org${facts.path}`;
+const articleImage = `https://zodiacs.org${published?.card ?? '/assets/og/v2/share.png'}`;
+const publicationDate = published
+  ? `${published.lastModified}T00:00:00.000Z`
+  : event.lastModified;
 const jsonLd = [
   {
     '@type': 'Article',
     headline: facts.title,
     description: metaDescription(facts),
-    ...(event.lastModified ? { dateModified: event.lastModified } : {}),
+    inLanguage: 'en',
+    url: canonicalUrl,
+    mainEntityOfPage: { '@type': 'WebPage', '@id': canonicalUrl },
+    image: articleImage,
+    author: { '@id': 'https://zodiacs.org/#org' },
+    publisher: { '@id': 'https://zodiacs.org/#org' },
+    ...(publicationDate ? {
+      datePublished: publicationDate,
+      dateModified: publicationDate,
+    } : {}),
   },
   {
     '@type': 'BreadcrumbList',
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Zodiacs.org', item: 'https://zodiacs.org/' },
       { '@type': 'ListItem', position: 2, name: 'Sky events', item: 'https://zodiacs.org/events/' },
-      { '@type': 'ListItem', position: 3, name: facts.title, item: `https://zodiacs.org${facts.path}` },
+      { '@type': 'ListItem', position: 3, name: facts.title, item: canonicalUrl },
     ],
   },
 ];
@@ -159,14 +175,17 @@ const sources = [
 ];
 ---
 <Base
+  stableTypography
   title={metaTitle(facts)}
   description={metaDescription(facts)}
   path={facts.path}
+  image={published?.card}
   imageAlt={`${facts.title} — Zodiacs.org`}
   type="article"
   noindex={!event.indexEligible}
   jsonLd={jsonLd}
   sources={sources}
+  rssFeed={{ href: '/feeds/events.xml', title: 'Zodiacs.org — sky events' }}
 >
   <noscript>
     <style>

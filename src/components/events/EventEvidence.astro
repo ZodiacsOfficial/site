@@ -20,6 +20,8 @@ if (facts.at) rows.push({ label: 'Exact instant', value: facts.at });
 if (facts.start) rows.push({ label: 'Retrograde station', value: facts.start });
 if (facts.end) rows.push({ label: 'Direct station', value: facts.end });
 if (facts.end === null) rows.push({ label: 'Direct station', value: 'beyond the current data horizon' });
+if (facts.preShadowStart) rows.push({ label: 'Pre-shadow begins', value: facts.preShadowStart });
+if (facts.postShadowEnd) rows.push({ label: 'Post-shadow ends', value: facts.postShadowEnd });
 if (facts.longitude !== undefined) {
   rows.push({ label: 'Ecliptic longitude', value: `${facts.longitude.toFixed(2)}° · ${formatLongitude(facts.longitude)}` });
 }

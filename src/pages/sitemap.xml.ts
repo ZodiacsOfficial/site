@@ -13,13 +13,17 @@ import { registryAuraSitemapEntry } from '../lib/registry-aura-entry.mjs';
 import { SIGNS } from '../lib/signs';
 import daily from '../data/daily.json';
 import horoscopeProgram from '../data/horoscope-program.json';
+import eventsPublicationData from '../data/events-publication.json';
+import type { EventsPublication } from '../lib/events/publication';
 
 const SITE = 'https://zodiacs.org';
+const eventsPublication = eventsPublicationData as EventsPublication;
 const YEARLY_HOROSCOPE_LASTMOD = '2026-07-19';
 // Keep these dates source-controlled: build environments may have shallow or
 // absent Git history. When an evergreen page's rendered source changes, update
 // its entry here in the same commit.
 const EVERGREEN_LASTMOD = new Map<string, string>([
+  [eventsPublication.hub.path, eventsPublication.lastModified] as const,
   ...[
     '/', '/birth-chart/', '/compatibility/', '/moon-sign/', '/rising-sign/',
     '/moon-phase/', '/saturn-return/', '/solar-return/', '/mercury-retrograde/', '/transits/',
@@ -123,6 +127,9 @@ export const GET: APIRoute = async () => {
     { loc: '/full-moon-calendar/', priority: 0.85 },
     { loc: '/retrogrades/', priority: 0.8 },
     { loc: '/today/', priority: 0.8 },
+    ...(eventsPublication.hub.indexEligible
+      ? [{ loc: eventsPublication.hub.path, priority: 0.82 }]
+      : []),
     { loc: '/learn/', priority: 0.85 },
     { loc: '/tools/', priority: 0.8 },
     { loc: '/profile/', priority: 0.75 },
@@ -161,6 +168,11 @@ export const GET: APIRoute = async () => {
     ...evergreenUrls,
     ...(registryAuraEntry ? [registryAuraEntry] : []),
     { loc: '/horoscopes/', priority: 0.8, lastmod: horoscopeProgram.anchorDate },
+    ...eventsPublication.pages.map((event) => ({
+      loc: event.path,
+      priority: 0.64,
+      lastmod: event.lastModified,
+    })),
     ...guides.map((g) => ({
       loc: `/${g.data.sign}/`,
       priority: 0.9,

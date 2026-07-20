@@ -15,16 +15,18 @@ afterEach(async () => {
   temporaryRoot = undefined;
 });
 
-describe('Phase 1 transit fact generation', () => {
+describe('Transit fact generation', () => {
   it('regenerates every committed monthly catalog from the site engine', async () => {
     temporaryRoot = await mkdtemp(join(tmpdir(), 'zodiacs-transit-parity-'));
     const filenames = (await readdir(resolve(repositoryRoot, 'src/data')))
       .filter((name) => /^transits-\d{4}-(?:0[1-9]|1[0-2])\.json$/u.test(name))
       .sort();
-    expect(filenames).toEqual(expect.arrayContaining([
-      'transits-2026-07.json',
-      'transits-2026-08.json',
-    ]));
+    const expectedFilenames = Array.from({ length: 60 }, (_, index) => {
+      const year = 2026 + Math.floor(index / 12);
+      const month = String((index % 12) + 1).padStart(2, '0');
+      return `transits-${year}-${month}.json`;
+    });
+    expect(filenames).toEqual(expectedFilenames);
 
     for (const filename of filenames) {
       const month = filename.slice('transits-'.length, -'.json'.length);
@@ -47,6 +49,24 @@ describe('Phase 1 transit fact generation', () => {
       expect(first, `${filename} must regenerate byte-for-byte`).toBe(second);
       expect(JSON.parse(first), filename).toEqual(JSON.parse(committed));
     }
+  }, 60_000);
+
+  it('pins complete monthly coverage and aggregate event counts for 2026–2030', async () => {
+    const filenames = (await readdir(resolve(repositoryRoot, 'src/data')))
+      .filter((name) => /^transits-\d{4}-(?:0[1-9]|1[0-2])\.json$/u.test(name))
+      .sort();
+    const aggregate = { ingresses: 0, lunations: 0, stations: 0, aspects: 0 };
+    for (const filename of filenames) {
+      const source = JSON.parse(await readFile(resolve(repositoryRoot, 'src/data', filename), 'utf8'));
+      expect(filename).toBe(`transits-${source.month}.json`);
+      for (const key of Object.keys(aggregate)) aggregate[key] += source[key].length;
+    }
+    expect(aggregate).toEqual({
+      ingresses: 243,
+      lunations: 124,
+      stations: 90,
+      aspects: 797,
+    });
   });
 
   it('pins event coverage and exact source-of-truth vectors for both Phase 1 months', async () => {

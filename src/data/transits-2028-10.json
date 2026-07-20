@@ -1,0 +1,204 @@
+{
+  "month": "2028-10",
+  "ingresses": [
+    {
+      "planet": "Venus",
+      "at": "2028-10-02T10:07:40.346Z",
+      "sign": "virgo",
+      "retrograde": false
+    },
+    {
+      "planet": "Sun",
+      "at": "2028-10-22T21:13:29.883Z",
+      "sign": "scorpio",
+      "retrograde": false
+    },
+    {
+      "planet": "Mars",
+      "at": "2028-10-24T01:11:06.404Z",
+      "sign": "virgo",
+      "retrograde": false
+    },
+    {
+      "planet": "Venus",
+      "at": "2028-10-27T13:51:15.827Z",
+      "sign": "libra",
+      "retrograde": false
+    }
+  ],
+  "lunations": [
+    {
+      "type": "full",
+      "at": "2028-10-03T16:24:53.810Z",
+      "sign": "aries",
+      "degree": 10.986975590218208
+    },
+    {
+      "type": "new",
+      "at": "2028-10-18T02:56:41.338Z",
+      "sign": "libra",
+      "degree": 25.264200149690396
+    }
+  ],
+  "stations": [
+    {
+      "planet": "Mercury",
+      "at": "2028-10-11T10:29:55.879Z",
+      "type": "direct",
+      "sign": "libra",
+      "degree": 3.480046116958647
+    },
+    {
+      "planet": "Pluto",
+      "at": "2028-10-19T04:19:42.099Z",
+      "type": "direct",
+      "sign": "aquarius",
+      "degree": 6.406416121272855
+    }
+  ],
+  "aspects": [
+    {
+      "a": "Mercury",
+      "b": "Jupiter",
+      "type": "conjunction",
+      "orb": 0,
+      "at": "2028-10-03T12:46:51.070Z",
+      "aSign": "libra",
+      "aDegree": 8.539246627693274,
+      "bSign": "libra",
+      "bDegree": 8.539246972646993
+    },
+    {
+      "a": "Mercury",
+      "b": "Neptune",
+      "type": "opposition",
+      "orb": 0,
+      "at": "2028-10-04T15:20:59.114Z",
+      "aSign": "libra",
+      "aDegree": 7.355981184814141,
+      "bSign": "aries",
+      "bDegree": 7.355981833278804
+    },
+    {
+      "a": "Mercury",
+      "b": "Pluto",
+      "type": "trine",
+      "orb": 0,
+      "at": "2028-10-05T13:25:08.393Z",
+      "aSign": "libra",
+      "aDegree": 6.449351130505647,
+      "bSign": "aquarius",
+      "bDegree": 6.449351723567474
+    },
+    {
+      "a": "Sun",
+      "b": "Uranus",
+      "type": "trine",
+      "orb": 0,
+      "at": "2028-10-06T20:23:22.046Z",
+      "aSign": "libra",
+      "aDegree": 14.1059375661074,
+      "bSign": "gemini",
+      "bDegree": 14.105936625675099
+    },
+    {
+      "a": "Venus",
+      "b": "Saturn",
+      "type": "trine",
+      "orb": 0,
+      "at": "2028-10-10T09:51:18.614Z",
+      "aSign": "virgo",
+      "aDegree": 9.403079884457838,
+      "bSign": "taurus",
+      "bDegree": 9.403078989707922
+    },
+    {
+      "a": "Venus",
+      "b": "Uranus",
+      "type": "square",
+      "orb": 0,
+      "at": "2028-10-14T06:06:54.623Z",
+      "aSign": "virgo",
+      "aDegree": 13.973523951230845,
+      "bSign": "gemini",
+      "bDegree": 13.973522883711098
+    },
+    {
+      "a": "Mercury",
+      "b": "Pluto",
+      "type": "trine",
+      "orb": 0,
+      "at": "2028-10-17T08:16:26.434Z",
+      "aSign": "libra",
+      "aDegree": 6.407230794624411,
+      "bSign": "aquarius",
+      "bDegree": 6.407230163395525
+    },
+    {
+      "a": "Mercury",
+      "b": "Neptune",
+      "type": "opposition",
+      "orb": 0,
+      "at": "2028-10-17T22:52:33.624Z",
+      "aSign": "libra",
+      "aDegree": 6.995656305239777,
+      "bSign": "aries",
+      "bDegree": 6.995655560228101
+    },
+    {
+      "a": "Mercury",
+      "b": "Jupiter",
+      "type": "conjunction",
+      "orb": 0,
+      "at": "2028-10-22T13:36:25.289Z",
+      "aSign": "libra",
+      "aDegree": 12.626308432510882,
+      "bSign": "libra",
+      "bDegree": 12.62630796538349
+    },
+    {
+      "a": "Mercury",
+      "b": "Uranus",
+      "type": "trine",
+      "orb": 0,
+      "at": "2028-10-23T08:42:09.161Z",
+      "aSign": "libra",
+      "aDegree": 13.753903253936642,
+      "bSign": "gemini",
+      "bDegree": 13.753902262038594
+    },
+    {
+      "a": "Jupiter",
+      "b": "Uranus",
+      "type": "trine",
+      "orb": 0,
+      "at": "2028-10-27T09:03:26.568Z",
+      "aSign": "libra",
+      "aDegree": 13.639119741742888,
+      "bSign": "gemini",
+      "bDegree": 13.639119556342507
+    },
+    {
+      "a": "Sun",
+      "b": "Pluto",
+      "type": "square",
+      "orb": 0,
+      "at": "2028-10-29T07:59:19.926Z",
+      "aSign": "scorpio",
+      "aDegree": 6.431011510405028,
+      "bSign": "aquarius",
+      "bDegree": 6.431010710978853
+    },
+    {
+      "a": "Sun",
+      "b": "Saturn",
+      "type": "opposition",
+      "orb": 0,
+      "at": "2028-10-30T17:30:33.892Z",
+      "aSign": "scorpio",
+      "aDegree": 7.826419835792763,
+      "bSign": "taurus",
+      "bDegree": 7.826419401645694
+    }
+  ]
+}

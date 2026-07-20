@@ -91,6 +91,9 @@ jobs:
       - name: Link & artifact integrity over dist
         run: node scripts/check-dist.mjs
 
+      - name: Phase 2 sky-events publication drive
+        run: OUT_DIR=tests/visual/artifacts/events npm run test:events:browser
+
       - name: Today SSR and personalization
         run: npm run test:today:browser
 

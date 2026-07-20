@@ -20,6 +20,12 @@ const routes = [
   { name: 'horoscope-love', path: '/horoscopes/aries/love/' },
   { name: 'horoscope-career', path: '/horoscopes/aries/career/' },
   { name: 'horoscope-yearly', path: '/horoscopes/aries/2027/' },
+  { name: 'events-hub', path: '/events/' },
+  { name: 'event-full-moon', path: '/full-moon/2026-07-29/' },
+  { name: 'event-eclipse', path: '/eclipses/2026-08-12/' },
+  { name: 'event-retrograde', path: '/mercury-retrograde/2026-06-29/' },
+  { name: 'event-ingress', path: '/events/saturn-enters-aries-2026-02-14/' },
+  { name: 'event-aspect', path: '/events/jupiter-trine-saturn-2026-08-31/' },
 ];
 // The Phase 1 brief gates every *new* template. Older site baselines remain
 // available for a broader audit without making unrelated debt block this gate.
@@ -32,18 +38,6 @@ if (process.env.LIGHTHOUSE_INCLUDE_BASELINE === '1') {
 }
 if (process.env.LIGHTHOUSE_INCLUDE_AURA === '1') {
   routes.push({ name: 'registry-aura', path: '/registry/aura/' });
-}
-// Phase 2 sky-events templates (opt-in until the family joins the release
-// gate; the routes are pinned by src/lib/events/catalog.test.ts).
-if (process.env.LIGHTHOUSE_INCLUDE_EVENTS === '1') {
-  routes.push(
-    { name: 'events-hub', path: '/events/' },
-    { name: 'event-full-moon', path: '/full-moon/2026-07-29/' },
-    { name: 'event-eclipse', path: '/eclipses/2026-08-12/' },
-    { name: 'event-retrograde', path: '/mercury-retrograde/2026-06-29/' },
-    { name: 'event-ingress', path: '/events/saturn-enters-aries-2026-02-14/' },
-    { name: 'event-aspect', path: '/events/jupiter-trine-saturn-2026-08-31/' },
-  );
 }
 const budgets = {
   score: 0.95,
@@ -150,6 +144,6 @@ try {
 
 if (failures > 0) {
   throw new Error(
-    `${failures} route${failures === 1 ? '' : 's'} missed the Phase 1 Lighthouse gate: performance, accessibility, and SEO ≥95; LCP ≤2.50s; CLS =0; TBT ≤200ms.`,
+    `${failures} route${failures === 1 ? '' : 's'} missed the Phase 1/2 Lighthouse gate: performance, accessibility, and SEO ≥95; LCP ≤2.50s; CLS =0; TBT ≤200ms.`,
   );
 }

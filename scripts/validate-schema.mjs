@@ -254,8 +254,11 @@ for (const file of await htmlFiles(dist)) {
   const horoscopeContent = new RegExp(
     `^/horoscopes/(?:${[...signSlugs].join('|')})(?:/(?:tomorrow|weekly|monthly|love|career|2027))?/$`,
   ).test(pathname);
+  const eventContent = /^\/(?:full-moon|new-moon|eclipses|(?:mercury|venus|mars)-retrograde)\/\d{4}-\d{2}-\d{2}\/$/.test(pathname)
+    || /^\/events\/(?!preview(?:\/|$))[a-z0-9-]+\/$/.test(pathname);
   const needsArticle = (topLevelSlug.length === 1 && signSlugs.has(topLevelSlug[0]))
-    || horoscopeContent;
+    || horoscopeContent
+    || eventContent;
   const learnContent = pathname.startsWith('/learn/')
     && (pathname === '/learn/how-to-read-a-birth-chart/'
       || pathname === '/learn/zodiac-dates/'
@@ -264,8 +267,8 @@ for (const file of await htmlFiles(dist)) {
   if (needsArticle || learnContent) {
     const articles = nodes.filter((node) => hasType(node, 'Article'));
     if (articles.length !== 1) {
-      failures.push(`${label}: sign/learn content needs exactly one Article (found ${articles.length})`);
-    } else validateArticle(articles[0], label, canonicalUrl, { requireDates: horoscopeContent });
+      failures.push(`${label}: article content needs exactly one Article (found ${articles.length})`);
+    } else validateArticle(articles[0], label, canonicalUrl, { requireDates: horoscopeContent || eventContent });
   }
 
   if (horoscopeContent) {

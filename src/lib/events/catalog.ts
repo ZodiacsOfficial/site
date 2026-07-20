@@ -21,7 +21,8 @@ import {
   ingressId, ingressPath, isoDay, lunationId, lunationPath,
   moonNameForDate, retrogradeId, retrogradePath, stationId,
 } from './format';
-import { EVENTS_INDEX_ELIGIBLE, type CatalogEvent, type EventFacts, type EventLink } from './types';
+import { publishedEventById } from './publication';
+import type { CatalogEvent, EventFacts, EventLink } from './types';
 import { FIXTURE_EVENTS } from './fixtures';
 import { interpretationFor } from './interpretations';
 
@@ -134,10 +135,21 @@ function eclipseFacts(): EventFacts[] {
 export const RETRO_PAGE_PLANETS = ['Mercury', 'Venus', 'Mars'] as const;
 
 interface RetroWindow {
-  planet: string; from: string; to: string | null; clamped: boolean;
+  planet: string;
+  from: string;
+  to: string | null;
+  preShadowStart?: string | null;
+  postShadowEnd?: string | null;
+  clamped: boolean;
 }
 
-const retroWindows: RetroWindow[] = (sky.retrogrades as { planet: string; from: string; to: string | null }[])
+const retroWindows: RetroWindow[] = (sky.retrogrades as {
+  planet: string;
+  from: string;
+  to: string | null;
+  preShadowStart?: string | null;
+  postShadowEnd?: string | null;
+}[])
   .map((window) => ({ ...window, clamped: window.from === sky.from }));
 
 /**
@@ -166,6 +178,8 @@ function retrogradeFacts(): EventFacts[] {
       subtype: 'cycle',
       start: window.from,
       end: window.to,
+      preShadowStart: window.preShadowStart ?? null,
+      postShadowEnd: window.postShadowEnd ?? null,
       clamped: window.clamped,
       bodies: [window.planet],
       signs,
@@ -472,6 +486,19 @@ function buildCatalog(): EventsCatalog {
       }
     }
 
+    const interpretation = interpretationFor(facts);
+    const published = publishedEventById.get(facts.id);
+    // The committed publication receipt is the only indexing allowlist. A
+    // matching ID alone is insufficient: if a fact changes, verification must
+    // regenerate and review the receipt before that page can remain public.
+    const indexEligible = Boolean(
+      interpretation
+      && published
+      && published.path === facts.path
+      && published.title === facts.title
+      && published.anchor === (facts.at ?? facts.start),
+    );
+
     return {
       facts,
       relations: {
@@ -486,9 +513,9 @@ function buildCatalog(): EventsCatalog {
         eclipse,
         cycle,
       },
-      interpretation: interpretationFor(facts.id),
-      indexEligible: EVENTS_INDEX_ELIGIBLE,
-      lastModified: facts.provenance.generatedAt,
+      interpretation,
+      indexEligible,
+      lastModified: indexEligible ? published?.lastModified : facts.provenance.generatedAt,
     };
   });
 

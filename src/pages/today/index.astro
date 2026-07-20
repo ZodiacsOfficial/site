@@ -1,6 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import EvidenceDisclosure from '../../components/EvidenceDisclosure.astro';
+import UpcomingEventLinks from '../../components/events/UpcomingEventLinks.astro';
 import TodayBrief from '../../islands/today/TodayBrief';
 import dailyData from '../../data/daily.json';
 import publicationData from '../../data/daily-publication.json';
@@ -77,6 +78,8 @@ const sunSignLines = Object.fromEntries(
          of its copy, so it needs neither the full client UI catalog nor eager
          hydration; personalization can wait until the first paint is idle. -->
     <TodayBrief client:idle sunSignLines={sunSignLines} />
+
+    <UpcomingEventLinks date={publication.date} />
 
     {daily.eventsCoverage === 'unavailable' && (
       <p class="today-coverage-note">

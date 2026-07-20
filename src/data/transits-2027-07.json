@@ -1,0 +1,183 @@
+{
+  "month": "2027-07",
+  "ingresses": [
+    {
+      "planet": "Venus",
+      "at": "2027-07-03T02:00:34.399Z",
+      "sign": "cancer",
+      "retrograde": false
+    },
+    {
+      "planet": "Mercury",
+      "at": "2027-07-12T13:45:17.105Z",
+      "sign": "cancer",
+      "retrograde": false
+    },
+    {
+      "planet": "Mars",
+      "at": "2027-07-15T05:40:14.594Z",
+      "sign": "libra",
+      "retrograde": false
+    },
+    {
+      "planet": "Sun",
+      "at": "2027-07-23T01:04:31.806Z",
+      "sign": "leo",
+      "retrograde": false
+    },
+    {
+      "planet": "Jupiter",
+      "at": "2027-07-26T04:45:20.433Z",
+      "sign": "virgo",
+      "retrograde": false
+    },
+    {
+      "planet": "Venus",
+      "at": "2027-07-27T12:29:53.702Z",
+      "sign": "leo",
+      "retrograde": false
+    }
+  ],
+  "lunations": [
+    {
+      "type": "new",
+      "at": "2027-07-04T03:01:58.815Z",
+      "sign": "cancer",
+      "degree": 11.956557386933412
+    },
+    {
+      "type": "full",
+      "at": "2027-07-18T15:44:51.512Z",
+      "sign": "capricorn",
+      "degree": 25.81271899306637
+    }
+  ],
+  "stations": [
+    {
+      "planet": "Mercury",
+      "at": "2027-07-04T19:40:01.665Z",
+      "type": "direct",
+      "sign": "gemini",
+      "degree": 27.469443978155766
+    },
+    {
+      "planet": "Neptune",
+      "at": "2027-07-09T22:50:11.241Z",
+      "type": "retrograde",
+      "sign": "aries",
+      "degree": 6.662670528079786
+    }
+  ],
+  "aspects": [
+    {
+      "a": "Venus",
+      "b": "Neptune",
+      "type": "square",
+      "orb": 0,
+      "at": "2027-07-08T12:30:39.439Z",
+      "aSign": "cancer",
+      "aDegree": 6.662110899481945,
+      "bSign": "aries",
+      "bDegree": 6.662110518049246
+    },
+    {
+      "a": "Jupiter",
+      "b": "Saturn",
+      "type": "trine",
+      "orb": 0,
+      "at": "2027-07-11T22:45:48.310Z",
+      "aSign": "leo",
+      "aDegree": 27.168472300411167,
+      "bSign": "aries",
+      "bDegree": 27.16847218332316
+    },
+    {
+      "a": "Mercury",
+      "b": "Neptune",
+      "type": "square",
+      "orb": 0,
+      "at": "2027-07-19T14:09:48.206Z",
+      "aSign": "cancer",
+      "aDegree": 6.637997210716435,
+      "bSign": "aries",
+      "bDegree": 6.6379971480480435
+    },
+    {
+      "a": "Sun",
+      "b": "Saturn",
+      "type": "square",
+      "orb": 0,
+      "at": "2027-07-20T10:44:41.981Z",
+      "aSign": "cancer",
+      "aDegree": 27.52170792553318,
+      "bSign": "aries",
+      "bDegree": 27.521707367848023
+    },
+    {
+      "a": "Venus",
+      "b": "Saturn",
+      "type": "square",
+      "orb": 0,
+      "at": "2027-07-25T15:15:19.555Z",
+      "aSign": "cancer",
+      "aDegree": 27.679485094169877,
+      "bSign": "aries",
+      "bDegree": 27.67948425521223
+    },
+    {
+      "a": "Mars",
+      "b": "Pluto",
+      "type": "trine",
+      "orb": 0,
+      "at": "2027-07-25T15:23:08.231Z",
+      "aSign": "libra",
+      "aDegree": 6.043606007971903,
+      "bSign": "aquarius",
+      "bDegree": 6.043605513331727
+    },
+    {
+      "a": "Mars",
+      "b": "Neptune",
+      "type": "opposition",
+      "orb": 0,
+      "at": "2027-07-26T13:31:48.021Z",
+      "aSign": "libra",
+      "aDegree": 6.5893888579582836,
+      "bSign": "aries",
+      "bDegree": 6.589388731334623
+    },
+    {
+      "a": "Sun",
+      "b": "Pluto",
+      "type": "opposition",
+      "orb": 0,
+      "at": "2027-07-29T06:46:44.478Z",
+      "aSign": "leo",
+      "aDegree": 5.958797629818321,
+      "bSign": "aquarius",
+      "bDegree": 5.958797372844629
+    },
+    {
+      "a": "Sun",
+      "b": "Neptune",
+      "type": "trine",
+      "orb": 0,
+      "at": "2027-07-29T21:48:03.167Z",
+      "aSign": "leo",
+      "aDegree": 6.557320526834644,
+      "bSign": "aries",
+      "bDegree": 6.5573200281611435
+    },
+    {
+      "a": "Mars",
+      "b": "Uranus",
+      "type": "trine",
+      "orb": 0,
+      "at": "2027-07-30T16:59:07.154Z",
+      "aSign": "libra",
+      "aDegree": 9.060122456007093,
+      "bSign": "gemini",
+      "bDegree": 9.060122429836952
+    }
+  ]
+}

@@ -1,20 +1,67 @@
 import { describe, expect, it } from 'vitest';
-import { bodyLongitude } from '../engine/full';
+import { bodyLongitude, longitudeSpeed } from '../engine/full';
 import { degreeInSign, signForLongitude } from '../signs';
 import { solarHouse } from '../daily';
 import { eventsCatalog, RETRO_PAGE_PLANETS, SLOW_BODIES } from './catalog';
 import { eventClock, metaDescription, metaTitle, moonNameForDate } from './format';
 import { INTERPRETED_IDS, interpretationFor } from './interpretations';
-import { EVENTS_INDEX_ELIGIBLE } from './types';
+import { publishedEventPages } from './publication';
 
 const catalog = eventsCatalog();
 const byId = catalog.byId;
+const expectedTransitMonths = Array.from({ length: 60 }, (_, index) => {
+  const year = 2026 + Math.floor(index / 12);
+  const month = String((index % 12) + 1).padStart(2, '0');
+  return `${year}-${month}`;
+});
+const transitSources = Object.entries(
+  import.meta.glob('../../data/transits-*.json', { eager: true }),
+).map(([, module]) => (module as { default: {
+  month: string;
+  lunations: { type: 'full' | 'new'; at: string }[];
+  stations: { planet: string; at: string; type: 'retrograde' | 'direct' }[];
+  aspects: { a: string; b: string; type: string; at: string; orb: number }[];
+} }).default).sort((left, right) => left.month.localeCompare(right.month));
 const anchor = (id: string) => {
   const event = byId.get(id)!;
   return new Date(event.facts.at ?? event.facts.start ?? 0).getTime();
 };
+const wrap180 = (value: number) => {
+  const wrapped = ((value % 360) + 360) % 360;
+  return wrapped > 180 ? wrapped - 360 : wrapped;
+};
 
 describe('events catalog — construction', () => {
+  it('covers every month and standalone event in the inclusive 2026–2030 horizon', () => {
+    expect(catalog.range).toEqual({
+      from: '2026-01-01T00:00:00.000Z',
+      to: '2031-01-01T00:00:00.000Z',
+    });
+    expect(transitSources.map((source) => source.month)).toEqual(expectedTransitMonths);
+    expect(catalog.pages).toHaveLength(219);
+    const familyCounts = catalog.pages.reduce<Record<string, number>>((counts, event) => {
+      counts[event.facts.family] = (counts[event.facts.family] ?? 0) + 1;
+      return counts;
+    }, {});
+    expect(familyCounts).toEqual({
+      lunation: 124,
+      eclipse: 24,
+      retrograde: 21,
+      ingress: 10,
+      aspect: 40,
+    });
+    const yearCounts = catalog.pages.reduce<Record<string, number>>((counts, event) => {
+      const year = (event.facts.at ?? event.facts.start!).slice(0, 4);
+      counts[year] = (counts[year] ?? 0) + 1;
+      return counts;
+    }, {});
+    expect(yearCounts).toEqual({ 2026: 49, 2027: 43, 2028: 45, 2029: 42, 2030: 40 });
+    for (const event of catalog.pages) {
+      const at = event.facts.at ?? event.facts.start!;
+      expect(at >= catalog.range.from && at < catalog.range.to, event.facts.id).toBe(true);
+    }
+  });
+
   it('builds every family from the committed catalogs', () => {
     const families = new Set(catalog.events.map((event) => event.facts.family));
     for (const family of ['lunation', 'eclipse', 'retrograde', 'ingress', 'aspect', 'station']) {
@@ -49,10 +96,20 @@ describe('events catalog — construction', () => {
     expect(catalog.pages.some((page) => page.facts.id === mercuryCycle.facts.id)).toBe(true);
   });
 
-  it('keeps the branch-wide indexing policy off for every event', () => {
-    expect(EVENTS_INDEX_ELIGIBLE).toBe(false);
-    for (const event of [...catalog.events, ...catalog.fixtures]) {
+  it('indexes exactly the committed 2026–2027 publication receipt', () => {
+    const publishedIds = new Set(publishedEventPages.map((event) => event.id));
+    const eligible = catalog.pages.filter((event) => event.indexEligible);
+    expect(eligible).toHaveLength(92);
+    expect(new Set(eligible.map((event) => event.facts.id))).toEqual(publishedIds);
+    for (const event of eligible) {
+      expect(event.interpretation, event.facts.id).toBeDefined();
+      expect(event.lastModified, event.facts.id).toBe('2026-07-20');
+    }
+    for (const event of catalog.events.filter((candidate) => !publishedIds.has(candidate.facts.id))) {
       expect(event.indexEligible, event.facts.id).toBe(false);
+    }
+    for (const fixture of catalog.fixtures) {
+      expect(fixture.indexEligible, fixture.facts.id).toBe(false);
     }
   });
 
@@ -126,6 +183,37 @@ describe('events catalog — named regression vectors', () => {
     expect(byId.get('jupiter-stations-retrograde-2026-01-01')).toBeUndefined();
   });
 
+  it('exposes verified pre- and post-shadow boundaries without guessing incomplete cycles', () => {
+    const cycles = catalog.events.filter((event) => event.facts.family === 'retrograde');
+    const incomplete = cycles.filter((event) => event.facts.clamped || !event.facts.end);
+    expect(incomplete).toHaveLength(2);
+    for (const event of incomplete) {
+      expect(event.facts.preShadowStart, event.facts.id).toBeNull();
+      expect(event.facts.postShadowEnd, event.facts.id).toBeNull();
+    }
+    for (const event of cycles.filter((candidate) => !candidate.facts.clamped && candidate.facts.end)) {
+      const facts = event.facts;
+      expect(facts.preShadowStart, facts.id).toBeTruthy();
+      expect(facts.postShadowEnd, facts.id).toBeTruthy();
+      expect(facts.preShadowStart! < facts.start!, facts.id).toBe(true);
+      expect(facts.start! < facts.end!, facts.id).toBe(true);
+      expect(facts.end! < facts.postShadowEnd!, facts.id).toBe(true);
+      const body = facts.bodies[0] as Parameters<typeof bodyLongitude>[0];
+      const preDelta = Math.abs(wrap180(
+        bodyLongitude(body, new Date(facts.preShadowStart!))
+          - bodyLongitude(body, new Date(facts.end!)),
+      ));
+      const postDelta = Math.abs(wrap180(
+        bodyLongitude(body, new Date(facts.postShadowEnd!))
+          - bodyLongitude(body, new Date(facts.start!)),
+      ));
+      expect(preDelta, `${facts.id} pre-shadow longitude`).toBeLessThan(0.02);
+      expect(postDelta, `${facts.id} post-shadow longitude`).toBeLessThan(0.02);
+      expect(longitudeSpeed(body, new Date(facts.preShadowStart!)), facts.id).toBeGreaterThan(0);
+      expect(longitudeSpeed(body, new Date(facts.postShadowEnd!)), facts.id).toBeGreaterThan(0);
+    }
+  });
+
   it('names the 2026-05-31 full moon a blue moon (second full moon of May)', () => {
     const blue = byId.get('full-moon-2026-05-31')!;
     expect(blue.facts.moonName).toBe('Blue');
@@ -164,6 +252,28 @@ describe('events catalog — named regression vectors', () => {
 });
 
 describe('events catalog — derivation agreement', () => {
+  it('maps every monthly lunation, station, and slow-pair aspect into the unified facts', () => {
+    const slowBodies = new Set<string>(SLOW_BODIES);
+    for (const source of transitSources) {
+      for (const lunation of source.lunations) {
+        const id = `${lunation.type}-moon-${lunation.at.slice(0, 10)}`;
+        expect(byId.get(id)?.facts.provenance.source, id).toBe(`transits-${source.month}.json`);
+      }
+      for (const station of source.stations) {
+        const id = `${station.planet.toLowerCase()}-stations-${station.type}-${station.at.slice(0, 10)}`;
+        const event = byId.get(id);
+        expect(event, id).toBeDefined();
+        expect(Math.abs(new Date(event!.facts.at!).getTime() - new Date(station.at).getTime()), id)
+          .toBeLessThan(2_000);
+      }
+      for (const aspect of source.aspects) {
+        if (!slowBodies.has(aspect.a) || !slowBodies.has(aspect.b) || aspect.orb !== 0) continue;
+        const id = `${aspect.a.toLowerCase()}-${aspect.type}-${aspect.b.toLowerCase()}-${aspect.at.slice(0, 10)}`;
+        expect(byId.get(id)?.facts.provenance.source, id).toBe(`transits-${source.month}.json`);
+      }
+    }
+  });
+
   it('agrees with the engine at every monthly-catalog lunation instant', () => {
     for (const event of catalog.events) {
       if (event.facts.family !== 'lunation') continue;
