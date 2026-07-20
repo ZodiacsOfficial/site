@@ -15,6 +15,24 @@ const manifest = JSON.parse(await readFile(
   new URL('../src/data/daily-publication-manifest.json', import.meta.url),
   'utf8',
 ));
+const daily = JSON.parse(await readFile(new URL('../src/data/daily.json', import.meta.url), 'utf8'));
+const MAJOR_ASPECT_ANGLES = [0, 60, 90, 120, 180];
+
+function quietAriesLongitude() {
+  const candidates = Array.from({ length: 300 }, (_, index) => index / 10).map((lon) => {
+    const nearestOrb = Math.min(...daily.bodies.flatMap((body) => {
+      const rawSeparation = Math.abs(body.lon - lon) % 360;
+      const separation = rawSeparation > 180 ? 360 - rawSeparation : rawSeparation;
+      return MAJOR_ASPECT_ANGLES.map((angle) => Math.abs(separation - angle));
+    }));
+    return { lon, nearestOrb };
+  });
+  const best = candidates.sort((a, b) => b.nearestOrb - a.nearestOrb)[0];
+  if (!best || best.nearestOrb <= 3) {
+    throw new Error(`No deterministic quiet Aries fixture exists for ${daily.date}.`);
+  }
+  return best.lon;
+}
 
 const profile = {
   version: 1,
@@ -62,7 +80,7 @@ const quietMobileProfile = {
     name: LONG_CHART_NAME,
     summary: {
       ...profile.charts[0].summary,
-      bodies: [{ body: 'Sun', lon: 0, retrograde: false }],
+      bodies: [{ body: 'Sun', lon: quietAriesLongitude(), retrograde: false }],
       angles: null,
     },
   }],

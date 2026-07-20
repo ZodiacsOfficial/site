@@ -16,6 +16,26 @@ const CHROMIUM = await findChromium();
 const DAILY = JSON.parse(await readFile(new URL('../src/data/daily.json', import.meta.url), 'utf8'));
 const PROGRAM = JSON.parse(await readFile(new URL('../src/data/horoscope-program.json', import.meta.url), 'utf8'));
 const LONG_CHART_NAME = 'AChartNameThatKeepsGoingWithoutAnyBreakOpportunityForTheEntireMobileViewport';
+const DAILY_FOR_YOU_MOVERS = new Set(['Sun', 'Mercury', 'Venus', 'Mars', 'Jupiter', 'Saturn']);
+const MAJOR_ASPECT_ANGLES = [0, 60, 90, 120, 180];
+
+function quietAriesLongitude() {
+  const sky = DAILY.bodies.filter((body) => DAILY_FOR_YOU_MOVERS.has(body.body));
+  const candidates = Array.from({ length: 300 }, (_, index) => index / 10).map((lon) => {
+    const nearestOrb = Math.min(...sky.flatMap((body) => {
+      const rawSeparation = Math.abs(body.lon - lon) % 360;
+      const separation = rawSeparation > 180 ? 360 - rawSeparation : rawSeparation;
+      return MAJOR_ASPECT_ANGLES.map((angle) => Math.abs(separation - angle));
+    }));
+    return { lon, nearestOrb };
+  });
+  const best = candidates.sort((a, b) => b.nearestOrb - a.nearestOrb)[0];
+  if (!best || best.nearestOrb <= 3) {
+    throw new Error(`No deterministic quiet Aries fixture exists for ${DAILY.date}.`);
+  }
+  return best.lon;
+}
+
 const RETURNING_PROFILE = {
   version: 1,
   settings: { houseSystem: 'whole' },
@@ -51,7 +71,7 @@ const QUIET_MOBILE_PROFILE = {
     name: LONG_CHART_NAME,
     summary: {
       ...RETURNING_PROFILE.charts[0].summary,
-      bodies: [{ body: 'Sun', lon: 0, retrograde: false }],
+      bodies: [{ body: 'Sun', lon: quietAriesLongitude(), retrograde: false }],
       angles: null,
     },
   }],
