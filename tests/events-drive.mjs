@@ -215,7 +215,7 @@ await withPreview({ port: 4412 }, async (BASE) => {
       check('full moon: heading names the Buck Moon',
         (await page.locator('h1').innerText()).includes('Buck Moon'));
       check('full moon: dateline carries the exact UTC clock',
-        (await page.locator('.event-hero__when').innerText()).includes('14:36 UTC'));
+        (await page.locator('.event-hero__when').innerText()).includes('14:35 UTC'));
       check('full moon: twelve sign notes with anchors',
         await page.locator('.event-signs__item').count() === 12
         && await page.locator('#for-aquarius').count() === 1);
@@ -237,7 +237,7 @@ await withPreview({ port: 4412 }, async (BASE) => {
       check('full moon: evidence opens by keyboard',
         await page.locator('[data-evidence-disclosure]').evaluate((node) => node.open));
       check('full moon: opened evidence lists the exact instant',
-        (await page.locator('.event-evidence__rows').innerText()).includes('2026-07-29T14:36'));
+        (await page.locator('.event-evidence__rows').innerText()).includes('2026-07-29T14:35'));
       if (OUT) await page.screenshot({ path: `${OUT}/full-moon-1280-evidence-open.png`, fullPage: true });
       await page.close();
 

@@ -28,7 +28,7 @@ interface Props {
 }
 
 const { event } = Astro.props;
-const { facts, interpretation, relations } = event;
+const { facts, interpretation } = event;
 const catalog = eventsCatalog();
 const resolve = (id: string) => catalog.byId.get(id);
 
