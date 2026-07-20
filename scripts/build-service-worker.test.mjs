@@ -80,14 +80,14 @@ describe('offline service worker posture', () => {
 
     await dispatchPush(handler, {
       title: '  Full moon tonight  ',
-      body: '  The Buck Moon peaks in Aquarius at 14:35 UTC.  ',
+      body: '  The Buck Moon — the Moon stands opposite the Sun in Aquarius. Exact at 14:35 UTC. Where it lands for you:  ',
       url: '/full-moon/2026-07-29/',
     });
 
     expect(worker.showNotification).toHaveBeenCalledTimes(1);
     const [title, options] = worker.showNotification.mock.calls[0];
     expect(title).toBe('Full moon tonight');
-    expect(options.body).toBe('The Buck Moon peaks in Aquarius at 14:35 UTC.');
+    expect(options.body).toBe('The Buck Moon — the Moon stands opposite the Sun in Aquarius. Exact at 14:35 UTC. Where it lands for you:');
     expect(options.tag).toBe('zodiacs-sky-alert');
     expect(options.data.url).toBe('/full-moon/2026-07-29/');
 
@@ -95,8 +95,8 @@ describe('offline service worker posture', () => {
       undefined,
       { title: '', body: 'Body', url: '/events/example/' },
       { title: 'Title', body: ' ', url: '/events/example/' },
-      { title: 'T'.repeat(121), body: 'Body', url: '/events/example/' },
-      { title: 'Title', body: 'B'.repeat(321), url: '/events/example/' },
+      { title: 'T'.repeat(33), body: 'Body', url: '/events/example/' },
+      { title: 'Title', body: 'B'.repeat(141), url: '/events/example/' },
       { title: 'Title', body: 'Body', url: '//example.com/events/example/' },
       { title: 'Title', body: 'Body', url: '/events\\example/' },
       { title: 'Title', body: 'Body', url: '/events/example/\u0000' },

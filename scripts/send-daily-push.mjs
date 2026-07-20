@@ -9,8 +9,8 @@ const LIVE_EVENT_ORIGIN = 'https://zodiacs.org';
 const DAY_MS = 86_400_000;
 const EVENT_ID_PATTERN = /^[a-z0-9][a-z0-9-]{0,159}$/u;
 const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/iu;
-const ALERT_TITLE_MAX = 120;
-const ALERT_BODY_MAX = 320;
+const ALERT_TITLE_MAX = 32;
+const ALERT_BODY_MAX = 140;
 const EVENT_PATH_MAX = 512;
 const EVENT_PATH_PREFIXES = Object.freeze([
   '/eclipses/',
@@ -23,16 +23,25 @@ const EVENT_PATH_PREFIXES = Object.freeze([
   '/venus-retrograde/',
 ]);
 
-// Fable's final collision/copy addendum can replace this isolated policy
-// without touching delivery or consent. Until then, eclipse is the explicit
-// paired-lunation winner and every other tie is deterministic.
 const EVENT_PRIORITY = Object.freeze({
-  eclipse: 0,
-  station: 1,
-  lunation: 2,
+  eclipse: 1,
+  ingress: 2,
   aspect: 3,
-  ingress: 4,
+  station: 4,
+  lunation: 5,
 });
+const SUBTYPE_PRIORITY = Object.freeze({
+  eclipse: Object.freeze({ solar: 0, lunar: 1 }),
+  ingress: Object.freeze({ ingress: 0 }),
+  aspect: Object.freeze({ conjunction: 0, opposition: 1, square: 2, trine: 3, sextile: 4 }),
+  station: Object.freeze({ retrograde: 0, direct: 1 }),
+  lunation: Object.freeze({ full: 0, new: 1 }),
+});
+const SLOW_BODIES = new Set(['Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto']);
+const STATION_BODIES = new Set([
+  'Mercury', 'Venus', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto',
+]);
+const ELIGIBLE_ASPECTS = new Set(['conjunction', 'opposition', 'square', 'trine']);
 
 function utcDay(value) {
   const time = value instanceof Date ? value.getTime() : Date.parse(value);
@@ -43,21 +52,12 @@ function utcTime(value) {
   return new Date(value).toISOString().slice(11, 16);
 }
 
-function titleCase(value) {
-  return String(value ?? '').replace(/(^|[-\s])\p{L}/gu, (match) => match.toUpperCase());
-}
-
-function sentence(value) {
-  const normalized = String(value ?? '').trim();
-  return /[.!?]$/u.test(normalized) ? normalized : `${normalized}.`;
-}
-
-function withoutPeriod(value) {
-  return String(value ?? '').trim().replace(/\.$/u, '');
-}
-
-function eventRank(event) {
+export function eventFamilyRank(event) {
   return EVENT_PRIORITY[event.family] ?? Number.MAX_SAFE_INTEGER;
+}
+
+function subtypeRank(event) {
+  return SUBTYPE_PRIORITY[event.family]?.[event.subtype] ?? Number.MAX_SAFE_INTEGER;
 }
 
 function supportedSubtype(event) {
@@ -65,7 +65,8 @@ function supportedSubtype(event) {
   if (event.family === 'eclipse') return event.subtype === 'solar' || event.subtype === 'lunar';
   if (event.family === 'station') return event.subtype === 'direct' || event.subtype === 'retrograde';
   if (event.family === 'ingress') return event.subtype === 'ingress';
-  return event.family === 'aspect' && event.subtype.length > 0 && event.subtype.length <= 40;
+  return event.family === 'aspect'
+    && Object.hasOwn(SUBTYPE_PRIORITY.aspect, event.subtype);
 }
 
 function validEvent(event) {
@@ -112,6 +113,25 @@ function validEvent(event) {
   );
 }
 
+export function eligibleEvent(event) {
+  if (!validEvent(event)) return false;
+  if (event.family === 'ingress') return SLOW_BODIES.has(event.bodies[0]);
+  if (event.family === 'aspect') {
+    return ELIGIBLE_ASPECTS.has(event.subtype)
+      && event.bodies.length === 2
+      && event.bodies.every((body) => SLOW_BODIES.has(body));
+  }
+  if (event.family === 'station') return STATION_BODIES.has(event.bodies[0]);
+  return true;
+}
+
+export function compareEligibleEvents(left, right) {
+  return eventFamilyRank(left) - eventFamilyRank(right)
+    || left.anchor.localeCompare(right.anchor)
+    || subtypeRank(left) - subtypeRank(right)
+    || left.id.localeCompare(right.id);
+}
+
 function checkedAlert(alert) {
   const title = typeof alert?.title === 'string' ? alert.title.trim() : '';
   const body = typeof alert?.body === 'string' ? alert.body.trim() : '';
@@ -126,7 +146,7 @@ function checkedAlert(alert) {
   return { title, body, url: alert.url };
 }
 
-/** Select exactly one published event on the run's UTC day; never look ahead. */
+/** Select exactly one eligible published event on the run's UTC day. */
 export function selectEventForDay(publication, date = new Date()) {
   if (publication?.schema !== EVENTS_SCHEMA
     || publication.locale !== 'en'
@@ -137,81 +157,77 @@ export function selectEventForDay(publication, date = new Date()) {
   if (!day) throw new Error('Push delivery date is invalid.');
 
   const candidates = publication.timeline
-    .filter(validEvent)
+    .filter(eligibleEvent)
     .filter((event) => utcDay(event.anchor) === day);
-  const hasEclipse = candidates.some((event) => event.family === 'eclipse');
   return candidates
-    .filter((event) => !hasEclipse || event.family !== 'lunation')
-    .sort((left, right) => (
-      eventRank(left) - eventRank(right)
-      || left.anchor.localeCompare(right.anchor)
-      || left.id.localeCompare(right.id)
-    ))[0] ?? null;
+    .sort(compareEligibleEvents)[0] ?? null;
 }
 
-/**
- * English-only, source-backed payload policy. These are the approved Fable
- * slots where the receipt exposes them; unsupported families fall back to the
- * committed publication sentence, never to a generic daily notification.
- */
+/** Return the best family rank within the next six UTC dates, if any. */
+export function upcomingBestRankWithinSixDays(publication, event, date) {
+  if (!eligibleEvent(event)) throw new Error('Cannot reserve for an ineligible Sky Alert event.');
+  const day = utcDay(date);
+  if (!day || utcDay(event.anchor) !== day) {
+    throw new Error('Sky Alert reservation date must match the selected event.');
+  }
+  const start = Date.parse(`${day}T00:00:00.000Z`);
+  let bestRank = null;
+  for (let offset = 1; offset <= 6; offset += 1) {
+    const candidate = selectEventForDay(publication, new Date(start + (offset * DAY_MS)));
+    if (candidate) {
+      const rank = eventFamilyRank(candidate);
+      bestRank = bestRank === null ? rank : Math.min(bestRank, rank);
+    }
+  }
+  return bestRank;
+}
+
+/** English-only payload formulas using only the committed event receipt. */
 export function buildEventAlert(event) {
-  if (!validEvent(event)) throw new Error('Cannot build a push alert from an invalid event.');
+  if (!eligibleEvent(event)) throw new Error('Cannot build a push alert from an ineligible event.');
   const time = utcTime(event.anchor);
-  const sign = titleCase(event.signs[0]);
   const planet = event.bodies[0] ?? '';
+  const summary = event.summary.trim();
 
   if (event.family === 'lunation' && event.subtype === 'full') {
-    const namedMoon = event.summary.match(/^(The [^—]+?)\s+—/u)?.[1] ?? 'The full Moon';
     return checkedAlert({
-      title: 'Full moon tonight',
-      body: `${namedMoon} peaks${sign ? ` in ${sign}` : ''} at ${time} UTC. Where it lands for you:`,
+      title: new Date(event.anchor).getUTCHours() >= 12 ? 'Full moon tonight' : 'Full moon today',
+      body: `${summary} Exact at ${time} UTC. Where it lands for you:`,
       url: event.path,
     });
   }
   if (event.family === 'lunation' && event.subtype === 'new') {
     return checkedAlert({
       title: 'New moon today',
-      body: `Sun and Moon meet${sign ? ` in ${sign}` : ''} — the month’s reset point.`,
+      body: summary,
       url: event.path,
     });
   }
   if (event.family === 'eclipse') {
-    const label = event.title.split(/\s+—/u)[0]?.replace(/\s+in\s+.+$/u, '').trim() || 'Eclipse';
+    const label = event.title.split(/\s+in\s+/iu)[0].trim();
     return checkedAlert({
       title: `${label} today`,
-      body: event.id === 'eclipse-2026-08-12'
-        ? 'The Moon covers the Sun at 20° Leo, 17:45 UTC — the year’s most emphatic new moon.'
-        : `${withoutPeriod(event.summary)} at ${time} UTC.`,
+      body: `${summary} Exact at ${time} UTC.`,
       url: event.path,
     });
   }
   if (event.family === 'station') {
-    const direction = event.subtype === 'direct' ? 'direct' : 'retrograde';
     return checkedAlert({
-      title: `${planet || 'A planet'} turns ${direction} today`,
-      body: planet === 'Mercury' && direction === 'direct'
-        ? `The review window closes at ${time} UTC. Stalled plans start moving.`
-        : `${withoutPeriod(event.summary)} at ${time} UTC.`,
+      title: `${planet} turns ${event.subtype} today`,
+      body: `${summary} Exact at ${time} UTC.`,
       url: event.path,
     });
   }
   if (event.family === 'aspect') {
-    if (event.id === 'uranus-trine-pluto-2026-07-18') {
-      return checkedAlert({
-        title: 'A rare exact alignment today',
-        body: 'Uranus and Pluto reach an exact trine — years in the making.',
-        url: event.path,
-      });
-    }
     return checkedAlert({
-      title: event.title.split(/\s+—/u)[0],
-      body: sentence(event.summary),
+      title: 'A rare exact alignment today',
+      body: summary,
       url: event.path,
     });
   }
   return checkedAlert({
-    title: event.title.split(/\s+—/u)[0],
-    body: sentence(event.summary),
+    title: `${event.title.split(/\s+—/u)[0].trim()} today`,
+    body: summary,
     url: event.path,
   });
 }
@@ -227,7 +243,7 @@ export async function verifyEventLive(
   fetchImpl = fetch,
   origin = LIVE_EVENT_ORIGIN,
 ) {
-  if (!validEvent(event)) throw new Error('Cannot verify an invalid Sky Alert event.');
+  if (!eligibleEvent(event)) throw new Error('Cannot verify an ineligible Sky Alert event.');
   const expected = new URL(event.path, origin);
   expected.hash = '';
   if (expected.origin !== origin) throw new Error('Sky Alert live origin is invalid.');
@@ -296,7 +312,7 @@ export async function readSubscriptions(
   const filter = subscriptionIds.length > 0
     ? `&subscription_id=in.(${subscriptionIds.join(',')})`
     : '';
-  const endpoint = `${url.replace(/\/+$/, '')}/rest/v1/push_subscriptions?select=subscription_id,endpoint,p256dh,auth,lang&order=created_at.asc&limit=${limit}${filter}`;
+  const endpoint = `${url.replace(/\/+$/, '')}/rest/v1/push_subscriptions?select=subscription_id,endpoint,p256dh,auth,lang,updated_at&order=created_at.asc&limit=${limit}${filter}`;
   const response = await fetchImpl(endpoint, { headers: serviceHeaders(serviceKey, 'return=representation') });
   if (!response.ok) throw new Error(`Could not read push subscriptions (${response.status}).`);
   const rows = await response.json();
@@ -307,11 +323,14 @@ export async function readSubscriptions(
 function emptyReport(event = null) {
   return {
     event: event?.id ?? null,
+    schedule: event ? 'pending' : 'none',
     considered: 0,
     reserved: 0,
     capped: 0,
+    held: 0,
     duplicate: 0,
     missing: 0,
+    stale: 0,
     sent: 0,
     pruned: 0,
     failed: 0,
@@ -325,9 +344,9 @@ function deliveryTtlSeconds(now) {
 }
 
 /**
- * Deliver one event alert to a bounded subscription batch. The claim store is
- * the only authority for duplicate and rolling-cap decisions and is always
- * consulted before Web Push. Dry runs are render-only and never call it.
+ * Select one global editorial send, then deliver it to a bounded subscription
+ * batch. Both durable stores are consulted before Web Push. Dry runs are
+ * render-only and call neither store.
  */
 export async function sendDailyPush({
   subscriptions,
@@ -335,6 +354,7 @@ export async function sendDailyPush({
   date,
   now = new Date(),
   dryRun = false,
+  schedule,
   claims,
   sendNotification,
   log = console.log,
@@ -347,7 +367,28 @@ export async function sendDailyPush({
   }
 
   const alert = buildEventAlert(event);
+  const eventDate = utcDay(event.anchor);
+  const currentRank = eventFamilyRank(event);
+  const upcomingBestRank = upcomingBestRankWithinSixDays(publication, event, date);
   const payload = JSON.stringify(alert);
+  if (subscriptions.length === 0) {
+    report.schedule = 'empty';
+    return report;
+  }
+  if (!dryRun) {
+    const selection = await schedule.select(eventDate, event.id, currentRank, upcomingBestRank);
+    report.schedule = selection.outcome;
+    if (selection.outcome === 'conflict') {
+      throw new Error(`Sky Alert schedule conflicts with the selected event on ${eventDate}.`);
+    }
+    if (selection.outcome !== 'selected') {
+      if (selection.outcome === 'held_7d') report.held = 1;
+      if (selection.outcome === 'capped_7d') report.capped = 1;
+      return report;
+    }
+  } else {
+    report.schedule = 'dry_run';
+  }
   for (const row of subscriptions) {
     report.considered += 1;
     if (dryRun) {
@@ -358,7 +399,7 @@ export async function sendDailyPush({
 
     let claim;
     try {
-      claim = await claims.claim(row.subscription_id, event.id);
+      claim = await claims.claim(row.subscription_id, event.id, row.updated_at);
     } catch (error) {
       report.failed += 1;
       log(`sky-alert: claim failed ${error instanceof Error ? error.message : 'unknown'}`);
@@ -367,6 +408,7 @@ export async function sendDailyPush({
     if (claim.outcome !== 'reserved') {
       if (claim.outcome === 'capped_24h' || claim.outcome === 'capped_7d') report.capped += 1;
       else if (claim.outcome === 'duplicate') report.duplicate += 1;
+      else if (claim.outcome === 'stale') report.stale += 1;
       else report.missing += 1;
       continue;
     }
@@ -481,12 +523,16 @@ export function createPushClaimStore(
 ) {
   const root = url.replace(/\/+$/, '');
   return {
-    async claim(subscriptionId, eventId) {
+    async claim(subscriptionId, eventId, subscriptionUpdatedAt) {
       if (!Number.isSafeInteger(subscriptionId) || subscriptionId < 1) {
         throw new Error('Push delivery requires a valid subscription id.');
       }
       if (typeof eventId !== 'string' || !EVENT_ID_PATTERN.test(eventId)) {
         throw new Error('Push delivery requires a valid event id.');
+      }
+      if (typeof subscriptionUpdatedAt !== 'string'
+        || !Number.isFinite(Date.parse(subscriptionUpdatedAt))) {
+        throw new Error('Push delivery requires the listed subscription version.');
       }
       const claimToken = randomId();
       if (typeof claimToken !== 'string' || !UUID_PATTERN.test(claimToken)) {
@@ -498,7 +544,8 @@ export function createPushClaimStore(
         headers: serviceHeaders(serviceKey, 'return=representation'),
         body: JSON.stringify({
           candidate_subscription_id: subscriptionId,
-          candidate_event_key: eventId,
+          candidate_event_id: eventId,
+          candidate_subscription_updated_at: subscriptionUpdatedAt,
           candidate_claim_token: claimToken,
         }),
       };
@@ -507,7 +554,7 @@ export function createPushClaimStore(
         throw new Error(`Could not claim push delivery (${response.status}): ${await responseDetail(response)}`);
       }
       const result = parseRpcObject(await response.json(), 'Push delivery claim');
-      const outcomes = new Set(['reserved', 'duplicate', 'capped_24h', 'capped_7d', 'missing']);
+      const outcomes = new Set(['reserved', 'duplicate', 'capped_24h', 'capped_7d', 'missing', 'stale']);
       if (!outcomes.has(result.outcome)) throw new Error('Push delivery claim returned an unknown outcome.');
       if (result.outcome === 'reserved' && result.claim_token !== claimToken) {
         throw new Error('Push delivery claim was not owned by this worker.');
@@ -534,7 +581,7 @@ export function createPushClaimStore(
         headers: serviceHeaders(serviceKey, 'return=representation'),
         body: JSON.stringify({
           candidate_subscription_id: subscriptionId,
-          candidate_event_key: eventId,
+          candidate_event_id: eventId,
           candidate_claim_token: claimToken,
           candidate_outcome: outcome,
           candidate_provider_status: providerStatus,
@@ -549,6 +596,47 @@ export function createPushClaimStore(
       if (result.outcome !== expected
         || (expected === 'finalized' && result.status !== outcome)) {
         throw new Error('Push delivery receipt was not finalized by its owner.');
+      }
+      return result;
+    },
+  };
+}
+
+export function createPushScheduleStore(fetchImpl, url, serviceKey) {
+  const root = url.replace(/\/+$/, '');
+  return {
+    async select(eventDate, eventId, familyRank, upcomingBestRank) {
+      if (typeof eventDate !== 'string'
+        || !/^\d{4}-\d{2}-\d{2}$/u.test(eventDate)
+        || utcDay(`${eventDate}T00:00:00.000Z`) !== eventDate
+        || typeof eventId !== 'string'
+        || !EVENT_ID_PATTERN.test(eventId)
+        || !Number.isInteger(familyRank)
+        || familyRank < 1
+        || familyRank > 5
+        || (upcomingBestRank !== null
+          && (!Number.isInteger(upcomingBestRank) || upcomingBestRank < 1 || upcomingBestRank > 5))) {
+        throw new Error('Sky Alert schedule selection arguments are invalid.');
+      }
+      const rpcUrl = `${root}/rest/v1/rpc/select_push_alert_event`;
+      const init = {
+        method: 'POST',
+        headers: serviceHeaders(serviceKey, 'return=representation'),
+        body: JSON.stringify({
+          candidate_utc_date: eventDate,
+          candidate_event_id: eventId,
+          candidate_family_rank: familyRank,
+          candidate_upcoming_best_rank: upcomingBestRank,
+        }),
+      };
+      const response = await postRpcWithTransportRetry(fetchImpl, rpcUrl, init);
+      if (!response.ok) {
+        throw new Error(`Could not select Sky Alert schedule (${response.status}): ${await responseDetail(response)}`);
+      }
+      const result = parseRpcObject(await response.json(), 'Sky Alert schedule selection');
+      const outcomes = new Set(['selected', 'capped_7d', 'held_7d', 'conflict']);
+      if (!outcomes.has(result.outcome)) {
+        throw new Error('Sky Alert schedule selection returned an unknown outcome.');
       }
       return result;
     },
@@ -603,18 +691,22 @@ async function main() {
   const claims = options.dryRun
     ? { claim: async () => { throw new Error('Dry run attempted to claim.'); }, complete: async () => {} }
     : createPushClaimStore(fetch, url, serviceKey);
+  const schedule = options.dryRun
+    ? { select: async () => { throw new Error('Dry run attempted to select a schedule.'); } }
+    : createPushScheduleStore(fetch, url, serviceKey);
   const report = await sendDailyPush({
     subscriptions,
     publication,
     date: options.date,
     now: new Date(),
     dryRun: options.dryRun,
+    schedule,
     claims,
     sendNotification: webPush.sendNotification.bind(webPush),
   });
   console.log(
-    `sky-alert: done event=${report.event ?? 'none'} considered=${report.considered} reserved=${report.reserved} `
-    + `sent=${report.sent} capped=${report.capped} duplicate=${report.duplicate} missing=${report.missing} `
+    `sky-alert: done event=${report.event ?? 'none'} schedule=${report.schedule} considered=${report.considered} reserved=${report.reserved} `
+    + `sent=${report.sent} capped=${report.capped} held=${report.held} duplicate=${report.duplicate} missing=${report.missing} stale=${report.stale} `
     + `pruned=${report.pruned} failed=${report.failed} dryRun=${report.dryRun}`,
   );
   if (report.failed > 0) process.exitCode = 1;

@@ -6,11 +6,11 @@
     "script": "tests/phase1-acceptance-drive.mjs",
     "contractVersion": 3
   },
-  "capturedAt": "2026-07-20T15:54:33.025Z",
+  "capturedAt": "2026-07-20T16:56:05.818Z",
   "browser": "Chromium 149.0.7827.55",
   "dailyDate": "2026-07-20",
   "publicationCanonicalSha256": "f39b950c6366974b78e5823adb2eb23a52c474addfcba9c9466e945b22bf5460",
-  "templateSourceSha256": "898f492b726a9b0120de314891ec7d863fb04b899f8b95323c51651032af8083",
+  "templateSourceSha256": "eecb3da0a7c3852d8bf7e322ae85ea5c6d9d412e65459c1194888fbab491f7aa",
   "renderPayloadSha256": {
     "daily": "81e21a81dacf365261295c43758813a831816d1c5c9797a2f3cb2273addc8cb5",
     "dailyPublication": "361b64eef149c916ac29ae247e8c675c80dbee924f60fccd5f7e404360c3e5c5",
@@ -19,8 +19,8 @@
   },
   "buildReceipt": {
     "schema": "zodiacs.phase1-build-receipt.v1",
-    "builtAt": "2026-07-20T15:52:27.178Z",
-    "templateSourceSha256": "898f492b726a9b0120de314891ec7d863fb04b899f8b95323c51651032af8083",
+    "builtAt": "2026-07-20T16:55:14.216Z",
+    "templateSourceSha256": "eecb3da0a7c3852d8bf7e322ae85ea5c6d9d412e65459c1194888fbab491f7aa",
     "dailyDate": "2026-07-20",
     "publicationCanonicalSha256": "f39b950c6366974b78e5823adb2eb23a52c474addfcba9c9466e945b22bf5460",
     "renderPayloadSha256": {
@@ -272,7 +272,7 @@
         "file": "monthly-360.png",
         "width": 360,
         "height": 4248,
-        "sha256": "4fe1b23fd210b2e2de451e024750f4546c77879a8de4ce3ae911555641aa60ad"
+        "sha256": "d92f8d3f3d5b68e8736a7629d439404e6a1db61dfc05aa7d86730a4e26a825ec"
       },
       "layout": {
         "clientWidth": 360,
@@ -410,7 +410,7 @@
         "file": "yearly-360.png",
         "width": 360,
         "height": 11910,
-        "sha256": "39e7f7854efdcb2b1a2e86569d70b69d5bb8a4e26805cf3610599da24f65a681"
+        "sha256": "dabb23a32c37b809f7d9f029798d18de8ffa35f14ded82959e9571dca02d349b"
       },
       "layout": {
         "clientWidth": 360,
@@ -433,7 +433,7 @@
         "file": "yearly-1280.png",
         "width": 1280,
         "height": 7239,
-        "sha256": "041bfb8ea4eb2468ff8813dc6e2fe1e3251ebc8280afec43e79dfdaaf0bbf796"
+        "sha256": "9b0f6c204c2f1eebbef6e63a3f267430d02eb4b43581faea2ba84f0a8a2d46be"
       },
       "layout": {
         "clientWidth": 1280,

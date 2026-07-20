@@ -3,12 +3,17 @@ import { readFileSync } from 'node:fs';
 import {
   authorizeRealDelivery,
   buildEventAlert,
+  compareEligibleEvents,
   createPushClaimStore,
+  createPushScheduleStore,
+  eligibleEvent,
+  eventFamilyRank,
   parseOptions,
   parseSubscriptionIdAllowlist,
   readSubscriptions,
   selectEventForDay,
   sendDailyPush,
+  upcomingBestRankWithinSixDays,
   verifyEventLive,
 } from './send-daily-push.mjs';
 
@@ -107,6 +112,7 @@ const subscription = (overrides = {}) => ({
   p256dh: 'public-key',
   auth: 'auth-key',
   lang: 'en',
+  updated_at: '2026-07-18T03:00:00.000Z',
   ...overrides,
 });
 
@@ -114,6 +120,12 @@ function claims(outcome = 'reserved') {
   return {
     claim: vi.fn().mockResolvedValue({ outcome, claimToken: '11111111-1111-4111-8111-111111111111' }),
     complete: vi.fn().mockResolvedValue({ outcome: 'finalized', status: 'sent' }),
+  };
+}
+
+function schedule(outcome = 'selected') {
+  return {
+    select: vi.fn().mockResolvedValue({ outcome }),
   };
 }
 
@@ -125,6 +137,38 @@ function response({ ok = true, status = 200, json = {}, text = '' } = {}) {
     json: vi.fn().mockResolvedValue(json),
     text: vi.fn().mockResolvedValue(text),
   };
+}
+
+function simulateEditorialSchedule(publication, startDay, endDay) {
+  const selected = [];
+  const skipped = [];
+  for (
+    let dayMs = Date.parse(`${startDay}T00:00:00.000Z`);
+    dayMs <= Date.parse(`${endDay}T00:00:00.000Z`);
+    dayMs += 86_400_000
+  ) {
+    const date = new Date(dayMs + 43_200_000);
+    const candidate = selectEventForDay(publication, date);
+    if (!candidate) continue;
+    const utcDate = candidate.anchor.slice(0, 10);
+    const prior = selected.filter(({ utcDate: priorDate }) => {
+      const priorMs = Date.parse(`${priorDate}T00:00:00.000Z`);
+      return priorMs >= dayMs - (6 * 86_400_000) && priorMs < dayMs;
+    });
+    const familyRank = eventFamilyRank(candidate);
+    const upcomingBestRank = upcomingBestRankWithinSixDays(publication, candidate, date);
+    const outcome = prior.length >= 2
+      ? 'capped_7d'
+      : prior.length === 1
+        && familyRank > 1
+        && upcomingBestRank !== null
+        && upcomingBestRank < familyRank
+        ? 'held_7d'
+        : 'selected';
+    const receipt = { utcDate, eventId: candidate.id, familyRank, outcome };
+    (outcome === 'selected' ? selected : skipped).push(receipt);
+  }
+  return { selected, skipped };
 }
 
 describe('sky-alert event selection and copy', () => {
@@ -139,7 +183,7 @@ describe('sky-alert event selection and copy', () => {
       .toBe('eclipse-2026-08-12');
   });
 
-  it('uses stable priority, then anchor, then id for unresolved collisions', () => {
+  it('uses family rank, anchor, subtype constants, then id as a total order', () => {
     const reversed = { ...PUBLICATION, timeline: [...PUBLICATION.timeline].reverse() };
     expect(selectEventForDay(reversed, new Date('2026-07-20T12:00:00Z'))?.id)
       .toBe('jupiter-trine-neptune-2026-07-20');
@@ -162,27 +206,39 @@ describe('sky-alert event selection and copy', () => {
       ],
     };
     expect(selectEventForDay(mixed, new Date('2026-06-29T12:00:00Z'))?.family).toBe('station');
+
+    const tied = [
+      event({ id: 'z-trine', anchor: '2026-07-18T04:39:44.443Z', subtype: 'trine' }),
+      event({ id: 'z-square', anchor: '2026-07-18T04:39:44.443Z', subtype: 'square' }),
+      event({ id: 'a-square', anchor: '2026-07-18T04:39:44.443Z', subtype: 'square' }),
+    ].sort(compareEligibleEvents);
+    expect(tied.map(({ id }) => id)).toEqual(['a-square', 'z-square', 'z-trine']);
+    expect(eventFamilyRank(event({ family: 'eclipse' }))).toBe(1);
+    expect(eventFamilyRank(event({ family: 'ingress' }))).toBe(2);
+    expect(eventFamilyRank(event({ family: 'aspect' }))).toBe(3);
+    expect(eventFamilyRank(event({ family: 'station' }))).toBe(4);
+    expect(eventFamilyRank(event({ family: 'lunation' }))).toBe(5);
   });
 
-  it('pins the approved full moon, new moon, station, and major-event slots', () => {
+  it('byte-pins the approved full moon, new moon, station, and aspect formulas', () => {
     expect(buildEventAlert(PUBLICATION.timeline[4])).toEqual({
       title: 'Full moon tonight',
-      body: 'The Buck Moon peaks in Aquarius at 14:35 UTC. Where it lands for you:',
+      body: 'The Buck Moon — the Moon stands opposite the Sun in Aquarius. Exact at 14:35 UTC. Where it lands for you:',
       url: '/full-moon/2026-07-29/',
     });
     expect(buildEventAlert(PUBLICATION.timeline[5])).toEqual({
       title: 'New moon today',
-      body: 'Sun and Moon meet in Leo — the month’s reset point.',
+      body: "Sun and Moon meet in Leo; the month's quiet reset.",
       url: '/new-moon/2026-08-12/',
     });
     expect(buildEventAlert(PUBLICATION.timeline[3])).toEqual({
       title: 'Mercury turns direct today',
-      body: 'The review window closes at 22:56 UTC. Stalled plans start moving.',
+      body: 'Mercury stands still, then resumes forward motion. Exact at 22:56 UTC.',
       url: '/mercury-retrograde/2026-06-29/',
     });
     expect(buildEventAlert(PUBLICATION.timeline[0])).toEqual({
       title: 'A rare exact alignment today',
-      body: 'Uranus and Pluto reach an exact trine — years in the making.',
+      body: 'Uranus and Pluto reach an exact trine.',
       url: '/events/uranus-trine-pluto-2026-07-18/',
     });
   });
@@ -190,7 +246,7 @@ describe('sky-alert event selection and copy', () => {
   it('uses only the selected event canonical URL for an eclipse', () => {
     expect(buildEventAlert(PUBLICATION.timeline[6])).toEqual({
       title: 'Total solar eclipse today',
-      body: 'The Moon covers the Sun at 20° Leo, 17:45 UTC — the year’s most emphatic new moon.',
+      body: "A new moon crosses the Sun's face in Leo. Exact at 17:45 UTC.",
       url: '/eclipses/2026-08-12/',
     });
   });
@@ -215,9 +271,18 @@ describe('sky-alert event selection and copy', () => {
     await expect(verifyEventLive(selected, redirect)).rejects.toThrow(/not live \(308\)/u);
   });
 
-  it('keeps unapproved aspect and family fallbacks on committed publication copy', () => {
+  it('excludes sextiles and non-slow aspect/ingress bodies', () => {
+    expect(eligibleEvent(event({ subtype: 'sextile' }))).toBe(false);
+    expect(eligibleEvent(event({ bodies: ['Venus', 'Pluto'] }))).toBe(false);
+    expect(eligibleEvent(event({
+      family: 'ingress', subtype: 'ingress', bodies: ['Mercury'],
+    }))).toBe(false);
+    expect(() => buildEventAlert(event({ subtype: 'sextile' }))).toThrow(/ineligible/u);
+  });
+
+  it('uses the fixed aspect deck and exact slow-ingress formula', () => {
     expect(buildEventAlert(PUBLICATION.timeline[1])).toEqual({
-      title: 'Jupiter trine Neptune',
+      title: 'A rare exact alignment today',
       body: 'Jupiter and Neptune reach an exact trine.',
       url: '/events/jupiter-trine-neptune-2026-07-20/',
     });
@@ -232,7 +297,7 @@ describe('sky-alert event selection and copy', () => {
       signs: ['aries'],
       summary: 'Neptune moves into Aries from Pisces.',
     }))).toEqual({
-      title: 'Neptune enters Aries',
+      title: 'Neptune enters Aries today',
       body: 'Neptune moves into Aries from Pisces.',
       url: '/events/neptune-enters-aries-2026-01-26/',
     });
@@ -253,31 +318,126 @@ describe('sky-alert event selection and copy', () => {
       .toThrow(/verified events publication/u);
   });
 
-  it('renders bounded local payloads for every family in the committed receipt', () => {
-    for (const published of COMMITTED_PUBLICATION.timeline) {
-      const alert = buildEventAlert(published);
+  it('renders every eligible committed alert within the exact 32/140 envelope', () => {
+    const rendered = COMMITTED_PUBLICATION.timeline
+      .filter(eligibleEvent)
+      .map((published) => ({ published, alert: buildEventAlert(published) }));
+    expect(rendered).toHaveLength(109);
+    for (const { published, alert } of rendered) {
       expect(alert.title.length).toBeGreaterThan(0);
-      expect(alert.title.length).toBeLessThanOrEqual(120);
+      expect(alert.title.length).toBeLessThanOrEqual(32);
       expect(alert.body.length).toBeGreaterThan(0);
-      expect(alert.body.length).toBeLessThanOrEqual(320);
+      expect(alert.body.length).toBeLessThanOrEqual(140);
       expect(alert.url).toBe(published.path);
       expect(alert.url.length).toBeLessThanOrEqual(512);
       expect(alert.url.startsWith('/')).toBe(true);
       expect(alert.url.startsWith('//')).toBe(false);
       expect(JSON.stringify(alert).length).toBeLessThan(4_096);
     }
+    expect(Math.max(...rendered.map(({ alert }) => alert.title.length))).toBe(30);
+    expect(Math.max(...rendered.map(({ alert }) => alert.body.length))).toBe(114);
+  });
+
+  it('totally orders every committed day and resolves independently of input order', () => {
+    const days = [...new Set(COMMITTED_PUBLICATION.timeline.map(({ anchor }) => anchor.slice(0, 10)))];
+    for (const day of days) {
+      const candidates = COMMITTED_PUBLICATION.timeline
+        .filter(eligibleEvent)
+        .filter(({ anchor }) => anchor.startsWith(day));
+      const ordered = [...candidates].sort(compareEligibleEvents);
+      for (let index = 1; index < ordered.length; index += 1) {
+        expect(compareEligibleEvents(ordered[index - 1], ordered[index])).toBeLessThan(0);
+      }
+      expect(selectEventForDay(COMMITTED_PUBLICATION, new Date(`${day}T12:00:00Z`))?.id ?? null)
+        .toBe(ordered[0]?.id ?? null);
+      expect(selectEventForDay(
+        { ...COMMITTED_PUBLICATION, timeline: [...COMMITTED_PUBLICATION.timeline].reverse() },
+        new Date(`${day}T12:00:00Z`),
+      )?.id ?? null).toBe(ordered[0]?.id ?? null);
+    }
+  });
+
+  it('looks ahead exactly six UTC dates and returns the best selected family rank', () => {
+    const selected = selectEventForDay(PUBLICATION, new Date('2026-07-18T12:00:00Z'));
+    expect(upcomingBestRankWithinSixDays(
+      PUBLICATION, selected, new Date('2026-07-18T12:00:00Z'),
+    )).toBe(3);
+    const synthetic = {
+      ...PUBLICATION,
+      timeline: [
+        event({
+          id: 'full-moon-2026-09-01', family: 'lunation', subtype: 'full',
+          path: '/full-moon/2026-09-01/', anchor: '2026-09-01T12:00:00Z',
+          title: 'Full moon in Pisces — September 1, 2026', bodies: ['Moon', 'Sun'],
+        }),
+        event({
+          id: 'eclipse-2026-09-07', family: 'eclipse', subtype: 'solar',
+          path: '/eclipses/2026-09-07/', anchor: '2026-09-07T12:00:00Z',
+          title: 'Total solar eclipse in Virgo — September 7, 2026', bodies: ['Moon', 'Sun'],
+        }),
+      ],
+    };
+    const moon = selectEventForDay(synthetic, new Date('2026-09-01T12:00:00Z'));
+    expect(upcomingBestRankWithinSixDays(
+      synthetic, moon, new Date('2026-09-01T12:00:00Z'),
+    )).toBe(1);
+  });
+
+  it('keeps the entire committed editorial stream below three alerts in every seven UTC dates', () => {
+    const stream = simulateEditorialSchedule(
+      COMMITTED_PUBLICATION,
+      '2026-01-03',
+      '2027-12-27',
+    );
+    expect(stream.selected).toHaveLength(84);
+    expect(stream.skipped).toHaveLength(12);
+    for (const receipt of stream.selected) {
+      const end = Date.parse(`${receipt.utcDate}T00:00:00.000Z`);
+      const count = stream.selected.filter(({ utcDate }) => {
+        const candidate = Date.parse(`${utcDate}T00:00:00.000Z`);
+        return candidate >= end - (6 * 86_400_000) && candidate <= end;
+      }).length;
+      expect(count).toBeLessThanOrEqual(2);
+    }
+    expect(stream.skipped.filter(({ outcome }) => outcome === 'held_7d')).toHaveLength(4);
+  });
+
+  it('pins the corrected seeded July stream without inventing a production receipt', () => {
+    const stream = simulateEditorialSchedule(
+      COMMITTED_PUBLICATION,
+      '2026-07-18',
+      '2026-07-29',
+    );
+    expect(stream.selected.map(({ utcDate, eventId }) => [utcDate, eventId])).toEqual([
+      ['2026-07-18', 'uranus-trine-pluto-2026-07-18'],
+      ['2026-07-20', 'jupiter-trine-neptune-2026-07-20'],
+      ['2026-07-26', 'saturn-stations-retrograde-2026-07-26'],
+      ['2026-07-29', 'full-moon-2026-07-29'],
+    ]);
+    expect(stream.skipped.map(({ utcDate, eventId, outcome }) => [utcDate, eventId, outcome]))
+      .toEqual([
+        ['2026-07-23', 'mercury-stations-direct-2026-07-23', 'capped_7d'],
+      ]);
+  });
+
+  it('contains none of the retired daily or preview fallback strings', () => {
+    const sender = readFileSync(new URL('./send-daily-push.mjs', import.meta.url), 'utf8');
+    expect(sender).not.toContain('Next:');
+    expect(sender).not.toContain('Your daily note is ready');
   });
 });
 
 describe('sky-alert delivery', () => {
   it('does nothing on a quiet day without claiming or contacting Web Push', async () => {
+    const editorialSchedule = schedule();
     const store = claims();
     const sendNotification = vi.fn();
     const report = await sendDailyPush({
       subscriptions: [subscription()], publication: PUBLICATION,
-      date: new Date('2026-07-19T12:00:00Z'), claims: store, sendNotification,
+      date: new Date('2026-07-22T12:00:00Z'), schedule: editorialSchedule, claims: store, sendNotification,
     });
     expect(report).toMatchObject({ event: null, considered: 0, reserved: 0, sent: 0, dryRun: 0 });
+    expect(editorialSchedule.select).not.toHaveBeenCalled();
     expect(store.claim).not.toHaveBeenCalled();
     expect(sendNotification).not.toHaveBeenCalled();
   });
@@ -305,6 +465,11 @@ describe('sky-alert delivery', () => {
 
   it('reserves before Web Push, sends the event URL, then finalizes the exact claim', async () => {
     const order = [];
+    const editorialSchedule = schedule();
+    editorialSchedule.select.mockImplementation(async () => {
+      order.push('schedule');
+      return { outcome: 'selected' };
+    });
     const store = claims();
     store.claim.mockImplementation(async () => {
       order.push('reserve');
@@ -323,30 +488,78 @@ describe('sky-alert delivery', () => {
     const report = await sendDailyPush({
       subscriptions: [subscription()], publication: PUBLICATION,
       date: new Date('2026-07-18T12:00:00Z'), now: new Date('2026-07-18T12:00:00Z'),
-      claims: store, sendNotification,
+      schedule: editorialSchedule, claims: store, sendNotification,
     });
-    expect(order).toEqual(['reserve', 'send', 'finalize']);
-    expect(store.claim).toHaveBeenCalledWith(41, 'uranus-trine-pluto-2026-07-18');
+    expect(order).toEqual(['schedule', 'reserve', 'send', 'finalize']);
+    expect(editorialSchedule.select).toHaveBeenCalledWith(
+      '2026-07-18', 'uranus-trine-pluto-2026-07-18', 3, 3,
+    );
+    expect(store.claim).toHaveBeenCalledWith(
+      41,
+      'uranus-trine-pluto-2026-07-18',
+      '2026-07-18T03:00:00.000Z',
+    );
     expect(store.complete).toHaveBeenCalledWith(
       41, 'uranus-trine-pluto-2026-07-18', 'claim-token', 'sent', 201,
     );
     expect(report).toMatchObject({ considered: 1, reserved: 1, sent: 1, failed: 0 });
   });
 
-  it.each(['capped_24h', 'capped_7d', 'duplicate', 'missing'])(
+  it.each(['capped_7d', 'held_7d'])(
+    'does not read endpoint claims or contact Web Push after global %s',
+    async (outcome) => {
+      const store = claims();
+      const sendNotification = vi.fn();
+      const report = await sendDailyPush({
+        subscriptions: [subscription()], publication: PUBLICATION,
+        date: new Date('2026-07-18T12:00:00Z'), schedule: schedule(outcome),
+        claims: store, sendNotification,
+      });
+      expect(report.schedule).toBe(outcome);
+      expect(report.held).toBe(outcome === 'held_7d' ? 1 : 0);
+      expect(store.claim).not.toHaveBeenCalled();
+      expect(sendNotification).not.toHaveBeenCalled();
+    },
+  );
+
+  it('fails closed when another schedule decision conflicts with the selected publication event', async () => {
+    const store = claims();
+    const sendNotification = vi.fn();
+    await expect(sendDailyPush({
+      subscriptions: [subscription()], publication: PUBLICATION,
+      date: new Date('2026-07-18T12:00:00Z'), schedule: schedule('conflict'),
+      claims: store, sendNotification,
+    })).rejects.toThrow(/schedule conflicts/u);
+    expect(store.claim).not.toHaveBeenCalled();
+    expect(sendNotification).not.toHaveBeenCalled();
+  });
+
+  it('leaves the schedule ledger untouched when no subscription can receive the alert', async () => {
+    const editorialSchedule = schedule();
+    const report = await sendDailyPush({
+      subscriptions: [], publication: PUBLICATION,
+      date: new Date('2026-07-18T12:00:00Z'), schedule: editorialSchedule,
+      claims: claims(), sendNotification: vi.fn(),
+    });
+    expect(report.schedule).toBe('empty');
+    expect(editorialSchedule.select).not.toHaveBeenCalled();
+  });
+
+  it.each(['capped_24h', 'capped_7d', 'duplicate', 'missing', 'stale'])(
     'does not contact Web Push after a %s outcome',
     async (outcome) => {
       const store = claims(outcome);
       const sendNotification = vi.fn();
       const report = await sendDailyPush({
         subscriptions: [subscription()], publication: PUBLICATION,
-        date: new Date('2026-07-18T12:00:00Z'), claims: store, sendNotification,
+        date: new Date('2026-07-18T12:00:00Z'), schedule: schedule(), claims: store, sendNotification,
       });
       expect(sendNotification).not.toHaveBeenCalled();
       expect(store.complete).not.toHaveBeenCalled();
       expect(report.capped).toBe(outcome.startsWith('capped') ? 1 : 0);
       expect(report.duplicate).toBe(outcome === 'duplicate' ? 1 : 0);
       expect(report.missing).toBe(outcome === 'missing' ? 1 : 0);
+      expect(report.stale).toBe(outcome === 'stale' ? 1 : 0);
     },
   );
 
@@ -355,7 +568,7 @@ describe('sky-alert delivery', () => {
     store.complete.mockResolvedValue({ outcome: 'expired' });
     const report = await sendDailyPush({
       subscriptions: [subscription()], publication: PUBLICATION,
-      date: new Date('2026-07-18T12:00:00Z'), claims: store,
+      date: new Date('2026-07-18T12:00:00Z'), schedule: schedule(), claims: store,
       sendNotification: vi.fn().mockRejectedValue({ statusCode }),
     });
     expect(store.complete).toHaveBeenCalledWith(
@@ -369,7 +582,7 @@ describe('sky-alert delivery', () => {
     store.complete.mockResolvedValue({ outcome: 'expired' });
     const report = await sendDailyPush({
       subscriptions: [subscription()], publication: PUBLICATION,
-      date: new Date('2026-07-18T12:00:00Z'), claims: store,
+      date: new Date('2026-07-18T12:00:00Z'), schedule: schedule(), claims: store,
       sendNotification: vi.fn().mockResolvedValue({ statusCode: 410 }),
     });
     expect(store.complete).toHaveBeenCalledWith(
@@ -385,7 +598,7 @@ describe('sky-alert delivery', () => {
       store.complete.mockResolvedValue({ outcome: 'finalized', status: 'failed' });
       const report = await sendDailyPush({
         subscriptions: [subscription()], publication: PUBLICATION,
-        date: new Date('2026-07-18T12:00:00Z'), claims: store,
+        date: new Date('2026-07-18T12:00:00Z'), schedule: schedule(), claims: store,
         sendNotification: vi.fn().mockResolvedValue(providerResponse), log: vi.fn(),
       });
       expect(store.complete).toHaveBeenCalledWith(
@@ -400,7 +613,7 @@ describe('sky-alert delivery', () => {
     store.complete.mockResolvedValue({ outcome: 'finalized', status: 'failed' });
     const report = await sendDailyPush({
       subscriptions: [subscription()], publication: PUBLICATION,
-      date: new Date('2026-07-18T12:00:00Z'), claims: store,
+      date: new Date('2026-07-18T12:00:00Z'), schedule: schedule(), claims: store,
       sendNotification: vi.fn().mockRejectedValue({ statusCode: 503 }), log: vi.fn(),
     });
     expect(store.complete).toHaveBeenCalledWith(
@@ -414,7 +627,7 @@ describe('sky-alert delivery', () => {
     store.complete.mockRejectedValue(new Error('database unavailable'));
     const report = await sendDailyPush({
       subscriptions: [subscription()], publication: PUBLICATION,
-      date: new Date('2026-07-18T12:00:00Z'), claims: store,
+      date: new Date('2026-07-18T12:00:00Z'), schedule: schedule(), claims: store,
       sendNotification: vi.fn().mockRejectedValue({ statusCode: 503 }), log: vi.fn(),
     });
     expect(report).toMatchObject({ considered: 1, reserved: 1, sent: 0, failed: 1 });
@@ -425,7 +638,7 @@ describe('sky-alert delivery', () => {
     store.complete.mockRejectedValue(new Error('database unavailable'));
     const report = await sendDailyPush({
       subscriptions: [subscription()], publication: PUBLICATION,
-      date: new Date('2026-07-18T12:00:00Z'), claims: store,
+      date: new Date('2026-07-18T12:00:00Z'), schedule: schedule(), claims: store,
       sendNotification: vi.fn().mockResolvedValue({ statusCode: 201 }), log: vi.fn(),
     });
     expect(store.complete).toHaveBeenCalledTimes(1);
@@ -438,7 +651,7 @@ describe('push claim PostgREST adapter and CLI', () => {
     const fetchImpl = vi.fn().mockResolvedValue(response({ json: [subscription()] }));
     await expect(readSubscriptions(fetchImpl, 'https://project.supabase.co', 'service-key', 500))
       .resolves.toEqual([subscription()]);
-    expect(String(fetchImpl.mock.calls[0][0])).toContain('select=subscription_id,endpoint,p256dh,auth,lang');
+    expect(String(fetchImpl.mock.calls[0][0])).toContain('select=subscription_id,endpoint,p256dh,auth,lang,updated_at');
 
     await readSubscriptions(
       fetchImpl,
@@ -469,18 +682,51 @@ describe('push claim PostgREST adapter and CLI', () => {
     const store = createPushClaimStore(fetchImpl, 'https://project.supabase.co', 'service-key', {
       randomId: () => '11111111-1111-4111-8111-111111111111',
     });
-    const claim = await store.claim(41, 'event-id');
+    const claim = await store.claim(41, 'event-id', '2026-07-18T03:00:00.000Z');
     expect(claim.outcome).toBe('reserved');
     await expect(store.complete(41, 'event-id', claim.claimToken, 'sent', 201))
       .resolves.toMatchObject({ outcome: 'finalized', status: 'sent' });
     expect(String(fetchImpl.mock.calls[0][0])).toContain('/rpc/reserve_push_delivery');
+    expect(JSON.parse(fetchImpl.mock.calls[0][1].body)).toEqual({
+      candidate_subscription_id: 41,
+      candidate_event_id: 'event-id',
+      candidate_subscription_updated_at: '2026-07-18T03:00:00.000Z',
+      candidate_claim_token: claim.claimToken,
+    });
     expect(JSON.parse(fetchImpl.mock.calls[1][1].body)).toEqual({
       candidate_subscription_id: 41,
-      candidate_event_key: 'event-id',
+      candidate_event_id: 'event-id',
       candidate_claim_token: claim.claimToken,
       candidate_outcome: 'sent',
       candidate_provider_status: 201,
     });
+  });
+
+  it('selects the global UTC-date schedule through the service-only RPC contract', async () => {
+    const fetchImpl = vi.fn().mockResolvedValue(response({ json: {
+      outcome: 'selected', utc_date: '2026-07-18', event_id: 'event-id',
+    } }));
+    const store = createPushScheduleStore(fetchImpl, 'https://project.supabase.co', 'service-key');
+    await expect(store.select('2026-07-18', 'event-id', 3, 1))
+      .resolves.toMatchObject({ outcome: 'selected' });
+    expect(String(fetchImpl.mock.calls[0][0])).toContain('/rpc/select_push_alert_event');
+    expect(JSON.parse(fetchImpl.mock.calls[0][1].body)).toEqual({
+      candidate_utc_date: '2026-07-18',
+      candidate_event_id: 'event-id',
+      candidate_family_rank: 3,
+      candidate_upcoming_best_rank: 1,
+    });
+  });
+
+  it('retries a thrown schedule transport once with the identical decision body', async () => {
+    const fetchImpl = vi.fn()
+      .mockRejectedValueOnce(new Error('connection reset after commit'))
+      .mockResolvedValueOnce(response({ json: { outcome: 'selected' } }));
+    const store = createPushScheduleStore(fetchImpl, 'https://project.supabase.co', 'service-key');
+    await store.select('2026-07-18', 'event-id', 3, null);
+    expect(fetchImpl).toHaveBeenCalledTimes(2);
+    expect(fetchImpl.mock.calls[0][0]).toBe(fetchImpl.mock.calls[1][0]);
+    expect(fetchImpl.mock.calls[0][1].body).toBe(fetchImpl.mock.calls[1][1].body);
   });
 
   it('retries a thrown reserve/finalize transport once with the identical idempotency body', async () => {
@@ -494,7 +740,7 @@ describe('push claim PostgREST adapter and CLI', () => {
     const store = createPushClaimStore(fetchImpl, 'https://project.supabase.co', 'service-key', {
       randomId: () => '11111111-1111-4111-8111-111111111111',
     });
-    const claim = await store.claim(41, 'event-id');
+    const claim = await store.claim(41, 'event-id', '2026-07-18T03:00:00.000Z');
     await store.complete(41, 'event-id', claim.claimToken, 'sent', 201);
     expect(fetchImpl).toHaveBeenCalledTimes(4);
     expect(fetchImpl.mock.calls[0][0]).toBe(fetchImpl.mock.calls[1][0]);
@@ -508,7 +754,7 @@ describe('push claim PostgREST adapter and CLI', () => {
     const store = createPushClaimStore(fetchImpl, 'https://project.supabase.co', 'service-key', {
       randomId: () => '11111111-1111-4111-8111-111111111111',
     });
-    await expect(store.claim(41, 'event-id')).rejects.toThrow(/503/u);
+    await expect(store.claim(41, 'event-id', '2026-07-18T03:00:00.000Z')).rejects.toThrow(/503/u);
     expect(fetchImpl).toHaveBeenCalledTimes(1);
 
     const finalizeFetch = vi.fn().mockResolvedValue(response({ ok: false, status: 409, text: 'conflict' }));
@@ -524,9 +770,20 @@ describe('push claim PostgREST adapter and CLI', () => {
       vi.fn().mockResolvedValue(response({ json: { outcome: 'surprise' } })),
       'https://project.supabase.co', 'service-key',
     );
-    await expect(store.claim(41, 'event-id')).rejects.toThrow(/unknown outcome/u);
-    await expect(store.claim(0, 'event-id')).rejects.toThrow(/subscription id/u);
-    await expect(store.claim(41, '../event')).rejects.toThrow(/event id/u);
+    await expect(store.claim(41, 'event-id', '2026-07-18T03:00:00.000Z')).rejects.toThrow(/unknown outcome/u);
+    await expect(store.claim(0, 'event-id', '2026-07-18T03:00:00.000Z')).rejects.toThrow(/subscription id/u);
+    await expect(store.claim(41, '../event', '2026-07-18T03:00:00.000Z')).rejects.toThrow(/event id/u);
+    await expect(store.claim(41, 'event-id', 'not-a-timestamp')).rejects.toThrow(/subscription version/u);
+    const scheduleStore = createPushScheduleStore(
+      vi.fn().mockResolvedValue(response({ json: { outcome: 'surprise' } })),
+      'https://project.supabase.co', 'service-key',
+    );
+    await expect(scheduleStore.select('2026-07-18', 'event-id', 3, null))
+      .rejects.toThrow(/unknown outcome/u);
+    await expect(scheduleStore.select('2026-02-31', 'event-id', 3, null))
+      .rejects.toThrow(/arguments are invalid/u);
+    await expect(scheduleStore.select('2026-07-18', 'event-id', 0, null))
+      .rejects.toThrow(/arguments are invalid/u);
     expect(() => parseOptions(['--date', '2026-02-31'])).toThrow(/real UTC calendar date/u);
     expect(() => parseOptions(['--limit', '0'])).toThrow(/integer from 1 to 10000/u);
     expect(() => parseOptions(['--fixture'])).toThrow(/requires --dry-run/u);
@@ -537,6 +794,9 @@ describe('push claim PostgREST adapter and CLI', () => {
     const workflow = readFileSync(new URL('../.github/workflows/push-daily.yml', import.meta.url), 'utf8');
     expect(workflow).toContain('Require selected event in production before real delivery');
     expect(workflow).toContain('npm run push:daily -- --verify-live-only');
+    expect(workflow).toContain('--date 2026-07-18');
+    expect(workflow).toContain('--date 2026-07-22');
+    expect(workflow).not.toContain('--date 2026-07-19');
     expect(workflow).toContain("vars.PUSH_ENABLED == 'true'");
     expect(workflow).toContain('PUSH_TEST_SUBSCRIPTION_IDS: ${{ vars.PUSH_TEST_SUBSCRIPTION_IDS }}');
   });

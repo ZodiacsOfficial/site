@@ -164,6 +164,47 @@ jobs:
       - name: Drift gate
         run: git diff --exit-code -- public/
 
+  phase3-delivery-sql:
+    name: Phase 3 delivery SQL
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: PostgreSQL 17 migration and concurrency gates
+        run: bash scripts/test-phase3-delivery-sql.sh
+
+  phase3-push-drive:
+    name: Phase 3 push drive
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      PUBLIC_WEB_PUSH_ENABLED: "1"
+      PUSH_ENABLED: "1"
+      PUBLIC_VAPID_KEY: AQIDBA
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Install Chromium
+        run: npx playwright-core install --with-deps chromium
+
+      - name: Build (push flags on, fixture key only)
+        run: npm run build
+
+      - name: Browser acceptance drive
+        run: npm run test:phase3:push
+
   aura-drive:
     # The flag-on browser acceptance suite for Registry Aura: docket honesty,
     # Alignment grammar, share privacy, wallet lifecycle, forced colors, and

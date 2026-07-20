@@ -21,13 +21,18 @@ select pg_temp.assert_true(
    where oid = 'public.daily_chart_confirmation_send_claims'::regclass)
   and (select relrowsecurity
        from pg_catalog.pg_class
+       where oid = 'public.push_alert_schedule'::regclass)
+  and (select relrowsecurity
+       from pg_catalog.pg_class
        where oid = 'public.push_delivery_claims'::regclass),
-  'both delivery-guard ledgers must have RLS enabled'
+  'all delivery-guard ledgers must have RLS enabled'
 );
 
 select pg_temp.assert_true(
   not has_table_privilege('anon', 'public.daily_chart_confirmation_send_claims', 'select')
     and not has_table_privilege('authenticated', 'public.daily_chart_confirmation_send_claims', 'select')
+    and not has_table_privilege('anon', 'public.push_alert_schedule', 'select')
+    and not has_table_privilege('authenticated', 'public.push_alert_schedule', 'select')
     and not has_table_privilege('anon', 'public.push_delivery_claims', 'select')
     and not has_table_privilege('authenticated', 'public.push_delivery_claims', 'select'),
   'browser roles must have no delivery-ledger access'
@@ -43,6 +48,16 @@ select pg_temp.assert_true(
       'service_role',
       'public.daily_chart_confirmation_send_claims',
       'update'
+    )
+    and has_table_privilege(
+      'service_role',
+      'public.push_alert_schedule',
+      'select,insert'
+    )
+    and not has_table_privilege(
+      'service_role',
+      'public.push_alert_schedule',
+      'update,delete'
     )
     and has_table_privilege(
       'service_role',
@@ -77,6 +92,7 @@ select pg_temp.assert_true(
     from pg_catalog.pg_policy
     where polrelid in (
       'public.daily_chart_confirmation_send_claims'::regclass,
+      'public.push_alert_schedule'::regclass,
       'public.push_delivery_claims'::regclass
     )
   ),
@@ -89,13 +105,16 @@ select pg_temp.assert_true(
        where oid = 'public.prune_daily_chart_confirmation_send_claims(integer)'::regprocedure)
     and not (select prosecdef
              from pg_catalog.pg_proc
+             where oid = 'public.select_push_alert_event(date,text,smallint,smallint)'::regprocedure)
+    and not (select prosecdef
+             from pg_catalog.pg_proc
              where oid = 'public.claim_daily_chart_confirmation_send(uuid,uuid)'::regprocedure)
     and not (select prosecdef
              from pg_catalog.pg_proc
              where oid = 'public.prune_push_delivery_claims(integer)'::regprocedure)
     and not (select prosecdef
              from pg_catalog.pg_proc
-             where oid = 'public.reserve_push_delivery(bigint,text,uuid)'::regprocedure)
+             where oid = 'public.reserve_push_delivery(bigint,text,timestamp with time zone,uuid)'::regprocedure)
     and not (select prosecdef
              from pg_catalog.pg_proc
              where oid = 'public.finalize_push_delivery(bigint,text,uuid,text,integer)'::regprocedure),
@@ -108,8 +127,9 @@ select pg_temp.assert_true(
     from (values
       ('public.prune_daily_chart_confirmation_send_claims(integer)'),
       ('public.claim_daily_chart_confirmation_send(uuid,uuid)'),
+      ('public.select_push_alert_event(date,text,smallint,smallint)'),
       ('public.prune_push_delivery_claims(integer)'),
-      ('public.reserve_push_delivery(bigint,text,uuid)'),
+      ('public.reserve_push_delivery(bigint,text,timestamp with time zone,uuid)'),
       ('public.finalize_push_delivery(bigint,text,uuid,text,integer)')
     ) as rpc(signature)
     where has_function_privilege('anon', rpc.signature, 'execute')
@@ -149,6 +169,13 @@ select pg_temp.assert_true(
       select 1
       from information_schema.columns
       where table_schema = 'public'
+        and table_name = 'push_alert_schedule'
+        and column_name in ('endpoint', 'p256dh', 'auth', 'email', 'recipient_hash')
+    )
+    and not exists (
+      select 1
+      from information_schema.columns
+      where table_schema = 'public'
         and table_name = 'push_delivery_claims'
         and column_name in ('endpoint', 'p256dh', 'auth')
     ),
@@ -156,14 +183,47 @@ select pg_temp.assert_true(
 );
 
 select pg_temp.assert_true(
+  (select count(*) = 2
+   from pg_catalog.pg_constraint
+   where conrelid = 'public.push_alert_schedule'::regclass
+     and contype = 'u'
+     and conname in (
+       'push_alert_schedule_one_event_per_day',
+       'push_alert_schedule_event_unique'
+     ))
+    and exists (
+      select 1
+      from pg_catalog.pg_constraint
+      where conrelid = 'public.push_alert_schedule'::regclass
+        and conname = 'push_alert_schedule_family_rank_valid'
+        and contype = 'c'
+    )
+    and exists (
+      select 1
+      from pg_catalog.pg_constraint
+      where conrelid = 'public.push_delivery_claims'::regclass
+        and conname = 'push_delivery_claims_utc_date_unique'
+        and contype = 'u'
+    )
+    and (
+      select is_generated = 'ALWAYS' and data_type = 'date'
+      from information_schema.columns
+      where table_schema = 'public'
+        and table_name = 'push_delivery_claims'
+        and column_name = 'utc_date'
+    ),
+  'schedule and endpoint ledgers must enforce their UTC-date and rank invariants'
+);
+
+select pg_temp.assert_true(
   pg_catalog.pg_get_functiondef(
     'public.claim_daily_chart_confirmation_send(uuid,uuid)'::regprocedure
   ) ilike '%pg_advisory_xact_lock%'
     and pg_catalog.pg_get_functiondef(
-      'public.reserve_push_delivery(bigint,text,uuid)'::regprocedure
+      'public.reserve_push_delivery(bigint,text,timestamp with time zone,uuid)'::regprocedure
     ) ilike '%for update%'
     and pg_catalog.pg_get_functiondef(
-      'public.reserve_push_delivery(bigint,text,uuid)'::regprocedure
+      'public.reserve_push_delivery(bigint,text,timestamp with time zone,uuid)'::regprocedure
     ) ilike '%pg_advisory_xact_lock%',
   'empty chart ledgers and endpoint re-subscriptions must be serialized in database'
 );
@@ -351,6 +411,111 @@ begin
 end;
 $$;
 
+-- The global editorial stream is keyed by the committed UTC date and event.
+-- This seeded contract begins on July 18; it is test state, never a claim that
+-- production sent before the feature was enabled.
+select pg_temp.assert_true(
+  public.select_push_alert_event(
+    '2026-07-18', 'uranus-trine-pluto-2026-07-18', 3::smallint, 3::smallint
+  )->>'outcome' = 'selected',
+  'the seeded July 18 aspect must select'
+);
+select pg_temp.assert_true(
+  public.select_push_alert_event(
+    '2026-07-18', 'uranus-trine-pluto-2026-07-18', 3::smallint, 3::smallint
+  )->>'outcome' = 'selected'
+    and (select count(*) = 1 from public.push_alert_schedule where utc_date = '2026-07-18'),
+  'the same UTC-date event decision must be idempotent'
+);
+select pg_temp.assert_true(
+  public.select_push_alert_event(
+    '2026-07-18', 'another-event-2026-07-18', 3::smallint, 3::smallint
+  )->>'outcome' = 'conflict',
+  'a second event can never replace the selected UTC-date winner'
+);
+select pg_temp.assert_true(
+  public.select_push_alert_event(
+    '2026-07-20', 'jupiter-trine-neptune-2026-07-20', 3::smallint, 4::smallint
+  )->>'outcome' = 'selected',
+  'one remaining slot may be used when the next six dates have no higher rank'
+);
+select pg_temp.assert_true(
+  public.select_push_alert_event(
+    '2026-07-23', 'mercury-stations-direct-2026-07-23', 4::smallint, 4::smallint
+  )->>'outcome' = 'capped_7d'
+    and not exists (
+      select 1 from public.push_alert_schedule
+      where event_id = 'mercury-stations-direct-2026-07-23'
+    ),
+  'a cap-skipped station must write no ledger row'
+);
+select pg_temp.assert_true(
+  public.select_push_alert_event(
+    '2026-07-26', 'saturn-stations-retrograde-2026-07-26', 4::smallint, 5::smallint
+  )->>'outcome' = 'selected',
+  'the committed July 26 station must select after July 18 leaves the window'
+);
+select pg_temp.assert_true(
+  public.select_push_alert_event(
+    '2026-07-29', 'full-moon-2026-07-29', 5::smallint, null
+  )->>'outcome' = 'selected',
+  'the July 29 Buck Moon must select with one prior send in its date window'
+);
+
+select pg_temp.assert_true(
+  public.select_push_alert_event(
+    '2026-09-01', 'full-moon-2026-09-01', 5::smallint, 1::smallint
+  )->>'outcome' = 'selected',
+  'the first event in a fresh window must not be reservation-skipped'
+);
+select pg_temp.assert_true(
+  public.select_push_alert_event(
+    '2026-09-03', 'full-moon-2026-09-03', 5::smallint, 1::smallint
+  )->>'outcome' = 'held_7d'
+    and not exists (
+      select 1 from public.push_alert_schedule where event_id = 'full-moon-2026-09-03'
+    ),
+  'one remaining slot must be held for a strictly higher-ranked nearby event'
+);
+select pg_temp.assert_true(
+  public.select_push_alert_event(
+    '2026-09-04', 'eclipse-2026-09-04', 1::smallint, null
+  )->>'outcome' = 'selected',
+  'a rank-one eclipse can never be reservation-skipped'
+);
+
+select pg_temp.assert_true(
+  not exists (
+    select 1
+    from public.push_alert_schedule as anchor
+    where (
+      select count(*)
+      from public.push_alert_schedule as windowed
+      where windowed.utc_date between anchor.utc_date - 6 and anchor.utc_date
+    ) > 2
+  ),
+  'no seven consecutive UTC dates may contain three selected alerts'
+);
+
+do $$
+begin
+  begin
+    perform public.select_push_alert_event(
+      '2026-10-01', 'invalid-rank-event', 0::smallint, null
+    );
+    raise exception 'invalid schedule rank was accepted';
+  exception when sqlstate '22023' then null;
+  end;
+  begin
+    perform public.select_push_alert_event(
+      '2026-10-01', 'invalid-upcoming-rank', 3::smallint, 6::smallint
+    );
+    raise exception 'invalid upcoming schedule rank was accepted';
+  exception when sqlstate '22023' then null;
+  end;
+end;
+$$;
+
 -- Service inserts prove the identity sequence grant used by the subscription
 -- endpoint, while endpoints and encryption keys remain in one table only.
 insert into public.push_subscriptions (endpoint, p256dh, auth, lang) values
@@ -375,6 +540,8 @@ select pg_temp.assert_true(
     (select subscription_id from public.push_subscriptions
      where endpoint = 'https://push.test/caps-a'),
     'full-moon-2026-07-29',
+    (select updated_at from public.push_subscriptions
+     where endpoint = 'https://push.test/caps-a'),
     'b1000000-0000-4000-8000-000000000001'
   )->>'outcome' = 'reserved',
   'first push event must reserve'
@@ -385,11 +552,13 @@ select pg_temp.assert_true(
     (select subscription_id from public.push_subscriptions
      where endpoint = 'https://push.test/caps-a'),
     'full-moon-2026-07-29',
+    (select updated_at from public.push_subscriptions
+     where endpoint = 'https://push.test/caps-a'),
     'b1000000-0000-4000-8000-000000000001'
   )->>'outcome' = 'reserved'
     and (select count(*) = 1
          from public.push_delivery_claims
-         where event_key = 'full-moon-2026-07-29'),
+         where event_id = 'full-moon-2026-07-29'),
   'same push reservation owner must recover a lost RPC response'
 );
 
@@ -398,6 +567,8 @@ select pg_temp.assert_true(
     (select subscription_id from public.push_subscriptions
      where endpoint = 'https://push.test/caps-a'),
     'full-moon-2026-07-29',
+    (select updated_at from public.push_subscriptions
+     where endpoint = 'https://push.test/caps-a'),
     'b1000000-0000-4000-8000-000000000002'
   )->>'outcome' = 'duplicate',
   'same endpoint and event must never reserve twice'
@@ -408,6 +579,8 @@ with result as (
     (select subscription_id from public.push_subscriptions
      where endpoint = 'https://push.test/caps-a'),
     'mercury-stations-direct-2026-07-23',
+    (select updated_at from public.push_subscriptions
+     where endpoint = 'https://push.test/caps-a'),
     'b1000000-0000-4000-8000-000000000003'
   ) as value
 )
@@ -423,7 +596,7 @@ from result;
 reset role;
 update public.push_delivery_claims
 set claimed_at = clock_timestamp() - interval '25 hours'
-where event_key = 'full-moon-2026-07-29';
+where event_id = 'full-moon-2026-07-29';
 set role service_role;
 
 select pg_temp.assert_true(
@@ -431,6 +604,8 @@ select pg_temp.assert_true(
     (select subscription_id from public.push_subscriptions
      where endpoint = 'https://push.test/caps-a'),
     'mercury-stations-direct-2026-07-23',
+    (select updated_at from public.push_subscriptions
+     where endpoint = 'https://push.test/caps-a'),
     'b1000000-0000-4000-8000-000000000003'
   )->>'outcome' = 'reserved',
   'second push inside seven days may reserve after the daily window'
@@ -441,6 +616,8 @@ with result as (
     (select subscription_id from public.push_subscriptions
      where endpoint = 'https://push.test/caps-a'),
     'neptune-sextile-pluto-2026-07-24',
+    (select updated_at from public.push_subscriptions
+     where endpoint = 'https://push.test/caps-a'),
     'b1000000-0000-4000-8000-000000000004'
   ) as value
 )
@@ -456,6 +633,8 @@ select pg_temp.assert_true(
     (select subscription_id from public.push_subscriptions
      where endpoint = 'https://push.test/caps-b'),
     'neptune-sextile-pluto-2026-07-24',
+    (select updated_at from public.push_subscriptions
+     where endpoint = 'https://push.test/caps-b'),
     'b2000000-0000-4000-8000-000000000001'
   )->>'outcome' = 'reserved',
   'caps must be isolated per endpoint'
@@ -467,6 +646,8 @@ select pg_temp.assert_true(
     (select subscription_id from public.push_subscriptions
      where endpoint = 'https://push.test/persist'),
     'jupiter-sextile-uranus-2026-07-21',
+    (select updated_at from public.push_subscriptions
+     where endpoint = 'https://push.test/persist'),
     'b3000000-0000-4000-8000-000000000001'
   )->>'outcome' = 'reserved',
   'persist fixture must reserve'
@@ -484,12 +665,14 @@ select pg_temp.assert_true(
   ) is distinct from (
     select subscription_id
     from public.push_delivery_claims
-    where event_key = 'jupiter-sextile-uranus-2026-07-21'
+    where event_id = 'jupiter-sextile-uranus-2026-07-21'
   )
     and public.reserve_push_delivery(
       (select subscription_id from public.push_subscriptions
        where endpoint = 'https://push.test/persist'),
       'mercury-stations-direct-2026-07-23',
+      (select updated_at from public.push_subscriptions
+       where endpoint = 'https://push.test/persist'),
       'b3000000-0000-4000-8000-000000000002'
     )->>'outcome' = 'capped_24h',
   'delete and re-subscribe must not reset a per-endpoint cap'
@@ -523,6 +706,8 @@ select public.reserve_push_delivery(
   (select subscription_id from public.push_subscriptions
    where endpoint = 'https://push.test/failed'),
   'uranus-trine-pluto-2026-07-18',
+  (select updated_at from public.push_subscriptions
+   where endpoint = 'https://push.test/failed'),
   'b4000000-0000-4000-8000-000000000001'
 );
 select pg_temp.assert_true(
@@ -539,17 +724,58 @@ select pg_temp.assert_true(
 select pg_temp.assert_true(
   (select status = 'failed'
    from public.push_delivery_claims
-   where event_key = 'uranus-trine-pluto-2026-07-18'),
+   where event_id = 'uranus-trine-pluto-2026-07-18'),
   'provider failures must remain counted after finalization'
 );
 
--- A refreshed subscription wins a stale provider 410. An unchanged one is
--- pruned atomically, while its endpoint-hash claim remains for seven days.
-select public.reserve_push_delivery(
-  (select subscription_id from public.push_subscriptions
-   where endpoint = 'https://push.test/refresh'),
-  'uranus-sextile-neptune-2026-07-15',
-  'b5000000-0000-4000-8000-000000000001'
+-- A worker may only reserve the exact subscription version it listed. A
+-- refresh before reservation is stale and creates no claim; a refresh after
+-- reservation wins a stale provider 410 without deleting the new keys.
+do $$
+declare
+  listed_subscription_id bigint;
+  listed_subscription_updated_at timestamptz;
+  reservation jsonb;
+begin
+  select subscription_id, updated_at
+  into listed_subscription_id, listed_subscription_updated_at
+  from public.push_subscriptions
+  where endpoint = 'https://push.test/refresh';
+
+  perform pg_sleep(0.01);
+  update public.push_subscriptions
+  set p256dh = 'public_refresh_before_reserve'
+  where subscription_id = listed_subscription_id;
+
+  reservation := public.reserve_push_delivery(
+    listed_subscription_id,
+    'uranus-sextile-neptune-2026-07-15',
+    listed_subscription_updated_at,
+    'b5000000-0000-4000-8000-000000000001'
+  );
+  if reservation->>'outcome' <> 'stale' then
+    raise exception 'stale listed subscription was reserved: %', reservation;
+  end if;
+end;
+$$;
+select pg_temp.assert_true(
+  not exists (
+    select 1 from public.push_delivery_claims
+    where claim_token = 'b5000000-0000-4000-8000-000000000001'
+  ),
+  'refresh before reservation must return stale without creating a claim'
+);
+
+select pg_temp.assert_true(
+  public.reserve_push_delivery(
+    (select subscription_id from public.push_subscriptions
+     where endpoint = 'https://push.test/refresh'),
+    'uranus-sextile-neptune-2026-07-15',
+    (select updated_at from public.push_subscriptions
+     where endpoint = 'https://push.test/refresh'),
+    'b5000000-0000-4000-8000-000000000001'
+  )->>'outcome' = 'reserved',
+  'the current listed subscription version must reserve normally'
 );
 select pg_sleep(0.01);
 update public.push_subscriptions
@@ -577,6 +803,8 @@ select public.reserve_push_delivery(
   (select subscription_id from public.push_subscriptions
    where endpoint = 'https://push.test/expired'),
   'uranus-trine-pluto-2026-07-18',
+  (select updated_at from public.push_subscriptions
+   where endpoint = 'https://push.test/expired'),
   'b6000000-0000-4000-8000-000000000001'
 );
 select pg_temp.assert_true(
@@ -599,7 +827,7 @@ select pg_temp.assert_true(
     and exists (
       select 1
       from public.push_delivery_claims
-      where event_key = 'uranus-trine-pluto-2026-07-18'
+      where event_id = 'uranus-trine-pluto-2026-07-18'
         and claim_token = 'b6000000-0000-4000-8000-000000000001'
         and status = 'expired'
     ),
@@ -622,6 +850,7 @@ select pg_temp.assert_true(
   public.reserve_push_delivery(
     9223372036854775807,
     'full-moon-2026-07-29',
+    clock_timestamp(),
     'b7000000-0000-4000-8000-000000000001'
   )->>'outcome' = 'missing'
     and public.finalize_push_delivery(
@@ -649,7 +878,7 @@ begin
   exception when sqlstate '22023' then null;
   end;
   begin
-    perform public.reserve_push_delivery(1, 'Invalid Event Key', gen_random_uuid());
+    perform public.reserve_push_delivery(1, 'Invalid Event Key', clock_timestamp(), gen_random_uuid());
     raise exception 'invalid event key was accepted';
   exception when sqlstate '22023' then null;
   end;

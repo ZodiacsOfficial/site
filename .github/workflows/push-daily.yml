@@ -40,7 +40,7 @@ jobs:
       - name: Smoke event and quiet-day dry runs
         run: |
           npm run push:daily -- --dry-run --fixture --date 2026-07-18 --limit 1
-          npm run push:daily -- --dry-run --fixture --date 2026-07-19 --limit 1
+          npm run push:daily -- --dry-run --fixture --date 2026-07-22 --limit 1
 
       - name: Require the verified events publication
         run: npm run data:events:verify

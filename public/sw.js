@@ -20,8 +20,8 @@ const PRECACHE_URLS = [ // @build precache-start
 ]; // @build precache-end
 const PUSH_ENABLED = false; // @build push-enabled
 
-const SKY_ALERT_TITLE_MAX = 120;
-const SKY_ALERT_BODY_MAX = 320;
+const SKY_ALERT_TITLE_MAX = 32;
+const SKY_ALERT_BODY_MAX = 140;
 const SKY_ALERT_PATH_MAX = 512;
 const SKY_ALERT_PATH_PREFIXES = [
   '/eclipses/',

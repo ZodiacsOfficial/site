@@ -245,15 +245,22 @@ repeated Sun-tier confirmation mail without replacing the valid pending token,
 and signed Sun-tier unsubscribe removes that abuse-control row too.
 
 The delivery-guards migration adds an account-owned chart-confirmation attempt
-ledger and an endpoint-fingerprinted Sky Alerts ledger, again with RLS and no
-browser policies. Chart confirmation attempts allow one provider attempt per
-60 seconds and six per exact rolling 24 hours; the account-level limit survives
-preference cancellation, recipient changes, and unsubscribe, and disappears
-only with the Auth account. Sky Alerts reserve before the provider call and
-count every attempt against the absolute limit of one per exact rolling 24
-hours and two per exact rolling seven days. Expired 404/410 endpoints are
-removed only when the stored subscription snapshot is still current. Neither
-guard ledger stores a raw email, endpoint, chart, or push encryption key.
+ledger, a global Sky Alerts editorial schedule, and an endpoint-fingerprinted
+delivery ledger, again with RLS and no browser policies. Chart confirmation
+attempts allow one provider attempt per 60 seconds and six per exact rolling 24
+hours; the account-level limit survives preference cancellation, recipient
+changes, and unsubscribe, and disappears only with the Auth account. The
+global schedule atomically selects no more than one event per UTC date and two
+selected dates in any seven-date window. When one slot remains, it holds a
+lower-priority candidate if the committed six-date lookahead contains a
+strictly higher-priority event; held and capped candidates write no row.
+Endpoint claims still reserve before the provider call and count every attempt
+against the fail-safe limit of one per exact rolling 24 hours and two per exact
+rolling seven days. Expired 404/410 endpoints are removed only when the stored
+subscription snapshot is still current. A worker must also present the exact
+`updated_at` version it listed before it can reserve, so a refresh between the
+list and reserve steps exits as stale without contacting Web Push. No guard
+ledger stores a raw email, endpoint, chart, or push encryption key.
 
 Daily DOI dispatch runs through Vercel `waitUntil`, giving every valid public
 submission the same immediate response while the database and provider work
@@ -311,10 +318,14 @@ Daily messages send both `List-Unsubscribe` and `List-Unsubscribe-Post: List-Uns
 1. Generate one VAPID keypair outside the repository.
 2. Put the public key in the public/server variable stores and the private key only in GitHub/Vercel secrets.
 3. Apply and verify both Phase 3 migrations, including subscription identity,
-   service-only claim RPCs, exact rolling 24-hour/seven-day boundaries, and
-   persistence across delete/re-subscribe of the same endpoint.
+   the service-only global schedule and endpoint-claim RPCs, UTC-date and exact
+   rolling boundaries, priority reservation, and persistence across
+   delete/re-subscribe of the same endpoint. Run
+   `npm run test:phase3:delivery-sql` against its disposable PostgreSQL 17
+   container; never point that harness at a live database.
 4. Build with both runtime flags enabled in a preview and confirm the service worker version changes.
-5. Test subscribe, unsubscribe, quiet-day no-op, event-day canonical
+5. Run `npm run test:phase3:push` against that flags-on fixture build. Test
+   subscribe, unsubscribe, quiet-day no-op, event-day canonical
    click-through, duplicate suppression, both rolling frequency caps, failed
    provider attempts, refreshed-subscription protection, expired endpoint
    cleanup, denied permission, and iOS installed-PWA behavior.
@@ -344,9 +355,9 @@ All schedules are UTC.
 | `.github/workflows/weekly-digest.yml` | Monday 06:00 | Fixture smoke always; real send only when `DIGEST_ENABLED=true`. | Off by default. |
 | `.github/workflows/pulse-refresh.yml` | Monday 06:17 | Refreshes Wikipedia/Trends pulse data and commits changes. | Existing, best effort. |
 | `.github/workflows/distribution-refresh.yml` | Monday 06:31 | Refreshes Registry ownership distribution and commits changes. | Existing Registry operation. |
-| `.github/workflows/push-daily.yml` | Daily 07:00 | Verifies the committed events publication and dry-runs both an event day and a quiet day; when enabled, sends at most one source-backed event alert and otherwise sends nothing. | Off by default; real delivery requires GitHub `PUSH_ENABLED=true`. |
+| `.github/workflows/push-daily.yml` | Daily 07:00 | Verifies the committed events publication and dry-runs the July 18 event plus the July 22 quiet day; when enabled, applies the global priority/cap schedule, sends at most one source-backed event alert, and otherwise sends nothing. | Off by default; real delivery requires GitHub `PUSH_ENABLED=true`. |
 | `.github/workflows/transits-monthly.yml` | Monthly on day 25 at 05:41 | Computes next month's facts, verifies deterministic regeneration, commits, and opens the twelve-sign editorial issue. | Always on; Phase 1 may automate prose but must preserve fact verification. |
-| `.github/workflows/site-check.yml` | Push/PR/manual | Full build, type, fact, browser, schema, bundle, visual, Lighthouse, widget, and drift gates. | Required before merge. |
+| `.github/workflows/site-check.yml` | Push/PR/manual | Full build, type, fact, browser, schema, bundle, visual, Lighthouse, widget, drift, disposable PostgreSQL 17 concurrency, and flags-on push-browser gates. | Required before merge. |
 
 Phase 3 daily-email schedule (implemented, production flags off):
 

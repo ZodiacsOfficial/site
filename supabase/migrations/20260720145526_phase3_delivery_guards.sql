@@ -197,9 +197,137 @@ begin
 end;
 $$;
 
+-- One global editorial decision keeps the alert stream identical for every
+-- subscriber. A selected row is durable before provider delivery, so a crash
+-- or partial batch can never reopen a weekly slot. Held/capped candidates do
+-- not write rows and therefore do not consume a slot.
+create table public.push_alert_schedule (
+  utc_date date not null,
+  event_id text not null,
+  family_rank smallint not null,
+  selected_at timestamptz not null default clock_timestamp(),
+  primary key (utc_date, event_id),
+  constraint push_alert_schedule_one_event_per_day unique (utc_date),
+  constraint push_alert_schedule_event_unique unique (event_id),
+  constraint push_alert_schedule_event_id_valid
+    check (
+      octet_length(event_id) between 1 and 160
+      and event_id ~ '^[a-z0-9][a-z0-9-]*$'
+    ),
+  constraint push_alert_schedule_family_rank_valid
+    check (family_rank between 1 and 5)
+);
+
+create index push_alert_schedule_date_idx
+  on public.push_alert_schedule (utc_date desc);
+
+create or replace function public.select_push_alert_event(
+  candidate_utc_date date,
+  candidate_event_id text,
+  candidate_family_rank smallint,
+  candidate_upcoming_best_rank smallint
+)
+returns jsonb
+language plpgsql
+security invoker
+set search_path = pg_catalog, public
+as $$
+declare
+  existing_event_id text;
+  existing_family_rank smallint;
+  sends_in_window integer;
+  oldest_utc_date date;
+begin
+  if candidate_utc_date is null
+    or candidate_event_id is null
+    or octet_length(candidate_event_id) not between 1 and 160
+    or candidate_event_id !~ '^[a-z0-9][a-z0-9-]*$'
+    or candidate_family_rank is null
+    or candidate_family_rank not between 1 and 5
+    or (
+      candidate_upcoming_best_rank is not null
+      and candidate_upcoming_best_rank not between 1 and 5
+    )
+  then
+    raise exception 'invalid Sky Alert schedule selection' using errcode = '22023';
+  end if;
+
+  perform pg_catalog.pg_advisory_xact_lock(
+    pg_catalog.hashtextextended('zodiacs.sky-alert-schedule', 7312029)
+  );
+
+  select event_id, family_rank
+  into existing_event_id, existing_family_rank
+  from public.push_alert_schedule
+  where utc_date = candidate_utc_date;
+
+  if found then
+    if existing_event_id = candidate_event_id
+      and existing_family_rank = candidate_family_rank
+    then
+      return jsonb_build_object(
+        'outcome', 'selected',
+        'utc_date', candidate_utc_date,
+        'event_id', candidate_event_id
+      );
+    end if;
+    return jsonb_build_object('outcome', 'conflict');
+  end if;
+
+  if exists (
+    select 1
+    from public.push_alert_schedule
+    where event_id = candidate_event_id
+  ) then
+    return jsonb_build_object('outcome', 'conflict');
+  end if;
+
+  select count(*)::integer, min(utc_date)
+  into sends_in_window, oldest_utc_date
+  from public.push_alert_schedule
+  where utc_date between candidate_utc_date - 6 and candidate_utc_date - 1;
+
+  if sends_in_window >= 2 then
+    return jsonb_build_object(
+      'outcome', 'capped_7d',
+      'next_available_utc_date', oldest_utc_date + 7
+    );
+  end if;
+
+  if sends_in_window = 1
+    and candidate_family_rank > 1
+    and candidate_upcoming_best_rank is not null
+    and candidate_upcoming_best_rank < candidate_family_rank
+  then
+    return jsonb_build_object('outcome', 'held_7d');
+  end if;
+
+  insert into public.push_alert_schedule (
+    utc_date,
+    event_id,
+    family_rank
+  ) values (
+    candidate_utc_date,
+    candidate_event_id,
+    candidate_family_rank
+  );
+
+  return jsonb_build_object(
+    'outcome', 'selected',
+    'utc_date', candidate_utc_date,
+    'event_id', candidate_event_id
+  );
+end;
+$$;
+
+revoke all on function public.select_push_alert_event(date, text, smallint, smallint)
+  from public, anon, authenticated;
+grant execute on function public.select_push_alert_event(date, text, smallint, smallint)
+  to service_role;
+
 create table public.push_delivery_claims (
   endpoint_hash text not null,
-  event_key text not null,
+  event_id text not null,
   claim_token uuid not null,
   -- This is a snapshot identifier, intentionally not a foreign key: deleting
   -- and re-creating the same endpoint must not erase its rolling cap history.
@@ -208,19 +336,22 @@ create table public.push_delivery_claims (
   status text not null default 'reserved',
   provider_status smallint,
   claimed_at timestamptz not null default clock_timestamp(),
+  utc_date date generated always as ((claimed_at at time zone 'UTC')::date) stored,
   finalized_at timestamptz,
   primary key (endpoint_hash, claim_token),
   constraint push_delivery_claims_event_unique
-    unique (endpoint_hash, event_key),
+    unique (endpoint_hash, event_id),
+  constraint push_delivery_claims_utc_date_unique
+    unique (endpoint_hash, utc_date),
   constraint push_delivery_claims_endpoint_hash_valid
     check (
       octet_length(endpoint_hash) = 64
       and endpoint_hash ~ '^[0-9a-f]{64}$'
     ),
-  constraint push_delivery_claims_event_key_valid
+  constraint push_delivery_claims_event_id_valid
     check (
-      octet_length(event_key) between 1 and 160
-      and event_key ~ '^[a-z0-9][a-z0-9._:-]*$'
+      octet_length(event_id) between 1 and 160
+      and event_id ~ '^[a-z0-9][a-z0-9-]*$'
     ),
   constraint push_delivery_claims_subscription_id_valid
     check (subscription_id > 0),
@@ -259,7 +390,7 @@ create index push_delivery_claims_time_endpoint_idx
   on public.push_delivery_claims (claimed_at, endpoint_hash);
 
 create index push_delivery_claims_subscription_event_idx
-  on public.push_delivery_claims (subscription_id, event_key);
+  on public.push_delivery_claims (subscription_id, event_id);
 
 create or replace function public.prune_push_delivery_claims(
   candidate_limit integer default 512
@@ -300,7 +431,8 @@ grant execute on function public.prune_push_delivery_claims(integer)
 
 create or replace function public.reserve_push_delivery(
   candidate_subscription_id bigint,
-  candidate_event_key text,
+  candidate_event_id text,
+  candidate_subscription_updated_at timestamptz,
   candidate_claim_token uuid
 )
 returns jsonb
@@ -313,7 +445,7 @@ declare
   current_subscription_updated_at timestamptz;
   current_endpoint_hash text;
   observed_at timestamptz;
-  existing_event_key text;
+  existing_event_id text;
   existing_status text;
   existing_claimed_at timestamptz;
   latest_claimed_at timestamptz;
@@ -328,9 +460,10 @@ declare
 begin
   if candidate_subscription_id is null
     or candidate_subscription_id < 1
-    or candidate_event_key is null
-    or octet_length(candidate_event_key) not between 1 and 160
-    or candidate_event_key !~ '^[a-z0-9][a-z0-9._:-]*$'
+    or candidate_event_id is null
+    or octet_length(candidate_event_id) not between 1 and 160
+    or candidate_event_id !~ '^[a-z0-9][a-z0-9-]*$'
+    or candidate_subscription_updated_at is null
     or candidate_claim_token is null
   then
     raise exception 'invalid push delivery reservation' using errcode = '22023';
@@ -346,6 +479,13 @@ begin
 
   if not found then
     return jsonb_build_object('outcome', 'missing');
+  end if;
+
+  -- The sender must reserve exactly the key material it listed. If a browser
+  -- refreshed this subscription before reservation, the stale worker exits
+  -- before creating a claim and can never prune the refreshed row on 404/410.
+  if current_subscription_updated_at is distinct from candidate_subscription_updated_at then
+    return jsonb_build_object('outcome', 'stale');
   end if;
 
   current_endpoint_hash := encode(
@@ -364,14 +504,14 @@ begin
   where endpoint_hash = current_endpoint_hash
     and claimed_at <= observed_at - interval '7 days';
 
-  select event_key, status, claimed_at
-  into existing_event_key, existing_status, existing_claimed_at
+  select event_id, status, claimed_at
+  into existing_event_id, existing_status, existing_claimed_at
   from public.push_delivery_claims
   where endpoint_hash = current_endpoint_hash
     and claim_token = candidate_claim_token;
 
   if found then
-    if existing_event_key is distinct from candidate_event_key then
+    if existing_event_id is distinct from candidate_event_id then
       raise exception 'push claim token belongs to another event' using errcode = '22023';
     end if;
     if existing_status = 'reserved' then
@@ -388,7 +528,7 @@ begin
     select 1
     from public.push_delivery_claims
     where endpoint_hash = current_endpoint_hash
-      and event_key = candidate_event_key
+      and event_id = candidate_event_id
   ) then
     return jsonb_build_object('outcome', 'duplicate');
   end if;
@@ -442,7 +582,7 @@ begin
 
   insert into public.push_delivery_claims (
     endpoint_hash,
-    event_key,
+    event_id,
     claim_token,
     subscription_id,
     subscription_updated_at,
@@ -450,7 +590,7 @@ begin
     claimed_at
   ) values (
     current_endpoint_hash,
-    candidate_event_key,
+    candidate_event_id,
     candidate_claim_token,
     candidate_subscription_id,
     current_subscription_updated_at,
@@ -466,14 +606,14 @@ begin
 end;
 $$;
 
-revoke all on function public.reserve_push_delivery(bigint, text, uuid)
+revoke all on function public.reserve_push_delivery(bigint, text, timestamptz, uuid)
   from public, anon, authenticated;
-grant execute on function public.reserve_push_delivery(bigint, text, uuid)
+grant execute on function public.reserve_push_delivery(bigint, text, timestamptz, uuid)
   to service_role;
 
 create or replace function public.finalize_push_delivery(
   candidate_subscription_id bigint,
-  candidate_event_key text,
+  candidate_event_id text,
   candidate_claim_token uuid,
   candidate_outcome text,
   candidate_provider_status integer
@@ -493,9 +633,9 @@ declare
 begin
   if candidate_subscription_id is null
     or candidate_subscription_id < 1
-    or candidate_event_key is null
-    or octet_length(candidate_event_key) not between 1 and 160
-    or candidate_event_key !~ '^[a-z0-9][a-z0-9._:-]*$'
+    or candidate_event_id is null
+    or octet_length(candidate_event_id) not between 1 and 160
+    or candidate_event_id !~ '^[a-z0-9][a-z0-9-]*$'
     or candidate_claim_token is null
     or candidate_outcome not in ('sent', 'failed', 'expired')
     or (
@@ -519,7 +659,7 @@ begin
   into current_claim
   from public.push_delivery_claims
   where subscription_id = candidate_subscription_id
-    and event_key = candidate_event_key
+    and event_id = candidate_event_id
   for update;
 
   if not found then
@@ -614,15 +754,21 @@ grant execute on function public.finalize_push_delivery(bigint, text, uuid, text
   to service_role;
 
 alter table public.daily_chart_confirmation_send_claims enable row level security;
+alter table public.push_alert_schedule enable row level security;
 alter table public.push_delivery_claims enable row level security;
 
 revoke all on table public.daily_chart_confirmation_send_claims
+  from public, anon, authenticated, service_role;
+revoke all on table public.push_alert_schedule
   from public, anon, authenticated, service_role;
 revoke all on table public.push_delivery_claims
   from public, anon, authenticated, service_role;
 
 grant select, insert, delete
   on table public.daily_chart_confirmation_send_claims
+  to service_role;
+grant select, insert
+  on table public.push_alert_schedule
   to service_role;
 grant select, insert, update, delete
   on table public.push_delivery_claims
@@ -637,9 +783,15 @@ comment on table public.daily_chart_confirmation_send_claims is
   'Server-only chart confirmation provider-attempt ledger: one minute between attempts and at most six per exact rolling 24 hours.';
 comment on column public.daily_chart_confirmation_send_claims.user_id is
   'Authenticated account identity; deliberately independent of recipient and mutable daily-chart preference rows.';
+comment on table public.push_alert_schedule is
+  'Server-only global Sky Alert editorial ledger: one selected event per UTC date and at most two selected dates in any seven-date window.';
+comment on column public.push_alert_schedule.event_id is
+  'Exact committed timeline identifier selected for the UTC date; collision losers, held events, and capped events are not inserted.';
 comment on table public.push_delivery_claims is
   'Server-only Sky Alert attempt ledger enforcing at most one claim per exact rolling 24 hours and two per exact rolling seven days.';
 comment on column public.push_delivery_claims.endpoint_hash is
   'SHA-256 fingerprint of the high-entropy push endpoint; rows stop affecting caps after seven days and are then eligible for bounded opportunistic pruning.';
+comment on column public.push_delivery_claims.utc_date is
+  'Database-derived UTC date of the provider attempt; paired with endpoint_hash as the one-alert-per-date backstop.';
 comment on column public.push_delivery_claims.subscription_updated_at is
   'Subscription snapshot used to prevent a stale 404/410 worker from deleting refreshed browser keys.';
