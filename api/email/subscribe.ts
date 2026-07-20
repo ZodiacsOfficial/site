@@ -1,3 +1,4 @@
+import { waitUntil } from '@vercel/functions';
 import { createEmailSubscriptionAdapter } from '../../src/lib/email/provider.js';
 import { parseEmailSubscription } from '../../src/lib/email/input.js';
 import { isAllowedEmailCaptureRequest, requestHeader } from '../../src/lib/email/request.js';
@@ -65,22 +66,34 @@ export default async function handler(req: any, res: any): Promise<void> {
     return;
   }
 
+  // Daily DOI dispatch continues inside the Vercel request lifecycle without
+  // delaying the public response. This keeps active, pending, throttled, and
+  // new addresses indistinguishable at the HTTP boundary. The durable
+  // recipient cooldown prevents background requests from becoming an email
+  // flooding or token-churn path.
+  if (daily) {
+    if (!input.honeypot) {
+      waitUntil(adapter.subscribe(input.email, input.sign).then(
+        () => undefined,
+        () => undefined,
+      ));
+    }
+    if (wantsJson(req)) sendJson(res, 200, { ok: true, pending: true });
+    else sendHtml(res, 200, dailyEmailPage(
+      'You’re set.',
+      'If confirmation or a change is needed, check your inbox. Nothing changes until you confirm it.',
+    ));
+    return;
+  }
+
   try {
     // A filled hidden field is treated as a successful no-op. Only the email
     // and optional self-declared sign ever cross the provider boundary.
     if (!input.honeypot) await adapter.subscribe(input.email, input.sign);
     if (wantsJson(req)) sendJson(res, 200, { ok: true, pending: true });
-    else if (daily) sendHtml(res, 200, dailyEmailPage(
-      'Check your inbox',
-      'We sent a confirmation link. Your daily brief starts only after you confirm.',
-    ));
     else sendHtml(res, 200, emailStatusPage(input.locale, 'emailPendingTitle', 'emailPendingBody'));
   } catch {
     if (wantsJson(req)) sendJson(res, 502, { error: 'unavailable' });
-    else if (daily) sendHtml(res, 502, dailyEmailPage(
-      'Please try again',
-      'We could not send the confirmation email just now.',
-    ));
     else sendHtml(res, 502, emailStatusPage(input.locale, 'emailCaptureErrorTitle', 'emailCaptureError'));
   }
 }

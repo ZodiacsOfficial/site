@@ -70,23 +70,32 @@ describe('daily sun confirmation', () => {
   it('keeps GET read-only and assigns exactly one sign segment after POST', async () => {
     configure();
     const token = createDailySunOptInToken({ email: 'person@example.com', sign: 'libra' }, SECRET);
-    let sunRow = {
-      recipient_hash: RECIPIENT_HASH,
-      sign: 'libra',
-      confirmation_token_hash: createHash('sha256').update(token).digest('hex'),
-      confirmation_state: 'pending',
-      confirmed_at: null as string | null,
-    };
+    let requestState: 'pending' | 'confirming' | 'confirmed' = 'pending';
     const fetcher = vi.fn(async (input: string | URL | Request, init?: RequestInit) => {
       const url = String(input);
-      if (url.includes('/rest/v1/daily_sun_preferences?')) {
-        if (!init?.method) return json([sunRow]);
-        if (init.method === 'PATCH') {
-          const expectedState = new URL(url).searchParams.get('confirmation_state')?.replace('eq.', '');
-          if (expectedState !== sunRow.confirmation_state) return json([]);
-          sunRow = { ...sunRow, ...JSON.parse(String(init.body)) };
-          return json([sunRow]);
-        }
+      if (url.endsWith('/rest/v1/rpc/inspect_daily_sun_confirmation')) {
+        return json(requestState === 'pending'
+          ? {
+            outcome: 'valid', request_kind: 'subscribe', active_sign: null,
+            confirmation_state: 'pending',
+          }
+          : { outcome: 'invalid' });
+      }
+      if (url.endsWith('/rest/v1/rpc/claim_daily_sun_confirmation')) {
+        if (requestState !== 'pending') return json({ outcome: 'unavailable' });
+        requestState = 'confirming';
+        return json({ outcome: 'claimed', request_kind: 'subscribe', active_sign: null });
+      }
+      if (url.endsWith('/rest/v1/rpc/complete_daily_sun_confirmation')) {
+        requestState = 'confirmed';
+        return json({ outcome: 'completed', active_sign: 'libra' });
+      }
+      if (url.includes('/rest/v1/daily_sun_preferences?') && !init?.method) {
+        return json(requestState === 'confirmed' ? [{
+          recipient_hash: RECIPIENT_HASH,
+          sign: 'libra',
+          confirmed_at: '2026-07-20T12:00:00.000Z',
+        }] : []);
       }
       if (url === 'https://api.resend.com/contacts' && init?.method === 'POST') {
         return json({ id: CONTACT_ID }, 201);
@@ -104,42 +113,58 @@ describe('daily sun confirmation', () => {
     expect(getResponse.statusCode).toBe(200);
     expect(getResponse.body).toContain('Confirm subscription');
     expect(fetcher).toHaveBeenCalledOnce();
-    expect(fetcher.mock.calls[0]?.[1]?.method).toBeUndefined();
-    expect(sunRow.confirmation_state).toBe('pending');
+    expect(String(fetcher.mock.calls[0]?.[0])).toContain('/rpc/inspect_daily_sun_confirmation');
+    expect(requestState).toBe('pending');
 
     const postResponse = responseRecorder();
     await confirmHandler({ method: 'POST', body: { token } }, postResponse);
     expect(postResponse.statusCode).toBe(200);
     expect(fetcher.mock.calls.filter(([url]) => String(url).startsWith('https://api.resend.com')))
       .toHaveLength(4);
-    expect(sunRow).toMatchObject({
-      confirmation_token_hash: null,
-      confirmation_state: 'confirmed',
-    });
+    expect(requestState).toBe('confirmed');
     const segmentCalls = fetcher.mock.calls.filter(([url]) => String(url).includes('/segments/'));
     expect(segmentCalls.filter(([, init]) => init?.method === 'DELETE')).toHaveLength(1);
     expect(segmentCalls.filter(([, init]) => init?.method === 'POST').map(([url]) => String(url)))
       .toEqual([`https://api.resend.com/contacts/${CONTACT_ID}/segments/${SEGMENTS.libra}`]);
+    const completionIndex = fetcher.mock.calls.findIndex(([url]) => (
+      String(url).endsWith('/rest/v1/rpc/complete_daily_sun_confirmation')
+    ));
+    const authorityIndices = fetcher.mock.calls
+      .map(([url], index) => String(url).includes('/rest/v1/daily_sun_preferences?') ? index : -1)
+      .filter((index) => index >= 0);
+    const firstProviderIndex = fetcher.mock.calls.findIndex(([url]) => (
+      String(url).startsWith('https://api.resend.com')
+    ));
+    const lastProviderIndex = fetcher.mock.calls.reduce((last, [url], index) => (
+      String(url).startsWith('https://api.resend.com') ? index : last
+    ), -1);
+    expect(authorityIndices).toHaveLength(2);
+    expect(completionIndex).toBeLessThan(authorityIndices[0]!);
+    expect(authorityIndices[0]!).toBeLessThan(firstProviderIndex);
+    expect(lastProviderIndex).toBeLessThan(authorityIndices[1]!);
   });
 
   it('honors a Resend 429 before applying the serialized sign change', async () => {
     configure();
     const token = createDailySunOptInToken({ email: 'person@example.com', sign: 'libra' }, SECRET);
-    let sunRow = {
-      recipient_hash: RECIPIENT_HASH,
-      sign: 'libra',
-      confirmation_token_hash: createHash('sha256').update(token).digest('hex'),
-      confirmation_state: 'pending',
-      confirmed_at: null as string | null,
-    };
+    let requestState: 'pending' | 'confirming' | 'confirmed' = 'pending';
     let segmentLookups = 0;
     const fetcher = vi.fn(async (input: string | URL | Request, init?: RequestInit) => {
       const url = String(input);
-      if (url.includes('/rest/v1/daily_sun_preferences?') && init?.method === 'PATCH') {
-        const expectedState = new URL(url).searchParams.get('confirmation_state')?.replace('eq.', '');
-        if (expectedState !== sunRow.confirmation_state) return json([]);
-        sunRow = { ...sunRow, ...JSON.parse(String(init.body)) };
-        return json([sunRow]);
+      if (url.endsWith('/rest/v1/rpc/claim_daily_sun_confirmation')) {
+        requestState = 'confirming';
+        return json({ outcome: 'claimed', request_kind: 'subscribe', active_sign: null });
+      }
+      if (url.endsWith('/rest/v1/rpc/complete_daily_sun_confirmation')) {
+        requestState = 'confirmed';
+        return json({ outcome: 'completed', active_sign: 'libra' });
+      }
+      if (url.includes('/rest/v1/daily_sun_preferences?') && !init?.method) {
+        return json(requestState === 'confirmed' ? [{
+          recipient_hash: RECIPIENT_HASH,
+          sign: 'libra',
+          confirmed_at: '2026-07-20T12:00:00.000Z',
+        }] : []);
       }
       if (url === 'https://api.resend.com/contacts' && init?.method === 'POST') {
         return json({ id: CONTACT_ID }, 201);
@@ -158,14 +183,44 @@ describe('daily sun confirmation', () => {
     await confirmHandler({ method: 'POST', body: { token } }, response);
     expect(response.statusCode).toBe(200);
     expect(segmentLookups).toBe(2);
-    expect(sunRow.confirmation_state).toBe('confirmed');
+    expect(requestState).toBe('confirmed');
     const mutations = fetcher.mock.calls
-      .filter(([, init]) => init?.method === 'DELETE' || init?.method === 'POST')
+      .filter(([url, init]) => String(url).startsWith('https://api.resend.com')
+        && (init?.method === 'DELETE' || init?.method === 'POST'))
       .slice(1)
       .map(([url, init]) => `${init?.method} ${String(url)}`);
     expect(mutations).toEqual([
       `DELETE https://api.resend.com/contacts/${CONTACT_ID}/segments/${SEGMENTS.aries}`,
       `POST https://api.resend.com/contacts/${CONTACT_ID}/segments/${SEGMENTS.libra}`,
+    ]);
+  });
+
+  it('does not let a superseded worker mutate provider routing', async () => {
+    configure();
+    const token = createDailySunOptInToken({ email: 'person@example.com', sign: 'libra' }, SECRET);
+    const fetcher = vi.fn(async (input: string | URL | Request) => {
+      const url = String(input);
+      if (url.endsWith('/rest/v1/rpc/claim_daily_sun_confirmation')) {
+        return json({ outcome: 'claimed', request_kind: 'sign_change', active_sign: 'aries' });
+      }
+      if (url.endsWith('/rest/v1/rpc/complete_daily_sun_confirmation')) {
+        return json({ outcome: 'superseded', active_sign: 'aries' });
+      }
+      if (url.startsWith('https://api.resend.com')) return json({}, 200);
+      throw new Error(`Unexpected request: GET ${url}`);
+    });
+    vi.stubGlobal('fetch', fetcher);
+
+    const response = responseRecorder();
+    await confirmHandler({ method: 'POST', body: { token, decision: 'switch' } }, response);
+
+    expect(response.statusCode).toBe(409);
+    expect(response.body).toContain('A newer request or unsubscribe replaced it');
+    expect(fetcher.mock.calls.filter(([url]) => String(url).startsWith('https://api.resend.com')))
+      .toHaveLength(0);
+    expect(fetcher.mock.calls.map(([url]) => String(url))).toEqual([
+      'https://project.supabase.co/rest/v1/rpc/claim_daily_sun_confirmation',
+      'https://project.supabase.co/rest/v1/rpc/complete_daily_sun_confirmation',
     ]);
   });
 

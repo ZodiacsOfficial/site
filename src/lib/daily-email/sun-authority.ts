@@ -8,7 +8,6 @@ const HASHES_PER_REQUEST = 50;
 interface DailySunAuthorityRow {
   recipient_hash?: unknown;
   sign?: unknown;
-  confirmation_state?: unknown;
   confirmed_at?: unknown;
 }
 
@@ -35,7 +34,6 @@ function serviceHeaders(serviceKey: string): Record<string, string> {
 function confirmedAuthority(row: DailySunAuthorityRow): { recipientHash: string; sign: string } | null {
   if (typeof row.recipient_hash !== 'string' || !HASH.test(row.recipient_hash)) return null;
   if (typeof row.sign !== 'string' || !SIGN_SLUGS.includes(row.sign)) return null;
-  if (row.confirmation_state !== 'confirmed') return null;
   if (typeof row.confirmed_at !== 'string' || !Number.isFinite(Date.parse(row.confirmed_at))) return null;
   return { recipientHash: row.recipient_hash, sign: row.sign };
 }
@@ -70,7 +68,7 @@ export async function loadAuthorizedSunRecipients({
   for (let offset = 0; offset < hashes.length; offset += HASHES_PER_REQUEST) {
     const batch = hashes.slice(offset, offset + HASHES_PER_REQUEST);
     const url = preferencesEndpoint(supabaseUrl);
-    url.searchParams.set('select', 'recipient_hash,sign,confirmation_state,confirmed_at');
+    url.searchParams.set('select', 'recipient_hash,sign,confirmed_at');
     url.searchParams.set('recipient_hash', `in.(${batch.join(',')})`);
     const response = await fetchImpl(url, {
       headers: serviceHeaders(serviceKey),

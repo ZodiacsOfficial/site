@@ -60,15 +60,23 @@ describe('daily chart confirmation token', () => {
 });
 
 describe('daily sun confirmation token', () => {
-  it('uses a purpose-specific signature so weekly consent cannot become daily consent', () => {
+  it('seals recipient identity with a unique nonce and purpose-specific authenticated encryption', () => {
     const now = Date.UTC(2026, 6, 20);
     const token = createDailySunOptInToken({ email: 'Person@Example.com', sign: 'libra' }, SECRET, now);
+    const second = createDailySunOptInToken({ email: 'Person@Example.com', sign: 'libra' }, SECRET, now);
+    expect(token).not.toBe(second);
+    expect(token).toMatch(/^v2\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+$/u);
+    expect(token).not.toContain('person');
+    expect(token.split('.').slice(1).map((part) => Buffer.from(part, 'base64url').toString('utf8')).join(''))
+      .not.toContain('person@example.com');
     expect(verifyDailySunOptInToken(token, SECRET, now + 1_000)).toEqual({
       email: 'person@example.com',
       sign: 'libra',
       expiresAt: now + DAILY_SUN_OPT_IN_TTL_MS,
     });
     expect(verifyDailySunOptInToken(`${token}x`, SECRET, now)).toBeNull();
+    expect(verifyDailySunOptInToken(token, `${SECRET}-wrong`, now)).toBeNull();
+    expect(verifyDailySunOptInToken(token, SECRET, now + DAILY_SUN_OPT_IN_TTL_MS)).toBeNull();
   });
 });
 

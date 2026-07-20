@@ -1,5 +1,8 @@
-import { createHash } from 'node:crypto';
-import { createEmailSubscriptionAdapter } from '../../src/lib/email/provider.js';
+import { createHash, randomUUID } from 'node:crypto';
+import {
+  createEmailSubscriptionAdapter,
+  type EmailSubscriptionAdapter,
+} from '../../src/lib/email/provider.js';
 import { hasEmailCaptureProvider } from '../../src/lib/email/config.js';
 import { verifyEmailOptInToken } from '../../src/lib/email/opt-in-token.js';
 import { requestHeader } from '../../src/lib/email/request.js';
@@ -18,7 +21,9 @@ import { verifyDailySunOptInToken } from '../../src/lib/email/daily-sun-token.js
 import {
   claimPendingDailySunConfirmation,
   completeClaimedDailySunConfirmation,
-  isCurrentPendingDailySunConfirmation,
+  getDailySunPreference,
+  inspectDailySunConfirmation,
+  keepCurrentDailySunSign,
   releaseClaimedDailySunConfirmation,
 } from '../../src/lib/email/daily-sun-server.js';
 import { getAdminEmailUser } from '../../src/lib/email/daily-server.js';
@@ -59,6 +64,21 @@ function tokenFromBody(body: unknown): string {
   return '';
 }
 
+function decisionFromBody(body: unknown): string {
+  if (typeof body === 'string') {
+    try {
+      const parsed = JSON.parse(body) as { decision?: unknown };
+      if (typeof parsed.decision === 'string') return parsed.decision;
+    } catch {
+      return new URLSearchParams(body).get('decision') ?? '';
+    }
+  }
+  if (body && typeof body === 'object' && typeof (body as { decision?: unknown }).decision === 'string') {
+    return (body as { decision: string }).decision;
+  }
+  return '';
+}
+
 function wantsJson(req: any): boolean {
   return requestHeader(req, 'accept').includes('application/json');
 }
@@ -66,6 +86,38 @@ function wantsJson(req: any): boolean {
 function sendUnavailable(req: any, res: any, locale: Locale): void {
   if (wantsJson(req)) sendJson(res, 503, { error: 'disabled' });
   else send(res, 503, emailStatusPage(locale, 'emailCaptureErrorTitle', 'emailCaptureError'));
+}
+
+async function currentDailySunAuthority(email: string) {
+  return getDailySunPreference(
+    dailyRecipientHash(
+      email,
+      process.env.DAILY_EMAIL_RECIPIENT_HASH_SECRET ?? '',
+    ),
+  );
+}
+
+/**
+ * Provider segments are derived routing state, never consent authority. Read
+ * the committed authority before and after each provider mutation so a
+ * concurrent confirmation or unsubscribe always has a worker that converges
+ * routing on the newest database version.
+ */
+async function synchronizeDailySunProvider(
+  email: string,
+  confirm: NonNullable<EmailSubscriptionAdapter['confirm']>,
+) {
+  for (let attempt = 0; attempt < 3; attempt += 1) {
+    const before = await currentDailySunAuthority(email);
+    if (before) await confirm(email, before.sign, 'daily');
+    else await removeDailySunSegments({ email });
+
+    const after = await currentDailySunAuthority(email);
+    if (before?.sign === after?.sign && before?.confirmedAt === after?.confirmedAt) {
+      return after;
+    }
+  }
+  throw new Error('Daily Sun provider authority changed during reconciliation.');
 }
 
 function matchesPendingChartRequest(
@@ -144,7 +196,7 @@ export default async function handler(req: any, res: any): Promise<void> {
       }
       if (sunClaim) {
         try {
-          const current = await isCurrentPendingDailySunConfirmation(
+          const current = await inspectDailySunConfirmation(
             sunClaim.email,
             sunClaim.sign,
             token,
@@ -154,6 +206,22 @@ export default async function handler(req: any, res: any): Promise<void> {
               'This link is not valid.',
               'It may have expired — links work for 48 hours — or already been used. Request a fresh one from any daily signup on the site.',
               { kind: 'link', href: '/horoscopes/#daily-email', label: 'Request a new link' },
+            ));
+            return;
+          }
+          if (current.requestKind === 'sign_change' && current.activeSign) {
+            const oldSign = signBySlug(current.activeSign).name;
+            const newSign = signBySlug(sunClaim.sign).name;
+            send(res, 200, dailyEmailPage(
+              'One last check.',
+              `This address already gets the daily as ${oldSign}. Switch it to ${newSign}?`,
+              {
+                action: '/api/email/confirm',
+                token,
+                label: `Switch to ${newSign}`,
+                decision: 'switch',
+                secondary: { label: `Keep ${oldSign}`, decision: 'keep' },
+              },
             ));
             return;
           }
@@ -236,32 +304,85 @@ export default async function handler(req: any, res: any): Promise<void> {
     return;
   }
   if (sunClaim) {
+    const decision = decisionFromBody(req.body);
+    if (decision && decision !== 'confirm' && decision !== 'switch' && decision !== 'keep') {
+      send(res, 400, dailyEmailPage(
+        'This link is not valid.',
+        'It may have expired — links work for 48 hours — or already been used. Request a fresh one from any daily signup on the site.',
+        { kind: 'link', href: '/horoscopes/#daily-email', label: 'Request a new link' },
+      ));
+      return;
+    }
+    if (decision === 'keep') {
+      try {
+        const current = await inspectDailySunConfirmation(sunClaim.email, sunClaim.sign, token);
+        if (!current || current.requestKind !== 'sign_change' || !current.activeSign
+          || !await keepCurrentDailySunSign(sunClaim.email, token)) {
+          send(res, 409, dailyEmailPage(
+            'This link is not valid.',
+            'It may have expired — links work for 48 hours — or already been used. Request a fresh one from any daily signup on the site.',
+            { kind: 'link', href: '/horoscopes/#daily-email', label: 'Request a new link' },
+          ));
+          return;
+        }
+        send(res, 200, dailyEmailPage(
+          'Subscription confirmed.',
+          `Your ${signBySlug(current.activeSign).name} daily starts tomorrow morning. Every email includes an unsubscribe link.`,
+        ));
+      } catch {
+        send(res, 502, dailyEmailPage('Please try again', 'We could not save your daily brief just now.'));
+      }
+      return;
+    }
+
+    const attemptId = randomUUID();
     let claimed = false;
-    let providerConfirmed = false;
+    const synchronizeProvider = () => synchronizeDailySunProvider(
+      sunClaim.email,
+      adapter.confirm!.bind(adapter),
+    );
     try {
-      claimed = await claimPendingDailySunConfirmation(
+      const claimResult = await claimPendingDailySunConfirmation(
         sunClaim.email,
         sunClaim.sign,
         token,
+        attemptId,
       );
-      if (!claimed) {
+      if (claimResult.outcome !== 'claimed') {
+        // A completed request can lose its HTTP response. The signed link may
+        // safely finish provider synchronization only while its sign remains
+        // the active database authority.
+        if (claimResult.outcome === 'unavailable') {
+          const authority = await currentDailySunAuthority(sunClaim.email);
+          if (authority?.sign === sunClaim.sign) {
+            await synchronizeProvider();
+            send(res, 200, dailyEmailPage(
+              'Subscription confirmed.',
+              `Your ${signBySlug(sunClaim.sign).name} daily starts tomorrow morning. Every email includes an unsubscribe link.`,
+            ));
+            return;
+          }
+        }
         send(res, 409, dailyEmailPage(
-          'This link is not valid.',
-          'It may have expired — links work for 48 hours — or already been used. Request a fresh one from any daily signup on the site.',
+          claimResult.outcome === 'busy' ? 'Confirmation in progress.' : 'This link is not valid.',
+          claimResult.outcome === 'busy'
+            ? 'This subscription is already being confirmed. Wait a moment, then try again.'
+            : 'It may have expired — links work for 48 hours — or already been used. Request a fresh one from any daily signup on the site.',
           { kind: 'link', href: '/horoscopes/#daily-email', label: 'Request a new link' },
         ));
         return;
       }
+      claimed = true;
 
-      await adapter.confirm(sunClaim.email, sunClaim.sign, 'daily');
-      providerConfirmed = true;
-      const completed = await completeClaimedDailySunConfirmation(
+      // Commit consent first. A stale or reclaimed worker therefore cannot
+      // mutate provider routing. Delivery remains fail-closed until the
+      // provider is reconciled to this committed authority.
+      const completion = await completeClaimedDailySunConfirmation(
         sunClaim.email,
-        sunClaim.sign,
         token,
+        attemptId,
       );
-      if (!completed) {
-        await removeDailySunSegments({ email: sunClaim.email });
+      if (completion.outcome !== 'completed') {
         send(res, 409, dailyEmailPage(
           'This link is not valid.',
           'A newer request or unsubscribe replaced it, so nothing was turned on.',
@@ -269,23 +390,31 @@ export default async function handler(req: any, res: any): Promise<void> {
         ));
         return;
       }
+      await synchronizeProvider();
       send(res, 200, dailyEmailPage(
         'Subscription confirmed.',
         `Your ${signBySlug(sunClaim.sign).name} daily starts tomorrow morning. Every email includes an unsubscribe link.`,
       ));
     } catch {
-      if (providerConfirmed) {
+      if (claimed) {
         try {
-          await removeDailySunSegments({ email: sunClaim.email });
+          await releaseClaimedDailySunConfirmation(sunClaim.email, token, attemptId);
         } catch {
-          // The failure remains visible; a fresh unsubscribe retries the same fail-closed removal.
+          // A reclaimed lease or unsubscribe already fenced this worker out.
         }
-      } else if (claimed) {
-        try {
-          await releaseClaimedDailySunConfirmation(sunClaim.email, sunClaim.sign, token);
-        } catch {
-          // A new signup safely replaces an interrupted claim.
+      }
+      try {
+        const authority = await currentDailySunAuthority(sunClaim.email);
+        if (authority?.sign === sunClaim.sign) {
+          await synchronizeProvider();
+          send(res, 200, dailyEmailPage(
+            'Subscription confirmed.',
+            `Your ${signBySlug(sunClaim.sign).name} daily starts tomorrow morning. Every email includes an unsubscribe link.`,
+          ));
+          return;
         }
+      } catch {
+        // Database authority remains fail-closed if provider repair must retry.
       }
       send(res, 502, dailyEmailPage('Please try again', 'We could not save your daily brief just now.'));
     }

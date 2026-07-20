@@ -11,8 +11,9 @@ import { confirmDailySunContact } from './daily-resend.js';
 import {
   deletePendingDailySunConfirmation,
   savePendingDailySunConfirmation,
+  type DailySunStageOutcome,
 } from './daily-sun-server.js';
-import { createDailySunOptInToken } from './daily-sun-token.js';
+import { createDailySunOptInToken, verifyDailySunOptInToken } from './daily-sun-token.js';
 import type { Locale } from '../i18n/core';
 import { serverUiMessage } from '../i18n/ui/server.js';
 import { signBySlug } from '../signs.js';
@@ -24,7 +25,7 @@ type Fetch = typeof fetch;
 export interface EmailSubscriptionResult {
   provider: EmailProviderName;
   pending: true;
-  outcome?: 'already_on' | 'already_pending';
+  outcome?: DailySunStageOutcome;
 }
 
 export interface EmailSubscriptionAdapter {
@@ -64,10 +65,21 @@ class ResendAdapter implements EmailSubscriptionAdapter {
     const token = daily
       ? createDailySunOptInToken({ email, sign: sign ?? '' }, secret)
       : createEmailOptInToken({ email, sign: sign ?? null, locale: this.locale }, secret);
+    const dailyClaim = daily ? verifyDailySunOptInToken(token, secret) : null;
+    if (daily && !dailyClaim) throw new Error('Daily sun confirmation token could not be verified.');
     const pending = daily
-      ? await savePendingDailySunConfirmation(email, sign ?? '', token, this.env, this.fetcher)
+      ? await savePendingDailySunConfirmation(
+        email,
+        sign ?? '',
+        token,
+        dailyClaim!.expiresAt,
+        this.env,
+        this.fetcher,
+      )
       : null;
-    if (pending?.outcome === 'already_on' || pending?.outcome === 'already_pending') {
+    if (pending?.outcome === 'already_on'
+      || pending?.outcome === 'cooldown'
+      || pending?.outcome === 'in_flight') {
       return { provider: this.provider, pending: true, outcome: pending.outcome };
     }
     const confirmation = new URL('/api/email/confirm', baseUrl(this.env));
@@ -122,7 +134,11 @@ class ResendAdapter implements EmailSubscriptionAdapter {
       }
       throw error;
     }
-    return { provider: this.provider, pending: true };
+    return {
+      provider: this.provider,
+      pending: true,
+      ...(pending ? { outcome: pending.outcome } : {}),
+    };
   }
 
   async confirm(email: string, sign?: string, purpose: 'weekly' | 'daily' = 'weekly'): Promise<void> {

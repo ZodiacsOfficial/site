@@ -1,31 +1,60 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
+
+const { waitUntilTasks } = vi.hoisted(() => ({
+  waitUntilTasks: [] as Promise<unknown>[],
+}));
+
+vi.mock('@vercel/functions', () => ({
+  waitUntil(task: Promise<unknown>) {
+    waitUntilTasks.push(task);
+  },
+}));
+
 import subscribeHandler from '../../../api/email/subscribe';
 import confirmHandler from '../../../api/email/confirm';
 import unsubscribeHandler from '../../../api/email/unsubscribe';
 import { createDailyUnsubscribeToken } from './daily-unsubscribe-token';
-import { dailySunRecipientHash } from './daily-sun-server';
+import { dailySunRecipientHash, dailySunTokenHash } from './daily-sun-server';
 
 const ORIGINAL_ENV = { ...process.env };
 const SECRET = 'test-secret-that-is-at-least-thirty-two-characters';
 const CONTACT_ID = 'contact_12345678';
+const ATTEMPT_ID = '110e8400-e29b-41d4-a716-446655440000';
 const SIGNS = [
   'aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo',
   'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces',
 ];
 const SEGMENTS = Object.fromEntries(SIGNS.map((sign, index) => [sign, `segment_${index + 1}`]));
 
-interface SunRow {
+interface ActiveRow {
   recipient_hash: string;
   sign: string;
-  confirmation_token_hash: string | null;
-  confirmation_state: 'pending' | 'confirming' | 'confirmed' | 'revoked';
-  confirmed_at: string | null;
+  confirmed_at: string;
+  confirmed_by_attempt_id: string;
+}
+
+interface RequestRow {
+  recipient_hash: string;
+  requested_sign: string;
+  confirmation_token_hash: string;
+  request_kind: 'subscribe' | 'sign_change';
+  confirmation_state: 'pending' | 'confirming';
+  attempt_id: string | null;
+  claimed_at: number | null;
+  expires_at: number;
 }
 
 afterEach(() => {
   process.env = { ...ORIGINAL_ENV };
+  waitUntilTasks.splice(0);
   vi.unstubAllGlobals();
 });
+
+async function flushWaitUntil(): Promise<void> {
+  while (waitUntilTasks.length > 0) {
+    await Promise.all(waitUntilTasks.splice(0));
+  }
+}
 
 function configure(): void {
   Object.assign(process.env, {
@@ -74,96 +103,209 @@ function requestToken(emailBody: unknown): string {
   return match[1];
 }
 
-function createHarness(initialRow: SunRow | null = null) {
-  let row = initialRow ? { ...initialRow } : null;
+function confirmed(sign: string): ActiveRow {
+  return {
+    recipient_hash: dailySunRecipientHash('person@example.com'),
+    sign,
+    confirmed_at: '2026-07-20T00:00:00.000Z',
+    confirmed_by_attempt_id: ATTEMPT_ID,
+  };
+}
+
+function createHarness(initialActive: ActiveRow | null = null) {
+  let active = initialActive ? { ...initialActive } : null;
+  let request: RequestRow | null = null;
   const confirmationEmails: Array<{ body: string }> = [];
   const databaseBodies: string[] = [];
+  const callOrder: string[] = [];
   const segments = new Set<string>();
   let contactWrites = 0;
   let failNextContactWrite = false;
-
-  const matches = (url: URL): boolean => {
-    if (!row) return false;
-    const fields: Array<[string, keyof SunRow]> = [
-      ['recipient_hash', 'recipient_hash'],
-      ['sign', 'sign'],
-      ['confirmation_token_hash', 'confirmation_token_hash'],
-      ['confirmation_state', 'confirmation_state'],
-    ];
-    return fields.every(([parameter, field]) => {
-      const filter = url.searchParams.get(parameter);
-      return !filter || filter === `eq.${row?.[field]}`;
-    });
-  };
+  let nextAllowedAt: number | null = null;
 
   const fetcher = vi.fn(async (input: string | URL | Request, init?: RequestInit) => {
     const url = new URL(String(input));
     const method = init?.method ?? 'GET';
+    const rpc = url.hostname === 'project.supabase.co' && url.pathname.startsWith('/rest/v1/rpc/');
+    const bodyText = method === 'POST' && init?.body ? String(init.body) : '';
+    if (rpc) databaseBodies.push(bodyText);
 
-    if (url.hostname === 'project.supabase.co'
-      && url.pathname === '/rest/v1/rpc/stage_daily_sun_confirmation'
-      && method === 'POST') {
-      const bodyText = String(init?.body);
-      databaseBodies.push(bodyText);
+    if (url.pathname === '/rest/v1/rpc/stage_daily_sun_confirmation' && method === 'POST') {
+      callOrder.push('db:stage');
+      const body = JSON.parse(bodyText) as {
+        candidate_recipient_hash: string;
+        candidate_sign: string;
+        candidate_token_hash: string;
+        candidate_expires_at: string;
+      };
+      if (nextAllowedAt !== null && nextAllowedAt > Date.now()) {
+        return json({ outcome: 'cooldown', active_sign: active?.sign ?? null });
+      }
+      nextAllowedAt = Date.now() + 15 * 60_000;
+      if (active?.sign === body.candidate_sign) {
+        return json({ outcome: 'already_on', active_sign: active.sign });
+      }
+      if (request?.confirmation_state === 'confirming'
+        && request.claimed_at !== null
+        && request.claimed_at > Date.now() - 300_000) {
+        return json({ outcome: 'in_flight', active_sign: active?.sign ?? null });
+      }
+      const existed = Boolean(request);
+      const kind = active ? 'sign_change' : 'subscribe';
+      request = {
+        recipient_hash: body.candidate_recipient_hash,
+        requested_sign: body.candidate_sign,
+        confirmation_token_hash: body.candidate_token_hash,
+        request_kind: kind,
+        confirmation_state: 'pending',
+        attempt_id: null,
+        claimed_at: null,
+        expires_at: Date.parse(body.candidate_expires_at),
+      };
+      return json({
+        outcome: kind === 'subscribe'
+          ? existed ? 'replaced_request' : 'new_request'
+          : existed ? 'sign_change_replaced' : 'sign_change_request',
+        active_sign: active?.sign ?? null,
+      });
+    }
+
+    if (url.pathname === '/rest/v1/rpc/inspect_daily_sun_confirmation' && method === 'POST') {
       const body = JSON.parse(bodyText) as {
         candidate_recipient_hash: string;
         candidate_sign: string;
         candidate_token_hash: string;
       };
-      if (row?.confirmation_state === 'confirmed') return json('already_on');
-      if (row?.confirmation_state === 'confirming') return json('already_pending');
-      row = {
-        recipient_hash: body.candidate_recipient_hash,
-        sign: body.candidate_sign,
-        confirmation_token_hash: body.candidate_token_hash,
-        confirmation_state: 'pending',
-        confirmed_at: null,
-      };
-      return json('pending');
+      const valid = request
+        && request.recipient_hash === body.candidate_recipient_hash
+        && request.requested_sign === body.candidate_sign
+        && request.confirmation_token_hash === body.candidate_token_hash
+        && request.expires_at > Date.now();
+      return valid
+        ? json({
+          outcome: 'valid',
+          request_kind: request!.request_kind,
+          active_sign: active?.sign ?? null,
+          confirmation_state: request!.confirmation_state,
+        })
+        : json({ outcome: 'invalid' });
     }
 
-    if (url.hostname === 'project.supabase.co'
-      && url.pathname === '/rest/v1/rpc/revoke_daily_email_preference'
-      && method === 'POST') {
-      const bodyText = String(init?.body);
-      databaseBodies.push(bodyText);
+    if (url.pathname === '/rest/v1/rpc/claim_daily_sun_confirmation' && method === 'POST') {
+      callOrder.push('db:claim');
+      const body = JSON.parse(bodyText) as {
+        candidate_recipient_hash: string;
+        candidate_sign: string;
+        candidate_token_hash: string;
+        candidate_attempt_id: string;
+      };
+      const matches = request
+        && request.recipient_hash === body.candidate_recipient_hash
+        && request.requested_sign === body.candidate_sign
+        && request.confirmation_token_hash === body.candidate_token_hash
+        && request.expires_at > Date.now();
+      if (!matches) return json({ outcome: 'unavailable' });
+      if (request!.confirmation_state === 'confirming'
+        && request!.claimed_at !== null
+        && request!.claimed_at > Date.now() - 300_000
+        && request!.attempt_id !== body.candidate_attempt_id) return json({ outcome: 'busy' });
+      request = {
+        ...request!,
+        confirmation_state: 'confirming',
+        attempt_id: body.candidate_attempt_id,
+        claimed_at: Date.now(),
+      };
+      return json({
+        outcome: 'claimed',
+        request_kind: request.request_kind,
+        active_sign: active?.sign ?? null,
+      });
+    }
+
+    if (url.pathname === '/rest/v1/rpc/complete_daily_sun_confirmation' && method === 'POST') {
+      callOrder.push('db:complete');
+      const body = JSON.parse(bodyText) as {
+        candidate_recipient_hash: string;
+        candidate_token_hash: string;
+        candidate_attempt_id: string;
+      };
+      if (active?.confirmed_by_attempt_id === body.candidate_attempt_id) {
+        return json({ outcome: 'completed', active_sign: active.sign });
+      }
+      const matches = request
+        && request.recipient_hash === body.candidate_recipient_hash
+        && request.confirmation_token_hash === body.candidate_token_hash
+        && request.confirmation_state === 'confirming'
+        && request.attempt_id === body.candidate_attempt_id
+        && request.claimed_at !== null
+        && request.claimed_at > Date.now() - 300_000;
+      if (!matches) {
+        return json({
+          outcome: request ? 'superseded' : 'gone',
+          active_sign: active?.sign ?? null,
+        });
+      }
+      active = {
+        recipient_hash: request!.recipient_hash,
+        sign: request!.requested_sign,
+        confirmed_at: new Date().toISOString(),
+        confirmed_by_attempt_id: body.candidate_attempt_id,
+      };
+      request = null;
+      return json({ outcome: 'completed', active_sign: active.sign });
+    }
+
+    if (url.pathname === '/rest/v1/rpc/release_daily_sun_confirmation' && method === 'POST') {
+      const body = JSON.parse(bodyText) as {
+        candidate_recipient_hash: string;
+        candidate_token_hash: string;
+        candidate_attempt_id: string;
+      };
+      const matches = request
+        && request.recipient_hash === body.candidate_recipient_hash
+        && request.confirmation_token_hash === body.candidate_token_hash
+        && request.confirmation_state === 'confirming'
+        && request.attempt_id === body.candidate_attempt_id;
+      if (matches) request = {
+        ...request!, confirmation_state: 'pending', attempt_id: null, claimed_at: null,
+      };
+      return json({
+        outcome: matches ? 'released' : request ? 'superseded' : 'gone',
+        active_sign: active?.sign ?? null,
+      });
+    }
+
+    if (url.pathname === '/rest/v1/rpc/cancel_daily_sun_confirmation' && method === 'POST') {
+      const body = JSON.parse(bodyText) as {
+        candidate_recipient_hash: string;
+        candidate_token_hash: string;
+        require_sign_change: boolean;
+      };
+      const matches = request
+        && request.recipient_hash === body.candidate_recipient_hash
+        && request.confirmation_token_hash === body.candidate_token_hash
+        && (!body.require_sign_change || request.request_kind === 'sign_change');
+      if (matches) request = null;
+      return json(Boolean(matches));
+    }
+
+    if (url.pathname === '/rest/v1/rpc/revoke_daily_email_preference' && method === 'POST') {
       const body = JSON.parse(bodyText) as {
         candidate_recipient_hash: string;
         candidate_tier: 'sun_sign' | 'chart';
         candidate_user_id: string | null;
       };
-      if (body.candidate_tier === 'sun_sign'
-        && body.candidate_user_id === null
-        && row?.recipient_hash === body.candidate_recipient_hash) {
-        row = {
-          ...row,
-          confirmation_token_hash: null,
-          confirmation_state: 'revoked',
-          confirmed_at: null,
-        };
+      if (body.candidate_tier === 'sun_sign' && body.candidate_user_id === null) {
+        if (active?.recipient_hash === body.candidate_recipient_hash) active = null;
+        if (request?.recipient_hash === body.candidate_recipient_hash) request = null;
+        nextAllowedAt = null;
       }
       return json(null);
     }
 
     if (url.hostname === 'project.supabase.co'
-      && url.pathname === '/rest/v1/daily_sun_preferences') {
-      if (method === 'GET') return json(matches(url) && row ? [{ ...row }] : []);
-      if (method === 'DELETE') {
-        if (matches(url)) row = null;
-        return json({});
-      }
-      if (method === 'PATCH') {
-        const bodyText = String(init?.body);
-        databaseBodies.push(bodyText);
-        const body = JSON.parse(bodyText) as Partial<SunRow>;
-        const changed = matches(url) && row;
-        if (changed && row) row = { ...row, ...body };
-        return init?.headers
-          && String((init.headers as Record<string, string>).Prefer).includes('return=representation')
-          ? json(changed && row ? [{ ...row }] : [])
-          : json({});
-      }
-    }
+      && url.pathname === '/rest/v1/daily_sun_preferences'
+      && method === 'GET') return json(active ? [{ ...active }] : []);
 
     if (url.hostname === 'project.supabase.co'
       && url.pathname === '/rest/v1/daily_chart_preferences'
@@ -173,12 +315,11 @@ function createHarness(initialRow: SunRow | null = null) {
       confirmationEmails.push({ body: String(init?.body) });
       return json({ id: `email_${confirmationEmails.length}` });
     }
-
     if (url.href === `https://api.resend.com/contacts/${CONTACT_ID}` && method === 'GET') {
       return json({ id: CONTACT_ID, email: 'person@example.com' });
     }
-
     if (url.href === 'https://api.resend.com/contacts' && method === 'POST') {
+      callOrder.push('provider:contact');
       contactWrites += 1;
       if (failNextContactWrite) {
         failNextContactWrite = false;
@@ -186,11 +327,9 @@ function createHarness(initialRow: SunRow | null = null) {
       }
       return json({ id: CONTACT_ID }, 201);
     }
-
     if (url.pathname.endsWith('/segments') && method === 'GET') {
       return json({ data: [...segments].map((id) => ({ id })) });
     }
-
     const segmentMatch = url.pathname.match(/\/segments\/([^/]+)$/u);
     if (segmentMatch?.[1] && method === 'POST') {
       segments.add(decodeURIComponent(segmentMatch[1]));
@@ -200,7 +339,6 @@ function createHarness(initialRow: SunRow | null = null) {
       segments.delete(decodeURIComponent(segmentMatch[1]));
       return json({});
     }
-
     throw new Error(`Unexpected request: ${method} ${url.href}`);
   });
 
@@ -208,18 +346,44 @@ function createHarness(initialRow: SunRow | null = null) {
     fetcher,
     confirmationEmails,
     databaseBodies,
+    callOrder,
     segments,
-    get row() { return row; },
+    get active() { return active; },
+    get request() { return request; },
     get contactWrites() { return contactWrites; },
     failContactWrite() { failNextContactWrite = true; },
+    expireCooldown() { nextAllowedAt = Date.now() - 1; },
+    makeLeaseStale() {
+      if (!request) throw new Error('No request to lease.');
+      request = {
+        ...request,
+        confirmation_state: 'confirming',
+        attempt_id: ATTEMPT_ID,
+        claimed_at: Date.now() - 301_000,
+      };
+    },
   };
 }
 
 async function requestSunLink(
   harness: ReturnType<typeof createHarness>,
   sign: string,
+): Promise<{ token: string; responseBody: string }> {
+  const emailsBefore = harness.confirmationEmails.length;
+  const responseBody = await submitSunRequest(harness, sign);
+  expect(harness.confirmationEmails).toHaveLength(emailsBefore + 1);
+  return {
+    token: requestToken(harness.confirmationEmails.at(-1)?.body),
+    responseBody,
+  };
+}
+
+async function submitSunRequest(
+  harness: ReturnType<typeof createHarness>,
+  sign: string,
 ): Promise<string> {
   vi.stubGlobal('fetch', harness.fetcher);
+  const emailsBefore = harness.confirmationEmails.length;
   const response = responseRecorder();
   await subscribeHandler({
     method: 'POST',
@@ -227,136 +391,208 @@ async function requestSunLink(
     body: { email: 'person@example.com', sign, locale: 'en' },
   }, response);
   expect(response.statusCode).toBe(200);
-  return requestToken(harness.confirmationEmails.at(-1)?.body);
+  expect(JSON.parse(response.body)).toEqual({ ok: true, pending: true });
+  expect(waitUntilTasks).toHaveLength(1);
+  expect(harness.confirmationEmails).toHaveLength(emailsBefore);
+  await flushWaitUntil();
+  return response.body;
 }
 
 describe('durable daily sun confirmation state', () => {
-  it('keeps only the newest resend link, keeps scanner GET read-only, and consumes success against replay', async () => {
+  it('dispatches in waitUntil, suppresses duplicate token churn, and safely repairs a replay', async () => {
     configure();
     const harness = createHarness();
-    const oldToken = await requestSunLink(harness, 'aries');
-    const currentToken = await requestSunLink(harness, 'libra');
-    expect(currentToken).not.toBe(oldToken);
+    const first = await requestSunLink(harness, 'aries');
+    const requestSnapshot = { ...harness.request! };
+    const throttledBody = await submitSunRequest(harness, 'libra');
+    expect(throttledBody).toBe(first.responseBody);
+    expect(harness.confirmationEmails).toHaveLength(1);
+    expect(harness.request).toEqual(requestSnapshot);
+
+    harness.expireCooldown();
+    const currentToken = (await requestSunLink(harness, 'libra')).token;
+    expect(currentToken).not.toBe(first.token);
     expect(harness.confirmationEmails).toHaveLength(2);
     expect(harness.databaseBodies.every((body) => !body.includes('@'))).toBe(true);
 
-    const snapshot = { ...harness.row! };
+    const snapshot = JSON.stringify(harness.request);
     const scanner = responseRecorder();
     await confirmHandler({ method: 'GET', query: { token: currentToken } }, scanner);
     expect(scanner.statusCode).toBe(200);
     expect(scanner.body).toContain('Confirm subscription');
-    expect(harness.row).toEqual(snapshot);
+    expect(JSON.stringify(harness.request)).toBe(snapshot);
     expect(harness.contactWrites).toBe(0);
 
     const stale = responseRecorder();
-    await confirmHandler({ method: 'POST', body: { token: oldToken } }, stale);
+    await confirmHandler({ method: 'POST', body: { token: first.token } }, stale);
     expect(stale.statusCode).toBe(409);
     expect(harness.contactWrites).toBe(0);
 
-    const confirmed = responseRecorder();
-    await confirmHandler({ method: 'POST', body: { token: currentToken } }, confirmed);
-    expect(confirmed.statusCode).toBe(200);
+    const accepted = responseRecorder();
+    await confirmHandler({ method: 'POST', body: { token: currentToken } }, accepted);
+    expect(accepted.statusCode).toBe(200);
+    expect(harness.active?.sign).toBe('libra');
+    expect(harness.request).toBeNull();
     expect(harness.contactWrites).toBe(1);
-    expect(harness.row).toMatchObject({
-      sign: 'libra',
-      confirmation_token_hash: null,
-      confirmation_state: 'confirmed',
-    });
 
     const replay = responseRecorder();
     await confirmHandler({ method: 'POST', body: { token: currentToken } }, replay);
-    expect(replay.statusCode).toBe(409);
-    expect(harness.contactWrites).toBe(1);
+    expect(replay.statusCode).toBe(200);
+    expect(harness.contactWrites).toBe(2);
+    expect(harness.active?.sign).toBe('libra');
+    expect(harness.request).toBeNull();
   });
 
   it('lets exactly one concurrent confirmation claim reach the provider', async () => {
     configure();
     const harness = createHarness();
-    const token = await requestSunLink(harness, 'libra');
+    const { token } = await requestSunLink(harness, 'libra');
     const first = responseRecorder();
     const second = responseRecorder();
-
     await Promise.all([
       confirmHandler({ method: 'POST', body: { token } }, first),
       confirmHandler({ method: 'POST', body: { token } }, second),
     ]);
-
     expect([first.statusCode, second.statusCode].sort()).toEqual([200, 409]);
     expect(harness.contactWrites).toBe(1);
-    expect(harness.row?.confirmation_state).toBe('confirmed');
+    expect(harness.active?.sign).toBe('libra');
   });
 
-  it('invalidates an outstanding link before unsubscribe touches the provider', async () => {
+  it('makes unsubscribe invalidate active consent and every outstanding request before provider cleanup', async () => {
     configure();
-    const harness = createHarness();
-    const token = await requestSunLink(harness, 'aries');
-    const recipientHash = dailySunRecipientHash('person@example.com');
+    const harness = createHarness(confirmed('aries'));
+    const { token } = await requestSunLink(harness, 'libra');
     harness.segments.add(SEGMENTS.aries);
     const unsubscribeToken = createDailyUnsubscribeToken({
       kind: 'sun',
       contactId: CONTACT_ID,
-      recipientHash,
+      recipientHash: dailySunRecipientHash('person@example.com'),
     }, SECRET);
 
     const unsubscribed = responseRecorder();
     await unsubscribeHandler({ method: 'POST', query: { token: unsubscribeToken } }, unsubscribed);
     expect(unsubscribed.statusCode).toBe(200);
-    expect(harness.row).toMatchObject({
-      confirmation_token_hash: null,
-      confirmation_state: 'revoked',
-      confirmed_at: null,
-    });
+    expect(harness.active).toBeNull();
+    expect(harness.request).toBeNull();
     expect(harness.segments.has(SEGMENTS.aries)).toBe(false);
 
     const stale = responseRecorder();
     await confirmHandler({ method: 'POST', body: { token } }, stale);
     expect(stale.statusCode).toBe(409);
+  });
+
+  it('preserves the active sign until a signed switch is confirmed', async () => {
+    configure();
+    const harness = createHarness(confirmed('aries'));
+    harness.segments.add(SEGMENTS.aries);
+    const { token } = await requestSunLink(harness, 'libra');
+    expect(harness.active?.sign).toBe('aries');
+    expect(harness.request).toMatchObject({ requested_sign: 'libra', request_kind: 'sign_change' });
+
+    const scanner = responseRecorder();
+    await confirmHandler({ method: 'GET', query: { token } }, scanner);
+    expect(scanner.statusCode).toBe(200);
+    expect(scanner.body).toContain('already gets the daily as Aries. Switch it to Libra?');
+    expect(scanner.body).toContain('Switch to Libra');
+    expect(scanner.body).toContain('Keep Aries');
+    expect(scanner.body.match(/method="post"/gu)).toHaveLength(2);
+    expect(harness.active?.sign).toBe('aries');
+
+    const switched = responseRecorder();
+    await confirmHandler({ method: 'POST', body: { token, decision: 'switch' } }, switched);
+    expect(switched.statusCode).toBe(200);
+    expect(harness.active?.sign).toBe('libra');
+    expect(harness.request).toBeNull();
+    expect(harness.segments).toEqual(new Set([SEGMENTS.libra]));
+  });
+
+  it('keeps the old sign through a signed POST without touching the provider', async () => {
+    configure();
+    const harness = createHarness(confirmed('aries'));
+    const { token } = await requestSunLink(harness, 'libra');
+    const kept = responseRecorder();
+    await confirmHandler({ method: 'POST', body: { token, decision: 'keep' } }, kept);
+    expect(kept.statusCode).toBe(200);
+    expect(harness.active?.sign).toBe('aries');
+    expect(harness.request).toBeNull();
     expect(harness.contactWrites).toBe(0);
   });
 
-  it('does not overwrite confirmed consent or send another DOI, deferring sign changes to managed UX', async () => {
+  it('does not let an unauthenticated same-sign submit cancel a pending switch', async () => {
     configure();
-    const recipientHash = dailySunRecipientHash('person@example.com');
-    const confirmedAt = '2026-07-20T00:00:00.000Z';
-    const harness = createHarness({
-      recipient_hash: recipientHash,
-      sign: 'aries',
-      confirmation_token_hash: null,
-      confirmation_state: 'confirmed',
-      confirmed_at: confirmedAt,
-    });
-    vi.stubGlobal('fetch', harness.fetcher);
+    const harness = createHarness(confirmed('aries'));
+    const { token } = await requestSunLink(harness, 'libra');
+    const requestSnapshot = { ...harness.request! };
+    const emailsBefore = harness.confirmationEmails.length;
     const response = responseRecorder();
     await subscribeHandler({
-      method: 'POST',
-      headers: SITE_HEADERS,
-      body: { email: 'person@example.com', sign: 'libra', locale: 'en' },
+      method: 'POST', headers: SITE_HEADERS,
+      body: { email: 'person@example.com', sign: 'aries', locale: 'en' },
     }, response);
-
     expect(response.statusCode).toBe(200);
-    expect(harness.confirmationEmails).toHaveLength(0);
-    expect(harness.row).toEqual({
-      recipient_hash: recipientHash,
-      sign: 'aries',
-      confirmation_token_hash: null,
-      confirmation_state: 'confirmed',
-      confirmed_at: confirmedAt,
-    });
+    expect(JSON.parse(response.body)).toEqual({ ok: true, pending: true });
+    expect(waitUntilTasks).toHaveLength(1);
+    await flushWaitUntil();
+    expect(harness.confirmationEmails).toHaveLength(emailsBefore);
+    expect(harness.request).toEqual(requestSnapshot);
+    expect(harness.request?.confirmation_token_hash).toBe(dailySunTokenHash(token));
   });
 
-  it('releases a provider failure so the same current link can be retried', async () => {
+  it('keeps no-JS success truthful and indistinguishable across new and already-active addresses', async () => {
+    configure();
+    const request = {
+      method: 'POST',
+      headers: { origin: 'https://zodiacs.org', host: 'zodiacs.org' },
+      body: { email: 'person@example.com', sign: 'aries', locale: 'en' },
+    };
+    const freshHarness = createHarness();
+    vi.stubGlobal('fetch', freshHarness.fetcher);
+    const fresh = responseRecorder();
+    await subscribeHandler(request, fresh);
+    expect(waitUntilTasks).toHaveLength(1);
+    await flushWaitUntil();
+
+    const activeHarness = createHarness(confirmed('aries'));
+    vi.stubGlobal('fetch', activeHarness.fetcher);
+    const alreadyActive = responseRecorder();
+    await subscribeHandler(request, alreadyActive);
+    expect(waitUntilTasks).toHaveLength(1);
+    await flushWaitUntil();
+
+    expect(fresh.statusCode).toBe(200);
+    expect(alreadyActive.statusCode).toBe(200);
+    expect(fresh.body).toBe(alreadyActive.body);
+    expect(fresh.body).toContain('If confirmation or a change is needed, check your inbox.');
+    expect(freshHarness.confirmationEmails).toHaveLength(1);
+    expect(activeHarness.confirmationEmails).toHaveLength(0);
+  });
+
+  it('commits consent before provider reconciliation and repairs a transient provider failure', async () => {
     configure();
     const harness = createHarness();
-    const token = await requestSunLink(harness, 'libra');
+    const { token } = await requestSunLink(harness, 'libra');
     harness.failContactWrite();
-    const failed = responseRecorder();
-    await confirmHandler({ method: 'POST', body: { token } }, failed);
-    expect(failed.statusCode).toBe(502);
-    expect(harness.row?.confirmation_state).toBe('pending');
+    const response = responseRecorder();
+    await confirmHandler({ method: 'POST', body: { token } }, response);
+    expect(response.statusCode).toBe(200);
+    expect(harness.active?.sign).toBe('libra');
+    expect(harness.request).toBeNull();
+    expect(harness.contactWrites).toBe(2);
+    const completion = harness.callOrder.indexOf('db:complete');
+    const firstProviderWrite = harness.callOrder.indexOf('provider:contact');
+    expect(completion).toBeGreaterThan(-1);
+    expect(firstProviderWrite).toBeGreaterThan(completion);
+  });
 
-    const retried = responseRecorder();
-    await confirmHandler({ method: 'POST', body: { token } }, retried);
-    expect(retried.statusCode).toBe(200);
-    expect(harness.row?.confirmation_state).toBe('confirmed');
+  it('reclaims a stale confirming lease without accepting the old owner', async () => {
+    configure();
+    const harness = createHarness();
+    const { token } = await requestSunLink(harness, 'libra');
+    harness.makeLeaseStale();
+    const response = responseRecorder();
+    await confirmHandler({ method: 'POST', body: { token } }, response);
+    expect(response.statusCode).toBe(200);
+    expect(harness.active?.sign).toBe('libra');
+    expect(harness.active?.confirmed_by_attempt_id).not.toBe(ATTEMPT_ID);
   });
 });

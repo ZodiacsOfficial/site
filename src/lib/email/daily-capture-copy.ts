@@ -11,7 +11,7 @@ export const DAILY_CAPTURE_EN = {
   changeSign: 'Change',
   submit: 'Start my daily',
   submitting: 'Starting…',
-  success: 'Check your email — nothing starts until you confirm.',
+  success: 'You’re set. If confirmation or a change is needed, check your inbox.',
   missingSign: 'Pick your sign first — the daily is written per sign.',
   invalidEmail: 'That email address doesn’t look complete.',
   error: "Couldn't start the subscription. Please try again.",
