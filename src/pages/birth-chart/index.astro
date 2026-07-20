@@ -1,10 +1,15 @@
 ---
 import Base from '../../layouts/Base.astro';
 import ChartCalculator from '../../islands/ChartCalculator';
+import { PostChartDailyBrief } from '../../islands/PostChartDailyBrief';
 import EmailCapture from '../../components/EmailCapture.astro';
 import EvidenceDisclosure from '../../components/EvidenceDisclosure.astro';
+import { hasDailyChartEmailProvider } from '../../lib/email/daily-config';
 import '../../styles/calculator.css';
 import '../../styles/explorer.css';
+import '../../styles/post-chart-daily.css';
+
+const postChartDailyEnabled = hasDailyChartEmailProvider(process.env);
 
 const faq = [
   {
@@ -77,7 +82,11 @@ const jsonLd = [
     </div>
 
     <ChartCalculator mode="full" client:load />
-    <EmailCapture placement="chart" revealOnChart />
+    <EmailCapture placement="chart" revealOnChart postChartManaged={postChartDailyEnabled}>
+      {postChartDailyEnabled && (
+        <PostChartDailyBrief slot="post-chart" idPrefix="email-chart-en" client:load />
+      )}
+    </EmailCapture>
     <noscript>
       <p>This birth chart calculator needs JavaScript. Enable it and reload to calculate your Sun, Moon, rising sign, planets, and houses in your browser.</p>
     </noscript>

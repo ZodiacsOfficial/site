@@ -6,6 +6,7 @@ import {
   getDailyChartPreference,
   maskDailyEmail,
   pauseDailyChartPreferenceForDeletion,
+  resendDailyChartPreference,
   rememberDailyChartSelection,
   rememberedDailyChartSelection,
   setDailyChartPreference,
@@ -57,6 +58,27 @@ describe('daily chart preference client', () => {
     expect(String(init?.body)).not.toContain('browser-jwt');
   });
 
+  it('resends the server-owned pending request without accepting a chart choice', async () => {
+    const fetcher = vi.fn(async (
+      _input: Parameters<typeof fetch>[0],
+      _init?: Parameters<typeof fetch>[1],
+    ) => new Response(JSON.stringify({
+        ok: true,
+        pending: true,
+        requestId: 'replacement',
+      }), { status: 200 }));
+
+    await expect(resendDailyChartPreference(
+      'browser-jwt',
+      fetcher as unknown as typeof fetch,
+    )).resolves.toEqual({ ok: true, pending: true, requestId: 'replacement' });
+    const [, init] = fetcher.mock.calls[0];
+    expect(init?.method).toBe('POST');
+    expect(JSON.parse(String(init?.body))).toEqual({ action: 'resend' });
+    expect(String(init?.body)).not.toContain(chartId);
+    expect(init?.headers).toMatchObject({ Authorization: 'Bearer browser-jwt' });
+  });
+
   it('recognizes persisted pending and paused server states', async () => {
     const pending = vi.fn(async () => new Response(JSON.stringify({
       enabled: false,
@@ -86,6 +108,54 @@ describe('daily chart preference client', () => {
       enabled: true,
       paused: true,
       chartId: null,
+    });
+  });
+
+  it('keeps a changed Auth address out of the active state until it confirms', async () => {
+    const fetcher = vi.fn(async () => new Response(JSON.stringify({
+      enabled: false,
+      pending: false,
+      paused: false,
+      requiresConfirmation: true,
+      chartId,
+      timezone: 'UTC',
+      confirmedAt: '2026-07-20T08:00:00.000Z',
+      maskedEmail: null,
+    }), { status: 200 }));
+    await expect(getDailyChartPreference(
+      'token',
+      fetcher as unknown as typeof fetch,
+    )).resolves.toMatchObject({
+      enabled: false,
+      requiresConfirmation: true,
+      chartId,
+    });
+  });
+
+  it('parses a deleted-chart pause after the account email changes', async () => {
+    const fetcher = vi.fn(async () => new Response(JSON.stringify({
+      enabled: false,
+      pending: false,
+      paused: true,
+      requiresConfirmation: true,
+      chartId: null,
+      timezone: 'UTC',
+      confirmedAt: '2026-07-20T08:00:00.000Z',
+      maskedEmail: null,
+    }), { status: 200 }));
+
+    await expect(getDailyChartPreference(
+      'token',
+      fetcher as unknown as typeof fetch,
+    )).resolves.toEqual({
+      enabled: false,
+      pending: false,
+      paused: true,
+      requiresConfirmation: true,
+      chartId: null,
+      timezone: 'UTC',
+      confirmedAt: '2026-07-20T08:00:00.000Z',
+      maskedEmail: null,
     });
   });
 

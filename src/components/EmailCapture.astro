@@ -12,6 +12,7 @@ interface Props {
   placement: 'chart' | 'horoscopes' | 'footer';
   revealOnChart?: boolean;
   sign?: string;
+  postChartManaged?: boolean;
 }
 
 const {
@@ -19,6 +20,7 @@ const {
   placement,
   revealOnChart = false,
   sign: requestedSign,
+  postChartManaged: requestedPostChartManaged = false,
 } = Astro.props;
 const locale = normalizeLocale(rawLocale);
 const selectedSignData = SIGNS.find((sign) => sign.slug === requestedSign);
@@ -29,6 +31,7 @@ const selectedSignName = selectedSignData ? signName(selectedSignData, locale) :
 const dailyRequested = locale === 'en' && dailyEmailFeatureEnabled(process.env);
 const daily = dailyRequested && hasDailySunEmailProvider(process.env);
 const enabled = dailyRequested ? daily : hasEmailCaptureProvider(process.env);
+const postChartManaged = daily && placement === 'chart' && requestedPostChartManaged;
 const capture = daily ? {
   kicker: DAILY_CAPTURE_EN.kicker,
   title: placement === 'footer' ? DAILY_CAPTURE_EN.footerTitle : DAILY_CAPTURE_EN.title,
@@ -77,9 +80,11 @@ const id = `email-${placement}-${locale}`;
     data-reveal-on-chart={revealOnChart ? 'true' : undefined}
     data-personalized-sign={selectedSign ? 'true' : undefined}
     data-daily-capture={daily ? 'true' : undefined}
+    data-post-chart-managed={postChartManaged ? 'true' : undefined}
     hidden={revealOnChart}
     aria-labelledby={`${id}-title`}
   >
+    {postChartManaged && <slot name="post-chart" />}
     <div class="email-capture__copy">
       {!(daily && placement === 'footer') && <span class="email-capture__kicker">{capture.kicker}</span>}
       <h2
@@ -173,6 +178,12 @@ const id = `email-${placement}-${locale}`;
       </fieldset>
 
       <p class="email-capture__privacy">{capture.privacy}</p>
+      {postChartManaged && (
+        <p class="email-capture__privacy email-capture__device-note" data-post-chart-device-note hidden>
+          Prefer a brief matched to this exact chart? That exists only for account-synced charts — syncing is always your call, and this chart stays on your device until you make it.{' '}
+          <a href="/profile/#profile-sync">How chart sync works</a>
+        </p>
+      )}
       <p class="email-capture__status" role="status" aria-live="polite" data-email-status></p>
       <span hidden data-success-copy>{capture.success}</span>
       <span hidden data-missing-sign-copy>{capture.missingSign}</span>
@@ -194,6 +205,9 @@ const id = `email-${placement}-${locale}`;
     background: var(--void-1);
   }
   .email-capture[hidden] { display: none; }
+  .email-capture__copy[hidden],
+  .email-capture__form[hidden],
+  .email-capture__device-note[hidden] { display: none; }
   @media (min-width: 860px) {
     .email-capture { grid-template-columns: minmax(180px, 0.7fr) minmax(0, 1.3fr); align-items: start; }
   }
@@ -291,6 +305,16 @@ const id = `email-${placement}-${locale}`;
   .email-capture__sign input:checked ~ .email-capture__sign-name { color: var(--text-2); }
   .email-capture__privacy,
   .email-capture__status { margin: 10px 0 0; color: var(--faint); font-size: 11px; line-height: 1.5; }
+  .email-capture__device-note { max-width: 62ch; }
+  .email-capture__device-note a {
+    color: var(--text-2);
+    text-decoration-color: var(--hair-3);
+    text-underline-offset: 0.18em;
+  }
+  .email-capture__device-note a:focus-visible {
+    outline: 2px solid var(--ink-0);
+    outline-offset: 3px;
+  }
   .email-capture__status:not(:empty) { color: var(--text-2); }
   .email-capture--footer { margin: 0 0 clamp(36px, 6vw, 60px); }
   @media (prefers-reduced-motion: reduce) {

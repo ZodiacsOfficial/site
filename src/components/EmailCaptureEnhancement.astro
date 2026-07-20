@@ -112,7 +112,12 @@
     if (mode !== 'full') return;
     document.querySelectorAll<HTMLElement>('[data-reveal-on-chart="true"]').forEach((surface) => {
       preselectCaptureSign(surface, detail?.sunSign);
-      surface.hidden = false;
+      const managed = surface.dataset.postChartManaged === 'true'
+        && document.documentElement.hasAttribute('data-daily-email-lifecycle');
+      // The Phase 3 controller keeps the optional surface hidden until auth,
+      // sync ownership, and preference reads agree. This prevents an active
+      // subscriber from briefly seeing a second signup form.
+      surface.hidden = managed;
     });
   }
 

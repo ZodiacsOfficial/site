@@ -7,6 +7,7 @@ export interface DailyChartPreference {
   enabled: boolean;
   pending: boolean;
   paused: boolean;
+  requiresConfirmation: boolean;
   chartId: string | null;
   timezone: string | null;
   confirmedAt: string | null;
@@ -66,29 +67,62 @@ export async function getDailyChartPreference(
   const enabled = value.enabled === true;
   const pending = value.pending === true;
   const paused = value.paused === true;
+  const requiresConfirmation = value.requiresConfirmation === true;
   const chartId = typeof value.chartId === 'string' && UUID.test(value.chartId)
     ? value.chartId
     : value.chartId === null ? null : undefined;
   const timezone = typeof value.timezone === 'string' ? value.timezone : null;
   const confirmedAt = typeof value.confirmedAt === 'string' ? value.confirmedAt : null;
   const maskedEmail = typeof value.maskedEmail === 'string' ? value.maskedEmail : null;
-  if (value.enabled === false && !pending && !paused) {
+  if (value.enabled === false && !pending && !paused && !requiresConfirmation) {
     return {
       enabled: false,
       pending: false,
       paused: false,
+      requiresConfirmation: false,
       chartId: null,
       timezone: null,
       confirmedAt: null,
       maskedEmail,
     };
   }
-  if (pending && !enabled && !paused && chartId && timezone) {
-    return { enabled: false, pending: true, paused: false, chartId, timezone, confirmedAt: null, maskedEmail };
+  if (pending && !enabled && !paused && !requiresConfirmation && chartId && timezone) {
+    return {
+      enabled: false,
+      pending: true,
+      paused: false,
+      requiresConfirmation: false,
+      chartId,
+      timezone,
+      confirmedAt: null,
+      maskedEmail,
+    };
   }
-  if (enabled && !pending && timezone && confirmedAt
+  if (enabled && !pending && !requiresConfirmation && timezone && confirmedAt
     && ((paused && chartId === null) || (!paused && typeof chartId === 'string'))) {
-    return { enabled: true, pending: false, paused, chartId, timezone, confirmedAt, maskedEmail };
+    return {
+      enabled: true,
+      pending: false,
+      paused,
+      requiresConfirmation: false,
+      chartId,
+      timezone,
+      confirmedAt,
+      maskedEmail,
+    };
+  }
+  if (!enabled && !pending && requiresConfirmation && timezone && confirmedAt
+    && ((paused && chartId === null) || (!paused && typeof chartId === 'string'))) {
+    return {
+      enabled: false,
+      pending: false,
+      paused,
+      requiresConfirmation: true,
+      chartId,
+      timezone,
+      confirmedAt,
+      maskedEmail: null,
+    };
   }
   throw new DailyChartPreferenceError(502);
 }
@@ -111,6 +145,28 @@ export async function setDailyChartPreference(
   return {
     ok: true,
     pending: value.pending,
+    ...(typeof value.requestId === 'string' ? { requestId: value.requestId } : {}),
+  };
+}
+
+/** Reissues only the server's current pending request; no chart choice crosses from this surface. */
+export async function resendDailyChartPreference(
+  accessToken: string,
+  fetcher: Fetcher = fetch,
+): Promise<DailyChartPreferenceMutation> {
+  const response = await fetcher('/api/email/chart-preference', {
+    method: 'POST',
+    credentials: 'same-origin',
+    headers: bearerHeaders(accessToken, true),
+    body: JSON.stringify({ action: 'resend' }),
+  });
+  const value = await responseJson(response);
+  if (value.ok !== true || value.pending !== true) {
+    throw new DailyChartPreferenceError(502);
+  }
+  return {
+    ok: true,
+    pending: true,
     ...(typeof value.requestId === 'string' ? { requestId: value.requestId } : {}),
   };
 }

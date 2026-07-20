@@ -244,6 +244,54 @@ describe('daily sun confirmation', () => {
 });
 
 describe('daily chart preference', () => {
+  it.each([
+    {
+      name: 'the request is cross-origin',
+      headers: { ...SITE_HEADERS, origin: 'https://attacker.example' },
+      expectedStatus: 403,
+      authStatus: null,
+    },
+    {
+      name: 'the bearer token is missing',
+      headers: { origin: SITE_HEADERS.origin, host: SITE_HEADERS.host },
+      expectedStatus: 401,
+      authStatus: null,
+    },
+    {
+      name: 'the bearer token is invalid',
+      headers: { ...SITE_HEADERS, authorization: 'Bearer invalid_access_token' },
+      expectedStatus: 401,
+      authStatus: 401,
+    },
+  ])('rejects resend before preference or provider access when $name', async ({
+    headers, expectedStatus, authStatus,
+  }) => {
+    configure();
+    const fetcher = vi.fn(async (input: string | URL | Request) => {
+      const url = String(input);
+      if (authStatus === 401 && url.endsWith('/auth/v1/user')) return json({}, 401);
+      throw new Error(`Unexpected request: GET ${url}`);
+    });
+    vi.stubGlobal('fetch', fetcher);
+    const response = responseRecorder();
+
+    await chartPreferenceHandler({
+      method: 'POST', headers, body: { action: 'resend' },
+    }, response);
+
+    expect(response.statusCode).toBe(expectedStatus);
+    const requestedUrls = fetcher.mock.calls.map(([url]) => String(url));
+    expect(requestedUrls.filter((url) => (
+      url.includes('/rest/v1/daily_chart_preferences')
+      || url.startsWith('https://api.resend.com')
+    ))).toEqual([]);
+    if (authStatus === 401) {
+      expect(requestedUrls).toEqual(['https://project.supabase.co/auth/v1/user']);
+    } else {
+      expect(requestedUrls).toEqual([]);
+    }
+  });
+
   it('authenticates, verifies chart ownership, stores only a pending token hash, and sends DOI', async () => {
     configure();
     const fetcher = vi.fn(async (input: string | URL | Request, init?: RequestInit) => {
@@ -288,6 +336,288 @@ describe('daily chart preference', () => {
     expect(emailBody).not.toHaveProperty('html');
   });
 
+  it('does not mislabel a pending request after the account email changes', async () => {
+    configure();
+    const fetcher = vi.fn(async (input: string | URL | Request) => {
+      const url = String(input);
+      if (url.endsWith('/auth/v1/user')) {
+        return json({ id: USER_ID, email: 'new-address@example.com' });
+      }
+      if (url.includes('/rest/v1/daily_chart_preferences?')) {
+        return json([{
+          chart_id: CHART_ID,
+          recipient_hash: RECIPIENT_HASH,
+          confirmation_token_hash: 'a'.repeat(64),
+          timezone: 'UTC',
+          confirmed_at: null,
+        }]);
+      }
+      throw new Error(`Unexpected request: GET ${url}`);
+    });
+    vi.stubGlobal('fetch', fetcher);
+    const response = responseRecorder();
+    await chartPreferenceHandler({ method: 'GET', headers: SITE_HEADERS }, response);
+    expect(response.statusCode).toBe(200);
+    expect(JSON.parse(response.body)).toMatchObject({
+      enabled: false,
+      pending: true,
+      maskedEmail: null,
+    });
+    expect(response.body).not.toContain('new-address');
+    expect(response.body).not.toContain('person@example');
+  });
+
+  it('requires confirmation instead of claiming delivery after the account email changes', async () => {
+    configure();
+    const fetcher = vi.fn(async (input: string | URL | Request) => {
+      const url = String(input);
+      if (url.endsWith('/auth/v1/user')) {
+        return json({ id: USER_ID, email: 'new-address@example.com' });
+      }
+      if (url.includes('/rest/v1/daily_chart_preferences?')) {
+        return json([{
+          chart_id: CHART_ID,
+          recipient_hash: RECIPIENT_HASH,
+          confirmation_token_hash: null,
+          timezone: 'UTC',
+          confirmed_at: '2026-07-01T00:00:00.000Z',
+        }]);
+      }
+      throw new Error(`Unexpected request: GET ${url}`);
+    });
+    vi.stubGlobal('fetch', fetcher);
+    const response = responseRecorder();
+    await chartPreferenceHandler({ method: 'GET', headers: SITE_HEADERS }, response);
+    expect(response.statusCode).toBe(200);
+    expect(JSON.parse(response.body)).toMatchObject({
+      enabled: false,
+      pending: false,
+      requiresConfirmation: true,
+      chartId: CHART_ID,
+      maskedEmail: null,
+    });
+    expect(response.body).not.toContain('new-address');
+    expect(response.body).not.toContain('person@example');
+  });
+
+  it('keeps a deleted-chart pause authoritative after the account email changes', async () => {
+    configure();
+    const fetcher = vi.fn(async (input: string | URL | Request) => {
+      const url = String(input);
+      if (url.endsWith('/auth/v1/user')) {
+        return json({ id: USER_ID, email: 'new-address@example.com' });
+      }
+      if (url.includes('/rest/v1/daily_chart_preferences?')) {
+        return json([{
+          chart_id: null,
+          recipient_hash: RECIPIENT_HASH,
+          confirmation_token_hash: null,
+          timezone: 'UTC',
+          confirmed_at: '2026-07-01T00:00:00.000Z',
+        }]);
+      }
+      throw new Error(`Unexpected request: GET ${url}`);
+    });
+    vi.stubGlobal('fetch', fetcher);
+    const response = responseRecorder();
+
+    await chartPreferenceHandler({ method: 'GET', headers: SITE_HEADERS }, response);
+
+    expect(response.statusCode).toBe(200);
+    expect(JSON.parse(response.body)).toMatchObject({
+      enabled: false,
+      pending: false,
+      paused: true,
+      requiresConfirmation: true,
+      chartId: null,
+      timezone: 'UTC',
+      confirmedAt: '2026-07-01T00:00:00.000Z',
+      maskedEmail: null,
+    });
+  });
+
+  it('resends only the current pending server selection with a conditional replacement', async () => {
+    configure();
+    const previousTokenHash = 'a'.repeat(64);
+    const fetcher = vi.fn(async (input: string | URL | Request, init?: RequestInit) => {
+      const url = String(input);
+      if (url.endsWith('/auth/v1/user')) return json({ id: USER_ID, email: 'person@example.com' });
+      if (url.includes('/rest/v1/daily_chart_preferences?') && !init?.method) {
+        return json([{
+          chart_id: CHART_ID,
+          recipient_hash: RECIPIENT_HASH,
+          confirmation_token_hash: previousTokenHash,
+          timezone: 'America/New_York',
+          confirmed_at: null,
+        }]);
+      }
+      if (url.includes('/rest/v1/charts?') && !init?.method) {
+        return json([{ id: CHART_ID, payload: { name: 'My chart' } }]);
+      }
+      if (url.includes('/rest/v1/daily_chart_preferences?') && init?.method === 'PATCH') {
+        return json([{}]);
+      }
+      if (url === 'https://api.resend.com/emails' && init?.method === 'POST') {
+        return json({ id: 'email_resend' });
+      }
+      throw new Error(`Unexpected request: ${init?.method ?? 'GET'} ${url}`);
+    });
+    vi.stubGlobal('fetch', fetcher);
+    const response = responseRecorder();
+    await chartPreferenceHandler({
+      method: 'POST',
+      headers: SITE_HEADERS,
+      body: { action: 'resend', chartId: 'ignored-by-server' },
+    }, response);
+
+    expect(response.statusCode).toBe(200);
+    expect(JSON.parse(response.body)).toMatchObject({ ok: true, pending: true });
+    const replacement = fetcher.mock.calls.find(([url, init]) => (
+      String(url).includes('/daily_chart_preferences?') && init?.method === 'PATCH'
+    ));
+    expect(String(replacement?.[0])).toContain(`confirmation_token_hash=eq.${previousTokenHash}`);
+    expect(String(replacement?.[0])).toContain('updated_at=lte.');
+    const replacementBody = JSON.parse(String(replacement?.[1]?.body));
+    expect(replacementBody).toMatchObject({
+      chart_id: CHART_ID,
+      recipient_hash: RECIPIENT_HASH,
+      timezone: 'America/New_York',
+    });
+    expect(replacementBody.confirmation_token_hash).toMatch(/^[0-9a-f]{64}$/u);
+    expect(String(replacement?.[1]?.body)).not.toContain('@');
+    const email = fetcher.mock.calls.find(([url]) => String(url) === 'https://api.resend.com/emails');
+    expect(JSON.parse(String(email?.[1]?.body))).toMatchObject({
+      to: ['person@example.com'],
+    });
+  });
+
+  it('does not revive a pending request when confirmation wins the resend race', async () => {
+    configure();
+    let preferenceReads = 0;
+    const fetcher = vi.fn(async (input: string | URL | Request, init?: RequestInit) => {
+      const url = String(input);
+      if (url.endsWith('/auth/v1/user')) return json({ id: USER_ID, email: 'person@example.com' });
+      if (url.includes('/rest/v1/daily_chart_preferences?') && !init?.method) {
+        preferenceReads += 1;
+        if (preferenceReads > 1) {
+          return json([{
+            chart_id: CHART_ID,
+            recipient_hash: RECIPIENT_HASH,
+            confirmation_token_hash: null,
+            timezone: 'UTC',
+            confirmed_at: '2026-07-20T00:00:00.000Z',
+          }]);
+        }
+        return json([{
+          chart_id: CHART_ID,
+          recipient_hash: RECIPIENT_HASH,
+          confirmation_token_hash: 'a'.repeat(64),
+          timezone: 'UTC',
+          confirmed_at: null,
+        }]);
+      }
+      if (url.includes('/rest/v1/charts?') && !init?.method) {
+        return json([{ id: CHART_ID, payload: { name: 'My chart' } }]);
+      }
+      if (url.includes('/rest/v1/daily_chart_preferences?') && init?.method === 'PATCH') {
+        return json([]);
+      }
+      throw new Error(`Unexpected request: ${init?.method ?? 'GET'} ${url}`);
+    });
+    vi.stubGlobal('fetch', fetcher);
+    const response = responseRecorder();
+    await chartPreferenceHandler({
+      method: 'POST', headers: SITE_HEADERS, body: { action: 'resend' },
+    }, response);
+    expect(response.statusCode).toBe(409);
+    expect(JSON.parse(response.body)).toEqual({ error: 'not_pending' });
+    expect(fetcher.mock.calls.some(([url]) => String(url) === 'https://api.resend.com/emails')).toBe(false);
+  });
+
+  it('debounces a still-current pending resend atomically', async () => {
+    configure();
+    const tokenHash = 'a'.repeat(64);
+    const fetcher = vi.fn(async (input: string | URL | Request, init?: RequestInit) => {
+      const url = String(input);
+      if (url.endsWith('/auth/v1/user')) return json({ id: USER_ID, email: 'person@example.com' });
+      if (url.includes('/rest/v1/daily_chart_preferences?') && !init?.method) {
+        return json([{
+          chart_id: CHART_ID,
+          recipient_hash: RECIPIENT_HASH,
+          confirmation_token_hash: tokenHash,
+          timezone: 'UTC',
+          confirmed_at: null,
+        }]);
+      }
+      if (url.includes('/rest/v1/charts?') && !init?.method) {
+        return json([{ id: CHART_ID, payload: { name: 'My chart' } }]);
+      }
+      if (url.includes('/rest/v1/daily_chart_preferences?') && init?.method === 'PATCH') {
+        return json([]);
+      }
+      throw new Error(`Unexpected request: ${init?.method ?? 'GET'} ${url}`);
+    });
+    vi.stubGlobal('fetch', fetcher);
+    const response = responseRecorder();
+    await chartPreferenceHandler({
+      method: 'POST', headers: SITE_HEADERS, body: { action: 'resend' },
+    }, response);
+    expect(response.statusCode).toBe(429);
+    expect(JSON.parse(response.body)).toEqual({ error: 'rate_limited' });
+    expect(response.headers.get('Retry-After')).toBe('60');
+    expect(fetcher.mock.calls.some(([url]) => String(url) === 'https://api.resend.com/emails')).toBe(false);
+  });
+
+  it('restores the complete older pending request when resend delivery fails', async () => {
+    configure();
+    const oldTokenHash = 'a'.repeat(64);
+    let patchCount = 0;
+    const fetcher = vi.fn(async (input: string | URL | Request, init?: RequestInit) => {
+      const url = String(input);
+      if (url.endsWith('/auth/v1/user')) return json({ id: USER_ID, email: 'new-address@example.com' });
+      if (url.includes('/rest/v1/daily_chart_preferences?') && !init?.method) {
+        return json([{
+          chart_id: CHART_ID,
+          recipient_hash: RECIPIENT_HASH,
+          confirmation_token_hash: oldTokenHash,
+          timezone: 'UTC',
+          confirmed_at: null,
+        }]);
+      }
+      if (url.includes('/rest/v1/charts?') && !init?.method) {
+        return json([{ id: CHART_ID, payload: { name: 'My chart' } }]);
+      }
+      if (url.includes('/rest/v1/daily_chart_preferences?') && init?.method === 'PATCH') {
+        patchCount += 1;
+        return json([{}]);
+      }
+      if (url === 'https://api.resend.com/emails' && init?.method === 'POST') {
+        return json({ error: 'rejected' }, 422);
+      }
+      throw new Error(`Unexpected request: ${init?.method ?? 'GET'} ${url}`);
+    });
+    vi.stubGlobal('fetch', fetcher);
+    const response = responseRecorder();
+    await chartPreferenceHandler({
+      method: 'POST', headers: SITE_HEADERS, body: { action: 'resend' },
+    }, response);
+    expect(response.statusCode).toBe(502);
+    const patches = fetcher.mock.calls.filter(([url, init]) => (
+      String(url).includes('/daily_chart_preferences?') && init?.method === 'PATCH'
+    ));
+    expect(patchCount).toBe(2);
+    const replacementBody = JSON.parse(String(patches[0]?.[1]?.body));
+    const restoreBody = JSON.parse(String(patches[1]?.[1]?.body));
+    expect(replacementBody.recipient_hash).not.toBe(RECIPIENT_HASH);
+    expect(restoreBody).toMatchObject({
+      chart_id: CHART_ID,
+      recipient_hash: RECIPIENT_HASH,
+      confirmation_token_hash: oldTokenHash,
+      timezone: 'UTC',
+    });
+    expect(String(patches[1]?.[0])).toContain(`confirmation_token_hash=eq.${replacementBody.confirmation_token_hash}`);
+  });
+
   it('applies chart and timezone changes immediately after chart-tier consent is confirmed', async () => {
     configure();
     const fetcher = vi.fn(async (input: string | URL | Request, init?: RequestInit) => {
@@ -305,8 +635,8 @@ describe('daily chart preference', () => {
           confirmed_at: '2026-07-01T00:00:00.000Z',
         }]);
       }
-      if (url.includes('/rest/v1/daily_chart_preferences?') && init?.method === 'POST') {
-        return json({}, 201);
+      if (url.includes('/rest/v1/daily_chart_preferences?') && init?.method === 'PATCH') {
+        return json([{}]);
       }
       throw new Error(`Unexpected request: ${init?.method ?? 'GET'} ${url}`);
     });
@@ -323,7 +653,51 @@ describe('daily chart preference', () => {
       pending: false,
       preference: { chartId: CHART_ID, timezone: 'Asia/Bangkok', paused: false },
     });
+    const update = fetcher.mock.calls.find(([url, init]) => (
+      String(url).includes('/daily_chart_preferences?') && init?.method === 'PATCH'
+    ));
+    expect(String(update?.[0])).toContain('chart_id=is.null');
+    expect(String(update?.[0])).toContain('confirmed_at=eq.2026-07-01T00%3A00%3A00.000Z');
+    expect(JSON.parse(String(update?.[1]?.body))).toEqual({
+      chart_id: CHART_ID,
+      timezone: 'Asia/Bangkok',
+    });
     expect(fetcher.mock.calls.some(([url]) => String(url) === 'https://api.resend.com/emails')).toBe(false);
+  });
+
+  it('does not recreate confirmed consent when opt-out wins a preference edit race', async () => {
+    configure();
+    const fetcher = vi.fn(async (input: string | URL | Request, init?: RequestInit) => {
+      const url = String(input);
+      if (url.endsWith('/auth/v1/user')) return json({ id: USER_ID, email: 'person@example.com' });
+      if (url.includes('/rest/v1/charts?')) {
+        return json([{ id: CHART_ID, payload: { name: 'My chart' } }]);
+      }
+      if (url.includes('/rest/v1/daily_chart_preferences?') && !init?.method) {
+        return json([{
+          chart_id: CHART_ID,
+          recipient_hash: RECIPIENT_HASH,
+          confirmation_token_hash: null,
+          timezone: 'UTC',
+          confirmed_at: '2026-07-01T00:00:00.000Z',
+        }]);
+      }
+      if (url.includes('/rest/v1/daily_chart_preferences?') && init?.method === 'PATCH') {
+        return json([]);
+      }
+      throw new Error(`Unexpected request: ${init?.method ?? 'GET'} ${url}`);
+    });
+    vi.stubGlobal('fetch', fetcher);
+    const response = responseRecorder();
+    await chartPreferenceHandler({
+      method: 'POST', headers: SITE_HEADERS,
+      body: { chartId: CHART_ID, timezone: 'Asia/Bangkok' },
+    }, response);
+    expect(response.statusCode).toBe(409);
+    expect(JSON.parse(response.body)).toEqual({ error: 'preference_changed' });
+    expect(fetcher.mock.calls.some(([url, init]) => (
+      String(url).includes('/daily_chart_preferences?') && init?.method === 'POST'
+    ))).toBe(false);
   });
 
   it('requires fresh confirmation instead of carrying chart consent to a changed account email', async () => {
@@ -346,8 +720,8 @@ describe('daily chart preference', () => {
           confirmed_at: '2026-07-01T00:00:00.000Z',
         }]);
       }
-      if (url.includes('/rest/v1/daily_chart_preferences?') && init?.method === 'POST') {
-        return json({}, 201);
+      if (url.includes('/rest/v1/daily_chart_preferences?') && init?.method === 'PATCH') {
+        return json([{}]);
       }
       if (url === 'https://api.resend.com/emails' && init?.method === 'POST') {
         return json({ id: 'email_changed_address' });
@@ -365,19 +739,67 @@ describe('daily chart preference', () => {
     expect(response.statusCode).toBe(200);
     expect(JSON.parse(response.body)).toMatchObject({ ok: true, pending: true });
     const preferenceWrite = fetcher.mock.calls.find(([url, init]) => (
-      String(url).includes('/daily_chart_preferences?') && init?.method === 'POST'
+      String(url).includes('/daily_chart_preferences?') && init?.method === 'PATCH'
     ));
+    expect(String(preferenceWrite?.[0])).toContain(`chart_id=eq.${CHART_ID}`);
+    expect(String(preferenceWrite?.[0])).toContain(`recipient_hash=eq.${RECIPIENT_HASH}`);
+    expect(String(preferenceWrite?.[0])).toContain('confirmation_token_hash=is.null');
+    expect(String(preferenceWrite?.[0])).toContain('timezone=eq.UTC');
+    expect(String(preferenceWrite?.[0])).toContain('confirmed_at=eq.2026-07-01T00%3A00%3A00.000Z');
     expect(JSON.parse(String(preferenceWrite?.[1]?.body))).toMatchObject({
       recipient_hash: nextHash,
       confirmed_at: null,
       confirmation_token_hash: expect.stringMatching(/^[0-9a-f]{64}$/u),
     });
+    expect(fetcher.mock.calls.some(([url, init]) => (
+      String(url).includes('/daily_chart_preferences?') && init?.method === 'POST'
+    ))).toBe(false);
     const confirmationEmail = fetcher.mock.calls.find(([url]) => (
       String(url) === 'https://api.resend.com/emails'
     ));
     expect(JSON.parse(String(confirmationEmail?.[1]?.body))).toMatchObject({
       to: ['new-address@example.com'],
     });
+  });
+
+  it('does not recreate consent when Stop wins a changed-recipient confirmation race', async () => {
+    configure();
+    const fetcher = vi.fn(async (input: string | URL | Request, init?: RequestInit) => {
+      const url = String(input);
+      if (url.endsWith('/auth/v1/user')) {
+        return json({ id: USER_ID, email: 'new-address@example.com' });
+      }
+      if (url.includes('/rest/v1/charts?')) {
+        return json([{ id: CHART_ID, payload: { name: 'My chart' } }]);
+      }
+      if (url.includes('/rest/v1/daily_chart_preferences?') && !init?.method) {
+        return json([{
+          chart_id: CHART_ID,
+          recipient_hash: RECIPIENT_HASH,
+          confirmation_token_hash: null,
+          timezone: 'UTC',
+          confirmed_at: '2026-07-01T00:00:00.000Z',
+        }]);
+      }
+      if (url.includes('/rest/v1/daily_chart_preferences?') && init?.method === 'PATCH') {
+        return json([]);
+      }
+      throw new Error(`Unexpected request: ${init?.method ?? 'GET'} ${url}`);
+    });
+    vi.stubGlobal('fetch', fetcher);
+    const response = responseRecorder();
+
+    await chartPreferenceHandler({
+      method: 'POST', headers: SITE_HEADERS,
+      body: { chartId: CHART_ID, timezone: 'Asia/Bangkok' },
+    }, response);
+
+    expect(response.statusCode).toBe(409);
+    expect(JSON.parse(response.body)).toEqual({ error: 'preference_changed' });
+    expect(fetcher.mock.calls.some(([url, init]) => (
+      String(url).includes('/daily_chart_preferences?') && init?.method === 'POST'
+    ))).toBe(false);
+    expect(fetcher.mock.calls.some(([url]) => String(url) === 'https://api.resend.com/emails')).toBe(false);
   });
 
   it('keeps authenticated preference revocation available while sending is off', async () => {

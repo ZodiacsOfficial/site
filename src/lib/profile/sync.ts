@@ -203,6 +203,13 @@ async function syncProfile(): Promise<boolean> {
     if (deleteChartsError) throw deleteChartsError;
   }
 
+  // Data-free completion signal for optional account-aware surfaces. Local
+  // profile writes fire before their cloud upsert; consumers that require
+  // proven RLS ownership must re-read only after the sync has fully succeeded.
+  if (typeof window !== 'undefined') {
+    window.dispatchEvent(new Event('zodiacs:profile-synced'));
+  }
+
   return true;
 }
 

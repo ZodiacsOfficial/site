@@ -221,6 +221,167 @@ export async function savePendingDailyChartPreference(
   if (!response.ok) throw new Error(`Daily chart confirmation request write failed (${response.status})`);
 }
 
+/**
+ * Replaces only the pending request the caller just inspected. A concurrent
+ * confirmation, cancellation, deletion, or resend makes the conditional
+ * update affect zero rows instead of silently changing a newer preference.
+ */
+export async function replacePendingDailyChartPreference(
+  userId: string,
+  previousConfirmationTokenHash: string,
+  chartId: string,
+  recipientHash: string,
+  confirmationTokenHash: string,
+  timezone: string,
+  options: {
+    notUpdatedAfter?: string;
+    env?: Environment;
+    fetcher?: Fetch;
+  } = {},
+): Promise<boolean> {
+  const env = options.env ?? process.env;
+  const fetcher = options.fetcher ?? fetch;
+  if (!UUID.test(userId)
+    || !UUID.test(chartId)
+    || !HASH.test(previousConfirmationTokenHash)
+    || !HASH.test(recipientHash)
+    || !HASH.test(confirmationTokenHash)) {
+    throw new Error('Pending daily chart replacement identifiers are invalid.');
+  }
+  const query = new URLSearchParams({
+    user_id: `eq.${userId}`,
+    confirmation_token_hash: `eq.${previousConfirmationTokenHash}`,
+    confirmed_at: 'is.null',
+  });
+  if (options.notUpdatedAfter) {
+    const cutoff = new Date(options.notUpdatedAfter);
+    if (!Number.isFinite(cutoff.getTime())) {
+      throw new Error('Pending daily chart replacement cutoff is invalid.');
+    }
+    query.set('updated_at', `lte.${cutoff.toISOString()}`);
+  }
+  const response = await fetcher(
+    `${supabaseOrigin(env)}/rest/v1/daily_chart_preferences?${query}`,
+    {
+      method: 'PATCH',
+      headers: serviceHeaders(env, 'return=representation'),
+      body: JSON.stringify({
+        chart_id: chartId,
+        recipient_hash: recipientHash,
+        confirmation_token_hash: confirmationTokenHash,
+        timezone,
+      }),
+    },
+  );
+  if (!response.ok) throw new Error(`Pending daily chart replacement failed (${response.status})`);
+  const rows = await response.json() as unknown;
+  return Array.isArray(rows) && rows.length === 1;
+}
+
+/**
+ * Changes a confirmed chart preference only if the exact row inspected by the
+ * request still exists. A concurrent stop, unsubscribe, or newer edit wins;
+ * this update never recreates confirmed consent with an upsert.
+ */
+export async function updateConfirmedDailyChartPreference(
+  userId: string,
+  previousChartId: string | null,
+  recipientHash: string,
+  previousTimezone: string,
+  confirmedAt: string,
+  chartId: string,
+  timezone: string,
+  env: Environment = process.env,
+  fetcher: Fetch = fetch,
+): Promise<boolean> {
+  if (!UUID.test(userId)
+    || (previousChartId !== null && !UUID.test(previousChartId))
+    || !UUID.test(chartId)
+    || !HASH.test(recipientHash)
+    || !previousTimezone
+    || !timezone
+    || !Number.isFinite(new Date(confirmedAt).getTime())) {
+    throw new Error('Confirmed daily chart update identifiers are invalid.');
+  }
+  const query = new URLSearchParams({
+    user_id: `eq.${userId}`,
+    chart_id: previousChartId === null ? 'is.null' : `eq.${previousChartId}`,
+    recipient_hash: `eq.${recipientHash}`,
+    confirmation_token_hash: 'is.null',
+    timezone: `eq.${previousTimezone}`,
+    confirmed_at: `eq.${confirmedAt}`,
+  });
+  const response = await fetcher(
+    `${supabaseOrigin(env)}/rest/v1/daily_chart_preferences?${query}`,
+    {
+      method: 'PATCH',
+      headers: serviceHeaders(env, 'return=representation'),
+      body: JSON.stringify({ chart_id: chartId, timezone }),
+    },
+  );
+  if (!response.ok) throw new Error(`Confirmed daily chart update failed (${response.status})`);
+  const rows = await response.json() as unknown;
+  return Array.isArray(rows) && rows.length === 1;
+}
+
+/**
+ * Moves an exact confirmed preference to a fresh recipient's pending DOI.
+ * A concurrent stop, unsubscribe, deletion, or edit affects the match and
+ * therefore wins instead of being recreated by an upsert.
+ */
+export async function replaceConfirmedDailyChartPreferenceWithPending(
+  userId: string,
+  previousChartId: string | null,
+  previousRecipientHash: string,
+  previousTimezone: string,
+  previousConfirmedAt: string,
+  chartId: string,
+  recipientHash: string,
+  confirmationTokenHash: string,
+  timezone: string,
+  env: Environment = process.env,
+  fetcher: Fetch = fetch,
+): Promise<boolean> {
+  if (!UUID.test(userId)
+    || (previousChartId !== null && !UUID.test(previousChartId))
+    || !UUID.test(chartId)
+    || !HASH.test(previousRecipientHash)
+    || !HASH.test(recipientHash)
+    || !HASH.test(confirmationTokenHash)
+    || !previousTimezone
+    || !timezone
+    || !Number.isFinite(new Date(previousConfirmedAt).getTime())) {
+    throw new Error('Confirmed daily chart replacement identifiers are invalid.');
+  }
+  const query = new URLSearchParams({
+    user_id: `eq.${userId}`,
+    chart_id: previousChartId === null ? 'is.null' : `eq.${previousChartId}`,
+    recipient_hash: `eq.${previousRecipientHash}`,
+    confirmation_token_hash: 'is.null',
+    timezone: `eq.${previousTimezone}`,
+    confirmed_at: `eq.${previousConfirmedAt}`,
+  });
+  const response = await fetcher(
+    `${supabaseOrigin(env)}/rest/v1/daily_chart_preferences?${query}`,
+    {
+      method: 'PATCH',
+      headers: serviceHeaders(env, 'return=representation'),
+      body: JSON.stringify({
+        chart_id: chartId,
+        recipient_hash: recipientHash,
+        confirmation_token_hash: confirmationTokenHash,
+        timezone,
+        confirmed_at: null,
+      }),
+    },
+  );
+  if (!response.ok) {
+    throw new Error(`Confirmed daily chart replacement failed (${response.status})`);
+  }
+  const rows = await response.json() as unknown;
+  return Array.isArray(rows) && rows.length === 1;
+}
+
 export async function confirmDailyChartPreference(
   userId: string,
   chartId: string,

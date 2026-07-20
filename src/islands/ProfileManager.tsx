@@ -24,6 +24,7 @@ import {
   pauseDailyChartPreferenceForDeletion,
   rememberDailyChartSelection,
   rememberedDailyChartSelection,
+  resendDailyChartPreference,
   setDailyChartPreference,
   type DailyChartPreference,
 } from '../lib/profile/daily-email-client';
@@ -85,9 +86,13 @@ const PF_DAILY_COPY = {
   enroll: 'Start my daily brief',
   pendingTitle: 'Confirm from your inbox.',
   pendingBody: (maskedEmail: string) => `We sent a link to ${maskedEmail}. The brief begins after you confirm — until then, nothing is sent.`,
+  pendingAddressChanged: 'A confirmation is still pending. Resend the link to your current account email, then confirm it to begin the brief.',
   pendingResend: 'Resend the link',
   pendingAgain: 'Another confirmation link is on its way. The newest link is the one that works.',
   pendingCancel: 'Cancel this request',
+  reconfirmTitle: 'Confirm your current email.',
+  reconfirmBody: 'Your account email changed. Delivery is paused until you confirm the current address.',
+  reconfirmAction: 'Confirm my current email',
   activeLine: (chartName: string, timezone: string) => `On · reading ${chartName} · arriving around 7:00, ${timezone}`,
   changeChart: 'Change chart',
   chartChanged: (chartName: string) => `Switched. Tomorrow’s brief reads ${chartName}.`,
@@ -259,8 +264,10 @@ export default function ProfileManager({
     setDailyError(false);
   }
 
-  async function loadDailyState(current: Session): Promise<void> {
-    if (!showDailyEmail) return;
+  async function loadDailyState(
+    current: Session,
+  ): Promise<'pending' | 'resolved' | 'unavailable'> {
+    if (!showDailyEmail) return 'unavailable';
     setDailyLoading(true);
     setDailyError(false);
     setDailyMessage('');
@@ -280,20 +287,24 @@ export default function ProfileManager({
         });
         setDailyChartId(preference.chartId);
         setDailyTimezone(preference.timezone);
-      } else if (preference.enabled) {
+        return 'pending';
+      } else if (preference.enabled || preference.requiresConfirmation) {
         rememberDailyChartSelection(preference.paused ? null : preference.chartId);
         setDailyPreference(preference);
         setDailyPending(null);
         setDailyChartId(preference.chartId ?? '');
         setDailyTimezone(preference.timezone ?? 'UTC');
+        return 'resolved';
       } else {
         rememberDailyChartSelection(null);
         setDailyPreference(null);
         setDailyPending(null);
+        return 'resolved';
       }
     } catch {
       setDailyError(true);
       setDailyMessage(PF_DAILY_COPY.error);
+      return 'unavailable';
     } finally {
       setDailyLoading(false);
     }
@@ -468,6 +479,8 @@ export default function ProfileManager({
     : null;
   const dailyPaused = dailyPreference?.paused === true
     || Boolean(dailyPreference && !activeDailyChart);
+  const dailyNeedsConfirmation = dailyPreference?.requiresConfirmation === true
+    && !dailyPaused;
   const dailyTimezoneChoices = useMemo(() => browserTimezoneChoices([
     dailyTimezone,
     ...profile.charts.flatMap((chart) => chart.birth.place?.tz ? [chart.birth.place.tz] : []),
@@ -510,9 +523,27 @@ export default function ProfileManager({
   }
 
   async function onDailyResend() {
-    if (!dailyPending) return;
-    const sent = await saveDailyPreference(dailyPending.chartId, dailyPending.timezone);
-    if (sent) setDailyMessage(PF_DAILY_COPY.pendingAgain);
+    if (!dailyPending || !session) return;
+    setDailyBusy(true);
+    setDailyError(false);
+    setDailyMessage('');
+    try {
+      await resendDailyChartPreference(session.access_token);
+      const freshState = await loadDailyState(session);
+      if (freshState === 'pending') setDailyMessage(PF_DAILY_COPY.pendingAgain);
+    } catch {
+      // A concurrent confirmation/cancellation is resolved by the fresh read;
+      // otherwise retain the pending state and offer an honest retry.
+      const freshState = await loadDailyState(session);
+      if (freshState !== 'resolved') setDailyMessage(PF_DAILY_COPY.error);
+    } finally {
+      setDailyBusy(false);
+    }
+  }
+
+  async function onDailyReconfirm() {
+    if (!dailyPreference?.chartId || !dailyPreference.timezone) return;
+    await saveDailyPreference(dailyPreference.chartId, dailyPreference.timezone);
   }
 
   async function onDailyCancel() {
@@ -673,11 +704,13 @@ export default function ProfileManager({
           <h3>{PF_DAILY_COPY.pendingTitle}</h3>
           <p
             class="pf-daily__truncate"
-            title={dailyPending.maskedEmail ?? maskDailyEmail(session.user.email)}
+            title={dailyPending.maskedEmail ?? undefined}
             role="status"
             aria-live="polite"
           >
-            {PF_DAILY_COPY.pendingBody(dailyPending.maskedEmail ?? maskDailyEmail(session.user.email))}
+            {dailyPending.maskedEmail
+              ? PF_DAILY_COPY.pendingBody(dailyPending.maskedEmail)
+              : PF_DAILY_COPY.pendingAddressChanged}
           </p>
           <div class="pf-daily__actions">
             <button class="btn btn--ghost" type="button" onClick={onDailyResend} disabled={dailyBusy}>
@@ -707,7 +740,24 @@ export default function ProfileManager({
         </div>
       )}
 
-      {!dailyLoading && !dailyError && !dailyPending && dailyPreference && !dailyPaused && activeDailyChart && (
+      {!dailyLoading && !dailyError && !dailyPending && dailyPreference && dailyNeedsConfirmation && (
+        <div class="pf-daily__state">
+          <h3>{PF_DAILY_COPY.reconfirmTitle}</h3>
+          <p role="status" aria-live="polite">{PF_DAILY_COPY.reconfirmBody}</p>
+          <div class="pf-daily__actions">
+            <button
+              class="btn btn--primary"
+              type="button"
+              onClick={() => void onDailyReconfirm()}
+              disabled={dailyBusy}
+            >
+              {PF_DAILY_COPY.reconfirmAction}
+            </button>
+          </div>
+        </div>
+      )}
+
+      {!dailyLoading && !dailyError && !dailyPending && dailyPreference && !dailyPaused && !dailyNeedsConfirmation && activeDailyChart && (
         <div class="pf-daily__state">
           <p class="pf-daily__active pf-daily__truncate" title={activeDailyChart.name}>
             {PF_DAILY_COPY.activeLine(activeDailyChart.name, dailyPreference.timezone ?? 'UTC')}
