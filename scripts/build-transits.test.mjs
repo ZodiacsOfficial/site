@@ -10,6 +10,29 @@ const execFileAsync = promisify(execFile);
 const repositoryRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 let temporaryRoot;
 
+function canonicalTransit(catalog) {
+  // V8 delegates trigonometry to the host libm, so Node on Linux and macOS
+  // can differ below 1e-12 degrees. Normalize only those physical coordinates;
+  // every event, timestamp, sign, body, direction, and ordering remains exact.
+  const coordinate = (value) => Number(value.toFixed(9));
+  return {
+    ...catalog,
+    lunations: catalog.lunations.map((event) => ({
+      ...event,
+      degree: coordinate(event.degree),
+    })),
+    stations: catalog.stations.map((event) => ({
+      ...event,
+      degree: coordinate(event.degree),
+    })),
+    aspects: catalog.aspects.map((event) => ({
+      ...event,
+      aDegree: coordinate(event.aDegree),
+      bDegree: coordinate(event.bDegree),
+    })),
+  };
+}
+
 afterEach(async () => {
   if (temporaryRoot) await rm(temporaryRoot, { force: true, recursive: true });
   temporaryRoot = undefined;
@@ -47,7 +70,8 @@ describe('Transit fact generation', () => {
         readFile(resolve(repositoryRoot, 'src/data', filename), 'utf8'),
       ]);
       expect(first, `${filename} must regenerate byte-for-byte`).toBe(second);
-      expect(JSON.parse(first), filename).toEqual(JSON.parse(committed));
+      expect(canonicalTransit(JSON.parse(first)), filename)
+        .toEqual(canonicalTransit(JSON.parse(committed)));
     }
   }, 60_000);
 
