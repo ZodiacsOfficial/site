@@ -114,8 +114,9 @@ try {
           document.fonts.ready,
           new Promise((resolveReady) => setTimeout(resolveReady, 10_000)),
         ]));
-        await page.evaluate(async () => {
+        const missingZodiacIcons = await page.evaluate(async () => {
           const waitForPaint = () => new Promise((resolvePaint) => requestAnimationFrame(() => resolvePaint()));
+          for (const image of document.images) image.loading = 'eager';
           const step = Math.max(480, Math.floor(window.innerHeight * 0.8));
           for (let y = 0; y < document.documentElement.scrollHeight; y += step) {
             window.scrollTo(0, y);
@@ -127,7 +128,14 @@ try {
             Promise.all([...document.images].map((image) => image.decode?.().catch(() => undefined))),
             new Promise((resolveImages) => setTimeout(resolveImages, 10_000)),
           ]);
+          return [...document.images]
+            .filter((image) => (image.currentSrc || image.src).includes('/assets/zodiac-icons/'))
+            .filter((image) => !image.complete || image.naturalWidth === 0)
+            .map((image) => image.currentSrc || image.src);
         });
+        if (missingZodiacIcons.length > 0) {
+          errors.push(`zodiac icons failed to load: ${missingZodiacIcons.join(', ')}`);
+        }
 
         const layout = await page.evaluate(() => ({
           clientWidth: document.documentElement.clientWidth,

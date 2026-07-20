@@ -1,0 +1,403 @@
+---
+/**
+ * Sky events — the calendar hub. Answers, in order: what is happening
+ * now, what is next, what it means, which dates matter, how to explore
+ * by type, and how this connects to the horoscopes. Complete without
+ * JavaScript; the type filter is a small enhancement on top.
+ */
+import Base from '../../layouts/Base.astro';
+import '../../styles/events.css';
+import EventMark from '../../components/events/EventMark.astro';
+import EvidenceDisclosure from '../../components/EvidenceDisclosure.astro';
+import { eventsCatalog } from '../../lib/events/catalog';
+import { eventsPublication } from '../../lib/events/publication';
+import { FAMILY_LABEL, eventDay, timelineLine } from '../../lib/events/format';
+import { formatDate, formatShortDate } from '../../lib/i18n/dates';
+import { signBySlug } from '../../lib/signs';
+import type { CatalogEvent } from '../../lib/events/types';
+
+const catalog = eventsCatalog();
+const buildNow = new Date();
+const rangeFrom = new Date(eventsPublication.window.from).getTime();
+const rangeTo = new Date(eventsPublication.window.to).getTime();
+const publicTimelineIds = new Set(eventsPublication.timeline.map((event) => event.id));
+
+const anchorTime = (event: CatalogEvent) =>
+  new Date(event.facts.at ?? event.facts.start ?? 0).getTime();
+
+/** Timeline rows: dated moments inside the catalog window. Cycles are
+ * represented by their stations; everything else appears directly. */
+const timeline = catalog.events.filter((event) => publicTimelineIds.has(event.facts.id));
+
+const upcoming = timeline.filter((event) => anchorTime(event) >= buildNow.getTime());
+const nextUp = upcoming.slice(0, 3);
+const nextEvent = upcoming[0];
+
+const activeCycles = catalog.events.filter((event) =>
+  event.facts.family === 'retrograde'
+  && new Date(event.facts.start!).getTime() < rangeTo
+  && (!event.facts.end || new Date(event.facts.end).getTime() >= rangeFrom)
+  && new Date(event.facts.start!).getTime() <= buildNow.getTime()
+  && (!event.facts.end || new Date(event.facts.end).getTime() >= buildNow.getTime()));
+
+const listJoin = (items: string[]) =>
+  items.length <= 2 ? items.join(' and ') : `${items.slice(0, -1).join(', ')}, and ${items.at(-1)}`;
+
+const nowLine = activeCycles.length
+  ? `Retrograde right now: ${listJoin(activeCycles.map((event) => event.facts.bodies[0]))}. Everything else is moving forward.`
+  : 'Every planet is moving forward right now — it never lasts long.';
+
+const monthKey = (event: CatalogEvent) => (event.facts.at ?? event.facts.start!).slice(0, 7);
+const monthLabel = (key: string) => formatDate('en', new Date(`${key}-15T00:00:00Z`), {
+  month: 'long', year: 'numeric', timeZone: 'UTC',
+});
+const currentMonthKey = buildNow.toISOString().slice(0, 7);
+
+const months: { key: string; label: string; past: boolean; rows: CatalogEvent[] }[] = [];
+for (const event of timeline) {
+  const key = monthKey(event);
+  let month = months.find((entry) => entry.key === key);
+  if (!month) {
+    month = { key, label: monthLabel(key), past: key < currentMonthKey, rows: [] };
+    months.push(month);
+  }
+  month.rows.push(event);
+}
+const earlier = months.filter((month) => month.past);
+const current = months.filter((month) => !month.past);
+
+const dayLabel = (event: CatalogEvent) => formatDate('en', new Date(event.facts.at ?? event.facts.start!), {
+  month: 'short', day: 'numeric', timeZone: 'UTC',
+});
+
+const hue = nextEvent?.facts.signs[0] ? signBySlug(nextEvent.facts.signs[0]).hue : 'var(--sign-aquarius)';
+const asOf = formatShortDate('en', buildNow);
+const pageIds = new Set(eventsPublication.pages.map((page) => page.id));
+
+const filters = [
+  { key: 'all', label: 'Everything' },
+  { key: 'lunation', label: 'Moons' },
+  { key: 'eclipse', label: 'Eclipses' },
+  { key: 'retrograde', label: 'Retrogrades' },
+  { key: 'ingress', label: 'Sign changes' },
+  { key: 'aspect', label: 'Alignments' },
+];
+const rowFamily = (event: CatalogEvent) =>
+  event.facts.family === 'station' ? 'retrograde' : event.facts.family;
+
+const types = [
+  {
+    sample: timeline.find((event) => event.facts.family === 'lunation' && event.facts.subtype === 'full'),
+    name: 'Full and new moons',
+    what: 'The month\'s peak and its reset, each an exact instant.',
+    links: [{ href: '/full-moon-calendar/', label: 'the full moon calendar' }, { href: '/moon-phase/', label: 'tonight\'s phase' }],
+  },
+  {
+    sample: timeline.find((event) => event.facts.family === 'eclipse'),
+    name: 'Eclipses',
+    what: 'Lunations with exact aim — the years\' hinge dates.',
+    links: [{ href: '/eclipses/', label: 'every eclipse through 2028' }],
+  },
+  {
+    sample: timeline.find((event) => event.facts.family === 'station'),
+    name: 'Retrogrades and stations',
+    what: 'Apparent reversals and the standstill days that bound them.',
+    links: [{ href: '/retrogrades/', label: 'every window, dated' }, { href: '/mercury-retrograde/', label: 'the Mercury story' }],
+  },
+  {
+    sample: timeline.find((event) => event.facts.family === 'ingress'),
+    name: 'Sign changes',
+    what: 'A slow planet entering a new sign — scenery that lasts years.',
+    links: [{ href: '/transits/', label: 'track them against your chart' }],
+  },
+  {
+    sample: timeline.find((event) => event.facts.family === 'aspect'),
+    name: 'Rare alignments',
+    what: 'Exact angles between the slow movers, years in the making.',
+    links: [{ href: '/learn/aspects/', label: 'how aspects work' }],
+  },
+];
+
+const jsonLd = [
+  {
+    '@type': 'CollectionPage',
+    name: 'Sky events — astrology calendar 2026–2027',
+    url: 'https://zodiacs.org/events/',
+    description: 'Upcoming astrology events with exact universal-time instants: lunations, eclipses, retrogrades, stations, ingresses, and exact aspects.',
+  },
+  {
+    '@type': 'ItemList',
+    itemListOrder: 'https://schema.org/ItemListOrderAscending',
+    numberOfItems: upcoming.filter((event) => pageIds.has(event.facts.id)).length,
+    itemListElement: upcoming
+      .filter((event) => pageIds.has(event.facts.id))
+      .map((event, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        name: event.facts.title,
+        url: `https://zodiacs.org${event.facts.path}`,
+      })),
+  },
+  {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Zodiacs.org', item: 'https://zodiacs.org/' },
+      { '@type': 'ListItem', position: 2, name: 'Sky events', item: 'https://zodiacs.org/events/' },
+    ],
+  },
+];
+
+const sources = [
+  { label: 'Astronomy Engine', href: 'https://github.com/cosinekitty/astronomy' },
+  { label: 'IANA Time Zone Database', href: 'https://www.iana.org/time-zones' },
+];
+---
+<Base
+  stableTypography
+  title="Astrology Events 2026 & 2027 — Full Moons, Eclipses, Retrogrades, Dated | Zodiacs.org"
+  description="Every notable sky event of 2026 and 2027, exact to the minute: full and new moons, eclipses, retrogrades and their stations, slow-planet sign changes, and rare exact alignments — with what each one means."
+  path="/events/"
+  image={eventsPublication.hub.card}
+  imageAlt="Sky events — Zodiacs.org"
+  noindex={!eventsPublication.hub.indexEligible}
+  jsonLd={jsonLd}
+  sources={sources}
+  rssFeed={{ href: '/feeds/events.xml', title: 'Zodiacs.org — sky events' }}
+>
+  <noscript>
+    <style>
+      .reveal { opacity: 1 !important; transform: none !important; filter: none !important; }
+    </style>
+  </noscript>
+
+  <section class="section--tight container container--narrow">
+    <div class="tool-hero reveal">
+      <span class="kicker">The sky, dated</span>
+      <h1 class="display">Sky events</h1>
+      <p>
+        Every date the sky does something worth knowing about, through the
+        end of 2027 — <a href="/learn/glossary/#full-moon">full moons</a> and new moons,{' '}
+        <a href="/learn/glossary/#eclipse">eclipses</a>, <a href="/learn/glossary/#retrograde">retrogrades</a>,
+        slow planets changing signs, and the rare exact
+        <a href="/learn/glossary/#aspect"> alignments</a> between them. Each is
+        computed to the minute, and the ones with a story to tell have pages
+        of their own.
+      </p>
+    </div>
+
+    <div class="evhub-now shell tinted reveal" style={`--sign:${hue}`}>
+      <div class="core tinted evhub-now__core">
+        <span class="mono--label">As of {asOf}</span>
+        <strong class="evhub-now__line">{nowLine}</strong>
+        {nextEvent && (
+          <span class="evhub-now__sub">
+            Next on the calendar: <a href={nextEvent.facts.path}>{nextEvent.facts.title}</a>
+          </span>
+        )}
+      </div>
+    </div>
+  </section>
+
+  {nextUp.length > 0 && (
+    <section class="section--tight container container--narrow" aria-labelledby="next-up-head">
+      <div class="section-head reveal"><h2 id="next-up-head">Next up</h2></div>
+      <div class="evhub-next reveal">
+        {nextUp.map((event) => (
+          <a class="evhub-next__tile tile" href={event.facts.path} style={event.facts.signs[0] ? `--sign:${signBySlug(event.facts.signs[0]).hue}` : undefined}>
+            <span class="evhub-next__head">
+              <EventMark facts={event.facts} />
+              <span class="evhub-next__date mono">{eventDay(event.facts.at ?? event.facts.start!)}</span>
+            </span>
+            <span class="evhub-next__title">{event.facts.title}</span>
+            <p class="evhub-next__line">{timelineLine(event.facts)}</p>
+          </a>
+        ))}
+      </div>
+    </section>
+  )}
+
+  <section class="section--tight container container--narrow" aria-labelledby="calendar-head">
+    <div class="section-head reveal">
+      <h2 id="calendar-head">The calendar, month by month</h2>
+      <p>Dates are universal time — in the Americas an instant can fall the evening before.</p>
+    </div>
+
+    <div class="evhub-filter reveal" data-event-filter role="group" aria-label="Show one kind of event">
+      {filters.map((filter, index) => (
+        <button type="button" data-filter={filter.key} aria-pressed={index === 0 ? 'true' : 'false'}>
+          {filter.label}
+        </button>
+      ))}
+    </div>
+
+    {earlier.length > 0 && (
+      <details class="evhub-earlier reveal">
+        <summary>
+          <h2>Earlier in {earlier[0].label.split(' ')[1]}</h2>
+          <span class="mono--label">{earlier.length} months</span>
+        </summary>
+        {earlier.map((month) => (
+          <section class="evhub-month" data-event-month aria-label={month.label}>
+            <h2>{month.label}</h2>
+            <ol class="evhub-rows">
+              {month.rows.map((event) => (
+                <li
+                  class:list={['evhub-row', anchorTime(event) < buildNow.getTime() && 'evhub-row--past']}
+                  data-event-row
+                  data-family={rowFamily(event)}
+                >
+                  <a class="evhub-row__in" href={event.facts.path} style={event.facts.signs[0] ? `--sign:${signBySlug(event.facts.signs[0]).hue}` : undefined}>
+                    <span class="evhub-row__date mono">{dayLabel(event)}</span>
+                    <EventMark facts={event.facts} />
+                    <span>
+                      <span class="evhub-row__title">{event.facts.title.replace(/ — .*$/, '')}</span>
+                      <span class="evhub-row__family">{FAMILY_LABEL[rowFamily(event)]}</span>
+                    </span>
+                    <p class="evhub-row__line">{timelineLine(event.facts)}</p>
+                  </a>
+                </li>
+              ))}
+            </ol>
+          </section>
+        ))}
+      </details>
+    )}
+
+    {current.map((month) => (
+      <section class="evhub-month reveal" data-event-month aria-label={month.label}>
+        <h2>{month.label}</h2>
+        <ol class="evhub-rows">
+          {month.rows.map((event) => (
+            <li
+              class:list={['evhub-row', anchorTime(event) < buildNow.getTime() && 'evhub-row--past']}
+              data-event-row
+              data-family={rowFamily(event)}
+            >
+              <a class="evhub-row__in" href={event.facts.path} style={event.facts.signs[0] ? `--sign:${signBySlug(event.facts.signs[0]).hue}` : undefined}>
+                <span class="evhub-row__date mono">{dayLabel(event)}</span>
+                <EventMark facts={event.facts} />
+                <span>
+                  <span class="evhub-row__title">{event.facts.title.replace(/ — .*$/, '')}</span>
+                  <span class="evhub-row__family">{FAMILY_LABEL[rowFamily(event)]}</span>
+                </span>
+                <p class="evhub-row__line">{timelineLine(event.facts)}</p>
+              </a>
+            </li>
+          ))}
+        </ol>
+      </section>
+    ))}
+  </section>
+
+  <section class="section--tight container container--narrow" aria-labelledby="types-head">
+    <div class="section-head reveal">
+      <h2 id="types-head">The kinds of event</h2>
+      <p>Each mark on the calendar is one of five families; the deep tables live on their own pages.</p>
+    </div>
+    <div class="evhub-types reveal">
+      {types.map((type) => (
+        <div class="evhub-type tile" style={type.sample?.facts.signs[0] ? `--sign:${signBySlug(type.sample.facts.signs[0]).hue}` : undefined}>
+          {type.sample && <EventMark facts={type.sample.facts} />}
+          <span class="evhub-type__name">{type.name}</span>
+          <p class="evhub-type__what">
+            {type.what}{' '}
+            {type.links.map((link, index) => (
+              <>
+                {index > 0 && ' · '}
+                <a href={link.href}>{link.label}</a>
+              </>
+            ))}
+          </p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="section--tight container container--narrow">
+    <div class="prose reveal">
+      <h2>How to use this calendar</h2>
+      <p>
+        Skim the month you are in, note the two or three dates ahead, and
+        open the ones that name a sign that matters to you — your{' '}
+        <a href="/learn/glossary/#sun-sign">Sun sign</a>, your{' '}
+        <a href="/rising-sign/">rising sign</a>, or anything prominent in
+        your <a href="/birth-chart/">birth chart</a>. Every event page says
+        what the moment is, when it is exact, and what the tradition makes
+        of it — and the <a href="/horoscopes/">daily horoscopes</a> carry
+        each one into day-by-day readings as it approaches.
+      </p>
+      <p>
+        The pace is steadier than the headlines suggest. Most months hold a
+        full moon, a new moon, and a station or two; eclipses come roughly
+        twice a year, in pairs; the slow planets change signs a few times a
+        decade. When a date here feels heavy, the{' '}
+        <a href="/almanac/">Almanac</a> usually has the longer story of its
+        month.
+      </p>
+    </div>
+  </section>
+
+  <section class="section--tight container container--narrow">
+    <EvidenceDisclosure
+      variant="panel"
+      label="Behind this calendar"
+      description="Coverage, sources, and method"
+      class="reveal"
+    >
+      <p>
+        Events cover {eventsPublication.window.from.slice(0, 4)} through the end of{' '}
+        {String(Number(eventsPublication.window.to.slice(0, 4)) - 1)}, drawn from the
+        site's committed sky catalogs — the same astronomy behind the{' '}
+        <a href="/almanac/">Almanac</a>, the <a href="/retrogrades/">retrograde tables</a>,
+        and the <a href="/eclipses/">eclipse calendar</a>. Instants are
+        universal time, exact as printed. Lunations and eclipses list the
+        Moon's sign and degree at the listed instant; the calendar shows
+        slow-planet sign changes and slow-pair exact aspects, while the
+        faster daily traffic lives in the <a href="/horoscopes/">horoscopes</a>{' '}
+        and the monthly Almanac. <a href="/methodology/">How the site computes
+        and reads the sky</a> covers both halves of the method.
+      </p>
+    </EvidenceDisclosure>
+  </section>
+
+  <style>
+    .tool-hero { max-width: 62ch; margin-bottom: clamp(24px, 4vw, 36px); }
+    .tool-hero .kicker { display: block; margin-bottom: 4px; }
+    .tool-hero h1 {
+      margin: 0 0 16px;
+      font-family: var(--font-serif);
+      font-size: var(--text-2xl);
+      font-weight: 500;
+      letter-spacing: -0.005em;
+      line-height: 1.04;
+      font-variant-numeric: oldstyle-figures;
+      text-wrap: balance;
+    }
+    .tool-hero p { margin: 0; color: var(--muted); font-size: var(--text-lg); text-wrap: pretty; }
+  </style>
+
+  <script is:inline>
+    (function () {
+      var bar = document.querySelector('[data-event-filter]');
+      if (!bar) return;
+      bar.classList.add('is-ready');
+      var buttons = Array.prototype.slice.call(bar.querySelectorAll('button'));
+      var rows = Array.prototype.slice.call(document.querySelectorAll('[data-event-row]'));
+      var months = Array.prototype.slice.call(document.querySelectorAll('[data-event-month]'));
+      buttons.forEach(function (button) {
+        button.addEventListener('click', function () {
+          var family = button.getAttribute('data-filter');
+          buttons.forEach(function (other) {
+            other.setAttribute('aria-pressed', other === button ? 'true' : 'false');
+          });
+          rows.forEach(function (row) {
+            row.hidden = family !== 'all' && row.getAttribute('data-family') !== family;
+          });
+          months.forEach(function (month) {
+            month.hidden = !month.querySelector('[data-event-row]:not([hidden])');
+          });
+        });
+      });
+    })();
+  </script>
+</Base>

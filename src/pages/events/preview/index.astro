@@ -1,0 +1,45 @@
+---
+/**
+ * Fixture preview index — a reviewer's map of the labeled sample pages.
+ * Noindex always; nothing here is a sky fact or a production surface.
+ */
+import Base from '../../../layouts/Base.astro';
+import '../../../styles/events.css';
+import { eventsCatalog } from '../../../lib/events/catalog';
+
+const fixtures = eventsCatalog().fixtures;
+---
+<Base
+  title="Event Template Previews — Sample Data | Zodiacs.org"
+  description="Labeled sample pages used to review the event-page templates. Not sky facts; not indexed."
+  path="/events/preview/"
+  imageAlt="Event template previews — Zodiacs.org"
+  noindex={true}
+>
+  <section class="section--tight container container--narrow">
+    <p class="event-sample" data-event-sample>
+      Template review area. Every page linked below renders from labeled
+      sample data, not sky facts, and is excluded from search.
+    </p>
+    <h1 class="display">Event template previews</h1>
+    <ul class="preview-list">
+      {fixtures.map((fixture) => (
+        <li>
+          <a href={fixture.facts.path}>{fixture.facts.title}</a>
+          <span class="mono"> · {fixture.facts.family}</span>
+        </li>
+      ))}
+    </ul>
+    <p class="preview-back"><a href="/events/">Back to the live calendar</a></p>
+  </section>
+</Base>
+
+<style>
+  h1 { font-size: var(--text-2xl); margin: 0 0 22px; }
+  .preview-list { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
+  .preview-list a { color: var(--text); }
+  .preview-list .mono { color: var(--faint); font-size: 11px; }
+  .preview-back { margin-top: 28px; }
+  .preview-back a { color: var(--muted); }
+  .preview-back a:hover { color: var(--text); }
+</style>

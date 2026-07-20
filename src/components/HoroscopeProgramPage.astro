@@ -4,6 +4,7 @@ import EmailCapture from './EmailCapture.astro';
 import Faq from './Faq.astro';
 import ShareRow from './ShareRow.astro';
 import SignIcon from './SignIcon.astro';
+import UpcomingEventLinks from './events/UpcomingEventLinks.astro';
 import { EDITOR_AUTHOR } from '../lib/editorial';
 import { SIGNS, signBySlug } from '../lib/signs';
 import type {
@@ -224,6 +225,10 @@ const skyMarkers = reading.skyStrip.markers;
           ))}
         </div>
       </aside>
+    )}
+
+    {surface === 'today' && (
+      <UpcomingEventLinks date={reading.datePublished.slice(0, 10)} compact />
     )}
 
     <section class="program__reading" aria-labelledby="reading-heading">

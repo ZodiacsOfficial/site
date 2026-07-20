@@ -1,0 +1,91 @@
+---
+/**
+ * The closed "Behind this event" disclosure — exact instants, positions,
+ * catalog provenance, and method, available on request by keyboard,
+ * touch, and without JavaScript, never blocking the reading above it.
+ */
+import EvidenceDisclosure from '../EvidenceDisclosure.astro';
+import { formatLongitude } from '../../lib/signs';
+import type { CatalogEvent } from '../../lib/events/types';
+
+interface Props {
+  event: CatalogEvent;
+}
+
+const { event } = Astro.props;
+const { facts } = event;
+
+const rows: { label: string; value: string }[] = [];
+if (facts.at) rows.push({ label: 'Exact instant', value: facts.at });
+if (facts.start) rows.push({ label: 'Retrograde station', value: facts.start });
+if (facts.end) rows.push({ label: 'Direct station', value: facts.end });
+if (facts.end === null) rows.push({ label: 'Direct station', value: 'beyond the current data horizon' });
+if (facts.preShadowStart) rows.push({ label: 'Pre-shadow begins', value: facts.preShadowStart });
+if (facts.postShadowEnd) rows.push({ label: 'Post-shadow ends', value: facts.postShadowEnd });
+if (facts.longitude !== undefined) {
+  rows.push({ label: 'Ecliptic longitude', value: `${facts.longitude.toFixed(2)}° · ${formatLongitude(facts.longitude)}` });
+}
+if (facts.degree !== undefined && facts.longitude === undefined) {
+  rows.push({ label: 'Degree in sign', value: `${facts.degree.toFixed(2)}°` });
+}
+if (facts.orb === 0) rows.push({ label: 'Orb at the listed instant', value: '0° — an exact hit, not an approximation' });
+if (facts.obscuration !== undefined) rows.push({ label: 'Maximum obscuration', value: facts.obscuration.toFixed(3) });
+rows.push({
+  label: 'Fact source',
+  value: facts.provenance.source === 'fixture'
+    ? 'labeled sample data — not a sky fact'
+    : `${facts.provenance.source}${facts.provenance.generatedAt ? `, generated ${facts.provenance.generatedAt.slice(0, 10)}` : ''}`,
+});
+for (const derivation of facts.provenance.derived ?? []) {
+  rows.push({ label: 'Derived for display', value: derivation });
+}
+---
+<EvidenceDisclosure
+  variant="panel"
+  label="Behind this event"
+  description="Exact times, positions, sources, and method"
+  class="event-evidence"
+>
+  <dl class="event-evidence__rows">
+    {rows.map((row) => (
+      <div>
+        <dt>{row.label}</dt>
+        <dd class="mono">{row.value}</dd>
+      </div>
+    ))}
+  </dl>
+  <p>
+    Instants and positions come from the site's astronomy engine and its
+    committed yearly and monthly sky catalogs — the same data behind the{' '}
+    <a href="/almanac/">Almanac</a> and the daily horoscopes. Times are
+    universal time; in the Americas an instant can fall the evening before
+    the date printed. Sign-by-sign notes, where present, use whole-sign
+    solar houses. The readings are a tradition being applied, not a
+    forecast — <a href="/methodology/">the methodology page</a> sets out
+    both halves.
+  </p>
+</EvidenceDisclosure>
+
+<style>
+  .event-evidence__rows {
+    margin: 0 0 14px;
+    display: grid;
+    gap: 10px 24px;
+  }
+  @media (min-width: 700px) {
+    .event-evidence__rows { grid-template-columns: 1fr 1fr; }
+  }
+  .event-evidence__rows > div { display: grid; gap: 3px; }
+  .event-evidence__rows dt {
+    font-size: 10.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--faint);
+  }
+  .event-evidence__rows dd {
+    margin: 0;
+    font-size: var(--text-sm);
+    color: var(--text-2);
+    overflow-wrap: anywhere;
+  }
+</style>

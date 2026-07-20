@@ -213,6 +213,9 @@ async function loadStaticPages(repoRoot, context) {
     // Registry-only, feature-flagged utility: keep it out of the consumer
     // astrology assistant and its deliberately strict vocabulary boundary.
     if (route.startsWith('/registry/')) continue;
+    // Labeled sample pages for event-template review: never part of the
+    // recommendable site inventory.
+    if (route.startsWith('/events/preview/')) continue;
     const source = await readFile(file, 'utf8');
     pages.push({
       route,

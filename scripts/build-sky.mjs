@@ -1,7 +1,8 @@
 /*
  * Precomputes the sky data the homepage needs without shipping the
  * ephemeris there: retrograde windows for Mercury–Pluto and the list of
- * new/full moons over a two-year window.
+ * new/full moons over the complete 2026–2030 event horizon. Closed
+ * retrograde windows also carry their pre- and post-shadow boundaries.
  *
  *   npm run data:sky   →  src/data/sky.json
  *
@@ -17,16 +18,28 @@ import {
 } from 'astronomy-engine';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-const out = resolve(root, 'src/data/sky.json');
+const outputIndex = process.argv.indexOf('--output');
+const requestedOutput = outputIndex >= 0 ? process.argv[outputIndex + 1] : null;
+if (outputIndex >= 0 && !requestedOutput) throw new Error('--output requires a file path');
+const generatedAtIndex = process.argv.indexOf('--generated-at');
+const requestedGeneratedAt = generatedAtIndex >= 0 ? process.argv[generatedAtIndex + 1] : null;
+if (generatedAtIndex >= 0 && !requestedGeneratedAt) throw new Error('--generated-at requires an ISO instant');
+const generatedAt = requestedGeneratedAt ?? new Date().toISOString();
+if (new Date(generatedAt).toISOString() !== generatedAt) {
+  throw new Error('--generated-at must be a canonical ISO instant');
+}
+const out = requestedOutput ? resolve(process.cwd(), requestedOutput) : resolve(root, 'src/data/sky.json');
 await mkdir(dirname(out), { recursive: true });
 
 const FROM = new Date('2026-01-01T00:00:00Z');
-const TO = new Date('2028-01-01T00:00:00Z');
-// A 2027 retrograde can station direct after the display horizon. Scan far
-// enough to close every window that begins before TO, while keeping new 2028
-// windows and lunations outside the committed two-year catalog.
-const STATION_SCAN_TO = new Date('2028-04-01T00:00:00Z');
+const TO = new Date('2031-01-01T00:00:00Z');
+// A 2030 retrograde can station direct after the display horizon. Scan far
+// enough to close every window that begins before TO, while keeping new 2031
+// windows and lunations outside the committed five-year catalog.
+const STATION_SCAN_TO = new Date('2031-04-01T00:00:00Z');
 const PLANETS = ['Mercury', 'Venus', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto'];
+const DAY = 86_400_000;
+const SHADOW_SCAN_DAYS = 730;
 
 function lonAt(body, date) {
   const t = MakeTime(date);
@@ -47,6 +60,12 @@ function speedAt(body, date) {
   return d / (2 * h);
 }
 
+/** Wrap an angular difference to (−180, 180]. */
+function wrap180(value) {
+  const wrapped = ((value % 360) + 360) % 360;
+  return wrapped > 180 ? wrapped - 360 : wrapped;
+}
+
 // ── Retrograde windows (daily scan, refined to the hour) ─────────────
 function refine(body, lo, hi, wantRetro) {
   // Binary search for the sign change of the speed between lo and hi.
@@ -55,6 +74,35 @@ function refine(body, lo, hi, wantRetro) {
     if ((speedAt(body, mid) < 0) === wantRetro) hi = mid; else lo = mid;
   }
   return hi;
+}
+
+/** Refine a forward-motion crossing of one target longitude. */
+function refineDirectCrossing(body, target, lo, hi) {
+  for (let i = 0; i < 20; i += 1) {
+    const mid = new Date((lo.getTime() + hi.getTime()) / 2);
+    if (wrap180(lonAt(body, mid) - target) >= 0) hi = mid; else lo = mid;
+  }
+  return hi;
+}
+
+/** Find direct-motion crossings of a longitude in a bounded interval.
+ * Daily brackets are safe here: Mercury, the fastest listed body, moves only
+ * a few degrees per day, and the ±180° seam is explicitly rejected. */
+function directCrossings(body, target, from, to) {
+  const crossings = [];
+  let previousDate = from;
+  let previous = wrap180(lonAt(body, previousDate) - target);
+  for (let time = from.getTime() + DAY; time <= to.getTime(); time += DAY) {
+    const date = new Date(time);
+    const current = wrap180(lonAt(body, date) - target);
+    if (previous < 0 && current >= 0 && Math.abs(previous) < 90 && Math.abs(current) < 90) {
+      const at = refineDirectCrossing(body, target, previousDate, date);
+      if (speedAt(body, at) > 0) crossings.push(at);
+    }
+    previousDate = date;
+    previous = current;
+  }
+  return crossings;
 }
 
 const retrogrades = [];
@@ -81,6 +129,71 @@ for (const body of PLANETS) {
 }
 retrogrades.sort((a, b) => a.from.localeCompare(b.from));
 
+// ── Retrograde shadows ────────────────────────────────────────────────
+// A pre-shadow begins when the direct planet first crosses the longitude of
+// its eventual direct station. A post-shadow ends when it again crosses the
+// longitude of the retrograde station. Clamped/open windows cannot support
+// both facts, so they expose explicit nulls rather than invented boundaries.
+for (const window of retrogrades) {
+  const clamped = window.from === FROM.toISOString();
+  if (clamped || !window.to) {
+    window.preShadowStart = null;
+    window.postShadowEnd = null;
+    continue;
+  }
+  const stationRetrograde = new Date(window.from);
+  const stationDirect = new Date(window.to);
+  const directStationLongitude = lonAt(window.planet, stationDirect);
+  const retrogradeStationLongitude = lonAt(window.planet, stationRetrograde);
+  const preCandidates = directCrossings(
+    window.planet,
+    directStationLongitude,
+    new Date(stationRetrograde.getTime() - SHADOW_SCAN_DAYS * DAY),
+    stationRetrograde,
+  );
+  const postCandidates = directCrossings(
+    window.planet,
+    retrogradeStationLongitude,
+    stationDirect,
+    new Date(stationDirect.getTime() + SHADOW_SCAN_DAYS * DAY),
+  );
+  window.preShadowStart = preCandidates.at(-1)?.toISOString() ?? null;
+  window.postShadowEnd = postCandidates[0]?.toISOString() ?? null;
+}
+
+const shadowProblems = [];
+for (const window of retrogrades) {
+  const clamped = window.from === FROM.toISOString();
+  if (clamped || !window.to) {
+    if (window.preShadowStart !== null || window.postShadowEnd !== null) {
+      shadowProblems.push(`${window.planet} ${window.from}: incomplete window carries a shadow boundary`);
+    }
+    continue;
+  }
+  if (!window.preShadowStart || !window.postShadowEnd) {
+    shadowProblems.push(`${window.planet} ${window.from}: missing a shadow boundary`);
+    continue;
+  }
+  if (!(window.preShadowStart < window.from && window.from < window.to && window.to < window.postShadowEnd)) {
+    shadowProblems.push(`${window.planet} ${window.from}: shadow chronology is invalid`);
+  }
+  const preDelta = Math.abs(wrap180(
+    lonAt(window.planet, new Date(window.preShadowStart))
+      - lonAt(window.planet, new Date(window.to)),
+  ));
+  const postDelta = Math.abs(wrap180(
+    lonAt(window.planet, new Date(window.postShadowEnd))
+      - lonAt(window.planet, new Date(window.from)),
+  ));
+  if (preDelta > 0.001 || postDelta > 0.001) {
+    shadowProblems.push(`${window.planet} ${window.from}: shadow longitude does not match its station`);
+  }
+}
+if (shadowProblems.length) {
+  console.error('build-sky: shadow validation failed —\n  ' + shadowProblems.join('\n  '));
+  process.exit(1);
+}
+
 // ── New + full moons ──────────────────────────────────────────────────
 const moons = [];
 for (const [targetLon, type] of [[0, 'new'], [180, 'full']]) {
@@ -95,12 +208,13 @@ for (const [targetLon, type] of [[0, 'new'], [180, 'full']]) {
 moons.sort((a, b) => a.at.localeCompare(b.at));
 
 const payload = {
-  generatedAt: new Date().toISOString(),
+  generatedAt,
   from: FROM.toISOString(),
   to: TO.toISOString(),
   stationBoundaryScanTo: STATION_SCAN_TO.toISOString(),
+  shadowBoundaryScanDays: SHADOW_SCAN_DAYS,
   retrogrades,
   moons,
 };
 await writeFile(out, JSON.stringify(payload, null, 2) + '\n');
-console.log(`Done — ${retrogrades.length} retrograde windows, ${moons.length} lunations → src/data/sky.json`);
+console.log(`Done — ${retrogrades.length} retrograde windows, ${moons.length} lunations → ${out}`);

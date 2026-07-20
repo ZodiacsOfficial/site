@@ -1,0 +1,19 @@
+---
+/**
+ * Fixture preview pages — labeled sample data for template review. Always
+ * noindex, never in the sitemap, feeds, or search index; the visible
+ * banner in the template marks every one as a sample.
+ */
+import EventPageLayout from '../../../components/events/EventPageLayout.astro';
+import { eventsCatalog } from '../../../lib/events/catalog';
+
+export async function getStaticPaths() {
+  return eventsCatalog().fixtures.map((event) => ({
+    params: { fixture: event.facts.path.replace('/events/preview/', '').replace(/\/$/, '') },
+    props: { event },
+  }));
+}
+
+const { event } = Astro.props;
+---
+<EventPageLayout event={event} />

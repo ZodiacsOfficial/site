@@ -1,0 +1,62 @@
+---
+/**
+ * The family mark — one small drawing per event family, tinted with the
+ * event's sign hue. Decorative: the row's text carries the meaning, so
+ * the mark stays aria-hidden. Moons are discs, eclipses are shadowed
+ * discs, retrogrades wear the ℞, ingresses are an arrival, aspects reuse
+ * the crafted aspect glyphs.
+ */
+import AspectGlyph from '../AspectGlyph.tsx';
+import { signBySlug } from '../../lib/signs';
+import type { EventFacts } from '../../lib/events/types';
+
+interface Props {
+  facts: EventFacts;
+  class?: string;
+}
+
+const { facts, class: className } = Astro.props;
+const hue = facts.signs[0] ? signBySlug(facts.signs[0]).hue : undefined;
+const kind = facts.family === 'lunation'
+  ? (facts.subtype === 'full' ? 'full' : 'new')
+  : facts.family === 'eclipse'
+    ? (facts.subtype === 'solar' ? 'eclipse-solar' : 'eclipse-lunar')
+    : facts.family;
+---
+<span
+  class:list={['evmark', (kind === 'retrograde' || kind === 'station') && 'evmark--rx', className]}
+  style={hue ? `--sign:${hue}` : undefined}
+  aria-hidden="true"
+>
+  {kind === 'full' && (
+    <svg viewBox="0 0 24 24" width="20" height="20"><circle cx="12" cy="12" r="7.5" fill="currentColor" /></svg>
+  )}
+  {kind === 'new' && (
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none"><circle cx="12" cy="12" r="7" stroke="currentColor" stroke-width="1.6" /></svg>
+  )}
+  {kind === 'eclipse-solar' && (
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none">
+      <circle cx="12" cy="12" r="7.5" stroke="currentColor" stroke-width="1.5" />
+      <circle cx="12" cy="12" r="4.6" fill="currentColor" />
+    </svg>
+  )}
+  {kind === 'eclipse-lunar' && (
+    <svg viewBox="0 0 24 24" width="20" height="20">
+      <defs><clipPath id={`evm-${facts.id}`}><circle cx="12" cy="12" r="7.5" /></clipPath></defs>
+      <circle cx="12" cy="12" r="7.5" fill="currentColor" />
+      <circle cx="16.5" cy="9" r="7.5" fill="var(--void-0)" opacity="0.82" clip-path={`url(#evm-${facts.id})`} />
+      <circle cx="12" cy="12" r="7.5" fill="none" stroke="currentColor" stroke-width="1" />
+    </svg>
+  )}
+  {(kind === 'retrograde' || kind === 'station') && '℞'}
+  {kind === 'ingress' && (
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+      <path d="M3 12h8" />
+      <path d="M8.4 8.6 11.8 12l-3.4 3.4" />
+      <circle cx="17" cy="12" r="4.2" fill="currentColor" stroke="none" />
+    </svg>
+  )}
+  {kind === 'aspect' && facts.aspectType && (
+    <AspectGlyph type={facts.aspectType} size={19} />
+  )}
+</span>

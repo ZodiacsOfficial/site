@@ -1,0 +1,144 @@
+{
+  "month": "2027-02",
+  "ingresses": [
+    {
+      "planet": "Mercury",
+      "at": "2027-02-01T01:26:46.653Z",
+      "sign": "pisces",
+      "retrograde": false
+    },
+    {
+      "planet": "Venus",
+      "at": "2027-02-03T14:30:32.789Z",
+      "sign": "capricorn",
+      "retrograde": false
+    },
+    {
+      "planet": "Mercury",
+      "at": "2027-02-18T12:17:06.321Z",
+      "sign": "aquarius",
+      "retrograde": true
+    },
+    {
+      "planet": "Sun",
+      "at": "2027-02-18T21:33:36.353Z",
+      "sign": "pisces",
+      "retrograde": false
+    },
+    {
+      "planet": "Mars",
+      "at": "2027-02-21T14:15:52.572Z",
+      "sign": "leo",
+      "retrograde": true
+    }
+  ],
+  "lunations": [
+    {
+      "type": "new",
+      "at": "2027-02-06T15:56:02.062Z",
+      "sign": "aquarius",
+      "degree": 17.627128067801664
+    },
+    {
+      "type": "full",
+      "at": "2027-02-20T23:23:31.110Z",
+      "sign": "virgo",
+      "degree": 2.0929882550057073
+    }
+  ],
+  "stations": [
+    {
+      "planet": "Uranus",
+      "at": "2027-02-08T12:23:10.950Z",
+      "type": "direct",
+      "sign": "gemini",
+      "degree": 1.6824559824346466
+    },
+    {
+      "planet": "Mercury",
+      "at": "2027-02-09T17:35:36.455Z",
+      "type": "retrograde",
+      "sign": "pisces",
+      "degree": 5.982592150350229
+    }
+  ],
+  "aspects": [
+    {
+      "a": "Mercury",
+      "b": "Uranus",
+      "type": "square",
+      "orb": 0,
+      "at": "2027-02-02T12:18:12.095Z",
+      "aSign": "pisces",
+      "aDegree": 1.6982749697475583,
+      "bSign": "gemini",
+      "bDegree": 1.6982749295878534
+    },
+    {
+      "a": "Venus",
+      "b": "Neptune",
+      "type": "square",
+      "orb": 0,
+      "at": "2027-02-05T17:38:13.422Z",
+      "aSign": "capricorn",
+      "aDegree": 2.44667166443719,
+      "bSign": "aries",
+      "bDegree": 2.446671571467448
+    },
+    {
+      "a": "Sun",
+      "b": "Jupiter",
+      "type": "opposition",
+      "orb": 0,
+      "at": "2027-02-11T00:28:33.206Z",
+      "aSign": "aquarius",
+      "aDegree": 22.039839451884063,
+      "bSign": "leo",
+      "bDegree": 22.039838762307852
+    },
+    {
+      "a": "Venus",
+      "b": "Saturn",
+      "type": "square",
+      "orb": 0,
+      "at": "2027-02-13T11:36:45.504Z",
+      "aSign": "capricorn",
+      "aDegree": 11.42222311207638,
+      "bSign": "aries",
+      "bDegree": 11.42222216060054
+    },
+    {
+      "a": "Mercury",
+      "b": "Uranus",
+      "type": "square",
+      "orb": 0,
+      "at": "2027-02-16T22:39:35.463Z",
+      "aSign": "pisces",
+      "aDegree": 1.7142739857697507,
+      "bSign": "gemini",
+      "bDegree": 1.7142745272664115
+    },
+    {
+      "a": "Mars",
+      "b": "Uranus",
+      "type": "square",
+      "orb": 0,
+      "at": "2027-02-17T06:36:53.935Z",
+      "aSign": "virgo",
+      "aDegree": 1.716822469765816,
+      "bSign": "gemini",
+      "bDegree": 1.7168225031556403
+    },
+    {
+      "a": "Sun",
+      "b": "Uranus",
+      "type": "square",
+      "orb": 0,
+      "at": "2027-02-20T15:10:29.845Z",
+      "aSign": "pisces",
+      "aDegree": 1.747994615324842,
+      "bSign": "gemini",
+      "bDegree": 1.7479941108421144
+    }
+  ]
+}

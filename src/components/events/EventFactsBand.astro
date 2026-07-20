@@ -1,0 +1,112 @@
+---
+/**
+ * The quiet what/when card — the event's useful facts in one tinted band:
+ * sign, position, exact universal time, and the family-specific figures.
+ * Sits directly under the lead; the deeper receipts live in the closed
+ * "Behind this event" disclosure.
+ */
+import SignIcon from '../SignIcon.astro';
+import { formatLongitude, signBySlug } from '../../lib/signs';
+import { eventClock, eventDay } from '../../lib/events/format';
+import type { EventFacts } from '../../lib/events/types';
+
+interface Props {
+  facts: EventFacts;
+}
+
+const { facts } = Astro.props;
+const hue = facts.signs[0] ? signBySlug(facts.signs[0]).hue : undefined;
+
+interface Row {
+  label: string;
+  value?: string;
+  mono?: boolean;
+  sign?: string;
+}
+
+const rows: Row[] = [];
+const signName = (slug: string) => signBySlug(slug).name;
+
+if (facts.family === 'lunation' || facts.family === 'eclipse') {
+  rows.push({ label: facts.family === 'eclipse' ? 'Peak, universal time' : 'Exact, universal time', value: eventClock(facts.at!), mono: true });
+  rows.push({ label: 'In the sign', value: signName(facts.signs[0]), sign: facts.signs[0] });
+  if (facts.longitude !== undefined) {
+    rows.push({ label: 'The Moon stands at', value: formatLongitude(facts.longitude), mono: true });
+  } else if (facts.degree !== undefined) {
+    rows.push({ label: 'Degree in sign', value: `${Math.floor(facts.degree)}°`, mono: true });
+  }
+  if (facts.family === 'lunation' && facts.moonName) {
+    rows.push({ label: 'Traditional name', value: facts.moonName === 'Blue' ? 'Blue moon' : `${facts.moonName} Moon` });
+  }
+  if (facts.family === 'eclipse' && facts.obscuration !== undefined) {
+    rows.push({
+      label: 'Sun or Moon covered',
+      value: `${Math.round(facts.obscuration * 100)}% at most`,
+      mono: true,
+    });
+  }
+  if (facts.family === 'eclipse' && facts.totalMinutes) {
+    rows.push({ label: 'Totality lasts', value: `${facts.totalMinutes} minutes`, mono: true });
+  }
+}
+
+if (facts.family === 'retrograde') {
+  if (facts.preShadowStart) {
+    rows.push({
+      label: 'Pre-shadow begins',
+      value: `${eventDay(facts.preShadowStart)} · ${eventClock(facts.preShadowStart)}`,
+      mono: true,
+    });
+  }
+  rows.push({
+    label: 'Stations retrograde',
+    value: facts.clamped
+      ? 'already retrograde as the catalog opens'
+      : `${eventDay(facts.start!)} · ${eventClock(facts.start!)}`,
+    mono: !facts.clamped,
+  });
+  rows.push({
+    label: 'Stations direct',
+    value: facts.end ? `${eventDay(facts.end)} · ${eventClock(facts.end)}` : 'past the data horizon',
+    mono: Boolean(facts.end),
+  });
+  if (facts.postShadowEnd) {
+    rows.push({
+      label: 'Post-shadow ends',
+      value: `${eventDay(facts.postShadowEnd)} · ${eventClock(facts.postShadowEnd)}`,
+      mono: true,
+    });
+  }
+  rows.push(facts.signs.length === 1
+    ? { label: 'Entirely within', value: signName(facts.signs[0]), sign: facts.signs[0] }
+    : { label: 'Crosses back from', value: facts.signs.map(signName).join(' into '), sign: facts.signs[facts.signs.length - 1] });
+}
+
+if (facts.family === 'ingress') {
+  rows.push({ label: 'Exact, universal time', value: eventClock(facts.at!), mono: true });
+  rows.push({ label: 'Enters', value: signName(facts.signs[0]), sign: facts.signs[0] });
+  if (facts.fromSign) rows.push({ label: 'Leaves', value: signName(facts.fromSign), sign: facts.fromSign });
+}
+
+if (facts.family === 'aspect') {
+  rows.push({ label: 'Exact, universal time', value: eventClock(facts.at!), mono: true });
+  rows.push({ label: facts.bodies[0], value: signName(facts.signs[0]), sign: facts.signs[0] });
+  if (facts.signs[1]) rows.push({ label: facts.bodies[1], value: signName(facts.signs[1]), sign: facts.signs[1] });
+  if (facts.degree !== undefined) {
+    rows.push({ label: 'Both near', value: `${Math.floor(facts.degree)}° of their signs`, mono: true });
+  }
+}
+---
+<div class="shell tinted" style={hue ? `--sign:${hue}` : undefined}>
+  <dl class="core tinted event-facts__core">
+    {rows.map((row) => (
+      <div class="event-facts__item">
+        <dt class="mono--label">{row.label}</dt>
+        <dd class={row.mono ? 'mono' : undefined}>
+          {row.sign && <SignIcon sign={row.sign} size={20} />}
+          {row.value}
+        </dd>
+      </div>
+    ))}
+  </dl>
+</div>

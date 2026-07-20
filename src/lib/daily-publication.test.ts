@@ -156,7 +156,9 @@ describe('daily editorial publication', () => {
       .toContain('FACT-EVENT-INSTANT');
 
     const wrongDay = clone(daily);
-    wrongDay.events[0].at = '2026-07-20T00:05:52.329Z';
+    const adjacentDate = new Date(`${daily.date}T00:00:00.000Z`);
+    adjacentDate.setUTCDate(adjacentDate.getUTCDate() + 1);
+    wrongDay.events[0].at = `${adjacentDate.toISOString().slice(0, 10)}T00:05:52.329Z`;
     expect(validateDailyFacts(wrongDay).map((failure) => failure.ruleId))
       .toContain('FACT-EVENT-DATE');
 

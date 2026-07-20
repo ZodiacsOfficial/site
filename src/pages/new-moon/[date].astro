@@ -1,0 +1,16 @@
+---
+import EventPageLayout from '../../components/events/EventPageLayout.astro';
+import { eventsCatalog } from '../../lib/events/catalog';
+
+export async function getStaticPaths() {
+  return eventsCatalog().pages
+    .filter((event) => event.facts.family === 'lunation' && event.facts.subtype === 'new')
+    .map((event) => ({
+      params: { date: event.facts.at!.slice(0, 10) },
+      props: { event },
+    }));
+}
+
+const { event } = Astro.props;
+---
+<EventPageLayout event={event} />

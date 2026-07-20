@@ -1,0 +1,124 @@
+---
+import SignIcon from '../SignIcon.astro';
+import { upcomingPublishedEvents } from '../../lib/events/publication';
+import { signBySlug } from '../../lib/signs';
+
+interface Props {
+  date: string;
+  compact?: boolean;
+}
+
+const { date, compact = false } = Astro.props;
+const events = upcomingPublishedEvents(date);
+const start = new Date(`${date}T00:00:00.000Z`).getTime();
+const dayLabel = (anchor: string) => {
+  const difference = Math.floor((new Date(anchor).getTime() - start) / 86_400_000);
+  if (difference === 0) return 'Today';
+  if (difference === 1) return 'Tomorrow';
+  return new Intl.DateTimeFormat('en-US', {
+    month: 'short', day: 'numeric', timeZone: 'UTC',
+  }).format(new Date(anchor));
+};
+---
+{events.length > 0 && (
+  <aside
+    class:list={['upcoming-events', compact && 'upcoming-events--compact']}
+    aria-labelledby={`upcoming-events-${date}`}
+    data-daily-event-links
+  >
+    <div class="upcoming-events__head">
+      <span class="mono">Next five days</span>
+      <h2 id={`upcoming-events-${date}`}>Coming up in the sky</h2>
+    </div>
+    <ul>
+      {events.map((event) => {
+        const sign = event.signs[0] ? signBySlug(event.signs[0]) : null;
+        return (
+          <li style={sign ? `--event-sign:${sign.hue}` : undefined}>
+            <a href={event.path}>
+              {sign && <SignIcon sign={sign.slug} size={30} />}
+              <span>
+                <strong>{event.title}</strong>
+                <time datetime={event.anchor}>{dayLabel(event.anchor)}</time>
+              </span>
+            </a>
+          </li>
+        );
+      })}
+    </ul>
+  </aside>
+)}
+
+<style>
+  .upcoming-events {
+    display: grid;
+    gap: 14px;
+    padding: clamp(16px, 3vw, 22px);
+    border: 1px solid var(--hair-1);
+    border-radius: var(--r-lg);
+    background: rgba(198, 204, 218, 0.025);
+  }
+  .upcoming-events__head { display: grid; gap: 5px; }
+  .upcoming-events__head .mono {
+    color: var(--faint);
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .upcoming-events h2 {
+    margin: 0;
+    color: var(--text);
+    font-size: var(--text-lg);
+    font-weight: 620;
+    letter-spacing: -0.015em;
+  }
+  .upcoming-events ul {
+    display: grid;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .upcoming-events li { min-width: 0; }
+  .upcoming-events a {
+    display: grid;
+    grid-template-columns: 30px minmax(0, 1fr);
+    align-items: center;
+    gap: 11px;
+    padding: 10px 11px;
+    border-radius: var(--r-md);
+    color: var(--text-2);
+    text-decoration: none;
+  }
+  .upcoming-events a:hover,
+  .upcoming-events a:focus-visible {
+    color: var(--text);
+    background: color-mix(in oklab, var(--event-sign, var(--accent)) 7%, transparent);
+  }
+  .upcoming-events a > span:last-child {
+    display: flex;
+    min-width: 0;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .upcoming-events strong {
+    min-width: 0;
+    font-size: var(--text-sm);
+    font-weight: 590;
+    line-height: 1.35;
+  }
+  .upcoming-events time {
+    flex: none;
+    color: var(--faint);
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .upcoming-events--compact { padding: 14px; }
+  .upcoming-events--compact h2 { font-size: var(--text-md); }
+  @media (max-width: 520px) {
+    .upcoming-events a > span:last-child { align-items: flex-start; flex-direction: column; gap: 3px; }
+  }
+</style>
