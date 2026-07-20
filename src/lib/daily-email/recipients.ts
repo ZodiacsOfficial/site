@@ -227,13 +227,7 @@ export function mergeDailyEmailRecipients({
   editionDate: string;
   at: Date;
 }): DailyEmailRecipient[] {
-  const sunByEmail = new Map(sun.map((recipient) => [recipient.email, recipient]));
-  const recipients: DailyEmailRecipient[] = chart.map((recipient) => {
-    const matchingSun = sunByEmail.get(recipient.email);
-    return matchingSun
-      ? { ...recipient, sunContactId: matchingSun.contactId }
-      : recipient;
-  });
+  const recipients: DailyEmailRecipient[] = [...chart];
   if (isDailyEmailDue(editionDate, at, 'UTC')) {
     recipients.push(...sun.filter((recipient) => (
       !suppressSunEmails.has(recipient.email)

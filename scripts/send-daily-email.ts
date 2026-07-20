@@ -252,8 +252,6 @@ async function loadProductionRecipients({
   });
 
   const diagnostics: string[] = [];
-  // The complete segment set is also needed outside 07:00 UTC so chart-tier
-  // unsubscribe links can carry the matching Sun contact and revoke both tiers.
   const segments = parseSignSegmentMap(requiredEnv(env, 'RESEND_DAILY_SIGN_SEGMENTS_JSON'));
   const sun = await loadSunSignRecipients({
     fetchImpl,
@@ -298,7 +296,6 @@ export function dailyRecipientUnsubscribeClaim(
       kind: 'chart' as const,
       userId: recipient.userId,
       recipientHash,
-      ...(recipient.sunContactId ? { contactId: recipient.sunContactId } : {}),
     };
 }
 

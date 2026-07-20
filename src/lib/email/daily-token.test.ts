@@ -7,6 +7,7 @@ import {
 } from './daily-chart-token';
 import {
   hasDailyChartEmailProvider,
+  hasDailyEmailRevocation,
   hasDailySunEmailProvider,
   hasDailySunStateAccess,
   parseDailySignSegments,
@@ -77,13 +78,13 @@ describe('daily unsubscribe token', () => {
       kind: 'sun', contactId: 'contact_12345678', recipientHash: RECIPIENT_HASH,
     }, SECRET);
     const chart = createDailyUnsubscribeToken({
-      kind: 'chart', userId: USER_ID, recipientHash: RECIPIENT_HASH, contactId: 'contact_12345678',
+      kind: 'chart', userId: USER_ID, recipientHash: RECIPIENT_HASH,
     }, SECRET);
     expect(verifyDailyUnsubscribeToken(sun, SECRET)).toEqual({
       kind: 'sun', contactId: 'contact_12345678', recipientHash: RECIPIENT_HASH,
     });
     expect(verifyDailyUnsubscribeToken(chart, SECRET)).toEqual({
-      kind: 'chart', userId: USER_ID, recipientHash: RECIPIENT_HASH, contactId: 'contact_12345678',
+      kind: 'chart', userId: USER_ID, recipientHash: RECIPIENT_HASH,
     });
     expect(verifyDailyUnsubscribeToken(`${sun}x`, SECRET)).toBeNull();
     expect(dailyUnsubscribeUrl('https://zodiacs.org/anything', {
@@ -125,5 +126,17 @@ describe('daily email configuration', () => {
       PUBLIC_SUPABASE_PUBLISHABLE_KEY: 'sb_publishable_test',
       SUPABASE_SERVICE_ROLE_KEY: 'service-test',
     })).toBe(true);
+  });
+
+  it('keeps permanent unsubscribe available without enrollment or provider routing', () => {
+    const revocationOnly = {
+      DAILY_EMAIL_ENABLED: '0',
+      DAILY_EMAIL_UNSUBSCRIBE_SECRET: SECRET,
+      DAILY_EMAIL_RECIPIENT_HASH_SECRET: SECRET,
+      PUBLIC_SUPABASE_URL: 'https://project.supabase.co',
+      SUPABASE_SERVICE_ROLE_KEY: 'service-test',
+    };
+    expect(hasDailyEmailRevocation(revocationOnly)).toBe(true);
+    expect(hasDailyEmailRevocation({ ...revocationOnly, SUPABASE_SERVICE_ROLE_KEY: '' })).toBe(false);
   });
 });

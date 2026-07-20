@@ -19,8 +19,6 @@ export interface ChartRecipient extends RecipientBase {
   userId: string;
   chartId: string;
   chart: SavedChart;
-  /** Matching Resend contact, when the address also has a Sun-sign tier. */
-  sunContactId?: string;
 }
 
 export type DailyEmailRecipient = SunSignRecipient | ChartRecipient;

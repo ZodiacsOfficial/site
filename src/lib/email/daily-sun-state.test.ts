@@ -123,12 +123,18 @@ function createHarness(initialRow: SunRow | null = null) {
     }
 
     if (url.hostname === 'project.supabase.co'
-      && url.pathname === '/rest/v1/rpc/revoke_daily_email_preferences'
+      && url.pathname === '/rest/v1/rpc/revoke_daily_email_preference'
       && method === 'POST') {
       const bodyText = String(init?.body);
       databaseBodies.push(bodyText);
-      const body = JSON.parse(bodyText) as { candidate_recipient_hash: string };
-      if (row?.recipient_hash === body.candidate_recipient_hash) {
+      const body = JSON.parse(bodyText) as {
+        candidate_recipient_hash: string;
+        candidate_tier: 'sun_sign' | 'chart';
+        candidate_user_id: string | null;
+      };
+      if (body.candidate_tier === 'sun_sign'
+        && body.candidate_user_id === null
+        && row?.recipient_hash === body.candidate_recipient_hash) {
         row = {
           ...row,
           confirmation_token_hash: null,
@@ -166,6 +172,10 @@ function createHarness(initialRow: SunRow | null = null) {
     if (url.href === 'https://api.resend.com/emails' && method === 'POST') {
       confirmationEmails.push({ body: String(init?.body) });
       return json({ id: `email_${confirmationEmails.length}` });
+    }
+
+    if (url.href === `https://api.resend.com/contacts/${CONTACT_ID}` && method === 'GET') {
+      return json({ id: CONTACT_ID, email: 'person@example.com' });
     }
 
     if (url.href === 'https://api.resend.com/contacts' && method === 'POST') {

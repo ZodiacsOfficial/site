@@ -264,11 +264,13 @@ revoke all on function public.stage_daily_sun_confirmation(text, text, text)
 grant execute on function public.stage_daily_sun_confirmation(text, text, text)
   to service_role;
 
--- Either daily unsubscribe link revokes both authoritative tiers in one
--- transaction. Provider segments are routing metadata only and are cleaned up
--- afterward; a provider outage can never leave chart delivery authorized.
-create or replace function public.revoke_daily_email_preferences(
-  candidate_recipient_hash text
+-- Each daily unsubscribe link revokes only the tier named in its signed claim.
+-- Provider segments are routing metadata only and are cleaned up afterward;
+-- chart revocation leaves confirmed Sun consent intact so it can resume.
+create or replace function public.revoke_daily_email_preference(
+  candidate_recipient_hash text,
+  candidate_tier text,
+  candidate_user_id uuid
 )
 returns void
 language plpgsql
@@ -283,20 +285,25 @@ begin
     raise exception 'invalid daily recipient hash' using errcode = '22023';
   end if;
 
-  update public.daily_sun_preferences
-  set confirmation_token_hash = null,
-      confirmation_state = 'revoked',
-      confirmed_at = null
-  where recipient_hash = candidate_recipient_hash;
-
-  delete from public.daily_chart_preferences
-  where recipient_hash = candidate_recipient_hash;
+  if candidate_tier = 'sun_sign' and candidate_user_id is null then
+    update public.daily_sun_preferences
+    set confirmation_token_hash = null,
+        confirmation_state = 'revoked',
+        confirmed_at = null
+    where recipient_hash = candidate_recipient_hash;
+  elsif candidate_tier = 'chart' and candidate_user_id is not null then
+    delete from public.daily_chart_preferences
+    where recipient_hash = candidate_recipient_hash
+      and user_id = candidate_user_id;
+  else
+    raise exception 'invalid daily preference subject' using errcode = '22023';
+  end if;
 end;
 $$;
 
-revoke all on function public.revoke_daily_email_preferences(text)
+revoke all on function public.revoke_daily_email_preference(text, text, uuid)
   from public, anon, authenticated;
-grant execute on function public.revoke_daily_email_preferences(text)
+grant execute on function public.revoke_daily_email_preference(text, text, uuid)
   to service_role;
 
 create table public.daily_email_deliveries (
@@ -416,7 +423,7 @@ comment on column public.daily_chart_preferences.timezone is
 comment on column public.daily_chart_preferences.chart_id is
   'Exactly one explicitly selected synced chart; null only after that chart is deleted, which pauses delivery.';
 comment on column public.daily_chart_preferences.recipient_hash is
-  'Non-reversible HMAC used only to make either daily unsubscribe link revoke both daily tiers.';
+  'Non-reversible HMAC used for identity checks, one-email suppression, and list-specific revocation.';
 comment on column public.daily_chart_preferences.confirmation_token_hash is
   'SHA-256 of the one current pending confirmation token; cleared on confirmation so cancel and replacement invalidate prior links.';
 comment on table public.daily_sun_preferences is

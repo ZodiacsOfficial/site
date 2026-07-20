@@ -95,10 +95,13 @@ describe('daily email CLI', () => {
         },
       },
       timezone: 'UTC',
-      sunContactId: 'contact_same_1',
     }, secret);
     expect(chart.recipientHash).toBe(sun.recipientHash);
-    expect(chart).toMatchObject({ kind: 'chart', contactId: 'contact_same_1' });
+    expect(chart).toEqual({
+      kind: 'chart',
+      userId: '10000000-0000-4000-8000-000000000002',
+      recipientHash: sun.recipientHash,
+    });
   });
 
   it('pins the hourly minute-13 workflow, smoke, live gate, and feature flag', async () => {

@@ -360,20 +360,28 @@ export async function pauseOrCancelDailyChartForDeletion(
   return { outcome, selectedChartId };
 }
 
-export async function revokeDailyEmailPreferences(
+export async function revokeDailyEmailPreference(
   recipientHash: string,
+  subject: { kind: 'sun' } | { kind: 'chart'; userId: string },
   env: Environment = process.env,
   fetcher: Fetch = fetch,
 ): Promise<void> {
   if (!HASH.test(recipientHash)) {
     throw new Error('Daily recipient hash is invalid.');
   }
+  if (subject.kind === 'chart' && !UUID.test(subject.userId)) {
+    throw new Error('Daily chart preference user is invalid.');
+  }
   const response = await fetcher(
-    `${supabaseOrigin(env)}/rest/v1/rpc/revoke_daily_email_preferences`,
+    `${supabaseOrigin(env)}/rest/v1/rpc/revoke_daily_email_preference`,
     {
       method: 'POST',
       headers: serviceHeaders(env, 'return=minimal'),
-      body: JSON.stringify({ candidate_recipient_hash: recipientHash }),
+      body: JSON.stringify({
+        candidate_recipient_hash: recipientHash,
+        candidate_tier: subject.kind === 'sun' ? 'sun_sign' : 'chart',
+        candidate_user_id: subject.kind === 'chart' ? subject.userId : null,
+      }),
     },
   );
   if (!response.ok) throw new Error(`Daily preference revocation failed (${response.status})`);

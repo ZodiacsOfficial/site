@@ -59,10 +59,7 @@ export function hasDailyChartEmailProvider(env: Environment = process.env): bool
 
 /** Permanent links remain usable when enrollment and delivery are disabled. */
 export function hasDailyEmailRevocation(env: Environment = process.env): boolean {
-  return emailProviderName(env) === 'resend'
-    && environmentValue(env, 'RESEND_API_KEY') !== ''
-    && environmentValue(env, 'DAILY_EMAIL_UNSUBSCRIBE_SECRET').length >= 32
+  return environmentValue(env, 'DAILY_EMAIL_UNSUBSCRIBE_SECRET').length >= 32
     && environmentValue(env, 'DAILY_EMAIL_RECIPIENT_HASH_SECRET').length >= 32
-    && parseDailySignSegments(env) !== null
     && hasDailySunStateAccess(env);
 }

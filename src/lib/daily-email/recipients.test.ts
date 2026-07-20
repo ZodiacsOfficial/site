@@ -152,7 +152,7 @@ describe('daily email recipient selection', () => {
     })).toEqual([sun]);
   });
 
-  it('carries the matching suppressed Sun contact onto the chart tier', () => {
+  it('keeps provider routing identity out of the chart tier', () => {
     const chartRecipient = {
       tier: 'chart' as const,
       email: 'same@example.com',
@@ -173,7 +173,7 @@ describe('daily email recipient selection', () => {
       editionDate: '2026-07-20',
       at: new Date('2026-07-20T07:13:00Z'),
     });
-    expect(merged).toEqual([{ ...chartRecipient, sunContactId: 'contact_same_1' }]);
+    expect(merged).toEqual([chartRecipient]);
   });
 
   it('holds a missing, malformed, or ownership-mismatched selected chart without substitution', async () => {

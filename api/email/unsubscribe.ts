@@ -1,7 +1,7 @@
 import { hasDailyEmailRevocation } from '../../src/lib/email/daily-config.js';
 import { dailyEmailPage } from '../../src/lib/email/daily-page.js';
 import { getDailyContactEmail, removeDailySunSegments } from '../../src/lib/email/daily-resend.js';
-import { getAdminEmailUser, revokeDailyEmailPreferences } from '../../src/lib/email/daily-server.js';
+import { getAdminEmailUser, revokeDailyEmailPreference } from '../../src/lib/email/daily-server.js';
 import { verifyDailyUnsubscribeToken } from '../../src/lib/email/daily-unsubscribe-token.js';
 import { dailyRecipientHash } from '../../src/lib/daily-email/identity.js';
 
@@ -49,6 +49,19 @@ async function currentEmailForClaim(
   return currentHash === recipientHash ? user.email : null;
 }
 
+async function currentSunEmailForClaim(
+  contactId: string,
+  recipientHash: string,
+): Promise<string | null> {
+  const email = await getDailyContactEmail(contactId);
+  if (!email) return null;
+  const currentHash = dailyRecipientHash(
+    email,
+    process.env.DAILY_EMAIL_RECIPIENT_HASH_SECRET ?? '',
+  );
+  return currentHash === recipientHash ? email : null;
+}
+
 export default async function handler(req: any, res: any): Promise<void> {
   if (req.method !== 'GET' && req.method !== 'POST') {
     res.setHeader('Allow', 'GET, POST');
@@ -67,58 +80,57 @@ export default async function handler(req: any, res: any): Promise<void> {
     return;
   }
 
+  const listName = claim.kind === 'sun' ? 'sun-sign daily' : 'personal daily brief';
+
   if (req.method === 'GET') {
     let email: string | null = null;
     try {
-      if (claim.kind === 'sun' || claim.contactId) {
-        email = await getDailyContactEmail(claim.kind === 'sun' ? claim.contactId : claim.contactId!);
+      if (claim.kind === 'sun') {
+        email = await currentSunEmailForClaim(claim.contactId, claim.recipientHash);
       } else {
         email = await currentEmailForClaim(claim.userId, claim.recipientHash);
       }
     } catch {
       // The confirmation page remains available while provider reads recover.
     }
-    const listName = claim.kind === 'sun' ? 'sun-sign daily' : 'personal daily brief';
     send(res, 200, dailyEmailPage(
       'Unsubscribe?',
-      `This stops the ${listName} for ${maskedEmail(email)}. One click, effective immediately. Any other daily tier for this address stops too; the weekly stays separate.`,
+      `This stops the ${listName} for ${maskedEmail(email)}. One click, effective immediately.`,
       { action: '/api/email/unsubscribe', token, label: 'Confirm unsubscribe' },
     ));
     return;
   }
 
-  // Both server-owned consent tiers are revoked atomically before touching
-  // provider routing metadata. After this commits, no provider/Auth failure
-  // can leave either daily sender authorized.
+  // Revoke only the list named in the signed claim before touching provider
+  // routing metadata. A chart-tier stop deliberately leaves the Sun tier
+  // intact, so its already-confirmed delivery can resume on the next edition.
   try {
-    await revokeDailyEmailPreferences(claim.recipientHash);
+    await revokeDailyEmailPreference(claim.recipientHash, claim);
   } catch {
     send(res, 502, dailyEmailPage(
       'Please try again',
-      'We could not stop the daily emails just now. Your link will keep working.',
+      `We could not stop the ${listName} just now. Your link will keep working.`,
     ));
     return;
   }
 
   try {
     if (claim.kind === 'sun') {
-      await removeDailySunSegments({ contactId: claim.contactId });
-    } else {
-      if (claim.contactId) {
-        await removeDailySunSegments({ contactId: claim.contactId });
-      } else {
-        const currentEmail = await currentEmailForClaim(claim.userId, claim.recipientHash);
-        if (currentEmail) await removeDailySunSegments({ email: currentEmail });
-      }
+      const currentEmail = await currentSunEmailForClaim(claim.contactId, claim.recipientHash);
+      if (currentEmail) await removeDailySunSegments({ contactId: claim.contactId });
     }
   } catch {
     // Resend segments never grant consent. The authoritative transaction above
-    // already stopped both senders, so a provider outage must not turn a
-    // successful unsubscribe back into an active chart preference.
+    // already stopped the Sun tier, so provider cleanup cannot turn a
+    // successful unsubscribe back into active consent.
   }
   send(res, 200, dailyEmailPage(
     'Done — you’re unsubscribed.',
-    'No more daily emails for this address. If you change your mind, restart below — a fresh confirmation email comes first.',
-    { kind: 'link', href: '/horoscopes/#daily-email', label: 'Restart the daily' },
+    `No more ${listName}. If you change your mind, restart below — a fresh confirmation email comes first.`,
+    {
+      kind: 'link',
+      href: claim.kind === 'sun' ? '/horoscopes/#daily-email' : '/profile/#daily-brief',
+      label: 'Restart the daily',
+    },
   ));
 }

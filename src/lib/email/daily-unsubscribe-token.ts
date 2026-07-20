@@ -4,13 +4,12 @@ const TOKEN_CONTEXT = 'zodiacs-daily-email-unsubscribe-v1';
 
 export type DailyUnsubscribeClaim =
   | { kind: 'sun'; contactId: string; recipientHash: string }
-  | { kind: 'chart'; userId: string; recipientHash: string; contactId?: string };
+  | { kind: 'chart'; userId: string; recipientHash: string };
 
 interface SerializedClaim {
   k: 's' | 'c';
   i: string;
   h: string;
-  r?: string;
 }
 
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
@@ -20,7 +19,7 @@ const RECIPIENT_HASH = /^[0-9a-f]{64}$/;
 function serialize(claim: DailyUnsubscribeClaim): SerializedClaim {
   return claim.kind === 'sun'
     ? { k: 's', i: claim.contactId, h: claim.recipientHash }
-    : { k: 'c', i: claim.userId, h: claim.recipientHash, ...(claim.contactId ? { r: claim.contactId } : {}) };
+    : { k: 'c', i: claim.userId, h: claim.recipientHash };
 }
 
 function signature(payload: string, secret: string): string {
@@ -43,8 +42,7 @@ export function createDailyUnsubscribeToken(
   const serialized = serialize(claim);
   if ((serialized.k === 's' && !CONTACT_ID.test(serialized.i))
     || (serialized.k === 'c' && !UUID.test(serialized.i))
-    || !RECIPIENT_HASH.test(serialized.h)
-    || (serialized.r !== undefined && !CONTACT_ID.test(serialized.r))) {
+    || !RECIPIENT_HASH.test(serialized.h)) {
     throw new Error('Invalid daily email unsubscribe subject.');
   }
   const payload = Buffer.from(JSON.stringify(serialized)).toString('base64url');
@@ -64,19 +62,16 @@ export function verifyDailyUnsubscribeToken(
     if (typeof parsed.h !== 'string' || !RECIPIENT_HASH.test(parsed.h)) return null;
     if (parsed.k === 's'
       && typeof parsed.i === 'string'
-      && CONTACT_ID.test(parsed.i)
-      && parsed.r === undefined) {
+      && CONTACT_ID.test(parsed.i)) {
       return { kind: 'sun', contactId: parsed.i, recipientHash: parsed.h };
     }
     if (parsed.k === 'c'
       && typeof parsed.i === 'string'
-      && UUID.test(parsed.i)
-      && (parsed.r === undefined || (typeof parsed.r === 'string' && CONTACT_ID.test(parsed.r)))) {
+      && UUID.test(parsed.i)) {
       return {
         kind: 'chart',
         userId: parsed.i,
         recipientHash: parsed.h,
-        ...(parsed.r ? { contactId: parsed.r } : {}),
       };
     }
     return null;

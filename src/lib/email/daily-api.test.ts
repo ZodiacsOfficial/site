@@ -503,7 +503,7 @@ describe('daily chart preference', () => {
 });
 
 describe('daily unsubscribe', () => {
-  it('lets scanners inspect GET and removes only daily sign segments on POST', async () => {
+  it('keeps GET scanner-safe and revokes only the Sun tier on POST', async () => {
     configure();
     const token = createDailyUnsubscribeToken({
       kind: 'sun', contactId: CONTACT_ID, recipientHash: RECIPIENT_HASH,
@@ -529,6 +529,8 @@ describe('daily unsubscribe', () => {
     expect(getResponse.statusCode).toBe(200);
     expect(getResponse.body).toContain('Confirm unsubscribe');
     expect(getResponse.body).toContain('p…@example.com');
+    expect(getResponse.body).toContain('This stops the sun-sign daily');
+    expect(getResponse.body).not.toContain('other daily tier');
     expect(fetcher).toHaveBeenCalledOnce();
     expect(fetcher.mock.calls[0]?.[1]?.method).toBeUndefined();
     fetcher.mockClear();
@@ -537,7 +539,7 @@ describe('daily unsubscribe', () => {
     const postResponse = responseRecorder();
     await unsubscribeHandler({ method: 'POST', query: { token } }, postResponse);
     expect(postResponse.statusCode).toBe(200);
-    expect(fetcher).toHaveBeenCalledTimes(4);
+    expect(fetcher).toHaveBeenCalledTimes(5);
     const deleted = fetcher.mock.calls
       .filter(([, init]) => init?.method === 'DELETE')
       .map(([url]) => String(url));
@@ -545,20 +547,22 @@ describe('daily unsubscribe', () => {
     expect(deleted).toContain(`https://api.resend.com/contacts/${CONTACT_ID}/segments/${SEGMENTS.libra}`);
     expect(deleted.some((url) => url.includes('unrelated_weekly_segment'))).toBe(false);
     const revoked = fetcher.mock.calls.find(([url, init]) => (
-      String(url).endsWith('/rest/v1/rpc/revoke_daily_email_preferences') && init?.method === 'POST'
+      String(url).endsWith('/rest/v1/rpc/revoke_daily_email_preference') && init?.method === 'POST'
     ));
     expect(JSON.parse(String(revoked?.[1]?.body))).toEqual({
       candidate_recipient_hash: RECIPIENT_HASH,
+      candidate_tier: 'sun_sign',
+      candidate_user_id: null,
     });
+    expect(postResponse.body).toContain('No more sun-sign daily.');
   });
 
-  it('uses a chart link to revoke a matching sun tier and chart preference', async () => {
+  it('uses a chart link to revoke only the personal tier', async () => {
     configure();
     const token = createDailyUnsubscribeToken({
       kind: 'chart',
       userId: USER_ID,
       recipientHash: RECIPIENT_HASH,
-      contactId: CONTACT_ID,
     }, SECRET);
     const fetcher = vi.fn(async (input: string | URL | Request, init?: RequestInit) => {
       const url = String(input);
@@ -571,13 +575,17 @@ describe('daily unsubscribe', () => {
     const response = responseRecorder();
     await unsubscribeHandler({ method: 'POST', query: { token } }, response);
     expect(response.statusCode).toBe(200);
-    expect(fetcher.mock.calls.some(([url, init]) => (
-      String(url).includes(`/contacts/${CONTACT_ID}/segments/${SEGMENTS.libra}`) && init?.method === 'DELETE'
-    ))).toBe(true);
-    expect(fetcher.mock.calls.some(([url, init]) => (
-      String(url).endsWith('/rest/v1/rpc/revoke_daily_email_preferences') && init?.method === 'POST'
-    ))).toBe(true);
+    expect(fetcher).toHaveBeenCalledOnce();
+    expect(fetcher.mock.calls[0]?.[0]).toContain('/rest/v1/rpc/revoke_daily_email_preference');
+    expect(JSON.parse(String(fetcher.mock.calls[0]?.[1]?.body))).toEqual({
+      candidate_recipient_hash: RECIPIENT_HASH,
+      candidate_tier: 'chart',
+      candidate_user_id: USER_ID,
+    });
+    expect(fetcher.mock.calls.some(([url]) => String(url).startsWith('https://api.resend.com'))).toBe(false);
     expect(fetcher.mock.calls.some(([url]) => String(url).includes('/auth/v1/admin/users/'))).toBe(false);
+    expect(response.body).toContain('No more personal daily brief.');
+    expect(response.body).toContain('/profile/#daily-brief');
   });
 
   it('never exposes or unsubscribes a changed account email through an old chart link', async () => {
@@ -606,21 +614,30 @@ describe('daily unsubscribe', () => {
     expect(postResponse.statusCode).toBe(200);
     expect(fetcher.mock.calls.some(([url]) => String(url).startsWith('https://api.resend.com'))).toBe(false);
     expect(fetcher.mock.calls.some(([url, init]) => (
-      String(url).endsWith('/rest/v1/rpc/revoke_daily_email_preferences') && init?.method === 'POST'
+      String(url).endsWith('/rest/v1/rpc/revoke_daily_email_preference') && init?.method === 'POST'
     ))).toBe(true);
+    const revoke = fetcher.mock.calls.find(([url]) => (
+      String(url).endsWith('/rest/v1/rpc/revoke_daily_email_preference')
+    ));
+    expect(JSON.parse(String(revoke?.[1]?.body))).toMatchObject({
+      candidate_tier: 'chart',
+      candidate_user_id: USER_ID,
+    });
   });
 
-  it('keeps both daily tiers stopped when provider identity lookup is unavailable', async () => {
+  it('keeps the Sun revocation authoritative when provider cleanup is unavailable', async () => {
     configure();
     const token = createDailyUnsubscribeToken({
-      kind: 'chart', userId: USER_ID, recipientHash: RECIPIENT_HASH,
+      kind: 'sun', contactId: CONTACT_ID, recipientHash: RECIPIENT_HASH,
     }, SECRET);
     const fetcher = vi.fn(async (input: string | URL | Request, init?: RequestInit) => {
       const url = String(input);
-      if (url.endsWith('/rest/v1/rpc/revoke_daily_email_preferences') && init?.method === 'POST') {
+      if (url.endsWith('/rest/v1/rpc/revoke_daily_email_preference') && init?.method === 'POST') {
         return json(null, 200);
       }
-      if (url.includes(`/auth/v1/admin/users/${USER_ID}`)) return json({ error: 'unavailable' }, 503);
+      if (url.endsWith(`/${CONTACT_ID}/segments`) && !init?.method) {
+        return json({ error: 'unavailable' }, 503);
+      }
       throw new Error(`Unexpected request: ${url}`);
     });
     vi.stubGlobal('fetch', fetcher);
@@ -628,7 +645,66 @@ describe('daily unsubscribe', () => {
     await unsubscribeHandler({ method: 'POST', query: { token } }, response);
     expect(response.statusCode).toBe(200);
     expect(fetcher).toHaveBeenCalledTimes(2);
-    expect(fetcher.mock.calls[0]?.[0]).toContain('/rest/v1/rpc/revoke_daily_email_preferences');
+    expect(fetcher.mock.calls[0]?.[0]).toContain('/rest/v1/rpc/revoke_daily_email_preference');
+    expect(JSON.parse(String(fetcher.mock.calls[0]?.[1]?.body))).toMatchObject({
+      candidate_tier: 'sun_sign',
+      candidate_user_id: null,
+    });
     expect(response.body).toContain('Done');
+  });
+
+  it('revokes a valid list while enrollment and provider configuration are disabled', async () => {
+    configure();
+    delete process.env.EMAIL_PROVIDER;
+    delete process.env.RESEND_API_KEY;
+    delete process.env.RESEND_DAILY_SIGN_SEGMENTS_JSON;
+    process.env.DAILY_EMAIL_ENABLED = '0';
+    const token = createDailyUnsubscribeToken({
+      kind: 'chart', userId: USER_ID, recipientHash: RECIPIENT_HASH,
+    }, SECRET);
+    const fetcher = vi.fn(async (input: string | URL | Request, init?: RequestInit) => {
+      const url = String(input);
+      if (url.endsWith('/rest/v1/rpc/revoke_daily_email_preference') && init?.method === 'POST') {
+        return json(null, 200);
+      }
+      throw new Error(`Unexpected request: ${url}`);
+    });
+    vi.stubGlobal('fetch', fetcher);
+    const response = responseRecorder();
+    await unsubscribeHandler({ method: 'POST', query: { token } }, response);
+    expect(response.statusCode).toBe(200);
+    expect(fetcher).toHaveBeenCalledOnce();
+    expect(response.body).toContain('No more personal daily brief.');
+  });
+
+  it('does not reveal or clean a recycled Sun provider contact', async () => {
+    configure();
+    const token = createDailyUnsubscribeToken({
+      kind: 'sun', contactId: CONTACT_ID, recipientHash: RECIPIENT_HASH,
+    }, SECRET);
+    const fetcher = vi.fn(async (input: string | URL | Request, init?: RequestInit) => {
+      const url = String(input);
+      if (url.endsWith(`/contacts/${CONTACT_ID}`) && !init?.method) {
+        return json({ id: CONTACT_ID, email: 'someone-else@example.com' });
+      }
+      if (url.endsWith('/rest/v1/rpc/revoke_daily_email_preference') && init?.method === 'POST') {
+        return json(null, 200);
+      }
+      throw new Error(`Unexpected request: ${url}`);
+    });
+    vi.stubGlobal('fetch', fetcher);
+
+    const getResponse = responseRecorder();
+    await unsubscribeHandler({ method: 'GET', query: { token } }, getResponse);
+    expect(getResponse.statusCode).toBe(200);
+    expect(getResponse.body).toContain('this address');
+    expect(getResponse.body).not.toContain('someone-else');
+    fetcher.mockClear();
+
+    const postResponse = responseRecorder();
+    await unsubscribeHandler({ method: 'POST', query: { token } }, postResponse);
+    expect(postResponse.statusCode).toBe(200);
+    expect(fetcher).toHaveBeenCalledTimes(2);
+    expect(fetcher.mock.calls.some(([url]) => String(url).endsWith(`/${CONTACT_ID}/segments`))).toBe(false);
   });
 });
