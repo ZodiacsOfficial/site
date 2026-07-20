@@ -1,9 +1,30 @@
+import { createHash } from 'node:crypto';
 import { createEmailSubscriptionAdapter } from '../../src/lib/email/provider.js';
 import { hasEmailCaptureProvider } from '../../src/lib/email/config.js';
 import { verifyEmailOptInToken } from '../../src/lib/email/opt-in-token.js';
 import { requestHeader } from '../../src/lib/email/request.js';
 import { emailStatusPage } from '../../src/lib/email/server-page.js';
 import type { Locale } from '../../src/lib/i18n/core';
+import { dailyEmailFeatureEnabled, hasDailyChartEmailProvider, hasDailySunEmailProvider } from '../../src/lib/email/daily-config.js';
+import { verifyDailyChartOptInToken } from '../../src/lib/email/daily-chart-token.js';
+import { dailyEmailPage } from '../../src/lib/email/daily-page.js';
+import {
+  consumePendingDailyChartPreference,
+  getDailyChartPreference,
+  getOwnedDailyChart,
+  type DailyChartPreference,
+} from '../../src/lib/email/daily-server.js';
+import { verifyDailySunOptInToken } from '../../src/lib/email/daily-sun-token.js';
+import {
+  claimPendingDailySunConfirmation,
+  completeClaimedDailySunConfirmation,
+  isCurrentPendingDailySunConfirmation,
+  releaseClaimedDailySunConfirmation,
+} from '../../src/lib/email/daily-sun-server.js';
+import { getAdminEmailUser } from '../../src/lib/email/daily-server.js';
+import { dailyRecipientHash } from '../../src/lib/daily-email/identity.js';
+import { removeDailySunSegments } from '../../src/lib/email/daily-resend.js';
+import { signBySlug } from '../../src/lib/signs.js';
 
 function sendJson(res: any, status: number, body: Record<string, string | boolean>): void {
   res.statusCode = status;
@@ -47,6 +68,18 @@ function sendUnavailable(req: any, res: any, locale: Locale): void {
   else send(res, 503, emailStatusPage(locale, 'emailCaptureErrorTitle', 'emailCaptureError'));
 }
 
+function matchesPendingChartRequest(
+  preference: DailyChartPreference | null,
+  claim: NonNullable<ReturnType<typeof verifyDailyChartOptInToken>>,
+  token: string,
+): boolean {
+  return Boolean(preference?.pending
+    && preference.chartId === claim.chartId
+    && preference.recipientHash === claim.recipientHash
+    && preference.timezone === claim.timezone
+    && preference.confirmationTokenHash === createHash('sha256').update(token).digest('hex'));
+}
+
 export default async function handler(req: any, res: any): Promise<void> {
   if (req.method !== 'GET' && req.method !== 'POST') {
     res.setHeader('Allow', 'GET, POST');
@@ -58,31 +91,211 @@ export default async function handler(req: any, res: any): Promise<void> {
     : tokenFromBody(req.body);
   const secret = process.env.EMAIL_CONFIRM_SECRET ?? '';
   const claim = secret ? verifyEmailOptInToken(token, secret) : null;
-  if (!hasEmailCaptureProvider(process.env)) {
-    sendUnavailable(req, res, claim?.locale ?? 'en');
+  const daily = dailyEmailFeatureEnabled(process.env);
+  const chartClaim = daily && secret ? verifyDailyChartOptInToken(token, secret) : null;
+  const sunClaim = daily && secret ? verifyDailySunOptInToken(token, secret) : null;
+  const configured = chartClaim
+    ? hasDailyChartEmailProvider(process.env)
+    : sunClaim
+      ? hasDailySunEmailProvider(process.env)
+      : claim
+        ? hasEmailCaptureProvider(process.env)
+        : daily
+          ? hasDailySunEmailProvider(process.env)
+          : hasEmailCaptureProvider(process.env);
+  if (!configured) {
+    if (daily) {
+      if (wantsJson(req)) sendJson(res, 503, { error: 'disabled' });
+      else send(res, 503, dailyEmailPage('Not available yet', 'Daily email is not ready just yet.'));
+    } else sendUnavailable(req, res, claim?.locale ?? 'en');
     return;
   }
-  if (!claim) {
-    send(res, 400, emailStatusPage('en', 'emailConfirmInvalidTitle', 'emailConfirmInvalidBody'));
+  if (!claim && !chartClaim && !sunClaim) {
+    if (daily) send(res, 400, dailyEmailPage(
+      'This link is not valid.',
+      'It may have expired — links work for 48 hours — or already been used. Request a fresh one from any daily signup on the site.',
+      { kind: 'link', href: '/horoscopes/#daily-email', label: 'Request a new link' },
+    ));
+    else send(res, 400, emailStatusPage('en', 'emailConfirmInvalidTitle', 'emailConfirmInvalidBody'));
     return;
   }
 
   // GET never changes state: link scanners can safely inspect it. The human
   // confirms with the POST button rendered below.
   if (req.method === 'GET') {
-    send(res, 200, emailStatusPage(claim.locale, 'emailConfirmTitle', 'emailConfirmBody', { token }));
+    if (chartClaim || sunClaim) {
+      let chartName = 'your saved chart';
+      if (chartClaim) {
+        try {
+          const preference = await getDailyChartPreference(chartClaim.userId);
+          if (!matchesPendingChartRequest(preference, chartClaim, token)) {
+            send(res, 400, dailyEmailPage(
+              'This link is not valid.',
+              'It may have expired — links work for 48 hours — or already been used. Request a fresh one from any daily signup on the site.',
+              { kind: 'link', href: '/profile/#daily-brief', label: 'Request a new link' },
+            ));
+            return;
+          }
+          chartName = (await getOwnedDailyChart(chartClaim.userId, chartClaim.chartId))?.name
+            ?? chartName;
+        } catch {
+          // The scanner-safe page remains useful; ownership is revalidated on POST.
+        }
+      }
+      if (sunClaim) {
+        try {
+          const current = await isCurrentPendingDailySunConfirmation(
+            sunClaim.email,
+            sunClaim.sign,
+            token,
+          );
+          if (!current) {
+            send(res, 400, dailyEmailPage(
+              'This link is not valid.',
+              'It may have expired — links work for 48 hours — or already been used. Request a fresh one from any daily signup on the site.',
+              { kind: 'link', href: '/horoscopes/#daily-email', label: 'Request a new link' },
+            ));
+            return;
+          }
+        } catch {
+          send(res, 502, dailyEmailPage('Please try again', 'We could not check your daily subscription just now.'));
+          return;
+        }
+      }
+      send(res, 200, dailyEmailPage(
+        'One last check.',
+        chartClaim
+          ? `Confirm this subscription to start the personal daily brief for ${chartName}. Until you do, nothing is sent.`
+          : 'Confirm this subscription to start the free daily forecast. Until you do, nothing is active.',
+        { action: '/api/email/confirm', token, label: 'Confirm subscription' },
+      ));
+    }
+    else if (claim) send(res, 200, emailStatusPage(claim.locale, 'emailConfirmTitle', 'emailConfirmBody', { token }));
+    return;
+  }
+
+  if (chartClaim) {
+    try {
+      const preference = await getDailyChartPreference(chartClaim.userId);
+      if (!matchesPendingChartRequest(preference, chartClaim, token)) {
+        send(res, 409, dailyEmailPage(
+          'This link is not valid.',
+          'It may have expired — links work for 48 hours — or already been used. Request a fresh one from your profile.',
+          { kind: 'link', href: '/profile/#daily-brief', label: 'Request a new link' },
+        ));
+        return;
+      }
+      const chart = await getOwnedDailyChart(chartClaim.userId, chartClaim.chartId);
+      if (!chart) {
+        send(res, 409, dailyEmailPage(
+          'That chart is no longer available',
+          'Choose another saved chart from your profile if you still want a personal daily brief.',
+        ));
+        return;
+      }
+      const user = await getAdminEmailUser(chartClaim.userId);
+      const currentHash = user
+        ? dailyRecipientHash(user.email, process.env.DAILY_EMAIL_RECIPIENT_HASH_SECRET ?? '')
+        : null;
+      if (!currentHash || currentHash !== chartClaim.recipientHash) {
+        send(res, 409, dailyEmailPage(
+          'Request a fresh link',
+          'Your account email changed after this link was sent, so nothing was turned on.',
+        ));
+        return;
+      }
+      const consumed = await consumePendingDailyChartPreference(
+        chartClaim.userId,
+        chartClaim.chartId,
+        chartClaim.recipientHash,
+        createHash('sha256').update(token).digest('hex'),
+        chartClaim.timezone,
+      );
+      if (!consumed) {
+        send(res, 409, dailyEmailPage(
+          'This link is not valid.',
+          'It may have expired — links work for 48 hours — or already been used. Request a fresh one from your profile.',
+          { kind: 'link', href: '/profile/#daily-brief', label: 'Request a new link' },
+        ));
+        return;
+      }
+      send(res, 200, dailyEmailPage(
+        'Subscription confirmed.',
+        `The personal daily brief for ${chart.name} starts tomorrow morning. Manage it anytime in your profile.`,
+      ));
+    } catch {
+      send(res, 502, dailyEmailPage('Please try again', 'We could not save your daily brief just now.'));
+    }
     return;
   }
 
   const adapter = createEmailSubscriptionAdapter(process.env);
   if (!adapter?.confirm) {
-    send(res, 503, emailStatusPage(claim.locale, 'emailCaptureErrorTitle', 'emailCaptureError'));
+    if (sunClaim) send(res, 503, dailyEmailPage('Not available yet', 'Daily email is not ready just yet.'));
+    else send(res, 503, emailStatusPage(claim!.locale, 'emailCaptureErrorTitle', 'emailCaptureError'));
+    return;
+  }
+  if (sunClaim) {
+    let claimed = false;
+    let providerConfirmed = false;
+    try {
+      claimed = await claimPendingDailySunConfirmation(
+        sunClaim.email,
+        sunClaim.sign,
+        token,
+      );
+      if (!claimed) {
+        send(res, 409, dailyEmailPage(
+          'This link is not valid.',
+          'It may have expired — links work for 48 hours — or already been used. Request a fresh one from any daily signup on the site.',
+          { kind: 'link', href: '/horoscopes/#daily-email', label: 'Request a new link' },
+        ));
+        return;
+      }
+
+      await adapter.confirm(sunClaim.email, sunClaim.sign, 'daily');
+      providerConfirmed = true;
+      const completed = await completeClaimedDailySunConfirmation(
+        sunClaim.email,
+        sunClaim.sign,
+        token,
+      );
+      if (!completed) {
+        await removeDailySunSegments({ email: sunClaim.email });
+        send(res, 409, dailyEmailPage(
+          'This link is not valid.',
+          'A newer request or unsubscribe replaced it, so nothing was turned on.',
+          { kind: 'link', href: '/horoscopes/#daily-email', label: 'Request a new link' },
+        ));
+        return;
+      }
+      send(res, 200, dailyEmailPage(
+        'Subscription confirmed.',
+        `Your ${signBySlug(sunClaim.sign).name} daily starts tomorrow morning. Every email includes an unsubscribe link.`,
+      ));
+    } catch {
+      if (providerConfirmed) {
+        try {
+          await removeDailySunSegments({ email: sunClaim.email });
+        } catch {
+          // The failure remains visible; a fresh unsubscribe retries the same fail-closed removal.
+        }
+      } else if (claimed) {
+        try {
+          await releaseClaimedDailySunConfirmation(sunClaim.email, sunClaim.sign, token);
+        } catch {
+          // A new signup safely replaces an interrupted claim.
+        }
+      }
+      send(res, 502, dailyEmailPage('Please try again', 'We could not save your daily brief just now.'));
+    }
     return;
   }
   try {
-    await adapter.confirm(claim.email, claim.sign ?? undefined);
-    send(res, 200, emailStatusPage(claim.locale, 'emailConfirmedTitle', 'emailConfirmedBody'));
+    await adapter.confirm(claim!.email, claim!.sign ?? undefined, 'weekly');
+    send(res, 200, emailStatusPage(claim!.locale, 'emailConfirmedTitle', 'emailConfirmedBody'));
   } catch {
-    send(res, 502, emailStatusPage(claim.locale, 'emailCaptureErrorTitle', 'emailCaptureError'));
+    if (daily) send(res, 502, dailyEmailPage('Please try again', 'We could not save your daily brief just now.'));
+    else send(res, 502, emailStatusPage(claim!.locale, 'emailCaptureErrorTitle', 'emailCaptureError'));
   }
 }

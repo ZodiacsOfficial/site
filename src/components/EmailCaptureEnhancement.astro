@@ -1,0 +1,188 @@
+<script>
+  type AnalyticsWindow = Window & {
+    zodiacsAnalytics?: { track?: (name: string, props: Record<string, string>) => void };
+  };
+
+  function trackCaptureView(surface: HTMLElement) {
+    if (surface.dataset.viewTracked === 'true') return;
+    surface.dataset.viewTracked = 'true';
+    (window as AnalyticsWindow).zodiacsAnalytics?.track?.('email_capture_viewed', {
+      placement: surface.dataset.placement ?? 'unknown',
+    });
+  }
+
+  const captureSurfaces = document.querySelectorAll<HTMLElement>('[data-email-capture-shell]');
+  if ('IntersectionObserver' in window) {
+    const captureObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        trackCaptureView(entry.target as HTMLElement);
+        observer.unobserve(entry.target);
+      });
+    }, { threshold: 0.2 });
+    captureSurfaces.forEach((surface) => captureObserver.observe(surface));
+  } else {
+    captureSurfaces.forEach((surface) => {
+      if (!surface.hidden) trackCaptureView(surface);
+    });
+  }
+
+  function preselectCaptureSign(surface: HTMLElement, sign: string | undefined) {
+    if (!sign) return;
+    const radios = Array.from(surface.querySelectorAll<HTMLInputElement>('input[name="sign"]'));
+    const radio = radios.find((input) => input.value === sign);
+    if (!radio) return;
+    surface.dataset.personalizedSign = 'true';
+    radios.forEach((input) => {
+      input.checked = input === radio;
+      input.defaultChecked = input === radio;
+    });
+    renderCaptureSign(surface, radio, true);
+  }
+
+  function fillSignTemplate(template: string | undefined, signName: string) {
+    return (template ?? '').replace('{sign}', signName);
+  }
+
+  function renderCaptureSign(
+    surface: HTMLElement,
+    radio: HTMLInputElement | undefined,
+    collapse: boolean,
+  ) {
+    const title = surface.querySelector<HTMLElement>('[data-email-title]');
+    const summary = surface.querySelector<HTMLElement>('[data-email-sign-summary]');
+    const summaryCopy = surface.querySelector<HTMLElement>('[data-email-sign-summary-copy]');
+    const chooser = surface.querySelector<HTMLFieldSetElement>('[data-email-signs]');
+    const change = surface.querySelector<HTMLButtonElement>('[data-email-sign-change]');
+    if (!title || !summary || !summaryCopy || !chooser || !change) return;
+
+    const name = radio?.value ? radio.dataset.signName : undefined;
+    if (!name) {
+      title.textContent = title.dataset.defaultTitle ?? '';
+      summary.hidden = true;
+      chooser.hidden = false;
+      change.setAttribute('aria-expanded', 'true');
+      return;
+    }
+
+    title.textContent = fillSignTemplate(title.dataset.personalTitle, name);
+    summaryCopy.textContent = fillSignTemplate(summary.dataset.summaryTemplate, name);
+    summary.hidden = false;
+    chooser.hidden = collapse;
+    change.setAttribute('aria-expanded', String(!collapse));
+  }
+
+  function setupSignChooser(surface: HTMLElement) {
+    if (surface.dataset.signChooserEnhanced === 'true') return;
+    const chooser = surface.querySelector<HTMLFieldSetElement>('[data-email-signs]');
+    const summary = surface.querySelector<HTMLElement>('[data-email-sign-summary]');
+    const change = surface.querySelector<HTMLButtonElement>('[data-email-sign-change]');
+    if (!chooser || !summary || !change) return;
+    surface.dataset.signChooserEnhanced = 'true';
+
+    change.addEventListener('click', () => {
+      const selected = chooser.querySelector<HTMLInputElement>('input[name="sign"]:checked');
+      const opening = chooser.hidden;
+      renderCaptureSign(surface, selected ?? undefined, !opening);
+      if (opening) requestAnimationFrame(() => selected?.focus());
+    });
+
+    chooser.addEventListener('change', (event) => {
+      const radio = (event.target as HTMLElement).closest<HTMLInputElement>('input[name="sign"]');
+      if (!radio || surface.dataset.personalizedSign !== 'true') return;
+      const radios = Array.from(chooser.querySelectorAll<HTMLInputElement>('input[name="sign"]'));
+      radios.forEach((input) => { input.defaultChecked = input === radio; });
+      renderCaptureSign(surface, radio, Boolean(radio.value));
+      if (radio.value) change.focus({ preventScroll: true });
+    });
+
+    chooser.addEventListener('keydown', (event) => {
+      if (event.key !== 'Escape' || surface.dataset.personalizedSign !== 'true') return;
+      const selected = chooser.querySelector<HTMLInputElement>('input[name="sign"]:checked');
+      if (!selected?.value) return;
+      event.preventDefault();
+      renderCaptureSign(surface, selected, true);
+      change.focus({ preventScroll: true });
+    });
+  }
+
+  function revealChartCapture(event: Event) {
+    const detail = (event as CustomEvent<{ mode?: string; sunSign?: string }>).detail;
+    const mode = detail?.mode;
+    if (mode !== 'full') return;
+    document.querySelectorAll<HTMLElement>('[data-reveal-on-chart="true"]').forEach((surface) => {
+      preselectCaptureSign(surface, detail?.sunSign);
+      surface.hidden = false;
+    });
+  }
+
+  window.addEventListener('zodiacs:chart-computed', revealChartCapture);
+
+  captureSurfaces.forEach(setupSignChooser);
+
+  document.querySelectorAll<HTMLFormElement>('[data-email-capture]').forEach((form) => {
+    if (form.dataset.enhanced === 'true') return;
+    form.dataset.enhanced = 'true';
+    form.addEventListener('reset', () => {
+      queueMicrotask(() => {
+        const surface = form.closest<HTMLElement>('[data-email-capture-shell]');
+        if (!surface || surface.dataset.personalizedSign !== 'true') return;
+        const selected = form.querySelector<HTMLInputElement>('input[name="sign"]:checked');
+        renderCaptureSign(surface, selected ?? undefined, Boolean(selected?.value));
+      });
+    });
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const button = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+      const status = form.querySelector<HTMLElement>('[data-email-status]');
+      if (!button || !status) return;
+      const email = form.querySelector<HTMLInputElement>('input[name="email"]');
+      const selectedSign = form.querySelector<HTMLInputElement>('input[name="sign"]:checked');
+      const surface = form.closest<HTMLElement>('[data-email-capture-shell]');
+      if (!email?.validity.valid) {
+        status.textContent = form.querySelector<HTMLElement>('[data-invalid-email-copy]')?.textContent ?? '';
+        email?.reportValidity();
+        email?.focus();
+        return;
+      }
+      if (surface?.dataset.dailyCapture === 'true' && !selectedSign?.value) {
+        status.textContent = form.querySelector<HTMLElement>('[data-missing-sign-copy]')?.textContent ?? '';
+        const chooser = form.querySelector<HTMLFieldSetElement>('[data-email-signs]');
+        if (chooser) chooser.hidden = false;
+        form.querySelector<HTMLInputElement>('input[name="sign"]')?.focus();
+        return;
+      }
+      if (!form.reportValidity()) return;
+      const idle = button.dataset.label ?? button.textContent ?? '';
+      button.disabled = true;
+      button.textContent = button.dataset.busyLabel ?? idle;
+      status.textContent = '';
+      try {
+        const response = await fetch(form.action, {
+          method: 'POST',
+          headers: { Accept: 'application/json' },
+          body: new URLSearchParams(new FormData(form) as unknown as Record<string, string>),
+        });
+        if (!response.ok) throw new Error('subscription unavailable');
+        status.textContent = form.querySelector<HTMLElement>('[data-success-copy]')?.textContent ?? '';
+        if (surface?.dataset.dailyCapture === 'true' && selectedSign?.value) {
+          const radios = Array.from(form.querySelectorAll<HTMLInputElement>('input[name="sign"]'));
+          radios.forEach((input) => { input.defaultChecked = input === selectedSign; });
+          surface.dataset.personalizedSign = 'true';
+        }
+        form.reset();
+        if (surface?.dataset.dailyCapture === 'true' && selectedSign?.value) {
+          renderCaptureSign(surface, selectedSign, true);
+        }
+        const placement = form.dataset.placement ?? 'unknown';
+        (window as AnalyticsWindow)
+          .zodiacsAnalytics?.track?.('email_subscribed', { placement });
+      } catch {
+        status.textContent = form.querySelector<HTMLElement>('[data-error-copy]')?.textContent ?? '';
+      } finally {
+        button.disabled = false;
+        button.textContent = idle;
+      }
+    });
+  });
+</script>

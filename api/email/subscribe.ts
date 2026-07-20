@@ -2,6 +2,8 @@ import { createEmailSubscriptionAdapter } from '../../src/lib/email/provider.js'
 import { parseEmailSubscription } from '../../src/lib/email/input.js';
 import { isAllowedEmailCaptureRequest, requestHeader } from '../../src/lib/email/request.js';
 import { emailStatusPage } from '../../src/lib/email/server-page.js';
+import { dailyEmailFeatureEnabled, hasDailySunEmailProvider } from '../../src/lib/email/daily-config.js';
+import { dailyEmailPage } from '../../src/lib/email/daily-page.js';
 
 function sendJson(res: any, status: number, body: Record<string, string | boolean>): void {
   res.statusCode = status;
@@ -43,6 +45,19 @@ export default async function handler(req: any, res: any): Promise<void> {
     return;
   }
 
+  const daily = dailyEmailFeatureEnabled(process.env) && input.locale === 'en';
+  if (daily && !input.sign) {
+    if (wantsJson(req)) sendJson(res, 400, { error: 'sign_required' });
+    else sendHtml(res, 400, dailyEmailPage('Choose your sign', 'A sign is needed for the daily horoscope.'));
+    return;
+  }
+
+  if (daily && !hasDailySunEmailProvider(process.env)) {
+    if (wantsJson(req)) sendJson(res, 503, { error: 'disabled' });
+    else sendHtml(res, 503, dailyEmailPage('Not available yet', 'Daily email is not ready to join just yet.'));
+    return;
+  }
+
   const adapter = createEmailSubscriptionAdapter(process.env, fetch, input.locale);
   if (!adapter) {
     if (wantsJson(req)) sendJson(res, 503, { error: 'disabled' });
@@ -55,9 +70,17 @@ export default async function handler(req: any, res: any): Promise<void> {
     // and optional self-declared sign ever cross the provider boundary.
     if (!input.honeypot) await adapter.subscribe(input.email, input.sign);
     if (wantsJson(req)) sendJson(res, 200, { ok: true, pending: true });
+    else if (daily) sendHtml(res, 200, dailyEmailPage(
+      'Check your inbox',
+      'We sent a confirmation link. Your daily brief starts only after you confirm.',
+    ));
     else sendHtml(res, 200, emailStatusPage(input.locale, 'emailPendingTitle', 'emailPendingBody'));
   } catch {
     if (wantsJson(req)) sendJson(res, 502, { error: 'unavailable' });
+    else if (daily) sendHtml(res, 502, dailyEmailPage(
+      'Please try again',
+      'We could not send the confirmation email just now.',
+    ));
     else sendHtml(res, 502, emailStatusPage(input.locale, 'emailCaptureErrorTitle', 'emailCaptureError'));
   }
 }

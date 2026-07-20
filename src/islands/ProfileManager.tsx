@@ -3,7 +3,7 @@
  * saved charts from localStorage, supports rename/delete, and frames
  * the local-first sync model honestly.
  */
-import { useEffect, useState } from 'preact/hooks';
+import { useEffect, useMemo, useState } from 'preact/hooks';
 import { deleteChart, renameChart } from '../lib/profile/store';
 import { deletePair, loadPairs, pairSideLabels, prunePairs } from '../lib/profile/pairs';
 import type { SavedPair } from '../lib/profile/pairs';
@@ -15,6 +15,18 @@ import type { Session } from '@supabase/supabase-js';
 import type * as Sync from '../lib/profile/sync';
 import { localizePath, normalizeLocale, t, tf, type Locale, type UiKey } from '../lib/i18n';
 import { formatDate, intlLocale } from '../lib/i18n/dates';
+import {
+  browserTimezoneChoices,
+  deleteDailyChartPreference,
+  getDailyChartPreference,
+  getSyncedChartIds,
+  maskDailyEmail,
+  pauseDailyChartPreferenceForDeletion,
+  rememberDailyChartSelection,
+  rememberedDailyChartSelection,
+  setDailyChartPreference,
+  type DailyChartPreference,
+} from '../lib/profile/daily-email-client';
 import EvidenceDisclosure from './EvidenceDisclosure';
 
 /** "Cancer Sun · 1907-07-06" → "Cancer Sun" for compact CTAs. */
@@ -61,6 +73,38 @@ const PF_EMAIL_COPY = {
     digestCopy: 'Una previsione basata sul tema salvato e sincronizzato. Resta disattivata finché non selezioni questa casella.',
   },
 } as const satisfies Record<Locale, Record<'syncLabel' | 'digestLabel' | 'digestTitle' | 'digestCopy', string>>;
+const PF_DAILY_COPY = {
+  title: 'Personal daily brief',
+  body: 'One synced chart, read against each morning’s sky, in your inbox.',
+  noChartsBeforeLink: 'This needs a synced chart. Charts saved only on this device never enter email — sync one first if you want the brief.',
+  syncLink: 'How chart sync works',
+  chartLegend: 'Which chart should the brief read?',
+  timezoneLabel: 'Deliver around 7:00 in',
+  timezoneUtc: 'UTC (the default morning)',
+  consentNote: 'One email each morning for this chart. Stop anytime here, or from any email’s unsubscribe link.',
+  enroll: 'Start my daily brief',
+  pendingTitle: 'Confirm from your inbox.',
+  pendingBody: (maskedEmail: string) => `We sent a link to ${maskedEmail}. The brief begins after you confirm — until then, nothing is sent.`,
+  pendingResend: 'Resend the link',
+  pendingAgain: 'Another confirmation link is on its way. The newest link is the one that works.',
+  pendingCancel: 'Cancel this request',
+  activeLine: (chartName: string, timezone: string) => `On · reading ${chartName} · arriving around 7:00, ${timezone}`,
+  changeChart: 'Change chart',
+  chartChanged: (chartName: string) => `Switched. Tomorrow’s brief reads ${chartName}.`,
+  timezoneChanged: (timezone: string) => `Saved. Tomorrow arrives around 7:00, ${timezone}.`,
+  stop: 'Stop the daily brief',
+  stopNote: 'Stops the personal brief immediately. If this address also has the sun-sign daily, that one resumes on its own.',
+  pausedBanner: 'Paused — the chart this brief read was deleted. Delivery stays stopped until you choose another below.',
+  vsWeekly: 'Separate from the weekly: the “Personalized weekly sky email” below remains its own choice.',
+  error: "Couldn't update this preference. Please try again.",
+} as const;
+const PF_DAILY_DELETE_BLOCKED = {
+  en: 'Sign in before removing this synced chart so its daily email and cloud copy can stop together.',
+  es: 'Inicia sesión antes de eliminar esta carta sincronizada para que su email diario y su copia en la nube se detengan a la vez.',
+  pt: 'Entre na conta antes de remover este mapa sincronizado para que o e-mail diário e a cópia na nuvem sejam interrompidos juntos.',
+  fr: 'Connecte-toi avant de supprimer ce thème synchronisé afin que son e-mail quotidien et sa copie dans le cloud s’arrêtent ensemble.',
+  it: 'Accedi prima di rimuovere questo tema sincronizzato, così l’email quotidiana e la copia nel cloud si interrompono insieme.',
+} as const satisfies Record<Locale, string>;
 export const PF_BOOK_COPY = {
   en: {
     count: (n: number) => n === 1
@@ -108,6 +152,33 @@ const HAS_PROFILE_SYNC = Boolean(
   (import.meta.env.PUBLIC_SUPABASE_PUBLISHABLE_KEY || import.meta.env.PUBLIC_SUPABASE_ANON_KEY)
 );
 
+function dailyChartIdentity(chart: SavedChart): string {
+  const date = formatDate('en', `${chart.birth.date}T12:00:00Z`, {
+    year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC',
+  });
+  let time = 'Time unknown';
+  if (chart.birth.timeKnown && chart.birth.time) {
+    const [hours, minutes] = chart.birth.time.split(':').map(Number);
+    if (Number.isFinite(hours) && Number.isFinite(minutes)) {
+      time = new Intl.DateTimeFormat('en-US', {
+        hour: 'numeric',
+        minute: '2-digit',
+        timeZone: 'UTC',
+      }).format(new Date(Date.UTC(2000, 0, 1, hours, minutes)));
+    }
+  }
+  const place = chart.birth.place
+    ? `${chart.birth.place.name}, ${chart.birth.place.country}`
+    : 'Place not saved';
+  return `${date} · ${time} · ${place}`;
+}
+
+interface ProfileManagerProps {
+  locale?: Locale;
+  /** Server-computed only; the island cannot infer or enable this feature. */
+  dailyEmailEnabled?: boolean;
+}
+
 function ChipRow({ chart, locale }: { chart: SavedChart; locale: Locale }) {
   const find = (name: string) => chart.summary.bodies.find((b) => b.body === name);
   const entries: { label: UiKey; lon: number | null }[] = [
@@ -140,8 +211,12 @@ function ChipRow({ chart, locale }: { chart: SavedChart; locale: Locale }) {
   );
 }
 
-export default function ProfileManager({ locale: rawLocale = 'en' }: { locale?: Locale }) {
+export default function ProfileManager({
+  locale: rawLocale = 'en',
+  dailyEmailEnabled = false,
+}: ProfileManagerProps) {
   const locale = normalizeLocale(rawLocale);
+  const showDailyEmail = dailyEmailEnabled && locale === 'en';
   const { profile, ready: profileReady } = useProfile();
   const [editing, setEditing] = useState<string | null>(null);
   const [draft, setDraft] = useState('');
@@ -156,6 +231,73 @@ export default function ProfileManager({ locale: rawLocale = 'en' }: { locale?: 
   const [digestState, setDigestState] = useState<'idle' | 'saved' | 'error'>('idle');
   const [digestOptIn, setDigestOptInState] = useState(false);
   const [digestBusy, setDigestBusy] = useState(false);
+  const [syncedChartIds, setSyncedChartIds] = useState<string[]>([]);
+  const [dailyPreference, setDailyPreference] = useState<DailyChartPreference | null>(null);
+  const [dailyPending, setDailyPending] = useState<{
+    chartId: string;
+    timezone: string;
+    maskedEmail: string | null;
+  } | null>(null);
+  const [dailyChartId, setDailyChartId] = useState('');
+  const [dailyTimezone, setDailyTimezone] = useState('UTC');
+  const [dailyBusy, setDailyBusy] = useState(false);
+  const [dailyLoading, setDailyLoading] = useState(false);
+  const [dailyEditingChart, setDailyEditingChart] = useState(false);
+  const [dailyMessage, setDailyMessage] = useState('');
+  const [dailyError, setDailyError] = useState(false);
+
+  function resetDailyState() {
+    setSyncedChartIds([]);
+    setDailyPreference(null);
+    setDailyPending(null);
+    setDailyChartId('');
+    setDailyTimezone('UTC');
+    setDailyBusy(false);
+    setDailyLoading(false);
+    setDailyEditingChart(false);
+    setDailyMessage('');
+    setDailyError(false);
+  }
+
+  async function loadDailyState(current: Session): Promise<void> {
+    if (!showDailyEmail) return;
+    setDailyLoading(true);
+    setDailyError(false);
+    setDailyMessage('');
+    try {
+      const [ids, preference] = await Promise.all([
+        getSyncedChartIds(current.user.id),
+        getDailyChartPreference(current.access_token),
+      ]);
+      setSyncedChartIds(ids);
+      if (preference.pending && preference.chartId && preference.timezone) {
+        rememberDailyChartSelection(preference.chartId);
+        setDailyPreference(null);
+        setDailyPending({
+          chartId: preference.chartId,
+          timezone: preference.timezone,
+          maskedEmail: preference.maskedEmail,
+        });
+        setDailyChartId(preference.chartId);
+        setDailyTimezone(preference.timezone);
+      } else if (preference.enabled) {
+        rememberDailyChartSelection(preference.paused ? null : preference.chartId);
+        setDailyPreference(preference);
+        setDailyPending(null);
+        setDailyChartId(preference.chartId ?? '');
+        setDailyTimezone(preference.timezone ?? 'UTC');
+      } else {
+        rememberDailyChartSelection(null);
+        setDailyPreference(null);
+        setDailyPending(null);
+      }
+    } catch {
+      setDailyError(true);
+      setDailyMessage(PF_DAILY_COPY.error);
+    } finally {
+      setDailyLoading(false);
+    }
+  }
 
   useEffect(() => {
     let unsubscribe = () => {};
@@ -171,17 +313,20 @@ export default function ProfileManager({ locale: rawLocale = 'en' }: { locale?: 
           await api.syncNow();
           setDigestOptInState(await api.getDigestOptIn());
           setSyncState('synced');
+          await loadDailyState(current);
         }
         unsubscribe = api.onSyncAuthChange(async (next) => {
           setSession(next);
           if (!next) {
             setDigestOptInState(false);
+            resetDailyState();
             return;
           }
           setSyncState('syncing');
           await api.syncNow();
           setDigestOptInState(await api.getDigestOptIn());
           setSyncState('synced');
+          await loadDailyState(next);
         });
       })
       .catch(() => {});
@@ -273,6 +418,7 @@ export default function ProfileManager({ locale: rawLocale = 'en' }: { locale?: 
     try {
       await syncApi.syncNow();
       setSyncState('synced');
+      if (session) await loadDailyState(session);
     } catch (err) {
       setSyncState('error');
       setSyncMessage(err instanceof Error ? err.message : t(locale, 'syncFailed'));
@@ -287,6 +433,7 @@ export default function ProfileManager({ locale: rawLocale = 'en' }: { locale?: 
     setDigestMessage('');
     setDigestState('idle');
     setSyncState('idle');
+    resetDailyState();
   }
 
   async function onDigestChange(e: Event) {
@@ -311,8 +458,346 @@ export default function ProfileManager({ locale: rawLocale = 'en' }: { locale?: 
     }
   }
 
+  const syncedChartIdSet = new Set(syncedChartIds);
+  const dailyCharts = profile.charts.filter((chart) => syncedChartIdSet.has(chart.id));
+  const effectiveDailyChartId = dailyCharts.some((chart) => chart.id === dailyChartId)
+    ? dailyChartId
+    : dailyCharts[0]?.id ?? '';
+  const activeDailyChart = dailyPreference
+    ? dailyCharts.find((chart) => chart.id === dailyPreference.chartId) ?? null
+    : null;
+  const dailyPaused = dailyPreference?.paused === true
+    || Boolean(dailyPreference && !activeDailyChart);
+  const dailyTimezoneChoices = useMemo(() => browserTimezoneChoices([
+    dailyTimezone,
+    ...profile.charts.flatMap((chart) => chart.birth.place?.tz ? [chart.birth.place.tz] : []),
+  ]), [dailyTimezone, profile]);
+
+  async function saveDailyPreference(
+    chartId: string,
+    timezone: string,
+    successMessage = '',
+  ): Promise<boolean> {
+    if (!session || !chartId) return false;
+    setDailyBusy(true);
+    setDailyError(false);
+    setDailyMessage('');
+    try {
+      const result = await setDailyChartPreference(session.access_token, { chartId, timezone });
+      rememberDailyChartSelection(chartId);
+      setDailyChartId(chartId);
+      setDailyTimezone(timezone);
+      if (result.pending) {
+        setDailyPreference(null);
+        setDailyPending({ chartId, timezone, maskedEmail: maskDailyEmail(session.user.email) });
+      } else {
+        setDailyPending(null);
+        await loadDailyState(session);
+        setDailyMessage(successMessage);
+      }
+      return true;
+    } catch {
+      setDailyMessage(PF_DAILY_COPY.error);
+      return false;
+    } finally {
+      setDailyBusy(false);
+    }
+  }
+
+  async function onDailyEnroll(e: Event) {
+    e.preventDefault();
+    await saveDailyPreference(effectiveDailyChartId, dailyTimezone);
+  }
+
+  async function onDailyResend() {
+    if (!dailyPending) return;
+    const sent = await saveDailyPreference(dailyPending.chartId, dailyPending.timezone);
+    if (sent) setDailyMessage(PF_DAILY_COPY.pendingAgain);
+  }
+
+  async function onDailyCancel() {
+    if (!session) return;
+    setDailyBusy(true);
+    setDailyError(false);
+    setDailyMessage('');
+    try {
+      await deleteDailyChartPreference(session.access_token);
+      rememberDailyChartSelection(null);
+      setDailyPending(null);
+      setDailyPreference(null);
+    } catch {
+      setDailyMessage(PF_DAILY_COPY.error);
+    } finally {
+      setDailyBusy(false);
+    }
+  }
+
+  async function onDailyStop() {
+    if (!session) return;
+    setDailyBusy(true);
+    setDailyError(false);
+    setDailyMessage('');
+    try {
+      await deleteDailyChartPreference(session.access_token);
+      rememberDailyChartSelection(null);
+      setDailyPreference(null);
+      setDailyPending(null);
+      setDailyEditingChart(false);
+      setDailyMessage(PF_DAILY_COPY.stopNote);
+    } catch {
+      setDailyMessage(PF_DAILY_COPY.error);
+    } finally {
+      setDailyBusy(false);
+    }
+  }
+
+  async function onDailyChartChange(chart: SavedChart) {
+    if (!dailyPreference || !dailyPreference.timezone || chart.id === dailyPreference.chartId) return;
+    const saved = await saveDailyPreference(
+      chart.id,
+      dailyPreference.timezone,
+      PF_DAILY_COPY.chartChanged(chart.name),
+    );
+    if (saved) setDailyEditingChart(false);
+  }
+
+  async function onDailyTimezoneChange(e: Event) {
+    if (!dailyPreference || !dailyPreference.chartId || !activeDailyChart) return;
+    const timezone = (e.currentTarget as HTMLSelectElement).value;
+    await saveDailyPreference(
+      dailyPreference.chartId,
+      timezone,
+      PF_DAILY_COPY.timezoneChanged(timezone),
+    );
+  }
+
+  async function onDeleteChart(chart: SavedChart) {
+    if (!confirm(tf(locale, 'removeChartConfirm', { name: chart.name }))) return;
+    // Only a chart this device knows was selected for daily email adds a
+    // network dependency to otherwise-local deletion. The marker survives a
+    // feature kill switch or sign-out, but contains only the chart UUID.
+    const lifecycleEnabled = dailyEmailEnabled
+      || (typeof document !== 'undefined'
+        && document.documentElement.hasAttribute('data-daily-email-lifecycle'));
+    const requiresDailyPauseCheck = (lifecycleEnabled && Boolean(session))
+      || rememberedDailyChartSelection() === chart.id
+      || dailyPreference?.chartId === chart.id
+      || dailyPending?.chartId === chart.id;
+    if (requiresDailyPauseCheck && !session) {
+      setSyncState('error');
+      setSyncMessage(PF_DAILY_DELETE_BLOCKED[locale]);
+      return;
+    }
+    if (requiresDailyPauseCheck) {
+      setDailyBusy(true);
+      setDailyError(false);
+      setDailyMessage('');
+      try {
+        const result = await pauseDailyChartPreferenceForDeletion(
+          session!.access_token,
+          chart.id,
+        );
+        rememberDailyChartSelection(result.selectedChartId);
+        if (result.outcome === 'paused') {
+          setDailyPreference((current) => current ? { ...current, chartId: null, paused: true } : current);
+        } else if (result.outcome === 'cancelled' || dailyPending?.chartId === chart.id) {
+          setDailyPending(null);
+        }
+      } catch {
+        setDailyError(true);
+        setDailyMessage("Couldn't pause the daily brief, so this synced chart was not deleted. Please try again online.");
+        setSyncState('error');
+        setSyncMessage(t(locale, 'syncFailed'));
+        setDailyBusy(false);
+        return;
+      }
+      setDailyBusy(false);
+    }
+    deleteChart(chart.id);
+  }
+
+  const dailyChartChooser = dailyCharts.length > 0 && (
+    <>
+      <fieldset class="pf-daily__charts">
+        <legend>{PF_DAILY_COPY.chartLegend}</legend>
+        {dailyCharts.map((chart) => (
+          <label class="pf-daily__chart" key={chart.id}>
+            <input
+              type="radio"
+              name="chartId"
+              value={chart.id}
+              checked={effectiveDailyChartId === chart.id}
+              onChange={() => setDailyChartId(chart.id)}
+              disabled={dailyBusy}
+              required
+            />
+            <span>
+              <strong>{chart.name}</strong>
+              <small>{dailyChartIdentity(chart)}</small>
+            </span>
+          </label>
+        ))}
+      </fieldset>
+      <label class="pf-daily__timezone" for="pf-daily-timezone">
+        <span>{PF_DAILY_COPY.timezoneLabel}</span>
+        <select
+          id="pf-daily-timezone"
+          name="timezone"
+          value={dailyTimezone}
+          onChange={(e) => setDailyTimezone((e.currentTarget as HTMLSelectElement).value)}
+          disabled={dailyBusy}
+          required
+        >
+          {dailyTimezoneChoices.map((timezone) => (
+            <option value={timezone} key={timezone}>
+              {timezone === 'UTC' ? PF_DAILY_COPY.timezoneUtc : timezone}
+            </option>
+          ))}
+        </select>
+      </label>
+    </>
+  );
+
+  const dailyPanel = showDailyEmail && session && (
+    <section
+      class="pf-daily"
+      id="daily-brief"
+      aria-labelledby="pf-daily-title"
+      aria-busy={dailyLoading || dailyBusy}
+    >
+      <h2 id="pf-daily-title">{PF_DAILY_COPY.title}</h2>
+      <p class="pf-daily__dek">{PF_DAILY_COPY.body}</p>
+
+      {!dailyLoading && !dailyError && dailyPending && (
+        <div class="pf-daily__state">
+          <h3>{PF_DAILY_COPY.pendingTitle}</h3>
+          <p
+            class="pf-daily__truncate"
+            title={dailyPending.maskedEmail ?? maskDailyEmail(session.user.email)}
+            role="status"
+            aria-live="polite"
+          >
+            {PF_DAILY_COPY.pendingBody(dailyPending.maskedEmail ?? maskDailyEmail(session.user.email))}
+          </p>
+          <div class="pf-daily__actions">
+            <button class="btn btn--ghost" type="button" onClick={onDailyResend} disabled={dailyBusy}>
+              {PF_DAILY_COPY.pendingResend}
+            </button>
+            <button class="pf-daily__text-action" type="button" onClick={onDailyCancel} disabled={dailyBusy}>
+              {PF_DAILY_COPY.pendingCancel}
+            </button>
+          </div>
+        </div>
+      )}
+
+      {!dailyLoading && !dailyError && !dailyPending && dailyPreference && dailyPaused && (
+        <div class="pf-daily__state">
+          <p class="pf-daily__banner" role="status" aria-live="polite">{PF_DAILY_COPY.pausedBanner}</p>
+          {dailyCharts.length > 0 ? (
+            <form method="post" action="/api/email/chart-preference" onSubmit={onDailyEnroll}>
+              {dailyChartChooser}
+              <p class="pf-daily__consent">{PF_DAILY_COPY.consentNote}</p>
+              <button class="btn btn--primary" type="submit" disabled={dailyBusy || !effectiveDailyChartId}>
+                <span>{PF_DAILY_COPY.enroll}</span><span class="orb">↗</span>
+              </button>
+            </form>
+          ) : (
+            <p>{PF_DAILY_COPY.noChartsBeforeLink} <a href="#profile-sync">{PF_DAILY_COPY.syncLink}</a></p>
+          )}
+        </div>
+      )}
+
+      {!dailyLoading && !dailyError && !dailyPending && dailyPreference && !dailyPaused && activeDailyChart && (
+        <div class="pf-daily__state">
+          <p class="pf-daily__active pf-daily__truncate" title={activeDailyChart.name}>
+            {PF_DAILY_COPY.activeLine(activeDailyChart.name, dailyPreference.timezone ?? 'UTC')}
+          </p>
+          <div class="pf-daily__actions">
+            <button
+              class="btn btn--ghost"
+              type="button"
+              aria-expanded={dailyEditingChart}
+              aria-controls="pf-daily-chart-change"
+              onClick={() => setDailyEditingChart((open) => !open)}
+              disabled={dailyBusy}
+            >
+              {PF_DAILY_COPY.changeChart}
+            </button>
+          </div>
+          {dailyEditingChart && (
+            <fieldset class="pf-daily__charts" id="pf-daily-chart-change">
+              <legend>{PF_DAILY_COPY.chartLegend}</legend>
+              {dailyCharts.map((chart) => (
+                <label class="pf-daily__chart" key={chart.id}>
+                  <input
+                    type="radio"
+                    name="activeChartId"
+                    value={chart.id}
+                    checked={dailyPreference.chartId === chart.id}
+                    onChange={() => void onDailyChartChange(chart)}
+                    disabled={dailyBusy}
+                  />
+                  <span>
+                    <strong>{chart.name}</strong>
+                    <small>{dailyChartIdentity(chart)}</small>
+                  </span>
+                </label>
+              ))}
+            </fieldset>
+          )}
+          <label class="pf-daily__timezone" for="pf-daily-active-timezone">
+            <span>{PF_DAILY_COPY.timezoneLabel}</span>
+            <select
+              id="pf-daily-active-timezone"
+              value={dailyPreference.timezone ?? 'UTC'}
+              onChange={onDailyTimezoneChange}
+              disabled={dailyBusy}
+            >
+              {dailyTimezoneChoices.map((timezone) => (
+                <option value={timezone} key={timezone}>
+                  {timezone === 'UTC' ? PF_DAILY_COPY.timezoneUtc : timezone}
+                </option>
+              ))}
+            </select>
+          </label>
+          <button class="btn btn--ghost pf-daily__stop" type="button" onClick={onDailyStop} disabled={dailyBusy}>
+            {PF_DAILY_COPY.stop}
+          </button>
+          <p class="pf-daily__consent">{PF_DAILY_COPY.stopNote}</p>
+        </div>
+      )}
+
+      {!dailyLoading && !dailyError && !dailyPending && !dailyPreference && (
+        <div class="pf-daily__state">
+          {dailyCharts.length === 0 ? (
+            <p>{PF_DAILY_COPY.noChartsBeforeLink} <a href="#profile-sync">{PF_DAILY_COPY.syncLink}</a></p>
+          ) : (
+            <form method="post" action="/api/email/chart-preference" onSubmit={onDailyEnroll}>
+              {dailyChartChooser}
+              <p class="pf-daily__consent">{PF_DAILY_COPY.consentNote}</p>
+              <button class="btn btn--primary" type="submit" disabled={dailyBusy || !effectiveDailyChartId}>
+                <span>{PF_DAILY_COPY.enroll}</span><span class="orb">↗</span>
+              </button>
+            </form>
+          )}
+        </div>
+      )}
+
+      {dailyMessage && (
+        <p
+          class="pf-sync__message pf-daily__message"
+          role="status"
+          aria-live="polite"
+        >
+          {dailyMessage}
+        </p>
+      )}
+      <p class="pf-daily__weekly-note">{PF_DAILY_COPY.vsWeekly}</p>
+    </section>
+  );
+
   const syncPanel = HAS_PROFILE_SYNC && (
-    <aside class="pf-sync shell">
+    <aside class="pf-sync shell" id="profile-sync">
       <div class="core pf-sync__core">
         <div>
           <span class="mono--label pf-sync__label">{PF_EMAIL_COPY[locale].syncLabel}</span>
@@ -349,6 +834,7 @@ export default function ProfileManager({ locale: rawLocale = 'en' }: { locale?: 
             </button>
           </form>
         )}
+        {dailyPanel}
         {session && (
           <div class="pf-digest-panel">
             <span class="mono--label">{PF_EMAIL_COPY[locale].digestLabel}</span>
@@ -444,9 +930,7 @@ export default function ProfileManager({ locale: rawLocale = 'en' }: { locale?: 
                   <button
                     class="pf-chart__action pf-chart__action--danger"
                     type="button"
-                    onClick={() => {
-                      if (confirm(tf(locale, 'removeChartConfirm', { name: chart.name }))) deleteChart(chart.id);
-                    }}
+                    onClick={() => void onDeleteChart(chart)}
                   >
                     {t(locale, 'remove')}
                   </button>

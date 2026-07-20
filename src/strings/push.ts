@@ -1,18 +1,21 @@
 import type { Locale } from '../lib/i18n';
 
 const EN = {
-  heading: 'Get a daily note?',
-  body: 'A short sky note opens your private brief at /today/. Your birth details stay on this device.',
-  ios: 'On iPhone and iPad, notifications work only after you add this site to your Home Screen. Install it first, then return here.',
-  accept: 'Turn on daily notes',
+  heading: 'Sky alerts, when they’re earned?',
+  body: 'A notification only for the dates that matter — full moons, eclipses, retrograde turns. Most days, nothing.',
+  ios: 'On iPhone and iPad, alerts work only after you add Zodiacs to your Home Screen. Install first, then return here.',
+  accept: 'Turn on sky alerts',
   installing: 'Turning on…',
   dismiss: 'Not now',
-  dismissLabel: 'Dismiss daily-note offer',
-  on: 'Daily notes are on. Notifications open /today/; your chart stays on this device.',
+  dismissLabel: 'Dismiss the sky-alerts offer',
+  on: 'Sky alerts are on — only the dates that matter, never more than one a day.',
   off: 'Turn off',
-  denied: 'Notifications are blocked in this browser. You can change that in the site settings.',
-  error: 'Daily notes are unavailable right now. Try again later.',
+  denied: 'Notifications are blocked in this browser, so sky alerts can’t reach you. Your browser’s site settings can change that whenever you like.',
+  error: 'Sky alerts are unavailable right now. Try again later.',
 } as const;
+
+export const PUSH_CAP_EN = 'Never more than one a day, or two a week.';
+export const PUSH_REOFFER_EN = 'Your sky alerts lapsed with this browser’s subscription. Turn them back on?';
 
 export const PUSH_COPY = {
   en: EN,

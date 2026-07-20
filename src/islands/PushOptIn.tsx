@@ -9,7 +9,7 @@ import {
   setPushPreference,
   vapidKeyBytes,
 } from '../lib/push';
-import { PUSH_COPY } from '../strings/push';
+import { PUSH_CAP_EN, PUSH_COPY, PUSH_REOFFER_EN } from '../strings/push';
 import '../styles/push.css';
 
 interface Props {
@@ -17,7 +17,7 @@ interface Props {
   context?: 'chart-save' | 'today-return';
 }
 
-type View = 'hidden' | 'offer' | 'ios-install' | 'busy' | 'subscribed' | 'denied' | 'error';
+type View = 'hidden' | 'offer' | 'reoffer' | 'ios-install' | 'busy' | 'subscribed' | 'denied' | 'error';
 const WEB_PUSH_ENABLED = import.meta.env.PUBLIC_WEB_PUSH_ENABLED === '1';
 
 function track(name: 'push_prompt' | 'push_subscribe'): void {
@@ -64,7 +64,7 @@ export default function PushOptIn({ locale = 'en', context = 'chart-save' }: Pro
 
       if (readPushPreference(localStorage) === 'subscribed') {
         setPushPreference(localStorage, 'offered');
-        setView('offer');
+        setView('reoffer');
         track('push_prompt');
         return;
       }
@@ -156,16 +156,21 @@ export default function PushOptIn({ locale = 'en', context = 'chart-save' }: Pro
         ? copy.denied
         : view === 'error'
           ? copy.error
-          : copy.body;
+          : view === 'reoffer' && locale === 'en'
+            ? PUSH_REOFFER_EN
+            : copy.body;
 
   return (
     <aside class="push-optin" aria-live="polite" data-push-optin data-push-context={context}>
       <div class="push-optin__copy">
         {view !== 'subscribed' && <strong>{copy.heading}</strong>}
         <span>{message}</span>
+        {locale === 'en' && (view === 'offer' || view === 'reoffer' || view === 'subscribed') && (
+          <small>{PUSH_CAP_EN}</small>
+        )}
       </div>
       <div class="push-optin__actions">
-        {(view === 'offer' || view === 'busy') && (
+        {(view === 'offer' || view === 'reoffer' || view === 'busy') && (
           <button class="btn btn--ghost" type="button" onClick={subscribe} disabled={view === 'busy'}>
             {view === 'busy' ? copy.installing : copy.accept}
           </button>
