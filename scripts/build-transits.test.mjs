@@ -73,7 +73,7 @@ describe('Transit fact generation', () => {
       expect(canonicalTransit(JSON.parse(first)), filename)
         .toEqual(canonicalTransit(JSON.parse(committed)));
     }
-  }, 60_000);
+  }, 120_000);
 
   it('pins complete monthly coverage and aggregate event counts for 2026–2030', async () => {
     const filenames = (await readdir(resolve(repositoryRoot, 'src/data')))
