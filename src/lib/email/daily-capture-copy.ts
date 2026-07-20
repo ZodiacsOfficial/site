@@ -1,0 +1,22 @@
+/** English-only Phase 3 capture copy; selected only while the daily flag is complete. */
+export const DAILY_CAPTURE_EN = {
+  kicker: 'Free daily forecast',
+  title: 'Your day ahead.',
+  personalTitle: 'Your {sign} day ahead.',
+  copy: 'Each morning, the day’s reading for your sign — one email, free, unsubscribe anytime.',
+  emailLabel: 'Email address',
+  emailPlaceholder: 'you@example.com',
+  signLegend: 'Your Sun sign',
+  usingSign: 'Using your Sun sign: {sign}',
+  changeSign: 'Change',
+  submit: 'Start my daily',
+  submitting: 'Starting…',
+  success: 'You’re set. If confirmation or a change is needed, check your inbox.',
+  missingSign: 'Pick your sign first — the daily is written per sign.',
+  invalidEmail: 'That email address doesn’t look complete.',
+  error: "Couldn't start the subscription. Please try again.",
+  privacy: 'We store your email and your chosen sign — nothing else. Never your birth details.',
+  honeypot: 'Leave this field blank',
+  footerTitle: 'The daily, by email.',
+  footerCopy: 'Your sign’s reading each morning. Free, unsubscribe anytime.',
+} as const;

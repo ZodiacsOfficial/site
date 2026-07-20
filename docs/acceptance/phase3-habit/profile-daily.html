@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Proof — profile daily-brief preference</title>
+<link rel="stylesheet" href="proof.css">
+</head>
+<body>
+<header class="proof-head">
+  <h1>Profile — personal daily brief</h1>
+  <p>New section at /profile/#daily-brief, above the existing weekly digest,
+  separated by a hairline. Exactly one synced chart, explicit timezone,
+  explicit consent, everything reversible. Handoff §2.3, strings §3.2.</p>
+</header>
+
+<div class="note"><strong>State 3 · eligible, not enrolled</strong> — synced
+charts only (device-only charts are structurally absent), timezone select,
+consent sentence directly above the one primary action.
+<div class="crit">exactly one chart · explicit consent · native ≥44px controls</div></div>
+
+<div class="board board--1280">
+  <p class="board__tag">1280 · eligible</p>
+  <div class="panel" style="max-width:640px">
+    <h3>Personal daily brief</h3>
+    <p>One synced chart, read against each morning’s sky, in your inbox.</p>
+    <fieldset style="border:0;padding:0;margin:8px 0 0;display:grid;gap:8px">
+      <legend class="ec-label">Which chart should the brief read?</legend>
+      <label class="radio-row"><input type="radio" name="c" checked>
+        <strong>Frida Kahlo</strong>
+        <span class="sub">July 6, 1907 · 8:30 AM · Coyoacán, Mexico</span></label>
+      <label class="radio-row"><input type="radio" name="c">
+        <strong>Morning chart</strong>
+        <span class="sub">March 3, 1991 · 7:15 AM · Lisbon, Portugal</span></label>
+    </fieldset>
+    <div style="margin-top:10px">
+      <label class="ec-label" for="tz">Deliver around 7:00 in</label>
+      <select class="select" id="tz"><option>UTC (the default morning)</option><option>Europe/Lisbon</option><option>America/Mexico_City</option></select>
+    </div>
+    <p class="ec-privacy" style="font-size:12.5px">One email each morning for
+    this chart. Stop anytime here, or from any email’s unsubscribe link.</p>
+    <div class="actions"><button class="btn btn--primary" type="button">Start my daily brief</button></div>
+  </div>
+  <hr class="hr">
+  <div class="panel" style="max-width:640px">
+    <p class="ec-privacy" style="font-size:12.5px">Separate from the weekly:
+    the “Personalized weekly sky email” below remains its own choice.</p>
+    <h3 style="font-size:1.1rem">Personalized weekly sky email</h3>
+    <p>A forecast based on your synced saved chart. Off until you check this
+    box. <em style="color:var(--faint)">(existing weekly block — copy and
+    toggle unchanged)</em></p>
+  </div>
+</div>
+
+<div class="note"><strong>State 2 · no synced charts</strong></div>
+<div class="board board--360">
+  <p class="board__tag">360 · no synced charts</p>
+  <div class="panel">
+    <h3>Personal daily brief</h3>
+    <p>This needs a synced chart. Charts saved only on this device never
+    enter email — sync one first if you want the brief.
+    <a class="quiet-link" href="#">How chart sync works</a></p>
+  </div>
+</div>
+
+<div class="note"><strong>State 4 · pending confirmation</strong> — with cancel.
+<div class="crit">pending is explicit · cancel keeps nothing</div></div>
+<div class="board board--360">
+  <p class="board__tag">360 · pending</p>
+  <div class="panel">
+    <h3>Confirm from your inbox.</h3>
+    <p>We sent a link to f…@example.com. The brief begins after you confirm —
+    until then, nothing is sent.</p>
+    <div class="actions">
+      <button class="btn" type="button">Resend the link</button>
+      <button class="dismiss" type="button">Cancel this request</button>
+    </div>
+  </div>
+</div>
+
+<div class="note"><strong>State 5 · active</strong> — summary + change chart /
+change timezone / stop. Stopping notes the sun-sign fallback plainly.
+<div class="crit">reversible consent · chart switch is explicit and announced</div></div>
+<div class="board board--1280">
+  <p class="board__tag">1280 · active</p>
+  <div class="panel" style="max-width:640px">
+    <h3>Personal daily brief</h3>
+    <p class="statusline">On · reading Frida Kahlo · arriving around 7:00,
+    Europe/Lisbon</p>
+    <div class="actions">
+      <button class="btn" type="button">Change chart</button>
+      <button class="btn" type="button">Stop the daily brief</button>
+    </div>
+    <p class="ec-privacy" style="font-size:12px">Stops the personal brief
+    immediately. If this address also has the sun-sign daily, that one
+    resumes on its own.</p>
+    <p class="statusline" style="color:var(--faint);font-size:12.5px">
+    Switched. Tomorrow’s brief reads Frida Kahlo. <em>(post-change status
+    line, live region)</em></p>
+  </div>
+</div>
+
+<div class="note"><strong>State 6 · selected chart deleted</strong> — banner +
+deliberate re-selection; delivery stays stopped meanwhile.
+<div class="crit">no silent substitution — the reader chooses again</div></div>
+<div class="board board--360">
+  <p class="board__tag">360 · paused after deletion</p>
+  <div class="panel">
+    <div class="banner">Paused — the chart this brief read was deleted.
+    Delivery stays stopped until you choose another below.</div>
+    <label class="radio-row"><input type="radio" name="c2">
+      <strong>Morning chart</strong>
+      <span class="sub">March 3, 1991 · 7:15 AM · Lisbon, Portugal</span></label>
+    <div class="actions"><button class="btn btn--primary" type="button">Start my daily brief</button></div>
+  </div>
+</div>
+</body>
+</html>

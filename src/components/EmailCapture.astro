@@ -1,14 +1,18 @@
 ---
 import SignIcon from './SignIcon.astro';
+import EmailCaptureEnhancement from './EmailCaptureEnhancement.astro';
 import { hasEmailCaptureProvider } from '../lib/email/config';
+import { dailyEmailFeatureEnabled, hasDailySunEmailProvider } from '../lib/email/daily-config';
+import { DAILY_CAPTURE_EN } from '../lib/email/daily-capture-copy';
 import { SIGNS, signName } from '../lib/signs';
-import { normalizeLocale, t, tf, type Locale } from '../lib/i18n';
+import { normalizeLocale, t, type Locale } from '../lib/i18n';
 
 interface Props {
   locale?: Locale;
   placement: 'chart' | 'horoscopes' | 'footer';
   revealOnChart?: boolean;
   sign?: string;
+  postChartManaged?: boolean;
 }
 
 const {
@@ -16,6 +20,7 @@ const {
   placement,
   revealOnChart = false,
   sign: requestedSign,
+  postChartManaged: requestedPostChartManaged = false,
 } = Astro.props;
 const locale = normalizeLocale(rawLocale);
 const selectedSignData = SIGNS.find((sign) => sign.slug === requestedSign);
@@ -23,32 +28,76 @@ const selectedSign = selectedSignData?.slug;
 const selectedSignName = selectedSignData ? signName(selectedSignData, locale) : undefined;
 // Astro's static frontmatter runs in Node; unprefixed provider secrets are
 // intentionally absent from `import.meta.env` client exposure.
-const enabled = hasEmailCaptureProvider(process.env);
+const dailyRequested = locale === 'en' && dailyEmailFeatureEnabled(process.env);
+const daily = dailyRequested && hasDailySunEmailProvider(process.env);
+const enabled = dailyRequested ? daily : hasEmailCaptureProvider(process.env);
+const postChartManaged = daily && placement === 'chart' && requestedPostChartManaged;
+const capture = daily ? {
+  kicker: DAILY_CAPTURE_EN.kicker,
+  title: placement === 'footer' ? DAILY_CAPTURE_EN.footerTitle : DAILY_CAPTURE_EN.title,
+  personalTitle: DAILY_CAPTURE_EN.personalTitle,
+  copy: placement === 'footer' ? DAILY_CAPTURE_EN.footerCopy : DAILY_CAPTURE_EN.copy,
+  emailLabel: DAILY_CAPTURE_EN.emailLabel,
+  emailPlaceholder: DAILY_CAPTURE_EN.emailPlaceholder,
+  signLegend: DAILY_CAPTURE_EN.signLegend,
+  usingSign: DAILY_CAPTURE_EN.usingSign,
+  changeSign: DAILY_CAPTURE_EN.changeSign,
+  submit: DAILY_CAPTURE_EN.submit,
+  submitting: DAILY_CAPTURE_EN.submitting,
+  success: DAILY_CAPTURE_EN.success,
+  missingSign: DAILY_CAPTURE_EN.missingSign,
+  invalidEmail: DAILY_CAPTURE_EN.invalidEmail,
+  error: DAILY_CAPTURE_EN.error,
+  privacy: DAILY_CAPTURE_EN.privacy,
+  honeypot: DAILY_CAPTURE_EN.honeypot,
+} : {
+  kicker: t(locale, 'emailCaptureKicker'),
+  title: t(locale, 'emailCaptureTitle'),
+  personalTitle: t(locale, 'emailCapturePersonalTitle'),
+  copy: t(locale, 'emailCaptureCopy'),
+  emailLabel: t(locale, 'emailCaptureEmailLabel'),
+  emailPlaceholder: t(locale, 'emailCaptureEmailPlaceholder'),
+  signLegend: t(locale, 'emailCaptureSignLegend'),
+  usingSign: t(locale, 'emailCaptureUsingSign'),
+  changeSign: t(locale, 'emailCaptureChangeSign'),
+  submit: t(locale, 'emailCaptureSubmit'),
+  submitting: t(locale, 'emailCaptureSubmitting'),
+  success: t(locale, 'emailCaptureSuccess'),
+  missingSign: '',
+  invalidEmail: '',
+  error: t(locale, 'emailCaptureError'),
+  privacy: t(locale, 'emailCapturePrivacy'),
+  honeypot: t(locale, 'emailCaptureHoneypot'),
+};
 const id = `email-${placement}-${locale}`;
 ---
 {enabled && (
   <section
+    id={daily && placement === 'horoscopes' ? 'daily-email' : undefined}
     class:list={['email-capture', `email-capture--${placement}`]}
     data-email-capture-shell
     data-placement={placement}
     data-reveal-on-chart={revealOnChart ? 'true' : undefined}
     data-personalized-sign={selectedSign ? 'true' : undefined}
+    data-daily-capture={daily ? 'true' : undefined}
+    data-post-chart-managed={postChartManaged ? 'true' : undefined}
     hidden={revealOnChart}
     aria-labelledby={`${id}-title`}
   >
+    {postChartManaged && <slot name="post-chart" />}
     <div class="email-capture__copy">
-      <span class="email-capture__kicker">{t(locale, 'emailCaptureKicker')}</span>
+      {!(daily && placement === 'footer') && <span class="email-capture__kicker">{capture.kicker}</span>}
       <h2
         id={`${id}-title`}
         data-email-title
-        data-default-title={t(locale, 'emailCaptureTitle')}
-        data-personal-title={t(locale, 'emailCapturePersonalTitle')}
+        data-default-title={capture.title}
+        data-personal-title={capture.personalTitle}
       >
         {selectedSignName
-          ? tf(locale, 'emailCapturePersonalTitle', { sign: selectedSignName })
-          : t(locale, 'emailCaptureTitle')}
+          ? capture.personalTitle.replace('{sign}', selectedSignName)
+          : capture.title}
       </h2>
-      <p>{t(locale, 'emailCaptureCopy')}</p>
+      <p>{capture.copy}</p>
     </div>
 
     <form
@@ -60,37 +109,37 @@ const id = `email-${placement}-${locale}`;
     >
       <input type="hidden" name="locale" value={locale} />
       <div class="email-capture__trap" aria-hidden="true">
-        <label for={`${id}-website`}>{t(locale, 'emailCaptureHoneypot')}</label>
+        <label for={`${id}-website`}>{capture.honeypot}</label>
         <input id={`${id}-website`} name="website" type="text" tabindex="-1" autocomplete="off" />
       </div>
 
       <div class="email-capture__email-row">
         <div class="email-capture__field">
-          <label for={`${id}-address`}>{t(locale, 'emailCaptureEmailLabel')}</label>
+          <label for={`${id}-address`}>{capture.emailLabel}</label>
           <input
             id={`${id}-address`}
             name="email"
             type="email"
             inputmode="email"
             autocomplete="email"
-            placeholder={t(locale, 'emailCaptureEmailPlaceholder')}
+            placeholder={capture.emailPlaceholder}
             maxlength="254"
             required
           />
         </div>
-        <button class="btn btn--primary email-capture__submit" type="submit" data-label={t(locale, 'emailCaptureSubmit')} data-busy-label={t(locale, 'emailCaptureSubmitting')}>
-          {t(locale, 'emailCaptureSubmit')}
+        <button class="btn btn--primary email-capture__submit" type="submit" data-label={capture.submit} data-busy-label={capture.submitting}>
+          {capture.submit}
         </button>
       </div>
 
       <div
         class="email-capture__sign-summary"
         data-email-sign-summary
-        data-summary-template={t(locale, 'emailCaptureUsingSign')}
+        data-summary-template={capture.usingSign}
         hidden={!selectedSignName}
       >
         <span data-email-sign-summary-copy>
-          {selectedSignName ? tf(locale, 'emailCaptureUsingSign', { sign: selectedSignName }) : ''}
+          {selectedSignName ? capture.usingSign.replace('{sign}', selectedSignName) : ''}
         </span>
         <button
           class="email-capture__change-sign"
@@ -99,16 +148,16 @@ const id = `email-${placement}-${locale}`;
           aria-controls={`${id}-signs`}
           aria-expanded="false"
         >
-          {t(locale, 'emailCaptureChangeSign')}
+          {capture.changeSign}
         </button>
       </div>
 
       <fieldset id={`${id}-signs`} class="email-capture__signs" data-email-signs hidden={Boolean(selectedSignName)}>
-        <legend>{t(locale, 'emailCaptureSignLegend')}</legend>
-        <label class="email-capture__skip">
+        <legend>{capture.signLegend}</legend>
+        {!daily && <label class="email-capture__skip">
           <input type="radio" name="sign" value="" checked={!selectedSign} />
           <span>{t(locale, 'emailCaptureNoSign')}</span>
-        </label>
+        </label>}
         <div class="email-capture__sign-grid">
           {SIGNS.map((sign) => (
             <label class="email-capture__sign" title={signName(sign, locale)}>
@@ -128,178 +177,22 @@ const id = `email-${placement}-${locale}`;
         </div>
       </fieldset>
 
-      <p class="email-capture__privacy">{t(locale, 'emailCapturePrivacy')}</p>
+      <p class="email-capture__privacy">{capture.privacy}</p>
+      {postChartManaged && (
+        <p class="email-capture__privacy email-capture__device-note" data-post-chart-device-note hidden>
+          Prefer a brief matched to this exact chart? That exists only for account-synced charts — syncing is always your call, and this chart stays on your device until you make it.{' '}
+          <a href="/profile/#profile-sync">How chart sync works</a>
+        </p>
+      )}
       <p class="email-capture__status" role="status" aria-live="polite" data-email-status></p>
-      <span hidden data-success-copy>{t(locale, 'emailCaptureSuccess')}</span>
-      <span hidden data-error-copy>{t(locale, 'emailCaptureError')}</span>
+      <span hidden data-success-copy>{capture.success}</span>
+      <span hidden data-missing-sign-copy>{capture.missingSign}</span>
+      <span hidden data-invalid-email-copy>{capture.invalidEmail}</span>
+      <span hidden data-error-copy>{capture.error}</span>
     </form>
   </section>
 )}
-
-<script>
-  type AnalyticsWindow = Window & {
-    zodiacsAnalytics?: { track?: (name: string, props: Record<string, string>) => void };
-  };
-
-  function trackCaptureView(surface: HTMLElement) {
-    if (surface.dataset.viewTracked === 'true') return;
-    surface.dataset.viewTracked = 'true';
-    (window as AnalyticsWindow).zodiacsAnalytics?.track?.('email_capture_viewed', {
-      placement: surface.dataset.placement ?? 'unknown',
-    });
-  }
-
-  const captureSurfaces = document.querySelectorAll<HTMLElement>('[data-email-capture-shell]');
-  if ('IntersectionObserver' in window) {
-    const captureObserver = new IntersectionObserver((entries, observer) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) return;
-        trackCaptureView(entry.target as HTMLElement);
-        observer.unobserve(entry.target);
-      });
-    }, { threshold: 0.2 });
-    captureSurfaces.forEach((surface) => captureObserver.observe(surface));
-  } else {
-    captureSurfaces.forEach((surface) => {
-      if (!surface.hidden) trackCaptureView(surface);
-    });
-  }
-
-  function preselectCaptureSign(surface: HTMLElement, sign: string | undefined) {
-    if (!sign) return;
-    const radios = Array.from(surface.querySelectorAll<HTMLInputElement>('input[name="sign"]'));
-    const radio = radios.find((input) => input.value === sign);
-    if (!radio) return;
-    surface.dataset.personalizedSign = 'true';
-    radios.forEach((input) => {
-      input.checked = input === radio;
-      input.defaultChecked = input === radio;
-    });
-    renderCaptureSign(surface, radio, true);
-  }
-
-  function fillSignTemplate(template: string | undefined, signName: string) {
-    return (template ?? '').replace('{sign}', signName);
-  }
-
-  function renderCaptureSign(
-    surface: HTMLElement,
-    radio: HTMLInputElement | undefined,
-    collapse: boolean,
-  ) {
-    const title = surface.querySelector<HTMLElement>('[data-email-title]');
-    const summary = surface.querySelector<HTMLElement>('[data-email-sign-summary]');
-    const summaryCopy = surface.querySelector<HTMLElement>('[data-email-sign-summary-copy]');
-    const chooser = surface.querySelector<HTMLFieldSetElement>('[data-email-signs]');
-    const change = surface.querySelector<HTMLButtonElement>('[data-email-sign-change]');
-    if (!title || !summary || !summaryCopy || !chooser || !change) return;
-
-    const name = radio?.value ? radio.dataset.signName : undefined;
-    if (!name) {
-      title.textContent = title.dataset.defaultTitle ?? '';
-      summary.hidden = true;
-      chooser.hidden = false;
-      change.setAttribute('aria-expanded', 'true');
-      return;
-    }
-
-    title.textContent = fillSignTemplate(title.dataset.personalTitle, name);
-    summaryCopy.textContent = fillSignTemplate(summary.dataset.summaryTemplate, name);
-    summary.hidden = false;
-    chooser.hidden = collapse;
-    change.setAttribute('aria-expanded', String(!collapse));
-  }
-
-  function setupSignChooser(surface: HTMLElement) {
-    if (surface.dataset.signChooserEnhanced === 'true') return;
-    const chooser = surface.querySelector<HTMLFieldSetElement>('[data-email-signs]');
-    const summary = surface.querySelector<HTMLElement>('[data-email-sign-summary]');
-    const change = surface.querySelector<HTMLButtonElement>('[data-email-sign-change]');
-    if (!chooser || !summary || !change) return;
-    surface.dataset.signChooserEnhanced = 'true';
-
-    change.addEventListener('click', () => {
-      const selected = chooser.querySelector<HTMLInputElement>('input[name="sign"]:checked');
-      const opening = chooser.hidden;
-      renderCaptureSign(surface, selected ?? undefined, !opening);
-      if (opening) requestAnimationFrame(() => selected?.focus());
-    });
-
-    chooser.addEventListener('change', (event) => {
-      const radio = (event.target as HTMLElement).closest<HTMLInputElement>('input[name="sign"]');
-      if (!radio || surface.dataset.personalizedSign !== 'true') return;
-      const radios = Array.from(chooser.querySelectorAll<HTMLInputElement>('input[name="sign"]'));
-      radios.forEach((input) => { input.defaultChecked = input === radio; });
-      renderCaptureSign(surface, radio, Boolean(radio.value));
-      if (radio.value) change.focus({ preventScroll: true });
-    });
-
-    chooser.addEventListener('keydown', (event) => {
-      if (event.key !== 'Escape' || surface.dataset.personalizedSign !== 'true') return;
-      const selected = chooser.querySelector<HTMLInputElement>('input[name="sign"]:checked');
-      if (!selected?.value) return;
-      event.preventDefault();
-      renderCaptureSign(surface, selected, true);
-      change.focus({ preventScroll: true });
-    });
-  }
-
-  function revealChartCapture(event: Event) {
-    const detail = (event as CustomEvent<{ mode?: string; sunSign?: string }>).detail;
-    const mode = detail?.mode;
-    if (mode !== 'full') return;
-    document.querySelectorAll<HTMLElement>('[data-reveal-on-chart="true"]').forEach((surface) => {
-      preselectCaptureSign(surface, detail?.sunSign);
-      surface.hidden = false;
-    });
-  }
-
-  window.addEventListener('zodiacs:chart-computed', revealChartCapture);
-
-  captureSurfaces.forEach(setupSignChooser);
-
-  document.querySelectorAll<HTMLFormElement>('[data-email-capture]').forEach((form) => {
-    if (form.dataset.enhanced === 'true') return;
-    form.dataset.enhanced = 'true';
-    form.addEventListener('reset', () => {
-      queueMicrotask(() => {
-        const surface = form.closest<HTMLElement>('[data-email-capture-shell]');
-        if (!surface || surface.dataset.personalizedSign !== 'true') return;
-        const selected = form.querySelector<HTMLInputElement>('input[name="sign"]:checked');
-        renderCaptureSign(surface, selected ?? undefined, Boolean(selected?.value));
-      });
-    });
-    form.addEventListener('submit', async (event) => {
-      event.preventDefault();
-      if (!form.reportValidity()) return;
-      const button = form.querySelector<HTMLButtonElement>('button[type="submit"]');
-      const status = form.querySelector<HTMLElement>('[data-email-status]');
-      if (!button || !status) return;
-      const idle = button.dataset.label ?? button.textContent ?? '';
-      button.disabled = true;
-      button.textContent = button.dataset.busyLabel ?? idle;
-      status.textContent = '';
-      try {
-        const response = await fetch(form.action, {
-          method: 'POST',
-          headers: { Accept: 'application/json' },
-          body: new URLSearchParams(new FormData(form) as unknown as Record<string, string>),
-        });
-        if (!response.ok) throw new Error('subscription unavailable');
-        status.textContent = form.querySelector<HTMLElement>('[data-success-copy]')?.textContent ?? '';
-        form.reset();
-        const placement = form.dataset.placement ?? 'unknown';
-        (window as AnalyticsWindow)
-          .zodiacsAnalytics?.track?.('email_subscribed', { placement });
-      } catch {
-        status.textContent = form.querySelector<HTMLElement>('[data-error-copy]')?.textContent ?? '';
-      } finally {
-        button.disabled = false;
-        button.textContent = idle;
-      }
-    });
-  });
-</script>
+{enabled && <EmailCaptureEnhancement />}
 
 <style>
   .email-capture {
@@ -312,6 +205,9 @@ const id = `email-${placement}-${locale}`;
     background: var(--void-1);
   }
   .email-capture[hidden] { display: none; }
+  .email-capture__copy[hidden],
+  .email-capture__form[hidden],
+  .email-capture__device-note[hidden] { display: none; }
   @media (min-width: 860px) {
     .email-capture { grid-template-columns: minmax(180px, 0.7fr) minmax(0, 1.3fr); align-items: start; }
   }
@@ -409,6 +305,16 @@ const id = `email-${placement}-${locale}`;
   .email-capture__sign input:checked ~ .email-capture__sign-name { color: var(--text-2); }
   .email-capture__privacy,
   .email-capture__status { margin: 10px 0 0; color: var(--faint); font-size: 11px; line-height: 1.5; }
+  .email-capture__device-note { max-width: 62ch; }
+  .email-capture__device-note a {
+    color: var(--text-2);
+    text-decoration-color: var(--hair-3);
+    text-underline-offset: 0.18em;
+  }
+  .email-capture__device-note a:focus-visible {
+    outline: 2px solid var(--ink-0);
+    outline-offset: 3px;
+  }
   .email-capture__status:not(:empty) { color: var(--text-2); }
   .email-capture--footer { margin: 0 0 clamp(36px, 6vw, 60px); }
   @media (prefers-reduced-motion: reduce) {

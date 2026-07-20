@@ -114,6 +114,21 @@ try {
           document.fonts.ready,
           new Promise((resolveReady) => setTimeout(resolveReady, 10_000)),
         ]));
+        // Durable evidence represents a settled page, not a random frame of
+        // an infinite ornament or an IntersectionObserver transition. Motion
+        // cadence has its own Phase 1 gate; make this pixel receipt repeatable.
+        await page.addStyleTag({ content: `
+          *, *::before, *::after {
+            animation: none !important;
+            transition: none !important;
+            caret-color: transparent !important;
+          }
+        ` });
+        await page.evaluate(() => {
+          document.querySelectorAll('.reveal').forEach((element) => element.classList.add('is-in'));
+          document.querySelectorAll('[data-reading-reveal]')
+            .forEach((element) => element.setAttribute('data-visible', 'true'));
+        });
         const missingZodiacIcons = await page.evaluate(async () => {
           const waitForPaint = () => new Promise((resolvePaint) => requestAnimationFrame(() => resolvePaint()));
           for (const image of document.images) image.loading = 'eager';
@@ -128,6 +143,15 @@ try {
             Promise.all([...document.images].map((image) => image.decode?.().catch(() => undefined))),
             new Promise((resolveImages) => setTimeout(resolveImages, 10_000)),
           ]);
+          // The initial font-ready promise covers the first viewport. Scrolling
+          // can request a below-fold face for the first time; wait again so a
+          // fallback glyph cannot change wrapping or rasterization mid-shot.
+          await Promise.race([
+            document.fonts.ready,
+            new Promise((resolveFonts) => setTimeout(resolveFonts, 10_000)),
+          ]);
+          await waitForPaint();
+          await waitForPaint();
           return [...document.images]
             .filter((image) => (image.currentSrc || image.src).includes('/assets/zodiac-icons/'))
             .filter((image) => !image.complete || image.naturalWidth === 0)

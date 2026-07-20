@@ -1,7 +1,10 @@
+import { waitUntil } from '@vercel/functions';
 import { createEmailSubscriptionAdapter } from '../../src/lib/email/provider.js';
 import { parseEmailSubscription } from '../../src/lib/email/input.js';
 import { isAllowedEmailCaptureRequest, requestHeader } from '../../src/lib/email/request.js';
 import { emailStatusPage } from '../../src/lib/email/server-page.js';
+import { dailyEmailFeatureEnabled, hasDailySunEmailProvider } from '../../src/lib/email/daily-config.js';
+import { dailyEmailPage } from '../../src/lib/email/daily-page.js';
 
 function sendJson(res: any, status: number, body: Record<string, string | boolean>): void {
   res.statusCode = status;
@@ -43,10 +46,43 @@ export default async function handler(req: any, res: any): Promise<void> {
     return;
   }
 
+  const daily = dailyEmailFeatureEnabled(process.env) && input.locale === 'en';
+  if (daily && !input.sign) {
+    if (wantsJson(req)) sendJson(res, 400, { error: 'sign_required' });
+    else sendHtml(res, 400, dailyEmailPage('Choose your sign', 'A sign is needed for the daily horoscope.'));
+    return;
+  }
+
+  if (daily && !hasDailySunEmailProvider(process.env)) {
+    if (wantsJson(req)) sendJson(res, 503, { error: 'disabled' });
+    else sendHtml(res, 503, dailyEmailPage('Not available yet', 'Daily email is not ready to join just yet.'));
+    return;
+  }
+
   const adapter = createEmailSubscriptionAdapter(process.env, fetch, input.locale);
   if (!adapter) {
     if (wantsJson(req)) sendJson(res, 503, { error: 'disabled' });
     else sendHtml(res, 503, emailStatusPage(input.locale, 'emailCaptureErrorTitle', 'emailCaptureError'));
+    return;
+  }
+
+  // Daily DOI dispatch continues inside the Vercel request lifecycle without
+  // delaying the public response. This keeps active, pending, throttled, and
+  // new addresses indistinguishable at the HTTP boundary. The durable
+  // recipient cooldown prevents background requests from becoming an email
+  // flooding or token-churn path.
+  if (daily) {
+    if (!input.honeypot) {
+      waitUntil(adapter.subscribe(input.email, input.sign).then(
+        () => undefined,
+        () => undefined,
+      ));
+    }
+    if (wantsJson(req)) sendJson(res, 200, { ok: true, pending: true });
+    else sendHtml(res, 200, dailyEmailPage(
+      'You’re set.',
+      'If confirmation or a change is needed, check your inbox. Nothing changes until you confirm it.',
+    ));
     return;
   }
 

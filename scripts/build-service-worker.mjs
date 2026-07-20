@@ -2,7 +2,6 @@ import { createHash } from 'node:crypto';
 import { readdir, readFile, stat, writeFile } from 'node:fs/promises';
 import { dirname, relative, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { PWA_PUSH_EN } from '../src/strings/pwa.en.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const dist = resolve(root, 'dist');
@@ -65,13 +64,6 @@ export async function buildServiceWorker({ outputDirectory = dist, pushEnabled =
   code = code.replace(
     /const PUSH_ENABLED = (?:true|false); \/\/ @build push-enabled/,
     `const PUSH_ENABLED = ${Boolean(pushEnabled)}; // @build push-enabled`,
-  );
-  code = code.replace(
-    /const PUSH_DEFAULTS = \{[^\n]+\}; \/\/ @build push-copy/,
-    `const PUSH_DEFAULTS = ${JSON.stringify({
-      title: PWA_PUSH_EN.title,
-      body: PWA_PUSH_EN.body,
-    })}; // @build push-copy`,
   );
   await writeFile(resolve(outputDirectory, 'sw.js'), code, 'utf8');
   return { version, assets: urls.length, pushEnabled: Boolean(pushEnabled) };

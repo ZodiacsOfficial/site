@@ -19,7 +19,20 @@ const PRECACHE_URLS = [ // @build precache-start
   '/site.webmanifest',
 ]; // @build precache-end
 const PUSH_ENABLED = false; // @build push-enabled
-const PUSH_DEFAULTS = { title: '__PUSH_NOTIFICATION_TITLE__', body: '__PUSH_NOTIFICATION_BODY__' }; // @build push-copy
+
+const SKY_ALERT_TITLE_MAX = 32;
+const SKY_ALERT_BODY_MAX = 140;
+const SKY_ALERT_PATH_MAX = 512;
+const SKY_ALERT_PATH_PREFIXES = [
+  '/eclipses/',
+  '/events/',
+  '/full-moon/',
+  '/mars-retrograde/',
+  '/mercury-retrograde/',
+  '/new-moon/',
+  '/retrogrades/',
+  '/venus-retrograde/',
+];
 
 const SHELL_CACHE = `zodiacs-shell-${CACHE_VERSION}`;
 const DATA_CACHE = `zodiacs-data-${CACHE_VERSION}`;
@@ -78,6 +91,42 @@ async function cacheFirst(request, cacheName) {
   return response;
 }
 
+function boundedAlertText(value, maxLength) {
+  if (typeof value !== 'string') return null;
+  const text = value.trim();
+  if (!text || text.length > maxLength || /[\u0000-\u001F\u007F]/.test(text)) return null;
+  return text;
+}
+
+function safeEventPath(value) {
+  if (typeof value !== 'string'
+    || !value
+    || value.length > SKY_ALERT_PATH_MAX
+    || !value.startsWith('/')
+    || value.startsWith('//')
+    || value.includes('\\')
+    || value.includes('?')
+    || /[\u0000-\u001F\u007F]/.test(value)
+    || !SKY_ALERT_PATH_PREFIXES.some((prefix) => value.startsWith(prefix))) {
+    return null;
+  }
+
+  const parts = value.split('#');
+  if (parts.length > 2
+    || !/^\/[a-z0-9/-]+\/$/i.test(parts[0])
+    || (parts.length === 2 && !/^[a-z0-9-]+$/i.test(parts[1]))) {
+    return null;
+  }
+
+  try {
+    const url = new URL(value, self.location.origin);
+    if (url.origin !== self.location.origin || `${url.pathname}${url.hash}` !== value) return null;
+  } catch {
+    return null;
+  }
+  return value;
+}
+
 self.addEventListener('fetch', (event) => {
   const request = event.request;
   if (request.method !== 'GET') return;
@@ -111,37 +160,31 @@ self.addEventListener('fetch', (event) => {
 
 if (PUSH_ENABLED) {
   self.addEventListener('push', (event) => {
-    let payload = {};
+    let payload;
     try {
-      payload = event.data ? event.data.json() : {};
+      payload = event.data?.json();
     } catch {
-      payload = {};
+      return;
     }
 
-    const title = typeof payload.title === 'string' ? payload.title : PUSH_DEFAULTS.title;
-    const body = typeof payload.body === 'string' ? payload.body : PUSH_DEFAULTS.body;
-    const path = typeof payload.url === 'string'
-      && payload.url.startsWith('/')
-      && !payload.url.startsWith('//')
-      ? payload.url
-      : '/today/';
+    const title = boundedAlertText(payload?.title, SKY_ALERT_TITLE_MAX);
+    const body = boundedAlertText(payload?.body, SKY_ALERT_BODY_MAX);
+    const path = safeEventPath(payload?.url);
+    if (!title || !body || !path) return;
 
     event.waitUntil(self.registration.showNotification(title, {
       body,
       icon: '/assets/app-icons/icon-192.png',
       badge: '/assets/app-icons/icon-192.png',
-      tag: 'zodiacs-daily-note',
+      tag: 'zodiacs-sky-alert',
       data: { url: path },
     }));
   });
 
   self.addEventListener('notificationclick', (event) => {
     event.notification.close();
-    const path = typeof event.notification.data?.url === 'string'
-      && event.notification.data.url.startsWith('/')
-      && !event.notification.data.url.startsWith('//')
-      ? event.notification.data.url
-      : '/today/';
+    const path = safeEventPath(event.notification.data?.url);
+    if (!path) return;
     const target = new URL(path, self.location.origin).href;
 
     event.waitUntil((async () => {

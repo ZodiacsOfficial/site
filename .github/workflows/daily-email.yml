@@ -1,0 +1,102 @@
+name: Daily Email
+
+on:
+  schedule:
+    - cron: "13 * * * *"
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Render eligible confirmed recipients without receipts or sends"
+        required: false
+        type: boolean
+        default: true
+      at:
+        description: "Optional ISO instant for deterministic verification"
+        required: false
+        type: string
+      limit:
+        description: "Maximum reserved deliveries"
+        required: false
+        type: string
+        default: "200"
+      to:
+        description: "Optional exact subscribed address filter"
+        required: false
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: daily-email
+  cancel-in-progress: false
+
+jobs:
+  daily-email:
+    name: Select and send daily email cohort
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Fixture smoke
+        run: npx vite-node --script scripts/send-daily-email.ts --fixture --dry-run --limit 2
+
+      - name: Require the committed verified edition
+        if: github.event_name == 'workflow_dispatch' || vars.DAILY_EMAIL_ENABLED == '1'
+        run: npm run editorial:daily:verify -- --date "$(date -u +%F)"
+
+      - name: Enforce test-list-only release state
+        if: vars.DAILY_EMAIL_ENABLED == '1' && (github.event_name == 'schedule' || inputs.dry_run == false)
+        env:
+          DAILY_EMAIL_COHORT: test
+        run: |
+          if [ "$DAILY_EMAIL_COHORT" != "test" ]; then
+            echo "::error::This workflow is frozen to the test cohort until a separate approved release change."
+            exit 1
+          fi
+
+      - name: Require the exact edition in production before real delivery
+        if: vars.DAILY_EMAIL_ENABLED == '1' && (github.event_name == 'schedule' || inputs.dry_run == false)
+        run: npm run editorial:daily:verify-live
+
+      - name: Run eligible cohort
+        if: vars.DAILY_EMAIL_ENABLED == '1' || (github.event_name == 'workflow_dispatch' && inputs.dry_run == true)
+        env:
+          DAILY_EMAIL_ENABLED: ${{ vars.DAILY_EMAIL_ENABLED }}
+          DAILY_EMAIL_COHORT: test
+          DAILY_EMAIL_TEST_ALLOWLIST: ${{ secrets.DAILY_EMAIL_TEST_ALLOWLIST }}
+          DAILY_EMAIL_RECIPIENT_HASH_SECRET: ${{ secrets.DAILY_EMAIL_RECIPIENT_HASH_SECRET }}
+          DAILY_EMAIL_UNSUBSCRIBE_SECRET: ${{ secrets.DAILY_EMAIL_UNSUBSCRIBE_SECRET }}
+          DAILY_EMAIL_FROM: ${{ vars.DAILY_EMAIL_FROM || 'Zodiacs.org <hello@zodiacs.org>' }}
+          DAILY_EMAIL_BASE_URL: ${{ vars.DAILY_EMAIL_BASE_URL || 'https://zodiacs.org' }}
+          DAILY_EMAIL_POSTAL_ADDRESS: ${{ vars.DAILY_EMAIL_POSTAL_ADDRESS }}
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          RESEND_DAILY_SIGN_SEGMENTS_JSON: ${{ secrets.RESEND_DAILY_SIGN_SEGMENTS_JSON }}
+          PUBLIC_SUPABASE_URL: ${{ vars.PUBLIC_SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          DAILY_EMAIL_DRY_RUN: ${{ inputs.dry_run }}
+          DAILY_EMAIL_AT: ${{ inputs.at }}
+          DAILY_EMAIL_LIMIT: ${{ inputs.limit }}
+          DAILY_EMAIL_TO: ${{ inputs.to }}
+        run: |
+          ARGS="--limit ${DAILY_EMAIL_LIMIT:-200}"
+          if [ "${DAILY_EMAIL_DRY_RUN:-false}" = "true" ]; then
+            ARGS="$ARGS --dry-run"
+          fi
+          if [ -n "${DAILY_EMAIL_AT:-}" ]; then
+            ARGS="$ARGS --at $DAILY_EMAIL_AT"
+          fi
+          if [ -n "${DAILY_EMAIL_TO:-}" ]; then
+            ARGS="$ARGS --to $DAILY_EMAIL_TO"
+          fi
+          npx vite-node --script scripts/send-daily-email.ts $ARGS

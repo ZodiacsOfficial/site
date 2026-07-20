@@ -6,8 +6,18 @@ import {
   validLoopsFormEndpoint,
   type EmailProviderName,
 } from './config.js';
+import { dailyEmailFeatureEnabled } from './daily-config.js';
+import { confirmDailySunContact } from './daily-resend.js';
+import {
+  deletePendingDailySunConfirmation,
+  savePendingDailySunConfirmation,
+  type DailySunStageOutcome,
+} from './daily-sun-server.js';
+import { createDailySunOptInToken, verifyDailySunOptInToken } from './daily-sun-token.js';
 import type { Locale } from '../i18n/core';
 import { serverUiMessage } from '../i18n/ui/server.js';
+import { signBySlug } from '../signs.js';
+import { createRateLimitedResendRequest } from '../daily-email/resend-request.js';
 
 type Environment = Record<string, unknown>;
 type Fetch = typeof fetch;
@@ -15,13 +25,14 @@ type Fetch = typeof fetch;
 export interface EmailSubscriptionResult {
   provider: EmailProviderName;
   pending: true;
+  outcome?: DailySunStageOutcome;
 }
 
 export interface EmailSubscriptionAdapter {
   readonly provider: EmailProviderName;
   subscribe(email: string, sign?: string): Promise<EmailSubscriptionResult>;
   /** Resend uses a first-party confirmation token; native-DOI providers omit this. */
-  confirm?(email: string, sign?: string): Promise<void>;
+  confirm?(email: string, sign?: string, purpose?: 'weekly' | 'daily'): Promise<void>;
 }
 
 function providerError(provider: EmailProviderName, status: number): Error {
@@ -50,36 +61,92 @@ class ResendAdapter implements EmailSubscriptionAdapter {
 
   async subscribe(email: string, sign?: string): Promise<EmailSubscriptionResult> {
     const secret = environmentValue(this.env, 'EMAIL_CONFIRM_SECRET');
-    const token = createEmailOptInToken({ email, sign: sign ?? null, locale: this.locale }, secret);
+    const daily = dailyEmailFeatureEnabled(this.env) && this.locale === 'en';
+    const token = daily
+      ? createDailySunOptInToken({ email, sign: sign ?? '' }, secret)
+      : createEmailOptInToken({ email, sign: sign ?? null, locale: this.locale }, secret);
+    const dailyClaim = daily ? verifyDailySunOptInToken(token, secret) : null;
+    if (daily && !dailyClaim) throw new Error('Daily sun confirmation token could not be verified.');
+    const pending = daily
+      ? await savePendingDailySunConfirmation(
+        email,
+        sign ?? '',
+        token,
+        dailyClaim!.expiresAt,
+        this.env,
+        this.fetcher,
+      )
+      : null;
+    if (pending?.outcome === 'already_on'
+      || pending?.outcome === 'cooldown'
+      || pending?.outcome === 'in_flight') {
+      return { provider: this.provider, pending: true, outcome: pending.outcome };
+    }
     const confirmation = new URL('/api/email/confirm', baseUrl(this.env));
     confirmation.searchParams.set('token', token);
 
     // Text-only by design: no tracking pixels, remote images, or open signal.
-    const body = [
-      serverUiMessage(this.locale, 'emailConfirmMessage'),
-      '',
-      confirmation.toString(),
-      '',
-      serverUiMessage(this.locale, 'emailConfirmIgnore'),
-    ].join('\n');
-    const response = await this.fetcher('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${environmentValue(this.env, 'RESEND_API_KEY')}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        from: environmentValue(this.env, 'RESEND_FROM_EMAIL'),
-        to: [email],
-        subject: serverUiMessage(this.locale, 'emailConfirmSubject'),
-        text: body,
-      }),
-    });
-    if (!response.ok) throw providerError(this.provider, response.status);
-    return { provider: this.provider, pending: true };
+    const body = daily
+      ? [
+        `Confirm that you want the free Zodiacs.org daily forecast for ${signBySlug(sign!).name}:`,
+        '',
+        `Confirm subscription: ${confirmation.toString()}`,
+        '',
+        'The link works for 48 hours. If you did not request this, ignore this email — nothing will be subscribed.',
+      ].join('\n')
+      : [
+        serverUiMessage(this.locale, 'emailConfirmMessage'),
+        '',
+        confirmation.toString(),
+        '',
+        serverUiMessage(this.locale, 'emailConfirmIgnore'),
+      ].join('\n');
+    const request = createRateLimitedResendRequest(this.fetcher);
+    try {
+      const response = await request('https://api.resend.com/emails', {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${environmentValue(this.env, 'RESEND_API_KEY')}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          from: environmentValue(this.env, 'RESEND_FROM_EMAIL'),
+          to: [email],
+          subject: daily
+            ? 'Confirm your Zodiacs.org daily forecast'
+            : serverUiMessage(this.locale, 'emailConfirmSubject'),
+          text: body,
+        }),
+      });
+      if (!response.ok) throw providerError(this.provider, response.status);
+    } catch (error) {
+      if (pending) {
+        try {
+          await deletePendingDailySunConfirmation(
+            pending.recipientHash,
+            pending.confirmationTokenHash,
+            this.env,
+            this.fetcher,
+          );
+        } catch {
+          // The undelivered token remains harmless and is replaced by the next request.
+        }
+      }
+      throw error;
+    }
+    return {
+      provider: this.provider,
+      pending: true,
+      ...(pending ? { outcome: pending.outcome } : {}),
+    };
   }
 
-  async confirm(email: string, sign?: string): Promise<void> {
+  async confirm(email: string, sign?: string, purpose: 'weekly' | 'daily' = 'weekly'): Promise<void> {
+    if (purpose === 'daily') {
+      if (!sign) throw new Error('A sign is required for the daily horoscope.');
+      await confirmDailySunContact(email, sign, this.env, this.fetcher);
+      return;
+    }
     const signKey = environmentValue(this.env, 'RESEND_SIGN_PROPERTY') || 'sun_sign';
     const segment = environmentValue(this.env, 'RESEND_SEGMENT_ID');
     const properties = optionalSignProperty(sign, signKey);

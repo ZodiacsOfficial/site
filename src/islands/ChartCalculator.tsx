@@ -63,10 +63,25 @@ import { LOCALES, localizePath, normalizeLocale, t, type Locale } from '../lib/i
 import { aspectLabel, moonPhaseLabel, planetLabel } from '../lib/i18n/astrology';
 import { useEngine } from '../lib/hooks/useEngine';
 import type { AspectType } from '../lib/engine/types';
+import {
+  clearPostChartContext,
+  publishPostChartContext,
+} from '../lib/profile/post-chart-context';
 
 type Mode = 'full' | 'moon' | 'rising';
 
 interface Props { mode: Mode; locale?: Locale }
+
+interface RunInput {
+  date: string;
+  time: string;
+  timeKnown: boolean;
+  city: City;
+  houseSystem: HouseSystem;
+  name?: string;
+  subjectMode?: SubjectMode;
+  mine?: MineHandoff | null;
+}
 
 type ShareSurfaceModule = typeof import('./PositionsShareSurface');
 type TourModule = typeof import('./explorer/tour');
@@ -265,6 +280,8 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   const [error, setError] = useState('');
   const [saved, setSaved] = useState<'idle' | 'saved' | 'full' | 'error'>('idle');
   const [shareInput, setShareInput] = useState<ShareChartInput | null>(null);
+  const [computedInput, setComputedInput] = useState<RunInput | null>(null);
+  const [profileRevision, setProfileRevision] = useState(0);
   const [share, setShare] = useState<CopyLinkState>('idle');
   const [card, setCard] = useState<'idle' | 'busy' | 'saved' | 'error'>('idle');
   const [fromLink, setFromLink] = useState(false);
@@ -295,6 +312,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   const saveOriginRef = useRef<'tour' | 'free'>('free');
   const shareReturnRef = useRef<HTMLElement | null>(null);
   const focusAfterComputeRef = useRef(false);
+  const chartContextIdRef = useRef(0);
 
   // ── Chart Explorer state (full mode) ──
   const [selection, setSelection] = useState<EntityRef | null>(null);
@@ -348,6 +366,12 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
 
   useEffect(() => () => {
     spotlightArrivalCleanupRef.current?.();
+  }, []);
+
+  useEffect(() => {
+    const onProfile = () => setProfileRevision((revision) => revision + 1);
+    window.addEventListener('zodiacs:profile', onProfile);
+    return () => window.removeEventListener('zodiacs:profile', onProfile);
   }, []);
 
   function track(name: string, props: Record<string, string>) {
@@ -765,6 +789,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
           }
           setChart(null);
           setShareInput(null);
+          setComputedInput(null);
           setPositionsOnly(decoded);
           setShareSurface(surface);
           setSubjectMode(nextSubjectMode);
@@ -819,13 +844,6 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   const canCompute = date !== '' && city !== null && (!timeKnown || time !== '')
     && !(mode === 'rising' && !timeKnown);
 
-  interface RunInput {
-    date: string; time: string; timeKnown: boolean; city: City; houseSystem: HouseSystem;
-    name?: string;
-    subjectMode?: SubjectMode;
-    mine?: MineHandoff | null;
-  }
-
   async function runChart(input: RunInput, focusAfterCompute: boolean) {
     focusAfterComputeRef.current = focusAfterCompute;
     setBusy(true);
@@ -855,6 +873,10 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
         flags: resolved.flags,
       });
       setChart(result);
+      setComputedInput({ ...input, city: { ...input.city } });
+      const contextId = chartContextIdRef.current + 1;
+      chartContextIdRef.current = contextId;
+      clearPostChartContext();
       if (mode === 'full' && firstReading.status === 'in_progress') {
         const nextChartKey = firstReadingChartKey(result);
         if (firstReading.chartKey !== nextChartKey) {
@@ -879,6 +901,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
         detail: {
           mode,
           sunSign: computedSun ? signForLongitude(computedSun.lon).slug : undefined,
+          contextId,
         },
       }));
       setShareInput({
@@ -979,7 +1002,9 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   const asc = chart?.angles?.asc ?? null;
   const sunSign = sun ? signForLongitude(sun.lon) : null;
   const autoNames = LOCALES.map((candidate) =>
-    sunSign ? `${signName(sunSign, candidate)} ${AUTO_NAME_SUN[candidate]} · ${date}` : '',
+    sunSign
+      ? `${signName(sunSign, candidate)} ${AUTO_NAME_SUN[candidate]} · ${computedInput?.date ?? date}`
+      : '',
   );
   const autoName = autoNames[LOCALES.indexOf(locale)] ?? '';
   const isAutoName = (name: string | null) => name !== null && autoNames.includes(name);
@@ -997,43 +1022,60 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
     : '/birth-chart/someone-else/';
 
   useEffect(() => {
-    if (!chart || !city) return;
+    if (!chart || !computedInput || mode !== 'full') return;
     let active = true;
+    const contextId = chartContextIdRef.current;
     const identity = {
       birth: {
-        date,
-        time: timeKnown ? time : null,
-        timeKnown,
+        date: computedInput.date,
+        time: computedInput.timeKnown ? computedInput.time : null,
+        timeKnown: computedInput.timeKnown,
         place: {
-          name: city.name, admin1: city.admin1, country: city.country,
-          lat: city.lat, lon: city.lon, tz: city.tz,
+          name: computedInput.city.name,
+          admin1: computedInput.city.admin1,
+          country: computedInput.city.country,
+          lat: computedInput.city.lat,
+          lon: computedInput.city.lon,
+          tz: computedInput.city.tz,
         },
       },
-      summary: { houseSystem: chart.houses?.system ?? houseSystem },
+      summary: { houseSystem: chart.houses?.system ?? computedInput.houseSystem },
     };
     void import('../lib/profile/store').then(({ findMatchingChart }) => {
-      if (active) setMatchedName(findMatchingChart(identity)?.name ?? null);
+      if (!active || contextId !== chartContextIdRef.current) return;
+      const match = findMatchingChart(identity);
+      setMatchedName(match?.name ?? null);
+      publishPostChartContext({
+        mode: 'full',
+        sunSign: sunSign?.slug ?? null,
+        chartId: match?.id ?? null,
+        contextId,
+      });
     }).catch(() => {});
     return () => { active = false; };
-  }, [chart, city, date, time, timeKnown, houseSystem]);
+  }, [chart, computedInput, mode, profileRevision, sunSign?.slug]);
 
   useEffect(() => {
     if (savePromptOpen) saveNameRef.current?.focus();
   }, [savePromptOpen]);
 
   function chartIdentity() {
-    if (!chart || !city) return null;
+    if (!chart || !computedInput) return null;
     return {
       birth: {
-        date,
-        time: timeKnown ? time : null,
-        timeKnown,
+        date: computedInput.date,
+        time: computedInput.timeKnown ? computedInput.time : null,
+        timeKnown: computedInput.timeKnown,
         place: {
-          name: city.name, admin1: city.admin1, country: city.country,
-          lat: city.lat, lon: city.lon, tz: city.tz,
+          name: computedInput.city.name,
+          admin1: computedInput.city.admin1,
+          country: computedInput.city.country,
+          lat: computedInput.city.lat,
+          lon: computedInput.city.lon,
+          tz: computedInput.city.tz,
         },
       },
-      summary: { houseSystem: chart.houses?.system ?? houseSystem },
+      summary: { houseSystem: chart.houses?.system ?? computedInput.houseSystem },
     };
   }
 
@@ -1061,29 +1103,22 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   }
 
   async function commitSave(explicitName: string | undefined, via: 'prompt' | 'link' | 'skip') {
-    if (!chart || !city) return;
+    const identity = chartIdentity();
+    if (!chart || !computedInput || !identity) return;
     track('chart_save', { source: saveOriginRef.current });
     const now = new Date().toISOString();
     try {
-      const { saveChart } = await import('../lib/profile/store');
+      const { findMatchingChart, saveChart } = await import('../lib/profile/store');
       const status = saveChart({
         id: crypto.randomUUID(),
         name: explicitName ?? autoName,
         createdAt: now,
         updatedAt: now,
-        birth: {
-          date,
-          time: timeKnown ? time : null,
-          timeKnown,
-          place: {
-            name: city.name, admin1: city.admin1, country: city.country,
-            lat: city.lat, lon: city.lon, tz: city.tz,
-          },
-        },
+        birth: identity.birth,
         summary: {
           engineVersion: ENGINE_VERSION,
           utcISO: chart.input.utc.toISOString(),
-          houseSystem: chart.houses?.system ?? houseSystem,
+          houseSystem: chart.houses?.system ?? computedInput.houseSystem,
           bodies: chart.bodies.map((b) => ({ body: b.body, lon: b.lon, retrograde: b.retrograde })),
           angles: chart.angles ? { asc: chart.angles.asc, mc: chart.angles.mc } : null,
           flags: chart.flags,
@@ -1093,7 +1128,14 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
       if (status === 'saved' || status === 'updated') {
         track('chart_saved', { source: saveOriginRef.current });
         track('chart_name_set', { via });
-        setMatchedName(explicitName ?? matchedName ?? autoName);
+        const match = findMatchingChart(identity);
+        setMatchedName(match?.name ?? explicitName ?? matchedName ?? autoName);
+        publishPostChartContext({
+          mode: 'full',
+          sunSign: sunSign?.slug ?? null,
+          chartId: match?.id ?? null,
+          contextId: chartContextIdRef.current,
+        });
         void import('../lib/a2hs').then(({ claimA2hsHint }) => {
           const hint = claimA2hsHint(locale, navigator.userAgent, localStorage);
           const standalone = (navigator as Navigator & { standalone?: boolean }).standalone === true

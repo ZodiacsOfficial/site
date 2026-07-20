@@ -1,6 +1,6 @@
 # Zodiacs.org setup and operations
 
-Last updated: 2026-07-19
+Last updated: 2026-07-20
 
 This is the provisioning source of truth for the six-phase household-name program. It consolidates the live repository's external services, environment variables, feature flags, and scheduled jobs. It contains names and procedures only—never secrets or secret values.
 
@@ -39,7 +39,7 @@ Do not put credentials in `.env` files that can be committed, Markdown, fixtures
 | --- | --- | --- | --- |
 | Vercel | Existing | Static hosting, previews, and `api/` serverless functions | Keep Production, Preview, and Development env scopes aligned. Deploy `main`. |
 | GitHub Actions | Existing | CI, daily/monthly data generation, digest, push, and refresh jobs | Give only the permissions declared by each workflow. Store secrets as Actions secrets and non-secret switches as variables. |
-| Supabase | Existing | Magic-link auth, RLS chart sync, digest preferences, assistant quota, push subscriptions; later compatibility invites | Apply migrations, keep RLS on, and never expose the service-role key. |
+| Supabase | Existing | Magic-link auth, RLS chart sync, digest preferences, daily-chart consent and delivery receipts, assistant quota, push subscriptions; later compatibility invites | Apply migrations, keep RLS on, and never expose the service-role key. |
 | Resend | Selected standard | Double-opt-in capture, weekly/daily email, unsubscribe-compatible delivery | Authenticate `zodiacs.org` with SPF/DKIM and use a domain sender. |
 | Buttondown or Loops | Supported alternatives | Standalone capture only | Configure exactly one provider. Do not combine providers in one deployment. |
 | Anthropic | Existing optional integration | Ask Zodiacs; optional future Phase 1 prose build | Use server/CI-only keys. Keep daily-prose and assistant budgets independently revocable. |
@@ -59,7 +59,7 @@ These values may appear in client bundles. They must never contain a secret.
 
 | Variable | Required when | Meaning |
 | --- | --- | --- |
-| `PUBLIC_SUPABASE_URL` | Account sync, digest/push backend, assistant quota | Supabase project origin. |
+| `PUBLIC_SUPABASE_URL` | Account sync, digest/daily-email/push backend, assistant quota | Supabase project origin. |
 | `PUBLIC_SUPABASE_PUBLISHABLE_KEY` | Account sync | Modern browser publishable key; preferred. |
 | `PUBLIC_SUPABASE_ANON_KEY` | Legacy fallback only | Older browser key name. Do not set when the publishable key is available. |
 | `PUBLIC_PLAUSIBLE_SCRIPT_URL` | Analytics enabled | Full cookieless analytics script URL. Unset means no provider script. |
@@ -74,7 +74,7 @@ These values may appear in client bundles. They must never contain a secret.
 
 | Variable | Scope | Meaning |
 | --- | --- | --- |
-| `SUPABASE_SERVICE_ROLE_KEY` | Vercel server + GitHub Actions secret | Server-only Supabase credential for digest, unsubscribe, push, and assistant quota. Never expose it to a browser. |
+| `SUPABASE_SERVICE_ROLE_KEY` | Vercel server + GitHub Actions secret | Server-only Supabase credential for digest, daily-email preferences/receipts, unsubscribe, push, and assistant quota. Never expose it to a browser. |
 | `DIGEST_UNSUBSCRIBE_SECRET` | Vercel server + GitHub Actions secret | Signs one-click unsubscribe tokens. Use a long random value and rotate only with a deliberate invalidation plan. |
 
 ### Standalone email capture
@@ -105,14 +105,33 @@ Supported alternatives:
 
 The capture component is omitted when its selected adapter is incomplete. Resend confirmation `GET` is read-only for mail-scanner safety; the human/agent-triggered form `POST` creates the contact.
 
-### Digest and future daily email
+### Digest and Phase 3 daily email
 
 | Variable | Scope | Meaning |
 | --- | --- | --- |
 | `DIGEST_FROM_EMAIL` | GitHub variable, optional | Sender; defaults to `Zodiacs.org <hello@zodiacs.org>`. |
 | `DIGEST_BASE_URL` | GitHub variable, optional | Site origin; defaults to `https://zodiacs.org`. |
 | `DIGEST_ENABLED` | GitHub variable | Set to the string `true` only after manual dry-run, live unsubscribe, sender authentication, and test-list proof. |
-| `DAILY_EMAIL_ENABLED` | Reserved Phase 3 GitHub variable | Future hourly local-time daily brief switch. It is not read by current code; do not set yet. |
+| `DAILY_EMAIL_ENABLED` | Vercel server flag + GitHub variable | Must equal the literal string `1`. In Vercel it exposes daily enrollment; in GitHub it permits real delivery. Leave both off until their release gates pass. |
+| `DAILY_EMAIL_COHORT` | Sender environment | Must be `test` or `all`. The committed workflow hardcodes `test` and exposes no cohort input; `all` remains dormant CLI support for a later approved release change. |
+| `DAILY_EMAIL_ALL_APPROVED` | Reserved GitHub variable / sender environment | Independent general-audience interlock. The sender requires the literal string `1` for a real `all`-cohort send, but the committed workflow does not read this variable or offer an `all` path. |
+| `DAILY_EMAIL_TEST_ALLOWLIST` | GitHub secret | Required for the `test` cohort. JSON array or comma/whitespace-separated list of normalized recipient addresses. |
+| `DAILY_EMAIL_RECIPIENT_HASH_SECRET` | Vercel server + GitHub Actions secret | At least 32 characters. HMACs normalized addresses for cross-tier suppression, revocation, receipts, and idempotency without storing raw email. Use the same value in both runtimes. |
+| `DAILY_EMAIL_UNSUBSCRIBE_SECRET` | Vercel server + GitHub Actions secret | At least 32 characters. Signs permanent first-party daily-unsubscribe links. Keep available while delivery is off; rotation invalidates links and requires an explicit migration plan. |
+| `DAILY_EMAIL_FROM` | GitHub variable, optional | Verified daily sender; defaults to `Zodiacs.org <hello@zodiacs.org>`. This is distinct from `RESEND_FROM_EMAIL`, which sends confirmation mail. |
+| `DAILY_EMAIL_BASE_URL` | GitHub variable, optional | HTTPS site origin used in daily links; defaults to `https://zodiacs.org`. |
+| `DAILY_EMAIL_POSTAL_ADDRESS` | GitHub variable | Physical sender address printed in every HTML and plain-text daily email. Required for real delivery; never use a placeholder in a test-list or audience send. |
+| `RESEND_DAILY_SIGN_SEGMENTS_JSON` | Vercel server + GitHub Actions secret | Exact twelve-sign Resend segment map shown below. Every canonical sign must have a distinct segment ID. |
+
+The Vercel daily-email endpoints require `EMAIL_PROVIDER=resend`, `RESEND_API_KEY`, `RESEND_FROM_EMAIL`, `EMAIL_CONFIRM_SECRET`, `PUBLIC_SUPABASE_URL`, exactly one public Supabase browser key, and `SUPABASE_SERVICE_ROLE_KEY`; `EMAIL_CONFIRM_BASE_URL` is the optional origin override. GitHub delivery requires `PUBLIC_SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `RESEND_API_KEY`, `DAILY_EMAIL_ENABLED`, `DAILY_EMAIL_RECIPIENT_HASH_SECRET`, `DAILY_EMAIL_UNSUBSCRIBE_SECRET`, `DAILY_EMAIL_POSTAL_ADDRESS`, `RESEND_DAILY_SIGN_SEGMENTS_JSON`, and the test allowlist. The workflow itself supplies `DAILY_EMAIL_COHORT=test`. Dormant direct-CLI `all` support additionally requires `DAILY_EMAIL_ALL_APPROVED=1`, but it is not a release path until an approved workflow change deliberately exposes it. The daily sender and base URL have the defaults above. Store secret values only in each platform's secret store.
+
+`RESEND_DAILY_SIGN_SEGMENTS_JSON` must be one JSON object with exactly these keys and twelve real, distinct Resend segment IDs:
+
+```json
+{"aries":"segment_aries","taurus":"segment_taurus","gemini":"segment_gemini","cancer":"segment_cancer","leo":"segment_leo","virgo":"segment_virgo","libra":"segment_libra","scorpio":"segment_scorpio","sagittarius":"segment_sagittarius","capricorn":"segment_capricorn","aquarius":"segment_aquarius","pisces":"segment_pisces"}
+```
+
+The values above are placeholders, not deployable IDs. Sun-sign daily enrollment moves a confirmed contact into exactly one of these daily segments. Weekly-digest consent remains separate and must never be inferred, added, or removed by a daily-email action.
 
 ### Ask Zodiacs
 
@@ -148,10 +167,14 @@ If the key, flag, provider, output schema, fact audit, or copy gate is unavailab
 | `VAPID_PUBLIC_KEY` | GitHub variable/server config | Delivery-side public key. |
 | `VAPID_PRIVATE_KEY` | GitHub secret | Delivery-side private key. |
 | `VAPID_SUBJECT` | GitHub variable | Contact URI, normally a `mailto:` address. |
+| `PUSH_TEST_SUBSCRIPTION_IDS` | GitHub variable | Optional comma-separated list of at most 50 exact subscription IDs. Required for a real pre-enable test send; omitted for the enabled production schedule. |
 
 The scheduled GitHub workflow also checks a repository variable named `PUSH_ENABLED` for the literal string `true`. This is separate from Vercel's runtime requirement of `PUSH_ENABLED=1`. Document both values in the deployment change record whenever push is flipped.
 
-The production schema must include an RLS-protected `push_subscriptions` table through a committed migration before enabling push.
+The production schema must include the RLS-protected `push_subscriptions` and
+`push_delivery_claims` tables through the committed Phase 3 migrations before
+enabling push. Delivery claims are the database authority for the advertised
+rolling caps; an in-memory or workflow-only counter is not sufficient.
 
 ### Registry-only integrations to preserve
 
@@ -183,7 +206,8 @@ These are outside this program and should remain off unless separately authorize
 | Model-assisted daily prose | `DAILY_PROSE_ENABLED=true` + dedicated secret; reserved | Deterministic-template edition or held verified edition. |
 | Standalone email capture | Complete `EMAIL_PROVIDER` adapter | Capture component is absent; pages remain complete. |
 | Weekly digest schedule | GitHub `DIGEST_ENABLED=true` | Workflow smoke test runs; no scheduled send. |
-| Future daily email | Reserved `DAILY_EMAIL_ENABLED=true` | No daily email send. |
+| Phase 3 daily enrollment | Vercel `DAILY_EMAIL_ENABLED=1` + complete Resend/Supabase configuration | Daily capture and chart preference enrollment are absent/disabled; existing daily unsubscribe remains usable. |
+| Phase 3 daily delivery | GitHub `DAILY_EMAIL_ENABLED=1`; committed workflow is fixed to `DAILY_EMAIL_COHORT=test` and requires the allowlist | Fixture smoke still runs; no real daily email send. General-audience delivery is not exposed. |
 | Browser push UI | `PUBLIC_WEB_PUSH_ENABLED=1` | No prompt or subscription UI. |
 | Push endpoint/worker | `PUSH_ENABLED=1` | Endpoint disabled and worker has no push handler. |
 | Scheduled push delivery | GitHub `PUSH_ENABLED=true` | Scheduled job stops before delivery. |
@@ -202,11 +226,50 @@ Required current migrations:
 1. `supabase/migrations/20260706000000_profile_sync.sql`
 2. `supabase/migrations/20260706130517_chart_deletions.sql`
 3. `supabase/migrations/20260707125552_weekly_digest_opt_in.sql`
+4. `supabase/migrations/20260720074516_phase3_habit_layer.sql`
+5. `supabase/migrations/20260720145526_phase3_delivery_guards.sql`
+
+Before either Phase 3 daily-email flag or any push flag is enabled, apply and
+verify both Phase 3 migrations. The habit-layer migration creates service-owned
+`daily_chart_preferences`, `daily_sun_preferences`,
+`daily_sun_confirmation_requests`, `daily_sun_confirmation_rate_limits`,
+`daily_email_deliveries`, and `push_subscriptions` tables with RLS enabled and
+no browser policies. Daily preferences point to one chart owned by the same
+user, require an IANA timezone, and store only an opaque recipient HMAC. The
+deletion guard atomically cancels a pending request or pauses confirmed consent
+before a selected chart leaves the device. Sun authority stays separate from
+expiring confirmation requests, so a pending sign change cannot replace the
+active sign; both tables store only recipient HMACs and token digests, never
+the raw address. A server-only 15-minute recipient-HMAC cooldown suppresses
+repeated Sun-tier confirmation mail without replacing the valid pending token,
+and signed Sun-tier unsubscribe removes that abuse-control row too.
+
+The delivery-guards migration adds an account-owned chart-confirmation attempt
+ledger, a global Sky Alerts editorial schedule, and an endpoint-fingerprinted
+delivery ledger, again with RLS and no browser policies. Chart confirmation
+attempts allow one provider attempt per 60 seconds and six per exact rolling 24
+hours; the account-level limit survives preference cancellation, recipient
+changes, and unsubscribe, and disappears only with the Auth account. The
+global schedule atomically selects no more than one event per UTC date and two
+selected dates in any seven-date window. When one slot remains, it holds a
+lower-priority candidate if the committed six-date lookahead contains a
+strictly higher-priority event; held and capped candidates write no row.
+Endpoint claims still reserve before the provider call and count every attempt
+against the fail-safe limit of one per exact rolling 24 hours and two per exact
+rolling seven days. Expired 404/410 endpoints are removed only when the stored
+subscription snapshot is still current. A worker must also present the exact
+`updated_at` version it listed before it can reserve, so a refresh between the
+list and reserve steps exits as stale without contacting Web Push. No guard
+ledger stores a raw email, endpoint, chart, or push encryption key.
+
+Daily DOI dispatch runs through Vercel `waitUntil`, giving every valid public
+submission the same immediate response while the database and provider work
+finishes inside the function lifecycle. Delivery receipts store the edition,
+recipient HMAC, tier, state, and provider receipt—never the raw address.
 
 Before enabling server features, add and apply committed idempotent migrations for any live-only schema not yet represented in this directory:
 
 - Assistant quota table and `assistant_quota_bump` function.
-- Push subscriptions table and its owner/service policies.
 - Phase 4 compatibility invites, including owner scope, token lookup policy, revocation, and expiry cleanup.
 
 Security checklist:
@@ -225,9 +288,22 @@ Security checklist:
 3. Create a least-privilege server key for this project.
 4. Choose a verified sender such as `Zodiacs.org <hello@zodiacs.org>`.
 5. Configure the Resend email-capture variables in Vercel Production, Preview, and Development as appropriate.
-6. Configure the digest secrets/variables in GitHub Actions and the unsubscribe secrets in Vercel.
-7. Test scanner-safe confirmation, token expiry, replay no-op, one-click unsubscribe, and an existing-unsubscribed contact.
-8. Keep `DIGEST_ENABLED` and future `DAILY_EMAIL_ENABLED` off until the test-list evidence is recorded in `PLAN.md`.
+6. Create twelve distinct daily Resend segments and configure `RESEND_DAILY_SIGN_SEGMENTS_JSON` identically in Vercel and GitHub Actions.
+7. Configure the weekly-digest and Phase 3 daily secrets/variables in GitHub Actions; configure the confirmation, preference, and unsubscribe secrets in Vercel.
+8. Test scanner-safe confirmation, token expiry, replay no-op, RFC 8058 one-click unsubscribe, and an existing-unsubscribed contact.
+9. Keep `DIGEST_ENABLED` and both instances of `DAILY_EMAIL_ENABLED` off until their independent evidence is recorded in `PLAN.md`.
+
+Daily messages send both `List-Unsubscribe` and `List-Unsubscribe-Post: List-Unsubscribe=One-Click` to the first-party `/api/email/unsubscribe` endpoint. `GET` is read-only and asks for confirmation; RFC 8058 `POST` performs the change. Each link revokes only its named tier while leaving weekly-digest consent unchanged. Stopping the personal-chart tier lets an already-confirmed Sun-sign daily resume automatically. Revocation must continue to work when enrollment and delivery flags are off, and the database transaction remains authoritative if provider segment cleanup is unavailable.
+
+### Daily-email verification and release
+
+1. Leave the Vercel and GitHub `DAILY_EMAIL_ENABLED` values unset/off. Apply both Phase 3 migrations only through the normal reviewed migration process, then verify their RLS, grants, ownership foreign key, timezone constraint, confirmation-attempt caps, and receipt uniqueness.
+2. Run `npx vite-node --script scripts/send-daily-email.ts --fixture --dry-run --limit 2`. Fixture mode requires `--dry-run`, uses no production recipients, creates no receipts, and performs no provider sends.
+3. Manually dispatch `.github/workflows/daily-email.yml` with `dry_run=true`. The workflow is fixed to the test cohort. A dry run may render eligible confirmed test recipients but must not reserve receipts or call Resend delivery. Use `--to`/the workflow `to` input only as an additional exact subscribed-address filter; it never bypasses consent or the cohort allowlist.
+4. For real test-list proof only, set the GitHub variable `DAILY_EMAIL_ENABLED=1` and populate `DAILY_EMAIL_TEST_ALLOWLIST`. The workflow remains hardcoded to `DAILY_EMAIL_COHORT=test`. Leave the Vercel production enrollment flag off. Dispatch with `dry_run=false`; the workflow must verify the committed edition and its exact live production counterpart before delivery.
+5. Record at least three consecutive successful test-list sends on distinct eligible daily editions and prove each live first-party unsubscribe removes only its named tier without changing weekly-digest consent. Also prove that stopping the chart tier lets an already-confirmed Sun-sign daily resume. A duplicate receipt/skip does not count as a send, and a failed, gapped, or unverifiable qualifying edition breaks the streak; do not compensate with a general send.
+6. Even after that evidence, this committed workflow cannot send to `all`. A separate reviewed and explicitly approved release change must reintroduce the cohort choice, thread `DAILY_EMAIL_ALL_APPROVED` into the workflow, and preserve the sender's independent approval check. Until that change lands, keep the workflow test-only.
+7. Roll back immediately by unsetting/turning off `DAILY_EMAIL_ENABLED` in both Vercel and GitHub and unsetting `DAILY_EMAIL_ALL_APPROVED`. Keep the unsubscribe secrets and endpoint deployed so existing links continue to revoke consent.
 
 ## Analytics provisioning
 
@@ -241,10 +317,22 @@ Security checklist:
 
 1. Generate one VAPID keypair outside the repository.
 2. Put the public key in the public/server variable stores and the private key only in GitHub/Vercel secrets.
-3. Apply and verify the push-subscription migration.
+3. Apply and verify both Phase 3 migrations, including subscription identity,
+   the service-only global schedule and endpoint-claim RPCs, UTC-date and exact
+   rolling boundaries, priority reservation, and persistence across
+   delete/re-subscribe of the same endpoint. Run
+   `npm run test:phase3:delivery-sql` against its disposable PostgreSQL 17
+   container; never point that harness at a live database.
 4. Build with both runtime flags enabled in a preview and confirm the service worker version changes.
-5. Test subscribe, unsubscribe, expired endpoint cleanup, frequency cap, click-through, denied permission, and iOS installed-PWA behavior.
-6. Run the workflow manually with `dry_run=true`, then against a small test list.
+5. Run `npm run test:phase3:push` against that flags-on fixture build. Test
+   subscribe, unsubscribe, quiet-day no-op, event-day canonical
+   click-through, duplicate suppression, both rolling frequency caps, failed
+   provider attempts, refreshed-subscription protection, expired endpoint
+   cleanup, denied permission, and iOS installed-PWA behavior.
+6. Run the workflow manually with `dry_run=true`, then set
+   `PUSH_TEST_SUBSCRIPTION_IDS` to a small controlled cohort and run one real
+   test. With the GitHub `PUSH_ENABLED` schedule flag off, a real run fails
+   closed unless this exact allowlist is present.
 7. Enable the Vercel `1` flags and GitHub `true` schedule variable only after the preview and test-list checks pass.
 
 ## Ask Zodiacs provisioning
@@ -263,19 +351,19 @@ All schedules are UTC.
 | Workflow | Schedule | Current behavior | Gate |
 | --- | --- | --- | --- |
 | `.github/workflows/daily-horoscopes.yml` | Daily 00:00 | Builds facts/publication, verifies, replays 30 days, commits changes, waits for live edition, pings IndexNow. GitHub may start the runner after the declared boundary. | Always on. Phase 1 covers all daily cuts and Monday weekly generation. |
+| `.github/workflows/daily-email.yml` | Hourly at UTC minute 13 | Runs a credential-free fixture smoke; when explicitly enabled, verifies the exact live edition and selects eligible test-list recipients. | Off by default; real delivery requires GitHub `DAILY_EMAIL_ENABLED=1`. Workflow is hardcoded to `test`; no general-audience path exists. |
 | `.github/workflows/weekly-digest.yml` | Monday 06:00 | Fixture smoke always; real send only when `DIGEST_ENABLED=true`. | Off by default. |
 | `.github/workflows/pulse-refresh.yml` | Monday 06:17 | Refreshes Wikipedia/Trends pulse data and commits changes. | Existing, best effort. |
 | `.github/workflows/distribution-refresh.yml` | Monday 06:31 | Refreshes Registry ownership distribution and commits changes. | Existing Registry operation. |
-| `.github/workflows/push-daily.yml` | Daily 07:00 | Fixture smoke and edition verification; real send only when GitHub `PUSH_ENABLED=true`. | Off by default. |
+| `.github/workflows/push-daily.yml` | Daily 07:00 | Verifies the committed events publication and dry-runs the July 18 event plus the July 22 quiet day; when enabled, applies the global priority/cap schedule, sends at most one source-backed event alert, and otherwise sends nothing. | Off by default; real delivery requires GitHub `PUSH_ENABLED=true`. |
 | `.github/workflows/transits-monthly.yml` | Monthly on day 25 at 05:41 | Computes next month's facts, verifies deterministic regeneration, commits, and opens the twelve-sign editorial issue. | Always on; Phase 1 may automate prose but must preserve fact verification. |
-| `.github/workflows/site-check.yml` | Push/PR/manual | Full build, type, fact, browser, schema, bundle, visual, Lighthouse, widget, and drift gates. | Required before merge. |
+| `.github/workflows/site-check.yml` | Push/PR/manual | Full build, type, fact, browser, schema, bundle, visual, Lighthouse, widget, drift, disposable PostgreSQL 17 concurrency, and flags-on push-browser gates. | Required before merge. |
 
-Planned Phase 3 schedule:
+Phase 3 daily-email schedule (implemented, production flags off):
 
-- Add `.github/workflows/daily-email.yml` at minute 13 of every hour.
-- Select only consented recipients whose stored timezone has just reached 07:00; recipients without a timezone enter the 07:00 UTC cohort.
-- Use an edition/recipient idempotency key so workflow retries cannot duplicate a send.
-- Run a fixture smoke on every invocation; perform delivery only with `DAILY_EMAIL_ENABLED=true`.
+- The workflow runs at minute 13 of every UTC hour. A confirmed chart recipient becomes eligible when the edition date matches their chosen IANA timezone and the local hour is 07:00 or later. An absent or invalid timezone fails safely to the UTC cohort; Sun-sign recipients use UTC and enter at 07:00 UTC.
+- Later local hours remain eligible if a verified edition was held or the runner was delayed. The `(edition_date, recipient_hash)` receipt key and Resend idempotency key limit each address to one daily message for that edition. A crashed worker's `reserved` receipt can be reclaimed only after its fixed 30-minute lease through an atomic `updated_at` comparison. Reclaiming assigns a new owner token, and finalize/fail updates require that token, so the previous worker cannot mutate the new lease; the provider retry still uses the same deterministic idempotency key. A confirmed chart brief suppresses the matching Sun-sign brief.
+- Every invocation runs the credential-free fixture smoke. Real delivery additionally requires GitHub `DAILY_EMAIL_ENABLED=1` and an exact verified live edition. The committed workflow hardcodes `DAILY_EMAIL_COHORT=test`, requires the allowlist, and provides no `all` input or scheduled path. Dormant CLI `all` support remains protected by the independent `DAILY_EMAIL_ALL_APPROVED=1` interlock for a future separately approved workflow release.
 
 Do not add scheduled jobs for Phase 2 catalogs or Phase 5 people ingestion. Those are reviewed, versioned build inputs and should run through explicit generation PRs.
 
