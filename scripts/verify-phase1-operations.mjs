@@ -295,8 +295,8 @@ export function repositoryEvidenceFailures(receipt, run, targetDate, cutoverSha,
   return failures;
 }
 
-async function downloadOperationReceipt(repo, artifact) {
-  const response = await githubResponse(repo, `/actions/artifacts/${artifact.id}/zip`, 'application/octet-stream');
+export async function downloadOperationReceipt(repo, artifact, request = githubResponse) {
+  const response = await request(repo, `/actions/artifacts/${artifact.id}/zip`, 'application/vnd.github+json');
   return extractJsonFromZip(await response.arrayBuffer());
 }
 
