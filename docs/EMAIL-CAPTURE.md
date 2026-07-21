@@ -18,10 +18,18 @@ Choose exactly one provider with `EMAIL_PROVIDER=resend|buttondown|loops`.
 
 Required:
 
-- `RESEND_API_KEY` — server-only Resend key.
+- `RESEND_API_KEY` — server-only sending-access Resend key, used only for
+  confirmation and message delivery.
+- `RESEND_CONTACTS_API_KEY` — separate server-only full-access Resend key,
+  used only for contact and segment reads/writes. It must differ from
+  `RESEND_API_KEY`.
 - `RESEND_FROM_EMAIL` — verified sender used for the plain-text confirmation.
 - `EMAIL_CONFIRM_SECRET` — at least 32 characters; signs the 48-hour opt-in
   token. Rotate only after allowing outstanding confirmation links to expire.
+
+Resend's [API key permissions](https://resend.com/docs/create-an-api-key)
+limit sending-access keys to email sends; contact and segment APIs therefore
+cannot share the sending key in this integration.
 
 Optional:
 
@@ -37,6 +45,11 @@ explicit form `POST` creates the contact. A replay is a no-op, and the confirm
 endpoint never updates an existing contact because doing so could reverse an
 earlier unsubscribe. Contact creation follows Resend's
 [Contacts API](https://resend.com/docs/api-reference/contacts/create-contact).
+
+Phase 3 sun-sign daily uses a separate `RESEND_DAILY_SEGMENT_ID`.
+That segment is routing metadata only: `daily_sun_preferences` is the consent
+and sign authority. The daily and legacy weekly segment IDs must differ so a
+daily confirmation or unsubscribe can never change weekly membership.
 
 ### Buttondown
 

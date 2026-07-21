@@ -118,11 +118,16 @@ describe('Phase 1 durable acceptance evidence', () => {
     expect(review).toContain('third sky-strip marker');
   });
 
-  it('invalidates stale evidence when a transitive component or bundled font changes', async () => {
+  it('invalidates stale evidence when a transitive render source or bundled font changes', async () => {
     const baseline = await phase1TemplateSourceSha256(root);
     for (const changedPath of [
       resolve(root, 'src/components/BrandMark.astro'),
       resolve(root, 'public/fonts/instrument-sans-latin-wght-normal.woff2'),
+      resolve(root, 'src/lib/email/config.ts'),
+      resolve(root, 'src/lib/email/daily-capture-copy.ts'),
+      resolve(root, 'src/lib/email/daily-config.ts'),
+      resolve(root, 'src/lib/email/daily-segment-id.ts'),
+      resolve(root, 'src/lib/email/post-chart-state.ts'),
     ]) {
       const changed = await phase1TemplateSourceSha256(root, {
         readSource: async (path) => {
@@ -132,6 +137,26 @@ describe('Phase 1 durable acceptance evidence', () => {
       });
       expect(changed, changedPath).not.toBe(baseline);
     }
+  });
+
+  it('keeps server-only email delivery changes outside the Phase 1 visual receipt', async () => {
+    const baseline = await phase1TemplateSourceSha256(root);
+    const deliveryPaths = new Set([
+      resolve(root, 'src/lib/daily-email/segments.ts'),
+      resolve(root, 'src/lib/email/daily-resend.ts'),
+    ]);
+    let deliveryRead = false;
+    const changed = await phase1TemplateSourceSha256(root, {
+      readSource: async (path) => {
+        const bytes = await readFile(path);
+        if (!deliveryPaths.has(path)) return bytes;
+        deliveryRead = true;
+        return Buffer.concat([bytes, Buffer.from('server-delivery-change')]);
+      },
+    });
+
+    expect(deliveryRead).toBe(false);
+    expect(changed).toBe(baseline);
   });
 
   it('keeps reviewed template geometry valid across payload-only daily editions', async () => {

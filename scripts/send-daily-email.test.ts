@@ -4,6 +4,7 @@ import {
   assertDailyEmailSendInterlocks,
   dailyRecipientUnsubscribeClaim,
   parseDailyEmailArgs,
+  requireResendCapabilities,
   runDailyEmail,
   selectDailyEmailNearbyEvents,
 } from './send-daily-email';
@@ -80,6 +81,19 @@ describe('daily email CLI', () => {
     })).toBe('all');
   });
 
+  it('requires distinct sending and contacts capabilities', () => {
+    expect(requireResendCapabilities({
+      RESEND_API_KEY: 're_sending_test',
+      RESEND_CONTACTS_API_KEY: 're_contacts_test',
+    })).toEqual({ sendingKey: 're_sending_test', contactsKey: 're_contacts_test' });
+    expect(() => requireResendCapabilities({ RESEND_API_KEY: 're_sending_test' }))
+      .toThrow(/RESEND_CONTACTS_API_KEY is required/u);
+    expect(() => requireResendCapabilities({
+      RESEND_API_KEY: 're_same',
+      RESEND_CONTACTS_API_KEY: 're_same',
+    })).toThrow(/must be distinct capability keys/u);
+  });
+
   it('never permits a fake fixture identity to become a real delivery', async () => {
     await expect(runDailyEmail({
       options: parseDailyEmailArgs(['--fixture']),
@@ -127,7 +141,10 @@ describe('daily email CLI', () => {
     expect(workflow).toContain('DAILY_EMAIL_COHORT: test');
     expect(workflow).not.toContain('inputs.cohort');
     expect(workflow).not.toMatch(/^\s+- all\s*$/mu);
-    expect(workflow).toContain('RESEND_DAILY_SIGN_SEGMENTS_JSON');
+    expect(workflow).toContain('RESEND_DAILY_SEGMENT_ID');
+    expect(workflow).toContain('RESEND_SEGMENT_ID');
+    expect(workflow).toContain('RESEND_CONTACTS_API_KEY');
+    expect(workflow).not.toContain('RESEND_DAILY_SIGN_SEGMENTS_JSON');
     expect(workflow).toContain('DAILY_EMAIL_COHORT');
   });
 });

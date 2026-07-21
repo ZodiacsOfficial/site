@@ -86,7 +86,8 @@ Resend, the program standard:
 | Variable | Requirement | Meaning |
 | --- | --- | --- |
 | `EMAIL_PROVIDER` | Required | Set to `resend`. |
-| `RESEND_API_KEY` | Required, server/CI secret | Resend API key. |
+| `RESEND_API_KEY` | Required, server/CI secret | Sending-access Resend key used only to send confirmation and daily messages. |
+| `RESEND_CONTACTS_API_KEY` | Required, server/CI secret | Separate full-access Resend key used only for contact and segment operations. It must differ from `RESEND_API_KEY`. |
 | `RESEND_FROM_EMAIL` | Required | Verified sender used for confirmation mail. |
 | `EMAIL_CONFIRM_SECRET` | Required, server secret | At least 32 characters; signs 48-hour confirmation tokens. |
 | `EMAIL_CONFIRM_BASE_URL` | Optional | HTTPS site origin; defaults to `https://zodiacs.org`. |
@@ -121,17 +122,11 @@ The capture component is omitted when its selected adapter is incomplete. Resend
 | `DAILY_EMAIL_FROM` | GitHub variable, optional | Verified daily sender; defaults to `Zodiacs.org <hello@zodiacs.org>`. This is distinct from `RESEND_FROM_EMAIL`, which sends confirmation mail. |
 | `DAILY_EMAIL_BASE_URL` | GitHub variable, optional | HTTPS site origin used in daily links; defaults to `https://zodiacs.org`. |
 | `DAILY_EMAIL_POSTAL_ADDRESS` | GitHub variable | Physical sender address printed in every HTML and plain-text daily email. Required for real delivery; never use a placeholder in a test-list or audience send. |
-| `RESEND_DAILY_SIGN_SEGMENTS_JSON` | Vercel server + GitHub Actions secret | Exact twelve-sign Resend segment map shown below. Every canonical sign must have a distinct segment ID. |
+| `RESEND_DAILY_SEGMENT_ID` | Vercel server + GitHub Actions secret | One dedicated Resend segment for confirmed sun-sign daily contacts. It must differ from the legacy weekly `RESEND_SEGMENT_ID`. |
 
-The Vercel daily-email endpoints require `EMAIL_PROVIDER=resend`, `RESEND_API_KEY`, `RESEND_FROM_EMAIL`, `EMAIL_CONFIRM_SECRET`, `PUBLIC_SUPABASE_URL`, exactly one public Supabase browser key, and `SUPABASE_SERVICE_ROLE_KEY`; `EMAIL_CONFIRM_BASE_URL` is the optional origin override. GitHub delivery requires `PUBLIC_SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `RESEND_API_KEY`, `DAILY_EMAIL_ENABLED`, `DAILY_EMAIL_RECIPIENT_HASH_SECRET`, `DAILY_EMAIL_UNSUBSCRIBE_SECRET`, `DAILY_EMAIL_POSTAL_ADDRESS`, `RESEND_DAILY_SIGN_SEGMENTS_JSON`, and the test allowlist. The workflow itself supplies `DAILY_EMAIL_COHORT=test`. Dormant direct-CLI `all` support additionally requires `DAILY_EMAIL_ALL_APPROVED=1`, but it is not a release path until an approved workflow change deliberately exposes it. The daily sender and base URL have the defaults above. Store secret values only in each platform's secret store.
+The Vercel daily-email endpoints require `EMAIL_PROVIDER=resend`, distinct `RESEND_API_KEY` and `RESEND_CONTACTS_API_KEY` capability keys, `RESEND_FROM_EMAIL`, `EMAIL_CONFIRM_SECRET`, `PUBLIC_SUPABASE_URL`, exactly one public Supabase browser key, `SUPABASE_SERVICE_ROLE_KEY`, and `RESEND_DAILY_SEGMENT_ID`; `EMAIL_CONFIRM_BASE_URL` is the optional origin override. GitHub delivery requires `PUBLIC_SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, both distinct Resend keys, `DAILY_EMAIL_ENABLED`, `DAILY_EMAIL_RECIPIENT_HASH_SECRET`, `DAILY_EMAIL_UNSUBSCRIBE_SECRET`, `DAILY_EMAIL_POSTAL_ADDRESS`, `RESEND_DAILY_SEGMENT_ID`, and the test allowlist. When the legacy weekly capture uses `RESEND_SEGMENT_ID`, provide that value to the daily-email runtime too so equality is rejected fail-closed. The workflow itself supplies `DAILY_EMAIL_COHORT=test`. Dormant direct-CLI `all` support additionally requires `DAILY_EMAIL_ALL_APPROVED=1`, but it is not a release path until an approved workflow change deliberately exposes it. The daily sender and base URL have the defaults above. Store secret values only in each platform's secret store.
 
-`RESEND_DAILY_SIGN_SEGMENTS_JSON` must be one JSON object with exactly these keys and twelve real, distinct Resend segment IDs:
-
-```json
-{"aries":"segment_aries","taurus":"segment_taurus","gemini":"segment_gemini","cancer":"segment_cancer","leo":"segment_leo","virgo":"segment_virgo","libra":"segment_libra","scorpio":"segment_scorpio","sagittarius":"segment_sagittarius","capricorn":"segment_capricorn","aquarius":"segment_aquarius","pisces":"segment_pisces"}
-```
-
-The values above are placeholders, not deployable IDs. Sun-sign daily enrollment moves a confirmed contact into exactly one of these daily segments. Weekly-digest consent remains separate and must never be inferred, added, or removed by a daily-email action.
+`RESEND_DAILY_SEGMENT_ID` is provider routing metadata, not sign or consent authority. After double opt-in commits `daily_sun_preferences`, the endpoint idempotently adds the contact to this one segment. Sign changes update only the Supabase preference. The sender pages the segment, HMACs each normalized address, intersects it with confirmed `daily_sun_preferences`, and takes the sign only from that row. Unsubscribe revokes Supabase first and then removes this membership on a best-effort basis. Weekly-digest consent remains separate and must never be inferred, added, or removed by a daily-email action.
 
 ### Ask Zodiacs
 
@@ -285,10 +280,10 @@ Security checklist:
 
 1. Add and authenticate `zodiacs.org` in Resend.
 2. Publish the required SPF and DKIM DNS records and wait for verification.
-3. Create a least-privilege server key for this project.
+3. Create two distinct capability keys: a domain-restricted sending-access key for `RESEND_API_KEY`, and a separate full-access key for `RESEND_CONTACTS_API_KEY`. Never place the full-access key in the sending variable.
 4. Choose a verified sender such as `Zodiacs.org <hello@zodiacs.org>`.
 5. Configure the Resend email-capture variables in Vercel Production, Preview, and Development as appropriate.
-6. Create twelve distinct daily Resend segments and configure `RESEND_DAILY_SIGN_SEGMENTS_JSON` identically in Vercel and GitHub Actions.
+6. Create one dedicated daily Sun Resend segment and configure its ID as `RESEND_DAILY_SEGMENT_ID` identically in Vercel and GitHub Actions. It must not equal the legacy weekly `RESEND_SEGMENT_ID`.
 7. Configure the weekly-digest and Phase 3 daily secrets/variables in GitHub Actions; configure the confirmation, preference, and unsubscribe secrets in Vercel.
 8. Test scanner-safe confirmation, token expiry, replay no-op, RFC 8058 one-click unsubscribe, and an existing-unsubscribed contact.
 9. Keep `DIGEST_ENABLED` and both instances of `DAILY_EMAIL_ENABLED` off until their independent evidence is recorded in `PLAN.md`.

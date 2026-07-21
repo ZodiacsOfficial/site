@@ -13,6 +13,9 @@ interface Props {
   alt?: string;
   loading?: 'lazy' | 'eager';
   fetchPriority?: 'high' | 'low' | 'auto';
+  /** Skip AVIF when its derivative is larger than WebP on an LCP path. */
+  webpOnly?: boolean;
+  decoding?: 'async' | 'sync' | 'auto';
   class?: string;
 }
 
@@ -22,13 +25,15 @@ const {
   alt = '',
   loading = 'lazy',
   fetchPriority,
+  webpOnly = false,
+  decoding = 'async',
   class: className,
 } = Astro.props;
 const s = signBySlug(sign);
 const tier = size <= 24 ? 48 : size <= 64 ? 128 : 400;
 ---
 <picture class:list={['sign-icon', className]} style={`--sign:${s.hue};--sign-size:${size}px`}>
-  <source srcset={`/assets/zodiac-icons/${tier}/${sign}.avif`} type="image/avif" />
+  {!webpOnly && <source srcset={`/assets/zodiac-icons/${tier}/${sign}.avif`} type="image/avif" />}
   <img
     src={`/assets/zodiac-icons/${tier}/${sign}.webp`}
     width={size}
@@ -36,7 +41,7 @@ const tier = size <= 24 ? 48 : size <= 64 ? 128 : 400;
     alt={alt}
     loading={loading}
     fetchpriority={fetchPriority}
-    decoding="async"
+    decoding={decoding}
   />
 </picture>
 

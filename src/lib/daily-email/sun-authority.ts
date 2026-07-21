@@ -1,5 +1,6 @@
 import { SIGN_SLUGS } from '../signs';
 import { dailyRecipientHash } from './identity';
+import type { DailySunContact } from './segments';
 import type { SunSignRecipient } from './types';
 
 const HASH = /^[0-9a-f]{64}$/u;
@@ -40,26 +41,26 @@ function confirmedAuthority(row: DailySunAuthorityRow): { recipientHash: string;
 
 /**
  * Intersects provider routing state with the server-owned consent ledger.
- * Provider segments may drift, but can never grant delivery authority alone.
+ * Provider membership may drift, but can never grant delivery authority alone.
  */
 export async function loadAuthorizedSunRecipients({
-  recipients,
+  contacts,
   fetchImpl,
   supabaseUrl,
   serviceKey,
   hashSecret,
 }: {
-  recipients: readonly SunSignRecipient[];
+  contacts: readonly DailySunContact[];
   fetchImpl: typeof fetch;
   supabaseUrl: string;
   serviceKey: string;
   hashSecret: string;
 }): Promise<AuthorizedSunRecipients> {
-  if (recipients.length === 0) return { recipients: [], rejected: 0 };
+  if (contacts.length === 0) return { recipients: [], rejected: 0 };
 
-  const candidates = recipients.map((recipient) => ({
-    recipient,
-    recipientHash: dailyRecipientHash(recipient.email, hashSecret),
+  const candidates = contacts.map((contact) => ({
+    contact,
+    recipientHash: dailyRecipientHash(contact.email, hashSecret),
   }));
   const hashes = [...new Set(candidates.map((candidate) => candidate.recipientHash))];
   const confirmedByHash = new Map<string, string>();
@@ -95,8 +96,15 @@ export async function loadAuthorizedSunRecipients({
     }
   }
 
-  const authorized = candidates
-    .filter(({ recipient, recipientHash }) => confirmedByHash.get(recipientHash) === recipient.sign)
-    .map(({ recipient }) => recipient);
-  return { recipients: authorized, rejected: recipients.length - authorized.length };
+  const authorized = candidates.flatMap(({ contact, recipientHash }) => {
+    const sign = confirmedByHash.get(recipientHash);
+    return sign ? [{
+      tier: 'sun_sign' as const,
+      email: contact.email,
+      sign,
+      contactId: contact.contactId,
+      timezone: 'UTC' as const,
+    }] : [];
+  });
+  return { recipients: authorized, rejected: contacts.length - authorized.length };
 }

@@ -81,7 +81,9 @@ jobs:
           DAILY_EMAIL_BASE_URL: ${{ vars.DAILY_EMAIL_BASE_URL || 'https://zodiacs.org' }}
           DAILY_EMAIL_POSTAL_ADDRESS: ${{ vars.DAILY_EMAIL_POSTAL_ADDRESS }}
           RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
-          RESEND_DAILY_SIGN_SEGMENTS_JSON: ${{ secrets.RESEND_DAILY_SIGN_SEGMENTS_JSON }}
+          RESEND_CONTACTS_API_KEY: ${{ secrets.RESEND_CONTACTS_API_KEY }}
+          RESEND_DAILY_SEGMENT_ID: ${{ secrets.RESEND_DAILY_SEGMENT_ID }}
+          RESEND_SEGMENT_ID: ${{ secrets.RESEND_SEGMENT_ID }}
           PUBLIC_SUPABASE_URL: ${{ vars.PUBLIC_SUPABASE_URL }}
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
           DAILY_EMAIL_DRY_RUN: ${{ inputs.dry_run }}

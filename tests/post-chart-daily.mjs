@@ -8,23 +8,18 @@
 import { spawnSync } from 'node:child_process';
 import { resolve } from 'node:path';
 
-const signs = [
-  'aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo',
-  'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces',
-];
 const fixtureEnv = {
   ...process.env,
   DAILY_EMAIL_ENABLED: '1',
   EMAIL_PROVIDER: 'resend',
-  RESEND_API_KEY: 're_fixture_not_a_secret',
+  RESEND_API_KEY: 're_fixture_sending_not_a_secret',
+  RESEND_CONTACTS_API_KEY: 're_fixture_contacts_not_a_secret',
   RESEND_FROM_EMAIL: 'Zodiacs.org <fixture@zodiacs.org>',
   EMAIL_CONFIRM_SECRET: 'fixture-confirm-secret-000000000000000000000000',
   EMAIL_CONFIRM_BASE_URL: 'https://zodiacs.org',
   DAILY_EMAIL_UNSUBSCRIBE_SECRET: 'fixture-unsubscribe-secret-0000000000000000000',
   DAILY_EMAIL_RECIPIENT_HASH_SECRET: 'fixture-recipient-secret-000000000000000000000',
-  RESEND_DAILY_SIGN_SEGMENTS_JSON: JSON.stringify(Object.fromEntries(
-    signs.map((sign, index) => [sign, `fixture_segment_${String(index + 1).padStart(2, '0')}`]),
-  )),
+  RESEND_DAILY_SEGMENT_ID: 'fixture_daily_sun_segment',
   PUBLIC_SUPABASE_URL: 'https://phase3-test.supabase.co',
   PUBLIC_SUPABASE_PUBLISHABLE_KEY: 'sb_publishable_fixture',
   SUPABASE_SERVICE_ROLE_KEY: 'service_fixture_not_a_secret',
