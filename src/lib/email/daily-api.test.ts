@@ -18,11 +18,7 @@ const CLAIM_TOKEN = '330e8400-e29b-41d4-a716-446655440000';
 const CONTACT_ID = 'contact_12345678';
 const RECIPIENT_HASH = dailyRecipientHash('person@example.com', SECRET);
 const CLAIMED_AT = '2026-07-20T12:00:00.000Z';
-const SIGNS = [
-  'aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo',
-  'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces',
-];
-const SEGMENTS = Object.fromEntries(SIGNS.map((sign, index) => [sign, `segment_${index + 1}`]));
+const DAILY_SEGMENT = 'segment_daily_sun';
 
 afterEach(() => {
   process.env = { ...ORIGINAL_ENV };
@@ -33,13 +29,14 @@ function configure(): void {
   Object.assign(process.env, {
     DAILY_EMAIL_ENABLED: '1',
     EMAIL_PROVIDER: 'resend',
-    RESEND_API_KEY: 're_test',
+    RESEND_API_KEY: 're_sending_test',
+    RESEND_CONTACTS_API_KEY: 're_contacts_test',
     RESEND_FROM_EMAIL: 'Zodiacs.org <hello@zodiacs.org>',
     EMAIL_CONFIRM_SECRET: SECRET,
     EMAIL_CONFIRM_BASE_URL: 'https://zodiacs.org',
     DAILY_EMAIL_UNSUBSCRIBE_SECRET: SECRET,
     DAILY_EMAIL_RECIPIENT_HASH_SECRET: SECRET,
-    RESEND_DAILY_SIGN_SEGMENTS_JSON: JSON.stringify(SEGMENTS),
+    RESEND_DAILY_SEGMENT_ID: DAILY_SEGMENT,
     PUBLIC_SUPABASE_URL: 'https://project.supabase.co',
     PUBLIC_SUPABASE_PUBLISHABLE_KEY: 'sb_publishable_test',
     SUPABASE_SERVICE_ROLE_KEY: 'service_test',
@@ -124,7 +121,7 @@ describe('daily chart confirmation send claim', () => {
 });
 
 describe('daily sun confirmation', () => {
-  it('keeps GET read-only and assigns exactly one sign segment after POST', async () => {
+  it('keeps GET read-only, commits DOI authority, then assigns the one daily segment', async () => {
     configure();
     const token = createDailySunOptInToken({ email: 'person@example.com', sign: 'libra' }, SECRET);
     let requestState: 'pending' | 'confirming' | 'confirmed' = 'pending';
@@ -157,9 +154,6 @@ describe('daily sun confirmation', () => {
       if (url === 'https://api.resend.com/contacts' && init?.method === 'POST') {
         return json({ id: CONTACT_ID }, 201);
       }
-      if (url.endsWith(`/${CONTACT_ID}/segments`) && !init?.method) {
-        return json({ data: [{ id: SEGMENTS.aries }] });
-      }
       if (url.includes('/segments/')) return json({}, 200);
       throw new Error(`Unexpected request: ${init?.method ?? 'GET'} ${url}`);
     });
@@ -177,12 +171,15 @@ describe('daily sun confirmation', () => {
     await confirmHandler({ method: 'POST', body: { token } }, postResponse);
     expect(postResponse.statusCode).toBe(200);
     expect(fetcher.mock.calls.filter(([url]) => String(url).startsWith('https://api.resend.com')))
-      .toHaveLength(4);
+      .toHaveLength(2);
     expect(requestState).toBe('confirmed');
     const segmentCalls = fetcher.mock.calls.filter(([url]) => String(url).includes('/segments/'));
-    expect(segmentCalls.filter(([, init]) => init?.method === 'DELETE')).toHaveLength(1);
+    expect(segmentCalls.filter(([, init]) => init?.method === 'DELETE')).toHaveLength(0);
     expect(segmentCalls.filter(([, init]) => init?.method === 'POST').map(([url]) => String(url)))
-      .toEqual([`https://api.resend.com/contacts/${CONTACT_ID}/segments/${SEGMENTS.libra}`]);
+      .toEqual([`https://api.resend.com/contacts/${CONTACT_ID}/segments/${DAILY_SEGMENT}`]);
+    for (const [, init] of fetcher.mock.calls.filter(([url]) => String(url).startsWith('https://api.resend.com'))) {
+      expect(new Headers(init?.headers).get('authorization')).toBe('Bearer re_contacts_test');
+    }
     const completionIndex = fetcher.mock.calls.findIndex(([url]) => (
       String(url).endsWith('/rest/v1/rpc/complete_daily_sun_confirmation')
     ));
@@ -201,11 +198,11 @@ describe('daily sun confirmation', () => {
     expect(lastProviderIndex).toBeLessThan(authorityIndices[1]!);
   });
 
-  it('honors a Resend 429 before applying the serialized sign change', async () => {
+  it('retries a Resend 429 without moving segment membership for a sign change', async () => {
     configure();
     const token = createDailySunOptInToken({ email: 'person@example.com', sign: 'libra' }, SECRET);
     let requestState: 'pending' | 'confirming' | 'confirmed' = 'pending';
-    let segmentLookups = 0;
+    let segmentAttempts = 0;
     const fetcher = vi.fn(async (input: string | URL | Request, init?: RequestInit) => {
       const url = String(input);
       if (url.endsWith('/rest/v1/rpc/claim_daily_sun_confirmation')) {
@@ -226,30 +223,30 @@ describe('daily sun confirmation', () => {
       if (url === 'https://api.resend.com/contacts' && init?.method === 'POST') {
         return json({ id: CONTACT_ID }, 201);
       }
-      if (url.endsWith(`/${CONTACT_ID}/segments`) && !init?.method) {
-        segmentLookups += 1;
-        return segmentLookups === 1
+      if (url.endsWith(`/${CONTACT_ID}/segments/${DAILY_SEGMENT}`) && init?.method === 'POST') {
+        segmentAttempts += 1;
+        return segmentAttempts === 1
           ? new Response('', { status: 429, headers: { 'retry-after': '0' } })
-          : json({ data: [{ id: SEGMENTS.aries }] });
+          : json({}, 200);
       }
-      if (url.includes('/segments/')) return json({}, 200);
       throw new Error(`Unexpected request: ${init?.method ?? 'GET'} ${url}`);
     });
     vi.stubGlobal('fetch', fetcher);
     const response = responseRecorder();
     await confirmHandler({ method: 'POST', body: { token } }, response);
     expect(response.statusCode).toBe(200);
-    expect(segmentLookups).toBe(2);
+    expect(segmentAttempts).toBe(2);
     expect(requestState).toBe('confirmed');
     const mutations = fetcher.mock.calls
       .filter(([url, init]) => String(url).startsWith('https://api.resend.com')
         && (init?.method === 'DELETE' || init?.method === 'POST'))
-      .slice(1)
       .map(([url, init]) => `${init?.method} ${String(url)}`);
     expect(mutations).toEqual([
-      `DELETE https://api.resend.com/contacts/${CONTACT_ID}/segments/${SEGMENTS.aries}`,
-      `POST https://api.resend.com/contacts/${CONTACT_ID}/segments/${SEGMENTS.libra}`,
+      'POST https://api.resend.com/contacts',
+      `POST https://api.resend.com/contacts/${CONTACT_ID}/segments/${DAILY_SEGMENT}`,
+      `POST https://api.resend.com/contacts/${CONTACT_ID}/segments/${DAILY_SEGMENT}`,
     ]);
+    expect(mutations.some((mutation) => mutation.startsWith('DELETE '))).toBe(false);
   });
 
   it('does not let a superseded worker mutate provider routing', async () => {
@@ -386,6 +383,8 @@ describe('daily chart preference', () => {
     expect(pendingBody.confirmation_token_hash).toMatch(/^[0-9a-f]{64}$/u);
     expect(String(pendingWrite?.[1]?.body)).not.toContain('@');
     const emailRequest = fetcher.mock.calls.find(([url]) => String(url) === 'https://api.resend.com/emails');
+    expect(new Headers(emailRequest?.[1]?.headers).get('authorization'))
+      .toBe('Bearer re_sending_test');
     const emailBody = JSON.parse(String(emailRequest?.[1]?.body));
     expect(emailBody.to).toEqual(['person@example.com']);
     expect(emailBody.subject).toBe('Confirm your Zodiacs.org personal daily brief');
@@ -1177,13 +1176,6 @@ describe('daily unsubscribe', () => {
       if (url.endsWith(`/contacts/${CONTACT_ID}`) && !init?.method) {
         return json({ id: CONTACT_ID, email: 'person@example.com' });
       }
-      if (url.endsWith(`/${CONTACT_ID}/segments`) && !init?.method) {
-        return json({ data: [
-          { id: SEGMENTS.aries },
-          { id: SEGMENTS.libra },
-          { id: 'unrelated_weekly_segment' },
-        ] });
-      }
       return json({}, 200);
     });
     vi.stubGlobal('fetch', fetcher);
@@ -1203,13 +1195,13 @@ describe('daily unsubscribe', () => {
     const postResponse = responseRecorder();
     await unsubscribeHandler({ method: 'POST', query: { token } }, postResponse);
     expect(postResponse.statusCode).toBe(200);
-    expect(fetcher).toHaveBeenCalledTimes(5);
+    expect(fetcher).toHaveBeenCalledTimes(3);
     const deleted = fetcher.mock.calls
       .filter(([, init]) => init?.method === 'DELETE')
       .map(([url]) => String(url));
-    expect(deleted).toContain(`https://api.resend.com/contacts/${CONTACT_ID}/segments/${SEGMENTS.aries}`);
-    expect(deleted).toContain(`https://api.resend.com/contacts/${CONTACT_ID}/segments/${SEGMENTS.libra}`);
-    expect(deleted.some((url) => url.includes('unrelated_weekly_segment'))).toBe(false);
+    expect(deleted).toEqual([
+      `https://api.resend.com/contacts/${CONTACT_ID}/segments/${DAILY_SEGMENT}`,
+    ]);
     const revoked = fetcher.mock.calls.find(([url, init]) => (
       String(url).endsWith('/rest/v1/rpc/revoke_daily_email_preference') && init?.method === 'POST'
     ));
@@ -1218,6 +1210,13 @@ describe('daily unsubscribe', () => {
       candidate_tier: 'sun_sign',
       candidate_user_id: null,
     });
+    const revokeIndex = fetcher.mock.calls.findIndex(([url]) => (
+      String(url).endsWith('/rest/v1/rpc/revoke_daily_email_preference')
+    ));
+    const cleanupIndex = fetcher.mock.calls.findIndex(([url, init]) => (
+      init?.method === 'DELETE' && String(url).includes('/segments/')
+    ));
+    expect(revokeIndex).toBeLessThan(cleanupIndex);
     expect(postResponse.body).toContain('No more sun-sign daily.');
   });
 
@@ -1228,13 +1227,7 @@ describe('daily unsubscribe', () => {
       userId: USER_ID,
       recipientHash: RECIPIENT_HASH,
     }, SECRET);
-    const fetcher = vi.fn(async (input: string | URL | Request, init?: RequestInit) => {
-      const url = String(input);
-      if (url.endsWith(`/${CONTACT_ID}/segments`) && !init?.method) {
-        return json({ data: [{ id: SEGMENTS.libra }] });
-      }
-      return json({}, 200);
-    });
+    const fetcher = vi.fn(async (_input: string | URL | Request, _init?: RequestInit) => json({}, 200));
     vi.stubGlobal('fetch', fetcher);
     const response = responseRecorder();
     await unsubscribeHandler({ method: 'POST', query: { token } }, response);
@@ -1299,7 +1292,10 @@ describe('daily unsubscribe', () => {
       if (url.endsWith('/rest/v1/rpc/revoke_daily_email_preference') && init?.method === 'POST') {
         return json(null, 200);
       }
-      if (url.endsWith(`/${CONTACT_ID}/segments`) && !init?.method) {
+      if (url.endsWith(`/contacts/${CONTACT_ID}`) && !init?.method) {
+        return json({ id: CONTACT_ID, email: 'person@example.com' });
+      }
+      if (url.endsWith(`/${CONTACT_ID}/segments/${DAILY_SEGMENT}`) && init?.method === 'DELETE') {
         return json({ error: 'unavailable' }, 503);
       }
       throw new Error(`Unexpected request: ${url}`);
@@ -1308,7 +1304,7 @@ describe('daily unsubscribe', () => {
     const response = responseRecorder();
     await unsubscribeHandler({ method: 'POST', query: { token } }, response);
     expect(response.statusCode).toBe(200);
-    expect(fetcher).toHaveBeenCalledTimes(2);
+    expect(fetcher).toHaveBeenCalledTimes(3);
     expect(fetcher.mock.calls[0]?.[0]).toContain('/rest/v1/rpc/revoke_daily_email_preference');
     expect(JSON.parse(String(fetcher.mock.calls[0]?.[1]?.body))).toMatchObject({
       candidate_tier: 'sun_sign',
@@ -1321,7 +1317,8 @@ describe('daily unsubscribe', () => {
     configure();
     delete process.env.EMAIL_PROVIDER;
     delete process.env.RESEND_API_KEY;
-    delete process.env.RESEND_DAILY_SIGN_SEGMENTS_JSON;
+    delete process.env.RESEND_CONTACTS_API_KEY;
+    delete process.env.RESEND_DAILY_SEGMENT_ID;
     process.env.DAILY_EMAIL_ENABLED = '0';
     const token = createDailyUnsubscribeToken({
       kind: 'chart', userId: USER_ID, recipientHash: RECIPIENT_HASH,
@@ -1369,6 +1366,6 @@ describe('daily unsubscribe', () => {
     await unsubscribeHandler({ method: 'POST', query: { token } }, postResponse);
     expect(postResponse.statusCode).toBe(200);
     expect(fetcher).toHaveBeenCalledTimes(2);
-    expect(fetcher.mock.calls.some(([url]) => String(url).endsWith(`/${CONTACT_ID}/segments`))).toBe(false);
+    expect(fetcher.mock.calls.some(([url]) => String(url).includes(`/${CONTACT_ID}/segments/`))).toBe(false);
   });
 });

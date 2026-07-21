@@ -144,7 +144,7 @@ class ResendAdapter implements EmailSubscriptionAdapter {
   async confirm(email: string, sign?: string, purpose: 'weekly' | 'daily' = 'weekly'): Promise<void> {
     if (purpose === 'daily') {
       if (!sign) throw new Error('A sign is required for the daily horoscope.');
-      await confirmDailySunContact(email, sign, this.env, this.fetcher);
+      await confirmDailySunContact(email, this.env, this.fetcher);
       return;
     }
     const signKey = environmentValue(this.env, 'RESEND_SIGN_PROPERTY') || 'sun_sign';
@@ -153,7 +153,7 @@ class ResendAdapter implements EmailSubscriptionAdapter {
     const response = await this.fetcher('https://api.resend.com/contacts', {
       method: 'POST',
       headers: {
-        Authorization: `Bearer ${environmentValue(this.env, 'RESEND_API_KEY')}`,
+        Authorization: `Bearer ${environmentValue(this.env, 'RESEND_CONTACTS_API_KEY')}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({

@@ -20,11 +20,7 @@ const ORIGINAL_ENV = { ...process.env };
 const SECRET = 'test-secret-that-is-at-least-thirty-two-characters';
 const CONTACT_ID = 'contact_12345678';
 const ATTEMPT_ID = '110e8400-e29b-41d4-a716-446655440000';
-const SIGNS = [
-  'aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo',
-  'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces',
-];
-const SEGMENTS = Object.fromEntries(SIGNS.map((sign, index) => [sign, `segment_${index + 1}`]));
+const DAILY_SEGMENT = 'segment_daily_sun';
 
 interface ActiveRow {
   recipient_hash: string;
@@ -60,13 +56,14 @@ function configure(): void {
   Object.assign(process.env, {
     DAILY_EMAIL_ENABLED: '1',
     EMAIL_PROVIDER: 'resend',
-    RESEND_API_KEY: 're_test',
+    RESEND_API_KEY: 're_sending_test',
+    RESEND_CONTACTS_API_KEY: 're_contacts_test',
     RESEND_FROM_EMAIL: 'Zodiacs.org <hello@zodiacs.org>',
     EMAIL_CONFIRM_SECRET: SECRET,
     EMAIL_CONFIRM_BASE_URL: 'https://zodiacs.org',
     DAILY_EMAIL_UNSUBSCRIBE_SECRET: SECRET,
     DAILY_EMAIL_RECIPIENT_HASH_SECRET: SECRET,
-    RESEND_DAILY_SIGN_SEGMENTS_JSON: JSON.stringify(SEGMENTS),
+    RESEND_DAILY_SEGMENT_ID: DAILY_SEGMENT,
     PUBLIC_SUPABASE_URL: 'https://project.supabase.co',
     SUPABASE_SERVICE_ROLE_KEY: 'service_test',
   });
@@ -327,9 +324,6 @@ function createHarness(initialActive: ActiveRow | null = null) {
       }
       return json({ id: CONTACT_ID }, 201);
     }
-    if (url.pathname.endsWith('/segments') && method === 'GET') {
-      return json({ data: [...segments].map((id) => ({ id })) });
-    }
     const segmentMatch = url.pathname.match(/\/segments\/([^/]+)$/u);
     if (segmentMatch?.[1] && method === 'POST') {
       segments.add(decodeURIComponent(segmentMatch[1]));
@@ -462,7 +456,7 @@ describe('durable daily sun confirmation state', () => {
     configure();
     const harness = createHarness(confirmed('aries'));
     const { token } = await requestSunLink(harness, 'libra');
-    harness.segments.add(SEGMENTS.aries);
+    harness.segments.add(DAILY_SEGMENT);
     const unsubscribeToken = createDailyUnsubscribeToken({
       kind: 'sun',
       contactId: CONTACT_ID,
@@ -474,7 +468,7 @@ describe('durable daily sun confirmation state', () => {
     expect(unsubscribed.statusCode).toBe(200);
     expect(harness.active).toBeNull();
     expect(harness.request).toBeNull();
-    expect(harness.segments.has(SEGMENTS.aries)).toBe(false);
+    expect(harness.segments.has(DAILY_SEGMENT)).toBe(false);
 
     const stale = responseRecorder();
     await confirmHandler({ method: 'POST', body: { token } }, stale);
@@ -484,7 +478,7 @@ describe('durable daily sun confirmation state', () => {
   it('preserves the active sign until a signed switch is confirmed', async () => {
     configure();
     const harness = createHarness(confirmed('aries'));
-    harness.segments.add(SEGMENTS.aries);
+    harness.segments.add(DAILY_SEGMENT);
     const { token } = await requestSunLink(harness, 'libra');
     expect(harness.active?.sign).toBe('aries');
     expect(harness.request).toMatchObject({ requested_sign: 'libra', request_kind: 'sign_change' });
@@ -503,7 +497,7 @@ describe('durable daily sun confirmation state', () => {
     expect(switched.statusCode).toBe(200);
     expect(harness.active?.sign).toBe('libra');
     expect(harness.request).toBeNull();
-    expect(harness.segments).toEqual(new Set([SEGMENTS.libra]));
+    expect(harness.segments).toEqual(new Set([DAILY_SEGMENT]));
   });
 
   it('keeps the old sign through a signed POST without touching the provider', async () => {

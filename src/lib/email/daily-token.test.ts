@@ -10,7 +10,7 @@ import {
   hasDailyEmailRevocation,
   hasDailySunEmailProvider,
   hasDailySunStateAccess,
-  parseDailySignSegments,
+  dailySunSegmentId,
 } from './daily-config';
 import {
   createDailyUnsubscribeToken,
@@ -24,10 +24,7 @@ const SECRET = 'test-secret-that-is-at-least-thirty-two-characters';
 const USER_ID = '110e8400-e29b-41d4-a716-446655440000';
 const CHART_ID = '220e8400-e29b-41d4-a716-446655440000';
 const RECIPIENT_HASH = dailyRecipientHash('person@example.com', SECRET);
-const SEGMENTS = JSON.stringify(Object.fromEntries([
-  'aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo',
-  'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces',
-].map((sign, index) => [sign, `segment_${index + 1}`])));
+const DAILY_SEGMENT = 'segment_daily_sun';
 
 describe('daily chart confirmation token', () => {
   it('round-trips an expiring chart selection without storing an email', () => {
@@ -106,24 +103,28 @@ describe('daily email configuration', () => {
   const base = {
     DAILY_EMAIL_ENABLED: '1',
     EMAIL_PROVIDER: 'resend',
-    RESEND_API_KEY: 're_test',
+    RESEND_API_KEY: 're_sending_test',
+    RESEND_CONTACTS_API_KEY: 're_contacts_test',
     RESEND_FROM_EMAIL: 'Zodiacs.org <hello@zodiacs.org>',
     EMAIL_CONFIRM_SECRET: SECRET,
     DAILY_EMAIL_UNSUBSCRIBE_SECRET: SECRET,
     DAILY_EMAIL_RECIPIENT_HASH_SECRET: SECRET,
-    RESEND_DAILY_SIGN_SEGMENTS_JSON: SEGMENTS,
+    RESEND_DAILY_SEGMENT_ID: DAILY_SEGMENT,
     PUBLIC_SUPABASE_URL: 'https://project.supabase.co',
     SUPABASE_SERVICE_ROLE_KEY: 'service-test',
   };
 
-  it('requires an exact, unique segment mapping for all twelve signs', () => {
-    expect(parseDailySignSegments(base)?.libra).toBe('segment_7');
+  it('requires one dedicated daily segment distinct from the legacy weekly segment', () => {
+    expect(dailySunSegmentId(base)).toBe(DAILY_SEGMENT);
     expect(hasDailySunStateAccess(base)).toBe(true);
     expect(hasDailySunEmailProvider(base)).toBe(true);
     expect(hasDailySunEmailProvider({ ...base, DAILY_EMAIL_ENABLED: '0' })).toBe(false);
     expect(hasDailySunEmailProvider({ ...base, SUPABASE_SERVICE_ROLE_KEY: '' })).toBe(false);
-    expect(parseDailySignSegments({ ...base, RESEND_DAILY_SIGN_SEGMENTS_JSON: '{"aries":"segment_1"}' })).toBeNull();
-    expect(parseDailySignSegments({ ...base, RESEND_DAILY_SIGN_SEGMENTS_JSON: SEGMENTS.replace('segment_2', 'segment_1') })).toBeNull();
+    expect(hasDailySunEmailProvider({ ...base, RESEND_CONTACTS_API_KEY: '' })).toBe(false);
+    expect(hasDailySunEmailProvider({ ...base, RESEND_CONTACTS_API_KEY: base.RESEND_API_KEY })).toBe(false);
+    expect(dailySunSegmentId({ ...base, RESEND_DAILY_SEGMENT_ID: 'bad id' })).toBeNull();
+    expect(dailySunSegmentId({ ...base, RESEND_SEGMENT_ID: DAILY_SEGMENT })).toBeNull();
+    expect(hasDailySunEmailProvider({ ...base, RESEND_SEGMENT_ID: DAILY_SEGMENT })).toBe(false);
   });
 
   it('keeps chart email disabled until the server Supabase contract is complete', () => {

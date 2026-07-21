@@ -1,5 +1,5 @@
 import { environmentValue } from './config.js';
-import { parseDailySignSegments } from './daily-config.js';
+import { dailySunSegmentId } from './daily-config.js';
 import { createRateLimitedResendRequest, type ResendRequest } from '../daily-email/resend-request.js';
 import { normalizeEmail } from './input.js';
 
@@ -11,13 +11,16 @@ interface ResendContact {
   email?: string;
 }
 
-interface ResendSegmentList {
-  data?: unknown;
-}
-
-function authHeaders(env: Environment, json = false): Record<string, string> {
+function authHeaders(
+  env: Environment,
+  capability: 'sending' | 'contacts',
+  json = false,
+): Record<string, string> {
   return {
-    Authorization: `Bearer ${environmentValue(env, 'RESEND_API_KEY')}`,
+    Authorization: `Bearer ${environmentValue(
+      env,
+      capability === 'sending' ? 'RESEND_API_KEY' : 'RESEND_CONTACTS_API_KEY',
+    )}`,
     ...(json ? { 'Content-Type': 'application/json' } : {}),
   };
 }
@@ -35,7 +38,7 @@ async function contactByEmail(
   request: ResendRequest,
 ): Promise<ResendContact> {
   const response = await request(`https://api.resend.com/contacts/${encodeURIComponent(email)}`, {
-    headers: authHeaders(env),
+    headers: authHeaders(env, 'contacts'),
   });
   if (!response.ok) throw new Error(`Resend contact lookup failed (${response.status})`);
   const body = await response.json() as unknown;
@@ -51,7 +54,7 @@ export async function getDailyContactEmail(
   if (!/^[A-Za-z0-9_-]{8,128}$/.test(contactId)) return null;
   const request = createRateLimitedResendRequest(fetcher);
   const response = await request(`https://api.resend.com/contacts/${encodeURIComponent(contactId)}`, {
-    headers: authHeaders(env),
+    headers: authHeaders(env, 'contacts'),
   });
   if (response.status === 404) return null;
   if (!response.ok) throw new Error(`Resend contact lookup failed (${response.status})`);
@@ -66,7 +69,7 @@ async function ensureContact(
 ): Promise<ResendContact> {
   const response = await request('https://api.resend.com/contacts', {
     method: 'POST',
-    headers: authHeaders(env, true),
+    headers: authHeaders(env, 'contacts', true),
     body: JSON.stringify({ email, unsubscribed: false }),
   });
   if (response.status === 409) return contactByEmail(email, env, request);
@@ -84,7 +87,7 @@ async function removeSegment(
 ): Promise<void> {
   const response = await request(
     `https://api.resend.com/contacts/${encodeURIComponent(contactId)}/segments/${encodeURIComponent(segmentId)}`,
-    { method: 'DELETE', headers: authHeaders(env) },
+    { method: 'DELETE', headers: authHeaders(env, 'contacts') },
   );
   // Missing contact membership is the desired idempotent end state.
   if (!response.ok && response.status !== 404) {
@@ -100,67 +103,36 @@ async function addSegment(
 ): Promise<void> {
   const response = await request(
     `https://api.resend.com/contacts/${encodeURIComponent(contactId)}/segments/${encodeURIComponent(segmentId)}`,
-    { method: 'POST', headers: authHeaders(env) },
+    { method: 'POST', headers: authHeaders(env, 'contacts') },
   );
   if (!response.ok && response.status !== 409) {
     throw new Error(`Resend segment assignment failed (${response.status})`);
   }
 }
 
-async function listDailySegments(
-  identifier: string,
-  env: Environment,
-  request: ResendRequest,
-): Promise<string[]> {
-  const response = await request(
-    `https://api.resend.com/contacts/${encodeURIComponent(identifier)}/segments`,
-    { headers: authHeaders(env) },
-  );
-  if (response.status === 404) return [];
-  if (!response.ok) throw new Error(`Resend segment lookup failed (${response.status})`);
-  const body = await response.json() as ResendSegmentList;
-  if (!Array.isArray(body.data)) throw new Error('Resend returned an invalid segment list.');
-  return body.data.flatMap((entry) => (
-    entry && typeof entry === 'object' && typeof (entry as { id?: unknown }).id === 'string'
-      ? [(entry as { id: string }).id]
-      : []
-  ));
-}
-
 export async function confirmDailySunContact(
   email: string,
-  sign: string,
   env: Environment = process.env,
   fetcher: Fetch = fetch,
 ): Promise<ResendContact> {
-  const segments = parseDailySignSegments(env);
-  const selected = segments?.[sign];
-  if (!segments || !selected) throw new Error('Daily sign segments are not configured.');
+  const segment = dailySunSegmentId(env);
+  if (!segment) throw new Error('The daily Sun segment is not configured.');
   const request = createRateLimitedResendRequest(fetcher);
   const contact = await ensureContact(email, env, request);
-  const current = await listDailySegments(contact.id, env, request);
-  const daily = new Set(Object.values(segments));
-  for (const id of current) {
-    if (daily.has(id) && id !== selected) await removeSegment(contact.id, id, env, request);
-  }
-  if (!current.includes(selected)) await addSegment(contact.id, selected, env, request);
+  await addSegment(contact.id, segment, env, request);
   return contact;
 }
 
-export async function removeDailySunSegments(
+export async function removeDailySunSegment(
   subject: { contactId: string } | { email: string },
   env: Environment = process.env,
   fetcher: Fetch = fetch,
 ): Promise<void> {
-  const segments = parseDailySignSegments(env);
-  if (!segments) throw new Error('Daily sign segments are not configured.');
+  const segment = dailySunSegmentId(env);
+  if (!segment) throw new Error('The daily Sun segment is not configured.');
   const identifier = 'contactId' in subject ? subject.contactId : subject.email;
   const request = createRateLimitedResendRequest(fetcher);
-  const current = await listDailySegments(identifier, env, request);
-  const daily = new Set(Object.values(segments));
-  for (const id of current) {
-    if (daily.has(id)) await removeSegment(identifier, id, env, request);
-  }
+  await removeSegment(identifier, segment, env, request);
 }
 
 export async function sendDailyChartConfirmation(
@@ -185,7 +157,7 @@ export async function sendDailyChartConfirmation(
   const request = createRateLimitedResendRequest(fetcher);
   const response = await request('https://api.resend.com/emails', {
     method: 'POST',
-    headers: authHeaders(env, true),
+    headers: authHeaders(env, 'sending', true),
     body: JSON.stringify({
       from: environmentValue(env, 'RESEND_FROM_EMAIL'),
       to: [email],

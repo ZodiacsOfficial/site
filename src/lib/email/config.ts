@@ -38,6 +38,8 @@ export function hasEmailCaptureProvider(env: Environment): boolean {
   switch (emailProviderName(env)) {
     case 'resend':
       return value(env, 'RESEND_API_KEY') !== ''
+        && value(env, 'RESEND_CONTACTS_API_KEY') !== ''
+        && value(env, 'RESEND_API_KEY') !== value(env, 'RESEND_CONTACTS_API_KEY')
         && value(env, 'RESEND_FROM_EMAIL') !== ''
         && value(env, 'EMAIL_CONFIRM_SECRET').length >= 32;
     case 'buttondown':

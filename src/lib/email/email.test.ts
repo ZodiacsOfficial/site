@@ -36,6 +36,13 @@ describe('email capture configuration', () => {
     expect(hasEmailCaptureProvider({})).toBe(false);
     expect(hasEmailCaptureProvider({ EMAIL_PROVIDER: 'resend', RESEND_API_KEY: 're_test' })).toBe(false);
     expect(hasEmailCaptureProvider({
+      EMAIL_PROVIDER: 'resend',
+      RESEND_API_KEY: 're_same',
+      RESEND_CONTACTS_API_KEY: 're_same',
+      RESEND_FROM_EMAIL: 'Zodiacs.org <hello@zodiacs.org>',
+      EMAIL_CONFIRM_SECRET: SECRET,
+    })).toBe(false);
+    expect(hasEmailCaptureProvider({
       EMAIL_PROVIDER: 'loops',
       LOOPS_FORM_ENDPOINT: 'https://app.loops.so/api/newsletter-form/form_123',
     })).toBe(false);
@@ -149,13 +156,16 @@ describe('Resend and Loops subscription adapters', () => {
     const fetcher = vi.fn().mockResolvedValue({ ok: true, status: 200 });
     const adapter = createEmailSubscriptionAdapter({
       EMAIL_PROVIDER: 'resend',
-      RESEND_API_KEY: 're_test',
+      RESEND_API_KEY: 're_sending_test',
+      RESEND_CONTACTS_API_KEY: 're_contacts_test',
       RESEND_FROM_EMAIL: 'Zodiacs.org <hello@zodiacs.org>',
       EMAIL_CONFIRM_SECRET: SECRET,
       EMAIL_CONFIRM_BASE_URL: 'https://zodiacs.org',
     }, fetcher as unknown as typeof fetch, 'en');
     await adapter?.subscribe('person@example.com', 'taurus');
     expect(fetcher.mock.calls[0]?.[0]).toBe('https://api.resend.com/emails');
+    expect(new Headers(fetcher.mock.calls[0]?.[1]?.headers).get('authorization'))
+      .toBe('Bearer re_sending_test');
     const body = JSON.parse(String(fetcher.mock.calls[0]?.[1]?.body));
     expect(body).toMatchObject({
       to: ['person@example.com'],
@@ -189,7 +199,8 @@ describe('Resend and Loops subscription adapters', () => {
 describe('Resend confirmation endpoint', () => {
   it('makes GET read-only and creates the contact only after POST confirmation', async () => {
     process.env.EMAIL_PROVIDER = 'resend';
-    process.env.RESEND_API_KEY = 're_test';
+    process.env.RESEND_API_KEY = 're_sending_test';
+    process.env.RESEND_CONTACTS_API_KEY = 're_contacts_test';
     process.env.RESEND_FROM_EMAIL = 'Zodiacs.org <hello@zodiacs.org>';
     process.env.EMAIL_CONFIRM_SECRET = SECRET;
     const token = createEmailOptInToken({
@@ -213,6 +224,8 @@ describe('Resend confirmation endpoint', () => {
     expect(postResponse.statusCode).toBe(200);
     expect(fetcher).toHaveBeenCalledOnce();
     expect(fetcher.mock.calls[0]?.[0]).toBe('https://api.resend.com/contacts');
+    expect(new Headers(fetcher.mock.calls[0]?.[1]?.headers).get('authorization'))
+      .toBe('Bearer re_contacts_test');
     expect(JSON.parse(String(fetcher.mock.calls[0]?.[1]?.body))).toEqual({
       email: 'person@example.com',
       unsubscribed: false,

@@ -1,6 +1,6 @@
 import { hasDailyEmailRevocation } from '../../src/lib/email/daily-config.js';
 import { dailyEmailPage } from '../../src/lib/email/daily-page.js';
-import { getDailyContactEmail, removeDailySunSegments } from '../../src/lib/email/daily-resend.js';
+import { getDailyContactEmail, removeDailySunSegment } from '../../src/lib/email/daily-resend.js';
 import { getAdminEmailUser, revokeDailyEmailPreference } from '../../src/lib/email/daily-server.js';
 import { verifyDailyUnsubscribeToken } from '../../src/lib/email/daily-unsubscribe-token.js';
 import { dailyRecipientHash } from '../../src/lib/daily-email/identity.js';
@@ -117,10 +117,10 @@ export default async function handler(req: any, res: any): Promise<void> {
   try {
     if (claim.kind === 'sun') {
       const currentEmail = await currentSunEmailForClaim(claim.contactId, claim.recipientHash);
-      if (currentEmail) await removeDailySunSegments({ contactId: claim.contactId });
+      if (currentEmail) await removeDailySunSegment({ contactId: claim.contactId });
     }
   } catch {
-    // Resend segments never grant consent. The authoritative transaction above
+    // Resend membership never grants consent. The authoritative transaction above
     // already stopped the Sun tier, so provider cleanup cannot turn a
     // successful unsubscribe back into active consent.
   }

@@ -28,7 +28,7 @@ import {
 } from '../../src/lib/email/daily-sun-server.js';
 import { getAdminEmailUser } from '../../src/lib/email/daily-server.js';
 import { dailyRecipientHash } from '../../src/lib/daily-email/identity.js';
-import { removeDailySunSegments } from '../../src/lib/email/daily-resend.js';
+import { removeDailySunSegment } from '../../src/lib/email/daily-resend.js';
 import { signBySlug } from '../../src/lib/signs.js';
 
 function sendJson(res: any, status: number, body: Record<string, string | boolean>): void {
@@ -98,7 +98,7 @@ async function currentDailySunAuthority(email: string) {
 }
 
 /**
- * Provider segments are derived routing state, never consent authority. Read
+ * Provider membership is derived routing state, never consent authority. Read
  * the committed authority before and after each provider mutation so a
  * concurrent confirmation or unsubscribe always has a worker that converges
  * routing on the newest database version.
@@ -110,7 +110,7 @@ async function synchronizeDailySunProvider(
   for (let attempt = 0; attempt < 3; attempt += 1) {
     const before = await currentDailySunAuthority(email);
     if (before) await confirm(email, before.sign, 'daily');
-    else await removeDailySunSegments({ email });
+    else await removeDailySunSegment({ email });
 
     const after = await currentDailySunAuthority(email);
     if (before?.sign === after?.sign && before?.confirmedAt === after?.confirmedAt) {

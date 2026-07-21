@@ -38,7 +38,7 @@ import {
   createRateLimitedResendRequest,
   type ResendRequest,
 } from '../src/lib/daily-email/resend-request';
-import { loadSunSignRecipients, parseSignSegmentMap } from '../src/lib/daily-email/segments';
+import { loadDailySunContacts, requireDailySunSegmentId } from '../src/lib/daily-email/segments';
 import { loadAuthorizedSunRecipients } from '../src/lib/daily-email/sun-authority';
 import type { DailyEmailRecipient } from '../src/lib/daily-email/types';
 
@@ -116,6 +116,18 @@ function requiredEnv(env: NodeJS.ProcessEnv, name: string): string {
   const value = env[name]?.trim();
   if (!value) throw new Error(`${name} is required.`);
   return value;
+}
+
+export function requireResendCapabilities(env: NodeJS.ProcessEnv): {
+  sendingKey: string;
+  contactsKey: string;
+} {
+  const sendingKey = requiredEnv(env, 'RESEND_API_KEY');
+  const contactsKey = requiredEnv(env, 'RESEND_CONTACTS_API_KEY');
+  if (sendingKey === contactsKey) {
+    throw new Error('RESEND_API_KEY and RESEND_CONTACTS_API_KEY must be distinct capability keys.');
+  }
+  return { sendingKey, contactsKey };
 }
 
 function dailyEmailCohort(env: NodeJS.ProcessEnv): DailyEmailCohort {
@@ -241,7 +253,7 @@ async function loadProductionRecipients({
 }): Promise<{ recipients: DailyEmailRecipient[]; diagnostics: string[] }> {
   const supabaseUrl = requiredEnv(env, 'PUBLIC_SUPABASE_URL');
   const serviceKey = requiredEnv(env, 'SUPABASE_SERVICE_ROLE_KEY');
-  const resendKey = requiredEnv(env, 'RESEND_API_KEY');
+  const { contactsKey } = requireResendCapabilities(env);
   const hashSecret = requiredEnv(env, 'DAILY_EMAIL_RECIPIENT_HASH_SECRET');
   const client = createClient(supabaseUrl, serviceKey, {
     auth: { autoRefreshToken: false, persistSession: false },
@@ -265,22 +277,25 @@ async function loadProductionRecipients({
   });
 
   const diagnostics: string[] = [];
-  const segments = parseSignSegmentMap(requiredEnv(env, 'RESEND_DAILY_SIGN_SEGMENTS_JSON'));
-  const sun = await loadSunSignRecipients({
+  const segment = requireDailySunSegmentId(
+    requiredEnv(env, 'RESEND_DAILY_SEGMENT_ID'),
+    env.RESEND_SEGMENT_ID,
+  );
+  const sun = await loadDailySunContacts({
     fetchImpl,
-    apiKey: resendKey,
-    segments,
+    apiKey: contactsKey,
+    segment,
     request: resendRequest,
   });
   const authorizedSun = await loadAuthorizedSunRecipients({
-    recipients: sun.recipients,
+    contacts: sun.contacts,
     fetchImpl,
     supabaseUrl,
     serviceKey,
     hashSecret,
   });
   const sunRecipients = authorizedSun.recipients;
-  if (sun.ambiguous.length) diagnostics.push(`${sun.ambiguous.length} address(es) span multiple sign segments`);
+  if (sun.duplicates.length) diagnostics.push(`${sun.duplicates.length} address(es) map to multiple provider contacts`);
   if (authorizedSun.rejected) diagnostics.push(`${authorizedSun.rejected} Sun contact(s) lack matching confirmed database consent`);
   if (chart.invalidCharts.length) diagnostics.push(`${chart.invalidCharts.length} selected chart(s) are missing or invalid`);
   if (chart.invalidIdentities.length) diagnostics.push(`${chart.invalidIdentities.length} chart recipient identity record(s) are stale or unavailable`);
