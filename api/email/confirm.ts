@@ -30,6 +30,10 @@ import { getAdminEmailUser } from '../../src/lib/email/daily-server.js';
 import { dailyRecipientHash } from '../../src/lib/daily-email/identity.js';
 import { removeDailySunSegment } from '../../src/lib/email/daily-resend.js';
 import { signBySlug } from '../../src/lib/signs.js';
+import {
+  dailyEmailAdminBootstrapEnvironment,
+  isDailyEmailAdminBootstrapAddress,
+} from '../../src/lib/email/daily-admin-bootstrap.js';
 
 function sendJson(res: any, status: number, body: Record<string, string | boolean>): void {
   res.statusCode = status;
@@ -143,17 +147,28 @@ export default async function handler(req: any, res: any): Promise<void> {
     : tokenFromBody(req.body);
   const secret = process.env.EMAIL_CONFIRM_SECRET ?? '';
   const claim = secret ? verifyEmailOptInToken(token, secret) : null;
-  const daily = dailyEmailFeatureEnabled(process.env);
-  const chartClaim = daily && secret ? verifyDailyChartOptInToken(token, secret) : null;
-  const sunClaim = daily && secret ? verifyDailySunOptInToken(token, secret) : null;
+  const publicDaily = dailyEmailFeatureEnabled(process.env);
+  const candidateSunClaim = secret ? verifyDailySunOptInToken(token, secret) : null;
+  const bootstrapDaily = Boolean(candidateSunClaim
+    && isDailyEmailAdminBootstrapAddress(candidateSunClaim.email, process.env));
+  const dailyEnv = publicDaily
+    ? process.env
+    : bootstrapDaily
+      ? dailyEmailAdminBootstrapEnvironment(process.env)
+      : null;
+  const daily = dailyEnv !== null;
+  // The bootstrap exception applies only to an allowlisted Sun token. Chart
+  // enrollment and every other address still require the public feature flag.
+  const chartClaim = publicDaily && secret ? verifyDailyChartOptInToken(token, secret) : null;
+  const sunClaim = daily ? candidateSunClaim : null;
   const configured = chartClaim
     ? hasDailyChartEmailProvider(process.env)
     : sunClaim
-      ? hasDailySunEmailProvider(process.env)
+      ? hasDailySunEmailProvider(dailyEnv!)
       : claim
         ? hasEmailCaptureProvider(process.env)
         : daily
-          ? hasDailySunEmailProvider(process.env)
+          ? hasDailySunEmailProvider(dailyEnv!)
           : hasEmailCaptureProvider(process.env);
   if (!configured) {
     if (daily) {
@@ -297,7 +312,9 @@ export default async function handler(req: any, res: any): Promise<void> {
     return;
   }
 
-  const adapter = createEmailSubscriptionAdapter(process.env);
+  const adapter = createEmailSubscriptionAdapter(
+    sunClaim && dailyEnv ? dailyEnv : process.env,
+  );
   if (!adapter?.confirm) {
     if (sunClaim) send(res, 503, dailyEmailPage('Not available yet', 'Daily email is not ready just yet.'));
     else send(res, 503, emailStatusPage(claim!.locale, 'emailCaptureErrorTitle', 'emailCaptureError'));

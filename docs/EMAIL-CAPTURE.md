@@ -51,6 +51,27 @@ That segment is routing metadata only: `daily_sun_preferences` is the consent
 and sign authority. The daily and legacy weekly segment IDs must differ so a
 daily confirmation or unsubscribe can never change weekly membership.
 
+### Admin-only daily canary bootstrap
+
+Before the public daily flag is enabled, an operator may request DOI for the
+single canary address through `POST /api/email/admin-bootstrap`. The route has
+no public UI and requires all three server-only values:
+
+- `DAILY_EMAIL_ADMIN_BOOTSTRAP_ENABLED=1`
+- `DAILY_EMAIL_ADMIN_BOOTSTRAP_EMAIL=admin@zodiacs.org` (no other value is
+  accepted)
+- `DAILY_EMAIL_ADMIN_BOOTSTRAP_SECRET` — at least 32 characters, supplied as
+  the request's `Authorization: Bearer ...` credential
+
+Send JSON containing `email`, `sign`, and `locale: "en"`. Keep the bootstrap
+configuration present until the emailed scanner-safe GET page is explicitly
+confirmed by POST. The route locally opts only that operation into the daily
+adapter; it never changes `DAILY_EMAIL_ENABLED`, exposes a public capture, or
+requires a global `EMAIL_PROVIDER` (the route selects Resend only in its local
+server environment). It cannot allow a chart-tier or non-admin token through
+the confirmation exception. Remove the bootstrap values after the canary has
+confirmed.
+
 ### Buttondown
 
 Required:
