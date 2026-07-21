@@ -17,6 +17,11 @@ export const PHASE1_TEMPLATE_SOURCE_PATHS = Object.freeze([
   'src/data/transits-2026-08.json',
   'tsconfig.json',
   'scripts/phase1-acceptance-evidence.test.mjs',
+  'src/lib/email/config.ts',
+  'src/lib/email/daily-capture-copy.ts',
+  'src/lib/email/daily-config.ts',
+  'src/lib/email/daily-segment-id.ts',
+  'src/lib/email/post-chart-state.ts',
   'tests/phase1-acceptance-drive.mjs',
   'tests/visual/browser.mjs',
   'tests/visual/phase1-evidence-contract.mjs',
@@ -39,6 +44,18 @@ export const PHASE1_TEMPLATE_SOURCE_DIRECTORIES = Object.freeze([
   'src/pages/horoscopes',
   'src/pages/today',
   'src/styles',
+]);
+
+/**
+ * Phase 3 email delivery and lifecycle pages do not participate in the Phase 1
+ * site captures. Keep those server modules out of this pixel-evidence receipt,
+ * while explicitly listing every email module reached by a rendered component
+ * above. The segment-id parser lives beside daily-config so its complete
+ * runtime chain remains covered without pulling Resend contact delivery in.
+ */
+export const PHASE1_TEMPLATE_SOURCE_EXCLUDED_DIRECTORIES = Object.freeze([
+  'src/lib/daily-email',
+  'src/lib/email',
 ]);
 
 export function sha256(value) {
@@ -65,7 +82,9 @@ export async function phase1TemplateSourceSha256(
   const digest = createHash('sha256');
   const directoryFiles = (await Promise.all(
     PHASE1_TEMPLATE_SOURCE_DIRECTORIES.map((path) => sourceFiles(repositoryRoot, path)),
-  )).flat();
+  )).flat().filter((path) => !PHASE1_TEMPLATE_SOURCE_EXCLUDED_DIRECTORIES.some(
+    (directory) => path === directory || path.startsWith(`${directory}/`),
+  ));
   const paths = [...new Set([...PHASE1_TEMPLATE_SOURCE_PATHS, ...directoryFiles])].sort();
   for (const path of paths) {
     const absolute = resolve(repositoryRoot, path);

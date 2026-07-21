@@ -1,5 +1,5 @@
-import { parseDailySunSegmentId } from '../daily-email/segments.js';
 import { emailProviderName, environmentValue, hasEmailCaptureProvider } from './config.js';
+import { parseDailySunSegmentId } from './daily-segment-id.js';
 
 type Environment = Record<string, unknown>;
 

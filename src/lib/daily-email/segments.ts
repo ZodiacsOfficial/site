@@ -1,5 +1,8 @@
 import { normalizeEmail } from '../email/input.js';
+import { parseDailySunSegmentId } from '../email/daily-segment-id.js';
 import { createRateLimitedResendRequest, type ResendRequest } from './resend-request.js';
+
+export { parseDailySunSegmentId };
 
 export interface DailySunContact {
   email: string;
@@ -15,14 +18,6 @@ interface ResendContact {
 interface ResendContactPage {
   data?: unknown;
   has_more?: unknown;
-}
-
-export function parseDailySunSegmentId(value: unknown, legacyWeeklySegment: unknown = ''): string | null {
-  if (typeof value !== 'string') return null;
-  const id = value.trim();
-  if (!/^[A-Za-z0-9_-]{6,128}$/.test(id)) return null;
-  const weekly = typeof legacyWeeklySegment === 'string' ? legacyWeeklySegment.trim() : '';
-  return weekly && weekly === id ? null : id;
 }
 
 export function requireDailySunSegmentId(value: unknown, legacyWeeklySegment: unknown = ''): string {
