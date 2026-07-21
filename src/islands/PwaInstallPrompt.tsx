@@ -54,10 +54,13 @@ export default function PwaInstallPrompt({ locale: rawLocale = 'en', computation
 
   useEffect(() => {
     if (computationCount <= recordedComputation.current) return;
+    const unrecordedComputations = computationCount - recordedComputation.current;
     recordedComputation.current = computationCount;
     if (isStandalonePwa(navigator as Navigator & { standalone?: boolean }, window.matchMedia.bind(window))
       || pwaInstallDismissed(localStorage)) return;
-    if (recordChartComputation(localStorage)) setEligible(true);
+    for (let index = 0; index < unrecordedComputations; index += 1) {
+      if (recordChartComputation(localStorage)) setEligible(true);
+    }
   }, [computationCount]);
 
   function dismiss(): void {

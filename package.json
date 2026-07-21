@@ -61,6 +61,7 @@
     "test:phase3:post-chart": "node tests/post-chart-daily.mjs",
     "test:phase3:delivery-sql": "bash scripts/test-phase3-delivery-sql.sh",
     "test:phase3:push": "node tests/push-drive.mjs",
+    "test:phase3:pwa": "node tests/pwa-drive.mjs",
     "test:widgets:browser": "node tests/widgets-drive.mjs",
     "test:widgets:lighthouse": "node tests/visual/widget-lighthouse.mjs",
     "data:search-ui": "node scripts/build-search-ui.mjs",
