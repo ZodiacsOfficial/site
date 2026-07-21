@@ -128,21 +128,38 @@ const tools = [
       </div>
     </div>
     <script is:inline>
-      // The poster remains the experience for reduced-motion and constrained-
-      // data visitors. Otherwise sources attach only after first paint, with
-      // AV1 preferred and the original MP4 retained as a compatibility fallback.
+      // The poster is the LCP and the complete reduced-motion / constrained-data
+      // experience. Mobile video remains detached until the first interaction;
+      // desktop preserves its released autoplay. Offscreen ambient work pauses.
       (function () {
         var v = document.querySelector('[data-hero-video]');
         if (!v) return;
+        var frame = v.closest('.hero__frame');
         var connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-        // The poster is the complete mobile hero. Loading video after paint can
-        // replace it as the LCP candidate and penalize the very device that
-        // benefits least from background motion.
+        var reducedQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
         var compactViewport = window.matchMedia('(max-width: 719px)').matches;
         var constrained = connection && (
           connection.saveData ||
           ['slow-2g', '2g'].indexOf(connection.effectiveType) !== -1
         );
+        var visible = true;
+        var interacted = false;
+        var playbackRequested = false;
+        var playPending = false;
+        var posterFallback = false;
+        var playAttempt = 0;
+        var abortRetried = false;
+
+        var detachSources = function () {
+          playAttempt += 1;
+          playPending = false;
+          v.querySelectorAll('source[data-src]').forEach(function (source) {
+            source.removeAttribute('src');
+          });
+          delete v.dataset.sourcesAttached;
+          v.preload = 'none';
+          v.load();
+        };
         var attachSources = function () {
           if (!v.dataset.sourcesAttached) {
             v.querySelectorAll('source[data-src]').forEach(function (source) {
@@ -153,38 +170,147 @@ const tools = [
             v.load();
           }
         };
-        var tryPlay = function () {
-          var p = v.play();
-          if (p && p.catch) p.catch(function () {});
+        var usePosterFallback = function () {
+          if (posterFallback) return;
+          posterFallback = true;
+          playAttempt += 1;
+          playPending = false;
+          v.dataset.heroPlayback = 'poster-fallback';
+          v.pause();
+          detachSources();
         };
-        var play = function () {
-          if (compactViewport || constrained) return;
+        var tryPlay = function () {
+          if (!playbackRequested || !visible || document.hidden || constrained || reducedQuery.matches || posterFallback || playPending) return;
           attachSources();
+          var attempt = ++playAttempt;
+          playPending = true;
+          v.dataset.heroPlayback = 'loading';
+          var promise;
+          try {
+            promise = v.play();
+          } catch (error) {
+            usePosterFallback();
+            return;
+          }
+          if (!promise || !promise.then) {
+            playPending = false;
+            abortRetried = false;
+            v.dataset.heroPlayback = 'playing';
+            return;
+          }
+          promise.then(function () {
+            if (attempt !== playAttempt) return;
+            playPending = false;
+            abortRetried = false;
+            if (!visible || document.hidden) {
+              v.pause();
+              v.dataset.heroPlayback = 'paused';
+              return;
+            }
+            v.dataset.heroPlayback = 'playing';
+          }).catch(function (error) {
+            if (attempt !== playAttempt) return;
+            playPending = false;
+            if (error && error.name === 'AbortError') {
+              v.dataset.heroPlayback = 'paused';
+              if (visible && !document.hidden && !abortRetried) {
+                abortRetried = true;
+                window.setTimeout(tryPlay, 0);
+              }
+              return;
+            }
+            usePosterFallback();
+          });
+        };
+
+        var setVisible = function (nextVisible) {
+          visible = Boolean(nextVisible) && !document.hidden;
+          v.dataset.heroVisible = String(visible);
+          if (!visible) {
+            playAttempt += 1;
+            playPending = false;
+            if (playbackRequested) v.pause();
+            if (v.dataset.heroPlayback === 'playing' || v.dataset.heroPlayback === 'loading') v.dataset.heroPlayback = 'paused';
+            return;
+          }
           tryPlay();
         };
+
+        var beginPlayback = function () {
+          if (interacted) return;
+          interacted = true;
+          v.dataset.heroInteracted = 'true';
+          if (constrained || reducedQuery.matches) return;
+          if (playbackRequested) return;
+          playbackRequested = true;
+          tryPlay();
+        };
+
+        v.dataset.heroMotion = reducedQuery.matches ? 'static' : 'drift';
+        v.dataset.heroPlayback = 'poster';
+        setVisible(!frame || frame.getBoundingClientRect().bottom > 0);
+
+        // Preserve the released desktop experience. The interaction gate is for
+        // compact viewports, where the poster must remain the LCP surface.
+        if (!compactViewport && !constrained && !reducedQuery.matches) {
+          playbackRequested = true;
+          tryPlay();
+        }
+
+        ['pointerdown', 'touchstart', 'keydown'].forEach(function (eventName) {
+          window.addEventListener(eventName, beginPlayback, { once: true, passive: true, capture: true });
+        });
+
+        if (frame && 'IntersectionObserver' in window) {
+          var observer = new IntersectionObserver(function (entries) {
+            setVisible(entries[0] && entries[0].isIntersecting);
+          }, { threshold: 0.01 });
+          observer.observe(frame);
+        }
+
+        document.addEventListener('visibilitychange', function () {
+          if (document.hidden) setVisible(false);
+          else setVisible(!frame || frame.getBoundingClientRect().bottom > 0);
+        });
+
+        reducedQuery.addEventListener && reducedQuery.addEventListener('change', function () {
+          v.dataset.heroMotion = reducedQuery.matches ? 'static' : 'drift';
+          if (reducedQuery.matches) {
+            playAttempt += 1;
+            playPending = false;
+            if (playbackRequested) v.pause();
+            v.dataset.heroPlayback = 'paused';
+            return;
+          }
+          if ((!compactViewport || interacted) && !constrained && !posterFallback) {
+            playbackRequested = true;
+            tryPlay();
+          }
+        });
+
         v.addEventListener('error', function () {
-          if (constrained || !v.dataset.sourcesAttached || v.dataset.sourceRetry === 'true') return;
+          if (constrained || posterFallback || !playbackRequested || !v.dataset.sourcesAttached) return;
+          if (v.dataset.sourceRetry === 'true') {
+            usePosterFallback();
+            return;
+          }
           v.dataset.sourceRetry = 'true';
-          v.querySelectorAll('source[data-src]').forEach(function (source) {
-            source.removeAttribute('src');
-          });
-          delete v.dataset.sourcesAttached;
-          v.load();
+          playPending = false;
+          detachSources();
           window.setTimeout(function () {
+            if (posterFallback || !visible) return;
             attachSources();
             tryPlay();
           }, 0);
         });
-        if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-          if (window.matchMedia('(min-width: 720px)').matches) {
-            play();
-          } else if (document.readyState === 'complete') {
-            play();
-          } else {
-            window.addEventListener('load', play, { once: true });
-          }
-          window.addEventListener('pageshow', function (e) { if (e.persisted) play(); });
-        }
+        window.addEventListener('pagehide', function () {
+          playAttempt += 1;
+          playPending = false;
+          if (playbackRequested) v.pause();
+        });
+        window.addEventListener('pageshow', function (event) {
+          if (event.persisted) setVisible(!frame || frame.getBoundingClientRect().bottom > 0);
+        });
       })();
     </script>
 
@@ -220,7 +346,7 @@ const tools = [
     <div class="section-head reveal">
       <em class="kicker">Interactive preview</em>
       <h2>See how a birth chart becomes a story.</h2>
-      <p>Explore a real chart without entering anything. Tap a planet, house, or connection to see what it means.</p>
+      <p>Explore a real chart without entering anything. Tap a sign, planet, house, or connection to see what it means.</p>
     </div>
     <div class="reveal">
       <DemoChart />
@@ -457,6 +583,17 @@ const tools = [
     transform: scale(1.035);
     transform-origin: center;
   }
+  @keyframes hero-poster-drift {
+    0% { transform: scale(1.035) translate3d(0, 0, 0); }
+    100% { transform: scale(1.06) translate3d(-0.55%, 0.4%, 0); }
+  }
+  @media (max-width: 719px) and (prefers-reduced-motion: no-preference) {
+    .hero__video[data-hero-motion='drift'] {
+      animation: hero-poster-drift 18s cubic-bezier(0.45, 0, 0.55, 1) infinite alternate;
+      will-change: transform;
+    }
+    .hero__video[data-hero-visible='false'] { animation-play-state: paused; }
+  }
   .hero__scrim {
     position: absolute;
     inset: 0;
@@ -645,6 +782,7 @@ const tools = [
   }
   @media (prefers-reduced-motion: reduce) {
     .hero__frame { box-shadow: inset 0 0 0 1px rgba(198, 204, 218, 0.10); }
+    .hero__video { animation: none; transform: scale(1.035); }
   }
 
   /* Welcome-back strip + sky ticker styles live in ../styles/today.css
@@ -759,6 +897,12 @@ const tools = [
     stroke-linecap: round;
     vector-effect: non-scaling-stroke;
   }
+  :global(.demo__focus-sign) {
+    fill: color-mix(in oklab, var(--focus) 13%, transparent);
+    stroke: var(--focus);
+    stroke-width: 0.52;
+    vector-effect: non-scaling-stroke;
+  }
   :global(.demo__focus-node) {
     fill: rgba(10, 12, 17, 0.96);
     stroke: var(--focus);
@@ -798,11 +942,13 @@ const tools = [
   }
   :global(.demo__target--house) { width: clamp(22px, 6.6%, 34px); z-index: 2; }
   :global(.demo__target--aspect) { width: clamp(20px, 6%, 31px); z-index: 1; }
+  :global(.demo__target--sign) { width: 44px; height: 44px; z-index: 4; }
   :global(.demo__target:focus-visible) {
     outline: 2px solid var(--text);
     outline-offset: 2px;
   }
   :global(.demo__target--planet:focus-visible) { outline-offset: 7px; }
+  :global(.demo__target--sign:focus-visible) { outline-color: var(--sign); outline-offset: 2px; }
   @media (hover: hover) and (pointer: fine) {
     :global(.demo__target:hover) {
       border-color: color-mix(in oklab, var(--sign, var(--text)) 58%, transparent);
@@ -828,7 +974,10 @@ const tools = [
   :global(.demo[data-active-layer='houses'] .wheel__body),
   :global(.demo[data-active-layer='houses'] .wheel__aspect),
   :global(.demo[data-active-layer='aspects'] .wheel__body),
-  :global(.demo[data-active-layer='aspects'] .wheel__house) { opacity: 0.16; }
+  :global(.demo[data-active-layer='aspects'] .wheel__house),
+  :global(.demo[data-active-layer='signs'] .wheel__body),
+  :global(.demo[data-active-layer='signs'] .wheel__house),
+  :global(.demo[data-active-layer='signs'] .wheel__aspect) { opacity: 0.16; }
   :global(.demo__preview-hint) {
     margin: 8px 0 0;
     text-align: center;

@@ -21,6 +21,21 @@ const EXPECTED_HUES = [
   '--sign-pisces',
   '--sign-scorpio',
 ];
+const EXPECTED_SIGNS = [
+  'aries',
+  'taurus',
+  'gemini',
+  'cancer',
+  'leo',
+  'virgo',
+  'libra',
+  'scorpio',
+  'sagittarius',
+  'capricorn',
+  'aquarius',
+  'pisces',
+];
+const TAURUS_COPY = 'Steady hands, good taste, and a long memory for comfort. Her Moon uses this style in this chart.';
 
 const results = [];
 const check = (name, ok, detail = '') => results.push({ name, ok, detail });
@@ -59,6 +74,9 @@ await withPreview({ port: 4394 }, async (baseURL) => {
       await stage.evaluate((element) => element.scrollIntoView({ block: 'center' }));
       const reveal = page.locator('.reveal.is-in', { has: demo });
       await reveal.waitFor({ state: 'visible' });
+      // Do not mistake the intentional 12px entrance transition for chart
+      // reflow when the first preview control is selected.
+      await wait(300);
       await settledBox(stage);
 
       check(
@@ -117,6 +135,87 @@ await withPreview({ port: 4394 }, async (baseURL) => {
           Math.abs(aspectChartTop - initialChartTop),
         ) < 0.75,
         [initialChartTop, houseChartTop, aspectChartTop].map((top) => top.toFixed(2)).join(', '),
+      );
+
+      const signTargets = page.locator('[data-demo-sign]');
+      const signSlugs = await signTargets.evaluateAll((buttons) => buttons.map((button) => button.dataset.demoSign));
+      check(
+        `${width}px: all twelve canonical sign targets render in zodiac order`,
+        JSON.stringify(signSlugs) === JSON.stringify(EXPECTED_SIGNS),
+        signSlugs.join(', '),
+      );
+      const signImages = page.locator('.demo__wheel-stage .wheel image');
+      check(`${width}px: sign targets map one-to-one to the pastel discs`, await signImages.count() === 12);
+      for (let index = 0; index < EXPECTED_SIGNS.length; index += 1) {
+        const slug = EXPECTED_SIGNS[index];
+        const target = signTargets.nth(index);
+        const disc = signImages.nth(index);
+        const [targetBox, discBox] = await Promise.all([
+          settledBox(target),
+          settledBox(disc),
+        ]);
+        const centerDelta = targetBox && discBox
+          ? Math.hypot(
+              targetBox.x + targetBox.width / 2 - discBox.x - discBox.width / 2,
+              targetBox.y + targetBox.height / 2 - discBox.y - discBox.height / 2,
+            )
+          : Number.POSITIVE_INFINITY;
+        check(
+          `${width}px: ${slug} has a 44px target centered on its pastel disc`,
+          Boolean(targetBox)
+            && Math.abs(targetBox.width - 44) < 0.25
+            && Math.abs(targetBox.height - 44) < 0.25
+            && centerDelta < 0.75,
+          `${targetBox?.width.toFixed(2) ?? 'none'}×${targetBox?.height.toFixed(2) ?? 'none'}; Δ${centerDelta.toFixed(3)}px`,
+        );
+        const centerOwner = await target.evaluate((button) => {
+          const box = button.getBoundingClientRect();
+          const owner = document.elementFromPoint(box.left + box.width / 2, box.top + box.height / 2);
+          return {
+            owns: owner === button,
+            id: owner?.getAttribute('data-demo-id') ?? '',
+          };
+        });
+        check(
+          `${width}px: ${slug} owns its pointer center`,
+          centerOwner.owns,
+          centerOwner.id,
+        );
+      }
+
+      const taurus = page.locator('[data-demo-id="sign:taurus"]');
+      const signUrl = page.url();
+      await taurus.click();
+      await wait(260);
+      const signLayerOpacity = await Promise.all([
+        page.locator('.demo__wheel-stage .wheel__body').first().evaluate((node) => getComputedStyle(node).opacity),
+        page.locator('.demo__wheel-stage .wheel__house').first().evaluate((node) => getComputedStyle(node).opacity),
+        page.locator('.demo__wheel-stage .wheel__aspect').first().evaluate((node) => getComputedStyle(node).opacity),
+      ]);
+      check(
+        `${width}px: Taurus pointer selection illuminates its arc and explains the fixture placement`,
+        await demo.getAttribute('data-active-layer') === 'signs'
+          && await demo.getAttribute('data-active-id') === 'sign:taurus'
+          && await taurus.getAttribute('aria-pressed') === 'true'
+          && await page.locator('[data-demo-highlight-kind="sign"][data-active="true"]').getAttribute('data-demo-highlight') === 'sign:taurus'
+          && await page.locator('[data-demo-kind-output]').textContent() === 'Sign'
+          && await page.locator('[data-demo-title-output]').textContent() === 'Taurus'
+          && await page.locator('[data-demo-caption]').textContent() === TAURUS_COPY
+          && signLayerOpacity.every((opacity) => Number(opacity) <= 0.16),
+        signLayerOpacity.join(', '),
+      );
+      check(`${width}px: sign exploration does not mutate the page URL`, page.url() === signUrl);
+
+      await jumps.first().click();
+      await taurus.focus();
+      await taurus.press('Enter');
+      check(
+        `${width}px: Taurus is operable from the keyboard with an immediate update`,
+        await page.evaluate(() => document.activeElement?.getAttribute('data-demo-id')) === 'sign:taurus'
+          && await demo.getAttribute('data-demo-motion') === 'instant'
+          && await demo.getAttribute('data-active-id') === 'sign:taurus'
+          && await taurus.getAttribute('aria-pressed') === 'true'
+          && await page.locator('[data-demo-caption]').textContent() === TAURUS_COPY,
       );
 
       await jumps.first().focus();
@@ -226,16 +325,18 @@ await withPreview({ port: 4394 }, async (baseURL) => {
     });
     await reducedPage.goto(`${baseURL}/`, { waitUntil: 'networkidle' });
     const reducedDemo = reducedPage.locator('[data-demo-preview]');
-    const reducedAspect = reducedPage.locator('[data-demo-jump^="aspect:"]');
-    await reducedAspect.click();
-    const reducedHighlight = reducedPage.locator('[data-demo-highlight-kind="aspect"][data-active="true"]');
+    const reducedTaurus = reducedPage.locator('[data-demo-id="sign:taurus"]');
+    await reducedTaurus.click();
+    const reducedHighlight = reducedPage.locator('[data-demo-highlight-kind="sign"][data-active="true"]');
     const reducedStyle = await reducedHighlight.evaluate((node) => {
       const style = getComputedStyle(node);
       return { transitionProperty: style.transitionProperty, transform: style.transform };
     });
     check(
-      'reduced motion: preview keeps a gentle opacity cue without movement',
+      'reduced motion: sign preview keeps a gentle opacity cue without movement',
       await reducedDemo.getAttribute('data-demo-motion') === 'reduced'
+        && await reducedDemo.getAttribute('data-active-id') === 'sign:taurus'
+        && await reducedPage.locator('[data-demo-caption]').textContent() === TAURUS_COPY
         && reducedStyle.transitionProperty === 'opacity'
         && reducedStyle.transform === 'none',
       JSON.stringify(reducedStyle),

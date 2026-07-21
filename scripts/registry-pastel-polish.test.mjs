@@ -68,23 +68,53 @@ describe('registry pastel polish', () => {
     expect(registry).toContain('.strip__sub { display: none; }');
   });
 
-  it('keeps one explanatory hero action and one canonical thesis section', async () => {
+  it('keeps one primary hero action plus one flag-gated Cabinet action and one canonical thesis section', async () => {
     const [source, registry] = await Promise.all([
       read('src/app.jsx'),
       read('public/registry/index.html'),
     ]);
 
-    const hero = source.slice(source.indexOf('function CineHero()'), source.indexOf('function Hero('));
+    const hero = source.slice(source.indexOf('function CineHero('), source.indexOf('function Hero('));
     expect(hero).toContain('The official public record for the twelve Zodiacs—verify each sign and explore its story.');
     expect(hero.match(/className="btn btn--primary"/g)).toHaveLength(1);
-    expect(hero).not.toContain('REGISTRY_AURA_HERO_COPY');
+    expect(hero.match(/className="btn btn--ghost"/g)).toHaveLength(1);
+    expect(hero).toContain('REGISTRY_AURA_ENABLED &&');
+    expect(hero).toContain('REGISTRY_AURA_HERO_COPY.ariaLabel');
+    expect(hero).toContain('data-registry-browse');
     expect(hero).not.toContain('cine__why');
+    expect(source).toContain("return `/registry/${sign?.asset?.sign ?? 'aries'}/`;");
+    expect(registry).toContain('href="/registry/aries/" data-registry-browse');
     expect(source).not.toContain('<a className="reg__story-link" href="/thesis/">');
     expect(registry).not.toContain('<p><a href="/thesis/">Read the Registry thesis →</a></p>');
     expect(source).toContain('id="thesis" className="phil reveal"');
     expect(source).toContain('Read the full thesis — belief is the oldest asset');
-    expect(registry).not.toContain('registry-aura-hero:cta');
+    expect(registry).toContain('registry-aura-hero:slot');
     expect(registry).not.toContain('cine__why');
+  });
+
+  it('keeps the wing nav on the shared compact and desktop geometry contract', async () => {
+    const [wingNav, registry, thesis, sdk, source] = await Promise.all([
+      read('scripts/wing-nav.mjs'),
+      read('public/registry/index.html'),
+      read('public/thesis/index.html'),
+      read('public/sdk/index.html'),
+      read('src/app.jsx'),
+    ]);
+
+    for (const value of [wingNav, registry, thesis, sdk]) {
+      expect(value).toContain('height: 52px; padding: 0 10px 0 20px;');
+      expect(value).toContain('gap: 10px;');
+      expect(value).toContain('@media (min-width: 820px) { .wnav { gap: 18px; } }');
+      expect(value).toContain('rgba(198,204,218,0.16)');
+      expect(value).toContain('width: 34px; height: 34px;');
+      expect(value).toContain('letter-spacing: 0.08em;');
+      expect(value).toContain('@media (min-width: 820px) { .wnav__chip { letter-spacing: 0.14em; } }');
+      expect(value).toContain('@media (max-width: 819.5px) { .wnav__sep, .wnav__dim { display: none; } }');
+      expect(value).toContain('padding-top: env(safe-area-inset-top);');
+      expect(value).toContain('border: 1px solid rgba(198,204,218,0.16);');
+      expect(value).toContain('border-left: 1px solid rgba(198,204,218,0.16);');
+    }
+    expect(source).toContain('<span className="wnav__sep">·</span><span className="wnav__dim">org</span>');
   });
 
   it('uses a full-row, plain-English Registry Aura feature band', async () => {
@@ -125,6 +155,8 @@ describe('registry pastel polish', () => {
   it.each(signs)('renders the %s lot title with one decorative pastel disc', async (slug, name) => {
     const html = await read(`public/registry/${slug}/index.html`);
     const title = `<h1 class="lot__title" id="lot-title">${name} <picture class="lot__title-icon" aria-hidden="true">`;
+    const nextIndex = (signs.findIndex(([candidate]) => candidate === slug) + 1) % signs.length;
+    const [nextSlug, nextName] = signs[nextIndex];
 
     expect(html).toContain(title);
     expect(html).toContain(`srcset="/assets/zodiac-icons/400/${slug}.avif"`);
@@ -132,6 +164,12 @@ describe('registry pastel polish', () => {
     expect(html).toContain('width="112" height="112" alt=""');
     expect(html).not.toContain('class="lot__icon"');
     expect(html).not.toContain('<span class="glyph">');
+    expect(html).toContain('padding: calc(82px + env(safe-area-inset-top)) 0 36px;');
+    expect(html).toContain('min-height: 44px;');
+    expect(html).toContain(`class="lot__next" href="/registry/${nextSlug}/" aria-label="Next record, ${nextName}"`);
+    expect(html).toContain(`/assets/zodiac-icons/48/${nextSlug}.avif`);
+    expect(html).toContain(`/assets/zodiac-icons/48/${nextSlug}.webp`);
+    expect(html).toContain(`<span>Next record <strong>· ${nextName}</strong></span>`);
   });
 
   it('adds one decorative pastel disc after every thesis sign name', async () => {

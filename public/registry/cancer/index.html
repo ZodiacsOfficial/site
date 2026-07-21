@@ -185,8 +185,8 @@
     /* ── Unified site nav (Part AA) — shared wing nav module (wing-nav.mjs) ── */
     
   @font-face { font-family: 'Instrument Sans'; src: url('/fonts/instrument-sans-latin-wght-normal.woff2') format('woff2-variations'); font-weight: 400 600; font-style: normal; font-display: swap; }
-  .wnav-wrap { position: fixed; top: 14px; left: 0; right: 0; z-index: 60; display: flex; flex-direction: column; align-items: center; pointer-events: none; padding: env(safe-area-inset-top) 16px 0; }
-  .wnav { pointer-events: auto; display: inline-flex; align-items: center; gap: 10px; height: 52px; padding: 0 10px 0 20px; border-radius: 999px; background: rgba(10,12,17,0.66); backdrop-filter: saturate(150%) blur(18px); -webkit-backdrop-filter: saturate(150%) blur(18px); border: 1px solid var(--hair-2, rgba(198,204,218,0.16)); box-shadow: inset 0 1px 0 rgba(238,241,247,0.06), 0 12px 32px -14px rgba(0,0,0,0.7); }
+  .wnav-wrap { position: fixed; top: 14px; left: 0; right: 0; z-index: 60; display: flex; flex-direction: column; align-items: center; pointer-events: none; padding-top: env(safe-area-inset-top); }
+  .wnav { pointer-events: auto; display: inline-flex; align-items: center; gap: 10px; height: 52px; padding: 0 10px 0 20px; border-radius: 999px; background: rgba(10,12,17,0.66); backdrop-filter: saturate(150%) blur(18px); -webkit-backdrop-filter: saturate(150%) blur(18px); border: 1px solid rgba(198,204,218,0.16); box-shadow: inset 0 1px 0 rgba(238,241,247,0.06), 0 12px 32px -14px rgba(0,0,0,0.7); }
   @media (min-width: 820px) { .wnav { gap: 18px; } }
   .wnav__mark { display: inline-flex; align-items: center; gap: 9px; text-decoration: none; white-space: nowrap; }
   .wnav__brand { display: block; flex-shrink: 0; }
@@ -194,22 +194,25 @@
   .wnav__name { font-family: var(--serif, 'EB Garamond', Georgia, serif); font-weight: 400; font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; line-height: 1; color: var(--ink, #EEF1F7); white-space: nowrap; }
   .wnav__sep { color: var(--ink-mute, #8A93A6); margin: 0 4px; }
   .wnav__dim { color: var(--ink-2, #C6CCDA); font-weight: 500; }
-  @media (max-width: 819.5px) { .wnav__dim { display: none; } }
-  .wnav__search { display: inline-grid; place-items: center; width: 34px; height: 34px; margin-left: -8px; border-radius: 999px; color: var(--ink-2, #C6CCDA); text-decoration: none; transition: color 200ms var(--ease, cubic-bezier(0.4,0,0.2,1)), background 260ms var(--ease, cubic-bezier(0.4,0,0.2,1)); }
+  @media (max-width: 819.5px) { .wnav__sep, .wnav__dim { display: none; } }
+  .wnav__search { display: inline-flex; align-items: center; gap: 7px; padding: 8px 11px; border: none; border-radius: 999px; background: none; color: var(--ink-2, #C6CCDA); cursor: pointer; text-decoration: none; transition: color 200ms var(--ease, cubic-bezier(0.4,0,0.2,1)), background 260ms var(--ease, cubic-bezier(0.4,0,0.2,1)); }
   .wnav__search:hover { color: var(--ink, #EEF1F7); background: rgba(198,204,218,0.07); }
-  @media (min-width: 820px) { .wnav__search { display: none; } }
+  @media (max-width: 819.5px) { .wnav__search { display: inline-grid; place-items: center; width: 34px; height: 34px; padding: 0; } }
+  .wnav__search-kbd { display: none; font-family: var(--mono, 'JetBrains Mono', monospace); font-size: 10px; line-height: 1; padding: 3px 5px; border: 1px solid rgba(198,204,218,0.16); border-radius: 4px; color: var(--ink-mute, #8A93A6); }
+  @media (min-width: 820px) { .wnav__search-kbd { display: inline-block; } }
   .wnav__links { display: none; align-items: center; gap: 2px; }
   @media (min-width: 820px) { .wnav__links { display: inline-flex; } }
-  .wnav__link { display: inline-flex; align-items: center; gap: 6px; padding: 7px 13px; border-radius: 999px; font-family: 'Instrument Sans', system-ui, -apple-system, 'Segoe UI', sans-serif; font-size: 14px; font-weight: 500; letter-spacing: -0.005em; text-transform: none; white-space: nowrap; color: var(--ink-2, #C6CCDA); text-decoration: none; background: none; border: 0; cursor: pointer; transition: color 200ms var(--ease, cubic-bezier(0.4,0,0.2,1)), background 260ms var(--ease, cubic-bezier(0.4,0,0.2,1)); }
+  .wnav__link { display: inline-flex; align-items: center; gap: 6px; padding: 7px 13px; border-radius: 999px; font-family: 'Instrument Sans', system-ui, -apple-system, 'Segoe UI', sans-serif; font-size: 14px; font-weight: 500; letter-spacing: normal; text-transform: none; white-space: nowrap; color: var(--ink-2, #C6CCDA); text-decoration: none; background: none; border: 0; cursor: pointer; transition: color 200ms var(--ease, cubic-bezier(0.4,0,0.2,1)), background 260ms var(--ease, cubic-bezier(0.4,0,0.2,1)); }
   .wnav__link:hover { color: var(--ink, #EEF1F7); background: rgba(198,204,218,0.07); }
   .wnav__link[aria-current='page'] { color: var(--ink, #EEF1F7); }
   .wnav__signs-btn svg { transition: transform 260ms var(--ease, cubic-bezier(0.4,0,0.2,1)); }
   .wnav__signs-btn[aria-expanded='true'] svg { transform: rotate(180deg); }
-  .wnav__chip { display: inline-flex; align-items: center; height: 34px; padding: 0 2px 0 16px; border-left: 1px solid var(--hair-2, rgba(198,204,218,0.16)); font-family: var(--serif, 'EB Garamond', Georgia, serif); font-size: 13px; font-weight: 400; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-2, #C6CCDA); text-decoration: none; white-space: nowrap; transition: color 260ms var(--ease, cubic-bezier(0.4,0,0.2,1)); }
+  .wnav__chip { display: inline-flex; align-items: center; height: 34px; padding: 0 2px 0 16px; border-left: 1px solid rgba(198,204,218,0.16); font-family: var(--serif, 'EB Garamond', Georgia, serif); font-size: 13px; font-weight: 400; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-2, #C6CCDA); text-decoration: none; white-space: nowrap; transition: color 260ms var(--ease, cubic-bezier(0.4,0,0.2,1)); }
   .wnav__chip:hover { color: var(--ink, #EEF1F7); }
+  @media (min-width: 820px) { .wnav__chip { letter-spacing: 0.14em; } }
   
   
-  .wnav__burger { display: inline-grid; place-items: center; gap: 4px; width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--hair-2, rgba(198,204,218,0.16)); background: none; cursor: pointer; }
+  .wnav__burger { display: inline-grid; place-items: center; gap: 4px; width: 34px; height: 34px; border-radius: 50%; border: 1px solid rgba(198,204,218,0.16); background: none; cursor: pointer; }
   @media (min-width: 820px) { .wnav__burger { display: none; } }
   .wnav__burger-line { display: block; width: 15px; height: 1.5px; border-radius: 2px; background: var(--ink-2, #C6CCDA); transition: transform 260ms var(--ease, cubic-bezier(0.4,0,0.2,1)), opacity 200ms var(--ease, cubic-bezier(0.4,0,0.2,1)); }
   .wnav__burger[aria-expanded='true'] .wnav__burger-line:first-child { transform: translateY(5.5px) rotate(45deg); }
@@ -251,7 +254,7 @@
     }
 
     /* ── Lot header ── */
-    .lot { padding: 64px 0 36px; position: relative; }
+    .lot { padding: calc(82px + env(safe-area-inset-top)) 0 36px; position: relative; }
     .lot__eyebrow {
       display: inline-flex; align-items: center; gap: 10px;
       margin-bottom: 26px; padding: 6px 14px 6px 10px;
@@ -287,6 +290,25 @@
     .lot__dates {
       font-family: var(--mono); font-size: 10.5px;
       letter-spacing: 0.26em; text-transform: uppercase; color: var(--ink-dim);
+    }
+    .lot__next {
+      display: inline-flex; align-items: center; gap: 9px;
+      min-height: 44px; margin-top: 22px; padding: 5px 12px 5px 5px;
+      border: 1px solid var(--hair-2); border-radius: 999px;
+      background: rgba(198,204,218,0.035); color: var(--ink-2);
+      font-family: var(--display); font-weight: 500; font-size: 10px;
+      letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none;
+      transition: border-color 160ms cubic-bezier(0.23,1,0.32,1), color 160ms cubic-bezier(0.23,1,0.32,1), transform 120ms cubic-bezier(0.23,1,0.32,1);
+    }
+    .lot__next picture { display: block; width: 32px; height: 32px; flex: 0 0 auto; }
+    .lot__next img { width: 100%; height: 100%; border-radius: 50%; }
+    .lot__next strong { color: var(--gold-bright); font-weight: 500; }
+    .lot__next:active { transform: scale(0.97); }
+    @media (hover: hover) and (pointer: fine) {
+      .lot__next:hover { border-color: var(--gold); color: var(--ink); }
+    }
+    @media (min-width: 700px) {
+      .lot__next { position: absolute; top: calc(82px + env(safe-area-inset-top)); right: 0; margin-top: 0; }
     }
 
     /* ── Editorial split ── */
@@ -597,6 +619,8 @@
     .reveal.is-in { opacity: 1; transform: translateY(0); filter: blur(0); }
     @media (prefers-reduced-motion: reduce) {
       .reveal { transition: none !important; opacity: 1 !important; transform: none !important; filter: none !important; }
+      .lot__next { transition: none; }
+      .lot__next:active { transform: none; }
     }
   </style>
 </head>
@@ -605,21 +629,20 @@
   <div class="stars" aria-hidden="true"></div>
   <div class="grain" aria-hidden="true"></div>
 
-  
   <div class="wnav-wrap">
     <nav class="wnav" aria-label="Primary" data-wnav>
       <a class="wnav__mark" href="/"><span class="wnav__name">Zodiacs<span class="wnav__sep">·</span><span class="wnav__dim">org</span></span></a>
-      <a class="wnav__search" href="/?search=1" aria-label="Search the site">
-        <svg width="14" height="14" viewBox="0 0 15 15" fill="none" aria-hidden="true"><circle cx="6.5" cy="6.5" r="4.75" stroke="currentColor" stroke-width="1.4"/><path d="M10.5 10.5L13.5 13.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
-      </a>
       <div class="wnav__links">
+        <a class="wnav__link" href="/tools/">Tools<svg width="8" height="5" viewBox="0 0 8 5" fill="none" aria-hidden="true"><path d="M1 1l3 3 3-3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
         <button class="wnav__link wnav__signs-btn" type="button" data-wnav-signs aria-expanded="false" aria-controls="wnav-signs">Signs<svg width="8" height="5" viewBox="0 0 8 5" fill="none" aria-hidden="true"><path d="M1 1l3 3 3-3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-        <a class="wnav__link" href="/tools/">Tools</a>
         <a class="wnav__link" href="/learn/">Learn</a>
         <a class="wnav__link" href="/horoscopes/">Horoscopes</a>
         <a class="wnav__link" href="/profile/">Saved charts</a>
-        <a class="wnav__link" href="/?search=1">Search ↗</a>
       </div>
+      <a class="wnav__search" href="/?search=1" aria-label="Search the site">
+        <svg width="14" height="14" viewBox="0 0 15 15" fill="none" aria-hidden="true"><circle cx="6.5" cy="6.5" r="4.75" stroke="currentColor" stroke-width="1.4"/><path d="M10.5 10.5L13.5 13.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+        <kbd class="wnav__search-kbd" aria-hidden="true">/</kbd>
+      </a>
       <a class="wnav__chip" href="/registry/" aria-current="page">Registry</a>
       <button class="wnav__burger" type="button" data-wnav-burger aria-expanded="false" aria-controls="wnav-menu" aria-label="Menu">
         <span class="wnav__burger-line"></span><span class="wnav__burger-line"></span><span class="wnav__burger-line"></span>
@@ -651,6 +674,10 @@
       <h1 class="lot__title" id="lot-title">Cancer <picture class="lot__title-icon" aria-hidden="true"><source srcset="/assets/zodiac-icons/400/cancer.avif" type="image/avif"/><img src="/assets/zodiac-icons/400/cancer.webp" width="112" height="112" alt="" decoding="async" fetchpriority="high"/></picture></h1>
       <p class="lot__epithet">The Crab. The gate of incarnation.</p>
       <div class="lot__dates">21 June — 22 July · Water · Luna</div>
+      <a class="lot__next" href="/registry/leo/" aria-label="Next record, Leo">
+        <picture aria-hidden="true"><source srcset="/assets/zodiac-icons/48/leo.avif" type="image/avif"/><img src="/assets/zodiac-icons/48/leo.webp" width="32" height="32" alt="" decoding="async"/></picture>
+        <span>Next record <strong>· Leo</strong></span><span aria-hidden="true">→</span>
+      </a>
     </section>
 
     <div class="split">

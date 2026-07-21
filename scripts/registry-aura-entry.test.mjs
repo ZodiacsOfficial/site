@@ -2,6 +2,8 @@ import { describe, expect, it } from 'vitest';
 import {
   REGISTRY_AURA_ENTRY_COPY,
   REGISTRY_AURA_ENTRY_SLOT,
+  REGISTRY_AURA_HERO_COPY,
+  REGISTRY_AURA_HERO_SLOT,
   REGISTRY_AURA_PATH,
   injectRegistryAuraLanding,
   registryAuraChartAnalytics,
@@ -12,7 +14,8 @@ import {
 
 const HERO = `<p class="cine__line">The official public record for the twelve Zodiacs—verify each sign and explore its story.</p>
 <div class="cine__cta">
-<a class="btn btn--primary" href="#official-twelve"><span>Browse the Twelve</span></a>
+<a class="btn btn--primary" href="/registry/aries/"><span>Browse the Twelve</span></a>
+${REGISTRY_AURA_HERO_SLOT}
 </div>`;
 
 const HTML = `<!doctype html><html><head>
@@ -29,8 +32,10 @@ describe('Registry Aura build flag', () => {
   it('adds and removes the no-JS landing entry idempotently', () => {
     const on = injectRegistryAuraLanding(HTML, { PUBLIC_REGISTRY_AURA_ENABLED: '1' }).output;
     expect(on).toContain('content="1"');
-    // Aura discovery lives in one full-row Identity feature, never the hero.
-    expect(on.match(new RegExp(`href="${REGISTRY_AURA_PATH}"`, 'g'))).toHaveLength(1);
+    expect(on.match(new RegExp(`href="${REGISTRY_AURA_PATH}"`, 'g'))).toHaveLength(2);
+    expect(on).toContain(`aria-label="${REGISTRY_AURA_HERO_COPY.ariaLabel}"`);
+    expect(on).toContain(`<span>${REGISTRY_AURA_HERO_COPY.cta}</span>`);
+    expect(on).toContain('class="btn btn--ghost"');
     expect(on).toContain('class="static-site__card static-site__card--aura"');
     expect(on).toContain('Cabinet of Twelve');
     expect(on).toContain('Dated seal');
@@ -46,15 +51,18 @@ describe('Registry Aura build flag', () => {
     expect(injectRegistryAuraLanding(off, {}).output).toBe(off);
   });
 
-  it('leaves the single-purpose hero unchanged in both flag states', () => {
+  it('adds the Cabinet hero action only while enabled and preserves the Aries fallback', () => {
     const on = injectRegistryAuraLanding(HTML, { PUBLIC_REGISTRY_AURA_ENABLED: '1' }).output;
-    expect(on).toContain(HERO);
+    expect(on).toContain('href="/registry/aries/"');
     expect(on.match(/class="btn btn--primary"/g)).toHaveLength(1);
-    expect(on).not.toContain('cine__why');
+    expect(on.match(/class="btn btn--ghost"/g)).toHaveLength(1);
+    expect(on).toContain(REGISTRY_AURA_HERO_COPY.cta);
     expect(injectRegistryAuraLanding(on, { PUBLIC_REGISTRY_AURA_ENABLED: '1' }).output).toBe(on);
 
     const off = injectRegistryAuraLanding(on, {}).output;
     expect(off).toBe(HTML);
+    expect(off).not.toContain(REGISTRY_AURA_PATH);
+    expect(off).not.toContain(REGISTRY_AURA_HERO_COPY.cta);
     expect(injectRegistryAuraLanding(off, {}).output).toBe(off);
   });
 
@@ -64,6 +72,9 @@ describe('Registry Aura build flag', () => {
 
     const withoutEntry = HTML.replace(REGISTRY_AURA_ENTRY_SLOT, '');
     expect(() => injectRegistryAuraLanding(withoutEntry, {})).toThrow(/entry slot/i);
+
+    const withoutHero = HTML.replace(REGISTRY_AURA_HERO_SLOT, '');
+    expect(() => injectRegistryAuraLanding(withoutHero, {})).toThrow(/hero slot/i);
   });
 
   it('allows only the named chart return context and always uses the fixed Aura path', () => {

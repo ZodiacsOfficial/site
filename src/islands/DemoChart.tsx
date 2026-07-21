@@ -4,7 +4,7 @@
  * server-rendered; its tiny classic script only toggles existing DOM.
  */
 import Wheel from '../lib/wheel/Wheel';
-import { formatLongitude, signForLongitude } from '../lib/signs';
+import { formatLongitude, SIGNS, signForLongitude } from '../lib/signs';
 import { t } from '../lib/i18n';
 import { matchAspect } from '../lib/engine/aspects';
 import { houseOf, norm } from '../lib/engine/houses';
@@ -20,6 +20,9 @@ const R_ASPECTS = SIZE * 0.235;
 const R_HOUSE_LABELS = (R_ASPECTS + R_BODIES) / 2 - SIZE * 0.02;
 const R_HOUSE_INNER = R_ASPECTS + SIZE * 0.012;
 const R_HOUSE_OUTER = SIZE * 0.395 - SIZE * 0.012;
+const R_SIGNS = SIZE * ((0.475 + 0.395) / 2);
+const R_SIGN_FOCUS_INNER = SIZE * 0.397;
+const R_SIGN_FOCUS_OUTER = SIZE * 0.473;
 type Point = { x: number; y: number };
 
 function point(lon: number, radius: number) {
@@ -73,6 +76,18 @@ const aboutHer = (line: string) => line
 
 const distance = (a: Point, b: Point) => Math.hypot(a.x - b.x, a.y - b.y);
 
+function naturalList(items: string[]) {
+  if (items.length < 2) return items[0] ?? '';
+  if (items.length === 2) return `${items[0]} and ${items[1]}`;
+  return `${items.slice(0, -1).join(', ')}, and ${items.at(-1)}`;
+}
+
+function signOccupantLine(occupants: string[]) {
+  if (occupants.length === 0) return 'No placement uses this style in this chart.';
+  if (occupants.length === 1) return `Her ${occupants[0]} uses this style in this chart.`;
+  return `Her ${naturalList(occupants)} use this style in this chart.`;
+}
+
 export default function DemoChart() {
   const bodies = demo.bodies.filter((b) => b.body !== 'South Node');
   const planets = bodies.filter((b) => !b.body.includes('Node'));
@@ -114,6 +129,22 @@ export default function DemoChart() {
       // therefore remain individually clickable at every rendered width.
       hit: Math.min(6.4, nearest * 0.82),
       hue: sign.hue,
+    };
+  });
+  const signTargets = SIGNS.map((sign, index) => {
+    const occupants = bodies
+      .filter((body) => signForLongitude(body.lon).slug === sign.slug)
+      .map((body) => body.body);
+    return {
+      id: `sign:${sign.slug}`,
+      key: sign.slug,
+      label: `${sign.name} sign`,
+      kind: 'Sign',
+      title: sign.name,
+      caption: `${sign.essence} ${signOccupantLine(occupants)}`,
+      hue: sign.hue,
+      point: point(index * 30 + 15, R_SIGNS),
+      path: annularSectorPath(index * 30 + 1.5, 27, R_SIGN_FOCUS_INNER, R_SIGN_FOCUS_OUTER),
     };
   });
   const houseTargets = demo.houses.cusps.map((cusp, index) => {
@@ -189,6 +220,17 @@ export default function DemoChart() {
               preview
             />
             <svg class="demo__focus-layer" viewBox="0 0 100 100" aria-hidden="true">
+              {signTargets.map((target) => (
+                <path
+                  key={`focus-${target.id}`}
+                  d={target.path}
+                  class="demo__focus-sign"
+                  data-demo-highlight={target.id}
+                  data-demo-highlight-kind="sign"
+                  data-active="false"
+                  style={`--focus:${target.hue}`}
+                />
+              ))}
               {planetTargets.map((target) => (
                 <g
                   key={`focus-${target.id}`}
@@ -226,6 +268,22 @@ export default function DemoChart() {
               ))}
             </svg>
             <div class="demo__targets">
+              {signTargets.map((target) => (
+                <button
+                  type="button"
+                  class="demo__target demo__target--sign"
+                  style={position(target.point, target.hue)}
+                  aria-label={target.label}
+                  aria-pressed="false"
+                  data-demo-target
+                  data-demo-id={target.id}
+                  data-demo-layer="signs"
+                  data-demo-kind={target.kind}
+                  data-demo-title={target.title}
+                  data-demo-sign={target.key}
+                  data-demo-copy={target.caption}
+                />
+              ))}
               {planetTargets.map((target) => (
                 <button
                   type="button"
