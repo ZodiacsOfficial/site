@@ -23,6 +23,20 @@ const registryLabel: Record<Locale, string> = {
   fr: 'Collection numérique et registre',
   it: 'Collezione digitale e registro',
 };
+const openMenuLabel: Record<Locale, string> = {
+  en: 'Open menu',
+  es: 'Abrir menú',
+  pt: 'Abrir menu',
+  fr: 'Ouvrir le menu',
+  it: 'Apri menu',
+};
+const closeMenuLabel: Record<Locale, string> = {
+  en: 'Close menu',
+  es: 'Cerrar menú',
+  pt: 'Fechar menu',
+  fr: 'Fermer le menu',
+  it: 'Chiudi menu',
+};
 ---
 <div class="nav-wrap">
   <nav class="nav" aria-label={t(locale, 'navPrimary')} data-nav>
@@ -64,7 +78,16 @@ const registryLabel: Record<Locale, string> = {
       {t(locale, 'navCollect')}
     </a>
 
-    <button class="nav__burger" type="button" data-menu-toggle aria-expanded="false" aria-controls="mobile-menu" aria-label={t(locale, 'navMenu')}>
+    <button
+      class="nav__burger"
+      type="button"
+      data-menu-toggle
+      data-open-label={openMenuLabel[locale]}
+      data-close-label={closeMenuLabel[locale]}
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+      aria-label={openMenuLabel[locale]}
+    >
       <span class="nav__burger-line"></span>
       <span class="nav__burger-line"></span>
       <span class="nav__burger-line"></span>
@@ -277,21 +300,24 @@ const registryLabel: Record<Locale, string> = {
     height: 34px;
     border-radius: 50%;
     border: 1px solid var(--hair-2);
+    transition: transform 140ms cubic-bezier(0.23, 1, 0.32, 1);
   }
+  .nav__burger:active { transform: scale(0.97); }
   @media (min-width: 820px) { .nav__burger { display: none; } }
   .nav__burger-line {
     display: block;
-    width: 15px;
+    width: 18px;
     height: 1.5px;
     border-radius: 2px;
     background: var(--text-2);
-    transition: transform var(--dur-1) var(--ease), opacity var(--dur-1) var(--ease);
+    transform-origin: 50% 50%;
+    transition: transform 220ms cubic-bezier(0.77, 0, 0.175, 1), opacity 140ms cubic-bezier(0.23, 1, 0.32, 1);
   }
   /* Three bars collapse into an X: top and bottom cross at the centre,
      the middle bar fades out. */
-  .nav__burger[aria-expanded='true'] .nav__burger-line:first-child { transform: translateY(5.5px) rotate(45deg); }
-  .nav__burger[aria-expanded='true'] .nav__burger-line:nth-child(2) { opacity: 0; transform: scaleX(0.4); }
-  .nav__burger[aria-expanded='true'] .nav__burger-line:last-child { transform: translateY(-5.5px) rotate(-45deg); }
+  .nav__burger[aria-expanded='true'] .nav__burger-line:first-child { transform: translateY(12px) rotate(45deg); }
+  .nav__burger[aria-expanded='true'] .nav__burger-line:nth-child(2) { opacity: 0; transform: scaleX(0.18); }
+  .nav__burger[aria-expanded='true'] .nav__burger-line:last-child { transform: translateY(-12px) rotate(-45deg); }
 
   /* ── Tools / Signs dropdowns ── */
   .nav-menu {
@@ -458,6 +484,7 @@ const registryLabel: Record<Locale, string> = {
   }
   .mobile-menu__sign:last-child { border-bottom: 0; }
   @media (prefers-reduced-motion: reduce) {
+    .nav__burger,
     .nav__dropdown-btn svg,
     .nav__burger-line,
     .nav-menu { transition: none; }
@@ -574,6 +601,9 @@ const registryLabel: Record<Locale, string> = {
       signsDropdown?.setOpen(false);
     }
     burger.setAttribute('aria-expanded', String(open));
+    burger.setAttribute('aria-label', open
+      ? (burger.dataset.closeLabel || 'Close menu')
+      : (burger.dataset.openLabel || 'Menu'));
     mobileMenu.hidden = !open;
     mobileMenu.classList.toggle('is-open', open);
     document.documentElement.style.overflow = open ? 'hidden' : '';
