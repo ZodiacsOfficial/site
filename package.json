@@ -49,6 +49,8 @@
     "test:visual:update": "node tests/visual/visual-regression.mjs --update",
     "test:lighthouse": "node tests/visual/lighthouse.mjs",
     "test:webmcp": "node tests/webmcp-drive.mjs",
+    "test:home-hero:browser": "node tests/hero-video-drive.mjs",
+    "test:home-demo:browser": "node tests/home-demo-drive.mjs",
     "test:compatibility:browser": "node tests/relationship-wheel-drive.mjs",
     "test:registry-selector:browser": "node tests/registry-selector-drive.mjs",
     "test:today:browser": "node tests/today-drive.mjs",

@@ -297,7 +297,7 @@ ${JSON.stringify(jsonLd(m), null, 2)}
     }
 
     /* ── Lot header ── */
-    .lot { padding: 64px 0 36px; position: relative; }
+    .lot { padding: calc(82px + env(safe-area-inset-top)) 0 36px; position: relative; }
     .lot__eyebrow {
       display: inline-flex; align-items: center; gap: 10px;
       margin-bottom: 26px; padding: 6px 14px 6px 10px;
@@ -333,6 +333,25 @@ ${JSON.stringify(jsonLd(m), null, 2)}
     .lot__dates {
       font-family: var(--mono); font-size: 10.5px;
       letter-spacing: 0.26em; text-transform: uppercase; color: var(--ink-dim);
+    }
+    .lot__next {
+      display: inline-flex; align-items: center; gap: 9px;
+      min-height: 44px; margin-top: 22px; padding: 5px 12px 5px 5px;
+      border: 1px solid var(--hair-2); border-radius: 999px;
+      background: rgba(198,204,218,0.035); color: var(--ink-2);
+      font-family: var(--display); font-weight: 500; font-size: 10px;
+      letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none;
+      transition: border-color 160ms cubic-bezier(0.23,1,0.32,1), color 160ms cubic-bezier(0.23,1,0.32,1), transform 120ms cubic-bezier(0.23,1,0.32,1);
+    }
+    .lot__next picture { display: block; width: 32px; height: 32px; flex: 0 0 auto; }
+    .lot__next img { width: 100%; height: 100%; border-radius: 50%; }
+    .lot__next strong { color: var(--gold-bright); font-weight: 500; }
+    .lot__next:active { transform: scale(0.97); }
+    @media (hover: hover) and (pointer: fine) {
+      .lot__next:hover { border-color: var(--gold); color: var(--ink); }
+    }
+    @media (min-width: 700px) {
+      .lot__next { position: absolute; top: calc(82px + env(safe-area-inset-top)); right: 0; margin-top: 0; }
     }
 
     /* ── Editorial split ── */
@@ -643,6 +662,8 @@ ${JSON.stringify(jsonLd(m), null, 2)}
     .reveal.is-in { opacity: 1; transform: translateY(0); filter: blur(0); }
     @media (prefers-reduced-motion: reduce) {
       .reveal { transition: none !important; opacity: 1 !important; transform: none !important; filter: none !important; }
+      .lot__next { transition: none; }
+      .lot__next:active { transform: none; }
     }
   </style>
 </head>
@@ -659,6 +680,10 @@ ${JSON.stringify(jsonLd(m), null, 2)}
       <h1 class="lot__title" id="lot-title">${esc(m.name)} <picture class="lot__title-icon" aria-hidden="true"><source srcset="/assets/zodiac-icons/400/${m.slug}.avif" type="image/avif"/><img src="/assets/zodiac-icons/400/${m.slug}.webp" width="112" height="112" alt="" decoding="async" fetchpriority="high"/></picture></h1>
       <p class="lot__epithet">${esc(p.epithet)}</p>
       <div class="lot__dates">${esc(p.datesDisplay)} · ${esc(titleCase(meta.element))} · ${esc(meta.rulingPlanet)}</div>
+      <a class="lot__next" href="${signPath(m.next.slug)}" aria-label="Next record, ${esc(m.next.name)}">
+        <picture aria-hidden="true"><source srcset="/assets/zodiac-icons/48/${m.next.slug}.avif" type="image/avif"/><img src="/assets/zodiac-icons/48/${m.next.slug}.webp" width="32" height="32" alt="" decoding="async"/></picture>
+        <span>Next record <strong>· ${esc(m.next.name)}</strong></span><span aria-hidden="true">→</span>
+      </a>
     </section>
 
     <div class="split">

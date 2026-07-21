@@ -91,6 +91,12 @@ jobs:
       - name: Link & artifact integrity over dist
         run: node scripts/check-dist.mjs
 
+      - name: Homepage poster motion and deferred video
+        run: OUT_DIR=tests/visual/artifacts/home-hero npm run test:home-hero:browser
+
+      - name: Homepage interactive chart preview
+        run: npm run test:home-demo:browser
+
       - name: Phase 2 sky-events publication drive
         run: OUT_DIR=tests/visual/artifacts/events npm run test:events:browser
 

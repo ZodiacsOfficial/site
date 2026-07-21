@@ -2,7 +2,9 @@ import { describe, expect, it } from 'vitest';
 import {
   parseNameStatus,
   protectedPathLabels,
+  resolveOneTimeAllowance,
   selectComparisonBase,
+  oneTimeAllowancePath,
 } from './phase1-scope-guard.mjs';
 
 describe('Phase 1 protected-scope guard', () => {
@@ -72,5 +74,28 @@ describe('Phase 1 protected-scope guard', () => {
       verify: (candidate) => checked.push(candidate),
     })).toBe('abc123');
     expect(checked).toEqual(['abc123']);
+  });
+
+  it('activates a one-time allowance only when it exactly matches the protected diff and base', () => {
+    const protectedPaths = ['public/registry/aries/index.html', 'src/app.jsx'];
+    const changed = [oneTimeAllowancePath, ...protectedPaths, 'src/pages/index.astro'];
+    const allowance = {
+      version: 1,
+      id: 'bounded-test',
+      baseCommit: 'abc123',
+      protectedPaths,
+    };
+
+    expect([...resolveOneTimeAllowance({ allowance, baseCommit: 'abc123', changed })])
+      .toEqual(protectedPaths);
+    expect(resolveOneTimeAllowance({ allowance, baseCommit: 'abc123', changed: protectedPaths }))
+      .toEqual(new Set());
+    expect(() => resolveOneTimeAllowance({ allowance, baseCommit: 'different', changed }))
+      .toThrow(/pinned to a different base/u);
+    expect(() => resolveOneTimeAllowance({
+      allowance,
+      baseCommit: 'abc123',
+      changed: [...changed, 'public/registry/cancer/index.html'],
+    })).toThrow(/does not exactly match/u);
   });
 });

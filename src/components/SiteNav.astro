@@ -182,8 +182,9 @@ const registryLabel: Record<Locale, string> = {
   .nav__sep { color: var(--muted); margin: 0 4px; }
   .nav__dim { color: var(--text-2); font-weight: 500; }
   @media (max-width: 819.5px) {
-    /* On phones the persistent search control occupies the wordmark's
-       former "org" position: ZODIACS · [search]. */
+    /* The compact lockup is the name alone. Search follows as its own
+       control, without leaving a decorative separator behind. */
+    .nav__sep,
     .nav__dim { display: none; }
   }
 
@@ -217,6 +218,15 @@ const registryLabel: Record<Locale, string> = {
     text-decoration: none;
   }
   .nav__search:hover { color: var(--text); background: rgba(198, 204, 218, 0.07); }
+  @media (max-width: 819.5px) {
+    .nav__search {
+      display: inline-grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      padding: 0;
+    }
+  }
   .nav__search-kbd {
     display: none;
     font-size: 10px;

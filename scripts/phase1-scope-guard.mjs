@@ -5,8 +5,11 @@
  * allowances.
  */
 import { execFileSync } from 'node:child_process';
+import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { resolve } from 'node:path';
+
+export const oneTimeAllowancePath = '.github/phase1-scope-allowance.json';
 
 const args = process.argv.slice(2);
 const baseIndex = args.indexOf('--base');
@@ -92,6 +95,41 @@ export function protectedPathLabels(path) {
     .map(({ label }) => label);
 }
 
+/**
+ * A later, explicitly approved patch may carry one tightly bounded allowance.
+ * It is active only while the allowance file itself is part of the compared
+ * change, is pinned to the exact base commit, and names the complete protected
+ * path set. Once merged, later diffs do not include the file and the freeze is
+ * automatically back in force.
+ */
+export function resolveOneTimeAllowance({ allowance, baseCommit, changed }) {
+  if (!changed.includes(oneTimeAllowancePath)) return new Set();
+  if (!allowance || allowance.version !== 1 || typeof allowance.id !== 'string') {
+    throw new Error('phase1-scope-guard: malformed one-time allowance');
+  }
+  if (allowance.baseCommit !== baseCommit) {
+    throw new Error(`phase1-scope-guard: allowance ${allowance.id} is pinned to a different base`);
+  }
+  if (!Array.isArray(allowance.protectedPaths) || allowance.protectedPaths.length === 0) {
+    throw new Error(`phase1-scope-guard: allowance ${allowance.id} has no protected paths`);
+  }
+
+  const listed = [...new Set(allowance.protectedPaths)].sort();
+  if (listed.length !== allowance.protectedPaths.length
+      || listed.some((path, index) => path !== allowance.protectedPaths[index])) {
+    throw new Error(`phase1-scope-guard: allowance ${allowance.id} paths must be unique and sorted`);
+  }
+  if (listed.some((path) => protectedPathLabels(path).length === 0)) {
+    throw new Error(`phase1-scope-guard: allowance ${allowance.id} names an unprotected path`);
+  }
+
+  const actual = changed.filter((path) => protectedPathLabels(path).length > 0).sort();
+  if (actual.length !== listed.length || actual.some((path, index) => path !== listed[index])) {
+    throw new Error(`phase1-scope-guard: allowance ${allowance.id} does not exactly match the protected diff`);
+  }
+  return new Set(listed);
+}
+
 function changedPaths(base) {
   // `git diff HEAD` covers staged and unstaged tracked changes. The explicit
   // D filter plus both rename operands closes the old deletion/rename gap;
@@ -110,7 +148,20 @@ function changedPaths(base) {
 function main() {
   const base = resolveBase();
   const changed = changedPaths(base);
+  const baseCommit = git('rev-parse', `${base}^{commit}`).trim();
+  let allowed = new Set();
+  if (changed.includes(oneTimeAllowancePath)) {
+    try {
+      const allowance = JSON.parse(readFileSync(oneTimeAllowancePath, 'utf8'));
+      allowed = resolveOneTimeAllowance({ allowance, baseCommit, changed });
+    } catch (error) {
+      console.error(error instanceof Error ? error.message : String(error));
+      process.exitCode = 1;
+      return;
+    }
+  }
   const violations = changed.flatMap((path) => protectedPathLabels(path)
+    .filter(() => !allowed.has(path))
     .map((label) => `${path} (${label})`));
 
   if (violations.length) {
@@ -120,7 +171,10 @@ function main() {
     return;
   }
 
-  console.log(`phase1-scope-guard: PASS — ${changed.length} changed path(s), protected scope untouched`);
+  const allowanceNote = allowed.size
+    ? `; ${allowed.size} protected path(s) covered by the changed one-time allowance`
+    : ', protected scope untouched';
+  console.log(`phase1-scope-guard: PASS — ${changed.length} changed path(s)${allowanceNote}`);
 }
 
 const directInvocation = process.argv[1]

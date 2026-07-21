@@ -23,6 +23,181 @@ await withPreview({ port: 4404 }, async (baseURL) => {
   });
 
   try {
+    const navRoutes = [
+      { path: '/', selector: '.nav-wrap .nav', prefix: 'nav' },
+      { path: '/registry/', selector: '.wnav-wrap .wnav', prefix: 'wnav' },
+      { path: '/registry/aries/', selector: '.wnav-wrap .wnav', prefix: 'wnav' },
+    ];
+    for (const width of [390, 781, 1280]) {
+      let referenceGeometry = null;
+      for (const route of navRoutes) {
+        const navPage = await browser.newPage({ viewport: { width, height: 900 } });
+        await navPage.goto(`${baseURL}${route.path}`, { waitUntil: 'domcontentloaded' });
+        const nav = navPage.locator(route.selector).first();
+        await nav.waitFor({ state: 'visible' });
+        const geometry = await nav.evaluate((element, { prefix, viewportWidth }) => {
+          const style = getComputedStyle(element);
+          const rect = element.getBoundingClientRect();
+          const chip = element.querySelector(`.${prefix}__chip`);
+          const search = element.querySelector(`.${prefix}__search`);
+          const burger = element.querySelector(`.${prefix}__burger`);
+          const sep = element.querySelector(`.${prefix}__sep`);
+          const dim = element.querySelector(`.${prefix}__dim`);
+          const chipStyle = chip ? getComputedStyle(chip) : null;
+          const visible = (node) => Boolean(node && getComputedStyle(node).display !== 'none');
+          const size = (node) => {
+            if (!node) return null;
+            const box = node.getBoundingClientRect();
+            return { width: box.width, height: box.height };
+          };
+          const colorAlpha = (value) => {
+            const match = value.match(/rgba?\([^)]*[ ,\/]([\d.]+)\)$/);
+            return match ? Number(match[1]) : 1;
+          };
+          return {
+            width: rect.width,
+            left: rect.left,
+            height: rect.height,
+            paddingLeft: parseFloat(style.paddingLeft),
+            paddingRight: parseFloat(style.paddingRight),
+            gap: parseFloat(style.gap),
+            borderWidth: parseFloat(style.borderTopWidth),
+            borderAlpha: colorAlpha(style.borderTopColor),
+            backgroundAlpha: colorAlpha(style.backgroundColor),
+            backdrop: style.backdropFilter || style.webkitBackdropFilter,
+            chipHeight: chip ? chip.getBoundingClientRect().height : 0,
+            chipTracking: chipStyle ? parseFloat(chipStyle.letterSpacing) : 0,
+            searchVisible: visible(search),
+            searchSize: size(search),
+            burgerVisible: visible(burger),
+            burgerSize: size(burger),
+            sepVisible: visible(sep),
+            dimVisible: visible(dim),
+            pageWidth: document.documentElement.scrollWidth,
+            viewportWidth,
+          };
+        }, { prefix: route.prefix, viewportWidth: width });
+        const label = `${route.path} at ${width}px`;
+        const desktopNav = width >= 820;
+        if (!referenceGeometry) {
+          referenceGeometry = geometry;
+        } else {
+          check(
+            `${label} matches the main nav width and centering`,
+            Math.abs(geometry.width - referenceGeometry.width) <= 0.75
+              && Math.abs(geometry.left - referenceGeometry.left) <= 0.5,
+            `${geometry.width}/${geometry.left} vs ${referenceGeometry.width}/${referenceGeometry.left}`,
+          );
+        }
+        check(`${label} uses the 52px nav shell`, Math.abs(geometry.height - 52) <= 0.5, String(geometry.height));
+        check(
+          `${label} uses the shared padding and gap`,
+          Math.abs(geometry.paddingLeft - 20) <= 0.1
+            && Math.abs(geometry.paddingRight - 10) <= 0.1
+            && Math.abs(geometry.gap - (desktopNav ? 18 : 10)) <= 0.1,
+          `${geometry.paddingLeft}/${geometry.paddingRight}/${geometry.gap}`,
+        );
+        check(
+          `${label} keeps the shared hairline and glass floor`,
+          Math.abs(geometry.borderWidth - 1) <= 0.1
+            && geometry.borderAlpha >= 0.15
+            && geometry.borderAlpha <= 0.17
+            && geometry.backgroundAlpha >= 0.5
+            && geometry.backgroundAlpha <= 0.7
+            && geometry.backdrop !== 'none',
+          `${geometry.borderWidth}/${geometry.borderAlpha}/${geometry.backgroundAlpha}/${geometry.backdrop}`,
+        );
+        check(
+          `${label} uses the shared Registry tracking`,
+          Math.abs(geometry.chipTracking - (desktopNav ? 1.82 : 1.04)) <= 0.12
+            && Math.abs(geometry.chipHeight - 34) <= 0.5,
+          `${geometry.chipTracking}/${geometry.chipHeight}`,
+        );
+        if (desktopNav) {
+          check(`${label} shows the full desktop lockup`, geometry.sepVisible && geometry.dimVisible);
+        } else {
+          check(`${label} shows the compact ZODIACS lockup`, !geometry.sepVisible && !geometry.dimVisible);
+          check(
+            `${label} uses 34px mobile controls`,
+            geometry.searchVisible
+              && geometry.burgerVisible
+              && Math.abs(geometry.searchSize.width - 34) <= 0.5
+              && Math.abs(geometry.searchSize.height - 34) <= 0.5
+              && Math.abs(geometry.burgerSize.width - 34) <= 0.5
+              && Math.abs(geometry.burgerSize.height - 34) <= 0.5,
+            JSON.stringify({ search: geometry.searchSize, burger: geometry.burgerSize }),
+          );
+        }
+        check(
+          `${label} has no document overflow`,
+          geometry.pageWidth <= geometry.viewportWidth + 1,
+          `${geometry.pageWidth}/${geometry.viewportWidth}`,
+        );
+        await navPage.close();
+      }
+    }
+
+    for (const width of [390, 781]) {
+      for (const record of [
+        { slug: 'cancer', next: 'leo', name: 'Leo' },
+        { slug: 'pisces', next: 'aries', name: 'Aries' },
+      ]) {
+        const recordPage = await browser.newPage({ viewport: { width, height: 844 } });
+        await recordPage.goto(`${baseURL}/registry/${record.slug}/`, { waitUntil: 'domcontentloaded' });
+        const action = recordPage.locator('.lot__next');
+        await action.waitFor({ state: 'visible' });
+        const actionState = await action.evaluate((element) => {
+          const box = element.getBoundingClientRect();
+          const nav = document.querySelector('.wnav');
+          const eyebrow = document.querySelector('.lot__eyebrow');
+          return {
+            href: element.getAttribute('href'),
+            height: box.height,
+            icon: element.querySelector('img')?.getAttribute('src') ?? '',
+            navGap: eyebrow && nav
+              ? eyebrow.getBoundingClientRect().top - nav.getBoundingClientRect().bottom
+              : -1,
+            pageWidth: document.documentElement.scrollWidth,
+            viewportWidth: innerWidth,
+          };
+        });
+        check(
+          `${record.slug} at ${width}px advances to ${record.next}`,
+          actionState.href === `/registry/${record.next}/`,
+          actionState.href,
+        );
+        check(
+          `${record.slug} at ${width}px uses the pastel ${record.name} next-record icon`,
+          actionState.icon === `/assets/zodiac-icons/48/${record.next}.webp`,
+          actionState.icon,
+        );
+        check(
+          `${record.slug} at ${width}px keeps a 44px next-record target`,
+          actionState.height >= 44,
+          String(actionState.height),
+        );
+        check(
+          `${record.slug} at ${width}px clears the fixed nav by 16px`,
+          actionState.navGap >= 15.5,
+          String(actionState.navGap),
+        );
+        await action.focus();
+        const focusState = await action.evaluate((element) => {
+          const style = getComputedStyle(element);
+          return element === document.activeElement
+            && style.outlineStyle !== 'none'
+            && parseFloat(style.outlineWidth) > 0;
+        });
+        check(`${record.slug} at ${width}px shows keyboard focus`, focusState);
+        check(
+          `${record.slug} at ${width}px has no horizontal overflow`,
+          actionState.pageWidth <= actionState.viewportWidth + 1,
+          `${actionState.pageWidth}/${actionState.viewportWidth}`,
+        );
+        await recordPage.close();
+      }
+    }
+
     const desktop = await browser.newPage({ viewport: { width: 1126, height: 1180 } });
     const desktopErrors = [];
     desktop.on('pageerror', (error) => desktopErrors.push(String(error)));
@@ -62,10 +237,38 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       Boolean(selectedLabel) && seasonLabel.toLowerCase().startsWith(selectedLabel.toLowerCase()),
       `${seasonLabel} / ${selectedLabel}`,
     );
+    const initialFeaturedSlug = await desktop.locator('[data-featured-sign]').getAttribute('data-featured-sign');
+    const initialBrowseHref = await desktop.locator('[data-registry-browse]').getAttribute('href');
+    const initialNuggetHref = await desktop.locator('.nugget-link').getAttribute('href');
+    check(
+      'hero browse action follows the current-season featured record',
+      initialBrowseHref === `/registry/${initialFeaturedSlug}/` && initialBrowseHref === initialNuggetHref,
+      `${initialBrowseHref}/${initialNuggetHref}`,
+    );
+    const auraEnabled = await desktop.locator('meta[name="zodiacs-registry-aura-enabled"]').getAttribute('content') === '1';
+    const collectionActions = await desktop.locator('[data-registry-collection]').count();
+    check(
+      'Cabinet hero action follows the existing build flag',
+      collectionActions === (auraEnabled ? 1 : 0),
+      `${auraEnabled ? 'on' : 'off'}/${collectionActions}`,
+    );
+    if (auraEnabled) {
+      check(
+        'enabled Cabinet hero action uses the fixed Aura route',
+        await desktop.locator('[data-registry-collection]').getAttribute('href') === '/registry/aura/',
+      );
+    }
 
     await desktop.locator('[data-sign="pisces"]').click();
     await desktop.waitForSelector('[data-featured-sign="pisces"]');
     check('click updates the featured record', await desktop.locator('[data-featured-sign="pisces"]').count() === 1);
+    const piscesBrowseHref = await desktop.locator('[data-registry-browse]').getAttribute('href');
+    const piscesNuggetHref = await desktop.locator('.nugget-link').getAttribute('href');
+    check(
+      'hero browse action stays synchronized with the selected nugget',
+      piscesBrowseHref === '/registry/pisces/' && piscesBrowseHref === piscesNuggetHref,
+      `${piscesBrowseHref}/${piscesNuggetHref}`,
+    );
     check(
       'desktop status names the selected sign',
       (await desktop.locator('.strip__status').innerText()).toLowerCase().includes('pisces'),

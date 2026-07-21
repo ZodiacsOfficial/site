@@ -909,6 +909,10 @@
       return null;
     }
 
+    function registryProfilePath(sign) {
+      return `/registry/${sign?.asset?.sign ?? 'aries'}/`;
+    }
+
     const ZODIAC_MARKET_PAIRS = {
       aries: {
         chainId: 'solana',
@@ -1114,17 +1118,17 @@
               <a className="wnav__mark" href="/">
                 <span className="wnav__name">Zodiacs<span className="wnav__sep">·</span><span className="wnav__dim">org</span></span>
               </a>
-              <a className="wnav__search" href="/?search=1" aria-label="Search the site">
-                <svg width="14" height="14" viewBox="0 0 15 15" fill="none" aria-hidden="true"><circle cx="6.5" cy="6.5" r="4.75" stroke="currentColor" strokeWidth="1.4"/><path d="M10.5 10.5L13.5 13.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/></svg>
-              </a>
               <div className="wnav__links">
+                <a className="wnav__link" href="/tools/">Tools<svg width="8" height="5" viewBox="0 0 8 5" fill="none" aria-hidden="true"><path d="M1 1l3 3 3-3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/></svg></a>
                 <button className="wnav__link wnav__signs-btn" type="button" aria-expanded={signsOpen} aria-controls="wnav-signs" onClick={() => setSignsOpen((v) => !v)}>Signs<svg width="8" height="5" viewBox="0 0 8 5" fill="none" aria-hidden="true"><path d="M1 1l3 3 3-3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/></svg></button>
-                <a className="wnav__link" href="/tools/">Tools</a>
                 <a className="wnav__link" href="/learn/">Learn</a>
                 <a className="wnav__link" href="/horoscopes/">Horoscopes</a>
                 <a className="wnav__link" href="/profile/">Saved charts</a>
-                <a className="wnav__link" href="/?search=1">Search ↗</a>
               </div>
+              <a className="wnav__search" href="/?search=1" aria-label="Search the site">
+                <svg width="14" height="14" viewBox="0 0 15 15" fill="none" aria-hidden="true"><circle cx="6.5" cy="6.5" r="4.75" stroke="currentColor" strokeWidth="1.4"/><path d="M10.5 10.5L13.5 13.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/></svg>
+                <kbd className="wnav__search-kbd" aria-hidden="true">/</kbd>
+              </a>
               <a className="wnav__chip" href="/registry/" aria-current="page">Registry</a>
               <button type="button" className="wnav__burger" aria-expanded={menuOpen} aria-controls="wnav-menu" aria-label={menuOpen ? 'Close menu' : 'Open menu'} onClick={() => setMenuOpen((v) => !v)}>
                 <span className="wnav__burger-line" /><span className="wnav__burger-line" /><span className="wnav__burger-line" />
@@ -1176,8 +1180,9 @@
     // Portrait phones get a baked 9:16 crop; everything else the
     // landscape master. Lives outside the .zd shell — the shell clips
     // horizontal overflow, and this act must run edge to edge.
-    function CineHero() {
+    function CineHero({ sign }) {
       const videoRef = useRef(null);
+      const featuredHref = registryProfilePath(sign);
       // Shares the main site's hero footage so the wing opens on the same
       // image as zodiacs.org — one master serves every orientation (there is
       // no portrait crop of it, and the frame is composed to hold centre).
@@ -1249,10 +1254,20 @@
                   The official public record for the twelve Zodiacs—verify each sign and explore its story.
                 </p>
                 <div className="cine__cta">
-                  <a className="btn btn--primary" href="#official-twelve">
+                  <a className="btn btn--primary" href={featuredHref} data-registry-browse>
                     <span>Browse the Twelve</span>
                     <span className="arr">↗</span>
                   </a>
+                  {REGISTRY_AURA_ENABLED && (
+                    <a
+                      className="btn btn--ghost"
+                      href={REGISTRY_AURA_PATH}
+                      aria-label={REGISTRY_AURA_HERO_COPY.ariaLabel}
+                      data-registry-collection
+                    >
+                      <span>{REGISTRY_AURA_HERO_COPY.cta}</span>
+                    </a>
+                  )}
                 </div>
               </div>
             </div>
@@ -1319,7 +1334,7 @@
             <div className="glyph-stage">
               <a
                 className="nugget-link"
-                href={`/registry/${sign.asset.sign}/`}
+                href={registryProfilePath(sign)}
                 aria-label={`Open the ${sign.name} catalogue entry`}
               >
                 <img
@@ -3491,7 +3506,7 @@
           <div className="stars" aria-hidden="true" />
           <div className="grain" aria-hidden="true" />
           <Header />
-          <CineHero />
+          <CineHero sign={sign} />
           <div className="zd">
             <Hero
               sign={sign}

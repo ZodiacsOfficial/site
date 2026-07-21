@@ -468,6 +468,14 @@
       color: var(--gold-bright);
     }
     .cine__cta .btn--primary { color: var(--gold-bright); border-color: rgba(238,241,247,0.58); }
+    .cine__cta .btn--ghost {
+      padding: 0 22px;
+      color: var(--ink-2);
+      background: rgba(10,12,17,0.34);
+      border-color: rgba(198,204,218,0.28);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.12), 0 10px 30px -16px rgba(0,0,0,0.48);
+    }
+    .cine__cta .btn--ghost:hover { color: var(--gold-bright); border-color: rgba(238,241,247,0.46); }
     /* The arrow disc stays a solid bright token so the primary reads as the
        anchor — the wing's square analogue of the main site's white orb. */
     .cine__cta .btn--primary .arr {
@@ -541,8 +549,8 @@
 
     /* ── Header — unified nav (Part AA · shared scripts/wing-nav.mjs) ── */
   @font-face { font-family: 'Instrument Sans'; src: url('/fonts/instrument-sans-latin-wght-normal.woff2') format('woff2-variations'); font-weight: 400 600; font-style: normal; font-display: swap; }
-  .wnav-wrap { position: fixed; top: 14px; left: 0; right: 0; z-index: 60; display: flex; flex-direction: column; align-items: center; pointer-events: none; padding: env(safe-area-inset-top) 16px 0; }
-  .wnav { pointer-events: auto; display: inline-flex; align-items: center; gap: 10px; height: 52px; padding: 0 10px 0 20px; border-radius: 999px; background: rgba(10,12,17,0.66); backdrop-filter: saturate(150%) blur(18px); -webkit-backdrop-filter: saturate(150%) blur(18px); border: 1px solid var(--hair-2, rgba(198,204,218,0.16)); box-shadow: inset 0 1px 0 rgba(238,241,247,0.06), 0 12px 32px -14px rgba(0,0,0,0.7); }
+  .wnav-wrap { position: fixed; top: 14px; left: 0; right: 0; z-index: 60; display: flex; flex-direction: column; align-items: center; pointer-events: none; padding-top: env(safe-area-inset-top); }
+  .wnav { pointer-events: auto; display: inline-flex; align-items: center; gap: 10px; height: 52px; padding: 0 10px 0 20px; border-radius: 999px; background: rgba(10,12,17,0.66); backdrop-filter: saturate(150%) blur(18px); -webkit-backdrop-filter: saturate(150%) blur(18px); border: 1px solid rgba(198,204,218,0.16); box-shadow: inset 0 1px 0 rgba(238,241,247,0.06), 0 12px 32px -14px rgba(0,0,0,0.7); }
   @media (min-width: 820px) { .wnav { gap: 18px; } }
   .wnav__mark { display: inline-flex; align-items: center; gap: 9px; text-decoration: none; white-space: nowrap; }
   .wnav__brand { display: block; flex-shrink: 0; }
@@ -550,22 +558,25 @@
   .wnav__name { font-family: var(--serif, 'EB Garamond', Georgia, serif); font-weight: 400; font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; line-height: 1; color: var(--ink, #EEF1F7); white-space: nowrap; }
   .wnav__sep { color: var(--ink-mute, #8A93A6); margin: 0 4px; }
   .wnav__dim { color: var(--ink-2, #C6CCDA); font-weight: 500; }
-  @media (max-width: 819.5px) { .wnav__dim { display: none; } }
-  .wnav__search { display: inline-grid; place-items: center; width: 34px; height: 34px; margin-left: -8px; border-radius: 999px; color: var(--ink-2, #C6CCDA); text-decoration: none; transition: color 200ms var(--ease, cubic-bezier(0.4,0,0.2,1)), background 260ms var(--ease, cubic-bezier(0.4,0,0.2,1)); }
+  @media (max-width: 819.5px) { .wnav__sep, .wnav__dim { display: none; } }
+  .wnav__search { display: inline-flex; align-items: center; gap: 7px; padding: 8px 11px; border: none; border-radius: 999px; background: none; color: var(--ink-2, #C6CCDA); cursor: pointer; text-decoration: none; transition: color 200ms var(--ease, cubic-bezier(0.4,0,0.2,1)), background 260ms var(--ease, cubic-bezier(0.4,0,0.2,1)); }
   .wnav__search:hover { color: var(--ink, #EEF1F7); background: rgba(198,204,218,0.07); }
-  @media (min-width: 820px) { .wnav__search { display: none; } }
+  @media (max-width: 819.5px) { .wnav__search { display: inline-grid; place-items: center; width: 34px; height: 34px; padding: 0; } }
+  .wnav__search-kbd { display: none; font-family: var(--mono, 'JetBrains Mono', monospace); font-size: 10px; line-height: 1; padding: 3px 5px; border: 1px solid rgba(198,204,218,0.16); border-radius: 4px; color: var(--ink-mute, #8A93A6); }
+  @media (min-width: 820px) { .wnav__search-kbd { display: inline-block; } }
   .wnav__links { display: none; align-items: center; gap: 2px; }
   @media (min-width: 820px) { .wnav__links { display: inline-flex; } }
-  .wnav__link { display: inline-flex; align-items: center; gap: 6px; padding: 7px 13px; border-radius: 999px; font-family: 'Instrument Sans', system-ui, -apple-system, 'Segoe UI', sans-serif; font-size: 14px; font-weight: 500; letter-spacing: -0.005em; text-transform: none; white-space: nowrap; color: var(--ink-2, #C6CCDA); text-decoration: none; background: none; border: 0; cursor: pointer; transition: color 200ms var(--ease, cubic-bezier(0.4,0,0.2,1)), background 260ms var(--ease, cubic-bezier(0.4,0,0.2,1)); }
+  .wnav__link { display: inline-flex; align-items: center; gap: 6px; padding: 7px 13px; border-radius: 999px; font-family: 'Instrument Sans', system-ui, -apple-system, 'Segoe UI', sans-serif; font-size: 14px; font-weight: 500; letter-spacing: normal; text-transform: none; white-space: nowrap; color: var(--ink-2, #C6CCDA); text-decoration: none; background: none; border: 0; cursor: pointer; transition: color 200ms var(--ease, cubic-bezier(0.4,0,0.2,1)), background 260ms var(--ease, cubic-bezier(0.4,0,0.2,1)); }
   .wnav__link:hover { color: var(--ink, #EEF1F7); background: rgba(198,204,218,0.07); }
   .wnav__link[aria-current='page'] { color: var(--ink, #EEF1F7); }
   .wnav__signs-btn svg { transition: transform 260ms var(--ease, cubic-bezier(0.4,0,0.2,1)); }
   .wnav__signs-btn[aria-expanded='true'] svg { transform: rotate(180deg); }
-  .wnav__chip { display: inline-flex; align-items: center; height: 34px; padding: 0 2px 0 16px; border-left: 1px solid var(--hair-2, rgba(198,204,218,0.16)); font-family: var(--serif, 'EB Garamond', Georgia, serif); font-size: 13px; font-weight: 400; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-2, #C6CCDA); text-decoration: none; white-space: nowrap; transition: color 260ms var(--ease, cubic-bezier(0.4,0,0.2,1)); }
+  .wnav__chip { display: inline-flex; align-items: center; height: 34px; padding: 0 2px 0 16px; border-left: 1px solid rgba(198,204,218,0.16); font-family: var(--serif, 'EB Garamond', Georgia, serif); font-size: 13px; font-weight: 400; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-2, #C6CCDA); text-decoration: none; white-space: nowrap; transition: color 260ms var(--ease, cubic-bezier(0.4,0,0.2,1)); }
   .wnav__chip:hover { color: var(--ink, #EEF1F7); }
+  @media (min-width: 820px) { .wnav__chip { letter-spacing: 0.14em; } }
   
   
-  .wnav__burger { display: inline-grid; place-items: center; gap: 4px; width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--hair-2, rgba(198,204,218,0.16)); background: none; cursor: pointer; }
+  .wnav__burger { display: inline-grid; place-items: center; gap: 4px; width: 34px; height: 34px; border-radius: 50%; border: 1px solid rgba(198,204,218,0.16); background: none; cursor: pointer; }
   @media (min-width: 820px) { .wnav__burger { display: none; } }
   .wnav__burger-line { display: block; width: 15px; height: 1.5px; border-radius: 2px; background: var(--ink-2, #C6CCDA); transition: transform 260ms var(--ease, cubic-bezier(0.4,0,0.2,1)), opacity 200ms var(--ease, cubic-bezier(0.4,0,0.2,1)); }
   .wnav__burger[aria-expanded='true'] .wnav__burger-line:first-child { transform: translateY(5.5px) rotate(45deg); }
@@ -3646,7 +3657,8 @@
           <div class="cine__foot">
             <p class="cine__line">The official public record for the twelve Zodiacs—verify each sign and explore its story.</p>
             <div class="cine__cta">
-              <a class="btn btn--primary" href="#official-twelve"><span>Browse the Twelve</span><span class="arr">↗</span></a>
+              <a class="btn btn--primary" href="/registry/aries/" data-registry-browse><span>Browse the Twelve</span><span class="arr">↗</span></a>
+              <!-- registry-aura-hero:slot -->
             </div>
           </div>
         </div>

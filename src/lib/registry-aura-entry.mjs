@@ -3,6 +3,7 @@ export const REGISTRY_AURA_PATH = '/registry/aura/';
 export const REGISTRY_AURA_RETURN_KEY = 'registry-aura';
 export const REGISTRY_AURA_META_NAME = 'zodiacs-registry-aura-enabled';
 export const REGISTRY_AURA_ENTRY_SLOT = '<!-- registry-aura-entry:slot -->';
+export const REGISTRY_AURA_HERO_SLOT = '<!-- registry-aura-hero:slot -->';
 
 export const REGISTRY_AURA_ENTRY_COPY = Object.freeze({
   title: 'The Cabinet of Twelve',
@@ -10,16 +11,17 @@ export const REGISTRY_AURA_ENTRY_COPY = Object.freeze({
   link: 'Explore the finished sample →',
 });
 
-// Kept as a build-time compatibility export for the generated legacy bundle.
-// Aura discovery now lives in the Identity Context feature band, not the hero.
 export const REGISTRY_AURA_HERO_COPY = Object.freeze({
-  cta: 'The Cabinet of Twelve',
-  why: 'The story behind the Registry',
+  cta: 'See your collection',
+  ariaLabel: 'See your Zodiac collection in the Cabinet of Twelve',
 });
 
 const ENTRY_START = '<!-- registry-aura-entry:start -->';
 const ENTRY_END = '<!-- registry-aura-entry:end -->';
 const ENTRY_REGION = /<!-- registry-aura-entry:slot -->(?:\n[ \t]*<!-- registry-aura-entry:start -->[\s\S]*?<!-- registry-aura-entry:end -->)?/;
+const HERO_START = '<!-- registry-aura-hero:start -->';
+const HERO_END = '<!-- registry-aura-hero:end -->';
+const HERO_REGION = /<!-- registry-aura-hero:slot -->(?:\n[ \t]*<!-- registry-aura-hero:start -->[\s\S]*?<!-- registry-aura-hero:end -->)?/;
 const META = /<meta name="zodiacs-registry-aura-enabled" content="(?:0|1)" \/>/;
 
 export function registryAuraEnabled(env = {}) {
@@ -72,6 +74,12 @@ function renderNoJsEntry() {
           ${ENTRY_END}`;
 }
 
+function renderNoJsHeroAction() {
+  return `${HERO_START}
+              <a class="btn btn--ghost" href="${REGISTRY_AURA_PATH}" aria-label="${REGISTRY_AURA_HERO_COPY.ariaLabel}" data-registry-collection><span>${REGISTRY_AURA_HERO_COPY.cta}</span></a>
+              ${HERO_END}`;
+}
+
 export function injectRegistryAuraLanding(source, env = {}) {
   if (!META.test(source)) {
     throw new Error(`Missing ${REGISTRY_AURA_META_NAME} build marker`);
@@ -79,12 +87,20 @@ export function injectRegistryAuraLanding(source, env = {}) {
   if (!source.includes(REGISTRY_AURA_ENTRY_SLOT)) {
     throw new Error('Missing Registry Aura no-JS entry slot');
   }
+  if (!source.includes(REGISTRY_AURA_HERO_SLOT)) {
+    throw new Error('Missing Registry Aura no-JS hero slot');
+  }
 
   const enabled = registryAuraEnabled(env);
   let output = source
+    .replace(HERO_REGION, REGISTRY_AURA_HERO_SLOT)
     .replace(ENTRY_REGION, REGISTRY_AURA_ENTRY_SLOT)
     .replace(META, `<meta name="${REGISTRY_AURA_META_NAME}" content="${enabled ? '1' : '0'}" />`);
   if (enabled) {
+    output = output.replace(
+      REGISTRY_AURA_HERO_SLOT,
+      `${REGISTRY_AURA_HERO_SLOT}\n              ${renderNoJsHeroAction()}`,
+    );
     output = output.replace(
       REGISTRY_AURA_ENTRY_SLOT,
       `${REGISTRY_AURA_ENTRY_SLOT}\n          ${renderNoJsEntry()}`,
