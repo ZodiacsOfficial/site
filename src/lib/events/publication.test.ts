@@ -1,5 +1,10 @@
 import { describe, expect, it } from 'vitest';
-import { upcomingPublishedEvents, type EventsPublication } from './publication';
+import {
+  futurePublishedEvents,
+  singlePublishedEventSign,
+  upcomingPublishedEvents,
+  type EventsPublication,
+} from './publication';
 
 const descriptor = (id: string, anchor: string, family = 'aspect') => ({
   id,
@@ -44,5 +49,21 @@ describe('events publication cross-links', () => {
   it('prefers the eclipse page over its same-day lunation page', () => {
     expect(upcomingPublishedEvents('2026-07-20', { limit: 10 }, publication)
       .some((event) => event.id === 'paired-lunation')).toBe(false);
+  });
+
+  it('selects only genuinely future events for an Ahead window', () => {
+    expect(futurePublishedEvents('2026-07-20', { days: 5, limit: 10 }, publication)
+      .map((event) => event.id)).toEqual(['eclipse', 'fifth-day']);
+    expect(futurePublishedEvents('2026-07-20', { days: 1, limit: 10 }, publication)).toEqual([]);
+  });
+
+  it('never collapses a multi-sign event into one chart house', () => {
+    expect(singlePublishedEventSign({ ...descriptor('single', '2026-07-21T00:00:00Z'), signs: ['leo'] }))
+      .toBe('leo');
+    expect(singlePublishedEventSign({ ...descriptor('same', '2026-07-21T00:00:00Z'), signs: ['leo', 'leo'] }))
+      .toBe('leo');
+    expect(singlePublishedEventSign({
+      ...descriptor('aspect', '2026-07-21T00:00:00Z'), signs: ['leo', 'aries'],
+    })).toBeNull();
   });
 });

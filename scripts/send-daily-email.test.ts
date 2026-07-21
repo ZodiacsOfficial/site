@@ -5,7 +5,9 @@ import {
   dailyRecipientUnsubscribeClaim,
   parseDailyEmailArgs,
   runDailyEmail,
+  selectDailyEmailNearbyEvents,
 } from './send-daily-email';
+import { futurePublishedEvents } from '../src/lib/events/publication';
 
 describe('daily email CLI', () => {
   it('parses every bounded operator mode and rejects ambiguous instants', () => {
@@ -33,6 +35,17 @@ describe('daily email CLI', () => {
       considered: 2, reserved: 0, sent: 0, failed: 0, duplicate: 0, dryRun: 2,
     });
     expect(fetcher).not.toHaveBeenCalled();
+  });
+
+  it('keeps the first future event for Sun mail but skips ambiguous aspects for chart mail', () => {
+    const selection = selectDailyEmailNearbyEvents(futurePublishedEvents(
+      '2026-07-21',
+      { days: 9, limit: Number.MAX_SAFE_INTEGER },
+    ));
+    expect(selection.sunSign?.id).toBe('neptune-sextile-pluto-2026-07-24');
+    expect(selection.sunSign?.signs).toEqual(['aries', 'aquarius']);
+    expect(selection.chart?.id).toBe('full-moon-2026-07-29');
+    expect(selection.chart?.signs).toEqual(['aquarius']);
   });
 
   it('fails closed before network when real delivery is not enabled', async () => {
