@@ -4,7 +4,8 @@ Reviewer: Fable · Date: 2026-07-21 · Status: **implementation closeout — com
 
 Reviewed baseline: `origin/main` at merge
 `9ad1418f21129cfcd341859c168b4362b92e3a19` (PR #131 "Gate Phase 3 PWA
-retention", merged 2026-07-21T13:11:23Z — main has not advanced past it).
+retention", merged 2026-07-21T13:11:23Z — the tip when Fable performed
+the review).
 Contract: `docs/PHASE3-HABIT-FABLE-HANDOFF.md`, byte-identical on main to
 Fable's original handoff worktree copy and unchanged since `8affc2b`.
 Prior interim review: commit `eea5cab0e4658520f07538aa133b0d21a78bc681`
@@ -14,6 +15,12 @@ That commit also holds the interim evidence set
 (`docs/acceptance/phase3-habit/review/` — 23 headless captures, rendered
 implementation emails, `evidence.json`); it was never merged, so the
 findings tables below carry its substance into the record on main.
+
+Operator integration update (2026-07-21): this review is being integrated
+on `b3e3c80fc309486fae7814f8ceb47ac81753ce45`, after PR #132 added the
+admin-only Daily Email bootstrap. The review-time validation and
+non-action statements in §§5–6 remain Fable's historical record; current
+external-gate state is recorded in §2 and the handoff in §4.
 
 ## 0. Closeout verdict
 
@@ -28,12 +35,14 @@ are hereby blessed (§3). All committed gates pass on the baseline
 exit 0), including 94 new tests over the interim candidate.
 
 **Phase 3 is implementation-complete but not release-complete.** What
-remains is exclusively external evidence, not code: the Postal Annex
-approval, the live daily-email release ladder (double-opt-in, per-tier
-unsubscribe, three distinct-edition test-list canaries), and the real
-scheduled Sky-alert canary. All Phase 3 flags remain off, correctly, until
-those gates close. Nothing in this review claims otherwise, and nothing
-here substitutes for the SETUP.md release evidence.
+remains is exclusively external evidence, not code: two further distinct
+Daily Email test-list editions plus the tier-isolation/resume proof, and
+the real scheduled Sky-alert canary. Postal approval, the approved sender
+address, admin double opt-in, and the first real Sun-sign edition are now
+closed. Activation remains deliberately scoped: public Daily Email
+enrollment and public Sky-alert UI are off, while each scheduled sender is
+restricted to its explicit canary allowlist. Nothing in this review
+substitutes for the SETUP.md release evidence.
 
 ## 1. What was verified and how
 
@@ -103,19 +112,20 @@ backlog note B-10's root cause.
 | P3-2 | P3 | Chart email birth summary still omits the country (`content.ts:196`, `place?.name` only) where the profile identity line and the §3.5 example include it. |
 | P3-3 | P3 | `emailCaptureError` keeps the straight-apostrophe "Couldn't…" amid curly neighbors (sanctioned by §2.5.11; unify eventually). |
 | P3-4 | P3 | Interim backlog items not individually re-verified here and presumed open: email footer privacy-line order (B-2), "Read the event" trailing label (B-5), i18n catalog routing for EN-only Phase 3 strings (B-6), Outlook-desktop QA note (B-7), no-JS profile shell (B-8), transit-phrase fragment repetition (B-9), workflow arg quoting (B-12). None blocks anything. |
-| OBS-1 | note | Live `/horoscopes/` pages currently ship **no** email capture at all (component CSS is hoisted but no markup — the documented absent-when-unconfigured state; a local no-env build renders identically). This is environment, not code: the production build has no complete capture provider configured. If the weekly capture is *meant* to be live pre-launch, the build env needs the weekly provider variables; if it is deliberate staging, no action. Owner to confirm intent — flagged only so the silence is a decision, not an accident. |
+| OBS-1 | resolved observation | Live `/horoscopes/` pages currently ship **no** Daily Email capture (component CSS is hoisted but no markup). The current rollout deliberately stages this state: Vercel Production `DAILY_EMAIL_ENABLED` remains absent while the test-list sender gathers external evidence. No Daily Email action is due before the release ladder closes; whether to restore the separate legacy weekly capture remains a non-blocking owner/backlog decision. |
 
 **P0: none. P1: none — no implementation defect blocks any Phase 3 flag.**
-The flags stay off pending the external gates below, which is the correct
-state, not a finding.
+Public flags stay off pending the external gates below; server-side/test
+sender capability is canary-scoped, which is the correct state, not a
+finding.
 
 ### Pending external evidence gates (not defects)
 
 | Gate | State | What it blocks |
 | --- | --- | --- |
-| Postal Annex approval | Pending, ~2–3 business days from 2026-07-21 | Any real daily-email send. `DAILY_EMAIL_POSTAL_ADDRESS` must remain unset — no placeholder, no substitute address, anywhere, until approval is confirmed. The sender hard-requires it for real sends; it is a GitHub variable, currently absent. |
-| Live daily-email ladder (SETUP §"Daily-email verification and release" 1–7) | Not started | Both `DAILY_EMAIL_ENABLED` values. Needs: both migrations applied + RLS checklist against the live project, dry-run dispatch, three consecutive distinct-edition test-list sends, live per-tier one-click unsubscribe proof, and the chart-stop → Sun-resume proof, all recorded in PLAN.md. |
-| Real Sky-alert scheduled-event canary | Pending, monitored asynchronously | The push flag trio (`PUBLIC_WEB_PUSH_ENABLED`/`PUSH_ENABLED` + GitHub `PUSH_ENABLED=true`). Runs through `PUSH_TEST_SUBSCRIPTION_IDS` without enabling the schedule. |
+| Postal Annex approval and sender address | **Closed.** Mailbox approved; GitHub `DAILY_EMAIL_POSTAL_ADDRESS` is `Zodiacs.org · 5013 S Louise Ave · Unit #943 · Sioux Falls, SD 57108`; the first delivered email rendered it verbatim. | Nothing further. Public enrollment remains independently gated. |
+| Live daily-email ladder (SETUP §"Daily-email verification and release" 1–7) | **In progress: 1/3 distinct editions.** The live Sun-sign path is operational: admin `admin@zodiacs.org` completed scanner-safe DOI for Aries; dry run 29849560911 passed; real run 29849683804 sent the 2026-07-21 edition (`considered=1 reserved=1 sent=1 failed=0`); Gmail verified content, authentication, unsubscribe, and address. Temporary bootstrap variables were removed and Vercel public enrollment remains off. | Two further genuine distinct-edition canaries, the recorded live migration/RLS checklist, per-tier unsubscribe isolation, and chart-stop → confirmed-Sun resume evidence. GitHub test-list sending stays scoped to the admin address; broad/public delivery remains locked. |
+| Real Sky-alert scheduled-event canary | Pending, monitored asynchronously for the 2026-07-23 Mercury-direct event. Vercel server `PUSH_ENABLED=1`; public `PUBLIC_WEB_PUSH_ENABLED` is absent; GitHub delivery is restricted by `PUSH_TEST_SUBSCRIPTION_IDS=1`. | Public Sky-alert UI and clearing the test allowlist. |
 | Phase 1 external monitoring | Separate track | Nothing in Phase 3; listed to keep the ledgers distinct. |
 
 Phase 4 is explicitly not begun.
@@ -140,54 +150,51 @@ why-line) stand.
 
 ## 4. Handoff to Sol — exact next actions
 
-**After Postal Annex approval (and only then):**
+**Current Daily Email ladder (postal approval through edition 1 closed):**
 
-1. Set `DAILY_EMAIL_POSTAL_ADDRESS` as a GitHub Actions variable to the
-   approved annex address, exactly as approved — never a placeholder. Do
-   not set any Vercel flag yet.
-2. Apply and verify both Phase 3 migrations against the live project per
-   SETUP §Supabase (RLS on, zero browser policies, ownership FK, timezone
-   constraint, receipt uniqueness, guards tables + RPCs present), then run
-   the Supabase security checklist.
-3. Walk SETUP §"Daily-email verification and release" strictly in order:
-   fixture smoke → workflow dispatch `dry_run=true` → set GitHub
-   `DAILY_EMAIL_ENABLED=1` + `DAILY_EMAIL_TEST_ALLOWLIST` → three
-   consecutive real test-list sends on distinct eligible editions (a
-   duplicate/skip does not count; a gap breaks the streak) → prove each
-   live first-party unsubscribe revokes only its named tier → prove
-   chart-tier stop lets the confirmed Sun daily resume. Record every piece
-   in PLAN.md.
-4. Only after that evidence: enable the Vercel `DAILY_EMAIL_ENABLED=1`
-   enrollment flag. The `all` cohort stays locked behind a separately
-   approved workflow change regardless.
+1. Preserve the immutable first-edition evidence: release
+   `b3e3c80fc309486fae7814f8ceb47ac81753ce45`, dry run 29849560911,
+   real run 29849683804, and the genuine 2026-07-21 admin Gmail receipt.
+2. Keep Vercel Production `DAILY_EMAIL_ENABLED` and every temporary
+   `DAILY_EMAIL_ADMIN_BOOTSTRAP_*` variable absent. Keep GitHub
+   `DAILY_EMAIL_ENABLED=1` only while the workflow remains hard-coded to
+   `DAILY_EMAIL_COHORT=test` and the test allowlist contains only the admin
+   address.
+3. Record the remaining live migration/RLS checklist, then gather two more
+   real sends on distinct publication dates; duplicates and synthetic
+   `--at` runs never count. Complete the chart-tier suppression/unsubscribe
+   → confirmed-Sun resume sequence and prove each first-party unsubscribe
+   revokes only its named tier. Record exact runs, provider receipts,
+   mailbox evidence, and consent state in `PLAN.md`.
+4. After the evidence closes, remove the GitHub test-sender flag. Enable
+   Vercel public enrollment only under a separate explicit release
+   decision; the `all` cohort remains locked behind a separately approved
+   workflow change regardless.
 
 **After the Sky-alert scheduled-event canary:**
 
-1. The canary path is already built: on a true event day, populate
-   `PUSH_TEST_SUBSCRIPTION_IDS` with the explicit test subscription ids
-   and dispatch with `dry_run=false` — `authorizeRealDelivery` permits the
-   send without `PUSH_ENABLED`, `verifyEventLive` gates on the live
-   destination, and the claims ledger records it. Next natural windows
-   from the committed timeline: 2026-07-23 (Mercury turns direct) and
-   2026-07-29 (Buck Moon).
+1. The canary path is already active and restricted to subscription 1.
+   Let the schedule trigger naturally on 2026-07-23 (Mercury turns direct);
+   do not fabricate or replay a date. `verifyEventLive` gates on the live
+   destination and the claims ledger records the attempt. The next natural
+   fallback window is 2026-07-29 (Buck Moon).
 2. On success, record in PLAN.md: the `sky-alert:` report line
    (`schedule=selected`, sent/capped counts), the provider status, the
    received notification (device screenshot), the `push_alert_schedule`
    and `push_delivery_claims` rows, and a same-day re-dispatch showing
    `duplicate` — proving the caps ledger, not asserting it.
-3. Only then flip the push trio per SETUP §Push provisioning step 7
-   (Vercel `PUBLIC_WEB_PUSH_ENABLED=1` + `PUSH_ENABLED=1`, GitHub
-   `PUSH_ENABLED=true`), and clear `PUSH_TEST_SUBSCRIPTION_IDS` for the
-   enabled schedule. On any failure: flags stay off; the claims table is
-   the failure receipt; fix forward, re-canary.
-4. Independently of both: P3-1…P3-3 in the next copy/polish pass, and the
-   owner confirms OBS-1 (live weekly-capture absence) is intentional.
+3. Only then set Vercel `PUBLIC_WEB_PUSH_ENABLED=1` and clear
+   `PUSH_TEST_SUBSCRIPTION_IDS`; Vercel/GitHub server delivery flags are
+   already on for the test path. On any failure, public UI stays off and
+   the claims table is the failure receipt; fix forward, re-canary.
+4. Independently of both: carry P3-1…P3-3 into the next sanctioned
+   copy/polish pass. OBS-1 is resolved as intentional staging.
 
-## 5. Validation record (this closeout)
+## 5. Validation record (Fable's review-time closeout)
 
 | Command / check | Result |
 | --- | --- |
-| `git fetch origin` → `git rev-parse origin/main` | `9ad1418f21129cfcd341859c168b4362b92e3a19` — equals the expected production baseline; no descendants |
+| Review-time `git fetch origin` → `git rev-parse origin/main` | `9ad1418f21129cfcd341859c168b4362b92e3a19` — the expected production baseline when Fable ran the closeout |
 | `npm ci` | clean (exit 0) |
 | `npm run build && npm run check && npm test` | all green — 168 test files, 1273 tests, exit 0 |
 | GitHub PR #131 (`gh pr view`) | MERGED, merge commit `9ad1418`, 2026-07-21T13:11:23Z |
@@ -196,6 +203,8 @@ why-line) stand.
 | Live `/site.webmanifest` | 200 `application/manifest+json`, standalone, scope `/`, 3 icons |
 | Live `/api/email/unsubscribe` (no token, GET) | 400 — deployed and fail-closed |
 | Live `/horoscopes/leo/` | no capture markup (flag-off/unconfigured state; matches local no-env build) → OBS-1 |
+| Operator integration base | `b3e3c80fc309486fae7814f8ceb47ac81753ce45` (PR #132); post-merge Site Check 29847182817 passed |
+| First real Daily Email canary | 2026-07-21, run 29849683804, `considered=1 reserved=1 sent=1 failed=0`; authenticated admin Gmail receipt verified |
 
 This closeout changed only this document. No new proofs were added under
 `docs/acceptance/phase3-habit/review/` — the surfaces the interim evidence
@@ -203,12 +212,11 @@ covered are now gated by CI drives (`post-chart-daily-drive`, `pwa-drive`,
 `push-drive`, the SQL suites), which is stronger than static re-captures;
 the interim evidence remains available at commit `eea5cab`.
 
-## 6. Non-action statement
+## 6. Non-action statement (Fable's review-time closeout)
 
-Nothing was pushed, merged, or deployed; no product code, copy, flag,
-environment variable, navigation, email or push configuration was changed;
-no email was sent and no push notification was triggered; no postal
-address was published, configured, or substituted; no migration was
-applied; Phase 4 was not begun. All zodiacs.org access was read-only GET
-requests. The only change is this docs-only commit on an isolated local
-review branch.
+This statement records Fable's closeout execution only: Fable pushed,
+merged, deployed, configured, and sent nothing; its only change was this
+document on an isolated local review branch. Subsequent operator actions
+(PR #132, approved postal configuration, admin DOI, and the first Daily
+Email canary) are reported above and are not attributed to Fable. Phase 4
+was not begun.
