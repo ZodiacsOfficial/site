@@ -428,7 +428,7 @@
       text-wrap: pretty;
     }
     .cine__cta {
-      display: flex; flex-wrap: wrap; justify-content: center; gap: 12px;
+      display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;
     }
     /* Hero CTAs wear the lens over the footage — a frosted floor (rendered on
        Safari/iOS via -webkit-backdrop-filter) that the Chromium refraction lens
@@ -441,41 +441,35 @@
          site's sentence-case Instrument Sans buttons (base.css .btn). */
       border-radius: 999px;
       height: 48px;
-      padding: 0 8px 0 22px;
+      padding: 0 8px 0 18px;
       font-family: 'Instrument Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
       font-size: 15px;
       font-weight: 550;
       letter-spacing: -0.01em;
       text-transform: none;
-      background:
-        linear-gradient(180deg, rgba(255,255,255,0.16), rgba(255,255,255,0) 48%),
-        rgba(15,18,25,0.58);
-      backdrop-filter: blur(18px) saturate(165%) brightness(1.14);
-      -webkit-backdrop-filter: blur(18px) saturate(165%) brightness(1.14);
-      border-color: rgba(238,241,247,0.52);
+      background: rgba(10,12,17,0.66);
+      backdrop-filter: saturate(150%) blur(18px);
+      -webkit-backdrop-filter: saturate(150%) blur(18px);
+      border-color: rgba(198,204,218,0.16);
       color: var(--ink);
       box-shadow:
-        inset 0 1px 0 rgba(255,255,255,0.40),
-        inset 0 10px 22px -18px rgba(255,255,255,0.18),
-        inset 0 -12px 22px -14px rgba(255,255,255,0.08),
-        0 10px 30px -12px rgba(0,0,0,0.58);
+        inset 0 1px 0 rgba(238,241,247,0.06),
+        0 12px 32px -14px rgba(0,0,0,0.7);
     }
     .cine__cta .btn:hover {
-      background:
-        linear-gradient(180deg, rgba(255,255,255,0.20), rgba(255,255,255,0) 48%),
-        rgba(18,22,30,0.68);
-      border-color: rgba(238,241,247,0.64);
+      background: rgba(10,12,17,0.76);
+      border-color: rgba(238,241,247,0.34);
       color: var(--gold-bright);
     }
-    .cine__cta .btn--primary { color: var(--gold-bright); border-color: rgba(238,241,247,0.58); }
+    .cine__cta .btn--primary { color: var(--gold-bright); border-color: rgba(238,241,247,0.28); }
     .cine__cta .btn--ghost {
-      padding: 0 22px;
+      padding: 0 18px;
       color: var(--ink-2);
-      background: rgba(10,12,17,0.34);
-      border-color: rgba(198,204,218,0.28);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.12), 0 10px 30px -16px rgba(0,0,0,0.48);
+      gap: 10px;
     }
-    .cine__cta .btn--ghost:hover { color: var(--gold-bright); border-color: rgba(238,241,247,0.46); }
+    .cine__cta .btn--ghost:hover { color: var(--gold-bright); }
+    .cine__cta .cta-arr { color: var(--gold); transition: transform 160ms cubic-bezier(0.23,1,0.32,1); }
+    .cine__cta .btn--ghost:hover .cta-arr { transform: translateX(3px); }
     /* The arrow disc stays a solid bright token so the primary reads as the
        anchor — the wing's square analogue of the main site's white orb. */
     .cine__cta .btn--primary .arr {
@@ -501,8 +495,11 @@
       .cine__content {
         padding: calc(clamp(96px, 15svh, 120px) + env(safe-area-inset-top)) 18px 22px;
       }
-      .cine__cta { width: 100%; }
-      .cine__cta .btn { flex: 1 1 auto; justify-content: center; }
+      .cine__cta .btn { flex: 0 0 auto; justify-content: center; }
+    }
+    @media (max-width: 360px) {
+      .cine__cta { width: 100%; flex-direction: column; }
+      .cine__cta .btn { width: 100%; }
     }
 
     /* ── App shell ─────────────────────────────────────────────── */
@@ -576,12 +573,13 @@
   @media (min-width: 820px) { .wnav__chip { letter-spacing: 0.14em; } }
   
   
-  .wnav__burger { display: inline-grid; place-items: center; gap: 4px; width: 34px; height: 34px; border-radius: 50%; border: 1px solid rgba(198,204,218,0.16); background: none; cursor: pointer; }
+  .wnav__burger { display: inline-grid; place-items: center; gap: 4px; width: 34px; height: 34px; border-radius: 50%; border: 1px solid rgba(198,204,218,0.16); background: none; cursor: pointer; transition: transform 140ms cubic-bezier(0.23,1,0.32,1); }
+  .wnav__burger:active { transform: scale(0.97); }
   @media (min-width: 820px) { .wnav__burger { display: none; } }
-  .wnav__burger-line { display: block; width: 15px; height: 1.5px; border-radius: 2px; background: var(--ink-2, #C6CCDA); transition: transform 260ms var(--ease, cubic-bezier(0.4,0,0.2,1)), opacity 200ms var(--ease, cubic-bezier(0.4,0,0.2,1)); }
-  .wnav__burger[aria-expanded='true'] .wnav__burger-line:first-child { transform: translateY(5.5px) rotate(45deg); }
-  .wnav__burger[aria-expanded='true'] .wnav__burger-line:nth-child(2) { opacity: 0; transform: scaleX(0.4); }
-  .wnav__burger[aria-expanded='true'] .wnav__burger-line:last-child { transform: translateY(-5.5px) rotate(-45deg); }
+  .wnav__burger-line { display: block; width: 18px; height: 1.5px; border-radius: 2px; background: var(--ink-2, #C6CCDA); transform-origin: 50% 50%; transition: transform 220ms cubic-bezier(0.77,0,0.175,1), opacity 140ms cubic-bezier(0.23,1,0.32,1); }
+  .wnav__burger[aria-expanded='true'] .wnav__burger-line:first-child { transform: translateY(12px) rotate(45deg); }
+  .wnav__burger[aria-expanded='true'] .wnav__burger-line:nth-child(2) { opacity: 0; transform: scaleX(0.18); }
+  .wnav__burger[aria-expanded='true'] .wnav__burger-line:last-child { transform: translateY(-12px) rotate(-45deg); }
   .wnav-disc { display: inline-block; width: 32px; height: 32px; line-height: 0; flex: 0 0 auto; }
   .wnav-disc img { width: 100%; height: 100%; border-radius: 50%; display: block; }
   .wnav-disc--lg { width: 40px; height: 40px; }
@@ -609,7 +607,7 @@
   .wnav-menu.is-open .wnav-menu__link, .wnav-menu.is-open .wnav-menu__sign, .wnav-menu.is-open .wnav-menu__label { animation: wnav-in 640ms var(--ease, cubic-bezier(0.4,0,0.2,1)) both; animation-delay: calc(40ms * var(--i, 0)); }
   @keyframes wnav-in { from { opacity: 0; transform: translateY(14px); filter: blur(4px); } to { opacity: 1; transform: none; filter: none; } }
   @keyframes wnav-turn { to { transform: rotate(360deg); } }
-  @media (prefers-reduced-motion: reduce) { .wnav-menu.is-open .wnav-menu__link, .wnav-menu.is-open .wnav-menu__sign, .wnav-menu.is-open .wnav-menu__label { animation: none; } .wnav-signs { transition: none; } .wnav__mark:hover .wnav__brand { animation: none; } }
+  @media (prefers-reduced-motion: reduce) { .wnav-menu.is-open .wnav-menu__link, .wnav-menu.is-open .wnav-menu__sign, .wnav-menu.is-open .wnav-menu__label { animation: none; } .wnav-signs, .wnav__burger, .wnav__burger-line { transition: none; } .wnav__mark:hover .wnav__brand { animation: none; } }
 
     /* ── Liquid glass — SVG filter defs container. On Chromium the hero
        CTAs AND the nav pill refract the footage behind them (.zdx-lens is
@@ -617,21 +615,15 @@
        frosted blur floor. ── */
     .glass-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
     html.zdx-lens .cine__cta .btn {
-      background: rgba(10, 12, 17, 0.40);
-      /* The lens reference must stand ALONE: Chromium does not paint a
-         backdrop-filter list that chains url() with other functions (the
-         whole effect drops). The brightness lift the dark scrim needs is
-         baked into this page's #zdx-lens-cta primitives instead. */
-      backdrop-filter: url(#zdx-lens-cta);
-      -webkit-backdrop-filter: url(#zdx-lens-cta);
-      border-color: rgba(238,241,247,0.46);
+      background: rgba(10, 12, 17, 0.56);
+      backdrop-filter: url(#zdx-lens-nav);
+      -webkit-backdrop-filter: url(#zdx-lens-nav);
       box-shadow:
-        inset 0 1px 0 rgba(255,255,255,0.28),
-        inset 0 -10px 20px -14px rgba(255,255,255,0.06),
-        0 10px 30px -12px rgba(0,0,0,0.55);
+        inset 0 1px 0 rgba(238,241,247,0.10),
+        inset 0 -1px 0 rgba(238,241,247,0.04),
+        0 12px 32px -14px rgba(0,0,0,0.7);
     }
-    html.zdx-lens .cine__cta .btn:hover { background: rgba(10, 12, 17, 0.56); }
-    html.zdx-lens .cine__cta .btn--primary { border-color: rgba(238,241,247,0.50); }
+    html.zdx-lens .cine__cta .btn:hover { background: rgba(10, 12, 17, 0.66); }
     /* The unified nav pill refracts the footage on Chromium too — parity with
        the main site's nav (SiteNav.astro: html.zdx-lens .nav-wrap .nav). The
        #zdx-lens-nav defs + the .zdx-lens gate live on this hub page only, so
@@ -660,13 +652,13 @@
         0 14px 34px -14px rgba(0,0,0,0.72);
     }
     html:not(.zdx-lens) .cine__cta .btn {
-      backdrop-filter: blur(17px) saturate(165%) brightness(1.18);
-      -webkit-backdrop-filter: blur(17px) saturate(165%) brightness(1.18);
+      background: rgba(10, 12, 17, 0.58);
+      backdrop-filter: saturate(165%) blur(20px) brightness(1.1);
+      -webkit-backdrop-filter: saturate(165%) blur(20px) brightness(1.1);
       box-shadow:
-        inset 0 1px 0 rgba(255,255,255,0.36),
-        inset 0 10px 20px -14px rgba(255,255,255,0.10),
-        inset 0 -12px 22px -16px rgba(255,255,255,0.05),
-        0 10px 30px -12px rgba(0,0,0,0.55);
+        inset 0 1px 0 rgba(255,255,255,0.24),
+        inset 0 10px 22px -16px rgba(255,255,255,0.10),
+        0 14px 34px -14px rgba(0,0,0,0.72);
     }
     /* Reduced transparency: the CTA capsule + nav pill fall back to opaque
        (these selectors outweigh both the lens and the enriched-frost rules). */
@@ -3655,7 +3647,7 @@
           <a class="cine__eyebrow" href="/disclosure/" data-i18n="disclosure.linkLabel">The Official Registry · Est. <span data-registry-established>MMXXIV</span> · provenance pending</a>
           <h1 class="cine__title">Twelve signs.<br><span class="it">One register.</span></h1>
           <div class="cine__foot">
-            <p class="cine__line">The official public record for the twelve Zodiacs—verify each sign and explore its story.</p>
+            <p class="cine__line">Meet the twelve signs through their symbols, stories, and living traditions.</p>
             <div class="cine__cta">
               <a class="btn btn--primary" href="/registry/aries/" data-registry-browse><span>Browse the Twelve</span><span class="arr">↗</span></a>
               <!-- registry-aura-hero:slot -->

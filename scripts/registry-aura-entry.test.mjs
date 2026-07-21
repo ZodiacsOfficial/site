@@ -12,7 +12,7 @@ import {
   registryAuraSitemapEntry,
 } from '../src/lib/registry-aura-entry.mjs';
 
-const HERO = `<p class="cine__line">The official public record for the twelve Zodiacs—verify each sign and explore its story.</p>
+const HERO = `<p class="cine__line">Meet the twelve signs through their symbols, stories, and living traditions.</p>
 <div class="cine__cta">
 <a class="btn btn--primary" href="/registry/aries/"><span>Browse the Twelve</span></a>
 ${REGISTRY_AURA_HERO_SLOT}
@@ -23,6 +23,13 @@ const HTML = `<!doctype html><html><head>
 </head><body>${HERO}<div>${REGISTRY_AURA_ENTRY_SLOT}</div></body></html>`;
 
 describe('Registry Aura build flag', () => {
+  it('pins the approved Cabinet hero language', () => {
+    expect(REGISTRY_AURA_HERO_COPY).toEqual({
+      cta: 'Open the Cabinet',
+      ariaLabel: 'Open your Zodiac collection in the Cabinet of Twelve',
+    });
+  });
+
   it('enables only for the exact public flag value', () => {
     expect(registryAuraEnabled({ PUBLIC_REGISTRY_AURA_ENABLED: '1' })).toBe(true);
     expect(registryAuraEnabled({ PUBLIC_REGISTRY_AURA_ENABLED: 'true' })).toBe(false);
@@ -35,6 +42,7 @@ describe('Registry Aura build flag', () => {
     expect(on.match(new RegExp(`href="${REGISTRY_AURA_PATH}"`, 'g'))).toHaveLength(2);
     expect(on).toContain(`aria-label="${REGISTRY_AURA_HERO_COPY.ariaLabel}"`);
     expect(on).toContain(`<span>${REGISTRY_AURA_HERO_COPY.cta}</span>`);
+    expect(on).toContain('<span class="cta-arr" aria-hidden="true">→</span>');
     expect(on).toContain('class="btn btn--ghost"');
     expect(on).toContain('class="static-site__card static-site__card--aura"');
     expect(on).toContain('Cabinet of Twelve');

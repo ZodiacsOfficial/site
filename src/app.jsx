@@ -1251,7 +1251,7 @@
               </h1>
               <div className="cine__foot">
                 <p className="cine__line">
-                  The official public record for the twelve Zodiacs—verify each sign and explore its story.
+                  Meet the twelve signs through their symbols, stories, and living traditions.
                 </p>
                 <div className="cine__cta">
                   <a className="btn btn--primary" href={featuredHref} data-registry-browse>
@@ -1266,6 +1266,7 @@
                       data-registry-collection
                     >
                       <span>{REGISTRY_AURA_HERO_COPY.cta}</span>
+                      <span className="cta-arr" aria-hidden="true">→</span>
                     </a>
                   )}
                 </div>

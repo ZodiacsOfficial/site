@@ -77,7 +77,7 @@ export function wingNavHtml({ includeSearch = true } = {}) {
       </div>
       ${search}
       <a class="wnav__chip" href="/registry/" aria-current="page">Registry</a>
-      <button class="wnav__burger" type="button" data-wnav-burger aria-expanded="false" aria-controls="wnav-menu" aria-label="Menu">
+      <button class="wnav__burger" type="button" data-wnav-burger aria-expanded="false" aria-controls="wnav-menu" aria-label="Open menu">
         <span class="wnav__burger-line"></span><span class="wnav__burger-line"></span><span class="wnav__burger-line"></span>
       </button>
     </nav>
@@ -120,6 +120,7 @@ export function wingNavScript() {
     function setMobile(open){
       if(!burger||!mobile) return;
       burger.setAttribute('aria-expanded', String(open));
+      burger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
       mobile.hidden = !open;
       mobile.classList.toggle('is-open', open);
       document.documentElement.style.overflow = open ? 'hidden' : '';
@@ -165,12 +166,13 @@ export function wingNavCss() {
   @media (min-width: 820px) { .wnav__chip { letter-spacing: 0.14em; } }
   
   
-  .wnav__burger { display: inline-grid; place-items: center; gap: 4px; width: 34px; height: 34px; border-radius: 50%; border: 1px solid rgba(198,204,218,0.16); background: none; cursor: pointer; }
+  .wnav__burger { display: inline-grid; place-items: center; gap: 4px; width: 34px; height: 34px; border-radius: 50%; border: 1px solid rgba(198,204,218,0.16); background: none; cursor: pointer; transition: transform 140ms cubic-bezier(0.23,1,0.32,1); }
+  .wnav__burger:active { transform: scale(0.97); }
   @media (min-width: 820px) { .wnav__burger { display: none; } }
-  .wnav__burger-line { display: block; width: 15px; height: 1.5px; border-radius: 2px; background: var(--ink-2, #C6CCDA); transition: transform 260ms var(--ease, cubic-bezier(0.4,0,0.2,1)), opacity 200ms var(--ease, cubic-bezier(0.4,0,0.2,1)); }
-  .wnav__burger[aria-expanded='true'] .wnav__burger-line:first-child { transform: translateY(5.5px) rotate(45deg); }
-  .wnav__burger[aria-expanded='true'] .wnav__burger-line:nth-child(2) { opacity: 0; transform: scaleX(0.4); }
-  .wnav__burger[aria-expanded='true'] .wnav__burger-line:last-child { transform: translateY(-5.5px) rotate(-45deg); }
+  .wnav__burger-line { display: block; width: 18px; height: 1.5px; border-radius: 2px; background: var(--ink-2, #C6CCDA); transform-origin: 50% 50%; transition: transform 220ms cubic-bezier(0.77,0,0.175,1), opacity 140ms cubic-bezier(0.23,1,0.32,1); }
+  .wnav__burger[aria-expanded='true'] .wnav__burger-line:first-child { transform: translateY(12px) rotate(45deg); }
+  .wnav__burger[aria-expanded='true'] .wnav__burger-line:nth-child(2) { opacity: 0; transform: scaleX(0.18); }
+  .wnav__burger[aria-expanded='true'] .wnav__burger-line:last-child { transform: translateY(-12px) rotate(-45deg); }
   .wnav-disc { display: inline-block; width: 32px; height: 32px; line-height: 0; flex: 0 0 auto; }
   .wnav-disc img { width: 100%; height: 100%; border-radius: 50%; display: block; }
   .wnav-disc--lg { width: 40px; height: 40px; }
@@ -198,5 +200,5 @@ export function wingNavCss() {
   .wnav-menu.is-open .wnav-menu__link, .wnav-menu.is-open .wnav-menu__sign, .wnav-menu.is-open .wnav-menu__label { animation: wnav-in 640ms var(--ease, cubic-bezier(0.4,0,0.2,1)) both; animation-delay: calc(40ms * var(--i, 0)); }
   @keyframes wnav-in { from { opacity: 0; transform: translateY(14px); filter: blur(4px); } to { opacity: 1; transform: none; filter: none; } }
   @keyframes wnav-turn { to { transform: rotate(360deg); } }
-  @media (prefers-reduced-motion: reduce) { .wnav-menu.is-open .wnav-menu__link, .wnav-menu.is-open .wnav-menu__sign, .wnav-menu.is-open .wnav-menu__label { animation: none; } .wnav-signs { transition: none; } .wnav__mark:hover .wnav__brand { animation: none; } }`;
+  @media (prefers-reduced-motion: reduce) { .wnav-menu.is-open .wnav-menu__link, .wnav-menu.is-open .wnav-menu__sign, .wnav-menu.is-open .wnav-menu__label { animation: none; } .wnav-signs, .wnav__burger, .wnav__burger-line { transition: none; } .wnav__mark:hover .wnav__brand { animation: none; } }`;
 }

@@ -1,8 +1,8 @@
 {
   "version": 1,
-  "id": "bounded-ui-cleanup",
-  "baseCommit": "25bec96edffb5c1531c320402403f5168b4944a4",
-  "reason": "Owner-approved July 22 UI cleanup for the Registry navigation, landing actions, and sign-profile continuity.",
+  "id": "registry-elegance",
+  "baseCommit": "4fc6121cf8b07812ca35a7934b43ef0e871b3057",
+  "reason": "Owner-approved Registry elegance pass for the sign-header hierarchy, landing actions, and shared mobile menu motion.",
   "protectedPaths": [
     "public/assets/app.js",
     "public/registry/aquarius/index.html",

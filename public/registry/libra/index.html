@@ -212,12 +212,13 @@
   @media (min-width: 820px) { .wnav__chip { letter-spacing: 0.14em; } }
   
   
-  .wnav__burger { display: inline-grid; place-items: center; gap: 4px; width: 34px; height: 34px; border-radius: 50%; border: 1px solid rgba(198,204,218,0.16); background: none; cursor: pointer; }
+  .wnav__burger { display: inline-grid; place-items: center; gap: 4px; width: 34px; height: 34px; border-radius: 50%; border: 1px solid rgba(198,204,218,0.16); background: none; cursor: pointer; transition: transform 140ms cubic-bezier(0.23,1,0.32,1); }
+  .wnav__burger:active { transform: scale(0.97); }
   @media (min-width: 820px) { .wnav__burger { display: none; } }
-  .wnav__burger-line { display: block; width: 15px; height: 1.5px; border-radius: 2px; background: var(--ink-2, #C6CCDA); transition: transform 260ms var(--ease, cubic-bezier(0.4,0,0.2,1)), opacity 200ms var(--ease, cubic-bezier(0.4,0,0.2,1)); }
-  .wnav__burger[aria-expanded='true'] .wnav__burger-line:first-child { transform: translateY(5.5px) rotate(45deg); }
-  .wnav__burger[aria-expanded='true'] .wnav__burger-line:nth-child(2) { opacity: 0; transform: scaleX(0.4); }
-  .wnav__burger[aria-expanded='true'] .wnav__burger-line:last-child { transform: translateY(-5.5px) rotate(-45deg); }
+  .wnav__burger-line { display: block; width: 18px; height: 1.5px; border-radius: 2px; background: var(--ink-2, #C6CCDA); transform-origin: 50% 50%; transition: transform 220ms cubic-bezier(0.77,0,0.175,1), opacity 140ms cubic-bezier(0.23,1,0.32,1); }
+  .wnav__burger[aria-expanded='true'] .wnav__burger-line:first-child { transform: translateY(12px) rotate(45deg); }
+  .wnav__burger[aria-expanded='true'] .wnav__burger-line:nth-child(2) { opacity: 0; transform: scaleX(0.18); }
+  .wnav__burger[aria-expanded='true'] .wnav__burger-line:last-child { transform: translateY(-12px) rotate(-45deg); }
   .wnav-disc { display: inline-block; width: 32px; height: 32px; line-height: 0; flex: 0 0 auto; }
   .wnav-disc img { width: 100%; height: 100%; border-radius: 50%; display: block; }
   .wnav-disc--lg { width: 40px; height: 40px; }
@@ -245,7 +246,7 @@
   .wnav-menu.is-open .wnav-menu__link, .wnav-menu.is-open .wnav-menu__sign, .wnav-menu.is-open .wnav-menu__label { animation: wnav-in 640ms var(--ease, cubic-bezier(0.4,0,0.2,1)) both; animation-delay: calc(40ms * var(--i, 0)); }
   @keyframes wnav-in { from { opacity: 0; transform: translateY(14px); filter: blur(4px); } to { opacity: 1; transform: none; filter: none; } }
   @keyframes wnav-turn { to { transform: rotate(360deg); } }
-  @media (prefers-reduced-motion: reduce) { .wnav-menu.is-open .wnav-menu__link, .wnav-menu.is-open .wnav-menu__sign, .wnav-menu.is-open .wnav-menu__label { animation: none; } .wnav-signs { transition: none; } .wnav__mark:hover .wnav__brand { animation: none; } }
+  @media (prefers-reduced-motion: reduce) { .wnav-menu.is-open .wnav-menu__link, .wnav-menu.is-open .wnav-menu__sign, .wnav-menu.is-open .wnav-menu__label { animation: none; } .wnav-signs, .wnav__burger, .wnav__burger-line { transition: none; } .wnav__mark:hover .wnav__brand { animation: none; } }
 
     /* ── Page shell ── */
     .pg {
@@ -254,14 +255,16 @@
     }
 
     /* ── Lot header ── */
-    .lot { padding: calc(82px + env(safe-area-inset-top)) 0 36px; position: relative; }
+    .lot { padding: calc(94px + env(safe-area-inset-top)) 0 36px; position: relative; }
     .lot__eyebrow {
-      display: inline-flex; align-items: center; gap: 10px;
-      margin-bottom: 26px; padding: 6px 14px 6px 10px;
-      background: rgba(198,204,218,0.05);
-      border: 1px solid var(--hair-2); border-radius: 999px;
+      display: flex; align-items: center; gap: 10px; width: 100%;
+      margin-bottom: 28px;
       font-family: var(--display); font-weight: 500; font-size: 9px;
       letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold);
+    }
+    .lot__eyebrow::after {
+      content: ""; flex: 1 1 auto; height: 1px;
+      background: linear-gradient(90deg, var(--hair-2), transparent);
     }
     .lot__eyebrow .g { color: var(--ink-dim); }
     .lot__title {
@@ -287,28 +290,35 @@
       font-size: clamp(19px, 3vw, 26px); line-height: 1.35; color: var(--gold-bright);
       text-wrap: pretty;
     }
+    .lot__meta {
+      display: grid; gap: 12px; align-items: center;
+      margin-top: 22px; padding-top: 14px;
+      border-top: 1px solid var(--hair);
+    }
     .lot__dates {
       font-family: var(--mono); font-size: 10.5px;
       letter-spacing: 0.26em; text-transform: uppercase; color: var(--ink-dim);
     }
     .lot__next {
-      display: inline-flex; align-items: center; gap: 9px;
-      min-height: 44px; margin-top: 22px; padding: 5px 12px 5px 5px;
-      border: 1px solid var(--hair-2); border-radius: 999px;
-      background: rgba(198,204,218,0.035); color: var(--ink-2);
+      display: inline-grid; grid-template-columns: 28px auto auto; align-items: center; gap: 9px;
+      min-height: 44px; justify-self: start; padding: 4px 0;
+      color: var(--ink-2);
       font-family: var(--display); font-weight: 500; font-size: 10px;
       letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none;
-      transition: border-color 160ms cubic-bezier(0.23,1,0.32,1), color 160ms cubic-bezier(0.23,1,0.32,1), transform 120ms cubic-bezier(0.23,1,0.32,1);
+      transition: color 160ms cubic-bezier(0.23,1,0.32,1), transform 120ms cubic-bezier(0.23,1,0.32,1);
     }
-    .lot__next picture { display: block; width: 32px; height: 32px; flex: 0 0 auto; }
+    .lot__next picture { display: block; width: 28px; height: 28px; }
     .lot__next img { width: 100%; height: 100%; border-radius: 50%; }
     .lot__next strong { color: var(--gold-bright); font-weight: 500; }
+    .lot__next > span:last-child { transition: transform 160ms cubic-bezier(0.23,1,0.32,1); }
     .lot__next:active { transform: scale(0.97); }
     @media (hover: hover) and (pointer: fine) {
-      .lot__next:hover { border-color: var(--gold); color: var(--ink); }
+      .lot__next:hover { color: var(--ink); }
+      .lot__next:hover > span:last-child { transform: translateX(3px); }
     }
     @media (min-width: 700px) {
-      .lot__next { position: absolute; top: calc(82px + env(safe-area-inset-top)); right: 0; margin-top: 0; }
+      .lot__meta { grid-template-columns: minmax(0, 1fr) auto; gap: 24px; }
+      .lot__next { justify-self: end; }
     }
 
     /* ── Editorial split ── */
@@ -644,7 +654,7 @@
         <kbd class="wnav__search-kbd" aria-hidden="true">/</kbd>
       </a>
       <a class="wnav__chip" href="/registry/" aria-current="page">Registry</a>
-      <button class="wnav__burger" type="button" data-wnav-burger aria-expanded="false" aria-controls="wnav-menu" aria-label="Menu">
+      <button class="wnav__burger" type="button" data-wnav-burger aria-expanded="false" aria-controls="wnav-menu" aria-label="Open menu">
         <span class="wnav__burger-line"></span><span class="wnav__burger-line"></span><span class="wnav__burger-line"></span>
       </button>
     </nav>
@@ -670,14 +680,16 @@
 
   <main class="pg" id="main">
     <section class="lot" aria-labelledby="lot-title">
-      <span class="lot__eyebrow">Catalogue <span class="g">·</span> Lot VII of XII <span class="g">·</span> LIBRA</span>
+      <span class="lot__eyebrow">Catalogue <span class="g">/</span> Lot VII of XII</span>
       <h1 class="lot__title" id="lot-title">Libra <picture class="lot__title-icon" aria-hidden="true"><source srcset="/assets/zodiac-icons/400/libra.avif" type="image/avif"/><img src="/assets/zodiac-icons/400/libra.webp" width="112" height="112" alt="" decoding="async" fetchpriority="high"/></picture></h1>
       <p class="lot__epithet">The Scales. The one instrument among the living signs.</p>
-      <div class="lot__dates">23 September — 22 October · Air · Venus</div>
-      <a class="lot__next" href="/registry/scorpio/" aria-label="Next record, Scorpio">
-        <picture aria-hidden="true"><source srcset="/assets/zodiac-icons/48/scorpio.avif" type="image/avif"/><img src="/assets/zodiac-icons/48/scorpio.webp" width="32" height="32" alt="" decoding="async"/></picture>
-        <span>Next record <strong>· Scorpio</strong></span><span aria-hidden="true">→</span>
-      </a>
+      <div class="lot__meta">
+        <div class="lot__dates">23 September — 22 October · Air · Venus</div>
+        <a class="lot__next" href="/registry/scorpio/" aria-label="Next record, Scorpio">
+          <picture aria-hidden="true"><source srcset="/assets/zodiac-icons/48/scorpio.avif" type="image/avif"/><img src="/assets/zodiac-icons/48/scorpio.webp" width="28" height="28" alt="" decoding="async"/></picture>
+          <span>Next record <strong>· Scorpio</strong></span><span aria-hidden="true">→</span>
+        </a>
+      </div>
     </section>
 
     <div class="split">
@@ -971,6 +983,7 @@
     function setMobile(open){
       if(!burger||!mobile) return;
       burger.setAttribute('aria-expanded', String(open));
+      burger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
       mobile.hidden = !open;
       mobile.classList.toggle('is-open', open);
       document.documentElement.style.overflow = open ? 'hidden' : '';

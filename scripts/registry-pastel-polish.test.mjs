@@ -75,7 +75,7 @@ describe('registry pastel polish', () => {
     ]);
 
     const hero = source.slice(source.indexOf('function CineHero('), source.indexOf('function Hero('));
-    expect(hero).toContain('The official public record for the twelve Zodiacs—verify each sign and explore its story.');
+    expect(hero).toContain('Meet the twelve signs through their symbols, stories, and living traditions.');
     expect(hero.match(/className="btn btn--primary"/g)).toHaveLength(1);
     expect(hero.match(/className="btn btn--ghost"/g)).toHaveLength(1);
     expect(hero).toContain('REGISTRY_AURA_ENABLED &&');
@@ -107,6 +107,8 @@ describe('registry pastel polish', () => {
       expect(value).toContain('@media (min-width: 820px) { .wnav { gap: 18px; } }');
       expect(value).toContain('rgba(198,204,218,0.16)');
       expect(value).toContain('width: 34px; height: 34px;');
+      expect(value).toContain('width: 18px; height: 1.5px;');
+      expect(value).toContain('transform 220ms cubic-bezier(0.77,0,0.175,1)');
       expect(value).toContain('letter-spacing: 0.08em;');
       expect(value).toContain('@media (min-width: 820px) { .wnav__chip { letter-spacing: 0.14em; } }');
       expect(value).toContain('@media (max-width: 819.5px) { .wnav__sep, .wnav__dim { display: none; } }');
@@ -164,12 +166,16 @@ describe('registry pastel polish', () => {
     expect(html).toContain('width="112" height="112" alt=""');
     expect(html).not.toContain('class="lot__icon"');
     expect(html).not.toContain('<span class="glyph">');
-    expect(html).toContain('padding: calc(82px + env(safe-area-inset-top)) 0 36px;');
+    expect(html).toContain('padding: calc(94px + env(safe-area-inset-top)) 0 36px;');
+    expect(html).toContain(`<span class="lot__eyebrow">Catalogue <span class="g">/</span> Lot`);
+    expect(html).not.toContain(`of XII <span class="g">·</span> ${name.toUpperCase()}`);
+    expect(html).toContain('class="lot__meta"');
     expect(html).toContain('min-height: 44px;');
     expect(html).toContain(`class="lot__next" href="/registry/${nextSlug}/" aria-label="Next record, ${nextName}"`);
     expect(html).toContain(`/assets/zodiac-icons/48/${nextSlug}.avif`);
     expect(html).toContain(`/assets/zodiac-icons/48/${nextSlug}.webp`);
     expect(html).toContain(`<span>Next record <strong>· ${nextName}</strong></span>`);
+    expect(html).not.toContain('.lot__next { position: absolute;');
   });
 
   it('adds one decorative pastel disc after every thesis sign name', async () => {

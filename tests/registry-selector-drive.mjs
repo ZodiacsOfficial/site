@@ -127,6 +127,45 @@ await withPreview({ port: 4404 }, async (baseURL) => {
               && Math.abs(geometry.burgerSize.height - 34) <= 0.5,
             JSON.stringify({ search: geometry.searchSize, burger: geometry.burgerSize }),
           );
+          const burger = navPage.locator(`.${route.prefix}__burger`);
+          const burgerLines = burger.locator(`.${route.prefix}__burger-line`);
+          const closedLines = await burgerLines.evaluateAll((lines) => lines.map((line) => ({
+            width: line.getBoundingClientRect().width,
+            transition: getComputedStyle(line).transition,
+          })));
+          check(
+            `${label} uses the refined three-stroke menu icon`,
+            closedLines.length === 3
+              && closedLines.every((line) => Math.abs(line.width - 18) <= 0.5)
+              && closedLines.every((line) => line.transition.includes('0.22s')),
+            JSON.stringify(closedLines),
+          );
+          await burger.click();
+          await navPage.waitForTimeout(240);
+          const openState = await burger.evaluate((element, prefix) => {
+            const lines = [...element.querySelectorAll(`.${prefix}__burger-line`)];
+            return {
+              expanded: element.getAttribute('aria-expanded'),
+              label: element.getAttribute('aria-label'),
+              transforms: lines.map((line) => getComputedStyle(line).transform),
+              opacities: lines.map((line) => Number(getComputedStyle(line).opacity)),
+              centers: lines.map((line) => {
+                const rect = line.getBoundingClientRect();
+                return { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 };
+              }),
+            };
+          }, route.prefix);
+          check(
+            `${label} morphs cleanly into an accessible close control`,
+            openState.expanded === 'true'
+              && openState.label === 'Close menu'
+              && openState.transforms[0] !== 'none'
+              && openState.transforms[2] !== 'none'
+              && openState.opacities[1] === 0
+              && Math.abs(openState.centers[0].x - openState.centers[2].x) <= 0.5
+              && Math.abs(openState.centers[0].y - openState.centers[2].y) <= 0.5,
+            JSON.stringify(openState),
+          );
         }
         check(
           `${label} has no document overflow`,
@@ -136,6 +175,24 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         await navPage.close();
       }
     }
+
+    const reducedContext = await browser.newContext({
+      viewport: { width: 390, height: 844 },
+      reducedMotion: 'reduce',
+    });
+    const reducedPage = await reducedContext.newPage();
+    await reducedPage.goto(`${baseURL}/registry/aries/`, { waitUntil: 'domcontentloaded' });
+    const reducedBurger = reducedPage.locator('.wnav__burger');
+    await reducedBurger.click();
+    const reducedTransitions = await reducedBurger.locator('.wnav__burger-line').evaluateAll((lines) => (
+      lines.map((line) => getComputedStyle(line).transitionDuration)
+    ));
+    check(
+      'reduced-motion menu morph changes state without animated travel',
+      reducedTransitions.every((duration) => duration === '0s'),
+      JSON.stringify(reducedTransitions),
+    );
+    await reducedContext.close();
 
     for (const width of [390, 781]) {
       for (const record of [
@@ -248,6 +305,11 @@ await withPreview({ port: 4404 }, async (baseURL) => {
     const auraEnabled = await desktop.locator('meta[name="zodiacs-registry-aura-enabled"]').getAttribute('content') === '1';
     const collectionActions = await desktop.locator('[data-registry-collection]').count();
     check(
+      'Registry hero uses the approved reader-facing introduction',
+      (await desktop.locator('.cine__line').innerText()).trim()
+        === 'Meet the twelve signs through their symbols, stories, and living traditions.',
+    );
+    check(
       'Cabinet hero action follows the existing build flag',
       collectionActions === (auraEnabled ? 1 : 0),
       `${auraEnabled ? 'on' : 'off'}/${collectionActions}`,
@@ -256,6 +318,29 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       check(
         'enabled Cabinet hero action uses the fixed Aura route',
         await desktop.locator('[data-registry-collection]').getAttribute('href') === '/registry/aura/',
+      );
+      const actionMaterials = await desktop.locator('.cine__cta .btn').evaluateAll((actions) => actions.map((action) => {
+        const style = getComputedStyle(action);
+        const rect = action.getBoundingClientRect();
+        return {
+          label: action.innerText.trim().replace(/\s+/g, ' '),
+          height: rect.height,
+          background: style.backgroundColor,
+          backdrop: style.backdropFilter || style.webkitBackdropFilter,
+        };
+      }));
+      check(
+        'Registry hero actions share the nav glass material and 48px geometry',
+        actionMaterials.length === 2
+          && actionMaterials.every((action) => Math.abs(action.height - 48) <= 0.5)
+          && actionMaterials[0].background === actionMaterials[1].background
+          && actionMaterials[0].backdrop === actionMaterials[1].backdrop,
+        JSON.stringify(actionMaterials),
+      );
+      check(
+        'Cabinet action uses the approved label',
+        actionMaterials[1].label === 'Open the Cabinet →',
+        actionMaterials[1].label,
       );
     }
 

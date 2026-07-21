@@ -12,8 +12,8 @@ export const REGISTRY_AURA_ENTRY_COPY = Object.freeze({
 });
 
 export const REGISTRY_AURA_HERO_COPY = Object.freeze({
-  cta: 'See your collection',
-  ariaLabel: 'See your Zodiac collection in the Cabinet of Twelve',
+  cta: 'Open the Cabinet',
+  ariaLabel: 'Open your Zodiac collection in the Cabinet of Twelve',
 });
 
 const ENTRY_START = '<!-- registry-aura-entry:start -->';
@@ -76,7 +76,7 @@ function renderNoJsEntry() {
 
 function renderNoJsHeroAction() {
   return `${HERO_START}
-              <a class="btn btn--ghost" href="${REGISTRY_AURA_PATH}" aria-label="${REGISTRY_AURA_HERO_COPY.ariaLabel}" data-registry-collection><span>${REGISTRY_AURA_HERO_COPY.cta}</span></a>
+              <a class="btn btn--ghost" href="${REGISTRY_AURA_PATH}" aria-label="${REGISTRY_AURA_HERO_COPY.ariaLabel}" data-registry-collection><span>${REGISTRY_AURA_HERO_COPY.cta}</span><span class="cta-arr" aria-hidden="true">→</span></a>
               ${HERO_END}`;
 }
 
