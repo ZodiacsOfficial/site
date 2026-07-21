@@ -73,6 +73,13 @@ await withPreview({ port: 4404 }, async (baseURL) => {
 
     await desktop.locator('[data-sign="pisces"]').press('ArrowLeft');
     await desktop.waitForSelector('[data-featured-sign="aquarius"]');
+    // The selector deliberately moves focus in requestAnimationFrame after
+    // React commits the new active button. Wait for that public focus state
+    // instead of racing the scheduled frame after the featured record swaps.
+    await desktop.locator('[data-sign="aquarius"]:focus').waitFor({
+      state: 'attached',
+      timeout: 1_000,
+    });
     check('ArrowLeft moves selection', await desktop.locator('[data-sign="aquarius"][aria-pressed="true"]').count() === 1);
     check(
       'keyboard navigation moves focus with selection',
