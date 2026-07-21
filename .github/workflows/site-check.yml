@@ -175,6 +175,29 @@ jobs:
       - name: PostgreSQL 17 migration and concurrency gates
         run: bash scripts/test-phase3-delivery-sql.sh
 
+  phase3-post-chart-drive:
+    name: Phase 3 post-chart drive
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Install Chromium
+        run: npx playwright-core install --with-deps chromium
+
+      - name: Browser acceptance drive
+        run: npm run test:phase3:post-chart
+
   phase3-push-drive:
     name: Phase 3 push drive
     runs-on: ubuntu-latest

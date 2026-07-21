@@ -1,9 +1,19 @@
-import type { Daily, DailyLine } from '../daily';
+import {
+  HOUSE_THEME,
+  ORDINAL,
+  houseLine,
+  wholeSignHouseFromAsc,
+  type Daily,
+  type DailyLine,
+} from '../daily';
 import {
   publicationForSign,
   type DailyPublication,
 } from '../daily-publication';
-import type { PublishedEventDescriptor } from '../events/publication';
+import {
+  singlePublishedEventSign,
+  type PublishedEventDescriptor,
+} from '../events/publication';
 import type { HoroscopeProgram, HoroscopeReading } from '../horoscope-program';
 import type { SavedChart } from '../profile/schema';
 import { signBySlug, signForLongitude } from '../signs';
@@ -27,7 +37,7 @@ interface MessageModel {
   sections: MessageSection[];
   why?: string;
   cta: { label: string; url: string };
-  nearbyEvent?: { title: string; summary: string; url: string };
+  nearbyEvent?: { title: string; summary: string; separator?: string; url: string };
   footerLines: string[];
   manageUrl?: string;
   unsubscribeUrl: string;
@@ -117,6 +127,12 @@ function chartSunSign(recipient: Extract<DailyEmailRecipient, { tier: 'chart' }>
   return sun && Number.isFinite(sun.lon) ? signForLongitude(sun.lon).slug : null;
 }
 
+function chartAscendantSign(chart: SavedChart): string | null {
+  if (!chart.birth.timeKnown) return null;
+  const ascendant = chart.summary.angles?.asc;
+  return Number.isFinite(ascendant) ? signForLongitude(Number(ascendant)).slug : null;
+}
+
 function chartName(value: string): string {
   const normalized = value.replace(/[\r\n\t]+/gu, ' ').replace(/\s{2,}/gu, ' ').trim();
   return normalized.slice(0, 120) || 'Your chart';
@@ -181,6 +197,16 @@ function chartBirthSummary(chart: SavedChart): string {
   return parts.join(' · ');
 }
 
+function nearbyChartEventTitle(event: PublishedEventDescriptor): string {
+  const title = event.title.replace(/\s+—\s+.*$/u, '').trim();
+  const date = new Intl.DateTimeFormat('en', {
+    month: 'long',
+    day: 'numeric',
+    timeZone: 'UTC',
+  }).format(new Date(event.anchor));
+  return `${title} on ${date}`;
+}
+
 function degreeLabel(longitude: number): string {
   const sign = signForLongitude(longitude);
   const within = ((longitude % 30) + 30) % 30;
@@ -211,6 +237,7 @@ function contactReceipt(contact: TodayContact, methodologyUrl: string): string {
 function chartModel(
   recipient: Extract<DailyEmailRecipient, { tier: 'chart' }>,
   daily: Daily,
+  publication: DailyPublication,
   program: HoroscopeProgram,
   baseUrl: string,
   unsubscribeUrl: string,
@@ -228,6 +255,7 @@ function chartModel(
     ? contacts.map((contact) => transitLine(contact.transiting, contact.type, contact.natal))
     : [quiet];
   const signSlug = chartSunSign(recipient);
+  const ascendantSign = chartAscendantSign(recipient.chart);
   const sections: MessageSection[] = [];
   if (personal.length > 1) sections.push({ paragraphs: personal.slice(1) });
   if (contacts.length === 0 && signSlug) {
@@ -237,12 +265,25 @@ function chartModel(
       paragraphs: [baseline.passages[0].text],
     });
   }
+  const sharedSky: string[] = [];
+  const moon = ascendantSign
+    ? daily.bodies.find((body) => body.body === 'Moon' && Number.isFinite(body.lon))
+    : null;
+  if (moon && ascendantSign) {
+    sharedSky.push(houseLine(
+      moon,
+      wholeSignHouseFromAsc(moon.sign, ascendantSign),
+    ).text);
+  }
+  const collective = publication.signs[0]?.lines.find((line) => line.scope === 'collective');
+  if (collective) sharedSky.push(`Sky-wide: ${withExactTime(collective)}`);
+  if (sharedSky.length) sections.push({ paragraphs: sharedSky });
   const strongest = contacts[0];
   return {
     subject: strongest
       ? `Your chart today — ${contactSubject(strongest)}`
       : 'Your chart today — a quieter sky',
-    preheader: personal.slice(0, 2).join(' '),
+    preheader: [personal[0], sharedSky[0]].filter(Boolean).join(' '),
     identity: `FOR ${name.toUpperCase()} · ${dateLabel(program.anchorDate, true).toUpperCase()}`,
     identityDetail: chartBirthSummary(recipient.chart),
     title: personal[0],
@@ -278,7 +319,7 @@ function textFromModel(model: MessageModel): string {
   if (model.why) lines.push(`Why this appeared: ${model.why}`, '');
   if (model.nearbyEvent) {
     lines.push(
-      `Ahead: ${model.nearbyEvent.title} — ${model.nearbyEvent.summary}`,
+      `Ahead: ${model.nearbyEvent.title}${model.nearbyEvent.separator ?? ' — '}${model.nearbyEvent.summary}`,
       model.nearbyEvent.url,
       '',
     );
@@ -298,7 +339,7 @@ function htmlFromModel(model: MessageModel, baseUrl: string): string {
     </section>`).join('');
   const event = model.nearbyEvent ? `
     <section style="border-top:1px solid #26282E;padding-top:18px;margin:4px 0 26px">
-      <p style="font:14px/1.55 system-ui,-apple-system,sans-serif;margin:0;color:#C6CCDA"><strong style="color:#EEF1F7">Ahead: ${escapeHtml(model.nearbyEvent.title)}</strong> — ${escapeHtml(model.nearbyEvent.summary)} <a href="${escapeHtml(model.nearbyEvent.url)}" style="color:#EEF1F7">Read the event</a></p>
+      <p style="font:14px/1.55 system-ui,-apple-system,sans-serif;margin:0;color:#C6CCDA"><strong style="color:#EEF1F7">Ahead: ${escapeHtml(model.nearbyEvent.title)}</strong>${escapeHtml(model.nearbyEvent.separator ?? ' — ')}${escapeHtml(model.nearbyEvent.summary)} <a href="${escapeHtml(model.nearbyEvent.url)}" style="color:#EEF1F7">Read the event</a></p>
     </section>` : '';
   const signIcon = model.sign ? `
         <img src="${escapeHtml(siteUrl(baseUrl, `/assets/zodiac-icons/128/${model.sign}.webp`))}" width="44" height="44" alt="${escapeHtml(model.signName ?? '')}" style="display:block;width:44px;height:44px;border:0;border-radius:50%" />` : '';
@@ -360,13 +401,32 @@ export function renderDailyEmail({
   if (!postalAddress) throw new Error('Daily email sender postal address is required.');
   const model = recipient.tier === 'sun_sign'
     ? sunModel(recipient, publication, baseUrl, unsubscribeUrl, postalAddress)
-    : chartModel(recipient, daily, program, baseUrl, unsubscribeUrl, postalAddress);
-  if (nearbyEvent) {
-    model.nearbyEvent = {
-      title: nearbyEvent.title,
-      summary: nearbyEvent.summary,
-      url: siteUrl(baseUrl, nearbyEvent.path),
-    };
+    : chartModel(recipient, daily, publication, program, baseUrl, unsubscribeUrl, postalAddress);
+  if (nearbyEvent && nearbyEvent.anchor.slice(0, 10) > publication.date) {
+    if (recipient.tier === 'sun_sign') {
+      model.nearbyEvent = {
+        title: nearbyEvent.title,
+        summary: nearbyEvent.summary,
+        url: siteUrl(baseUrl, nearbyEvent.path),
+      };
+    } else {
+      const ascendantSign = chartAscendantSign(recipient.chart);
+      const eventSign = singlePublishedEventSign(nearbyEvent);
+      if (ascendantSign && eventSign) {
+        try {
+          signBySlug(eventSign);
+          const house = wholeSignHouseFromAsc(eventSign, ascendantSign);
+          model.nearbyEvent = {
+            title: nearbyChartEventTitle(nearbyEvent),
+            summary: `falls in your ${ORDINAL[house]} house — a checkpoint for ${HOUSE_THEME[house]}.`,
+            separator: ' ',
+            url: siteUrl(baseUrl, nearbyEvent.path),
+          };
+        } catch {
+          // Without a canonical event sign, there is no declared whole-sign derivation.
+        }
+      }
+    }
   }
   return {
     subject: model.subject,

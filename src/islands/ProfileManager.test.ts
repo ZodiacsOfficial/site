@@ -1,5 +1,14 @@
+import { readFile } from 'node:fs/promises';
 import { describe, expect, it } from 'vitest';
 import { PF_BOOK_COPY } from './ProfileManager';
+
+describe('weekly digest return target', () => {
+  it('renders the fragment anchor before the asynchronous session panel', async () => {
+    const source = await readFile(new URL('./ProfileManager.tsx', import.meta.url), 'utf8');
+    expect(source).toMatch(/<div id="weekly-digest">\s*\{session && \(/u);
+    expect(source).not.toContain('class="pf-digest-panel" id="weekly-digest"');
+  });
+});
 
 describe('English profile chart count', () => {
   it('uses singular grammar for one saved chart', () => {

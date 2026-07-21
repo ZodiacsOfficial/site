@@ -898,25 +898,28 @@ export default function ProfileManager({
           </form>
         )}
         {dailyPanel}
-        {session && (
-          <div class="pf-digest-panel">
-            <span class="mono--label">{PF_EMAIL_COPY[locale].digestLabel}</span>
-            <label class="pf-digest">
-              <input
-                type="checkbox"
-                checked={digestOptIn}
-                disabled={digestBusy}
-                onChange={onDigestChange}
-                aria-label={t(locale, 'weeklyDigestAria')}
-              />
-              <span>
-                <strong>{PF_EMAIL_COPY[locale].digestTitle}</strong>
-                <small>{PF_EMAIL_COPY[locale].digestCopy}</small>
-              </span>
-            </label>
-            {digestMessage && <p class={`pf-sync__message pf-sync__message--${digestState}`}>{digestMessage}</p>}
-          </div>
-        )}
+        {/* Keep the return fragment present before the asynchronous session resolves. */}
+        <div id="weekly-digest">
+          {session && (
+            <div class="pf-digest-panel">
+              <span class="mono--label">{PF_EMAIL_COPY[locale].digestLabel}</span>
+              <label class="pf-digest">
+                <input
+                  type="checkbox"
+                  checked={digestOptIn}
+                  disabled={digestBusy}
+                  onChange={onDigestChange}
+                  aria-label={t(locale, 'weeklyDigestAria')}
+                />
+                <span>
+                  <strong>{PF_EMAIL_COPY[locale].digestTitle}</strong>
+                  <small>{PF_EMAIL_COPY[locale].digestCopy}</small>
+                </span>
+              </label>
+              {digestMessage && <p class={`pf-sync__message pf-sync__message--${digestState}`}>{digestMessage}</p>}
+            </div>
+          )}
+        </div>
       </div>
     </aside>
   );

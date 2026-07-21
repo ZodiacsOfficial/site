@@ -8,7 +8,11 @@ import type { Daily } from '../src/lib/daily';
 import type { DailyPublication } from '../src/lib/daily-publication';
 import { dailyUnsubscribeUrl } from '../src/lib/email/daily-unsubscribe-token';
 import { normalizeEmail } from '../src/lib/email/input';
-import { upcomingPublishedEvents } from '../src/lib/events/publication';
+import {
+  futurePublishedEvents,
+  singlePublishedEventSign,
+  type PublishedEventDescriptor,
+} from '../src/lib/events/publication';
 import type { HoroscopeProgram } from '../src/lib/horoscope-program';
 import type { SavedChart } from '../src/lib/profile/schema';
 import {
@@ -53,6 +57,15 @@ export interface DailyEmailCliOptions {
 }
 
 export type DailyEmailCohort = 'test' | 'all';
+
+export function selectDailyEmailNearbyEvents(
+  events: readonly PublishedEventDescriptor[],
+): { sunSign: PublishedEventDescriptor | null; chart: PublishedEventDescriptor | null } {
+  return {
+    sunSign: events[0] ?? null,
+    chart: events.find((event) => singlePublishedEventSign(event) !== null) ?? null,
+  };
+}
 
 function requiredValue(value: string | undefined, flag: string): string {
   if (!value) throw new Error(`${flag} needs a value.`);
@@ -365,7 +378,10 @@ export async function runDailyEmail({
   }
   for (const diagnostic of diagnostics) log(`daily-email: held — ${diagnostic}`);
 
-  const nearbyEvent = upcomingPublishedEvents(publication.date, { days: 9, limit: 1 })[0] ?? null;
+  const nearbyEvents = selectDailyEmailNearbyEvents(futurePublishedEvents(
+    publication.date,
+    { days: 9, limit: Number.MAX_SAFE_INTEGER },
+  ));
   const unsubscribeSecret = env.DAILY_EMAIL_UNSUBSCRIBE_SECRET
     || (options.dryRun ? 'daily-email-dry-run-unsubscribe-secret' : '');
   if (!unsubscribeSecret) throw new Error('DAILY_EMAIL_UNSUBSCRIBE_SECRET is required when sending.');
@@ -402,7 +418,7 @@ export async function runDailyEmail({
         daily,
         publication,
         program,
-        nearbyEvent,
+        nearbyEvent: recipient.tier === 'chart' ? nearbyEvents.chart : nearbyEvents.sunSign,
         baseUrl,
         unsubscribeUrl: dailyUnsubscribeUrl(baseUrl, claim, unsubscribeSecret),
         senderPostalAddress,
