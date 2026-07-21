@@ -3,7 +3,7 @@ import {
   createEmailSubscriptionAdapter,
   type EmailSubscriptionAdapter,
 } from '../../src/lib/email/provider.js';
-import { hasEmailCaptureProvider } from '../../src/lib/email/config.js';
+import { environmentValue, hasEmailCaptureProvider } from '../../src/lib/email/config.js';
 import { verifyEmailOptInToken } from '../../src/lib/email/opt-in-token.js';
 import { requestHeader } from '../../src/lib/email/request.js';
 import { emailStatusPage } from '../../src/lib/email/server-page.js';
@@ -33,7 +33,10 @@ import { signBySlug } from '../../src/lib/signs.js';
 import {
   dailyEmailAdminBootstrapEnvironment,
   isDailyEmailAdminBootstrapAddress,
+  isDailyEmailAdminBootstrapRecipientHash,
 } from '../../src/lib/email/daily-admin-bootstrap.js';
+
+type Environment = Record<string, unknown>;
 
 function sendJson(res: any, status: number, body: Record<string, string | boolean>): void {
   res.statusCode = status;
@@ -136,6 +139,22 @@ function matchesPendingChartRequest(
     && preference.confirmationTokenHash === createHash('sha256').update(token).digest('hex'));
 }
 
+async function matchesAdminBootstrapChartIdentity(
+  claim: NonNullable<ReturnType<typeof verifyDailyChartOptInToken>>,
+  env: Environment,
+): Promise<boolean> {
+  const user = await getAdminEmailUser(claim.userId, env);
+  if (!user || !isDailyEmailAdminBootstrapAddress(user.email, env)) return false;
+  try {
+    return dailyRecipientHash(
+      user.email,
+      environmentValue(env, 'DAILY_EMAIL_RECIPIENT_HASH_SECRET'),
+    ) === claim.recipientHash;
+  } catch {
+    return false;
+  }
+}
+
 export default async function handler(req: any, res: any): Promise<void> {
   if (req.method !== 'GET' && req.method !== 'POST') {
     res.setHeader('Allow', 'GET, POST');
@@ -149,20 +168,31 @@ export default async function handler(req: any, res: any): Promise<void> {
   const claim = secret ? verifyEmailOptInToken(token, secret) : null;
   const publicDaily = dailyEmailFeatureEnabled(process.env);
   const candidateSunClaim = secret ? verifyDailySunOptInToken(token, secret) : null;
+  const candidateChartClaim = secret ? verifyDailyChartOptInToken(token, secret) : null;
+  const bootstrapEnv = dailyEmailAdminBootstrapEnvironment(process.env);
   const bootstrapDaily = Boolean(candidateSunClaim
+    && bootstrapEnv
     && isDailyEmailAdminBootstrapAddress(candidateSunClaim.email, process.env));
+  const bootstrapChart = Boolean(!publicDaily
+    && candidateChartClaim
+    && bootstrapEnv
+    && isDailyEmailAdminBootstrapRecipientHash(
+      candidateChartClaim.recipientHash,
+      process.env,
+    ));
   const dailyEnv = publicDaily
     ? process.env
     : bootstrapDaily
-      ? dailyEmailAdminBootstrapEnvironment(process.env)
+      ? bootstrapEnv
       : null;
-  const daily = dailyEnv !== null;
-  // The bootstrap exception applies only to an allowlisted Sun token. Chart
-  // enrollment and every other address still require the public feature flag.
-  const chartClaim = publicDaily && secret ? verifyDailyChartOptInToken(token, secret) : null;
+  const chartClaim = publicDaily || bootstrapChart ? candidateChartClaim : null;
+  const chartEnv = chartClaim
+    ? publicDaily ? process.env : bootstrapEnv
+    : null;
+  const daily = dailyEnv !== null || chartEnv !== null;
   const sunClaim = daily ? candidateSunClaim : null;
   const configured = chartClaim
-    ? hasDailyChartEmailProvider(process.env)
+    ? hasDailyChartEmailProvider(chartEnv!)
     : sunClaim
       ? hasDailySunEmailProvider(dailyEnv!)
       : claim
@@ -194,7 +224,7 @@ export default async function handler(req: any, res: any): Promise<void> {
       let chartName = 'your saved chart';
       if (chartClaim) {
         try {
-          const preference = await getDailyChartPreference(chartClaim.userId);
+          const preference = await getDailyChartPreference(chartClaim.userId, chartEnv!);
           if (!matchesPendingChartRequest(preference, chartClaim, token)) {
             send(res, 400, dailyEmailPage(
               'This link is not valid.',
@@ -203,10 +233,31 @@ export default async function handler(req: any, res: any): Promise<void> {
             ));
             return;
           }
-          chartName = (await getOwnedDailyChart(chartClaim.userId, chartClaim.chartId))?.name
-            ?? chartName;
+          const chart = await getOwnedDailyChart(
+            chartClaim.userId,
+            chartClaim.chartId,
+            chartEnv!,
+          );
+          if (bootstrapChart && (!chart
+            || !await matchesAdminBootstrapChartIdentity(chartClaim, chartEnv!))) {
+            send(res, 400, dailyEmailPage(
+              'This link is not valid.',
+              'It may have expired — links work for 48 hours — or already been used. Request a fresh one from your profile.',
+              { kind: 'link', href: '/profile/#daily-brief', label: 'Request a new link' },
+            ));
+            return;
+          }
+          chartName = chart?.name ?? chartName;
         } catch {
-          // The scanner-safe page remains useful; ownership is revalidated on POST.
+          if (bootstrapChart) {
+            send(res, 502, dailyEmailPage(
+              'Please try again',
+              'We could not check your personal daily brief just now.',
+            ));
+            return;
+          }
+          // Public enrollment keeps its scanner-safe fallback; POST still
+          // revalidates ownership and current account identity before consent.
         }
       }
       if (sunClaim) {
@@ -259,7 +310,7 @@ export default async function handler(req: any, res: any): Promise<void> {
 
   if (chartClaim) {
     try {
-      const preference = await getDailyChartPreference(chartClaim.userId);
+      const preference = await getDailyChartPreference(chartClaim.userId, chartEnv!);
       if (!matchesPendingChartRequest(preference, chartClaim, token)) {
         send(res, 409, dailyEmailPage(
           'This link is not valid.',
@@ -268,7 +319,11 @@ export default async function handler(req: any, res: any): Promise<void> {
         ));
         return;
       }
-      const chart = await getOwnedDailyChart(chartClaim.userId, chartClaim.chartId);
+      const chart = await getOwnedDailyChart(
+        chartClaim.userId,
+        chartClaim.chartId,
+        chartEnv!,
+      );
       if (!chart) {
         send(res, 409, dailyEmailPage(
           'That chart is no longer available',
@@ -276,11 +331,16 @@ export default async function handler(req: any, res: any): Promise<void> {
         ));
         return;
       }
-      const user = await getAdminEmailUser(chartClaim.userId);
+      const user = await getAdminEmailUser(chartClaim.userId, chartEnv!);
       const currentHash = user
-        ? dailyRecipientHash(user.email, process.env.DAILY_EMAIL_RECIPIENT_HASH_SECRET ?? '')
+        ? dailyRecipientHash(
+          user.email,
+          environmentValue(chartEnv!, 'DAILY_EMAIL_RECIPIENT_HASH_SECRET'),
+        )
         : null;
-      if (!currentHash || currentHash !== chartClaim.recipientHash) {
+      if (!currentHash
+        || currentHash !== chartClaim.recipientHash
+        || (bootstrapChart && !isDailyEmailAdminBootstrapAddress(user?.email ?? '', chartEnv!))) {
         send(res, 409, dailyEmailPage(
           'Request a fresh link',
           'Your account email changed after this link was sent, so nothing was turned on.',
@@ -293,6 +353,7 @@ export default async function handler(req: any, res: any): Promise<void> {
         chartClaim.recipientHash,
         createHash('sha256').update(token).digest('hex'),
         chartClaim.timezone,
+        chartEnv!,
       );
       if (!consumed) {
         send(res, 409, dailyEmailPage(

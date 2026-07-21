@@ -194,6 +194,18 @@ describe('Vercel API runtime packaging', () => {
     expect(audit.catalogs).toEqual([]);
   });
 
+  it('packages the shared admin bootstrap guard in both daily enrollment graphs', () => {
+    for (const handler of [
+      'api/email/chart-preference.ts',
+      'api/email/confirm.ts',
+    ]) {
+      expect(runtimeImports(join(ROOT, handler))).toContainEqual({
+        specifier: '../../src/lib/email/daily-admin-bootstrap.js',
+        hasJsonAttribute: false,
+      });
+    }
+  });
+
   it('follows attributed two-argument dynamic JSON imports', () => {
     expect(runtimeImportsFromSource(
       'virtual.ts',

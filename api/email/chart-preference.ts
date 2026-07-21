@@ -2,7 +2,8 @@ import { createHash, randomUUID } from 'node:crypto';
 import { hasDailyChartEmailProvider, hasDailyChartPreferenceAccess } from '../../src/lib/email/daily-config.js';
 import { isIanaTimezone } from '../../src/lib/email/daily-chart-token.js';
 import { createDailyChartOptInToken } from '../../src/lib/email/daily-chart-token.js';
-import { isAllowedEmailCaptureRequest } from '../../src/lib/email/request.js';
+import { environmentValue } from '../../src/lib/email/config.js';
+import { isAllowedEmailCaptureRequest, requestHeader } from '../../src/lib/email/request.js';
 import {
   authenticateEmailUser,
   claimDailyChartConfirmationSend,
@@ -18,6 +19,14 @@ import {
 } from '../../src/lib/email/daily-server.js';
 import { sendDailyChartConfirmation } from '../../src/lib/email/daily-resend.js';
 import { dailyRecipientHash } from '../../src/lib/daily-email/identity.js';
+import {
+  DAILY_EMAIL_ADMIN_BOOTSTRAP_HEADER,
+  dailyEmailAdminBootstrapEnvironment,
+  hasDailyEmailAdminBootstrapBearer,
+  isDailyEmailAdminBootstrapAddress,
+} from '../../src/lib/email/daily-admin-bootstrap.js';
+
+type Environment = Record<string, unknown>;
 
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
@@ -72,8 +81,9 @@ function maskedEmail(email: string): string {
 async function claimConfirmationSend(
   userId: string,
   res: any,
+  env: Environment = process.env,
 ): Promise<boolean> {
-  const claim = await claimDailyChartConfirmationSend(userId, randomUUID());
+  const claim = await claimDailyChartConfirmationSend(userId, randomUUID(), env);
   if (claim.outcome === 'claimed') return true;
   res.setHeader('Retry-After', String(claim.retryAfterSeconds));
   sendJson(res, 429, {
@@ -93,8 +103,27 @@ export default async function handler(req: any, res: any): Promise<void> {
     sendJson(res, 403, { error: 'forbidden' });
     return;
   }
+  const publicChartConfigured = hasDailyChartEmailProvider(process.env);
+  let operationEnv: Environment = process.env;
+  let adminBootstrap = false;
+  if (req.method === 'POST' && !publicChartConfigured) {
+    const bootstrapAuthorization = requestHeader(req, DAILY_EMAIL_ADMIN_BOOTSTRAP_HEADER);
+    if (bootstrapAuthorization) {
+      const bootstrapEnv = dailyEmailAdminBootstrapEnvironment(process.env);
+      if (!bootstrapEnv) {
+        sendJson(res, 404, { error: 'not_found' });
+        return;
+      }
+      if (!hasDailyEmailAdminBootstrapBearer(bootstrapAuthorization, process.env)) {
+        sendJson(res, 401, { error: 'unauthorized' });
+        return;
+      }
+      operationEnv = bootstrapEnv;
+      adminBootstrap = true;
+    }
+  }
   const configured = req.method === 'POST'
-    ? hasDailyChartEmailProvider(process.env)
+    ? (publicChartConfigured || (adminBootstrap && hasDailyChartEmailProvider(operationEnv)))
     : hasDailyChartPreferenceAccess(process.env);
   if (!configured) {
     sendJson(res, 503, { error: 'disabled' });
@@ -105,6 +134,10 @@ export default async function handler(req: any, res: any): Promise<void> {
     const user = await authenticateEmailUser(req);
     if (!user) {
       sendJson(res, 401, { error: 'unauthorized' });
+      return;
+    }
+    if (adminBootstrap && !isDailyEmailAdminBootstrapAddress(user.email, process.env)) {
+      sendJson(res, 403, { error: 'forbidden' });
       return;
     }
 
@@ -167,7 +200,7 @@ export default async function handler(req: any, res: any): Promise<void> {
     }
 
     if (isResendBody(req.body)) {
-      const existing = await getDailyChartPreference(user.id);
+      const existing = await getDailyChartPreference(user.id, operationEnv);
       if (!existing?.pending
         || !existing.chartId
         || !existing.confirmationTokenHash
@@ -175,22 +208,22 @@ export default async function handler(req: any, res: any): Promise<void> {
         sendJson(res, 409, { error: 'not_pending' });
         return;
       }
-      const chart = await getOwnedDailyChart(user.id, existing.chartId);
+      const chart = await getOwnedDailyChart(user.id, existing.chartId, operationEnv);
       if (!chart) {
         sendJson(res, 409, { error: 'chart_unavailable' });
         return;
       }
       const recipientHash = dailyRecipientHash(
         user.email,
-        process.env.DAILY_EMAIL_RECIPIENT_HASH_SECRET ?? '',
+        environmentValue(operationEnv, 'DAILY_EMAIL_RECIPIENT_HASH_SECRET'),
       );
-      if (!await claimConfirmationSend(user.id, res)) return;
+      if (!await claimConfirmationSend(user.id, res, operationEnv)) return;
       const token = createDailyChartOptInToken({
         userId: user.id,
         chartId: existing.chartId,
         recipientHash,
         timezone: existing.timezone,
-      }, process.env.EMAIL_CONFIRM_SECRET ?? '');
+      }, environmentValue(operationEnv, 'EMAIL_CONFIRM_SECRET'));
       const tokenHash = createHash('sha256').update(token).digest('hex');
       const replaced = await replacePendingDailyChartPreference(
         user.id,
@@ -199,13 +232,18 @@ export default async function handler(req: any, res: any): Promise<void> {
         recipientHash,
         tokenHash,
         existing.timezone,
+        { env: operationEnv },
       );
       if (!replaced) {
         sendJson(res, 409, { error: 'not_pending' });
         return;
       }
       try {
-        await sendDailyChartConfirmation(user.email, { chartName: chart.name, token });
+        await sendDailyChartConfirmation(
+          user.email,
+          { chartName: chart.name, token },
+          operationEnv,
+        );
       } catch (error) {
         try {
           // Preserve the exact older DOI request if this send failed. The
@@ -218,6 +256,7 @@ export default async function handler(req: any, res: any): Promise<void> {
             existing.recipientHash,
             existing.confirmationTokenHash,
             existing.timezone,
+            { env: operationEnv },
           );
         } catch {
           // A later action may already own the row. Never overwrite it.
@@ -233,16 +272,16 @@ export default async function handler(req: any, res: any): Promise<void> {
       sendJson(res, 400, { error: 'invalid' });
       return;
     }
-    const chart = await getOwnedDailyChart(user.id, input.chartId);
+    const chart = await getOwnedDailyChart(user.id, input.chartId, operationEnv);
     if (!chart) {
       sendJson(res, 404, { error: 'chart_not_found' });
       return;
     }
     const recipientHash = dailyRecipientHash(
       user.email,
-      process.env.DAILY_EMAIL_RECIPIENT_HASH_SECRET ?? '',
+      environmentValue(operationEnv, 'DAILY_EMAIL_RECIPIENT_HASH_SECRET'),
     );
-    const existing = await getDailyChartPreference(user.id);
+    const existing = await getDailyChartPreference(user.id, operationEnv);
     if (existing?.confirmedAt && existing.recipientHash === recipientHash) {
       // Once this address has confirmed the chart-tier consent, chart and
       // timezone changes are explicit profile preferences, not new enrollments.
@@ -254,6 +293,7 @@ export default async function handler(req: any, res: any): Promise<void> {
         existing.confirmedAt,
         input.chartId,
         input.timezone,
+        operationEnv,
       );
       if (!updated) {
         sendJson(res, 409, { error: 'preference_changed' });
@@ -271,7 +311,7 @@ export default async function handler(req: any, res: any): Promise<void> {
       });
       return;
     }
-    if (!await claimConfirmationSend(user.id, res)) return;
+    if (!await claimConfirmationSend(user.id, res, operationEnv)) return;
     // An account email change is a new recipient and therefore a new consent
     // boundary. It never transfers confirmed consent to the new address.
     const token = createDailyChartOptInToken({
@@ -279,7 +319,7 @@ export default async function handler(req: any, res: any): Promise<void> {
       chartId: input.chartId,
       recipientHash,
       timezone: input.timezone,
-    }, process.env.EMAIL_CONFIRM_SECRET ?? '');
+    }, environmentValue(operationEnv, 'EMAIL_CONFIRM_SECRET'));
     const tokenHash = createHash('sha256').update(token).digest('hex');
     if (existing?.confirmedAt) {
       const replaced = await replaceConfirmedDailyChartPreferenceWithPending(
@@ -292,6 +332,7 @@ export default async function handler(req: any, res: any): Promise<void> {
         recipientHash,
         tokenHash,
         input.timezone,
+        operationEnv,
       );
       if (!replaced) {
         sendJson(res, 409, { error: 'preference_changed' });
@@ -304,13 +345,18 @@ export default async function handler(req: any, res: any): Promise<void> {
         recipientHash,
         tokenHash,
         input.timezone,
+        operationEnv,
       );
     }
     try {
-      await sendDailyChartConfirmation(user.email, { chartName: chart.name, token });
+      await sendDailyChartConfirmation(
+        user.email,
+        { chartName: chart.name, token },
+        operationEnv,
+      );
     } catch (error) {
       try {
-        await deletePendingDailyChartPreference(user.id, tokenHash);
+        await deletePendingDailyChartPreference(user.id, tokenHash, operationEnv);
       } catch {
         // A retry replaces the stale pending token hash; never claim success.
       }
