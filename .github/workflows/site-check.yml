@@ -231,6 +231,32 @@ jobs:
       - name: Browser acceptance drive
         run: npm run test:phase3:push
 
+  phase3-pwa-drive:
+    name: Phase 3 PWA drive
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Install Chromium
+        run: npx playwright-core install --with-deps chromium
+
+      - name: Build
+        run: npm run build
+
+      - name: Browser acceptance drive
+        run: npm run test:phase3:pwa
+
   aura-drive:
     # The flag-on browser acceptance suite for Registry Aura: docket honesty,
     # Alignment grammar, share privacy, wallet lifecycle, forced colors, and

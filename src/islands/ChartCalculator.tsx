@@ -1941,7 +1941,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
         />
       )}
 
-      {PwaInstallPrompt && (saved === 'saved' || firstReading.status === 'complete') && (
+      {PwaInstallPrompt && (
         <PwaInstallPrompt locale={locale} computationCount={pwaComputationCount} />
       )}
     </div>
