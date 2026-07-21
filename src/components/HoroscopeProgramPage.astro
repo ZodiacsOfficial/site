@@ -187,7 +187,15 @@ const skyMarkers = reading.skyStrip.markers;
     </nav>
 
     <header class="program__hero">
-      <SignIcon sign={sign.slug} size={88} loading="eager" fetchPriority="high" class="program__icon" />
+      <SignIcon
+        sign={sign.slug}
+        size={88}
+        loading="eager"
+        fetchPriority="high"
+        webpOnly={surface === 'today'}
+        decoding={surface === 'today' ? 'sync' : 'async'}
+        class="program__icon"
+      />
       <div class="program__hero-copy">
         <em class="kicker">{meta.kicker} · {reading.label}</em>
         <h1 class="display">{sign.name} {reading.title}</h1>

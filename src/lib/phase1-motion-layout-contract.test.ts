@@ -115,7 +115,9 @@ describe('Phase 1 layout and motion contract', () => {
     expect(icon).toContain('aspect-ratio: 1;');
     expect(icon).toContain('.sign-icon img { display: block; width: 100%; height: auto; aspect-ratio: 1;');
     expect(icon).toContain('fetchpriority={fetchPriority}');
-    expect(program).toContain('loading="eager" fetchPriority="high" class="program__icon"');
+    expect(program).toContain('fetchPriority="high"');
+    expect(program).toContain("webpOnly={surface === 'today'}");
+    expect(program).toContain("decoding={surface === 'today' ? 'sync' : 'async'}");
   });
 
   it('loads the below-reading personalization bundle only when its saved-chart fallback is visible', async () => {

@@ -359,6 +359,19 @@ async function inspectRenderedPage(page, route, viewportKey) {
     iconPath === `/assets/zodiac-icons/400/${route.sign}.webp`,
     iconPath ?? 'missing',
   );
+  if (route.key === 'daily') {
+    const selectedIconPath = await iconNode.evaluate((image) => new URL(image.currentSrc).pathname);
+    check(
+      `${route.key} ${viewportKey}: LCP selects the smaller WebP derivative`,
+      selectedIconPath === `/assets/zodiac-icons/400/${route.sign}.webp`,
+      selectedIconPath,
+    );
+    check(
+      `${route.key} ${viewportKey}: LCP icon decodes with first paint`,
+      await iconNode.getAttribute('decoding') === 'sync',
+      await iconNode.getAttribute('decoding') ?? 'missing',
+    );
+  }
 
   const signFeed = page.locator(
     `head link[rel="alternate"][type="application/rss+xml"][href="/feeds/horoscopes/${route.sign}.xml"]`,
