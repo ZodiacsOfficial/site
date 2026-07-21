@@ -1,0 +1,107 @@
+/* RU/AR localization proofs — self-contained Cosmic Void stand-in.
+   Token VALUES inlined (public proofs never link hashed site CSS). */
+
+/* Russian: EB Garamond keeps display (Cyrillic subset); Golos Text is the
+   proposed body/UI sans; JetBrains Mono keeps data (Cyrillic subset).
+   The two Golos files compose: base file first, Cyrillic-ranged file
+   second, so whichever carries U+0400–04FF serves it. */
+@font-face { font-family: 'Golos Text'; src: url('assets/fonts/golos-cyr-b.woff2') format('woff2'); font-weight: 400 600; font-display: swap; }
+@font-face { font-family: 'Golos Text'; src: url('assets/fonts/golos-cyr-a.woff2') format('woff2'); font-weight: 400 600; font-display: swap; unicode-range: U+0400-04FF; }
+@font-face { font-family: 'EB Garamond Cyr'; src: url('assets/fonts/ebgaramond-500-cyr.woff2') format('woff2'); font-weight: 500; font-display: swap; }
+@font-face { font-family: 'JBMono Cyr'; src: url('assets/fonts/jbmono-cyr.woff2') format('woff2'); font-weight: 400 500; font-display: swap; }
+/* Arabic: Amiri (Naskh, editorial display) + IBM Plex Sans Arabic (UI). */
+@font-face { font-family: 'Amiri'; src: url('assets/fonts/amiri-400-arabic.woff2') format('woff2'); font-weight: 400; font-display: swap; }
+@font-face { font-family: 'Amiri'; src: url('assets/fonts/amiri-700-arabic.woff2') format('woff2'); font-weight: 700; font-display: swap; }
+@font-face { font-family: 'Plex Arabic'; src: url('assets/fonts/plex-arabic-400.woff2') format('woff2'); font-weight: 400; font-display: swap; }
+@font-face { font-family: 'Plex Arabic'; src: url('assets/fonts/plex-arabic-500.woff2') format('woff2'); font-weight: 500; font-display: swap; }
+@font-face { font-family: 'Plex Arabic'; src: url('assets/fonts/plex-arabic-600.woff2') format('woff2'); font-weight: 600; font-display: swap; }
+
+:root {
+  --void-0: #060709; --void-1: #0F121A; --text: #C6CCDA; --head: #EEF1F7;
+  --muted: #7A8397; --faint: #6A7183; --hair-1: rgba(198,204,218,.10);
+  --hair-2: rgba(198,204,218,.16); --ink-0: #EEF1F7;
+  --serif: 'EB Garamond Cyr', Georgia, serif;
+  --sans: 'Golos Text', system-ui, sans-serif;
+  --mono: 'JBMono Cyr', ui-monospace, Menlo, monospace;
+}
+html[lang="ar"] {
+  --serif: 'Amiri', 'Plex Arabic', serif;
+  --sans: 'Plex Arabic', system-ui, sans-serif;
+  /* Technical labels: readable Arabic sans, never forced monospace. The
+     mono face still serves purely-Latin value runs inside <bdi>. */
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--void-0); color: var(--text);
+  font: 15px/1.6 var(--sans); -webkit-font-smoothing: antialiased;
+}
+html[lang="ar"] body { font-size: 15.5px; line-height: 1.75; hyphens: none; }
+
+/* Annotation rail (review chrome, not product) */
+.proof-head { padding: 20px 22px 6px; border-bottom: 1px solid var(--hair-1); }
+.proof-head h1 { margin: 0 0 6px; font: 500 24px/1.2 var(--serif); color: var(--head); }
+.proof-head p { margin: 0 0 12px; max-width: 72ch; color: var(--muted); font-size: 13px; }
+.note { margin: 26px 22px 10px; padding: 10px 12px; border-inline-start: 2px solid var(--hair-2); color: var(--muted); font-size: 12.5px; max-width: 78ch; }
+.note strong { color: var(--text); }
+.crit { margin-top: 5px; font-family: var(--mono); font-size: 10.5px; color: var(--faint); }
+html[lang="ar"] .crit { font-family: var(--sans); letter-spacing: 0; }
+.board { margin: 8px 22px 30px; padding: clamp(14px, 3vw, 26px); border: 1px solid var(--hair-2); border-radius: 16px; background: var(--void-1); }
+.board__tag { margin: 0 0 14px; font-family: var(--mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--faint); }
+html[lang="ar"] .board__tag { font-family: var(--sans); letter-spacing: 0; text-transform: none; font-size: 11.5px; font-weight: 600; }
+
+/* Product stand-ins */
+.kicker { font: italic 500 14px/1.3 var(--serif); color: var(--muted); }
+.display { font: 500 clamp(26px, 5vw, 40px)/1.12 var(--serif); color: var(--head); margin: 6px 0 10px; }
+html[lang="ar"] .display { line-height: 1.35; }
+.mono-label { font-family: var(--mono); font-size: 10px; letter-spacing: .15em; text-transform: uppercase; color: var(--faint); }
+html[lang="ar"] .mono-label { font-family: var(--sans); font-size: 11.5px; font-weight: 600; letter-spacing: 0; text-transform: none; }
+.btn { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 18px; border-radius: 999px; border: 1px solid var(--hair-2); background: transparent; color: var(--text); font: 600 14px/1 var(--sans); cursor: pointer; }
+.btn--primary { background: var(--ink-0); border-color: var(--ink-0); color: var(--void-0); }
+.btn:focus-visible, a:focus-visible, input:focus-visible, .focus-demo { outline: 2px solid var(--ink-0); outline-offset: 3px; }
+a { color: var(--text); text-underline-offset: .18em; }
+.field { display: grid; gap: 7px; min-width: 0; }
+.field label { font-family: var(--mono); font-size: 10px; letter-spacing: .15em; text-transform: uppercase; color: var(--faint); }
+html[lang="ar"] .field label { font-family: var(--sans); font-size: 11.5px; font-weight: 600; letter-spacing: 0; text-transform: none; }
+.field input, .field select { min-height: 44px; padding: 0 13px; border: 1px solid var(--hair-2); border-radius: 10px; background: var(--void-0); color: var(--text); font: inherit; width: 100%; }
+.form-grid { display: grid; gap: 16px; }
+@media (min-width: 700px) { .form-grid { grid-template-columns: 1fr 1fr; } .form-grid .span-2 { grid-column: 1 / -1; } }
+.status-err { color: var(--text); font-size: 13px; border-inline-start: 2px solid var(--hair-2); padding-inline-start: 10px; }
+.help { color: var(--faint); font-size: 12px; }
+
+/* Nav stand-in */
+.nav { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 14px 4px; border-bottom: 1px solid var(--hair-1); }
+.nav__brand { font: 600 15px/1 var(--sans); color: var(--head); letter-spacing: .01em; }
+.nav__links { display: flex; flex-wrap: wrap; gap: 18px; font-size: 14px; }
+.nav__links a { text-decoration: none; color: var(--text); }
+.drawer { margin-top: 12px; padding: 16px; border: 1px solid var(--hair-2); border-radius: 14px; background: var(--void-0); }
+.drawer h3 { margin: 14px 0 8px; font: italic 500 15px/1.2 var(--serif); color: var(--muted); }
+.drawer ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 2px; }
+.drawer a { display: flex; min-height: 44px; align-items: center; text-decoration: none; }
+
+/* Signs / wheel */
+.disc { display: inline-grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; color: #060709; font-size: 15px; }
+.sign-row { display: flex; flex-wrap: wrap; gap: 8px; }
+.wheel { position: relative; width: min(300px, 78vw); aspect-ratio: 1; margin: 8px auto; border: 1px solid var(--hair-2); border-radius: 50%; direction: ltr; }
+.wheel::after { content: ''; position: absolute; inset: 18%; border: 1px solid var(--hair-1); border-radius: 50%; }
+.wheel i { position: absolute; inset-inline-start: 50%; inset-block-start: 50%; font-style: normal; font-size: 13px; color: var(--muted); }
+.cards { display: grid; gap: 12px; }
+@media (min-width: 760px) { .cards { grid-template-columns: repeat(3, 1fr); } }
+.card { padding: 14px; border: 1px solid var(--hair-2); border-radius: 14px; background: var(--void-0); min-width: 0; }
+.card strong { display: block; color: var(--head); font-size: 15px; margin: 8px 0 3px; }
+.table-wrap { overflow-x: auto; max-width: 100%; }
+table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+th, td { padding: 9px 10px; border-bottom: 1px solid var(--hair-1); text-align: start; }
+th { font-family: var(--mono); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--faint); font-weight: 500; }
+html[lang="ar"] th { font-family: var(--sans); font-size: 11px; letter-spacing: 0; text-transform: none; font-weight: 600; }
+.num, bdi.val { font-family: var(--mono); font-size: 12.5px; direction: ltr; unicode-bidi: isolate; }
+.footer { margin-top: 26px; padding: 20px 4px 6px; border-top: 1px solid var(--hair-1); color: var(--muted); font-size: 13px; }
+.footer .langs { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-top: 12px; }
+.footer .langs .sep { color: var(--faint); }
+.footer .langs a, .footer .langs span[aria-current] { min-height: 44px; display: inline-flex; align-items: center; text-decoration: none; }
+.footer .langs span[aria-current] { color: var(--head); }
+.arrow::after { content: '→'; }
+html[dir="rtl"] .arrow::after { content: '←'; }
+.tile-list { display: grid; gap: 10px; }
+@media (min-width: 700px) { .tile-list { grid-template-columns: 1fr 1fr; } }
+.tile { display: flex; gap: 12px; align-items: center; padding: 12px; border: 1px solid var(--hair-1); border-radius: 12px; min-width: 0; text-decoration: none; }
+.pill { display: inline-flex; align-items: center; gap: 6px; min-height: 30px; padding: 0 10px; border: 1px solid var(--hair-2); border-radius: 999px; font-size: 12px; color: var(--muted); }

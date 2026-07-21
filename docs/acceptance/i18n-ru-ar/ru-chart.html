@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Проба — RU: натальная карта, форма и результат</title>
+<link rel="stylesheet" href="proof.css">
+</head>
+<body>
+<header class="proof-head">
+  <h1>Русский · форма карты, валидация, результат</h1>
+  <p>Форма нативная, метки-моно капсом (латиница в моно допускает капс;
+  кириллические метки — Golos 600 без капса — сравнение ниже). Ошибки без
+  красного; фокус — существующий контур.</p>
+</header>
+
+<div class="note"><strong>Форма</strong> — «Не знаю время» + подсказка;
+приватность одной строкой под формой.
+<div class="crit">поля ≥44px · плейсхолдеры по-русски · города из GeoNames</div></div>
+<div class="board">
+  <p class="board__tag">форма · ввод</p>
+  <div class="form-grid">
+    <div class="field"><label for="d">Дата рождения</label><input id="d" type="text" value="1907-07-06"></div>
+    <div class="field"><label for="t">Время рождения</label><input id="t" type="text" placeholder="08:30"></div>
+    <div class="field span-2"><label for="p">Место рождения</label><input id="p" type="text" placeholder="Начните вводить город…" class="focus-demo"></div>
+  </div>
+  <p style="margin:12px 0 0"><label style="display:inline-flex;gap:8px;align-items:center;min-height:44px"><input type="checkbox" style="width:18px;height:18px"> Не знаю время</label></p>
+  <p class="help">Нет времени рождения? Солнце и Луну вы всё равно получите —
+  асценденту нужны часы.</p>
+  <p><button class="btn btn--primary" type="button">Постройте бесплатную натальную карту</button>
+  <button class="btn" type="button" disabled>Считаем…</button></p>
+  <p class="help">Приватно по умолчанию. Данные рождения остаются в этом браузере.</p>
+</div>
+
+<div class="note"><strong>Валидация и сбой</strong> — статус в живой области,
+значения сохраняются, кнопка возвращается.</div>
+<div class="board">
+  <p class="board__tag">форма · ошибки</p>
+  <p class="status-err" role="status">Ничего не найдено</p>
+  <p class="status-err">Не удалось загрузить справочник мест — проверьте
+  соединение и попробуйте ещё раз.</p>
+  <p class="status-err">Не получилось рассчитать карту. Попробуйте ещё раз.</p>
+</div>
+
+<div class="note"><strong>Результат: большая тройка + колесо</strong> —
+геометрия колеса НЕ зеркалируется ни в одном языке; градусы — латиницей
+в моно; названия знаков склоняются в подписи («Луна в Весах» — форма
+из таблицы предложного падежа).
+<div class="crit">колесо: direction ltr всегда · глифы с U+FE0E · подписи ≥12px</div></div>
+<div class="board">
+  <p class="board__tag">результат · тройка и колесо</p>
+  <div class="cards">
+    <div class="card"><span class="mono-label">Солнце</span><strong>Лев</strong><span class="num">13°20′</span> · пятый дом</div>
+    <div class="card"><span class="mono-label">Луна</span><strong>Весы</strong><span class="num">16°41′</span> · «Луна в Весах»</div>
+    <div class="card"><span class="mono-label">Асцендент</span><strong>Лев</strong><span class="num">23°30′</span> · управитель — Солнце</div>
+  </div>
+  <div class="wheel" role="img" aria-label="Колесо натальной карты — порядок знаков не меняется">
+    <i style="transform:translate(-50%,-50%) rotate(0deg) translateY(-132px)">♈︎</i>
+    <i style="transform:translate(-50%,-50%) rotate(-30deg) translateY(-132px)">♉︎</i>
+    <i style="transform:translate(-50%,-50%) rotate(-60deg) translateY(-132px)">♊︎</i>
+    <i style="transform:translate(-50%,-50%) rotate(-90deg) translateY(-132px)">♋︎</i>
+    <i style="transform:translate(-50%,-50%) rotate(-120deg) translateY(-132px)">♌︎</i>
+    <i style="transform:translate(-50%,-50%) rotate(-150deg) translateY(-132px)">♍︎</i>
+    <i style="transform:translate(-50%,-50%) rotate(-180deg) translateY(-132px)">♎︎</i>
+    <i style="transform:translate(-50%,-50%) rotate(-210deg) translateY(-132px)">♏︎</i>
+    <i style="transform:translate(-50%,-50%) rotate(-240deg) translateY(-132px)">♐︎</i>
+    <i style="transform:translate(-50%,-50%) rotate(-270deg) translateY(-132px)">♑︎</i>
+    <i style="transform:translate(-50%,-50%) rotate(-300deg) translateY(-132px)">♒︎</i>
+    <i style="transform:translate(-50%,-50%) rotate(-330deg) translateY(-132px)">♓︎</i>
+  </div>
+</div>
+
+<div class="note"><strong>Таблица положений + оговорка</strong> — заголовки
+таблицы моно-капсом (латиница) держат стиль; длинные русские значения не
+ломают колонки.</div>
+<div class="board">
+  <p class="board__tag">результат · положения</p>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>Тело</th><th>Знак</th><th>Положение</th><th>Дом</th><th>Движение</th></tr></thead>
+    <tbody>
+      <tr><td>Солнце</td><td>Лев</td><td class="num">13°20′</td><td>5</td><td>—</td></tr>
+      <tr><td>Меркурий</td><td>Лев</td><td class="num">6°20′</td><td>5</td><td>ретроградный</td></tr>
+      <tr><td>Юпитер</td><td>Лев</td><td class="num">4°25′</td><td>5</td><td>директный</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="help" style="margin-top:12px">Без времени рождения считаем на
+  полдень: планеты точны в пределах дня, а асценденту и домам нужны часы.</p>
+  <p><button class="btn" type="button">Сохранить эту карту</button>
+  <span class="pill">Сохранено · на этом устройстве</span></p>
+  <p class="help">Можно хранить до 40 карт — сначала удалите одну.</p>
+</div>
+</body>
+</html>

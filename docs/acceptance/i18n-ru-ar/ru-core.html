@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Проба — RU: главная, навигация, подвал</title>
+<link rel="stylesheet" href="proof.css">
+</head>
+<body>
+<header class="proof-head">
+  <h1>Русский · главная, навигация, селектор языка</h1>
+  <p>Типографика: EB Garamond (кириллическое начертание, дисплей) ·
+  Golos Text (интерфейс) · JetBrains Mono (данные, кириллица).
+  LTR, без зеркалирования. Копия — из RU-COPY-DECK.md, дословно.</p>
+</header>
+
+<div class="note"><strong>Навигация, закрытая</strong> — бренд не переводится;
+пункты из §1 колоды.
+<div class="crit">лат. бренд + кириллица рядом · цели ≥44px · фокус виден</div></div>
+<div class="board">
+  <p class="board__tag">навигация · закрыта</p>
+  <nav class="nav">
+    <span class="nav__brand">Zodiacs.org</span>
+    <span class="nav__links">
+      <a href="#">Знаки</a>
+      <a href="#">Инструменты</a>
+      <a href="#">Разбор</a>
+      <a href="#">Гороскопы</a>
+      <a href="#" class="focus-demo">Реестр</a>
+    </span>
+    <button class="btn" type="button">Меню</button>
+  </nav>
+</div>
+
+<div class="note"><strong>Навигация, открытая</strong> — секции «Основное» и
+«Двенадцать знаков»; знаки — пастельные диски (единственный цвет).</div>
+<div class="board">
+  <p class="board__tag">навигация · меню открыто</p>
+  <div class="drawer">
+    <h3>Основное</h3>
+    <ul>
+      <li><a href="#">Натальная карта</a></li>
+      <li><a href="#">Совместимость</a></li>
+      <li><a href="#">Лунный знак</a></li>
+      <li><a href="#">Асцендент</a></li>
+      <li><a href="#">Сохранённые карты</a></li>
+    </ul>
+    <h3>Двенадцать знаков</h3>
+    <div class="sign-row" aria-label="Знаки">
+      <span class="disc" style="background:#DE8E79">♈︎</span>
+      <span class="disc" style="background:#B9D4BE">♉︎</span>
+      <span class="disc" style="background:#B29DD0">♊︎</span>
+      <span class="disc" style="background:#B6D4E4">♋︎</span>
+      <span class="disc" style="background:#E0A9B4">♌︎</span>
+      <span class="disc" style="background:#B7D9B0">♍︎</span>
+      <span class="disc" style="background:#D3A9DE">♎︎</span>
+      <span class="disc" style="background:#B9DCE8">♏︎</span>
+      <span class="disc" style="background:#E0B080">♐︎</span>
+      <span class="disc" style="background:#C0DEA8">♑︎</span>
+      <span class="disc" style="background:#AE8FC9">♒︎</span>
+      <span class="disc" style="background:#A9D4C4">♓︎</span>
+    </div>
+  </div>
+</div>
+
+<div class="note"><strong>Главная</strong> — киккер серифным курсивом
+(не моно-капс), длинные русские строки в двух колонках не переполняют.
+<div class="crit">даты и UTC — латинские цифры в моно · «— пока по-английски» для отложенных разделов</div></div>
+<div class="board">
+  <p class="board__tag">главная · герой + лента неба</p>
+  <p class="kicker">Бесплатная астрология, посчитанная честно</p>
+  <h2 class="display">Натальные карты и астрология без&nbsp;мистики</h2>
+  <p style="max-width:56ch">Бесплатные натальные карты, совместимость и гиды
+  по знакам. Всё считается приватно в вашем браузере и объясняется простым
+  языком.</p>
+  <p><button class="btn btn--primary" type="button">Постройте бесплатную натальную карту</button></p>
+  <p class="mono-label" style="margin-top:22px">Прямо сейчас</p>
+  <p><span class="num">2026-07-22 · 12 UTC</span> · Полнолуние · <span class="num">2026-07-29</span> ·
+  Ретроградный Меркурий</p>
+  <p><a href="#">Сегодняшний гороскоп — пока по-английски</a></p>
+</div>
+
+<div class="note"><strong>Подвал и селектор языка</strong> — «Русский»
+текущим, ссылки на остальные; каждая — со своим <code>lang</code>.
+<div class="crit">самоназвания: Русский · العربية · строка шрифтов: OFL</div></div>
+<div class="board">
+  <p class="board__tag">подвал · языки</p>
+  <div class="footer">
+    <p>Бесплатные астрологические инструменты и гиды по знакам. Карты
+    считаются приватно, прямо в вашем браузере.</p>
+    <p>Данные о местах: <bdi class="val">GeoNames (CC BY 4.0)</bdi> ·
+    Шрифты под лицензией <bdi class="val">OFL</bdi></p>
+    <div class="langs">
+      <a href="#" lang="en" hreflang="en">English</a><span class="sep">·</span>
+      <a href="#" lang="es" hreflang="es">Español</a><span class="sep">·</span>
+      <a href="#" lang="pt-BR" hreflang="pt-BR">Português (Brasil)</a><span class="sep">·</span>
+      <a href="#" lang="fr" hreflang="fr">Français</a><span class="sep">·</span>
+      <a href="#" lang="it" hreflang="it">Italiano</a><span class="sep">·</span>
+      <span lang="ru" aria-current="true">Русский</span><span class="sep">·</span>
+      <a href="#" lang="ar" hreflang="ar" dir="rtl">العربية</a>
+    </div>
+  </div>
+</div>
+</body>
+</html>
