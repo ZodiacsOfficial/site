@@ -54,8 +54,8 @@ daily confirmation or unsubscribe can never change weekly membership.
 ### Admin-only daily canary bootstrap
 
 Before the public daily flag is enabled, an operator may request DOI for the
-single canary address through `POST /api/email/admin-bootstrap`. The route has
-no public UI and requires all three server-only values:
+single canary address. The bootstrap has no public UI and requires all three
+server-only values:
 
 - `DAILY_EMAIL_ADMIN_BOOTSTRAP_ENABLED=1`
 - `DAILY_EMAIL_ADMIN_BOOTSTRAP_EMAIL=admin@zodiacs.org` (no other value is
@@ -63,14 +63,30 @@ no public UI and requires all three server-only values:
 - `DAILY_EMAIL_ADMIN_BOOTSTRAP_SECRET` — at least 32 characters, supplied as
   the request's `Authorization: Bearer ...` credential
 
-Send JSON containing `email`, `sign`, and `locale: "en"`. Keep the bootstrap
-configuration present until the emailed scanner-safe GET page is explicitly
-confirmed by POST. The route locally opts only that operation into the daily
-adapter; it never changes `DAILY_EMAIL_ENABLED`, exposes a public capture, or
-requires a global `EMAIL_PROVIDER` (the route selects Resend only in its local
-server environment). It cannot allow a chart-tier or non-admin token through
-the confirmation exception. Remove the bootstrap values after the canary has
-confirmed.
+For the Sun-sign canary, send `email`, `sign`, and `locale: "en"` as JSON to
+`POST /api/email/admin-bootstrap`, with the bootstrap secret in the request's
+`Authorization` header.
+
+For the personal-chart canary, the admin must first sign in through Supabase
+and sync the chart normally. Send `chartId` and an IANA `timezone` as JSON to
+`POST /api/email/chart-preference`. Put the real Supabase access token in
+`Authorization: Bearer ...` and the existing bootstrap credential in the
+second server-only header
+`X-Daily-Email-Admin-Bootstrap: Bearer ...`. The endpoint accepts this
+public-off exception only when Supabase authenticates the fixed admin mailbox
+and the selected UUID belongs to that account's synced `charts` rows. It then
+uses the ordinary pending preference, confirmation-attempt cap, signed DOI,
+and compare-and-swap confirmation path; it does not create or seed a chart.
+
+Keep the bootstrap configuration present until the emailed scanner-safe GET
+page is explicitly confirmed by POST. Confirmation revalidates the current
+Auth account email and owned chart before it can commit consent. The bootstrap
+locally opts only these fixed-admin operations into the daily adapter; it never
+changes `DAILY_EMAIL_ENABLED`, exposes a public capture, or requires a global
+`EMAIL_PROVIDER` (Resend is selected only in its local server environment).
+Every other address or chart token still requires the public feature flag.
+Remove the bootstrap values after confirmation; both public-off enrollment
+exceptions then become inert while permanent unsubscribe remains available.
 
 ### Buttondown
 

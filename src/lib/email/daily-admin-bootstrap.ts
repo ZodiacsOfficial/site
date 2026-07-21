@@ -1,10 +1,14 @@
 import { createHash, timingSafeEqual } from 'node:crypto';
 import { environmentValue } from './config.js';
 import { normalizeEmail } from './input.js';
+import { dailyRecipientHash } from '../daily-email/identity.js';
 
 type Environment = Record<string, unknown>;
 
 export const DAILY_EMAIL_ADMIN_BOOTSTRAP_ADDRESS = 'admin@zodiacs.org';
+export const DAILY_EMAIL_ADMIN_BOOTSTRAP_HEADER = 'x-daily-email-admin-bootstrap';
+
+const RECIPIENT_HASH = /^[0-9a-f]{64}$/;
 
 /**
  * This is an operational canary switch, not a public feature flag. Requiring
@@ -42,6 +46,32 @@ export function hasDailyEmailAdminBootstrapBearer(
     digest(candidate),
     digest(environmentValue(env, 'DAILY_EMAIL_ADMIN_BOOTSTRAP_SECRET')),
   );
+}
+
+/**
+ * Chart confirmation tokens contain only the account id and an opaque address
+ * HMAC. Matching that HMAC here keeps the public-off exception pinned to the
+ * same fixed canary mailbox without adding a raw address to the token.
+ */
+export function isDailyEmailAdminBootstrapRecipientHash(
+  recipientHash: string,
+  env: Environment = process.env,
+): boolean {
+  if (!dailyEmailAdminBootstrapConfigured(env) || !RECIPIENT_HASH.test(recipientHash)) {
+    return false;
+  }
+  try {
+    const expected = dailyRecipientHash(
+      DAILY_EMAIL_ADMIN_BOOTSTRAP_ADDRESS,
+      environmentValue(env, 'DAILY_EMAIL_RECIPIENT_HASH_SECRET'),
+    );
+    return timingSafeEqual(
+      Buffer.from(recipientHash, 'hex'),
+      Buffer.from(expected, 'hex'),
+    );
+  } catch {
+    return false;
+  }
 }
 
 /**
