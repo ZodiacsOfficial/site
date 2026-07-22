@@ -2,17 +2,38 @@ import { chromium } from 'playwright-core';
 import { findChromium, STABLE_CHROMIUM_ARGS } from './visual/browser.mjs';
 import { withPreview } from './visual/preview-server.mjs';
 
-const LOCALES = [
+const CORE_LOCALES = [
   { code: 'en', prefix: '', lang: 'en', hreflang: 'en' },
   { code: 'es', prefix: '/es', lang: 'es', hreflang: 'es' },
   { code: 'pt', prefix: '/pt', lang: 'pt-BR', hreflang: 'pt-BR' },
   { code: 'fr', prefix: '/fr', lang: 'fr', hreflang: 'fr' },
   { code: 'it', prefix: '/it', lang: 'it', hreflang: 'it' },
+  { code: 'ru', prefix: '/ru', lang: 'ru', hreflang: 'ru' },
 ];
-const HREFLANGS = [...LOCALES.map((entry) => entry.hreflang), 'x-default'];
+const PROGRAMMATIC_LOCALES = CORE_LOCALES.filter((entry) => entry.code !== 'ru');
+const CORE_HREFLANGS = [...CORE_LOCALES.map((entry) => entry.hreflang), 'x-default'];
+const PROGRAMMATIC_HREFLANGS = [...PROGRAMMATIC_LOCALES.map((entry) => entry.hreflang), 'x-default'];
 const failures = [];
 const check = (condition, message) => { if (!condition) failures.push(message); };
 const localizedPath = (prefix, path) => `${prefix}${path}` || '/';
+
+async function routeState(page) {
+  return page.evaluate(() => ({
+    lang: document.documentElement.lang,
+    dirAttribute: document.documentElement.getAttribute('dir'),
+    width: document.documentElement.scrollWidth,
+    viewport: innerWidth,
+    canonical: document.querySelector('link[rel="canonical"]')?.href ?? null,
+    alternates: Array.from(document.querySelectorAll('link[rel="alternate"][hreflang]'))
+      .map((node) => [node.getAttribute('hreflang'), node.href]),
+    selector: Array.from(document.querySelectorAll('.footer__languages .footer__language-option'))
+      .map((node) => node.textContent?.replace(/^\s*·\s*/, '').trim()),
+    russian: /Русский/u.test(document.body.textContent ?? '')
+      || Boolean(document.querySelector('a[href="/ru"], a[href^="/ru/"]')),
+    arabic: /العربية/u.test(document.body.textContent ?? '')
+      || Boolean(document.querySelector('a[href="/ar"], a[href^="/ar/"]')),
+  }));
+}
 
 await withPreview({ port: 4417 }, async (baseURL) => {
   const browser = await chromium.launch({
@@ -25,36 +46,41 @@ await withPreview({ port: 4417 }, async (baseURL) => {
       const browserErrors = [];
       page.on('pageerror', (error) => browserErrors.push(error.message));
 
-      for (const route of ['/', '/birth-chart/', '/birthday/july-15/', '/learn/chinese-zodiac/dragon/']) {
-        for (const locale of LOCALES) {
+      for (const route of ['/', '/birth-chart/']) {
+        for (const locale of CORE_LOCALES) {
           const path = localizedPath(locale.prefix, route);
           const response = await page.goto(`${baseURL}${path}`, { waitUntil: 'domcontentloaded' });
           check(response?.status() === 200, `${path}@${viewport.width}: expected 200, got ${response?.status()}`);
-          const state = await page.evaluate(() => ({
-            lang: document.documentElement.lang,
-            dirAttribute: document.documentElement.getAttribute('dir'),
-            width: document.documentElement.scrollWidth,
-            viewport: innerWidth,
-            canonical: document.querySelector('link[rel="canonical"]')?.href ?? null,
-            alternates: Array.from(document.querySelectorAll('link[rel="alternate"][hreflang]'))
-              .map((node) => [node.getAttribute('hreflang'), node.href]),
-            selector: Array.from(document.querySelectorAll('.footer__languages .footer__language-option'))
-              .map((node) => node.textContent?.replace(/^\s*·\s*/, '').trim()),
-            inactiveText: /Русский|العربية/u.test(document.body.textContent ?? ''),
-            inactiveHref: Boolean(document.querySelector(
-              'a[href="/ru"], a[href^="/ru/"], a[href="/ar"], a[href^="/ar/"], '
-              + 'a[href="https://zodiacs.org/ru"], a[href^="https://zodiacs.org/ru/"], '
-              + 'a[href="https://zodiacs.org/ar"], a[href^="https://zodiacs.org/ar/"]',
-            )),
-          }));
+          const state = await routeState(page);
           check(state.lang === locale.lang, `${path}@${viewport.width}: lang ${state.lang}`);
           check(state.dirAttribute === null, `${path}@${viewport.width}: LTR output gained dir=${state.dirAttribute}`);
           check(state.width <= state.viewport + 1, `${path}@${viewport.width}: ${state.width}px overflow`);
           check(state.canonical === `https://zodiacs.org${path}`, `${path}: canonical ${state.canonical}`);
-          check(JSON.stringify(state.alternates.map(([lang]) => lang)) === JSON.stringify(HREFLANGS),
-            `${path}: hreflangs ${state.alternates.map(([lang]) => lang).join(',')}`);
+          check(
+            JSON.stringify(state.alternates.map(([lang]) => lang)) === JSON.stringify(CORE_HREFLANGS),
+            `${path}: hreflangs ${state.alternates.map(([lang]) => lang).join(',')}`,
+          );
+          check(state.selector.length === 6, `${path}: selector has ${state.selector.length} entries`);
+          check(state.russian && !state.arabic, `${path}: public core selector release set drifted`);
+        }
+      }
+
+      for (const route of ['/birthday/july-15/', '/learn/chinese-zodiac/dragon/']) {
+        for (const locale of PROGRAMMATIC_LOCALES) {
+          const path = localizedPath(locale.prefix, route);
+          const response = await page.goto(`${baseURL}${path}`, { waitUntil: 'domcontentloaded' });
+          check(response?.status() === 200, `${path}@${viewport.width}: expected 200, got ${response?.status()}`);
+          const state = await routeState(page);
+          check(state.lang === locale.lang, `${path}@${viewport.width}: lang ${state.lang}`);
+          check(state.dirAttribute === null, `${path}@${viewport.width}: LTR output gained dir=${state.dirAttribute}`);
+          check(state.width <= state.viewport + 1, `${path}@${viewport.width}: ${state.width}px overflow`);
+          check(state.canonical === `https://zodiacs.org${path}`, `${path}: canonical ${state.canonical}`);
+          check(
+            JSON.stringify(state.alternates.map(([lang]) => lang)) === JSON.stringify(PROGRAMMATIC_HREFLANGS),
+            `${path}: hreflangs ${state.alternates.map(([lang]) => lang).join(',')}`,
+          );
           check(state.selector.length === 5, `${path}: selector has ${state.selector.length} entries`);
-          check(!state.inactiveText && !state.inactiveHref, `${path}: staged locale leaked into rendered UI`);
+          check(!state.russian && !state.arabic, `${path}: deferred locale leaked into programmatic output`);
         }
       }
 
@@ -66,29 +92,23 @@ await withPreview({ port: 4417 }, async (baseURL) => {
       ]) {
         const response = await page.goto(`${baseURL}${path}`, { waitUntil: 'domcontentloaded' });
         check(response?.status() === 200, `${path}@${viewport.width}: deferred route is unavailable`);
-        const state = await page.evaluate(() => ({
-          alternates: document.querySelectorAll('link[rel="alternate"][hreflang]').length,
-          selector: document.querySelectorAll('.footer__languages .footer__language-option').length,
-          width: document.documentElement.scrollWidth,
-          viewport: innerWidth,
-          inactiveHref: Boolean(document.querySelector(
-            'a[href="/ru"], a[href^="/ru/"], a[href="/ar"], a[href^="/ar/"], '
-            + 'a[href="https://zodiacs.org/ru"], a[href^="https://zodiacs.org/ru/"], '
-            + 'a[href="https://zodiacs.org/ar"], a[href^="https://zodiacs.org/ar/"]',
-          )),
-        }));
-        check(state.alternates === 0, `${path}: deferred route emitted ${state.alternates} hreflangs`);
-        check(state.selector === selectorCount,
-          `${path}: deferred route locale-home selector has ${state.selector} entries`);
+        const state = await routeState(page);
+        check(state.alternates.length === 0, `${path}: deferred route emitted ${state.alternates.length} hreflangs`);
+        check(state.selector.length === selectorCount,
+          `${path}: deferred route locale-home selector has ${state.selector.length} entries`);
         check(state.width <= state.viewport + 1, `${path}@${viewport.width}: ${state.width}px overflow`);
-        check(!state.inactiveHref, `${path}: staged locale href leaked`);
+        check(!state.russian && !state.arabic, `${path}: unavailable locale href leaked`);
       }
       check(browserErrors.length === 0, `${viewport.width}px browser errors: ${browserErrors.join(' | ')}`);
       await page.close();
     }
 
     const page = await browser.newPage();
-    for (const path of ['/ar/', '/ar/birth-chart/']) {
+    for (const path of [
+      '/ar/', '/ar/birth-chart/',
+      '/ru/birthday/july-15/', '/ru/learn/chinese-zodiac/dragon/',
+      '/ru/today/', '/ru/horoscopes/aries/', '/ru/events/', '/ru/registry/',
+    ]) {
       const response = await page.goto(`${baseURL}${path}`, { waitUntil: 'domcontentloaded' });
       check(response?.status() === 404, `${path}: expected 404, got ${response?.status()}`);
     }
@@ -103,4 +123,4 @@ if (failures.length) {
   for (const failure of failures) console.error(`- ${failure}`);
   process.exit(1);
 }
-console.log('i18n-r0-drive: public locale rails remain isolated; Arabic routes remain absent');
+console.log('i18n-r0-drive: Russian is public only on core routes; programmatic/deferred rails stay five-locale and Arabic stays absent');

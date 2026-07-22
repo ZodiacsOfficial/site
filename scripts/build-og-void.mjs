@@ -14,6 +14,7 @@
  *   placements/{planet}.png  one per planet, shared by its 12 placement pages
  *   rising/{slug}.png      the 12 rising-sign profiles
  *   almanac/{slug}.png     the Almanac hub + published articles
+ *   ru/{...}.png           the bounded 27-route Russian release set
  *
  * The legacy gilt cards at assets/og/*.png stay byte-identical — the
  * frozen originals remain available. This script never touches those files
@@ -26,6 +27,7 @@
  * URIs; Chromium comes from playwright-core (PLAYWRIGHT_MODULE and
  * CHROMIUM_PATH override module and binary).
  */
+import { createHash } from 'node:crypto';
 import { existsSync } from 'node:fs';
 import { mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
 import { fileURLToPath, pathToFileURL } from 'node:url';
@@ -35,14 +37,23 @@ import sharp from 'sharp';
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const OUT = resolve(root, 'public/assets/og/v2');
 
-// Canonical sign data straight from the site's own table (signs.ts has
-// no imports and only erasable TS, so Node's type stripping loads it).
-const { SIGNS, ELEMENT_LABEL, MODALITY_LABEL } = await import(
-  pathToFileURL(resolve(root, 'src/lib/signs.ts')).href
-);
+// Import-free, test-pinned projection of the canonical sign table. The live
+// signs module now has runtime imports, while this generator must stay plain
+// Node, deterministic, and offline.
+const {
+  OG_SIGNS: SIGNS,
+  OG_ELEMENT_LABEL: ELEMENT_LABEL,
+  OG_MODALITY_LABEL: MODALITY_LABEL,
+} = await import(pathToFileURL(resolve(root, 'src/strings/seo.signs.mjs')).href);
 const { HOROSCOPE_OG_SURFACES, OG_EN } = await import(
   pathToFileURL(resolve(root, 'src/strings/seo.en.mjs')).href
 );
+const {
+  RU_OG_COPY_DIGEST_INPUT,
+  RU_OG_REQUIRED_CARDS,
+  RU_OG_ROUTE_CARDS,
+  RU_OG_ROUTES,
+} = await import(pathToFileURL(resolve(root, 'src/strings/seo.ru.mjs')).href);
 const EVENTS_PUBLICATION = JSON.parse(
   await readFile(resolve(root, 'src/data/events-publication.json'), 'utf8'),
 );
@@ -60,6 +71,10 @@ const FONTS = {
   serifItalic: await b64('public/fonts/eb-garamond-latin-400-italic.woff2', 'font/woff2'),
   sans: await b64('public/fonts/instrument-sans-latin-wght-normal.woff2', 'font/woff2'),
   mono: await b64('public/fonts/jetbrains-mono-latin-wght-normal.woff2', 'font/woff2'),
+  ruSerif: await b64('public/fonts/eb-garamond-cyrillic-500-normal.woff2', 'font/woff2'),
+  ruSansA: await b64('public/fonts/golos-text-cyr-a.woff2', 'font/woff2'),
+  ruSansB: await b64('public/fonts/golos-text-cyr-b.woff2', 'font/woff2'),
+  ruMono: await b64('public/fonts/jetbrains-mono-cyrillic-400-500.woff2', 'font/woff2'),
 };
 
 const DISCS = {};
@@ -159,6 +174,92 @@ function wheelMark(diameter, dot) {
       style="position:absolute;left:${x.toFixed(1)}px;top:${y.toFixed(1)}px;width:${dot}px;height:${dot}px;border-radius:50%;display:block" />`;
   }).join('');
   return `<span style="position:relative;display:block;width:${diameter}px;height:${diameter}px">${dots}</span>`;
+}
+
+function russianShell(body, footer) {
+  return `<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><style>
+  @font-face { font-family: 'EB Garamond Cyrillic'; font-weight: 400 500; src: url(${FONTS.ruSerif}) format('woff2'); }
+  @font-face { font-family: 'Golos Text'; font-weight: 400 600; src: url(${FONTS.ruSansB}) format('woff2'); }
+  @font-face { font-family: 'Golos Text'; font-weight: 400 600; src: url(${FONTS.ruSansA}) format('woff2'); unicode-range: U+0400-04FF; }
+  @font-face { font-family: 'JetBrains Mono Cyrillic'; font-weight: 400 500; src: url(${FONTS.ruMono}) format('woff2'); }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1200px; height: 630px; }
+  body {
+    background: ${VOID};
+    color: ${INK};
+    font-family: 'Golos Text', sans-serif;
+    position: relative;
+    overflow: hidden;
+  }
+  .stage {
+    position: absolute;
+    inset: 0 78px 96px 88px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 44px;
+  }
+  .left { max-width: 710px; }
+  .display {
+    font-family: 'EB Garamond Cyrillic', serif;
+    font-weight: 500;
+    line-height: 1.02;
+    letter-spacing: -0.005em;
+  }
+  .sub {
+    max-width: 700px;
+    margin-top: 22px;
+    color: ${INK2};
+    font-size: 24px;
+    line-height: 1.42;
+  }
+  .disc { display: block; border-radius: 50%; }
+  .rule { position: absolute; left: 88px; right: 88px; bottom: 84px; height: 1px; background: ${HAIR}; }
+  .footer {
+    position: absolute;
+    left: 88px;
+    right: 88px;
+    bottom: 40px;
+    color: ${MUTED};
+    font-family: 'JetBrains Mono Cyrillic', monospace;
+    font-size: 18px;
+    letter-spacing: 0.04em;
+  }
+</style></head><body>
+  ${body}
+  <div class="rule"></div>
+  <div class="footer">${footer}</div>
+</body></html>`;
+}
+
+function russianTitleSize(title) {
+  if (title.length > 62) return 49;
+  if (title.length > 50) return 54;
+  if (title.length > 38) return 60;
+  if (title.length > 28) return 66;
+  return 76;
+}
+
+function russianCard(entry) {
+  const title = escapeHtml(entry.title);
+  const description = escapeHtml(entry.description);
+  const sign = entry.kind === 'sign'
+    ? SIGNS.find((candidate) => candidate.slug === entry.slug)
+    : null;
+  const accent = sign
+    ? `<img class="disc" src="${DISCS[sign.slug]}" width="310" height="310"
+         style="box-shadow:0 32px 90px ${sign.hue}40" />`
+    : wheelMark(258, 23);
+  const body = `
+  <div class="stage">
+    <div class="left">
+      <div class="display" style="font-size:${russianTitleSize(entry.title)}px">${title}</div>
+      <div class="sub">${description}</div>
+    </div>
+    ${accent}
+  </div>`;
+  return russianShell(body, `zodiacs.org${escapeHtml(entry.publicPath)}`);
 }
 
 const nameSize = (name) => (name.length >= 10 ? 104 : name.length >= 8 ? 118 : 132);
@@ -459,21 +560,51 @@ const almanacEntries = (await Promise.all(
 const TOOLS = OG_EN.tools;
 
 // ── Render loop ───────────────────────────────────────────────────────
-for (const dir of ['', 'sign', 'registry', 'tool', 'pair', 'horoscope', 'placements', 'rising', 'almanac', 'events', 'pin']) {
+for (const dir of ['', 'sign', 'registry', 'tool', 'pair', 'horoscope', 'placements', 'rising', 'almanac', 'events', 'pin', 'ru', 'ru/sign', 'ru/tool']) {
   await mkdir(resolve(OUT, dir), { recursive: true });
 }
 
 const browser = await chromium.launch({ executablePath });
 const page = await browser.newPage({ viewport: { width: 1200, height: 630 }, deviceScaleFactor: 1 });
 const onlyHoroscopes = process.argv.includes('--only-horoscopes');
+const onlyRussian = process.argv.includes('--only-ru');
 
 let total = 0;
 let count = 0;
+let russianTotal = 0;
 
 async function shoot(html, outPath) {
   await page.setContent(html, { waitUntil: 'load' });
   await page.evaluate(() => document.fonts.ready);
   await page.waitForTimeout(120);
+  if (outPath.startsWith('ru/')) {
+    const layout = await page.evaluate(() => {
+      const stage = document.querySelector('.stage')?.getBoundingClientRect();
+      const left = document.querySelector('.left')?.getBoundingClientRect();
+      const display = document.querySelector('.display')?.getBoundingClientRect();
+      const sub = document.querySelector('.sub')?.getBoundingClientRect();
+      return {
+        stage: stage ? { left: stage.left, right: stage.right, top: stage.top, bottom: stage.bottom } : null,
+        left: left ? { left: left.left, right: left.right, top: left.top, bottom: left.bottom } : null,
+        display: display ? { left: display.left, right: display.right, top: display.top, bottom: display.bottom } : null,
+        sub: sub ? { left: sub.left, right: sub.right, top: sub.top, bottom: sub.bottom } : null,
+        fonts: {
+          sans: document.fonts.check('24px "Golos Text"', 'Натальная карта'),
+          serif: document.fonts.check('54px "EB Garamond Cyrillic"', 'Знаки'),
+          mono: document.fonts.check('18px "JetBrains Mono Cyrillic"', 'zodiacs.org/ru/'),
+        },
+      };
+    });
+    const boxes = [layout.left, layout.display, layout.sub];
+    const fits = layout.stage && boxes.every((box) => box
+      && box.left >= layout.stage.left - 1
+      && box.right <= layout.stage.right + 1
+      && box.top >= layout.stage.top - 1
+      && box.bottom <= layout.stage.bottom + 1);
+    if (!fits || !Object.values(layout.fonts).every(Boolean)) {
+      throw new Error(`${outPath}: Russian card overflow or font-load failure (${JSON.stringify(layout)})`);
+    }
+  }
   const raw = await page.screenshot({ type: 'png' });
   const firstPass = await sharp(raw)
     .png({ palette: true, compressionLevel: 9, effort: 8 })
@@ -482,7 +613,8 @@ async function shoot(html, outPath) {
   // 64-colour palette keeps type edges and the canonical pastel sign art
   // crisp while cutting this repeated family enough to preserve the complete
   // v2 bundle's 15MiB ceiling.
-  const buf = outPath.startsWith('events/')
+  const compactPalette = outPath.startsWith('events/') || outPath.startsWith('ru/');
+  const buf = compactPalette
     ? await sharp(firstPass).png({
         palette: true,
         colors: 64,
@@ -493,8 +625,42 @@ async function shoot(html, outPath) {
     : firstPass;
   await writeFile(resolve(OUT, outPath), buf);
   total += buf.length;
+  if (outPath.startsWith('ru/')) russianTotal += buf.length;
   count += 1;
   if (count % 20 === 0) console.log(`  …${count} cards, ${(total / 1024 / 1024).toFixed(1)}MB so far`);
+}
+
+async function writeRussianManifest() {
+  const copyDigest = createHash('sha256').update(RU_OG_COPY_DIGEST_INPUT).digest('hex');
+  await writeFile(resolve(OUT, 'ru/manifest.json'), `${JSON.stringify({
+    schema: 'zodiacs.og-cards.v1',
+    locale: 'ru',
+    width: 1200,
+    height: 630,
+    iconSource: '/assets/zodiac-icons/128/{sign}.webp',
+    fallback: '/assets/og/v2/ru/share.png',
+    copyDigest,
+    requiredCards: RU_OG_REQUIRED_CARDS,
+    routeCards: RU_OG_ROUTE_CARDS,
+  }, null, 2)}\n`);
+}
+
+async function renderRussianCards() {
+  for (const entry of RU_OG_ROUTES) {
+    await shoot(russianCard(entry), `ru/${entry.card}`);
+  }
+  await writeRussianManifest();
+  if (russianTotal > 600 * 1024) {
+    throw new Error(`Russian OG family is ${(russianTotal / 1024).toFixed(1)}KiB; budget is 600KiB`);
+  }
+}
+
+if (onlyRussian) {
+  console.log('Rendering Russian OG cards…');
+  await renderRussianCards();
+  console.log(`Done: ${count} Russian cards, ${(russianTotal / 1024).toFixed(1)}KiB.`);
+  await browser.close();
+  process.exit(0);
 }
 
 if (process.argv.includes('--only-almanac')) {
@@ -582,6 +748,7 @@ if (onlyHoroscopes) {
       await shoot(eventCard(event), `events/${event.id}.png`);
     }
   }
+  await renderRussianCards();
 }
 
 // ── Pinterest pins — 1000×1500, the 2:3 ratio pins want ──────────────

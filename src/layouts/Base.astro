@@ -102,7 +102,9 @@ const FAVICON = "data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/sv
       <>
         <link rel="preload" href="/fonts/golos-text-cyr-a.woff2" as="font" type="font/woff2" crossorigin />
         <link rel="preload" href="/fonts/golos-text-cyr-b.woff2" as="font" type="font/woff2" crossorigin />
-        <link rel="preload" href="/fonts/eb-garamond-cyrillic-500-normal.woff2" as="font" type="font/woff2" crossorigin />
+        {props.path !== '/ru/' && (
+          <link rel="preload" href="/fonts/eb-garamond-cyrillic-500-normal.woff2" as="font" type="font/woff2" crossorigin />
+        )}
       </>
     ) : (
       <>

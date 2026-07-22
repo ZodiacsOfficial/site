@@ -3,19 +3,19 @@
  * TypeScript locale union never changes this release policy.
  */
 export const HREFLANG_LOCALE_POLICY = Object.freeze([
-  { locale: 'en', hreflang: 'en', indexEligible: true, routeFamilies: ['core', 'programmatic'], expectedBlocks: 2025 },
-  { locale: 'es', hreflang: 'es', indexEligible: true, routeFamilies: ['core', 'programmatic'], expectedBlocks: 2025 },
-  { locale: 'pt', hreflang: 'pt-BR', indexEligible: true, routeFamilies: ['core', 'programmatic'], expectedBlocks: 2025 },
-  { locale: 'fr', hreflang: 'fr', indexEligible: true, routeFamilies: ['core', 'programmatic'], expectedBlocks: 2025 },
-  { locale: 'it', hreflang: 'it', indexEligible: true, routeFamilies: ['core', 'programmatic'], expectedBlocks: 2025 },
-  { locale: 'ru', hreflang: 'ru', indexEligible: false, routeFamilies: [], expectedBlocks: 0 },
+  { locale: 'en', hreflang: 'en', indexEligible: true, routeFamilies: ['core', 'programmatic'], expectedBlocks: 2051 },
+  { locale: 'es', hreflang: 'es', indexEligible: true, routeFamilies: ['core', 'programmatic'], expectedBlocks: 2051 },
+  { locale: 'pt', hreflang: 'pt-BR', indexEligible: true, routeFamilies: ['core', 'programmatic'], expectedBlocks: 2051 },
+  { locale: 'fr', hreflang: 'fr', indexEligible: true, routeFamilies: ['core', 'programmatic'], expectedBlocks: 2051 },
+  { locale: 'it', hreflang: 'it', indexEligible: true, routeFamilies: ['core', 'programmatic'], expectedBlocks: 2051 },
+  { locale: 'ru', hreflang: 'ru', indexEligible: true, routeFamilies: ['core'], expectedBlocks: 156 },
   { locale: 'ar', hreflang: 'ar', indexEligible: false, routeFamilies: [], expectedBlocks: 0 },
 ]);
 
 export const X_DEFAULT_HREFLANG = Object.freeze({
   hreflang: 'x-default',
   locale: 'en',
-  expectedBlocks: 2025,
+  expectedBlocks: 2051,
 });
 
 export const ACTIVE_HREFLANGS = Object.freeze(
@@ -26,8 +26,8 @@ export const INACTIVE_HREFLANGS = Object.freeze(
   HREFLANG_LOCALE_POLICY.filter((entry) => !entry.indexEligible).map((entry) => entry.hreflang),
 );
 
-/** Built for private QA, but deliberately absent from every discovery rail. */
-export const STAGED_NOINDEX_LOCALES = Object.freeze(['ru']);
+/** Complete locale trees still held in private QA. */
+export const STAGED_NOINDEX_LOCALES = Object.freeze([]);
 
 /** Declared metadata only: no generated route tree is permitted yet. */
 export const ABSENT_LOCALES = Object.freeze(

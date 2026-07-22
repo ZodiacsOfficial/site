@@ -49,6 +49,16 @@ const ZODIAC_SIGN_SLUGS = [
   'aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo',
   'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces',
 ];
+const RUSSIAN_INDEXED_PATHS = new Set([
+  '/ru/', '/ru/tools/', '/ru/birth-chart/', '/ru/compatibility/',
+  '/ru/moon-sign/', '/ru/rising-sign/', '/ru/moon-phase/',
+  '/ru/saturn-return/', '/ru/transits/', '/ru/baby-zodiac/',
+  '/ru/profile/', '/ru/methodology/', '/ru/privacy/', '/ru/disclosure/',
+  ...ZODIAC_SIGN_SLUGS.map((sign) => `/ru/${sign}/`),
+]);
+const LOCALIZED_404_PATHS = new Set([
+  '/404.html', '/es/404/', '/pt/404/', '/fr/404/', '/it/404/', '/ru/404/',
+]);
 const PHASE1_HOROSCOPE_PATHS = ZODIAC_SIGN_SLUGS.flatMap((sign) => [
   `/horoscopes/${sign}/`,
   `/horoscopes/${sign}/tomorrow/`,
@@ -992,20 +1002,20 @@ if (sitemapLocs.has('/registry/aura/') !== registryAuraBuildEnabled) {
 // Keep exact counts so sitemap drift fails loudly.
 const registryAuraIndexed = sitemapLocs.has('/registry/aura/');
 const sitemapPolicy = {
-  total: 2392 + Number(registryAuraIndexed) + publishedEventPaths.size,
+  total: 2418 + Number(registryAuraIndexed) + publishedEventPaths.size,
   compatibilityPairs: 78,
   birthdays: 1830,
   chineseZodiac: 65,
-  disclosures: 5,
+  disclosures: 6,
   horoscopePages: 84,
   eventPages: publishedEventPaths.size,
-  translatedBlocks: 2025,
+  translatedBlocks: 2051,
 };
 const indexedFamilies = [
   { label: 'compatibility pairs', pattern: /^\/compatibility\/[a-z]+-[a-z]+\/$/, expected: sitemapPolicy.compatibilityPairs, localized: false },
   { label: 'birthdays', pattern: /^\/(?:(?:es|pt|fr|it)\/)?birthday\/[a-z]+-\d{1,2}\/$/, expected: sitemapPolicy.birthdays, localized: true },
   { label: 'Chinese zodiac', pattern: /^\/(?:(?:es|pt|fr|it)\/)?learn\/chinese-zodiac(?:\/[a-z]+)?\/$/, expected: sitemapPolicy.chineseZodiac, localized: true },
-  { label: 'disclosures', pattern: /^\/(?:(?:es|pt|fr|it)\/)?disclosure\/$/, expected: sitemapPolicy.disclosures, localized: true },
+  { label: 'disclosures', pattern: /^\/(?:(?:es|pt|fr|it|ru)\/)?disclosure\/$/, expected: sitemapPolicy.disclosures, localized: true },
   {
     label: 'horoscope program pages',
     pattern: /^\/horoscopes\/(?:aries|taurus|gemini|cancer|leo|virgo|libra|scorpio|sagittarius|capricorn|aquarius|pisces)(?:\/(?:tomorrow|weekly|monthly|love|career|2027))?\/$/,
@@ -1025,6 +1035,11 @@ requireExactSet(
   'sitemap.xml Phase 2 event routes',
   new Set([...sitemapLocs].filter(isPhase2EventPath)),
   publishedEventPaths,
+);
+requireExactSet(
+  'sitemap.xml Russian core routes',
+  new Set([...sitemapLocs].filter((path) => path === '/ru/' || path.startsWith('/ru/'))),
+  RUSSIAN_INDEXED_PATHS,
 );
 
 if (sitemapLocs.size !== sitemapPolicy.total) {
@@ -1078,6 +1093,9 @@ for (const inactiveLocale of INACTIVE_HREFLANGS) {
     fail(`i18n: inactive /${inactiveLocale}/ URL leaked into search-index.json`);
   }
 }
+if ([...indexedSearchPaths].some((path) => path === '/ru/' || path.startsWith('/ru/'))) {
+  fail('i18n: Russian route leaked into the English-only search-index.json');
+}
 for (const absentLocale of ABSENT_LOCALES) {
   if (await exists(resolve(root, absentLocale))) {
     fail(`i18n: absent /${absentLocale}/ output directory exists`);
@@ -1091,22 +1109,33 @@ for (const previewLocale of STAGED_NOINDEX_LOCALES) {
 for (const file of files) {
   const html = idCache.get(file) ?? (await readFile(file, 'utf8'));
   const rel = relative(root, file);
-  const isRussianPreview = rel === 'ru/index.html' || rel.startsWith(`ru${sep}`);
-  if (!isRussianPreview && /href=["'](?:https:\/\/zodiacs\.org)?\/ru(?:\/|["'#?])/.test(html)) {
-    fail(`${rel}: staged RU route leaked outside its private preview tree`);
+  const pagePath = htmlFileToPath(rel.split(sep).join('/'));
+  const russianRouteAvailable = expectedHreflangsForPath(pagePath).has('ru')
+    || LOCALIZED_404_PATHS.has(pagePath);
+  if (!russianRouteAvailable && /href=["'](?:https:\/\/zodiacs\.org)?\/ru(?:\/|["'#?])/.test(html)) {
+    fail(`${rel}: Russian route leaked onto a deferred or programmatic page`);
   }
   if (/href=["'](?:https:\/\/zodiacs\.org)?\/ar(?:\/|["'#?])/.test(html)) {
     fail(`${rel}: absent AR route leaked into an href`);
   }
-  if (/hreflang=["'](?:ru|ar)["']/.test(html)) {
-    fail(`${rel}: inactive RU/AR hreflang leaked into HTML`);
+  if (/hreflang=["']ar["']/.test(html)) {
+    fail(`${rel}: inactive Arabic hreflang leaked into HTML`);
   }
-  if (/property=["']og:locale(?::alternate)?["'][^>]*content=["']ar_AR["']/.test(html)
-      || (!isRussianPreview && /property=["']og:locale(?::alternate)?["'][^>]*content=["']ru_RU["']/.test(html))) {
-    fail(`${rel}: inactive RU/AR Open Graph locale leaked into HTML`);
+  if (!russianRouteAvailable && /hreflang=["']ru["']/.test(html)) {
+    fail(`${rel}: Russian hreflang leaked onto a deferred or programmatic page`);
   }
-  if (/العربية/u.test(html) || (!isRussianPreview && /Русский/u.test(html))) {
-    fail(`${rel}: inactive RU/AR language-selector label leaked into HTML`);
+  if (/property=["']og:locale(?::alternate)?["'][^>]*content=["']ar_AR["']/.test(html)) {
+    fail(`${rel}: inactive Arabic Open Graph locale leaked into HTML`);
+  }
+  if (!russianRouteAvailable
+      && /property=["']og:locale(?::alternate)?["'][^>]*content=["']ru_RU["']/.test(html)) {
+    fail(`${rel}: Russian Open Graph locale leaked onto a deferred or programmatic page`);
+  }
+  if (/العربية/u.test(html)) {
+    fail(`${rel}: inactive Arabic language-selector label leaked into HTML`);
+  }
+  if (!russianRouteAvailable && /Русский/u.test(html)) {
+    fail(`${rel}: Russian language-selector label leaked onto a deferred or programmatic page`);
   }
 }
 

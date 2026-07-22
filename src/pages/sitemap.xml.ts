@@ -79,6 +79,16 @@ const EVERGREEN_LASTMOD = new Map<string, string>([
       'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces',
     ].map((sign) => `/it/${sign}/`),
   ].map((loc) => [loc, '2026-07-15'] as const),
+  ...[
+    '/ru/', '/ru/birth-chart/', '/ru/compatibility/', '/ru/moon-sign/',
+    '/ru/rising-sign/', '/ru/moon-phase/', '/ru/saturn-return/', '/ru/transits/',
+    '/ru/tools/', '/ru/profile/', '/ru/baby-zodiac/', '/ru/methodology/',
+    '/ru/privacy/', '/ru/disclosure/',
+    ...[
+      'aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo',
+      'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces',
+    ].map((sign) => `/ru/${sign}/`),
+  ].map((loc) => [loc, '2026-07-22'] as const),
 ]);
 
 function getLastmod(loc: string): string {

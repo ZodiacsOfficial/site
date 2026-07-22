@@ -12,9 +12,15 @@ import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
 import sharp from 'sharp';
 import { HOROSCOPE_OG_SURFACES, OG_EN } from '../src/strings/seo.en.mjs';
+import {
+  RU_OG_COPY_DIGEST_INPUT,
+  RU_OG_REQUIRED_CARDS,
+  RU_OG_ROUTE_CARDS,
+} from '../src/strings/seo.ru.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const out = resolve(root, 'public/assets/og/v2');
+const russianOut = resolve(out, 'ru');
 const eventsPublication = JSON.parse(
   await readFile(resolve(root, 'src/data/events-publication.json'), 'utf8'),
 );
@@ -50,6 +56,16 @@ async function directoryBytes(directory) {
     bytes += entry.isDirectory() ? await directoryBytes(path) : (await stat(path)).size;
   }
   return bytes;
+}
+
+async function relativePngFiles(directory, prefix = '') {
+  const files = [];
+  for (const entry of await readdir(directory, { withFileTypes: true })) {
+    const relativePath = prefix ? `${prefix}/${entry.name}` : entry.name;
+    if (entry.isDirectory()) files.push(...await relativePngFiles(resolve(directory, entry.name), relativePath));
+    else if (entry.name.endsWith('.png')) files.push(relativePath);
+  }
+  return files.sort();
 }
 
 async function validatePng(relativePath, { unique = true } = {}) {
@@ -88,6 +104,13 @@ for (const slug of signSlugs) {
 
 for (const relativePath of expected) await validatePng(relativePath);
 await validatePng('share.png', { unique: false });
+try {
+  const fallbackBytes = await readFile(resolve(out, 'share.png'));
+  const fallbackHash = createHash('sha256').update(fallbackBytes).digest('hex');
+  if (!hashes.has(fallbackHash)) hashes.set(fallbackHash, 'share.png');
+} catch {
+  // validatePng reports the missing fallback above.
+}
 
 try {
   const manifest = JSON.parse(await readFile(resolve(out, 'manifest.json'), 'utf8'));
@@ -103,6 +126,53 @@ try {
   failures.push(`manifest.json: ${error instanceof Error ? error.message : 'missing or invalid'}`);
 }
 
+const russianExpected = [...RU_OG_REQUIRED_CARDS];
+for (const relativePath of russianExpected) await validatePng(`ru/${relativePath}`);
+
+try {
+  const inventory = await relativePngFiles(russianOut);
+  if (JSON.stringify(inventory) !== JSON.stringify(russianExpected)) {
+    failures.push(`ru: expected exactly ${russianExpected.length} PNGs; found ${inventory.length}`);
+  }
+} catch (error) {
+  failures.push(`ru: ${error instanceof Error ? error.message : 'missing card directory'}`);
+}
+
+try {
+  const manifest = JSON.parse(await readFile(resolve(russianOut, 'manifest.json'), 'utf8'));
+  const expectedCopyDigest = createHash('sha256').update(RU_OG_COPY_DIGEST_INPUT).digest('hex');
+  if (manifest.schema !== 'zodiacs.og-cards.v1') failures.push('ru/manifest.json: unsupported schema');
+  if (manifest.locale !== 'ru') failures.push('ru/manifest.json: locale must be ru');
+  if (manifest.width !== 1200 || manifest.height !== 630) failures.push('ru/manifest.json: invalid dimensions');
+  if (manifest.iconSource !== '/assets/zodiac-icons/128/{sign}.webp') {
+    failures.push('ru/manifest.json: canonical icon source drifted');
+  }
+  if (manifest.fallback !== '/assets/og/v2/ru/share.png') {
+    failures.push('ru/manifest.json: localized fallback drifted');
+  }
+  if (manifest.copyDigest !== expectedCopyDigest) {
+    failures.push('ru/manifest.json: deck copy digest drifted; rerun npm run data:og -- --only-ru');
+  }
+  if (JSON.stringify(manifest.requiredCards) !== JSON.stringify(russianExpected)) {
+    failures.push('ru/manifest.json: required card list drifted; rerun npm run data:og -- --only-ru');
+  }
+  if (JSON.stringify(manifest.routeCards) !== JSON.stringify(RU_OG_ROUTE_CARDS)) {
+    failures.push('ru/manifest.json: route-to-card mapping drifted; rerun npm run data:og -- --only-ru');
+  }
+} catch (error) {
+  failures.push(`ru/manifest.json: ${error instanceof Error ? error.message : 'missing or invalid'}`);
+}
+
+let russianBytes = 0;
+try {
+  russianBytes = await directoryBytes(russianOut);
+  if (russianBytes > 600 * 1024) {
+    failures.push(`Russian OG family: ${(russianBytes / 1024).toFixed(1)}KiB exceeds the 600KiB budget`);
+  }
+} catch {
+  // The missing Russian directory is reported by the inventory gate above.
+}
+
 const bundleBytes = await directoryBytes(out);
 const bundleMb = bundleBytes / 1024 / 1024;
 if (bundleMb > 15) failures.push(`v2 asset bundle: ${bundleMb.toFixed(2)}MB exceeds the 15MB budget`);
@@ -113,4 +183,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log(`verify-og-cards: OK — ${expected.length} unique page cards + frozen fallback, all 1200x630 PNG; v2 bundle ${bundleMb.toFixed(2)}MB`);
+console.log(`verify-og-cards: OK — ${expected.length} English + ${russianExpected.length} Russian unique page cards, all 1200x630 PNG; Russian family ${(russianBytes / 1024).toFixed(1)}KiB; v2 bundle ${bundleMb.toFixed(2)}MB`);

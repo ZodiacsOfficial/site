@@ -91,6 +91,12 @@ jobs:
       - name: Link & artifact integrity over dist
         run: node scripts/check-dist.mjs
 
+      - name: I18n route-boundary regression
+        run: npm run test:i18n:r0
+
+      - name: Russian R2 public-locale acceptance
+        run: OUT_DIR=tests/visual/artifacts/i18n-r2-ru npm run test:i18n:r2
+
       - name: Homepage poster motion and deferred video
         run: OUT_DIR=tests/visual/artifacts/home-hero npm run test:home-hero:browser
 

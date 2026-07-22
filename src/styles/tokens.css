@@ -284,5 +284,7 @@
 html:lang(ru) {
   --font-serif: 'EB Garamond Cyrillic', 'EB Garamond Fallback', 'EB Garamond Fallback Android', 'EB Garamond Fallback Times', Georgia, serif;
   --font-sans: 'Golos Text', 'Instrument Sans Fallback', 'Instrument Sans Fallback Android', system-ui, sans-serif;
-  --font-mono: 'JetBrains Mono Cyrillic', 'JetBrains Mono', ui-monospace, Menlo, Consolas, monospace;
+  /* The reviewed Cyrillic subset owns Russian labels. Latin receipts can use
+     the platform mono rather than pulling the separate 39KB Latin webfont. */
+  --font-mono: 'JetBrains Mono Cyrillic', ui-monospace, Menlo, Consolas, monospace;
 }

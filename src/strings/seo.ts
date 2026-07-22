@@ -1,11 +1,11 @@
 import type { CatalogLocale as Locale } from '../lib/i18n/core';
 import { additionText, localizedAdditionObject } from './additions';
-import { BREADCRUMB_LABELS, OG_EN, SCHEMA_EN } from './seo.en.mjs';
+import { BREADCRUMB_LABELS, OG_EN, SCHEMA_EN, ogImageForPath } from './seo.en.mjs';
+import { ruOgImageForPath } from './seo.ru.mjs';
 
-// TODO(i18n-og, estimate: 1 engineer-day plus four-locale visual QA): teach
-// build-og-void.mjs locale-scoped filenames/manifests before localized pages
-// reference translated artwork. The current generator is English-only code,
-// so localized OG images are not a pure configuration change.
+// Russian is the first localized social-card catalogue. Other released
+// locales keep the established English artwork until their own reviewed card
+// sets are approved; the route-level copy and metadata remain localized.
 
 export function schemaCatalog(locale: Locale) {
   if (locale === 'ru') return RU_SCHEMA;
@@ -18,6 +18,12 @@ export function breadcrumbLabelForLocale(segment: string, locale: Locale): strin
   if (!english) return key.replaceAll('-', ' ').replace(/\b\w/g, (letter) => letter.toUpperCase());
   if (locale === 'ru') return RU_BREADCRUMB_LABELS[key] ?? english;
   return additionText(locale, `schema.breadcrumbLabels.${key}`, english);
+}
+
+/** Resolve only cards that exist for the requested released route family. */
+export function ogImageForPathAndLocale(path: string, locale: Locale): string | null {
+  if (locale === 'ru') return ruOgImageForPath(path) ?? ogImageForPath(path);
+  return ogImageForPath(path);
 }
 
 export function ogAltForPathAndLocale(path: string, locale: Locale): string {

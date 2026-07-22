@@ -15,11 +15,11 @@ import {
 import {
   SOCIAL_PROFILES,
   WEB_APPLICATION_PATHS,
-  ogImageForPath,
 } from '../strings/seo.en.mjs';
 import {
   breadcrumbLabelForLocale,
   ogAltForPathAndLocale,
+  ogImageForPathAndLocale,
   schemaCatalog,
 } from '../strings/seo';
 
@@ -54,7 +54,12 @@ const locale = normalizeCatalogLocale(rawLocale);
 const schema = schemaCatalog(locale);
 const canonical = site + canonicalPath;
 const contentPath = stripLocale(canonicalPath);
-const image = explicitImage ?? ogImageForPath(contentPath) ?? '/assets/og/v2/share.png';
+const catalogImage = ogImageForPathAndLocale(contentPath, locale);
+// The released Russian catalogue is authoritative for every bounded RU route,
+// even where an older explicit English image prop remains in a page template.
+const image = locale === 'ru'
+  ? catalogImage ?? explicitImage ?? '/assets/og/v2/ru/share.png'
+  : explicitImage ?? catalogImage ?? '/assets/og/v2/share.png';
 const imageAlt = explicitImageAlt ?? ogAltForPathAndLocale(contentPath, locale);
 const imageUrl = image.startsWith('http') ? image : site + image;
 const alternates = noindex
@@ -101,7 +106,7 @@ const pageNodes = jsonLd
   .filter((node) => node !== suppliedOrganization)
   .map((node) => {
     if (nodeHasType(node, 'Article')) {
-      return {
+      const article = {
         headline: title.replace(/\s*[|—]\s*Zodiacs\.org.*$/i, ''),
         description,
         url: canonical,
@@ -112,9 +117,12 @@ const pageNodes = jsonLd
         inLanguage: LOCALE_META[locale].htmlLang,
         ...node,
       };
+      // Preserve the established property order and page-authored image for
+      // every existing locale. Russian alone forces its reviewed local card.
+      return locale === 'ru' ? { ...article, image: imageUrl } : article;
     }
     if (nodeHasType(node, 'WebApplication')) {
-      return {
+      const application = {
         name: title.replace(/\s*[|—]\s*Zodiacs\.org.*$/i, ''),
         url: canonical,
         description,
@@ -131,6 +139,7 @@ const pageNodes = jsonLd
         publisher: { '@id': organization['@id'] },
         ...node,
       };
+      return locale === 'ru' ? { ...application, image: imageUrl } : application;
     }
     return node;
   });

@@ -62,6 +62,7 @@ const jsonLd = [
 <Base
   clientUi
   glass
+  inlineCriticalCss
   title="Бесплатная натальная карта — Солнце, Луна и асцендент"
   description="Рассчитайте натальную карту: Солнце, Луна, асцендент, планеты, дома и их значение. Приватно в браузере, объяснено простым языком."
   path="/ru/birth-chart/"
@@ -69,14 +70,13 @@ const jsonLd = [
   image="/assets/og/v2/tool/birth-chart.png"
   imageAlt="Бесплатная натальная карта — Zodiacs.org"
   jsonLd={jsonLd}
-  noindex
 >
   <section class="section--tight container">
     <div class="tool-hero">
       <h1 class="display">Постройте бесплатную натальную карту.</h1>
       <p>Введите дату, время и место рождения, чтобы увидеть Солнце, Луну, асцендент, планеты, дома и их значение.</p>
     </div>
-    <ChartCalculator mode="full" locale="ru" client:load />
+    <ChartCalculator mode="full" locale="ru" client:idle />
     <noscript>
       <p>Для расчёта натальной карты нужен JavaScript. Включите его и перезагрузите страницу, чтобы рассчитать Солнце, Луну, асцендент, планеты и дома в вашем браузере.</p>
     </noscript>
