@@ -276,9 +276,11 @@ await withPreview({ port: 4404 }, async (baseURL) => {
     ]);
     const material = async (page, selector, lens) => {
       await page.evaluate((enabled) => document.documentElement.classList.toggle('zdx-lens', enabled), lens);
-      // Let the existing button background transition settle after switching
-      // between the Chromium lens and the Safari/iOS fallback recipes.
-      await page.waitForTimeout(240);
+      // Let the Registry's existing 420ms button background transition settle
+      // after switching between the Chromium lens and Safari/iOS fallback
+      // recipes. Sampling mid-transition makes equivalent settled materials
+      // serialize with different alpha values in Chromium.
+      await page.waitForTimeout(480);
       return page.locator(selector).evaluateAll((actions) => actions.map((action) => {
         const style = getComputedStyle(action);
         return {
