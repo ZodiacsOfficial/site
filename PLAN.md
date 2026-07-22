@@ -233,7 +233,8 @@ Keep clean data and route seams for these; do not implement them inside this pro
 - Kept the Russian homepage poster under a 48 KiB gate while preserving its subtle mobile drift and interaction-only video loading.
 - Released by PR #140 at merge `37cd2fc0a7dd948f1d5cd1507c5a8c89bf8d48b3` on `2026-07-22T13:33:15Z`. Exact-SHA Site Check run `29924409476` passed all seven jobs at `2026-07-22T13:50:56Z`; Vercel completed the production deployment at `2026-07-22T13:35:42Z`.
 - The production audit passed all 26 Russian pages, all 26 reciprocal English alternates, all 26 localized social cards, the exact 26-URL sitemap inventory, the private Russian 404 contract, Russian search exclusion, Arabic absence, and existing-language/Registry smoke checks. A real-browser check also passed desktop and mobile rendering, the six-language selector, keyboard menu behavior, overflow, and console-error checks.
-- IndexNow accepted the exact 26 released Russian URLs with HTTP 200. Google sitemap submission remains pending because the signed-in `admin@zodiacs.org` Search Console account has no Zodiacs.org property; do not count that submission until the owner authorizes and completes property verification.
+- IndexNow accepted the exact 26 released Russian URLs with HTTP 200.
+- The owner-authorized Google Search Console setup completed under `admin@zodiacs.org`: the `sc-domain:zodiacs.org` property was automatically verified by the domain-name provider without a DNS change, and `https://zodiacs.org/sitemap.xml` was submitted successfully on `2026-07-22`. Search Console reported `Success`, a same-day last read, and 2,512 discovered pages. Indexing itself remains search-engine-owned and must not be inferred from sitemap acceptance.
 
 ### 2026-07-22 — Russian R1 private preview candidate
 
