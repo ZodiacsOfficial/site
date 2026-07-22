@@ -13,7 +13,7 @@ import { overlayAspectId, type WheelOverlay } from '../../../lib/scene/types';
 import { collisionNudge } from '../../../lib/scene/layout';
 import { findInterAspects, type InterAspect } from '../../../lib/engine/synastry';
 import { renderTransitOverlay } from '../../transit/renderTransitOverlay';
-import type { Locale } from '../../../lib/i18n';
+import type { ReleasedLocale as Locale } from '../../../lib/i18n';
 import { intlLocale } from '../../../lib/i18n/dates';
 import type { WheelGeometry } from '../../../lib/wheel/Wheel';
 import type { Chart } from '../../../lib/engine/types';

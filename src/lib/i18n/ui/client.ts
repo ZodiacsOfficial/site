@@ -1,12 +1,13 @@
-import type { Locale } from '../core';
+import { requireReleasedLocale, type Locale } from '../core';
 import type { ClientUiPayload, UiCatalog, UiKey } from './schema';
 
 type ClientUiGlobal = typeof globalThis & { __ZDX_UI__?: ClientUiPayload };
 
 export function clientUi(locale: Locale): UiCatalog {
+  const releasedLocale = requireReleasedLocale(locale);
   const payload = (globalThis as ClientUiGlobal).__ZDX_UI__;
-  if (!payload || payload.locale !== locale || !payload.messages) {
-    throw new Error(`Missing client UI catalog for ${locale}`);
+  if (!payload || payload.locale !== releasedLocale || !payload.messages) {
+    throw new Error(`Missing client UI catalog for ${releasedLocale}`);
   }
   return payload.messages;
 }

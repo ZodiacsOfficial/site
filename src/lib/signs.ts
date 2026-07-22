@@ -4,7 +4,7 @@
  * Hues are sampled from the pastel SDK icon discs — the same values live
  * as --sign-* custom properties in src/styles/tokens.css.
  */
-import type { Locale } from './i18n';
+import { requireReleasedLocale, type Locale, type ReleasedLocale } from './i18n/core.js';
 
 export type Element = 'fire' | 'earth' | 'air' | 'water';
 export type Modality = 'cardinal' | 'fixed' | 'mutable';
@@ -47,6 +47,27 @@ export const SIGNS: readonly Sign[] = [
 
 export const SIGN_SLUGS = SIGNS.map((s) => s.slug);
 export type DisplayLocale = Locale;
+
+export const RUSSIAN_SIGN_PREPOSITIONAL = {
+  aries: 'Овне',
+  taurus: 'Тельце',
+  gemini: 'Близнецах',
+  cancer: 'Раке',
+  leo: 'Льве',
+  virgo: 'Деве',
+  libra: 'Весах',
+  scorpio: 'Скорпионе',
+  sagittarius: 'Стрельце',
+  capricorn: 'Козероге',
+  aquarius: 'Водолее',
+  pisces: 'Рыбах',
+} as const satisfies Record<(typeof SIGNS)[number]['slug'], string>;
+
+/** Russian case seam used by R1 copy such as “Луна в {sign}”. */
+export function signPrepositional(sign: Sign | string): string {
+  const resolved = typeof sign === 'string' ? signBySlug(sign) : sign;
+  return RUSSIAN_SIGN_PREPOSITIONAL[resolved.slug as keyof typeof RUSSIAN_SIGN_PREPOSITIONAL];
+}
 
 const SIGN_NAME_ES: Record<string, string> = {
   aries: 'Aries',
@@ -234,7 +255,7 @@ const SIGN_NAME_OVERRIDES = {
   pt: SIGN_NAME_PT,
   fr: SIGN_NAME_FR,
   it: SIGN_NAME_IT,
-} satisfies Record<DisplayLocale, Record<string, string> | null>;
+} satisfies Record<ReleasedLocale, Record<string, string> | null>;
 
 const SIGN_DATES_OVERRIDES = {
   en: null,
@@ -242,7 +263,7 @@ const SIGN_DATES_OVERRIDES = {
   pt: SIGN_DATES_PT,
   fr: SIGN_DATES_FR,
   it: SIGN_DATES_IT,
-} satisfies Record<DisplayLocale, Record<string, string> | null>;
+} satisfies Record<ReleasedLocale, Record<string, string> | null>;
 
 const SIGN_ESSENCE_OVERRIDES = {
   en: null,
@@ -250,7 +271,7 @@ const SIGN_ESSENCE_OVERRIDES = {
   pt: SIGN_ESSENCE_PT,
   fr: SIGN_ESSENCE_FR,
   it: SIGN_ESSENCE_IT,
-} satisfies Record<DisplayLocale, Record<string, string> | null>;
+} satisfies Record<ReleasedLocale, Record<string, string> | null>;
 
 export function signBySlug(slug: string): Sign {
   const sign = SIGNS.find((s) => s.slug === slug);
@@ -269,17 +290,17 @@ export function signForLongitude(lon: number): Sign {
 
 export function signName(sign: Sign | string, locale: DisplayLocale = 'en'): string {
   const resolved = typeof sign === 'string' ? signBySlug(sign) : sign;
-  return SIGN_NAME_OVERRIDES[locale]?.[resolved.slug] ?? resolved.name;
+  return SIGN_NAME_OVERRIDES[requireReleasedLocale(locale)]?.[resolved.slug] ?? resolved.name;
 }
 
 export function signDates(sign: Sign | string, locale: DisplayLocale = 'en'): string {
   const resolved = typeof sign === 'string' ? signBySlug(sign) : sign;
-  return SIGN_DATES_OVERRIDES[locale]?.[resolved.slug] ?? resolved.dates;
+  return SIGN_DATES_OVERRIDES[requireReleasedLocale(locale)]?.[resolved.slug] ?? resolved.dates;
 }
 
 export function signEssence(sign: Sign | string, locale: DisplayLocale = 'en'): string {
   const resolved = typeof sign === 'string' ? signBySlug(sign) : sign;
-  return SIGN_ESSENCE_OVERRIDES[locale]?.[resolved.slug] ?? resolved.essence;
+  return SIGN_ESSENCE_OVERRIDES[requireReleasedLocale(locale)]?.[resolved.slug] ?? resolved.essence;
 }
 
 /** Degree within the sign (0–29.999…) for an ecliptic longitude. */
@@ -309,7 +330,7 @@ const ELEMENT_LABEL_OVERRIDES = {
   pt: { fire: 'Fogo', earth: 'Terra', air: 'Ar', water: 'Água' },
   fr: { fire: 'Feu', earth: 'Terre', air: 'Air', water: 'Eau' },
   it: { fire: 'Fuoco', earth: 'Terra', air: 'Aria', water: 'Acqua' },
-} satisfies Record<DisplayLocale, Record<Element, string> | null>;
+} satisfies Record<ReleasedLocale, Record<Element, string> | null>;
 
 const MODALITY_LABEL_OVERRIDES = {
   en: null,
@@ -317,14 +338,14 @@ const MODALITY_LABEL_OVERRIDES = {
   pt: { cardinal: 'Cardinal', fixed: 'Fixo', mutable: 'Mutável' },
   fr: { cardinal: 'Cardinal', fixed: 'Fixe', mutable: 'Mutable' },
   it: { cardinal: 'Cardinale', fixed: 'Fisso', mutable: 'Mobile' },
-} satisfies Record<DisplayLocale, Record<Modality, string> | null>;
+} satisfies Record<ReleasedLocale, Record<Modality, string> | null>;
 
 export function elementLabel(element: Element, locale: DisplayLocale = 'en'): string {
-  return ELEMENT_LABEL_OVERRIDES[locale]?.[element] ?? ELEMENT_LABEL[element];
+  return ELEMENT_LABEL_OVERRIDES[requireReleasedLocale(locale)]?.[element] ?? ELEMENT_LABEL[element];
 }
 
 export function modalityLabel(modality: Modality, locale: DisplayLocale = 'en'): string {
-  return MODALITY_LABEL_OVERRIDES[locale]?.[modality] ?? MODALITY_LABEL[modality];
+  return MODALITY_LABEL_OVERRIDES[requireReleasedLocale(locale)]?.[modality] ?? MODALITY_LABEL[modality];
 }
 
 /** The sun sign whose season contains the given month/day (tropical). */

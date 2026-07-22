@@ -1,4 +1,4 @@
-import type { Locale } from '../lib/i18n/core';
+import type { ReleasedLocale as Locale } from '../lib/i18n/core';
 
 const COPY = {
   es: {

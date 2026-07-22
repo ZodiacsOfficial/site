@@ -2,9 +2,16 @@ import { describe, expect, it } from 'vitest';
 import {
   LOCALES,
   LOCALE_META,
+  LOCALE_PATH_PREFIX,
   LOCALIZED_PATHS,
+  CORE_ROUTE_LOCALES,
+  LEGACY_HOME_SELECTOR_LOCALES,
+  PROGRAMMATIC_ROUTE_LOCALES,
+  RELEASED_LOCALES,
   alternatePaths,
+  availableLocalesForPath,
   localizePath,
+  normalizeKnownLocale,
   normalizeLocale,
   showsEnglishOnlyInterpretation,
   stripLocale,
@@ -17,7 +24,7 @@ describe('i18n helpers', () => {
   it('keeps every localized UI catalog aligned with all 383 English keys', () => {
     const englishKeys = Object.keys(UI.en).sort();
     expect(englishKeys).toHaveLength(383);
-    for (const locale of LOCALES) {
+    for (const locale of RELEASED_LOCALES) {
       expect(Object.keys(UI[locale]).sort()).toEqual(englishKeys);
     }
   });
@@ -29,7 +36,7 @@ describe('i18n helpers', () => {
         .sort()
     );
     const keys = Object.keys(UI.en) as UiKey[];
-    for (const locale of LOCALES) {
+    for (const locale of RELEASED_LOCALES) {
       for (const key of keys) {
         expect(placeholders(UI[locale][key]), locale + '.' + key).toEqual(placeholders(UI.en[key]));
       }
@@ -61,11 +68,13 @@ describe('i18n helpers', () => {
 
   it('derives locale parsing and prefixes from the declared locales', () => {
     for (const locale of LOCALES) {
-      expect(normalizeLocale(locale.toUpperCase())).toBe(locale);
-      expect(normalizeLocale(LOCALE_META[locale].htmlLang)).toBe(locale);
-      expect(normalizeLocale(LOCALE_META[locale].intlLocale)).toBe(locale);
+      expect(normalizeKnownLocale(locale.toUpperCase())).toBe(locale);
+      expect(normalizeKnownLocale(LOCALE_META[locale].htmlLang)).toBe(locale);
+      expect(normalizeKnownLocale(LOCALE_META[locale].intlLocale)).toBe(locale);
       expect(stripLocale(`${LOCALE_META[locale].pathPrefix}/tools/`)).toBe('/tools/');
     }
+    expect(normalizeLocale('ru')).toBe('en');
+    expect(normalizeLocale('ar')).toBe('en');
     expect(normalizeLocale('not-a-locale')).toBe('en');
   });
 
@@ -95,8 +104,8 @@ describe('i18n helpers', () => {
       fr: '/fr/disclosure/',
       it: '/it/disclosure/',
     });
-    expect(LOCALIZED_PATHS.get('/tools/')).toEqual(LOCALES);
-    expect(Object.keys(alternatePaths('/tools/') ?? {})).toEqual([...LOCALES]);
+    expect(LOCALIZED_PATHS.get('/tools/')).toEqual(CORE_ROUTE_LOCALES);
+    expect(Object.keys(alternatePaths('/tools/') ?? {})).toEqual([...RELEASED_LOCALES]);
     expect(alternatePaths('/es/404/')).toEqual({
       en: '/404.html',
       es: '/es/404/',
@@ -105,6 +114,35 @@ describe('i18n helpers', () => {
       it: '/it/404/',
     });
     expect(alternatePaths('/learn/placements/venus-in-scorpio/')).toBeNull();
+  });
+
+  it('keeps staged locales in metadata without activating production routes', () => {
+    expect(LOCALES).toEqual(['en', 'es', 'pt', 'fr', 'it', 'ru', 'ar']);
+    expect(RELEASED_LOCALES).toEqual(['en', 'es', 'pt', 'fr', 'it']);
+    expect(CORE_ROUTE_LOCALES).toEqual(['en', 'es', 'pt', 'fr', 'it']);
+    expect(LEGACY_HOME_SELECTOR_LOCALES).toEqual(['en', 'es', 'pt', 'fr', 'it']);
+    expect(PROGRAMMATIC_ROUTE_LOCALES).toEqual(['en', 'es', 'pt', 'fr', 'it']);
+    expect(LOCALE_META.ru).toEqual({
+      pathPrefix: '/ru', htmlLang: 'ru', dir: 'ltr', hreflang: 'ru',
+      intlLocale: 'ru-RU', ogLocale: 'ru_RU', languageName: 'Русский',
+    });
+    expect(LOCALE_META.ar).toEqual({
+      pathPrefix: '/ar', htmlLang: 'ar', dir: 'rtl', hreflang: 'ar',
+      intlLocale: 'ar-u-ca-gregory-nu-latn', ogLocale: 'ar_AR', languageName: 'العربية',
+    });
+    expect(LOCALES.slice(0, 5).every((locale) => LOCALE_META[locale].dir === 'ltr')).toBe(true);
+    for (const locale of LOCALES) {
+      expect(LOCALE_PATH_PREFIX[locale]).toBe(LOCALE_META[locale].pathPrefix);
+    }
+    expect(localizePath('ru', '/tools/')).toBe('/tools/');
+    expect(localizePath('ar', '/tools/')).toBe('/tools/');
+    expect(availableLocalesForPath('/tools/')).toEqual(CORE_ROUTE_LOCALES);
+    expect(availableLocalesForPath('/birthday/february-29/')).toEqual(PROGRAMMATIC_ROUTE_LOCALES);
+    expect(availableLocalesForPath('/learn/chinese-zodiac/dragon/')).toEqual(PROGRAMMATIC_ROUTE_LOCALES);
+    for (const path of ['/tools/', '/birthday/february-29/', '/learn/chinese-zodiac/dragon/']) {
+      expect(alternatePaths(path)).not.toHaveProperty('ru');
+      expect(alternatePaths(path)).not.toHaveProperty('ar');
+    }
   });
 
   it('localizes data-driven WS5 routes while keeping pair prose English-only', () => {

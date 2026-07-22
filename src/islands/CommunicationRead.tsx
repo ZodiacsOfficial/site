@@ -7,7 +7,7 @@ import {
   communicationRead,
 } from '../lib/communication';
 import type { Chart } from '../lib/engine/types';
-import type { Locale } from '../lib/i18n';
+import type { ReleasedLocale as Locale } from '../lib/i18n';
 import {
   prepareChartCard,
   savePreparedChartCard,

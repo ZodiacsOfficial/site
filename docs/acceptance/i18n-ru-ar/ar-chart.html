@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>إثبات — AR: خريطة الميلاد، النموذج والنتيجة</title>
+<link rel="stylesheet" href="proof.css">
+</head>
+<body>
+<header class="proof-head">
+  <h1>العربية · نموذج الخريطة والتحقق والنتيجة</h1>
+  <p>تسميات الحقول بخط Plex Arabic بوزن 600 بلا تباعد ولا حالة كبيرة؛ القيم
+  الرقمية لاتينية داخل عزلٍ ثنائي الاتجاه؛ عجلة الخريطة لا تنعكس أبدًا.</p>
+</header>
+
+<div class="note"><strong>النموذج</strong> — «لا أعرفه» لوقت الميلاد؛ سطر
+الخصوصية تحت النموذج؛ حقل التاريخ قيمة لاتينية داخل حقل RTL.
+<div class="crit">الحقول ≥44px · placeholder عربي · قيمة التاريخ ltr داخل الحقل</div></div>
+<div class="board">
+  <p class="board__tag">النموذج · الإدخال</p>
+  <div class="form-grid">
+    <div class="field"><label for="d">تاريخ الميلاد</label><input id="d" type="text" value="1907-07-06" dir="ltr" style="text-align:end"></div>
+    <div class="field"><label for="t">وقت الميلاد</label><input id="t" type="text" placeholder="08:30" dir="ltr" style="text-align:end"></div>
+    <div class="field span-2"><label for="p">مكان الميلاد</label><input id="p" type="text" placeholder="ابدأ بكتابة اسم مدينة…" class="focus-demo"></div>
+  </div>
+  <p style="margin:12px 0 0"><label style="display:inline-flex;gap:8px;align-items:center;min-height:44px"><input type="checkbox" style="width:18px;height:18px"> لا أعرفه</label></p>
+  <p class="help">لا تعرف وقت الميلاد؟ ستحصل على الشمس والقمر على أي حال —
+  الطالع وحده يحتاج الساعة.</p>
+  <p><button class="btn btn--primary" type="button">احصل على خريطة ميلادك مجانًا</button>
+  <button class="btn" type="button" disabled>جارٍ الحساب…</button></p>
+  <p class="help">خصوصية افتراضيًا: بيانات ميلادك تبقى في هذا المتصفح.</p>
+  <p class="help">يشمل البحث نحو <bdi class="val">34,000</bdi> مكان ·
+  <bdi class="val">GeoNames (CC BY 4.0)</bdi></p>
+</div>
+
+<div class="note"><strong>التحقق والأعطال</strong> — رسائل هادئة بلا أحمر؛
+تُعلن عبر <code>role="status"</code>.</div>
+<div class="board">
+  <p class="board__tag">النموذج · الأخطاء</p>
+  <p class="status-err" role="status">لا نتائج</p>
+  <p class="status-err">تعذَّر تحميل فهرس الأماكن — تحقق من الاتصال وحاول مجددًا.</p>
+  <p class="status-err">حدث خطأ أثناء حساب الخريطة. حاول مجددًا.</p>
+</div>
+
+<div class="note"><strong>النتيجة: الثلاثة الكبار والعجلة</strong> — العجلة
+والرموز والترتيب الفلكي كلها ثابتة LTR داخل صفحة RTL؛ الدرجات لاتينية؛
+أسماء الأبراج عربية بجوارها.
+<div class="crit">العجلة direction:ltr دائمًا · الرموز بـU+FE0E · لا انعكاس للهندسة</div></div>
+<div class="board">
+  <p class="board__tag">النتيجة · الثلاثة والعجلة</p>
+  <div class="cards">
+    <div class="card"><span class="mono-label">الشمس</span><strong>الأسد</strong><bdi class="val">13°20′</bdi> · البيت 5</div>
+    <div class="card"><span class="mono-label">القمر</span><strong>الميزان</strong><bdi class="val">16°41′</bdi> · «القمر في الميزان»</div>
+    <div class="card"><span class="mono-label">الطالع</span><strong>الأسد</strong><bdi class="val">23°30′</bdi> · الحاكم: الشمس</div>
+  </div>
+  <div class="wheel" role="img" aria-label="عجلة خريطة الميلاد — ترتيب الأبراج لا يتغيّر">
+    <i style="transform:translate(-50%,-50%) rotate(0deg) translateY(-132px)">♈︎</i>
+    <i style="transform:translate(-50%,-50%) rotate(-30deg) translateY(-132px)">♉︎</i>
+    <i style="transform:translate(-50%,-50%) rotate(-60deg) translateY(-132px)">♊︎</i>
+    <i style="transform:translate(-50%,-50%) rotate(-90deg) translateY(-132px)">♋︎</i>
+    <i style="transform:translate(-50%,-50%) rotate(-120deg) translateY(-132px)">♌︎</i>
+    <i style="transform:translate(-50%,-50%) rotate(-150deg) translateY(-132px)">♍︎</i>
+    <i style="transform:translate(-50%,-50%) rotate(-180deg) translateY(-132px)">♎︎</i>
+    <i style="transform:translate(-50%,-50%) rotate(-210deg) translateY(-132px)">♏︎</i>
+    <i style="transform:translate(-50%,-50%) rotate(-240deg) translateY(-132px)">♐︎</i>
+    <i style="transform:translate(-50%,-50%) rotate(-270deg) translateY(-132px)">♑︎</i>
+    <i style="transform:translate(-50%,-50%) rotate(-300deg) translateY(-132px)">♒︎</i>
+    <i style="transform:translate(-50%,-50%) rotate(-330deg) translateY(-132px)">♓︎</i>
+  </div>
+</div>
+
+<div class="note"><strong>جدول المواضع والتنويه</strong> — رؤوس الجدول بخط
+الواجهة العربي (لا مونو مفروض)؛ محاذاة البداية تتبع RTL؛ الدرجات داخل
+<code>bdi</code> تحفظ ترتيب «درجة°دقيقة′».</div>
+<div class="board">
+  <p class="board__tag">النتيجة · المواضع</p>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>الجرم</th><th>البرج</th><th>الموضع</th><th>البيت</th><th>الحركة</th></tr></thead>
+    <tbody>
+      <tr><td>الشمس</td><td>الأسد</td><td><bdi class="val">13°20′</bdi></td><td><bdi class="val">5</bdi></td><td>—</td></tr>
+      <tr><td>عطارد</td><td>الأسد</td><td><bdi class="val">6°20′</bdi></td><td><bdi class="val">5</bdi></td><td>متراجع</td></tr>
+      <tr><td>المشتري</td><td>الأسد</td><td><bdi class="val">4°25′</bdi></td><td><bdi class="val">5</bdi></td><td>مستقيم</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="help" style="margin-top:12px">من دون وقت الميلاد نحسب على
+  الظهيرة: الكواكب دقيقة في حدود اليوم، أما الطالع والبيوت فيحتاجان الساعة.</p>
+  <p><button class="btn" type="button">احفظ هذه الخريطة</button>
+  <span class="pill">محفوظة · على هذا الجهاز</span></p>
+  <p class="help">يمكن حفظ حتى <bdi class="val">40</bdi> خريطة — احذف واحدة أولًا.</p>
+</div>
+</body>
+</html>

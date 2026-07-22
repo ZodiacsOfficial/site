@@ -1,0 +1,184 @@
+[
+  {
+    "file": "ru-core.html",
+    "width": 360,
+    "scrollWidth": 360,
+    "clientWidth": 360,
+    "bodyScrollWidth": 360,
+    "overflowPx": 0,
+    "loadedFonts": [
+      "Golos Text",
+      "EB Garamond Cyr",
+      "JBMono Cyr"
+    ]
+  },
+  {
+    "file": "ru-core.html",
+    "width": 1280,
+    "scrollWidth": 1280,
+    "clientWidth": 1280,
+    "bodyScrollWidth": 1280,
+    "overflowPx": 0,
+    "loadedFonts": [
+      "Golos Text",
+      "EB Garamond Cyr",
+      "JBMono Cyr"
+    ]
+  },
+  {
+    "file": "ru-chart.html",
+    "width": 360,
+    "scrollWidth": 360,
+    "clientWidth": 360,
+    "bodyScrollWidth": 360,
+    "overflowPx": 0,
+    "loadedFonts": [
+      "Golos Text",
+      "EB Garamond Cyr",
+      "JBMono Cyr"
+    ]
+  },
+  {
+    "file": "ru-chart.html",
+    "width": 1280,
+    "scrollWidth": 1280,
+    "clientWidth": 1280,
+    "bodyScrollWidth": 1280,
+    "overflowPx": 0,
+    "loadedFonts": [
+      "Golos Text",
+      "EB Garamond Cyr",
+      "JBMono Cyr"
+    ]
+  },
+  {
+    "file": "ru-surfaces.html",
+    "width": 360,
+    "scrollWidth": 360,
+    "clientWidth": 360,
+    "bodyScrollWidth": 360,
+    "overflowPx": 0,
+    "loadedFonts": [
+      "Golos Text",
+      "EB Garamond Cyr",
+      "JBMono Cyr"
+    ]
+  },
+  {
+    "file": "ru-surfaces.html",
+    "width": 1280,
+    "scrollWidth": 1280,
+    "clientWidth": 1280,
+    "bodyScrollWidth": 1280,
+    "overflowPx": 0,
+    "loadedFonts": [
+      "Golos Text",
+      "EB Garamond Cyr",
+      "JBMono Cyr"
+    ]
+  },
+  {
+    "file": "ar-core.html",
+    "width": 360,
+    "scrollWidth": 360,
+    "clientWidth": 360,
+    "bodyScrollWidth": 360,
+    "overflowPx": 0,
+    "loadedFonts": [
+      "JBMono Cyr",
+      "Amiri",
+      "Plex Arabic"
+    ]
+  },
+  {
+    "file": "ar-core.html",
+    "width": 390,
+    "scrollWidth": 390,
+    "clientWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflowPx": 0,
+    "loadedFonts": [
+      "JBMono Cyr",
+      "Amiri",
+      "Plex Arabic"
+    ]
+  },
+  {
+    "file": "ar-core.html",
+    "width": 1280,
+    "scrollWidth": 1280,
+    "clientWidth": 1280,
+    "bodyScrollWidth": 1280,
+    "overflowPx": 0,
+    "loadedFonts": [
+      "JBMono Cyr",
+      "Amiri",
+      "Plex Arabic"
+    ]
+  },
+  {
+    "file": "ar-chart.html",
+    "width": 360,
+    "scrollWidth": 360,
+    "clientWidth": 360,
+    "bodyScrollWidth": 360,
+    "overflowPx": 0,
+    "loadedFonts": [
+      "JBMono Cyr",
+      "Amiri",
+      "Plex Arabic"
+    ]
+  },
+  {
+    "file": "ar-chart.html",
+    "width": 390,
+    "scrollWidth": 390,
+    "clientWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflowPx": 0,
+    "loadedFonts": [
+      "JBMono Cyr",
+      "Amiri",
+      "Plex Arabic"
+    ]
+  },
+  {
+    "file": "ar-chart.html",
+    "width": 1280,
+    "scrollWidth": 1280,
+    "clientWidth": 1280,
+    "bodyScrollWidth": 1280,
+    "overflowPx": 0,
+    "loadedFonts": [
+      "JBMono Cyr",
+      "Amiri",
+      "Plex Arabic"
+    ]
+  },
+  {
+    "file": "ar-surfaces.html",
+    "width": 360,
+    "scrollWidth": 360,
+    "clientWidth": 360,
+    "bodyScrollWidth": 360,
+    "overflowPx": 0,
+    "loadedFonts": [
+      "JBMono Cyr",
+      "Amiri",
+      "Plex Arabic"
+    ]
+  },
+  {
+    "file": "ar-surfaces.html",
+    "width": 1280,
+    "scrollWidth": 1280,
+    "clientWidth": 1280,
+    "bodyScrollWidth": 1280,
+    "overflowPx": 0,
+    "loadedFonts": [
+      "JBMono Cyr",
+      "Amiri",
+      "Plex Arabic"
+    ]
+  }
+]

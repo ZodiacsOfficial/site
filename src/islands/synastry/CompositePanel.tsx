@@ -1,7 +1,7 @@
 import AspectGlyph from '../../components/AspectGlyph';
 import PlanetGlyph from '../../components/PlanetGlyph';
 import { aspectLabel, planetLabel } from '../../lib/i18n/astrology';
-import { type Locale } from '../../lib/i18n';
+import { type ReleasedLocale as Locale } from '../../lib/i18n';
 import { formatLongitude } from '../../lib/signs';
 import Wheel from '../../lib/wheel/Wheel';
 import type { CompositeTabData } from './relationshipData';

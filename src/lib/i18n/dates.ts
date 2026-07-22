@@ -1,18 +1,10 @@
-import { normalizeLocale, type Locale } from './core';
+import { LOCALE_META, type Locale } from './core';
 
 export const TECHNICAL_OFFSET_LOCALE = 'en-US';
 export const TECHNICAL_WALL_LOCALE = 'en-CA';
 
-const INTL_LOCALES = {
-  en: 'en-US',
-  es: 'es-419',
-  pt: 'pt-BR',
-  fr: 'fr-FR',
-  it: 'it-IT',
-} as const satisfies Record<Locale, string>;
-
 export function intlLocale(locale: Locale): string {
-  return INTL_LOCALES[locale];
+  return LOCALE_META[locale].intlLocale;
 }
 
 export function formatDate(
@@ -21,7 +13,7 @@ export function formatDate(
   options: Intl.DateTimeFormatOptions,
 ): string {
   const date = typeof value === 'string' ? new Date(value) : value;
-  return date.toLocaleDateString(intlLocale(normalizeLocale(locale)), options);
+  return date.toLocaleDateString(intlLocale(locale), options);
 }
 
 export function formatTime(
@@ -30,7 +22,7 @@ export function formatTime(
   options: Intl.DateTimeFormatOptions,
 ): string {
   const date = typeof value === 'string' ? new Date(value) : value;
-  return date.toLocaleTimeString(intlLocale(normalizeLocale(locale)), options);
+  return date.toLocaleTimeString(intlLocale(locale), options);
 }
 
 export function formatDateTime(
@@ -39,7 +31,7 @@ export function formatDateTime(
   options: Intl.DateTimeFormatOptions,
 ): string {
   const date = typeof value === 'string' ? new Date(value) : value;
-  return new Intl.DateTimeFormat(intlLocale(normalizeLocale(locale)), options).format(date);
+  return new Intl.DateTimeFormat(intlLocale(locale), options).format(date);
 }
 
 export function formatShortDate(locale: Locale, value: Date | string): string {

@@ -1,4 +1,4 @@
-import type { Locale } from './i18n';
+import type { ReleasedLocale as Locale } from './i18n';
 
 export const SHARE_CARD_EN = {
   bigThreeTitle: 'Your big three',

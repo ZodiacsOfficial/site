@@ -1,4 +1,4 @@
-import type { Locale, UiKey } from './i18n';
+import type { ReleasedLocale as Locale, UiKey } from './i18n';
 
 interface NavTool {
   href: string;

@@ -1,6 +1,6 @@
 import { useState } from 'preact/hooks';
 import type { MinimalBody, PairSummary } from '../lib/engine/synastry';
-import { tf, type Locale } from '../lib/i18n';
+import { tf, type ReleasedLocale as Locale } from '../lib/i18n';
 import { pairSlug } from '../lib/pair-slug';
 import { shareCardText } from '../lib/share-card-copy';
 import { signForLongitude, signName } from '../lib/signs';

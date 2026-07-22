@@ -5,8 +5,8 @@
  */
 import {
   DEFAULT_LOCALE,
-  LOCALES,
   LOCALE_META,
+  alternatePathEntries,
   alternatePaths,
   normalizeLocale,
   stripLocale,
@@ -60,12 +60,7 @@ const imageUrl = image.startsWith('http') ? image : site + image;
 const alternates = noindex
   ? null
   : alternatePaths(path);
-const alternateEntries = alternates
-  ? LOCALES.flatMap((candidate) => {
-      const href = alternates[candidate];
-      return href ? [{ locale: candidate, href }] : [];
-    })
-  : [];
+const alternateEntries = noindex ? [] : alternatePathEntries(path);
 const defaultAlternate = alternates?.[DEFAULT_LOCALE];
 const ogLocale = LOCALE_META[locale].ogLocale;
 const ogLocaleAlternates = alternateEntries

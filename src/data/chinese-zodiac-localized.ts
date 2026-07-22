@@ -1,4 +1,4 @@
-import type { Locale } from '../lib/i18n/core';
+import type { ReleasedLocale as Locale } from '../lib/i18n/core';
 import { additionFormat, additionText, localizedAdditionObject } from '../strings/additions';
 import { CHINESE_ZODIAC_ANIMALS, CHINESE_ZODIAC_COPY } from './chinese-zodiac';
 

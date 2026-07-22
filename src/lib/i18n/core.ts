@@ -1,15 +1,77 @@
-export const LOCALES = ['en', 'es', 'pt', 'fr', 'it'] as const;
+export const LOCALES = ['en', 'es', 'pt', 'fr', 'it', 'ru', 'ar'] as const;
 export type Locale = typeof LOCALES[number];
 
-export const DEFAULT_LOCALE: Locale = 'en';
+/** Locales with complete production routes and catalogs. */
+export const RELEASED_LOCALES = ['en', 'es', 'pt', 'fr', 'it'] as const;
+export type ReleasedLocale = typeof RELEASED_LOCALES[number];
 
-export function normalizeLocale(locale: string | undefined | null): Locale {
+export const DEFAULT_LOCALE: ReleasedLocale = 'en';
+
+export type TextDirection = 'ltr' | 'rtl';
+
+export interface LocaleMeta {
+  /** URL segment, including its leading slash. Empty for the default locale. */
+  pathPrefix: string;
+  /** Value rendered on the document's `lang` attribute. */
+  htmlLang: string;
+  /** Browser text direction when a route for the locale is released. */
+  dir: TextDirection;
+  /** Value rendered on alternate links and sitemap entries. */
+  hreflang: string;
+  /** Locale passed to the browser's Intl formatters. */
+  intlLocale: string;
+  /** Open Graph's underscore-form locale identifier. */
+  ogLocale: string;
+  /** Self-name used by language selectors. */
+  languageName: string;
+}
+
+/**
+ * Metadata describes every known locale. Route availability is deliberately
+ * separate: adding a locale here must never publish a URL or selector entry.
+ */
+export const LOCALE_META = {
+  en: { pathPrefix: '', htmlLang: 'en', dir: 'ltr', hreflang: 'en', intlLocale: 'en-US', ogLocale: 'en_US', languageName: 'English' },
+  es: { pathPrefix: '/es', htmlLang: 'es', dir: 'ltr', hreflang: 'es', intlLocale: 'es-419', ogLocale: 'es_ES', languageName: 'Español' },
+  pt: { pathPrefix: '/pt', htmlLang: 'pt-BR', dir: 'ltr', hreflang: 'pt-BR', intlLocale: 'pt-BR', ogLocale: 'pt_BR', languageName: 'Português (Brasil)' },
+  fr: { pathPrefix: '/fr', htmlLang: 'fr', dir: 'ltr', hreflang: 'fr', intlLocale: 'fr-FR', ogLocale: 'fr_FR', languageName: 'Français' },
+  it: { pathPrefix: '/it', htmlLang: 'it', dir: 'ltr', hreflang: 'it', intlLocale: 'it-IT', ogLocale: 'it_IT', languageName: 'Italiano' },
+  ru: { pathPrefix: '/ru', htmlLang: 'ru', dir: 'ltr', hreflang: 'ru', intlLocale: 'ru-RU', ogLocale: 'ru_RU', languageName: 'Русский' },
+  ar: { pathPrefix: '/ar', htmlLang: 'ar', dir: 'rtl', hreflang: 'ar', intlLocale: 'ar-u-ca-gregory-nu-latn', ogLocale: 'ar_AR', languageName: 'العربية' },
+} as const satisfies Record<Locale, LocaleMeta>;
+
+export function isLocale(locale: string): locale is Locale {
+  return (LOCALES as readonly string[]).includes(locale);
+}
+
+export function isReleasedLocale(locale: string): locale is ReleasedLocale {
+  return (RELEASED_LOCALES as readonly string[]).includes(locale);
+}
+
+/** Parse every declared locale, including staged locales with no routes yet. */
+export function normalizeKnownLocale(locale: string | undefined | null): Locale {
   const value = locale?.trim().toLowerCase();
   if (!value) return DEFAULT_LOCALE;
   return LOCALES.find((candidate) => value === candidate || value.startsWith(`${candidate}-`))
     ?? DEFAULT_LOCALE;
 }
 
+/** Resolve a locale for code that renders today's complete catalogs/routes. */
+export function normalizeReleasedLocale(locale: string | undefined | null): ReleasedLocale {
+  const normalized = normalizeKnownLocale(locale);
+  return isReleasedLocale(normalized) ? normalized : DEFAULT_LOCALE;
+}
+
+/** Existing rendering API remains release-gated; staged locales fail closed. */
+export const normalizeLocale = normalizeReleasedLocale;
+
+export function requireReleasedLocale(locale: Locale): ReleasedLocale {
+  if (!isReleasedLocale(locale)) {
+    throw new Error(`Locale ${locale} has no released production catalog`);
+  }
+  return locale;
+}
+
 export function localeHtmlLang(locale: Locale): string {
-  return locale === 'pt' ? 'pt-BR' : locale;
+  return LOCALE_META[locale].htmlLang;
 }

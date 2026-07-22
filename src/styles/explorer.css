@@ -35,7 +35,7 @@
   position: absolute;
   z-index: 2;
   top: 12px;
-  left: 12px;
+  inset-inline-start: 12px;
   gap: 2px;
   border: 1px solid var(--hair-2);
   border-radius: 12px;
@@ -247,7 +247,8 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 2px 9px 2px 5px;
+  padding-block: 2px;
+  padding-inline: 5px 9px;
   border-radius: var(--r-full);
   border: 1px solid color-mix(in oklab, var(--sign, var(--accent)) 35%, transparent);
   background: color-mix(in oklab, var(--sign, var(--accent)) 8%, transparent);
@@ -306,7 +307,8 @@
 }
 .insp__related-actions .insp__chip {
   min-height: 40px;
-  padding: 7px 11px 7px 7px;
+  padding-block: 7px;
+  padding-inline: 7px 11px;
 }
 .insp__exact {
   border-block: 1px solid var(--hair-1);
@@ -383,7 +385,8 @@
   }
   .insp--card {
     position: fixed;
-    left: 0; right: 0; bottom: 0;
+    inset-inline: 0;
+    bottom: 0;
     width: 100%;
     max-width: 100vw;
     box-sizing: border-box;
@@ -481,7 +484,7 @@
   display: inline-flex;
   align-items: center;
   gap: 0;
-  text-align: left;
+  text-align: start;
   border-radius: 6px;
   transition: color var(--dur-1) var(--ease);
 }
@@ -490,8 +493,16 @@ tr[data-selected='true'] td:first-child .calc__rowbtn { color: var(--text); }
 tr[data-selected='true'] td {
   background: color-mix(in oklab, var(--sign, var(--accent)) 7%, transparent);
 }
-tr[data-selected='true'] td:first-child { border-radius: 8px 0 0 8px; }
-tr[data-selected='true'] td:last-child { border-radius: 0 8px 8px 0; }
+tr[data-selected='true'] td:first-child {
+  border-radius: 0;
+  border-start-start-radius: 8px;
+  border-end-start-radius: 8px;
+}
+tr[data-selected='true'] td:last-child {
+  border-radius: 0;
+  border-start-end-radius: 8px;
+  border-end-end-radius: 8px;
+}
 
 /* ── Guided tour ─────────────────────────────────────────────────
    The chart story uses the Inspector's accessible desktop/mobile shell,
@@ -567,8 +578,8 @@ tr[data-selected='true'] td:last-child { border-radius: 0 8px 8px 0; }
 }
 .tour__life-area {
   margin: 0;
-  padding-left: 12px;
-  border-left: 2px solid color-mix(in oklab, var(--accent) 70%, transparent);
+  padding-inline-start: 12px;
+  border-inline-start: 2px solid color-mix(in oklab, var(--accent) 70%, transparent);
 }
 .tour__ctas { grid-auto-flow: column; justify-items: stretch; gap: 10px; }
 .tour__first-list {
@@ -591,7 +602,7 @@ tr[data-selected='true'] td:last-child { border-radius: 0 8px 8px 0; }
   background: rgba(198, 204, 218, 0.035);
 }
 .tour__first-role { color: var(--text-2); font-size: 12.5px; }
-.tour__first-value { display: grid; justify-items: end; gap: 1px; text-align: right; }
+.tour__first-value { display: grid; justify-items: end; gap: 1px; text-align: end; }
 .tour__first-value strong { color: var(--text); font-size: 14px; font-weight: 650; }
 .tour__first-value small {
   color: var(--faint);

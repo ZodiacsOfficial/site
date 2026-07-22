@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'preact/hooks';
 import PlanetGlyph from '../components/PlanetGlyph';
 import type { Chart } from '../lib/engine/types';
-import { t, type Locale } from '../lib/i18n';
+import { t, type ReleasedLocale as Locale } from '../lib/i18n';
 import { planetLabel } from '../lib/i18n/astrology';
 import {
   decodePositionsLink,

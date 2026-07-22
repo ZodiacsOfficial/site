@@ -10,7 +10,7 @@ import {
   disclosureText,
   type DisclosureTextKey,
 } from './disclosure';
-import { LOCALES, LOCALE_META, localizePath, type Locale } from './i18n';
+import { RELEASED_LOCALES, LOCALE_META, localizePath, type ReleasedLocale as Locale } from './i18n';
 import {
   REGISTRY_ESTABLISHED,
   REGISTRY_ESTABLISHMENT,
@@ -195,7 +195,7 @@ describe('registry disclosure contract', () => {
   });
 
   it('keeps the six-row contract and pending provenance localized in every catalog', () => {
-    for (const locale of LOCALES) {
+    for (const locale of RELEASED_LOCALES) {
       const rows = disclosureRows(locale);
       expect(rows.map((row) => row.id), locale).toEqual(ROW_IDS);
       expect(rows.filter((row) => row.status === 'pending').map((row) => row.id), locale)
@@ -227,7 +227,7 @@ describe('registry disclosure contract', () => {
   });
 
   it('render-checks all five routes without operator scaffolding or English copy leakage', async () => {
-    for (const locale of LOCALES) {
+    for (const locale of RELEASED_LOCALES) {
       const html = await readFile(routeFile(locale), 'utf8');
       const route = localizePath(locale, '/disclosure/');
       expect(html, locale).toContain(`<html lang="${LOCALE_META[locale].htmlLang}">`);

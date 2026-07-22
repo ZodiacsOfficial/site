@@ -1,4 +1,4 @@
-import { localizePath, type Locale } from './i18n';
+import { localizePath, type ReleasedLocale as Locale } from './i18n';
 import { SIGNS, signName } from './signs';
 import { EN } from '../strings/en.mjs';
 import { additionFormat, additionText } from '../strings/additions';

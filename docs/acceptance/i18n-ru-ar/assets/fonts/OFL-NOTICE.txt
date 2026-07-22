@@ -1,0 +1,14 @@
+Proof-only font redistribution notice
+
+All nine .woff2 files in this directory are subsets fetched from Google
+Fonts and are licensed under the SIL Open Font License 1.1:
+
+- Golos Text — Copyright 2018 the Golos Text Project Authors
+- EB Garamond — Copyright 2017 the EB Garamond Project Authors
+- JetBrains Mono — Copyright 2020 The JetBrains Mono Project Authors
+- Amiri — Copyright 2010-2023 The Amiri Project Authors
+- IBM Plex Sans Arabic — Copyright 2017 IBM Corp.
+
+Full OFL 1.1 text: https://openfontlicense.org — production shipping per
+the handoff copies each family's complete OFL text into public/fonts/,
+matching the existing OFL-*.txt convention.

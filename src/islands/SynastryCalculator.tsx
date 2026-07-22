@@ -16,7 +16,7 @@ import type { SavedChart } from '../lib/profile/schema';
 import type { MinimalBody, PairSummary } from '../lib/engine/synastry';
 import type { ShareChartInput } from '../lib/share';
 import type { City } from '../lib/geo/search';
-import { LOCALE_META, localizePath, normalizeLocale, t, tf, type Locale } from '../lib/i18n';
+import { LOCALE_META, localizePath, normalizeLocale, t, tf, type ReleasedLocale as Locale } from '../lib/i18n';
 import { useEngine, type EngineLoader } from '../lib/hooks/useEngine';
 import { useProfile } from '../lib/hooks/useProfile';
 

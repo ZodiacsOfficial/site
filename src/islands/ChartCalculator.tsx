@@ -59,7 +59,7 @@ import type { TourVisual } from '../lib/scene/chapters';
 import { ENGINE_VERSION } from '../lib/engine/types';
 import type { Chart, HouseSystem } from '../lib/engine/types';
 import type { City } from '../lib/geo/search';
-import { LOCALES, localizePath, normalizeLocale, t, type Locale } from '../lib/i18n';
+import { RELEASED_LOCALES, localizePath, normalizeLocale, t, type ReleasedLocale as Locale } from '../lib/i18n';
 import { aspectLabel, moonPhaseLabel, planetLabel } from '../lib/i18n/astrology';
 import { useEngine } from '../lib/hooks/useEngine';
 import type { AspectType } from '../lib/engine/types';
@@ -1001,12 +1001,12 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   const moon = chart?.bodies.find((b) => b.body === 'Moon');
   const asc = chart?.angles?.asc ?? null;
   const sunSign = sun ? signForLongitude(sun.lon) : null;
-  const autoNames = LOCALES.map((candidate) =>
+  const autoNames = RELEASED_LOCALES.map((candidate) =>
     sunSign
       ? `${signName(sunSign, candidate)} ${AUTO_NAME_SUN[candidate]} · ${computedInput?.date ?? date}`
       : '',
   );
-  const autoName = autoNames[LOCALES.indexOf(locale)] ?? '';
+  const autoName = autoNames[RELEASED_LOCALES.indexOf(locale)] ?? '';
   const isAutoName = (name: string | null) => name !== null && autoNames.includes(name);
   const personName = linkName && !isAutoName(linkName)
     ? linkName

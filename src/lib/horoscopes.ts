@@ -5,7 +5,7 @@
  * stale month renders honestly instead of failing the deploy.
  */
 import { signBySlug, signName } from './signs';
-import type { Locale } from './i18n';
+import type { ReleasedLocale as Locale } from './i18n';
 import { aspectLabel, planetLabel } from './i18n/astrology';
 import { formatDate } from './i18n/dates';
 

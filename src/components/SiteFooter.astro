@@ -3,24 +3,28 @@ import { SIGNS, signName } from '../lib/signs';
 import BrandMark from './BrandMark.astro';
 import EmailCapture from './EmailCapture.astro';
 import {
-  LOCALES,
   LOCALE_META,
-  alternatePaths,
+  LEGACY_HOME_SELECTOR_LOCALES,
+  alternatePathEntries,
   localizePath,
   normalizeLocale,
   stripLocale,
   t,
-  type Locale,
+  type ReleasedLocale as Locale,
 } from '../lib/i18n';
 
 const year = new Date().getFullYear();
 interface Props { locale?: Locale }
 const locale = normalizeLocale(Astro.props.locale);
-const twin = alternatePaths(Astro.url.pathname);
-const languageLinks = LOCALES.map((candidate) => ({
-  locale: candidate,
-  href: twin?.[candidate] ?? localizePath(candidate, '/'),
-  meta: LOCALE_META[candidate],
+const routeLanguageLinks = alternatePathEntries(Astro.url.pathname);
+// Preserve the established locale-home fallback on English-only routes while
+// deriving the candidate set from actual route availability, never LOCALES.
+const availableHomeFallback = alternatePathEntries('/').filter((entry) => (
+  LEGACY_HOME_SELECTOR_LOCALES.includes(entry.locale as typeof LEGACY_HOME_SELECTOR_LOCALES[number])
+));
+const languageLinks = (routeLanguageLinks.length ? routeLanguageLinks : availableHomeFallback).map((entry) => ({
+  ...entry,
+  meta: LOCALE_META[entry.locale],
 }));
 const FOOTER_COPY = {
   en: { assistant: 'Ask Zodiacs', today: 'Today' },
@@ -162,6 +166,7 @@ const suppressFooterEmailCapture = /^\/(?:birth-chart|horoscopes|profile)(?:\/|$
   .footer__brand { grid-column: 1 / -1; }
   @media (min-width: 900px) { .footer__brand { grid-column: auto; } }
   .footer__mark {
+    direction: ltr;
     display: inline-flex;
     align-items: center;
     gap: 10px;

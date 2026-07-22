@@ -1,5 +1,5 @@
 import { useState } from 'preact/hooks';
-import type { Locale } from '../lib/i18n';
+import type { ReleasedLocale as Locale } from '../lib/i18n';
 import { SIGN_SLUGS, signBySlug, signName, type Sign } from '../lib/signs';
 
 export const COMPATIBILITY_PREFILL_EN = {
