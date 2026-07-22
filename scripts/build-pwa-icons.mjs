@@ -23,10 +23,17 @@ export async function composeWheelIcon(size, { maskable = false } = {}) {
       .toBuffer();
     return { input, left, top };
   }));
-  return sharp({
+  const wheel = await sharp({
     create: { width: logicalSize, height: logicalSize, channels: 4, background: '#060709' },
   })
     .composite(inputs)
+    .png()
+    .toBuffer();
+
+  // Sharp applies resize operations before composites in the same pipeline.
+  // Flatten the canonical 512px wheel first so smaller PWA and Apple assets
+  // scale the complete ring instead of clipping composites at 512px offsets.
+  return sharp(wheel)
     .resize(size, size, { kernel: 'lanczos3' })
     .png({ compressionLevel: 9, adaptiveFiltering: true })
     .toBuffer();
