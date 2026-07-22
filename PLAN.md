@@ -1,6 +1,6 @@
 # Zodiacs.org household-name program
 
-Last updated: 2026-07-19
+Last updated: 2026-07-22
 
 Active phase: **Phase 1 — The Daily Horoscope Engine**
 
@@ -63,8 +63,8 @@ New work reuses these tokens. It introduces no new decorative color, chrome lang
 ### Internationalization
 
 - Locale routing and UI catalogs live under `src/lib/i18n/`; the released locale roots remain `/es/`, `/pt/`, `/fr/`, and `/it/`.
-- The owner-approved Russian workstream is staged separately from the six product phases. R0 added availability-aware locale plumbing without a visible change. R1 adds 27 complete Russian preview routes under `/ru/`, all with `noindex`; Russian remains absent from public selectors, alternates, sitemaps, search, and Registry output.
-- R2 has not started. Russian can become public only after its localized social cards, indexability flip, public selector/alternate/sitemap wiring, live reciprocity checks, and explicit owner approval pass as one bounded release. Arabic routes and content remain absent.
+- The owner-approved Russian workstream is staged separately from the six product phases. R0 added availability-aware locale plumbing without a visible change. R1 released 27 complete Russian preview routes under `/ru/`, all with `noindex` and absent from public discovery.
+- R2 is now a bounded release candidate: 26 reviewed Russian core pages gain localized social cards and public selector/alternate/sitemap discovery; `/ru/404/` remains `noindex`. Russian search and every deferred route family remain excluded. Nothing becomes public until this candidate passes its complete local and CI release gates and receives explicit release approval. Arabic routes and content remain absent.
 - Daily horoscopes, Today and event publications, Registry, birthday pages, Ask, and email/push publication content remain outside the Russian launch set. Russian pages label linked English-only material plainly rather than implying that it is translated.
 
 ### Computation and current horoscope pipeline
@@ -222,6 +222,15 @@ The prior release cutover is superseded; the current hardening candidate must es
 Keep clean data and route seams for these; do not implement them inside this program.
 
 ## Change log
+
+### 2026-07-22 — Russian R2 public-release candidate
+
+- Prepared exactly 26 reviewed Russian core pages for indexability while keeping `/ru/404/` `noindex`; daily horoscopes, Today, events, birthday and Chinese-zodiac programs, Registry, Ask, search, and email/push publication content remain outside the Russian route set.
+- Added reciprocal EN↔RU alternates, an availability-derived six-language selector on the launched core family, and exact Russian sitemap rows with English retained as `x-default`. Deferred and programmatic routes remain on the existing five-language policy.
+- Added 27 localized 1200×630 Russian social cards, including the private 404 card, generated from the approved Russian deck with the canonical pastel sign artwork. The Russian set is about 521 KiB and the full card library remains below the existing 15 MiB ceiling.
+- Added release gates for exact route/indexing inventory, reciprocal hreflang, sitemap counts, localized metadata and cards, Arabic absence, Russian search exclusion, 360px/1280px layout, keyboard navigation, reduced motion, chart calculation, font loading, and Russian Lighthouse coverage.
+- Preserved the 62,880-byte Russian font payload under its 80 KiB cap and introduced no new runtime dependency, data store, product flag, or Registry change.
+- This entry records a candidate, not a production release. Live reciprocity and Search Console submission remain release-time evidence after explicit approval.
 
 ### 2026-07-22 — Russian R1 private preview candidate
 

@@ -29,12 +29,12 @@ const jsonLd = [
 ---
 <Base
   clientUi
+  inlineCriticalCss
   title="Zodiacs.org — натальные карты и астрология без мистики"
   description="Бесплатные натальные карты, совместимость и гиды по знакам. Всё считается приватно в вашем браузере и объясняется простым языком."
   path="/ru/"
   locale="ru"
   jsonLd={jsonLd}
-  noindex
 >
   <link
     slot="head"
@@ -44,7 +44,7 @@ const jsonLd = [
     fetchpriority="high"
   />
   <section class="hero-ru container">
-    <div class="hero-ru__frame reveal">
+    <div class="hero-ru__frame">
       <video
         class="hero-ru__video"
         poster="/assets/hero/zodiacs-hero-poster.avif"
@@ -269,10 +269,10 @@ const jsonLd = [
     </svg>
   </section>
 
-  <WelcomeBack client:load locale="ru" />
+  <WelcomeBack client:visible locale="ru" />
 
   <section class="container ticker-band reveal">
-    <SkyTicker client:load locale="ru" />
+    <SkyTicker client:visible locale="ru" />
   </section>
 
   <section class="section container">

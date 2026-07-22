@@ -1,22 +1,10 @@
 {
   "version": 1,
-  "id": "i18n-r1-russian-private-preview",
-  "baseCommit": "bcedd5374dc69d70ed9c9c43b6bf6981db56b674",
-  "reason": "Owner-approved R1 Russian localization preview; 27 Russian routes remain noindex and absent from public selectors, alternates, sitemap, search, Registry output, and indexing.",
+  "id": "i18n-r2-russian-public-release",
+  "baseCommit": "640e3c1c43636679700b584d7529220d038fd07c",
+  "reason": "Owner-approved R2 Russian release candidate; exactly 26 reviewed core routes become public while the Russian 404 stays noindex, deferred route families stay English-only, Arabic stays absent, and Registry output is unchanged.",
   "protectedPaths": [
-    "src/lib/i18n/astrology.ts",
-    "src/lib/i18n/core.ts",
     "src/lib/i18n/index.test.ts",
-    "src/lib/i18n/index.ts",
-    "src/lib/i18n/plural.test.ts",
-    "src/lib/i18n/ru-runtime/client.test.ts",
-    "src/lib/i18n/ru-runtime/client.ts",
-    "src/lib/i18n/ru-runtime/index.ts",
-    "src/lib/i18n/ru-runtime/schema.ts",
-    "src/lib/i18n/ru-runtime/server.ts",
-    "src/lib/i18n/ui/client.ts",
-    "src/lib/i18n/ui/ru.test.ts",
-    "src/lib/i18n/ui/ru.ts",
-    "src/lib/i18n/ui/server.ts"
+    "src/lib/i18n/index.ts"
   ]
 }

@@ -74,11 +74,10 @@ const CORE_LOCALIZED_PATHS = [
  * Route publication is independent from catalog readiness. Future RU/AR
  * catalogs cannot publish a URL until that locale is added to a route policy.
  */
-export const CORE_ROUTE_LOCALES = ['en', 'es', 'pt', 'fr', 'it'] as const satisfies readonly Locale[];
+export const CORE_ROUTE_LOCALES = ['en', 'es', 'pt', 'fr', 'it', 'ru'] as const satisfies readonly Locale[];
 
-/** Complete private-preview trees. They can link internally but are excluded
- * from selectors, alternates, sitemaps, search, and public availability. */
-export const STAGED_CORE_ROUTE_LOCALES = ['ru'] as const satisfies readonly Locale[];
+/** Complete private-preview trees awaiting a later indexability release. */
+export const STAGED_CORE_ROUTE_LOCALES = [] as const satisfies readonly Locale[];
 
 /** Birthday and Chinese-zodiac families remain outside R1/R2/A1/A2. */
 export const PROGRAMMATIC_ROUTE_LOCALES = ['en', 'es', 'pt', 'fr', 'it'] as const satisfies readonly Locale[];

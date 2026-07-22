@@ -1,5 +1,6 @@
 import { mkdir } from 'node:fs/promises';
 import { chromium } from 'playwright-core';
+import { RU_OG_ROUTE_CARDS } from '../src/strings/seo.ru.mjs';
 import { findChromium, STABLE_CHROMIUM_ARGS } from './visual/browser.mjs';
 import { withPreview } from './visual/preview-server.mjs';
 
@@ -10,12 +11,21 @@ const signs = [
   'aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo',
   'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces',
 ];
-const routes = [
+const corePaths = [
   '/', '/tools/', '/birth-chart/', '/compatibility/', '/moon-sign/',
   '/rising-sign/', '/moon-phase/', '/saturn-return/', '/transits/',
   '/baby-zodiac/', '/profile/', '/methodology/', '/privacy/', '/disclosure/',
-  '/404/', ...signs.map((sign) => `/${sign}/`),
-].map((path) => `/ru${path}`);
+  ...signs.map((sign) => `/${sign}/`),
+];
+const indexedRoutes = corePaths.map((path) => `/ru${path}`);
+const routes = [...indexedRoutes, '/ru/404/'];
+const expectedHreflangs = ['en', 'es', 'pt-BR', 'fr', 'it', 'ru', 'x-default'];
+const structuredImageRoutes = new Set([
+  '/ru/birth-chart/', '/ru/compatibility/', '/ru/moon-sign/',
+  '/ru/rising-sign/', '/ru/moon-phase/', '/ru/saturn-return/',
+  '/ru/transits/', '/ru/baby-zodiac/', '/ru/methodology/',
+  ...signs.map((sign) => `/ru/${sign}/`),
+]);
 
 if (OUT) await mkdir(OUT, { recursive: true });
 
@@ -39,7 +49,25 @@ await withPreview({ port: 4418 }, async (baseURL) => {
           dir: document.documentElement.getAttribute('dir'),
           robots: document.querySelector('meta[name="robots"]')?.getAttribute('content'),
           canonical: document.querySelector('link[rel="canonical"]')?.getAttribute('href'),
-          alternates: document.querySelectorAll('link[rel="alternate"][hreflang]').length,
+          alternates: Array.from(document.querySelectorAll('link[rel="alternate"][hreflang]'))
+            .map((node) => [node.getAttribute('hreflang'), node.getAttribute('href')]),
+          ogImage: document.querySelector('meta[property="og:image"]')?.getAttribute('content'),
+          twitterImage: document.querySelector('meta[name="twitter:image"]')?.getAttribute('content'),
+          structuredImages: Array.from(document.querySelectorAll('script[type="application/ld+json"]'))
+            .flatMap((node) => {
+              const images = [];
+              const walk = (value) => {
+                if (Array.isArray(value)) {
+                  value.forEach(walk);
+                  return;
+                }
+                if (!value || typeof value !== 'object') return;
+                if (typeof value.image === 'string') images.push(value.image);
+                Object.values(value).forEach(walk);
+              };
+              try { walk(JSON.parse(node.textContent ?? 'null')); } catch { return ['INVALID_JSON_LD']; }
+              return images;
+            }),
           width: document.documentElement.scrollWidth,
           viewport: innerWidth,
           selectorEntries: document.querySelectorAll('.footer__languages .footer__language-option').length,
@@ -47,14 +75,45 @@ await withPreview({ port: 4418 }, async (baseURL) => {
           cyrillic: (document.body.innerText.match(/[А-Яа-яЁё]/gu) ?? []).length,
           arHref: Boolean(document.querySelector('a[href="/ar"], a[href^="/ar/"]')),
         }));
+        const notFound = route === '/ru/404/';
         check(state.lang === 'ru', `${route}@${viewport.width}: lang=${state.lang}`);
         check(state.dir === null, `${route}@${viewport.width}: Russian page emitted dir=${state.dir}`);
-        check(state.robots === 'noindex, follow, max-image-preview:large', `${route}: robots=${state.robots}`);
+        check(
+          state.robots === (notFound ? 'noindex, follow, max-image-preview:large' : 'max-image-preview:large'),
+          `${route}: robots=${state.robots}`,
+        );
         check(state.canonical === `https://zodiacs.org${route}`, `${route}: canonical=${state.canonical}`);
-        check(state.alternates === 0, `${route}: emitted ${state.alternates} hreflangs`);
+        check(
+          JSON.stringify(state.alternates.map(([hreflang]) => hreflang))
+            === JSON.stringify(notFound ? [] : expectedHreflangs),
+          `${route}: hreflangs=${state.alternates.map(([hreflang]) => hreflang).join(',') || 'none'}`,
+        );
+        if (!notFound) {
+          const englishPath = route === '/ru/' ? '/' : route.slice('/ru'.length);
+          check(
+            state.alternates.find(([hreflang]) => hreflang === 'x-default')?.[1]
+              === `https://zodiacs.org${englishPath}`,
+            `${route}: x-default is not English`,
+          );
+        }
+        const expectedImage = RU_OG_ROUTE_CARDS[route]
+          ? `https://zodiacs.org/assets/og/v2/ru/${RU_OG_ROUTE_CARDS[route]}`
+          : null;
+        check(state.ogImage === expectedImage, `${route}: og:image=${state.ogImage}`);
+        check(state.twitterImage === expectedImage, `${route}: twitter:image=${state.twitterImage}`);
+        if (structuredImageRoutes.has(route)) {
+          check(
+            state.structuredImages.length === 1 && state.structuredImages[0] === expectedImage,
+            `${route}: structured image=${state.structuredImages.join(',') || 'none'}`,
+          );
+        }
+        check(
+          state.structuredImages.every((value) => value === expectedImage),
+          `${route}: structured data references non-Russian artwork`,
+        );
         check(state.width <= state.viewport + 1, `${route}@${viewport.width}: ${state.width}px overflow`);
-        check(state.selectorEntries === 5, `${route}: language selector has ${state.selectorEntries} public entries`);
-        check(!/Русский|العربية/u.test(state.selectorText), `${route}: staged selector entry became visible`);
+        check(state.selectorEntries === 6, `${route}: language selector has ${state.selectorEntries} entries`);
+        check(/Русский/u.test(state.selectorText) && !/العربية/u.test(state.selectorText), `${route}: selector release set drifted`);
         check(state.cyrillic >= 60, `${route}: too little Russian copy (${state.cyrillic} Cyrillic letters)`);
         check(!state.arHref, `${route}: Arabic route leaked`);
 
@@ -68,6 +127,21 @@ await withPreview({ port: 4418 }, async (baseURL) => {
         if (OUT && ['/ru/', '/ru/birth-chart/', '/ru/aries/'].includes(route)) {
           const name = route === '/ru/' ? 'home' : route.split('/').filter(Boolean).at(-1);
           await page.screenshot({ path: `${OUT}/${name}-${viewport.width}.png`, fullPage: true });
+        }
+      }
+
+      if (viewport.width === 1280) {
+        for (const path of corePaths) {
+          await page.goto(`${baseURL}${path}`, { waitUntil: 'domcontentloaded' });
+          const russianAlternate = await page.locator('link[rel="alternate"][hreflang="ru"]').getAttribute('href');
+          check(
+            russianAlternate === `https://zodiacs.org/ru${path}`,
+            `${path}: reciprocal Russian alternate=${russianAlternate}`,
+          );
+          check(
+            await page.locator('.footer__languages .footer__language-option').count() === 6,
+            `${path}: public language selector does not expose Russian`,
+          );
         }
       }
 
@@ -147,9 +221,9 @@ await withPreview({ port: 4418 }, async (baseURL) => {
 });
 
 if (failures.length) {
-  console.error(`i18n-r1-ru-drive: ${failures.length} failure(s)`);
+  console.error(`i18n-r2-ru-drive: ${failures.length} failure(s)`);
   for (const failure of failures) console.error(`- ${failure}`);
   process.exit(1);
 }
 
-console.log('i18n-r1-ru-drive: 27 private routes passed at 360/1280, plus keyboard, reduced-motion, chart-result, and font checks');
+console.log('i18n-r2-ru-drive: 26 public routes + noindex 404 passed at 360/1280, including reciprocal discovery, keyboard, reduced-motion, chart-result, and font checks');

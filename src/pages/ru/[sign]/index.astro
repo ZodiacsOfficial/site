@@ -45,7 +45,7 @@ const jsonLd = [
     author: EDITOR_AUTHOR,
     publisher: { '@id': 'https://zodiacs.org/#org' },
     mainEntityOfPage: { '@type': 'WebPage', '@id': `https://zodiacs.org/ru/${sign.slug}/` },
-    image: `https://zodiacs.org/assets/og/v2/sign/${sign.slug}.png`,
+    image: `https://zodiacs.org/assets/og/v2/ru/sign/${sign.slug}.png`,
     inLanguage: 'ru',
     about: { '@type': 'Thing', name: `${signName(sign, 'ru')} (астрология)` },
   },
@@ -72,12 +72,11 @@ const jsonLd = [
   title={metaTitle}
   description={metaDescription}
   path={`/ru/${sign.slug}/`}
-  image={`/assets/og/v2/sign/${sign.slug}.png`}
+  image={`/assets/og/v2/ru/sign/${sign.slug}.png`}
   imageAlt={`${signName(sign, 'ru')} — гид по знаку на Zodiacs.org`}
   type="article"
   locale="ru"
   jsonLd={jsonLd}
-  noindex
 >
   <article style={`--sign:${sign.hue}`}>
     <header class="guide-ru-hero container">

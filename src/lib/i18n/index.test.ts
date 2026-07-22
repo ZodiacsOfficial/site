@@ -95,6 +95,7 @@ describe('i18n helpers', () => {
       pt: '/pt/tools/',
       fr: '/fr/tools/',
       it: '/it/tools/',
+      ru: '/ru/tools/',
     });
     expect(alternatePaths('/pt/privacy/')).toEqual({
       en: '/privacy/',
@@ -102,6 +103,7 @@ describe('i18n helpers', () => {
       pt: '/pt/privacy/',
       fr: '/fr/privacy/',
       it: '/it/privacy/',
+      ru: '/ru/privacy/',
     });
     expect(alternatePaths('/fr/disclosure/')).toEqual({
       en: '/disclosure/',
@@ -109,25 +111,27 @@ describe('i18n helpers', () => {
       pt: '/pt/disclosure/',
       fr: '/fr/disclosure/',
       it: '/it/disclosure/',
+      ru: '/ru/disclosure/',
     });
     expect(LOCALIZED_PATHS.get('/tools/')).toEqual(CORE_ROUTE_LOCALES);
-    expect(Object.keys(alternatePaths('/tools/') ?? {})).toEqual([...RELEASED_LOCALES]);
+    expect(Object.keys(alternatePaths('/tools/') ?? {})).toEqual([...CORE_ROUTE_LOCALES]);
     expect(alternatePaths('/es/404/')).toEqual({
       en: '/404.html',
       es: '/es/404/',
       pt: '/pt/404/',
       fr: '/fr/404/',
       it: '/it/404/',
+      ru: '/ru/404/',
     });
     expect(alternatePaths('/learn/placements/venus-in-scorpio/')).toBeNull();
   });
 
-  it('keeps staged locales in metadata without activating production routes', () => {
+  it('publishes Russian only on the reviewed core route family', () => {
     expect(LOCALES).toEqual(['en', 'es', 'pt', 'fr', 'it', 'ru', 'ar']);
     expect(RELEASED_LOCALES).toEqual(['en', 'es', 'pt', 'fr', 'it']);
-    expect(CORE_ROUTE_LOCALES).toEqual(['en', 'es', 'pt', 'fr', 'it']);
+    expect(CORE_ROUTE_LOCALES).toEqual(['en', 'es', 'pt', 'fr', 'it', 'ru']);
     expect(CATALOG_LOCALES).toEqual(['en', 'es', 'pt', 'fr', 'it', 'ru']);
-    expect(STAGED_CORE_ROUTE_LOCALES).toEqual(['ru']);
+    expect(STAGED_CORE_ROUTE_LOCALES).toEqual([]);
     expect(LEGACY_HOME_SELECTOR_LOCALES).toEqual(['en', 'es', 'pt', 'fr', 'it']);
     expect(PROGRAMMATIC_ROUTE_LOCALES).toEqual(['en', 'es', 'pt', 'fr', 'it']);
     expect(LOCALE_META.ru).toEqual({
@@ -146,10 +150,11 @@ describe('i18n helpers', () => {
     expect(localizePath('ar', '/tools/')).toBe('/tools/');
     expect(localizePath('ru', '/birthday/february-29/')).toBe('/birthday/february-29/');
     expect(availableLocalesForPath('/tools/')).toEqual(CORE_ROUTE_LOCALES);
-    expect(renderableLocalesForPath('/tools/')).toEqual([...CORE_ROUTE_LOCALES, 'ru']);
+    expect(renderableLocalesForPath('/tools/')).toEqual(CORE_ROUTE_LOCALES);
     expect(availableLocalesForPath('/birthday/february-29/')).toEqual(PROGRAMMATIC_ROUTE_LOCALES);
     expect(availableLocalesForPath('/learn/chinese-zodiac/dragon/')).toEqual(PROGRAMMATIC_ROUTE_LOCALES);
-    for (const path of ['/tools/', '/birthday/february-29/', '/learn/chinese-zodiac/dragon/']) {
+    expect(alternatePaths('/tools/')).toHaveProperty('ru', '/ru/tools/');
+    for (const path of ['/birthday/february-29/', '/learn/chinese-zodiac/dragon/']) {
       expect(alternatePaths(path)).not.toHaveProperty('ru');
       expect(alternatePaths(path)).not.toHaveProperty('ar');
     }

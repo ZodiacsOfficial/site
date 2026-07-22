@@ -21,6 +21,8 @@ const signs = [
 const targetPaths = [
   'today/index.html',
   ...signs.map((sign) => `horoscopes/${sign}/index.html`),
+  'ru/index.html',
+  'ru/birth-chart/index.html',
 ];
 
 async function htmlFiles(directory) {
@@ -129,9 +131,9 @@ async function main() {
     stylesheets += result.stylesheets;
     bytes += result.bytes;
   }
-  if (pages + alreadyInlined !== 13 || stylesheets !== 26) {
+  if (pages + alreadyInlined !== 15 || stylesheets !== 32) {
     throw new Error(
-      `inline-critical-styles: expected 13 pages / 26 stylesheets, found ${pages + alreadyInlined} / ${stylesheets}`,
+      `inline-critical-styles: expected 15 pages / 32 stylesheets, found ${pages + alreadyInlined} / ${stylesheets}`,
     );
   }
   const state = pages > 0

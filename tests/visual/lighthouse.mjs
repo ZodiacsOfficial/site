@@ -26,6 +26,12 @@ const routes = [
   { name: 'event-retrograde', path: '/mercury-retrograde/2026-06-29/' },
   { name: 'event-ingress', path: '/events/saturn-enters-aries-2026-02-14/' },
   { name: 'event-aspect', path: '/events/jupiter-trine-saturn-2026-08-31/' },
+  // R2 makes the reviewed Russian core public. Gate each distinct Russian
+  // template family instead of assuming the English scores transfer across
+  // longer Cyrillic copy and the locale-specific font preload path.
+  { name: 'ru-home', path: '/ru/' },
+  { name: 'ru-birth-chart', path: '/ru/birth-chart/' },
+  { name: 'ru-sign-guide', path: '/ru/aries/' },
 ];
 // The Phase 1 brief gates every *new* template. Older site baselines remain
 // available for a broader audit without making unrelated debt block this gate.
@@ -38,6 +44,15 @@ if (process.env.LIGHTHOUSE_INCLUDE_BASELINE === '1') {
 }
 if (process.env.LIGHTHOUSE_INCLUDE_AURA === '1') {
   routes.push({ name: 'registry-aura', path: '/registry/aura/' });
+}
+const routeFilter = new Set(
+  (process.env.LIGHTHOUSE_ROUTES ?? '').split(',').map((name) => name.trim()).filter(Boolean),
+);
+const selectedRoutes = routeFilter.size > 0
+  ? routes.filter((route) => routeFilter.has(route.name))
+  : routes;
+if (selectedRoutes.length === 0) {
+  throw new Error(`LIGHTHOUSE_ROUTES did not match a route: ${[...routeFilter].join(', ')}`);
 }
 const budgets = {
   score: 0.95,
@@ -96,7 +111,7 @@ try {
     console.log(`Lighthouse · ${runCount} run${runCount === 1 ? '' : 's'} per route · ${baseURL}`);
     console.log('Route                         Perf  A11y   SEO     LCP       CLS       TBT');
 
-    for (const route of routes) {
+    for (const route of selectedRoutes) {
       const results = [];
       for (let index = 0; index < runCount; index += 1) {
         const url = `${baseURL}${route.path}`;
