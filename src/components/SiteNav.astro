@@ -161,9 +161,13 @@ const visibleNavTools = locale === 'ru'
       <span class="mobile-menu__label">{t(locale, 'navTools')}</span>
       <div class="mobile-menu__tools">
         {visibleNavTools.map((tool, i) => (
-          <a class="mobile-menu__tool" style={`--i:${i}`} href={localizePath(locale, tool.href)}>
+          <a
+            class="mobile-menu__tool"
+            style={`--i:${i}`}
+            href={localizePath(locale, tool.href)}
+            aria-label={`${t(locale, tool.label)}. ${tool.sublabel[locale]}`}
+          >
             <span>{t(locale, tool.label)}</span>
-            <span class="mobile-menu__tool-desc">{tool.sublabel[locale]}</span>
           </a>
         ))}
       </div>
@@ -499,8 +503,7 @@ const visibleNavTools = locale === 'ru'
     grid-template-columns: minmax(0, 1fr);
   }
   .mobile-menu__tool {
-    display: grid;
-    gap: 4px;
+    display: block;
     min-width: 0;
     padding: 11px 0;
     border-bottom: 1px solid var(--hair);
@@ -510,16 +513,7 @@ const visibleNavTools = locale === 'ru'
     line-height: 1.05;
     text-decoration: none;
   }
-  .mobile-menu__tool-desc {
-    overflow: hidden;
-    color: var(--faint);
-    font-family: var(--font-mono);
-    font-size: 9px;
-    line-height: 1.35;
-    letter-spacing: 0.02em;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
+  .mobile-menu__tool:last-child { border-bottom: 0; }
   .mobile-menu__signs {
     direction: ltr;
     display: flex;

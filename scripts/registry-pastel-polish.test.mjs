@@ -90,15 +90,17 @@ describe('registry pastel polish', () => {
     expect(source).toContain('Read the full thesis — belief is the oldest asset');
     expect(registry).toContain('registry-aura-hero:slot');
     expect(registry).not.toContain('cine__why');
+    expect(registry).toContain('.cine__cta .btn--ghost::after { content: none; }');
   });
 
   it('keeps the wing nav on the shared compact and desktop geometry contract', async () => {
-    const [wingNav, registry, thesis, sdk, source] = await Promise.all([
+    const [wingNav, registry, thesis, sdk, source, siteNav] = await Promise.all([
       read('scripts/wing-nav.mjs'),
       read('public/registry/index.html'),
       read('public/thesis/index.html'),
       read('public/sdk/index.html'),
       read('src/app.jsx'),
+      read('src/components/SiteNav.astro'),
     ]);
 
     for (const value of [wingNav, registry, thesis, sdk]) {
@@ -118,8 +120,41 @@ describe('registry pastel polish', () => {
       expect(value).toContain('padding-top: env(safe-area-inset-top);');
       expect(value).toContain('border: 1px solid rgba(198,204,218,0.16);');
       expect(value).toContain('border-left: 1px solid rgba(198,204,218,0.16);');
+      expect(value).toContain('wnav-menu__registry');
+      expect(value).toContain('wnav-menu__tools');
+      expect(value).toContain('wnav-menu__tool');
+      expect(value).toContain('background: rgba(6,7,9,0.88)');
+      expect(value).toContain('padding: calc(96px + env(safe-area-inset-top)) 24px 40px;');
+      expect(value).not.toContain('.wnav-menu > nav { max-width: 520px; margin: 0 auto; }');
+      expect(value).not.toContain('@keyframes wnav-in');
     }
+    for (const value of [wingNav, thesis, sdk]) expect(value).toContain('>Tools</span>');
+    for (const [href, name] of [
+      ['/birth-chart/', 'Birth chart'],
+      ['/compatibility/', 'Compatibility'],
+      ['/transits/', 'Transits'],
+      ['/moon-sign/', 'Moon sign'],
+      ['/rising-sign/', 'Rising sign'],
+      ['/moon-phase/', 'Moon phase'],
+      ['/saturn-return/', 'Saturn return'],
+      ['/birthday/', 'Birthday'],
+    ]) {
+      expect(wingNav).toContain(`{ href: '${href}', name: '${name}', description:`);
+      expect(source).toContain(`{ href: '${href}', name: '${name}', description:`);
+      for (const output of [thesis, sdk]) {
+        expect(output).toContain(`href="${href}" aria-label="${name}.`);
+        expect(output).toContain(`>${name}</a>`);
+      }
+    }
+    for (const output of [thesis, sdk]) {
+      expect(output).toContain('class="wnav-menu__sign" style="--i:0;--sign:#DE8E79"');
+      expect(output).toContain('class="wnav-menu__sign" style="--i:11;--sign:#A9D4C4"');
+    }
+    expect(siteNav).toContain('.mobile-menu__tool:last-child { border-bottom: 0; }');
     expect(source).toContain('<span className="wnav__sep">·</span><span className="wnav__dim">org</span>');
+    expect(source).toContain('<span className="wnav-menu__label">Tools</span>');
+    expect(source).toContain('wnav-menu__registry');
+    expect(source).toContain('className="wnav-menu__tool"');
   });
 
   it('uses a full-row, plain-English Registry Aura feature band', async () => {
