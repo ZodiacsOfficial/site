@@ -5,7 +5,7 @@
  * The rail button labels live in the HOST (they render before this module
  * loads); everything below the wheel lives here.
  */
-import type { ReleasedLocale as Locale } from '../../../lib/i18n';
+import type { CatalogLocale as Locale } from '../../../lib/i18n';
 
 export type LensId = 'sky' | 'progressed' | 'return';
 
@@ -118,6 +118,24 @@ export const LENS_CHROME = {
     progressedAngles: 'Le case progredite richiedono una convenzione che non abbiamo adottato, quindi qui progrediscono solo i pianeti.',
     trustLine: 'Ognuno di questi cieli viene calcolato su questo dispositivo.',
     loading: 'Calcolo in corso…',
+  },
+  ru: {
+    skyRingLabel: 'небо прямо сейчас',
+    progressedRingLabel: 'ваши прогрессивные планеты',
+    returnRingLabel: 'небо вашего солнечного возвращения',
+    skyIntro: 'Внешнее кольцо — небо этого момента поверх вашей натальной карты.',
+    progressedIntro: 'Внешнее кольцо — ваша карта, прогрессивно сдвинутая к сегодняшнему дню: один день после рождения соответствует одному году жизни.',
+    returnIntro: 'Внешнее кольцо — небо последнего солнечного возвращения: момента, когда Солнце вернулось в натальное положение.',
+    tightestNow: 'Самые точные контакты:',
+    noContacts: 'Сейчас в этом орбисе нет близких контактов.',
+    transitsLink: 'Двигайте это небо во времени на /transits/.',
+    returnInstant: 'Момент возвращения',
+    localTime: 'ваше время',
+    noTimeNote: 'Считано по полуденной карте. Планетные темы остаются полезными; дома и асцендент скрыты, пока вы не добавите время рождения.',
+    noPlaceNote: 'Без места рождения солнечное возвращение показано только по планетам, без домов.',
+    progressedAngles: 'Для прогрессивных домов нужна договорённость, которую мы не приняли, поэтому здесь прогрессируют только планеты.',
+    trustLine: 'Каждое из этих положений неба рассчитано на вашем устройстве.',
+    loading: 'Считаем…',
   },
 } as const satisfies Record<Locale, LensChrome>;
 

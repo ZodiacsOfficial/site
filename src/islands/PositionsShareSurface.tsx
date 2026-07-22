@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'preact/hooks';
 import PlanetGlyph from '../components/PlanetGlyph';
 import type { Chart } from '../lib/engine/types';
-import { t, type ReleasedLocale as Locale } from '../lib/i18n';
+import { t, type CatalogLocale as Locale } from '../lib/i18n';
 import { planetLabel } from '../lib/i18n/astrology';
 import {
   decodePositionsLink,
@@ -112,6 +112,23 @@ const SHARE_COPY = {
     shareThisImage: 'Condividi questa immagine',
     moreWaysToShare: 'Altri modi per condividere',
     chartImagePrivacy: 'L’immagine include le posizioni del tema e la versione del motore, ma non nome, data, ora o luogo di nascita, coordinate o link al tema.',
+  },
+  ru: {
+    shareOptionsTitle: 'Поделиться этой картой',
+    closeShare: 'Закрыть варианты отправки',
+    hideBirthDetails: 'Скрыть данные рождения',
+    copyPositionsLink: 'Скопировать ссылку только с положениями',
+    positionsShareNote: 'В ссылке нет даты, времени и места рождения; на карточке вместо них указана версия движка. Положения планет всё равно могут вас идентифицировать — это не анонимная ссылка.',
+    positionsOnlyTitle: 'Положения из присланной карты',
+    positionsOnlyNotice: 'Только положения — без данных рождения.',
+    positionsOnlyPrivacy: 'В этом коде нет даты, времени и места рождения. Положения планет всё равно могут вас идентифицировать; это не анонимно.',
+    positionsLinkInvalid: 'Ссылка только с положениями недействительна или неполна.',
+    shareLinkAmbiguous: 'В ссылке есть два формата карты, поэтому ни один не был открыт.',
+    positionsShareUnavailable: 'Не удалось создать ссылку только с положениями для этой карты.',
+    preparingImage: 'Готовим изображение…',
+    shareThisImage: 'Поделиться изображением',
+    moreWaysToShare: 'Другие способы поделиться',
+    chartImagePrivacy: 'На изображении есть положения карты и версия движка, но нет имени, даты, времени и места рождения, координат или ссылки на карту.',
   },
 } as const;
 

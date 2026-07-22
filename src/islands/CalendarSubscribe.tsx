@@ -3,7 +3,7 @@ import {
   encodePositionsLink,
   type PositionsShareInput,
 } from '../lib/share-positions';
-import type { ReleasedLocale as Locale } from '../lib/i18n';
+import type { CatalogLocale as Locale } from '../lib/i18n';
 
 /** Saved summaries carry body names as strings; the existing encoder remains
  * the runtime authority and rejects incomplete or non-canonical inputs. */
@@ -40,6 +40,11 @@ const COPY = {
     unavailable: 'Link al calendario non disponibile',
     note: 'Questo calendario si aggiorna automaticamente. Iscriviti una volta e il tuo calendario manterrà aggiornati gli eventi. L’URL contiene solo le posizioni planetarie e ASC/MC: non include nome, data, ora, luogo o coordinate di nascita.',
   },
+  ru: {
+    action: 'Добавить в календарь',
+    unavailable: 'Ссылка на календарь недоступна',
+    note: 'Это обновляемая лента. Подпишитесь один раз, и календарь будет получать свежие события. В URL есть только положения планет и ASC/MC — без имени, даты, времени, места и координат рождения.',
+  },
 } as const;
 
 export function calendarWebcalUrl(origin: string, token: string): string {
@@ -61,7 +66,7 @@ interface CalendarSubscribeProps {
 }
 
 export default function CalendarSubscribe({ locale, positions }: CalendarSubscribeProps) {
-  const copy = COPY[locale] ?? COPY.en;
+  const copy = COPY[locale];
   const token = useMemo(() => encodePositionsLink(positions as PositionsShareInput), [positions]);
   const [href, setHref] = useState('');
 

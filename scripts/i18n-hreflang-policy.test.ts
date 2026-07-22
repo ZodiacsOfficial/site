@@ -1,9 +1,11 @@
 import { describe, expect, it } from 'vitest';
 import { LOCALES, LOCALE_META } from '../src/lib/i18n';
 import {
+  ABSENT_LOCALES,
   ACTIVE_HREFLANGS,
   HREFLANG_LOCALE_POLICY,
   INACTIVE_HREFLANGS,
+  STAGED_NOINDEX_LOCALES,
   X_DEFAULT_HREFLANG,
   expectedHreflangsForPath,
   hreflangRouteFamily,
@@ -19,6 +21,8 @@ describe('hreflang release policy', () => {
     }
     expect(ACTIVE_HREFLANGS).toEqual(['en', 'es', 'pt-BR', 'fr', 'it']);
     expect(INACTIVE_HREFLANGS).toEqual(['ru', 'ar']);
+    expect(STAGED_NOINDEX_LOCALES).toEqual(['ru']);
+    expect(ABSENT_LOCALES).toEqual(['ar']);
     expect(X_DEFAULT_HREFLANG).toEqual({
       hreflang: 'x-default', locale: 'en', expectedBlocks: 2025,
     });

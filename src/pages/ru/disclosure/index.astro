@@ -1,0 +1,61 @@
+---
+import Base from '../../../layouts/Base.astro';
+import SignIcon from '../../../components/SignIcon.astro';
+import { SIGNS } from '../../../lib/signs';
+
+const jsonLd = [{
+  '@type': 'WebPage',
+  '@id': 'https://zodiacs.org/ru/disclosure/#page',
+  name: 'Раскрытие информации',
+  url: 'https://zodiacs.org/ru/disclosure/',
+  description: 'Открытые сведения о проекте, источниках данных и коллекционном крыле.',
+  inLanguage: 'ru',
+  isPartOf: { '@id': 'https://zodiacs.org/#site' },
+}];
+---
+<Base
+  title="Раскрытие информации"
+  description="Открытые сведения о проекте, источниках данных и коллекционном крыле."
+  path="/ru/disclosure/"
+  locale="ru"
+  jsonLd={jsonLd}
+  noindex
+>
+  <section class="section container container--narrow disclosure-ru">
+    <header>
+      <div class="disclosure-ru__icons" aria-hidden="true">
+        {SIGNS.map((sign) => <SignIcon sign={sign.slug} size={32} loading="eager" />)}
+      </div>
+      <em class="kicker">Открытые сведения</em>
+      <h1 class="display">Раскрытие информации.</h1>
+      <p class="lede">Zodiacs.org публикует бесплатные расчётные инструменты, астрологические гиды и датированные материалы о небе.</p>
+    </header>
+
+    <div class="prose">
+      <h2>Как устроен проект</h2>
+      <p>Расчётные страницы используют астрономические эфемериды и выполняют вычисления в браузере. Метод, источники и ограничения описаны в <a href="/ru/methodology/">методологии</a>.</p>
+
+      <h2>Источники и обозначения</h2>
+      <p>Время событий указывается в UTC, положения — в градусах тропического зодиака. Данные о местах: GeoNames (CC BY 4.0). Шрифты распространяются по лицензии OFL.</p>
+
+      <h2>Коллекционное крыло</h2>
+      <p>Коллекционное крыло — архив записей: только чтение, без кошельков, подписей и предложений что-либо купить. Ничто там не является финансовым советом.</p>
+      <p><a href="/registry/" hreflang="en" title="Материал пока доступен по-английски">Открыть Реестр — пока по-английски</a>.</p>
+
+      <h2>Границы</h2>
+      <p>Астрология здесь — язык наблюдения, а не приговор. Мы описываем паттерны и даты; выводы остаются за вами.</p>
+      <p>Ничто на сайте не является медицинским, финансовым или юридическим советом.</p>
+
+      <h2>Связь</h2>
+      <p>Вопросы о проекте и запросы по данным: <a href="mailto:admin@zodiacs.org">admin@zodiacs.org</a>.</p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .disclosure-ru header { padding-block: clamp(18px, 4vw, 44px) clamp(24px, 5vw, 42px); }
+  .disclosure-ru__icons { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 28px; }
+  .disclosure-ru h1 { margin: 8px 0 18px; max-width: 14ch; }
+  .disclosure-ru .lede { margin: 0; max-width: 64ch; color: var(--text-2); font-family: var(--font-serif); font-size: var(--text-lg); line-height: 1.55; }
+  @media (max-width: 660px) { .disclosure-ru__icons :global(picture:nth-child(n+7)) { display: none; } }
+</style>

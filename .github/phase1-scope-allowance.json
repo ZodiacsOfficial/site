@@ -1,27 +1,22 @@
 {
   "version": 1,
-  "id": "i18n-r0-foundation",
-  "baseCommit": "c8866f874a66caa9fec55a945386288d16428f6f",
-  "reason": "Owner-approved R0 localization foundation; all Russian and Arabic routes, selectors, alternates, sitemap URLs, content, fonts, and indexing remain inactive.",
+  "id": "i18n-r1-russian-private-preview",
+  "baseCommit": "bcedd5374dc69d70ed9c9c43b6bf6981db56b674",
+  "reason": "Owner-approved R1 Russian localization preview; 27 Russian routes remain noindex and absent from public selectors, alternates, sitemap, search, Registry output, and indexing.",
   "protectedPaths": [
-    "src/components/LocalizedDisclosurePage.astro",
     "src/lib/i18n/astrology.ts",
     "src/lib/i18n/core.ts",
-    "src/lib/i18n/dates.ts",
     "src/lib/i18n/index.test.ts",
     "src/lib/i18n/index.ts",
     "src/lib/i18n/plural.test.ts",
-    "src/lib/i18n/plural.ts",
+    "src/lib/i18n/ru-runtime/client.test.ts",
+    "src/lib/i18n/ru-runtime/client.ts",
+    "src/lib/i18n/ru-runtime/index.ts",
+    "src/lib/i18n/ru-runtime/schema.ts",
+    "src/lib/i18n/ru-runtime/server.ts",
     "src/lib/i18n/ui/client.ts",
-    "src/lib/i18n/ui/server.ts",
-    "src/pages/[sign]/index.astro",
-    "src/pages/es/[sign]/index.astro",
-    "src/pages/es/tools/index.astro",
-    "src/pages/fr/[sign]/index.astro",
-    "src/pages/fr/tools/index.astro",
-    "src/pages/it/[sign]/index.astro",
-    "src/pages/it/tools/index.astro",
-    "src/pages/pt/[sign]/index.astro",
-    "src/pages/pt/tools/index.astro"
+    "src/lib/i18n/ui/ru.test.ts",
+    "src/lib/i18n/ui/ru.ts",
+    "src/lib/i18n/ui/server.ts"
   ]
 }

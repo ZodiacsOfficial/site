@@ -13,8 +13,9 @@ import { overlayAspectId, type WheelOverlay } from '../../../lib/scene/types';
 import { collisionNudge } from '../../../lib/scene/layout';
 import { findInterAspects, type InterAspect } from '../../../lib/engine/synastry';
 import { renderTransitOverlay } from '../../transit/renderTransitOverlay';
-import type { ReleasedLocale as Locale } from '../../../lib/i18n';
+import type { CatalogLocale as Locale } from '../../../lib/i18n';
 import { intlLocale } from '../../../lib/i18n/dates';
+import { planetLabel } from '../../../lib/i18n/astrology';
 import type { WheelGeometry } from '../../../lib/wheel/Wheel';
 import type { Chart } from '../../../lib/engine/types';
 import type { EngineLoader } from '../../../lib/hooks/useEngine';
@@ -76,7 +77,7 @@ async function computeLensSky(lens: LensId, chart: Chart, loadEngine: EngineLoad
 }
 
 export default function ChartLens({ lens, chart, locale, loadEngine, track, onRing }: ChartLensProps) {
-  const c = LENS_CHROME[locale] ?? LENS_CHROME.en;
+  const c = LENS_CHROME[locale];
   const [sky, setSky] = useState<LensSky | null>(null);
   const [focus, setFocus] = useState<string | null>(null);
 
@@ -168,7 +169,7 @@ export default function ChartLens({ lens, chart, locale, loadEngine, track, onRi
                     onClick={() => setFocus(focus === id ? null : id)}
                     data-lens-contact={id}
                   >
-                    <span class="mono">{hit.a} {GLYPH_ASPECT[hit.type]} {hit.b}</span>
+                    <span class="mono">{planetLabel(locale, hit.a)} {GLYPH_ASPECT[hit.type]} {planetLabel(locale, hit.b)}</span>
                     <span class="lens__orb mono">{hit.orb.toFixed(1)}°</span>
                   </button>
                 </li>
@@ -203,7 +204,7 @@ export default function ChartLens({ lens, chart, locale, loadEngine, track, onRi
       {lens === 'sky' && (
         <p class="lens__note">
           {c.transitsLink.split('/transits/')[0]}
-          <a href="/transits/">/transits/</a>
+          <a href={locale === 'ru' ? '/ru/transits/' : '/transits/'}>/transits/</a>
           {c.transitsLink.split('/transits/')[1]}
         </p>
       )}

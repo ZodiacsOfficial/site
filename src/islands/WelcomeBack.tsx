@@ -8,10 +8,10 @@ import SignChip from './SignChip';
 import { NextActionCard } from '../components/NextActionCard';
 import { useProfile } from '../lib/hooks/useProfile';
 import { encodeChartLink } from '../lib/share';
-import { localizePath, normalizeLocale, t, tf, type Locale } from '../lib/i18n';
+import { localizePath, normalizeCatalogLocale, t, tf, type CatalogLocale as Locale } from '../lib/i18n';
 
 export default function WelcomeBack({ locale: rawLocale = 'en' }: { locale?: Locale }) {
-  const locale = normalizeLocale(rawLocale);
+  const locale = normalizeCatalogLocale(rawLocale);
   const { profile } = useProfile();
   const chart = [...profile.charts]
     .sort((a, b) => b.updatedAt.localeCompare(a.updatedAt))[0] ?? null;

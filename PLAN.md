@@ -62,8 +62,10 @@ New work reuses these tokens. It introduces no new decorative color, chrome lang
 
 ### Internationalization
 
-- Locale routing and UI catalogs live under `src/lib/i18n/`; current locale roots are `/es/`, `/pt/`, `/fr/`, and `/it/`.
-- This program is English-first. New templates must keep data and strings separable for later translation, but must not add machine-translated locale pages.
+- Locale routing and UI catalogs live under `src/lib/i18n/`; the released locale roots remain `/es/`, `/pt/`, `/fr/`, and `/it/`.
+- The owner-approved Russian workstream is staged separately from the six product phases. R0 added availability-aware locale plumbing without a visible change. R1 adds 27 complete Russian preview routes under `/ru/`, all with `noindex`; Russian remains absent from public selectors, alternates, sitemaps, search, and Registry output.
+- R2 has not started. Russian can become public only after its localized social cards, indexability flip, public selector/alternate/sitemap wiring, live reciprocity checks, and explicit owner approval pass as one bounded release. Arabic routes and content remain absent.
+- Daily horoscopes, Today and event publications, Registry, birthday pages, Ask, and email/push publication content remain outside the Russian launch set. Russian pages label linked English-only material plainly rather than implying that it is translated.
 
 ### Computation and current horoscope pipeline
 
@@ -220,6 +222,15 @@ The prior release cutover is superseded; the current hardening candidate must es
 Keep clean data and route seams for these; do not implement them inside this program.
 
 ## Change log
+
+### 2026-07-22 — Russian R1 private preview candidate
+
+- Added the complete Russian UI catalog, twelve sign guides, core legal/method pages, astrology labels, grammar cases, and plural rules for the 27 approved core routes.
+- Kept every Russian route private and `noindex`; no Russian selector entry, hreflang, sitemap row, search entry, or public discovery path was activated. Arabic remains absent.
+- Added licensed Cyrillic font subsets totaling 62,880 bytes, below the 80KB localization allowance, with Russian-only loading and no change to the existing public font contract.
+- Added build and browser gates for exact route count, Russian-language coverage, English-only seam labels, 360px/1280px layout, keyboard navigation, reduced motion, chart calculation, fonts, and discovery isolation.
+- Kept deferred products honest: the birthday tool, search, English-backed email capture, push, assistant, daily publications, events, and Registry translation do not silently appear as Russian features.
+- R2 release work is not included. Russian remains a hidden review candidate until a separate approval starts the indexable release gate.
 
 ### 2026-07-19 — Phase 1 closeout hardening; external evidence pending
 

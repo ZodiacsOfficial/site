@@ -12,7 +12,7 @@ import type { Chart } from '../lib/engine/types';
 import type { SavedChart } from '../lib/profile/schema';
 import { resolveLocalToUtc } from '../lib/time/localToUtc';
 import type { City } from '../lib/geo/search';
-import { localizePath, normalizeLocale, t, type Locale } from '../lib/i18n';
+import { localizePath, normalizeCatalogLocale, t, type CatalogLocale as Locale } from '../lib/i18n';
 import { useEngine, type EngineLoader } from '../lib/hooks/useEngine';
 import { useProfile } from '../lib/hooks/useProfile';
 import type { TransitSky } from './transit/TransitRing';
@@ -144,7 +144,7 @@ function natalFromSaved(chart: SavedChart, engine: Engine): NatalWheel {
 }
 
 export default function TransitTracker({ locale: rawLocale = 'en' }: { locale?: Locale }) {
-  const locale = normalizeLocale(rawLocale);
+  const locale = normalizeCatalogLocale(rawLocale);
   const loadEngine = useEngine();
   const { profile, ready: profileReady } = useProfile();
   const [slot, setSlot] = useState<SlotState>({

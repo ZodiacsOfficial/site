@@ -1,4 +1,4 @@
-import type { ReleasedLocale as Locale, UiKey } from './i18n';
+import type { CatalogLocale as Locale, UiKey } from './i18n';
 
 interface NavTool {
   href: string;
@@ -20,6 +20,7 @@ export const NAV_TOOLS = [
       pt: 'Veja seu Sol, sua Lua, seu ascendente, os planetas, as casas e o que tudo isso significa.',
       fr: 'Découvre ton Soleil, ta Lune, ton ascendant, tes planètes, tes maisons et leur signification.',
       it: 'Il tuo Sole, la tua Luna, l’ascendente, i pianeti, le case e il loro significato.',
+      ru: 'Солнце, Луна, асцендент, планеты, дома — и что всё это значит.',
     },
   },
   {
@@ -31,6 +32,7 @@ export const NAV_TOOLS = [
       pt: 'Compare dois mapas e veja onde combinam, entram em conflito e crescem.',
       fr: 'Compare deux thèmes et vois où ils s’accordent, se heurtent et évoluent.',
       it: 'Confronta due temi e scopri dove si accordano, si scontrano e crescono.',
+      ru: 'Сравните две карты и увидьте, где они совпадают, спорят и растут.',
     },
   },
   {
@@ -42,6 +44,7 @@ export const NAV_TOOLS = [
       pt: 'Veja o céu de hoje ao lado do seu mapa.',
       fr: 'Observe le ciel d’aujourd’hui par rapport à ton thème.',
       it: 'Il cielo di oggi a confronto con il tuo tema.',
+      ru: 'Посмотрите на сегодняшнее небо рядом со своей картой.',
     },
   },
   {
@@ -53,6 +56,7 @@ export const NAV_TOOLS = [
       pt: 'Como você vive as emoções e o que traz calma.',
       fr: 'Ta manière de ressentir et ce qui t’apaise.',
       it: 'Come vivi le emozioni e che cosa ti calma.',
+      ru: 'Как вы чувствуете и что помогает вам успокоиться.',
     },
   },
   {
@@ -64,6 +68,7 @@ export const NAV_TOOLS = [
       pt: 'Descubra o signo que as pessoas percebem primeiro em você. O horário de nascimento ajuda.',
       fr: 'Découvre le signe que les autres perçoivent en premier. L’heure de naissance est utile.',
       it: 'Il segno che mostri agli altri al primo incontro. L’ora di nascita aiuta.',
+      ru: 'Найдите знак, который люди встречают первым. Нужны часы рождения.',
     },
   },
   {
@@ -75,6 +80,7 @@ export const NAV_TOOLS = [
       pt: 'A Lua desta noite e a Lua de qualquer data importante para você.',
       fr: 'La Lune de ce soir et celle de toute date qui compte pour toi.',
       it: 'La Luna di oggi e quella di qualsiasi data importante per te.',
+      ru: 'Луна сегодня и Луна в любую важную для вас дату.',
     },
   },
   {
@@ -86,6 +92,7 @@ export const NAV_TOOLS = [
       pt: 'Quando o seu acontece, com exatidão, e o que ele costuma pedir.',
       fr: 'Quand le tien arrive, précisément, et ce qu’il tend à demander.',
       it: 'Quando arriva il tuo, con precisione, e che cosa tende a chiedere.',
+      ru: 'Когда именно случится ваше возвращение и о чём оно обычно спрашивает.',
     },
   },
   {
@@ -97,6 +104,7 @@ export const NAV_TOOLS = [
       pt: 'Um aniversário, uma data especial, qualquer data.',
       fr: 'Un anniversaire, une date marquante, n’importe quelle date.',
       it: 'Un compleanno, un anniversario, una data qualsiasi.',
+      ru: 'Выберите дату рождения и получите точные данные о знаке, градусе и декане.',
     },
   },
 ] as const satisfies readonly NavTool[];

@@ -2,7 +2,7 @@
 import { useRef, useState } from 'preact/hooks';
 import { preloadIndex, searchCities } from '../lib/geo/search';
 import type { City } from '../lib/geo/search';
-import { t, type Locale } from '../lib/i18n';
+import { t, type CatalogLocale as Locale } from '../lib/i18n';
 
 interface Props {
   onSelect: (city: City | null) => void;

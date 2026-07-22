@@ -1,5 +1,5 @@
 import type { PairSummary, MinimalBody } from './engine/synastry';
-import type { ReleasedLocale as Locale } from './i18n';
+import type { CatalogLocale as Locale } from './i18n';
 import { aspectLabel, planetLabel } from './i18n/astrology';
 import { degreeInSign, signForLongitude, signName } from './signs';
 import { shareCardText } from './share-card-copy';

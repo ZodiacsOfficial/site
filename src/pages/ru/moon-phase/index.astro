@@ -1,0 +1,79 @@
+---
+import Base from '../../../layouts/Base.astro';
+import Faq from '../../../components/Faq.astro';
+import MoonPhaseTool from '../../../islands/MoonPhaseTool';
+import '../../../styles/calculator.css';
+
+const faq = [
+  {
+    q: 'Какая фаза Луны сегодня?',
+    a: 'Индикатор в начале страницы считает её прямо на вашем устройстве: показывает название текущей фазы, процент освещённости, знак Луны и время UTC.',
+  },
+  {
+    q: 'Какая фаза Луны была в день моего рождения?',
+    a: 'Введите дату рождения. Фазу можно точно рассчитать по дате: полный цикл Луны занимает около 29,5 суток. В астрологии натальная фаза — одна из заметок о темпераменте, а не приговор.',
+  },
+  {
+    q: 'Как часто бывает полнолуние?',
+    a: 'В среднем каждые 29,5 суток — это синодический месяц. Он не совпадает с календарным, поэтому дата полнолуния сдвигается, а иногда в один календарный месяц попадают два полнолуния.',
+  },
+  {
+    q: 'Фаза Луны влияет на мой лунный знак?',
+    a: 'Это разные измерения. Фаза сравнивает Луну с Солнцем, а лунный знак показывает положение Луны в зодиаке. Полнолуние может быть в любом из двенадцати знаков.',
+  },
+];
+
+const jsonLd = [
+  {
+    '@type': 'WebApplication',
+    name: 'Калькулятор фаз Луны',
+    url: 'https://zodiacs.org/ru/moon-phase/',
+    applicationCategory: 'LifestyleApplication',
+    operatingSystem: 'Web',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    inLanguage: 'ru',
+    isPartOf: { '@id': 'https://zodiacs.org/#site' },
+  },
+  {
+    '@type': 'FAQPage',
+    inLanguage: 'ru',
+    mainEntity: faq.map(({ q, a }) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: { '@type': 'Answer', text: a },
+    })),
+  },
+];
+---
+<Base
+  clientUi
+  title="Фаза Луны при рождении"
+  description="Узнайте фазу Луны на любую дату — освещённость, знак и что это значит, без мистики."
+  path="/ru/moon-phase/"
+  locale="ru"
+  image="/assets/og/v2/tool/moon-phase.png"
+  imageAlt="Фаза Луны сегодня и в любую дату — Zodiacs.org"
+  jsonLd={jsonLd}
+  noindex
+>
+  <section class="section--tight container">
+    <div class="tool-hero">
+      <h1 class="display">Луна сегодня и в любую дату.</h1>
+      <p>Текущая фаза, рассчитанная прямо сейчас. Ниже — поиск Луны в день вашего рождения или в любую важную дату.</p>
+    </div>
+    <MoonPhaseTool locale="ru" client:load />
+    <noscript>
+      <p>Для расчёта фаз Луны нужен JavaScript. Включите его и перезагрузите страницу, чтобы увидеть текущую фазу или проверить другую дату.</p>
+    </noscript>
+  </section>
+
+  <section class="section--tight container container--narrow">
+    <Faq items={faq} heading="Вопросы о фазах Луны" />
+  </section>
+</Base>
+
+<style>
+  .tool-hero { max-width: 62ch; margin-bottom: clamp(28px, 5vw, 44px); }
+  .tool-hero h1 { margin: 0 0 16px; font-size: var(--text-2xl); line-height: 1.04; }
+  .tool-hero p { margin: 0; color: var(--muted); font-size: var(--text-lg); text-wrap: pretty; }
+</style>

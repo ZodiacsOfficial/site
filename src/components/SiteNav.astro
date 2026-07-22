@@ -6,7 +6,7 @@
  */
 import { SIGNS, signDates, signName } from '../lib/signs';
 import SignIcon from './SignIcon.astro';
-import { localizePath, normalizeLocale, t, type ReleasedLocale as Locale } from '../lib/i18n';
+import { localizePath, normalizeCatalogLocale, t, type CatalogLocale as Locale } from '../lib/i18n';
 import { NAV_TOOLS } from '../lib/nav-tools';
 
 const links = [
@@ -14,7 +14,7 @@ const links = [
   { href: '/horoscopes/', label: 'navHoroscopes' },
 ] as const;
 interface Props { locale?: Locale }
-const locale = normalizeLocale(Astro.props.locale);
+const locale = normalizeCatalogLocale(Astro.props.locale);
 const path = Astro.url.pathname;
 const registryLabel: Record<Locale, string> = {
   en: 'Digital collection and registry',
@@ -22,6 +22,7 @@ const registryLabel: Record<Locale, string> = {
   pt: 'Coleção digital e registro',
   fr: 'Collection numérique et registre',
   it: 'Collezione digitale e registro',
+  ru: 'Цифровая коллекция и реестр — пока по-английски',
 };
 const openMenuLabel: Record<Locale, string> = {
   en: 'Open menu',
@@ -29,6 +30,7 @@ const openMenuLabel: Record<Locale, string> = {
   pt: 'Abrir menu',
   fr: 'Ouvrir le menu',
   it: 'Apri menu',
+  ru: 'Открыть меню',
 };
 const closeMenuLabel: Record<Locale, string> = {
   en: 'Close menu',
@@ -36,7 +38,12 @@ const closeMenuLabel: Record<Locale, string> = {
   pt: 'Fechar menu',
   fr: 'Fermer le menu',
   it: 'Chiudi menu',
+  ru: 'Закрыть меню',
 };
+const englishOnlyAria = locale === 'ru' ? 'Материал пока доступен по-английски' : undefined;
+const visibleNavTools = locale === 'ru'
+  ? NAV_TOOLS.filter((tool) => tool.href !== '/birthday/')
+  : NAV_TOOLS;
 ---
 <div class="nav-wrap">
   <nav class="nav" aria-label={t(locale, 'navPrimary')} data-nav>
@@ -54,28 +61,48 @@ const closeMenuLabel: Record<Locale, string> = {
         <svg width="8" height="5" viewBox="0 0 8 5" fill="none" aria-hidden="true"><path d="M1 1l3 3 3-3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </button>
       {links.map((l) => (
-        <a class="nav__link" href={localizePath(locale, l.href)} aria-current={path.startsWith(localizePath(locale, l.href)) ? 'page' : undefined}>{t(locale, l.label)}</a>
+        <a
+          class:list={['nav__link', { 'nav__link--deferred': locale === 'ru' }]}
+          href={localizePath(locale, l.href)}
+          hreflang={locale === 'ru' ? 'en' : undefined}
+          aria-current={path.startsWith(localizePath(locale, l.href)) ? 'page' : undefined}
+          title={locale === 'ru' ? englishOnlyAria : undefined}
+          aria-label={locale === 'ru' ? `${t(locale, l.label)}. ${englishOnlyAria}` : undefined}
+        >
+          {locale === 'ru' ? (
+            <><span>{t(locale, l.label)}</span><small class="nav__deferred">— пока по-английски</small></>
+          ) : t(locale, l.label)}
+        </a>
       ))}
       <a class="nav__link nav__saved" href={localizePath(locale, '/profile/')} aria-current={path.startsWith(localizePath(locale, '/profile/')) ? 'page' : undefined} data-profile-glyph>{t(locale, 'navSavedCharts')}</a>
     </div>
 
-    {locale === 'en' ? (
+    {locale === 'ru' ? null : locale === 'en' ? (
       <button class="nav__search" type="button" data-search-open aria-label="Search the site" aria-haspopup="dialog">
         <svg width="14" height="14" viewBox="0 0 15 15" fill="none" aria-hidden="true"><circle cx="6.5" cy="6.5" r="4.75" stroke="currentColor" stroke-width="1.4"/><path d="M10.5 10.5L13.5 13.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
         <kbd class="nav__search-kbd mono" aria-hidden="true">/</kbd>
       </button>
     ) : (
-      <a class="nav__search" href="/?search=1" aria-label="Search the site">
+      <a
+        class="nav__search"
+        href="/?search=1"
+        aria-label="Search the site"
+      >
         <svg width="14" height="14" viewBox="0 0 15 15" fill="none" aria-hidden="true"><circle cx="6.5" cy="6.5" r="4.75" stroke="currentColor" stroke-width="1.4"/><path d="M10.5 10.5L13.5 13.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
       </a>
     )}
 
     <a
-      class="nav__chip"
+      class:list={['nav__chip', { 'nav__chip--deferred': locale === 'ru' }]}
       href="/registry/"
+      hreflang={locale === 'ru' ? 'en' : undefined}
       aria-current={path.startsWith('/registry/') ? 'page' : undefined}
+      title={locale === 'ru' ? englishOnlyAria : undefined}
+      aria-label={locale === 'ru' ? `${t(locale, 'navCollect')}. ${englishOnlyAria}` : undefined}
     >
-      {t(locale, 'navCollect')}
+      {locale === 'ru' ? (
+        <><span>{t(locale, 'navCollect')}</span><small class="nav__deferred">— пока по-английски</small></>
+      ) : t(locale, 'navCollect')}
     </a>
 
     <button
@@ -96,7 +123,7 @@ const closeMenuLabel: Record<Locale, string> = {
 
   <div class="nav-menu tools-menu" id="tools-menu" data-tools-menu hidden>
     <div class="tools-menu__grid">
-      {NAV_TOOLS.map((tool) => (
+      {visibleNavTools.map((tool) => (
         <a class="tools-menu__item" href={localizePath(locale, tool.href)}>
           <span class="tools-menu__name">{t(locale, tool.label)}</span>
           <span class="tools-menu__desc">{tool.sublabel[locale]}</span>
@@ -119,13 +146,13 @@ const closeMenuLabel: Record<Locale, string> = {
 </div>
 
 <div class="mobile-menu" id="mobile-menu" data-mobile-menu hidden>
-  <nav aria-label="Mobile">
+  <nav aria-label={locale === 'ru' ? 'Мобильная навигация' : 'Mobile'}>
     <div class="mobile-menu__group">
       <span class="mobile-menu__label">{t(locale, 'navSite')}</span>
-      <a class="mobile-menu__link" style="--i:0" href={localizePath(locale, '/learn/')}>{t(locale, 'navLearn')}</a>
-      <a class="mobile-menu__link" style="--i:1" href={localizePath(locale, '/horoscopes/')}>{t(locale, 'navHoroscopes')}</a>
+      <a class="mobile-menu__link" style="--i:0" href={localizePath(locale, '/learn/')} hreflang={locale === 'ru' ? 'en' : undefined} title={locale === 'ru' ? englishOnlyAria : undefined}>{t(locale, 'navLearn')}{locale === 'ru' ? ' — пока по-английски' : ''}</a>
+      <a class="mobile-menu__link" style="--i:1" href={localizePath(locale, '/horoscopes/')} hreflang={locale === 'ru' ? 'en' : undefined} title={locale === 'ru' ? englishOnlyAria : undefined}>{t(locale, 'navHoroscopes')}{locale === 'ru' ? ' — пока по-английски' : ''}</a>
       <a class="mobile-menu__link" style="--i:2" href={localizePath(locale, '/profile/')}>{t(locale, 'navSavedCharts')}</a>
-      <a class="mobile-menu__link mobile-menu__registry" style="--i:3" href="/registry/">
+      <a class="mobile-menu__link mobile-menu__registry" style="--i:3" href="/registry/" hreflang={locale === 'ru' ? 'en' : undefined} title={locale === 'ru' ? englishOnlyAria : undefined}>
         <span>{t(locale, 'navCollect')}</span>
         <small>{registryLabel[locale]}</small>
       </a>
@@ -133,7 +160,7 @@ const closeMenuLabel: Record<Locale, string> = {
     <div class="mobile-menu__group">
       <span class="mobile-menu__label">{t(locale, 'navTools')}</span>
       <div class="mobile-menu__tools">
-        {NAV_TOOLS.map((tool, i) => (
+        {visibleNavTools.map((tool, i) => (
           <a class="mobile-menu__tool" style={`--i:${i}`} href={localizePath(locale, tool.href)}>
             <span>{t(locale, tool.label)}</span>
             <span class="mobile-menu__tool-desc">{tool.sublabel[locale]}</span>
@@ -228,6 +255,24 @@ const closeMenuLabel: Record<Locale, string> = {
   }
   .nav__link:hover { color: var(--text); background: rgba(198, 204, 218, 0.07); }
   .nav__link[aria-current='page'] { color: var(--text); }
+  .nav__link--deferred,
+  .nav__chip--deferred {
+    flex-direction: column;
+    justify-content: center;
+    gap: 1px;
+    line-height: 1.05;
+  }
+  .nav__deferred {
+    display: block;
+    font-family: var(--font-sans);
+    font-size: 7.5px;
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: 1;
+    text-transform: none;
+    color: var(--faint);
+    white-space: nowrap;
+  }
 
   .nav__search {
     display: inline-flex;

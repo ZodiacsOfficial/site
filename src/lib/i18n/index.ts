@@ -10,16 +10,21 @@ import type { UiKey } from './ui/schema';
 
 export {
   DEFAULT_LOCALE,
+  CATALOG_LOCALES,
   LOCALES,
   LOCALE_META,
   RELEASED_LOCALES,
   isLocale,
+  isCatalogLocale,
   isReleasedLocale,
   localeHtmlLang,
   normalizeKnownLocale,
+  normalizeCatalogLocale,
   normalizeLocale,
   normalizeReleasedLocale,
   requireReleasedLocale,
+  requireCatalogLocale,
+  type CatalogLocale,
   type Locale,
   type LocaleMeta,
   type ReleasedLocale,
@@ -71,6 +76,10 @@ const CORE_LOCALIZED_PATHS = [
  */
 export const CORE_ROUTE_LOCALES = ['en', 'es', 'pt', 'fr', 'it'] as const satisfies readonly Locale[];
 
+/** Complete private-preview trees. They can link internally but are excluded
+ * from selectors, alternates, sitemaps, search, and public availability. */
+export const STAGED_CORE_ROUTE_LOCALES = ['ru'] as const satisfies readonly Locale[];
+
 /** Birthday and Chinese-zodiac families remain outside R1/R2/A1/A2. */
 export const PROGRAMMATIC_ROUTE_LOCALES = ['en', 'es', 'pt', 'fr', 'it'] as const satisfies readonly Locale[];
 
@@ -120,6 +129,15 @@ export function availableLocalesForPath(path: string): readonly Locale[] | undef
     ?? (isLocalizedProgrammaticPath(canonical) ? PROGRAMMATIC_ROUTE_LOCALES : undefined);
 }
 
+/** Internal rendering availability; never use this for discovery metadata. */
+export function renderableLocalesForPath(path: string): readonly Locale[] | undefined {
+  const canonical = stripLocale(path);
+  if (CORE_LOCALIZED_PATHS.includes(canonical)) {
+    return [...CORE_ROUTE_LOCALES, ...STAGED_CORE_ROUTE_LOCALES];
+  }
+  return isLocalizedProgrammaticPath(canonical) ? PROGRAMMATIC_ROUTE_LOCALES : undefined;
+}
+
 export function stripLocale(path: string): string {
   for (const locale of LOCALES) {
     const prefix = LOCALE_PATH_PREFIX[locale];
@@ -135,7 +153,7 @@ export function localizePath(locale: Locale, path: string): string {
   const clean = path.startsWith('/') ? path : `/${path}`;
   const canonical = stripLocale(clean);
   if (locale === DEFAULT_LOCALE) return canonical;
-  if (!availableLocalesForPath(canonical)?.includes(locale)) return canonical;
+  if (!renderableLocalesForPath(canonical)?.includes(locale)) return canonical;
   return `${LOCALE_PATH_PREFIX[locale]}${canonical}`;
 }
 

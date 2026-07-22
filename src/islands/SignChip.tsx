@@ -1,9 +1,9 @@
 /** Small sign pill used inside result tables and synastry readouts. */
 import { signForLongitude, signName } from '../lib/signs';
-import { localizePath, normalizeLocale, type Locale } from '../lib/i18n';
+import { localizePath, normalizeCatalogLocale, type CatalogLocale as Locale } from '../lib/i18n';
 
 export default function SignChip({ lon, locale: rawLocale = 'en' }: { lon: number; locale?: Locale }) {
-  const locale = normalizeLocale(rawLocale);
+  const locale = normalizeCatalogLocale(rawLocale);
   const s = signForLongitude(lon);
   return (
     <a class="chip" href={localizePath(locale, `/${s.slug}/`)} style={`--sign:${s.hue}`}>

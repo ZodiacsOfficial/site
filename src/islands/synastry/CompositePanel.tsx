@@ -1,7 +1,7 @@
 import AspectGlyph from '../../components/AspectGlyph';
 import PlanetGlyph from '../../components/PlanetGlyph';
 import { aspectLabel, planetLabel } from '../../lib/i18n/astrology';
-import { type ReleasedLocale as Locale } from '../../lib/i18n';
+import { type CatalogLocale as Locale } from '../../lib/i18n';
 import { formatLongitude } from '../../lib/signs';
 import Wheel from '../../lib/wheel/Wheel';
 import type { CompositeTabData } from './relationshipData';
@@ -43,6 +43,13 @@ const COPY = {
     aspects: 'Aspetti del tema composito',
     noAspects: 'Nessun aspetto maggiore del tema composito rientra nell’orbita.',
     note: 'Un tema composito corrisponde ai punti medi di due temi: descrive la relazione stessa, non l’una o l’altra persona. Le case del tema composito richiedono una convenzione sul luogo che non intendiamo inventare, quindi questo tema viene mostrato senza case.',
+  },
+  ru: {
+    title: 'Две карты, одна середина',
+    placements: 'Положения композитной карты',
+    aspects: 'Аспекты композитной карты',
+    noAspects: 'Мажорных композитных аспектов в орбисе нет.',
+    note: 'Композитная карта строится по средним точкам двух карт и описывает сами отношения, а не одного из людей. Для композитных домов нужна договорённость о месте, которую мы не станем выдумывать, поэтому карта показана без домов.',
   },
 } as const;
 

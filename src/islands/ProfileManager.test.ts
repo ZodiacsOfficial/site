@@ -5,8 +5,17 @@ import { PF_BOOK_COPY } from './ProfileManager';
 describe('weekly digest return target', () => {
   it('renders the fragment anchor before the asynchronous session panel', async () => {
     const source = await readFile(new URL('./ProfileManager.tsx', import.meta.url), 'utf8');
-    expect(source).toMatch(/<div id="weekly-digest">\s*\{session && \(/u);
+    expect(source).toMatch(/<div id="weekly-digest">\s*\{session && locale !== 'ru' && \(/u);
     expect(source).not.toContain('class="pf-digest-panel" id="weekly-digest"');
+  });
+});
+
+describe('Russian profile failure copy', () => {
+  it('does not expose provider or English daily-lifecycle errors', async () => {
+    const source = await readFile(new URL('./ProfileManager.tsx', import.meta.url), 'utf8');
+    expect(source).toContain("locale === 'ru' ? t(locale, 'syncFailed') : result.message");
+    expect(source).toMatch(/setSyncMessage\(locale === 'ru'\s*\? t\(locale, 'syncFailed'\)/u);
+    expect(source).toMatch(/setDailyMessage\(locale === 'ru'\s*\? t\(locale, 'syncFailed'\)/u);
   });
 });
 

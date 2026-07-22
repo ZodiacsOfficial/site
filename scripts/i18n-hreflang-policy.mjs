@@ -26,6 +26,14 @@ export const INACTIVE_HREFLANGS = Object.freeze(
   HREFLANG_LOCALE_POLICY.filter((entry) => !entry.indexEligible).map((entry) => entry.hreflang),
 );
 
+/** Built for private QA, but deliberately absent from every discovery rail. */
+export const STAGED_NOINDEX_LOCALES = Object.freeze(['ru']);
+
+/** Declared metadata only: no generated route tree is permitted yet. */
+export const ABSENT_LOCALES = Object.freeze(
+  INACTIVE_HREFLANGS.filter((locale) => !STAGED_NOINDEX_LOCALES.includes(locale)),
+);
+
 const SIGN_SLUGS = [
   'aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo',
   'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces',

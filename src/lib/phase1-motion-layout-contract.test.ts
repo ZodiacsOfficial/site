@@ -132,13 +132,24 @@ describe('Phase 1 layout and motion contract', () => {
     const fontFaces = (tokens.match(/@font-face\s*\{[^}]+\}/gu) ?? [])
       .filter((face) => face.includes("url('/fonts/"));
     const phase1FontFaces = fontFaces.filter((face) => face.includes(' Phase1'));
-    const establishedFontFaces = fontFaces.filter((face) => !face.includes(' Phase1'));
+    const russianFontFaces = fontFaces.filter((face) => (
+      face.includes("font-family: 'Golos Text'")
+      || face.includes("font-family: 'EB Garamond Cyrillic'")
+      || face.includes("font-family: 'JetBrains Mono Cyrillic'")
+    ));
+    const establishedFontFaces = fontFaces.filter((face) => (
+      !face.includes(' Phase1') && !russianFontFaces.includes(face)
+    ));
     expect(phase1FontFaces).toHaveLength(6);
     expect(establishedFontFaces).toHaveLength(6);
+    expect(russianFontFaces).toHaveLength(4);
     for (const face of phase1FontFaces) {
       expect(face).toContain('font-display: optional;');
     }
     for (const face of establishedFontFaces) {
+      expect(face).toContain('font-display: swap;');
+    }
+    for (const face of russianFontFaces) {
       expect(face).toContain('font-display: swap;');
     }
 

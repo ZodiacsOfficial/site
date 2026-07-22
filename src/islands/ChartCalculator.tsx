@@ -59,8 +59,9 @@ import type { TourVisual } from '../lib/scene/chapters';
 import { ENGINE_VERSION } from '../lib/engine/types';
 import type { Chart, HouseSystem } from '../lib/engine/types';
 import type { City } from '../lib/geo/search';
-import { RELEASED_LOCALES, localizePath, normalizeLocale, t, type ReleasedLocale as Locale } from '../lib/i18n';
+import { CATALOG_LOCALES, RELEASED_LOCALES, localizePath, normalizeCatalogLocale, t, tp, type CatalogLocale as Locale, type ReleasedLocale } from '../lib/i18n';
 import { aspectLabel, moonPhaseLabel, planetLabel } from '../lib/i18n/astrology';
+import { russianRuntime } from '../lib/i18n/ru-runtime';
 import { useEngine } from '../lib/hooks/useEngine';
 import type { AspectType } from '../lib/engine/types';
 import {
@@ -90,14 +91,14 @@ type LensId = import('./explorer/lens/copy').LensId;
 type LensRingRenderer = (geo: import('../lib/wheel/Wheel').WheelGeometry) => import('preact').ComponentChildren;
 
 /** Rail labels stay host-local: they render before the lens module loads. */
-const LENS_LABELS: Record<Locale, Record<'rail' | 'natal' | LensId, string>> = {
+const LENS_LABELS: Record<ReleasedLocale, Record<'rail' | 'natal' | LensId, string>> = {
   en: { rail: 'Chart through time', natal: 'Natal', sky: 'Sky now', progressed: 'Progressed', return: 'Solar return' },
   es: { rail: 'La carta en el tiempo', natal: 'Natal', sky: 'Cielo ahora', progressed: 'Progresada', return: 'Retorno solar' },
   pt: { rail: 'O mapa ao longo do tempo', natal: 'Natal', sky: 'Céu agora', progressed: 'Progredido', return: 'Retorno solar' },
   fr: { rail: 'Le thème au fil du temps', natal: 'Natal', sky: 'Ciel actuel', progressed: 'Progressé', return: 'Révolution solaire' },
   it: { rail: 'Il tema nel tempo', natal: 'Natale', sky: 'Cielo attuale', progressed: 'Progredito', return: 'Rivoluzione solare' },
 };
-const DETAIL_LABELS: Record<Locale, { lead: string; placements: string; aspects: string }> = {
+const DETAIL_LABELS: Record<ReleasedLocale, { lead: string; placements: string; aspects: string }> = {
   en: { lead: 'See exact chart data — ', placements: ' placements · ', aspects: ' aspects' },
   es: { lead: 'Ver los datos exactos — ', placements: ' posiciones · ', aspects: ' aspectos' },
   pt: { lead: 'Ver os dados exatos — ', placements: ' posições · ', aspects: ' aspectos' },
@@ -111,7 +112,7 @@ const WHEEL_ACTION_COPY = {
   pt: { actions: 'Ações do mapa', guide: 'Fazer o tour guiado', replay: 'Repetir o tour', another: 'Ler outro mapa', signatureSelf: 'A assinatura do seu mapa', signatureOther: 'A assinatura deste mapa', compareMine: 'Comparar com o meu', compareAdd: 'Adicionar meu mapa para comparar', shareOther: 'Compartilhar este mapa' },
   fr: { actions: 'Actions du thème', guide: 'Faire la visite guidée', replay: 'Rejouer la visite', another: 'Lire un autre thème', signatureSelf: 'La signature de ton thème', signatureOther: 'La signature de son thème', compareMine: 'Comparer avec le mien', compareAdd: 'Ajouter mon thème pour comparer', shareOther: 'Partager ce thème' },
   it: { actions: 'Azioni del tema', guide: 'Inizia il tour guidato', replay: 'Ripeti il tour', another: 'Leggi un altro tema', signatureSelf: 'La firma del tuo tema', signatureOther: 'La firma del suo tema', compareMine: 'Confronta con il mio', compareAdd: 'Aggiungi il mio tema per confrontare', shareOther: 'Condividi questo tema' },
-} as const satisfies Record<Locale, {
+} as const satisfies Record<ReleasedLocale, {
   actions: string;
   guide: string;
   replay: string;
@@ -136,7 +137,7 @@ const CHART_BOOK_COPY = {
   pt: { label: 'De quem é este mapa?', save: 'Salvar', skip: 'Pular' },
   fr: { label: 'À qui appartient ce thème\u202f?', save: 'Enregistrer', skip: 'Passer' },
   it: { label: 'Di chi è questo tema?', save: 'Salva', skip: 'Salta' },
-} as const satisfies Record<Locale, { label: string; save: string; skip: string }>;
+} as const satisfies Record<ReleasedLocale, { label: string; save: string; skip: string }>;
 const REGISTRY_AURA_CHART_COPY = {
   en: {
     discover: 'Your saved chart can meet the Registry records carried by a public address.',
@@ -168,7 +169,7 @@ const REGISTRY_AURA_CHART_COPY = {
     return: 'Il tema è stato salvato.',
     returnLink: 'Torna a Registry Aura →',
   },
-} as const satisfies Record<Locale, {
+} as const satisfies Record<ReleasedLocale, {
   discover: string;
   discoverLink: string;
   return: string;
@@ -180,7 +181,7 @@ const PERSON_CHART_COPY = {
   pt: (name: string) => `O mapa de ${name}: o "você" abaixo se refere a ${name}.`,
   fr: (name: string) => `Le thème de ${name}\u00a0: le «\u00a0tu\u00a0» ci-dessous désigne ${name}.`,
   it: (name: string) => `Il tema di ${name}: il «tu» qui sotto si riferisce a ${name}.`,
-} satisfies Record<Locale, (name: string) => string>;
+} satisfies Record<ReleasedLocale, (name: string) => string>;
 const OTHER_SUBJECT_COPY = {
   en: {
     unnamed: 'You’re reading someone else’s chart. “You” below means the person whose birth details you entered.',
@@ -217,7 +218,7 @@ const OTHER_SUBJECT_COPY = {
     submit: 'Aggiorna il suo tema',
     privacy: 'Privato per impostazione predefinita. I suoi dati di nascita restano in questo browser.',
   },
-} as const satisfies Record<Locale, {
+} as const satisfies Record<ReleasedLocale, {
   unnamed: string;
   named: (name: string) => string;
   heading: (name: string | null) => string;
@@ -230,7 +231,11 @@ const AUTO_NAME_SUN = {
   pt: 'Sol',
   fr: 'Soleil',
   it: 'Sole',
-} as const satisfies Record<Locale, string>;
+} as const satisfies Record<ReleasedLocale, string>;
+
+function russianNameTemplate(template: string, name: string): string {
+  return template.replaceAll('{name}', name);
+}
 type SavePrefillSource = 'link' | 'match' | 'auto';
 type CalendarSubscribeModule = typeof import('./CalendarSubscribe');
 type CopyLinkModule = typeof import('./CopyLinkButton');
@@ -261,7 +266,28 @@ function sceneHas(scene: ChartSceneModel, ref: EntityRef): boolean {
 }
 
 export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Props) {
-  const locale = normalizeLocale(rawLocale);
+  const locale = normalizeCatalogLocale(rawLocale);
+  const russianCopy = locale === 'ru' ? russianRuntime() : null;
+  const releasedLocale: ReleasedLocale | null = locale === 'ru' ? null : locale;
+  const lensLabels = russianCopy?.chart.lens ?? LENS_LABELS[releasedLocale!];
+  const detailLabels = russianCopy?.chart.detail ?? DETAIL_LABELS[releasedLocale!];
+  const wheelActionCopy = russianCopy?.chart.wheelActions ?? WHEEL_ACTION_COPY[releasedLocale!];
+  const chartBookCopy = russianCopy?.chart.chartBook ?? CHART_BOOK_COPY[releasedLocale!];
+  const registryAuraCopy = russianCopy?.chart.registryAura ?? REGISTRY_AURA_CHART_COPY[releasedLocale!];
+  const otherSubjectCopy = russianCopy
+    ? {
+        unnamed: russianCopy.chart.otherSubject.unnamed,
+        named: (name: string) => russianNameTemplate(russianCopy.chart.otherSubject.namedTemplate, name),
+        heading: (name: string | null) => name
+          ? russianNameTemplate(russianCopy.chart.otherSubject.headingTemplate, name)
+          : russianCopy.chart.otherSubject.headingUnnamed,
+        submit: russianCopy.chart.otherSubject.submit,
+        privacy: russianCopy.chart.otherSubject.privacy,
+      }
+    : OTHER_SUBJECT_COPY[releasedLocale!];
+  const personChartCopy = (name: string) => russianCopy
+    ? russianNameTemplate(russianCopy.chart.personChartTemplate, name)
+    : PERSON_CHART_COPY[releasedLocale!](name);
   const showsEnglishInterpretation = locale === 'en';
   const registryAuraLink = typeof window === 'undefined'
     ? null
@@ -381,7 +407,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   }
 
   function loadPushOptIn(): void {
-    if (!WEB_PUSH_ENABLED) return;
+    if (!WEB_PUSH_ENABLED || locale === 'ru') return;
     void import('./PushOptIn').then(setPushOptIn, () => {});
   }
 
@@ -807,7 +833,8 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
     const decoded = decodeChartLink(token);
     if (!decoded) return;
     const linkCity: City = {
-      name: decoded.place ?? 'Shared birthplace', admin1: '', country: '',
+      name: decoded.place ?? (russianCopy?.chart.sharedBirthplace ?? 'Shared birthplace'),
+      admin1: '', country: '',
       lat: decoded.lat, lon: decoded.lon, tz: decoded.tz, pop: 0,
     };
     setDate(decoded.date);
@@ -894,7 +921,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
       }
       track('result_rendered', { mode });
       track('chart_computed', { mode });
-      void import('./PwaInstallPrompt').then(setPwaInstallModule, () => {});
+      if (locale !== 'ru') void import('./PwaInstallPrompt').then(setPwaInstallModule, () => {});
       setPwaComputationCount((count) => count + 1);
       const computedSun = result.bodies.find((body) => body.body === 'Sun');
       window.dispatchEvent(new CustomEvent('zodiacs:chart-computed', {
@@ -1001,19 +1028,24 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   const moon = chart?.bodies.find((b) => b.body === 'Moon');
   const asc = chart?.angles?.asc ?? null;
   const sunSign = sun ? signForLongitude(sun.lon) : null;
-  const autoNames = RELEASED_LOCALES.map((candidate) =>
-    sunSign
-      ? `${signName(sunSign, candidate)} ${AUTO_NAME_SUN[candidate]} · ${computedInput?.date ?? date}`
-      : '',
-  );
-  const autoName = autoNames[RELEASED_LOCALES.indexOf(locale)] ?? '';
+  const autoNameLocales = locale === 'ru' ? CATALOG_LOCALES : RELEASED_LOCALES;
+  const autoNames = autoNameLocales.map((candidate) => {
+    if (!sunSign) return '';
+    const sunLabel = candidate === 'ru'
+      ? russianCopy!.chart.autoNameSun
+      : AUTO_NAME_SUN[candidate];
+    return `${signName(sunSign, candidate)} ${sunLabel} · ${computedInput?.date ?? date}`;
+  });
+  const autoName = sunSign
+    ? `${signName(sunSign, locale)} ${locale === 'ru' ? russianCopy!.chart.autoNameSun : AUTO_NAME_SUN[locale]} · ${computedInput?.date ?? date}`
+    : '';
   const isAutoName = (name: string | null) => name !== null && autoNames.includes(name);
   const personName = linkName && !isAutoName(linkName)
     ? linkName
     : matchedName && !isAutoName(matchedName) ? matchedName : null;
   const otherSubjectNotice = personName
-    ? OTHER_SUBJECT_COPY[locale].named(personName)
-    : OTHER_SUBJECT_COPY[locale].unnamed;
+    ? otherSubjectCopy.named(personName)
+    : otherSubjectCopy.unnamed;
   const compareWithMineHref = subjectMode === 'other' && shareInput
     ? compatibilityHandoffPath(shareInput, mineHandoff)
     : undefined;
@@ -1288,13 +1320,13 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                 : mode === 'moon' ? t(locale, 'findMoonSign')
                 : mode === 'rising' ? t(locale, 'findRisingSign')
                 : subjectMode === 'other'
-                  ? OTHER_SUBJECT_COPY[locale].submit
+                  ? otherSubjectCopy.submit
                   : t(locale, 'getBirthChart')}
             </span>
             <span class="orb">↗</span>
           </button>
           <p class="calc__privacy">
-            {subjectMode === 'other' ? OTHER_SUBJECT_COPY[locale].privacy : t(locale, 'privacyDevice')}
+            {subjectMode === 'other' ? otherSubjectCopy.privacy : t(locale, 'privacyDevice')}
           </p>
           {error && <p class="calc__error" role="alert" tabIndex={-1} ref={errorRef}>{error}</p>}
         </div>
@@ -1313,7 +1345,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
         <div class="calc__result" ref={resultRef}>
           <h2 class="sr-only" tabIndex={-1} ref={resultHeadingRef}>
             {subjectMode === 'other'
-              ? OTHER_SUBJECT_COPY[locale].heading(personName)
+              ? otherSubjectCopy.heading(personName)
               : mode === 'moon'
               ? t(locale, 'yourMoonSign')
               : mode === 'rising'
@@ -1350,7 +1382,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
             </p>
           ) : personName && (
             <p class="notice" data-chart-person>
-              {PERSON_CHART_COPY[locale](personName)}
+              {personChartCopy(personName)}
             </p>
           )}
 
@@ -1445,7 +1477,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
 
           {/* Wheel + inspector + placements (full mode) — the Chart Explorer */}
           {mode !== 'full' && chart && (
-            <EvidenceDisclosure label={DETAIL_LABELS[locale].lead.replace(/\s*—\s*$/, '')}>
+            <EvidenceDisclosure label={detailLabels.lead.replace(/\s*—\s*$/, '')}>
               <p class="calc__receipt mono" data-chart-receipt>
                 {chart.input.utc.toISOString().replace('T', ' · ').slice(0, 21)} UTC
                 {city ? ` · ${city.lat.toFixed(2)}°, ${city.lon.toFixed(2)}°` : ''}
@@ -1500,13 +1532,13 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                             data-phase={spotlight.phase}
                             aria-hidden="true"
                           >
-                            <span>Highlighted on this chart</span>
+                            <span>{russianCopy?.chart.wheelActions.spotlight ?? 'Highlighted on this chart'}</span>
                             <strong>{describeSelection(selection)}</strong>
                           </div>
                         )}
                       </div>
                       {!tourOpen && (
-                        <div class="calc__lens-rail" role="group" aria-label={LENS_LABELS[locale].rail}>
+                        <div class="calc__lens-rail" role="group" aria-label={lensLabels.rail}>
                           {(['natal', 'sky', 'progressed', 'return'] as const).map((id) => (
                             <button
                               key={id}
@@ -1516,7 +1548,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                               onClick={() => void selectLens(id)}
                               data-lens-btn={id}
                             >
-                              {LENS_LABELS[locale][id]}
+                              {lensLabels[id]}
                             </button>
                           ))}
                         </div>
@@ -1606,34 +1638,34 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                         <ChartActionDock
                           tourOpen={tourOpen}
                           shareOnly={firstReadingPromptVisible}
-                          actionLabel={WHEEL_ACTION_COPY[locale].actions}
+                          actionLabel={wheelActionCopy.actions}
                           signature={showsEnglishInterpretation && signature ? {
                             headline: signature.title,
                             evidence: signature.summary,
                           } : null}
                           signatureLabel={subjectMode === 'other'
-                            ? WHEEL_ACTION_COPY[locale].signatureOther
-                            : WHEEL_ACTION_COPY[locale].signatureSelf}
+                            ? wheelActionCopy.signatureOther
+                            : wheelActionCopy.signatureSelf}
                           guideLabel={firstReading.status === 'complete'
-                            ? WHEEL_ACTION_COPY[locale].replay
-                            : WHEEL_ACTION_COPY[locale].guide}
+                            ? wheelActionCopy.replay
+                            : wheelActionCopy.guide}
                           shareLabel={subjectMode === 'other'
-                            ? WHEEL_ACTION_COPY[locale].shareOther
+                            ? wheelActionCopy.shareOther
                             : t(locale, 'shareChart')}
                           shareStatusLabel={card === 'busy'
                             ? t(locale, 'rendering')
                             : card === 'saved'
                               ? t(locale, 'cardSaved')
                               : subjectMode === 'other'
-                                ? WHEEL_ACTION_COPY[locale].shareOther
+                                ? wheelActionCopy.shareOther
                                 : t(locale, 'shareChart')}
                           compareLabel={subjectMode === 'other'
                             ? mineHandoff
-                              ? WHEEL_ACTION_COPY[locale].compareMine
-                              : WHEEL_ACTION_COPY[locale].compareAdd
+                              ? wheelActionCopy.compareMine
+                              : wheelActionCopy.compareAdd
                             : undefined}
                           compareHref={compareWithMineHref}
-                          anotherLabel={WHEEL_ACTION_COPY[locale].another}
+                          anotherLabel={wheelActionCopy.another}
                           anotherHref={anotherChartHref}
                           onGuide={() => {
                             track('next_action_clicked', {
@@ -1679,7 +1711,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
           <div class="calc__actions">
             {savePromptOpen ? (
               <form class="calc__save-prompt" onSubmit={submitSaveName} data-save-prompt>
-                <label class="sr-only" for="chart-save-name">{CHART_BOOK_COPY[locale].label}</label>
+                <label class="sr-only" for="chart-save-name">{chartBookCopy.label}</label>
                 <input
                   ref={saveNameRef}
                   class="field__input calc__save-name"
@@ -1693,9 +1725,9 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                     closeSavePrompt();
                   }}
                 />
-                <button class="btn btn--primary" type="submit">{CHART_BOOK_COPY[locale].save}</button>
+                <button class="btn btn--primary" type="submit">{chartBookCopy.save}</button>
                 <button class="btn btn--ghost" type="button" onClick={() => void commitSave(undefined, 'skip')}>
-                  {CHART_BOOK_COPY[locale].skip}
+                  {chartBookCopy.skip}
                 </button>
               </form>
             ) : mode === 'full' ? (
@@ -1724,10 +1756,11 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                 <a
                   class="btn btn--primary"
                   href="/today/"
+                  title={russianCopy?.chart.englishOnlyTitle}
                   onClick={() => track('next_action_clicked', { state: 'saved', action: 'today' })}
                   data-primary-action="today"
                 >
-                  <span>{t(locale, 'seeTodaySky')}</span>
+                  <span>{t(locale, 'seeTodaySky')}{russianCopy?.chart.englishOnlySuffix ?? ''}</span>
                   <span class="orb">→</span>
                 </a>
               )
@@ -1804,16 +1837,16 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
           {mode === 'full' && saved === 'saved' && registryAuraLink && (
             <p class="calc__saved" data-registry-aura-chart-link>
               {registryAuraLink.context === 'return'
-                ? REGISTRY_AURA_CHART_COPY[locale].return
-                : REGISTRY_AURA_CHART_COPY[locale].discover}{' '}
+                ? registryAuraCopy.return
+                : registryAuraCopy.discover}{' '}
               <a href={registryAuraLink.href} onClick={() => {
                 for (const event of registryAuraChartAnalytics(registryAuraLink.context)) {
                   trackAnalytics(event.name, event.properties);
                 }
               }}>
                 {registryAuraLink.context === 'return'
-                  ? REGISTRY_AURA_CHART_COPY[locale].returnLink
-                  : REGISTRY_AURA_CHART_COPY[locale].discoverLink}
+                  ? registryAuraCopy.returnLink
+                  : registryAuraCopy.discoverLink}
               </a>
             </p>
           )}
@@ -1831,7 +1864,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
               >×</button>
             </div>
           )}
-          {PushOptIn && <PushOptIn locale={locale} />}
+          {PushOptIn && locale !== 'ru' && <PushOptIn locale={locale} />}
 
           {mode === 'full' && scene && (
             <details
@@ -1841,7 +1874,12 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
               open={detailOpen}
               onToggle={onDetailToggle}
             >
-              <summary class="calc__detail-summary">{DETAIL_LABELS[locale].lead}<span class="mono">{placements.length}</span>{DETAIL_LABELS[locale].placements}<span class="mono">{chart.aspects.length}</span>{DETAIL_LABELS[locale].aspects}</summary>
+              <summary class="calc__detail-summary">
+                {detailLabels.lead}<span class="mono">{placements.length}</span>{detailLabels.placements}
+                {locale === 'ru'
+                  ? tp('ru', 'aspects', chart.aspects.length, russianCopy!.plurals)
+                  : <><span class="mono">{chart.aspects.length}</span>{detailLabels.aspects}</>}
+              </summary>
               <div class="calc__detail-body">
                 <p class="calc__receipt mono" data-chart-receipt>
                   {chart.input.utc.toISOString().replace('T', ' · ').slice(0, 21)} UTC
@@ -1888,7 +1926,9 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
 
                 {chart.aspects.length > 0 && (
                   <section class="calc__aspects" aria-labelledby="calc-aspects-title">
-                    <h3 id="calc-aspects-title">{t(locale, 'aspectsFound')} - {chart.aspects.length} {t(locale, 'found')}</h3>
+                    <h3 id="calc-aspects-title">{t(locale, 'aspectsFound')} - {locale === 'ru'
+                      ? tp('ru', 'aspects', chart.aspects.length, russianCopy!.plurals)
+                      : <>{chart.aspects.length} {t(locale, 'found')}</>}</h3>
                     <ul>
                       {chart.aspects.map((a) => {
                         const ref: EntityRef = { kind: 'aspect', a: a.a, b: a.b, type: a.type };
@@ -1925,7 +1965,11 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
             <aside class="calc__record">
               <span class="calc__record-label mono">{t(locale, 'recordLabel')}</span>
               <span class="calc__record-text">{signName(sunSign, locale)} {t(locale, 'recordOneOfTwelve')}</span>
-              <a class="calc__record-link" href={`/registry/${sunSign.slug}/`}>{t(locale, 'recordViewLink')}</a>
+              <a
+                class="calc__record-link"
+                href={`/registry/${sunSign.slug}/`}
+                title={russianCopy?.chart.englishOnlyTitle}
+              >{t(locale, 'recordViewLink')}</a>
             </aside>
           )}
         </div>
@@ -1941,7 +1985,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
         />
       )}
 
-      {PwaInstallPrompt && (
+      {PwaInstallPrompt && locale !== 'ru' && (
         <PwaInstallPrompt locale={locale} computationCount={pwaComputationCount} />
       )}
     </div>

@@ -20,7 +20,7 @@ import {
   type Modality,
 } from './signs';
 import type { Chart } from './engine/types';
-import type { ReleasedLocale as Locale } from './i18n';
+import type { CatalogLocale as Locale } from './i18n';
 import { shareCardFormat, shareCardText } from './share-card-copy';
 import { communicationRead } from './communication';
 import { approachRead } from './approach';

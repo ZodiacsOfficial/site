@@ -1,5 +1,5 @@
 import { useState } from 'preact/hooks';
-import type { ReleasedLocale as Locale } from '../lib/i18n';
+import type { CatalogLocale as Locale } from '../lib/i18n';
 import { SIGN_SLUGS, signBySlug, signName, type Sign } from '../lib/signs';
 
 export const COMPATIBILITY_PREFILL_EN = {
@@ -29,6 +29,11 @@ export const COMPATIBILITY_PREFILL_COPY = {
     title: 'Abbinamento {a} e {b} caricato',
     help: 'Mantiene visibile il contesto dei segni solari mentre inserisci i due temi reali qui sotto. Non inventa dati di nascita.',
     clear: 'Rimuovi l’abbinamento di segni solari caricato',
+  },
+  ru: {
+    title: 'Пара {a} и {b} загружена',
+    help: 'Солнечные знаки останутся на виду, пока вы вводите две настоящие карты ниже. Мы не придумываем данные рождения.',
+    clear: 'Убрать загруженную пару солнечных знаков',
   },
 } as const;
 

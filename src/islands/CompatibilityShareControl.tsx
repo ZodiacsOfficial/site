@@ -1,6 +1,6 @@
 import { useState } from 'preact/hooks';
 import type { MinimalBody, PairSummary } from '../lib/engine/synastry';
-import { tf, type ReleasedLocale as Locale } from '../lib/i18n';
+import { tf, type CatalogLocale as Locale } from '../lib/i18n';
 import { pairSlug } from '../lib/pair-slug';
 import { shareCardText } from '../lib/share-card-copy';
 import { signForLongitude, signName } from '../lib/signs';
@@ -31,11 +31,15 @@ export function CompatibilityPairingCta({
   const signA = signForLongitude(sunA.lon);
   const signB = signForLongitude(sunB.lon);
   return (
-    <a class="btn btn--ghost" href={`/compatibility/${pairSlug(signA.slug, signB.slug)}/`}>
+    <a
+      class="btn btn--ghost"
+      href={`/compatibility/${pairSlug(signA.slug, signB.slug)}/`}
+      title={locale === 'ru' ? 'Материал пока доступен по-английски' : undefined}
+    >
       <span>{tf(locale, 'pairingCta', {
         a: signName(signA, locale),
         b: signName(signB, locale),
-      })}</span>
+      })}{locale === 'ru' ? ' — пока по-английски' : ''}</span>
       <span class="orb">→</span>
     </a>
   );

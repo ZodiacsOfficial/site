@@ -1,6 +1,7 @@
-import type { ReleasedLocale as Locale } from './index';
+import { requireCatalogLocale, type CatalogLocale as Locale, type ReleasedLocale } from './core';
+import { russianRuntime } from './ru-runtime/index.js';
 
-const PLANET_LABELS: Record<Locale, Record<string, string>> = {
+const PLANET_LABELS: Record<ReleasedLocale, Record<string, string>> = {
   en: {
     Sun: 'Sun', Moon: 'Moon', Mercury: 'Mercury', Venus: 'Venus', Mars: 'Mars',
     Jupiter: 'Jupiter', Saturn: 'Saturn', Uranus: 'Uranus', Neptune: 'Neptune', Pluto: 'Pluto',
@@ -28,7 +29,7 @@ const PLANET_LABELS: Record<Locale, Record<string, string>> = {
   },
 };
 
-const ASPECT_LABELS: Record<Locale, Record<string, string>> = {
+const ASPECT_LABELS: Record<ReleasedLocale, Record<string, string>> = {
   en: {
     conjunction: 'conjunction', sextile: 'sextile', square: 'square',
     trine: 'trine', opposition: 'opposition',
@@ -51,7 +52,7 @@ const ASPECT_LABELS: Record<Locale, Record<string, string>> = {
   },
 };
 
-const MOON_PHASE_LABELS: Record<Locale, Record<string, string>> = {
+const MOON_PHASE_LABELS: Record<ReleasedLocale, Record<string, string>> = {
   en: {
     'New Moon': 'New Moon',
     'Waxing Crescent': 'Waxing Crescent',
@@ -105,13 +106,19 @@ const MOON_PHASE_LABELS: Record<Locale, Record<string, string>> = {
 };
 
 export function planetLabel(locale: Locale, body: string): string {
-  return PLANET_LABELS[locale][body] ?? body;
+  const catalogLocale = requireCatalogLocale(locale);
+  if (catalogLocale === 'ru') return russianRuntime().astrology.planets[body] ?? body;
+  return PLANET_LABELS[catalogLocale][body] ?? body;
 }
 
 export function aspectLabel(locale: Locale, aspect: string): string {
-  return ASPECT_LABELS[locale][aspect] ?? aspect;
+  const catalogLocale = requireCatalogLocale(locale);
+  if (catalogLocale === 'ru') return russianRuntime().astrology.aspects[aspect] ?? aspect;
+  return ASPECT_LABELS[catalogLocale][aspect] ?? aspect;
 }
 
 export function moonPhaseLabel(locale: Locale, phase: string): string {
-  return MOON_PHASE_LABELS[locale][phase] ?? phase;
+  const catalogLocale = requireCatalogLocale(locale);
+  if (catalogLocale === 'ru') return russianRuntime().astrology.moonPhases[phase] ?? phase;
+  return MOON_PHASE_LABELS[catalogLocale][phase] ?? phase;
 }

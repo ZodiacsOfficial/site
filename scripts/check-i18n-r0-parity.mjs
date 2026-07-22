@@ -9,6 +9,7 @@ const argumentValue = (flag, fallback) => {
 };
 const baselineArg = argumentValue('--baseline');
 const candidateArg = argumentValue('--candidate', 'dist');
+const allowedExtraTree = argumentValue('--allow-extra-tree');
 if (!baselineArg) {
   console.error('Usage: node scripts/check-i18n-r0-parity.mjs --baseline /path/to/dist [--candidate dist]');
   process.exit(2);
@@ -63,7 +64,10 @@ const baselineFiles = await filesBelow(baseline);
 const candidateFiles = await filesBelow(candidate);
 const htmlNames = new Set([
   ...[...baselineFiles.keys()].filter((name) => name.endsWith('.html')),
-  ...[...candidateFiles.keys()].filter((name) => name.endsWith('.html')),
+  ...[...candidateFiles.keys()].filter((name) => (
+    name.endsWith('.html')
+    && (!allowedExtraTree || !name.startsWith(`${allowedExtraTree.replace(/\/$/u, '')}/`))
+  )),
 ]);
 for (const name of [...htmlNames].sort()) {
   const baselineHtml = baselineFiles.get(name) ? await read(baselineFiles.get(name)) : null;

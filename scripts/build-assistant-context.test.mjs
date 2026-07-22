@@ -71,6 +71,7 @@ describe('assistant site context', () => {
     expect(bytes).toBeLessThanOrEqual(MAX_CONTEXT_BYTES);
     expect(context).not.toMatch(/(?:^|\s)\/es\//m);
     expect(context).not.toMatch(/(?:^|\s)\/pt\//m);
+    expect(context).not.toMatch(/(?:^|\s)\/ru\//m);
     for (const word of BANNED_CONSUMER_VOCABULARY) {
       expect(context).not.toMatch(new RegExp(`\\b${word}(?:s)?\\b`, 'i'));
     }

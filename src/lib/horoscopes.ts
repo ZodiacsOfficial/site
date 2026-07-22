@@ -4,8 +4,8 @@
  * from frontmatter — the wall clock never decides what displays, so a
  * stale month renders honestly instead of failing the deploy.
  */
-import { signBySlug, signName } from './signs';
-import type { ReleasedLocale as Locale } from './i18n';
+import { signBySlug, signName, signPrepositional } from './signs';
+import type { CatalogLocale as Locale } from './i18n';
 import { aspectLabel, planetLabel } from './i18n/astrology';
 import { formatDate } from './i18n/dates';
 
@@ -109,6 +109,16 @@ const TRANSIT_EVENT_LABELS = {
       `${planetLabel('it', event.planet)} staziona in moto ${event.type === 'retrograde' ? 'retrogrado' : 'diretto'} a ${Math.round(event.degree)}° in ${sn(event.sign, 'it')}`,
     aspect: (event) =>
       `${planetLabel('it', event.a)} in ${aspectLabel('it', event.type)} con ${planetLabel('it', event.b)} (${sn(event.aSign, 'it')}–${sn(event.bSign, 'it')})`,
+  },
+  ru: {
+    ingress: (event) =>
+      `${planetLabel('ru', event.planet)} входит в ${signPrepositional(event.sign)}${event.retrograde ? ', ретроградно' : ''}`,
+    lunation: (event) =>
+      `${event.type === 'new' ? 'Новолуние' : 'Полнолуние'} · ${Math.round(event.degree)}° · ${sn(event.sign, 'ru')}`,
+    station: (event) =>
+      `${planetLabel('ru', event.planet)} становится ${event.type === 'retrograde' ? 'ретроградным' : 'директным'} · ${Math.round(event.degree)}° · ${sn(event.sign, 'ru')}`,
+    aspect: (event) =>
+      `${planetLabel('ru', event.a)} ${aspectLabel('ru', event.type)} ${planetLabel('ru', event.b)} (${sn(event.aSign, 'ru')}–${sn(event.bSign, 'ru')})`,
   },
 } satisfies Record<Locale, TransitEventLabels>;
 

@@ -31,8 +31,10 @@ import {
 } from './search-index-lib.mjs';
 import { backstageCopyMatches } from './consumer-copy-lib.mjs';
 import {
+  ABSENT_LOCALES,
   HREFLANG_LOCALE_POLICY,
   INACTIVE_HREFLANGS,
+  STAGED_NOINDEX_LOCALES,
   X_DEFAULT_HREFLANG,
   expectedHreflangsForPath,
 } from './i18n-hreflang-policy.mjs';
@@ -1068,30 +1070,42 @@ for (const policy of HREFLANG_LOCALE_POLICY) {
   }
 }
 
-for (const stagedLocale of INACTIVE_HREFLANGS) {
-  if (await exists(resolve(root, stagedLocale))) {
-    fail(`i18n R0: inactive /${stagedLocale}/ output directory exists`);
+for (const inactiveLocale of INACTIVE_HREFLANGS) {
+  if ([...sitemapLocs].some((path) => path === `/${inactiveLocale}/` || path.startsWith(`/${inactiveLocale}/`))) {
+    fail(`i18n: inactive /${inactiveLocale}/ URL leaked into sitemap.xml`);
   }
-  if ([...sitemapLocs].some((path) => path === `/${stagedLocale}/` || path.startsWith(`/${stagedLocale}/`))) {
-    fail(`i18n R0: inactive /${stagedLocale}/ URL leaked into sitemap.xml`);
+  if ([...indexedSearchPaths].some((path) => path === `/${inactiveLocale}/` || path.startsWith(`/${inactiveLocale}/`))) {
+    fail(`i18n: inactive /${inactiveLocale}/ URL leaked into search-index.json`);
   }
-  if ([...indexedSearchPaths].some((path) => path === `/${stagedLocale}/` || path.startsWith(`/${stagedLocale}/`))) {
-    fail(`i18n R0: inactive /${stagedLocale}/ URL leaked into search-index.json`);
+}
+for (const absentLocale of ABSENT_LOCALES) {
+  if (await exists(resolve(root, absentLocale))) {
+    fail(`i18n: absent /${absentLocale}/ output directory exists`);
+  }
+}
+for (const previewLocale of STAGED_NOINDEX_LOCALES) {
+  if (!(await exists(resolve(root, previewLocale)))) {
+    fail(`i18n: staged /${previewLocale}/ preview directory is missing`);
   }
 }
 for (const file of files) {
   const html = idCache.get(file) ?? (await readFile(file, 'utf8'));
   const rel = relative(root, file);
-  if (/href=["'](?:https:\/\/zodiacs\.org)?\/(?:ru|ar)(?:\/|["'#?])/.test(html)) {
-    fail(`${rel}: inactive RU/AR route leaked into an href`);
+  const isRussianPreview = rel === 'ru/index.html' || rel.startsWith(`ru${sep}`);
+  if (!isRussianPreview && /href=["'](?:https:\/\/zodiacs\.org)?\/ru(?:\/|["'#?])/.test(html)) {
+    fail(`${rel}: staged RU route leaked outside its private preview tree`);
+  }
+  if (/href=["'](?:https:\/\/zodiacs\.org)?\/ar(?:\/|["'#?])/.test(html)) {
+    fail(`${rel}: absent AR route leaked into an href`);
   }
   if (/hreflang=["'](?:ru|ar)["']/.test(html)) {
     fail(`${rel}: inactive RU/AR hreflang leaked into HTML`);
   }
-  if (/property=["']og:locale(?::alternate)?["'][^>]*content=["'](?:ru_RU|ar_AR)["']/.test(html)) {
+  if (/property=["']og:locale(?::alternate)?["'][^>]*content=["']ar_AR["']/.test(html)
+      || (!isRussianPreview && /property=["']og:locale(?::alternate)?["'][^>]*content=["']ru_RU["']/.test(html))) {
     fail(`${rel}: inactive RU/AR Open Graph locale leaked into HTML`);
   }
-  if (/(?:Русский|العربية)/u.test(html)) {
+  if (/العربية/u.test(html) || (!isRussianPreview && /Русский/u.test(html))) {
     fail(`${rel}: inactive RU/AR language-selector label leaked into HTML`);
   }
 }

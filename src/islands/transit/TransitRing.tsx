@@ -32,7 +32,8 @@ import { transitLine, TRANSIT_ORB } from '../../lib/transits';
 import { formatLongitude } from '../../lib/signs';
 import { formatDate, formatDateTime } from '../../lib/i18n/dates';
 import { aspectLabel, planetLabel } from '../../lib/i18n/astrology';
-import { showsEnglishOnlyInterpretation, t, type ReleasedLocale as Locale } from '../../lib/i18n';
+import { showsEnglishOnlyInterpretation, t, tp, type CatalogLocale as Locale } from '../../lib/i18n';
+import { russianRuntime } from '../../lib/i18n/ru-runtime';
 import CalendarSubscribe, { type CalendarPositionsSource } from '../CalendarSubscribe';
 import EvidenceDisclosure from '../EvidenceDisclosure';
 
@@ -187,9 +188,32 @@ const COPY = {
     skyPositions: 'Posizioni del cielo',
     contactOrbs: 'Orbi dei contatti',
   },
+  ru: {
+    skyRingLabel: 'транзитное небо',
+    scrubLabel: 'Сдвинуть дату',
+    scrubHint: 'Перетаскивайте, чтобы двигать небо вперёд или назад; внешнее кольцо показывает положения планет в выбранный момент.',
+    now: 'Сейчас',
+    back1m: '−1 месяц',
+    fwd1m: '+1 месяц',
+    outerRing: 'Внешнее кольцо — небо тогда. Внутреннее колесо — ваша натальная карта.',
+    tapHint: 'Коснитесь движущейся планеты или соединительной линии, чтобы прочитать данные.',
+    moonOmitted: 'Луна движется слишком быстро для списка, но её путь виден на колесе',
+    announce: 'Небо на',
+    scanning: 'Считаем точные даты медленных транзитов…',
+    marksLabel: 'Точные даты медленных транзитов в этом окне',
+    nextUp: 'Ближайшие точные аспекты:',
+    noSlowExact: 'В этом окне нет точных медленных транзитов.',
+    activeOne: 'активный транзит',
+    activeMany: 'активных транзитов',
+    noActive: 'Сейчас нет активных транзитов между планетами.',
+    exactDetails: 'Точные положения неба и контакты',
+    skyPositions: 'Положения на небе',
+    contactOrbs: 'Орбисы контактов',
+  },
 } as const;
 
 const FRENCH_FEMININE_NATAL = new Set(['Moon', 'Venus']);
+const RUSSIAN_FEMININE_NATAL = new Set(['Moon', 'Venus']);
 const POSTPOSITIVE_NATAL_LOCALES = new Set<Locale>(['fr', 'it']);
 const isAngle = (point: string) => point === 'ASC' || point === 'MC';
 const natalQualifier = (locale: Locale, point: string) => (
@@ -197,7 +221,9 @@ const natalQualifier = (locale: Locale, point: string) => (
     ? 'natale'
     : locale === 'fr'
       ? (FRENCH_FEMININE_NATAL.has(point) ? 'natale' : 'natal')
-      : t(locale, 'natal')
+      : locale === 'ru'
+        ? (RUSSIAN_FEMININE_NATAL.has(point) ? 'натальная' : 'натальный')
+        : t(locale, 'natal')
 );
 const natalPointName = (locale: Locale, point: string) => (
   isAngle(point) ? point : planetLabel(locale, point)
@@ -220,7 +246,7 @@ function NatalPointLabel({ locale, point }: { locale: Locale; point: string }) {
 }
 
 export default function TransitRing({ locale, natal, computeSky, nowMs, focusRequest = null }: TransitRingProps) {
-  const c = COPY[locale] ?? COPY.en;
+  const c = COPY[locale];
   const showInterpretation = showsEnglishOnlyInterpretation(locale);
   const [offset, setOffset] = useState(0);          // days from now (may be fractional mid-tween)
   const [sel, setSel] = useState<string | null>(null);
@@ -522,7 +548,9 @@ export default function TransitRing({ locale, natal, computeSky, nowMs, focusReq
       <p class="syn__tally mono">
         {overlay.aspects.length === 0
           ? c.noActive
-          : `${overlay.aspects.length} ${overlay.aspects.length === 1 ? c.activeOne : c.activeMany}`}
+          : locale === 'ru'
+            ? tp('ru', 'activeTransits', overlay.aspects.length, russianRuntime().plurals)
+            : `${overlay.aspects.length} ${overlay.aspects.length === 1 ? c.activeOne : c.activeMany}`}
       </p>
 
       <div class="syn__aspects">
