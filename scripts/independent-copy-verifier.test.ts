@@ -191,18 +191,42 @@ describe('independent copy verifier', () => {
       }>;
     };
     const reading = tampered.signs[0].readings.today;
-    reading.passages[0].text = reading.passages[0].text.replace('waxing crescent', 'waning crescent');
-    reading.passages[1].text = reading.passages[1].text.replace('in Cancer', 'in Leo');
-    reading.passages[2].text = reading.passages[2].text
-      .replace('Mars sextile Saturn', 'Mars square Saturn')
-      .replace('errands, siblings, messages, and the near neighborhood', 'money, possessions, and what steadies you');
-    reading.text = reading.passages.map((passage) => passage.text).join('\n\n');
-    reading.wordCount = independentWordCount(reading.text);
-
-    const derived = tampered.evidence.find((receipt) => (
-      receipt.id === reading.passages[0].evidenceRefs.find((ref) => ref.startsWith('derived:'))
+    const moon = tampered.evidence.find((receipt) => (
+      reading.passages[0].evidenceRefs.includes(String(receipt.id))
+      && receipt.kind === 'body-position'
+      && receipt.body === 'Moon'
     ));
-    if (derived) derived.house = 8;
+    const signedBody = tampered.evidence.find((receipt) => (
+      reading.passages[1].evidenceRefs.includes(String(receipt.id))
+      && receipt.kind === 'body-position'
+      && typeof receipt.sign === 'string'
+    ));
+    const derived = tampered.evidence.find((receipt) => (
+      reading.passages[0].evidenceRefs.includes(String(receipt.id))
+      && receipt.kind === 'solar-house'
+      && typeof receipt.house === 'number'
+    ));
+    const referencedIds = new Set(tampered.signs.flatMap((entry) => (
+      Object.values(entry.readings).flatMap((candidate) => (
+        candidate.passages.flatMap((passage) => passage.evidenceRefs)
+      ))
+    )));
+    const aspect = tampered.evidence.find((receipt) => (
+      referencedIds.has(String(receipt.id))
+      && receipt.kind === 'sky-event'
+      && receipt.eventKind === 'aspect'
+    ));
+
+    expect(moon).toBeDefined();
+    expect(signedBody).toBeDefined();
+    expect(derived).toBeDefined();
+    expect(aspect).toBeDefined();
+    if (!moon || !signedBody || !derived || !aspect) return;
+
+    moon.moonPhase = moon.moonPhase === 'Full Moon' ? 'New Moon' : 'Full Moon';
+    signedBody.sign = signedBody.sign === 'aries' ? 'taurus' : 'aries';
+    derived.house = (Number(derived.house) % 12) + 1;
+    aspect.eventType = aspect.eventType === 'square' ? 'trine' : 'square';
 
     const ids = ruleIds(verifyHoroscopeProgramCopy(tampered));
     expect(ids).toContain('COPY-EVIDENCE-CLAIM');

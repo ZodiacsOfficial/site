@@ -1,10 +1,9 @@
 {
   "version": 1,
-  "id": "registry-elegance",
-  "baseCommit": "4fc6121cf8b07812ca35a7934b43ef0e871b3057",
-  "reason": "Owner-approved Registry elegance pass for the sign-header hierarchy, landing actions, and shared mobile menu motion.",
+  "id": "menu-stroke-spacing",
+  "baseCommit": "5845bddf5899446adc74c7a2e60b1cefe66f9d15",
+  "reason": "Owner-approved shared navigation patch that replaces the widely spaced mobile menu strokes with a compact centered three-line morph.",
   "protectedPaths": [
-    "public/assets/app.js",
     "public/registry/aquarius/index.html",
     "public/registry/aries/index.html",
     "public/registry/cancer/index.html",
@@ -19,10 +18,6 @@
     "public/registry/taurus/index.html",
     "public/registry/virgo/index.html",
     "public/sdk/index.html",
-    "scripts/build-sign-pages.mjs",
-    "scripts/registry-aura-entry.test.mjs",
-    "scripts/registry-pastel-polish.test.mjs",
-    "src/app.jsx",
-    "src/lib/registry-aura-entry.mjs"
+    "scripts/registry-pastel-polish.test.mjs"
   ]
 }

@@ -18,6 +18,23 @@ const daily = dailyData as Daily;
 const publication = publicationData as DailyPublication;
 const clone = <T>(value: T): T => JSON.parse(JSON.stringify(value)) as T;
 
+function dailyWithExactAspect(): Daily {
+  const candidate = clone(daily);
+  candidate.events = [{
+    kind: 'aspect',
+    a: 'Mars',
+    b: 'Saturn',
+    type: 'sextile',
+    orb: 0,
+    aSign: 'gemini',
+    aDegree: 12,
+    bSign: 'aries',
+    bDegree: 12,
+    at: `${candidate.date}T06:00:00.000Z`,
+  }];
+  return candidate;
+}
+
 describe('daily editorial publication', () => {
   it('rebuilds the committed twelve-sign edition with no violations', () => {
     expect(buildDailyPublication(daily)).toEqual(publication);
@@ -43,24 +60,26 @@ describe('daily editorial publication', () => {
       degree: expect.any(Number),
       retrograde: false,
     });
-    const exactAspect = publication.facts.find((fact) => fact.eventKind === 'aspect');
+    const exactAspect = buildDailyPublication(dailyWithExactAspect()).facts
+      .find((fact) => fact.eventKind === 'aspect');
     expect(exactAspect).toMatchObject({ kind: 'sky-event', orb: 0 });
   });
 
   it('requires exact-hit aspects to expose zero orb and rejects approximations', () => {
-    const missing = clone(daily) as any;
+    const aspectDaily = dailyWithExactAspect();
+    const missing = clone(aspectDaily) as any;
     delete missing.events[0].orb;
     expect(validateDailyFacts(missing).map((failure) => failure.ruleId))
       .toContain('FACT-EVENT-ORB');
 
-    const approximate = clone(daily) as any;
+    const approximate = clone(aspectDaily) as any;
     approximate.events[0].orb = 0.25;
     expect(validateDailyFacts(approximate).map((failure) => failure.ruleId))
       .toContain('FACT-EVENT-ORB');
 
-    const publishedApproximation = clone(publication) as any;
+    const publishedApproximation = clone(buildDailyPublication(aspectDaily)) as any;
     publishedApproximation.facts.find((fact: { eventKind?: string }) => fact.eventKind === 'aspect').orb = 0.25;
-    expect(validateDailyPublication(daily, publishedApproximation).map((failure) => failure.ruleId))
+    expect(validateDailyPublication(aspectDaily, publishedApproximation).map((failure) => failure.ruleId))
       .toContain('FACT-ASPECT-ORB');
   });
 
@@ -186,6 +205,7 @@ describe('daily editorial publication', () => {
 
   it('enforces canonical body, sign, and major-aspect enums', () => {
     const candidate = clone(daily);
+    candidate.events = dailyWithExactAspect().events;
     candidate.bodies[0].body = 'Chiron';
     candidate.bodies[0].sign = 'ophiuchus';
     candidate.events[0].a = 'Chiron';

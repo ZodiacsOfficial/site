@@ -108,6 +108,9 @@ describe('registry pastel polish', () => {
       expect(value).toContain('rgba(198,204,218,0.16)');
       expect(value).toContain('width: 34px; height: 34px;');
       expect(value).toContain('width: 18px; height: 1.5px;');
+      expect(value).toContain('position: absolute; top: 50%; left: 50%;');
+      expect(value).toContain('translate(-50%, calc(-50% - 5px))');
+      expect(value).toContain('translate(-50%, calc(-50% + 5px))');
       expect(value).toContain('transform 220ms cubic-bezier(0.77,0,0.175,1)');
       expect(value).toContain('letter-spacing: 0.08em;');
       expect(value).toContain('@media (min-width: 820px) { .wnav__chip { letter-spacing: 0.14em; } }');
