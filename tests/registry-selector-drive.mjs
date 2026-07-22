@@ -156,7 +156,10 @@ await withPreview({ port: 4404 }, async (baseURL) => {
             JSON.stringify(closedLines.map((line) => line.center)),
           );
           await burger.click();
-          await navPage.waitForTimeout(240);
+          // The morph itself lasts 220ms. Leave a scheduling margin so slower
+          // CI runners are measured at the settled X rather than one frame
+          // before the transition completes.
+          await navPage.waitForTimeout(320);
           const openState = await burger.evaluate((element, prefix) => {
             const lines = [...element.querySelectorAll(`.${prefix}__burger-line`)];
             return {
