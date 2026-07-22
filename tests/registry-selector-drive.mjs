@@ -27,6 +27,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       { path: '/', selector: '.nav-wrap .nav', prefix: 'nav' },
       { path: '/registry/', selector: '.wnav-wrap .wnav', prefix: 'wnav' },
       { path: '/registry/aries/', selector: '.wnav-wrap .wnav', prefix: 'wnav' },
+      { path: '/sdk/', selector: '.wnav-wrap .wnav', prefix: 'wnav' },
     ];
     for (const width of [390, 781, 1280]) {
       let referenceGeometry = null;
@@ -267,6 +268,20 @@ await withPreview({ port: 4404 }, async (baseURL) => {
           geometry.pageWidth <= geometry.viewportWidth + 1,
           `${geometry.pageWidth}/${geometry.viewportWidth}`,
         );
+        if (route.path === '/sdk/') {
+          const heroGap = await navPage.evaluate(() => {
+            const nav = document.querySelector('.wnav');
+            const eyebrow = document.querySelector('.hero .eyebrow');
+            return nav && eyebrow
+              ? eyebrow.getBoundingClientRect().top - nav.getBoundingClientRect().bottom
+              : null;
+          });
+          check(
+            `${label} keeps the SDK hero clear of the fixed navigation`,
+            heroGap !== null && heroGap >= 16,
+            String(heroGap),
+          );
+        }
         await navPage.close();
       }
     }
