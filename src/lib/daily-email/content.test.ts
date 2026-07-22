@@ -59,6 +59,18 @@ function eventOffset(days: number, signs = ['aquarius']): PublishedEventDescript
   };
 }
 
+function publicationWithCollectiveLine(): DailyPublication {
+  const candidate = structuredClone(publication);
+  candidate.signs[0]!.lines.unshift({
+    text: 'Jupiter and Neptune reach an exact trine.',
+    receipt: 'Jupiter trine Neptune · exact 07:47 UTC',
+    templateId: 'aspect-collective.v1',
+    scope: 'collective',
+    evidenceRefs: [candidate.facts[0]!.id],
+  });
+  return candidate;
+}
+
 function quietLongitude(): number {
   const angles = [0, 60, 90, 120, 180];
   const candidates = Array.from({ length: 3_600 }, (_, index) => index / 10).map((lon) => ({
@@ -110,19 +122,27 @@ describe('daily email content', () => {
       expect(message.text).toContain(unsubscribeUrl);
       expect(message.html).toContain(unsubscribeUrl.replaceAll('&', '&amp;'));
     }
+    const subjectPublication = structuredClone(publication);
+    subjectPublication.signs.find((entry) => entry.sign === 'leo')!.todayLine.house = 3;
     const leo = renderDailyEmail({
       recipient: {
         tier: 'sun_sign', email: 'leo@example.com', sign: 'leo',
         contactId: 'contact_leo', timezone: 'UTC',
       },
-      daily, publication, program, baseUrl: 'https://zodiacs.org', unsubscribeUrl,
+      daily, publication: subjectPublication, program, baseUrl: 'https://zodiacs.org', unsubscribeUrl,
     });
     expect(leo.subject).toBe('Leo today — messages come to the front');
-    const receiptTime = /exact (\d{2}:\d{2} UTC)$/u.exec(
-      publication.signs.find((entry) => entry.sign === 'leo')!.lines
-        .find((line) => line.scope === 'collective')!.receipt,
-    )![1];
-    expect(leo.text).toContain(receiptTime);
+
+    const collectivePublication = publicationWithCollectiveLine();
+    const timed = renderDailyEmail({
+      recipient: {
+        tier: 'sun_sign', email: 'aries@example.com', sign: 'aries',
+        contactId: 'contact_aries', timezone: 'UTC',
+      },
+      daily, publication: collectivePublication, program,
+      baseUrl: 'https://zodiacs.org', unsubscribeUrl,
+    });
+    expect(timed.text).toContain('07:47 UTC');
   });
 
   it('uses the exact Today contact selector and transit prose for chart mail', () => {
@@ -156,6 +176,7 @@ describe('daily email content', () => {
 
   it('grounds chart context in the committed Moon and first collective edition line', () => {
     const ascendant = 120;
+    const groundedPublication = publicationWithCollectiveLine();
     const chart = chartWithBodies(daily.bodies.slice(0, 3).map((body) => ({
       body: body.body, lon: body.lon, retrograde: false,
     })), ascendant);
@@ -164,12 +185,12 @@ describe('daily email content', () => {
         tier: 'chart', email: 'grounded@example.com', userId: 'user', chartId: chart.id,
         chart, timezone: 'UTC',
       },
-      daily, publication, program, baseUrl: 'https://zodiacs.org', unsubscribeUrl,
+      daily, publication: groundedPublication, program, baseUrl: 'https://zodiacs.org', unsubscribeUrl,
     });
     const moon = daily.bodies.find((body) => body.body === 'Moon')!;
     const ascendantSign = signForLongitude(ascendant).slug;
     const moonLine = houseLine(moon, wholeSignHouseFromAsc(moon.sign, ascendantSign)).text;
-    const collective = publication.signs[0]!.lines.find((line) => line.scope === 'collective')!;
+    const collective = groundedPublication.signs[0]!.lines.find((line) => line.scope === 'collective')!;
     expect(message.text).toContain(moonLine);
     expect(message.html).toContain(moonLine);
     expect(message.text).toContain(`Sky-wide: ${collective.text.replace(/[.]$/u, '')}`);

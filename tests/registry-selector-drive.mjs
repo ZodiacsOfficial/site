@@ -131,14 +131,28 @@ await withPreview({ port: 4404 }, async (baseURL) => {
           const burgerLines = burger.locator(`.${route.prefix}__burger-line`);
           const closedLines = await burgerLines.evaluateAll((lines) => lines.map((line) => ({
             width: line.getBoundingClientRect().width,
+            position: getComputedStyle(line).position,
             transition: getComputedStyle(line).transition,
+            center: (() => {
+              const rect = line.getBoundingClientRect();
+              return { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 };
+            })(),
           })));
           check(
             `${label} uses the refined three-stroke menu icon`,
             closedLines.length === 3
               && closedLines.every((line) => Math.abs(line.width - 18) <= 0.5)
+              && closedLines.every((line) => line.position === 'absolute')
               && closedLines.every((line) => line.transition.includes('0.22s')),
             JSON.stringify(closedLines),
+          );
+          check(
+            `${label} keeps the three menu strokes tightly grouped`,
+            Math.abs(closedLines[0].center.x - closedLines[1].center.x) <= 0.5
+              && Math.abs(closedLines[1].center.x - closedLines[2].center.x) <= 0.5
+              && Math.abs((closedLines[1].center.y - closedLines[0].center.y) - 5) <= 0.5
+              && Math.abs((closedLines[2].center.y - closedLines[1].center.y) - 5) <= 0.5,
+            JSON.stringify(closedLines.map((line) => line.center)),
           );
           await burger.click();
           await navPage.waitForTimeout(240);
