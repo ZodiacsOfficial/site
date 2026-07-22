@@ -467,6 +467,7 @@
       color: var(--ink-2);
       gap: 10px;
     }
+    .cine__cta .btn--ghost::after { content: none; }
     .cine__cta .btn--ghost:hover { color: var(--gold-bright); }
     .cine__cta .cta-arr { color: var(--gold); transition: transform 160ms cubic-bezier(0.23,1,0.32,1); }
     .cine__cta .btn--ghost:hover .cta-arr { transform: translateX(3px); }
@@ -596,21 +597,23 @@
   .wnav-signs__item .wnav-disc { grid-row: span 2; }
   .wnav-signs__name { font-family: 'Instrument Sans', system-ui, sans-serif; font-size: 14px; font-weight: 550; color: var(--ink, #EEF1F7); line-height: 1.25; }
   .wnav-signs__dates { font-family: var(--mono, 'JetBrains Mono', monospace); font-size: 10px; letter-spacing: 0.06em; color: var(--ink-mute, #8A93A6); }
-  .wnav-menu { position: fixed; inset: 0; z-index: 59; pointer-events: auto; background: rgba(6,7,9,0.90); backdrop-filter: blur(26px) saturate(140%); -webkit-backdrop-filter: blur(26px) saturate(140%); padding: calc(92px + env(safe-area-inset-top)) clamp(24px,7vw,40px) 40px; overflow-y: auto; }
+  .wnav-menu { position: fixed; inset: 0; z-index: 59; pointer-events: auto; background: rgba(6,7,9,0.88); backdrop-filter: blur(26px) saturate(140%); -webkit-backdrop-filter: blur(26px) saturate(140%); padding: calc(96px + env(safe-area-inset-top)) 24px 40px; overflow-y: auto; }
   .wnav-menu[hidden] { display: none; }
-  .wnav-menu > nav { max-width: 520px; margin: 0 auto; }
   .wnav-menu__group + .wnav-menu__group { margin-top: 34px; }
   .wnav-menu__label { display: block; margin-bottom: 14px; font-family: var(--mono, 'JetBrains Mono', monospace); font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--ink-mute, #8A93A6); }
   .wnav-menu__link { display: block; padding: 13px 0; font-family: var(--serif, 'EB Garamond', Georgia, serif); font-size: clamp(24px, 7vw, 32px); font-weight: 400; letter-spacing: 0.01em; line-height: 1.05; text-decoration: none; color: var(--ink, #EEF1F7); border-bottom: 1px solid var(--hair, rgba(198,204,218,0.10)); }
   .wnav-menu__link:last-child { border-bottom: 0; }
+  .wnav-menu__registry { display: grid; gap: 5px; }
+  .wnav-menu__registry small { color: var(--ink-mute, #8A93A6); font-family: var(--mono, 'JetBrains Mono', monospace); font-size: 9px; letter-spacing: 0.04em; line-height: 1.35; }
+  .wnav-menu__tools { display: grid; grid-template-columns: minmax(0, 1fr); }
+  .wnav-menu__tool { display: block; min-width: 0; padding: 11px 0; border-bottom: 1px solid var(--hair, rgba(198,204,218,0.10)); color: var(--ink, #EEF1F7); font-family: var(--serif, 'EB Garamond', Georgia, serif); font-size: clamp(18px, 5vw, 22px); line-height: 1.05; text-decoration: none; }
+  .wnav-menu__tool:last-child { border-bottom: 0; }
   .wnav-menu__signs { display: flex; flex-direction: column; }
   .wnav-menu__sign { display: flex; flex-direction: row; align-items: center; gap: 13px; padding: 10px 0; text-decoration: none; font-family: var(--serif, 'EB Garamond', Georgia, serif); font-size: clamp(20px, 5.5vw, 26px); font-weight: 400; color: var(--ink, #EEF1F7); border-bottom: 1px solid var(--hair, rgba(198,204,218,0.10)); }
   .wnav-menu__sign:last-child { border-bottom: 0; }
   .wnav-menu__sign .wnav-disc { width: 30px; height: 30px; }
-  .wnav-menu.is-open .wnav-menu__link, .wnav-menu.is-open .wnav-menu__sign, .wnav-menu.is-open .wnav-menu__label { animation: wnav-in 640ms var(--ease, cubic-bezier(0.4,0,0.2,1)) both; animation-delay: calc(40ms * var(--i, 0)); }
-  @keyframes wnav-in { from { opacity: 0; transform: translateY(14px); filter: blur(4px); } to { opacity: 1; transform: none; filter: none; } }
   @keyframes wnav-turn { to { transform: rotate(360deg); } }
-  @media (prefers-reduced-motion: reduce) { .wnav-menu.is-open .wnav-menu__link, .wnav-menu.is-open .wnav-menu__sign, .wnav-menu.is-open .wnav-menu__label { animation: none; } .wnav-signs, .wnav__burger, .wnav__burger-line { transition: none; } .wnav__mark:hover .wnav__brand { animation: none; } }
+  @media (prefers-reduced-motion: reduce) { .wnav-signs, .wnav__burger, .wnav__burger-line { transition: none; } .wnav__mark:hover .wnav__brand { animation: none; } }
 
     /* ── Liquid glass — SVG filter defs container. On Chromium the hero
        CTAs AND the nav pill refract the footage behind them (.zdx-lens is

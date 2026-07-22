@@ -30,6 +30,19 @@ export const NAV_SIGNS = [
   { slug: 'pisces', name: 'Pisces', glyph: '♓', dates: 'Feb 19 – Mar 20', hue: '#A9D4C4' },
 ];
 
+// English wing mirror of src/lib/nav-tools.ts. Descriptions stay out of the
+// visible menu but remain in each link's accessible name, matching SiteNav.
+export const NAV_TOOLS = [
+  { href: '/birth-chart/', name: 'Birth chart', description: 'See your sun, moon, rising, planets, houses, and what they mean.' },
+  { href: '/compatibility/', name: 'Compatibility', description: 'Compare two charts and see where they click, clash, and grow.' },
+  { href: '/transits/', name: 'Transits', description: "See today's sky next to your chart." },
+  { href: '/moon-sign/', name: 'Moon sign', description: 'How you feel, and what settles you.' },
+  { href: '/rising-sign/', name: 'Rising sign', description: 'Find the sign people meet first. Birth time helps.' },
+  { href: '/moon-phase/', name: 'Moon phase', description: 'Tonight’s moon, and the moon of any date you care about.' },
+  { href: '/saturn-return/', name: 'Saturn return', description: 'When yours hits, exactly, and what it tends to ask.' },
+  { href: '/birthday/', name: 'Birthday', description: 'Pick your birthday and get the receipts: sun sign verified across 1940–2030, exact degree spans, decans with traditional rulers, and year-by-year cusp tables.' },
+];
+
 // BrandMark: twelve dots in a ring, one per sign hue (mirrors BrandMark.astro).
 export function brandMarkSvg(size = 17) {
   const C = 12, R = 9, DOT = 1.9;
@@ -45,7 +58,6 @@ export function brandMarkSvg(size = 17) {
 // The full nav markup (bar + Signs dropdown + mobile overlay). The Registry chip
 // is marked aria-current on every wing page (we are always in the wing here).
 export function wingNavHtml({ includeSearch = true } = {}) {
-  const mobileSignOffset = 4;
   const signGrid = NAV_SIGNS.map((s) => (
     `<a class="wnav-signs__item" href="/${s.slug}/" style="--sign:${s.hue}">` +
       `<picture class="wnav-disc"><source srcset="/assets/zodiac-icons/128/${s.slug}.avif" type="image/avif"/><img src="/assets/zodiac-icons/128/${s.slug}.webp" width="32" height="32" alt="" loading="lazy" decoding="async"/></picture>` +
@@ -53,8 +65,11 @@ export function wingNavHtml({ includeSearch = true } = {}) {
       `<span class="wnav-signs__dates">${s.dates}</span>` +
     `</a>`
   )).join('');
+  const mobileTools = NAV_TOOLS.map((tool, i) => (
+    `<a class="wnav-menu__tool" style="--i:${i}" href="${tool.href}" aria-label="${tool.name}. ${tool.description}">${tool.name}</a>`
+  )).join('');
   const mobileSigns = NAV_SIGNS.map((s, i) => (
-    `<a class="wnav-menu__sign" style="--i:${mobileSignOffset + i};--sign:${s.hue}" href="/${s.slug}/" aria-label="${s.name}">` +
+    `<a class="wnav-menu__sign" style="--i:${i};--sign:${s.hue}" href="/${s.slug}/" aria-label="${s.name}">` +
       `<picture class="wnav-disc wnav-disc--lg"><source srcset="/assets/zodiac-icons/128/${s.slug}.avif" type="image/avif"/><img src="/assets/zodiac-icons/128/${s.slug}.webp" width="40" height="40" alt="" loading="lazy" decoding="async"/></picture>` +
       `<span>${s.name}</span>` +
     `</a>`
@@ -89,10 +104,14 @@ export function wingNavHtml({ includeSearch = true } = {}) {
     <nav aria-label="Mobile">
       <div class="wnav-menu__group">
         <span class="wnav-menu__label">The site</span>
-        <a class="wnav-menu__link" style="--i:0" href="/tools/">Tools</a>
-        <a class="wnav-menu__link" style="--i:1" href="/learn/">Learn</a>
-        <a class="wnav-menu__link" style="--i:2" href="/horoscopes/">Horoscopes</a>
-        <a class="wnav-menu__link" style="--i:3" href="/profile/">Saved charts</a>
+        <a class="wnav-menu__link" style="--i:0" href="/learn/">Learn</a>
+        <a class="wnav-menu__link" style="--i:1" href="/horoscopes/">Horoscopes</a>
+        <a class="wnav-menu__link" style="--i:2" href="/profile/">Saved charts</a>
+        <a class="wnav-menu__link wnav-menu__registry" style="--i:3" href="/registry/" aria-current="page"><span>Registry</span><small>Digital collection and registry</small></a>
+      </div>
+      <div class="wnav-menu__group">
+        <span class="wnav-menu__label">Tools</span>
+        <div class="wnav-menu__tools">${mobileTools}</div>
       </div>
       <div class="wnav-menu__group">
         <span class="wnav-menu__label">The twelve</span>
@@ -189,19 +208,21 @@ export function wingNavCss() {
   .wnav-signs__item .wnav-disc { grid-row: span 2; }
   .wnav-signs__name { font-family: 'Instrument Sans', system-ui, sans-serif; font-size: 14px; font-weight: 550; color: var(--ink, #EEF1F7); line-height: 1.25; }
   .wnav-signs__dates { font-family: var(--mono, 'JetBrains Mono', monospace); font-size: 10px; letter-spacing: 0.06em; color: var(--ink-mute, #8A93A6); }
-  .wnav-menu { position: fixed; inset: 0; z-index: 59; pointer-events: auto; background: rgba(6,7,9,0.90); backdrop-filter: blur(26px) saturate(140%); -webkit-backdrop-filter: blur(26px) saturate(140%); padding: calc(92px + env(safe-area-inset-top)) clamp(24px,7vw,40px) 40px; overflow-y: auto; }
+  .wnav-menu { position: fixed; inset: 0; z-index: 59; pointer-events: auto; background: rgba(6,7,9,0.88); backdrop-filter: blur(26px) saturate(140%); -webkit-backdrop-filter: blur(26px) saturate(140%); padding: calc(96px + env(safe-area-inset-top)) 24px 40px; overflow-y: auto; }
   .wnav-menu[hidden] { display: none; }
-  .wnav-menu > nav { max-width: 520px; margin: 0 auto; }
   .wnav-menu__group + .wnav-menu__group { margin-top: 34px; }
   .wnav-menu__label { display: block; margin-bottom: 14px; font-family: var(--mono, 'JetBrains Mono', monospace); font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--ink-mute, #8A93A6); }
   .wnav-menu__link { display: block; padding: 13px 0; font-family: var(--serif, 'EB Garamond', Georgia, serif); font-size: clamp(24px, 7vw, 32px); font-weight: 400; letter-spacing: 0.01em; line-height: 1.05; text-decoration: none; color: var(--ink, #EEF1F7); border-bottom: 1px solid var(--hair, rgba(198,204,218,0.10)); }
   .wnav-menu__link:last-child { border-bottom: 0; }
+  .wnav-menu__registry { display: grid; gap: 5px; }
+  .wnav-menu__registry small { color: var(--ink-mute, #8A93A6); font-family: var(--mono, 'JetBrains Mono', monospace); font-size: 9px; letter-spacing: 0.04em; line-height: 1.35; }
+  .wnav-menu__tools { display: grid; grid-template-columns: minmax(0, 1fr); }
+  .wnav-menu__tool { display: block; min-width: 0; padding: 11px 0; border-bottom: 1px solid var(--hair, rgba(198,204,218,0.10)); color: var(--ink, #EEF1F7); font-family: var(--serif, 'EB Garamond', Georgia, serif); font-size: clamp(18px, 5vw, 22px); line-height: 1.05; text-decoration: none; }
+  .wnav-menu__tool:last-child { border-bottom: 0; }
   .wnav-menu__signs { display: flex; flex-direction: column; }
   .wnav-menu__sign { display: flex; flex-direction: row; align-items: center; gap: 13px; padding: 10px 0; text-decoration: none; font-family: var(--serif, 'EB Garamond', Georgia, serif); font-size: clamp(20px, 5.5vw, 26px); font-weight: 400; color: var(--ink, #EEF1F7); border-bottom: 1px solid var(--hair, rgba(198,204,218,0.10)); }
   .wnav-menu__sign:last-child { border-bottom: 0; }
   .wnav-menu__sign .wnav-disc { width: 30px; height: 30px; }
-  .wnav-menu.is-open .wnav-menu__link, .wnav-menu.is-open .wnav-menu__sign, .wnav-menu.is-open .wnav-menu__label { animation: wnav-in 640ms var(--ease, cubic-bezier(0.4,0,0.2,1)) both; animation-delay: calc(40ms * var(--i, 0)); }
-  @keyframes wnav-in { from { opacity: 0; transform: translateY(14px); filter: blur(4px); } to { opacity: 1; transform: none; filter: none; } }
   @keyframes wnav-turn { to { transform: rotate(360deg); } }
-  @media (prefers-reduced-motion: reduce) { .wnav-menu.is-open .wnav-menu__link, .wnav-menu.is-open .wnav-menu__sign, .wnav-menu.is-open .wnav-menu__label { animation: none; } .wnav-signs, .wnav__burger, .wnav__burger-line { transition: none; } .wnav__mark:hover .wnav__brand { animation: none; } }`;
+  @media (prefers-reduced-motion: reduce) { .wnav-signs, .wnav__burger, .wnav__burger-line { transition: none; } .wnav__mark:hover .wnav__brand { animation: none; } }`;
 }

@@ -1111,6 +1111,16 @@
         { slug: 'aquarius', name: 'Aquarius', glyph: '♒', dates: 'Jan 20 – Feb 18', hue: '#AE8FC9' },
         { slug: 'pisces', name: 'Pisces', glyph: '♓', dates: 'Feb 19 – Mar 20', hue: '#A9D4C4' },
       ];
+      const NAV_TOOLS = [
+        { href: '/birth-chart/', name: 'Birth chart', description: 'See your sun, moon, rising, planets, houses, and what they mean.' },
+        { href: '/compatibility/', name: 'Compatibility', description: 'Compare two charts and see where they click, clash, and grow.' },
+        { href: '/transits/', name: 'Transits', description: "See today's sky next to your chart." },
+        { href: '/moon-sign/', name: 'Moon sign', description: 'How you feel, and what settles you.' },
+        { href: '/rising-sign/', name: 'Rising sign', description: 'Find the sign people meet first. Birth time helps.' },
+        { href: '/moon-phase/', name: 'Moon phase', description: 'Tonight’s moon, and the moon of any date you care about.' },
+        { href: '/saturn-return/', name: 'Saturn return', description: 'When yours hits, exactly, and what it tends to ask.' },
+        { href: '/birthday/', name: 'Birthday', description: 'Pick your birthday and get the receipts: sun sign verified across 1940–2030, exact degree spans, decans with traditional rulers, and year-by-year cusp tables.' },
+      ];
       return (
         <>
           <div className="wnav-wrap">
@@ -1150,16 +1160,27 @@
             <nav aria-label="Mobile">
               <div className="wnav-menu__group">
                 <span className="wnav-menu__label">The site</span>
-                <a className="wnav-menu__link" style={{ '--i': 0 }} href="/tools/">Tools</a>
-                <a className="wnav-menu__link" style={{ '--i': 1 }} href="/learn/">Learn</a>
-                <a className="wnav-menu__link" style={{ '--i': 2 }} href="/horoscopes/">Horoscopes</a>
-                <a className="wnav-menu__link" style={{ '--i': 3 }} href="/profile/">Saved charts</a>
+                <a className="wnav-menu__link" style={{ '--i': 0 }} href="/learn/">Learn</a>
+                <a className="wnav-menu__link" style={{ '--i': 1 }} href="/horoscopes/">Horoscopes</a>
+                <a className="wnav-menu__link" style={{ '--i': 2 }} href="/profile/">Saved charts</a>
+                <a className="wnav-menu__link wnav-menu__registry" style={{ '--i': 3 }} href="/registry/" aria-current="page">
+                  <span>Registry</span>
+                  <small>Digital collection and registry</small>
+                </a>
+              </div>
+              <div className="wnav-menu__group">
+                <span className="wnav-menu__label">Tools</span>
+                <div className="wnav-menu__tools">
+                  {NAV_TOOLS.map((tool, i) => (
+                    <a className="wnav-menu__tool" key={tool.href} style={{ '--i': i }} href={tool.href} aria-label={`${tool.name}. ${tool.description}`}>{tool.name}</a>
+                  ))}
+                </div>
               </div>
               <div className="wnav-menu__group">
                 <span className="wnav-menu__label">The twelve</span>
                 <div className="wnav-menu__signs">
                   {NAV_SIGNS.map((s, i) => (
-                    <a className="wnav-menu__sign" key={s.slug} style={{ '--i': 4 + i, '--sign': s.hue }} href={`/${s.slug}/`} aria-label={s.name}>
+                    <a className="wnav-menu__sign" key={s.slug} style={{ '--i': i, '--sign': s.hue }} href={`/${s.slug}/`} aria-label={s.name}>
                       <picture className="wnav-disc wnav-disc--lg"><source srcSet={`/assets/zodiac-icons/128/${s.slug}.avif`} type="image/avif" /><img src={`/assets/zodiac-icons/128/${s.slug}.webp`} width="40" height="40" alt="" loading="lazy" decoding="async" /></picture>
                       <span>{s.name}</span>
                     </a>

@@ -30,6 +30,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
     ];
     for (const width of [390, 781, 1280]) {
       let referenceGeometry = null;
+      let referenceMenuVisual = null;
       for (const route of navRoutes) {
         const navPage = await browser.newPage({ viewport: { width, height: 900 } });
         await navPage.goto(`${baseURL}${route.path}`, { waitUntil: 'domcontentloaded' });
@@ -180,6 +181,83 @@ await withPreview({ port: 4404 }, async (baseURL) => {
               && Math.abs(openState.centers[0].y - openState.centers[2].y) <= 0.5,
             JSON.stringify(openState),
           );
+          const menuRoot = route.prefix === 'nav' ? 'mobile-menu' : 'wnav-menu';
+          const menu = navPage.locator(`.${menuRoot}`);
+          await menu.waitFor({ state: 'visible' });
+          const menuContract = await menu.evaluate((element, root) => {
+            const groups = [...element.querySelectorAll(`:scope > nav > .${root}__group`)];
+            const innerNav = element.querySelector(':scope > nav');
+            const innerRect = innerNav?.getBoundingClientRect();
+            const rootStyle = getComputedStyle(element);
+            const toolLinks = [...element.querySelectorAll(`.${root}__tool`)];
+            return {
+              labels: groups.map((group) => group.querySelector(`.${root}__label`)?.textContent?.trim() ?? ''),
+              siteHrefs: [...(groups[0]?.querySelectorAll(`:scope > .${root}__link`) ?? [])]
+                .map((link) => link.getAttribute('href')),
+              toolNames: [...element.querySelectorAll(`.${root}__tool`)]
+                .map((link) => link.textContent?.trim() ?? ''),
+              toolHrefs: [...element.querySelectorAll(`.${root}__tool`)]
+                .map((link) => link.getAttribute('href')),
+              toolAccessibleNames: toolLinks.map((link) => link.getAttribute('aria-label')),
+              visibleDescriptions: element.querySelectorAll(`.${root}__tool-desc`).length,
+              lastToolBorder: toolLinks.length > 0 ? getComputedStyle(toolLinks.at(-1)).borderBottomWidth : null,
+              itemAnimation: groups[0]?.querySelector(`.${root}__link`)
+                ? getComputedStyle(groups[0].querySelector(`.${root}__link`)).animationName
+                : null,
+              visual: {
+                background: rootStyle.backgroundColor,
+                paddingTop: parseFloat(rootStyle.paddingTop),
+                paddingLeft: parseFloat(rootStyle.paddingLeft),
+                paddingRight: parseFloat(rootStyle.paddingRight),
+                navLeft: innerRect?.left ?? null,
+                navWidth: innerRect?.width ?? null,
+              },
+              signCount: element.querySelectorAll(`.${root}__sign`).length,
+            };
+          }, menuRoot);
+          const expectedTools = [
+            ['Birth chart', '/birth-chart/', 'Birth chart. See your sun, moon, rising, planets, houses, and what they mean.'],
+            ['Compatibility', '/compatibility/', 'Compatibility. Compare two charts and see where they click, clash, and grow.'],
+            ['Transits', '/transits/', "Transits. See today's sky next to your chart."],
+            ['Moon sign', '/moon-sign/', 'Moon sign. How you feel, and what settles you.'],
+            ['Rising sign', '/rising-sign/', 'Rising sign. Find the sign people meet first. Birth time helps.'],
+            ['Moon phase', '/moon-phase/', 'Moon phase. Tonight’s moon, and the moon of any date you care about.'],
+            ['Saturn return', '/saturn-return/', 'Saturn return. When yours hits, exactly, and what it tends to ask.'],
+            ['Birthday', '/birthday/', 'Birthday. Pick your birthday and get the receipts: sun sign verified across 1940–2030, exact degree spans, decans with traditional rulers, and year-by-year cusp tables.'],
+          ];
+          check(
+            `${label} uses the shared three-part mobile menu`,
+            JSON.stringify(menuContract.labels.map((value) => value.toLowerCase()))
+              === JSON.stringify(['the site', 'tools', 'the twelve'])
+              && JSON.stringify(menuContract.siteHrefs)
+                === JSON.stringify(['/learn/', '/horoscopes/', '/profile/', '/registry/']),
+            JSON.stringify(menuContract),
+          );
+          check(
+            `${label} uses the shared name-only tool list`,
+            JSON.stringify(menuContract.toolNames) === JSON.stringify(expectedTools.map(([name]) => name))
+              && JSON.stringify(menuContract.toolHrefs) === JSON.stringify(expectedTools.map(([, href]) => href))
+              && JSON.stringify(menuContract.toolAccessibleNames) === JSON.stringify(expectedTools.map(([, , accessibleName]) => accessibleName))
+              && menuContract.visibleDescriptions === 0,
+            JSON.stringify(menuContract),
+          );
+          check(`${label} ends the tool group cleanly`, menuContract.lastToolBorder === '0px', menuContract.lastToolBorder);
+          check(`${label} uses the main menu's calm, immediate presentation`, menuContract.itemAnimation === 'none', menuContract.itemAnimation);
+          if (!referenceMenuVisual) {
+            referenceMenuVisual = menuContract.visual;
+          } else {
+            check(
+              `${label} matches the main menu overlay geometry and tint`,
+              menuContract.visual.background === referenceMenuVisual.background
+                && Math.abs(menuContract.visual.paddingTop - referenceMenuVisual.paddingTop) <= 0.5
+                && Math.abs(menuContract.visual.paddingLeft - referenceMenuVisual.paddingLeft) <= 0.5
+                && Math.abs(menuContract.visual.paddingRight - referenceMenuVisual.paddingRight) <= 0.5
+                && Math.abs(menuContract.visual.navLeft - referenceMenuVisual.navLeft) <= 0.5
+                && Math.abs(menuContract.visual.navWidth - referenceMenuVisual.navWidth) <= 0.5,
+              JSON.stringify({ actual: menuContract.visual, expected: referenceMenuVisual }),
+            );
+          }
+          check(`${label} retains all twelve pastel sign links`, menuContract.signCount === 12, String(menuContract.signCount));
         }
         check(
           `${label} has no document overflow`,
@@ -189,6 +267,47 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         await navPage.close();
       }
     }
+
+    const homeMaterialPage = await browser.newPage({ viewport: { width: 390, height: 844 } });
+    const registryMaterialPage = await browser.newPage({ viewport: { width: 390, height: 844 } });
+    await Promise.all([
+      homeMaterialPage.goto(`${baseURL}/`, { waitUntil: 'domcontentloaded' }),
+      registryMaterialPage.goto(`${baseURL}/registry/`, { waitUntil: 'domcontentloaded' }),
+    ]);
+    const material = async (page, selector, lens) => {
+      await page.evaluate((enabled) => document.documentElement.classList.toggle('zdx-lens', enabled), lens);
+      // Let the existing button background transition settle after switching
+      // between the Chromium lens and the Safari/iOS fallback recipes.
+      await page.waitForTimeout(240);
+      return page.locator(selector).evaluateAll((actions) => actions.map((action) => {
+        const style = getComputedStyle(action);
+        return {
+          background: style.backgroundColor,
+          backdrop: style.backdropFilter || style.webkitBackdropFilter,
+          border: style.borderColor,
+          shadow: style.boxShadow,
+        };
+      }));
+    };
+    for (const lens of [false, true]) {
+      const [homeActions, registryActions] = await Promise.all([
+        material(homeMaterialPage, '.hero__ctas .btn', lens),
+        material(registryMaterialPage, '.cine__cta .btn', lens),
+      ]);
+      check(
+        `homepage hero actions match the Registry glass material (${lens ? 'lens' : 'iOS fallback'})`,
+        homeActions.length === 2
+          && registryActions.length >= 1
+          && homeActions.every((action) => (
+            action.background === registryActions[0].background
+            && action.backdrop === registryActions[0].backdrop
+            && action.border === registryActions[0].border
+            && action.shadow === registryActions[0].shadow
+          )),
+        JSON.stringify({ homeActions, registryActions }),
+      );
+    }
+    await Promise.all([homeMaterialPage.close(), registryMaterialPage.close()]);
 
     const reducedContext = await browser.newContext({
       viewport: { width: 390, height: 844 },
@@ -355,6 +474,15 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         'Cabinet action uses the approved label',
         actionMaterials[1].label === 'Open the Cabinet →',
         actionMaterials[1].label,
+      );
+      const cabinetLine = await desktop.locator('[data-registry-collection]').evaluate((element) => {
+        const style = getComputedStyle(element, '::after');
+        return { content: style.content, display: style.display };
+      });
+      check(
+        'Cabinet hero action has no decorative underline',
+        cabinetLine.content === 'none' || cabinetLine.display === 'none',
+        JSON.stringify(cabinetLine),
       );
     }
 
