@@ -230,6 +230,7 @@ Keep clean data and route seams for these; do not implement them inside this pro
 - Added 27 localized 1200×630 Russian social cards, including the private 404 card, generated from the approved Russian deck with the canonical pastel sign artwork. The Russian set is about 521 KiB and the full card library remains below the existing 15 MiB ceiling.
 - Added release gates for exact route/indexing inventory, reciprocal hreflang, sitemap counts, localized metadata and cards, Arabic absence, Russian search exclusion, 360px/1280px layout, keyboard navigation, reduced motion, chart calculation, font loading, and Russian Lighthouse coverage.
 - Preserved the 62,880-byte Russian font payload under its 80 KiB cap and introduced no new runtime dependency, data store, product flag, or Registry change.
+- Kept the Russian homepage poster under a 48 KiB gate while preserving its subtle mobile drift and interaction-only video loading.
 - This entry records a candidate, not a production release. Live reciprocity and Search Console submission remain release-time evidence after explicit approval.
 
 ### 2026-07-22 — Russian R1 private preview candidate

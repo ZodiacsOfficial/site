@@ -7,7 +7,11 @@ const navSource = await readFile(new URL('../src/components/SiteNav.astro', impo
 
 describe('hidden Russian homepage hero media contract', () => {
   it('keeps the poster as LCP and every video source detached initially', () => {
-    expect(source).toContain('poster="/assets/hero/zodiacs-hero-poster.avif"');
+    expect(source).toContain('src="/assets/hero/zodiacs-hero-poster-ru.avif"');
+    expect(source).toContain('data-hero-poster-ru');
+    expect(source).toContain('width="1440"');
+    expect(source).toContain('height="810"');
+    expect(source).not.toMatch(/<video[^>]*\sposter=/);
     expect(source).toContain('preload="none"');
     expect(source).toContain('data-src="/assets/hero/zodiacs-hero-av1.mp4"');
     expect(source).toContain('data-src="/assets/hero/zodiacs-hero.mp4"');
@@ -26,7 +30,7 @@ describe('hidden Russian homepage hero media contract', () => {
     expect(source).toContain("new IntersectionObserver");
     expect(source).toContain("v.dataset.heroPlayback = 'poster-fallback'");
     expect(source).toContain("v.dataset.heroVisible = String(visible)");
-    expect(source).toContain(".hero-ru__video[data-hero-visible='false'] { animation-play-state: paused; }");
+    expect(source).toContain(".hero-ru__poster[data-hero-visible='false'] { animation-play-state: paused; }");
     expect(source).toContain('@keyframes hero-poster-drift');
   });
 });

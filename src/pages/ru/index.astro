@@ -40,14 +40,24 @@ const jsonLd = [
     slot="head"
     rel="preload"
     as="image"
-    href="/assets/hero/zodiacs-hero-poster.avif"
+    href="/assets/hero/zodiacs-hero-poster-ru.avif"
     fetchpriority="high"
   />
   <section class="hero-ru container">
     <div class="hero-ru__frame">
+      <img
+        class="hero-ru__poster"
+        src="/assets/hero/zodiacs-hero-poster-ru.avif"
+        width="1440"
+        height="810"
+        loading="eager"
+        fetchpriority="high"
+        alt=""
+        aria-hidden="true"
+        data-hero-poster-ru
+      />
       <video
         class="hero-ru__video"
-        poster="/assets/hero/zodiacs-hero-poster.avif"
         muted
         loop
         playsinline
@@ -78,7 +88,8 @@ const jsonLd = [
       // interaction; offscreen ambient work pauses and resumes safely.
       (function () {
         var v = document.querySelector('[data-hero-video-ru]');
-        if (!v) return;
+        var p = document.querySelector('[data-hero-poster-ru]');
+        if (!v || !p) return;
         var frame = v.closest('.hero-ru__frame');
         var connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
         var reducedQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -120,6 +131,7 @@ const jsonLd = [
           playAttempt += 1;
           playPending = false;
           v.dataset.heroPlayback = 'poster-fallback';
+          v.classList.remove('is-playing');
           v.pause();
           detachSources();
         };
@@ -140,6 +152,7 @@ const jsonLd = [
             playPending = false;
             abortRetried = false;
             v.dataset.heroPlayback = 'playing';
+            v.classList.add('is-playing');
             return;
           }
           promise.then(function () {
@@ -152,6 +165,7 @@ const jsonLd = [
               return;
             }
             v.dataset.heroPlayback = 'playing';
+            v.classList.add('is-playing');
           }).catch(function (error) {
             if (attempt !== playAttempt) return;
             playPending = false;
@@ -169,6 +183,7 @@ const jsonLd = [
 
         var setVisible = function (nextVisible) {
           visible = Boolean(nextVisible) && !document.hidden;
+          p.dataset.heroVisible = String(visible);
           v.dataset.heroVisible = String(visible);
           if (!visible) {
             playAttempt += 1;
@@ -189,7 +204,7 @@ const jsonLd = [
           tryPlay();
         };
 
-        v.dataset.heroMotion = reducedQuery.matches ? 'static' : 'drift';
+        p.dataset.heroMotion = reducedQuery.matches ? 'static' : 'drift';
         v.dataset.heroPlayback = 'poster';
         setVisible(!frame || frame.getBoundingClientRect().bottom > 0);
 
@@ -210,12 +225,13 @@ const jsonLd = [
         });
 
         reducedQuery.addEventListener && reducedQuery.addEventListener('change', function () {
-          v.dataset.heroMotion = reducedQuery.matches ? 'static' : 'drift';
+          p.dataset.heroMotion = reducedQuery.matches ? 'static' : 'drift';
           if (reducedQuery.matches) {
             playAttempt += 1;
             playPending = false;
             if (playbackRequested) v.pause();
             v.dataset.heroPlayback = 'paused';
+            v.classList.remove('is-playing');
             return;
           }
           if (interacted && !constrained && !posterFallback) {
@@ -337,6 +353,7 @@ const jsonLd = [
     box-shadow: inset 0 0 0 1px rgba(198, 204, 218, 0.10), 0 30px 80px -40px rgba(0, 0, 0, 0.8);
     isolation: isolate;
   }
+  .hero-ru__poster,
   .hero-ru__video {
     position: absolute;
     inset: 0;
@@ -347,16 +364,25 @@ const jsonLd = [
     transform: scale(1.035);
     transform-origin: center;
   }
+  .hero-ru__poster { display: block; }
+  .hero-ru__video {
+    opacity: 0;
+    transition: opacity 420ms ease;
+  }
+  .hero-ru__video.is-playing { opacity: 1; }
   @keyframes hero-poster-drift {
     0% { transform: scale(1.035) translate3d(0, 0, 0); }
     100% { transform: scale(1.06) translate3d(-0.55%, 0.4%, 0); }
   }
   @media (max-width: 719px) and (prefers-reduced-motion: no-preference) {
-    .hero-ru__video[data-hero-motion='drift'] {
+    .hero-ru__poster[data-hero-motion='drift'] {
       animation: hero-poster-drift 18s cubic-bezier(0.45, 0, 0.55, 1) infinite alternate;
       will-change: transform;
     }
-    .hero-ru__video[data-hero-visible='false'] { animation-play-state: paused; }
+    .hero-ru__poster[data-hero-visible='false'] { animation-play-state: paused; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero-ru__video { transition: none; }
   }
   .hero-ru__scrim {
     position: absolute;
