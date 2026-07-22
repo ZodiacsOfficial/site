@@ -1,7 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import { formatDate, intlLocale } from './dates';
 import { pluralCategory, pluralText, tp, type PluralCatalog } from './plural';
-import { RUSSIAN_SIGN_PREPOSITIONAL, SIGN_SLUGS, signPrepositional } from '../signs';
+import { SIGN_SLUGS, signPrepositional } from '../signs';
+import { RUSSIAN_RUNTIME } from './ru-runtime/server';
 
 describe('staged locale grammar infrastructure', () => {
   it('delegates Russian cardinal categories to Intl.PluralRules', () => {
@@ -45,7 +46,7 @@ describe('staged locale grammar infrastructure', () => {
   });
 
   it('provides all twelve Russian prepositional sign forms without activating labels', () => {
-    expect(Object.keys(RUSSIAN_SIGN_PREPOSITIONAL)).toEqual(SIGN_SLUGS);
+    expect(Object.keys(RUSSIAN_RUNTIME.signs.prepositional)).toEqual(SIGN_SLUGS);
     expect(SIGN_SLUGS.map(signPrepositional)).toEqual([
       'Овне', 'Тельце', 'Близнецах', 'Раке', 'Льве', 'Деве',
       'Весах', 'Скорпионе', 'Стрельце', 'Козероге', 'Водолее', 'Рыбах',

@@ -1,4 +1,4 @@
-import type { ReleasedLocale as Locale } from './i18n';
+import type { CatalogLocale as Locale } from './i18n';
 
 export const A2HS_HINT_KEY = 'zodiacs.a2hs.v1';
 
@@ -40,6 +40,11 @@ const COPY = {
     ios: 'Per tenere a portata di mano i temi salvati, tocca Condividi → Aggiungi alla schermata Home. Su iPhone e iPad, le notifiche giornaliere funzionano solo dal sito installato.',
     android: 'Per tenere a portata di mano i temi salvati, tocca Menu → Aggiungi alla schermata Home.',
     dismiss: 'Ignora il suggerimento per la schermata Home',
+  },
+  ru: {
+    ios: 'Чтобы сохранённые карты всегда были рядом, нажмите «Поделиться» → «На экран Домой». На iPhone и iPad ежедневные уведомления работают только в установленном сайте.',
+    android: 'Чтобы сохранённые карты всегда были рядом, нажмите «Меню» → «Добавить на главный экран».',
+    dismiss: 'Закрыть подсказку об установке на главный экран',
   },
 } as const satisfies Record<Locale, {
   ios: string;

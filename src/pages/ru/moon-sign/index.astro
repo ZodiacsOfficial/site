@@ -1,0 +1,79 @@
+---
+import Base from '../../../layouts/Base.astro';
+import Faq from '../../../components/Faq.astro';
+import ChartCalculator from '../../../islands/ChartCalculator';
+import '../../../styles/calculator.css';
+
+const faq = [
+  {
+    q: 'Что такое лунный знак?',
+    a: 'Лунный знак — это знак зодиака, в котором находилась Луна при вашем рождении. Солнечный знак описывает основу идентичности, а лунный — эмоциональную жизнь: как вы чувствуете, что вас успокаивает и что даёт ощущение безопасности.',
+  },
+  {
+    q: 'Нужно ли время рождения, чтобы узнать лунный знак?',
+    a: 'Обычно нет: Луна проводит в каждом знаке около двух с половиной суток. Но в день перехода время важно. Калькулятор прямо предупредит, если ваша дата попадает на такую границу.',
+  },
+  {
+    q: 'Почему другой сайт показал другой лунный знак?',
+    a: 'Чаще всего причина в часовом поясе: некоторые калькуляторы неверно переводят время рождения, особенно для старых дат и мест с историческими изменениями часов. Здесь используется полная история часового пояса, а рассчитанный момент UTC показывается для проверки.',
+  },
+  {
+    q: 'Солнце, Луна и асцендент: в чём разница?',
+    a: 'Коротко: Солнце описывает, кто вы; Луна — как вы чувствуете; асцендент — каким вас видят при знакомстве. Вместе это «большая тройка», самый быстрый полезный обзор натальной карты.',
+  },
+];
+
+const jsonLd = [
+  {
+    '@type': 'WebApplication',
+    name: 'Калькулятор лунного знака',
+    url: 'https://zodiacs.org/ru/moon-sign/',
+    applicationCategory: 'LifestyleApplication',
+    operatingSystem: 'Web',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    inLanguage: 'ru',
+    isPartOf: { '@id': 'https://zodiacs.org/#site' },
+  },
+  {
+    '@type': 'FAQPage',
+    inLanguage: 'ru',
+    mainEntity: faq.map(({ q, a }) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: { '@type': 'Answer', text: a },
+    })),
+  },
+];
+---
+<Base
+  clientUi
+  title="Лунный знак — узнать по дате рождения"
+  description="Найдите свой лунный знак по дате рождения. Считается в браузере, с честными оговорками, когда Луна меняла знак."
+  path="/ru/moon-sign/"
+  locale="ru"
+  image="/assets/og/v2/tool/moon-sign.png"
+  imageAlt="Калькулятор лунного знака — Zodiacs.org"
+  jsonLd={jsonLd}
+  noindex
+>
+  <section class="section--tight container">
+    <div class="tool-hero">
+      <h1 class="display">Найдите свой лунный знак.</h1>
+      <p>Луна описывает эмоциональный мир: что вас успокаивает, что вам нужно и как вы возвращаетесь к ощущению дома.</p>
+    </div>
+    <ChartCalculator mode="moon" locale="ru" client:load />
+    <noscript>
+      <p>Для расчёта лунного знака нужен JavaScript. Включите его и перезагрузите страницу, чтобы рассчитать знак по данным рождения.</p>
+    </noscript>
+  </section>
+
+  <section class="section--tight container container--narrow">
+    <Faq items={faq} heading="Вопросы о лунном знаке" />
+  </section>
+</Base>
+
+<style>
+  .tool-hero { max-width: 62ch; margin-bottom: clamp(28px, 5vw, 44px); }
+  .tool-hero h1 { margin: 0 0 16px; font-size: var(--text-2xl); line-height: 1.04; }
+  .tool-hero p { margin: 0; color: var(--muted); font-size: var(--text-lg); text-wrap: pretty; }
+</style>

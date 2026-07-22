@@ -9,7 +9,7 @@ import { SIGNS, signName } from '../lib/signs';
 import PlanetGlyph from '../components/PlanetGlyph';
 import EvidenceDisclosure from './EvidenceDisclosure';
 import type { Daily } from '../lib/daily';
-import { localizePath, normalizeLocale, t, type Locale } from '../lib/i18n';
+import { localizePath, normalizeCatalogLocale, t, type CatalogLocale as Locale } from '../lib/i18n';
 import { formatDate } from '../lib/i18n/dates';
 import { moonPhaseLabel } from '../lib/i18n/astrology';
 import { dailyReadingForLocale } from '../lib/i18n/daily-reading';
@@ -18,8 +18,16 @@ import daily from '../data/daily.json';
 interface Props { locale?: Locale }
 
 export default function TodayBySign({ locale: rawLocale = 'en' }: Props) {
-  const locale = normalizeLocale(rawLocale);
+  const locale = normalizeCatalogLocale(rawLocale);
   const [sel, setSel] = useState<string | null>(null);
+  if (locale === 'ru') {
+    return (
+      <section class="tbs" aria-label={t(locale, 'todayBySignTitle')}>
+        <div class="tbs__head"><h2>{t(locale, 'todayBySignTitle')}</h2></div>
+        <p class="tbs__prompt">Ежедневные выпуски пока выходят по-английски. Расчётные данные — для любого языка.</p>
+      </section>
+    );
+  }
   const reading = sel ? dailyReadingForLocale(sel, daily as Daily, locale) : null;
   const active = sel ? SIGNS.find((s) => s.slug === sel)! : null;
 

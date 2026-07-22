@@ -88,7 +88,7 @@ await withPreview({ port: 4417 }, async (baseURL) => {
     }
 
     const page = await browser.newPage();
-    for (const path of ['/ru/', '/ar/', '/ru/birth-chart/', '/ar/birth-chart/']) {
+    for (const path of ['/ar/', '/ar/birth-chart/']) {
       const response = await page.goto(`${baseURL}${path}`, { waitUntil: 'domcontentloaded' });
       check(response?.status() === 404, `${path}: expected 404, got ${response?.status()}`);
     }
@@ -103,4 +103,4 @@ if (failures.length) {
   for (const failure of failures) console.error(`- ${failure}`);
   process.exit(1);
 }
-console.log('i18n-r0-drive: 52 localized/deferred/inactive page visits passed at 390px and 1280px');
+console.log('i18n-r0-drive: public locale rails remain isolated; Arabic routes remain absent');

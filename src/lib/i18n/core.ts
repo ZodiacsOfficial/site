@@ -5,6 +5,10 @@ export type Locale = typeof LOCALES[number];
 export const RELEASED_LOCALES = ['en', 'es', 'pt', 'fr', 'it'] as const;
 export type ReleasedLocale = typeof RELEASED_LOCALES[number];
 
+/** Locales whose complete UI catalog can render in a gated preview. */
+export const CATALOG_LOCALES = ['en', 'es', 'pt', 'fr', 'it', 'ru'] as const;
+export type CatalogLocale = typeof CATALOG_LOCALES[number];
+
 export const DEFAULT_LOCALE: ReleasedLocale = 'en';
 
 export type TextDirection = 'ltr' | 'rtl';
@@ -48,6 +52,10 @@ export function isReleasedLocale(locale: string): locale is ReleasedLocale {
   return (RELEASED_LOCALES as readonly string[]).includes(locale);
 }
 
+export function isCatalogLocale(locale: string): locale is CatalogLocale {
+  return (CATALOG_LOCALES as readonly string[]).includes(locale);
+}
+
 /** Parse every declared locale, including staged locales with no routes yet. */
 export function normalizeKnownLocale(locale: string | undefined | null): Locale {
   const value = locale?.trim().toLowerCase();
@@ -62,12 +70,26 @@ export function normalizeReleasedLocale(locale: string | undefined | null): Rele
   return isReleasedLocale(normalized) ? normalized : DEFAULT_LOCALE;
 }
 
+/** Resolve a complete catalog for staged preview rendering without publishing it. */
+export function normalizeCatalogLocale(locale: string | undefined | null): CatalogLocale {
+  const normalized = normalizeKnownLocale(locale);
+  return isCatalogLocale(normalized) ? normalized : DEFAULT_LOCALE;
+}
+
 /** Existing rendering API remains release-gated; staged locales fail closed. */
 export const normalizeLocale = normalizeReleasedLocale;
 
 export function requireReleasedLocale(locale: Locale): ReleasedLocale {
   if (!isReleasedLocale(locale)) {
     throw new Error(`Locale ${locale} has no released production catalog`);
+  }
+  return locale;
+}
+
+/** Resolve only complete catalogs; this does not publish or index a locale. */
+export function requireCatalogLocale(locale: Locale): CatalogLocale {
+  if (!isCatalogLocale(locale)) {
+    throw new Error(`Locale ${locale} has no complete production catalog`);
   }
   return locale;
 }

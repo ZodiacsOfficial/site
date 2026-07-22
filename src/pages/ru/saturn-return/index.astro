@@ -1,0 +1,83 @@
+---
+import Base from '../../../layouts/Base.astro';
+import Faq from '../../../components/Faq.astro';
+import SaturnReturnCalculator from '../../../islands/SaturnReturnCalculator';
+import '../../../styles/calculator.css';
+
+const faq = [
+  {
+    q: 'Что такое возвращение Сатурна?',
+    a: 'Это период, когда транзитный Сатурн возвращается в точный градус, который занимал при вашем рождении. Полный круг занимает около 29,4 года, поэтому первое возвращение приходит примерно в 29 лет, второе — в 58, третье — около 88.',
+  },
+  {
+    q: 'Когда моё возвращение Сатурна?',
+    a: 'Введите дату рождения. Калькулятор проследит реальное движение Сатурна и покажет точные даты, включая ретроградные проходы. Первое возвращение обычно начинается между 28 и 30 годами.',
+  },
+  {
+    q: 'Почему у возвращения может быть три даты?',
+    a: 'Сатурн ретрограден около четырёх с половиной месяцев в году. Если обратная петля проходит через ваш натальный градус, планета может коснуться его трижды: в прямом движении, ретроградно и ещё раз на выходе. Весь этот отрезок относится к возвращению.',
+  },
+  {
+    q: 'Сколько длится возвращение Сатурна?',
+    a: 'Точные пересечения могут растянуться от нескольких дней почти до года — в зависимости от ретроградной петли. Шире обычно рассматривают весь проход Сатурна по знаку натального Сатурна, около двух с половиной лет.',
+  },
+  {
+    q: 'Возвращение Сатурна — это плохо?',
+    a: 'У него суровая репутация, но полезнее видеть в нём проверку конструкции. То, что держится на осознанном выборе, может укрепиться; то, что существует по инерции, требует внимания. Астрология здесь — язык наблюдения, а не приговор.',
+  },
+];
+
+const jsonLd = [
+  {
+    '@type': 'WebApplication',
+    name: 'Калькулятор возвращения Сатурна',
+    url: 'https://zodiacs.org/ru/saturn-return/',
+    applicationCategory: 'LifestyleApplication',
+    operatingSystem: 'Web',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    inLanguage: 'ru',
+    isPartOf: { '@id': 'https://zodiacs.org/#site' },
+  },
+  {
+    '@type': 'FAQPage',
+    inLanguage: 'ru',
+    mainEntity: faq.map(({ q, a }) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: { '@type': 'Answer', text: a },
+    })),
+  },
+];
+---
+<Base
+  clientUi
+  title="Возвращение Сатурна — когда и что это"
+  description="Годы и точные даты вашего возвращения Сатурна, рассчитанные по эфемеридам, с тремя проходами."
+  path="/ru/saturn-return/"
+  locale="ru"
+  image="/assets/og/v2/tool/saturn-return.png"
+  imageAlt="Калькулятор возвращения Сатурна — Zodiacs.org"
+  jsonLd={jsonLd}
+  noindex
+>
+  <section class="section--tight container">
+    <div class="tool-hero">
+      <h1 class="display">Ваше возвращение Сатурна — с датами.</h1>
+      <p>Примерно в 29 лет Сатурн возвращается туда, где был при вашем рождении. Калькулятор найдёт точные даты по дате рождения.</p>
+    </div>
+    <SaturnReturnCalculator locale="ru" client:load />
+    <noscript>
+      <p>Для расчёта возвращения Сатурна нужен JavaScript. Включите его и перезагрузите страницу, чтобы найти даты по данным рождения.</p>
+    </noscript>
+  </section>
+
+  <section class="section--tight container container--narrow">
+    <Faq items={faq} heading="Вопросы о возвращении Сатурна" />
+  </section>
+</Base>
+
+<style>
+  .tool-hero { max-width: 62ch; margin-bottom: clamp(28px, 5vw, 44px); }
+  .tool-hero h1 { margin: 0 0 16px; font-size: var(--text-2xl); line-height: 1.04; }
+  .tool-hero p { margin: 0; color: var(--muted); font-size: var(--text-lg); text-wrap: pretty; }
+</style>

@@ -13,7 +13,8 @@ import { signForLongitude, formatLongitude, signName } from '../lib/signs';
 import { encodeChartLink } from '../lib/share';
 import type { Session } from '@supabase/supabase-js';
 import type * as Sync from '../lib/profile/sync';
-import { localizePath, normalizeLocale, t, tf, type ReleasedLocale as Locale, type UiKey } from '../lib/i18n';
+import { localizePath, normalizeCatalogLocale, t, tf, tp, type CatalogLocale as Locale, type UiKey } from '../lib/i18n';
+import { russianRuntime } from '../lib/i18n/ru-runtime';
 import { formatDate, intlLocale } from '../lib/i18n/dates';
 import {
   browserTimezoneChoices,
@@ -43,6 +44,7 @@ const PF_PAIR_COPY = {
   pt: { savedPairs: 'Comparações salvas', pairRemoved: 'Comparação removida.' },
   fr: { savedPairs: 'Comparaisons enregistrées', pairRemoved: 'Comparaison supprimée.' },
   it: { savedPairs: 'Confronti salvati', pairRemoved: 'Confronto rimosso.' },
+  ru: { savedPairs: 'Сохранённые сравнения', pairRemoved: 'Сравнение удалено.' },
 } as const satisfies Record<Locale, Record<'savedPairs' | 'pairRemoved', string>>;
 const PF_EMAIL_COPY = {
   en: {
@@ -74,6 +76,12 @@ const PF_EMAIL_COPY = {
     digestLabel: 'E-mail settimanale facoltativa',
     digestTitle: 'E-mail personalizzata del cielo settimanale',
     digestCopy: 'Una previsione basata sul tema salvato e sincronizzato. Resta disattivata finché non selezioni questa casella.',
+  },
+  ru: {
+    syncLabel: 'Почта для синхронизации карт',
+    digestLabel: 'Необязательное еженедельное письмо',
+    digestTitle: 'Персональный еженедельный прогноз',
+    digestCopy: 'Прогноз по вашей сохранённой и синхронизированной карте. Выключен, пока вы сами не поставите отметку.',
   },
 } as const satisfies Record<Locale, Record<'syncLabel' | 'digestLabel' | 'digestTitle' | 'digestCopy', string>>;
 const PF_DAILY_COPY = {
@@ -111,6 +119,7 @@ const PF_DAILY_DELETE_BLOCKED = {
   pt: 'Entre na conta antes de remover este mapa sincronizado para que o e-mail diário e a cópia na nuvem sejam interrompidos juntos.',
   fr: 'Connecte-toi avant de supprimer ce thème synchronisé afin que son e-mail quotidien et sa copie dans le cloud s’arrêtent ensemble.',
   it: 'Accedi prima di rimuovere questo tema sincronizzato, così l’email quotidiana e la copia nel cloud si interrompono insieme.',
+  ru: 'Войдите в аккаунт перед удалением синхронизированной карты, чтобы одновременно остановить её ежедневное письмо и удалить облачную копию.',
 } as const satisfies Record<Locale, string>;
 export const PF_BOOK_COPY = {
   en: {
@@ -152,6 +161,12 @@ export const PF_BOOK_COPY = {
     add: 'Aggiungi il tema di qualcuno',
     privacy: 'Salvato su questo dispositivo. Non viene caricato nulla, a meno che tu non attivi la sincronizzazione.',
     details: 'Dati di nascita',
+  },
+  ru: {
+    count: (n: number) => `${tp('ru', 'savedCharts', n, russianRuntime().plurals)} — ваши и тех, для кого вы читаете.`,
+    add: 'Добавить карту другого человека',
+    privacy: 'Сохранено на этом устройстве. Ничего не загружается, пока вы сами не включите синхронизацию.',
+    details: 'Данные рождения',
   },
 } as const;
 const HAS_PROFILE_SYNC = Boolean(
@@ -223,7 +238,7 @@ export default function ProfileManager({
   locale: rawLocale = 'en',
   dailyEmailEnabled = false,
 }: ProfileManagerProps) {
-  const locale = normalizeLocale(rawLocale);
+  const locale = normalizeCatalogLocale(rawLocale);
   const showDailyEmail = dailyEmailEnabled && locale === 'en';
   const { profile, ready: profileReady } = useProfile();
   const [editing, setEditing] = useState<string | null>(null);
@@ -432,7 +447,7 @@ export default function ProfileManager({
       setSyncMessage(t(locale, 'checkEmail'));
     } else {
       setSyncState('error');
-      setSyncMessage(result.message);
+      setSyncMessage(locale === 'ru' ? t(locale, 'syncFailed') : result.message);
     }
   }
 
@@ -445,7 +460,9 @@ export default function ProfileManager({
       if (session) await loadDailyState(session);
     } catch (err) {
       setSyncState('error');
-      setSyncMessage(err instanceof Error ? err.message : t(locale, 'syncFailed'));
+      setSyncMessage(locale === 'ru'
+        ? t(locale, 'syncFailed')
+        : err instanceof Error ? err.message : t(locale, 'syncFailed'));
     }
   }
 
@@ -649,7 +666,9 @@ export default function ProfileManager({
         }
       } catch {
         setDailyError(true);
-        setDailyMessage("Couldn't pause the daily brief, so this synced chart was not deleted. Please try again online.");
+        setDailyMessage(locale === 'ru'
+          ? t(locale, 'syncFailed')
+          : "Couldn't pause the daily brief, so this synced chart was not deleted. Please try again online.");
         setSyncState('error');
         setSyncMessage(t(locale, 'syncFailed'));
         setDailyBusy(false);
@@ -900,7 +919,7 @@ export default function ProfileManager({
         {dailyPanel}
         {/* Keep the return fragment present before the asynchronous session resolves. */}
         <div id="weekly-digest">
-          {session && (
+          {session && locale !== 'ru' && (
             <div class="pf-digest-panel">
               <span class="mono--label">{PF_EMAIL_COPY[locale].digestLabel}</span>
               <label class="pf-digest">
@@ -924,7 +943,7 @@ export default function ProfileManager({
     </aside>
   );
   const ProfilePushOptIn = pushModule?.default;
-  const pushPanel = ProfilePushOptIn && (
+  const pushPanel = ProfilePushOptIn && locale !== 'ru' && (
     <ProfilePushOptIn locale={locale} context="profile" />
   );
 

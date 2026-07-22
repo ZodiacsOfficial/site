@@ -4,7 +4,8 @@
  * Hues are sampled from the pastel SDK icon discs — the same values live
  * as --sign-* custom properties in src/styles/tokens.css.
  */
-import { requireReleasedLocale, type Locale, type ReleasedLocale } from './i18n/core.js';
+import { requireCatalogLocale, type Locale, type ReleasedLocale } from './i18n/core.js';
+import { russianRuntime } from './i18n/ru-runtime/index.js';
 
 export type Element = 'fire' | 'earth' | 'air' | 'water';
 export type Modality = 'cardinal' | 'fixed' | 'mutable';
@@ -48,25 +49,10 @@ export const SIGNS: readonly Sign[] = [
 export const SIGN_SLUGS = SIGNS.map((s) => s.slug);
 export type DisplayLocale = Locale;
 
-export const RUSSIAN_SIGN_PREPOSITIONAL = {
-  aries: 'Овне',
-  taurus: 'Тельце',
-  gemini: 'Близнецах',
-  cancer: 'Раке',
-  leo: 'Льве',
-  virgo: 'Деве',
-  libra: 'Весах',
-  scorpio: 'Скорпионе',
-  sagittarius: 'Стрельце',
-  capricorn: 'Козероге',
-  aquarius: 'Водолее',
-  pisces: 'Рыбах',
-} as const satisfies Record<(typeof SIGNS)[number]['slug'], string>;
-
 /** Russian case seam used by R1 copy such as “Луна в {sign}”. */
 export function signPrepositional(sign: Sign | string): string {
   const resolved = typeof sign === 'string' ? signBySlug(sign) : sign;
-  return RUSSIAN_SIGN_PREPOSITIONAL[resolved.slug as keyof typeof RUSSIAN_SIGN_PREPOSITIONAL];
+  return russianRuntime().signs.prepositional[resolved.slug];
 }
 
 const SIGN_NAME_ES: Record<string, string> = {
@@ -290,17 +276,23 @@ export function signForLongitude(lon: number): Sign {
 
 export function signName(sign: Sign | string, locale: DisplayLocale = 'en'): string {
   const resolved = typeof sign === 'string' ? signBySlug(sign) : sign;
-  return SIGN_NAME_OVERRIDES[requireReleasedLocale(locale)]?.[resolved.slug] ?? resolved.name;
+  const catalogLocale = requireCatalogLocale(locale);
+  if (catalogLocale === 'ru') return russianRuntime().signs.names[resolved.slug] ?? resolved.name;
+  return SIGN_NAME_OVERRIDES[catalogLocale]?.[resolved.slug] ?? resolved.name;
 }
 
 export function signDates(sign: Sign | string, locale: DisplayLocale = 'en'): string {
   const resolved = typeof sign === 'string' ? signBySlug(sign) : sign;
-  return SIGN_DATES_OVERRIDES[requireReleasedLocale(locale)]?.[resolved.slug] ?? resolved.dates;
+  const catalogLocale = requireCatalogLocale(locale);
+  if (catalogLocale === 'ru') return russianRuntime().signs.dates[resolved.slug] ?? resolved.dates;
+  return SIGN_DATES_OVERRIDES[catalogLocale]?.[resolved.slug] ?? resolved.dates;
 }
 
 export function signEssence(sign: Sign | string, locale: DisplayLocale = 'en'): string {
   const resolved = typeof sign === 'string' ? signBySlug(sign) : sign;
-  return SIGN_ESSENCE_OVERRIDES[requireReleasedLocale(locale)]?.[resolved.slug] ?? resolved.essence;
+  const catalogLocale = requireCatalogLocale(locale);
+  if (catalogLocale === 'ru') return russianRuntime().signs.essences[resolved.slug] ?? resolved.essence;
+  return SIGN_ESSENCE_OVERRIDES[catalogLocale]?.[resolved.slug] ?? resolved.essence;
 }
 
 /** Degree within the sign (0–29.999…) for an ecliptic longitude. */
@@ -341,11 +333,15 @@ const MODALITY_LABEL_OVERRIDES = {
 } satisfies Record<ReleasedLocale, Record<Modality, string> | null>;
 
 export function elementLabel(element: Element, locale: DisplayLocale = 'en'): string {
-  return ELEMENT_LABEL_OVERRIDES[requireReleasedLocale(locale)]?.[element] ?? ELEMENT_LABEL[element];
+  const catalogLocale = requireCatalogLocale(locale);
+  if (catalogLocale === 'ru') return russianRuntime().signs.elements[element];
+  return ELEMENT_LABEL_OVERRIDES[catalogLocale]?.[element] ?? ELEMENT_LABEL[element];
 }
 
 export function modalityLabel(modality: Modality, locale: DisplayLocale = 'en'): string {
-  return MODALITY_LABEL_OVERRIDES[requireReleasedLocale(locale)]?.[modality] ?? MODALITY_LABEL[modality];
+  const catalogLocale = requireCatalogLocale(locale);
+  if (catalogLocale === 'ru') return russianRuntime().signs.modalities[modality];
+  return MODALITY_LABEL_OVERRIDES[catalogLocale]?.[modality] ?? MODALITY_LABEL[modality];
 }
 
 /** The sun sign whose season contains the given month/day (tropical). */

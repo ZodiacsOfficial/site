@@ -1,0 +1,112 @@
+---
+import Base from '../../../layouts/Base.astro';
+import Faq from '../../../components/Faq.astro';
+import SignIcon from '../../../components/SignIcon.astro';
+import SynastryCalculator from '../../../islands/SynastryCalculator';
+import { SIGNS, signName } from '../../../lib/signs';
+import { pairSlug } from '../../../lib/compat';
+import '../../../styles/calculator.css';
+
+const faq = [
+  {
+    q: 'Как работает астрологическая совместимость?',
+    a: 'Астрология сравнивает две натальные карты по углам между планетами одного человека и планетами другого; это называется синастрией. Трины и секстили обычно читаются как лёгкость, а квадратуры и оппозиции — как продуктивное напряжение. Совместимость солнечных знаков — лишь краткое начало более полного сравнения.',
+  },
+  {
+    q: 'Имеет ли смысл совместимость солнечных знаков?',
+    a: 'Это самый простой полезный слой. Два человека — больше, чем их солнечные знаки: на практике Луна, Венера и Марс часто говорят больше. Гиды по парам дают честную отправную точку, а калькулятор сравнивает обе карты, когда есть данные рождения.',
+  },
+  {
+    q: 'Нужно ли точное время рождения для обеих карт?',
+    a: 'Время помогает, но не обязательно. Без него положения планет всё равно точны для дня; пропускаются только асцендент и дома. Луна проходит около 13 градусов в сутки, поэтому некоторые лунные аспекты при неизвестном времени будут приблизительными.',
+  },
+];
+
+const jsonLd = [
+  {
+    '@type': 'WebApplication',
+    name: 'Совместимость по натальным картам',
+    url: 'https://zodiacs.org/ru/compatibility/',
+    applicationCategory: 'LifestyleApplication',
+    operatingSystem: 'Any',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    description: 'Бесплатное сравнение двух натальных карт на вашем устройстве.',
+    inLanguage: 'ru',
+    isPartOf: { '@id': 'https://zodiacs.org/#site' },
+  },
+  {
+    '@type': 'FAQPage',
+    inLanguage: 'ru',
+    mainEntity: faq.map(({ q, a }) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: { '@type': 'Answer', text: a },
+    })),
+  },
+];
+---
+<Base
+  clientUi
+  title="Совместимость по натальным картам"
+  description="Сравните две карты: каждый межкартный аспект, рассчитанный честно и приватно на вашем устройстве."
+  path="/ru/compatibility/"
+  locale="ru"
+  image="/assets/og/v2/tool/compatibility.png"
+  imageAlt="Совместимость по натальным картам — Zodiacs.org"
+  jsonLd={jsonLd}
+  glass
+  noindex
+>
+  <section class="section--tight container container--narrow">
+    <div class="compat-hero">
+      <em class="kicker">Две карты, ясное сравнение</em>
+      <h1 class="display">Проверьте совместимость.</h1>
+      <p>Солнечные знаки — только начало. Сравните две натальные карты в браузере: обе на одном колесе, связи между ними и понятный разбор.</p>
+    </div>
+    <SynastryCalculator locale="ru" client:load />
+    <noscript>
+      <p>Для сравнения карт нужен JavaScript. Включите его и перезагрузите страницу, чтобы сопоставить две натальные карты в вашем браузере.</p>
+    </noscript>
+  </section>
+
+  <section class="section container">
+    <div class="section-head">
+      <h2>Все 78 сочетаний</h2>
+      <p>Полные гиды по парам пока доступны по-английски. Это отправная точка; точное сравнение дают две натальные карты.</p>
+    </div>
+    <div class="compat-index">
+      {SIGNS.map((a) => (
+        <div class="compat-row" style={`--sign:${a.hue}`}>
+          <a class="compat-row__sign" href={`/ru/${a.slug}/`}>
+            <SignIcon sign={a.slug} size={34} class="compat-row__icon" />
+            <span>{signName(a, 'ru')}</span>
+          </a>
+          <div class="compat-row__pairs">
+            {SIGNS.map((b) => (
+              <a class="compat-row__pair" href={`/compatibility/${pairSlug(a.slug, b.slug)}/`} hreflang="en" title="Материал пока доступен по-английски" aria-label={`${signName(a, 'ru')} и ${signName(b, 'ru')}. Материал пока доступен по-английски`}>
+                {signName(b, 'ru')}<span class="sr-only"> — пока по-английски</span>
+              </a>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="section--tight container container--narrow">
+    <Faq items={faq} heading="Вопросы о совместимости" />
+  </section>
+</Base>
+
+<style>
+  .compat-hero { max-width: 58ch; margin-bottom: clamp(26px, 5vw, 42px); }
+  .compat-hero h1 { margin: 14px 0; font-size: var(--text-2xl); line-height: 1.04; }
+  .compat-hero p { margin: 0; color: var(--muted); font-size: var(--text-lg); text-wrap: pretty; }
+  .compat-index { display: grid; }
+  .compat-row { display: grid; gap: 10px 26px; padding: 16px 0; border-bottom: 1px solid var(--hair-1); grid-template-columns: 1fr; }
+  .compat-row:first-child { border-top: 1px solid var(--hair-1); }
+  @media (min-width: 760px) { .compat-row { grid-template-columns: 190px 1fr; align-items: start; } }
+  .compat-row__sign { display: inline-flex; align-items: center; gap: 10px; color: var(--text); text-decoration: none; font-weight: 600; }
+  .compat-row__pairs { display: flex; flex-wrap: wrap; gap: 7px; }
+  .compat-row__pair { padding: 5px 10px; border: 1px solid var(--hair-1); border-radius: var(--r-full); color: var(--text-2); text-decoration: none; font-size: 13px; }
+</style>

@@ -7,15 +7,15 @@ import {
   LEGACY_HOME_SELECTOR_LOCALES,
   alternatePathEntries,
   localizePath,
-  normalizeLocale,
+  normalizeCatalogLocale,
   stripLocale,
   t,
-  type ReleasedLocale as Locale,
+  type CatalogLocale as Locale,
 } from '../lib/i18n';
 
 const year = new Date().getFullYear();
 interface Props { locale?: Locale }
-const locale = normalizeLocale(Astro.props.locale);
+const locale = normalizeCatalogLocale(Astro.props.locale);
 const routeLanguageLinks = alternatePathEntries(Astro.url.pathname);
 // Preserve the established locale-home fallback on English-only routes while
 // deriving the candidate set from actual route availability, never LOCALES.
@@ -32,7 +32,10 @@ const FOOTER_COPY = {
   pt: { assistant: 'Pergunte ao Zodiacs', today: 'Hoje (em inglês)' },
   fr: { assistant: 'Demander à Zodiacs', today: 'Aujourd’hui (en anglais)' },
   it: { assistant: 'Chiedi a Zodiacs', today: 'Oggi (in inglese)' },
+  ru: { assistant: 'Спросить Zodiacs — пока по-английски', today: 'Сегодня — пока по-английски' },
 } as const satisfies Record<Locale, { assistant: string; today: string }>;
+const englishSuffix = locale === 'ru' ? ' — пока по-английски' : '';
+const englishOnlyAria = locale === 'ru' ? 'Материал пока доступен по-английски' : undefined;
 const privacyHref = localizePath(locale, '/privacy/');
 const consumerPath = stripLocale(Astro.url.pathname);
 const isRegistryWing = /^\/(?:registry|sdk|thesis|archive|disclosure)(?:\/|$)/.test(consumerPath);
@@ -40,7 +43,7 @@ const suppressFooterEmailCapture = /^\/(?:birth-chart|horoscopes|profile)(?:\/|$
 ---
 <footer class="footer">
   <div class="container">
-    {!isRegistryWing && !suppressFooterEmailCapture && <EmailCapture locale={locale} placement="footer" />}
+    {locale !== 'ru' && !isRegistryWing && !suppressFooterEmailCapture && <EmailCapture locale={locale} placement="footer" />}
     <div class="footer__grid">
       <div class="footer__brand">
         <a class="footer__mark" href={localizePath(locale, '/')}>
@@ -48,38 +51,40 @@ const suppressFooterEmailCapture = /^\/(?:birth-chart|horoscopes|profile)(?:\/|$
           <span class="footer__name">Zodiacs</span><span class="footer__tld">.org</span>
         </a>
         <p class="footer__tag">{t(locale, 'footerTag')}</p>
-        <button
-          class="footer__assistant"
-          type="button"
-          data-assistant-open
-          data-assistant-locale={locale}
-          aria-haspopup="dialog"
-        >
-          {FOOTER_COPY[locale].assistant}
-        </button>
+        {locale !== 'ru' && (
+          <button
+            class="footer__assistant"
+            type="button"
+            data-assistant-open
+            data-assistant-locale={locale}
+            aria-haspopup="dialog"
+          >
+            {FOOTER_COPY[locale].assistant}
+          </button>
+        )}
       </div>
 
       <nav class="footer__col" aria-label={t(locale, 'navTools')}>
         <span class="footer__label">{t(locale, 'navTools')}</span>
         <a href={localizePath(locale, '/birth-chart/')}>{t(locale, 'birthChart')}</a>
-        <a href="/today/" hreflang="en">{FOOTER_COPY[locale].today}</a>
+        <a href="/today/" hreflang="en" title={englishOnlyAria}>{FOOTER_COPY[locale].today}</a>
         <a href={localizePath(locale, '/compatibility/')}>{t(locale, 'compatibility')}</a>
         <a href={localizePath(locale, '/moon-sign/')}>{t(locale, 'moonSign')}</a>
         <a href={localizePath(locale, '/rising-sign/')}>{t(locale, 'risingSign')}</a>
         <a href={localizePath(locale, '/moon-phase/')}>{t(locale, 'moonPhase')}</a>
         <a href={localizePath(locale, '/saturn-return/')}>{t(locale, 'saturnReturn')}</a>
         <a href={localizePath(locale, '/transits/')}>{t(locale, 'transits')}</a>
-        <a href="/retrogrades/">{t(locale, 'retrogrades')}</a>
+        <a href="/retrogrades/" hreflang={locale === 'ru' ? 'en' : undefined} title={englishOnlyAria}>{t(locale, 'retrogrades')}{englishSuffix}</a>
       </nav>
 
       <nav class="footer__col" aria-label={t(locale, 'navLearn')}>
         <span class="footer__label">{t(locale, 'navLearn')}</span>
-        <a href="/learn/">{t(locale, 'footerStartHere')}</a>
-        <a href="/horoscopes/">{t(locale, 'navHoroscopes')}</a>
-        <a href="/learn/planets/">{t(locale, 'footerPlanets')}</a>
-        <a href="/learn/houses/">{t(locale, 'footerHouses')}</a>
-        <a href="/learn/zodiac-dates/" hreflang="en">{t(locale, 'footerZodiacDates')}</a>
-        <a href="/learn/glossary/" hreflang="en">{t(locale, 'footerGlossary')}</a>
+        <a href="/learn/" hreflang={locale === 'ru' ? 'en' : undefined} title={englishOnlyAria}>{t(locale, 'footerStartHere')}{englishSuffix}</a>
+        <a href="/horoscopes/" hreflang={locale === 'ru' ? 'en' : undefined} title={englishOnlyAria}>{t(locale, 'navHoroscopes')}{englishSuffix}</a>
+        <a href="/learn/planets/" hreflang={locale === 'ru' ? 'en' : undefined} title={englishOnlyAria}>{t(locale, 'footerPlanets')}{englishSuffix}</a>
+        <a href="/learn/houses/" hreflang={locale === 'ru' ? 'en' : undefined} title={englishOnlyAria}>{t(locale, 'footerHouses')}{englishSuffix}</a>
+        <a href="/learn/zodiac-dates/" hreflang="en" title={englishOnlyAria}>{t(locale, 'footerZodiacDates')}{englishSuffix}</a>
+        <a href="/learn/glossary/" hreflang="en" title={englishOnlyAria}>{t(locale, 'footerGlossary')}{englishSuffix}</a>
         <a href={localizePath(locale, '/methodology/')}>{t(locale, 'footerCompute')}</a>
         <a href={localizePath(locale, '/profile/')}>{t(locale, 'navSavedCharts')}</a>
       </nav>
@@ -93,8 +98,8 @@ const suppressFooterEmailCapture = /^\/(?:birth-chart|horoscopes|profile)(?:\/|$
 
       <nav class="footer__col" aria-label={t(locale, 'navCollect')}>
         <span class="footer__label">{t(locale, 'navCollect')}</span>
-        <a href="/registry/">{t(locale, 'footerRegistry')}</a>
-        <a href="/sdk/">{t(locale, 'footerSdk')}</a>
+        <a href="/registry/" hreflang={locale === 'ru' ? 'en' : undefined} title={englishOnlyAria}>{t(locale, 'footerRegistry')}{englishSuffix}</a>
+        <a href="/sdk/" hreflang={locale === 'ru' ? 'en' : undefined} title={englishOnlyAria}>{t(locale, 'footerSdk')}{englishSuffix}</a>
         <a href={localizePath(locale, '/disclosure/')}>{t(locale, 'footerDisclosure')}</a>
         <span class="footer__note">{t(locale, 'footerCollectNote')}</span>
       </nav>
@@ -105,14 +110,14 @@ const suppressFooterEmailCapture = /^\/(?:birth-chart|horoscopes|profile)(?:\/|$
     <div class="footer__base">
       <span>© {year} Zodiacs.org</span>
       <span class="footer__base-links">
-        <a href="/about/">{t(locale, 'footerAbout')}</a>
+        <a href="/about/" hreflang={locale === 'ru' ? 'en' : undefined} title={englishOnlyAria}>{t(locale, 'footerAbout')}{englishSuffix}</a>
         <a href={privacyHref}>{t(locale, 'footerPrivacy')}</a>
-        <a href="/terms/">{t(locale, 'footerTerms')}</a>
+        <a href="/terms/" hreflang={locale === 'ru' ? 'en' : undefined} title={englishOnlyAria}>{t(locale, 'footerTerms')}{englishSuffix}</a>
         <a href={localizePath(locale, '/methodology/')}>{t(locale, 'footerMethodology')}</a>
         <span>{t(locale, 'footerPlaceData')}: <a href="https://www.geonames.org/" rel="noopener noreferrer">GeoNames</a> (CC BY 4.0)</span>
-        <span>{t(locale, 'footerFonts')} <a href="/fonts/OFL-instrument-sans.txt">SIL OFL</a></span>
-        <a href="/widgets/">{t(locale, 'footerWidgets')}</a>
-        <a href="/feeds/horoscopes.xml">RSS</a>
+        <span>{t(locale, 'footerFonts')} <a href={locale === 'ru' ? '/fonts/OFL-golos-text.txt' : '/fonts/OFL-instrument-sans.txt'}>SIL OFL</a></span>
+        <a href="/widgets/" hreflang={locale === 'ru' ? 'en' : undefined} title={englishOnlyAria}>{t(locale, 'footerWidgets')}{englishSuffix}</a>
+        <a href="/feeds/horoscopes.xml" hreflang={locale === 'ru' ? 'en' : undefined} title={englishOnlyAria}>RSS{englishSuffix}</a>
         <span class="footer__languages">
           {languageLinks.map((entry, index) => (
             <span class="footer__language-option">

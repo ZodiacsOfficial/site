@@ -15,7 +15,8 @@ import { renderTransitOverlay } from '../transit/renderTransitOverlay';
 import { synastryLine } from '../../lib/compat';
 import { elementLabel, formatLongitude, signForLongitude, signName } from '../../lib/signs';
 import { aspectLabel, planetLabel } from '../../lib/i18n/astrology';
-import { t, type ReleasedLocale as Locale } from '../../lib/i18n';
+import { t, tp, type CatalogLocale as Locale } from '../../lib/i18n';
+import { russianRuntime } from '../../lib/i18n/ru-runtime';
 import { AspectGrid, formatRelationshipCopy, RelationshipContactPoint } from './AspectGrid';
 import { CompositePanel } from './CompositePanel';
 import {
@@ -137,6 +138,23 @@ const COPY = {
     outerPositions: 'Posizioni dell’anello esterno',
     contactOrbs: 'Orbi dei contatti',
   },
+  ru: {
+    caption: 'Внутренняя карта: {a}. Внешнее кольцо: {b}. Линии между ними показывают, где карты соприкасаются.',
+    swap: 'Поместить {name} внутрь',
+    tapHint: 'Коснитесь соединительной линии или строки ниже, чтобы прочитать контакт. Коснитесь планеты на внешнем кольце, чтобы увидеть её положение.',
+    ringLabel: 'Карта {name} на внешнем кольце',
+    tally: 'межкартных аспектов',
+    easeful: 'плавных',
+    charged: 'напряжённых',
+    loudest: 'Самые заметные контакты:',
+    views: 'Виды карты отношений',
+    wheel: 'Колесо',
+    grid: 'Сетка',
+    composite: 'Композит',
+    exactDetails: 'Точные данные отношений',
+    outerPositions: 'Положения внешнего кольца',
+    contactOrbs: 'Орбисы контактов',
+  },
 } as const;
 
 const TAB_ORDER = ['wheel', 'grid', 'composite'] as const;
@@ -175,7 +193,7 @@ function contactReading(
 }
 
 export default function RelationshipWheel({ locale, a, b, summary }: RelationshipWheelProps) {
-  const c = COPY[locale] ?? COPY.en;
+  const c = COPY[locale];
   const [tab, setTab] = useState<RelationshipTab>('wheel');
   const [flipped, setFlipped] = useState(false);
   // Canonical focus ids are always chart-A-first and live above every tab.
@@ -414,7 +432,9 @@ export default function RelationshipWheel({ locale, a, b, summary }: Relationshi
           </div>
 
           <p class="syn__tally mono">
-            {summary.aspects.length} {c.tally} ·
+            {locale === 'ru'
+              ? tp('ru', 'aspects', summary.aspects.length, russianRuntime().plurals)
+              : `${summary.aspects.length} ${c.tally}`} ·
             {' '}{summary.easeful} {c.easeful} ({aspectLabel(locale, 'trine')}/{aspectLabel(locale, 'sextile')}) ·
             {' '}{summary.charged} {c.charged} ({aspectLabel(locale, 'square')}/{aspectLabel(locale, 'opposition')})
           </p>

@@ -1,6 +1,6 @@
 import type { ComponentChildren } from 'preact';
 import type { City } from '../lib/geo/search';
-import type { Locale } from '../lib/i18n';
+import type { CatalogLocale as Locale } from '../lib/i18n';
 import { t } from '../lib/i18n';
 import PlaceSearch from './PlaceSearch';
 

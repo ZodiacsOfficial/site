@@ -11,7 +11,7 @@ import { formatLongitude, signForLongitude } from '../lib/signs';
 import { resolveLocalToUtc } from '../lib/time/localToUtc';
 import type { City } from '../lib/geo/search';
 import type { ReturnSeason, SaturnReturnResult } from '../lib/engine/returns';
-import { localizePath, normalizeLocale, t, tf, type Locale } from '../lib/i18n';
+import { localizePath, normalizeCatalogLocale, t, tf, type CatalogLocale as Locale } from '../lib/i18n';
 import { formatShortDate } from '../lib/i18n/dates';
 
 let modsPromise: Promise<typeof import('../lib/engine/returns')> | null = null;
@@ -24,7 +24,7 @@ function seasonStatus(season: ReturnSeason, now: Date): 'past' | 'active' | 'upc
 }
 
 export default function SaturnReturnCalculator({ locale: rawLocale = 'en' }: { locale?: Locale }) {
-  const locale = normalizeLocale(rawLocale);
+  const locale = normalizeCatalogLocale(rawLocale);
   const ordinal = [t(locale, 'first'), t(locale, 'second'), t(locale, 'third'), t(locale, 'fourth')];
   const ageHint = [t(locale, 'aroundAge29'), t(locale, 'aroundAge58'), t(locale, 'aroundAge88'), ''];
   const statusLabel = { past: t(locale, 'complete'), active: t(locale, 'underwayNow'), upcoming: t(locale, 'aheadOfYou') } as const;
@@ -138,7 +138,7 @@ export default function SaturnReturnCalculator({ locale: rawLocale = 'en' }: { l
                   {formatLongitude(result.natalLon, locale)}{result.natalRetrograde ? ' · Rx' : ''}
                 </span>
               </span>
-              <p class="sr__reading">{SATURN_RETURN[natalSign.slug]}</p>
+              {locale !== 'ru' && <p class="sr__reading">{SATURN_RETURN[natalSign.slug]}</p>}
             </div>
           </div>
 
@@ -185,8 +185,12 @@ export default function SaturnReturnCalculator({ locale: rawLocale = 'en' }: { l
             <a class="btn btn--ghost" href={localizePath(locale, '/birth-chart/')}>
               <span>{t(locale, 'seeSaturnChart')}</span><span class="orb">↗</span>
             </a>
-            <a class="btn btn--ghost" href="/learn/planets/saturn/">
-              <span>{t(locale, 'whatSaturnMeans')}</span><span class="orb">→</span>
+            <a
+              class="btn btn--ghost"
+              href="/learn/planets/saturn/"
+              title={locale === 'ru' ? 'Материал пока доступен по-английски' : undefined}
+            >
+              <span>{t(locale, 'whatSaturnMeans')}{locale === 'ru' ? ' — пока по-английски' : ''}</span><span class="orb">→</span>
             </a>
           </div>
         </div>

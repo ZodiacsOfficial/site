@@ -28,6 +28,39 @@
   font-display: swap;
 }
 
+/* R1 Russian preview faces. These four reviewed Cyrillic subsets total less
+   than 80 KB and are selected only by Russian documents, so the five public
+   locale rails keep their existing font requests and rendered bytes. */
+@font-face {
+  font-family: 'Golos Text';
+  src: url('/fonts/golos-text-cyr-b.woff2') format('woff2');
+  font-weight: 400 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Golos Text';
+  src: url('/fonts/golos-text-cyr-a.woff2') format('woff2');
+  font-weight: 400 600;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0400-04FF;
+}
+@font-face {
+  font-family: 'EB Garamond Cyrillic';
+  src: url('/fonts/eb-garamond-cyrillic-500-normal.woff2') format('woff2');
+  font-weight: 400 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'JetBrains Mono Cyrillic';
+  src: url('/fonts/jetbrains-mono-cyrillic-400-500.woff2') format('woff2');
+  font-weight: 400 500;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* EB Garamond — display headlines only. An old-almanac serif for the
    celestial-atlas register; kept distinct from the wing's Cormorant. */
 @font-face {
@@ -246,4 +279,10 @@
   --font-serif: 'EB Garamond Phase1', 'EB Garamond Fallback', 'EB Garamond Fallback Android', 'EB Garamond Fallback Times', 'Iowan Old Style', Georgia, serif;
   --font-sans: 'Instrument Sans Phase1', 'Instrument Sans Fallback', 'Instrument Sans Fallback Android', system-ui, -apple-system, sans-serif;
   --font-mono: 'JetBrains Mono Phase1', ui-monospace, Menlo, Consolas, monospace;
+}
+
+html:lang(ru) {
+  --font-serif: 'EB Garamond Cyrillic', 'EB Garamond Fallback', 'EB Garamond Fallback Android', 'EB Garamond Fallback Times', Georgia, serif;
+  --font-sans: 'Golos Text', 'Instrument Sans Fallback', 'Instrument Sans Fallback Android', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono Cyrillic', 'JetBrains Mono', ui-monospace, Menlo, Consolas, monospace;
 }

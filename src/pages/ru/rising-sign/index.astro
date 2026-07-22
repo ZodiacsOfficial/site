@@ -1,0 +1,103 @@
+---
+import Base from '../../../layouts/Base.astro';
+import Faq from '../../../components/Faq.astro';
+import ChartCalculator from '../../../islands/ChartCalculator';
+import SignIcon from '../../../components/SignIcon.astro';
+import { SIGNS, signName } from '../../../lib/signs';
+import '../../../styles/calculator.css';
+
+const faq = [
+  {
+    q: 'Что такое асцендент?',
+    a: 'Асцендент — знак зодиака, который восходил над восточным горизонтом в момент вашего рождения. Он описывает первое впечатление и задаёт расположение всех домов натальной карты.',
+  },
+  {
+    q: 'Почему нужно точное время рождения?',
+    a: 'Асцендент проходит все двенадцать знаков за сутки и меняет знак примерно каждые два часа, иногда быстрее. У границы важны даже пятнадцать минут. Лучший источник — свидетельство о рождении, затем медицинская запись и память семьи.',
+  },
+  {
+    q: 'Что делать, если время округлено, например до 7:00?',
+    a: 'Округлённое время встречается часто. Если асцендент попал в первые или последние градусы знака, несколько минут могут изменить результат. Проверьте соседний знак и по возможности подтвердите время другим источником; сходство с описанием не заменяет точные данные.',
+  },
+  {
+    q: 'Что такое управитель карты?',
+    a: 'Планета, которая управляет вашим асцендентом, называется управителем карты. Её знак и дом считаются важной темой чтения. Калькулятор определяет её автоматически по традиционной системе управителей.',
+  },
+  {
+    q: 'Действительно ли асцендент так важен?',
+    a: 'В чтении карты это одна из ключевых точек: она задаёт дома и показывает, в какие сферы жизни попадают планеты. Поэтому у двух людей, родившихся в один день, карты могут быть устроены очень по-разному.',
+  },
+];
+
+const jsonLd = [
+  {
+    '@type': 'WebApplication',
+    name: 'Калькулятор асцендента',
+    url: 'https://zodiacs.org/ru/rising-sign/',
+    applicationCategory: 'LifestyleApplication',
+    operatingSystem: 'Web',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    inLanguage: 'ru',
+    isPartOf: { '@id': 'https://zodiacs.org/#site' },
+  },
+  {
+    '@type': 'FAQPage',
+    inLanguage: 'ru',
+    mainEntity: faq.map(({ q, a }) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: { '@type': 'Answer', text: a },
+    })),
+  },
+];
+---
+<Base
+  clientUi
+  title="Асцендент — рассчитать по времени рождения"
+  description="Асцендент меняется каждые два часа. Рассчитайте свой по дате, времени и месту — приватно в браузере."
+  path="/ru/rising-sign/"
+  locale="ru"
+  image="/assets/og/v2/tool/rising-sign.png"
+  imageAlt="Калькулятор асцендента — Zodiacs.org"
+  jsonLd={jsonLd}
+  noindex
+>
+  <section class="section--tight container">
+    <div class="tool-hero">
+      <h1 class="display">Найдите свой асцендент.</h1>
+      <p>Асцендент — знак, который восходил над горизонтом при вашем рождении. Здесь нужны время и место, и точность имеет значение.</p>
+    </div>
+    <ChartCalculator mode="rising" locale="ru" client:load />
+    <noscript>
+      <p>Для расчёта асцендента нужен JavaScript. Включите его и перезагрузите страницу, затем введите дату, точное время и место рождения.</p>
+    </noscript>
+  </section>
+
+  <section class="section--tight container container--narrow">
+    <div class="section-head">
+      <h2>Двенадцать асцендентов</h2>
+      <p>Когда калькулятор найдёт ваш, посмотрите, как он окрашивает первое впечатление и всю карту.</p>
+    </div>
+    <div class="risings">
+      {SIGNS.map((s) => (
+        <a class="risings__chip" href={`/rising-sign/${s.slug}/`} hreflang="en" title="Материал пока доступен по-английски" aria-label={`${signName(s, 'ru')} — асцендент. Материал пока доступен по-английски`} style={`--sign:${s.hue}`}>
+          <SignIcon sign={s.slug} size={26} class="risings__disc" />
+          <span>{signName(s, 'ru')} — асцендент <span class="sr-only">— пока по-английски</span></span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="section--tight container container--narrow">
+    <Faq items={faq} heading="Вопросы об асценденте" />
+  </section>
+</Base>
+
+<style>
+  .tool-hero { max-width: 62ch; margin-bottom: clamp(28px, 5vw, 44px); }
+  .tool-hero h1 { margin: 0 0 16px; font-size: var(--text-2xl); line-height: 1.04; }
+  .tool-hero p { margin: 0; color: var(--muted); font-size: var(--text-lg); text-wrap: pretty; }
+  .risings { display: flex; flex-wrap: wrap; gap: 8px; }
+  .risings__chip { display: inline-flex; align-items: center; gap: 9px; padding: 7px 14px 7px 8px; border: 1px solid var(--hair-1); border-radius: var(--r-full); color: var(--text-2); text-decoration: none; }
+  .risings__chip:hover { color: var(--text); border-color: color-mix(in oklab, var(--sign) 45%, transparent); }
+</style>

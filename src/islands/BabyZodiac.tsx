@@ -7,9 +7,9 @@
  * on first compute (bundle rule: only full.ts touches the ephemeris).
  */
 import { useEffect, useRef, useState } from 'preact/hooks';
-import { signForLongitude, signName, type Sign } from '../lib/signs';
+import { signForLongitude, signName, signPrepositional, type Sign } from '../lib/signs';
 import { birthdaySlug } from '../lib/birthdays';
-import { localizePath, normalizeLocale, t, type Locale } from '../lib/i18n';
+import { localizePath, normalizeCatalogLocale, t, type CatalogLocale as Locale } from '../lib/i18n';
 import { intlLocale } from '../lib/i18n/dates';
 import { planetLabel } from '../lib/i18n/astrology';
 import { useEngine } from '../lib/hooks/useEngine';
@@ -36,7 +36,7 @@ function fmtDay(iso: string, locale: Locale): string {
 }
 
 export default function BabyZodiac({ locale: rawLocale = 'en' }: Props) {
-  const locale = normalizeLocale(rawLocale);
+  const locale = normalizeCatalogLocale(rawLocale);
   const loadEngine = useEngine();
   const [due, setDue] = useState('');
   const [busy, setBusy] = useState(false);
@@ -193,7 +193,7 @@ export default function BabyZodiac({ locale: rawLocale = 'en' }: Props) {
                     {fmtDay(s.fromISO, locale)}
                     {s.toISO !== s.fromISO && <> – {fmtDay(s.toISO, locale)}</>}
                   </span>
-                  <span>{t(locale, 'moonIn')} {signName(s.sign, locale)}</span>
+                  <span>{t(locale, 'moonIn')} {locale === 'ru' ? signPrepositional(s.sign) : signName(s.sign, locale)}</span>
                 </li>
               ))}
             </ul>
@@ -214,8 +214,12 @@ export default function BabyZodiac({ locale: rawLocale = 'en' }: Props) {
           </div>
 
           <div class="calc__actions">
-            <a class="btn btn--ghost" href={reading.birthdayHref}>
-              <span>{t(locale, 'babyDateLink')}</span><span class="orb">→</span>
+            <a
+              class="btn btn--ghost"
+              href={reading.birthdayHref}
+              title={locale === 'ru' ? 'Материал пока доступен по-английски' : undefined}
+            >
+              <span>{t(locale, 'babyDateLink')}{locale === 'ru' ? ' — пока по-английски' : ''}</span><span class="orb">→</span>
             </a>
             <a class="btn btn--primary" href={localizePath(locale, '/birth-chart/')}>
               <span>{t(locale, 'babyChartLink')}</span><span class="orb">↗</span>

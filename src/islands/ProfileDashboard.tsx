@@ -27,7 +27,8 @@ import {
   type YearScanCache,
 } from '../lib/year-ahead';
 import { signBySlug, signForLongitude } from '../lib/signs';
-import { localizePath, normalizeLocale, t, type Locale } from '../lib/i18n';
+import { localizePath, normalizeCatalogLocale, t, type CatalogLocale as Locale } from '../lib/i18n';
+import { aspectLabel, moonPhaseLabel, planetLabel } from '../lib/i18n/astrology';
 import daily from '../data/daily.json';
 
 /** Each transiting body's current-sign hue, for the leading receipt glyph. */
@@ -55,7 +56,7 @@ const readYearCache = (): YearCacheFile => {
 };
 
 export default function ProfileDashboard({ locale: rawLocale = 'en' }: Props) {
-  const locale = normalizeLocale(rawLocale);
+  const locale = normalizeCatalogLocale(rawLocale);
   const { profile } = useProfile();
   const charts = useMemo(
     () => [...profile.charts].sort((a, b) => b.updatedAt.localeCompare(a.updatedAt)),
@@ -66,6 +67,9 @@ export default function ProfileDashboard({ locale: rawLocale = 'en' }: Props) {
   const [yearBusy, setYearBusy] = useState(false);
 
   const chart = charts.find((c) => c.id === sel) ?? charts[0] ?? null;
+  const natalPointLabel = (body: string) => locale === 'ru'
+    ? `${body === 'Moon' || body === 'Venus' ? 'натальная' : 'натальный'} ${planetLabel(locale, body)}`
+    : `${t(locale, 'natal')} ${planetLabel(locale, body)}`;
 
   // Year scan: cache first; compute (lazy engine) only on a miss or after
   // two weeks, so repeat visits stay ephemeris-free.
@@ -188,7 +192,7 @@ export default function ProfileDashboard({ locale: rawLocale = 'en' }: Props) {
           <div class="pfd__head">
             <h2>{t(locale, 'pfdToday')}</h2>
             <span class="mono pfd__stamp">
-              {daily.date} · {daily.moon.phase}
+              {daily.date} · {moonPhaseLabel(locale, daily.moon.phase)}
             </span>
           </div>
           {charts.length > 1 && (
@@ -205,7 +209,7 @@ export default function ProfileDashboard({ locale: rawLocale = 'en' }: Props) {
               </select>
             </label>
           )}
-          {today && today.houseLines.length > 0 && (
+          {locale !== 'ru' && today && today.houseLines.length > 0 && (
             <ul class="pfd__lines">
               {today.houseLines.map((l) => (
                 <li key={l.receipt}>
@@ -214,7 +218,9 @@ export default function ProfileDashboard({ locale: rawLocale = 'en' }: Props) {
               ))}
             </ul>
           )}
-          {today && today.hits.length > 0 ? (
+          {locale === 'ru' ? (
+            <p class="pfd__quiet">Ежедневные выпуски пока выходят по-английски. Расчётные данные ниже — для любого языка.</p>
+          ) : today && today.hits.length > 0 ? (
             <ul class="pfd__lines">
               {today.hits.map((a) => (
                 <li key={`${a.a}-${a.b}-${a.type}`}>
@@ -228,7 +234,7 @@ export default function ProfileDashboard({ locale: rawLocale = 'en' }: Props) {
           {today && (today.houseLines.length > 0 || today.hits.length > 0) && (
             <EvidenceDisclosure label={t(locale, 'whyThisReading')}>
               <ul class="evidence-disclosure__list">
-                {today.houseLines.map((l) => (
+                {locale !== 'ru' && today.houseLines.map((l) => (
                   <li class="mono evidence-disclosure__receipt" key={l.receipt}>
                     {l.body && <PlanetGlyph body={l.body} hue={l.hue} size={13} class="rcpt-glyph" />}
                     <span>{l.receipt}</span>
@@ -237,7 +243,7 @@ export default function ProfileDashboard({ locale: rawLocale = 'en' }: Props) {
                 {today.hits.map((a) => (
                   <li class="mono evidence-disclosure__receipt" key={`${a.a}-${a.b}-${a.type}`}>
                     <PlanetGlyph body={a.a} hue={SKY_HUE[a.a]} size={13} class="rcpt-glyph" />
-                    <span>{a.a} {a.type} {t(locale, 'natal')} {a.b} · {t(locale, 'orb')} {a.orb.toFixed(1)}°</span>
+                    <span>{planetLabel(locale, a.a)} {aspectLabel(locale, a.type)} {natalPointLabel(a.b)} · {t(locale, 'orb')} {a.orb.toFixed(1)}°</span>
                   </li>
                 ))}
               </ul>
@@ -253,7 +259,9 @@ export default function ProfileDashboard({ locale: rawLocale = 'en' }: Props) {
             <h2>{t(locale, 'pfdYearAhead')}</h2>
             <span class="mono pfd__stamp">{chart.name}</span>
           </div>
-          {timeline.length > 0 ? (
+          {locale === 'ru' ? (
+            <p class="pfd__quiet">Персональное чтение года впереди пока доступно по-английски. Расчёт выполняется на вашем устройстве.</p>
+          ) : timeline.length > 0 ? (
             <ul class="pfd__lines">
               {timeline.map((ev) => (
                 <li key={`${ev.kind}-${ev.at}-${ev.receipt}`}>
@@ -266,10 +274,10 @@ export default function ProfileDashboard({ locale: rawLocale = 'en' }: Props) {
           ) : (
             <p class="pfd__quiet">{t(locale, 'pfdQuietAhead')}</p>
           )}
-          {timeline.length > 0 && yearBusy && (
+          {locale !== 'ru' && timeline.length > 0 && yearBusy && (
             <p class="pfd__quiet">{t(locale, 'pfdYearBusy')}</p>
           )}
-          {timeline.length > 0 && (
+          {locale !== 'ru' && timeline.length > 0 && (
             <EvidenceDisclosure label={t(locale, 'whyThisReading')}>
               <p>{t(locale, 'pfdYearNote')}</p>
               <ul class="evidence-disclosure__list">

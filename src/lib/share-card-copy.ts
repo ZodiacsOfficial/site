@@ -1,4 +1,4 @@
-import type { ReleasedLocale as Locale } from './i18n';
+import type { CatalogLocale as Locale } from './i18n';
 
 export const SHARE_CARD_EN = {
   bigThreeTitle: 'Your big three',
@@ -163,12 +163,44 @@ export const SHARE_CARD_COPY = {
     compatibilitySaved: 'Immagine di compatibilità salvata.',
     compatibilityError: 'Non è stato possibile creare questa immagine nel tuo browser.',
   },
+  ru: {
+    bigThreeTitle: 'Ваша большая тройка',
+    fullChartTitle: 'Натальная карта',
+    signatureTitle: 'Характерный рисунок моей карты',
+    signatureKicker: 'ЧТО ВЫДЕЛЯЕТСЯ В МОЕЙ КАРТЕ',
+    approachTitle: 'Как ко мне подойти',
+    approachKicker: 'ПЕРВЫЙ КОНТАКТ · ДОВЕРИЕ · ТРЕНИЕ',
+    compatibilityTitle: 'Совместимость',
+    sun: 'Солнце',
+    moon: 'Луна',
+    rising: 'Асцендент',
+    sunDescriptor: 'Главная идентичность и направление',
+    moonDescriptor: 'Инстинкт и эмоциональная жизнь',
+    risingDescriptor: 'Первое впечатление и горизонт карты',
+    dominant: 'Преобладает: {element} · {modality}',
+    balanced: 'Равновесие',
+    compatibilityFlow: 'Лёгкость с полезным трением',
+    compatibilityCharge: 'Химия, которая просит внимания',
+    compatibilityBalance: 'Равный обмен лёгкостью и напряжением',
+    tightestContacts: 'Самые точные контакты',
+    engineReceipt: 'Движок {version}',
+    bigThreeAction: 'Поделиться большой тройкой',
+    fullChartAction: 'Поделиться полной картой',
+    signatureAction: 'Поделиться характерным рисунком карты',
+    approachAction: 'Поделиться чтением «Как ко мне подойти»',
+    approachBirthTimeNote: 'Время рождения добавило бы мой асцендент.',
+    approachMoonTimeNote: 'Без точного времени рождения моя Луна может оказаться в соседнем знаке.',
+    compatibilityAction: 'Поделиться совместимостью',
+    compatibilityBusy: 'Рисуем карточку совместимости…',
+    compatibilitySaved: 'Карточка совместимости сохранена.',
+    compatibilityError: 'Не удалось нарисовать эту карточку в вашем браузере.',
+  },
 } as const satisfies Record<Locale, Record<keyof typeof SHARE_CARD_EN, string>>;
 
 export type ShareCardCopyKey = keyof typeof SHARE_CARD_EN;
 
 export function shareCardText(locale: Locale, key: ShareCardCopyKey): string {
-  return SHARE_CARD_COPY[locale]?.[key] ?? SHARE_CARD_COPY.en[key];
+  return SHARE_CARD_COPY[locale][key];
 }
 
 export function shareCardFormat(
@@ -176,5 +208,5 @@ export function shareCardFormat(
   key: ShareCardCopyKey,
   values: Record<string, string | number>,
 ): string {
-  return shareCardText(locale, key).replace(/\{(\w+)\}/g, (_, name: string) => String(values[name] ?? ''));
+  return shareCardText(locale, key).replace(/\{(\w+)\}/g, (_token: string, name: string) => String(values[name] ?? ''));
 }

@@ -8,7 +8,7 @@
 import type { ComponentChildren } from 'preact';
 import { useEffect, useRef, useState, type MutableRef } from 'preact/hooks';
 import { tourFormat, tourText } from './copy';
-import type { ReleasedLocale as Locale } from '../../../lib/i18n';
+import type { CatalogLocale as Locale } from '../../../lib/i18n';
 
 interface Dot { label: string; active: boolean; complete: boolean }
 

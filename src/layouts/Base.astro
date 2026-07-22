@@ -10,7 +10,8 @@ import EditorialLine from '../components/EditorialLine.astro';
 import GlassDefs from '../components/GlassDefs.astro';
 import { ANALYTICS_EVENT_PROPS } from '../lib/analytics';
 import { hasDailyChartEmailProvider } from '../lib/email/daily-config';
-import { LOCALE_META, UI, normalizeLocale, t, type ReleasedLocale as Locale } from '../lib/i18n';
+import { LOCALE_META, UI, normalizeCatalogLocale, t, type CatalogLocale as Locale } from '../lib/i18n';
+import { RUSSIAN_RUNTIME } from '../lib/i18n/ru-runtime/server';
 
 interface Props {
   title: string;
@@ -37,8 +38,9 @@ interface Props {
 }
 
 const props = Astro.props;
-const locale = normalizeLocale(props.locale);
+const locale = normalizeCatalogLocale(props.locale);
 const clientUi = props.clientUi ? UI[locale] : null;
+const russianRuntime = props.clientUi && locale === 'ru' ? RUSSIAN_RUNTIME : null;
 const plausibleScriptUrl = import.meta.env.PUBLIC_PLAUSIBLE_SCRIPT_URL?.trim();
 const plausibleEndpoint = import.meta.env.PUBLIC_PLAUSIBLE_ENDPOINT?.trim() ?? '';
 const plausibleDomain = import.meta.env.PUBLIC_PLAUSIBLE_DOMAIN?.trim() ?? '';
@@ -96,20 +98,30 @@ const FAVICON = "data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/sv
         href={props.rssFeed.href}
       />
     )}
-    <link
-      rel="preload"
-      href="/fonts/instrument-sans-latin-wght-normal.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
-    <link
-      rel="preload"
-      href="/fonts/eb-garamond-latin-500-normal.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
+    {locale === 'ru' ? (
+      <>
+        <link rel="preload" href="/fonts/golos-text-cyr-a.woff2" as="font" type="font/woff2" crossorigin />
+        <link rel="preload" href="/fonts/golos-text-cyr-b.woff2" as="font" type="font/woff2" crossorigin />
+        <link rel="preload" href="/fonts/eb-garamond-cyrillic-500-normal.woff2" as="font" type="font/woff2" crossorigin />
+      </>
+    ) : (
+      <>
+        <link
+          rel="preload"
+          href="/fonts/instrument-sans-latin-wght-normal.woff2"
+          as="font"
+          type="font/woff2"
+          crossorigin
+        />
+        <link
+          rel="preload"
+          href="/fonts/eb-garamond-latin-500-normal.woff2"
+          as="font"
+          type="font/woff2"
+          crossorigin
+        />
+      </>
+    )}
     <!-- The mono face is decorative metadata, never the LCP typeface. Let CSS
          discover it after the sans/serif faces instead of making its 39KB
          preload compete with the first meaningful paint on mobile. -->
@@ -186,6 +198,11 @@ const FAVICON = "data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/sv
         globalThis.__ZDX_UI__ = { locale: uiLocale, messages: uiMessages };
       </script>
     )}
+    {russianRuntime && (
+      <script is:inline define:vars={{ russianRuntime }}>
+        globalThis.__ZDX_RU__ = { locale: 'ru', data: russianRuntime };
+      </script>
+    )}
     <a href="#main" class="skip">{t(locale, 'skipContent')}</a>
     <div class="orbs" aria-hidden="true"></div>
     <div class="dust" aria-hidden="true"></div>
@@ -199,7 +216,7 @@ const FAVICON = "data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/sv
     </main>
 
     {props.type === 'article' && <EditorialLine locale={locale} />}
-    <SourcesLine sources={props.sources} />
+    <SourcesLine sources={props.sources} locale={locale} />
     <SiteFooter locale={locale} />
 
     <script>

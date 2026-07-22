@@ -5,10 +5,10 @@
  * lunation comes from build-time sky data. The ephemeris never loads here.
  */
 import { useMemo } from 'preact/hooks';
-import { formatLongitude, signForLongitude, signName } from '../lib/signs';
+import { formatLongitude, signForLongitude, signName, signPrepositional } from '../lib/signs';
 import sky from '../data/sky.json';
 import daily from '../data/daily.json';
-import { normalizeLocale, t, tf, type Locale } from '../lib/i18n';
+import { normalizeCatalogLocale, t, tf, type CatalogLocale as Locale } from '../lib/i18n';
 import { planetLabel } from '../lib/i18n/astrology';
 import { formatDate, formatShortDate } from '../lib/i18n/dates';
 
@@ -63,7 +63,7 @@ function TickerIcon({ kind }: { kind: IconKind }) {
 }
 
 export default function SkyTicker({ locale: rawLocale = 'en' }: { locale?: Locale }) {
-  const locale = normalizeLocale(rawLocale);
+  const locale = normalizeCatalogLocale(rawLocale);
   const receiptDate = formatShortDate(locale, `${daily.date}T12:00:00.000Z`);
   const compactReceiptDate = formatDate(locale, `${daily.date}T12:00:00.000Z`, {
     month: 'short', day: 'numeric', timeZone: 'UTC',
@@ -78,7 +78,11 @@ export default function SkyTicker({ locale: rawLocale = 'en' }: { locale?: Local
     const moonLon = daily.bodies.find((body) => body.body === 'Moon')!.lon;
     const moonSign = signForLongitude(moonLon);
     out.push({ kind: 'sun', text: `${t(locale, 'sun')} ${formatLongitude(sunLon, locale)}`, hue: signForLongitude(sunLon).hue });
-    out.push({ kind: 'moon', text: `${t(locale, 'moonIn')} ${signName(moonSign, locale)}`, hue: moonSign.hue });
+    out.push({
+      kind: 'moon',
+      text: `${t(locale, 'moonIn')} ${locale === 'ru' ? signPrepositional(moonSign) : signName(moonSign, locale)}`,
+      hue: moonSign.hue,
+    });
 
     const active = daily.bodies.filter((body) => body.retrograde).map((body) => body.body);
     out.push(active.includes('Mercury')

@@ -16,7 +16,7 @@ import type { SavedChart } from '../lib/profile/schema';
 import type { MinimalBody, PairSummary } from '../lib/engine/synastry';
 import type { ShareChartInput } from '../lib/share';
 import type { City } from '../lib/geo/search';
-import { LOCALE_META, localizePath, normalizeLocale, t, tf, type ReleasedLocale as Locale } from '../lib/i18n';
+import { LOCALE_META, localizePath, normalizeCatalogLocale, t, tf, type CatalogLocale as Locale } from '../lib/i18n';
 import { useEngine, type EngineLoader } from '../lib/hooks/useEngine';
 import { useProfile } from '../lib/hooks/useProfile';
 
@@ -155,11 +155,29 @@ const PAIR_COPY = {
     savedComparisonSide: 'da un confronto salvato',
     restoredSideHelp: 'Questo lato proviene da un confronto salvato — cancellalo per inserire i dati di un’altra persona.',
   },
+  ru: {
+    savedPairs: 'Сохранённые сравнения',
+    useMyChart: 'Использовать мою карту — {handle}',
+    dismissMyChart: 'Закрыть предложение сохранённой карты',
+    saveCue: 'Дальше',
+    savePairTitle: 'Сохраните это чтение',
+    savePair: 'Сохранить сравнение',
+    savePairBenefit: 'Сохраните это чтение, чтобы вернуться без повторного ввода обеих карт.',
+    savedPairTitle: 'Сравнение сохранено',
+    openSavedPairs: 'Открыть сохранённые карты',
+    reopenPairNote: 'Это сравнение можно открыть снова в разделе сохранённых карт.',
+    pairSaved: 'Сравнение сохранено на этом устройстве.',
+    pairExists: 'Уже сохранено.',
+    pairSaveFull: 'Можно сохранить до {n} сравнений — сначала удалите одно.',
+    pairRemoved: 'Сравнение удалено.',
+    savedComparisonSide: 'из сохранённого сравнения',
+    restoredSideHelp: 'Эта сторона восстановлена из сохранённого сравнения — очистите её, чтобы ввести другого человека.',
+  },
 } as const satisfies Record<Locale, Record<keyof typeof PAIR_COPY_EN, string>>;
 
 const pc = (locale: Locale, key: keyof typeof PAIR_COPY_EN) => PAIR_COPY[locale][key];
 const pcf = (locale: Locale, key: keyof typeof PAIR_COPY_EN, values: Record<string, string | number>) =>
-  pc(locale, key).replace(/\{(\w+)\}/g, (_, k: string) => String(values[k] ?? ''));
+  pc(locale, key).replace(/\{(\w+)\}/g, (_token: string, k: string) => String(values[k] ?? ''));
 const listLocale = (locale: Locale) => LOCALE_META[locale].intlLocale;
 
 export type PairSaveState = 'idle' | 'saved' | 'exists' | 'full' | 'error';
@@ -374,7 +392,7 @@ function PersonCard({ person, locale }: { person: Person; locale: Locale }) {
 }
 
 export default function SynastryCalculator({ locale: rawLocale = 'en' }: { locale?: Locale }) {
-  const locale = normalizeLocale(rawLocale);
+  const locale = normalizeCatalogLocale(rawLocale);
   const loadEngine = useEngine();
   const { profile, ready: profileReady } = useProfile();
   const [slotA, setSlotA] = useState<SlotState>(emptySlot());

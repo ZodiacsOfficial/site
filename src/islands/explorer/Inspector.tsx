@@ -15,7 +15,7 @@ import {
 import { NATAL_HOUSE_THEME, natalAspectLine, planetInHouseLine } from '../../lib/natal';
 import { placementContext } from '../../lib/natal-context';
 import { aspectLabel, planetLabel } from '../../lib/i18n/astrology';
-import { localizePath, t, type ReleasedLocale as Locale } from '../../lib/i18n';
+import { localizePath, t, type CatalogLocale as Locale } from '../../lib/i18n';
 import type { AspectType } from '../../lib/engine/types';
 import type { ChartSceneModel, EntityRef, SignSlug } from '../../lib/scene/types';
 import { entityId, parseEntityId } from '../../lib/scene/types';
@@ -65,6 +65,7 @@ const DETENT_LABELS = {
   pt: { expand: 'Expandir a explicação do mapa', collapse: 'Recolher a explicação do mapa' },
   fr: { expand: 'Développer l’explication du thème', collapse: 'Réduire l’explication du thème' },
   it: { expand: 'Espandi la spiegazione del tema', collapse: 'Riduci la spiegazione del tema' },
+  ru: { expand: 'Развернуть объяснение карты', collapse: 'Свернуть объяснение карты' },
 } as const satisfies Record<Locale, { expand: string; collapse: string }>;
 
 interface Props {
@@ -155,8 +156,12 @@ export default function Inspector({ scene, selection, onSelect, locale, banner }
     onSelect(ref);
     requestAnimationFrame(() => headingRef.current?.focus());
   };
-  const learn = (path: string, label: string) => (
-    <a class="insp__more" href={path}>{label} →</a>
+  const learn = (path: string, label: string, englishOnly = true) => (
+    <a
+      class="insp__more"
+      href={path}
+      title={locale === 'ru' && englishOnly ? 'Материал пока доступен по-английски' : undefined}
+    >{label}{locale === 'ru' && englishOnly ? ' — пока по-английски' : ''} →</a>
   );
   const signButton = (slug: SignSlug, label: string) => {
     const sign = signBySlug(slug);
@@ -260,7 +265,7 @@ export default function Inspector({ scene, selection, onSelect, locale, banner }
       ) : (
         <>
           {exact}
-          {sb.house != null && <p class="insp__read">{planetInHouseLine(sb.body, sb.house)}</p>}
+          {sb.house != null && locale !== 'ru' && <p class="insp__read">{planetInHouseLine(sb.body, sb.house)}</p>}
           <div class="insp__related-actions">{related}</div>
           {!node && learn(`/learn/placements/${sb.body.toLowerCase().replace(' ', '-')}-in-${sb.sign}/`, `${bodyLabel} ${t(locale, 'readIn')} ${signName(sign, locale)}`)}
         </>
@@ -290,7 +295,7 @@ export default function Inspector({ scene, selection, onSelect, locale, banner }
               ? <AstroTerm term="element" label={elementLabel(sign.element, locale)} surface="chart-inspector" />
               : elementLabel(sign.element, locale)}
           </Receipt>
-          <Receipt label="Modality">
+          <Receipt label={locale === 'ru' ? 'Модальность' : 'Modality'}>
             {showsEnglishInterpretation
               ? <AstroTerm term={sign.modality} label={modalityLabel(sign.modality, locale)} surface="chart-inspector" />
               : modalityLabel(sign.modality, locale)}
@@ -315,13 +320,13 @@ export default function Inspector({ scene, selection, onSelect, locale, banner }
           </div>
           {occupants.length > 0 && <Related>{occupantButtons}</Related>}
           <ExactData>{exact}</ExactData>
-          {learn(localizePath(locale, `/${selection.sign}/`), `${t(locale, 'read')} ${signName(sign, locale)}`)}
+          {learn(localizePath(locale, `/${selection.sign}/`), `${t(locale, 'read')} ${signName(sign, locale)}`, false)}
         </>
       ) : (
         <>
           {exact}
           {occupants.length > 0 && <div class="insp__aspects"><span class="mono--label">{t(locale, 'inThisSign')}</span><div class="insp__related-actions">{occupantButtons}</div></div>}
-          {learn(localizePath(locale, `/${selection.sign}/`), `${t(locale, 'read')} ${signName(sign, locale)}`)}
+          {learn(localizePath(locale, `/${selection.sign}/`), `${t(locale, 'read')} ${signName(sign, locale)}`, false)}
         </>
       );
       break;
@@ -447,10 +452,10 @@ export default function Inspector({ scene, selection, onSelect, locale, banner }
           </div>
           <Related>{signButton(sign.slug as SignSlug, signName(sign, locale))}</Related>
           <ExactData>{exact}</ExactData>
-          {selection.angle === 'asc' && learn(localizePath(locale, '/rising-sign/'), `${signName(sign, locale)} ${t(locale, 'rising').toLowerCase()}`)}
+          {selection.angle === 'asc' && learn(localizePath(locale, '/rising-sign/'), `${signName(sign, locale)} ${t(locale, 'rising').toLowerCase()}`, false)}
         </>
       ) : (
-        <>{exact}<p class="insp__read">{t(locale, KEY[selection.angle])}</p>{selection.angle === 'asc' && learn(localizePath(locale, '/rising-sign/'), `${signName(sign, locale)} ${t(locale, 'rising').toLowerCase()}`)}</>
+        <>{exact}<p class="insp__read">{t(locale, KEY[selection.angle])}</p>{selection.angle === 'asc' && learn(localizePath(locale, '/rising-sign/'), `${signName(sign, locale)} ${t(locale, 'rising').toLowerCase()}`, false)}</>
       );
       break;
     }

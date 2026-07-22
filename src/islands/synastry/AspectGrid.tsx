@@ -2,7 +2,7 @@ import AspectGlyph from '../../components/AspectGlyph';
 import PlanetGlyph from '../../components/PlanetGlyph';
 import { synastryLine } from '../../lib/compat';
 import { aspectLabel, planetLabel } from '../../lib/i18n/astrology';
-import { t, type ReleasedLocale as Locale } from '../../lib/i18n';
+import { t, type CatalogLocale as Locale } from '../../lib/i18n';
 import type { RelationshipContact, RelationshipGridData, RelationshipPointName } from './relationshipData';
 import { relationshipContactId } from './relationshipData';
 import { synastryCorpusLine } from './synastryLines';
@@ -41,6 +41,11 @@ const COPY = {
     caption: 'Griglia degli aspetti tra {a} e {b}',
     empty: 'Nessun aspetto maggiore',
     contact: [': ', ', orbita ', ' gradi'],
+  },
+  ru: {
+    caption: 'Сетка аспектов: {a} и {b}',
+    empty: 'Нет мажорного аспекта',
+    contact: [': ', ', орбис ', '°'],
   },
 } as const satisfies Record<Locale, { caption: string; empty: string; contact: readonly [string, string, string] }>;
 

@@ -11,10 +11,10 @@ import {
   moonIllumination, moonLongitude, moonPhaseAngle, moonPhaseName,
 } from '../lib/engine/lite';
 import type { MoonPhaseName } from '../lib/engine/lite';
-import { formatLongitude, signForLongitude, signName } from '../lib/signs';
+import { formatLongitude, signForLongitude, signName, signPrepositional } from '../lib/signs';
 import { resolveLocalToUtc } from '../lib/time/localToUtc';
 import type { City } from '../lib/geo/search';
-import { localizePath, normalizeLocale, t, tf, type Locale } from '../lib/i18n';
+import { localizePath, normalizeCatalogLocale, t, tf, type CatalogLocale as Locale } from '../lib/i18n';
 import { formatDateTime } from '../lib/i18n/dates';
 import { moonPhaseLabel } from '../lib/i18n/astrology';
 import { useEngine } from '../lib/hooks/useEngine';
@@ -65,7 +65,7 @@ interface Lookup {
 }
 
 export default function MoonPhaseTool({ locale: rawLocale = 'en' }: { locale?: Locale }) {
-  const locale = normalizeLocale(rawLocale);
+  const locale = normalizeCatalogLocale(rawLocale);
   const loadEngine = useEngine();
   const [now, setNow] = useState<Date | null>(null);
   const [date, setDate] = useState('');
@@ -162,7 +162,7 @@ export default function MoonPhaseTool({ locale: rawLocale = 'en' }: { locale?: L
             <strong class="mp__phase">{now ? moonPhaseLabel(locale, moonPhaseName(now)) : t(locale, 'moonReadingSky')}</strong>
             <span class="mono mp__meta">
               {now
-                ? `${Math.round(moonIllumination(now) * 100)}% ${t(locale, 'illuminated')} · ${t(locale, 'moonIn')} ${signName(signForLongitude(moonLongitude(now)), locale)}`
+                ? `${Math.round(moonIllumination(now) * 100)}% ${t(locale, 'illuminated')} · ${t(locale, 'moonIn')} ${locale === 'ru' ? signPrepositional(signForLongitude(moonLongitude(now))) : signName(signForLongitude(moonLongitude(now)), locale)}`
                 : '—'}
             </span>
             {now && (
@@ -225,7 +225,9 @@ export default function MoonPhaseTool({ locale: rawLocale = 'en' }: { locale?: L
                 <strong class="mp__phase">{moonPhaseLabel(locale, result.phase)}</strong>
                 <span class="mono mp__meta">{Math.round(result.illum * 100)}% {t(locale, 'illuminated')}</span>
                 <span class="mp__signline">
-                  {t(locale, 'moonIn')} <SignChip lon={result.lon} locale={locale} />
+                  {t(locale, 'moonIn')} {locale === 'ru'
+                    ? signPrepositional(signForLongitude(result.lon))
+                    : <SignChip lon={result.lon} locale={locale} />}
                   {result.altLon !== null && (
                     <> {t(locale, 'or')} <SignChip lon={result.altLon} locale={locale} /></>
                   )}
