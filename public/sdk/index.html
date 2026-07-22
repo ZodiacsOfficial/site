@@ -286,7 +286,7 @@
       main {
       position: relative;
       z-index: 1;
-      padding: 58px 20px 84px;
+      padding: calc(88px + env(safe-area-inset-top)) 20px 84px;
       overflow: hidden;
     }
 
@@ -1434,7 +1434,7 @@
 
     @media (max-width: 520px) {
       main {
-        padding: 48px 18px 76px;
+        padding: calc(88px + env(safe-area-inset-top)) 18px 76px;
       }
 
       h1 {
@@ -1590,7 +1590,7 @@
 
       .shell { width: min(100%, 1180px); }
 
-      main { padding: 64px 72px 96px; }
+      main { padding: calc(92px + env(safe-area-inset-top)) 72px 96px; }
 
       /* Hero: copy left, artwork right */
       .hero {
