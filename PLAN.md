@@ -64,7 +64,7 @@ New work reuses these tokens. It introduces no new decorative color, chrome lang
 
 - Locale routing and UI catalogs live under `src/lib/i18n/`; the released locale roots remain `/es/`, `/pt/`, `/fr/`, and `/it/`.
 - The owner-approved Russian workstream is staged separately from the six product phases. R0 added availability-aware locale plumbing without a visible change. R1 released 27 complete Russian preview routes under `/ru/`, all with `noindex` and absent from public discovery.
-- R2 is now a bounded release candidate: 26 reviewed Russian core pages gain localized social cards and public selector/alternate/sitemap discovery; `/ru/404/` remains `noindex`. Russian search and every deferred route family remain excluded. Nothing becomes public until this candidate passes its complete local and CI release gates and receives explicit release approval. Arabic routes and content remain absent.
+- R2 is released: 26 reviewed Russian core pages have localized social cards and public selector/alternate/sitemap discovery; `/ru/404/` remains `noindex`. Russian search and every deferred route family remain excluded. Arabic routes and content remain absent.
 - Daily horoscopes, Today and event publications, Registry, birthday pages, Ask, and email/push publication content remain outside the Russian launch set. Russian pages label linked English-only material plainly rather than implying that it is translated.
 
 ### Computation and current horoscope pipeline
@@ -223,7 +223,7 @@ Keep clean data and route seams for these; do not implement them inside this pro
 
 ## Change log
 
-### 2026-07-22 — Russian R2 public-release candidate
+### 2026-07-22 — Russian R2 public release
 
 - Prepared exactly 26 reviewed Russian core pages for indexability while keeping `/ru/404/` `noindex`; daily horoscopes, Today, events, birthday and Chinese-zodiac programs, Registry, Ask, search, and email/push publication content remain outside the Russian route set.
 - Added reciprocal EN↔RU alternates, an availability-derived six-language selector on the launched core family, and exact Russian sitemap rows with English retained as `x-default`. Deferred and programmatic routes remain on the existing five-language policy.
@@ -231,7 +231,9 @@ Keep clean data and route seams for these; do not implement them inside this pro
 - Added release gates for exact route/indexing inventory, reciprocal hreflang, sitemap counts, localized metadata and cards, Arabic absence, Russian search exclusion, 360px/1280px layout, keyboard navigation, reduced motion, chart calculation, font loading, and Russian Lighthouse coverage.
 - Preserved the 62,880-byte Russian font payload under its 80 KiB cap and introduced no new runtime dependency, data store, product flag, or Registry change.
 - Kept the Russian homepage poster under a 48 KiB gate while preserving its subtle mobile drift and interaction-only video loading.
-- This entry records a candidate, not a production release. Live reciprocity and Search Console submission remain release-time evidence after explicit approval.
+- Released by PR #140 at merge `37cd2fc0a7dd948f1d5cd1507c5a8c89bf8d48b3` on `2026-07-22T13:33:15Z`. Exact-SHA Site Check run `29924409476` passed all seven jobs at `2026-07-22T13:50:56Z`; Vercel completed the production deployment at `2026-07-22T13:35:42Z`.
+- The production audit passed all 26 Russian pages, all 26 reciprocal English alternates, all 26 localized social cards, the exact 26-URL sitemap inventory, the private Russian 404 contract, Russian search exclusion, Arabic absence, and existing-language/Registry smoke checks. A real-browser check also passed desktop and mobile rendering, the six-language selector, keyboard menu behavior, overflow, and console-error checks.
+- IndexNow accepted the exact 26 released Russian URLs with HTTP 200. Google sitemap submission remains pending because the signed-in `admin@zodiacs.org` Search Console account has no Zodiacs.org property; do not count that submission until the owner authorizes and completes property verification.
 
 ### 2026-07-22 — Russian R1 private preview candidate
 
