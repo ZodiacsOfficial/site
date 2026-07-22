@@ -3,7 +3,7 @@ import PlanetGlyph from '../components/PlanetGlyph';
 import { approachRead, type ApproachPart } from '../lib/approach';
 import { trackAnalytics } from '../lib/analytics';
 import type { Chart } from '../lib/engine/types';
-import type { Locale } from '../lib/i18n';
+import type { ReleasedLocale as Locale } from '../lib/i18n';
 import {
   prepareChartCard,
   savePreparedChartCard,

@@ -7,7 +7,7 @@
 import type { APIRoute } from 'astro';
 import { getCollection } from 'astro:content';
 import { LEGACY_URLS } from '../lib/legacy/urls';
-import { DEFAULT_LOCALE, LOCALES, LOCALE_META, alternatePaths } from '../lib/i18n';
+import { DEFAULT_LOCALE, LOCALE_META, alternatePathEntries, alternatePaths } from '../lib/i18n';
 import { CHINESE_ZODIAC_PATHS } from '../lib/programmatic-paths';
 import { registryAuraSitemapEntry } from '../lib/registry-aura-entry.mjs';
 import { SIGNS } from '../lib/signs';
@@ -232,8 +232,7 @@ export const GET: APIRoute = async () => {
     if (url.loc === '/404.html') return [];
     const alternates = alternatePaths(url.loc);
     if (!alternates) return [];
-    return LOCALES.flatMap((locale) => {
-      const loc = alternates[locale];
+    return alternatePathEntries(url.loc).flatMap(({ href: loc }) => {
       if (!loc || loc === url.loc || existingLocations.has(loc)) return [];
       existingLocations.add(loc);
       return [{
@@ -256,12 +255,9 @@ ${allUrls
       const alternates = sitemapAlternates(u.loc);
       const defaultAlternate = alternates?.[DEFAULT_LOCALE];
       const alternateLinks = alternates && defaultAlternate
-        ? `${LOCALES.flatMap((locale) => {
-            const href = alternates[locale];
-            return href
-              ? [`    <xhtml:link rel="alternate" hreflang="${LOCALE_META[locale].hreflang}" href="${SITE}${href}" />`]
-              : [];
-          }).join('\n')}
+        ? `${alternatePathEntries(u.loc).map(({ locale, href }) => (
+            `    <xhtml:link rel="alternate" hreflang="${LOCALE_META[locale].hreflang}" href="${SITE}${href}" />`
+          )).join('\n')}
     <xhtml:link rel="alternate" hreflang="x-default" href="${SITE}${defaultAlternate}" />`
         : '';
       return `  <url>

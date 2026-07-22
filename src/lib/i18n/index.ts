@@ -1,11 +1,33 @@
 import { SIGN_SLUGS } from '../signs';
-import { DEFAULT_LOCALE, LOCALES, type Locale } from './core';
+import {
+  DEFAULT_LOCALE,
+  LOCALES,
+  type Locale,
+} from './core';
 import { clientUiMessage } from './ui/client';
-import { UI } from './ui/server';
+import { serverUiMessage } from './ui/server';
 import type { UiKey } from './ui/schema';
 
-export { DEFAULT_LOCALE, LOCALES, normalizeLocale, type Locale } from './core';
+export {
+  DEFAULT_LOCALE,
+  LOCALES,
+  LOCALE_META,
+  RELEASED_LOCALES,
+  isLocale,
+  isReleasedLocale,
+  localeHtmlLang,
+  normalizeKnownLocale,
+  normalizeLocale,
+  normalizeReleasedLocale,
+  requireReleasedLocale,
+  type Locale,
+  type LocaleMeta,
+  type ReleasedLocale,
+  type TextDirection,
+} from './core';
 export { UI } from './ui/server';
+export { pluralCategory, pluralText, tp } from './plural';
+export type { PluralCatalog, PluralCategory, PluralForms } from './plural';
 export type { UiKey } from './ui/schema';
 
 /** Kept separate so client-side path helpers do not carry head-only metadata. */
@@ -15,65 +37,9 @@ export const LOCALE_PATH_PREFIX = {
   pt: '/pt',
   fr: '/fr',
   it: '/it',
+  ru: '/ru',
+  ar: '/ar',
 } as const satisfies Record<Locale, string>;
-
-interface LocaleMeta {
-  /** URL segment, including its leading slash. Empty for the default locale. */
-  pathPrefix: string;
-  /** Value rendered on the document's `lang` attribute. */
-  htmlLang: string;
-  /** Value rendered on alternate links and sitemap entries. */
-  hreflang: string;
-  /** Locale passed to the browser's Intl formatters. */
-  intlLocale: string;
-  /** Open Graph's underscore-form locale identifier. */
-  ogLocale: string;
-  /** Self-name used by the footer language row. */
-  languageName: string;
-}
-
-export const LOCALE_META = {
-  en: {
-    pathPrefix: '',
-    htmlLang: 'en',
-    hreflang: 'en',
-    intlLocale: 'en-US',
-    ogLocale: 'en_US',
-    languageName: 'English',
-  },
-  es: {
-    pathPrefix: '/es',
-    htmlLang: 'es',
-    hreflang: 'es',
-    intlLocale: 'es-419',
-    ogLocale: 'es_ES',
-    languageName: 'Español',
-  },
-  pt: {
-    pathPrefix: '/pt',
-    htmlLang: 'pt-BR',
-    hreflang: 'pt-BR',
-    intlLocale: 'pt-BR',
-    ogLocale: 'pt_BR',
-    languageName: 'Português (Brasil)',
-  },
-  fr: {
-    pathPrefix: '/fr',
-    htmlLang: 'fr',
-    hreflang: 'fr',
-    intlLocale: 'fr-FR',
-    ogLocale: 'fr_FR',
-    languageName: 'Français',
-  },
-  it: {
-    pathPrefix: '/it',
-    htmlLang: 'it',
-    hreflang: 'it',
-    intlLocale: 'it-IT',
-    ogLocale: 'it_IT',
-    languageName: 'Italiano',
-  },
-} as const satisfies Record<Locale, LocaleMeta>;
 
 /** D9 policy: authored interpretation corpora remain English-only. */
 export function showsEnglishOnlyInterpretation(locale: Locale): boolean {
@@ -99,9 +65,21 @@ const CORE_LOCALIZED_PATHS = [
   ...SIGN_SLUGS.map((slug) => `/${slug}/`),
 ];
 
+/**
+ * Route publication is independent from catalog readiness. Future RU/AR
+ * catalogs cannot publish a URL until that locale is added to a route policy.
+ */
+export const CORE_ROUTE_LOCALES = ['en', 'es', 'pt', 'fr', 'it'] as const satisfies readonly Locale[];
+
+/** Birthday and Chinese-zodiac families remain outside R1/R2/A1/A2. */
+export const PROGRAMMATIC_ROUTE_LOCALES = ['en', 'es', 'pt', 'fr', 'it'] as const satisfies readonly Locale[];
+
+/** Byte-compatible locale-home fallback; future locales never join it. */
+export const LEGACY_HOME_SELECTOR_LOCALES = ['en', 'es', 'pt', 'fr', 'it'] as const satisfies readonly Locale[];
+
 /** Locales in which each translated route is actually available. */
 export const LOCALIZED_PATHS: ReadonlyMap<string, readonly Locale[]> = new Map(
-  CORE_LOCALIZED_PATHS.map((path) => [path, LOCALES] as const),
+  CORE_LOCALIZED_PATHS.map((path) => [path, CORE_ROUTE_LOCALES] as const),
 );
 
 const BIRTHDAY_MONTH_LENGTHS: Readonly<Record<string, number>> = Object.freeze({
@@ -136,8 +114,10 @@ function isLocalizedProgrammaticPath(path: string): boolean {
   return Boolean(maxDay && birthday[2] === String(day) && day >= 1 && day <= maxDay);
 }
 
-function availableLocales(path: string): readonly Locale[] | undefined {
-  return LOCALIZED_PATHS.get(path) ?? (isLocalizedProgrammaticPath(path) ? LOCALES : undefined);
+export function availableLocalesForPath(path: string): readonly Locale[] | undefined {
+  const canonical = stripLocale(path);
+  return LOCALIZED_PATHS.get(canonical)
+    ?? (isLocalizedProgrammaticPath(canonical) ? PROGRAMMATIC_ROUTE_LOCALES : undefined);
 }
 
 export function stripLocale(path: string): string {
@@ -155,18 +135,19 @@ export function localizePath(locale: Locale, path: string): string {
   const clean = path.startsWith('/') ? path : `/${path}`;
   const canonical = stripLocale(clean);
   if (locale === DEFAULT_LOCALE) return canonical;
-  if (!availableLocales(canonical)?.includes(locale)) return clean;
+  if (!availableLocalesForPath(canonical)?.includes(locale)) return canonical;
   return `${LOCALE_PATH_PREFIX[locale]}${canonical}`;
 }
 
 export type AlternatePaths = Partial<Record<Locale, string>>;
+export interface AlternatePathEntry { locale: Locale; href: string }
 
 export function alternatePaths(path: string): AlternatePaths | null {
   // Astro emits nested locale 404s at /{locale}/404/, while English remains
   // /404.html. Normalize only this server-rendered alternate-link family so
   // the client path helper stays byte-identical.
   const clean = path.endsWith('/404/') ? '/404.html' : stripLocale(path);
-  const locales = availableLocales(clean);
+  const locales = availableLocalesForPath(clean);
   if (!locales) return null;
   return Object.fromEntries(
     locales.map((locale) => [
@@ -178,8 +159,18 @@ export function alternatePaths(path: string): AlternatePaths | null {
   ) as AlternatePaths;
 }
 
+/** Ordered route-derived entries for selectors, head metadata, and sitemaps. */
+export function alternatePathEntries(path: string): AlternatePathEntry[] {
+  const alternates = alternatePaths(path);
+  if (!alternates) return [];
+  return Object.entries(alternates).map(([locale, href]) => ({
+    locale: locale as Locale,
+    href,
+  }));
+}
+
 export function t(locale: Locale, key: UiKey): string {
-  return import.meta.env.SSR ? UI[locale][key] : clientUiMessage(locale, key);
+  return import.meta.env.SSR ? serverUiMessage(locale, key) : clientUiMessage(locale, key);
 }
 
 export function tf(

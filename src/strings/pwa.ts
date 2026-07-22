@@ -1,4 +1,4 @@
-import type { Locale } from '../lib/i18n';
+import type { ReleasedLocale as Locale } from '../lib/i18n';
 
 export const PWA_PROMPT_EN = {
   heading: 'Keep Zodiacs close?',

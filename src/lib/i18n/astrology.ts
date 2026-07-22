@@ -1,4 +1,4 @@
-import type { Locale } from './index';
+import type { ReleasedLocale as Locale } from './index';
 
 const PLANET_LABELS: Record<Locale, Record<string, string>> = {
   en: {

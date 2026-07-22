@@ -15,7 +15,7 @@ import { renderTransitOverlay } from '../transit/renderTransitOverlay';
 import { synastryLine } from '../../lib/compat';
 import { elementLabel, formatLongitude, signForLongitude, signName } from '../../lib/signs';
 import { aspectLabel, planetLabel } from '../../lib/i18n/astrology';
-import { t, type Locale } from '../../lib/i18n';
+import { t, type ReleasedLocale as Locale } from '../../lib/i18n';
 import { AspectGrid, formatRelationshipCopy, RelationshipContactPoint } from './AspectGrid';
 import { CompositePanel } from './CompositePanel';
 import {

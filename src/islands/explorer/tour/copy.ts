@@ -9,7 +9,7 @@
  * Voice: plain, warm, specific. State computed facts; label interpretation
  * as tradition; never woo, never salesy.
  */
-import type { Locale } from '../../../lib/i18n';
+import type { ReleasedLocale as Locale } from '../../../lib/i18n';
 
 const TOUR_COPY = {
   en: {

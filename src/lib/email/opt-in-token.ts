@@ -1,6 +1,6 @@
 import { createHmac, timingSafeEqual } from 'node:crypto';
 import { SIGN_SLUGS } from '../signs.js';
-import { LOCALES, type Locale } from '../i18n/core.js';
+import { RELEASED_LOCALES, type ReleasedLocale } from '../i18n/core.js';
 
 const TOKEN_CONTEXT = 'zodiacs-email-capture-v1';
 export const EMAIL_OPT_IN_TTL_MS = 48 * 60 * 60 * 1_000;
@@ -8,14 +8,14 @@ export const EMAIL_OPT_IN_TTL_MS = 48 * 60 * 60 * 1_000;
 export interface EmailOptInClaim {
   email: string;
   sign: string | null;
-  locale: Locale;
+  locale: ReleasedLocale;
   expiresAt: number;
 }
 
 interface SerializedClaim {
   e: string;
   s: string | null;
-  l: Locale;
+  l: ReleasedLocale;
   x: number;
 }
 
@@ -58,11 +58,11 @@ export function verifyEmailOptInToken(
     if (typeof parsed.e !== 'string'
       || (parsed.s !== null && (typeof parsed.s !== 'string' || !SIGN_SLUGS.includes(parsed.s)))
       || typeof parsed.l !== 'string'
-      || !LOCALES.includes(parsed.l as Locale)
+      || !RELEASED_LOCALES.includes(parsed.l as ReleasedLocale)
       || typeof parsed.x !== 'number'
       || !Number.isFinite(parsed.x)
       || parsed.x <= now) return null;
-    return { email: parsed.e, sign: parsed.s, locale: parsed.l as Locale, expiresAt: parsed.x };
+    return { email: parsed.e, sign: parsed.s, locale: parsed.l as ReleasedLocale, expiresAt: parsed.x };
   } catch {
     return null;
   }

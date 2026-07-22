@@ -1,4 +1,4 @@
-import type { Locale } from '../lib/i18n';
+import type { ReleasedLocale as Locale } from '../lib/i18n';
 
 const EN = {
   heading: 'Sky alerts, when they’re earned?',

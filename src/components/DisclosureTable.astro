@@ -1,7 +1,7 @@
 ---
 import type { DisclosureRow } from '../lib/disclosure';
 import { disclosureText } from '../lib/disclosure';
-import type { Locale } from '../lib/i18n';
+import type { ReleasedLocale as Locale } from '../lib/i18n';
 
 interface Props {
   rows: readonly DisclosureRow[];
@@ -74,7 +74,7 @@ const { rows, locale } = Astro.props;
   th, td {
     padding: clamp(18px, 3vw, 28px);
     border-bottom: 1px solid var(--hair-1);
-    text-align: left;
+    text-align: start;
     vertical-align: top;
   }
   thead th {

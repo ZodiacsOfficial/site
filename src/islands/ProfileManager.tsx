@@ -13,7 +13,7 @@ import { signForLongitude, formatLongitude, signName } from '../lib/signs';
 import { encodeChartLink } from '../lib/share';
 import type { Session } from '@supabase/supabase-js';
 import type * as Sync from '../lib/profile/sync';
-import { localizePath, normalizeLocale, t, tf, type Locale, type UiKey } from '../lib/i18n';
+import { localizePath, normalizeLocale, t, tf, type ReleasedLocale as Locale, type UiKey } from '../lib/i18n';
 import { formatDate, intlLocale } from '../lib/i18n/dates';
 import {
   browserTimezoneChoices,

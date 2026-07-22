@@ -12,7 +12,7 @@ import { dirname, extname, join, relative, resolve } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { GLOSSARY } from '../src/data/glossary.ts';
 import { CHINESE_ZODIAC_COPY } from '../src/data/chinese-zodiac.ts';
-import { DEFAULT_LOCALE, LOCALES } from '../src/lib/i18n/core.ts';
+import { DEFAULT_LOCALE, RELEASED_LOCALES } from '../src/lib/i18n/core.ts';
 import { EN } from '../src/strings/en.mjs';
 import { WIDGET_EN } from '../src/strings/widgets.ts';
 
@@ -61,7 +61,7 @@ export const BANNED_CONSUMER_VOCABULARY = Object.freeze([
 ]);
 
 const COLLAPSE = /\s+/g;
-const LOCALIZED_PAGE_PREFIXES = LOCALES
+const LOCALIZED_PAGE_PREFIXES = RELEASED_LOCALES
   .filter((locale) => locale !== DEFAULT_LOCALE)
   .map((locale) => `${locale}/`);
 

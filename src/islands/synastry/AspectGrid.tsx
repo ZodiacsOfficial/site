@@ -2,7 +2,7 @@ import AspectGlyph from '../../components/AspectGlyph';
 import PlanetGlyph from '../../components/PlanetGlyph';
 import { synastryLine } from '../../lib/compat';
 import { aspectLabel, planetLabel } from '../../lib/i18n/astrology';
-import { t, type Locale } from '../../lib/i18n';
+import { t, type ReleasedLocale as Locale } from '../../lib/i18n';
 import type { RelationshipContact, RelationshipGridData, RelationshipPointName } from './relationshipData';
 import { relationshipContactId } from './relationshipData';
 import { synastryCorpusLine } from './synastryLines';

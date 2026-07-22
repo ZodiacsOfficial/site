@@ -29,7 +29,7 @@ import type { Aspect, AspectType, Chart } from '../../../lib/engine/types';
 import { formatLongitude, signForLongitude, signName } from '../../../lib/signs';
 import { bigThree } from '../../../lib/interpretations';
 import { aspectLabel, planetLabel } from '../../../lib/i18n/astrology';
-import { localizePath, t, type Locale } from '../../../lib/i18n';
+import { localizePath, t, type ReleasedLocale as Locale } from '../../../lib/i18n';
 import PlanetGlyph from '../../../components/PlanetGlyph';
 import AspectGlyph from '../../../components/AspectGlyph';
 import AstroTerm from '../../AstroTerm';

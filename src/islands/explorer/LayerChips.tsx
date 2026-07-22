@@ -6,7 +6,7 @@
  */
 import AspectGlyph from '../../components/AspectGlyph';
 import { aspectLabel } from '../../lib/i18n/astrology';
-import { t, type Locale } from '../../lib/i18n';
+import { t, type ReleasedLocale as Locale } from '../../lib/i18n';
 import type { AspectType } from '../../lib/engine/types';
 import { ALL_ASPECT_TYPES } from '../../lib/scene/types';
 

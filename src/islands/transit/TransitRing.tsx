@@ -32,7 +32,7 @@ import { transitLine, TRANSIT_ORB } from '../../lib/transits';
 import { formatLongitude } from '../../lib/signs';
 import { formatDate, formatDateTime } from '../../lib/i18n/dates';
 import { aspectLabel, planetLabel } from '../../lib/i18n/astrology';
-import { showsEnglishOnlyInterpretation, t, type Locale } from '../../lib/i18n';
+import { showsEnglishOnlyInterpretation, t, type ReleasedLocale as Locale } from '../../lib/i18n';
 import CalendarSubscribe, { type CalendarPositionsSource } from '../CalendarSubscribe';
 import EvidenceDisclosure from '../EvidenceDisclosure';
 

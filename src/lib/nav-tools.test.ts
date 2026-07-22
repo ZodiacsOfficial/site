@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { LOCALES, localizePath, t } from './i18n';
+import { RELEASED_LOCALES, localizePath, t } from './i18n';
 import { NAV_TOOLS } from './nav-tools';
 
 describe('NAV_TOOLS', () => {
@@ -17,7 +17,7 @@ describe('NAV_TOOLS', () => {
   });
 
   it('resolves labels, one-line sublabels, and existing localized paths', () => {
-    for (const locale of LOCALES) {
+    for (const locale of RELEASED_LOCALES) {
       for (const tool of NAV_TOOLS) {
         expect(t(locale, tool.label).trim()).not.toBe('');
         expect(tool.sublabel[locale]).not.toMatch(/[\r\n]/);

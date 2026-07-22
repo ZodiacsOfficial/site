@@ -1,4 +1,4 @@
-import type { Locale } from '../lib/i18n/core';
+import type { ReleasedLocale as Locale } from '../lib/i18n/core';
 import { additionText, localizedAdditionObject } from './additions';
 import { BREADCRUMB_LABELS, OG_EN, SCHEMA_EN } from './seo.en.mjs';
 

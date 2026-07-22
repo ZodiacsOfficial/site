@@ -97,7 +97,7 @@
   border-radius: var(--r-md);
   color: var(--text-2);
   background: rgba(198, 204, 218, 0.025);
-  text-align: left;
+  text-align: start;
   transition: border-color 160ms var(--ease), background 160ms var(--ease), transform 160ms var(--ease);
 }
 
@@ -181,8 +181,7 @@
   position: absolute;
   z-index: 30;
   top: calc(100% + 6px);
-  right: 0;
-  left: 0;
+  inset-inline: 0;
   max-height: 300px;
   margin: 0;
   padding: 6px;
@@ -201,7 +200,7 @@
   align-items: flex-start;
   gap: 2px;
   border-radius: var(--r-sm);
-  text-align: left;
+  text-align: start;
 }
 .other-chart .place__option.is-active { background: rgba(198, 204, 218, 0.09); }
 .other-chart .place__name { color: var(--text); font-size: 14px; font-weight: 550; }
@@ -211,7 +210,7 @@
 .other-chart .place__chip {
   display: flex;
   min-height: 46px;
-  padding-left: 14px;
+  padding-inline-start: 14px;
   align-items: center;
   gap: 8px;
   border: 1px solid color-mix(in oklab, var(--accent) 45%, transparent);
@@ -223,7 +222,7 @@
   display: grid;
   width: 30px;
   height: 30px;
-  margin-right: 7px;
+  margin-inline-end: 7px;
   place-items: center;
   flex: 0 0 auto;
   border: 1px solid var(--hair-2);
@@ -287,7 +286,7 @@
 .other-chart__sign strong { overflow: hidden; color: var(--text); text-overflow: ellipsis; }
 .other-chart__sign--unknown { border-color: var(--hair-2); background: rgba(198, 204, 218, 0.02); }
 .other-chart__own-sign { max-width: 360px; padding-top: 2px; }
-.other-chart__saved-context { padding: 10px 12px; border-left: 2px solid var(--hair-3); }
+.other-chart__saved-context { padding: 10px 12px; border-inline-start: 2px solid var(--hair-3); }
 
 .other-chart__link-form { display: grid; gap: 8px; }
 .other-chart__link-form > div { display: grid; gap: 9px; }

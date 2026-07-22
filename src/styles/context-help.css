@@ -52,7 +52,7 @@
   font-size: var(--text-sm);
   font-weight: 400;
   line-height: 1.55;
-  text-align: left;
+  text-align: start;
 }
 
 .astro-term__panel[popover] {

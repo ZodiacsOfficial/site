@@ -1,4 +1,4 @@
-import type { Locale } from '../core';
+import { requireReleasedLocale, type Locale, type ReleasedLocale } from '../core.js';
 import en from './en.js';
 import es from './es.js';
 import pt from './pt.js';
@@ -12,9 +12,9 @@ export const UI = {
   pt,
   fr,
   it,
-} as const satisfies Record<Locale, UiCatalog>;
+} as const satisfies Record<ReleasedLocale, UiCatalog>;
 
 /** Server-only lookup for code that runs outside Astro/Vite's import-meta environment. */
 export function serverUiMessage(locale: Locale, key: UiKey): string {
-  return UI[locale][key];
+  return UI[requireReleasedLocale(locale)][key];
 }

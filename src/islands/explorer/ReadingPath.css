@@ -211,7 +211,8 @@
 .reading-path__show {
   display: inline-flex;
   min-height: 44px;
-  padding: 8px 9px 8px 14px;
+  padding-block: 8px;
+  padding-inline: 14px 9px;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
@@ -272,7 +273,7 @@
   border-radius: 11px;
   color: var(--muted);
   background: rgba(198, 204, 218, 0.022);
-  text-align: left;
+  text-align: start;
 }
 
 .reading-path__room-map button[data-selected='true'] {
@@ -367,7 +368,8 @@
   display: flex;
   min-width: 0;
   min-height: 54px;
-  padding: 6px 7px 6px 11px;
+  padding-block: 6px;
+  padding-inline: 11px 7px;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
@@ -486,6 +488,8 @@
 }
 
 .reading-path__line--end { transform-origin: left center; }
+.reading-path__line:dir(rtl) { transform-origin: left center; }
+.reading-path__line--end:dir(rtl) { transform-origin: right center; }
 .reading-path__step[data-visible='true'] .reading-path__line { transform: scaleX(1); }
 
 .reading-path__aspect-node {
@@ -592,6 +596,7 @@
   transform-origin: left center;
   transition: transform 210ms cubic-bezier(0.23, 1, 0.32, 1) calc(80ms + var(--bar-delay));
 }
+.reading-path__bar-fill:dir(rtl) { transform-origin: right center; }
 .reading-path__step[data-visible='true'] .reading-path__bar-fill { transform: scaleX(var(--bar-value)); }
 
 [data-pattern-key='fire'] { --bar-color: var(--el-fire); }
@@ -609,7 +614,7 @@
 }
 
 .reading-path__weather li {
-  padding-left: 17px;
+  padding-inline-start: 17px;
   position: relative;
   color: var(--muted);
   font-size: 0.8rem;
@@ -622,7 +627,7 @@
   height: 5px;
   position: absolute;
   top: 0.56em;
-  left: 1px;
+  inset-inline-start: 1px;
   border-radius: 50%;
   background: var(--ink-2);
 }

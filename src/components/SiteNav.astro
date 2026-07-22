@@ -6,7 +6,7 @@
  */
 import { SIGNS, signDates, signName } from '../lib/signs';
 import SignIcon from './SignIcon.astro';
-import { localizePath, normalizeLocale, t, type Locale } from '../lib/i18n';
+import { localizePath, normalizeLocale, t, type ReleasedLocale as Locale } from '../lib/i18n';
 import { NAV_TOOLS } from '../lib/nav-tools';
 
 const links = [
@@ -159,8 +159,7 @@ const closeMenuLabel: Record<Locale, string> = {
   .nav-wrap {
     position: fixed;
     top: 14px;
-    left: 0;
-    right: 0;
+    inset-inline: 0;
     z-index: var(--z-nav);
     display: flex;
     flex-direction: column;
@@ -174,7 +173,8 @@ const closeMenuLabel: Record<Locale, string> = {
     align-items: center;
     gap: 10px;
     height: 52px;
-    padding: 0 10px 0 20px;
+    padding-block: 0;
+    padding-inline: 20px 10px;
     border-radius: var(--r-full);
     background: rgba(10, 12, 17, 0.66);
     backdrop-filter: saturate(150%) blur(18px);
@@ -186,6 +186,7 @@ const closeMenuLabel: Record<Locale, string> = {
   }
   @media (min-width: 820px) { .nav { gap: 18px; } }
   .nav__mark {
+    direction: ltr;
     display: inline-flex;
     align-items: center;
     gap: 9px;
@@ -273,8 +274,9 @@ const closeMenuLabel: Record<Locale, string> = {
     display: inline-flex;
     align-items: center;
     min-height: 34px;
-    padding: 0 2px 0 16px;
-    border-left: 1px solid var(--hair-2);
+    padding-block: 0;
+    padding-inline: 16px 2px;
+    border-inline-start: 1px solid var(--hair-2);
     font-family: var(--font-serif);
     font-size: 13px;
     font-weight: 400;
@@ -371,6 +373,7 @@ const closeMenuLabel: Record<Locale, string> = {
     white-space: nowrap;
   }
   .signs-menu__grid {
+    direction: ltr;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 2px;
@@ -386,6 +389,7 @@ const closeMenuLabel: Record<Locale, string> = {
     border-radius: var(--r-md);
     text-decoration: none;
   }
+  :global(html:lang(ar)) .signs-menu__item { direction: rtl; }
   .signs-menu__item:hover { background: color-mix(in oklab, var(--sign) 12%, transparent); }
   .signs-menu__item :global(.sign-icon) { grid-row: span 2; }
   .signs-menu__name { font-size: 14px; font-weight: 550; color: var(--text); line-height: 1.25; }
@@ -472,6 +476,7 @@ const closeMenuLabel: Record<Locale, string> = {
     white-space: nowrap;
   }
   .mobile-menu__signs {
+    direction: ltr;
     display: flex;
     flex-direction: column;
   }
@@ -488,6 +493,7 @@ const closeMenuLabel: Record<Locale, string> = {
     color: var(--text);
     border-bottom: 1px solid var(--hair);
   }
+  :global(html:lang(ar)) .mobile-menu__sign { direction: rtl; }
   .mobile-menu__sign:last-child { border-bottom: 0; }
   @media (prefers-reduced-motion: reduce) {
     .nav__burger,

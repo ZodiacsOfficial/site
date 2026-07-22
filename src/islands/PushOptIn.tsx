@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'preact/hooks';
-import type { Locale } from '../lib/i18n';
+import type { ReleasedLocale as Locale } from '../lib/i18n';
 import { claimA2hsHint } from '../lib/a2hs';
 import {
   claimPushPrompt,

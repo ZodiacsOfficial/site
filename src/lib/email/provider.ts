@@ -14,7 +14,7 @@ import {
   type DailySunStageOutcome,
 } from './daily-sun-server.js';
 import { createDailySunOptInToken, verifyDailySunOptInToken } from './daily-sun-token.js';
-import type { Locale } from '../i18n/core';
+import type { ReleasedLocale as Locale } from '../i18n/core';
 import { serverUiMessage } from '../i18n/ui/server.js';
 import { signBySlug } from '../signs.js';
 import { createRateLimitedResendRequest } from '../daily-email/resend-request.js';

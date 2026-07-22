@@ -30,6 +30,12 @@ import {
   searchIndexShapeFailures, shouldIndexPath,
 } from './search-index-lib.mjs';
 import { backstageCopyMatches } from './consumer-copy-lib.mjs';
+import {
+  HREFLANG_LOCALE_POLICY,
+  INACTIVE_HREFLANGS,
+  X_DEFAULT_HREFLANG,
+  expectedHreflangsForPath,
+} from './i18n-hreflang-policy.mjs';
 
 const repo = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const root = resolve(repo, 'dist');
@@ -811,6 +817,7 @@ for (const file of files) {
 const sitemap = await readFile(resolve(root, 'sitemap.xml'), 'utf8');
 if (!sitemap.startsWith('<?xml')) fail('sitemap.xml: missing XML declaration');
 const sitemapLocs = new Set();
+const sitemapBlocksByPath = new Map();
 for (const m of sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)) {
   const url = new URL(m[1]);
   if (url.origin !== 'https://zodiacs.org') {
@@ -831,6 +838,16 @@ for (const m of sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)) {
 }
 for (const block of sitemap.matchAll(/<url>([\s\S]*?)<\/url>/g)) {
   const loc = block[1].match(/<loc>([^<]+)<\/loc>/)?.[1] ?? '?';
+  try {
+    const url = new URL(loc);
+    if (sitemapBlocksByPath.has(url.pathname)) {
+      fail(`sitemap.xml: duplicate URL block ${url.pathname}`);
+    } else {
+      sitemapBlocksByPath.set(url.pathname, block[1]);
+    }
+  } catch {
+    fail(`sitemap.xml: invalid URL block location ${loc}`);
+  }
   const lastmod = block[1].match(/<lastmod>([^<]+)<\/lastmod>/)?.[1];
   if (!lastmod || !/^\d{4}-\d{2}-\d{2}$/.test(lastmod) || Number.isNaN(Date.parse(`${lastmod}T00:00:00Z`))) {
     fail(`sitemap.xml: ${loc} has invalid or missing lastmod`);
@@ -877,6 +894,76 @@ function canonicalHref(html) {
   const tag = [...html.matchAll(/<link\b[^>]*>/gi)].find((match) =>
     attr(match[0], 'rel')?.toLowerCase().split(/\s+/).includes('canonical'));
   return tag ? attr(tag[0], 'href') : null;
+}
+
+function alternateHrefMap(markup, sitemapBlock = false) {
+  const pattern = sitemapBlock ? /<xhtml:link\b[^>]*\/>/gi : /<link\b[^>]*>/gi;
+  const links = new Map();
+  for (const match of markup.matchAll(pattern)) {
+    const tag = match[0];
+    const rel = attr(tag, 'rel')?.toLowerCase().split(/\s+/) ?? [];
+    const hreflang = attr(tag, 'hreflang');
+    const href = attr(tag, 'href');
+    if (!rel.includes('alternate') || !hreflang || !href) continue;
+    if (links.has(hreflang)) fail(`hreflang: duplicate ${hreflang} alternate`);
+    links.set(hreflang, href);
+  }
+  return links;
+}
+
+function requireSameAlternateMap(label, actual, expected) {
+  requireExactSet(label, new Set(actual.keys()), new Set(expected.keys()));
+  for (const [hreflang, href] of expected) {
+    if (actual.get(hreflang) !== href) {
+      fail(`${label}: ${hreflang} points to ${actual.get(hreflang) ?? 'missing'} instead of ${href}`);
+    }
+  }
+}
+
+for (const [pagePath, block] of sitemapBlocksByPath) {
+  const sitemapAlternates = alternateHrefMap(block, true);
+  if (!sitemapAlternates.size) continue;
+  const expectedHreflangs = expectedHreflangsForPath(pagePath);
+  requireExactSet(`sitemap.xml ${pagePath} hreflangs`, new Set(sitemapAlternates.keys()), expectedHreflangs);
+  if (sitemapAlternates.get(X_DEFAULT_HREFLANG.hreflang) !== sitemapAlternates.get('en')) {
+    fail(`sitemap.xml ${pagePath}: x-default must equal the English alternate`);
+  }
+
+  for (const [hreflang, href] of sitemapAlternates) {
+    let alternateUrl;
+    try {
+      alternateUrl = new URL(href);
+    } catch {
+      fail(`sitemap.xml ${pagePath}: invalid ${hreflang} alternate ${href}`);
+      continue;
+    }
+    if (alternateUrl.origin !== SITE_ORIGIN) {
+      fail(`sitemap.xml ${pagePath}: foreign ${hreflang} alternate ${href}`);
+      continue;
+    }
+    const target = targetPath(alternateUrl.pathname);
+    if (!target || !(await exists(target))) {
+      fail(`sitemap.xml ${pagePath}: ${hreflang} alternate has no file — ${href}`);
+      continue;
+    }
+    if (!target.endsWith('.html')) continue;
+    const alternateHtml = idCache.get(target) ?? (await readFile(target, 'utf8'));
+    if (canonicalHref(alternateHtml) !== href) {
+      fail(`sitemap.xml ${pagePath}: ${hreflang} target is not self-canonical — ${href}`);
+    }
+    const headAlternates = alternateHrefMap(alternateHtml);
+    requireSameAlternateMap(`HTML ${alternateUrl.pathname} hreflangs`, headAlternates, sitemapAlternates);
+    const reciprocalBlock = sitemapBlocksByPath.get(alternateUrl.pathname);
+    if (!reciprocalBlock) {
+      fail(`sitemap.xml ${pagePath}: ${hreflang} alternate has no reciprocal URL block — ${href}`);
+      continue;
+    }
+    requireSameAlternateMap(
+      `sitemap.xml ${alternateUrl.pathname} reciprocal hreflangs`,
+      alternateHrefMap(reciprocalBlock, true),
+      sitemapAlternates,
+    );
+  }
 }
 
 const registryLandingPath = resolve(root, 'registry/index.html');
@@ -960,7 +1047,7 @@ for (const family of indexedFamilies) {
       fail(`sitemap.xml: English-only ${family.label} route has hreflang alternates — ${loc}`);
     }
     if (family.localized) {
-      for (const hreflang of ['en', 'es', 'pt-BR', 'fr', 'it', 'x-default']) {
+      for (const hreflang of expectedHreflangsForPath(loc)) {
         if (!block.includes(`hreflang="${hreflang}"`)) {
           fail(`sitemap.xml: localized ${family.label} route is missing ${hreflang} alternate — ${loc}`);
         }
@@ -968,10 +1055,44 @@ for (const family of indexedFamilies) {
     }
   }
 }
-for (const hreflang of ['en', 'es', 'pt-BR', 'fr', 'it', 'x-default']) {
-  const count = [...sitemap.matchAll(new RegExp(`hreflang="${hreflang}"`, 'g'))].length;
-  if (count !== sitemapPolicy.translatedBlocks) {
-    fail(`sitemap.xml: ${count} ${hreflang} alternates vs locale-rail baseline ${sitemapPolicy.translatedBlocks}`);
+for (const policy of HREFLANG_LOCALE_POLICY) {
+  const count = [...sitemap.matchAll(new RegExp(`hreflang="${policy.hreflang}"`, 'g'))].length;
+  if (count !== policy.expectedBlocks) {
+    fail(`sitemap.xml: ${count} ${policy.hreflang} alternates vs locale baseline ${policy.expectedBlocks}`);
+  }
+}
+{
+  const count = [...sitemap.matchAll(new RegExp(`hreflang="${X_DEFAULT_HREFLANG.hreflang}"`, 'g'))].length;
+  if (count !== X_DEFAULT_HREFLANG.expectedBlocks) {
+    fail(`sitemap.xml: ${count} x-default alternates vs locale baseline ${X_DEFAULT_HREFLANG.expectedBlocks}`);
+  }
+}
+
+for (const stagedLocale of INACTIVE_HREFLANGS) {
+  if (await exists(resolve(root, stagedLocale))) {
+    fail(`i18n R0: inactive /${stagedLocale}/ output directory exists`);
+  }
+  if ([...sitemapLocs].some((path) => path === `/${stagedLocale}/` || path.startsWith(`/${stagedLocale}/`))) {
+    fail(`i18n R0: inactive /${stagedLocale}/ URL leaked into sitemap.xml`);
+  }
+  if ([...indexedSearchPaths].some((path) => path === `/${stagedLocale}/` || path.startsWith(`/${stagedLocale}/`))) {
+    fail(`i18n R0: inactive /${stagedLocale}/ URL leaked into search-index.json`);
+  }
+}
+for (const file of files) {
+  const html = idCache.get(file) ?? (await readFile(file, 'utf8'));
+  const rel = relative(root, file);
+  if (/href=["'](?:https:\/\/zodiacs\.org)?\/(?:ru|ar)(?:\/|["'#?])/.test(html)) {
+    fail(`${rel}: inactive RU/AR route leaked into an href`);
+  }
+  if (/hreflang=["'](?:ru|ar)["']/.test(html)) {
+    fail(`${rel}: inactive RU/AR hreflang leaked into HTML`);
+  }
+  if (/property=["']og:locale(?::alternate)?["'][^>]*content=["'](?:ru_RU|ar_AR)["']/.test(html)) {
+    fail(`${rel}: inactive RU/AR Open Graph locale leaked into HTML`);
+  }
+  if (/(?:Русский|العربية)/u.test(html)) {
+    fail(`${rel}: inactive RU/AR language-selector label leaked into HTML`);
   }
 }
 

@@ -5,7 +5,7 @@
  * The rail button labels live in the HOST (they render before this module
  * loads); everything below the wheel lives here.
  */
-import type { Locale } from '../../../lib/i18n';
+import type { ReleasedLocale as Locale } from '../../../lib/i18n';
 
 export type LensId = 'sky' | 'progressed' | 'return';
 

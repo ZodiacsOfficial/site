@@ -15,7 +15,7 @@ import {
 import { NATAL_HOUSE_THEME, natalAspectLine, planetInHouseLine } from '../../lib/natal';
 import { placementContext } from '../../lib/natal-context';
 import { aspectLabel, planetLabel } from '../../lib/i18n/astrology';
-import { localizePath, t, type Locale } from '../../lib/i18n';
+import { localizePath, t, type ReleasedLocale as Locale } from '../../lib/i18n';
 import type { AspectType } from '../../lib/engine/types';
 import type { ChartSceneModel, EntityRef, SignSlug } from '../../lib/scene/types';
 import { entityId, parseEntityId } from '../../lib/scene/types';

@@ -3,7 +3,7 @@ import {
   encodePositionsLink,
   type PositionsShareInput,
 } from '../lib/share-positions';
-import type { Locale } from '../lib/i18n';
+import type { ReleasedLocale as Locale } from '../lib/i18n';
 
 /** Saved summaries carry body names as strings; the existing encoder remains
  * the runtime authority and rejects incomplete or non-canonical inputs. */

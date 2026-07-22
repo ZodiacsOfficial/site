@@ -1,4 +1,4 @@
-import type { Locale } from '../lib/i18n/core';
+import type { ReleasedLocale as Locale } from '../lib/i18n/core';
 import { ES_ADDITIONS } from './additions.es.mjs';
 import { FR_ADDITIONS } from './additions.fr.mjs';
 import { IT_ADDITIONS } from './additions.it.mjs';

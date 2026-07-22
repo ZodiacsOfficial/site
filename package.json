@@ -45,6 +45,7 @@
     "push:daily": "node scripts/send-daily-push.mjs",
     "report:bundles": "node scripts/report-bundles.mjs",
     "test:visual": "node tests/visual/visual-regression.mjs",
+    "test:i18n:r0": "node tests/i18n-r0-drive.mjs",
     "test:aura:browser": "node tests/aura-presence-drive.mjs",
     "test:visual:update": "node tests/visual/visual-regression.mjs --update",
     "test:lighthouse": "node tests/visual/lighthouse.mjs",
