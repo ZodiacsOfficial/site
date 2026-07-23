@@ -23,7 +23,7 @@ export const EDITOR_ORGANIZATION = {
     width: 512,
     height: 512,
   },
-  email: 'hello@zodiacs.org',
+  email: 'admin@zodiacs.org',
   description:
     'A free astrology reference for birth charts, daily horoscopes, sign guides, '
     + 'and clear interpretation, with private on-device tools.',
