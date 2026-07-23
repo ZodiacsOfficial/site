@@ -1,9 +1,18 @@
 {
   "version": 1,
-  "id": "sdk-mobile-top-spacing-2026-07-23",
-  "baseCommit": "00bc9fe639cefc8cfbe017b6755eadebb904df8d",
-  "reason": "Owner-approved visual fix keeping the SDK hero badge below the fixed navigation at mobile, tablet, and desktop widths, including device safe-area spacing.",
+  "id": "thesis-disclosure-closeout-2026-07-23",
+  "baseCommit": "614dcfb95ed52a385e2f868f51723704fa5838d6",
+  "reason": "Owner-approved bounded thesis and disclosure closeout integrating verified Registry origin receipts, verbatim operator attestation, separately labeled distribution evidence, candidacy evidence, and deterministic static drift checks without changing Registry assets or released navigation.",
   "protectedPaths": [
-    "public/sdk/index.html"
+    "public/assets/app.js",
+    "public/registry/index.html",
+    "public/registry/registry-meta.json",
+    "public/sdk/index.html",
+    "src/components/LocalizedDisclosurePage.astro",
+    "src/lib/registry-establishment.mjs",
+    "src/strings/additions.es.mjs",
+    "src/strings/additions.fr.mjs",
+    "src/strings/additions.it.mjs",
+    "src/strings/additions.pt.mjs"
   ]
 }

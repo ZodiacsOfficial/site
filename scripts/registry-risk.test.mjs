@@ -73,8 +73,10 @@ describe('Registry risk and trust copy', () => {
     expect(html).toContain('No purchase is required to use Registry Aura');
     expect(html).toContain('Verify a Zodiac');
     expect(html).toContain('Never share a seed phrase or private key');
-    expect(html).toContain('provenance pending');
-    expect(html).toContain('Operator and economic-interest statements remain pending confirmation');
+    expect(html).toContain('origin receipts 5 Jul 2024');
+    expect(html).toContain(
+      'Operator and economic-interest statements are published as dated operator attestations, not independently verified',
+    );
     expect(html).toContain('href="/privacy/"');
     expect(html).toContain('href="/terms/"');
     expect(html).not.toMatch(/Verified Ownership|public ownership|Read-only site/i);

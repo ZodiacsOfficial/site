@@ -184,7 +184,9 @@ describe('daily editorial publication', () => {
     const outOfOrder = clone(daily);
     const later = clone(outOfOrder.events[0]);
     later.at = `${daily.date}T20:05:52.329Z`;
-    outOfOrder.events = [later, clone(outOfOrder.events[0])];
+    const earlier = clone(outOfOrder.events[0]);
+    earlier.at = `${daily.date}T18:05:52.329Z`;
+    outOfOrder.events = [later, earlier];
     expect(validateDailyFacts(outOfOrder).map((failure) => failure.ruleId))
       .toContain('FACT-EVENT-ORDER');
   });
