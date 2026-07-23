@@ -8,6 +8,7 @@
     "public/registry/index.html",
     "public/registry/registry-meta.json",
     "public/sdk/index.html",
+    "scripts/registry-risk.test.mjs",
     "src/components/LocalizedDisclosurePage.astro",
     "src/lib/registry-establishment.mjs",
     "src/strings/additions.es.mjs",
