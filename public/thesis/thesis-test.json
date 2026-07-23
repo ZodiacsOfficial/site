@@ -1,23 +1,61 @@
 {
-  "$comment": "Maintainer-editable commitment data for the one-tap test (/thesis Section VII). status stays 'pending' until criteria are published; each criterion follows the same field contract as thesis-disclosure.json. PHASE 2: hydrate from @zodiacs/sdk at build time.",
-  "status": "pending",
+  "$comment": "Preregistration of the one-tap test (/thesis Section VII). Committed before the test begins; the claim surface is NOT yet live and the test has NOT begun. The result — success, mixed, or failure — will be published on /thesis/ and in this file within 14 days of the final cohort day's day-90 mark. Field contract matches thesis-disclosure.json; 'preregistered' renders like a filled value with its committed date.",
+  "status": "preregistered",
+  "preregisteredAt": "2026-07-23",
+  "start": {
+    "trigger": "Public deployment of the one-tap claim surface on zodiacs.org, announced on /thesis/ when it happens",
+    "noLaterThan": "2026-10-31",
+    "windowDays": 28
+  },
+  "cohort": "Visitors who complete the claim flow on the zodiacs.org claim surface during the 28-day window",
+  "uniqueClaimant": "One wallet completing the claim flow for one chosen sign, counted once across all signs",
+  "exclusions": "Wallets sharing a funding wallet with another claimant within 24 hours of the claim, and wallets created less than 24 hours before claiming with no other activity, are excluded as duplicates or bots",
+  "retention": {
+    "numerator": "Counted claimant wallets still holding at least the claimed amount of the claimed sign at claim + 90 days",
+    "denominator": "All counted unique claimants"
+  },
+  "dispersionMetric": "Median per-sign top-10 token-account share, the instrument's published metric, snapshotted at start and at the final cohort day + 90",
+  "baseline": {
+    "asOf": "2026-07-23",
+    "medianTopTenSharePct": 27.2,
+    "range": "23.0–30.6% per sign",
+    "source": "weekly distribution snapshots in the public repository"
+  },
+  "thresholds": {
+    "success": "≥ 500 unique claimants AND ≥ 20% ninety-day retention AND median top-10 share falls ≥ 2.0 percentage points vs baseline",
+    "mixed": "exactly two of the three",
+    "failure": "one or none of the three"
+  },
+  "publication": "Within 14 days of the final cohort day's day-90 mark, on /thesis/ and in this file, regardless of outcome, including failure",
+  "startWindow": {
+    "value": "on claim-surface deploy · no later than 2026-10-31 · 28-day window",
+    "status": "preregistered",
+    "asOf": "2026-07-23",
+    "verifyUrl": null
+  },
+  "verdictRule": {
+    "value": "success = all three · mixed = two · failure = one or none",
+    "status": "preregistered",
+    "asOf": "2026-07-23",
+    "verifyUrl": null
+  },
   "criteria": {
     "uniqueClaimants": {
-      "value": null,
-      "status": "pending",
-      "asOf": null,
+      "value": "success ≥ 500 wallets · one claim per wallet · sybil exclusions preregistered",
+      "status": "preregistered",
+      "asOf": "2026-07-23",
       "verifyUrl": null
     },
     "ninetyDayRetention": {
-      "value": null,
-      "status": "pending",
-      "asOf": null,
+      "value": "success ≥ 20% of claimants still holding the claimed amount at day 90",
+      "status": "preregistered",
+      "asOf": "2026-07-23",
       "verifyUrl": null
     },
     "holderDispersion": {
-      "value": null,
-      "status": "pending",
-      "asOf": null,
+      "value": "success = median top-10 share falls ≥ 2.0pp vs the 2026-07-23 baseline (27.2%)",
+      "status": "preregistered",
+      "asOf": "2026-07-23",
       "verifyUrl": null
     }
   }

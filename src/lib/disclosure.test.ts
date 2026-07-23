@@ -4,10 +4,12 @@ import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
 import { EN } from '../strings/en.mjs';
 import { additionFormat } from '../strings/additions';
+import originReceipts from '../data/registry-origin-receipts.json';
 import {
   DISCLOSURE_ROWS,
   disclosureRows,
   disclosureText,
+  statusText,
   type DisclosureTextKey,
 } from './disclosure';
 import { RELEASED_LOCALES, LOCALE_META, localizePath, type ReleasedLocale as Locale } from './i18n';
@@ -26,7 +28,8 @@ const ROW_IDS = [
   'read-only',
   'financial-advice',
 ] as const;
-const PENDING_IDS = ['operator', 'economic-interest', 'origin'] as const;
+const ATTESTED_IDS = ['operator', 'economic-interest'] as const;
+const VERIFIED_IDS = ['origin', 'separation', 'read-only', 'financial-advice'] as const;
 const ROUTE_TEXT_KEYS = [
   'metaTitle',
   'metaDescription',
@@ -36,11 +39,13 @@ const ROUTE_TEXT_KEYS = [
   'scope',
   'establishedLabel',
   'establishedPrefix',
+  'establishedProvenance',
   'establishedPending',
   'tableLabel',
   'statementHeading',
   'evidenceHeading',
   'statusPending',
+  'statusAttested',
   'statusVerified',
   'operatorLabel',
   'operatorStatement',
@@ -72,6 +77,8 @@ const ROUTE_TEXT_KEYS = [
 ] as const satisfies readonly DisclosureTextKey[];
 
 const repo = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
+const RECEIPT_DATE = '2024-07-05';
+const SIGNATURE_PATTERN = /^[1-9A-HJ-NP-Za-km-z]{64,90}$/;
 
 function routeFile(locale: Locale): string {
   const prefix = LOCALE_META[locale].pathPrefix.replace(/^\//, '');
@@ -87,18 +94,79 @@ function literalTextPattern(value: string): RegExp {
   return new RegExp(`(?<!\\p{L})${escaped}(?!\\p{L})`, 'u');
 }
 
+describe('origin-receipt evidence file', () => {
+  const receipts = originReceipts.receipts;
+
+  it('records one verified receipt per canonical mint', async () => {
+    const registry = JSON.parse(
+      await readFile(resolve(repo, 'public/registry/zodiacs.registry.json'), 'utf8'),
+    );
+    const registryMints = new Map(
+      registry.assets.map((asset: { sign: string; native: { address: string } }) => [
+        asset.sign,
+        asset.native.address,
+      ]),
+    );
+    expect(receipts).toHaveLength(12);
+    expect(new Set(receipts.map((r) => r.sign)).size).toBe(12);
+    expect(new Set(receipts.map((r) => r.signature)).size).toBe(12);
+    for (const receipt of receipts) {
+      expect(registryMints.get(receipt.sign), receipt.sign).toBe(receipt.mint);
+      expect(receipt.signature, receipt.sign).toMatch(SIGNATURE_PATTERN);
+      expect(receipt.blockTime, receipt.sign).toMatch(
+        new RegExp(`^${RECEIPT_DATE}T\\d{2}:\\d{2}:\\d{2}\\.000Z$`),
+      );
+      expect(receipt.explorerUrl, receipt.sign).toBe(`https://solscan.io/tx/${receipt.signature}`);
+      expect(receipt.verification.rpc.initializeMintObserved, receipt.sign).toBe(true);
+      expect(receipt.verification.solscan.pageResolved, receipt.sign).toBe(true);
+      expect(receipt.verification.solscan.slotShown, receipt.sign).toBe(true);
+      expect(receipt.verification.solscan.initializeMintShown, receipt.sign).toBe(true);
+    }
+  });
+
+  it('derives the establishment from the earliest verified receipt', () => {
+    const earliest = [...receipts].sort((a, b) => a.slot - b.slot)[0];
+    expect(originReceipts.establishment.earliestReceipt.signature).toBe(earliest.signature);
+    expect(REGISTRY_ESTABLISHMENT_PROVENANCE_URL).toBe(earliest.explorerUrl);
+    expect(REGISTRY_ESTABLISHED).toBe(originReceipts.establishment.romanYear);
+    expect(REGISTRY_ESTABLISHMENT.year).toBe(Number(earliest.blockTime.slice(0, 4)));
+    expect(REGISTRY_ESTABLISHMENT.provenanceStatus).toBe('verified');
+  });
+});
+
 describe('registry disclosure contract', () => {
   it('publishes every required disclosure row exactly once', () => {
     expect(DISCLOSURE_ROWS.map((row) => row.id)).toEqual(ROW_IDS);
   });
 
-  it('keeps every unverified operator claim visibly pending', () => {
-    const pending = DISCLOSURE_ROWS.filter((row) => row.status === 'pending');
-    expect(pending.map((row) => row.id)).toEqual(['operator', 'economic-interest', 'origin']);
-    expect(pending.slice(0, 2).every((row) => /unverified/i.test(row.statement))).toBe(true);
-    // Pending facts stay explicit in their own statement as well as row status;
-    // no operator confirmation is inferred from absent repository evidence.
-    expect(pending.every((row) => !`${row.statement} ${row.evidence}`.includes('[OPERATOR'))).toBe(true);
+  it('labels operator statements as dated attestations, never as verified', () => {
+    const attested = DISCLOSURE_ROWS.filter((row) => row.status === 'operator-attested');
+    expect(attested.map((row) => row.id)).toEqual([...ATTESTED_IDS]);
+    // An attestation names its own evidentiary limit and its date.
+    for (const row of attested) {
+      expect(row.evidence).toMatch(/not independently verified/i);
+      expect(row.evidence).toMatch(/\b2026-\d{2}-\d{2}\b/);
+    }
+    expect(statusText('en', 'operator-attested')).toBe(EN['disclosure.statusAttested']);
+    expect(EN['disclosure.statusAttested']).toMatch(/not independently verified/i);
+    // No row is pending, and no operator scaffolding remains.
+    expect(DISCLOSURE_ROWS.some((row) => row.status === 'pending')).toBe(false);
+    expect(DISCLOSURE_ROWS.every((row) => !`${row.statement} ${row.evidence}`.includes('[OPERATOR'))).toBe(true);
+  });
+
+  it('publishes twelve linked origin receipts on the verified origin row', () => {
+    const origin = DISCLOSURE_ROWS.find((row) => row.id === 'origin')!;
+    expect(origin.status).toBe('verified');
+    expect(origin.links).toHaveLength(12);
+    for (const [index, link] of origin.links.entries()) {
+      const receipt = originReceipts.receipts.find(
+        (r) => r.sign === SIGNS[index].slug,
+      )!;
+      expect(link.href, SIGNS[index].slug).toBe(receipt.explorerUrl);
+      expect(link.external, SIGNS[index].slug).toBe(true);
+      expect(link.label, SIGNS[index].slug).toContain(RECEIPT_DATE);
+      expect(link.label, SIGNS[index].slug).not.toMatch(/pending/i);
+    }
   });
 
   it('describes Aura wallet access as optional, public-address-only, and non-transactional', () => {
@@ -172,36 +240,35 @@ describe('registry disclosure contract', () => {
       "does not prove control of an address, legal ownership of an asset, or a person's identity",
       '“official,” “official Zodiac,” and similar wording mean only',
       'not an endorsement, solicitation, or statement that an asset is suitable for you',
-      'still pending operator confirmation',
+      'as a dated operator attestation',
+      'must not be treated as independently verified',
     ]) {
       expect(terms).toContain(required);
     }
+    expect(terms).not.toContain('still pending operator confirmation');
   });
 
-  it('provides one pending deploy-transaction slot per sign', () => {
-    const origin = DISCLOSURE_ROWS.find((row) => row.id === 'origin');
-    expect(origin?.links).toHaveLength(12);
-    expect(origin?.links.every((link) => !link.href && link.label.endsWith('— pending'))).toBe(true);
-  });
-
-  it('centralizes the provisional year and leaves provenance unsupplied', () => {
+  it('links verified establishment provenance from the receipts file', () => {
     expect(REGISTRY_ESTABLISHED).toBe(REGISTRY_ESTABLISHMENT.romanYear);
-    expect(REGISTRY_ESTABLISHMENT_PROVENANCE_URL).toBeNull();
+    expect(REGISTRY_ESTABLISHMENT_PROVENANCE_URL).toMatch(/^https:\/\/solscan\.io\/tx\//);
   });
 
-  it('keeps pending chips on the established #E0B080 convention', async () => {
+  it('keeps pending chips on the established #E0B080 convention for future rows', async () => {
     const source = await readFile(resolve(repo, 'src/components/DisclosureTable.astro'), 'utf8');
     expect(source).toMatch(/\.status-chip--pending\s*\{[\s\S]*color:\s*#E0B080;/);
+    // The attested chip is visually distinct from both verified and pending.
+    expect(source).toMatch(/\.status-chip--operator-attested\s*\{[\s\S]*color:\s*#B6D4E4;/);
   });
 
-  it('keeps the six-row contract and pending provenance localized in every catalog', () => {
+  it('keeps the six-row contract and receipt links localized in every catalog', () => {
     for (const locale of RELEASED_LOCALES) {
       const rows = disclosureRows(locale);
       expect(rows.map((row) => row.id), locale).toEqual(ROW_IDS);
-      expect(rows.filter((row) => row.status === 'pending').map((row) => row.id), locale)
-        .toEqual(PENDING_IDS);
+      expect(rows.filter((row) => row.status === 'operator-attested').map((row) => row.id), locale)
+        .toEqual([...ATTESTED_IDS]);
       expect(rows.filter((row) => row.status === 'verified').map((row) => row.id), locale)
-        .toEqual(['separation', 'read-only', 'financial-advice']);
+        .toEqual([...VERIFIED_IDS]);
+      expect(rows.some((row) => row.status === 'pending'), locale).toBe(false);
       expect(rows.every((row) => !`${row.statement} ${row.evidence}`.includes('[OPERATOR')), locale)
         .toBe(true);
 
@@ -211,12 +278,14 @@ describe('registry disclosure contract', () => {
         additionFormat(
           locale,
           'disclosure.originSlot',
-          { sign: signName(sign, locale) },
+          { sign: signName(sign, locale), date: RECEIPT_DATE },
           EN['disclosure.originSlot'],
         )
       )));
-      expect(origin.links.every((link) => !link.href && !link.label.includes('[OPERATOR')), locale)
-        .toBe(true);
+      expect(
+        origin.links.every((link) => link.href?.startsWith('https://solscan.io/tx/') && link.external),
+        locale,
+      ).toBe(true);
 
       const separation = rows.find((row) => row.id === 'separation')!;
       expect(separation.links.map((link) => link.href), locale).toEqual([
@@ -226,7 +295,7 @@ describe('registry disclosure contract', () => {
     }
   });
 
-  it('render-checks all five routes without operator scaffolding or English copy leakage', async () => {
+  it('render-checks all five routes without pending chips or English copy leakage', async () => {
     for (const locale of RELEASED_LOCALES) {
       const html = await readFile(routeFile(locale), 'utf8');
       const route = localizePath(locale, '/disclosure/');
@@ -241,22 +310,31 @@ describe('registry disclosure contract', () => {
       ] as const) {
         expect(html, `${locale}:disclosure.${key}`).toContain(disclosureText(locale, key));
       }
-      expect(html.match(/class="[^"]*status-chip--pending[^"]*"/g), locale).toHaveLength(3);
-      expect(html.match(/class="[^"]*status-chip--verified[^"]*"/g), locale).toHaveLength(3);
-      expect(html.match(/class="[^"]*establishment__pending[^"]*"/g), locale).toHaveLength(1);
-      expect(html, locale).toContain(disclosureText(locale, 'establishedPending'));
-      expect(html.match(/class="[^"]*evidence-slot[^"]*"/g), locale).toHaveLength(12);
+      expect(html.match(/class="[^"]*status-chip--pending[^"]*"/g), locale).toBeNull();
+      expect(html.match(/class="[^"]*status-chip--operator-attested[^"]*"/g), locale).toHaveLength(2);
+      expect(html.match(/class="[^"]*status-chip--verified[^"]*"/g), locale).toHaveLength(4);
+      expect(html.match(/class="[^"]*establishment__pending[^"]*"/g), locale).toBeNull();
+      expect(html, locale).toContain(`href="${REGISTRY_ESTABLISHMENT_PROVENANCE_URL}"`);
+      expect(html, locale).toContain(disclosureText(locale, 'establishedProvenance'));
+      expect(html.match(/class="[^"]*evidence-slot[^"]*"/g), locale).toBeNull();
+      for (const receipt of originReceipts.receipts) {
+        expect(html, `${locale}:${receipt.sign}`).toContain(`href="${receipt.explorerUrl}"`);
+      }
       for (const link of disclosureRows(locale).find((row) => row.id === 'origin')!.links) {
         expect(html, `${locale}:${link.label}`).toContain(link.label);
       }
 
-      for (const id of PENDING_IDS) {
+      for (const id of ATTESTED_IDS) {
         const row = routeRow(html, id);
-        expect(row, `${locale}:${id}`).toContain('status-chip--pending');
-        expect(row, `${locale}:${id}`).toContain(disclosureText(locale, 'statusPending'));
+        expect(row, `${locale}:${id}`).toContain('status-chip--operator-attested');
+        expect(row, `${locale}:${id}`).toContain(disclosureText(locale, 'statusAttested'));
         expect(row, `${locale}:${id}`).not.toContain('status-chip--verified');
-        expect(row, `${locale}:${id}`).not.toContain(disclosureText(locale, 'statusVerified'));
+        expect(row, `${locale}:${id}`).not.toContain('status-chip--pending');
       }
+      const originRow = routeRow(html, 'origin');
+      expect(originRow, `${locale}:origin`).toContain('status-chip--verified');
+      expect(originRow, `${locale}:origin`).not.toContain('status-chip--operator-attested');
+
       for (const hreflang of ['en', 'es', 'pt-BR', 'fr', 'it', 'x-default']) {
         expect(html, `${locale}:${hreflang}`).toContain(`hreflang="${hreflang}"`);
       }

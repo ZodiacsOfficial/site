@@ -1,35 +1,35 @@
 {
-  "$comment": "Maintainer-editable candidacy evidence for /thesis Section V. Same contract as thesis-disclosure.json: pending fields render the amber chip; filled fields render the value (a count or short factual note), the asOf date, and a Verify link when given. PHASE 2: hydrate from @zodiacs/sdk at build time.",
+  "$comment": "Maintainer-editable candidacy evidence for /thesis Section V. Same contract as thesis-disclosure.json: pending fields render the amber chip; filled fields render the value, the asOf date, and a Verify link when given. Values are observations, not claims: zeros and baselines are published as zeros and baselines. Counting rules: Zodiacs.org, Astrofolio, the SDK's own examples, and owner-controlled accounts are never counted as independent; automated wallet/aggregator listings are reported but not counted as citations. Methods and capture evidence for the 2026-07-23 readings are recorded in the closeout release notes.",
   "criteria": {
     "independentIntegrations": {
-      "value": null,
-      "status": "pending",
-      "asOf": null,
-      "verifyUrl": null
+      "value": "0 verified · public code and package search for consumers of this registry or @zodiacs/sdk, excluding Zodiacs.org, Astrofolio, and the SDK's own examples · @zodiacs/sdk: 81 npm downloads in 30 days, no public dependents found",
+      "status": "filled",
+      "asOf": "2026-07-23",
+      "verifyUrl": "https://www.npmjs.com/package/@zodiacs/sdk"
     },
     "thirdPartyCitations": {
-      "value": null,
-      "status": "pending",
-      "asOf": null,
-      "verifyUrl": null
+      "value": "0 editorial citations found · automated wallet and aggregator listings of the addresses exist (e.g. Solflare token pages) and are not counted",
+      "status": "filled",
+      "asOf": "2026-07-23",
+      "verifyUrl": "https://www.solflare.com/prices/aries/GhFiFrExPY3proVF96oth1gESWA5QPQzdtb8cy8b1YZv/"
     },
     "holderDispersion": {
-      "value": null,
-      "status": "pending",
-      "asOf": null,
-      "verifyUrl": null
+      "value": "baseline established, no widening yet · weekly public snapshots since 2026-06-29 · median top-10 share 26.6% → 27.2% over four weeks (slightly more concentrated)",
+      "status": "filled",
+      "asOf": "2026-07-23",
+      "verifyUrl": "https://github.com/ZodiacsOfficial/site/commits/main/public/assets/distribution.json"
     },
     "liquidityPersistence": {
-      "value": null,
-      "status": "pending",
-      "asOf": null,
-      "verifyUrl": null
+      "value": "12 of 12 canonical Raydium pools live since 2024-07-05 (748 days) · $11.9k–17.8k depth at capture · 24h volume $10–158 · persistent but thin; historical depth between captures not independently archived",
+      "status": "filled",
+      "asOf": "2026-07-23",
+      "verifyUrl": "https://dexscreener.com/solana/GhFiFrExPY3proVF96oth1gESWA5QPQzdtb8cy8b1YZv"
     },
     "archiveContinuity": {
-      "value": null,
-      "status": "pending",
-      "asOf": null,
-      "verifyUrl": null
+      "value": "own version archive continuous in the public repository since 2024 · Internet Archive coverage sparse: 9 captures since 2024-01-01, largest gap 166 days, none in the last 12 months",
+      "status": "filled",
+      "asOf": "2026-07-23",
+      "verifyUrl": "https://web.archive.org/web/2024*/zodiacs.org"
     }
   }
 }

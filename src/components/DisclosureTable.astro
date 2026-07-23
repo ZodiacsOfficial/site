@@ -1,6 +1,6 @@
 ---
 import type { DisclosureRow } from '../lib/disclosure';
-import { disclosureText } from '../lib/disclosure';
+import { disclosureText, statusText } from '../lib/disclosure';
 import type { ReleasedLocale as Locale } from '../lib/i18n';
 
 interface Props {
@@ -29,9 +29,7 @@ const { rows, locale } = Astro.props;
           </th>
           <td role="cell">
             <span class:list={['status-chip', `status-chip--${row.status}`]}>
-              {row.status === 'pending'
-                ? disclosureText(locale, 'statusPending')
-                : disclosureText(locale, 'statusVerified')}
+              {statusText(locale, row.status)}
             </span>
             <p class="disclosure-table__evidence">{row.evidence}</p>
             {row.links.length > 0 && (
@@ -115,6 +113,15 @@ const { rows, locale } = Astro.props;
     text-transform: uppercase;
   }
   .status-chip--verified { color: var(--ink-1); background: rgba(198, 204, 218, 0.06); }
+  /* Operator attested: published and dated, but not independently verified.
+     The chip text carries the distinction; the cool tint only reinforces it.
+     (#B6D4E4 is the Cancer disc hue — sanctioned chroma, distinct from the
+     amber pending state, which stays reserved for unresolved rows.) */
+  .status-chip--operator-attested {
+    color: #B6D4E4;
+    border-color: rgba(182, 212, 228, 0.4);
+    background: rgba(182, 212, 228, 0.07);
+  }
   .status-chip--pending {
     color: #E0B080;
     border-color: rgba(224, 176, 128, 0.45);

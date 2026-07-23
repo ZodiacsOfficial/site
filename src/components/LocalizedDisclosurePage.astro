@@ -150,18 +150,21 @@ const jsonLd = [
   .establishment strong { color: var(--ink-1); font-weight: 500; }
   .establishment a { color: var(--ink-1); }
   .establishment__pending { color: #E0B080; }
+  /* Attestation explainer — cool tint matching the operator-attested chip
+     (#B6D4E4, Cancer disc hue). The amber styling stays reserved for a
+     future genuinely-pending state. */
   .operator-request {
     display: grid;
     grid-template-columns: auto 1fr;
     gap: 18px;
     margin-top: 28px;
     padding: clamp(20px, 4vw, 30px);
-    border: 1px solid rgba(224, 176, 128, 0.32);
+    border: 1px solid rgba(182, 212, 228, 0.3);
     border-radius: var(--r-lg);
-    background: rgba(224, 176, 128, 0.05);
+    background: rgba(182, 212, 228, 0.04);
   }
   .operator-request__icons { display: flex; gap: 5px; }
-  .operator-request h2 { margin: 0 0 7px; font-size: var(--text-lg); color: #E0B080; }
+  .operator-request h2 { margin: 0 0 7px; font-size: var(--text-lg); color: #B6D4E4; }
   .operator-request p { margin: 0; max-width: 68ch; color: var(--muted); line-height: 1.6; }
   .disclosure-back { margin-top: 28px; }
   @media (max-width: 660px) {
