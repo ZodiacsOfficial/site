@@ -2,8 +2,15 @@ import { localizePath, type ReleasedLocale as Locale } from './i18n';
 import { SIGNS, signName } from './signs';
 import { EN } from '../strings/en.mjs';
 import { additionFormat, additionText } from '../strings/additions';
+import originReceipts from '../data/registry-origin-receipts.json';
 
-export type DisclosureStatus = 'verified' | 'pending';
+/**
+ * verified — supported by public repository or onchain evidence.
+ * operator-attested — supplied by the operator, dated and published, but not
+ *   independently verified; rendered with its own chip, never as verified.
+ * pending — unresolved; the amber chip. Kept for future rows.
+ */
+export type DisclosureStatus = 'verified' | 'operator-attested' | 'pending';
 
 export interface DisclosureEvidence {
   label: string;
@@ -28,13 +35,28 @@ export function disclosureText(locale: Locale, key: DisclosureTextKey): string {
   return additionText(locale, catalogKey, EN[catalogKey]);
 }
 
+const RECEIPT_BY_SIGN = new Map(
+  originReceipts.receipts.map((receipt) => [receipt.sign, receipt]),
+);
+
+/** 2024-07-05T17:54:34.000Z → 2024-07-05 (UTC date of the receipt). */
+function receiptDate(blockTime: string): string {
+  return blockTime.slice(0, 10);
+}
+
+export function statusText(locale: Locale, status: DisclosureStatus): string {
+  if (status === 'verified') return disclosureText(locale, 'statusVerified');
+  if (status === 'operator-attested') return disclosureText(locale, 'statusAttested');
+  return disclosureText(locale, 'statusPending');
+}
+
 export function disclosureRows(locale: Locale): readonly DisclosureRow[] {
   return [
   {
     id: 'operator',
     label: disclosureText(locale, 'operatorLabel'),
     statement: disclosureText(locale, 'operatorStatement'),
-    status: 'pending',
+    status: 'operator-attested',
     evidence: disclosureText(locale, 'operatorEvidence'),
     links: [],
   },
@@ -42,24 +64,36 @@ export function disclosureRows(locale: Locale): readonly DisclosureRow[] {
     id: 'economic-interest',
     label: disclosureText(locale, 'economicLabel'),
     statement: disclosureText(locale, 'economicStatement'),
-    status: 'pending',
+    status: 'operator-attested',
     evidence: disclosureText(locale, 'economicEvidence'),
-    links: [],
+    links: [
+      {
+        label: disclosureText(locale, 'economicSnapshotsLink'),
+        href: 'https://github.com/ZodiacsOfficial/site/commits/main/public/assets/distribution.json',
+        external: true,
+      },
+    ],
   },
   {
     id: 'origin',
     label: disclosureText(locale, 'originLabel'),
     statement: disclosureText(locale, 'originStatement'),
-    status: 'pending',
+    status: 'verified',
     evidence: disclosureText(locale, 'originEvidence'),
-    links: SIGNS.map((sign) => ({
-      label: additionFormat(
-        locale,
-        'disclosure.originSlot',
-        { sign: signName(sign, locale) },
-        EN['disclosure.originSlot'],
-      ),
-    })),
+    links: SIGNS.map((sign) => {
+      const receipt = RECEIPT_BY_SIGN.get(sign.slug);
+      if (!receipt) throw new Error(`Missing origin receipt for ${sign.slug}`);
+      return {
+        label: additionFormat(
+          locale,
+          'disclosure.originSlot',
+          { sign: signName(sign, locale), date: receiptDate(receipt.blockTime) },
+          EN['disclosure.originSlot'],
+        ),
+        href: receipt.explorerUrl,
+        external: true,
+      };
+    }),
   },
   {
     id: 'separation',

@@ -76,7 +76,7 @@ export const OG_EN = Object.freeze({
     subtitle: 'Operator, economic-interest, provenance, separation, and read-only disclosures.',
     path: '/disclosure/',
     image: '/assets/og/v2/disclosure.png',
-    alt: 'Registry disclosure — verified facts and pending operator confirmations.',
+    alt: 'Registry disclosure — verified facts and dated operator attestations.',
   },
   horoscope: {
     kicker: 'Horoscope',

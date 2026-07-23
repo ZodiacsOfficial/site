@@ -1,0 +1,290 @@
+{
+  "$comment": "Reviewed origin-receipt evidence for the twelve canonical native mints. Definition: the origin receipt is the transaction that created (initialized) the canonical native mint account. SPL Token initializeMint succeeds only on an uninitialized account, so one successful initializeMint per mint is unique by protocol — it is the earliest qualifying transaction. Each receipt was parsed from archival RPC (jsonParsed instruction inspection, never token name/ticker) and independently cross-checked against Solscan's own indexer via the published transaction page (slot and InitializeMint instruction shown). Base bridge provenance is deliberately NOT recorded here; bridged-contract facts live in the thesis instrument disclosure and stay separate from native origin.",
+  "reviewedAt": "2026-07-23",
+  "method": {
+    "definition": "earliest qualifying transaction = the transaction containing the successful initializeMint for the canonical mint account",
+    "discovery": "creator-wallet history walk (oldest-first) on archival RPC; discovery convenience carries no evidentiary weight — the claim rests on the parsed initializeMint instruction",
+    "verification": [
+      "api.mainnet-beta.solana.com getTransaction jsonParsed instruction inspection",
+      "solscan.io rendered transaction page (independent indexer): page resolves, slot shown, InitializeMint shown, mint address shown"
+    ]
+  },
+  "establishment": {
+    "romanYear": "MMXXIV",
+    "year": 2024,
+    "earliestReceipt": {
+      "sign": "aquarius",
+      "signature": "3ntKqfqu4LYkSpqJ1DmLNdZHPNgDkkYjdUmZHH3Ejzk8Np6mA8rnaBT3C33dCHeGZhHm6j9sRpJzgtrtcvCWK9jX",
+      "slot": 275861144,
+      "blockTime": "2024-07-05T17:54:34.000Z",
+      "explorerUrl": "https://solscan.io/tx/3ntKqfqu4LYkSpqJ1DmLNdZHPNgDkkYjdUmZHH3Ejzk8Np6mA8rnaBT3C33dCHeGZhHm6j9sRpJzgtrtcvCWK9jX"
+    },
+    "note": "Derived from the earliest verified qualifying receipt; consistent with the displayed MMXXIV."
+  },
+  "receipts": [
+    {
+      "sign": "aries",
+      "mint": "GhFiFrExPY3proVF96oth1gESWA5QPQzdtb8cy8b1YZv",
+      "signature": "5v7R4CzrqvTzBZSrh7DnAqmDWYJhqe818mK37u1eYeeESgiJCGVGPHW1UNYFZ2qEntWsZwAFVPXF3F8apqXHyuMu",
+      "slot": 275861512,
+      "blockTime": "2024-07-05T17:57:25.000Z",
+      "explorerUrl": "https://solscan.io/tx/5v7R4CzrqvTzBZSrh7DnAqmDWYJhqe818mK37u1eYeeESgiJCGVGPHW1UNYFZ2qEntWsZwAFVPXF3F8apqXHyuMu",
+      "verification": {
+        "rpc": {
+          "provider": "api.mainnet-beta.solana.com",
+          "initializeMintObserved": true,
+          "fetchedAt": "2026-07-23T04:23:04.895Z"
+        },
+        "solscan": {
+          "pageResolved": true,
+          "slotShown": true,
+          "initializeMintShown": true,
+          "mintAddressShown": true,
+          "checkedAt": "2026-07-23T04:40:14.618Z"
+        }
+      }
+    },
+    {
+      "sign": "taurus",
+      "mint": "EjkkxYpfSwS6TAtKKuiJuNMMngYvumc1t1v9ZX1WJKMp",
+      "signature": "5HjV4Lrp6BVTSNavioaqGX5tniguedTULyNDtTS8KJ4KVYBSukRqwY7fYeGpvJJBwa8v6xRCRxHLm2nzqvD6CCjp",
+      "slot": 275862520,
+      "blockTime": "2024-07-05T18:05:23.000Z",
+      "explorerUrl": "https://solscan.io/tx/5HjV4Lrp6BVTSNavioaqGX5tniguedTULyNDtTS8KJ4KVYBSukRqwY7fYeGpvJJBwa8v6xRCRxHLm2nzqvD6CCjp",
+      "verification": {
+        "rpc": {
+          "provider": "api.mainnet-beta.solana.com",
+          "initializeMintObserved": true,
+          "fetchedAt": "2026-07-23T04:23:04.895Z"
+        },
+        "solscan": {
+          "pageResolved": true,
+          "slotShown": true,
+          "initializeMintShown": true,
+          "mintAddressShown": true,
+          "checkedAt": "2026-07-23T04:40:14.618Z"
+        }
+      }
+    },
+    {
+      "sign": "gemini",
+      "mint": "ARiZfq6dK19uNqxWyRudhbM2MswLyYhVUHdndGkffdGc",
+      "signature": "58Vo9aqtCrjHrny8awbHpE6ssCpa9XJdDLvkoz2we3me5DR7ypnnNh89o81PxyZTTq4vAAFKKduMtApyMTFLziuk",
+      "slot": 275861944,
+      "blockTime": "2024-07-05T18:00:50.000Z",
+      "explorerUrl": "https://solscan.io/tx/58Vo9aqtCrjHrny8awbHpE6ssCpa9XJdDLvkoz2we3me5DR7ypnnNh89o81PxyZTTq4vAAFKKduMtApyMTFLziuk",
+      "verification": {
+        "rpc": {
+          "provider": "api.mainnet-beta.solana.com",
+          "initializeMintObserved": true,
+          "fetchedAt": "2026-07-23T04:23:04.895Z"
+        },
+        "solscan": {
+          "pageResolved": true,
+          "slotShown": true,
+          "initializeMintShown": true,
+          "mintAddressShown": true,
+          "checkedAt": "2026-07-23T04:40:14.618Z"
+        }
+      }
+    },
+    {
+      "sign": "cancer",
+      "mint": "CmomKM8iPKRSMN7y1jqyW1QKj5bGoZmbvNZXWBJSUdnZ",
+      "signature": "2wiST7gGN5WmGNPHhvAyJ7MtHhr91VYcUjFkqcesmRtETHqvfVVzRQoFxNxJ7C972DwM5hrzZD6c3x98XRJiHW2H",
+      "slot": 275861692,
+      "blockTime": "2024-07-05T17:58:48.000Z",
+      "explorerUrl": "https://solscan.io/tx/2wiST7gGN5WmGNPHhvAyJ7MtHhr91VYcUjFkqcesmRtETHqvfVVzRQoFxNxJ7C972DwM5hrzZD6c3x98XRJiHW2H",
+      "verification": {
+        "rpc": {
+          "provider": "api.mainnet-beta.solana.com",
+          "initializeMintObserved": true,
+          "fetchedAt": "2026-07-23T04:23:04.895Z"
+        },
+        "solscan": {
+          "pageResolved": true,
+          "slotShown": true,
+          "initializeMintShown": true,
+          "mintAddressShown": true,
+          "checkedAt": "2026-07-23T04:40:14.618Z"
+        }
+      }
+    },
+    {
+      "sign": "leo",
+      "mint": "8Cd7wXoPb5Yt9cUGtmHNqAEmpMDrhfcVqnGbLC48b8Qm",
+      "signature": "3S3sXU7E8oHbpMijHGQvnR858HgQTGgn3CdVH7rvV7xLkQvsp6htbzY6cqxcCHdxYdp9zVjQRbFyhYDUHpvdfDKp",
+      "slot": 275862055,
+      "blockTime": "2024-07-05T18:01:43.000Z",
+      "explorerUrl": "https://solscan.io/tx/3S3sXU7E8oHbpMijHGQvnR858HgQTGgn3CdVH7rvV7xLkQvsp6htbzY6cqxcCHdxYdp9zVjQRbFyhYDUHpvdfDKp",
+      "verification": {
+        "rpc": {
+          "provider": "api.mainnet-beta.solana.com",
+          "initializeMintObserved": true,
+          "fetchedAt": "2026-07-23T04:23:04.895Z"
+        },
+        "solscan": {
+          "pageResolved": true,
+          "slotShown": true,
+          "initializeMintShown": true,
+          "mintAddressShown": true,
+          "checkedAt": "2026-07-23T04:40:14.618Z"
+        }
+      }
+    },
+    {
+      "sign": "virgo",
+      "mint": "Ez4bst5qu5uqX3AntYWUdafw9XvtFeJ3gugytKKbSJso",
+      "signature": "4Ei66n3t7AdowzDfmUQfxzwg7BN9CQiCZkVArPWHDvqdQmnLdwnUmtC7ayt8JsCAivVVGH6hBSXKHMMLVxpXCdFF",
+      "slot": 275862648,
+      "blockTime": "2024-07-05T18:06:24.000Z",
+      "explorerUrl": "https://solscan.io/tx/4Ei66n3t7AdowzDfmUQfxzwg7BN9CQiCZkVArPWHDvqdQmnLdwnUmtC7ayt8JsCAivVVGH6hBSXKHMMLVxpXCdFF",
+      "verification": {
+        "rpc": {
+          "provider": "api.mainnet-beta.solana.com",
+          "initializeMintObserved": true,
+          "fetchedAt": "2026-07-23T04:23:04.895Z"
+        },
+        "solscan": {
+          "pageResolved": true,
+          "slotShown": true,
+          "initializeMintShown": true,
+          "mintAddressShown": true,
+          "checkedAt": "2026-07-23T04:40:14.618Z"
+        }
+      }
+    },
+    {
+      "sign": "libra",
+      "mint": "7Zt2KUh5mkpEpPGcNcFy51aGkh9Ycb5ELcqRH1n2GmAe",
+      "signature": "5JYYmNkViHtaQZ6hJRpaqarPYK6bt4jQBqvVEjsm92vh2p6ETfiTthsBuffyTpCDhZYn4JCcNFjrz35AkqhokfjF",
+      "slot": 275862160,
+      "blockTime": "2024-07-05T18:02:35.000Z",
+      "explorerUrl": "https://solscan.io/tx/5JYYmNkViHtaQZ6hJRpaqarPYK6bt4jQBqvVEjsm92vh2p6ETfiTthsBuffyTpCDhZYn4JCcNFjrz35AkqhokfjF",
+      "verification": {
+        "rpc": {
+          "provider": "api.mainnet-beta.solana.com",
+          "initializeMintObserved": true,
+          "fetchedAt": "2026-07-23T04:23:04.895Z"
+        },
+        "solscan": {
+          "pageResolved": true,
+          "slotShown": true,
+          "initializeMintShown": true,
+          "mintAddressShown": true,
+          "checkedAt": "2026-07-23T04:40:14.618Z"
+        }
+      }
+    },
+    {
+      "sign": "scorpio",
+      "mint": "J4fQTRN13MKpXhVE74t99msKJLbrjegjEgLBnzEv2YH1",
+      "signature": "2679DKhAVdEVCpodh5te1zbwPRQfPefnEnSrf1ygaykm8Qura6B7thTKgYPmAZ2MRYa8oS4Jm5dLK7FcCP6HuvBK",
+      "slot": 275862417,
+      "blockTime": "2024-07-05T18:04:35.000Z",
+      "explorerUrl": "https://solscan.io/tx/2679DKhAVdEVCpodh5te1zbwPRQfPefnEnSrf1ygaykm8Qura6B7thTKgYPmAZ2MRYa8oS4Jm5dLK7FcCP6HuvBK",
+      "verification": {
+        "rpc": {
+          "provider": "api.mainnet-beta.solana.com",
+          "initializeMintObserved": true,
+          "fetchedAt": "2026-07-23T04:23:04.895Z"
+        },
+        "solscan": {
+          "pageResolved": true,
+          "slotShown": true,
+          "initializeMintShown": true,
+          "mintAddressShown": true,
+          "checkedAt": "2026-07-23T04:40:14.618Z"
+        }
+      }
+    },
+    {
+      "sign": "sagittarius",
+      "mint": "8x17zMmVjJxqswjX4hNpxVPc7Tr5UabVJF3kv8TKq8Y3",
+      "signature": "4Ei8HNCMqA5ih8W4i18obifAmAJtiC55WaVhoeVCaoJGwyfqwCiZz94RRB9tH53j7QW5EhnnK86w28R4JM7h2dA6",
+      "slot": 275862851,
+      "blockTime": "2024-07-05T18:07:58.000Z",
+      "explorerUrl": "https://solscan.io/tx/4Ei8HNCMqA5ih8W4i18obifAmAJtiC55WaVhoeVCaoJGwyfqwCiZz94RRB9tH53j7QW5EhnnK86w28R4JM7h2dA6",
+      "verification": {
+        "rpc": {
+          "provider": "api.mainnet-beta.solana.com",
+          "initializeMintObserved": true,
+          "fetchedAt": "2026-07-23T04:23:04.895Z"
+        },
+        "solscan": {
+          "pageResolved": true,
+          "slotShown": true,
+          "initializeMintShown": true,
+          "mintAddressShown": true,
+          "checkedAt": "2026-07-23T04:40:14.618Z"
+        }
+      }
+    },
+    {
+      "sign": "capricorn",
+      "mint": "3C2SN1FjzE9MiLFFVRp7Jhkp8Gjwpk29S2TCSJ2jkHn2",
+      "signature": "k1f3QRpJeaDFsgTtrXdzaKBqGSBksXcYFDSwHeMeV7N1rGGeYt4idvVyqFzpXepu8WtCJjA69Y1zkYGzroPH4w6",
+      "slot": 275866772,
+      "blockTime": "2024-07-05T18:38:08.000Z",
+      "explorerUrl": "https://solscan.io/tx/k1f3QRpJeaDFsgTtrXdzaKBqGSBksXcYFDSwHeMeV7N1rGGeYt4idvVyqFzpXepu8WtCJjA69Y1zkYGzroPH4w6",
+      "verification": {
+        "rpc": {
+          "provider": "api.mainnet-beta.solana.com",
+          "initializeMintObserved": true,
+          "fetchedAt": "2026-07-23T04:23:04.895Z"
+        },
+        "solscan": {
+          "pageResolved": true,
+          "slotShown": true,
+          "initializeMintShown": true,
+          "mintAddressShown": true,
+          "checkedAt": "2026-07-23T04:40:14.618Z"
+        }
+      }
+    },
+    {
+      "sign": "aquarius",
+      "mint": "C49Ut3om3QFTDrMZ5Cr8VcTKPpHDcQ2Fv8mmuJHHigDt",
+      "signature": "3ntKqfqu4LYkSpqJ1DmLNdZHPNgDkkYjdUmZHH3Ejzk8Np6mA8rnaBT3C33dCHeGZhHm6j9sRpJzgtrtcvCWK9jX",
+      "slot": 275861144,
+      "blockTime": "2024-07-05T17:54:34.000Z",
+      "explorerUrl": "https://solscan.io/tx/3ntKqfqu4LYkSpqJ1DmLNdZHPNgDkkYjdUmZHH3Ejzk8Np6mA8rnaBT3C33dCHeGZhHm6j9sRpJzgtrtcvCWK9jX",
+      "verification": {
+        "rpc": {
+          "provider": "api.mainnet-beta.solana.com",
+          "initializeMintObserved": true,
+          "fetchedAt": "2026-07-23T04:23:04.895Z"
+        },
+        "solscan": {
+          "pageResolved": true,
+          "slotShown": true,
+          "initializeMintShown": true,
+          "mintAddressShown": true,
+          "checkedAt": "2026-07-23T04:40:14.618Z"
+        }
+      }
+    },
+    {
+      "sign": "pisces",
+      "mint": "3JsSsmGzjWDNe9XCw2L9vznC5JU9wSqQeB6ns5pAkPeE",
+      "signature": "3qSMX2ADNTZU9LSV5ZmHijPCvLCwJP6cD9w8iZzo7CKrEDwz8RVQxefUcitAAjDVRfNimkXuizTLhRU41BzneDxh",
+      "slot": 275866668,
+      "blockTime": "2024-07-05T18:37:23.000Z",
+      "explorerUrl": "https://solscan.io/tx/3qSMX2ADNTZU9LSV5ZmHijPCvLCwJP6cD9w8iZzo7CKrEDwz8RVQxefUcitAAjDVRfNimkXuizTLhRU41BzneDxh",
+      "verification": {
+        "rpc": {
+          "provider": "api.mainnet-beta.solana.com",
+          "initializeMintObserved": true,
+          "fetchedAt": "2026-07-23T04:23:04.895Z"
+        },
+        "solscan": {
+          "pageResolved": true,
+          "slotShown": true,
+          "initializeMintShown": true,
+          "mintAddressShown": true,
+          "checkedAt": "2026-07-23T04:40:14.618Z"
+        }
+      }
+    }
+  ]
+}

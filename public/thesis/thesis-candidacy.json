@@ -1,35 +1,35 @@
 {
-  "$comment": "Maintainer-editable candidacy evidence for /thesis Section V. Same contract as thesis-disclosure.json: pending fields render the amber chip; filled fields render the value (a count or short factual note), the asOf date, and a Verify link when given. PHASE 2: hydrate from @zodiacs/sdk at build time.",
+  "$comment": "Maintainer-editable candidacy evidence for /thesis Section V. Same contract as thesis-disclosure.json: pending fields render the amber chip; filled fields render the value, the asOf date, and a Verify link. Values are observations scoped to their defined searches — negative results say 'no qualifying results found', never an exhaustive zero. The complete measurement definitions, sources, queries, UTC capture times, exclusions, and raw capture records live in thesis-candidacy-evidence.json (each row's Verify link); refreshing either file is a reviewed action.",
   "criteria": {
     "independentIntegrations": {
-      "value": null,
-      "status": "pending",
-      "asOf": null,
-      "verifyUrl": null
+      "value": "no qualifying results found in the defined search · public package-registry and web queries for consumers of this registry or @zodiacs/sdk, excluding Zodiacs.org, Astrofolio, and the SDK's own examples · @zodiacs/sdk: 81 npm downloads in 30 days",
+      "status": "filled",
+      "asOf": "2026-07-23",
+      "verifyUrl": "https://zodiacs.org/thesis/thesis-candidacy-evidence.json"
     },
     "thirdPartyCitations": {
-      "value": null,
-      "status": "pending",
-      "asOf": null,
-      "verifyUrl": null
+      "value": "no qualifying editorial citations found in the defined searches · automated wallet and aggregator listings of the addresses were observed and are excluded by definition",
+      "status": "filled",
+      "asOf": "2026-07-23",
+      "verifyUrl": "https://zodiacs.org/thesis/thesis-candidacy-evidence.json"
     },
     "holderDispersion": {
-      "value": null,
-      "status": "pending",
-      "asOf": null,
-      "verifyUrl": null
+      "value": "baseline established, no widening yet · four weekly public snapshots since 2026-06-29 · median top-10 share 26.6% → 27.2% (slightly more concentrated)",
+      "status": "filled",
+      "asOf": "2026-07-23",
+      "verifyUrl": "https://zodiacs.org/thesis/thesis-candidacy-evidence.json"
     },
     "liquidityPersistence": {
-      "value": null,
-      "status": "pending",
-      "asOf": null,
-      "verifyUrl": null
+      "value": "12 of 12 canonical Raydium pools live at the 2026-07-23 capture · $11.9k–17.8k depth, $10–158 of 24h volume · pair creation 2024-07-05 per Dexscreener · continuous historical depth was not archived",
+      "status": "filled",
+      "asOf": "2026-07-23",
+      "verifyUrl": "https://zodiacs.org/thesis/thesis-candidacy-evidence.json"
     },
     "archiveContinuity": {
-      "value": null,
-      "status": "pending",
-      "asOf": null,
-      "verifyUrl": null
+      "value": "own version archive continuous in the public repository since 2024 · Internet Archive: 9 captures since 2024-01-01, largest gap 166 days, none in the 12 months before the 2026-07-23 query",
+      "status": "filled",
+      "asOf": "2026-07-23",
+      "verifyUrl": "https://zodiacs.org/thesis/thesis-candidacy-evidence.json"
     }
   }
 }
