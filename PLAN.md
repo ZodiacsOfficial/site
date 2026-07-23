@@ -1,9 +1,10 @@
 # Zodiacs.org household-name program
 
-Last updated: 2026-07-23
+Last updated: 2026-07-24
 
-Active phase: **Phase 1 external closure monitoring. Phase 3 is formally
-complete; Phase 4 has not begun.**
+Active phase: **Phase 4 private sharing loop — design and technical contracts
+in progress. Phase 3 is formally complete; Phase 1 external closure monitoring
+continues independently.**
 
 ## Authority and operating rule
 
@@ -175,8 +176,10 @@ no open P0 or P1 defect, both reviewed migrations are live with their
 server-only security boundary, the three-edition Daily Email canary
 completed, consent isolation and chart-stop → Sun-sign resume were proved
 against production state, and the real Mercury-direct Sky Alert was
-delivered once and rejected as a duplicate on replay. Phase 4 remains
-closed.
+delivered once and rejected as a duplicate on replay. Phase 4 is now
+authorized. Its first bounded wave is the Fable reader-experience handoff and
+Sol's privacy/security technical contract; no Phase 4 production flag is
+enabled.
 
 ### Live schema and consent evidence
 
