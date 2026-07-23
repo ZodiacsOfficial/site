@@ -160,6 +160,9 @@ describe('Phase 1 layout and motion contract', () => {
       source('components/HoroscopeProgramPage.astro'),
     ]);
     expect(base).toContain('data-stable-typography={props.stableTypography');
+    expect(base).toContain('data-local-typography={props.localTypography');
+    expect(today).toMatch(/<Base\s+[\s\S]*?localTypography/u);
+    expect(today).toContain('<TodayBrief client:idle');
     for (const phase1Surface of [today, hub, program]) {
       expect(phase1Surface).toMatch(/<Base\s+[\s\S]*?stableTypography/u);
     }

@@ -8,6 +8,8 @@ const navSource = await readFile(new URL('../src/components/SiteNav.astro', impo
 describe('hidden Russian homepage hero media contract', () => {
   it('keeps the poster as LCP and every video source detached initially', () => {
     expect(source).toContain('src="/assets/hero/zodiacs-hero-poster-ru.avif"');
+    expect(source).toContain('srcset="/assets/hero/zodiacs-hero-poster-ru-mobile.avif"');
+    expect(source).toContain('media="(max-width: 719px)"');
     expect(source).toContain('data-hero-poster-ru');
     expect(source).toContain('width="1440"');
     expect(source).toContain('height="810"');

@@ -281,6 +281,15 @@
   --font-mono: 'JetBrains Mono Phase1', ui-monospace, Menlo, Consolas, monospace;
 }
 
+/* The daily reader's useful first screen must remain immediate on a cold,
+   constrained connection. These existing metric-matched local faces retain
+   its established proportions without creating a late webfont LCP repaint. */
+:root[data-local-typography] {
+  --font-serif: 'EB Garamond Fallback', 'EB Garamond Fallback Android', 'EB Garamond Fallback Times', 'Iowan Old Style', Georgia, serif;
+  --font-sans: 'Instrument Sans Fallback', 'Instrument Sans Fallback Android', system-ui, -apple-system, sans-serif;
+  --font-mono: ui-monospace, Menlo, Consolas, monospace;
+}
+
 html:lang(ru) {
   --font-serif: 'EB Garamond Cyrillic', 'EB Garamond Fallback', 'EB Garamond Fallback Android', 'EB Garamond Fallback Times', Georgia, serif;
   --font-sans: 'Golos Text', 'Instrument Sans Fallback', 'Instrument Sans Fallback Android', system-ui, sans-serif;

@@ -40,22 +40,38 @@ const jsonLd = [
     slot="head"
     rel="preload"
     as="image"
+    href="/assets/hero/zodiacs-hero-poster-ru-mobile.avif"
+    media="(max-width: 719px)"
+    fetchpriority="high"
+  />
+  <link
+    slot="head"
+    rel="preload"
+    as="image"
     href="/assets/hero/zodiacs-hero-poster-ru.avif"
+    media="(min-width: 720px)"
     fetchpriority="high"
   />
   <section class="hero-ru container">
     <div class="hero-ru__frame">
-      <img
-        class="hero-ru__poster"
-        src="/assets/hero/zodiacs-hero-poster-ru.avif"
-        width="1440"
-        height="810"
-        loading="eager"
-        fetchpriority="high"
-        alt=""
-        aria-hidden="true"
-        data-hero-poster-ru
-      />
+      <picture>
+        <source
+          media="(max-width: 719px)"
+          srcset="/assets/hero/zodiacs-hero-poster-ru-mobile.avif"
+          type="image/avif"
+        />
+        <img
+          class="hero-ru__poster"
+          src="/assets/hero/zodiacs-hero-poster-ru.avif"
+          width="1440"
+          height="810"
+          loading="eager"
+          fetchpriority="high"
+          alt=""
+          aria-hidden="true"
+          data-hero-poster-ru
+        />
+      </picture>
       <video
         class="hero-ru__video"
         muted
