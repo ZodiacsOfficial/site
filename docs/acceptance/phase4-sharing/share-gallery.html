@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Proof — share surfaces at 1× and 2×</title>
+<link rel="stylesheet" href="proof.css">
+</head>
+<body>
+<header class="proof-head">
+  <span class="kicker">Phase 4 sharing loop · proof 14</span>
+  <h1>Share surfaces — Full Chart, Big Three, Compatibility, daily reading</h1>
+  <p>Handoff §5. All personal cards are 1080×1350 client-rendered PNGs carrying no birth input; both DPRs are one bitmap (2× render, platform downscale). The Big Three card returns to the live share sheet (decision D-5 — code and tests exist today, unexposed). The daily reading deliberately keeps link-plus-OG sharing with no canvas card. Geometry mocks below are to scale; content is fixture-computed.</p>
+</header>
+
+<section class="board">
+  <div class="board__note"><strong>Big Three — 2× (left) and 1× (right).</strong> Discs 178 px at 2×; rows y 245 + 292·i; receipt mono y 1238; wordmark right. 1× criterion: the smallest mono (11 px effective) stays legible; fitText never crosses the gutter at 24-char labels.</div>
+  <div class="board__stage">
+    <div class="cardmock">
+      <div class="rows">
+        <div class="row"><img src="assets/cancer-128.webp" alt=""><div><div class="lbl">SUN</div><div class="sig">Cancer</div><div class="des">The part of you that chooses a direction.</div></div></div>
+        <div class="row"><img src="assets/leo-128.webp" alt=""><div><div class="lbl">MOON</div><div class="sig">Leo</div><div class="des">What you need in order to feel steady.</div></div></div>
+        <div class="row"><img src="assets/sagittarius-128.webp" alt=""><div><div class="lbl">RISING</div><div class="sig">Sagittarius</div><div class="des">How people first meet you.</div></div></div>
+      </div>
+      <div class="receipt">Computed in the browser · engine-verified positions · no birth details on this card</div>
+      <div class="wm">ZODIACS.ORG</div>
+    </div>
+    <div class="cardmock cardmock--half">
+      <div class="rows">
+        <div class="row"><img src="assets/cancer-128.webp" alt=""><div><div class="lbl" style="font-size:5px">SUN</div><div class="sig">Cancer</div></div></div>
+        <div class="row"><img src="assets/leo-128.webp" alt=""><div><div class="lbl" style="font-size:5px">MOON</div><div class="sig">Leo</div></div></div>
+        <div class="row"><img src="assets/sagittarius-128.webp" alt=""><div><div class="lbl" style="font-size:5px">RISING</div><div class="sig">Sagittarius</div></div></div>
+      </div>
+      <div class="receipt">Computed in the browser</div>
+      <div class="wm">ZODIACS.ORG</div>
+    </div>
+  </div>
+</section>
+
+<section class="board">
+  <div class="board__note"><strong>Compatibility card — the send-back's picture.</strong> Two columns at x 285/795 (2×), divider x 540, headline fit ≤54, "Tightest contacts" mono 22, three contacts. No numeric score exists or ever will. Content engine-computed from the fixture.</div>
+  <div class="board__stage">
+    <div class="cardmock" style="width:270px">
+      <div style="display:flex; gap:10px; flex:1; align-items:center">
+        <div style="flex:1; border-right:1px solid var(--hair); padding-right:8px">
+          <div class="sig" style="font-size:12px">Frida Kahlo</div>
+          <div class="row" style="margin-top:8px"><img src="assets/cancer-128.webp" alt="" style="width:28px;height:28px"><span class="des">Cancer Sun</span></div>
+        </div>
+        <div style="flex:1">
+          <div class="sig" style="font-size:12px">Their side</div>
+          <div class="row" style="margin-top:8px"><img src="assets/sagittarius-128.webp" alt="" style="width:28px;height:28px"><span class="des">Sagittarius Sun</span></div>
+        </div>
+      </div>
+      <div class="sig" style="font-size:13px; margin:8px 0 4px">Chemistry that asks for attention</div>
+      <div class="lbl">TIGHTEST CONTACTS</div>
+      <div class="des" style="font-size:8px; font-style:normal">Neptune square Uranus · 0.6°<br>Jupiter conjunction Saturn · 1.0°<br>Mars trine Moon · 1.0°</div>
+      <div class="receipt" style="margin-top:8px">Positions only · computed in the browser</div>
+      <div class="wm">ZODIACS.ORG</div>
+    </div>
+  </div>
+</section>
+
+<section class="board">
+  <div class="board__note"><strong>Full Chart card and the daily reading.</strong> Left: full-wheel geometry (wheel 780 px at 2×, discs row y 992, big-three line y 1138, receipt y 1272) — stands as shipped. Right: the daily page's share affordance — link sharing with the per-page 1200×630 OG card; no canvas card by decision.</div>
+  <div class="board__stage">
+    <div class="cardmock" style="width:270px">
+      <div class="des" style="font-style:italic; font-size:9px">Your sky, drawn whole</div>
+      <svg viewBox="0 0 100 100" style="width:180px; margin:8px auto"><circle cx="50" cy="50" r="44" fill="none" stroke="#C6CCDA" stroke-width="0.8"/><circle cx="50" cy="50" r="30" fill="none" stroke="#8E96AB" stroke-width="0.5"/><line x1="20" y1="38" x2="80" y2="66" stroke="#B6D4E4" stroke-width="0.6"/><line x1="34" y1="76" x2="70" y2="24" stroke="#E0A9B4" stroke-width="0.6"/></svg>
+      <div class="row" style="justify-content:center; gap:6px"><img src="assets/cancer-128.webp" alt="" style="width:22px;height:22px"><img src="assets/leo-128.webp" alt="" style="width:22px;height:22px"><img src="assets/sagittarius-128.webp" alt="" style="width:22px;height:22px"></div>
+      <div class="receipt" style="margin-top:6px">Sun Cancer · Moon Leo · Rising Sagittarius</div>
+      <div class="wm">ZODIACS.ORG</div>
+    </div>
+    <div class="mock mock--narrow">
+      <p class="mono" style="margin-bottom:10px">— daily reading, share row —</p>
+      <p class="fine">Send this page: X · WhatsApp · Telegram · Email</p>
+      <div style="margin-top:12px; border:1px solid var(--hair); border-radius:8px; aspect-ratio:1200/630; display:flex; align-items:center; justify-content:center">
+        <span class="mono">per-page OG card 1200×630</span>
+      </div>
+    </div>
+  </div>
+</section>
+</body>
+</html>

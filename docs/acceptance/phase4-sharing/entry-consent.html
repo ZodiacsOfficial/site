@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Proof — entry, sign-in path, chart selection, consent</title>
+<link rel="stylesheet" href="proof.css">
+</head>
+<body>
+<header class="proof-head">
+  <span class="kicker">Phase 4 sharing loop · proof 1–3</span>
+  <h1>Entry points, the gentle sign-in path, chart selection, explicit consent</h1>
+  <p>States from handoff §2.1 with the §3.1–3.2 strings verbatim. All surfaces sit in the existing calculator grammar; pastel discs are the only sign rendering; no birth summaries render in the picker (decision D-6).</p>
+</header>
+
+<section class="board">
+  <div class="board__note"><strong>§2.1 state 0 · signed out.</strong> Renders below the compatibility form when slot A is ready. Criterion: an invitation to sign in, never a wall — the calculator above stays untouched. Strings: siTitle, siBody, siCta.</div>
+  <div class="board__stage">
+    <div class="mock">
+      <h3>Invitations need an account.</h3>
+      <p>An invitation keeps your side ready for up to 14 days, so it needs a place that belongs to you. Sign in, sync the chart you'd share, and the invitation button appears right here.</p>
+      <a class="btn btn--text" href="#">Sign in from your profile</a>
+    </div>
+    <div class="mock mock--narrow">
+      <h3>Sync a chart to invite with it.</h3>
+      <p>Invitations read a saved, synced chart. Charts kept only on this device stay here — sync one from your profile if you want it to carry an invitation.</p>
+      <a class="btn btn--text" href="#">Open your profile</a>
+      <p class="board__note" style="margin:14px 0 0"><strong>§2.1 state 1</strong> · signed in, nothing synced. Device-only charts are never listed or teased.</p>
+    </div>
+  </div>
+</section>
+
+<section class="board">
+  <div class="board__note"><strong>§2.1 state 2 · consenting.</strong> Chart picker (names + discs only), consent checkbox with the three term lines, the independent email checkbox, create disabled until consent + selection. Strings: invTitle, invBody, invChartLegend, invConsentLabel, invTerm1–3, invNotifyLabel, invNotifyNote, invCreate. Criterion: proof 3 — explicit consent naming what travels, for whom, how long, the way out.</div>
+  <div class="board__stage">
+    <div class="mock">
+      <h2>Invite them to fill in their half.</h2>
+      <p>Your side travels as chart positions — where everything sits in your sky — carried by a private link. They add theirs, and the reading appears for them right away.</p>
+      <div class="field">
+        <span class="legend">Which chart carries your side?</span>
+        <div class="pickrow"><span class="radio on"></span><img src="assets/cancer.webp" alt=""><span class="name">Frida Kahlo</span></div>
+        <div class="pickrow"><span class="radio"></span><img src="assets/taurus.webp" alt=""><span class="name">Mamá Matilde — the long name case that trims</span></div>
+      </div>
+      <div class="checkrow"><span class="box on"></span><span>Share this chart's positions with whoever opens the link</span></div>
+      <ul class="terms">
+        <li>The link carries your chart's name or label and its computed positions. It never carries your birth date, time, or place.</li>
+        <li>Meant for one person — it closes once their reading is made, and after 14 days at the latest.</li>
+        <li>You can end it early anytime from your profile, on any device you're signed in to.</li>
+      </ul>
+      <div class="checkrow"><span class="box"></span><span>Email me once, when their reading is ready</span></div>
+      <p class="fine">One email for this invitation, to your account address. It isn't a subscription, and it doesn't touch your daily email choices.</p>
+      <span class="btn btn--primary">Create the invitation link</span>
+    </div>
+    <div class="mock mock--narrow">
+      <h2>Invite them to fill in their half.</h2>
+      <p class="fine" style="margin-bottom:10px">Consent unchecked — create stays disabled. Nothing about the form judges or hurries.</p>
+      <div class="checkrow"><span class="box"></span><span>Share this chart's positions with whoever opens the link</span></div>
+      <span class="btn btn--primary" aria-disabled="true">Create the invitation link</span>
+    </div>
+  </div>
+</section>
+
+<section class="board">
+  <div class="board__note"><strong>Entry points.</strong> Left: post-result ghost (invOpenPanel) under an existing comparison. Right: the profile register's pfInvNew action. The form entry renders the panel inline when slot A is ready and slot B untouched; it hides while B is mid-entry.</div>
+  <div class="board__stage">
+    <div class="mock mock--narrow">
+      <p class="mono" style="margin-bottom:12px">— existing comparison result above —</p>
+      <span class="btn btn--ghost">Invite someone to compare with Frida Kahlo</span>
+    </div>
+    <div class="mock mock--narrow">
+      <span class="kicker">Compatibility invitations</span>
+      <p class="fine">No invitations yet. Make one from any comparison on the compatibility page.</p>
+      <a class="btn btn--text" href="#">Make an invitation</a>
+    </div>
+  </div>
+</section>
+</body>
+</html>

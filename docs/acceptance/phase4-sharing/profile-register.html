@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Proof — profile invitation register</title>
+<link rel="stylesheet" href="proof.css">
+</head>
+<body>
+<header class="proof-head">
+  <span class="kicker">Phase 4 sharing loop · proof 5</span>
+  <h1>The invitation register — active, opened, completed, expired, revoked</h1>
+  <p>Handoff §2.5 with §3.5 strings verbatim, rendered in the profile's pf-row grammar between the saved-comparisons strip and the daily-brief section. Account-scoped: the same register on every signed-in device. Deletion-claiming lines render only from a closure-verifying status response.</p>
+</header>
+
+<section class="board">
+  <div class="board__note"><strong>The five row states.</strong> pfInvWaiting / pfInvOpened / pfInvDone / pfInvEnded / pfInvExpired, with their actions. "End this invitation" is one click, optimistic, announced; terminal rows offer list-removal only.</div>
+  <div class="board__stage">
+    <div class="mock mock--wide">
+      <span class="kicker">Compatibility invitations</span>
+      <p class="fine" style="margin-bottom:14px">Links you've made that carry one chart's positions. Each closes once it's read — or after 14 days at the latest.</p>
+      <div class="pf-row">
+        <span class="who">Frida Kahlo · July 24</span><span class="st">Waiting</span>
+        <span class="detail">Not opened yet. The link works until August 7.</span>
+        <span class="acts"><span class="btn btn--ghost">Copy link</span><span class="btn btn--text">End this invitation</span></span>
+      </div>
+      <div class="pf-row">
+        <span class="who">Frida Kahlo · July 22</span><span class="st">Opened</span>
+        <span class="detail">Opened, no reading yet. Closes August 5.</span>
+        <span class="acts"><span class="btn btn--ghost">Copy link</span><span class="btn btn--text">End this invitation</span></span>
+      </div>
+      <div class="pf-row">
+        <span class="who">Frida Kahlo · July 20</span><span class="st">Reading done</span>
+        <span class="detail">Their reading happened July 23. The link closed and its positions are deleted. The result comes back only if they send it.</span>
+        <span class="acts"><span class="btn btn--text">Remove from this list</span></span>
+      </div>
+      <div class="pf-row">
+        <span class="who">Frida Kahlo · July 12</span><span class="st">Ended by you</span>
+        <span class="detail">You ended this on July 18. Its positions are deleted.</span>
+        <span class="acts"><span class="btn btn--text">Remove from this list</span></span>
+      </div>
+      <div class="pf-row">
+        <span class="who">A chart name stretched to forty characters yes · July 8</span><span class="st">Expired</span>
+        <span class="detail">Expired July 22 unopened. Its positions are deleted.</span>
+        <span class="acts"><span class="btn btn--text">Remove from this list</span></span>
+      </div>
+      <p class="mono" style="margin-top:14px">Invitations belong to your account — manage them from any device you're signed in to.</p>
+    </div>
+  </div>
+</section>
+
+<section class="board">
+  <div class="board__note"><strong>Degraded states.</strong> Left: offline/stale — cached words render under pfInvStale, End disabled (revocation must not pretend). Right: kill switch — pfInvPaused, Copy disabled, End fully live (the withdrawal partition, carried A2).</div>
+  <div class="board__stage">
+    <div class="mock">
+      <div class="pf-row">
+        <span class="who">Frida Kahlo · July 24</span><span class="st">Waiting</span>
+        <span class="detail">Not opened yet. The link works until August 7.</span>
+        <span class="acts"><span class="btn btn--ghost">Copy link</span><span class="btn btn--text" style="opacity:.4">End this invitation</span></span>
+      </div>
+      <p class="status-line">Statuses may be out of date — this device is offline or the check didn't go through.</p>
+    </div>
+    <div class="mock">
+      <div class="pf-row">
+        <span class="who">Frida Kahlo · July 24</span><span class="st">Waiting</span>
+        <span class="detail">Not opened yet. The link works until August 7.</span>
+        <span class="acts"><span class="btn btn--ghost" style="opacity:.4">Copy link</span><span class="btn btn--text">End this invitation</span></span>
+      </div>
+      <p class="status-line">Invitations are off right now, so these links won't open. You can still end one — ending always works.</p>
+    </div>
+  </div>
+</section>
+
+<section class="board">
+  <div class="board__note"><strong>Empty state.</strong> pfInvEmpty + pfInvNew. Hidden entirely only when the flag is off and the account has no invitations.</div>
+  <div class="board__stage">
+    <div class="mock mock--narrow">
+      <span class="kicker">Compatibility invitations</span>
+      <p class="fine">No invitations yet. Make one from any comparison on the compatibility page.</p>
+      <a class="btn btn--text" href="#">Make an invitation</a>
+    </div>
+  </div>
+</section>
+</body>
+</html>

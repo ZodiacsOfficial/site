@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Proof — the meeting, reduced motion, skip</title>
+<link rel="stylesheet" href="proof.css">
+</head>
+<body>
+<header class="proof-head">
+  <span class="kicker">Phase 4 sharing loop · proofs 9 and 10</span>
+  <h1>The meeting — two rings drawing together, skip, reduced motion</h1>
+  <p>Handoff §4, carried verbatim from the reviewed prior design. 1.4 s, transforms and opacity only, CSS classes on a wrapper. Every element is interactive from the first frame; any pointer or key input settles it instantly; reduced motion reads the settled bi-wheel on first paint. Restores and #s= arrivals never animate.</p>
+</header>
+
+<section class="board">
+  <div class="board__note"><strong>Storyboard.</strong> Frames at t=0 / 420 / 840 / 1400 ms. Inner ring = A (rises, scale 0.94→1); outer ring = B (joins, rotate −8°→0); contact lines light tightest-orb-first, opacity only — drawing without stroke geometry.</div>
+  <div class="frames">
+    <div class="frame"><div class="t">t = 0 ms · cards fading in</div>
+      <svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="30" fill="none" stroke="#8E96AB" stroke-width="1" opacity="0.15"/><circle cx="60" cy="60" r="46" fill="none" stroke="#8E96AB" stroke-width="1" opacity="0"/></svg></div>
+    <div class="frame"><div class="t">t = 420 ms · A's ring risen</div>
+      <svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="30" fill="none" stroke="#C6CCDA" stroke-width="1" opacity="0.9"/><circle cx="60" cy="60" r="46" fill="none" stroke="#8E96AB" stroke-width="1" opacity="0.25" transform="rotate(-6 60 60)"/></svg></div>
+    <div class="frame"><div class="t">t = 840 ms · B's ring joined</div>
+      <svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="30" fill="none" stroke="#C6CCDA" stroke-width="1"/><circle cx="60" cy="60" r="46" fill="none" stroke="#C6CCDA" stroke-width="1" opacity="0.9"/><line x1="42" y1="48" x2="84" y2="70" stroke="#B6D4E4" stroke-width="1" opacity="0.5"/></svg></div>
+    <div class="frame"><div class="t">t = 1400 ms · settled</div>
+      <svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="30" fill="none" stroke="#C6CCDA" stroke-width="1"/><circle cx="60" cy="60" r="46" fill="none" stroke="#C6CCDA" stroke-width="1"/><line x1="42" y1="48" x2="84" y2="70" stroke="#B6D4E4" stroke-width="1"/><line x1="50" y1="82" x2="76" y2="38" stroke="#E0A9B4" stroke-width="1"/><line x1="34" y1="62" x2="88" y2="56" stroke="#B9D4BE" stroke-width="1" opacity="0.8"/></svg></div>
+  </div>
+</section>
+
+<section class="board">
+  <div class="board__note"><strong>Skip and reduced motion.</strong> No skip chrome — any pointerdown/keydown inside the result adds .is-settled. prefers-reduced-motion: the settled frame IS the experience, complete on first paint; nothing is missing, nothing waits. The animation fires no analytics.</div>
+  <div class="board__stage">
+    <div class="mock mock--narrow">
+      <p class="mono" style="margin-bottom:8px">reduced-motion first paint</p>
+      <svg viewBox="0 0 120 120" style="width:160px"><circle cx="60" cy="60" r="30" fill="none" stroke="#C6CCDA" stroke-width="1"/><circle cx="60" cy="60" r="46" fill="none" stroke="#C6CCDA" stroke-width="1"/><line x1="42" y1="48" x2="84" y2="70" stroke="#B6D4E4" stroke-width="1"/><line x1="50" y1="82" x2="76" y2="38" stroke="#E0A9B4" stroke-width="1"/><line x1="34" y1="62" x2="88" y2="56" stroke="#B9D4BE" stroke-width="1"/></svg>
+      <p class="fine" style="margin-top:8px">Identical to t=1400. All motion rules live inside a no-preference media query; hiding styles are gated on html.js.</p>
+    </div>
+  </div>
+</section>
+</body>
+</html>

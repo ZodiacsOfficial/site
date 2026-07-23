@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Proof — invitation created</title>
+<link rel="stylesheet" href="proof.css">
+</head>
+<body>
+<header class="proof-head">
+  <span class="kicker">Phase 4 sharing loop · proof 4</span>
+  <h1>Invitation created — share, copy, expiry, and the privacy explanation</h1>
+  <p>Handoff §2.1 state 4. The link field is the slashed canonical; the Web Share action renders only where the API exists; the privacy line is the one quiet mono line. Focus moves to the link field on ready; the status region announces "Invitation link ready."</p>
+</header>
+
+<section class="board">
+  <div class="board__note"><strong>Ready, email opted in.</strong> Strings: invNotifyOn, invCopy, invShare, invManageNote, invPrivacyLine. Expiry renders month + day inside the 14-day window.</div>
+  <div class="board__stage">
+    <div class="mock">
+      <h2>Invite them to fill in their half.</h2>
+      <div class="field">
+        <span class="legend">The invitation link</span>
+        <div class="input input--mono focused">https://zodiacs.org/c/Xy4kQ0aB9cD2eF6gH8jKlm/</div>
+      </div>
+      <div class="btn-row">
+        <span class="btn btn--primary">Copy link</span>
+        <span class="btn btn--ghost">Share…</span>
+      </div>
+      <p class="status-line">Ready. One reading, until August 7 — and one email to you when it happens.</p>
+      <p class="fine">Watch or end it from your profile.</p>
+      <p class="mono">The link carries a label and chart positions. No birth details.</p>
+    </div>
+    <div class="mock mock--narrow">
+      <h2>Invite them to fill in their half.</h2>
+      <div class="field">
+        <span class="legend">The invitation link</span>
+        <div class="input input--mono">https://zodiacs.org/c/Xy4kQ0aB9cD2…</div>
+      </div>
+      <div class="btn-row">
+        <span class="btn btn--primary">Copy link</span>
+      </div>
+      <p class="status-line">Ready. One reading, until August 7.</p>
+      <p class="mono">The link carries a label and chart positions. No birth details.</p>
+      <p class="board__note" style="margin:12px 0 0"><strong>No-share-API variant</strong> · the Share… ghost is absent, never disabled. Long URL ellipsizes inside the field; the copy carries the full value.</p>
+    </div>
+  </div>
+</section>
+
+<section class="board">
+  <div class="board__note"><strong>Failure and limit states.</strong> invError (values preserved, button re-enabled), invThrottled, invCapNote. Recovery never clears the reader's choices.</div>
+  <div class="board__stage">
+    <div class="mock mock--narrow">
+      <span class="btn btn--primary">Create the invitation link</span>
+      <p class="status-line">Couldn't create the link. Please try again.</p>
+    </div>
+    <div class="mock mock--narrow">
+      <span class="btn btn--primary">Create the invitation link</span>
+      <p class="status-line">Too many new links just now — give it a minute.</p>
+    </div>
+    <div class="mock mock--narrow">
+      <p>Twelve invitations are open on your account. End one in your profile before making another.</p>
+      <a class="btn btn--text" href="#">Watch or end it from your profile.</a>
+    </div>
+  </div>
+</section>
+</body>
+</html>
