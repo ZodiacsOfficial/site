@@ -66,7 +66,13 @@ export function disclosureRows(locale: Locale): readonly DisclosureRow[] {
     statement: disclosureText(locale, 'economicStatement'),
     status: 'operator-attested',
     evidence: disclosureText(locale, 'economicEvidence'),
-    links: [],
+    links: [
+      {
+        label: disclosureText(locale, 'economicSnapshotsLink'),
+        href: 'https://github.com/ZodiacsOfficial/site/commits/main/public/assets/distribution.json',
+        external: true,
+      },
+    ],
   },
   {
     id: 'origin',

@@ -134,6 +134,51 @@ describe('origin-receipt evidence file', () => {
   });
 });
 
+describe('candidacy observations are reproducible and never overclaim', () => {
+  const EVIDENCE_URL = 'https://zodiacs.org/thesis/thesis-candidacy-evidence.json';
+
+  it('backs every reader-facing field with a complete evidence record', async () => {
+    const candidacy = JSON.parse(
+      await readFile(resolve(repo, 'public/thesis/thesis-candidacy.json'), 'utf8'),
+    );
+    const evidence = JSON.parse(
+      await readFile(resolve(repo, 'public/thesis/thesis-candidacy-evidence.json'), 'utf8'),
+    );
+    const criteria = Object.keys(candidacy.criteria);
+    expect(criteria).toEqual(Object.keys(evidence.criteria));
+    for (const key of criteria) {
+      const field = candidacy.criteria[key];
+      const record = evidence.criteria[key];
+      expect(field.status, key).toBe('filled');
+      expect(field.verifyUrl, key).toBe(EVIDENCE_URL);
+      // Negative observations are scoped to their search, never exhaustive zeros.
+      expect(field.value, key).not.toMatch(/(^|[^\d.])0 (verified|editorial|independent|qualifying)/i);
+      for (const required of ['definition', 'method', 'capturedAtUtc', 'exclusions', 'result'] as const) {
+        expect(typeof record[required], `${key}.${required}`).toBe('string');
+        expect(record[required].length, `${key}.${required}`).toBeGreaterThan(20);
+      }
+      expect(Array.isArray(record.sourcesSearched) && record.sourcesSearched.length > 0, key).toBe(true);
+      expect(Array.isArray(record.verificationUrls) && record.verificationUrls.length > 0, key).toBe(true);
+    }
+    for (const key of ['independentIntegrations', 'thirdPartyCitations'] as const) {
+      expect(candidacy.criteria[key].value, key).toMatch(/no qualifying/i);
+      expect(evidence.criteria[key].result, key).toMatch(/not exhaustive/i);
+    }
+    // The historical liquidity claim is exactly what the receipts support.
+    expect(evidence.criteria.liquidityPersistence.pools).toHaveLength(12);
+    for (const pool of evidence.criteria.liquidityPersistence.pools) {
+      expect(pool.pairCreatedAtPerDexscreener, pool.sign).toBe('2024-07-05');
+      expect(pool.verificationUrl, pool.sign).toContain(pool.pairAddress);
+    }
+    expect(candidacy.criteria.liquidityPersistence.value).toMatch(/not archived/i);
+    expect(candidacy.criteria.liquidityPersistence.value).not.toMatch(/persisted since|live since/i);
+    // The archive count is backed by the embedded CDX rows.
+    const cdxRows = evidence.criteria.archiveContinuity.cdxRows;
+    expect(Array.isArray(cdxRows)).toBe(true);
+    expect(candidacy.criteria.archiveContinuity.value).toContain(`${cdxRows.length} captures`);
+  });
+});
+
 describe('registry disclosure contract', () => {
   it('publishes every required disclosure row exactly once', () => {
     expect(DISCLOSURE_ROWS.map((row) => row.id)).toEqual(ROW_IDS);
@@ -149,6 +194,31 @@ describe('registry disclosure contract', () => {
     }
     expect(statusText('en', 'operator-attested')).toBe(EN['disclosure.statusAttested']);
     expect(EN['disclosure.statusAttested']).toMatch(/not independently verified/i);
+    // The operator statement is the owner's final confirmation, verbatim:
+    // surface control answered directly, no analogy, no unverifiable negative,
+    // and none of the superseded hedged wording.
+    const operator = DISCLOSURE_ROWS.find((row) => row.id === 'operator')!;
+    expect(operator.statement).toContain('I personally control the zodiacs.org domain, repository, deployments, and the Registry content published there');
+    expect(operator.statement).toContain('I do not control astrofolio.xyz, its official channels, token deployment or administrative authorities, treasury, liquidity, or market activity');
+    expect(operator.statement).toContain('No person, account, or organization responsible for zodiacs.org also controls those Astrofolio surfaces');
+    expect(operator.statement).not.toMatch(/bitcoin/i);
+    expect(operator.evidence).not.toContain('No public record identifies');
+    // The economic row pairs the attested holdings statement with the
+    // publicly verifiable distribution figures, without refusal framing.
+    const economic = DISCLOSURE_ROWS.find((row) => row.id === 'economic-interest')!;
+    expect(economic.statement).toContain('holding positions in one or more of the twelve Registry assets');
+    expect(economic.evidence).toContain('ranged from 23.0% to 30.6%');
+    expect(economic.evidence).toContain('median of 27.2%');
+    expect(economic.evidence).toContain('checked against the published snapshots and public chain records');
+    expect(economic.links.map((link) => link.href)).toEqual([
+      'https://github.com/ZodiacsOfficial/site/commits/main/public/assets/distribution.json',
+    ]);
+    for (const row of [operator, economic]) {
+      const text = `${row.statement} ${row.evidence}`;
+      expect(text).not.toMatch(/partial, without specifying/i);
+      expect(text).not.toMatch(/did not authorize|declined/i);
+      expect(text).not.toMatch(/evenly distributed/i);
+    }
     // No row is pending, and no operator scaffolding remains.
     expect(DISCLOSURE_ROWS.some((row) => row.status === 'pending')).toBe(false);
     expect(DISCLOSURE_ROWS.every((row) => !`${row.statement} ${row.evidence}`.includes('[OPERATOR'))).toBe(true);

@@ -9,8 +9,15 @@
  * standing pending chip. Idempotent: re-running against unchanged JSONs is a
  * no-op.
  *
- * Run after `npm run data:disclosure` (or any manual JSON edit):
- *   node scripts/bake-thesis-disclosure-static.mjs
+ * Modes:
+ *   node scripts/bake-thesis-disclosure-static.mjs          # write the baked page
+ *   node scripts/bake-thesis-disclosure-static.mjs --check  # fail if the page
+ *     diverges from the JSONs (wired into postbuild; reads only local files,
+ *     never refreshes evidence)
+ *
+ * `npm run data:disclosure` chains the write mode, so any reviewed refresh
+ * re-bakes automatically; a manual JSON edit without a re-bake fails the
+ * build's --check gate.
  */
 import { readFile, writeFile } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
@@ -78,9 +85,12 @@ function spanExtent(html, openStart) {
   return cursor;
 }
 
-let html = await readFile(pagePath, 'utf8');
+const CHECK = process.argv.includes('--check');
+const original = await readFile(pagePath, 'utf8');
+let html = original;
 let baked = 0;
 let latest = null;
+const divergent = [];
 
 for (const { id, json, tracksUpdated } of SECTIONS) {
   const data = JSON.parse(await readFile(resolve(root, json), 'utf8'));
@@ -98,6 +108,7 @@ for (const { id, json, tracksUpdated } of SECTIONS) {
     if (tracksUpdated && field?.asOf && field.status !== 'pending' && (!latest || field.asOf > latest)) {
       latest = field.asOf;
     }
+    if (html.slice(spanStart, spanEnd) !== replacement) divergent.push(path);
     html = html.slice(0, spanStart) + replacement + html.slice(spanEnd);
     baked += 1;
     end += replacement.length - (spanEnd - spanStart);
@@ -122,5 +133,15 @@ if (latest) {
   );
 }
 
-await writeFile(pagePath, html, 'utf8');
-console.log(`baked ${baked} disclosure slots; instrument last updated ${latest ?? 'n/a'}`);
+if (CHECK) {
+  if (html !== original) {
+    console.error(`thesis static disclosure drift: ${divergent.length} slot(s) diverge from the JSON sources`);
+    for (const path of divergent.slice(0, 8)) console.error(`  · ${path}`);
+    console.error('run: node scripts/bake-thesis-disclosure-static.mjs');
+    process.exit(1);
+  }
+  console.log(`thesis static disclosure: ${baked} slots match the JSON sources`);
+} else {
+  await writeFile(pagePath, html, 'utf8');
+  console.log(`baked ${baked} disclosure slots; instrument last updated ${latest ?? 'n/a'}`);
+}

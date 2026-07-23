@@ -79,8 +79,9 @@ try {
     (await page.locator('#the-instrument a.disc-verify').count()) >= 100);
   const scoreVals = await page.locator('#the-candidacy .score .disc-val').count();
   check('candidacy scoreboard carries five observed readings', scoreVals === 5, `${scoreVals} values`);
-  check('candidacy readings stay honest about zeros',
-    /0 verified/.test(await page.locator('#the-candidacy .score').textContent() ?? ''));
+  const scoreText = await page.locator('#the-candidacy .score').textContent() ?? '';
+  check('candidacy readings stay search-scoped, not exhaustive',
+    /no qualifying/i.test(scoreText) && !/(^|[^\d.])0 (verified|editorial)/i.test(scoreText));
   const tcard = await page.locator('.tcard').textContent() ?? '';
   check('test card is preregistered, not pending', /PREREGISTERED/.test(tcard) && !/PENDING/i.test(tcard.replace(/PREREGISTERED[^.]*/, '')));
   check('test card admits the test has not begun', /has not begun/.test(tcard));

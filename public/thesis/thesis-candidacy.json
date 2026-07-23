@@ -1,35 +1,35 @@
 {
-  "$comment": "Maintainer-editable candidacy evidence for /thesis Section V. Same contract as thesis-disclosure.json: pending fields render the amber chip; filled fields render the value, the asOf date, and a Verify link when given. Values are observations, not claims: zeros and baselines are published as zeros and baselines. Counting rules: Zodiacs.org, Astrofolio, the SDK's own examples, and owner-controlled accounts are never counted as independent; automated wallet/aggregator listings are reported but not counted as citations. Methods and capture evidence for the 2026-07-23 readings are recorded in the closeout release notes.",
+  "$comment": "Maintainer-editable candidacy evidence for /thesis Section V. Same contract as thesis-disclosure.json: pending fields render the amber chip; filled fields render the value, the asOf date, and a Verify link. Values are observations scoped to their defined searches — negative results say 'no qualifying results found', never an exhaustive zero. The complete measurement definitions, sources, queries, UTC capture times, exclusions, and raw capture records live in thesis-candidacy-evidence.json (each row's Verify link); refreshing either file is a reviewed action.",
   "criteria": {
     "independentIntegrations": {
-      "value": "0 verified · public code and package search for consumers of this registry or @zodiacs/sdk, excluding Zodiacs.org, Astrofolio, and the SDK's own examples · @zodiacs/sdk: 81 npm downloads in 30 days, no public dependents found",
+      "value": "no qualifying results found in the defined search · public package-registry and web queries for consumers of this registry or @zodiacs/sdk, excluding Zodiacs.org, Astrofolio, and the SDK's own examples · @zodiacs/sdk: 81 npm downloads in 30 days",
       "status": "filled",
       "asOf": "2026-07-23",
-      "verifyUrl": "https://www.npmjs.com/package/@zodiacs/sdk"
+      "verifyUrl": "https://zodiacs.org/thesis/thesis-candidacy-evidence.json"
     },
     "thirdPartyCitations": {
-      "value": "0 editorial citations found · automated wallet and aggregator listings of the addresses exist (e.g. Solflare token pages) and are not counted",
+      "value": "no qualifying editorial citations found in the defined searches · automated wallet and aggregator listings of the addresses were observed and are excluded by definition",
       "status": "filled",
       "asOf": "2026-07-23",
-      "verifyUrl": "https://www.solflare.com/prices/aries/GhFiFrExPY3proVF96oth1gESWA5QPQzdtb8cy8b1YZv/"
+      "verifyUrl": "https://zodiacs.org/thesis/thesis-candidacy-evidence.json"
     },
     "holderDispersion": {
-      "value": "baseline established, no widening yet · weekly public snapshots since 2026-06-29 · median top-10 share 26.6% → 27.2% over four weeks (slightly more concentrated)",
+      "value": "baseline established, no widening yet · four weekly public snapshots since 2026-06-29 · median top-10 share 26.6% → 27.2% (slightly more concentrated)",
       "status": "filled",
       "asOf": "2026-07-23",
-      "verifyUrl": "https://github.com/ZodiacsOfficial/site/commits/main/public/assets/distribution.json"
+      "verifyUrl": "https://zodiacs.org/thesis/thesis-candidacy-evidence.json"
     },
     "liquidityPersistence": {
-      "value": "12 of 12 canonical Raydium pools live since 2024-07-05 (748 days) · $11.9k–17.8k depth at capture · 24h volume $10–158 · persistent but thin; historical depth between captures not independently archived",
+      "value": "12 of 12 canonical Raydium pools live at the 2026-07-23 capture · $11.9k–17.8k depth, $10–158 of 24h volume · pair creation 2024-07-05 per Dexscreener · continuous historical depth was not archived",
       "status": "filled",
       "asOf": "2026-07-23",
-      "verifyUrl": "https://dexscreener.com/solana/GhFiFrExPY3proVF96oth1gESWA5QPQzdtb8cy8b1YZv"
+      "verifyUrl": "https://zodiacs.org/thesis/thesis-candidacy-evidence.json"
     },
     "archiveContinuity": {
-      "value": "own version archive continuous in the public repository since 2024 · Internet Archive coverage sparse: 9 captures since 2024-01-01, largest gap 166 days, none in the last 12 months",
+      "value": "own version archive continuous in the public repository since 2024 · Internet Archive: 9 captures since 2024-01-01, largest gap 166 days, none in the 12 months before the 2026-07-23 query",
       "status": "filled",
       "asOf": "2026-07-23",
-      "verifyUrl": "https://web.archive.org/web/2024*/zodiacs.org"
+      "verifyUrl": "https://zodiacs.org/thesis/thesis-candidacy-evidence.json"
     }
   }
 }
