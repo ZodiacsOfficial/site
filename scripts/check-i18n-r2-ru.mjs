@@ -293,13 +293,18 @@ const fontFiles = [
   'eb-garamond-cyrillic-500-normal.woff2', 'jetbrains-mono-cyrillic-400-500.woff2',
 ];
 let heroPosterBytes = 0;
+let mobileHeroPosterBytes = 0;
 try {
   heroPosterBytes = (await stat(resolve(repo, 'public/assets/hero/zodiacs-hero-poster-ru.avif'))).size;
   if (heroPosterBytes > 48 * 1024) {
     fail(`Russian homepage poster is ${heroPosterBytes} bytes; budget is 49152`);
   }
+  mobileHeroPosterBytes = (await stat(resolve(repo, 'public/assets/hero/zodiacs-hero-poster-ru-mobile.avif'))).size;
+  if (mobileHeroPosterBytes > 33 * 1024) {
+    fail(`Russian mobile homepage poster is ${mobileHeroPosterBytes} bytes; budget is 33792`);
+  }
 } catch {
-  fail('Russian homepage poster is missing');
+  fail('Russian homepage poster or mobile derivative is missing');
 }
 let fontBytes = 0;
 for (const name of fontFiles) {
@@ -325,4 +330,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log(`i18n-r2-ru: OK — 26 indexable routes + noindex 404, reciprocal discovery, ${fontBytes} font bytes, ${heroPosterBytes} byte homepage poster`);
+console.log(`i18n-r2-ru: OK — 26 indexable routes + noindex 404, reciprocal discovery, ${fontBytes} font bytes, ${heroPosterBytes}/${mobileHeroPosterBytes} byte desktop/mobile homepage posters`);
