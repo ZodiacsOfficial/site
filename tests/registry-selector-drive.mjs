@@ -286,6 +286,43 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       }
     }
 
+    for (const width of [360, 390]) {
+      const fallbackPage = await browser.newPage({
+        viewport: { width, height: 844 },
+        javaScriptEnabled: false,
+      });
+      await fallbackPage.goto(`${baseURL}/registry/`, { waitUntil: 'domcontentloaded' });
+      const fallbackState = await fallbackPage.locator('.static-site__nav').evaluate((nav) => ({
+        pageWidth: document.documentElement.scrollWidth,
+        viewportWidth: innerWidth,
+        links: [...nav.querySelectorAll('a')].map((link) => {
+          const rect = link.getBoundingClientRect();
+          return {
+            label: link.textContent?.trim() ?? '',
+            left: rect.left,
+            right: rect.right,
+            width: rect.width,
+          };
+        }),
+      }));
+      check(
+        `Registry no-JavaScript fallback at ${width}px has no document overflow`,
+        fallbackState.pageWidth <= fallbackState.viewportWidth + 1,
+        `${fallbackState.pageWidth}/${fallbackState.viewportWidth}`,
+      );
+      check(
+        `Registry no-JavaScript fallback at ${width}px keeps every primary link onscreen`,
+        fallbackState.links.length === 7
+          && fallbackState.links.every((link) => (
+            link.width > 0
+            && link.left >= -1
+            && link.right <= fallbackState.viewportWidth + 1
+          )),
+        JSON.stringify(fallbackState.links),
+      );
+      await fallbackPage.close();
+    }
+
     const homeMaterialPage = await browser.newPage({ viewport: { width: 390, height: 844 } });
     const registryMaterialPage = await browser.newPage({ viewport: { width: 390, height: 844 } });
     await Promise.all([

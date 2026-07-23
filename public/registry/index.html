@@ -3248,6 +3248,17 @@
       text-transform: uppercase;
       color: var(--ink-mute);
     }
+    @media (max-width: 600px) {
+      .static-site__nav {
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        gap: 12px 18px;
+      }
+      .static-site__nav a {
+        min-width: 0;
+        white-space: normal;
+      }
+    }
     .static-site__hero {
       padding: 62px 0 46px;
     }

@@ -145,17 +145,28 @@ If the publishable key is rotated:
 
 Do not add a service-role key to Vercel for the browser sync path.
 
-## Remaining Manual QA
+## Production Account-Sync Acceptance
 
-These require a real mailbox/session or two device contexts and should be done
-before marking account sync fully accepted:
+The real mailbox and two-device acceptance was completed on 2026-07-23 against
+production SHA `ad91e7ebb2987067e9b7258224fa94bf7702cc45`, using only the
+approved `admin@zodiacs.org` account:
 
-- Magic-link round trip on `https://zodiacs.org/profile/`.
-- Save chart signed out, sign in, confirm remote upload.
-- Sign in on a second browser/device, confirm the chart appears.
-- Rename on one device, sync on the second, confirm latest name wins.
-- Delete on one device, sync on the second, confirm the chart disappears.
-- Sign out and confirm local-only saves still work.
+- A clean signed-out browser saved a temporary chart locally before sign-in.
+- The first magic link was requested at `2026-07-23T14:33:46.020Z`, arrived in
+  the approved mailbox, completed the `/profile/` round trip, and uploaded the
+  local chart.
+- A second clean browser began with zero local charts. Its magic link was
+  requested at `2026-07-23T14:36:55.246Z`; after sign-in, the uploaded chart
+  restored from the account.
+- Renaming the temporary chart in the first browser and syncing the second
+  reproduced the new name there.
+- Deleting it in the second browser and syncing the first removed it there.
+  The temporary chart was removed from both local contexts and the account.
+- After signing out, the first browser saved and removed a second temporary
+  local-only chart successfully.
+- Both browser contexts completed without page or console errors. No address
+  other than the approved admin mailbox was used, and the existing canary chart
+  was not changed.
 
 ## Since this was written (2026-07-14 addendum)
 
