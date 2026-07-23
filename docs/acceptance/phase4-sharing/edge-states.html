@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Proof — terminal and degraded arrival states</title>
+<link rel="stylesheet" href="proof.css">
+</head>
+<body>
+<header class="proof-head">
+  <span class="kicker">Phase 4 sharing loop · proof 7</span>
+  <h1>Invalid, closed, used, feature-off, offline, loading, server-error, no-JS</h1>
+  <p>Handoff §2.3 states 1 and 5–10 with §3.3 strings. Every terminal state keeps the page fully usable — the plain calculator always renders beneath. Revoked and expired share one calm rendering; a used link tells a late holder nothing about A.</p>
+</header>
+
+<section class="board">
+  <div class="board__note"><strong>Loading and offline.</strong> The loading frame reserves the ready card's height (zero CLS). Offline offers one retry; the retry is single-flight.</div>
+  <div class="board__stage">
+    <div class="mock mock--narrow" style="min-height:150px">
+      <p class="status-line">Opening the invitation…</p>
+    </div>
+    <div class="mock mock--narrow">
+      <h3>You're offline.</h3>
+      <p>Opening an invitation needs a connection once, to fetch their side. Reconnect and try again.</p>
+      <span class="btn btn--ghost">Try again</span>
+    </div>
+  </div>
+</section>
+
+<section class="board">
+  <div class="board__note"><strong>Invalid · closed · used.</strong> arrInvalid*, arrClosed* (revoked and expired, one rendering — never a slammed door), arrUsed* (no label, sign, or positions in the response).</div>
+  <div class="board__stage">
+    <div class="mock mock--narrow">
+      <h3>This invitation link isn't right.</h3>
+      <p>It may have been copied incompletely. Ask them to send a fresh one — or read any two charts below.</p>
+    </div>
+    <div class="mock mock--narrow">
+      <h3>This invitation has closed.</h3>
+      <p>Invitations close once they're read, after 14 days, or when the person who made one ends it. Ask them for a fresh link — or read any two charts below.</p>
+    </div>
+    <div class="mock mock--narrow">
+      <h3>This invitation was already used.</h3>
+      <p>It carried one reading, and that reading has happened. If that was you, your comparison may still be saved where you read it. Otherwise, ask for a fresh link — or read any two charts below.</p>
+    </div>
+  </div>
+</section>
+
+<section class="board">
+  <div class="board__note"><strong>Server error / feature-off while links circulate.</strong> One rendering (arrDown*): the link itself may be fine. Retry re-POSTs open.</div>
+  <div class="board__stage">
+    <div class="mock mock--narrow">
+      <h3>Invitations aren't reachable right now.</h3>
+      <p>The link itself may be fine. Try again in a little while — or read any two charts below.</p>
+      <span class="btn btn--ghost">Try again</span>
+    </div>
+    <div class="mock">
+      <p class="mono" style="margin-bottom:10px">— /compatibility/ noscript block, flag-on EN build —</p>
+      <div class="notice notice--quiet">
+        <p class="fine">The comparison runs in your browser, so this page needs JavaScript to compute anything. Invitation links open here too, and need JavaScript for the same reason.</p>
+      </div>
+      <p class="board__note" style="margin:12px 0 0"><strong>No-JS</strong> · noscriptInviteLine appended at build time only when the UI flag is on and the locale is EN; flag-off builds stay byte-identical (carried A5 rule). The /c/ shell reaches this page by meta refresh without JavaScript.</p>
+    </div>
+  </div>
+</section>
+</body>
+</html>
