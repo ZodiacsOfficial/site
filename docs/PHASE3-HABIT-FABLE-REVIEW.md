@@ -22,6 +22,16 @@ admin-only Daily Email bootstrap. The review-time validation and
 non-action statements in §§5–6 remain Fable's historical record; current
 external-gate state is recorded in §2 and the handoff in §4.
 
+Operator formal-closure update (2026-07-23): every external Phase 3 gate
+is now closed with live evidence. Three distinct Daily Email editions
+reached the approved admin test address; a signed chart-tier unsubscribe
+left the independently confirmed Sun-sign tier active and the selector
+resumed it; the natural Mercury-direct Sky Alert received provider HTTP
+`201`; and a same-day replay returned `duplicate=1` with zero additional
+sends. The exact record is in §§2, 4, and 5. Public Daily Email enrollment
+and public Sky-alert UI remain off, the push test allowlist remains in
+place, and Phase 4 has not begun.
+
 ## 0. Closeout verdict
 
 **Every implementation finding from the interim review is resolved on
@@ -34,15 +44,14 @@ are hereby blessed (§3). All committed gates pass on the baseline
 (`npm run build && npm run check && npm test` → 168 files, **1273 tests**,
 exit 0), including 94 new tests over the interim candidate.
 
-**Phase 3 is implementation-complete but not release-complete.** What
-remains is exclusively external evidence, not code: two further distinct
-Daily Email test-list editions plus the tier-isolation/resume proof, and
-the real scheduled Sky-alert canary. Postal approval, the approved sender
-address, admin double opt-in, and the first real Sun-sign edition are now
-closed. Activation remains deliberately scoped: public Daily Email
-enrollment and public Sky-alert UI are off, while each scheduled sender is
-restricted to its explicit canary allowlist. Nothing in this review
-substitutes for the SETUP.md release evidence.
+**Phase 3 is implementation- and release-complete.** The remaining
+external evidence named in Fable's 2026-07-21 review has now been obtained
+without synthetic dates, backdating, broad delivery, or direct database
+edits. Activation remains deliberately scoped after closure: public Daily
+Email enrollment and public Sky-alert UI are off; the Daily Email canary
+sender was disabled after its third qualifying receipt; and push remains
+restricted to its explicit test allowlist. The evidence below satisfies
+the Phase 3 Definition of Done without authorizing Phase 4.
 
 ## 1. What was verified and how
 
@@ -119,13 +128,13 @@ Public flags stay off pending the external gates below; server-side/test
 sender capability is canary-scoped, which is the correct state, not a
 finding.
 
-### Pending external evidence gates (not defects)
+### External evidence gates (not defects)
 
 | Gate | State | What it blocks |
 | --- | --- | --- |
 | Postal Annex approval and sender address | **Closed.** Mailbox approved; GitHub `DAILY_EMAIL_POSTAL_ADDRESS` is `Zodiacs.org · 5013 S Louise Ave · Unit #943 · Sioux Falls, SD 57108`; the first delivered email rendered it verbatim. | Nothing further. Public enrollment remains independently gated. |
-| Live daily-email ladder (SETUP §"Daily-email verification and release" 1–7) | **In progress: 1/3 distinct editions.** The live Sun-sign path is operational: admin `admin@zodiacs.org` completed scanner-safe DOI for Aries; dry run 29849560911 passed; real run 29849683804 sent the 2026-07-21 edition (`considered=1 reserved=1 sent=1 failed=0`); Gmail verified content, authentication, unsubscribe, and address. Temporary bootstrap variables were removed and Vercel public enrollment remains off. | Two further genuine distinct-edition canaries, the recorded live migration/RLS checklist, per-tier unsubscribe isolation, and chart-stop → confirmed-Sun resume evidence. GitHub test-list sending stays scoped to the admin address; broad/public delivery remains locked. |
-| Real Sky-alert scheduled-event canary | Pending, monitored asynchronously for the 2026-07-23 Mercury-direct event. Vercel server `PUSH_ENABLED=1`; public `PUBLIC_WEB_PUSH_ENABLED` is absent; GitHub delivery is restricted by `PUSH_TEST_SUBSCRIPTION_IDS=1`. | Public Sky-alert UI and clearing the test allowlist. |
+| Live daily-email ladder (SETUP §"Daily-email verification and release" 1–7) | **Closed: 3/3 distinct editions.** Runs `29849683804` (2026-07-21 Sun sign), `29908738347` (2026-07-22 chart), and `29995921748` (2026-07-23 chart) each reported `considered=1 reserved=1 sent=1 failed=0 duplicate=0`; the delivery ledger holds three matching `sent` rows and the admin mailbox holds all three messages. A signed chart unsubscribe removed only `daily_chart_preferences`, retained the confirmed Aries row, and dry-run `29998119153` selected `sun_sign` with no send. At `2026-07-23T10:16:10Z`, anonymous reads against all nine Phase 3 tables returned `401`, matching the committed RLS/grant contract. GitHub test sending was disabled at `2026-07-23T10:12:34Z`; Vercel public enrollment remains off. | Nothing in Phase 3. A future public enrollment launch still requires separate authorization. |
+| Real Sky-alert scheduled-event canary | **Closed.** Natural run `29995058826` selected and sent `mercury-stations-direct-2026-07-23` (`reserved=1 sent=1 failed=0 duplicate=0`) after live destination verification. The one schedule row was selected at `2026-07-23T09:23:29.548655Z`; the one delivery row was finalized `sent` at `2026-07-23T09:23:30Z` with provider HTTP `201`. Safe replay `29998221975` returned `reserved=0 sent=0 failed=0 duplicate=1`; the ledger remained exactly one unchanged row. Production `sw.js` remains stamped `PUSH_ENABLED = false`, and `PUSH_TEST_SUBSCRIPTION_IDS=1` remains in place. | Nothing in Phase 3. Public Sky-alert UI and allowlist removal remain a separate launch decision. |
 | Phase 1 external monitoring | Separate track | Nothing in Phase 3; listed to keep the ledgers distinct. |
 
 Phase 4 is explicitly not begun.
@@ -148,47 +157,59 @@ replacement contract. The interim review's blessed nits (station/aspect/
 eclipse alert bodies built from committed summaries; the orb-bearing
 why-line) stand.
 
-## 4. Handoff to Sol — exact next actions
+## 4. Operator formal-closure record
 
-**Current Daily Email ladder (postal approval through edition 1 closed):**
+### Daily Email
 
-1. Preserve the immutable first-edition evidence: release
-   `b3e3c80fc309486fae7814f8ceb47ac81753ce45`, dry run 29849560911,
-   real run 29849683804, and the genuine 2026-07-21 admin Gmail receipt.
-2. Keep Vercel Production `DAILY_EMAIL_ENABLED` and every temporary
-   `DAILY_EMAIL_ADMIN_BOOTSTRAP_*` variable absent. Keep GitHub
-   `DAILY_EMAIL_ENABLED=1` only while the workflow remains hard-coded to
-   `DAILY_EMAIL_COHORT=test` and the test allowlist contains only the admin
-   address.
-3. Record the remaining live migration/RLS checklist, then gather two more
-   real sends on distinct publication dates; duplicates and synthetic
-   `--at` runs never count. Complete the chart-tier suppression/unsubscribe
-   → confirmed-Sun resume sequence and prove each first-party unsubscribe
-   revokes only its named tier. Record exact runs, provider receipts,
-   mailbox evidence, and consent state in `PLAN.md`.
-4. After the evidence closes, remove the GitHub test-sender flag. Enable
-   Vercel public enrollment only under a separate explicit release
-   decision; the `all` cohort remains locked behind a separately approved
-   workflow change regardless.
+| Edition | Tier | Run / release SHA | Provider receipt | Sent UTC |
+| --- | --- | --- | --- | --- |
+| 2026-07-21 | `sun_sign` | `29849683804` / `b3e3c80fc309486fae7814f8ceb47ac81753ce45` | `22509174-e862-483f-ac2d-c3ad81d1b746` | `2026-07-21T16:41:50Z` |
+| 2026-07-22 | `chart` | `29908738347` / `bcedd5374dc69d70ed9c9c43b6bf6981db56b674` | `d83e6991-5993-492d-9e22-c51124ce7b82` | `2026-07-22T09:38:30Z` |
+| 2026-07-23 | `chart` | `29995921748` / `90b724722e3d8567647ab04397089fede7b091ea` | `c67dc5ef-7c41-428b-a94e-dadddadff5c6` | `2026-07-23T09:35:49Z` |
 
-**After the Sky-alert scheduled-event canary:**
+Each run used a distinct genuine publication, delivered only to
+`admin@zodiacs.org`, ended
+`considered=1 reserved=1 sent=1 failed=0 duplicate=0`, and has a matching
+admin-mailbox receipt and `daily_email_deliveries` row.
 
-1. The canary path is already active and restricted to subscription 1.
-   Let the schedule trigger naturally on 2026-07-23 (Mercury turns direct);
-   do not fabricate or replay a date. `verifyEventLive` gates on the live
-   destination and the claims ledger records the attempt. The next natural
-   fallback window is 2026-07-29 (Buck Moon).
-2. On success, record in PLAN.md: the `sky-alert:` report line
-   (`schedule=selected`, sent/capped counts), the provider status, the
-   received notification (device screenshot), the `push_alert_schedule`
-   and `push_delivery_claims` rows, and a same-day re-dispatch showing
-   `duplicate` — proving the caps ledger, not asserting it.
-3. Only then set Vercel `PUBLIC_WEB_PUSH_ENABLED=1` and clear
-   `PUSH_TEST_SUBSCRIPTION_IDS`; Vercel/GitHub server delivery flags are
-   already on for the test path. On any failure, public UI stays off and
-   the claims table is the failure receipt; fix forward, re-canary.
-4. Independently of both: carry P3-1…P3-3 into the next sanctioned
-   copy/polish pass. OBS-1 is resolved as intentional staging.
+The Aries Sun-sign double opt in is recorded at
+`2026-07-21T16:34:36.291978Z`; the chart tier separately completed double
+opt in before the 2026-07-22 delivery. The production chart unsubscribe
+then removed the sole `daily_chart_preferences` row while the confirmed
+Aries row remained unchanged. Dry-run `29998119153` selected that
+surviving `sun_sign` recipient and ended
+`considered=1 reserved=0 sent=0 failed=0 duplicate=0 dryRun=1`. No consent
+or database row was fabricated. GitHub `DAILY_EMAIL_ENABLED` was removed
+at `2026-07-23T10:12:34Z`; Vercel public enrollment and the dormant
+all-recipient interlock remain off.
+
+### Sky Alert
+
+Natural run `29995058826` on
+`90b724722e3d8567647ab04397089fede7b091ea` verified the live destination
+and delivered `mercury-stations-direct-2026-07-23`:
+`schedule=selected considered=1 reserved=1 sent=1 failed=0 duplicate=0`.
+The schedule row is rank 4, selected at
+`2026-07-23T09:23:29.548655Z`. The delivery claim is `sent`, claimed at
+`2026-07-23T09:23:29Z`, finalized at `2026-07-23T09:23:30Z`, with provider
+HTTP `201`.
+
+Safe replay `29998221975` verified the same live destination and ended
+`schedule=selected considered=1 reserved=0 sent=0 failed=0 duplicate=1`.
+The post-replay ledger remained one unchanged claim, proving that the
+database guard—not operator restraint—prevented a second send. Public
+`sw.js` remains stamped `PUSH_ENABLED = false`; the test subscription
+allowlist remains `1`.
+
+### Live data boundary
+
+Both Phase 3 migration object sets are live. At
+`2026-07-23T10:16:10Z`, the publishable browser credential received `401`
+for all nine Phase 3 tables, while the successful allowlisted workflows
+used the service-only functions and ledgers. That is the expected live
+RLS/revoked-grant contract. No public enrollment, public push UI, general
+send, direct consent edit, Registry/localization/indexing change, or Phase
+4 work was performed.
 
 ## 5. Validation record (Fable's review-time closeout)
 
@@ -205,8 +226,23 @@ why-line) stand.
 | Live `/horoscopes/leo/` | no capture markup (flag-off/unconfigured state; matches local no-env build) → OBS-1 |
 | Operator integration base | `b3e3c80fc309486fae7814f8ceb47ac81753ce45` (PR #132); post-merge Site Check 29847182817 passed |
 | First real Daily Email canary | 2026-07-21, run 29849683804, `considered=1 reserved=1 sent=1 failed=0`; authenticated admin Gmail receipt verified |
+| Second and third Daily Email canaries | 2026-07-22 run `29908738347` and 2026-07-23 run `29995921748`; both `considered=1 reserved=1 sent=1 failed=0 duplicate=0`, with matching provider, ledger, and mailbox receipts |
+| Signed chart unsubscribe | Production success page; chart preference count `1 → 0`; confirmed Aries preference retained at `2026-07-21T16:34:36.291978Z` |
+| Chart-stop → Sun-sign resume | Dry-run `29998119153`, `dry-run sun_sign ad***@zodiacs.org`, `considered=1 reserved=0 sent=0 failed=0 duplicate=0 dryRun=1` |
+| Live Phase 3 RLS/grant check | `2026-07-23T10:16:10Z`; nine of nine Phase 3 tables denied publishable-key reads with `401`; server-only workflows remained operational |
+| Natural Sky Alert canary | Run `29995058826`; Mercury direct selected and sent once; provider HTTP `201`; one matching schedule row and one `sent` delivery claim |
+| Sky Alert duplicate proof | Run `29998221975`; `reserved=0 sent=0 failed=0 duplicate=1`; post-run ledger remained one unchanged claim |
+| Public release guardrails after closure | GitHub Daily Email test sender removed; Vercel public Daily Email enrollment absent; live worker `PUSH_ENABLED = false`; push test allowlist retained |
+| Operator focused Vitest closure suite | 20 files, **202/202 tests passed** |
+| Operator PostgreSQL 17 Phase 3 suite | Fresh-schema, concurrency, RLS/grants, consent isolation, durable delivery, and legacy push upgrade fixtures all passed |
+| Operator post-chart browser gate | **291/291 checks passed** |
+| Operator push browser gate | Flags-on mocked browser/API drive: **ALL PASS**; no real subscription or send |
+| Operator PWA browser gate | **26/26 checks passed**, including installability, offline routes, and never-cached Registry authority JSON |
+| Operator production build and checks | **3,670 pages**, `check-dist`, Russian R2, thesis drift, schema (2,508 JSON-LD documents / 9,857 graph nodes), and bundle budgets passed; Astro check reported 0 errors |
 
-This closeout changed only this document. No new proofs were added under
+Fable's original review-time closeout changed only this document. The
+operator's formal closure updates this record and `PLAN.md`; it changes no
+product code or public flag. No new proofs were added under
 `docs/acceptance/phase3-habit/review/` — the surfaces the interim evidence
 covered are now gated by CI drives (`post-chart-daily-drive`, `pwa-drive`,
 `push-drive`, the SQL suites), which is stronger than static re-captures;
@@ -217,6 +253,7 @@ the interim evidence remains available at commit `eea5cab`.
 This statement records Fable's closeout execution only: Fable pushed,
 merged, deployed, configured, and sent nothing; its only change was this
 document on an isolated local review branch. Subsequent operator actions
-(PR #132, approved postal configuration, admin DOI, and the first Daily
-Email canary) are reported above and are not attributed to Fable. Phase 4
-was not begun.
+(PR #132, approved postal configuration, admin DOI, the three Daily Email
+canaries, signed chart unsubscribe, resume proof, and the Sky Alert
+delivery/duplicate proof) are reported above and are not attributed to
+Fable. Phase 4 was not begun.
