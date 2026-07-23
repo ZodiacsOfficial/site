@@ -1,8 +1,9 @@
 # Zodiacs.org household-name program
 
-Last updated: 2026-07-22
+Last updated: 2026-07-23
 
-Active phase: **Phase 1 — The Daily Horoscope Engine**
+Active phase: **Phase 1 external closure monitoring. Phase 3 is formally
+complete; Phase 4 has not begun.**
 
 ## Authority and operating rule
 
@@ -167,6 +168,86 @@ New work reuses these tokens. It introduces no new decorative color, chrome lang
 | 5. People directory | Phase 4 complete | 500 people + 366 birthday pages live; schema/sitemap complete; 20 sampled charts verified; provenance and data-quality label on every person; no thin indexed pages. |
 | 6. Ask Zodiacs | Phase 5 complete | Grounded chat behind flag; ≥90% internal-link sample; written red-team passes; rate limit and disclosure proven; static fallback useful. |
 
+## Phase 3 formal closure
+
+Phase 3 is **complete as of 2026-07-23**. The implementation review has
+no open P0 or P1 defect, both reviewed migrations are live with their
+server-only security boundary, the three-edition Daily Email canary
+completed, consent isolation and chart-stop → Sun-sign resume were proved
+against production state, and the real Mercury-direct Sky Alert was
+delivered once and rejected as a duplicate on replay. Phase 4 remains
+closed.
+
+### Live schema and consent evidence
+
+- The live project contains the consent, confirmation, delivery,
+  subscription, schedule, and claim objects introduced by
+  `20260720074516_phase3_habit_layer.sql` and
+  `20260720145526_phase3_delivery_guards.sql`. The real Daily Email and Sky
+  Alert workflows successfully used those objects.
+- At `2026-07-23T10:16:10Z`, anonymous/publishable-key reads against all
+  nine Phase 3 tables returned `401`: `daily_chart_preferences`,
+  `daily_sun_preferences`, `daily_sun_confirmation_requests`,
+  `daily_sun_confirmation_rate_limits`, `daily_email_deliveries`,
+  `push_subscriptions`, `daily_chart_confirmation_send_claims`,
+  `push_alert_schedule`, and `push_delivery_claims`. The privileged
+  scheduling RPC is not exposed to the public API. This matches the
+  committed RLS, revoked public grants, and service-role-only execution
+  contract.
+- The admin test address received the real Aries double-opt-in email on
+  2026-07-21; the live row records confirmation at
+  `2026-07-21T16:34:36.291978Z`. The chart tier separately completed its
+  own double opt in before the 2026-07-22 chart delivery. No preference
+  was manufactured or edited directly.
+- On 2026-07-23 the signed chart-tier unsubscribe returned its production
+  success page. A fresh live read changed
+  `daily_chart_preferences` from one row to zero while the confirmed Aries
+  `daily_sun_preferences` row remained present with its original
+  confirmation timestamp.
+- Workflow run `29998119153` then selected exactly that surviving
+  `sun_sign` tier for `admin@zodiacs.org` in dry-run mode:
+  `considered=1 reserved=0 sent=0 failed=0 duplicate=0 dryRun=1`.
+  This proves chart stop → confirmed Sun-sign resume without sending a
+  fourth message.
+
+### Three qualifying Daily Email editions
+
+All three editions are distinct real publication dates, delivered only to
+the approved admin test address, and have matching workflow, provider,
+mailbox, and database receipts.
+
+| Edition | Tier | Workflow / release SHA | Delivery result | Provider receipt / sent UTC | Mailbox receipt |
+| --- | --- | --- | --- | --- | --- |
+| 2026-07-21 | Sun sign (Aries) | `29849683804` / `b3e3c80fc309486fae7814f8ceb47ac81753ce45` | `considered=1 reserved=1 sent=1 failed=0 duplicate=0` | `22509174-e862-483f-ac2d-c3ad81d1b746` / `2026-07-21T16:41:50Z` | `Aries today — relationships come into focus`, received in the admin mailbox |
+| 2026-07-22 | Chart | `29908738347` / `bcedd5374dc69d70ed9c9c43b6bf6981db56b674` | `considered=1 reserved=1 sent=1 failed=0 duplicate=0` | `d83e6991-5993-492d-9e22-c51124ce7b82` / `2026-07-22T09:38:30Z` | `Your chart today — Sun opens for your natal Moon`, received in the admin mailbox |
+| 2026-07-23 | Chart | `29995921748` / `90b724722e3d8567647ab04397089fede7b091ea` | `considered=1 reserved=1 sent=1 failed=0 duplicate=0` | `c67dc5ef-7c41-428b-a94e-dadddadff5c6` / `2026-07-23T09:35:49Z` | `Your chart today — Moon challenges your natal Ascendant`, received in the admin mailbox |
+
+The GitHub test sender was disabled at `2026-07-23T10:12:34Z` after this
+evidence closed. Vercel public Daily Email enrollment remains absent, the
+workflow still has no public/all-recipient release path, and the
+unsubscribe endpoint remains live.
+
+### Sky Alert delivery and duplicate protection
+
+- Natural scheduled run `29995058826` on release
+  `90b724722e3d8567647ab04397089fede7b091ea` selected
+  `mercury-stations-direct-2026-07-23`, verified its live canonical
+  destination, and reported
+  `schedule=selected considered=1 reserved=1 sent=1 failed=0 duplicate=0`.
+- The schedule ledger contains one row for the event, rank 4, selected at
+  `2026-07-23T09:23:29.548655Z`. The delivery ledger contains one `sent`
+  row, claimed at `2026-07-23T09:23:29Z`, finalized at
+  `2026-07-23T09:23:30Z`, with provider HTTP status `201`.
+- Safe same-day replay `29998221975` on the same release passed live
+  destination verification and returned
+  `schedule=selected considered=1 reserved=0 sent=0 failed=0 duplicate=1`.
+  A post-replay live read still showed exactly one unchanged delivery
+  claim. No second notification was sent.
+- Public push remains off: the production worker is stamped
+  `PUSH_ENABLED = false`. The GitHub sender remains restricted to test
+  subscription `1`; the public UI was not enabled and the test allowlist
+  was not cleared.
+
 ## Current Phase 1 status
 
 Implementation is **85 of 85 required routes pre-rendered**: the hub plus seven surfaces for each of the twelve signs. The deterministic phrase-library renderer is the active degraded-but-shippable no-key mode; model-assisted copy remains a later quality upgrade, not a hidden claim about the current pipeline. The independent verifier checks facts, evidence, structure, periods, length, voice, safety, meaning-first openings, and distinctness without importing the renderer, builders, or generator validators.
@@ -222,6 +303,26 @@ The prior release cutover is superseded; the current hardening candidate must es
 Keep clean data and route seams for these; do not implement them inside this program.
 
 ## Change log
+
+### 2026-07-23 — Phase 3 formally complete
+
+- Closed the external Daily Email ladder with three genuine editions on
+  2026-07-21, 2026-07-22, and 2026-07-23, each backed by a successful
+  allowlisted workflow, provider receipt, delivery-ledger row, and admin
+  mailbox receipt.
+- Proved the two daily-email tiers are independent: the signed chart
+  unsubscribe removed only the chart preference, retained the confirmed
+  Aries Sun-sign preference, and the next no-send selector run resumed the
+  Sun-sign tier.
+- Closed the Sky Alert canary with the natural 2026-07-23 Mercury-direct
+  delivery, provider HTTP `201`, durable schedule/delivery rows, and a
+  same-day replay that returned `duplicate=1` and `sent=0` while leaving
+  exactly one delivery claim.
+- Re-verified the live Phase 3 schema and public-denial contract. Disabled
+  the GitHub Daily Email canary sender after the third receipt; kept public
+  Daily Email enrollment and public push UI off, and retained the push
+  test allowlist.
+- Phase 4 was not begun.
 
 ### 2026-07-22 — Russian R2 public release
 
