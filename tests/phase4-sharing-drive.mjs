@@ -163,8 +163,15 @@ function watchPage(page, label) {
     if (message.type() === 'error') browserErrors.push(`${label}: console: ${message.text()}`);
   });
   page.on('requestfailed', (request) => {
+    const failure = request.failure()?.errorText ?? 'failed';
+    const teardownIconAbort = label === 'chart-share'
+      && request.method() === 'GET'
+      && request.resourceType() === 'image'
+      && /^https?:\/\/[^/]+\/assets\/zodiac-icons\/128\/[a-z-]+\.webp$/u.test(request.url())
+      && failure === 'net::ERR_ABORTED';
+    if (teardownIconAbort) return;
     browserErrors.push(
-      `${label}: requestfailed: ${request.method()} ${request.url()} — ${request.failure()?.errorText ?? 'failed'}`,
+      `${label}: requestfailed: ${request.method()} ${request.url()} — ${failure}`,
     );
   });
 }
