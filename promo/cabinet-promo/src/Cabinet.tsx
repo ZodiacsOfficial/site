@@ -106,7 +106,15 @@ export const Cabinet = ({ waves }: { waves: CabinetWaves }) => {
             easing: OVERSHOOT,
           });
           const isGold = finish === 'gold';
-          const rim = finish === 'bronze' ? BRONZE_RIM : finish === 'silver' ? SILVER_RIM : isGold ? GOLD_RIM : null;
+          const isSilver = finish === 'silver';
+          const rim = finish === 'bronze' ? BRONZE_RIM : isSilver ? SILVER_RIM : isGold ? GOLD_RIM : null;
+          // Silver is a bigger promotion: its own stronger pop and a glint sweep.
+          const silverPop = recastPop(frame, waves.silver[index]);
+          const glintP = interpolate(frame, [waves.silver[index], waves.silver[index] + 18], [0, 1], {
+            extrapolateLeft: 'clamp',
+            extrapolateRight: 'clamp',
+            easing: SLOW,
+          });
           const badgeIn = isGold
             ? interpolate(frame, [waves.gold[index] + 5, waves.gold[index] + 12], [0, 1], {
                 extrapolateLeft: 'clamp',
@@ -132,8 +140,14 @@ export const Cabinet = ({ waves }: { waves: CabinetWaves }) => {
                 borderRadius: 18,
                 background: isGold
                   ? `radial-gradient(circle at 50% 42%, rgba(224,176,128,${0.1 + bloom * 0.08}), transparent 72%)`
-                  : 'rgba(10,12,17,0.5)',
-                boxShadow: isGold ? `0 0 ${24 + bloom * 30}px rgba(224,176,128,0.22)` : 'none',
+                  : isSilver
+                    ? `radial-gradient(circle at 50% 42%, rgba(221,227,236,${0.08 + silverPop * 0.22}), transparent 72%)`
+                    : 'rgba(10,12,17,0.5)',
+                boxShadow: isGold
+                  ? `0 0 ${24 + bloom * 30}px rgba(224,176,128,0.22)`
+                  : isSilver
+                    ? `0 0 ${18 + silverPop * 30}px rgba(221,227,236,0.3)`
+                    : 'none',
               }}
             >
               <span
@@ -197,35 +211,75 @@ export const Cabinet = ({ waves }: { waves: CabinetWaves }) => {
                   />
                 ) : (
                   <>
-                    <Img
-                      src={staticFile(`${sign.slug}.webp`)}
+                    <div
                       style={{
+                        position: 'relative',
                         width: artSize * 0.82,
                         height: artSize * 0.82,
                         borderRadius: '50%',
+                        overflow: 'hidden',
                         opacity: arriveP,
-                        scale: String((1.45 - arriveP * 0.45) * (1 + pops * 0.08)),
-                        boxShadow: rim ? `0 0 0 4px ${rim}, 0 0 18px ${rim}55` : 'none',
+                        scale: String(
+                          (1.45 - arriveP * 0.45)
+                          * (1 + (isSilver ? silverPop * 0.16 : pops * 0.08)),
+                        ),
+                        boxShadow: isSilver
+                          ? '0 0 0 5px #DDE3EC, 0 0 0 9px rgba(198,204,218,0.38), 0 0 32px rgba(221,227,236,0.65)'
+                          : rim
+                            ? `0 0 0 4px ${rim}, 0 0 16px ${rim}44`
+                            : 'none',
                       }}
-                    />
+                    >
+                      <Img
+                        src={staticFile(`${sign.slug}.webp`)}
+                        style={{
+                          width: '100%',
+                          height: '100%',
+                          filter: isSilver
+                            ? 'saturate(0.22) brightness(1.24) contrast(1.08)'
+                            : finish === 'bronze'
+                              ? 'sepia(0.5) saturate(0.85) brightness(0.98)'
+                              : 'none',
+                        }}
+                      />
+                      {isSilver && glintP < 1 && (
+                        <div
+                          style={{
+                            position: 'absolute',
+                            top: '-50%',
+                            left: 0,
+                            width: '55%',
+                            height: '200%',
+                            rotate: '22deg',
+                            translate: `${-100 + glintP * 340}% 0px`,
+                            background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.9), transparent)',
+                            opacity: 0.9 - glintP * 0.5,
+                          }}
+                        />
+                      )}
+                    </div>
                     {rim && (
                       <span
                         style={{
                           position: 'absolute',
-                          bottom: -4,
+                          bottom: isSilver ? -6 : -4,
                           right: seatW * 0.14,
-                          width: 32,
-                          height: 32,
+                          width: isSilver ? 36 : 32,
+                          height: isSilver ? 36 : 32,
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
                           borderRadius: '50%',
-                          border: `2px solid ${rim}`,
-                          background: '#0A0C11',
+                          border: isSilver ? '2px solid #EEF1F7' : `2px solid ${rim}`,
+                          background: isSilver
+                            ? 'linear-gradient(160deg, #EEF1F7, #B8C0CF)'
+                            : '#0A0C11',
                           fontFamily: SERIF,
-                          fontSize: 16,
-                          color: rim,
-                          scale: String(1 + pops * 0.25),
+                          fontWeight: 500,
+                          fontSize: isSilver ? 18 : 16,
+                          color: isSilver ? '#0A0C11' : rim,
+                          boxShadow: isSilver ? '0 0 14px rgba(221,227,236,0.6)' : 'none',
+                          scale: String(1 + (isSilver ? silverPop * 0.4 : pops * 0.25)),
                         }}
                       >
                         {finish === 'bronze' ? 'II' : 'III'}
