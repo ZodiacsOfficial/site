@@ -23,7 +23,7 @@ const FINISH_CAPTION: Record<Exclude<Finish, 'reserved'>, string> = {
   pastel: 'I · PASTEL',
   bronze: 'II · BRONZE',
   silver: 'III · SILVER',
-  gold: 'IV · GOLD ×9+',
+  gold: 'IV · GOLD ×9',
 };
 
 function seatFinish(index: number, frame: number, waves: CabinetWaves): Finish {
@@ -196,7 +196,7 @@ export const Cabinet = ({ waves }: { waves: CabinetWaves }) => {
                     scale: String(0.7 + badgeIn * 0.3),
                   }}
                 >
-                  ×9+
+                  ×9
                 </span>
               )}
 

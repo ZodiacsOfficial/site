@@ -132,7 +132,7 @@ export const CabinetVideo = () => {
         <Flash peak={0.3} color="224,176,128" />
       </Sequence>
 
-      <Sequence name="Card — twelve signs" from={0} durationInFrames={45}>
+      <Sequence name="Card — twelve signs" durationInFrames={45}>
         <TitleCard lines={['TWELVE SIGNS.', 'ONE OFFICIAL RECORD.']} duration={45} size={86} />
       </Sequence>
       <Sequence name="Threshold — bronze" from={106} durationInFrames={60}>
