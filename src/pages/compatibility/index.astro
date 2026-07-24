@@ -43,6 +43,7 @@ const jsonLd = [
     })),
   },
 ];
+const inviteUiEnabled = import.meta.env.PUBLIC_COMPAT_INVITES_ENABLED === '1';
 ---
 <Base
   clientUi
@@ -68,6 +69,7 @@ const jsonLd = [
     <SynastryCalculator client:load />
     <noscript>
       <p>This compatibility calculator needs JavaScript. Enable it and reload to compare two birth charts in your browser.</p>
+      {inviteUiEnabled && <p>Invitation links open here too, and need JavaScript for the same reason.</p>}
     </noscript>
   </section>
 

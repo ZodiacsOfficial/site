@@ -219,7 +219,7 @@ try {
       const dialog = source.locator('[data-share-dialog]');
       await dialog.waitFor({ state: 'visible', timeout: TIMEOUT });
       assert.equal(await dialog.getAttribute('open') !== null, true, 'share dialog must be modal/open');
-      assert.equal(await dialog.getAttribute('data-share-mode'), 'full');
+      assert.equal(await dialog.getAttribute('data-share-mode'), 'chart-and-big-three');
       assert.equal(await dialog.locator('[data-hide-birth-details]').count(), 0,
         'the share sheet must not expose the retired birth-detail toggle');
       assert.equal(await dialog.locator('[data-share-options]').count(), 0,
@@ -228,15 +228,18 @@ try {
         'the share sheet must not offer a chart-signature preview');
       assert.equal(await dialog.locator('[data-share-card-action="signature"]').count(), 0,
         'the share sheet must not offer a chart-signature card');
-      assert.equal(await dialog.locator('[data-share-card-action="big-three"]').count(), 0,
-        'the share sheet must not offer a Big Three card');
+      assert.equal(await dialog.locator('[data-share-card-action="big-three"]').count(), 1,
+        'the share sheet must offer one Big Three card beside the full chart');
       assert.equal(await dialog.locator('[data-share-link]').count(), 0,
         'the image sheet must not mix in a positions-only link choice');
 
       const fullCardAction = dialog.locator('[data-share-card-action="full"]');
+      const bigThreeCardAction = dialog.locator('[data-share-card-action="big-three"]');
       await source.waitForFunction(() => {
-        const action = document.querySelector('[data-share-card-action="full"]');
-        return action instanceof HTMLButtonElement && !action.disabled;
+        const full = document.querySelector('[data-share-card-action="full"]');
+        const bigThree = document.querySelector('[data-share-card-action="big-three"]');
+        return full instanceof HTMLButtonElement && !full.disabled
+          && bigThree instanceof HTMLButtonElement && !bigThree.disabled;
       }, null, { timeout: TIMEOUT });
       assert.equal(await source.evaluate(() => globalThis.__t17Events.length), 0,
         'pre-rendering the full chart must not count as a share');
@@ -302,6 +305,31 @@ try {
       const privacy = await dialog.locator('.calc-share-dialog__note').innerText();
       assert.match(privacy, /not a name, birth date, time, place, coordinates, or chart link/i);
 
+      const bigThreeDownloadPromise = source.waitForEvent('download', { timeout: TIMEOUT });
+      await bigThreeCardAction.click();
+      await source.waitForFunction(() => globalThis.__t17Events.length === 4, null, { timeout: TIMEOUT });
+      const bigThreeDownload = await bigThreeDownloadPromise;
+      assert.equal(bigThreeDownload.suggestedFilename(), 'zodiacs-big-three.png',
+        'Big Three filename must contain no birth input');
+      assert.deepEqual(await pngDimensions(bigThreeDownload), { width: 1080, height: 1350 },
+        'Big Three must export at the reviewed 1080×1350 size');
+      const bigThreeRender = await source.evaluate(() => ({
+        text: globalThis.__t17CanvasText.slice(),
+        events: globalThis.__t17Events.slice(),
+      }));
+      const bigThreeText = bigThreeRender.text.map((entry) => entry.value).join(' | ');
+      assert.equal(bigThreeText.includes('Your big three'), true,
+        'the prepared Big Three artifact must carry its accurate title');
+      for (const privateValue of [BIRTH.date, BIRTH.time, BIRTH.cityQuery, 'June 15, 1990', 'America/New_York']) {
+        assert.equal(bigThreeText.includes(privateValue), false, `Big Three PNG leaked ${privateValue}`);
+      }
+      assert.deepEqual((await events(source)).map(({ name, props }) => ({ name, props })), [
+        { name: 'chart_share', props: { variant: 'full_chart_card' } },
+        { name: 'share_card_downloaded', props: { variant: 'full_chart_card' } },
+        { name: 'chart_share', props: { variant: 'big_three_card' } },
+        { name: 'share_card_downloaded', props: { variant: 'big_three_card' } },
+      ], 'each selected chart card must fire its own privacy-safe analytics pair');
+
       const eventCountBeforeCancel = (await events(source)).length;
       await source.evaluate(() => {
         globalThis.__t17DownloadClicks = [];
@@ -327,7 +355,8 @@ try {
       assert.equal(await source.evaluate(() => globalThis.__t17DownloadClicks.length), 0,
         'a cancelled share sheet must not fall through to download');
       const cardIconRequests = iconRequests.filter((request) => request.type === 'fetch');
-      assert.ok(cardIconRequests.length >= 3, 'share cards must request canonical zodiac art');
+      assert.ok(cardIconRequests.length >= 6,
+        'the full-chart and Big Three cards must both request canonical zodiac art');
       assert.equal(cardIconRequests.every(({ path }) => /^\/assets\/zodiac-icons\/128\/[a-z-]+\.webp$/.test(path)), true,
         'share cards may request only canonical 128px zodiac icons');
 
@@ -737,9 +766,9 @@ try {
         'opening the mobile share sheet must not immediately invoke native sharing');
       assert.equal(await mobile.locator('[data-share-options]').count(), 0,
         'mobile must not expose a separate share-options control');
-      const mobileFullAction = mobileSheet.locator('[data-share-card-action="full"]');
+      const mobileBigThreeAction = mobileSheet.locator('[data-share-card-action="big-three"]');
       await mobile.waitForFunction(() => {
-        const action = document.querySelector('[data-share-card-action="full"]');
+        const action = document.querySelector('[data-share-card-action="big-three"]');
         return action instanceof HTMLButtonElement && !action.disabled;
       }, null, { timeout: TIMEOUT });
       const mobileSheetBox = await mobileSheet.boundingBox();
@@ -748,12 +777,12 @@ try {
       assert.ok(mobileSheetBox.height < 844 && mobileSheetBox.width === 390,
         'mobile share sheet must fit the viewport without becoming a blank full-screen layer');
       const mobileTapStart = await mobile.evaluate(() => performance.now());
-      await mobileFullAction.click();
+      await mobileBigThreeAction.click();
       await mobile.waitForFunction(() => globalThis.__mobileShareCalls === 1, null, { timeout: TIMEOUT });
       const mobilePayload = await mobile.evaluate(() => globalThis.__mobileSharePayload);
       assert.equal(mobilePayload.files.length, 1, 'the final mobile tap must share one prepared file');
       assert.deepEqual(mobilePayload.files[0], {
-        name: 'zodiacs-chart.png',
+        name: 'zodiacs-big-three.png',
         type: 'image/png',
         size: mobilePayload.files[0].size,
       });

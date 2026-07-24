@@ -39,6 +39,7 @@ const expected = [
     horoscopeCardPath(slug, surface)
   ))),
   ...OG_EN.tools.map((tool) => `tool/${tool.key}.png`),
+  'tool/compatibility-invite.png',
   ...(eventsPublication.hub.indexEligible ? ['events/index.png'] : []),
   ...eventsPublication.pages.map((event) => `events/${event.id}.png`),
   'registry.png',

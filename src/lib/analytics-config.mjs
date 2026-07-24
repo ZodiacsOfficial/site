@@ -21,6 +21,12 @@ export const ANALYTICS_EVENT_PROPS = Object.freeze({
   aura_cabinet_select: [],
   aura_cabinet_reveal: ['outcome'],
   aura_talisman_personalize: ['state'],
+  invite_created: ['notify'],
+  invite_opened: ['state'],
+  invite_completed: [],
+  invite_returned: ['method'],
+  invite_converted: ['action'],
+  invite_revoked: [],
 
   // Existing event names remain accepted so historical funnels do not break.
   result_rendered: ['mode'],
@@ -54,4 +60,17 @@ export const ANALYTICS_EVENT_PROPS = Object.freeze({
   detail_toggle: ['to'],
   chart_name_set: ['via'],
   comm_read_view: [],
+});
+
+/** Closed-value contracts for the sharing loop's non-identifying dimensions. */
+export const ANALYTICS_EVENT_VALUES = Object.freeze({
+  invite_opened: Object.freeze({
+    state: Object.freeze(['ready', 'invalid', 'closed', 'used', 'unavailable', 'offline']),
+  }),
+  invite_returned: Object.freeze({
+    method: Object.freeze(['share', 'copy', 'download']),
+  }),
+  invite_converted: Object.freeze({
+    action: Object.freeze(['saved_chart', 'saved_pair', 'own_chart']),
+  }),
 });

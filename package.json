@@ -65,6 +65,8 @@
     "test:events:browser": "node tests/events-drive.mjs",
     "test:phase3:post-chart": "node tests/post-chart-daily.mjs",
     "test:phase3:delivery-sql": "bash scripts/test-phase3-delivery-sql.sh",
+    "test:phase4:invites-sql": "bash scripts/test-phase4-compat-invites-sql.sh",
+    "test:phase4:sharing": "node tests/phase4-sharing.mjs",
     "test:phase3:push": "node tests/push-drive.mjs",
     "test:phase3:pwa": "node tests/pwa-drive.mjs",
     "test:widgets:browser": "node tests/widgets-drive.mjs",

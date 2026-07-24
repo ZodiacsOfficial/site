@@ -187,6 +187,40 @@ jobs:
       - name: PostgreSQL 17 migration and concurrency gates
         run: bash scripts/test-phase3-delivery-sql.sh
 
+  phase4-compat-invites-sql:
+    name: Phase 4 compatibility invite SQL
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: PostgreSQL 17 migration, privacy, and concurrency gates
+        run: bash scripts/test-phase4-compat-invites-sql.sh
+
+  phase4-sharing-drive:
+    name: Phase 4 sharing drive
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Install Chromium
+        run: npx playwright-core install --with-deps chromium
+
+      - name: Feature-off and fixture-enabled browser acceptance
+        run: npm run test:phase4:sharing
+
   phase3-post-chart-drive:
     name: Phase 3 post-chart drive
     runs-on: ubuntu-latest

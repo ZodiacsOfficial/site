@@ -1,0 +1,47 @@
+---
+import Base from '../../layouts/Base.astro';
+---
+<Base
+  title="An invitation — Zodiacs.org"
+  description="A private compatibility reading — their side is entered, yours stays in your browser."
+  path="/c/"
+  canonicalPath="/c/"
+  image="/assets/og/v2/tool/compatibility-invite.png"
+  imageAlt="Two charts, read together — a private Zodiacs.org compatibility invitation."
+  noindex
+>
+  <section class="section container container--narrow invite-shell">
+    <em class="kicker">Private compatibility invitation</em>
+    <h1 class="display">Opening your invitation…</h1>
+    <p>
+      A complete invitation link opens the compatibility reading with one side
+      ready. Your own details stay in your browser.
+    </p>
+    <p>
+      <a class="btn btn--ghost" href="/compatibility/">
+        <span>Open the reading</span><span class="orb" aria-hidden="true">→</span>
+      </a>
+    </p>
+    <noscript>
+      <p>JavaScript is needed to calculate the private reading on this device.</p>
+    </noscript>
+  </section>
+</Base>
+
+<style>
+  .invite-shell {
+    min-height: 62vh;
+    display: grid;
+    align-content: center;
+    justify-items: start;
+    gap: 16px;
+  }
+  .invite-shell h1 { margin: 0; font-size: var(--text-2xl); }
+  .invite-shell p {
+    max-width: 52ch;
+    margin: 0;
+    color: var(--text-2);
+    font-size: var(--text-lg);
+    line-height: 1.6;
+  }
+</style>

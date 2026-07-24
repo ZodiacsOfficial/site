@@ -389,7 +389,7 @@ export default function ProfileManager({
   }, [profileReady, profile]);
 
   const sideRestorable = (side: SavedPair['a']) =>
-    side.kind === 'input' || profile.charts.some((c) => c.id === side.chartId);
+    side.kind !== 'chart' || profile.charts.some((c) => c.id === side.chartId);
   const visiblePairs = pairs.filter((pair) => sideRestorable(pair.a) && sideRestorable(pair.b));
 
   function onRemovePair(pair: SavedPair, index: number) {

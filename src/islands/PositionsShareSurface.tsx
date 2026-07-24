@@ -24,6 +24,8 @@ type ShareVariant =
   | 'big_three_card'
   | 'full_chart_card'
   | 'signature_card';
+type ShareCardChoice = 'full' | 'big-three';
+type PreparedCardState = 'preparing' | 'ready' | 'busy' | 'saved' | 'error';
 
 export const SHARE_POSITIONS_EN = {
     shareOptionsTitle: 'Share this chart',
@@ -246,8 +248,12 @@ export function ChartShareDialog({
   onClose,
 }: ChartShareDialogProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
-  const [preparedPrimary, setPreparedPrimary] = useState<PreparedChartCard | null>(null);
-  const [primaryState, setPrimaryState] = useState<'preparing' | 'ready' | 'busy' | 'saved' | 'error'>('preparing');
+  const [preparedCards, setPreparedCards] = useState<Partial<Record<ShareCardChoice, PreparedChartCard>>>({});
+  const [cardStates, setCardStates] = useState<Record<ShareCardChoice, PreparedCardState>>({
+    full: 'preparing',
+    'big-three': 'preparing',
+  });
+  const hasBigThree = chart.angles !== null;
 
   useEffect(() => {
     const dialog = dialogRef.current;
@@ -259,41 +265,60 @@ export function ChartShareDialog({
 
   useEffect(() => {
     let current = true;
-    setPreparedPrimary(null);
-    setPrimaryState('preparing');
-    void prepareChartCard(chart, { variant: 'full', locale }).then((prepared) => {
-      if (!current) return;
-      setPreparedPrimary(prepared);
-      setPrimaryState('ready');
-    }).catch((error) => {
-      console.error(error);
-      if (current) setPrimaryState('error');
-    });
-    return () => { current = false; };
-  }, [chart, locale]);
+    setPreparedCards({});
+    setCardStates({ full: 'preparing', 'big-three': 'preparing' });
 
-  function sharePrimary(): void {
-    if (!preparedPrimary || primaryState === 'busy') return;
-    setPrimaryState('busy');
+    const prepare = (variant: ShareCardChoice) => {
+      void prepareChartCard(chart, { variant, locale }).then((prepared) => {
+        if (!current) return;
+        setPreparedCards((value) => ({ ...value, [variant]: prepared }));
+        setCardStates((value) => ({ ...value, [variant]: 'ready' }));
+      }).catch((error) => {
+        console.error(error);
+        if (current) setCardStates((value) => ({ ...value, [variant]: 'error' }));
+      });
+    };
+
+    prepare('full');
+    if (hasBigThree) prepare('big-three');
+    return () => { current = false; };
+  }, [chart, hasBigThree, locale]);
+
+  function shareCard(variant: ShareCardChoice): void {
+    const prepared = preparedCards[variant];
+    if (!prepared || cardStates[variant] === 'busy') return;
+    setCardStates((value) => ({ ...value, [variant]: 'busy' }));
     onCardStateChange('busy');
     // savePreparedChartCard calls navigator.share before its returned promise
     // yields, preserving the activation from this exact button tap on iOS.
-    void savePreparedChartCard(preparedPrimary).then((outcome) => {
+    void savePreparedChartCard(prepared).then((outcome) => {
       if (outcome === 'cancelled') {
-        setPrimaryState('ready');
+        setCardStates((value) => ({ ...value, [variant]: 'ready' }));
         onCardStateChange('idle');
         return;
       }
-      trackShare('full_chart_card');
-      trackCardDownloaded('full_chart_card');
-      setPrimaryState('saved');
+      const analyticsVariant = variant === 'big-three' ? 'big_three_card' : 'full_chart_card';
+      trackShare(analyticsVariant);
+      trackCardDownloaded(analyticsVariant);
+      setCardStates((value) => ({ ...value, [variant]: 'saved' }));
       onCardStateChange('saved');
     }).catch((error) => {
       console.error(error);
-      setPrimaryState('error');
+      setCardStates((value) => ({ ...value, [variant]: 'error' }));
       onCardStateChange('error');
     });
   }
+
+  const actionLabel = (variant: ShareCardChoice): string =>
+    shareCardText(locale, variant === 'big-three' ? 'bigThreeAction' : 'fullChartAction');
+
+  const stateLabel = (variant: ShareCardChoice): string => {
+    const state = cardStates[variant];
+    if (state === 'preparing') return shareText(locale, 'preparingImage');
+    if (state === 'busy') return t(locale, 'rendering');
+    if (state === 'saved') return t(locale, 'cardSaved');
+    return '';
+  };
 
   return (
     <dialog
@@ -304,7 +329,7 @@ export function ChartShareDialog({
         if (event.target === event.currentTarget) dialogRef.current?.close();
       }}
       data-share-dialog
-      data-share-mode="full"
+      data-share-mode={hasBigThree ? 'chart-and-big-three' : 'full'}
       aria-labelledby="chart-share-title"
     >
       <div class="calc-share-dialog__surface">
@@ -340,23 +365,42 @@ export function ChartShareDialog({
           </div>
         </section>
 
-        <button
-          class="btn btn--primary calc-share-dialog__primary"
-          type="button"
-          onClick={sharePrimary}
-          disabled={card === 'busy' || !preparedPrimary || primaryState === 'preparing' || primaryState === 'busy'}
-          data-share-card-action="full"
+        <div
+          class="calc-share-dialog__cards"
+          role="group"
+          aria-label={shareText(locale, 'shareOptionsTitle')}
         >
-          <span>{primaryState === 'preparing'
-            ? shareText(locale, 'preparingImage')
-            : primaryState === 'busy' ? t(locale, 'rendering')
-              : primaryState === 'saved' ? t(locale, 'cardSaved') : shareText(locale, 'shareThisImage')}</span>
-          <span class="orb" aria-hidden="true">{primaryState === 'saved' ? '✓' : '↗'}</span>
-        </button>
+          {hasBigThree && (
+            <button
+              class="btn btn--primary calc-share-dialog__card"
+              type="button"
+              onClick={() => shareCard('big-three')}
+              disabled={card === 'busy' || !preparedCards['big-three'] || cardStates['big-three'] === 'preparing' || cardStates['big-three'] === 'busy'}
+              data-share-card-action="big-three"
+            >
+              <span>{actionLabel('big-three')}</span>
+              {stateLabel('big-three') && <span class="sr-only">{stateLabel('big-three')}</span>}
+              <span class="orb" aria-hidden="true">{cardStates['big-three'] === 'saved' ? '✓' : '↗'}</span>
+            </button>
+          )}
+          <button
+            class={`btn ${hasBigThree ? 'btn--ghost' : 'btn--primary'} calc-share-dialog__card`}
+            type="button"
+            onClick={() => shareCard('full')}
+            disabled={card === 'busy' || !preparedCards.full || cardStates.full === 'preparing' || cardStates.full === 'busy'}
+            data-share-card-action="full"
+          >
+            <span>{actionLabel('full')}</span>
+            {stateLabel('full') && <span class="sr-only">{stateLabel('full')}</span>}
+            <span class="orb" aria-hidden="true">{cardStates.full === 'saved' ? '✓' : '↗'}</span>
+          </button>
+        </div>
 
         <p class="calc-share-dialog__note">{shareText(locale, 'chartImagePrivacy')}</p>
         {card === 'saved' && <p class="sr-only" role="status">{t(locale, 'chartCardSaved')}</p>}
-        {(card === 'error' || primaryState === 'error') && <p class="calc__error" role="alert">{t(locale, 'cardError')}</p>}
+        {(card === 'error' || Object.values(cardStates).includes('error')) && (
+          <p class="calc__error" role="alert">{t(locale, 'cardError')}</p>
+        )}
       </div>
     </dialog>
   );

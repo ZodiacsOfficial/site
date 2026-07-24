@@ -1,11 +1,13 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import type { ShareChartInput } from '../share';
+import type { PositionsShareInput } from '../share-positions';
 import {
   MAX_PAIRS,
   PAIRS_KEY,
   deletePair,
   loadPairs,
   pairSideLabels,
+  positionsPairSide,
   prunePairs,
   savePair,
 } from './pairs';
@@ -57,6 +59,16 @@ const inputSide = (overrides: Partial<ShareChartInput> = {}, label = 'Guest'): S
 
 const pair = (id: string, a: SavedPairSide, b: SavedPairSide): SavedPair => ({
   id, createdAt: '2026-07-11T00:00:00.000Z', a, b,
+});
+
+const positions = (offset = 0): PositionsShareInput => ({
+  bodies: [
+    'Sun', 'Moon', 'Mercury', 'Venus', 'Mars', 'Jupiter',
+    'Saturn', 'Uranus', 'Neptune', 'Pluto', 'North Node', 'South Node',
+  ].map((body, index) => ({ body, lon: (index * 27 + offset) % 360 })) as PositionsShareInput['bodies'],
+  angles: { asc: (88 + offset) % 360, mc: (2 + offset) % 360 },
+  houseSystem: 'whole',
+  engineVersion: '1.0.0',
 });
 
 let storage: MemoryStorage;
@@ -111,6 +123,22 @@ describe('savePair', () => {
     }
     expect(savePair(pair('overflow', chartSide('frida'), inputSide({ lat: 99 })))).toBe('full');
     expect(loadPairs()).toHaveLength(MAX_PAIRS);
+  });
+
+  it('stores and dedupes privacy-safe positions without birth details', () => {
+    const a = positionsPairSide(positions(), ' Their chart ');
+    const b = positionsPairSide(positions(10), 'My chart');
+    expect(a).not.toBeNull();
+    expect(b).not.toBeNull();
+    expect(savePair(pair('positions', a!, b!))).toBe('saved');
+    expect(savePair(pair('positions-reversed', b!, a!))).toBe('exists');
+
+    const stored = JSON.stringify(loadPairs());
+    expect(stored).not.toContain('date');
+    expect(stored).not.toContain('place');
+    expect(stored).not.toContain('timezone');
+    expect(stored).not.toContain('email');
+    expect(stored).toContain('"received":true');
   });
 });
 
@@ -174,5 +202,16 @@ describe('loadPairs', () => {
     // eat the cap forever.
     expect(savePair(pair('another', chartSide('diego'), inputSide()))).toBe('saved');
     expect(loadPairs().map((p) => p.id)).toEqual(['another', 'good']);
+  });
+
+  it('rejects positions sides with extra fields or without received provenance', () => {
+    const clean = positionsPairSide(positions(), 'Guest')!;
+    const other = positionsPairSide(positions(10), 'Me')!;
+    storage.setItem(PAIRS_KEY, JSON.stringify([
+      pair('missing-provenance', { ...clean, received: false } as unknown as SavedPairSide, other),
+      pair('extra-private-field', { ...clean, date: '1907-07-06' } as unknown as SavedPairSide, other),
+      pair('valid-positions', clean, other),
+    ]));
+    expect(loadPairs().map((item) => item.id)).toEqual(['valid-positions']);
   });
 });

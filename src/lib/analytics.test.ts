@@ -23,6 +23,12 @@ const REQUIRED_EVENTS = [
   'aura_cabinet_select',
   'aura_cabinet_reveal',
   'aura_talisman_personalize',
+  'invite_created',
+  'invite_opened',
+  'invite_completed',
+  'invite_returned',
+  'invite_converted',
+  'invite_revoked',
   'context_help_opened',
   'first_reading_prompt',
   'first_reading_step',
@@ -98,5 +104,24 @@ describe('analytics event contract', () => {
       action: 'today',
       chartId: 'private',
     })).toEqual({ state: 'saved', action: 'today' });
+  });
+
+  it('keeps sharing-loop analytics inside fixed, non-identifying enums', () => {
+    expect(sanitizeAnalyticsProperties('invite_created', {
+      notify: true,
+      token: 'never',
+      label: 'never',
+    })).toEqual({ notify: true });
+    expect(sanitizeAnalyticsProperties('invite_opened', {
+      state: 'ready',
+      sign: 'cancer',
+    })).toEqual({ state: 'ready' });
+    expect(sanitizeAnalyticsProperties('invite_opened', {
+      state: 'owner@example.com',
+    })).toEqual({});
+    expect(sanitizeAnalyticsProperties('invite_returned', {
+      method: 'copy',
+      url: 'never',
+    })).toEqual({ method: 'copy' });
   });
 });

@@ -1,7 +1,10 @@
 # Phase 4 — Private sharing loop technical contract
 
-Status: implementation-ready Sol contract  
-Baseline: `734c36ff960d4743ac268ab6368bd915d063ed4f`  
+Status: implementation candidate; multi-tab capability hardening implemented
+and unit/API verified; unreleased, uncanaried, and disabled
+
+Baseline: `734c36ff960d4743ac268ab6368bd915d063ed4f`
+
 Scope: Phase 4 compatibility invitations and shareable result cards only
 
 This contract turns the Master Plan's Phase 4 sharing loop into a bounded,
@@ -10,23 +13,36 @@ birth inputs stay in the visitor's browser, invite links carry no raw birth
 inputs, and a recipient's chart is never written to the server unless that
 person separately chooses to save it through the existing account flow.
 
-The reader experience and final English copy remain Fable's authority. If
-Fable's Phase 4 handoff conflicts with a security, retention, or data-boundary
-rule below, the safer rule in this document wins and the discrepancy must be
-resolved explicitly before implementation.
+The reader experience and final English copy remain Fable's authority.
+`docs/PHASE4-SHARING-INTEGRATION-DECISIONS.md` is the binding reconciliation
+between that handoff and this security contract, with one subsequent
+release-hardening amendment: a non-secret, per-arrival session handle selects
+one handle-scoped HttpOnly capability cookie so two open invitations cannot
+overwrite each other. The candidate implements that amendment and its focused
+unit/API isolation tests pass; the full browser, parity, CI, migration, and
+canary evidence remains a release gate. Nothing in this document is evidence
+that the migration has been applied, a flag has been enabled, a canary has
+run, or production has changed.
 
 ## 1. Fixed release boundary
 
-The first release is:
+The bounded candidate is:
 
 - English only.
 - Available only to signed-in inviters who select one synchronized saved
   chart.
-- Hidden unless both `PUBLIC_COMPAT_INVITES_ENABLED=1` and
-  `COMPAT_INVITES_ENABLED=1`.
-- Restricted in production by `COMPAT_INVITE_TEST_USER_IDS` until the canary
-  is complete.
-- A new private recipient route at `/c/`, with token exchange at `/c/{token}`.
+- Its reader UI is hidden unless `PUBLIC_COMPAT_INVITES_ENABLED=1`.
+- Creating and opening invitations are separately disabled unless
+  `COMPAT_INVITES_ENABLED=1` and the complete server contract is present.
+- Creation requires an exact match in `COMPAT_INVITE_TEST_USER_IDS`. A missing
+  or empty canary allowlist denies every creator. Status, revocation, hiding,
+  completion replay, and cleanup are not blocked by the canary allowlist.
+- It adds one private token path, `/c/{token}/`, which exchanges the token for
+  a new non-secret 16-byte, 22-character base64url session handle, stores the
+  raw capability only in that handle's scoped HttpOnly cookie, and redirects to
+  `/compatibility/#invite={handle}`.
+- It also adds a generic, static, noindex `/c/` fallback shell. The shell
+  contains no invitation data and does not validate a token.
 - One orchestrated relationship-wheel motion, plus existing native share and
   PNG download behavior.
 
@@ -42,8 +58,10 @@ The first release is not:
   coordinates, timezone, email, free-text message, or complete saved chart in
   an invite.
 
-All non-English compatibility routes and the existing feature-off English
-route keep their current behavior and rendered output.
+All non-English compatibility routes and the feature-off English experience
+must keep their existing behavior. The candidate has not yet completed the
+full parity, preview, canary, or release ladder needed to claim that outcome
+in production.
 
 ## 2. Existing surfaces to reuse
 
@@ -83,12 +101,17 @@ a chart.
 
 ### 3.2 Recipient
 
-1. The recipient opens `/c/{token}`.
-2. The server exchanges the token for a short-lived, private capability
-   cookie and redirects to `/c/`, removing the token from the visible URL
-   before page analytics can load.
-3. `/c/` explains whose chart is waiting using only the inviter-selected
-   label and Sun sign.
+1. The recipient opens `/c/{token}/`.
+2. The server validates the token, mints a non-secret 16-byte, 22-character
+   base64url session handle, places the raw capability in a Secure HttpOnly
+   cookie scoped to that handle, and redirects with `303` to
+   `/compatibility/#invite={handle}`. The token is removed before the
+   compatibility page or its analytics run.
+3. The compatibility island reads the capability through the same-origin
+   session endpoint using the validated handle to select the matching
+   HttpOnly cookie. Only then does it receive the inviter-selected label, Sun
+   sign, and positions-only payload. A second invitation tab uses another
+   handle/cookie pair and cannot overwrite the first.
 4. The recipient enters their own birth details in the existing local
    calculator.
 5. Their chart and the compatibility result are computed locally.
@@ -114,55 +137,44 @@ It performs no invitation-table update and sends no email or push.
 
 ## 4. Minimum invite payload
 
-The only astrology payload stored for the inviter is:
+The only astrology payload stored for the inviter is the exact compact v2
+positions wire already defined by `src/lib/share-positions.ts`:
 
 ```ts
-export const COMPAT_INVITE_BODY_ALLOWLIST = [
-  'sun',
-  'moon',
-  'mercury',
-  'venus',
-  'mars',
-  'jupiter',
-  'saturn',
-  'uranus',
-  'neptune',
-  'pluto',
-] as const;
-
-export interface CompatibilityInvitePayloadV1 {
-  version: 1;
-  label: string;
-  engineVersion: string;
-  timeKnown: boolean;
-  sunSign:
-    | 'aries' | 'taurus' | 'gemini' | 'cancer'
-    | 'leo' | 'virgo' | 'libra' | 'scorpio'
-    | 'sagittarius' | 'capricorn' | 'aquarius' | 'pisces';
-  bodies: Array<{
-    body: typeof COMPAT_INVITE_BODY_ALLOWLIST[number];
-    lon: number;
-    retrograde: boolean;
-  }>;
-  angles: { asc: number; mc: number } | null;
+interface CompatibilityInvitePositions {
+  // Canonical order:
+  // Sun, Moon, Mercury, Venus, Mars, Jupiter, Saturn, Uranus,
+  // Neptune, Pluto, North Node, South Node.
+  b: [number, number, number, number, number, number,
+      number, number, number, number, number, number];
+  a?: [number, number]; // [ASC, MC]; absent for a no-time chart
+  h: 'w' | 'p';        // whole-sign or Placidus
+  v: string;           // bounded engine version
 }
 ```
 
 Validation is strict:
 
-- `version` must equal `1`.
-- `label` is trimmed, 1–48 Unicode characters, control characters removed.
-- `engineVersion` is 1–32 characters from `[A-Za-z0-9._-]`.
-- `bodies` contains exactly the ten allowlisted bodies, once each.
-- Longitudes are finite numbers normalized to `[0, 360)`, with at most six
-  decimal places.
-- `angles` is required when `timeKnown=true` and must be `null` when false.
-- `sunSign` must equal the sign derived from the submitted Sun longitude.
-- Unknown keys, additional bodies, and oversized JSON are rejected.
-- The canonical serialized payload must be no more than 4 KiB.
+- The stored label is normalized and trimmed, contains no control characters,
+  and is 1–24 Unicode characters and at most 96 UTF-8 bytes.
+- `b` contains exactly twelve finite longitudes in canonical order, each in
+  `[0, 360)` and rounded to at most three decimal places.
+- `a` is present with exactly `[ASC, MC]` when `time_known=true` and is absent
+  when `time_known=false`.
+- `h` is exactly `w` or `p`.
+- `v` is 1–32 characters and matches the existing engine-version grammar
+  `[A-Za-z0-9][A-Za-z0-9._+-]{0,31}`.
+- `sun_sign` must equal the sign derived from `b[0]`, the Sun longitude.
+- The object has only `b`, optional `a`, `h`, and `v`; unknown keys,
+  birth-shaped fields, additional bodies, retrograde flags, and oversized
+  JSON are rejected.
+- The stored JSON text is capped at 1,024 bytes.
 
-The server derives this payload from the synchronized chart row it reads. It
-does not trust a browser-supplied payload or owner identity.
+The browser submits exactly `{ chartId, consent: true, notify }`. The server
+authenticates the account, reads that account's synchronized chart, derives
+the bounded label, Sun sign, positions wire, and time-known state, and then
+discards the chart ID. It does not trust a browser-supplied payload, label,
+Sun sign, email address, or owner identity.
 
 The invite must not store:
 
@@ -183,17 +195,34 @@ The invite must not store:
 - Use constant-shape failure responses for unknown, expired, revoked, and
   already-purged tokens.
 
-`GET /c/{token}` is rewritten to the exchange function. On success it:
+`GET /c/{token}/` is rewritten to the exchange function. On success it:
 
 1. Hashes and validates the token.
-2. Sets `zodiacs_compat_invite` to the raw bearer token using:
-   `Secure; HttpOnly; SameSite=Lax; Path=/api/compatibility; Max-Age=<remaining>`.
-3. Responds `303 See Other` to `/c/`.
+2. Mints an independent, non-secret 16-byte, 22-character base64url session
+   handle.
+3. Sets one handle-scoped capability cookie named
+   `zodiacs_compat_invite_{handle}` whose value is the raw bearer token using:
+   `Secure; HttpOnly; SameSite=Lax; Path=/api/compatibility;
+   Max-Age=<remaining>`.
+4. Responds `303 See Other` to
+   `/compatibility/#invite={handle}`.
 
 The cookie lifetime never exceeds the invitation's remaining lifetime. The
-cookie is cleared when the invite is expired, revoked, or purged.
+validated handle is safe for the URL fragment because it is only a selector,
+not authority. Session and completion calls present that handle so the server
+selects exactly its matching HttpOnly cookie; the raw capability remains
+unavailable to page JavaScript. The matching cookie is cleared by a
+terminal/unavailable session read and after completion. Completion, revocation,
+and expiry all destroy the authoritative token hash and positions in the same
+database transition.
 
-The recipient page never receives the raw token in HTML or JavaScript.
+The recipient page never receives the raw token in HTML or JavaScript. Each
+open invitation has a distinct handle/cookie pair, so opening a second link in
+another tab cannot replace the first tab's capability. Consent-safe completion
+replay uses one bounded local key per validated handle,
+`zodiacs.invites.pending.v2.{handle}`, with at most 24 entries; it stores only
+the non-secret handle and expiry/remembered timestamps. Fetch, replay, and
+`sendBeacon` select the same handle through the `session` query.
 
 ## 6. Database contract
 
@@ -209,27 +238,31 @@ Required fields:
 | --- | --- |
 | `id` | UUID primary key |
 | `owner_user_id` | Auth user UUID, indexed |
-| `owner_chart_id` | UUID for an existing chart owned by the same user |
-| `token_hash` | Unique 64-char lowercase hex; nullable only after authority is destroyed |
-| `payload` | Validated JSONB payload V1; nullable only after authority is destroyed |
+| `token_hash` | Unique 64-char lowercase SHA-256 hex while active; null immediately at completion, revocation, or expiry |
+| `completion_replay_hash` | Domain-separated, non-authoritative 64-char digest retained only for idempotent completion retries; present only after completion |
+| `label` | Normalized 1–24-character display label |
+| `sun_sign` | Twelve-value sign slug derived from the stored Sun longitude |
+| `positions` | Strict compact twelve-body v2 positions wire; null immediately at every terminal transition |
+| `time_known` | Boolean that must agree with the presence of ASC/MC |
+| `status` | `active`, `completed`, `revoked`, or `expired` |
 | `notify_on_complete` | Boolean, default false |
 | `created_at` | Server UTC |
 | `expires_at` | Exactly `created_at + interval '14 days'` |
 | `opened_at` | First valid exchange UTC, nullable |
 | `completed_at` | First valid completion UTC, nullable |
 | `revoked_at` | Owner revocation UTC, nullable |
-| `authority_destroyed_at` | UTC when token/payload were nulled |
-| `delete_after` | Thirty days after terminal state |
+| `expired_at` | Stored expiry close UTC, nullable |
+| `authority_destroyed_at` | UTC when token authority and positions were nulled |
+| `delete_after` | Exactly thirty days after the terminal transition |
+| `owner_hidden_at` | Owner presentation choice for a closed row; does not erase retained operational evidence early |
 
-The owner chart relation must prove same-owner ownership. If the existing
-charts schema cannot express a composite foreign key safely, the creation RPC
-must lock and verify `(chart.id, chart.user_id)` in the same transaction.
-
-Authority ends at the earlier of expiry or revocation. Revocation and expiry
-immediately null both `token_hash` and `payload`; completion retains them only
-until natural expiry so the recipient can reopen the result during the
-original 14-day window. `delete_after` is thirty days after authority ends,
-not thirty days after an early completion.
+No saved-chart ID is stored. Ownership is verified by the server's exact
+`charts?id=...&user_id=...` lookup before it derives the positions wire.
+Completion, revocation, and expiry immediately null both `token_hash` and
+`positions`. A completed row keeps only the domain-separated replay digest
+needed to turn a lost-response retry into `duplicate`; that digest cannot open
+or read the invitation. All positions-free status and delivery evidence is
+deleted after the thirty-day retention boundary.
 
 ### 6.2 `compatibility_invite_delivery_claims`
 
@@ -240,10 +273,10 @@ One row per invite and channel:
 | `invite_id` | FK, cascade delete |
 | `channel` | Initially only `email` |
 | `state` | `reserved`, `sent`, or `failed` |
-| `owner_token` | Random worker-claim UUID |
+| `claim_token` | Random worker-claim UUID |
 | `recipient_hash` | Keyed HMAC of resolved account email, never raw email |
 | `provider_receipt` | Provider ID, nullable |
-| `provider_status` | Bounded fixed enum/HTTP code, nullable |
+| `provider_status` | Bounded HTTP status, nullable |
 | timestamps | Claim, finalize, and update UTC |
 
 Primary key `(invite_id, channel)` makes completion notification at-most-once.
@@ -256,10 +289,10 @@ This is a bounded operational ledger, not product analytics:
 | Field | Contract |
 | --- | --- |
 | `invite_id` | FK, cascade delete |
-| `event` | `created`, `opened`, `completed`, `revoked`, `expired`, `purged` |
+| `event` | `created`, `opened`, `completed`, `revoked`, or `expired` |
 | `occurred_at` | Server UTC |
 
-No IP, user agent, URL, token, label, chart ID, payload, or recipient data is
+No IP, user agent, URL, token, label, chart ID, positions, or recipient data is
 stored. At most one row per `(invite_id, event)`.
 
 ### 6.4 Transactional RPCs
@@ -272,8 +305,10 @@ locked `search_path`:
 - `read_compatibility_invite(token_hash)`
 - `complete_compatibility_invite(token_hash)`
 - `revoke_compatibility_invite(owner_user_id, invite_id)`
-- `reserve_compatibility_invite_delivery(invite_id, recipient_hash)`
-- `finalize_compatibility_invite_delivery(invite_id, owner_token, outcome, receipt)`
+- `list_compatibility_invites(owner_user_id)`
+- `hide_compatibility_invite(owner_user_id, invite_id)`
+- `reserve_compatibility_invite_delivery(invite_id, recipient_hash, claim_token)`
+- `finalize_compatibility_invite_delivery(invite_id, claim_token, outcome, provider_receipt, provider_status)`
 - `prune_compatibility_invites(limit)`
 
 Public, anonymous, and authenticated roles have no execute privilege.
@@ -283,80 +318,112 @@ Creation is serialized per owner and enforces both:
 - Maximum 12 active invitations.
 - Maximum 20 creations in the exact rolling 24 hours.
 
-An active invite is unexpired, unrevoked, and still has token authority.
-Completed-but-unexpired invitations count toward the active cap because they
-can still be reopened.
+An active invite is unexpired, unrevoked, uncompleted, and still has token
+authority. Completed invitations do not count toward the active cap because
+completion destroys that authority.
 
 Cleanup:
 
-- Revoked and expired authority is destroyed immediately.
+- Completed, revoked, and expired authority is destroyed immediately.
 - Non-sensitive status, event, and delivery evidence remains for 30 days.
 - The next prune permanently deletes the invitation and cascades its ledgers.
-- A scheduled job may call the bounded prune RPC, but correctness cannot
-  depend on the scheduler: every create/read/open/complete/list operation
-  performs bounded lazy cleanup first.
+- The committed hourly authenticated workflow is required release
+  infrastructure. Create, open/read, list, revoke, and completion also close
+  touched or owner-scoped overdue records so cleanup fails safely if a single
+  scheduled invocation is delayed.
 
 ## 7. Server API contract
 
-All endpoints fail as `404` when `COMPAT_INVITES_ENABLED` is not exactly `1`.
-Owner endpoints additionally require a valid Supabase access token and the
-production canary allowlist while that allowlist is set.
+The server contract exists only when `PUBLIC_SUPABASE_URL` and
+`SUPABASE_SERVICE_ROLE_KEY` are valid. `COMPAT_INVITES_ENABLED=1` gates only
+creation, exchange, and session reads. Owner status, revocation, hiding,
+completion replay, delivery finalization, and cleanup remain available when
+the contract exists. The production canary allowlist applies only to create.
 
 ### `POST /api/compatibility/invites`
 
-Input: `{ chartId: string, notifyOnComplete: boolean }`
+Input: exactly `{ chartId: string, consent: true, notify: boolean }`
 
 - Authenticates the owner.
 - Reads the owned synchronized chart server-side.
-- Constructs and validates payload V1.
+- Constructs and validates the compact twelve-body positions wire.
 - Creates the invite transactionally.
-- Returns `201` with `{ id, url, expiresAt, status: "active" }`.
+- Returns `201` with `{ id, url, expiresAt, state: "waiting" }`.
 - The `url` containing the raw token is returned only here.
 
-Errors: `400 invalid_request`, `401 sign_in_required`, `404 chart_not_found`,
-`409 active_limit`, `429 creation_rate_limit`, `503 unavailable`.
+Errors: `400 invalid_request`, `401 sign_in_required`, `403 canary_only`,
+`404 chart_not_found`, `409 active_limit`, `429 creation_rate_limit`,
+`503 unavailable`.
 
 ### `GET /api/compatibility/invites`
 
 Returns the signed-in owner's status rows only:
-`{ id, label, sunSign, createdAt, expiresAt, openedAt, completedAt, revokedAt, status }`.
+`{ id, label, sunSign, state, createdAt, expiresAt, openedAt, closedAt,
+hiddenAt }`.
 
 It never returns payload, token hash, raw token, recipient information, or
-delivery-provider information.
+delivery-provider information. A browser that created an invitation may keep
+the one returned URL in account-keyed local storage for Copy; another device
+can manage status and revocation but cannot reconstruct that URL.
 
 ### `POST /api/compatibility/invite-revoke`
 
-Input: `{ inviteId: string }`
+Input: exactly `{ id: string }`.
 
 Owner-scoped and idempotent. Returns `{ status: "revoked" }`. Cross-owner and
 unknown IDs return the same `404`.
 
+### `POST /api/compatibility/invite-hide`
+
+Input: exactly `{ id: string }`.
+
+Owner-scoped and accepted only after authority has ended. It sets
+`owner_hidden_at` without deleting the thirty-day evidence row. Active
+invitations return `409`; cross-owner and unknown IDs return the same `404`.
+
 ### `GET /api/compatibility/invite-exchange`
 
 Receives the rewritten path token, never a token supplied by page JavaScript.
-Success sets the capability cookie and `303` redirects to `/c/`. Terminal or
-invalid states clear the cookie and redirect to `/c/?state=unavailable`.
+Success mints a non-secret 16-byte, 22-character base64url handle, sets that
+handle's capability cookie, and `303` redirects to
+`/compatibility/#invite={handle}`. Terminal, invalid, server-off, and
+unavailable states set no authority and redirect to
+`/compatibility/#invite=unavailable`; the recipient does not receive a
+token-status oracle.
 
 Response headers include `Cache-Control: no-store` and
 `Referrer-Policy: no-referrer`.
 
-### `GET /api/compatibility/invite-session`
+### `GET /api/compatibility/invite-session?session={handle}`
 
-Reads the HttpOnly capability cookie, hashes it, and returns only:
-`{ label, sunSign, payload, expiresAt, state }`.
+Accepts only a validated non-secret session handle, selects that handle's
+HttpOnly capability cookie, hashes the cookie value, and returns only:
+`{ state: "ready", payload: { version, label, sunSign, positions, timeKnown,
+expiresAt } }`, or `{ state: "unavailable" }`.
 
 It does not return owner user ID, chart ID, invite ID, token hash, or
 notification preference.
 
-### `POST /api/compatibility/invite-complete`
+### `POST /api/compatibility/invite-complete?session={handle}`
 
-Accepts only an empty JSON object. Any additional key is rejected.
+Accepts only the validated non-secret session handle needed to select that
+handle's HttpOnly cookie. Birth input, positions, labels, recipient data, and
+any additional field are rejected.
 
 Atomically records the first completion. Returns:
-`{ outcome: "completed" | "duplicate", notification: "sent" | "skipped" | "failed" }`.
+`{ outcome: "completed" | "duplicate" | "unavailable",
+notification: "queued" | "skipped" }`.
 
-The notification result is operational; the recipient never sees the
-inviter's address or account state.
+The recipient does not wait for provider delivery and never sees the
+inviter's address or account state. A durable database claim and provider
+idempotency key enforce the one-shot email promise.
+
+### `POST /api/compatibility/invite-sweep`
+
+Requires `Authorization: Bearer COMPAT_INVITE_SWEEP_SECRET` and the complete
+server contract. It runs bounded cleanup batches and returns
+`{ expired, pruned, batches }`. Missing or wrong configuration returns the
+same `404`.
 
 Every API:
 
@@ -368,7 +435,7 @@ Every API:
 
 ## 8. Recipient route, search, and cache contract
 
-`/c/` is a programmatic private route:
+`/c/` and `/c/{token}/` are programmatic private routes:
 
 - `<meta name="robots" content="noindex,nofollow,noarchive">`
 - No sitemap entry.
@@ -378,13 +445,14 @@ Every API:
   detail.
 - Server and Vercel headers: `Cache-Control: private, no-store`,
   `Referrer-Policy: no-referrer`.
-- No analytics until after token exchange; events use the canonical `/c/`
-  path only.
+- The token path is a Vercel rewrite to the exchange function. It emits no
+  page analytics; after the `303`, analytics sees only the canonical
+  `/compatibility/` page and never the secret.
 - A complete no-JavaScript explanation that calculation requires JavaScript,
   without revealing invite details.
 
 The locale availability system must explicitly classify `/c/` and
-`/c/{token}` as English-only programmatic routes so they cannot gain selector
+`/c/{token}/` as English-only programmatic routes so they cannot gain selector
 entries, alternates, or sitemap URLs through future locale expansion.
 
 ## 9. Completion notification
@@ -418,11 +486,16 @@ share codec.
 Properties:
 
 - URL fragment only; never query or path.
-- Contains two payloads shaped like §4, but excludes account/chart IDs,
-  engine flags, birth input, place, timezone, and email.
-- Labels are optional, trimmed to 48 characters, and included only after the
+- An `s1.` wrapper contains exactly two existing canonical v2 positions
+  tokens plus two labels and two time-known booleans. The wrapper keys are
+  exactly `{ p, l, k }`.
+- It excludes account/chart/invitation IDs, birth input, place, timezone,
+  email, and retrograde state.
+- Labels are optional, normalized, trimmed to 24 characters, and included only after the
   person explicitly chooses to create the link.
-- Strict schema, allowed-body, longitude, version, and maximum-length checks.
+- Strict canonical JSON/base64url, exact-key, body, longitude, version, and
+  time-known/angle checks apply. The complete token is capped at 640
+  characters.
 - Fragment is stripped from browser history after successful decode, matching
   the existing share hygiene.
 - A decoded result can be viewed and re-rendered, but the received fragment is
@@ -474,36 +547,38 @@ Add only these events and fixed properties:
 
 | Event | Allowed properties |
 | --- | --- |
-| `compat_invite_created` | `source` |
-| `compat_invite_opened` | none |
-| `compat_invite_completed` | none |
-| `compat_invite_revoked` | none |
-| `compat_invite_action` | `action` |
-| `share_card_action` | `surface`, `variant`, `outcome` |
+| `invite_created` | `notify`: boolean |
+| `invite_opened` | `state` |
+| `invite_completed` | none |
+| `invite_returned` | `method` |
+| `invite_converted` | `action` |
+| `invite_revoked` | none |
 
 Allowed values are closed enums:
 
-- `source`: `compatibility`, `profile`
-- `action`: `copy`, `native_share`, `open_own_chart`, `send_back`
-- `surface`: `birth_chart`, `compatibility`, `invite`
-- `variant`: `big_three`, `chart_wheel`, `compatibility`
-- `outcome`: `shared`, `downloaded`, `cancelled`, `failed`
+- `invite_opened.state`: `ready`, `invalid`, `closed`, `used`,
+  `unavailable`, or `offline`
+- `invite_returned.method`: `share`, `copy`, or `download`
+- `invite_converted.action`: `saved_chart`, `saved_pair`, or `own_chart`
 
 Never send a token, invitation ID, URL, chart ID, label, sign, birth input,
 position, email, provider receipt, free text, query, or fragment. The analytics
 shim continues to replace the browser URL with its canonical path.
+A cancelled native share emits no event.
 
 ## 13. Failure and recovery matrix
 
 | Condition | Reader outcome | Data outcome |
 | --- | --- | --- |
 | Both flags off | Existing compatibility experience | No invite call |
-| Public flag on, server flag off | Invite CTA absent/disabled safely | No write |
+| Public flag on, server flag off | Calm unavailable/create failure state | No write |
 | Signed out owner | Sign-in invitation | No write |
 | Device-only chart | Sync explanation only | No write |
 | Active/rate cap | Calm retry/manage message | No partial row |
-| Invalid/expired/revoked token | Generic unavailable page | Cookie cleared |
-| Recipient refresh | Result can be recomputed during validity | No new event beyond idempotent open |
+| Invalid/completed/expired/revoked token | One generic unavailable state | Cookie cleared; no status oracle |
+| Two invitation tabs | Each tab keeps its own non-secret handle | Each handle selects only its own HttpOnly capability cookie |
+| Recipient refresh before completion | The invitation side can load again while active | Open event remains idempotent |
+| Recipient refresh after completion | Generic unavailable state | Positions and token authority stay destroyed |
 | Recipient calculation error | Existing honest calculator error | No completion |
 | Completion replay | Same completed experience | `duplicate`, no second send |
 | Email provider failure | Result remains complete | Failed claim retained; no loop |
@@ -516,11 +591,16 @@ shim continues to replace the browser URL with its canonical path.
 
 ### Unit and property tests
 
-- Payload V1 accepts only the exact ten-body shape.
+- Stored positions accept only the exact twelve-body compact v2 shape.
 - Sun sign must match Sun longitude.
 - Angles/time-known invariants.
-- Canonical serialization and 4 KiB limit.
+- Three-decimal precision, exact-key validation, and the 1 KiB stored-payload
+  limit.
+- Create input accepts only `{ chartId, consent: true, notify }`; server
+  derivation rejects birth-shaped and client-supplied position fields.
 - 32-byte token entropy shape and SHA-256-only persistence.
+- Independent 128-bit session-handle shape, validation, handle-scoped cookie
+  naming, and rejection of malformed/cross-handle selectors.
 - Positions-only fragment round trip, corruption rejection, size cap, and
   received-link re-share containment.
 - Analytics allowlist drops every forbidden property.
@@ -531,11 +611,14 @@ shim continues to replace the browser URL with its canonical path.
 - Fresh migration and idempotent replay.
 - RLS enabled; anon/auth forged select/insert/update/delete denied.
 - Service-role grants are minimal.
-- Owner/chart ownership cannot be forged.
+- No chart ID or birth input exists in the invitation schema.
 - 12-active and rolling-24-hour limits under concurrency.
 - Open/complete/revoke races have one authoritative outcome.
-- Revocation and expiry immediately destroy token/payload.
+- Completion, revocation, and expiry immediately destroy token/positions.
+- Completion replay uses only its non-authoritative domain-separated digest.
 - Completion and delivery claims are idempotent under concurrency.
+- Owner hiding applies only to closed rows and does not erase retained
+  evidence.
 - Cleanup retains only bounded evidence for 30 days, then deletes it.
 - Functions have fixed search paths and no public execute grants.
 
@@ -546,15 +629,20 @@ shim continues to replace the browser URL with its canonical path.
 - Raw token appears in no database field, response after creation, log fixture,
   analytics payload, or built asset.
 - Exchange produces 303, secure cookie, token-free destination, no-store, and
-  no-referrer.
+  no-referrer. The destination contains only the non-secret handle.
 - Session response exposes only the public payload.
+- Session and completion select only the handle-matched HttpOnly cookie;
+  opening two invitations cannot cross-read or cross-complete them.
 - Complete rejects all recipient data and sends at most one notification.
 
 ### Browser tests
 
 - Owner creates, copies, lists, and revokes an invite.
 - Recipient open strips token before analytics.
-- Valid, expired, revoked, and malformed routes.
+- Two invitation links opened in parallel tabs retain independent ready
+  states and complete only their own records.
+- Valid, completed, expired, revoked, and malformed token paths, all with the
+  generic unavailable terminal treatment.
 - B calculates locally with network inspection proving no birth-input write.
 - Animation, skip, offscreen pause, tab visibility, and reduced motion.
 - Keyboard-only and screen-reader compute-to-result path.
@@ -574,6 +662,22 @@ manifest.
 
 ## 15. Release ladder
 
+Candidate checkpoint on 2026-07-24: Fable's docs/proofs are integrated and
+the isolated branch contains the migration, server APIs, disabled UI, codecs,
+email template, analytics allowlist, private route, OG asset, hourly workflow,
+and focused tests. The handle-scoped multi-tab capability hardening described
+in §§3, 5, 7, and 14 is implemented; its focused unit/API isolation suite
+passes 47/47, the feature-off browser suite passes 8/8, and the
+fixture-enabled A→B suite passes 35/35, including two simultaneous invitation
+tabs. The production build, 1,399-test unit suite, schema, bundles, visual
+regression, locale/Registry/legacy drift, widgets, Phase 1–3 regressions, and
+server-secret scan are green locally. Seventeen of eighteen three-run
+Lighthouse templates pass; the unchanged `/ru/birth-chart/` baseline measured
+2.56s locally against the 2.50s ceiling, so fresh candidate CI remains
+binding. Fable implementation review, live migration, preview, canary, PR
+merge, and production verification have not yet been completed. Both public
+and server flags remain off.
+
 1. Merge the Fable design/copy handoff into the integration branch.
 2. Implement schema, strict types/codecs, and disposable SQL tests.
 3. Implement server APIs with both flags off.
@@ -590,8 +694,10 @@ manifest.
 12. Record database/RLS evidence, provider evidence, screenshots, CI SHA,
     deployment, and UTC cutover.
 13. Fable reviews the live canary against its handoff.
-14. Public launch requires an explicit owner approval after the canary. It
-    removes only the test allowlist; the paired flags and rollback remain.
+14. Public launch requires an explicit owner approval after the canary and a
+    separately reviewed authorization change. This candidate has no
+    unrestricted-creator mode: clearing the test allowlist denies everyone.
+    The paired flags and rollback remain.
 
 Rollback is immediate: turn off the public flag, then the server flag. Existing
 invites remain revocable and cleanup remains operational; recipient endpoints
@@ -618,14 +724,30 @@ Sequential second wave:
 There is one implementation branch and one final release candidate. Do not
 split schema, APIs, and UI across independently releasable production branches.
 
-## 17. Blockers before code implementation
+## 17. Remaining release blockers
 
 The technical contract itself has no unresolved privacy or architecture
-decision. Code implementation waits only for:
+decision, and Fable's final handoff is integrated. Local implementation does
+not wait on a live service.
 
-- Fable's final Phase 4 handoff commit and proof paths.
-- Confirmation of the approved production canary user ID before live flag
-  configuration.
+The bounded candidate is still blocked from release by evidence, not by a
+design decision:
 
-Neither blocker prevents local schema, API, UI, or test implementation after
-the Fable handoff is available.
+- obtain green fresh-machine candidate CI; local flag-off, browser, visual,
+  accessibility, bundle, schema, locale, Registry, and security gates are
+  complete, with the one candid local Lighthouse measurement recorded in the
+  release-ladder checkpoint;
+- Fable's bounded implementation review and resolution of any deterministic
+  P0/P1 finding;
+- reviewed live migration application plus RLS/grant/RPC verification;
+- provisioned `COMPAT_INVITE_SWEEP_SECRET`,
+  `COMPAT_INVITE_RECIPIENT_HASH_SECRET`, and hourly workflow evidence;
+- confirmation of the approved production canary user ID before any live
+  flag configuration;
+- a genuine allowlisted A→B→send-back canary with provider, database,
+  duplicate-prevention, privacy, and expiry evidence; and
+- explicit owner approval plus a separately reviewed authorization change
+  before any access broader than the canary allowlist.
+
+Until those gates pass, Phase 4 is an unreleased candidate. No environment
+variable in this contract should be read as permission to enable it.

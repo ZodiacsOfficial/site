@@ -380,6 +380,22 @@ function toolCard(t) {
   return shell(body, `zodiacs.org${t.path}`);
 }
 
+function compatibilityInviteCard() {
+  const body = `
+  <div class="stage">
+    <div class="left">
+      <span class="kicker">A private invitation</span>
+      <div class="display" style="font-size: 76px;">Two charts,<br/>read together</div>
+      <div class="sub" style="font-size: 26px; color: ${MUTED}; max-width: 640px;">Their side is entered. Yours stays in your browser.</div>
+    </div>
+    <div style="display:flex;align-items:center;">
+      ${wheelMark(240, 22)}
+      <div style="margin-left:-38px;box-shadow:0 0 0 12px ${VOID};border-radius:50%;">${wheelMark(240, 22)}</div>
+    </div>
+  </div>`;
+  return shell(body, 'zodiacs.org/compatibility/');
+}
+
 function pairCard(a, b) {
   const aTitle = signName(a);
   const bTitle = signName(b);
@@ -567,6 +583,7 @@ for (const dir of ['', 'sign', 'registry', 'tool', 'pair', 'horoscope', 'placeme
 const browser = await chromium.launch({ executablePath });
 const page = await browser.newPage({ viewport: { width: 1200, height: 630 }, deviceScaleFactor: 1 });
 const onlyHoroscopes = process.argv.includes('--only-horoscopes');
+const onlyInvite = process.argv.includes('--only-compatibility-invite');
 const onlyRussian = process.argv.includes('--only-ru');
 
 let total = 0;
@@ -688,6 +705,14 @@ const PLANET_GLYPHS = {
   jupiter: '♃', saturn: '♄', uranus: '♅', neptune: '♆', pluto: '♇',
 };
 
+if (onlyInvite) {
+  console.log('Rendering the private compatibility-invitation card…');
+  await shoot(compatibilityInviteCard(), 'tool/compatibility-invite.png');
+  console.log(`Done: ${count} card(s), ${(total / 1024).toFixed(0)}KB.`);
+  await browser.close();
+  process.exit(0);
+}
+
 console.log(onlyHoroscopes ? 'Rendering horoscope-family cards…' : 'Rendering Cosmic Void OG cards…');
 if (onlyHoroscopes) {
   const horoscopeTool = TOOLS.find((tool) => tool.key === 'horoscopes');
@@ -727,6 +752,7 @@ if (onlyHoroscopes) {
   }
   await shoot(registryCard(), 'registry.png');
   await shoot(disclosureCard(), 'disclosure.png');
+  await shoot(compatibilityInviteCard(), 'tool/compatibility-invite.png');
   for (const t of TOOLS) await shoot(toolCard(t), `tool/${t.key}.png`);
   for (let i = 0; i < SIGNS.length; i += 1) {
     for (let j = i; j < SIGNS.length; j += 1) {
@@ -834,6 +860,7 @@ const requiredCards = [
   ...SIGNS.map((s) => `registry/${s.slug}.png`),
   ...SIGNS.flatMap((s) => HOROSCOPE_OG_SURFACES.map((surface) => horoscopeCardPath(s, surface))),
   ...TOOLS.map((tool) => `tool/${tool.key}.png`),
+  'tool/compatibility-invite.png',
   ...(EVENTS_PUBLICATION.hub.indexEligible ? ['events/index.png'] : []),
   ...EVENTS_PUBLICATION.pages.map((event) => `events/${event.id}.png`),
   'registry.png',
