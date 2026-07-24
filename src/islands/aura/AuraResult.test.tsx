@@ -74,7 +74,7 @@ describe("AuraResult rooms", () => {
     expect(markup).toContain("Under 10,000 held");
     expect(markup).toContain("Registry record");
     expect(markup).toContain("8 places remain reserved.");
-    expect(markup).toContain("Save the seal");
+    expect(markup).toContain("Share this collection");
     expect(markup).toContain("Open another collection");
     expect(markup).toContain("Browse the Registry");
     expect(markup).toContain("never the address");
@@ -92,7 +92,7 @@ describe("AuraResult rooms", () => {
     expect(markup).toContain("Try another address");
     expect(markup).toContain("View the sample");
     expect(markup).not.toContain("data-aura-talisman");
-    expect(markup).not.toContain("Save the seal");
+    expect(markup).not.toContain("Share this collection");
     expect(markup).not.toContain("The collection’s record.");
   });
 
@@ -108,6 +108,6 @@ describe("AuraResult rooms", () => {
     expect(markup).not.toMatch(/illustrative/i);
     expect(markup).toContain("Open my collection");
     expect(markup).toContain("Browse the Registry");
-    expect(markup).not.toContain("Save the seal");
+    expect(markup).not.toContain("Share this collection");
   });
 });
