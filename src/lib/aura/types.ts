@@ -20,11 +20,11 @@ export type AuraChain = 'solana' | 'base';
 export type AuraPersistenceMode = 'session' | 'local';
 export type AuraCabinetFinish = 'pastel' | 'bronze' | 'silver' | 'gold';
 /**
- * The five catalogue editions. Gilded is not a stored material: it is derived
+ * The five catalogue editions. Crown Gold is not a stored material: it is derived
  * from Gold multiplicity, so a record written before the edition existed still
- * reads as Gilded the moment its count qualifies.
+ * reads as Crown Gold the moment its count qualifies.
  */
-export type AuraCabinetEdition = AuraCabinetFinish | 'gilded';
+export type AuraCabinetEdition = AuraCabinetFinish | 'crown';
 export type AuraCabinetRevealMode = 'animate' | 'settled';
 
 interface AuraCabinetHoldingBase {

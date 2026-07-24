@@ -15,12 +15,15 @@ const SLOW = Easing.bezier(0.32, 0.72, 0, 1);
 
 /** The material waves — each seat's landing frame per edition, zodiac order. */
 const WAVES: CabinetWaves = {
-  pastel: Array.from({ length: 12 }, (_, i) => 62 + i * 4),
-  bronze: Array.from({ length: 12 }, (_, i) => 168 + i * 2),
-  silver: Array.from({ length: 12 }, (_, i) => 258 + i * 2),
+  pastel: Array.from({ length: 12 }, (_, i) => 50 + i * 4),
+  bronze: Array.from({ length: 12 }, (_, i) => 152 + i * 2),
+  silver: Array.from({ length: 12 }, (_, i) => 236 + i * 2),
   // The gold working slows as it closes: the twelfth casting lands last.
-  gold: [354, 358, 362, 366, 369, 372, 375, 378, 380, 382, 384, 387],
-  plateFrame: 404,
+  gold: [324, 327, 330, 333, 336, 339, 341, 343, 345, 347, 349, 351],
+  /** Crown Gold: one seat frames itself, and the case is gilded around it. */
+  crown: 436,
+  crownSeat: 0,
+  plateFrame: 452,
 };
 
 const WaveCaption = ({
@@ -103,7 +106,7 @@ export const CabinetVideo = () => {
   const portrait = height > width;
 
   // The stage fades to black before the closing line.
-  const stageFade = interpolate(frame, [457, 470], [1, 0], {
+  const stageFade = interpolate(frame, [486, 498], [1, 0], {
     extrapolateLeft: 'clamp',
     extrapolateRight: 'clamp',
   });
@@ -123,33 +126,39 @@ export const CabinetVideo = () => {
         <Cabinet waves={WAVES} />
       </AbsoluteFill>
 
-      <WaveCaption text="Pastel · any amount held" from={82} until={104} />
-      <WaveCaption text="Bronze · sealed II" from={172} until={194} />
-      <WaveCaption text="Silver · sealed III" from={262} until={284} />
-      <WaveCaption text="Gold · one sculpture per million held" from={362} until={412} gold />
+      <WaveCaption text="Pastel · any amount held" from={70} until={92} />
+      <WaveCaption text="Bronze · sealed II" from={156} until={176} />
+      <WaveCaption text="Silver · sealed III" from={240} until={260} />
+      <WaveCaption text="Gold · one sculpture per million held" from={330} until={372} gold />
 
-      <Sequence name="Master flash" from={387} durationInFrames={14}>
+      <Sequence name="Master flash" from={351} durationInFrames={14}>
         <Flash peak={0.3} color="224,176,128" />
       </Sequence>
-
-      <Sequence name="Card — twelve signs" durationInFrames={45}>
-        <TitleCard lines={['TWELVE SIGNS.', 'ONE OFFICIAL RECORD.']} duration={45} size={86} />
-      </Sequence>
-      <Sequence name="Threshold — bronze" from={106} durationInFrames={60}>
-        <ThresholdCard amount={10000} edition="Bronze Edition · II" tint="#B08D57" duration={60} />
-      </Sequence>
-      <Sequence name="Threshold — silver" from={196} durationInFrames={60}>
-        <ThresholdCard amount={100000} edition="Silver Edition · III" tint="#C6CCDA" duration={60} />
-      </Sequence>
-      <Sequence name="Threshold — gold" from={286} durationInFrames={66}>
-        <ThresholdCard amount={1000000} edition="Gold Sculpture · IV" tint="#E0B080" duration={66} />
+      <Sequence name="Crown flash" from={436} durationInFrames={14}>
+        <Flash peak={0.34} color="255,236,186" />
       </Sequence>
 
-      <Sequence name="Few ever finish" from={474} durationInFrames={30}>
-        <TitleCard lines={['Few cabinets are ever finished.']} duration={30} italic size={66} />
+      <Sequence name="Card — twelve signs" durationInFrames={34}>
+        <TitleCard lines={['TWELVE SIGNS.', 'ONE OFFICIAL RECORD.']} duration={34} size={86} />
       </Sequence>
-      <Sequence name="CTA" from={504} durationInFrames={58}>
-        <Cta duration={58} />
+      <Sequence name="Threshold — bronze" from={94} durationInFrames={56}>
+        <ThresholdCard amount={10000} edition="Bronze Edition · II" tint="#B08D57" duration={56} />
+      </Sequence>
+      <Sequence name="Threshold — silver" from={178} durationInFrames={56}>
+        <ThresholdCard amount={100000} edition="Silver Edition · III" tint="#C6CCDA" duration={56} />
+      </Sequence>
+      <Sequence name="Threshold — gold" from={262} durationInFrames={60}>
+        <ThresholdCard amount={1000000} edition="Gold Sculpture · IV" tint="#E0B080" duration={60} />
+      </Sequence>
+      <Sequence name="Threshold — crown" from={374} durationInFrames={60}>
+        <ThresholdCard amount={10000000} edition="Crown Gold · V" tint="#E8C46A" duration={60} />
+      </Sequence>
+
+      <Sequence name="Few ever finish" from={500} durationInFrames={28}>
+        <TitleCard lines={['Few cabinets are ever finished.']} duration={28} italic size={66} />
+      </Sequence>
+      <Sequence name="CTA" from={528} durationInFrames={52}>
+        <Cta duration={52} />
       </Sequence>
 
     </AbsoluteFill>

@@ -86,7 +86,7 @@ const MATERIAL_COLORS: Record<Exclude<AuraCabinetEdition, "pastel">, string> = {
   bronze: "#B87449",
   silver: "#C4CEDA",
   gold: "#DEB75E",
-  gilded: "#F6DE9C",
+  crown: "#F6DE9C",
 };
 const SERIF = '"EB Garamond", Georgia, serif';
 const MONO = '"JetBrains Mono", ui-monospace, Menlo, monospace';
@@ -441,7 +441,7 @@ function drawRepresentedSet(
     context.fillStyle = MUTED;
     context.font = `500 13px ${MONO}`;
     context.fillText(
-      `${sign.edition === "gilded" ? "GILDED" : sign.finish.toUpperCase()}${sign.goldCountLabel ? ` ${sign.goldCountLabel}` : ""}`,
+      `${sign.edition === "crown" ? "CROWN" : sign.finish.toUpperCase()}${sign.goldCountLabel ? ` ${sign.goldCountLabel}` : ""}`,
       x,
       y + 65,
     );

@@ -1,5 +1,5 @@
 import { SIGNS, signBySlug } from '../signs';
-import { isGildedGoldCount } from './cabinet-finish';
+import { isCrownGoldCount } from './cabinet-finish';
 import {
   AURA_SIGN_ORDER,
   type AuraCabinetEdition,
@@ -19,7 +19,7 @@ const EDITION_LABEL: Record<AuraCabinetEdition, string> = {
   bronze: 'Bronze Edition',
   silver: 'Silver Edition',
   gold: 'Gold Sculpture',
-  gilded: 'The Gilded Case',
+  crown: 'Crown Gold',
 };
 
 export type AuraTalismanCollectionMode = 'empty' | 'point' | 'chord' | 'polygon';
@@ -123,7 +123,7 @@ function normalizedGoldCount(holding: AuraCabinetHolding | undefined): bigint {
 
 /**
  * Exact for one through ninety-nine Gold editions, capped thereafter. The
- * tenth sculpture is the Gilded Case, so the tally has to read past it.
+ * tenth sculpture is Crown Gold, so the tally has to read past it.
  */
 export function talismanGoldCountLabel(value: string | bigint | null): string | null {
   if (value === null) return null;
@@ -280,7 +280,7 @@ export function talismanEdition(
   node: Pick<AuraTalismanOuterNode, 'finish' | 'goldCount'>,
 ): AuraCabinetEdition {
   if (node.finish !== 'gold') return node.finish ?? 'pastel';
-  return isGildedGoldCount(node.goldCount) ? 'gilded' : 'gold';
+  return isCrownGoldCount(node.goldCount) ? 'crown' : 'gold';
 }
 
 /** A concise factual label for accessible and exported surfaces. */

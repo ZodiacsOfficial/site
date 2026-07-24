@@ -32,8 +32,8 @@
     #f6e2a4 318deg,
     #68451c
   );
-  /* The fifth edition's leaf: brighter and more saturated than the brass
-     filet, so a gilded case is unmistakable beside an ungilded one. */
+  /* Crown Gold's leaf: brighter and more saturated than the brass filet, so a
+     crowned case is unmistakable beside an uncrowned one. */
   --aura-cabinet-leaf: #e8c46a;
   --aura-cabinet-leaf-bright: #fff2c4;
   --aura-cabinet-leaf-deep: #7a5620;
@@ -166,7 +166,7 @@
 
 /* The fifth edition gilds the case that holds it: a solid leaf filet laid
    over the brass one, plus a warmer floor and a wider corner bracket. */
-.aura-collection-cabinet.is-gilded .aura-collection-cabinet__frame {
+.aura-collection-cabinet.is-crown .aura-collection-cabinet__frame {
   border-color: rgba(232, 196, 106, 0.58);
   background:
     linear-gradient(135deg, rgba(255, 240, 195, 0.05), transparent 36%),
@@ -182,19 +182,19 @@
 
 /* The gilding already draws a filet, so the corner marks step inside it
    rather than doubling the line. */
-.aura-collection-cabinet.is-gilded .aura-collection-cabinet__frame::before,
-.aura-collection-cabinet.is-gilded .aura-collection-cabinet__frame::after {
+.aura-collection-cabinet.is-crown .aura-collection-cabinet__frame::before,
+.aura-collection-cabinet.is-crown .aura-collection-cabinet__frame::after {
   width: 26px;
   height: 26px;
   border-color: rgba(255, 242, 196, 0.62);
 }
 
-.aura-collection-cabinet.is-gilded .aura-collection-cabinet__frame::before {
+.aura-collection-cabinet.is-crown .aura-collection-cabinet__frame::before {
   top: 12px;
   left: 12px;
 }
 
-.aura-collection-cabinet.is-gilded .aura-collection-cabinet__frame::after {
+.aura-collection-cabinet.is-crown .aura-collection-cabinet__frame::after {
   right: 12px;
   bottom: 12px;
 }
@@ -214,7 +214,7 @@
   transition: opacity 640ms var(--aura-cabinet-ease-out);
 }
 
-.aura-collection-cabinet.is-gilded .aura-collection-cabinet__gilding {
+.aura-collection-cabinet.is-crown .aura-collection-cabinet__gilding {
   opacity: 1;
 }
 
@@ -293,7 +293,7 @@
   animation: aura-cabinet-gilding-pass 940ms var(--aura-cabinet-ease-out) both;
 }
 
-.aura-collection-cabinet.is-gilded[data-aura-cabinet-stage="settled"]
+.aura-collection-cabinet.is-crown[data-aura-cabinet-stage="settled"]
   .aura-collection-cabinet__gilding::before {
   animation: aura-cabinet-gilding-sheen 15s linear 1.4s infinite both;
 }
@@ -371,7 +371,7 @@
 
 /* The fifth edition frames its own niche in gold — the only seat in the case
    that carries metal on its opening as well as on its work. */
-.aura-collection-cabinet__item[data-aura-cabinet-edition="gilded"]
+.aura-collection-cabinet__item[data-aura-cabinet-edition="crown"]
   .aura-collection-cabinet__niche {
   border-color: rgba(122, 86, 32, 0.9);
   background:
@@ -387,7 +387,7 @@
 
 /* The opening itself is cast: a mitred gold bar around the whole niche, the
    only frame in the case made of metal rather than a hairline. */
-.aura-collection-cabinet__item[data-aura-cabinet-edition="gilded"]
+.aura-collection-cabinet__item[data-aura-cabinet-edition="crown"]
   .aura-collection-cabinet__niche::after {
   position: absolute;
   z-index: 5;
@@ -405,12 +405,12 @@
   pointer-events: none;
 }
 
-.aura-collection-cabinet__item[data-aura-cabinet-edition="gilded"]
+.aura-collection-cabinet__item[data-aura-cabinet-edition="crown"]
   .aura-collection-cabinet__niche::before {
   border-color: rgba(232, 196, 106, 0.28);
 }
 
-.aura-collection-cabinet__item[data-aura-cabinet-edition="gilded"]
+.aura-collection-cabinet__item[data-aura-cabinet-edition="crown"]
   .aura-collection-cabinet__niche.is-selected {
   box-shadow:
     inset 0 0 0 4px rgba(6, 5, 3, 0.72),
@@ -447,7 +447,7 @@
 
 /* The gilding beat takes the room down further still: one seat is lit. */
 .aura-collection-cabinet[data-aura-cabinet-stage="gild"]
-  .aura-collection-cabinet__item:not([data-aura-cabinet-edition="gilded"])
+  .aura-collection-cabinet__item:not([data-aura-cabinet-edition="crown"])
   .aura-collection-cabinet__niche {
   filter: brightness(0.74) saturate(0.82);
 }
@@ -467,7 +467,7 @@
 }
 
 .aura-collection-cabinet[data-aura-cabinet-stage="gild"]
-  .aura-collection-cabinet__item[data-aura-cabinet-edition="gilded"]
+  .aura-collection-cabinet__item[data-aura-cabinet-edition="crown"]
   .aura-collection-cabinet__object {
   animation: aura-cabinet-gild-lift 1200ms var(--aura-cabinet-ease-out) both;
 }
@@ -539,8 +539,8 @@
     radial-gradient(ellipse at center, rgba(0, 0, 0, 0.6), transparent 72%);
 }
 
-/* The gilded seat gets the brightest pedestal in the case. */
-.aura-collection-cabinet__item[data-aura-cabinet-edition="gilded"]
+/* The Crown Gold seat gets the brightest pedestal in the case. */
+.aura-collection-cabinet__item[data-aura-cabinet-edition="crown"]
   .aura-collection-cabinet__object::before {
   background: radial-gradient(
     circle,
@@ -550,7 +550,7 @@
   );
 }
 
-.aura-collection-cabinet__item[data-aura-cabinet-edition="gilded"]
+.aura-collection-cabinet__item[data-aura-cabinet-edition="crown"]
   .aura-collection-cabinet__object::after {
   background:
     linear-gradient(to bottom, rgba(240, 195, 100, 0.34), transparent 55%),
@@ -910,18 +910,18 @@
   color: rgba(203, 216, 231, 0.86);
 }
 
-.aura-collection-cabinet__item[data-aura-cabinet-edition="gilded"]
+.aura-collection-cabinet__item[data-aura-cabinet-edition="crown"]
   .aura-collection-cabinet__status {
   color: var(--aura-cabinet-leaf-bright);
 }
 
-.aura-collection-cabinet__item[data-aura-cabinet-edition="gilded"]
+.aura-collection-cabinet__item[data-aura-cabinet-edition="crown"]
   .aura-collection-cabinet__name {
   color: #fbf4e2;
 }
 
-/* The gilded tally is struck in leaf rather than outlined on the dark. */
-.aura-collection-cabinet__item[data-aura-cabinet-edition="gilded"]
+/* The Crown Gold tally is struck in leaf rather than outlined on the dark. */
+.aura-collection-cabinet__item[data-aura-cabinet-edition="crown"]
   .aura-collection-cabinet__multiplicity-badge {
   border-color: rgba(255, 242, 196, 0.72);
   background:
@@ -972,7 +972,7 @@
 }
 
 /* The gilt plate is cast, not engraved: leaf ground and dark lettering. */
-.aura-collection-cabinet__case-plate--gilt {
+.aura-collection-cabinet__case-plate--crown {
   border-color: rgba(255, 242, 196, 0.78);
   background:
     linear-gradient(102deg, var(--aura-cabinet-leaf-bright), var(--aura-cabinet-leaf) 46%, #c99f47);
@@ -983,7 +983,7 @@
   color: #2a1d07;
 }
 
-.aura-collection-cabinet__case-plate--gilt .aura-collection-cabinet__case-plate-date {
+.aura-collection-cabinet__case-plate--crown .aura-collection-cabinet__case-plate-date {
   color: rgba(42, 29, 7, 0.66);
 }
 
@@ -1080,7 +1080,7 @@
 
 /* Rung V stands in the rail whether or not it has been reached: the ladder
    is the whole ladder, and an unlit V is an honest statement of standing. */
-.aura-collection-cabinet__lineage span[data-aura-cabinet-lineage="gilded"].is-current {
+.aura-collection-cabinet__lineage span[data-aura-cabinet-lineage="crown"].is-current {
   background: linear-gradient(
     120deg,
     var(--aura-cabinet-leaf-bright),
@@ -1297,7 +1297,7 @@
   }
 
   .aura-collection-cabinet[data-aura-cabinet-stage="gild"]
-    .aura-collection-cabinet__item[data-aura-cabinet-edition="gilded"]
+    .aura-collection-cabinet__item[data-aura-cabinet-edition="crown"]
     .aura-collection-cabinet__object {
     animation: none;
   }
@@ -1336,17 +1336,17 @@
     display: none;
   }
 
-  .aura-collection-cabinet__case-plate--gilt,
-  .aura-collection-cabinet__case-plate--gilt .aura-collection-cabinet__case-plate-date,
-  .aura-collection-cabinet__item[data-aura-cabinet-edition="gilded"]
+  .aura-collection-cabinet__case-plate--crown,
+  .aura-collection-cabinet__case-plate--crown .aura-collection-cabinet__case-plate-date,
+  .aura-collection-cabinet__item[data-aura-cabinet-edition="crown"]
     .aura-collection-cabinet__niche,
-  .aura-collection-cabinet__item[data-aura-cabinet-edition="gilded"]
+  .aura-collection-cabinet__item[data-aura-cabinet-edition="crown"]
     .aura-collection-cabinet__niche.is-selected,
-  .aura-collection-cabinet__item[data-aura-cabinet-edition="gilded"]
+  .aura-collection-cabinet__item[data-aura-cabinet-edition="crown"]
     .aura-collection-cabinet__status,
-  .aura-collection-cabinet__item[data-aura-cabinet-edition="gilded"]
+  .aura-collection-cabinet__item[data-aura-cabinet-edition="crown"]
     .aura-collection-cabinet__name,
-  .aura-collection-cabinet__item[data-aura-cabinet-edition="gilded"]
+  .aura-collection-cabinet__item[data-aura-cabinet-edition="crown"]
     .aura-collection-cabinet__multiplicity-badge {
     border-color: CanvasText;
     background: Canvas;
@@ -1354,13 +1354,13 @@
     color: CanvasText;
   }
 
-  .aura-collection-cabinet__item[data-aura-cabinet-edition="gilded"]
+  .aura-collection-cabinet__item[data-aura-cabinet-edition="crown"]
     .aura-collection-cabinet__niche::after {
     border: 1px solid CanvasText;
     border-image: none;
   }
 
-  .aura-collection-cabinet__lineage span[data-aura-cabinet-lineage="gilded"].is-current {
+  .aura-collection-cabinet__lineage span[data-aura-cabinet-lineage="crown"].is-current {
     background: Highlight;
     color: HighlightText;
   }

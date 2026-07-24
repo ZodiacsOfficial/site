@@ -204,7 +204,7 @@ describe("Registry Aura collection talisman snapshot", () => {
     }).represented.find((sign) => sign.slug === "leo")!;
 
     expect(exact).toMatchObject({ goldCountLabel: "×2", goldTallyArcs: 1, edition: "gold" });
-    expect(capped).toMatchObject({ goldCountLabel: "×99+", goldTallyArcs: 2, edition: "gilded" });
+    expect(capped).toMatchObject({ goldCountLabel: "×99+", goldTallyArcs: 2, edition: "crown" });
   });
 
   it("ignores runtime extra fields so private data cannot reach the snapshot", () => {

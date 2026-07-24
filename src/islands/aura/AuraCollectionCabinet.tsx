@@ -1,7 +1,7 @@
 import { useEffect, useId, useRef, useState } from 'preact/hooks';
 import type { RefObject } from 'preact';
 import { AURA_SIGN_KEYWORDS } from '../../lib/aura/source-alignment';
-import { isGildedGoldCount } from '../../lib/aura/cabinet-finish';
+import { isCrownGoldCount } from '../../lib/aura/cabinet-finish';
 import {
   AURA_SIGN_ORDER,
   type AuraCabinetEdition,
@@ -69,7 +69,7 @@ export const FINISH_ORDER: readonly AuraCabinetFinish[] = [
 /** The catalogue ladder, including the derived fifth edition. */
 export const EDITION_ORDER: readonly AuraCabinetEdition[] = [
   ...FINISH_ORDER,
-  'gilded',
+  'crown',
 ];
 
 const FINISH_RANK: Record<AuraCabinetFinish, number> = {
@@ -108,10 +108,10 @@ export const EDITION_META: Record<AuraCabinetEdition, FinishMeta> = {
     range: 'From 1,000,000 held',
     material: 'The sign itself, cast in gold — the only edition that becomes a sculpture.',
   },
-  gilded: {
+  crown: {
     numeral: 'V',
-    name: 'The Gilded Case',
-    short: 'Gilded',
+    name: 'Crown Gold',
+    short: 'Crown',
     range: 'From 10,000,000 held',
     material:
       'Ten gold sculptures standing in one seat. Its niche is framed in gold, and the case is gilded around it.',
@@ -160,8 +160,8 @@ export function cabinetVisibleFinish(
 }
 
 /** True once a holding carries the tenth sculpture. */
-export function isGildedHolding(holding: AuraCabinetHolding | undefined): boolean {
-  return holding?.finish === 'gold' && isGildedGoldCount(holding.goldCount);
+export function isCrownHolding(holding: AuraCabinetHolding | undefined): boolean {
+  return holding?.finish === 'gold' && isCrownGoldCount(holding.goldCount);
 }
 
 /**
@@ -173,8 +173,8 @@ export function cabinetVisibleEdition(
   stage: AuraCabinetRevealStage,
 ): AuraCabinetEdition {
   const finish = cabinetVisibleFinish(holding.finish, stage);
-  if (finish !== 'gold' || !isGildedHolding(holding)) return finish;
-  return stage === 'gild' || stage === 'settled' ? 'gilded' : 'gold';
+  if (finish !== 'gold' || !isCrownHolding(holding)) return finish;
+  return stage === 'gild' || stage === 'settled' ? 'crown' : 'gold';
 }
 
 function materialAsset(sign: AuraSign): string {
@@ -194,7 +194,7 @@ export function exactGoldCount(value?: string): string {
 /**
  * One public count grammar for badges, seal nodes, and the exhibit card:
  * exact through ninety-nine sculptures, then a dignified cap. The tenth
- * sculpture is the Gilded Case, so the tally has to stay legible well past it;
+ * sculpture is Crown Gold, so the tally has to stay legible well past it;
  * the placard alone carries the exact figure, as the catalogue record.
  */
 export function compactGoldCount(value?: string): string {
@@ -369,8 +369,8 @@ export function AuraCollectionCabinet({
   const isComplete = representedSigns.length === AURA_SIGN_ORDER.length;
   const curatorialSets = earnedCuratorialSets(representedSigns);
   const plaqueSets = curatorialSets.filter((set) => set.kind !== 'complete-twelve');
-  const hasGilded = holdings.some((holding) => isGildedHolding(holding));
-  const gildingShown = hasGilded && (revealStage === 'gild' || revealStage === 'settled');
+  const hasCrown = holdings.some((holding) => isCrownHolding(holding));
+  const crownShown = hasCrown && (revealStage === 'gild' || revealStage === 'settled');
 
   useEffect(() => {
     outcomeRef.current = onRevealOutcome;
@@ -428,10 +428,10 @@ export function AuraCollectionCabinet({
       }
       timers.push(window.setTimeout(() => setRevealStage(stage), remaining));
     };
-    const beats: readonly [AuraCabinetRevealStage, number][] = hasGilded
+    const beats: readonly [AuraCabinetRevealStage, number][] = hasCrown
       ? [...REVEAL_BEATS, ['gild', GILD_BEAT_MS]]
       : REVEAL_BEATS;
-    const settleAt = hasGilded ? GILD_SETTLE_MS : REVEAL_SETTLE_MS;
+    const settleAt = hasCrown ? GILD_SETTLE_MS : REVEAL_SETTLE_MS;
     const scheduleSequence = () => {
       if (cancelled || sequenceScheduled || !visible || !assetsReady) return;
       sequenceScheduled = true;
@@ -499,7 +499,7 @@ export function AuraCollectionCabinet({
     ? cabinetVisibleEdition(activeHolding, revealStage)
     : null;
   const activeEdition: AuraCabinetEdition | null = activeHolding
-    ? (isGildedHolding(activeHolding) ? 'gilded' : activeHolding.finish)
+    ? (isCrownHolding(activeHolding) ? 'crown' : activeHolding.finish)
     : null;
   const activeGoldCount = activeHolding?.finish === 'gold'
     ? normalizedGoldCount(activeHolding.goldCount)
@@ -508,10 +508,10 @@ export function AuraCollectionCabinet({
   return (
     <section
       ref={cabinetRef}
-      class={`aura-collection-cabinet${isComplete ? ' is-complete' : ''}${gildingShown ? ' is-gilded' : ''}`}
+      class={`aura-collection-cabinet${isComplete ? ' is-complete' : ''}${crownShown ? ' is-crown' : ''}`}
       aria-labelledby={`${placardId}-title`}
       data-aura-cabinet-complete={isComplete ? 'true' : 'false'}
-      data-aura-cabinet-gilded={gildingShown ? 'true' : 'false'}
+      data-aura-cabinet-crown={crownShown ? 'true' : 'false'}
       data-aura-cabinet-count={representedSigns.length}
       data-aura-cabinet-stage={revealStage}
     >
@@ -532,7 +532,7 @@ export function AuraCollectionCabinet({
 
       <div class="aura-collection-cabinet__body">
         <div class="aura-collection-cabinet__frame">
-          {hasGilded && (
+          {hasCrown && (
             <span class="aura-collection-cabinet__gilding" aria-hidden="true" />
           )}
           <ol
@@ -549,7 +549,7 @@ export function AuraCollectionCabinet({
                 ? cabinetVisibleEdition(holding, revealStage)
                 : null;
               const edition: AuraCabinetEdition | null = holding
-                ? (isGildedHolding(holding) ? 'gilded' : holding.finish)
+                ? (isCrownHolding(holding) ? 'crown' : holding.finish)
                 : null;
               const goldCount = finish === 'gold'
                 ? normalizedGoldCount(holding?.goldCount)
@@ -596,9 +596,9 @@ export function AuraCollectionCabinet({
                                 sign={sign}
                                 finish={material}
                                 current={material === 'pastel'
-                                  ? visibleEdition !== 'gold' && visibleEdition !== 'gilded'
+                                  ? visibleEdition !== 'gold' && visibleEdition !== 'crown'
                                   : material === visibleEdition
-                                    || (material === 'gold' && visibleEdition === 'gilded')}
+                                    || (material === 'gold' && visibleEdition === 'crown')}
                                 eager={revealMode === 'animate' || index < 6}
                               />
                             ))}
@@ -651,14 +651,14 @@ export function AuraCollectionCabinet({
             })}
           </ol>
 
-          {(gildingShown || isComplete) && (
+          {(crownShown || isComplete) && (
             <div class="aura-collection-cabinet__plates">
-              {gildingShown && (
+              {crownShown && (
                 <p
-                  class="aura-collection-cabinet__case-plate aura-collection-cabinet__case-plate--gilt"
-                  data-aura-cabinet-gilt-plate
+                  class="aura-collection-cabinet__case-plate aura-collection-cabinet__case-plate--crown"
+                  data-aura-cabinet-crown-plate
                 >
-                  <span>The Gilded Case</span>
+                  <span>Crown Gold</span>
                   <span class="aura-collection-cabinet__case-plate-date">sealed V</span>
                 </p>
               )}
@@ -769,7 +769,7 @@ export function AuraCollectionCabinet({
 
       <p class="sr-only" role="status" aria-live="polite" aria-atomic="true">
         {announceFinal
-          ? `Cabinet editions displayed.${gildingShown ? ' The case is gilded.' : ''}`
+          ? `Cabinet editions displayed.${crownShown ? ' The case is gilded.' : ''}`
           : ''}
       </p>
     </section>

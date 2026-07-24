@@ -113,8 +113,8 @@ describe("Registry Aura cabinet card snapshot", () => {
     expect(snapshot.representedCount).toBe(5);
     expect(snapshot.complete).toBe(false);
     // Twelve sculptures in one seat is the fifth edition, derived not stored.
-    expect(snapshot.gilded).toBe(true);
-    expect(snapshot.seats[0]).toMatchObject({ edition: "gilded", tallyLabel: "×12" });
+    expect(snapshot.crown).toBe(true);
+    expect(snapshot.seats[0]).toMatchObject({ edition: "crown", tallyLabel: "×12" });
     expect(snapshot.seats[7]).toMatchObject({ edition: "gold", tallyLabel: "×3" });
     expect(snapshot.seats[3]).toMatchObject({ edition: "bronze", tallyLabel: null });
     // The reserved niches survive into the card: absence is part of the record.
@@ -145,7 +145,7 @@ describe("Registry Aura cabinet card snapshot", () => {
 
     expect(complete.complete).toBe(true);
     expect(complete.representedCount).toBe(12);
-    expect(complete.gilded).toBe(false);
+    expect(complete.crown).toBe(false);
   });
 
   it("ignores runtime extra fields so private data cannot reach the canvas", () => {
@@ -184,7 +184,7 @@ describe("Registry Aura cabinet card snapshot", () => {
     const text = auraCabinetAccessibleDescription(input);
 
     expect(text).toContain("5 of the Twelve represented");
-    expect(text).toContain("Aries gilded ×12");
+    expect(text).toContain("Aries crown ×12");
     expect(text).toContain("7 places remain reserved.");
     expect(text).toContain("Solana public record");
     expect(text).not.toMatch(/address|wallet|balance|price|birth/i);
@@ -192,62 +192,17 @@ describe("Registry Aura cabinet card snapshot", () => {
 });
 
 describe("Registry Aura cabinet PNG", () => {
-  it("paints a 1080×1350 case with every seat, both plates, and the wordmark", async () => {
-    const harness = installCanvas();
-    const blob = await drawAuraCabinetCard({
-      ...input,
-      holdings: AURA_SIGN_ORDER.map((sign) => (
-        sign === "aries"
-          ? { sign, finish: "gold" as const, goldCount: "12" }
-          : { sign, finish: "pastel" as const }
-      )),
-    });
-
-    expect(blob.type).toBe("image/png");
-    expect(harness.canvas).toMatchObject({ width: 1080, height: 1350 });
-    const text = harness.painted.join(" ");
-    for (const required of [
-      "COLLECTION DISPLAY",
-      "The Cabinet of Twelve",
-      "12 OF THE TWELVE",
-      "Nº 01",
-      "Nº 12",
-      "Aries",
-      "Pisces",
-      "V · GILDED",
-      "I · PASTEL",
-      "THE GILDED CASE",
-      "THE COMPLETE TWELVE",
-      "EDITIONS READ FROM THE PUBLIC RECORD",
-      "ZODIACS · ORG",
-    ]) {
-      expect(text).toContain(required);
-    }
-    // The page's own artwork, not a redrawn approximation.
-    expect(harness.drawn).toContain("/assets/cabinet-materials/gold/aries.webp");
-    expect(harness.drawn).toContain("/assets/zodiac-icons/128/pisces.webp");
-    // Nothing on the card can name an address or a balance.
-    expect(text).not.toMatch(/0x|address|balance|held\b.*\d{4,}/i);
-  });
-
-  it("still exports when the artwork cannot load", async () => {
-    const harness = installCanvas({ art: false });
-    const blob = await drawAuraCabinetCard(input);
-
-    expect(blob.type).toBe("image/png");
-    expect(harness.drawn).toHaveLength(0);
-    // The glyph fallback keeps every represented seat legible.
-    expect(harness.painted.join(" ")).toContain("Aries");
-  });
-
-  it("fails clearly when PNG encoding is unavailable", async () => {
-    installCanvas({ encode: false });
-    await expect(drawAuraCabinetCard(input)).rejects.toThrow("png_encode_failed");
+  it("refuses to export without a live cabinet to photograph", async () => {
+    installCanvas();
+    // The card is a capture, not a re-drawing: with no element there is
+    // nothing to be faithful to, and a silent approximation would be worse
+    // than an error.
+    await expect(drawAuraCabinetCard(input)).rejects.toThrow(TypeError);
   });
 
   it("shares and downloads under one constant cabinet filename", async () => {
     const harness = installCanvas();
-    const blob = await drawAuraCabinetCard(input);
+    const blob = new Blob(["png"], { type: "image/png" });
 
     expect(AURA_CABINET_FILENAME).toBe("zodiacs-cabinet.png");
     expect(canShareAuraCabinetBlob(blob)).toBe(true);
@@ -263,7 +218,7 @@ describe("Registry Aura cabinet PNG", () => {
 
   it("keeps unsupported native sharing on the download path", async () => {
     installCanvas({ canShare: false });
-    const blob = await drawAuraCabinetCard(input);
+    const blob = new Blob(["png"], { type: "image/png" });
 
     expect(canShareAuraCabinetBlob(blob)).toBe(false);
     expect(await shareAuraCabinetBlob(blob)).toBe("unavailable");

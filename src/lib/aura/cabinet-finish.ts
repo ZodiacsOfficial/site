@@ -10,11 +10,12 @@ const SILVER_MINIMUM = 100_000n;
 const GOLD_MINIMUM = 1_000_000n;
 
 /**
- * Ten complete Gold sculptures — 10,000,000 held in one sign — gild the case
+ * Ten complete Gold sculptures — 10,000,000 held in one sign — earn Crown Gold,
+ * which frames the seat and gilds the case
  * itself. The threshold is expressed in sculptures rather than tokens because
  * the Gold count is already the exact, decimals-independent tally.
  */
-export const GILDED_MINIMUM_SCULPTURES = 10n;
+export const CROWN_MINIMUM_SCULPTURES = 10n;
 
 function decimalScale(decimals: number): bigint {
   if (!Number.isSafeInteger(decimals) || decimals < 0 || decimals > 255) {
@@ -53,7 +54,7 @@ export function goldCountForAtomicAmount(
 }
 
 /** True once a Gold count reaches the tenth sculpture, whatever its notation. */
-export function isGildedGoldCount(value: string | bigint | null | undefined): boolean {
+export function isCrownGoldCount(value: string | bigint | null | undefined): boolean {
   if (value === null || value === undefined) return false;
   let count: bigint;
   try {
@@ -61,7 +62,7 @@ export function isGildedGoldCount(value: string | bigint | null | undefined): bo
   } catch {
     return false;
   }
-  return count >= GILDED_MINIMUM_SCULPTURES;
+  return count >= CROWN_MINIMUM_SCULPTURES;
 }
 
 /** The edition one verified holding displays: its material, then its Gold multiplicity. */
@@ -69,7 +70,7 @@ export function cabinetEditionForHolding(
   holding: { finish: AuraCabinetFinish; goldCount?: string },
 ): AuraCabinetEdition {
   if (holding.finish !== 'gold') return holding.finish;
-  return isGildedGoldCount(holding.goldCount) ? 'gilded' : 'gold';
+  return isCrownGoldCount(holding.goldCount) ? 'crown' : 'gold';
 }
 
 /** Converts one exact balance into the only collection data allowed past the provider boundary. */

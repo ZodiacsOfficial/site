@@ -118,7 +118,12 @@ async function prepareCabinetCard(result: AuraResultState): Promise<PreparedShar
     drawAuraCabinetCard,
     shareAuraCabinetBlob,
   } = await import("../lib/aura-cabinet-card");
+  // The live case is the card: capture the display the visitor is looking at.
+  // The frame is the display — the placard beneath it is a reading surface,
+  // not part of the case, and repeating it would only crowd the image.
+  const element = document.querySelector<HTMLElement>(".aura-collection-cabinet__frame");
   const cardInput = {
+    element,
     holdings: result.holdings,
     checkedAt: result.checkedAt,
     chain: result.chain,
@@ -1395,7 +1400,7 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
           <p>
             Gold counts in sculptures — one for each complete million held. The
             tenth sculpture in a single seat, 10,000,000 held, is the last
-            edition: that seat is framed in gold, the case is gilded around it,
+            edition — Crown Gold. That seat is framed in gold, the case is gilded around it,
             and the whole cabinet carries a cast plate sealed V. A seat badge
             shows up to ×99; beyond that it reads ×99+ and the placard keeps
             the exact count.

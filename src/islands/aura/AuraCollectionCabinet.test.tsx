@@ -9,7 +9,7 @@ import AuraCollectionCabinet, {
   cabinetVisibleFinish,
   compactGoldCount,
   exactGoldCount,
-  isGildedHolding,
+  isCrownHolding,
   normalizedGoldCount,
   principalSign,
 } from './AuraCollectionCabinet';
@@ -122,22 +122,22 @@ describe('AuraCollectionCabinet', () => {
     expect(cabinetVisibleFinish('silver', 'settled')).toBe('silver');
   });
 
-  it('holds the Gilded Case behind Gold until its own beat', () => {
-    const gilded = { sign: 'leo', finish: 'gold', goldCount: '12' } as const;
+  it('holds Crown Gold behind Gold until its own beat', () => {
+    const crowned = { sign: 'leo', finish: 'gold', goldCount: '12' } as const;
     const single = { sign: 'leo', finish: 'gold', goldCount: '9' } as const;
 
-    expect(isGildedHolding(gilded)).toBe(true);
-    expect(isGildedHolding(single)).toBe(false);
-    expect(isGildedHolding({ sign: 'leo', finish: 'silver' })).toBe(false);
-    expect(cabinetVisibleEdition(gilded, 'silver')).toBe('silver');
-    expect(cabinetVisibleEdition(gilded, 'gold')).toBe('gold');
-    expect(cabinetVisibleEdition(gilded, 'strike')).toBe('gold');
-    expect(cabinetVisibleEdition(gilded, 'gild')).toBe('gilded');
-    expect(cabinetVisibleEdition(gilded, 'settled')).toBe('gilded');
+    expect(isCrownHolding(crowned)).toBe(true);
+    expect(isCrownHolding(single)).toBe(false);
+    expect(isCrownHolding({ sign: 'leo', finish: 'silver' })).toBe(false);
+    expect(cabinetVisibleEdition(crowned, 'silver')).toBe('silver');
+    expect(cabinetVisibleEdition(crowned, 'gold')).toBe('gold');
+    expect(cabinetVisibleEdition(crowned, 'strike')).toBe('gold');
+    expect(cabinetVisibleEdition(crowned, 'gild')).toBe('crown');
+    expect(cabinetVisibleEdition(crowned, 'settled')).toBe('crown');
     expect(cabinetVisibleEdition(single, 'settled')).toBe('gold');
   });
 
-  it('gilds the case, frames the seat, and seals the fifth edition V', () => {
+  it('crowns the case, frames the seat, and seals the fifth edition V', () => {
     const markup = render(h(AuraCollectionCabinet, {
       holdings: [
         { sign: 'aries', finish: 'pastel' },
@@ -145,28 +145,28 @@ describe('AuraCollectionCabinet', () => {
       ],
       selectedSign: 'leo',
     }));
-    const ungilded = render(h(AuraCollectionCabinet, {
+    const uncrowned = render(h(AuraCollectionCabinet, {
       holdings: [{ sign: 'leo', finish: 'gold', goldCount: '9' }],
       selectedSign: 'leo',
     }));
 
-    expect(markup).toContain('data-aura-cabinet-gilded="true"');
+    expect(markup).toContain('data-aura-cabinet-crown="true"');
     expect(markup).toContain('aura-collection-cabinet__gilding');
-    expect(markup).toContain('data-aura-cabinet-gilt-plate');
-    expect(markup).toContain('The Gilded Case');
+    expect(markup).toContain('data-aura-cabinet-crown-plate');
+    expect(markup).toContain('Crown Gold');
     expect(markup).toContain('sealed V');
     expect(markup).toContain('From 10,000,000 held');
-    expect(markup).toContain('data-aura-cabinet-edition="gilded"');
-    expect(markup).toContain('data-aura-cabinet-lineage="gilded"');
+    expect(markup).toContain('data-aura-cabinet-edition="crown"');
+    expect(markup).toContain('data-aura-cabinet-lineage="crown"');
     expect(markup).toContain('>×12</span>');
     // The seat still holds a Gold sculpture: gilding frames it, never replaces it.
     expect(markup).toContain('/assets/cabinet-materials/gold/leo.webp');
     // Nine sculptures is still the Gold Sculpture, and the case stays plain.
-    expect(ungilded).toContain('data-aura-cabinet-gilded="false"');
-    expect(ungilded).not.toContain('data-aura-cabinet-gilt-plate');
-    expect(ungilded).not.toContain('data-aura-cabinet-edition="gilded"');
+    expect(uncrowned).toContain('data-aura-cabinet-crown="false"');
+    expect(uncrowned).not.toContain('data-aura-cabinet-crown-plate');
+    expect(uncrowned).not.toContain('data-aura-cabinet-edition="crown"');
     // Rung V stands in the rail either way — the ladder is always the whole ladder.
-    expect(ungilded).toContain('data-aura-cabinet-lineage="gilded"');
+    expect(uncrowned).toContain('data-aura-cabinet-lineage="crown"');
     // Standing is recorded, never sold.
     expect(markup).not.toMatch(/buy|acquire|upgrade|unlock/i);
   });
@@ -281,7 +281,7 @@ describe('AuraCollectionCabinet', () => {
     expect(css).toContain('aura-cabinet-gilding-pass');
     expect(css).toContain('aura-cabinet-gilding-sheen');
     // The gilding beat dims the room further than the gold beat did.
-    expect(css).toMatch(/data-aura-cabinet-stage="gild"[^{]*:not\(\[data-aura-cabinet-edition="gilded"\]\)/);
+    expect(css).toMatch(/data-aura-cabinet-stage="gild"[^{]*:not\(\[data-aura-cabinet-edition="crown"\]\)/);
     expect(css).toMatch(/\.aura-collection-cabinet__lineage\s*\{[^}]*repeat\(5,/s);
     expect(css).toContain('@media (hover: hover) and (pointer: fine)');
     expect(css).toContain('@media (prefers-reduced-motion: reduce)');

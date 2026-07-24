@@ -15,55 +15,37 @@ Promo films for zodiacs.org — the Registry wing's Cabinet of Twelve.
 
 | id | size | length | what it is |
 | --- | --- | --- | --- |
-| `TheCabinet` | 1080×1080 | 13.7s | **The campaign film. Square is the X master.** |
-| `TheCabinetVertical` | 1080×1920 | 13.7s | Stories / Reels cut of the same film |
-| `TheCabinetWide` | 1920×1080 | 13.7s | Landscape cut; uses the site's six-column case |
-| `CabinetPromo` | 1080×1920 | 18.8s | The original ladder explainer (I→IV) |
-| `CabinetPromoWide` | 1920×1080 | 18.8s | Landscape cut of the explainer |
+| `CabinetPromoWide` | 1920×1080 | 19.3s | **The campaign film.** Five editions, explained one threshold at a time. |
+| `CabinetPromo` | 1080×1920 | 19.3s | Vertical cut of the same film |
 
-### "The Cabinet of Twelve"
+The film's job is the ladder. A title card, then the case fills in pastel,
+and from there each edition gets the same treatment: a full-screen **HOLD**
+card counting up to the threshold, then the material landing across the
+twelve seats. Bronze at 10,000, Silver at 100,000, Gold at 1,000,000, and
+Crown Gold at 10,000,000 — where one seat frames itself in gold and the case
+is gilded around it. Tier-to-tier is roughly two thirds of the runtime, which
+is what the film is for.
 
-The subject is the cabinet, not any one edition:
-
-> Twelve numbered niches stand empty. A public record is read. The seats an
-> address has earned light up in their materials — and four stay reserved.
-
-Then the ladder is read **in place** across the filled case: I to V, each rung
-lighting only the seats that reached it, so the system explains itself without
-ever cutting away from the product. The gilding is the last rung, given one
-beat, not the plot.
-
-Rules the cut obeys:
-
-- **Museum register.** Void black, EB Garamond, long holds, silence as a
-  device. Restraint is the brand; nothing here shouts.
-- **Never leave the cabinet.** No explainer cards. That is also what keeps the
-  product on screen for twelve of the thirteen seconds.
-- **Four seats stay empty.** The reserved niches are the engine; a completed
-  case would be a nicer picture and a worse advertisement.
-- **Read it silent.** All meaning lives in image and type.
-
-Timing and the displayed standing live in one place, `src/cabinet/palette.ts`,
-and the score is written against the same frame numbers.
+Silver's promotion lives in the case, not the artwork: the niche becomes a
+brushed platinum bar with a travelling specular sheen while the medallion
+keeps its pastel art. That is what separates it from Bronze at a glance.
 
 ## Audio
 
-Both cues are pure-math synthesis — no samples, no third-party audio, nothing
-to clear. The voices are shared in `scripts/synth.mjs`; each cue is a script.
+The cue is pure-math synthesis — no samples, no third-party audio, nothing to
+clear. The voices live in `scripts/synth.mjs`.
 
 ```console
-node scripts/make-audio.mjs          # public/score.wav    — Cabinet promo
-node scripts/make-cabinet-audio.mjs  # public/cabinet.wav  — The Cabinet of Twelve
+node scripts/make-audio.mjs   # public/score.wav
 ```
 
 Deterministic: the same script always writes the same bytes.
 
-## Rendering the campaign
+## Rendering
 
 ```console
-npx remotion render TheCabinet         out/cabinet-square.mp4
-npx remotion render TheCabinetVertical out/cabinet-vertical.mp4
-npx remotion render TheCabinetWide     out/cabinet-wide.mp4
+npx remotion render CabinetPromoWide out/cabinet-promo-wide.mp4
+npx remotion render CabinetPromo     out/cabinet-promo-vertical.mp4
 ```
 
 ## Commands

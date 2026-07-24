@@ -1,12 +1,12 @@
 import { describe, expect, it } from 'vitest';
 import {
-  GILDED_MINIMUM_SCULPTURES,
+  CROWN_MINIMUM_SCULPTURES,
   cabinetEditionForHolding,
   cabinetFinishForAtomicAmount,
   cabinetHoldingForAtomicAmount,
   goldCountForAtomicAmount,
   isCanonicalGoldCount,
-  isGildedGoldCount,
+  isCrownGoldCount,
 } from './cabinet-finish';
 
 describe('cabinetFinishForAtomicAmount', () => {
@@ -66,21 +66,21 @@ describe('cabinetFinishForAtomicAmount', () => {
     });
 
   it('gilds the case from the tenth complete sculpture', () => {
-    expect(GILDED_MINIMUM_SCULPTURES).toBe(10n);
-    expect(isGildedGoldCount('9')).toBe(false);
-    expect(isGildedGoldCount('10')).toBe(true);
-    expect(isGildedGoldCount(10n)).toBe(true);
-    expect(isGildedGoldCount('12345678901234567890')).toBe(true);
-    expect(isGildedGoldCount(null)).toBe(false);
-    expect(isGildedGoldCount(undefined)).toBe(false);
-    expect(isGildedGoldCount('not-a-count')).toBe(false);
+    expect(CROWN_MINIMUM_SCULPTURES).toBe(10n);
+    expect(isCrownGoldCount('9')).toBe(false);
+    expect(isCrownGoldCount('10')).toBe(true);
+    expect(isCrownGoldCount(10n)).toBe(true);
+    expect(isCrownGoldCount('12345678901234567890')).toBe(true);
+    expect(isCrownGoldCount(null)).toBe(false);
+    expect(isCrownGoldCount(undefined)).toBe(false);
+    expect(isCrownGoldCount('not-a-count')).toBe(false);
   });
 
   it('derives the fifth edition from Gold multiplicity, never from storage', () => {
     // Ten million held in one sign is ten complete sculptures.
     const gilded = cabinetHoldingForAtomicAmount('aries', 10_000_000_000_000n, 6)!;
     expect(gilded).toEqual({ sign: 'aries', finish: 'gold', goldCount: '10' });
-    expect(cabinetEditionForHolding(gilded)).toBe('gilded');
+    expect(cabinetEditionForHolding(gilded)).toBe('crown');
     expect(cabinetEditionForHolding(
       cabinetHoldingForAtomicAmount('aries', 9_999_999_999_999n, 6)!,
     )).toBe('gold');
