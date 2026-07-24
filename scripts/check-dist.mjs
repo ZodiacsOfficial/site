@@ -500,8 +500,9 @@ function canonicalHref(html) {
 // English-only under D9, while birthdays, Chinese zodiac, and the Registry
 // disclosure ship on every locale rail. Keep exact counts so sitemap drift
 // fails loudly.
+// 2026-07-16: +1 for the Registry Collection page (/registry/collection/, EN-only).
 const sitemapPolicy = {
-  total: 2318,
+  total: 2319,
   compatibilityPairs: 78,
   birthdays: 1830,
   chineseZodiac: 65,

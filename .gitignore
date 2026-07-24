@@ -9,3 +9,4 @@ build/
 .astro/
 .cache/
 supabase/.temp/
+out/

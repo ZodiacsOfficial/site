@@ -20,6 +20,7 @@ export type AnalyticsEventName =
   | 'verifier_used'
   | 'sdk_click'
   | 'wallet_chart_computed'
+  | 'collection_checked'
   | 'result_rendered'
   | 'explorer_interaction'
   | 'tour_start'

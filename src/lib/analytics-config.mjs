@@ -10,6 +10,7 @@ export const ANALYTICS_EVENT_PROPS = Object.freeze({
   verifier_used: ['chain', 'outcome'],
   sdk_click: ['source', 'destination'],
   wallet_chart_computed: ['chain', 'holds_registry_asset'],
+  collection_checked: ['chain', 'tier', 'full_cabinet'],
 
   // Existing event names remain accepted so historical funnels do not break.
   result_rendered: ['mode'],

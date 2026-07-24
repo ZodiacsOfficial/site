@@ -1,5 +1,10 @@
 # Registry Aura — adversarial design audit & revised visual specification (v2)
 
+> **RETIRED — do not implement.** The Aura feature was cancelled before any code was written
+> (owner direction, 2026-07-16; see `docs/REGISTRY-COLLECTION-PIVOT.md`). The Registry segment
+> ships instead as **The Collection** at `/registry/collection/`. This document is kept as
+> history; only its endpoint/CI verification material remains useful as reference.
+
 **Prepared by:** Fable (adversarial product strategy + information design — planning/audit only)
 **For:** Sol Ultra (audit + implementation of the approved revision)
 **Supersedes:** the visual grammar, state system, share card, and parts of the copy spec in `docs/REGISTRY-AURA-PLAN.md` (v1). v1's product thesis, route, wallet/data architecture, endpoint contract, privacy boundaries, phasing, and CI-gate analysis stand unless amended in §14.

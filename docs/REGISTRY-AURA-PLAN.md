@@ -1,10 +1,9 @@
 # Registry Aura — implementation-ready planning document
 
-> **Superseded in part by `docs/REGISTRY-AURA-PLAN-V2.md`** (adversarial design audit, 2026-07-16).
-> The v2 document replaces this file's visual grammar, state system, screen order, share card,
-> reading templates, and acceptance criteria (its §14 lists the exact deltas). The product thesis,
-> route, wallet/data architecture, endpoint contract, privacy boundaries, phasing, and CI-gate
-> analysis below still stand. Implement from v2 wherever the two disagree.
+> **RETIRED — do not implement.** The Aura feature was cancelled before any code was written
+> (owner direction, 2026-07-16; see `docs/REGISTRY-COLLECTION-PIVOT.md`). The Registry segment
+> ships instead as **The Collection** at `/registry/collection/`. This document is kept as
+> history; only its endpoint architecture and CI-gate analysis remain useful as reference.
 
 **Prepared by:** Fable (product strategy, creative direction, experience architecture — planning only)
 **For:** Sol Ultra (audit + implementation)

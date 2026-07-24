@@ -1,0 +1,151 @@
+---
+import Base from '../../../layouts/Base.astro';
+import SignIcon from '../../../components/SignIcon.astro';
+import Cabinet from '../../../islands/registry/Cabinet';
+import { SIGNS } from '../../../lib/signs';
+import {
+  configuredCollectionChains,
+  type WalletEnvironment,
+} from '../../../lib/wallet/config';
+import { COLLECTION_EN, collectionText } from '../../../strings/collection';
+import { SCHEMA_EN } from '../../../strings/seo.en.mjs';
+import '../../../styles/collection.css';
+
+const buildEnvironment: WalletEnvironment = {
+  ...process.env,
+  PUBLIC_COLLECTION_ENABLED:
+    import.meta.env.PUBLIC_COLLECTION_ENABLED ?? process.env.PUBLIC_COLLECTION_ENABLED,
+};
+const availableChains = configuredCollectionChains(buildEnvironment);
+
+const TIER_ROWS = [
+  { tier: 'bronze', name: 'tierBronze', threshold: 'tierBronzeThreshold', line: 'tierBronzeLine' },
+  { tier: 'silver', name: 'tierSilver', threshold: 'tierSilverThreshold', line: 'tierSilverLine' },
+  { tier: 'gold', name: 'tierGold', threshold: 'tierGoldThreshold', line: 'tierGoldLine' },
+  { tier: 'master', name: 'tierMaster', threshold: 'tierMasterThreshold', line: 'tierMasterLine' },
+] as const;
+
+const jsonLd = [
+  {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: SCHEMA_EN.breadcrumbHome, item: 'https://zodiacs.org/' },
+      { '@type': 'ListItem', position: 2, name: collectionText('breadcrumbRegistry'), item: 'https://zodiacs.org/registry/' },
+      { '@type': 'ListItem', position: 3, name: collectionText('breadcrumbPage'), item: 'https://zodiacs.org/registry/collection/' },
+    ],
+  },
+];
+---
+<Base
+  title={COLLECTION_EN.metaTitle}
+  description={COLLECTION_EN.metaDescription}
+  path="/registry/collection/"
+  jsonLd={jsonLd}
+  clientUi
+>
+  <section class="section container container--narrow collection-page">
+    <header class="collection-page__hero">
+      <em class="kicker">{collectionText('kicker')}</em>
+      <h1 class="display">{collectionText('title')}</h1>
+      <p class="collection-page__intro">{collectionText('intro')}</p>
+      <p class="collection-page__boundary">{collectionText('boundary')}</p>
+    </header>
+
+    <div class="collection-page__section">
+      <ul class="cabinet cabinet--exemplar" aria-label={collectionText('exemplarCaption')}>
+        {SIGNS.map((sign) => (
+          <li class="cabinet__seat cabinet__seat--held" style={`--sign: ${sign.hue}`}>
+            <img
+              src={`/assets/zodiac-icons/128/${sign.slug}.webp`}
+              width="64"
+              height="64"
+              loading="lazy"
+              decoding="async"
+              alt=""
+            />
+            <span class="cabinet__seat-name">{sign.name}</span>
+          </li>
+        ))}
+      </ul>
+      <p class="collection-page__caption">{collectionText('exemplarCaption')}</p>
+    </div>
+
+    <div class="collection-page__section">
+      <div class="section-head">
+        <h2>{collectionText('tiersTitle')}</h2>
+        <p>{collectionText('tiersIntro')}</p>
+      </div>
+      <table class="tier-table">
+        <thead>
+          <tr>
+            <th scope="col">{collectionText('tierColumnTier')}</th>
+            <th scope="col">{collectionText('tierColumnThreshold')}</th>
+            <th scope="col">{collectionText('tierColumnMeaning')}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {TIER_ROWS.map((row) => (
+            <tr data-tier={row.tier}>
+              <td>{collectionText(row.name)}</td>
+              <td>{collectionText(row.threshold)}</td>
+              <td>{collectionText(row.line)}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <ul class="collection-rules">
+        <li>{collectionText('ruleCabinet')}</li>
+        <li>{collectionText('ruleTier')}</li>
+        <li>{collectionText('ruleVerifiable')}</li>
+      </ul>
+    </div>
+
+    <div class="collection-page__section">
+      <div class="section-head">
+        <h2>{collectionText('purposeTitle')}</h2>
+        <p>{collectionText('purposeBody')}</p>
+      </div>
+      <p class="collection-page__boundary">
+        {collectionText('purposeCatalogue')}
+        {' '}
+        <a href="/registry/#official-twelve">{collectionText('purposeCatalogueLink')}</a>
+      </p>
+    </div>
+
+    <div class="collection-page__section">
+      <div class="section-head">
+        <h2>{collectionText('checkerTitle')}</h2>
+        <p>{collectionText('checkerIntro')}</p>
+      </div>
+      <Cabinet client:load availableChains={availableChains} />
+      <noscript><p class="collection-page__noscript">{collectionText('noJavaScript')}</p></noscript>
+    </div>
+
+    <div class="collection-page__section">
+      <nav class="collection-catalogue" aria-label={collectionText('breadcrumbPage')}>
+        {SIGNS.map((sign) => (
+          <a href={`/registry/${sign.slug}/`}>
+            <SignIcon sign={sign.slug} size={24} />
+            {sign.name}
+          </a>
+        ))}
+      </nav>
+    </div>
+
+    <aside class="collection-page__disclosures" aria-labelledby="collection-privacy-title">
+      <div>
+        <h2 id="collection-privacy-title">{collectionText('privacyTitle')}</h2>
+        <p>{collectionText('privacyBody')}</p>
+      </div>
+      <ul>
+        <li>{collectionText('readOnlyDisclosure')}</li>
+        <li>{collectionText('standingDisclosure')}</li>
+        <li>{collectionText('amountsDisclosure')}</li>
+        <li>{collectionText('controlDisclosure')}</li>
+        <li>{collectionText('financialDisclosure')}</li>
+      </ul>
+    </aside>
+
+    <a class="btn btn--ghost collection-page__back" href="/registry/">{collectionText('registryBack')}</a>
+  </section>
+</Base>

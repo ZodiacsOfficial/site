@@ -43,6 +43,7 @@ const EVERGREEN_LASTMOD = new Map<string, string>([
     '/disclosure/',
     ...CHINESE_ZODIAC_PATHS,
   ].map((loc) => [loc, '2026-07-15'] as const),
+  ['/registry/collection/', '2026-07-16'] as const,
   ...[
     '/pt/', '/pt/birth-chart/', '/pt/compatibility/', '/pt/moon-sign/',
     '/pt/rising-sign/', '/pt/moon-phase/', '/pt/saturn-return/', '/pt/transits/',
@@ -123,6 +124,7 @@ export const GET: APIRoute = async () => {
     { loc: '/baby-zodiac/', priority: 0.8 },
     { loc: '/widgets/', priority: 0.6 },
     { loc: '/disclosure/', priority: 0.5 },
+    { loc: '/registry/collection/', priority: 0.7 },
     // Locale variants and hreflang blocks are added below through the same
     // alternatePaths policy used by birthday pages and the translated rails.
     ...CHINESE_ZODIAC_PATHS.map((loc, index) => ({

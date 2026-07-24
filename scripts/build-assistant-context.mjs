@@ -213,6 +213,8 @@ async function loadStaticPages(repoRoot, context) {
     // Registry-only, feature-flagged utility: keep it out of the consumer
     // astrology assistant and its deliberately strict vocabulary boundary.
     if (route === '/registry/wallet-chart/') continue;
+    // The Registry Collection page sits behind the same vocabulary boundary.
+    if (route === '/registry/collection/') continue;
     const source = await readFile(file, 'utf8');
     pages.push({
       route,

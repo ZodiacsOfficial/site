@@ -9,6 +9,7 @@ const API_ROOT = join(ROOT, 'api');
 const EXPECTED_HANDLERS = [
   'api/assistant.ts',
   'api/calendar/transits.ts',
+  'api/collection-holdings.ts',
   'api/email/confirm.ts',
   'api/email/subscribe.ts',
   'api/push/subscribe.ts',

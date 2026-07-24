@@ -3050,6 +3050,11 @@
           <p className="cat__lots-note">
             Tap a glyph to open its catalogue entry — lore, provenance &amp; acquisition.
           </p>
+          <p className="cat__lots-note">
+            The Cabinet of Twelve — how the Bronze, Silver, Gold &amp; Master tiers
+            work, and what any address keeps.{' '}
+            <a href="/registry/collection/">The Collection →</a>
+          </p>
         </section>
       );
     }

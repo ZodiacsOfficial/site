@@ -15,13 +15,25 @@ interface RegistryAsset {
   representations: RegistryRepresentation[];
 }
 
+/** One official sign with a positive on-chain balance, in ui units (6 decimals). */
+export interface OfficialHolding {
+  sign: string;
+  amount: number;
+}
+
 const OFFICIAL = (registryDocument.assets as RegistryAsset[])
   .flatMap((asset) => asset.representations)
   .filter((representation) => representation.isOfficialRepresentation);
 
 const SOLANA_TOKEN_PROGRAM = 'TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA';
+const RAW_PER_TOKEN = 1_000_000n;
 
-async function solanaHeldSigns(address: string, rpcUrl: string, fetcher: Fetcher): Promise<string[]> {
+/** Every official representation carries decimals: 6; keep whole units exact past 2^53 raw. */
+function uiAmount(raw: bigint): number {
+  return Number(raw / RAW_PER_TOKEN) + Number(raw % RAW_PER_TOKEN) / 1_000_000;
+}
+
+async function solanaHoldings(address: string, rpcUrl: string, fetcher: Fetcher): Promise<OfficialHolding[]> {
   const response = await fetcher(rpcUrl, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -47,10 +59,10 @@ async function solanaHeldSigns(address: string, rpcUrl: string, fetcher: Fetcher
   }
   return OFFICIAL
     .filter((asset) => asset.chain === 'solana' && (balances.get(asset.address) ?? 0n) > 0n)
-    .map((asset) => asset.sign);
+    .map((asset) => ({ sign: asset.sign, amount: uiAmount(balances.get(asset.address)!) }));
 }
 
-async function baseHeldSigns(address: string, rpcUrl: string, fetcher: Fetcher): Promise<string[]> {
+async function baseHoldings(address: string, rpcUrl: string, fetcher: Fetcher): Promise<OfficialHolding[]> {
   const official = OFFICIAL.filter((asset) => asset.chain === 'base');
   const ownerWord = address.toLowerCase().replace(/^0x/, '').padStart(64, '0');
   const requests = official.map((asset, index) => ({
@@ -70,11 +82,34 @@ async function baseHeldSigns(address: string, rpcUrl: string, fetcher: Fetcher):
     const result = byId.get(index + 1)?.result;
     if (typeof result !== 'string' || !/^0x[0-9a-fA-F]+$/.test(result)) return [];
     try {
-      return BigInt(result) > 0n ? [asset.sign] : [];
+      const raw = BigInt(result);
+      return raw > 0n ? [{ sign: asset.sign, amount: uiAmount(raw) }] : [];
     } catch {
       return [];
     }
   });
+}
+
+/** Best-effort, read-only balance amounts. Failure never changes identity. */
+export async function resolveOfficialHoldings(
+  chain: WalletChain,
+  address: string,
+  env: WalletEnvironment,
+  fetcher: Fetcher = fetch,
+): Promise<OfficialHolding[] | undefined> {
+  try {
+    const solanaRpcUrl = env.SOLANA_RPC_URL;
+    const baseRpcUrl = env.BASE_RPC_URL;
+    if (chain === 'solana' && solanaRpcUrl && validWalletProviderEndpoint(solanaRpcUrl, env)) {
+      return await solanaHoldings(address, solanaRpcUrl, fetcher);
+    }
+    if (chain === 'base' && baseRpcUrl && validWalletProviderEndpoint(baseRpcUrl, env)) {
+      return await baseHoldings(address, baseRpcUrl, fetcher);
+    }
+  } catch {
+    return undefined;
+  }
+  return undefined;
 }
 
 /** Best-effort, read-only balance context. Failure never changes identity. */
@@ -84,17 +119,6 @@ export async function resolveOfficialHeldSigns(
   env: WalletEnvironment,
   fetcher: Fetcher = fetch,
 ): Promise<string[] | undefined> {
-  try {
-    const solanaRpcUrl = env.SOLANA_RPC_URL;
-    const baseRpcUrl = env.BASE_RPC_URL;
-    if (chain === 'solana' && solanaRpcUrl && validWalletProviderEndpoint(solanaRpcUrl, env)) {
-      return await solanaHeldSigns(address, solanaRpcUrl, fetcher);
-    }
-    if (chain === 'base' && baseRpcUrl && validWalletProviderEndpoint(baseRpcUrl, env)) {
-      return await baseHeldSigns(address, baseRpcUrl, fetcher);
-    }
-  } catch {
-    return undefined;
-  }
-  return undefined;
+  const holdings = await resolveOfficialHoldings(chain, address, env, fetcher);
+  return holdings?.map((holding) => holding.sign);
 }
