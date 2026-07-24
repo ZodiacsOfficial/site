@@ -1,195 +1,279 @@
 import { Easing, Img, interpolate, staticFile, useCurrentFrame, useVideoConfig } from 'remotion';
-import { GOLD, HAIR, HAIR_SOFT, INK_2, MONO, SIGNS } from './theme';
+import { HAIR, HAIR_SOFT, INK_2, MONO, SERIF, SIGNS } from './theme';
 
-export interface CabinetLayout {
-  cols: number;
-  rows: number;
-  seat: number;
-  gap: number;
-  width: number;
-  height: number;
-}
-
-export function cabinetLayout(portrait: boolean): CabinetLayout {
-  const cols = portrait ? 3 : 4;
-  const rows = portrait ? 4 : 3;
-  const seat = portrait ? 252 : 268;
-  const gap = portrait ? 22 : 24;
-  return {
-    cols,
-    rows,
-    seat,
-    gap,
-    width: cols * seat + (cols - 1) * gap,
-    height: rows * seat + (rows - 1) * gap,
-  };
-}
-
-const OVERSHOOT = Easing.bezier(0.34, 1.56, 0.64, 1);
 const SLOW = Easing.bezier(0.32, 0.72, 0, 1);
+const OVERSHOOT = Easing.bezier(0.34, 1.56, 0.64, 1);
 
-interface Props {
-  /** Frame at which each of the twelve discs lands in its seat (zodiac order). */
-  seatFrames: number[];
-  /** Frame at which the case rim ignites gold (Infinity to disable). */
-  goldFrame: number;
-  /** Frame of the master contact bloom (Infinity to disable). */
-  masterFrame: number;
-  /** The twelfth disc descends slowly from this frame until masterFrame. */
-  descentStart: number;
+const BRONZE_RIM = '#B08D57';
+const SILVER_RIM = '#C6CCDA';
+const GOLD_RIM = '#E0B080';
+
+export interface CabinetWaves {
+  /** Per-seat landing frames for each material, zodiac order. */
+  pastel: number[];
+  bronze: number[];
+  silver: number[];
+  gold: number[];
+  /** The engraved case plate appears here. */
+  plateFrame: number;
 }
 
-export const Cabinet = ({ seatFrames, goldFrame, masterFrame, descentStart }: Props) => {
+type Finish = 'reserved' | 'pastel' | 'bronze' | 'silver' | 'gold';
+
+const FINISH_CAPTION: Record<Exclude<Finish, 'reserved'>, string> = {
+  pastel: 'I · PASTEL',
+  bronze: 'II · BRONZE',
+  silver: 'III · SILVER',
+  gold: 'IV · GOLD ×9+',
+};
+
+function seatFinish(index: number, frame: number, waves: CabinetWaves): Finish {
+  if (frame >= waves.gold[index]) return 'gold';
+  if (frame >= waves.silver[index]) return 'silver';
+  if (frame >= waves.bronze[index]) return 'bronze';
+  if (frame >= waves.pastel[index]) return 'pastel';
+  return 'reserved';
+}
+
+/** A brief pop when a seat is recast into a new material. */
+function recastPop(frame: number, at: number): number {
+  if (frame < at) return 0;
+  return interpolate(frame, [at, at + 9], [1, 0], {
+    extrapolateRight: 'clamp',
+    easing: SLOW,
+  });
+}
+
+export const Cabinet = ({ waves }: { waves: CabinetWaves }) => {
   const frame = useCurrentFrame();
   const { width, height } = useVideoConfig();
-  const layout = cabinetLayout(height > width);
+  const portrait = height > width;
+  const cols = portrait ? 3 : 4;
+  const seatW = portrait ? 300 : 236;
+  const seatH = Math.round(seatW * 1.18);
+  const gap = 18;
 
-  const caseIn = interpolate(frame, [45, 55], [0, 1], {
+  const caseIn = interpolate(frame, [45, 56], [0, 1], {
     extrapolateLeft: 'clamp',
     extrapolateRight: 'clamp',
     easing: SLOW,
   });
-  const goldHeat = interpolate(frame, [goldFrame, goldFrame + 10, masterFrame], [0, 1, 1], {
-    extrapolateLeft: 'clamp',
-    extrapolateRight: 'clamp',
-  });
-  const bloom = interpolate(frame, [masterFrame, masterFrame + 14], [0, 1], {
+  const plateIn = interpolate(frame, [waves.plateFrame, waves.plateFrame + 18], [0, 1], {
     extrapolateLeft: 'clamp',
     extrapolateRight: 'clamp',
     easing: SLOW,
   });
-  const borderColor = bloom > 0
-    ? `rgba(238, 241, 247, ${0.25 + bloom * 0.5})`
-    : goldHeat > 0
-      ? `rgba(224, 176, 128, ${0.16 + goldHeat * 0.5})`
-      : HAIR;
+  const allGoldAt = waves.gold[11];
+  const bloom = interpolate(frame, [allGoldAt, allGoldAt + 16], [0, 1], {
+    extrapolateLeft: 'clamp',
+    extrapolateRight: 'clamp',
+    easing: SLOW,
+  });
 
   return (
     <div
       style={{
         position: 'relative',
-        width: layout.width,
-        height: layout.height,
         opacity: caseIn,
-        scale: String(0.96 + caseIn * 0.04),
-        display: 'grid',
-        gridTemplateColumns: `repeat(${layout.cols}, ${layout.seat}px)`,
-        gap: layout.gap,
-        padding: 26,
-        border: `2px solid ${borderColor}`,
-        borderRadius: 34,
-        background: 'linear-gradient(180deg, rgba(198,204,218,0.04), rgba(198,204,218,0.01) 70%)',
-        boxShadow: goldHeat > 0 || bloom > 0
-          ? `0 0 ${60 + bloom * 90}px rgba(${bloom > 0 ? '238,241,247' : '224,176,128'}, ${0.12 + goldHeat * 0.12 + bloom * 0.3})`
-          : 'none',
-        boxSizing: 'content-box',
+        scale: String(0.97 + caseIn * 0.03),
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 16,
+        padding: 24,
+        border: `2px solid ${bloom > 0 ? `rgba(224,176,128,${0.3 + bloom * 0.45})` : HAIR}`,
+        borderRadius: 30,
+        background: 'linear-gradient(180deg, rgba(198,204,218,0.035), rgba(198,204,218,0.008) 70%)',
+        boxShadow: bloom > 0 ? `0 0 ${70 + bloom * 70}px rgba(224,176,128,${0.14 + bloom * 0.2})` : 'none',
       }}
     >
-      {SIGNS.map((sign, index) => {
-        const landing = seatFrames[index];
-        const isMasterDisc = index === 11 && Number.isFinite(masterFrame);
-        let discOpacity = 0;
-        let discScale = 1;
-        let discY = 0;
-        let discRotate = 0;
-
-        if (isMasterDisc) {
-          // The slow descent: the twelfth disc sinks into the last seat.
-          const p = interpolate(frame, [descentStart, masterFrame], [0, 1], {
-            extrapolateLeft: 'clamp',
-            extrapolateRight: 'clamp',
-            easing: SLOW,
-          });
-          discOpacity = frame < descentStart ? 0 : interpolate(p, [0, 0.12], [0, 1], { extrapolateRight: 'clamp' });
-          discY = (1 - p) * -(layout.height * 0.7);
-          discScale = 1.22 - p * 0.22;
-          discRotate = Math.sin(p * Math.PI * 2.2) * 5 * (1 - p);
-          // Wobble-settle right after contact.
-          if (frame >= masterFrame) {
-            const settle = interpolate(frame, [masterFrame, masterFrame + 12], [1, 0], {
-              extrapolateRight: 'clamp',
-            });
-            discY = 0;
-            discScale = 1 + settle * 0.05;
-            discRotate = Math.sin((frame - masterFrame) * 0.9) * 2.4 * settle;
-          }
-        } else if (index === 0) {
-          // The first disc slams in.
-          const p = interpolate(frame, [landing - 14, landing], [0, 1], {
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: `repeat(${cols}, ${seatW}px)`,
+          gap,
+        }}
+      >
+        {SIGNS.map((sign, index) => {
+          const finish = seatFinish(index, frame, waves);
+          const pops = Math.max(
+            recastPop(frame, waves.bronze[index]),
+            recastPop(frame, waves.silver[index]),
+            recastPop(frame, waves.gold[index]),
+          );
+          const arriveP = interpolate(frame, [waves.pastel[index] - 8, waves.pastel[index]], [0, 1], {
             extrapolateLeft: 'clamp',
             extrapolateRight: 'clamp',
             easing: OVERSHOOT,
           });
-          discOpacity = frame < landing - 14 ? 0 : Math.min(1, p * 2);
-          discScale = 2.6 - p * 1.6;
-          discY = (1 - p) * -120;
-        } else {
-          const p = interpolate(frame, [landing - 9, landing], [0, 1], {
-            extrapolateLeft: 'clamp',
-            extrapolateRight: 'clamp',
-            easing: OVERSHOOT,
-          });
-          discOpacity = frame < landing - 9 ? 0 : Math.min(1, p * 2.5);
-          discScale = 1.55 - p * 0.55;
-          discY = (1 - p) * -70;
-        }
+          const isGold = finish === 'gold';
+          const rim = finish === 'bronze' ? BRONZE_RIM : finish === 'silver' ? SILVER_RIM : isGold ? GOLD_RIM : null;
+          const badgeIn = isGold
+            ? interpolate(frame, [waves.gold[index] + 5, waves.gold[index] + 12], [0, 1], {
+                extrapolateLeft: 'clamp',
+                extrapolateRight: 'clamp',
+                easing: OVERSHOOT,
+              })
+            : 0;
+          const artSize = seatW * 0.56;
 
-        const seated = frame >= landing;
-        const seatGlow = seated ? 0.42 + bloom * 0.5 : 0.0;
-        const emptySpotlight = isMasterDisc && frame >= descentStart && frame < masterFrame ? 0.12 : 0;
-
-        return (
-          <div
-            key={sign.slug}
-            style={{
-              position: 'relative',
-              width: layout.seat,
-              height: layout.seat,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              border: `1.5px solid ${seated ? `color-mix(in srgb, ${sign.hue} ${Math.round(seatGlow * 100)}%, transparent)` : HAIR_SOFT}`,
-              borderRadius: 22,
-              background: emptySpotlight
-                ? `radial-gradient(circle, rgba(238,241,247,${emptySpotlight}), transparent 70%)`
-                : seated && bloom > 0
-                  ? `radial-gradient(circle, color-mix(in srgb, ${sign.hue} ${Math.round(bloom * 22)}%, transparent), transparent 75%)`
-                  : 'transparent',
-              boxShadow: seated && (bloom > 0 || goldHeat > 0)
-                ? `0 0 ${26 + bloom * 44}px color-mix(in srgb, ${sign.hue} ${Math.round(24 + bloom * 46)}%, transparent)`
-                : 'none',
-            }}
-          >
-            <Img
-              src={staticFile(`${sign.slug}.webp`)}
+          return (
+            <div
+              key={sign.slug}
               style={{
-                width: layout.seat * 0.74,
-                height: layout.seat * 0.74,
-                opacity: discOpacity,
-                scale: String(discScale),
-                translate: `0px ${discY}px`,
-                rotate: `${discRotate}deg`,
-              }}
-            />
-            <span
-              style={{
-                position: 'absolute',
-                bottom: 10,
-                fontFamily: MONO,
-                fontSize: 19,
-                letterSpacing: '0.14em',
-                textTransform: 'uppercase',
-                color: seated ? INK_2 : 'rgba(142,150,171,0.35)',
-                opacity: caseIn,
+                position: 'relative',
+                width: seatW,
+                height: seatH,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: 8,
+                border: `1.5px solid ${finish === 'reserved' ? HAIR_SOFT : rim ? `${rim}66` : HAIR}`,
+                borderRadius: 18,
+                background: isGold
+                  ? `radial-gradient(circle at 50% 42%, rgba(224,176,128,${0.1 + bloom * 0.08}), transparent 72%)`
+                  : 'rgba(10,12,17,0.5)',
+                boxShadow: isGold ? `0 0 ${24 + bloom * 30}px rgba(224,176,128,0.22)` : 'none',
               }}
             >
-              {sign.name}
-            </span>
-          </div>
-        );
-      })}
+              <span
+                style={{
+                  position: 'absolute',
+                  top: 10,
+                  left: 14,
+                  fontFamily: MONO,
+                  fontSize: 17,
+                  letterSpacing: '0.12em',
+                  color: 'rgba(142,150,171,0.7)',
+                }}
+              >
+                {`Nº ${String(index + 1).padStart(2, '0')}`}
+              </span>
+              {badgeIn > 0 && (
+                <span
+                  style={{
+                    position: 'absolute',
+                    top: 8,
+                    right: 12,
+                    padding: '3px 12px',
+                    border: `1.5px solid ${GOLD_RIM}aa`,
+                    borderRadius: 999,
+                    fontFamily: MONO,
+                    fontSize: 18,
+                    color: GOLD_RIM,
+                    opacity: badgeIn,
+                    scale: String(0.7 + badgeIn * 0.3),
+                  }}
+                >
+                  ×9+
+                </span>
+              )}
+
+              <div
+                style={{
+                  position: 'relative',
+                  width: artSize,
+                  height: artSize,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                {finish === 'reserved' ? (
+                  <Img
+                    src={staticFile(`${sign.slug}.webp`)}
+                    style={{ width: artSize * 0.6, height: artSize * 0.6, opacity: 0.08, filter: 'grayscale(1)' }}
+                  />
+                ) : isGold ? (
+                  <Img
+                    src={staticFile(`gold-${sign.slug}.webp`)}
+                    style={{
+                      width: artSize,
+                      height: artSize,
+                      objectFit: 'contain',
+                      scale: String(1 + pops * 0.1),
+                      filter: `drop-shadow(0 0 ${14 + bloom * 14}px rgba(224,176,128,0.5))`,
+                    }}
+                  />
+                ) : (
+                  <>
+                    <Img
+                      src={staticFile(`${sign.slug}.webp`)}
+                      style={{
+                        width: artSize * 0.82,
+                        height: artSize * 0.82,
+                        borderRadius: '50%',
+                        opacity: arriveP,
+                        scale: String((1.45 - arriveP * 0.45) * (1 + pops * 0.08)),
+                        boxShadow: rim ? `0 0 0 4px ${rim}, 0 0 18px ${rim}55` : 'none',
+                      }}
+                    />
+                    {rim && (
+                      <span
+                        style={{
+                          position: 'absolute',
+                          bottom: -4,
+                          right: seatW * 0.14,
+                          width: 32,
+                          height: 32,
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          borderRadius: '50%',
+                          border: `2px solid ${rim}`,
+                          background: '#0A0C11',
+                          fontFamily: SERIF,
+                          fontSize: 16,
+                          color: rim,
+                          scale: String(1 + pops * 0.25),
+                        }}
+                      >
+                        {finish === 'bronze' ? 'II' : 'III'}
+                      </span>
+                    )}
+                  </>
+                )}
+              </div>
+
+              <span style={{ fontFamily: SERIF, fontWeight: 500, fontSize: 27, color: '#EEF1F7', opacity: finish === 'reserved' ? 0.3 : 1 }}>
+                {sign.name}
+              </span>
+              <span
+                style={{
+                  fontFamily: MONO,
+                  fontSize: 15,
+                  letterSpacing: '0.2em',
+                  textTransform: 'uppercase',
+                  color: isGold ? GOLD_RIM : INK_2,
+                  opacity: finish === 'reserved' ? 0 : 0.9,
+                }}
+              >
+                {finish === 'reserved' ? '' : FINISH_CAPTION[finish]}
+              </span>
+            </div>
+          );
+        })}
+      </div>
+
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          gap: 6,
+          padding: '18px 0 10px',
+          borderTop: `1px solid ${plateIn > 0 ? 'rgba(224,176,128,0.4)' : 'transparent'}`,
+          opacity: plateIn,
+          translate: `0px ${(1 - plateIn) * 14}px`,
+        }}
+      >
+        <span style={{ fontFamily: MONO, fontSize: 26, letterSpacing: '0.34em', color: GOLD_RIM }}>
+          THE COMPLETE TWELVE
+        </span>
+        <span style={{ fontFamily: MONO, fontSize: 19, letterSpacing: '0.3em', color: 'rgba(224,176,128,0.7)' }}>
+          RECORDED JULY 24, 2026 UTC
+        </span>
+      </div>
     </div>
   );
 };
-
-export const goldColor = GOLD;
