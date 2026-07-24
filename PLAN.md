@@ -2,10 +2,11 @@
 
 Last updated: 2026-07-24
 
-Active phase: **Phase 4 private sharing loop — isolated implementation
-candidate in progress. Fable's design handoff is integrated, but Phase 4 is
-unreleased, uncanaried, and disabled. Phase 3 is formally complete; Phase 1
-external closure monitoring continues independently.**
+Active phase: **Phase 4 private sharing loop — implementation merged and the
+owner-only private canary completed successfully. Public access remains off.
+Fable's live-canary review and a separate explicit owner approval are still
+required before public launch or formal Phase 4 closure. Phase 5 has not
+begun; Phase 1 external closure monitoring continues independently.**
 
 ## Authority and operating rule
 
@@ -200,10 +201,10 @@ completed, consent isolation and chart-stop → Sun-sign resume were proved
 against production state, and the real Mercury-direct Sky Alert was
 delivered once and rejected as a duplicate on replay. Phase 4 is now
 authorized. Fable's reader-experience handoff and Sol's reconciled
-privacy/security contract are integrated on an isolated implementation branch,
-and candidate code now exists. This is not a release claim: no Phase 4
-production flag is enabled, no Phase 4 migration or scheduled cleanup is
-claimed live, and no canary evidence exists yet.
+privacy/security contract are now released in the flag-off production build.
+The live migration, authenticated cleanup, and allowlisted private canary are
+recorded below. This is not a public-launch claim: both Phase 4 flags are back
+off, the owner allowlist remains in place, and Phase 5 has not begun.
 
 ### Live schema and consent evidence
 
@@ -277,15 +278,19 @@ unsubscribe endpoint remains live.
 
 ## Current Phase 4 status
 
-Phase 4 is an **unreleased implementation candidate** on the isolated
-`codex/phase4-sharing-loop` branch. Fable's design/copy/proof commit
-`9809c3d247c0c6a0c1ecaf20cbddd51c0cea0795` is integrated, and
-`docs/PHASE4-SHARING-INTEGRATION-DECISIONS.md` reconciles its reader
-experience with the stricter capability, retention, and privacy boundary.
+Phase 4 is a **released, flag-off implementation with a successful private
+canary**. PR #151 merged at
+`9a975477a380513e3f28145721346b745d9ced61`; post-merge Site Check run
+`30075164453` passed on attempt 2. Fable's design/copy/proof commit
+`9809c3d247c0c6a0c1ecaf20cbddd51c0cea0795` and implementation review are
+integrated. `docs/PHASE4-SHARING-INTEGRATION-DECISIONS.md` reconciles the
+reader experience with the stricter capability, retention, and privacy
+boundary. Exact operational evidence is in
+`docs/PHASE4-SHARING-CANARY.md`.
 
-### Candidate work present
+### Released flag-off implementation
 
-- The migration candidate creates three server-owned, RLS-enabled tables with
+- The live migration creates three server-owned, RLS-enabled tables with
   zero browser policies, revoked public/browser grants, fixed-search-path
   service-role-only RPCs, concurrent 12-active and rolling-24-hour creation
   limits, atomic terminal transitions, one-shot email claims, owner hiding,
@@ -320,45 +325,53 @@ experience with the stricter capability, retention, and privacy boundary.
   closed enum/boolean properties.
 - A private OG asset, noindex/no-store/no-referrer route contract, disposable
   PostgreSQL harness, focused unit/API/UI tests, and an hourly authenticated
-  cleanup workflow are included in the candidate.
+  cleanup workflow are included in the released flag-off implementation.
 
-### Evidence still required before any release
+### Private canary closure and remaining public-launch gates
 
-- [ ] Finish the complete build, check, unit, browser, schema, bundle, visual,
+- [x] Finish the complete build, check, unit, browser, schema, bundle, visual,
   locale, Registry, security, and three-run Lighthouse gates, including a
-  no-secret and byte-parity flag-off build. Local evidence is green for the
-  production build, 1,399 unit tests, schema, bundles, Registry/locale/legacy
-  drift, widgets, visual regression, Phase 1–3 regressions, the server-secret
-  scan, and every Phase 4 suite. Seventeen of eighteen three-run Lighthouse
-  templates pass; the unchanged `/ru/birth-chart/` baseline measured 2.56s
-  locally against the 2.50s LCP ceiling. The audited base SHA's Site Check is
-  green; candidate CI remains the binding fresh-machine result.
+  no-secret and byte-parity flag-off build. Candidate PR CI passed, and
+  post-merge Site Check run `30075164453` passed all jobs on merge
+  `9a975477a380513e3f28145721346b745d9ced61` after rerunning the one known
+  `/ru/birth-chart/` Lighthouse flake.
 - [x] Complete the browser-level two-invitation/two-tab isolation evidence for
   the implemented handle-scoped capability hardening. Focused malformed and
   cross-handle unit/API tests pass 47/47; the fixture-enabled browser drive
   passes 35/35 and proves independent handles, cookies, reads, and completions.
-- [ ] Complete Fable's bounded implementation review and resolve only genuine
-  P0/P1 release blockers.
-- [ ] Obtain green PR CI and merge through the normal path with both Phase 4
+- [x] Complete Fable's bounded implementation review and resolve only genuine
+  P0/P1 release blockers. Review commit
+  `751a95f46ba01ff38d1a1020a81b458d21741f06` found one scoped responsive
+  blocker; the CSS fix is included in the released merge.
+- [x] Obtain green PR CI and merge through the normal path with both Phase 4
   flags still off.
-- [ ] Apply the Phase 4 migration through the reviewed live path and verify its
+- [x] Apply the Phase 4 migration through the reviewed live path and verify its
   tables, RLS, grants, service-only RPCs, caps, races, terminal destruction,
   and retention against production.
-- [ ] Provision the sweep and recipient-hash secrets, keep the exact approved
+- [x] Provision the sweep and recipient-hash secrets, keep the exact approved
   canary Auth UUID in `COMPAT_INVITE_TEST_USER_IDS`, and verify the hourly
-  cleanup path without enabling public use.
-- [ ] Run one genuine controlled A→B→send-back canary with the paired flags on
+  cleanup path without enabling public use. Workflow run `30076393065`
+  authenticated successfully and returned `expired=0`, `pruned=0`,
+  `batches=1` while both flags were off.
+- [x] Run one genuine controlled A→B→send-back canary with the paired flags on
   only for the allowlisted owner. Record network privacy, provider/database
   email evidence when opted in, duplicate prevention, return card/link,
   revocation, expiry, cleanup, accessibility, reduced motion, responsive
-  screenshots, and 1×/2× card review.
+  screenshots, and 1×/2× card review. The preview proved A→B, return link,
+  revocation, multi-tab containment, responsive behavior, and authority
+  destruction. The production canary delivered exactly one completion email
+  to the approved owner, retained one delivery claim after a repeat, and
+  ended with both flags off.
+- [ ] Obtain Fable's bounded review of the live private canary against the
+  committed handoff. This review may report evidence or a genuine P0/P1 only;
+  it does not authorize public launch.
 - [ ] Obtain explicit owner approval plus a separately reviewed authorization
   change before allowing anyone beyond the canary allowlist. Clearing the
   allowlist must continue to deny creation.
 
-Until every item above is genuine, keep
-`PUBLIC_COMPAT_INVITES_ENABLED` and `COMPAT_INVITES_ENABLED` unset/off, do not
-claim the migration or cleanup workflow is live, and do not begin Phase 5.
+Until the two remaining public-launch items are genuine, keep
+`PUBLIC_COMPAT_INVITES_ENABLED` and `COMPAT_INVITES_ENABLED` unset/off, retain
+the exact owner allowlist and cleanup path, and do not begin Phase 5.
 
 ## Current Phase 1 status
 
@@ -415,6 +428,38 @@ The prior release cutover is superseded; the current hardening candidate must es
 Keep clean data and route seams for these; do not implement them inside this program.
 
 ## Change log
+
+### 2026-07-24 — Phase 4 private canary complete; public launch remains off
+
+- Released the Phase 4 implementation flag-off through PR #151 at merge
+  `9a975477a380513e3f28145721346b745d9ced61`. Post-merge Site Check run
+  `30075164453` passed all jobs on attempt 2.
+- Applied migration `20260724003109_phase4_compat_invites.sql` and verified
+  the three live RLS tables, zero browser policies/grants, fixed search paths,
+  and service-only RPC boundary. Provisioned separate sweep and recipient-HMAC
+  secrets plus the exact owner-only allowlist.
+- Proved the authenticated cleanup path with workflow run `30076393065` while
+  the feature was off. The bounded run completed successfully with
+  `expired=0`, `pruned=0`, and `batches=1`.
+- Completed the private preview ladder with public historical fixtures only:
+  two independent guest sessions opened the same invitation safely, one
+  completed locally, its positions-only `#s=` return link reopened as a
+  settled reading, and a second invitation was revoked. Both terminal records
+  destroyed their token authority and positions; forbidden stored birth/email
+  fields remained zero.
+- Completed the owner-only production email canary. The invitation was created
+  at `2026-07-24T08:32:00.660739Z`, completed at
+  `2026-07-24T08:34:17.656670Z`, and produced one finalized delivery claim
+  with provider HTTP `200`; the approved admin mailbox received exactly one
+  `Your invitation was read` message. A second pre-opened guest session made
+  the same completion attempt without creating a second claim or message.
+- Returned both production and preview flags to off. Production flag-off
+  deployment `dpl_C5NuAAZm65p1U7uu569jFJZpDqfW` was live-verified at
+  `2026-07-24T08:43:57Z`; the private route still returned `303`,
+  `private, no-store`, and `noindex, nofollow, noarchive`.
+- Phase 4 is not publicly launched or formally closed. Fable's bounded
+  live-canary review and a separate explicit owner approval remain required.
+  Phase 5 was not begun.
 
 ### 2026-07-24 — Phase 4 isolated implementation candidate in progress
 
@@ -517,5 +562,6 @@ Keep clean data and route seams for these; do not implement them inside this pro
 - Selected exact-date event URLs to avoid same-month event collisions.
 - Preserved truthful Organization authorship for the AI-only operating model without a prominent reader-facing automation badge.
 
-Phase 4 has started but is not complete or released. Phase 5 and Phase 6 have
-not started.
+Phase 4 implementation is released flag-off and its private canary is
+complete, but public launch and formal phase closure remain pending. Phase 5
+and Phase 6 have not started.
