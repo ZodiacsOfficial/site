@@ -13,6 +13,12 @@
  * `prunePairs` runs when the compatibility island loads the profile.
  */
 import type { ShareChartInput } from '../share';
+import {
+  decodePositionsLink,
+  encodePositionsLink,
+  type PositionsShareChart,
+  type PositionsShareInput,
+} from '../share-positions';
 
 export const PAIRS_KEY = 'zodiacs.pairs.v1';
 export const MAX_PAIRS = 24;
@@ -34,6 +40,14 @@ export type SavedPairSide =
       /** True when the input arrived in someone else's invite link — a
        *  received side is never offered for re-sharing on restore. */
       received?: boolean;
+    }
+  | {
+      kind: 'positions';
+      chart: PositionsShareChart;
+      label: string;
+      /** A positions-only side can be read again on this device, but it
+       *  can never become the source of a fresh invitation. */
+      received: true;
     };
 
 export interface SavedPair {
@@ -53,6 +67,16 @@ function isSide(value: unknown): value is SavedPairSide {
   if (side.kind === 'input') {
     return !!side.input && typeof side.input === 'object'
       && typeof (side.input as Record<string, unknown>).date === 'string';
+  }
+  if (side.kind === 'positions') {
+    if (side.received !== true
+      || !side.chart
+      || typeof side.chart !== 'object'
+      || Object.keys(side).length !== 4) return false;
+    const token = encodePositionsLink(side.chart as PositionsShareInput);
+    const canonical = token ? decodePositionsLink(token) : null;
+    return canonical !== null
+      && JSON.stringify(canonical) === JSON.stringify(side.chart);
   }
   return false;
 }
@@ -91,6 +115,9 @@ function sideKey(side: SavedPairSide): string {
   if (side.kind === 'chart') {
     return side.birthKey ? `input:${side.birthKey}` : `chart:${side.chartId}`;
   }
+  if (side.kind === 'positions') {
+    return `positions:${encodePositionsLink(side.chart) ?? ''}`;
+  }
   const { date, time, lat, lon } = side.input;
   return `input:${date}|${time ?? ''}|${lat}|${lon}`;
 }
@@ -119,6 +146,31 @@ export function pairSideLabels(
     ? handleOf(charts.find((c) => c.id === side.chartId)?.name ?? side.label)
     : side.label);
   return [labelOf(pair.a), labelOf(pair.b)];
+}
+
+/**
+ * Build the only allowed local-storage representation for a received
+ * positions-only side. Encoding and decoding strips any accidental extra
+ * fields before the object reaches storage.
+ */
+export function positionsPairSide(
+  chart: PositionsShareInput,
+  label: string,
+): Extract<SavedPairSide, { kind: 'positions' }> | null {
+  const token = encodePositionsLink(chart);
+  const canonical = token ? decodePositionsLink(token) : null;
+  if (!canonical) return null;
+  const cleanLabel = label
+    .replace(/[\u0000-\u001f\u007f-\u009f]/gu, ' ')
+    .replace(/\s+/gu, ' ')
+    .trim()
+    .slice(0, 40);
+  return {
+    kind: 'positions',
+    chart: canonical,
+    label: cleanLabel || 'Chart',
+    received: true,
+  };
 }
 
 export function savePair(pair: SavedPair): 'saved' | 'exists' | 'full' | 'error' {

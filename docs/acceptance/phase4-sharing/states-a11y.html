@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Proof — keyboard, announcements, focus, targets, stress copy</title>
+<link rel="stylesheet" href="proof.css">
+</head>
+<body>
+<header class="proof-head">
+  <span class="kicker">Phase 4 sharing loop · proof 16</span>
+  <h1>Keyboard order, screen-reader announcements, visible focus, 44 px targets, stress copy</h1>
+  <p>Handoff §6. All controls are native elements; announcements ride the calculator's always-mounted role="status" node; focus outlines are 2 px solid ink at 3 px offset. Every new control's hit area measures ≥44 px.</p>
+</header>
+
+<section class="board">
+  <div class="board__note"><strong>Focus order maps.</strong> A-side: picker radios → consent → email checkbox → create; on ready, focus lands in the selected link field. B-side: arrival card precedes the form in DOM order; nothing steals focus on load; after compute, the existing result-heading focus applies. The #s= band precedes the settled result; Dismiss returns focus to the result heading.</div>
+  <div class="board__stage">
+    <div class="mock">
+      <ol class="fine" style="line-height:2; padding-left:18px; margin:0">
+        <li>Chart picker radio — <span class="mono">Frida Kahlo</span></li>
+        <li>Consent checkbox — "Share this chart's positions…"</li>
+        <li>Email checkbox — "Email me once…"</li>
+        <li>Create the invitation link</li>
+        <li>(ready) → link field, selected · <span class="mono">announce: "Invitation link ready."</span></li>
+        <li>Copy link → <span class="mono">announce: "Link copied."</span></li>
+      </ol>
+    </div>
+    <div class="mock mock--narrow">
+      <p class="fine" style="margin-bottom:10px">Visible focus, the house outline:</p>
+      <span class="btn btn--primary focused">Create the invitation link</span>
+      <p class="fine" style="margin-top:14px">Announced strings (status region): invReadyNote / invNotifyOn · inviteCopied · arrCleared · arrival headings · sendCopied · convSaved · pfInvEndedAnnounce · pfInvHidden</p>
+    </div>
+  </div>
+</section>
+
+<section class="board">
+  <div class="board__note"><strong>44 px audit.</strong> Every new control drawn at its minimum hit area. The arrival clear chip reuses place__clear's padded box (Sol verifies ≥44 in the drive; pads if under).</div>
+  <div class="board__stage">
+    <div class="mock">
+      <div class="btn-row" style="align-items:stretch">
+        <span class="btn btn--primary">Share it back</span>
+        <span class="btn btn--ghost">Copy the private link</span>
+        <span class="btn btn--ghost">Try again</span>
+        <span class="chip"><img src="assets/cancer.webp" alt="">Frida Kahlo · shared with you<span class="x">✕</span></span>
+      </div>
+      <div class="checkrow" style="margin-top:10px"><span class="box on"></span><span>Share this chart's positions with whoever opens the link — the checkbox row itself is the ≥44 px target</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="board">
+  <div class="board__note"><strong>Stress copy.</strong> 24-char label and 40-char chart name in every surface that renders one: one-line ellipsis, no layout break, serif headings wrap without clipping.</div>
+  <div class="board__stage">
+    <div class="mock mock--narrow">
+      <div class="pickrow"><span class="radio on"></span><img src="assets/taurus.webp" alt=""><span class="name">A chart name stretched to forty characters yes</span></div>
+      <span class="chip" style="max-width:100%"><img src="assets/cancer.webp" alt=""><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">A label stretched right out · shared with you</span><span class="x">✕</span></span>
+      <div class="pf-row" style="margin-top:10px">
+        <span class="who">A label stretched right out to twenty-four · July 24</span><span class="st">Waiting</span>
+        <span class="detail">Not opened yet. The link works until August 7.</span>
+      </div>
+    </div>
+    <div class="mock mock--narrow">
+      <h3>A label stretched right out to twenty-four wants to read your charts together.</h3>
+      <p class="fine">The serif heading wraps; the card grows; nothing clips or overflows horizontally.</p>
+    </div>
+  </div>
+</section>
+</body>
+</html>

@@ -19,7 +19,7 @@ import {
   type Element,
   type Modality,
 } from './signs';
-import type { Chart } from './engine/types';
+import type { Angles, BodyPosition, Chart } from './engine/types';
 import type { CatalogLocale as Locale } from './i18n';
 import { shareCardFormat, shareCardText } from './share-card-copy';
 import { communicationRead } from './communication';
@@ -149,7 +149,10 @@ export interface BigThreePlacement {
   degree: number;
 }
 
-export function bigThreePlacements(chart: Pick<Chart, 'bodies' | 'angles'>, locale: Locale = 'en'): BigThreePlacement[] {
+export function bigThreePlacements(
+  chart: Pick<BigThreeCardChart, 'bodies' | 'angles'>,
+  locale: Locale = 'en',
+): BigThreePlacement[] {
   const sun = chart.bodies.find((body) => body.body === 'Sun');
   const moon = chart.bodies.find((body) => body.body === 'Moon');
   if (!sun || !moon) throw new Error('chart missing luminaries');
@@ -491,7 +494,7 @@ async function drawFullChartCard(
 }
 
 async function drawBigThreeCard(
-  chart: Chart,
+  chart: BigThreeCardChart,
   options: ShareCardOptions = {},
 ): Promise<Blob> {
   const locale = options.locale ?? 'en';
@@ -898,6 +901,27 @@ export async function saveChartCard(
 export interface PreparedChartCard {
   blob: Blob;
   filename: string;
+}
+
+export interface BigThreeCardChart {
+  bodies: readonly Pick<BodyPosition, 'body' | 'lon'>[];
+  angles: Pick<Angles, 'asc' | 'mc'> | null;
+  engineVersion: string;
+}
+
+/**
+ * Prepare the privacy-light Big Three card directly from a positions-only
+ * chart. This keeps the invitation completion path from inventing or
+ * reconstructing any birth input merely to satisfy the full Chart type.
+ */
+export async function prepareBigThreeCard(
+  chart: BigThreeCardChart,
+  locale: Locale = 'en',
+): Promise<PreparedChartCard> {
+  return {
+    blob: await drawBigThreeCard(chart, { variant: 'big-three', locale }),
+    filename: chartCardFilename({ variant: 'big-three', locale }),
+  };
 }
 
 /**

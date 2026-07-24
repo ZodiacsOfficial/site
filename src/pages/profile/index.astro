@@ -1,11 +1,13 @@
 ---
 import Base from '../../layouts/Base.astro';
 import ProfileDashboard from '../../islands/ProfileDashboard';
+import ProfileInvites from '../../islands/ProfileInvites';
 import ProfileManager from '../../islands/ProfileManager';
 import { hasDailyChartEmailProvider } from '../../lib/email/daily-config';
 import '../../styles/calculator.css';
 
 const dailyEmailEnabled = hasDailyChartEmailProvider(process.env);
+const inviteUiEnabled = process.env.PUBLIC_COMPAT_INVITES_ENABLED === '1';
 ---
 <Base
   clientUi
@@ -24,6 +26,8 @@ const dailyEmailEnabled = hasDailyChartEmailProvider(process.env);
     </div>
 
     <ProfileDashboard client:load />
+
+    <ProfileInvites inviteUiEnabled={inviteUiEnabled} client:load />
 
     <ProfileManager dailyEmailEnabled={dailyEmailEnabled} client:load />
 
@@ -45,6 +49,165 @@ const dailyEmailEnabled = hasDailyChartEmailProvider(process.env);
   }
   .pf-hero p { margin: 0; color: var(--muted); font-size: var(--text-lg); text-wrap: pretty; }
   .pf-hero strong { color: var(--text-2); }
+
+  .pf-invites {
+    margin: clamp(18px, 4vw, 30px) 0;
+    overflow: hidden;
+  }
+  .pf-invites__core {
+    padding: clamp(18px, 4vw, 24px);
+    display: grid;
+    gap: 16px;
+  }
+  .pf-invites__head {
+    display: grid;
+    gap: 6px;
+  }
+  .pf-invites__head h2 {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: var(--text-xl);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+  .pf-invites__head p,
+  .pf-invites__empty p {
+    margin: 0;
+    color: var(--muted);
+    font-size: var(--text-sm);
+    line-height: 1.6;
+  }
+  .pf-invites__notice {
+    margin: 0;
+    padding: 11px 13px;
+    border-inline-start: 2px solid var(--hair-3);
+    background: color-mix(in oklab, var(--ink-0) 3%, transparent);
+    color: var(--text-2);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    line-height: 1.65;
+  }
+  .pf-invites__empty {
+    display: grid;
+    gap: 8px;
+    justify-items: start;
+  }
+  .pf-invites__list {
+    display: grid;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .pf-invites__row {
+    min-width: 0;
+    padding: 14px 0;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 5px 14px;
+    align-items: center;
+    border-top: 1px solid var(--hair-1);
+  }
+  .pf-invites__row:first-child { border-top: 0; }
+  .pf-invites__identity {
+    min-width: 0;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  .pf-invites__disc {
+    flex: 0 0 32px;
+    width: 32px;
+    height: 32px;
+    line-height: 0;
+  }
+  .pf-invites__disc img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+  }
+  .pf-invites__who {
+    min-width: 0;
+    overflow: hidden;
+    color: var(--text);
+    font-size: var(--text-sm);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .pf-invites__status {
+    justify-self: end;
+    color: var(--muted);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .pf-invites__detail,
+  .pf-invites__error,
+  .pf-invites__actions,
+  .pf-invites__manual {
+    grid-column: 1 / -1;
+  }
+  .pf-invites__detail,
+  .pf-invites__error {
+    margin: 0;
+    color: var(--muted);
+    font-size: 12.5px;
+    line-height: 1.55;
+  }
+  .pf-invites__error { color: var(--sign-aries); }
+  .pf-invites__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+  }
+  .pf-invites__actions .btn,
+  .pf-invites__text-action {
+    min-height: 44px;
+    font-size: 13px;
+  }
+  .pf-invites__actions .btn { padding: 8px 14px; }
+  .pf-invites__text-action {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 6px;
+    color: var(--text-2);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .pf-invites__text-action:disabled {
+    cursor: not-allowed;
+    opacity: 0.42;
+  }
+  .pf-invites__manual {
+    width: 100%;
+    min-height: 44px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+  }
+  .pf-invites__account {
+    margin: 0;
+    color: var(--muted);
+    font-size: 11px;
+    line-height: 1.65;
+  }
+  .pf-invites button:focus-visible,
+  .pf-invites input:focus-visible,
+  .pf-invites a:focus-visible {
+    outline: 2px solid var(--ink-0);
+    outline-offset: 3px;
+  }
+  @media (max-width: 420px) {
+    .pf-invites__row {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 7px;
+    }
+    .pf-invites__status {
+      justify-self: start;
+      padding-inline-start: 42px;
+    }
+  }
 
   .pf { display: grid; gap: 16px; }
   .pf-sync__core {

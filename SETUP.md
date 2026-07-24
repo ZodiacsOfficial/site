@@ -39,7 +39,7 @@ Do not put credentials in `.env` files that can be committed, Markdown, fixtures
 | --- | --- | --- | --- |
 | Vercel | Existing | Static hosting, previews, and `api/` serverless functions | Keep Production, Preview, and Development env scopes aligned. Deploy `main`. |
 | GitHub Actions | Existing | CI, daily/monthly data generation, digest, push, and refresh jobs | Give only the permissions declared by each workflow. Store secrets as Actions secrets and non-secret switches as variables. |
-| Supabase | Existing | Magic-link auth, RLS chart sync, digest preferences, daily-chart consent and delivery receipts, assistant quota, push subscriptions; later compatibility invites | Apply migrations, keep RLS on, and never expose the service-role key. |
+| Supabase | Existing | Magic-link auth, RLS chart sync, digest preferences, daily-chart consent and delivery receipts, assistant quota, push subscriptions; unreleased Phase 4 compatibility-invite candidate | Apply migrations, keep RLS on, and never expose the service-role key. Do not infer that candidate schema is live. |
 | Resend | Selected standard | Double-opt-in capture, weekly/daily email, unsubscribe-compatible delivery | Authenticate `zodiacs.org` with SPF/DKIM and use a domain sender. |
 | Buttondown or Loops | Supported alternatives | Standalone capture only | Configure exactly one provider. Do not combine providers in one deployment. |
 | Anthropic | Existing optional integration | Ask Zodiacs; optional future Phase 1 prose build | Use server/CI-only keys. Keep daily-prose and assistant budgets independently revocable. |
@@ -67,6 +67,7 @@ These values may appear in client bundles. They must never contain a secret.
 | `PUBLIC_PLAUSIBLE_DOMAIN` | Optional analytics override | Analytics site/domain identifier. |
 | `PUBLIC_WEB_PUSH_ENABLED` | Browser push prompt enabled | Must equal `1`; one half of the push kill switch. |
 | `PUBLIC_VAPID_KEY` | Browser push enabled | Browser-visible VAPID public key. |
+| `PUBLIC_COMPAT_INVITES_ENABLED` | Phase 4 invitation UI enabled | Must equal `1`; exposes the English invitation, arrival, profile-register, send-back, and return-link UI. This is public configuration, not a secret, and remains unset/off on the unreleased candidate. |
 | `PUBLIC_REGISTRY_AURA_ENABLED` | Registry Aura enabled | Must equal `1`; out-of-program flag, preserved. |
 | `PUBLIC_WALLET_CHART_ENABLED` | Wallet chart enabled | Must equal `1`; out-of-program flag, preserved. |
 
@@ -76,6 +77,11 @@ These values may appear in client bundles. They must never contain a secret.
 | --- | --- | --- |
 | `SUPABASE_SERVICE_ROLE_KEY` | Vercel server + GitHub Actions secret | Server-only Supabase credential for digest, daily-email preferences/receipts, unsubscribe, push, and assistant quota. Never expose it to a browser. |
 | `DIGEST_UNSUBSCRIBE_SECRET` | Vercel server + GitHub Actions secret | Signs one-click unsubscribe tokens. Use a long random value and rotate only with a deliberate invalidation plan. |
+| `COMPAT_INVITES_ENABLED` | Vercel server flag | Must equal `1` to create, exchange, or read Phase 4 invitations. Status, revocation, hiding, completion replay, and cleanup remain available whenever the underlying server contract exists. Leave unset/off until the reviewed canary step. |
+| `COMPAT_INVITE_TEST_USER_IDS` | Vercel server configuration | Required comma-separated list of exact Auth user UUIDs allowed to create invitations in this candidate. Missing or empty fails closed: nobody can create. Keep only the approved canary owner configured. A later public launch needs a separately reviewed authorization change; clearing this value never launches the feature. |
+| `COMPAT_INVITE_BASE_URL` | Vercel server configuration, optional | HTTPS site origin used in the one-time creation URL; defaults to `https://zodiacs.org`. |
+| `COMPAT_INVITE_SWEEP_SECRET` | Vercel + GitHub Actions secret | At least 32 characters. The same value authenticates the hourly cleanup workflow to the server endpoint. |
+| `COMPAT_INVITE_RECIPIENT_HASH_SECRET` | Vercel server secret | At least 32 characters. HMACs the resolved account email for the one-shot completion-email delivery claim; raw email is never stored in the Phase 4 tables. |
 
 ### Standalone email capture
 
@@ -171,6 +177,63 @@ The production schema must include the RLS-protected `push_subscriptions` and
 enabling push. Delivery claims are the database authority for the advertised
 rolling caps; an in-memory or workflow-only counter is not sufficient.
 
+### Phase 4 private compatibility invitations
+
+The Phase 4 candidate uses two independent switches:
+
+- `PUBLIC_COMPAT_INVITES_ENABLED=1` includes the English reader UI.
+- `COMPAT_INVITES_ENABLED=1` permits new creation and recipient open/session
+  reads after the server contract is present.
+
+Both are currently unset/off. Do not configure either as part of an ordinary
+deployment. A canary deployment also requires:
+
+- `PUBLIC_SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY`;
+- the applied and verified
+  `20260724003109_phase4_compat_invites.sql` migration;
+- `COMPAT_INVITE_TEST_USER_IDS` containing only the approved canary owner;
+- the same ≥32-character `COMPAT_INVITE_SWEEP_SECRET` in Vercel and GitHub;
+- `COMPAT_INVITE_RECIPIENT_HASH_SECRET` in Vercel;
+- the existing verified `RESEND_API_KEY` and `RESEND_FROM_EMAIL` for the
+  optional invitation-specific completion email; and
+- optional `COMPAT_INVITE_BASE_URL` only when the canonical origin must differ
+  from `https://zodiacs.org`.
+
+The invitation create body is limited to a synchronized chart UUID, explicit
+consent, and a boolean notification choice. The server authenticates the
+account, reads that owned chart, derives the exact twelve-body positions wire,
+and stores no chart ID, birth input, email, or recipient data. A raw 32-byte
+capability appears only in the one successful creation URL; the database keeps
+its SHA-256 digest until the invitation completes, is revoked, or expires.
+
+The private path `/c/{token}/` mints a non-secret 16-byte, 22-character
+base64url session handle, stores the raw capability only in the
+`zodiacs_compat_invite_{handle}` Secure, HttpOnly, SameSite=Lax cookie scoped
+to `/api/compatibility`, and redirects to
+`/compatibility/#invite={handle}`. Session and completion requests use the
+validated handle to select the matching cookie, so two invitation tabs cannot
+overwrite or cross-read one another. The `/c/` fallback and all token paths
+remain noindex, absent from sitemap/hreflang/language selection,
+private/no-store, and no-referrer.
+
+This handle-scoped multi-tab hardening is implemented. Its focused unit/API
+isolation suite passes 47/47, its feature-off browser suite passes 8/8, and
+its fixture-enabled A→B browser suite passes 35/35, including two simultaneous
+invitation tabs. Do not provision a canary until candidate CI and Fable's
+bounded implementation review are green.
+
+Status, revocation, hiding, completion replay, delivery finalization, and
+cleanup are deliberately not disabled by the create/open switch. The hourly
+`.github/workflows/compat-invite-sweep.yml` job closes overdue invitations and
+deletes their positions-free evidence after 30 days. Missing sweep
+configuration exits without changing anything; it is not permission to enable
+Phase 4.
+
+The optional completion email is a separate, one-invitation promise. It does
+not read or change Daily Email, weekly digest, or push consent. It reserves one
+durable database claim before sending and uses provider idempotency; a failure
+does not authorize an unbounded retry loop.
+
 ### Registry-only integrations to preserve
 
 These are outside this program and should remain off unless separately authorized.
@@ -206,23 +269,33 @@ These are outside this program and should remain off unless separately authorize
 | Browser push UI | `PUBLIC_WEB_PUSH_ENABLED=1` | No prompt or subscription UI. |
 | Push endpoint/worker | `PUSH_ENABLED=1` | Endpoint disabled and worker has no push handler. |
 | Scheduled push delivery | GitHub `PUSH_ENABLED=true` | Scheduled job stops before delivery. |
+| Phase 4 invitation UI | `PUBLIC_COMPAT_INVITES_ENABLED=1` | No invitation panel, arrival handling, profile register, send-back block, or returned-reading band. Existing compatibility behavior remains. |
+| Phase 4 create/open | `COMPAT_INVITES_ENABLED=1` + Supabase server contract | Creation, token exchange, and session reads fail closed. Existing status, revocation, hiding, completion replay, and cleanup remain available when the contract exists. |
+| Phase 4 canary creation | `COMPAT_INVITE_TEST_USER_IDS` | Only exact listed Auth user UUIDs may create. Missing or empty denies every creator; clearing it never creates public access. |
 | Ask Zodiacs model call | `ASSISTANT_ENABLED=1` + key/quota config | Static/disabled experience; no model request. |
 | Registry Aura | `PUBLIC_REGISTRY_AURA_ENABLED=1` + RPCs + firewall rule | No entry point, sitemap entry, or Aura route exposure. |
 | Wallet chart | `PUBLIC_WALLET_CHART_ENABLED=1` + a supported provider | Endpoint returns disabled; ordinary birth chart is unaffected. |
 
-Future Phase 4 invite server code must introduce one paired flag contract, `PUBLIC_COMPAT_INVITES_ENABLED=1` for the entry UI and `COMPAT_INVITES_ENABLED=1` for server writes. Those names are reserved but not read by current code.
+The Phase 4 candidate reads the paired flag contract above, but both values
+remain unset/off. Their presence in this document records the deployment
+contract; it does not mean Phase 4 is released or canaried.
 
 ## Supabase provisioning
 
 The live project is documented in `docs/SUPABASE.md`. The browser may receive only the public project URL and publishable key; RLS is the security boundary.
 
-Required current migrations:
+Required released migrations:
 
 1. `supabase/migrations/20260706000000_profile_sync.sql`
 2. `supabase/migrations/20260706130517_chart_deletions.sql`
 3. `supabase/migrations/20260707125552_weekly_digest_opt_in.sql`
 4. `supabase/migrations/20260720074516_phase3_habit_layer.sql`
 5. `supabase/migrations/20260720145526_phase3_delivery_guards.sql`
+
+Phase 4 adds one candidate migration that is committed on the isolated
+implementation branch but is not claimed live:
+
+6. `supabase/migrations/20260724003109_phase4_compat_invites.sql`
 
 Before either Phase 3 daily-email flag or any push flag is enabled, apply and
 verify both Phase 3 migrations. The habit-layer migration creates service-owned
@@ -265,7 +338,19 @@ recipient HMAC, tier, state, and provider receipt—never the raw address.
 Before enabling server features, add and apply committed idempotent migrations for any live-only schema not yet represented in this directory:
 
 - Assistant quota table and `assistant_quota_bump` function.
-- Phase 4 compatibility invites, including owner scope, token lookup policy, revocation, and expiry cleanup.
+
+Before enabling either Phase 4 switch, apply and verify the Phase 4 candidate
+migration through the reviewed production path. It creates the
+server-owned `compatibility_invites`,
+`compatibility_invite_delivery_claims`, and
+`compatibility_invite_events` tables with RLS on, zero browser policies,
+public/browser grants revoked, and fixed-search-path service-role-only RPCs.
+The schema stores a normalized label, derived Sun sign, exact compact
+twelve-body positions wire, notification choice, token/replay digests, and
+bounded lifecycle timestamps. It stores no saved-chart ID, birth input, email,
+raw recipient data, token URL, IP, or user agent. Completion, revocation, and
+expiry atomically destroy token authority and positions; only positions-free
+evidence remains for 30 days.
 
 Security checklist:
 
@@ -330,6 +415,39 @@ Daily messages send both `List-Unsubscribe` and `List-Unsubscribe-Post: List-Uns
    closed unless this exact allowlist is present.
 7. Enable the Vercel `1` flags and GitHub `true` schedule variable only after the preview and test-list checks pass.
 
+## Phase 4 invitation verification and release
+
+1. Keep `PUBLIC_COMPAT_INVITES_ENABLED` and `COMPAT_INVITES_ENABLED`
+   unset/off. Run the no-secret build and full flag-off parity gates.
+2. Run `npm run test:phase4:invites-sql` only against its disposable
+   PostgreSQL 17 container. Apply
+   `20260724003109_phase4_compat_invites.sql` to production only through the
+   reviewed migration path, then verify all three tables, RLS, revoked browser
+   grants, fixed function search paths, service-role-only execution, caps,
+   races, authority destruction, and 30-day cleanup.
+3. Set identical `COMPAT_INVITE_SWEEP_SECRET` values in Vercel and GitHub,
+   set `COMPAT_INVITE_RECIPIENT_HASH_SECRET` only in Vercel, and verify one
+   authenticated cleanup receipt while both reader/server flags remain off.
+4. Set `COMPAT_INVITE_TEST_USER_IDS` to the one approved Auth UUID. Deploy
+   a preview with both flags enabled and run the complete A→B→send-back
+   browser matrix before changing production. That matrix must include two
+   different invitation links opened in parallel tabs and prove that each
+   handle reads and completes only its own invitation.
+5. For the production canary, enable `COMPAT_INVITES_ENABLED=1` and
+   `PUBLIC_COMPAT_INVITES_ENABLED=1` only while the canary allowlist remains.
+   Use controlled accounts/browsers. Record creation, exchange, local-only B
+   network evidence, completion, optional one-shot email provider and mailbox
+   receipts, duplicate prevention, return link/card, revocation, expiry,
+   cleanup, accessibility, reduced motion, and 1×/2× card review.
+6. Obtain Fable's bounded live implementation review and resolve only
+   deterministic release blockers. Public launch needs a separate explicit
+   owner approval and a separately reviewed authorization change; this
+   candidate deliberately has no “everyone” mode. Both kill switches and the
+   cleanup job remain mandatory.
+7. Roll back immediately by turning off the public UI flag and then the server
+   create/open flag. Leave status, revocation, completion replay, delivery
+   finalization, and cleanup infrastructure available for existing rows.
+
 ## Ask Zodiacs provisioning
 
 1. Create a dedicated Anthropic key and set a hard provider budget/alert.
@@ -347,6 +465,7 @@ All schedules are UTC.
 | --- | --- | --- | --- |
 | `.github/workflows/daily-horoscopes.yml` | Daily 00:00 | Builds facts/publication, verifies, replays 30 days, commits changes, waits for live edition, pings IndexNow. GitHub may start the runner after the declared boundary. | Always on. Phase 1 covers all daily cuts and Monday weekly generation. |
 | `.github/workflows/daily-email.yml` | Hourly at UTC minute 13 | Runs a credential-free fixture smoke; when explicitly enabled, verifies the exact live edition and selects eligible test-list recipients. | Off by default; real delivery requires GitHub `DAILY_EMAIL_ENABLED=1`. Workflow is hardcoded to `test`; no general-audience path exists. |
+| `.github/workflows/compat-invite-sweep.yml` | Hourly at UTC minute 17 | Candidate workflow closes overdue Phase 4 invitations in bounded batches and prunes 30-day evidence when its secret is provisioned; otherwise exits cleanly. | Not yet released or provisioned. Required before a Phase 4 canary, and never an enablement signal by itself. |
 | `.github/workflows/weekly-digest.yml` | Monday 06:00 | Fixture smoke always; real send only when `DIGEST_ENABLED=true`. | Off by default. |
 | `.github/workflows/pulse-refresh.yml` | Monday 06:17 | Refreshes Wikipedia/Trends pulse data and commits changes. | Existing, best effort. |
 | `.github/workflows/distribution-refresh.yml` | Monday 06:31 | Refreshes Registry ownership distribution and commits changes. | Existing Registry operation. |
@@ -375,7 +494,8 @@ Do not add scheduled jobs for Phase 2 catalogs or Phase 5 people ingestion. Thos
 Before any phase closes:
 
 1. Run a full build with all optional variables absent.
-2. Confirm no email capture, push prompt, model call, Registry Aura entry, or wallet-chart entry leaks into the flag-off output.
+2. Confirm no email capture, push prompt, Phase 4 invitation UI, model call,
+   Registry Aura entry, or wallet-chart entry leaks into the flag-off output.
 3. Confirm `/today/`, all horoscope/event/content pages, and the eventual `/ask/` fallback remain useful without JavaScript or credentials.
 4. Scan the repository and built output for secret values and server-only variable names in client bundles.
 5. Run the full release evidence listed in `PLAN.md`.

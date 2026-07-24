@@ -1,9 +1,11 @@
 # Zodiacs.org household-name program
 
-Last updated: 2026-07-23
+Last updated: 2026-07-24
 
-Active phase: **Phase 1 external closure monitoring. Phase 3 is formally
-complete; Phase 4 has not begun.**
+Active phase: **Phase 4 private sharing loop — isolated implementation
+candidate in progress. Fable's design handoff is integrated, but Phase 4 is
+unreleased, uncanaried, and disabled. Phase 3 is formally complete; Phase 1
+external closure monitoring continues independently.**
 
 ## Authority and operating rule
 
@@ -139,9 +141,30 @@ New work reuses these tokens. It introduces no new decorative color, chrome lang
 
 ### Phase 4 — Compatibility Invite and Share Loop
 
-- Invite records are short-lived, revocable, RLS-protected, and hold only Person A's explicitly consented chart payload plus a 14-day expiry.
+- Signed-in Person A selects one synchronized chart and explicitly consents.
+  The browser sends only the owned chart UUID, consent, and the
+  invitation-specific email choice; the server derives a compact positions
+  payload and then stores no chart UUID.
+- Invite records are short-lived, revocable, RLS-protected, and hold only a
+  normalized 24-character label, derived Sun sign, the exact compact
+  twelve-body positions wire, consent state, capability digest, and bounded
+  lifecycle timestamps. They never store birth input, email, or recipient
+  data.
+- A 32-byte capability is returned once. Only its SHA-256 digest is
+  authoritative in storage. Completion, revocation, and expiry atomically
+  destroy both that authority and the positions; positions-free operational
+  evidence is retained for 30 days.
 - Person B computes locally. B's details are not written unless B explicitly saves or creates an account.
-- Share cards render client-side from the existing visual system. No chart payload is uploaded to make an image.
+- Person B explicitly sends the result back as the existing client-rendered
+  compatibility image plus a client-only `#s=` positions link. No numeric
+  score exists.
+- Share cards render client-side from the existing visual system. The Big
+  Three card returns to the birth-chart share sheet; no chart payload is
+  uploaded to make an image.
+- `PUBLIC_COMPAT_INVITES_ENABLED` controls the English reader UI.
+  `COMPAT_INVITES_ENABLED` controls new creation and recipient open/session
+  reads. Both remain off until the complete migration, CI, Fable review, and
+  allowlisted canary ladder passes.
 
 ### Phase 5 — People and Birthdays
 
@@ -175,8 +198,12 @@ no open P0 or P1 defect, both reviewed migrations are live with their
 server-only security boundary, the three-edition Daily Email canary
 completed, consent isolation and chart-stop → Sun-sign resume were proved
 against production state, and the real Mercury-direct Sky Alert was
-delivered once and rejected as a duplicate on replay. Phase 4 remains
-closed.
+delivered once and rejected as a duplicate on replay. Phase 4 is now
+authorized. Fable's reader-experience handoff and Sol's reconciled
+privacy/security contract are integrated on an isolated implementation branch,
+and candidate code now exists. This is not a release claim: no Phase 4
+production flag is enabled, no Phase 4 migration or scheduled cleanup is
+claimed live, and no canary evidence exists yet.
 
 ### Live schema and consent evidence
 
@@ -248,6 +275,91 @@ unsubscribe endpoint remains live.
   subscription `1`; the public UI was not enabled and the test allowlist
   was not cleared.
 
+## Current Phase 4 status
+
+Phase 4 is an **unreleased implementation candidate** on the isolated
+`codex/phase4-sharing-loop` branch. Fable's design/copy/proof commit
+`9809c3d247c0c6a0c1ecaf20cbddd51c0cea0795` is integrated, and
+`docs/PHASE4-SHARING-INTEGRATION-DECISIONS.md` reconciles its reader
+experience with the stricter capability, retention, and privacy boundary.
+
+### Candidate work present
+
+- The migration candidate creates three server-owned, RLS-enabled tables with
+  zero browser policies, revoked public/browser grants, fixed-search-path
+  service-role-only RPCs, concurrent 12-active and rolling-24-hour creation
+  limits, atomic terminal transitions, one-shot email claims, owner hiding,
+  and 30-day evidence cleanup.
+- The server derives the exact twelve-body v2 positions wire from an
+  authenticated owner's synchronized chart. The request cannot submit a
+  label, positions, owner identity, birth input, or email, and no saved-chart
+  ID is stored on the invitation.
+- A 32-byte raw capability is returned only in the successful creation URL.
+  Completion, revocation, and expiry destroy the authority digest and
+  positions immediately.
+- The multi-tab security hardening is implemented: `/c/{token}/` mints a
+  non-secret 16-byte, 22-character base64url session handle, places the raw
+  capability only in `zodiacs_compat_invite_{handle}`, an HttpOnly cookie
+  scoped to `/api/compatibility`, and redirects to
+  `/compatibility/#invite={handle}`. Session and completion select only that
+  handle's cookie, so two invitation tabs cannot overwrite or cross-read one
+  another. Its focused unit/API isolation suite passes 47/47. The dedicated
+  feature-off browser suite passes 8/8 and the fixture-enabled A→B suite passes
+  35/35, including two invitations in parallel tabs with no cross-read or
+  cross-completion.
+- English-only invitation creation, arrival, profile management, completion,
+  send-back, conversion, and returned-reading surfaces exist behind the
+  disabled public flag. B's chart calculation remains local.
+- The client-only `s1.` return codec carries two strict positions tokens,
+  bounded labels, and time-known state. Big Three sharing is re-exposed beside
+  the existing full-chart and compatibility images; no numeric score is
+  introduced.
+- The invitation-specific completion email is separate from every Phase 3
+  consent. It uses a keyed recipient HMAC, durable delivery claim, and provider
+  idempotency. Analytics uses only Fable's six allowlisted funnel events and
+  closed enum/boolean properties.
+- A private OG asset, noindex/no-store/no-referrer route contract, disposable
+  PostgreSQL harness, focused unit/API/UI tests, and an hourly authenticated
+  cleanup workflow are included in the candidate.
+
+### Evidence still required before any release
+
+- [ ] Finish the complete build, check, unit, browser, schema, bundle, visual,
+  locale, Registry, security, and three-run Lighthouse gates, including a
+  no-secret and byte-parity flag-off build. Local evidence is green for the
+  production build, 1,399 unit tests, schema, bundles, Registry/locale/legacy
+  drift, widgets, visual regression, Phase 1–3 regressions, the server-secret
+  scan, and every Phase 4 suite. Seventeen of eighteen three-run Lighthouse
+  templates pass; the unchanged `/ru/birth-chart/` baseline measured 2.56s
+  locally against the 2.50s LCP ceiling. The audited base SHA's Site Check is
+  green; candidate CI remains the binding fresh-machine result.
+- [x] Complete the browser-level two-invitation/two-tab isolation evidence for
+  the implemented handle-scoped capability hardening. Focused malformed and
+  cross-handle unit/API tests pass 47/47; the fixture-enabled browser drive
+  passes 35/35 and proves independent handles, cookies, reads, and completions.
+- [ ] Complete Fable's bounded implementation review and resolve only genuine
+  P0/P1 release blockers.
+- [ ] Obtain green PR CI and merge through the normal path with both Phase 4
+  flags still off.
+- [ ] Apply the Phase 4 migration through the reviewed live path and verify its
+  tables, RLS, grants, service-only RPCs, caps, races, terminal destruction,
+  and retention against production.
+- [ ] Provision the sweep and recipient-hash secrets, keep the exact approved
+  canary Auth UUID in `COMPAT_INVITE_TEST_USER_IDS`, and verify the hourly
+  cleanup path without enabling public use.
+- [ ] Run one genuine controlled A→B→send-back canary with the paired flags on
+  only for the allowlisted owner. Record network privacy, provider/database
+  email evidence when opted in, duplicate prevention, return card/link,
+  revocation, expiry, cleanup, accessibility, reduced motion, responsive
+  screenshots, and 1×/2× card review.
+- [ ] Obtain explicit owner approval plus a separately reviewed authorization
+  change before allowing anyone beyond the canary allowlist. Clearing the
+  allowlist must continue to deny creation.
+
+Until every item above is genuine, keep
+`PUBLIC_COMPAT_INVITES_ENABLED` and `COMPAT_INVITES_ENABLED` unset/off, do not
+claim the migration or cleanup workflow is live, and do not begin Phase 5.
+
 ## Current Phase 1 status
 
 Implementation is **85 of 85 required routes pre-rendered**: the hub plus seven surfaces for each of the twelve signs. The deterministic phrase-library renderer is the active degraded-but-shippable no-key mode; model-assisted copy remains a later quality upgrade, not a hidden claim about the current pipeline. The independent verifier checks facts, evidence, structure, periods, length, voice, safety, meaning-first openings, and distinctness without importing the renderer, builders, or generator validators.
@@ -303,6 +415,25 @@ The prior release cutover is superseded; the current hardening candidate must es
 Keep clean data and route seams for these; do not implement them inside this program.
 
 ## Change log
+
+### 2026-07-24 — Phase 4 isolated implementation candidate in progress
+
+- Integrated Fable's decision-complete sharing-loop handoff and static
+  responsive proofs, then recorded the binding security reconciliation for
+  the invitation secret, cookie exchange, server-derived twelve-body payload,
+  immediate authority destruction, 30-day evidence boundary, one-shot email,
+  generic terminal response, and client-only `#s=` return link.
+- Added the isolated candidate's migration, server APIs, English UI, profile
+  register, meeting motion, send-back/conversion loop, Big Three share-sheet
+  entry, completion email, privacy-filtered analytics, private route/OG
+  contract, focused tests, and hourly cleanup workflow.
+- Implemented the final handle-scoped capability hardening needed to keep two
+  invitation tabs independent. Its focused unit/API isolation suite passes
+  47/47; the browser-level isolation proof remains an open candidate gate.
+- Kept the work explicitly unreleased and uncanaried. No Phase 4 production
+  flag, live migration, secret, scheduled cleanup, provider send, public
+  indexing surface, or production release is claimed by this checkpoint.
+- Phase 5 was not begun.
 
 ### 2026-07-23 — Phase 3 formally complete
 
@@ -386,4 +517,5 @@ Keep clean data and route seams for these; do not implement them inside this pro
 - Selected exact-date event URLs to avoid same-month event collisions.
 - Preserved truthful Organization authorship for the AI-only operating model without a prominent reader-facing automation badge.
 
-No later phase has started.
+Phase 4 has started but is not complete or released. Phase 5 and Phase 6 have
+not started.

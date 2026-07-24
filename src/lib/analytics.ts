@@ -5,9 +5,15 @@
  * allowlist deliberately excludes URLs, addresses, email values, chart data,
  * birth details, free text, and persistent identifiers.
  */
-import { ANALYTICS_EVENT_PROPS as EVENT_PROPS } from './analytics-config.mjs';
+import {
+  ANALYTICS_EVENT_PROPS as EVENT_PROPS,
+  ANALYTICS_EVENT_VALUES as EVENT_VALUES,
+} from './analytics-config.mjs';
 
 export const ANALYTICS_EVENT_PROPS = EVENT_PROPS as Readonly<Record<string, readonly string[]>>;
+export const ANALYTICS_EVENT_VALUES = EVENT_VALUES as Readonly<
+  Record<string, Readonly<Record<string, readonly string[]>>>
+>;
 
 export type AnalyticsEventName =
   | 'chart_computed'
@@ -31,6 +37,12 @@ export type AnalyticsEventName =
   | 'aura_cabinet_select'
   | 'aura_cabinet_reveal'
   | 'aura_talisman_personalize'
+  | 'invite_created'
+  | 'invite_opened'
+  | 'invite_completed'
+  | 'invite_returned'
+  | 'invite_converted'
+  | 'invite_revoked'
   | 'result_rendered'
   | 'explorer_interaction'
   | 'tour_start'
@@ -75,6 +87,11 @@ export function sanitizeAnalyticsProperties(
   const safe: AnalyticsProperties = {};
   for (const key of allowed) {
     const value = properties[key];
+    const values = (ANALYTICS_EVENT_VALUES as Record<
+      string,
+      Readonly<Record<string, readonly string[]>>
+    >)[name]?.[key];
+    if (values && (typeof value !== 'string' || !values.includes(value))) continue;
     if (typeof value === 'number' || typeof value === 'boolean') safe[key] = value;
     if (typeof value === 'string' && value.length <= 32) safe[key] = value;
   }

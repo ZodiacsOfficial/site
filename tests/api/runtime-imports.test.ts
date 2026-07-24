@@ -10,6 +10,7 @@ const EXPECTED_HANDLERS = [
   'api/aura-holdings.ts',
   'api/assistant.ts',
   'api/calendar/transits.ts',
+  'api/compatibility.ts',
   'api/email/admin-bootstrap.ts',
   'api/email/chart-preference.ts',
   'api/email/confirm.ts',

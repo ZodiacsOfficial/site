@@ -219,6 +219,9 @@ async function loadStaticPages(repoRoot, context) {
     // Labeled sample pages for event-template review: never part of the
     // recommendable site inventory.
     if (route.startsWith('/events/preview/')) continue;
+    // Capability exchange shell: /c/{secret}/ is private, one-use transport,
+    // never a page the assistant should recommend or describe.
+    if (route.startsWith('/c/')) continue;
     const source = await readFile(file, 'utf8');
     pages.push({
       route,

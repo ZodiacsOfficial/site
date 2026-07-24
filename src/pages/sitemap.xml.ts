@@ -46,6 +46,9 @@ const EVERGREEN_LASTMOD = new Map<string, string>([
       ? '2026-07-19'
       : ['/', '/learn/zodiac-dates/', '/learn/glossary/'].includes(loc) ? '2026-07-11' : '2026-07-10',
   ] as const),
+  // Phase 4 re-exposes the already-reviewed Big Three share card from the
+  // birth-chart result sheet.
+  ['/birth-chart/', '2026-07-24'],
   ...LEGACY_URLS.map((url) => [url.path, '2026-07-10'] as const),
   ...[
     '/disclosure/',

@@ -8,7 +8,7 @@ import SiteFooter from '../components/SiteFooter.astro';
 import SourcesLine, { type SourceLink } from '../components/SourcesLine.astro';
 import EditorialLine from '../components/EditorialLine.astro';
 import GlassDefs from '../components/GlassDefs.astro';
-import { ANALYTICS_EVENT_PROPS } from '../lib/analytics';
+import { ANALYTICS_EVENT_PROPS, ANALYTICS_EVENT_VALUES } from '../lib/analytics';
 import { hasDailyChartEmailProvider } from '../lib/email/daily-config';
 import { LOCALE_META, UI, normalizeCatalogLocale, t, type CatalogLocale as Locale } from '../lib/i18n';
 import { RUSSIAN_RUNTIME } from '../lib/i18n/ru-runtime/server';
@@ -145,7 +145,11 @@ const FAVICON = "data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/sv
     <script is:inline>window.zodiacsAnalytics = window.zodiacsAnalytics || Object.freeze({ track: function () {} });</script>
     {plausibleEnabled && (
       <>
-        <script is:inline define:vars={{ plausibleEndpoint, analyticsEventProps: ANALYTICS_EVENT_PROPS }}>
+        <script is:inline define:vars={{
+          plausibleEndpoint,
+          analyticsEventProps: ANALYTICS_EVENT_PROPS,
+          analyticsEventValues: ANALYTICS_EVENT_VALUES,
+        }}>
           window.plausible = window.plausible || function () {
             (window.plausible.q = window.plausible.q || []).push(arguments);
           };
@@ -171,6 +175,8 @@ const FAVICON = "data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/sv
               var safe = {};
               allowed.forEach(function (key) {
                 var value = (props || {})[key];
+                var enumValues = analyticsEventValues[name] && analyticsEventValues[name][key];
+                if (enumValues && (typeof value !== 'string' || enumValues.indexOf(value) === -1)) return;
                 if (typeof value === 'number' || typeof value === 'boolean' ||
                     (typeof value === 'string' && value.length <= 32)) safe[key] = value;
               });

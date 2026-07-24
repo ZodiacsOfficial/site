@@ -10,18 +10,28 @@ import type { CopyLinkState } from './CopyLinkButton';
 import SignChip from './SignChip';
 import { NextActionCard } from '../components/NextActionCard';
 import { resolveSavedChart } from '../lib/profile/resolve';
-import { MAX_PAIRS, deletePair, hasPair, loadPairs, pairSideLabels, prunePairs, savePair } from '../lib/profile/pairs';
+import {
+  MAX_PAIRS,
+  deletePair,
+  hasPair,
+  loadPairs,
+  pairSideLabels,
+  positionsPairSide,
+  prunePairs,
+  savePair,
+} from '../lib/profile/pairs';
 import type { SavedPair, SavedPairSide } from '../lib/profile/pairs';
 import type { SavedChart } from '../lib/profile/schema';
 import type { MinimalBody, PairSummary } from '../lib/engine/synastry';
 import type { ShareChartInput } from '../lib/share';
+import type { PositionsShareChart, PositionsShareInput } from '../lib/share-positions';
 import type { City } from '../lib/geo/search';
 import { LOCALE_META, localizePath, normalizeCatalogLocale, t, tf, type CatalogLocale as Locale } from '../lib/i18n';
 import { useEngine, type EngineLoader } from '../lib/hooks/useEngine';
 import { useProfile } from '../lib/hooks/useProfile';
 
 interface SlotState {
-  source: 'saved' | 'form' | 'link';
+  source: 'saved' | 'form' | 'link' | 'positions';
   savedId: string;
   name: string;
   date: string;
@@ -32,6 +42,8 @@ interface SlotState {
    *  arrived in someone else's invite link (never re-shared); without it
    *  the side was restored from a saved comparison. */
   link: { input: ShareChartInput; label: string; received?: boolean } | null;
+  /** Positions-only side from a one-reading invitation or a returned result. */
+  positions: { chart: PositionsShareChart; label: string; invite?: boolean } | null;
 }
 
 interface Person {
@@ -46,6 +58,8 @@ interface Person {
     mc: number | null;
     cusps: number[] | null;
   };
+  /** Privacy-safe shape used by the positions-only send-back codec. */
+  positions: PositionsShareInput;
 }
 
 type WheelModule = typeof import('./synastry/RelationshipWheel');
@@ -53,10 +67,14 @@ type CopyLinkModule = typeof import('./CopyLinkButton');
 type ShareModule = typeof import('../lib/share');
 type CompatibilityShareModule = typeof import('./CompatibilityShareControl');
 type PrefilledPairModule = typeof import('./PrefilledPairNotice');
+type InviteExperienceModule = typeof import('./synastry/InviteExperience');
+type SendBackExperienceModule = typeof import('./synastry/SendBackExperience');
 
 const emptySlot = (): SlotState => ({
-  source: 'form', savedId: '', name: '', date: '', time: '', timeKnown: true, city: null, link: null,
+  source: 'form', savedId: '', name: '', date: '', time: '', timeKnown: true, city: null, link: null, positions: null,
 });
+
+const COMPAT_INVITES_UI_ENABLED = import.meta.env.PUBLIC_COMPAT_INVITES_ENABLED === '1';
 
 // Saved-comparison strings stay module-local (the RelationshipWheel COPY
 // precedent): only this island uses them, and the central UI dictionary
@@ -181,11 +199,22 @@ const pcf = (locale: Locale, key: keyof typeof PAIR_COPY_EN, values: Record<stri
 const listLocale = (locale: Locale) => LOCALE_META[locale].intlLocale;
 
 export type PairSaveState = 'idle' | 'saved' | 'exists' | 'full' | 'error';
+export type ComparisonResultSource = 'plain' | 'invite' | 'invite-restored' | 'returned';
 
 /** One completed state covers both a save from this result and a pair that
  *  was already present when the comparison opened. */
 export const pairSaveIsComplete = (state: PairSaveState, alreadyStored: boolean) =>
   alreadyStored || state === 'saved' || state === 'exists';
+
+export function comparisonResultSource(
+  aSource: SlotState['source'],
+  aIsFreshInvite: boolean,
+  bSource: SlotState['source'],
+): Exclude<ComparisonResultSource, 'returned'> {
+  if (aSource === 'positions' && aIsFreshInvite) return 'invite';
+  if (aSource === 'positions' && bSource === 'positions') return 'invite-restored';
+  return 'plain';
+}
 
 /** Short handle for sentences: chart names like "Cancer Sun · 1990-02-01" trim to "Cancer Sun". */
 const handleOf = (name: string) => name.split('·')[0].trim() || name;
@@ -204,6 +233,12 @@ async function resolveSaved(chart: SavedChart, loadEngine: EngineLoader): Promis
       bodies: resolved.bodies.map(({ body, lon }) => ({ body, lon, retrograde: retro.get(body) })),
       mc: chart.summary.angles?.mc ?? null,
       cusps: null,
+    },
+    positions: {
+      bodies: resolved.bodies as PositionsShareInput['bodies'],
+      angles: chart.summary.angles,
+      houseSystem: chart.summary.houseSystem,
+      engineVersion: chart.summary.engineVersion,
     },
   };
 }
@@ -237,6 +272,12 @@ async function resolveLink(link: { input: ShareChartInput; label: string }, load
       mc: result.angles?.mc ?? null,
       cusps: input.timeKnown ? (result.houses?.cusps ?? null) : null,
     },
+    positions: {
+      bodies: result.bodies,
+      angles: result.angles ? { asc: result.angles.asc, mc: result.angles.mc } : null,
+      houseSystem: result.input.houseSystem,
+      engineVersion: result.engineVersion,
+    },
   };
 }
 
@@ -265,6 +306,30 @@ async function resolveForm(slot: SlotState, fallbackLabel: string, loadEngine: E
       mc: result.angles?.mc ?? null,
       cusps: timeKnown ? (result.houses?.cusps ?? null) : null,
     },
+    positions: {
+      bodies: result.bodies,
+      angles: result.angles ? { asc: result.angles.asc, mc: result.angles.mc } : null,
+      houseSystem: result.input.houseSystem,
+      engineVersion: result.engineVersion,
+    },
+  };
+}
+
+function resolvePositions(
+  received: { chart: PositionsShareChart; label: string },
+): Person {
+  const { chart } = received;
+  return {
+    label: received.label,
+    bodies: chart.bodies,
+    asc: chart.angles?.asc ?? null,
+    timeKnown: chart.angles !== null,
+    wheel: {
+      bodies: chart.bodies,
+      mc: chart.angles?.mc ?? null,
+      cusps: null,
+    },
+    positions: chart,
   };
 }
 
@@ -285,6 +350,33 @@ function SlotForm({
     onDismiss: () => void;
   };
 }) {
+  if (slot.source === 'positions' && slot.positions) {
+    return (
+      <div class="syn__slot">
+        <span class="mono--label">{fallbackLabel}</span>
+        <div class="field">
+          <label class="field__label" for={`${idPrefix}-positions`}>{t(locale, 'chart')}</label>
+          <span class="place__chip">
+            <input
+              id={`${idPrefix}-positions`}
+              class="place__chip-value"
+              type="text"
+              readOnly
+              value={`${slot.positions.label} · ${t(locale, 'sharedWithYou')}`}
+            />
+            <button
+              type="button"
+              class="place__clear"
+              aria-label={t(locale, 'removeSharedChart')}
+              onClick={() => setSlot(() => emptySlot())}
+            >×</button>
+          </span>
+          <p class="field__help">This side arrived as chart positions only.</p>
+        </div>
+      </div>
+    );
+  }
+
   if (slot.source === 'link' && slot.link) {
     const received = slot.link.received === true;
     return (
@@ -393,6 +485,10 @@ function PersonCard({ person, locale }: { person: Person; locale: Locale }) {
 
 export default function SynastryCalculator({ locale: rawLocale = 'en' }: { locale?: Locale }) {
   const locale = normalizeCatalogLocale(rawLocale);
+  const inviteUiActive = COMPAT_INVITES_UI_ENABLED
+    && locale === 'en'
+    && typeof window !== 'undefined'
+    && window.location.pathname === '/compatibility/';
   const loadEngine = useEngine();
   const { profile, ready: profileReady } = useProfile();
   const [slotA, setSlotA] = useState<SlotState>(emptySlot());
@@ -400,12 +496,27 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
   const [result, setResult] = useState<{
     a: Person; b: Person; summary: PairSummary; at: number;
     sides: [SavedPairSide | null, SavedPairSide | null];
+    source: ComparisonResultSource;
   } | null>(null);
   const [wheelMod, setWheelMod] = useState<WheelModule | null>(null);
   const [copyLinkMod, setCopyLinkMod] = useState<CopyLinkModule | null>(null);
   const [shareMod, setShareMod] = useState<ShareModule | null>(null);
   const [compatShareMod, setCompatShareMod] = useState<CompatibilityShareModule | null>(null);
   const [prefilledPairMod, setPrefilledPairMod] = useState<PrefilledPairModule | null>(null);
+  const [inviteExperienceMod, setInviteExperienceMod] = useState<InviteExperienceModule | null>(null);
+  const [sendBackMod, setSendBackMod] = useState<SendBackExperienceModule | null>(null);
+  const [arrival, setArrival] = useState<
+    | { state: 'idle' | 'loading' }
+    | {
+      state: 'ready';
+      handle: string;
+      payload: import('../lib/invite/types').InvitePublicPayload;
+    }
+    | { state: 'unavailable' | 'offline' }
+  >({ state: 'idle' });
+  const [returnBand, setReturnBand] = useState<'none' | 'valid' | 'invalid'>('none');
+  const [meetingSettled, setMeetingSettled] = useState(true);
+  const [invitePanelExpanded, setInvitePanelExpanded] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
   const [autoRan, setAutoRan] = useState(false);
@@ -421,6 +532,9 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
   const errorRef = useRef<HTMLParagraphElement>(null);
   const focusAfterComputeRef = useRef(false);
   const profileLinksReadRef = useRef(false);
+  const inviteCompletionRef = useRef<number | null>(null);
+  const inviteOpenTrackedRef = useRef(false);
+  const inviteArrivalHandleRef = useRef('');
 
   // Result-only actions stay outside the entry form's initial closure.
   useEffect(() => {
@@ -444,6 +558,161 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
     }
     return () => { cancelled = true; };
   }, [result, copyLinkMod, shareMod, compatShareMod]);
+
+  useEffect(() => {
+    if (!inviteUiActive) return;
+    let active = true;
+    void Promise.all([
+      import('./synastry/InviteExperience'),
+      import('./synastry/SendBackExperience'),
+    ]).then(([inviteModule, sendModule]) => {
+      if (!active) return;
+      setInviteExperienceMod(inviteModule);
+      setSendBackMod(sendModule);
+    }).catch(() => {});
+    return () => { active = false; };
+  }, [inviteUiActive]);
+
+  async function openArrival(handle: string): Promise<void> {
+    inviteArrivalHandleRef.current = handle;
+    setArrival({ state: 'loading' });
+    const { openInviteSession } = await import('./synastry/inviteClient');
+    const next = await openInviteSession(handle);
+    if (next.state !== 'ready') {
+      setArrival(next);
+      if (!inviteOpenTrackedRef.current) {
+        inviteOpenTrackedRef.current = true;
+        track('invite_opened', { state: next.state });
+      }
+      return;
+    }
+    setArrival(next);
+    setSlotA({
+      ...emptySlot(),
+      source: 'positions',
+      positions: {
+        chart: next.payload.positions,
+        label: next.payload.label,
+        invite: true,
+      },
+    });
+    setResult(null);
+    if (!inviteOpenTrackedRef.current) {
+      inviteOpenTrackedRef.current = true;
+      track('invite_opened', { state: 'ready' });
+    }
+  }
+
+  useEffect(() => {
+    if (!inviteUiActive) return;
+    const fragment = new URLSearchParams(window.location.hash.slice(1));
+    const inviteHandles = fragment.getAll('invite');
+    const inviteArrival = fragment.has('invite');
+    const inviteHandle = inviteHandles.length === 1
+      && Array.from(fragment.keys()).every((key) => key === 'invite')
+      ? inviteHandles[0] ?? ''
+      : '';
+    const returnTokens = fragment.getAll('s');
+
+    if (inviteArrival) {
+      history.replaceState(null, '', window.location.pathname + window.location.search);
+      void openArrival(inviteHandle);
+      return;
+    }
+    if (!fragment.has('s')) return;
+
+    const token = returnTokens.length === 1 && Array.from(fragment.keys()).every((key) => key === 's')
+      ? returnTokens[0]
+      : '';
+    history.replaceState(null, '', window.location.pathname + window.location.search);
+    let active = true;
+    void Promise.all([
+      import('../lib/share-synastry'),
+      import('../lib/engine/synastry'),
+      import('./synastry/RelationshipWheel'),
+    ]).then(([codec, synastry, wheel]) => {
+      if (!active) return;
+      const decoded = token ? codec.decodeSynastryLink(token) : null;
+      if (!decoded) {
+        setReturnBand('invalid');
+        return;
+      }
+      const a = resolvePositions({
+        chart: decoded.sides[0].chart,
+        label: decoded.sides[0].label || 'Their side',
+      });
+      const b = resolvePositions({
+        chart: decoded.sides[1].chart,
+        label: decoded.sides[1].label || 'The other side',
+      });
+      setWheelMod(wheel);
+      setResult({
+        a,
+        b,
+        summary: synastry.summarizePair(a.bodies, b.bodies, 8),
+        at: Date.now(),
+        sides: [null, null],
+        source: 'returned',
+      });
+      setReturnBand('valid');
+      setMeetingSettled(true);
+      track('compat_computed', { source: 'returned' });
+    }).catch(() => {
+      if (active) setReturnBand('invalid');
+    });
+    return () => { active = false; };
+  }, [inviteUiActive]);
+
+  useEffect(() => {
+    if (!inviteUiActive) return;
+    const flush = () => {
+      void import('./synastry/inviteClient').then(({ beaconPendingCompletion }) => {
+        beaconPendingCompletion();
+      }).catch(() => {});
+    };
+    const onVisibility = () => {
+      if (document.visibilityState === 'hidden') flush();
+    };
+    window.addEventListener('pagehide', flush);
+    document.addEventListener('visibilitychange', onVisibility);
+    void import('./synastry/inviteClient').then(({ replayPendingCompletion }) => {
+      void replayPendingCompletion();
+    }).catch(() => {});
+    return () => {
+      window.removeEventListener('pagehide', flush);
+      document.removeEventListener('visibilitychange', onVisibility);
+    };
+  }, [inviteUiActive]);
+
+  useEffect(() => {
+    if (!result || result.source !== 'invite' || arrival.state !== 'ready') return;
+    if (inviteCompletionRef.current === result.at) return;
+    inviteCompletionRef.current = result.at;
+    track('invite_completed');
+    void import('./synastry/inviteClient').then(({ completeInvite }) => (
+      completeInvite(arrival.handle, arrival.payload.expiresAt)
+    )).catch(() => {});
+  }, [result, arrival]);
+
+  useEffect(() => {
+    if (!result) return;
+    if (result.source === 'returned'
+      || result.source === 'invite-restored'
+      || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setMeetingSettled(true);
+      return;
+    }
+    setMeetingSettled(false);
+    const settle = () => setMeetingSettled(true);
+    const timer = window.setTimeout(settle, 1_400);
+    window.addEventListener('pointerdown', settle, { once: true });
+    window.addEventListener('keydown', settle, { once: true });
+    return () => {
+      window.clearTimeout(timer);
+      window.removeEventListener('pointerdown', settle);
+      window.removeEventListener('keydown', settle);
+    };
+  }, [result?.at]);
 
   useEffect(() => {
     if (!profileReady || profileLinksReadRef.current) return;
@@ -561,6 +830,10 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
   const slotAIsUntouched = slotA.source === 'form'
     && slotA.name === '' && slotA.date === '' && slotA.time === ''
     && slotA.timeKnown && slotA.city === null && slotA.link === null;
+  const slotBIsUntouched = slotB.source === 'form'
+    && slotB.name === '' && slotB.date === '' && slotB.time === ''
+    && slotB.timeKnown && slotB.city === null && slotB.link === null
+    && slotB.positions === null;
   const showQuickFill = profileReady && latestChart !== null
     && slotAIsUntouched && !quickFillDismissed;
   const CopyLinkButton = copyLinkMod?.CopyLinkButton;
@@ -568,6 +841,7 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
   const slotReady = (slot: SlotState) =>
     slot.source === 'saved' ? charts.some((c) => c.id === slot.savedId)
       : slot.source === 'link' ? slot.link !== null
+      : slot.source === 'positions' ? slot.positions !== null
       : slot.date !== '' && slot.city !== null;
 
   const sameSaved =
@@ -580,6 +854,7 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
   // itself arrived by link is someone else's data and never re-shared.
   // A side restored from a saved comparison is this device's own data.
   function inviteFromSlot(slot: SlotState): ShareChartInput | null {
+    if (slot.source === 'positions') return null;
     if (slot.source === 'link') {
       return slot.link && slot.link.received !== true ? slot.link.input : null;
     }
@@ -625,6 +900,9 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
   /** Snapshot one slot as a storable pair side — a saved chart by
    *  reference (renames flow through), everything else by value. */
   function sideFromSlot(slot: SlotState, label: string): SavedPairSide | null {
+    if (slot.source === 'positions') {
+      return slot.positions ? positionsPairSide(slot.positions.chart, label) : null;
+    }
     if (slot.source === 'saved') {
       const c = charts.find((x) => x.id === slot.savedId);
       if (!c) return null;
@@ -674,6 +952,101 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
     if (outcome === 'saved') track('chart_saved', { source: 'pair' });
   }
 
+  function saveInvitationPair(): boolean {
+    if (!result || result.source !== 'invite') return false;
+    const a = positionsPairSide(result.a.positions, result.a.label);
+    const b = positionsPairSide(result.b.positions, result.b.label);
+    if (!a || !b) return false;
+    const outcome = savePair({
+      id: crypto.randomUUID(),
+      createdAt: new Date().toISOString(),
+      a,
+      b,
+    });
+    if (outcome === 'saved' || outcome === 'exists') {
+      setPairSave(outcome);
+      setPairAnnounce(pc(locale, outcome === 'saved' ? 'pairSaved' : 'pairExists'));
+      if (outcome === 'saved') track('chart_saved', { source: 'invite_pair' });
+      return true;
+    }
+    setPairSave(outcome);
+    return false;
+  }
+
+  async function saveInvitationOwnChart(): Promise<boolean> {
+    if (!result || result.source !== 'invite') return false;
+    if (slotB.source === 'saved') return charts.some((chart) => chart.id === slotB.savedId);
+    if (slotB.source !== 'form' || !slotB.city || !slotB.date) return false;
+    const timeKnown = slotB.timeKnown && slotB.time !== '';
+    try {
+      const [{ resolveLocalToUtc }, { saveChart }] = await Promise.all([
+        import('../lib/time/localToUtc'),
+        import('../lib/profile/store'),
+      ]);
+      const resolved = resolveLocalToUtc(
+        slotB.date,
+        timeKnown ? slotB.time : '12:00',
+        slotB.city.tz,
+      );
+      const now = new Date().toISOString();
+      const outcome = saveChart({
+        id: crypto.randomUUID(),
+        name: (slotB.name.trim() || result.b.label || 'My chart').slice(0, 40),
+        createdAt: now,
+        updatedAt: now,
+        birth: {
+          date: slotB.date,
+          time: timeKnown ? slotB.time : null,
+          timeKnown,
+          place: {
+            name: slotB.city.name,
+            admin1: slotB.city.admin1,
+            country: slotB.city.country,
+            lat: slotB.city.lat,
+            lon: slotB.city.lon,
+            tz: slotB.city.tz,
+          },
+        },
+        summary: {
+          engineVersion: result.b.positions.engineVersion,
+          utcISO: resolved.utc.toISOString(),
+          houseSystem: result.b.positions.houseSystem,
+          bodies: result.b.wheel.bodies.map((body) => ({
+            body: body.body,
+            lon: body.lon,
+            retrograde: body.retrograde === true,
+          })),
+          angles: result.b.positions.angles
+            ? { asc: result.b.positions.angles.asc, mc: result.b.positions.angles.mc }
+            : null,
+          flags: resolved.flags,
+        },
+      });
+      if (outcome === 'saved' || outcome === 'updated') {
+        track('chart_saved', { source: 'invite' });
+        return true;
+      }
+      return false;
+    } catch {
+      return false;
+    }
+  }
+
+  function startOwnInvitationLoop(): void {
+    if (slotB.source !== 'form' && slotB.source !== 'saved') return;
+    setSlotA(slotB);
+    setSlotB(emptySlot());
+    setResult(null);
+    setArrival({ state: 'idle' });
+    setInvitePanelExpanded(false);
+    requestAnimationFrame(() => {
+      document.getElementById('calculator')?.scrollIntoView({
+        behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+        block: 'start',
+      });
+    });
+  }
+
   function onRemovePair(pair: SavedPair, index: number) {
     if (!deletePair(pair.id)) {
       setPairAnnounce(t(locale, 'chartSaveError'));
@@ -692,13 +1065,23 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
   }
 
   function restorePair(pair: SavedPair) {
-    const toSlot = (side: SavedPairSide): SlotState => (side.kind === 'chart'
-      ? { ...emptySlot(), source: 'saved', savedId: side.chartId }
-      : {
+    const toSlot = (side: SavedPairSide): SlotState => {
+      if (side.kind === 'chart') {
+        return { ...emptySlot(), source: 'saved', savedId: side.chartId };
+      }
+      if (side.kind === 'positions') {
+        return {
+          ...emptySlot(),
+          source: 'positions',
+          positions: { chart: side.chart, label: side.label },
+        };
+      }
+      return {
         ...emptySlot(),
         source: 'link',
         link: { input: side.input, label: side.label, received: side.received },
-      });
+      };
+    };
     setSlotA(toSlot(pair.a));
     setSlotB(toSlot(pair.b));
     setRestoreTick((n) => n + 1);
@@ -707,7 +1090,7 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
   // A pair is only offered when both sides can still resolve — a chart
   // side whose saved chart is gone (mid-sync) would just error.
   const sideRestorable = (side: SavedPairSide) =>
-    side.kind === 'input' || charts.some((c) => c.id === side.chartId);
+    side.kind !== 'chart' || charts.some((c) => c.id === side.chartId);
   const visiblePairs = pairs.filter((pair) => sideRestorable(pair.a) && sideRestorable(pair.b));
   const resultPairAlreadyStored = result?.sides[0] && result.sides[1]
     ? hasPair(pairs, result.sides[0], result.sides[1])
@@ -734,6 +1117,7 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
       const resolve = (slot: SlotState, fallback: string) =>
         slot.source === 'saved' ? resolveSaved(charts.find((c) => c.id === slot.savedId)!, loadEngine)
           : slot.source === 'link' ? resolveLink(slot.link!, loadEngine)
+          : slot.source === 'positions' ? Promise.resolve(resolvePositions(slot.positions!))
           : resolveForm(slot, fallback, loadEngine);
       const [a, b, mod, { summarizePair }] = await Promise.all([
         resolve(slotA, t(locale, 'personA')),
@@ -742,17 +1126,27 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
         import('../lib/engine/synastry'),
       ]);
       const summary = summarizePair(a.bodies, b.bodies, 8);
+      const resultSource = comparisonResultSource(
+        slotA.source,
+        slotA.positions?.invite === true,
+        slotB.source,
+      );
       setWheelMod(mod);
+      setMeetingSettled(resultSource === 'invite-restored');
       setResult({
         a, b, summary, at: Date.now(),
         sides: [sideFromSlot(slotA, a.label), sideFromSlot(slotB, b.label)],
+        source: resultSource,
       });
       setInvite(inviteFromSlot(slotA));
       setInviteState('idle');
+      setInvitePanelExpanded(false);
       setPairSave('idle');
       setPairAnnounce(''); // same-text re-announcements need a mutation
       track('compat_computed', {
-        source: slotA.source === 'form' && slotB.source === 'form' ? 'form' : 'restored',
+        source: slotA.source === 'positions' && slotA.positions?.invite
+          ? 'invite'
+          : slotA.source === 'form' && slotB.source === 'form' ? 'form' : 'restored',
       });
     } catch (err) {
       setError(t(locale, 'compareError'));
@@ -798,6 +1192,27 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
 
   return (
     <div class="calc">
+      {sendBackMod && returnBand !== 'none' && (
+        <sendBackMod.ReturnBand
+          invalid={returnBand === 'invalid'}
+          onDismiss={() => {
+            setReturnBand('none');
+            requestAnimationFrame(() => resultHeadingRef.current?.focus());
+          }}
+        />
+      )}
+      {inviteExperienceMod && arrival.state !== 'idle' && (
+        <inviteExperienceMod.InviteArrival
+          view={arrival}
+          onRetry={() => void openArrival(inviteArrivalHandleRef.current)}
+          onClear={() => {
+            inviteArrivalHandleRef.current = '';
+            setSlotA(emptySlot());
+            setArrival({ state: 'idle' });
+            setPairAnnounce('Shared side removed. The page is a normal comparison now.');
+          }}
+        />
+      )}
       <form class="calc__form shell" onSubmit={compare} aria-busy={busy}>
         <div class="core calc__core">
           {/* Always mounted: role=status nodes inserted together with
@@ -873,8 +1288,24 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
         </div>
       </form>
 
+      {inviteExperienceMod && (
+        <inviteExperienceMod.InvitePanel
+          enabled={inviteUiActive}
+          visible={
+            (
+              slotReady(slotA)
+              && slotBIsUntouched
+              && slotA.source !== 'positions'
+              && !(slotA.source === 'link' && slotA.link?.received)
+            )
+            || invitePanelExpanded
+          }
+          charts={charts}
+        />
+      )}
+
       {result && (
-        <div class="calc__result">
+        <div class={`calc__result syn-meet${meetingSettled ? ' is-settled' : ''}`}>
           <h2 class="sr-only" tabIndex={-1} ref={resultHeadingRef}>{t(locale, 'compatibility')}</h2>
           {(!result.a.timeKnown || !result.b.timeKnown) && (
             <p class="notice" role="status">
@@ -914,6 +1345,38 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
               }}
               summary={result.summary}
             />
+          )}
+
+          {(result.source === 'invite' || result.source === 'invite-restored') && sendBackMod && (
+            <>
+              <sendBackMod.SendBackCard
+                a={{
+                  label: result.a.label,
+                  bodies: result.a.bodies,
+                  asc: result.a.asc,
+                  positions: result.a.positions,
+                }}
+                b={{
+                  label: result.b.label,
+                  bodies: result.b.bodies,
+                  asc: result.b.asc,
+                  positions: result.b.positions,
+                }}
+                summary={result.summary}
+                inviterLabel={result.a.label}
+                onReturned={(method) => track('invite_returned', { method })}
+              />
+              {result.source === 'invite'
+                && (slotB.source === 'form' || slotB.source === 'saved') && (
+                <sendBackMod.InvitationConversionCard
+                  inviterLabel={result.a.label}
+                  onSaveChart={saveInvitationOwnChart}
+                  onSavePair={saveInvitationPair}
+                  onStartOwn={startOwnInvitationLoop}
+                  onConverted={(action) => track('invite_converted', { action })}
+                />
+              )}
+            </>
           )}
 
           {(compatShareMod || (result.sides[0] && result.sides[1])) && (
@@ -1016,6 +1479,28 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
               </CopyLinkButton>
             </div>
           )}
+          {inviteUiActive
+            && inviteExperienceMod
+            && result.source === 'plain'
+            && slotA.source !== 'positions'
+            && !(slotA.source === 'link' && slotA.link?.received)
+            && !invitePanelExpanded && (
+              <button
+                type="button"
+                class="btn btn--ghost syn-invite__open"
+                onClick={() => {
+                  setInvitePanelExpanded(true);
+                  requestAnimationFrame(() => {
+                    document.getElementById('syn-invite-title')?.scrollIntoView({
+                      behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+                      block: 'center',
+                    });
+                  });
+                }}
+              >
+                Invite someone to compare with {result.a.label}
+              </button>
+            )}
         </div>
       )}
     </div>
