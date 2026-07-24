@@ -1,6 +1,8 @@
 import { SIGNS, signBySlug } from '../signs';
+import { isGildedGoldCount } from './cabinet-finish';
 import {
   AURA_SIGN_ORDER,
+  type AuraCabinetEdition,
   type AuraCabinetFinish,
   type AuraCabinetHolding,
   type AuraComposition,
@@ -12,11 +14,12 @@ const CENTER = 0.5;
 const OUTER_RADIUS = 0.42;
 const SKY_RADIUS = 0.255;
 const CHART_RADIUS = 0.16;
-const FINISH_LABEL: Record<AuraCabinetFinish, string> = {
+const EDITION_LABEL: Record<AuraCabinetEdition, string> = {
   pastel: 'Pastel Disc',
   bronze: 'Bronze Edition',
   silver: 'Silver Edition',
   gold: 'Gold Sculpture',
+  gilded: 'The Gilded Case',
 };
 
 export type AuraTalismanCollectionMode = 'empty' | 'point' | 'chord' | 'polygon';
@@ -118,7 +121,10 @@ function normalizedGoldCount(holding: AuraCabinetHolding | undefined): bigint {
   }
 }
 
-/** Exact for one through nine Gold editions, deliberately capped thereafter. */
+/**
+ * Exact for one through ninety-nine Gold editions, capped thereafter. The
+ * tenth sculpture is the Gilded Case, so the tally has to read past it.
+ */
 export function talismanGoldCountLabel(value: string | bigint | null): string | null {
   if (value === null) return null;
   let count: bigint;
@@ -128,7 +134,7 @@ export function talismanGoldCountLabel(value: string | bigint | null): string | 
     return null;
   }
   if (count < 1n) return null;
-  return count > 9n ? '×9+' : `×${count.toString()}`;
+  return count > 99n ? '×99+' : `×${count.toString()}`;
 }
 
 function segment(
@@ -269,6 +275,14 @@ export function buildAuraTalisman(
   };
 }
 
+/** The edition a represented node displays, Gold multiplicity included. */
+export function talismanEdition(
+  node: Pick<AuraTalismanOuterNode, 'finish' | 'goldCount'>,
+): AuraCabinetEdition {
+  if (node.finish !== 'gold') return node.finish ?? 'pastel';
+  return isGildedGoldCount(node.goldCount) ? 'gilded' : 'gold';
+}
+
 /** A concise factual label for accessible and exported surfaces. */
 export function auraTalismanSummary(model: AuraTalismanModel): string {
   const names = model.collectionPoints.map((point) => point.name);
@@ -278,7 +292,7 @@ export function auraTalismanSummary(model: AuraTalismanModel): string {
   const materials = model.collectionPoints.length === 0
     ? ''
     : ` Editions: ${model.collectionPoints.map((point) => (
-      `${point.name} ${FINISH_LABEL[point.finish!]}${point.goldCountLabel ? ` ${point.goldCountLabel}` : ''}`
+      `${point.name} ${EDITION_LABEL[talismanEdition(point)]}${point.goldCountLabel ? ` ${point.goldCountLabel}` : ''}`
     )).join('; ')}.`;
   const sun = signBySlug(model.skyMarks[0].sign).name;
   const moon = signBySlug(model.skyMarks[1].sign).name;

@@ -14,8 +14,8 @@ import { normalizeHeldSigns } from "../lib/aura/normalize";
 import { AURA_EXAMPLE_HOLDINGS } from "../lib/aura/example";
 import {
   AuraCollectionCabinet,
-  FINISH_META,
-  FINISH_ORDER,
+  EDITION_META,
+  EDITION_ORDER,
   principalSign,
 } from "./aura/AuraCollectionCabinet";
 import {
@@ -1272,22 +1272,22 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
       <section class="aura-editions" aria-labelledby="aura-editions-title">
         <p class="aura-editions__kicker">How the cabinet works</p>
         <h2 id="aura-editions-title">
-          Four editions, one rule: the more of a sign an address holds, the
+          Five editions, one rule: the more of a sign an address holds, the
           finer its casting.
         </h2>
         <ol class="aura-editions__ladder">
-          {FINISH_ORDER.map((finish) => (
+          {EDITION_ORDER.map((edition) => (
             <li
-              key={finish}
-              class={`aura-editions__row aura-editions__row--${finish}`}
+              key={edition}
+              class={`aura-editions__row aura-editions__row--${edition}`}
             >
               <span class="aura-editions__numeral" aria-hidden="true">
-                {FINISH_META[finish].numeral}
+                {EDITION_META[edition].numeral}
               </span>
-              <span class="aura-editions__name">{FINISH_META[finish].name}</span>
-              <span class="aura-editions__range">{FINISH_META[finish].range}</span>
+              <span class="aura-editions__name">{EDITION_META[edition].name}</span>
+              <span class="aura-editions__range">{EDITION_META[edition].range}</span>
               <span class="aura-editions__material">
-                {FINISH_META[finish].material}
+                {EDITION_META[edition].material}
               </span>
             </li>
           ))}
@@ -1302,9 +1302,12 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
             or plainer.
           </p>
           <p>
-            Gold counts in sculptures — one for each complete million held. A
-            seat badge shows up to ×9; beyond that it reads ×9+ and the placard
-            keeps the exact count.
+            Gold counts in sculptures — one for each complete million held. The
+            tenth sculpture in a single seat, 10,000,000 held, is the last
+            edition: that seat is framed in gold, the case is gilded around it,
+            and the whole cabinet carries a cast plate sealed V. A seat badge
+            shows up to ×99; beyond that it reads ×99+ and the placard keeps
+            the exact count.
           </p>
           <p>
             Arrangements follow presence alone: an opposite pair, an element

@@ -70,10 +70,10 @@ describe("AuraResult rooms", () => {
     expect(markup).not.toContain("Registry Aura rooms");
     expect(markup).toContain("data-aura-talisman");
     expect(markup).toContain("Add your chart’s echo.");
-    expect(markup.match(/data-aura-ledger-sign=/g)).toHaveLength(4);
+    expect(markup.match(/data-aura-ledger-sign=/g)).toHaveLength(5);
     expect(markup).toContain("Under 10,000 held");
     expect(markup).toContain("Registry record");
-    expect(markup).toContain("8 places remain reserved.");
+    expect(markup).toContain("7 places remain reserved.");
     expect(markup).toContain("Share this collection");
     expect(markup).toContain("Open another collection");
     expect(markup).toContain("Browse the Registry");

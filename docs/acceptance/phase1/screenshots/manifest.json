@@ -6,11 +6,11 @@
     "script": "tests/phase1-acceptance-drive.mjs",
     "contractVersion": 3
   },
-  "capturedAt": "2026-07-24T11:19:41.624Z",
+  "capturedAt": "2026-07-24T18:41:35.743Z",
   "browser": "Chromium 141.0.7390.37",
   "dailyDate": "2026-07-23",
   "publicationCanonicalSha256": "0a992bc02777c1f4ea42b7bc008ac8e53397966f394905d3fcd319755c88ee32",
-  "templateSourceSha256": "b46154abb5c7b40e636167ae46a974c9170419953c79cd98076a2cd3e7170e0d",
+  "templateSourceSha256": "4e6457100308f9dbe025758a6886ea0010214b3e62db0fe1650da5fbe5e65937",
   "renderPayloadSha256": {
     "daily": "403fd39ed3612e2ecb0637878acc1ffd271750db970c5e9316ca67ac66fd80b7",
     "dailyPublication": "04aaa19f6c1f1d26ed26811618d66a01878904306902dcce710a82776a767bea",
@@ -19,8 +19,8 @@
   },
   "buildReceipt": {
     "schema": "zodiacs.phase1-build-receipt.v1",
-    "builtAt": "2026-07-24T11:14:14.824Z",
-    "templateSourceSha256": "b46154abb5c7b40e636167ae46a974c9170419953c79cd98076a2cd3e7170e0d",
+    "builtAt": "2026-07-24T18:41:05.866Z",
+    "templateSourceSha256": "4e6457100308f9dbe025758a6886ea0010214b3e62db0fe1650da5fbe5e65937",
     "dailyDate": "2026-07-23",
     "publicationCanonicalSha256": "0a992bc02777c1f4ea42b7bc008ac8e53397966f394905d3fcd319755c88ee32",
     "renderPayloadSha256": {
@@ -88,7 +88,7 @@
         "file": "horoscopes-hub-360.png",
         "width": 360,
         "height": 5287,
-        "sha256": "39513679800b01600b47c0cad4c55977274ebc3a5620af3d8055b20be90adcea"
+        "sha256": "441d4302e0beecd34af29b4b44c6667f22de634e342afdb58e216e381af4dcd8"
       },
       "layout": {
         "clientWidth": 360,
@@ -134,7 +134,7 @@
         "file": "daily-360.png",
         "width": 360,
         "height": 3766,
-        "sha256": "3d5d56f10f5203518f86e442ed5d650a08887ae08d585dde89e9c2f68d90ac71"
+        "sha256": "a75c206073495670e47825e373b7eb30f720c2be2e5690cfbf6a87f6140c4e93"
       },
       "layout": {
         "clientWidth": 360,
@@ -157,7 +157,7 @@
         "file": "daily-1280.png",
         "width": 1280,
         "height": 3055,
-        "sha256": "6c334fc2c4b2bddccc9ffac0029e98754234364c47f943365e9b8143971ad75b"
+        "sha256": "ad9e9583a1dd4964e0c7bd05c87c01f840d4f1085d708de6ec3efa1b603743df"
       },
       "layout": {
         "clientWidth": 1280,
@@ -180,7 +180,7 @@
         "file": "tomorrow-360.png",
         "width": 360,
         "height": 3621,
-        "sha256": "b6bf151e77f4f8cb00987c321d43ea11b8ac12cfdfbde0984c91ab33bc695207"
+        "sha256": "46f2d71ef32282c0d2b04fdaee078c78b014657e6f4d872dc1f924a1da1dfb77"
       },
       "layout": {
         "clientWidth": 360,
@@ -203,7 +203,7 @@
         "file": "tomorrow-1280.png",
         "width": 1280,
         "height": 2973,
-        "sha256": "73f80c876312b99a821212696e7e0602179f335162b869add7c2b1235bc6525f"
+        "sha256": "5b5638e5bbd29aa7c29d001106b03bac1d0f6e9fe03fd006f480cdbe2223ce81"
       },
       "layout": {
         "clientWidth": 1280,

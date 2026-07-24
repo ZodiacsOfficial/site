@@ -1,7 +1,9 @@
 import type { SavedChart } from '../profile/schema';
 import type { AuraCabinetHolding, AuraSign } from './types';
 
+/** The curator's sample shows one seat at each of the five editions. */
 export const AURA_EXAMPLE_HOLDINGS: AuraCabinetHolding[] = [
+  { sign: 'aries', finish: 'gold', goldCount: '12' },
   { sign: 'cancer', finish: 'pastel' },
   { sign: 'leo', finish: 'bronze' },
   { sign: 'scorpio', finish: 'silver' },

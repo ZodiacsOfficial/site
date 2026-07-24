@@ -1,12 +1,15 @@
 import { signBySlug } from "./signs";
 import { assertAuraShareSign, auraShareDateMs } from "./aura-share";
 import {
+  talismanEdition,
   talismanGeometry,
   talismanGoldCountLabel,
   type AuraTalismanGeometry,
 } from "./aura/talisman";
+import { cabinetEditionForHolding } from "./aura/cabinet-finish";
 import {
   AURA_SIGN_ORDER,
+  type AuraCabinetEdition,
   type AuraCabinetFinish,
   type AuraCabinetHolding,
   type AuraSign,
@@ -35,6 +38,8 @@ export interface AuraShareSign {
   glyph: string;
   hue: string;
   finish: AuraCabinetFinish;
+  /** The catalogue edition, which folds Gold multiplicity into the material. */
+  edition: AuraCabinetEdition;
   goldCountLabel: string | null;
   goldTallyArcs: 0 | 1 | 2;
 }
@@ -77,10 +82,11 @@ const MUTED = "#9CA5B8";
 const ETCHED = "rgba(197, 205, 220, 0.22)";
 const HAIR = "rgba(205, 212, 226, 0.16)";
 const BRASS = "#B79A65";
-const MATERIAL_COLORS: Record<Exclude<AuraCabinetFinish, "pastel">, string> = {
+const MATERIAL_COLORS: Record<Exclude<AuraCabinetEdition, "pastel">, string> = {
   bronze: "#B87449",
   silver: "#C4CEDA",
   gold: "#DEB75E",
+  gilded: "#F6DE9C",
 };
 const SERIF = '"EB Garamond", Georgia, serif';
 const MONO = '"JetBrains Mono", ui-monospace, Menlo, monospace';
@@ -112,6 +118,7 @@ function shareSign(
     glyph: sign.glyph,
     hue: sign.hue,
     finish,
+    edition: holding ? cabinetEditionForHolding(holding) : "pastel",
     // A single Masterwork needs no count; the label appears from ×2 upward.
     goldCountLabel: goldCount > 1n ? talismanGoldCountLabel(goldCount) : null,
     goldTallyArcs: goldCount >= 3n ? 2 : goldCount >= 2n ? 1 : 0,
@@ -306,8 +313,8 @@ function circle(
   context.arc(x, y, radius, 0, Math.PI * 2);
 }
 
-function materialColor(sign: Pick<AuraShareSign, "finish" | "hue">): string {
-  return sign.finish === "pastel" ? sign.hue : MATERIAL_COLORS[sign.finish];
+function materialColor(sign: Pick<AuraShareSign, "edition" | "hue">): string {
+  return sign.edition === "pastel" ? sign.hue : MATERIAL_COLORS[sign.edition];
 }
 
 function drawSeal(
@@ -346,9 +353,10 @@ function drawSeal(
     const point = sealPoint(node, size, left, top);
     circle(context, point.x, point.y, node.represented ? 25 : 16);
     if (node.represented) {
-      context.fillStyle = node.finish && node.finish !== "pastel"
-        ? MATERIAL_COLORS[node.finish]
-        : node.hue;
+      const nodeEdition = node.finish ? talismanEdition(node) : "pastel";
+      context.fillStyle = nodeEdition === "pastel"
+        ? node.hue
+        : MATERIAL_COLORS[nodeEdition];
       context.fill();
       context.fillStyle = BG;
       context.textAlign = "center";
@@ -433,7 +441,7 @@ function drawRepresentedSet(
     context.fillStyle = MUTED;
     context.font = `500 13px ${MONO}`;
     context.fillText(
-      `${sign.finish.toUpperCase()}${sign.goldCountLabel ? ` ${sign.goldCountLabel}` : ""}`,
+      `${sign.edition === "gilded" ? "GILDED" : sign.finish.toUpperCase()}${sign.goldCountLabel ? ` ${sign.goldCountLabel}` : ""}`,
       x,
       y + 65,
     );
