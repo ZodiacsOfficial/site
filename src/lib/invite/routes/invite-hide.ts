@@ -1,8 +1,8 @@
-import { authenticateEmailUser } from '../../src/lib/email/daily-server.js';
-import { allowInviteMethods, sendInviteJson, validInviteBrowserRequest } from '../../src/lib/invite/api.js';
-import { hasCompatibilityInviteContract } from '../../src/lib/invite/config.js';
-import { hideCompatibilityInvite } from '../../src/lib/invite/server.js';
-import { parseInviteIdBody } from '../../src/lib/invite/validate.js';
+import { authenticateEmailUser } from '../../email/daily-server.js';
+import { allowInviteMethods, sendInviteJson, validInviteBrowserRequest } from '../api.js';
+import { hasCompatibilityInviteContract } from '../config.js';
+import { hideCompatibilityInvite } from '../server.js';
+import { parseInviteIdBody } from '../validate.js';
 
 export default async function handler(req: any, res: any): Promise<void> {
   if (req.method !== 'POST') {

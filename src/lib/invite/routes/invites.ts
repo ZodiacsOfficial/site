@@ -1,21 +1,21 @@
-import { authenticateEmailUser } from '../../src/lib/email/daily-server.js';
-import { sendInviteJson, allowInviteMethods, validInviteBrowserRequest } from '../../src/lib/invite/api.js';
+import { authenticateEmailUser } from '../../email/daily-server.js';
+import { sendInviteJson, allowInviteMethods, validInviteBrowserRequest } from '../api.js';
 import {
   compatibilityInviteBaseUrl,
   compatibilityInviteCreationEnabled,
   compatibilityInviteUserAllowed,
   hasCompatibilityInviteContract,
-} from '../../src/lib/invite/config.js';
+} from '../config.js';
 import {
   createCompatibilityInvite,
   getOwnedSyncedChartPayload,
   listCompatibilityInvites,
-} from '../../src/lib/invite/server.js';
+} from '../server.js';
 import {
   compatibilityInviteTokenHash,
   createCompatibilityInviteToken,
-} from '../../src/lib/invite/token.js';
-import { deriveInviteChartFromSyncedPayload, parseCreateInviteBody } from '../../src/lib/invite/validate.js';
+} from '../token.js';
+import { deriveInviteChartFromSyncedPayload, parseCreateInviteBody } from '../validate.js';
 
 export default async function handler(req: any, res: any): Promise<void> {
   if (req.method !== 'GET' && req.method !== 'POST') {

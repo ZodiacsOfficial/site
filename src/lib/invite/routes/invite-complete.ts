@@ -3,17 +3,17 @@ import {
   allowInviteMethods,
   sendInviteJson,
   validInviteBrowserRequest,
-} from '../../src/lib/invite/api.js';
-import { hasCompatibilityInviteContract } from '../../src/lib/invite/config.js';
-import { dispatchCompatibilityInviteCompletionEmail } from '../../src/lib/invite/email.js';
+} from '../api.js';
+import { hasCompatibilityInviteContract } from '../config.js';
+import { dispatchCompatibilityInviteCompletionEmail } from '../email.js';
 import {
   clearInviteCapabilityCookie,
   inviteCapabilityCookie,
   inviteSessionHandle,
-} from '../../src/lib/invite/request.js';
-import { completeCompatibilityInvite } from '../../src/lib/invite/server.js';
-import { compatibilityInviteTokenHash } from '../../src/lib/invite/token.js';
-import { isEmptyJsonBody } from '../../src/lib/invite/validate.js';
+} from '../request.js';
+import { completeCompatibilityInvite } from '../server.js';
+import { compatibilityInviteTokenHash } from '../token.js';
+import { isEmptyJsonBody } from '../validate.js';
 
 export default async function handler(req: any, res: any): Promise<void> {
   if (req.method !== 'POST') {

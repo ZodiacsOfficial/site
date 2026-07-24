@@ -40,7 +40,11 @@
   "rewrites": [
     {
       "source": "/c/:token/",
-      "destination": "/api/compatibility/invite-exchange?token=:token"
+      "destination": "/api/compatibility?action=invite-exchange&token=:token"
+    },
+    {
+      "source": "/api/compatibility/:action",
+      "destination": "/api/compatibility?action=:action"
     }
   ],
   "headers": [

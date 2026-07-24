@@ -1,15 +1,15 @@
-import { sendInviteJson, validInviteBrowserRequest } from '../../src/lib/invite/api.js';
-import { compatibilityInviteCreationEnabled } from '../../src/lib/invite/config.js';
+import { sendInviteJson, validInviteBrowserRequest } from '../api.js';
+import { compatibilityInviteCreationEnabled } from '../config.js';
 import {
   clearInviteCapabilityCookie,
   inviteCapabilityCookie,
   inviteSessionHandle,
-} from '../../src/lib/invite/request.js';
-import { readCompatibilityInvite } from '../../src/lib/invite/server.js';
+} from '../request.js';
+import { readCompatibilityInvite } from '../server.js';
 import {
   compatibilityInviteTokenHash,
   validCompatibilityInviteSessionHandle,
-} from '../../src/lib/invite/token.js';
+} from '../token.js';
 
 function clearSelectedCookie(res: any, handle: string): void {
   if (validCompatibilityInviteSessionHandle(handle)) {

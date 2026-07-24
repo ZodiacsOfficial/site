@@ -1,11 +1,11 @@
-import { allowInviteMethods, sendInviteJson } from '../../src/lib/invite/api.js';
+import { allowInviteMethods, sendInviteJson } from '../api.js';
 import {
   compatibilityInviteSweepSecret,
   hasCompatibilityInviteContract,
-} from '../../src/lib/invite/config.js';
-import { bearer } from '../../src/lib/invite/request.js';
-import { pruneCompatibilityInvites } from '../../src/lib/invite/server.js';
-import { constantTimeSecretMatch } from '../../src/lib/invite/token.js';
+} from '../config.js';
+import { bearer } from '../request.js';
+import { pruneCompatibilityInvites } from '../server.js';
+import { constantTimeSecretMatch } from '../token.js';
 
 export default async function handler(req: any, res: any): Promise<void> {
   if (req.method !== 'POST') {

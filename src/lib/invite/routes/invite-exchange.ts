@@ -1,11 +1,11 @@
-import { queryValue } from '../../src/lib/invite/api.js';
-import { compatibilityInviteCreationEnabled } from '../../src/lib/invite/config.js';
-import { setInviteCapabilityCookie } from '../../src/lib/invite/request.js';
-import { exchangeCompatibilityInvite } from '../../src/lib/invite/server.js';
+import { queryValue } from '../api.js';
+import { compatibilityInviteCreationEnabled } from '../config.js';
+import { setInviteCapabilityCookie } from '../request.js';
+import { exchangeCompatibilityInvite } from '../server.js';
 import {
   compatibilityInviteTokenHash,
   createCompatibilityInviteSessionHandle,
-} from '../../src/lib/invite/token.js';
+} from '../token.js';
 
 function redirect(res: any, location: string, cookie?: string): void {
   res.statusCode = 303;

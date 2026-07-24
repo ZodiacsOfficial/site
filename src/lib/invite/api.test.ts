@@ -1,11 +1,15 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import completeHandler from '../../../api/compatibility/invite-complete';
-import exchangeHandler from '../../../api/compatibility/invite-exchange';
-import revokeHandler from '../../../api/compatibility/invite-revoke';
-import sessionHandler from '../../../api/compatibility/invite-session';
-import sweepHandler from '../../../api/compatibility/invite-sweep';
-import invitesHandler from '../../../api/compatibility/invites';
+import dispatcher, {
+  COMPATIBILITY_INVITE_ACTIONS,
+  compatibilityInviteHandlerForAction,
+} from '../../../api/compatibility';
 import { POSITION_BODY_ORDER } from '../share-positions';
+import completeHandler from './routes/invite-complete';
+import exchangeHandler from './routes/invite-exchange';
+import revokeHandler from './routes/invite-revoke';
+import sessionHandler from './routes/invite-session';
+import sweepHandler from './routes/invite-sweep';
+import invitesHandler from './routes/invites';
 import { compatibilityInviteTokenHash } from './token';
 
 const ORIGINAL_ENV = { ...process.env };
@@ -73,6 +77,29 @@ function chartPayload() {
 }
 
 describe('Phase 4 invite API boundary', () => {
+  it('routes the seven public paths through one exact, fail-closed dispatcher', async () => {
+    expect(COMPATIBILITY_INVITE_ACTIONS).toEqual([
+      'invites',
+      'invite-exchange',
+      'invite-session',
+      'invite-complete',
+      'invite-revoke',
+      'invite-hide',
+      'invite-sweep',
+    ]);
+    for (const action of COMPATIBILITY_INVITE_ACTIONS) {
+      expect(compatibilityInviteHandlerForAction(action)).toBeTypeOf('function');
+    }
+    expect(compatibilityInviteHandlerForAction(['invites'])).toBeNull();
+    expect(compatibilityInviteHandlerForAction('not-an-action')).toBeNull();
+
+    const response = responseRecorder();
+    await dispatcher({ query: { action: 'not-an-action' } }, response);
+    expect(response.statusCode).toBe(404);
+    expect(JSON.parse(response.body)).toEqual({ error: 'not_found' });
+    expect(response.headers.get('cache-control')).toBe('private, no-store');
+  });
+
   it('fails creation closed before authentication or database access when the flag is off', async () => {
     configure(false);
     const fetcher = vi.fn();
