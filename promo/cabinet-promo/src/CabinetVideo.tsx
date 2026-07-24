@@ -1,10 +1,8 @@
-import { Audio } from '@remotion/media';
 import {
   AbsoluteFill,
   Easing,
   interpolate,
   Sequence,
-  staticFile,
   useCurrentFrame,
   useVideoConfig,
 } from 'remotion';
@@ -154,7 +152,6 @@ export const CabinetVideo = () => {
         <Cta duration={58} />
       </Sequence>
 
-      <Audio src={staticFile('score.wav')} />
     </AbsoluteFill>
   );
 };
