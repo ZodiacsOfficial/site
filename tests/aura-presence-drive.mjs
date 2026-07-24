@@ -306,7 +306,7 @@ async function verifyNoJavaScriptSample(browser, baseURL) {
     colorScheme: 'dark',
   });
   const page = await context.newPage();
-  await page.goto(`${baseURL}/registry/aura/`, { waitUntil: 'domcontentloaded' });
+  await page.goto(`${baseURL}/registry/collection/`, { waitUntil: 'domcontentloaded' });
 
   assert.equal(
     normalized(await page.locator('.aura-page__hero .kicker').innerText()).toLowerCase(),
@@ -375,7 +375,7 @@ async function verifySampleAndLiveCollection(browser, baseURL) {
     });
   });
 
-  await page.goto(`${baseURL}/registry/aura/`, { waitUntil: 'networkidle' });
+  await page.goto(`${baseURL}/registry/collection/`, { waitUntil: 'networkidle' });
   await page.screenshot({ path: resolve('/tmp', 'zodiacs-registry-aura-cabinet-top.png') });
   assert.equal(await stageCabinet(page).locator('[data-aura-cabinet-sign]').count(), 12);
   // The sample opens on its principal work: the Gold Masterwork, not the
@@ -561,7 +561,7 @@ async function verifyReducedMotion(browser, baseURL) {
     colorScheme: 'dark',
   });
   const page = await context.newPage();
-  await page.goto(`${baseURL}/registry/aura/`, { waitUntil: 'networkidle' });
+  await page.goto(`${baseURL}/registry/collection/`, { waitUntil: 'networkidle' });
 
   await assertSettledEditions(stageCabinet(page), 'the reduced-motion static sample');
 
@@ -603,7 +603,7 @@ async function verifyRestoredCabinet(browser, baseURL) {
     await route.abort();
   });
 
-  await page.goto(`${baseURL}/registry/aura/`, { waitUntil: 'networkidle' });
+  await page.goto(`${baseURL}/registry/collection/`, { waitUntil: 'networkidle' });
   await waitForStageKicker(page, 'Collection restored');
   const cabinet = stageCabinet(page);
   assert.match(await page.locator('#aura-status').innerText(), /restored from this device/i);
@@ -625,7 +625,7 @@ async function verifyDesktopFold(browser, baseURL) {
     colorScheme: 'dark',
   });
   const page = await context.newPage();
-  await page.goto(`${baseURL}/registry/aura/`, { waitUntil: 'networkidle' });
+  await page.goto(`${baseURL}/registry/collection/`, { waitUntil: 'networkidle' });
 
   // The thesis and the case itself both land inside the first screen.
   const headline = await page.locator('.aura-page__hero h1').boundingBox();

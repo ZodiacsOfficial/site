@@ -134,7 +134,7 @@ for (const [key, value] of Object.entries(budgets)) {
     fail(`budgets.json: ${key} must be a finite, non-negative number`);
   }
 }
-for (const required of ['/', '/birth-chart/', '/registry/aura/', '/aries/', 'chunk-max', 'engine-chunk']) {
+for (const required of ['/', '/birth-chart/', '/registry/collection/', '/aries/', 'chunk-max', 'engine-chunk']) {
   if (!(required in budgets)) fail(`budgets.json: missing ${required}`);
 }
 
@@ -255,7 +255,7 @@ if (
 }
 
 const homepage = routeRows.find(({ route }) => route === '/');
-const registryAura = routeRows.find(({ route }) => route === '/registry/aura/');
+const registryAura = routeRows.find(({ route }) => route === '/registry/collection/');
 const engineMarkers = ['Value is not boolean:', 'Light-travel time solver did not converge'];
 const homepageMarkerChunks = homepage
   ? [...homepage.closure].filter((path) => engineMarkers.some((marker) => chunks.get(path).source.includes(marker)))
@@ -288,9 +288,9 @@ if (registryAura) {
     'eth_signTypedData',
   ];
   const found = forbiddenAuraMarkers.filter((marker) => auraSource.includes(marker));
-  if (found.length) fail(`Registry Aura client boundary contains forbidden markers: ${found.join(', ')}`);
+  if (found.length) fail(`Registry Collection client boundary contains forbidden markers: ${found.join(', ')}`);
   if ([...registryAura.closure].some((path) => /\/_astro\/full\.[^/]+\.js$/.test(path))) {
-    fail('Registry Aura eagerly loads the full astronomy engine chunk');
+    fail('Registry Collection eagerly loads the full astronomy engine chunk');
   }
 }
 

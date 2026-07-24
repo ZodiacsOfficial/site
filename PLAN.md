@@ -85,7 +85,7 @@ New work reuses these tokens. It introduces no new decorative color, chrome lang
 
 - Supabase already supports magic-link auth, RLS-protected profile/chart sync, chart-deletion tombstones, and weekly-digest opt-in. Assistant quota and push-subscription surfaces also exist; their production schema must be migration-backed before their flags are enabled.
 - Email capture supports Resend, Buttondown, or Loops and fails closed when the chosen provider is incomplete. The program standard is Resend so capture, confirmation, and automated sends use one provider.
-- Push, weekly digest, Registry Aura, wallet chart, analytics, and Ask Zodiacs all have off-by-default or configuration-dependent behavior. Exact setup is consolidated in `SETUP.md`.
+- Push, weekly digest, Registry Collection, wallet chart, analytics, and Ask Zodiacs all have off-by-default or configuration-dependent behavior. Exact setup is consolidated in `SETUP.md`.
 - The static site builds without server credentials. This remains a release invariant for all phases.
 
 ### Editorial voice

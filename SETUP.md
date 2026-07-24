@@ -45,8 +45,8 @@ Do not put credentials in `.env` files that can be committed, Markdown, fixtures
 | Anthropic | Existing optional integration | Ask Zodiacs; optional future Phase 1 prose build | Use server/CI-only keys. Keep daily-prose and assistant budgets independently revocable. |
 | Plausible-compatible analytics | Optional, approved | Cookieless allowlisted product events | No script is emitted when unconfigured. Never send birth data, email, chart positions, wallet addresses, free text, query strings, or fragments. |
 | Web Push / VAPID | Scaffolded, off | Phase 3 opt-in notifications | Generate a VAPID pair, store subscriptions in Supabase, and enable client/server/schedule flags together only after verification. |
-| Solana/Base RPC providers | Existing optional Registry integrations | Wallet-chart and Registry Aura reads | Out of scope for this six-phase program; preserve their flags and server-only endpoints. |
-| Vercel Firewall | Existing Registry integration | Registry Aura rate limit | Keep the rule ID `registry-aura-holdings-v1` if Aura is enabled. |
+| Solana/Base RPC providers | Existing optional Registry integrations | Wallet-chart and Registry Collection reads | Out of scope for this six-phase program; preserve their flags and server-only endpoints. |
+| Vercel Firewall | Existing Registry integration | Registry Collection rate limit | Keep the rule ID `registry-aura-holdings-v1` if Aura is enabled. |
 | GeoNames | Existing build-time data source | Place-search shards | Attribution remains in the footer; no runtime credential is required by the committed build. |
 | Wikidata/Wikipedia | Phase 5, not provisioned | Reviewed public-figure facts and source URLs | Use public APIs/exports with an identifying User-Agent and cache source snapshots; never scrape astrology sites. |
 | Google Search Console, Bing Webmaster Tools, IndexNow | Existing operational surface | Discovery and crawl notification | Verify the domain and submit `/sitemap.xml`; the daily workflow already pings IndexNow after live verification. |
@@ -68,7 +68,7 @@ These values may appear in client bundles. They must never contain a secret.
 | `PUBLIC_WEB_PUSH_ENABLED` | Browser push prompt enabled | Must equal `1`; one half of the push kill switch. |
 | `PUBLIC_VAPID_KEY` | Browser push enabled | Browser-visible VAPID public key. |
 | `PUBLIC_COMPAT_INVITES_ENABLED` | Phase 4 invitation UI enabled | Must equal `1`; exposes the English invitation, arrival, profile-register, send-back, and return-link UI. This is public configuration, not a secret, and remains unset/off on the unreleased candidate. |
-| `PUBLIC_REGISTRY_AURA_ENABLED` | Registry Aura enabled | Must equal `1`; out-of-program flag, preserved. |
+| `PUBLIC_REGISTRY_COLLECTION_ENABLED` | Registry Collection enabled | Must equal `1`; out-of-program flag, preserved. |
 | `PUBLIC_WALLET_CHART_ENABLED` | Wallet chart enabled | Must equal `1`; out-of-program flag, preserved. |
 
 ### Supabase and server authorization
@@ -273,7 +273,7 @@ These are outside this program and should remain off unless separately authorize
 | Phase 4 create/open | `COMPAT_INVITES_ENABLED=1` + Supabase server contract | Creation, token exchange, and session reads fail closed. Existing status, revocation, hiding, completion replay, and cleanup remain available when the contract exists. |
 | Phase 4 canary creation | `COMPAT_INVITE_TEST_USER_IDS` | Only exact listed Auth user UUIDs may create. Missing or empty denies every creator; clearing it never creates public access. |
 | Ask Zodiacs model call | `ASSISTANT_ENABLED=1` + key/quota config | Static/disabled experience; no model request. |
-| Registry Aura | `PUBLIC_REGISTRY_AURA_ENABLED=1` + RPCs + firewall rule | No entry point, sitemap entry, or Aura route exposure. |
+| Registry Collection | `PUBLIC_REGISTRY_COLLECTION_ENABLED=1` + RPCs + firewall rule | No entry point, sitemap entry, or Aura route exposure. |
 | Wallet chart | `PUBLIC_WALLET_CHART_ENABLED=1` + a supported provider | Endpoint returns disabled; ordinary birth chart is unaffected. |
 
 The Phase 4 candidate reads the paired flag contract above, but both values
@@ -495,7 +495,7 @@ Before any phase closes:
 
 1. Run a full build with all optional variables absent.
 2. Confirm no email capture, push prompt, Phase 4 invitation UI, model call,
-   Registry Aura entry, or wallet-chart entry leaks into the flag-off output.
+   Registry Collection entry, or wallet-chart entry leaks into the flag-off output.
 3. Confirm `/today/`, all horoscope/event/content pages, and the eventual `/ask/` fallback remain useful without JavaScript or credentials.
 4. Scan the repository and built output for secret values and server-only variable names in client bundles.
 5. Run the full release evidence listed in `PLAN.md`.

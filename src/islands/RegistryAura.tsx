@@ -14,6 +14,8 @@ import { normalizeHeldSigns } from "../lib/aura/normalize";
 import { AURA_EXAMPLE_HOLDINGS } from "../lib/aura/example";
 import {
   AuraCollectionCabinet,
+  FINISH_META,
+  FINISH_ORDER,
   principalSign,
 } from "./aura/AuraCollectionCabinet";
 import {
@@ -1265,6 +1267,60 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
           plateDate={stagePlateDate}
           headingRef={resultHeadingRef}
         />
+      </section>
+
+      <section class="aura-editions" aria-labelledby="aura-editions-title">
+        <p class="aura-editions__kicker">How the cabinet works</p>
+        <h2 id="aura-editions-title">
+          Four editions, one rule: the more of a sign an address holds, the
+          finer its casting.
+        </h2>
+        <ol class="aura-editions__ladder">
+          {FINISH_ORDER.map((finish) => (
+            <li
+              key={finish}
+              class={`aura-editions__row aura-editions__row--${finish}`}
+            >
+              <span class="aura-editions__numeral" aria-hidden="true">
+                {FINISH_META[finish].numeral}
+              </span>
+              <span class="aura-editions__name">{FINISH_META[finish].name}</span>
+              <span class="aura-editions__range">{FINISH_META[finish].range}</span>
+              <span class="aura-editions__material">
+                {FINISH_META[finish].material}
+              </span>
+            </li>
+          ))}
+        </ol>
+        <div class="aura-editions__notes">
+          <p>
+            Each seat follows one balance — its own sign. Carry a sign past
+            10,000 and its pastel medallion is set in a bronze rim sealed II;
+            past 100,000, silver sealed III; at one million, the sign itself is
+            cast in gold. Editions are read from the public record, never
+            granted: a re-check records whatever the balance has become, finer
+            or plainer.
+          </p>
+          <p>
+            Gold counts in sculptures — one for each complete million held. A
+            seat badge shows up to ×9; beyond that it reads ×9+ and the placard
+            keeps the exact count.
+          </p>
+          <p>
+            Arrangements follow presence alone: an opposite pair, an element
+            triptych, or a modality quartet completes the moment its signs are
+            represented, whatever their editions. When all twelve signs stand
+            in the cabinet, the case takes its engraved plate — The Complete
+            Twelve, recorded with the date of the reading. Few cabinets are
+            ever finished.
+          </p>
+          <p>
+            The cabinet is a dated reading of standing, not a score: it shows
+            what one public address keeps, in editions anyone can verify. The
+            sky marks on the seal are computed fresh for each visit; the
+            editions stand as recorded until the collection is read again.
+          </p>
+        </div>
       </section>
 
       {result && (

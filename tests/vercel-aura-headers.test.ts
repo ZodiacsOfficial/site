@@ -11,7 +11,7 @@ const config = JSON.parse(
   readFileSync(resolve(__dirname, '../vercel.json'), 'utf8'),
 ) as { headers?: HeaderRule[] };
 
-describe('Registry Aura response headers', () => {
+describe('Registry Collection response headers', () => {
   it('never sets Referrer-Policy: no-referrer on a page that POSTs same-origin', () => {
     // Fetch serializes the Origin header of a non-CORS POST as `null` when
     // the document's referrer policy is no-referrer, which would make
@@ -19,7 +19,7 @@ describe('Registry Aura response headers', () => {
     // `same-origin` keeps cross-origin privacy without nulling Origin.
     for (const rule of config.headers ?? []) {
       const appliesToAura =
-        rule.source === '/(.*)' || rule.source.startsWith('/registry/aura');
+        rule.source === '/(.*)' || rule.source.startsWith('/registry/collection');
       if (!appliesToAura) continue;
       for (const header of rule.headers) {
         if (header.key.toLowerCase() !== 'referrer-policy') continue;
@@ -33,7 +33,7 @@ describe('Registry Aura response headers', () => {
 
   it('keeps a dedicated Aura policy that still limits cross-origin referrers', () => {
     const auraRule = (config.headers ?? []).find((rule) =>
-      rule.source.startsWith('/registry/aura'),
+      rule.source.startsWith('/registry/collection'),
     );
     const policy = auraRule?.headers.find(
       (header) => header.key.toLowerCase() === 'referrer-policy',

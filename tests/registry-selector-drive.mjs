@@ -492,7 +492,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       initialBrowseHref === `/registry/${initialFeaturedSlug}/` && initialBrowseHref === initialNuggetHref,
       `${initialBrowseHref}/${initialNuggetHref}`,
     );
-    const auraEnabled = await desktop.locator('meta[name="zodiacs-registry-aura-enabled"]').getAttribute('content') === '1';
+    const auraEnabled = await desktop.locator('meta[name="zodiacs-registry-collection-enabled"]').getAttribute('content') === '1';
     const collectionActions = await desktop.locator('[data-registry-collection]').count();
     check(
       'Registry hero uses the approved reader-facing introduction',
@@ -507,7 +507,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
     if (auraEnabled) {
       check(
         'enabled Cabinet hero action uses the fixed Aura route',
-        await desktop.locator('[data-registry-collection]').getAttribute('href') === '/registry/aura/',
+        await desktop.locator('[data-registry-collection]').getAttribute('href') === '/registry/collection/',
       );
       const actionMaterials = await desktop.locator('.cine__cta .btn').evaluateAll((actions) => actions.map((action) => {
         const style = getComputedStyle(action);

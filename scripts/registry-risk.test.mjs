@@ -70,7 +70,7 @@ describe('Registry risk and trust copy', () => {
     expect(html).toContain('not government, regulator, wallet, or exchange approval');
     expect(html).toContain('value can fall to zero');
     expect(html).toContain('Acquisition links open independently operated third-party venues');
-    expect(html).toContain('No purchase is required to use Registry Aura');
+    expect(html).toContain('No purchase is required to use Registry Collection');
     expect(html).toContain('Verify a Zodiac');
     expect(html).toContain('Never share a seed phrase or private key');
     expect(html).toContain('origin receipts 5 Jul 2024');
@@ -143,7 +143,7 @@ describe('Registry risk and trust copy', () => {
 
   it('gives the Aura route a constrained browser connection policy', async () => {
     const config = JSON.parse(await readFile(resolve(root, 'vercel.json'), 'utf8'));
-    const route = config.headers.find((entry) => entry.source === '/registry/aura/(.*)');
+    const route = config.headers.find((entry) => entry.source === '/registry/collection/(.*)');
     const csp = route?.headers?.find((header) => header.key === 'Content-Security-Policy')?.value ?? '';
     const referrer = route?.headers?.find((header) => header.key === 'Referrer-Policy')?.value;
 

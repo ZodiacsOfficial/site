@@ -2016,7 +2016,7 @@
   }
 }
 
-/* Registry Aura foyer — a restrained gallery entrance to the collection. */
+/* Registry Collection foyer — a restrained gallery entrance to the collection. */
 .aura-page__sample-link {
   display: inline-flex;
   min-height: 44px;
@@ -2702,4 +2702,111 @@
   .aura-result__reflection {
     border-color: CanvasText;
   }
+}
+
+/* The editions ladder — how the cabinet works, read beneath the case. */
+.aura-editions {
+  margin-top: clamp(44px, 7vw, 72px);
+  padding-top: clamp(28px, 4vw, 40px);
+  border-top: 1px solid var(--hair-1);
+}
+
+.aura-editions__kicker {
+  margin: 0 0 10px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+.aura-editions h2 {
+  max-width: 30ch;
+  margin: 0 0 22px;
+  font-family: var(--font-serif);
+  font-size: var(--text-xl);
+  font-weight: 500;
+  line-height: 1.25;
+  color: var(--text);
+}
+
+.aura-editions__ladder {
+  display: grid;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  border: 1px solid var(--hair-2);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  list-style: none;
+}
+
+.aura-editions__row {
+  display: grid;
+  grid-template-columns: 52px minmax(130px, 0.6fr) minmax(150px, 0.7fr) 1.6fr;
+  gap: 8px 16px;
+  align-items: baseline;
+  padding: 14px 18px;
+}
+
+.aura-editions__row + .aura-editions__row {
+  border-top: 1px solid var(--hair-1);
+}
+
+.aura-editions__numeral {
+  font-family: var(--font-serif);
+  font-size: var(--text-lg);
+  color: var(--muted);
+}
+
+.aura-editions__row--gold .aura-editions__numeral,
+.aura-editions__row--gold .aura-editions__name {
+  color: #e0b080;
+}
+
+.aura-editions__name {
+  font-family: var(--font-serif);
+  font-size: var(--text-lg);
+  color: var(--text);
+}
+
+.aura-editions__range {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.aura-editions__material {
+  margin: 0;
+  color: var(--text-2);
+  line-height: 1.55;
+}
+
+.aura-editions__notes {
+  display: grid;
+  gap: 14px;
+  max-width: 68ch;
+  margin-top: 22px;
+}
+
+.aura-editions__notes p {
+  margin: 0;
+  color: var(--text-2);
+  line-height: 1.65;
+}
+
+@media (max-width: 700px) {
+  .aura-editions__row {
+    grid-template-columns: 40px 1fr;
+    grid-template-areas:
+      'numeral name'
+      'numeral range'
+      'numeral material';
+  }
+  .aura-editions__numeral { grid-area: numeral; }
+  .aura-editions__name { grid-area: name; }
+  .aura-editions__range { grid-area: range; }
+  .aura-editions__material { grid-area: material; }
 }

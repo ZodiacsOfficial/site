@@ -120,6 +120,8 @@ export const GET: APIRoute = async () => {
       .map((entry) => [entry.data.sign, entry] as const),
   );
   const registryAuraEntry = registryAuraSitemapEntry({
+    PUBLIC_REGISTRY_COLLECTION_ENABLED:
+      import.meta.env.PUBLIC_REGISTRY_COLLECTION_ENABLED ?? process.env.PUBLIC_REGISTRY_COLLECTION_ENABLED,
     PUBLIC_REGISTRY_AURA_ENABLED:
       import.meta.env.PUBLIC_REGISTRY_AURA_ENABLED ?? process.env.PUBLIC_REGISTRY_AURA_ENABLED,
   });

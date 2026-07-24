@@ -143,31 +143,31 @@ const REGISTRY_AURA_CHART_COPY = {
     discover: 'Your saved chart can meet the Registry records carried by a public address.',
     discoverLink: 'Read this chart beside a public address →',
     return: 'Your chart is saved.',
-    returnLink: 'Return to Registry Aura →',
+    returnLink: 'Return to Registry Collection →',
   },
   es: {
     discover: 'Tu carta guardada puede encontrarse con los registros que lleva una dirección pública.',
     discoverLink: 'Lee esta carta junto a una dirección pública →',
     return: 'Tu carta está guardada.',
-    returnLink: 'Volver a Registry Aura →',
+    returnLink: 'Volver a Registry Collection →',
   },
   pt: {
     discover: 'Seu mapa salvo pode se encontrar com os registros associados a um endereço público.',
     discoverLink: 'Leia este mapa ao lado de um endereço público →',
     return: 'Seu mapa foi salvo.',
-    returnLink: 'Voltar para Registry Aura →',
+    returnLink: 'Voltar para Registry Collection →',
   },
   fr: {
     discover: 'Votre thème enregistré peut rencontrer les notices portées par une adresse publique.',
     discoverLink: 'Lire ce thème à côté d’une adresse publique →',
     return: 'Votre thème est enregistré.',
-    returnLink: 'Retourner à Registry Aura →',
+    returnLink: 'Retourner à Registry Collection →',
   },
   it: {
     discover: 'Il tema salvato può incontrare i registri associati a un indirizzo pubblico.',
     discoverLink: 'Leggi questa carta accanto a un indirizzo pubblico →',
     return: 'Il tema è stato salvato.',
-    returnLink: 'Torna a Registry Aura →',
+    returnLink: 'Torna a Registry Collection →',
   },
 } as const satisfies Record<ReleasedLocale, {
   discover: string;
@@ -292,6 +292,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   const registryAuraLink = typeof window === 'undefined'
     ? null
     : registryAuraChartLink(window.location.search, {
+        PUBLIC_REGISTRY_COLLECTION_ENABLED: import.meta.env.PUBLIC_REGISTRY_COLLECTION_ENABLED,
         PUBLIC_REGISTRY_AURA_ENABLED: import.meta.env.PUBLIC_REGISTRY_AURA_ENABLED,
       });
   const loadEngine = useEngine();

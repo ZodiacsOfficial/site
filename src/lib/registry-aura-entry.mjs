@@ -1,9 +1,11 @@
+export const REGISTRY_COLLECTION_FLAG = 'PUBLIC_REGISTRY_COLLECTION_ENABLED';
+/** Legacy flag name, still honored so existing deployments keep working. */
 export const REGISTRY_AURA_FLAG = 'PUBLIC_REGISTRY_AURA_ENABLED';
-export const REGISTRY_AURA_PATH = '/registry/aura/';
-export const REGISTRY_AURA_RETURN_KEY = 'registry-aura';
-export const REGISTRY_AURA_META_NAME = 'zodiacs-registry-aura-enabled';
-export const REGISTRY_AURA_ENTRY_SLOT = '<!-- registry-aura-entry:slot -->';
-export const REGISTRY_AURA_HERO_SLOT = '<!-- registry-aura-hero:slot -->';
+export const REGISTRY_AURA_PATH = '/registry/collection/';
+export const REGISTRY_AURA_RETURN_KEY = 'registry-collection';
+export const REGISTRY_AURA_META_NAME = 'zodiacs-registry-collection-enabled';
+export const REGISTRY_AURA_ENTRY_SLOT = '<!-- registry-collection-entry:slot -->';
+export const REGISTRY_AURA_HERO_SLOT = '<!-- registry-collection-hero:slot -->';
 
 export const REGISTRY_AURA_ENTRY_COPY = Object.freeze({
   title: 'The Cabinet of Twelve',
@@ -16,16 +18,16 @@ export const REGISTRY_AURA_HERO_COPY = Object.freeze({
   ariaLabel: 'Open your Zodiac collection in the Cabinet of Twelve',
 });
 
-const ENTRY_START = '<!-- registry-aura-entry:start -->';
-const ENTRY_END = '<!-- registry-aura-entry:end -->';
-const ENTRY_REGION = /<!-- registry-aura-entry:slot -->(?:\n[ \t]*<!-- registry-aura-entry:start -->[\s\S]*?<!-- registry-aura-entry:end -->)?/;
-const HERO_START = '<!-- registry-aura-hero:start -->';
-const HERO_END = '<!-- registry-aura-hero:end -->';
-const HERO_REGION = /<!-- registry-aura-hero:slot -->(?:\n[ \t]*<!-- registry-aura-hero:start -->[\s\S]*?<!-- registry-aura-hero:end -->)?/;
-const META = /<meta name="zodiacs-registry-aura-enabled" content="(?:0|1)" \/>/;
+const ENTRY_START = '<!-- registry-collection-entry:start -->';
+const ENTRY_END = '<!-- registry-collection-entry:end -->';
+const ENTRY_REGION = /<!-- registry-collection-entry:slot -->(?:\n[ \t]*<!-- registry-collection-entry:start -->[\s\S]*?<!-- registry-collection-entry:end -->)?/;
+const HERO_START = '<!-- registry-collection-hero:start -->';
+const HERO_END = '<!-- registry-collection-hero:end -->';
+const HERO_REGION = /<!-- registry-collection-hero:slot -->(?:\n[ \t]*<!-- registry-collection-hero:start -->[\s\S]*?<!-- registry-collection-hero:end -->)?/;
+const META = /<meta name="zodiacs-registry-collection-enabled" content="(?:0|1)" \/>/;
 
 export function registryAuraEnabled(env = {}) {
-  return env[REGISTRY_AURA_FLAG] === '1';
+  return (env[REGISTRY_COLLECTION_FLAG] ?? env[REGISTRY_AURA_FLAG]) === '1';
 }
 
 export function registryAuraChartLink(search = '', env = {}) {
@@ -49,13 +51,13 @@ export function registryAuraChartAnalytics(context) {
 
 export function registryAuraSitemapEntry(env = {}) {
   return registryAuraEnabled(env)
-    ? { loc: REGISTRY_AURA_PATH, priority: 0.6, lastmod: '2026-07-16' }
+    ? { loc: REGISTRY_AURA_PATH, priority: 0.6, lastmod: '2026-07-24' }
     : null;
 }
 
 function renderNoJsEntry() {
   return `${ENTRY_START}
-          <article class="static-site__card static-site__card--aura" data-registry-aura-entry>
+          <article class="static-site__card static-site__card--aura" data-registry-collection-entry>
             <div>
               <h3>${REGISTRY_AURA_ENTRY_COPY.title}</h3>
               <p>${REGISTRY_AURA_ENTRY_COPY.description}</p>
@@ -85,10 +87,10 @@ export function injectRegistryAuraLanding(source, env = {}) {
     throw new Error(`Missing ${REGISTRY_AURA_META_NAME} build marker`);
   }
   if (!source.includes(REGISTRY_AURA_ENTRY_SLOT)) {
-    throw new Error('Missing Registry Aura no-JS entry slot');
+    throw new Error('Missing Registry Collection no-JS entry slot');
   }
   if (!source.includes(REGISTRY_AURA_HERO_SLOT)) {
-    throw new Error('Missing Registry Aura no-JS hero slot');
+    throw new Error('Missing Registry Collection no-JS hero slot');
   }
 
   const enabled = registryAuraEnabled(env);

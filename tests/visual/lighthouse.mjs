@@ -43,7 +43,7 @@ if (process.env.LIGHTHOUSE_INCLUDE_BASELINE === '1') {
   );
 }
 if (process.env.LIGHTHOUSE_INCLUDE_AURA === '1') {
-  routes.push({ name: 'registry-aura', path: '/registry/aura/' });
+  routes.push({ name: 'registry-aura', path: '/registry/collection/' });
 }
 const routeFilter = new Set(
   (process.env.LIGHTHOUSE_ROUTES ?? '').split(',').map((name) => name.trim()).filter(Boolean),

@@ -1,5 +1,5 @@
 /*
- * Builds exact Moon sign ingresses for Registry Aura with the full astronomy
+ * Builds exact Moon sign ingresses for Registry Collection with the full astronomy
  * engine. The client still uses the lightweight Moon only for the visit-time
  * sign; this committed file supplies exact future activation timestamps.
  *

@@ -982,16 +982,16 @@ const registryLandingPath = resolve(root, 'registry/index.html');
 const registryLandingHtml = idCache.get(registryLandingPath)
   ?? (await readFile(registryLandingPath, 'utf8'));
 const registryAuraMarker = registryLandingHtml.match(
-  /<meta name="zodiacs-registry-aura-enabled" content="([01])" \/>/,
+  /<meta name="zodiacs-registry-collection-enabled" content="([01])" \/>/,
 )?.[1];
-if (!registryAuraMarker) fail('registry/index.html: missing Registry Aura build marker');
+if (!registryAuraMarker) fail('registry/index.html: missing Registry Collection build marker');
 const registryAuraBuildEnabled = registryAuraMarker === '1';
-const registryAuraLandingLinked = /href=["']\/registry\/aura\/["']/.test(registryLandingHtml);
+const registryAuraLandingLinked = /href=["']\/registry\/collection\/["']/.test(registryLandingHtml);
 if (registryAuraLandingLinked !== registryAuraBuildEnabled) {
-  fail('registry/index.html: Registry Aura landing link does not match its build marker');
+  fail('registry/index.html: Registry Collection landing link does not match its build marker');
 }
-if (sitemapLocs.has('/registry/aura/') !== registryAuraBuildEnabled) {
-  fail('sitemap.xml: Registry Aura inclusion does not match the Registry build marker');
+if (sitemapLocs.has('/registry/collection/') !== registryAuraBuildEnabled) {
+  fail('sitemap.xml: Registry Collection inclusion does not match the Registry build marker');
 }
 
 // Coordinated indexing baseline (2026-07-19): compatibility prose remains
@@ -1000,7 +1000,7 @@ if (sitemapLocs.has('/registry/aura/') !== registryAuraBuildEnabled) {
 // (/birth-chart/someone-else/) joined the index with the cabinet release. The
 // seven-surface horoscope program contributes 84 English-only sign pages.
 // Keep exact counts so sitemap drift fails loudly.
-const registryAuraIndexed = sitemapLocs.has('/registry/aura/');
+const registryAuraIndexed = sitemapLocs.has('/registry/collection/');
 const sitemapPolicy = {
   total: 2418 + Number(registryAuraIndexed) + publishedEventPaths.size,
   compatibilityPairs: 78,
@@ -1028,7 +1028,7 @@ const indexedFamilies = [
     expected: sitemapPolicy.eventPages,
     localized: false,
   },
-  { label: 'Registry Aura', pattern: /^\/registry\/aura\/$/, expected: Number(registryAuraIndexed), localized: false },
+  { label: 'Registry Collection', pattern: /^\/registry\/collection\/$/, expected: Number(registryAuraIndexed), localized: false },
 ];
 
 requireExactSet(

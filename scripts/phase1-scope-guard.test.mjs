@@ -11,12 +11,12 @@ describe('Phase 1 protected-scope guard', () => {
   it('retains deletions and both sides of a rename', () => {
     expect(parseNameStatus([
       'D', 'src/content/guides/aries.mdx',
-      'R100', 'src/pages/registry/aura/index.astro', 'src/pages/elsewhere/aura.astro',
+      'R100', 'src/pages/registry/collection/index.astro', 'src/pages/elsewhere/aura.astro',
       'A', 'src/pages/horoscopes/index.astro',
       '',
     ].join('\0'))).toEqual([
       'src/content/guides/aries.mdx',
-      'src/pages/registry/aura/index.astro',
+      'src/pages/registry/collection/index.astro',
       'src/pages/elsewhere/aura.astro',
       'src/pages/horoscopes/index.astro',
     ]);

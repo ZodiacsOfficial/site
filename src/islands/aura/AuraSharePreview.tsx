@@ -56,7 +56,7 @@ export function AuraSharePreview({
           src={previewUrl}
           width="1080"
           height="1350"
-          alt="Preview of the Registry Aura dated collection talisman"
+          alt="Preview of the Registry Collection dated talisman"
           aria-describedby="aura-share-preview-card-description"
           draggable={false}
         />
