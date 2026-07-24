@@ -585,6 +585,10 @@ async function runChartShareExposure(browser, baseURL) {
     !/(1990-06-15|08:30|New York|America\/New_York|40\.7128|74\.006)/u.test(
       await dialog.textContent() ?? '',
     ));
+  // Let ordinary page imagery settle before closing this short-lived context.
+  // Linux Chromium otherwise reports in-flight pastel icon requests as
+  // net::ERR_ABORTED during teardown even though both prepared cards passed.
+  await page.waitForLoadState('networkidle');
   await context.close();
 }
 
