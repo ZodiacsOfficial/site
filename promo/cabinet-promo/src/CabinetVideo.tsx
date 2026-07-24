@@ -16,11 +16,11 @@ const SLOW = Easing.bezier(0.32, 0.72, 0, 1);
 /** The material waves — each seat's landing frame per edition, zodiac order. */
 const WAVES: CabinetWaves = {
   pastel: Array.from({ length: 12 }, (_, i) => 62 + i * 4),
-  bronze: Array.from({ length: 12 }, (_, i) => 132 + i * 2),
-  silver: Array.from({ length: 12 }, (_, i) => 178 + i * 2),
-  // The gold working slows as it closes: the twelfth casting lands on the accent.
-  gold: [242, 246, 250, 254, 257, 260, 263, 266, 268, 270, 272, 275],
-  plateFrame: 292,
+  bronze: Array.from({ length: 12 }, (_, i) => 168 + i * 2),
+  silver: Array.from({ length: 12 }, (_, i) => 258 + i * 2),
+  // The gold working slows as it closes: the twelfth casting lands last.
+  gold: [354, 358, 362, 366, 369, 372, 375, 378, 380, 382, 384, 387],
+  plateFrame: 404,
 };
 
 const WaveCaption = ({
@@ -103,7 +103,7 @@ export const CabinetVideo = () => {
   const portrait = height > width;
 
   // The stage fades to black before the closing line.
-  const stageFade = interpolate(frame, [345, 358], [1, 0], {
+  const stageFade = interpolate(frame, [457, 470], [1, 0], {
     extrapolateLeft: 'clamp',
     extrapolateRight: 'clamp',
   });
@@ -124,31 +124,31 @@ export const CabinetVideo = () => {
       </AbsoluteFill>
 
       <WaveCaption text="Pastel · any amount held" from={82} until={104} />
-      <WaveCaption text="Bronze · sealed II" from={136} until={158} />
-      <WaveCaption text="Silver · sealed III" from={182} until={204} />
-      <WaveCaption text="Gold · one sculpture per million held" from={250} until={300} gold />
+      <WaveCaption text="Bronze · sealed II" from={172} until={194} />
+      <WaveCaption text="Silver · sealed III" from={262} until={284} />
+      <WaveCaption text="Gold · one sculpture per million held" from={362} until={412} gold />
 
-      <Sequence name="Master flash" from={275} durationInFrames={14}>
+      <Sequence name="Master flash" from={387} durationInFrames={14}>
         <Flash peak={0.3} color="224,176,128" />
       </Sequence>
 
       <Sequence name="Card — twelve signs" from={0} durationInFrames={45}>
         <TitleCard lines={['TWELVE SIGNS.', 'ONE OFFICIAL RECORD.']} duration={45} size={86} />
       </Sequence>
-      <Sequence name="Threshold — bronze" from={106} durationInFrames={26}>
-        <ThresholdCard amount="10,000" edition="Bronze Edition · II" tint="#B08D57" duration={26} />
+      <Sequence name="Threshold — bronze" from={106} durationInFrames={60}>
+        <ThresholdCard amount={10000} edition="Bronze Edition · II" tint="#B08D57" duration={60} />
       </Sequence>
-      <Sequence name="Threshold — silver" from={152} durationInFrames={26}>
-        <ThresholdCard amount="100,000" edition="Silver Edition · III" tint="#C6CCDA" duration={26} />
+      <Sequence name="Threshold — silver" from={196} durationInFrames={60}>
+        <ThresholdCard amount={100000} edition="Silver Edition · III" tint="#C6CCDA" duration={60} />
       </Sequence>
-      <Sequence name="Threshold — gold" from={198} durationInFrames={30}>
-        <ThresholdCard amount="1,000,000" edition="Gold Sculpture · IV" tint="#E0B080" duration={30} />
+      <Sequence name="Threshold — gold" from={286} durationInFrames={66}>
+        <ThresholdCard amount={1000000} edition="Gold Sculpture · IV" tint="#E0B080" duration={66} />
       </Sequence>
 
-      <Sequence name="Few ever finish" from={362} durationInFrames={30}>
+      <Sequence name="Few ever finish" from={474} durationInFrames={30}>
         <TitleCard lines={['Few cabinets are ever finished.']} duration={30} italic size={66} />
       </Sequence>
-      <Sequence name="CTA" from={392} durationInFrames={58}>
+      <Sequence name="CTA" from={504} durationInFrames={58}>
         <Cta duration={58} />
       </Sequence>
 

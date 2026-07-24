@@ -199,25 +199,42 @@ export const Counter = ({ value, label }: { value: number; label: string }) => (
   </div>
 );
 
-/** Threshold announcement: how much you must hold for the next edition. */
+/** Threshold announcement: how much you must hold for the next edition.
+ * Paced for reading: HOLD fades up, the amount counts up and lands,
+ * then the edition pill arrives. */
 export const ThresholdCard = ({
   amount,
   edition,
   tint,
   duration,
 }: {
-  amount: string;
+  amount: number;
   edition: string;
   tint: string;
   duration: number;
 }) => {
   const frame = useCurrentFrame();
-  const inP = interpolate(frame, [0, 8], [0, 1], {
+  const holdIn = interpolate(frame, [0, 10], [0, 1], {
     extrapolateLeft: 'clamp',
     extrapolateRight: 'clamp',
-    easing: Easing.bezier(0.32, 0.72, 0, 1),
+    easing: SLOW,
   });
-  const outP = interpolate(frame, [duration - 6, duration], [1, 0], {
+  const countP = interpolate(frame, [8, 34], [0, 1], {
+    extrapolateLeft: 'clamp',
+    extrapolateRight: 'clamp',
+    easing: Easing.bezier(0.22, 1, 0.36, 1),
+  });
+  const value = Math.round(amount * countP);
+  const landPop = interpolate(frame, [32, 38, 44], [1, 1.06, 1], {
+    extrapolateLeft: 'clamp',
+    extrapolateRight: 'clamp',
+  });
+  const pillIn = interpolate(frame, [36, 48], [0, 1], {
+    extrapolateLeft: 'clamp',
+    extrapolateRight: 'clamp',
+    easing: SLOW,
+  });
+  const outP = interpolate(frame, [duration - 7, duration], [1, 0], {
     extrapolateLeft: 'clamp',
     extrapolateRight: 'clamp',
   });
@@ -238,8 +255,6 @@ export const ThresholdCard = ({
           alignItems: 'center',
           gap: 22,
           textAlign: 'center',
-          opacity: inP,
-          scale: String(0.965 + inP * 0.035),
         }}
       >
         <div
@@ -249,12 +264,25 @@ export const ThresholdCard = ({
             letterSpacing: '0.34em',
             textTransform: 'uppercase',
             color: INK_2,
+            opacity: holdIn,
+            translate: `0px ${(1 - holdIn) * 14}px`,
           }}
         >
           Hold
         </div>
-        <div style={{ fontFamily: SERIF, fontWeight: 500, fontSize: 132, lineHeight: 1, color: '#EEF1F7' }}>
-          {amount}
+        <div
+          style={{
+            fontFamily: SERIF,
+            fontWeight: 500,
+            fontSize: 132,
+            lineHeight: 1,
+            color: countP >= 1 ? '#EEF1F7' : 'rgba(238,241,247,0.82)',
+            opacity: Math.min(1, holdIn * 2),
+            scale: String(landPop),
+            fontVariantNumeric: 'tabular-nums',
+          }}
+        >
+          {new Intl.NumberFormat('en').format(value)}
         </div>
         <div
           style={{
@@ -267,6 +295,8 @@ export const ThresholdCard = ({
             letterSpacing: '0.3em',
             textTransform: 'uppercase',
             color: tint,
+            opacity: pillIn,
+            translate: `0px ${(1 - pillIn) * 16}px`,
           }}
         >
           {edition}
