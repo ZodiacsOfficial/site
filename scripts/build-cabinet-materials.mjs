@@ -1,5 +1,5 @@
 /*
- * Builds the material editions used by Registry Aura's Cabinet of Twelve:
+ * Builds the material editions used by Registry Collection's Cabinet of Twelve:
  *
  *   public/assets/cabinet-materials/{bronze,silver,gold}/{sign}.{avif,webp}
  *

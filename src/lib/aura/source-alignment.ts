@@ -151,7 +151,7 @@ function alignmentExplanation(
 }
 
 /**
- * Builds the twelve deterministic rows behind Registry Aura's source bars.
+ * Builds the twelve deterministic rows behind Registry Collection's source bars.
  * Invalid sign values are ignored, duplicate evidence is collapsed, and the
  * result always follows canonical zodiac order.
  */

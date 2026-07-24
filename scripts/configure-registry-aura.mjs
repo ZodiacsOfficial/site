@@ -9,4 +9,4 @@ const source = await readFile(registryHtmlPath, 'utf8');
 const { output, enabled } = injectRegistryAuraLanding(source, process.env);
 
 if (output !== source) await writeFile(registryHtmlPath, output, 'utf8');
-console.log(`Registry Aura landing entry: ${enabled ? 'enabled' : 'disabled'}`);
+console.log(`Registry Collection landing entry: ${enabled ? 'enabled' : 'disabled'}`);

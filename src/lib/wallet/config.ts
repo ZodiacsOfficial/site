@@ -7,7 +7,7 @@ export function walletChartEnabled(env: WalletEnvironment): boolean {
 }
 
 export function auraEnabled(env: WalletEnvironment): boolean {
-  return env.PUBLIC_REGISTRY_AURA_ENABLED === '1';
+  return (env.PUBLIC_REGISTRY_COLLECTION_ENABLED ?? env.PUBLIC_REGISTRY_AURA_ENABLED) === '1';
 }
 
 export function validWalletProviderEndpoint(value: string | undefined, env: WalletEnvironment): boolean {

@@ -2537,7 +2537,7 @@
 
     // ---- Shelf viewer (read-only public lookup) ----------------------------
     // Reads native Solana holdings through the same minimized, same-origin
-    // endpoint as Registry Aura. The browser never sends an address directly
+    // endpoint as Registry Collection. The browser never sends an address directly
     // to a public RPC or requests unrelated token accounts.
     const SOLANA_ADDRESS_RE = /^[1-9A-HJ-NP-Za-km-z]{32,44}$/;
     const ZODIAC_SOLANA_MINTS = new Map(
@@ -2737,7 +2737,7 @@
             )}
           </form> : (
             <p className="shelf__hint">
-              Live lookup is paused while Registry Aura is off. The illustrative
+              Live lookup is paused while Registry Collection is off. The illustrative
               shelf below makes no address or provider request.
             </p>
           )}
@@ -2855,13 +2855,13 @@
           <p className="idctx__copy">
             Verify an official Zodiac, understand the pattern formed by a
             public collection, or carry trusted Registry facts into another
-            product. For collectors, Registry Aura shows the twelve-sign
+            product. For collectors, Registry Collection shows the twelve-sign
             pattern at a public address; a saved chart is an optional layer.
           </p>
 
           <div className="idctx__grid">
             {cards.map((card, i) => card.kind === 'aura' ? (
-              <article className="idctx__card idctx__card--aura" key={card.t} data-registry-aura-entry>
+              <article className="idctx__card idctx__card--aura" key={card.t} data-registry-collection-entry>
                 <div className="idctx__aura-intro">
                   <span className="idctx__num">{String(i + 1).padStart(2, '0')}</span>
                   <h3 className="idctx__card-title">{card.t}</h3>
@@ -3309,7 +3309,7 @@
             <h2 className="sec__title">Read-only by design</h2>
           </div>
           <p className="sec__statement">
-            The Registry, Registry Aura, and SDK lookup/display tools are made
+            The Registry, Registry Collection, and SDK lookup/display tools are made
             for recognition and display. They read public information but do
             not request signatures, approvals, swaps, network changes, or
             transactions, and they cannot hold or move assets. Wallets, market

@@ -19,10 +19,10 @@ ${REGISTRY_AURA_HERO_SLOT}
 </div>`;
 
 const HTML = `<!doctype html><html><head>
-<meta name="zodiacs-registry-aura-enabled" content="0" />
+<meta name="zodiacs-registry-collection-enabled" content="0" />
 </head><body>${HERO}<div>${REGISTRY_AURA_ENTRY_SLOT}</div></body></html>`;
 
-describe('Registry Aura build flag', () => {
+describe('Registry Collection build flag', () => {
   it('pins the approved Cabinet hero language', () => {
     expect(REGISTRY_AURA_HERO_COPY).toEqual({
       cta: 'Open the Cabinet',
@@ -31,6 +31,7 @@ describe('Registry Aura build flag', () => {
   });
 
   it('enables only for the exact public flag value', () => {
+    expect(registryAuraEnabled({ PUBLIC_REGISTRY_COLLECTION_ENABLED: '1' })).toBe(true);
     expect(registryAuraEnabled({ PUBLIC_REGISTRY_AURA_ENABLED: '1' })).toBe(true);
     expect(registryAuraEnabled({ PUBLIC_REGISTRY_AURA_ENABLED: 'true' })).toBe(false);
     expect(registryAuraEnabled({})).toBe(false);
@@ -75,7 +76,7 @@ describe('Registry Aura build flag', () => {
   });
 
   it('refuses to stamp a landing page missing its build markers', () => {
-    const withoutMeta = HTML.replace('<meta name="zodiacs-registry-aura-enabled" content="0" />', '');
+    const withoutMeta = HTML.replace('<meta name="zodiacs-registry-collection-enabled" content="0" />', '');
     expect(() => injectRegistryAuraLanding(withoutMeta, {})).toThrow(/marker/i);
 
     const withoutEntry = HTML.replace(REGISTRY_AURA_ENTRY_SLOT, '');
@@ -85,14 +86,14 @@ describe('Registry Aura build flag', () => {
     expect(() => injectRegistryAuraLanding(withoutHero, {})).toThrow(/hero slot/i);
   });
 
-  it('allows only the named chart return context and always uses the fixed Aura path', () => {
+  it('allows only the named chart return context and always uses the fixed Collection path', () => {
     const enabled = { PUBLIC_REGISTRY_AURA_ENABLED: '1' };
-    expect(registryAuraChartLink('?return=registry-aura', enabled)).toEqual({
+    expect(registryAuraChartLink('?return=registry-collection', enabled)).toEqual({
       href: REGISTRY_AURA_PATH,
       context: 'return',
     });
     expect(registryAuraChartLink('?return=https://evil.example', enabled)).toBeNull();
-    expect(registryAuraChartLink('?return=registry-aura', {})).toBeNull();
+    expect(registryAuraChartLink('?return=registry-collection', {})).toBeNull();
   });
 
   it('distinguishes a calculator return from a chart-side discovery click', () => {
@@ -110,7 +111,7 @@ describe('Registry Aura build flag', () => {
     expect(registryAuraSitemapEntry({ PUBLIC_REGISTRY_AURA_ENABLED: '1' })).toEqual({
       loc: REGISTRY_AURA_PATH,
       priority: 0.6,
-      lastmod: '2026-07-16',
+      lastmod: '2026-07-24',
     });
   });
 });

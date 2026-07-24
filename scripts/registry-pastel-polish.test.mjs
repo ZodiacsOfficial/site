@@ -88,7 +88,7 @@ describe('registry pastel polish', () => {
     expect(registry).not.toContain('<p><a href="/thesis/">Read the Registry thesis →</a></p>');
     expect(source).toContain('id="thesis" className="phil reveal"');
     expect(source).toContain('Read the full thesis — belief is the oldest asset');
-    expect(registry).toContain('registry-aura-hero:slot');
+    expect(registry).toContain('registry-collection-hero:slot');
     expect(registry).not.toContain('cine__why');
     expect(registry).toContain('.cine__cta .btn--ghost::after { content: none; }');
   });
@@ -157,7 +157,7 @@ describe('registry pastel polish', () => {
     expect(source).toContain('className="wnav-menu__tool"');
   });
 
-  it('uses a full-row, plain-English Registry Aura feature band', async () => {
+  it('uses a full-row, plain-English Registry Collection feature band', async () => {
     const [source, registry] = await Promise.all([
       read('src/app.jsx'),
       read('public/registry/index.html'),

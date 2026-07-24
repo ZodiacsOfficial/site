@@ -311,7 +311,7 @@ jobs:
     name: Registry Aura drive
     runs-on: ubuntu-latest
     env:
-      PUBLIC_REGISTRY_AURA_ENABLED: "1"
+      PUBLIC_REGISTRY_COLLECTION_ENABLED: "1"
       SOLANA_RPC_URL: https://aura-ci.invalid/rpc
       BASE_RPC_URL: https://aura-ci.invalid/base
     steps:

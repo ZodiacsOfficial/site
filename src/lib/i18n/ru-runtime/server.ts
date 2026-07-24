@@ -84,7 +84,7 @@ export const RUSSIAN_RUNTIME = {
       discover: 'Сохранённую карту можно сопоставить с записями Реестра по публичному адресу.',
       discoverLink: 'Открыть карту рядом с публичным адресом — пока по-английски →',
       return: 'Карта сохранена.',
-      returnLink: 'Вернуться в Registry Aura — пока по-английски →',
+      returnLink: 'Вернуться в Registry Collection — пока по-английски →',
     },
     personChartTemplate: 'Карта {name}: ниже «вы» означает {name}.',
     otherSubject: {

@@ -1,4 +1,4 @@
-import { useRef } from "preact/hooks";
+import { useEffect, useRef } from "preact/hooks";
 import type { SavedChart } from "../../lib/profile/schema";
 import { trackAnalytics } from "../../lib/analytics";
 import {
@@ -83,6 +83,17 @@ export function AuraResult({
   onCloseSharePreview,
 }: AuraResultProps) {
   const shareCreateButtonRef = useRef<HTMLButtonElement>(null);
+  const closingRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    if (!sharePreviewUrl) return;
+    closingRef.current?.scrollIntoView({
+      block: "center",
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+        ? "auto"
+        : "smooth",
+    });
+  }, [sharePreviewUrl]);
   const illustrative = addressMode === "example";
   const noHoldings = composition.heldSigns.length === 0;
   const skyDate = auraDateStamp(composition.currentSky.observedAt);
@@ -133,6 +144,18 @@ export function AuraResult({
             ? "The sample’s dated seal."
             : "The collection’s dated seal."}
         />
+        {!illustrative && (
+          <div class="aura-result__seal-actions">
+            <button
+              class="btn btn--ghost"
+              type="button"
+              onClick={onCreateSharePreview}
+              disabled={shareState === "busy"}
+            >
+              {shareState === "busy" ? "Creating preview…" : "Share this collection"}
+            </button>
+          </div>
+        )}
         <section class="aura-result__personalize" aria-labelledby="aura-personalize-title">
           <div>
             <p class="aura-result__kicker">Chart echo · optional</p>
@@ -281,6 +304,7 @@ export function AuraResult({
       </section>
 
       <section
+        ref={closingRef}
         class="aura-result__closing"
         data-aura-share-disclosure={illustrative ? undefined : "true"}
         aria-labelledby="aura-closing-title"
@@ -319,7 +343,7 @@ export function AuraResult({
                   ? "Creating preview…"
                   : sharePreviewUrl
                     ? "Recreate the seal"
-                    : "Save the seal"}
+                    : "Share this collection"}
               </button>
               <button class="btn btn--ghost" type="button" onClick={onClear}>
                 Open another collection

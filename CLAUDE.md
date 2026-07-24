@@ -29,8 +29,8 @@ The CONTENT boundary survives the visual merge:
    language or links.** The sanctioned cross-links into the wing are the
    CollectBand on sign guides (EN + ES), the records line on the birth-chart
    result (`ChartCalculator`, full mode), and the contextual saved-chart link
-   to Registry Aura when `PUBLIC_REGISTRY_AURA_ENABLED=1` — all in the records
-   register, never market language. Two carve-outs: `src/pages/registry/aura/`
+   to Registry Collection when `PUBLIC_REGISTRY_COLLECTION_ENABLED=1` — all in the records
+   register, never market language. Two carve-outs: `src/pages/registry/collection/`
    is itself a Registry surface (records register, protective negations only,
    no acquisition links), and the legal pages (Privacy, Terms, Disclosure, all
    locales) carry the wallet/provider/market-risk disclosures that the Registry
@@ -58,7 +58,7 @@ owns that page.
 - `public/registry/index.html` Aura marker region (meta flag + no-JS entry
   between the `registry-aura-entry` comments) ← stamped by
   `scripts/configure-registry-aura.mjs` (predev/prebuild) and
-  `scripts/build-app.mjs` from `PUBLIC_REGISTRY_AURA_ENABLED` in the SHELL
+  `scripts/build-app.mjs` from `PUBLIC_REGISTRY_COLLECTION_ENABLED` in the SHELL
   env (plain-node generators don't read `.env` files — set the flag in the
   shell or the Astro/site halves will skew, which `check-dist` fails on).
   The committed state is always flag-OFF (`content="0"`, no entry): the CI

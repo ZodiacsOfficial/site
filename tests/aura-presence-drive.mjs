@@ -306,7 +306,7 @@ async function verifyNoJavaScriptSample(browser, baseURL) {
     colorScheme: 'dark',
   });
   const page = await context.newPage();
-  await page.goto(`${baseURL}/registry/aura/`, { waitUntil: 'domcontentloaded' });
+  await page.goto(`${baseURL}/registry/collection/`, { waitUntil: 'domcontentloaded' });
 
   assert.equal(
     normalized(await page.locator('.aura-page__hero .kicker').innerText()).toLowerCase(),
@@ -375,7 +375,7 @@ async function verifySampleAndLiveCollection(browser, baseURL) {
     });
   });
 
-  await page.goto(`${baseURL}/registry/aura/`, { waitUntil: 'networkidle' });
+  await page.goto(`${baseURL}/registry/collection/`, { waitUntil: 'networkidle' });
   await page.screenshot({ path: resolve('/tmp', 'zodiacs-registry-aura-cabinet-top.png') });
   assert.equal(await stageCabinet(page).locator('[data-aura-cabinet-sign]').count(), 12);
   // The sample opens on its principal work: the Gold Masterwork, not the
@@ -407,7 +407,7 @@ async function verifySampleAndLiveCollection(browser, baseURL) {
     await page.locator('.aura-result__room--talisman [data-aura-talisman-chart-echo]').count() > 0,
     'the finished sample should demonstrate the optional private echo layer',
   );
-  assert.equal(await page.getByRole('button', { name: 'Save the seal' }).count(), 0);
+  assert.equal(await page.getByRole('button', { name: 'Share this collection' }).count(), 0);
   await assertHouseVoice(page, 'the opened sample');
 
   await page.getByRole('button', { name: 'Open my collection' }).click();
@@ -515,7 +515,7 @@ async function verifySampleAndLiveCollection(browser, baseURL) {
     /never the address/i,
   );
   await page.evaluate(() => { globalThis.__auraPaintedText = []; });
-  const saveButton = shareSection.getByRole('button', { name: 'Save the seal', exact: true });
+  const saveButton = shareSection.getByRole('button', { name: 'Share this collection', exact: true });
   await saveButton.waitFor({ state: 'visible' });
   assert.equal(await saveButton.isEnabled(), true);
   await saveButton.click();
@@ -561,7 +561,7 @@ async function verifyReducedMotion(browser, baseURL) {
     colorScheme: 'dark',
   });
   const page = await context.newPage();
-  await page.goto(`${baseURL}/registry/aura/`, { waitUntil: 'networkidle' });
+  await page.goto(`${baseURL}/registry/collection/`, { waitUntil: 'networkidle' });
 
   await assertSettledEditions(stageCabinet(page), 'the reduced-motion static sample');
 
@@ -603,7 +603,7 @@ async function verifyRestoredCabinet(browser, baseURL) {
     await route.abort();
   });
 
-  await page.goto(`${baseURL}/registry/aura/`, { waitUntil: 'networkidle' });
+  await page.goto(`${baseURL}/registry/collection/`, { waitUntil: 'networkidle' });
   await waitForStageKicker(page, 'Collection restored');
   const cabinet = stageCabinet(page);
   assert.match(await page.locator('#aura-status').innerText(), /restored from this device/i);
@@ -625,7 +625,7 @@ async function verifyDesktopFold(browser, baseURL) {
     colorScheme: 'dark',
   });
   const page = await context.newPage();
-  await page.goto(`${baseURL}/registry/aura/`, { waitUntil: 'networkidle' });
+  await page.goto(`${baseURL}/registry/collection/`, { waitUntil: 'networkidle' });
 
   // The thesis and the case itself both land inside the first screen.
   const headline = await page.locator('.aura-page__hero h1').boundingBox();

@@ -55,7 +55,7 @@ interface FinishMeta {
   material: string;
 }
 
-const FINISH_ORDER: readonly AuraCabinetFinish[] = [
+export const FINISH_ORDER: readonly AuraCabinetFinish[] = [
   'pastel',
   'bronze',
   'silver',
