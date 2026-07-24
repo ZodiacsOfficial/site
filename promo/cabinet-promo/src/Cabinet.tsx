@@ -5,7 +5,6 @@ const SLOW = Easing.bezier(0.32, 0.72, 0, 1);
 const OVERSHOOT = Easing.bezier(0.34, 1.56, 0.64, 1);
 
 const BRONZE_RIM = '#B08D57';
-const SILVER_RIM = '#C6CCDA';
 const GOLD_RIM = '#E0B080';
 
 export interface CabinetWaves {
@@ -107,10 +106,12 @@ export const Cabinet = ({ waves }: { waves: CabinetWaves }) => {
           });
           const isGold = finish === 'gold';
           const isSilver = finish === 'silver';
-          const rim = finish === 'bronze' ? BRONZE_RIM : isSilver ? SILVER_RIM : isGold ? GOLD_RIM : null;
-          // Silver is a bigger promotion: its own stronger pop and a glint sweep.
+          // The medallion keeps its bronze circle ring from silver onward; the
+          // silver promotion lives in the case: the niche becomes a platinum bar.
+          const circleRim = finish === 'bronze' || isSilver ? BRONZE_RIM : null;
           const silverPop = recastPop(frame, waves.silver[index]);
-          const glintP = interpolate(frame, [waves.silver[index], waves.silver[index] + 18], [0, 1], {
+          // A specular hotspot travels along the platinum frame after the recast.
+          const sheenP = interpolate(frame, [waves.silver[index], waves.silver[index] + 34], [0, 1], {
             extrapolateLeft: 'clamp',
             extrapolateRight: 'clamp',
             easing: SLOW,
@@ -136,29 +137,45 @@ export const Cabinet = ({ waves }: { waves: CabinetWaves }) => {
                 alignItems: 'center',
                 justifyContent: 'center',
                 gap: 8,
-                border: `1.5px solid ${finish === 'reserved' ? HAIR_SOFT : rim ? `${rim}66` : HAIR}`,
+                border: isSilver
+                  ? 'none'
+                  : `1.5px solid ${finish === 'reserved' ? HAIR_SOFT : isGold ? `${GOLD_RIM}66` : circleRim ? `${circleRim}66` : HAIR}`,
                 borderRadius: 18,
+                padding: isSilver ? 6 : 0,
                 background: isGold
                   ? `radial-gradient(circle at 50% 42%, rgba(224,176,128,${0.1 + bloom * 0.08}), transparent 72%)`
                   : isSilver
-                    ? `radial-gradient(circle at 50% 42%, rgba(221,227,236,${0.08 + silverPop * 0.22}), transparent 72%)`
+                    // Brushed platinum bar with a traveling specular hotspot.
+                    ? 'linear-gradient(118deg, #79808d 0%, #d8dee8 22%, #a6adba 40%, #f2f5fa 58%, #9aa1ae 78%, #c9d0da 100%)'
                     : 'rgba(10,12,17,0.5)',
+                backgroundSize: isSilver ? '260% 260%' : undefined,
+                backgroundPosition: isSilver ? `${sheenP * 100}% ${sheenP * 100}%` : undefined,
                 boxShadow: isGold
                   ? `0 0 ${24 + bloom * 30}px rgba(224,176,128,0.22)`
                   : isSilver
-                    ? `0 0 ${18 + silverPop * 30}px rgba(221,227,236,0.3)`
+                    ? `0 0 ${16 + silverPop * 30}px rgba(221,227,236,0.35), inset 0 1px 2px rgba(255,255,255,0.5)`
                     : 'none',
               }}
             >
+              {isSilver && (
+                <div
+                  style={{
+                    position: 'absolute',
+                    inset: 6,
+                    borderRadius: 13,
+                    background: 'linear-gradient(180deg, #0B0D12, #10131b)',
+                  }}
+                />
+              )}
               <span
                 style={{
                   position: 'absolute',
-                  top: 10,
-                  left: 14,
+                  top: isSilver ? 14 : 10,
+                  left: isSilver ? 18 : 14,
                   fontFamily: MONO,
                   fontSize: 17,
                   letterSpacing: '0.12em',
-                  color: 'rgba(142,150,171,0.7)',
+                  color: isSilver ? 'rgba(221,227,236,0.85)' : 'rgba(142,150,171,0.7)',
                 }}
               >
                 {`Nº ${String(index + 1).padStart(2, '0')}`}
@@ -211,54 +228,24 @@ export const Cabinet = ({ waves }: { waves: CabinetWaves }) => {
                   />
                 ) : (
                   <>
-                    <div
+                    <Img
+                      src={staticFile(`${sign.slug}.webp`)}
                       style={{
                         position: 'relative',
                         width: artSize * 0.82,
                         height: artSize * 0.82,
                         borderRadius: '50%',
-                        overflow: 'hidden',
                         opacity: arriveP,
                         scale: String(
                           (1.45 - arriveP * 0.45)
-                          * (1 + (isSilver ? silverPop * 0.16 : pops * 0.08)),
+                          * (1 + (isSilver ? silverPop * 0.12 : pops * 0.08)),
                         ),
-                        boxShadow: isSilver
-                          ? '0 0 0 5px #DDE3EC, 0 0 0 9px rgba(198,204,218,0.38), 0 0 32px rgba(221,227,236,0.65)'
-                          : rim
-                            ? `0 0 0 4px ${rim}, 0 0 16px ${rim}44`
-                            : 'none',
+                        boxShadow: circleRim
+                          ? `0 0 0 4px ${circleRim}, 0 0 16px ${circleRim}44`
+                          : 'none',
                       }}
-                    >
-                      <Img
-                        src={staticFile(`${sign.slug}.webp`)}
-                        style={{
-                          width: '100%',
-                          height: '100%',
-                          filter: isSilver
-                            ? 'saturate(0.22) brightness(1.24) contrast(1.08)'
-                            : finish === 'bronze'
-                              ? 'sepia(0.5) saturate(0.85) brightness(0.98)'
-                              : 'none',
-                        }}
-                      />
-                      {isSilver && glintP < 1 && (
-                        <div
-                          style={{
-                            position: 'absolute',
-                            top: '-50%',
-                            left: 0,
-                            width: '55%',
-                            height: '200%',
-                            rotate: '22deg',
-                            translate: `${-100 + glintP * 340}% 0px`,
-                            background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.9), transparent)',
-                            opacity: 0.9 - glintP * 0.5,
-                          }}
-                        />
-                      )}
-                    </div>
-                    {rim && (
+                    />
+                    {circleRim && (
                       <span
                         style={{
                           position: 'absolute',
@@ -270,14 +257,14 @@ export const Cabinet = ({ waves }: { waves: CabinetWaves }) => {
                           alignItems: 'center',
                           justifyContent: 'center',
                           borderRadius: '50%',
-                          border: isSilver ? '2px solid #EEF1F7' : `2px solid ${rim}`,
+                          border: isSilver ? '2px solid #EEF1F7' : `2px solid ${circleRim}`,
                           background: isSilver
                             ? 'linear-gradient(160deg, #EEF1F7, #B8C0CF)'
                             : '#0A0C11',
                           fontFamily: SERIF,
                           fontWeight: 500,
                           fontSize: isSilver ? 18 : 16,
-                          color: isSilver ? '#0A0C11' : rim,
+                          color: isSilver ? '#0A0C11' : circleRim,
                           boxShadow: isSilver ? '0 0 14px rgba(221,227,236,0.6)' : 'none',
                           scale: String(1 + (isSilver ? silverPop * 0.4 : pops * 0.25)),
                         }}
@@ -289,11 +276,12 @@ export const Cabinet = ({ waves }: { waves: CabinetWaves }) => {
                 )}
               </div>
 
-              <span style={{ fontFamily: SERIF, fontWeight: 500, fontSize: 27, color: '#EEF1F7', opacity: finish === 'reserved' ? 0.3 : 1 }}>
+              <span style={{ position: 'relative', fontFamily: SERIF, fontWeight: 500, fontSize: 27, color: '#EEF1F7', opacity: finish === 'reserved' ? 0.3 : 1 }}>
                 {sign.name}
               </span>
               <span
                 style={{
+                  position: 'relative',
                   fontFamily: MONO,
                   fontSize: 15,
                   letterSpacing: '0.2em',
