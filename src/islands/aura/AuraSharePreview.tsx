@@ -1,7 +1,25 @@
 import type { RefObject } from "preact";
 import { useEffect, useRef } from "preact/hooks";
 
+/** Copy that follows the card being reviewed, so the dialog never mislabels it. */
+const COPY = {
+  seal: {
+    title: "Review your talisman",
+    note: "The represented signs, their material editions, and the dated sky.",
+    alt: "Preview of the Registry Collection dated talisman",
+    id: "aura-share-preview",
+  },
+  cabinet: {
+    title: "Review your cabinet",
+    note: "The twelve seats, the editions this collection earned, and the places still reserved.",
+    alt: "Preview of the Cabinet of Twelve collection card",
+    id: "aura-cabinet-preview",
+  },
+} as const;
+
 interface AuraSharePreviewProps {
+  /** Which card is under review; defaults to the dated talisman. */
+  kind?: keyof typeof COPY;
   previewUrl: string;
   shareSupported: boolean;
   accessibleDescription: string;
@@ -13,6 +31,7 @@ interface AuraSharePreviewProps {
 }
 
 export function AuraSharePreview({
+  kind = "seal",
   previewUrl,
   shareSupported,
   accessibleDescription,
@@ -23,6 +42,7 @@ export function AuraSharePreview({
   onClose,
 }: AuraSharePreviewProps) {
   const headingRef = useRef<HTMLHeadingElement>(null);
+  const copy = COPY[kind];
 
   useEffect(() => {
     headingRef.current?.focus();
@@ -36,28 +56,26 @@ export function AuraSharePreview({
   return (
     <section
       class="aura-share-preview"
-      aria-labelledby="aura-share-preview-title"
-      aria-describedby="aura-share-preview-note"
+      aria-labelledby={`${copy.id}-title`}
+      aria-describedby={`${copy.id}-note`}
     >
       <header>
         <p class="aura-result__kicker">Artwork preview</p>
-        <h4 id="aura-share-preview-title" ref={headingRef} tabIndex={-1}>
-          Review your talisman
+        <h4 id={`${copy.id}-title`} ref={headingRef} tabIndex={-1}>
+          {copy.title}
         </h4>
-        <p id="aura-share-preview-note">
-          The represented signs, their material editions, and the dated sky.
-        </p>
+        <p id={`${copy.id}-note`}>{copy.note}</p>
       </header>
       <figure>
-        <p id="aura-share-preview-card-description" class="sr-only">
+        <p id={`${copy.id}-card-description`} class="sr-only">
           {accessibleDescription}
         </p>
         <img
           src={previewUrl}
           width="1080"
           height="1350"
-          alt="Preview of the Registry Collection dated talisman"
-          aria-describedby="aura-share-preview-card-description"
+          alt={copy.alt}
+          aria-describedby={`${copy.id}-card-description`}
           draggable={false}
         />
       </figure>

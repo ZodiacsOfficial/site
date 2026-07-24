@@ -1,6 +1,6 @@
 import { Img, spring, staticFile, useVideoConfig } from 'remotion';
 import { HAIR, HAIR_SOFT, INK_2, MONO, SERIF } from '../theme';
-import { LEAF, LEAF_BAR, LEAF_BRIGHT, LEAF_INK } from './leaf';
+import { LEAF, LEAF_BAR, LEAF_BRIGHT, LEAF_INK } from './palette';
 
 export type SeatEdition = 'reserved' | 'pastel' | 'bronze' | 'silver' | 'gold' | 'gilded';
 

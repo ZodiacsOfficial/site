@@ -153,7 +153,7 @@ export function AuraResult({
               onClick={onCreateSharePreview}
               disabled={shareState === "busy"}
             >
-              {shareState === "busy" ? "Creating preview…" : "Share this collection"}
+              {shareState === "busy" ? "Creating preview…" : "Share the dated seal"}
             </button>
           </div>
         )}
@@ -343,8 +343,8 @@ export function AuraResult({
                 {shareState === "busy"
                   ? "Creating preview…"
                   : sharePreviewUrl
-                    ? "Recreate the seal"
-                    : "Share this collection"}
+                    ? "Rebuild the seal"
+                    : "Share the dated seal"}
               </button>
               <button class="btn btn--ghost" type="button" onClick={onClear}>
                 Open another collection

@@ -1,6 +1,6 @@
 import { interpolate } from 'remotion';
-import { HAIR, MONO } from '../theme';
-import { LEAF_INK, LEAF_PLATE } from './leaf';
+import { MONO } from '../theme';
+import { LEAF_INK, LEAF_PLATE } from './palette';
 
 /**
  * The cabinet shell.
@@ -18,8 +18,13 @@ export const Case: React.FC<{
   plate?: number;
   /** The pass is laid leaf over one seat, but milk over twelve — hence weaker. */
   sweepStrength?: number;
-}> = ({ gild, sweep, pad, children, plate = 0, sweepStrength = 0.6 }) => {
+  /** 0–1 first light, before any work has landed. The case exists first. */
+  wake?: number;
+}> = ({ gild, sweep, pad, children, plate = 0, sweepStrength = 0.6, wake = 1 }) => {
   const corner = pad * 1.1;
+  const cornerInk = gild > 0
+    ? `rgba(255,242,196,${0.24 + 0.44 * gild})`
+    : `rgba(234,216,170,${0.42 * wake})`;
   return (
     <div
       style={{
@@ -30,7 +35,7 @@ export const Case: React.FC<{
         gap: pad * 0.7,
         padding: pad,
         borderRadius: pad * 0.9,
-        border: `2px solid ${gild > 0 ? `rgba(232,196,106,${0.22 + gild * 0.5})` : HAIR}`,
+        border: `2px solid ${gild > 0 ? `rgba(232,196,106,${0.22 + gild * 0.5})` : `rgba(198,204,218,${0.06 + wake * 0.16})`}`,
         background:
           gild > 0
             ? `radial-gradient(118% 88% at 50% 0%, rgba(146,108,40,${0.06 + gild * 0.16}), transparent 62%), linear-gradient(180deg, rgba(198,204,218,0.03), rgba(198,204,218,0.006) 70%)`
@@ -43,8 +48,8 @@ export const Case: React.FC<{
       }}
     >
       {/* Corner marks, stepped inside the filet so they read as corners
-          rather than as a doubled line. */}
-      {gild > 0 &&
+          rather than as a doubled line. Present from first light, gilt later. */}
+      {(gild > 0 || wake > 0) &&
         ([
           { top: pad * 0.4, left: pad * 0.4, borderTop: true, borderLeft: true },
           { bottom: pad * 0.4, right: pad * 0.4, borderBottom: true, borderRight: true },
@@ -59,10 +64,10 @@ export const Case: React.FC<{
               left: 'left' in mark ? mark.left : undefined,
               right: 'right' in mark ? mark.right : undefined,
               bottom: 'bottom' in mark ? mark.bottom : undefined,
-              borderTop: 'borderTop' in mark ? `1.5px solid rgba(255,242,196,${0.62 * gild})` : undefined,
-              borderLeft: 'borderLeft' in mark ? `1.5px solid rgba(255,242,196,${0.62 * gild})` : undefined,
-              borderRight: 'borderRight' in mark ? `1.5px solid rgba(255,242,196,${0.62 * gild})` : undefined,
-              borderBottom: 'borderBottom' in mark ? `1.5px solid rgba(255,242,196,${0.62 * gild})` : undefined,
+              borderTop: 'borderTop' in mark ? `1.5px solid ${cornerInk}` : undefined,
+              borderLeft: 'borderLeft' in mark ? `1.5px solid ${cornerInk}` : undefined,
+              borderRight: 'borderRight' in mark ? `1.5px solid ${cornerInk}` : undefined,
+              borderBottom: 'borderBottom' in mark ? `1.5px solid ${cornerInk}` : undefined,
             }}
           />
         ))}

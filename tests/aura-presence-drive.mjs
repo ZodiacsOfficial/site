@@ -407,7 +407,7 @@ async function verifySampleAndLiveCollection(browser, baseURL) {
     await page.locator('.aura-result__room--talisman [data-aura-talisman-chart-echo]').count() > 0,
     'the finished sample should demonstrate the optional private echo layer',
   );
-  assert.equal(await page.getByRole('button', { name: 'Share this collection' }).count(), 0);
+  assert.equal(await page.getByRole('button', { name: 'Share the dated seal' }).count(), 0);
   await assertHouseVoice(page, 'the opened sample');
 
   await page.getByRole('button', { name: 'Open my collection' }).click();
@@ -515,7 +515,7 @@ async function verifySampleAndLiveCollection(browser, baseURL) {
     /never the address/i,
   );
   await page.evaluate(() => { globalThis.__auraPaintedText = []; });
-  const saveButton = shareSection.getByRole('button', { name: 'Share this collection', exact: true });
+  const saveButton = shareSection.getByRole('button', { name: 'Share the dated seal', exact: true });
   await saveButton.waitFor({ state: 'visible' });
   assert.equal(await saveButton.isEnabled(), true);
   await saveButton.click();

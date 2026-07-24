@@ -15,35 +15,36 @@ Promo films for zodiacs.org — the Registry wing's Cabinet of Twelve.
 
 | id | size | length | what it is |
 | --- | --- | --- | --- |
-| `TheTenth` | 1080×1080 | 13.1s | **The edition V campaign. Square is the X master.** |
-| `TheTenthVertical` | 1080×1920 | 13.1s | Stories / Reels cut of the same film |
-| `TheTenthWide` | 1920×1080 | 13.1s | Landscape cut; uses the site's six-column case |
+| `TheCabinet` | 1080×1080 | 13.7s | **The campaign film. Square is the X master.** |
+| `TheCabinetVertical` | 1080×1920 | 13.7s | Stories / Reels cut of the same film |
+| `TheCabinetWide` | 1920×1080 | 13.7s | Landscape cut; uses the site's six-column case |
 | `CabinetPromo` | 1080×1920 | 18.8s | The original ladder explainer (I→IV) |
 | `CabinetPromoWide` | 1920×1080 | 18.8s | Landscape cut of the explainer |
 
-### "The Tenth"
+### "The Cabinet of Twelve"
 
-The explainer walks the ladder from I to IV. It teaches, but teaching is not
-wanting — so this film is built on one dramatic idea instead:
+The subject is the cabinet, not any one edition:
 
-> A tally climbs to nine. Everything stops. Then the tenth sculpture gilds the
-> entire case.
+> Twelve numbered niches stand empty. A public record is read. The seats an
+> address has earned light up in their materials — and four stay reserved.
 
-Rules the cut obeys, all of them written for a muted, scrolling timeline:
+Then the ladder is read **in place** across the filled case: I to V, each rung
+lighting only the seats that reached it, so the system explains itself without
+ever cutting away from the product. The gilding is the last rung, given one
+beat, not the plot.
 
-- **Open already lit.** No title card. Frame zero is a finished composition —
-  sculpture, tally, count — because X shows the opening frame as the poster.
-- **One idea, stated once.** Every beat serves the tenth. Nothing explains the
-  bronze and silver rungs; the site does that.
-- **Hold on nine.** Nearly two seconds where the picture and the score both
-  stop. Nothing else in the feed stops moving, which is the whole point.
-- **Comparative scarcity.** The payoff is not the gold — it is eleven dark
-  seats and one lit one. That frame, and the `10,000,000` stamp, are built to
-  survive being screenshotted on their own.
+Rules the cut obeys:
+
+- **Museum register.** Void black, EB Garamond, long holds, silence as a
+  device. Restraint is the brand; nothing here shouts.
+- **Never leave the cabinet.** No explainer cards. That is also what keeps the
+  product on screen for twelve of the thirteen seconds.
+- **Four seats stay empty.** The reserved niches are the engine; a completed
+  case would be a nicer picture and a worse advertisement.
 - **Read it silent.** All meaning lives in image and type.
 
-Timing lives in one place, `src/tenth/leaf.ts`, and the score is written
-against the same frame numbers.
+Timing and the displayed standing live in one place, `src/cabinet/palette.ts`,
+and the score is written against the same frame numbers.
 
 ## Audio
 
@@ -51,8 +52,8 @@ Both cues are pure-math synthesis — no samples, no third-party audio, nothing
 to clear. The voices are shared in `scripts/synth.mjs`; each cue is a script.
 
 ```console
-node scripts/make-audio.mjs        # public/score.wav  — Cabinet promo
-node scripts/make-tenth-audio.mjs  # public/tenth.wav  — The Tenth
+node scripts/make-audio.mjs          # public/score.wav    — Cabinet promo
+node scripts/make-cabinet-audio.mjs  # public/cabinet.wav  — The Cabinet of Twelve
 ```
 
 Deterministic: the same script always writes the same bytes.
@@ -60,9 +61,9 @@ Deterministic: the same script always writes the same bytes.
 ## Rendering the campaign
 
 ```console
-npx remotion render TheTenth         out/the-tenth-square.mp4
-npx remotion render TheTenthVertical out/the-tenth-vertical.mp4
-npx remotion render TheTenthWide     out/the-tenth-wide.mp4
+npx remotion render TheCabinet         out/cabinet-square.mp4
+npx remotion render TheCabinetVertical out/cabinet-vertical.mp4
+npx remotion render TheCabinetWide     out/cabinet-wide.mp4
 ```
 
 ## Commands
