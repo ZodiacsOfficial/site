@@ -479,6 +479,29 @@ async function runInvitationAndReturn(browser, baseURL) {
       && await settled.locator('.syn-sendback').evaluate((node) => (
         Boolean(node.compareDocumentPosition(document.querySelector('.syn-conversion')) & Node.DOCUMENT_POSITION_FOLLOWING)
       )));
+  for (const width of [360, 390, 781, 1280]) {
+    await page.setViewportSize({ width, height: width < 720 ? 844 : 900 });
+    const geometry = await page.evaluate(() => {
+      const core = document.querySelector('.syn-conversion .next-action__core');
+      const copy = document.querySelector('.syn-conversion .next-action__copy');
+      const actions = document.querySelector('.syn-conversion .next-action__actions');
+      return {
+        clientWidth: document.documentElement.clientWidth,
+        scrollWidth: document.documentElement.scrollWidth,
+        coreWidth: core?.getBoundingClientRect().width ?? 0,
+        copyWidth: copy?.getBoundingClientRect().width ?? 0,
+        actionsWidth: actions?.getBoundingClientRect().width ?? 0,
+      };
+    });
+    check(`completed invitation has no horizontal overflow at ${width}px`,
+      geometry.scrollWidth === geometry.clientWidth,
+      JSON.stringify(geometry));
+    check(`completed invitation keeps the conversion copy full-width at ${width}px`,
+      geometry.coreWidth > 0
+        && geometry.copyWidth >= geometry.coreWidth * 0.75
+        && geometry.actionsWidth >= geometry.coreWidth * 0.75,
+      JSON.stringify(geometry));
+  }
   const invitationBigThree = settled.locator('[data-share-card-action="big-three"]');
   await invitationBigThree.waitFor({ state: 'visible', timeout: 30_000 });
   await page.waitForFunction(() => {

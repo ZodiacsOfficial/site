@@ -1076,14 +1076,25 @@
 }
 /* This card lives in the narrow calculator column even on large screens;
    stack its controls so two secondary labels never squeeze the explanation. */
-.syn__next-action .next-action__core { grid-template-columns: minmax(0, 1fr); gap: 22px; }
-.syn__next-action .next-action__actions {
+.syn__next-action .next-action__core,
+.syn-sendback .next-action__core,
+.syn-conversion .next-action__core {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 22px;
+}
+.syn__next-action .next-action__actions,
+.syn-sendback .next-action__actions,
+.syn-conversion .next-action__actions {
   justify-items: start;
   min-width: 0;
   width: 100%;
 }
 .syn__next-action .next-action__primary,
-.syn__next-action .next-action__secondary { justify-content: flex-start; }
+.syn__next-action .next-action__secondary,
+.syn-sendback .next-action__primary,
+.syn-sendback .next-action__secondary,
+.syn-conversion .next-action__primary,
+.syn-conversion .next-action__secondary { justify-content: flex-start; }
 .syn__save-complete {
   display: flex;
   align-items: center;
