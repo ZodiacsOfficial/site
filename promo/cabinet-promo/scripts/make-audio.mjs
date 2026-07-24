@@ -95,6 +95,16 @@ function shimmer(t0, { gain = 0.07, dur = 3.6 } = {}) {
   }
 }
 
+/** Soft bell for a threshold card: gentle strike, long ring. */
+function bell(t0, f, { gain = 0.06 } = {}) {
+  for (let k = 0; k < 1.6 * SR; k++) {
+    const t = k / SR;
+    const env = Math.min(1, t / 0.01) * Math.exp(-t * 2.6) * gain;
+    const v = Math.sin(2 * Math.PI * f * t) + 0.4 * Math.sin(2 * Math.PI * f * 2.76 * t) * Math.exp(-t * 5);
+    add(t0 + t, v * env * 0.9, v * env);
+  }
+}
+
 // ---- Notes ----
 const D2 = 73.42, A2 = 110, D3 = 146.83, F3 = 174.61, A3 = 220, D4 = 293.66, F4 = 349.23, E4 = 329.63;
 const Bb2 = 116.54, Bb3 = 233.08;
@@ -106,6 +116,10 @@ pad(0.0, 3.4, [D2, A2, D3, F3], { gain: 0.07, attack: 1.4 });
 
 // Build (3–7s): pulse + ostinato + fuller Dm, lift to Bb.
 for (let b = 0; b < 7; b++) pulse(3.0 + b * 0.577, D2, { gain: 0.14 + b * 0.012 });
+// Threshold cards: HOLD 10,000 / 100,000 / 1,000,000 — soft ascending bells.
+bell(3.55, 587.33);
+bell(5.08, 659.25, { gain: 0.065 });
+bell(6.62, 698.46, { gain: 0.075 });
 pad(3.2, 5.4, [D3, F3, A3, D4], { gain: 0.075 });
 pad(5.2, 7.05, [Bb2, D3, F3, Bb3], { gain: 0.085 });
 const ARP = [D4, F4, A3, D4, E4, F4, A4, F4];

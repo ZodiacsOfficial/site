@@ -10,7 +10,7 @@ import {
 } from 'remotion';
 import './fonts';
 import { Cabinet, type CabinetWaves } from './Cabinet';
-import { Flash, Ground, TitleCard } from './overlays';
+import { Flash, Ground, ThresholdCard, TitleCard } from './overlays';
 import { INK_1, INK_2, MONO, SERIF, VOID } from './theme';
 
 const SLOW = Easing.bezier(0.32, 0.72, 0, 1);
@@ -18,7 +18,7 @@ const SLOW = Easing.bezier(0.32, 0.72, 0, 1);
 /** The material waves — each seat's landing frame per edition, zodiac order. */
 const WAVES: CabinetWaves = {
   pastel: Array.from({ length: 12 }, (_, i) => 62 + i * 4),
-  bronze: Array.from({ length: 12 }, (_, i) => 148 + i * 2),
+  bronze: Array.from({ length: 12 }, (_, i) => 132 + i * 2),
   silver: Array.from({ length: 12 }, (_, i) => 178 + i * 2),
   // The gold working slows as it closes: the twelfth casting lands on the accent.
   gold: [242, 246, 250, 254, 257, 260, 263, 266, 268, 270, 272, 275],
@@ -125,10 +125,10 @@ export const CabinetVideo = () => {
         <Cabinet waves={WAVES} />
       </AbsoluteFill>
 
-      <WaveCaption text="Pastel · under 10,000 held" from={104} until={144} />
-      <WaveCaption text="Bronze · from 10,000 held" from={150} until={177} />
-      <WaveCaption text="Silver · from 100,000 held" from={180} until={208} />
-      <WaveCaption text="Gold Sculpture · from 1,000,000 held" from={250} until={300} gold />
+      <WaveCaption text="Pastel · any amount held" from={82} until={104} />
+      <WaveCaption text="Bronze · sealed II" from={136} until={158} />
+      <WaveCaption text="Silver · sealed III" from={182} until={204} />
+      <WaveCaption text="Gold · one sculpture per million held" from={250} until={300} gold />
 
       <Sequence name="Master flash" from={275} durationInFrames={14}>
         <Flash peak={0.3} color="224,176,128" />
@@ -137,11 +137,14 @@ export const CabinetVideo = () => {
       <Sequence name="Card — twelve signs" from={0} durationInFrames={45}>
         <TitleCard lines={['TWELVE SIGNS.', 'ONE OFFICIAL RECORD.']} duration={45} size={86} />
       </Sequence>
-      <Sequence name="Card — recast" from={115} durationInFrames={30}>
-        <TitleCard lines={['EVERY SEAT', 'CAN BE RECAST.']} duration={30} size={86} />
+      <Sequence name="Threshold — bronze" from={106} durationInFrames={26}>
+        <ThresholdCard amount="10,000" edition="Bronze Edition · II" tint="#B08D57" duration={26} />
       </Sequence>
-      <Sequence name="Card — one casting" from={210} durationInFrames={30}>
-        <TitleCard lines={['ONE CASTING', 'REMAINS.']} duration={30} size={86} />
+      <Sequence name="Threshold — silver" from={152} durationInFrames={26}>
+        <ThresholdCard amount="100,000" edition="Silver Edition · III" tint="#C6CCDA" duration={26} />
+      </Sequence>
+      <Sequence name="Threshold — gold" from={198} durationInFrames={30}>
+        <ThresholdCard amount="1,000,000" edition="Gold Sculpture · IV" tint="#E0B080" duration={30} />
       </Sequence>
 
       <Sequence name="Few ever finish" from={362} durationInFrames={30}>

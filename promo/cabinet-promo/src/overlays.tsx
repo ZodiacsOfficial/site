@@ -198,3 +198,80 @@ export const Counter = ({ value, label }: { value: number; label: string }) => (
     {label} {new Intl.NumberFormat('en').format(Math.round(value))}
   </div>
 );
+
+/** Threshold announcement: how much you must hold for the next edition. */
+export const ThresholdCard = ({
+  amount,
+  edition,
+  tint,
+  duration,
+}: {
+  amount: string;
+  edition: string;
+  tint: string;
+  duration: number;
+}) => {
+  const frame = useCurrentFrame();
+  const inP = interpolate(frame, [0, 8], [0, 1], {
+    extrapolateLeft: 'clamp',
+    extrapolateRight: 'clamp',
+    easing: Easing.bezier(0.32, 0.72, 0, 1),
+  });
+  const outP = interpolate(frame, [duration - 6, duration], [1, 0], {
+    extrapolateLeft: 'clamp',
+    extrapolateRight: 'clamp',
+  });
+  return (
+    <AbsoluteFill
+      style={{
+        backgroundColor: VOID,
+        alignItems: 'center',
+        justifyContent: 'center',
+        opacity: outP,
+      }}
+    >
+      <AbsoluteFill style={{ backgroundImage: GRAIN, opacity: 0.05 }} />
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          gap: 22,
+          textAlign: 'center',
+          opacity: inP,
+          scale: String(0.965 + inP * 0.035),
+        }}
+      >
+        <div
+          style={{
+            fontFamily: MONO,
+            fontSize: 30,
+            letterSpacing: '0.34em',
+            textTransform: 'uppercase',
+            color: INK_2,
+          }}
+        >
+          Hold
+        </div>
+        <div style={{ fontFamily: SERIF, fontWeight: 500, fontSize: 132, lineHeight: 1, color: '#EEF1F7' }}>
+          {amount}
+        </div>
+        <div
+          style={{
+            marginTop: 6,
+            padding: '10px 26px',
+            border: `1.5px solid ${tint}88`,
+            borderRadius: 999,
+            fontFamily: MONO,
+            fontSize: 30,
+            letterSpacing: '0.3em',
+            textTransform: 'uppercase',
+            color: tint,
+          }}
+        >
+          {edition}
+        </div>
+      </div>
+    </AbsoluteFill>
+  );
+};
