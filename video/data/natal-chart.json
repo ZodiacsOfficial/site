@@ -1,0 +1,195 @@
+{
+  "input": {
+    "date": "1993-06-16",
+    "time": "12:30",
+    "tz": "America/New_York",
+    "lat": 40.7128,
+    "lon": -74.006,
+    "place": "New York, NY",
+    "houseSystem": "placidus"
+  },
+  "utc": "1993-06-16T16:30:00.000Z",
+  "engineVersion": "0.1.0",
+  "bodies": [
+    {
+      "body": "Sun",
+      "lon": 85.52388366320554,
+      "retrograde": false
+    },
+    {
+      "body": "Moon",
+      "lon": 44.9385181520409,
+      "retrograde": false
+    },
+    {
+      "body": "Mercury",
+      "lon": 110.1861306204828,
+      "retrograde": false
+    },
+    {
+      "body": "Venus",
+      "lon": 39.89346798736176,
+      "retrograde": false
+    },
+    {
+      "body": "Mars",
+      "lon": 146.2059635008336,
+      "retrograde": false
+    },
+    {
+      "body": "Jupiter",
+      "lon": 185.11795222674968,
+      "retrograde": false
+    },
+    {
+      "body": "Saturn",
+      "lon": 330.2934006069913,
+      "retrograde": true
+    },
+    {
+      "body": "Uranus",
+      "lon": 291.201148822169,
+      "retrograde": true
+    },
+    {
+      "body": "Neptune",
+      "lon": 290.42636789986466,
+      "retrograde": true
+    },
+    {
+      "body": "Pluto",
+      "lon": 233.29060629436532,
+      "retrograde": true
+    },
+    {
+      "body": "North Node",
+      "lon": 252.18455055757624,
+      "retrograde": false
+    },
+    {
+      "body": "South Node",
+      "lon": 72.18455055757624,
+      "retrograde": false
+    }
+  ],
+  "angles": {
+    "asc": 170.83345581885146,
+    "mc": 79.37713559020364,
+    "dsc": 350.83345581885146,
+    "ic": 259.3771355902036
+  },
+  "cusps": [
+    170.83345581885146,
+    196.06545244485616,
+    225.95349987271777,
+    259.3771355902036,
+    293.19310528652125,
+    324.08099175610744,
+    350.83345581885146,
+    16.06545244485619,
+    45.95349987271777,
+    79.37713559020364,
+    113.19310528652125,
+    144.08099175610744
+  ],
+  "aspects": [
+    {
+      "a": "Mercury",
+      "b": "Neptune",
+      "type": "opposition",
+      "orb": 0.24023727938185857,
+      "applying": true
+    },
+    {
+      "a": "Sun",
+      "b": "Mars",
+      "type": "sextile",
+      "orb": 0.6820798376280663,
+      "applying": true
+    },
+    {
+      "a": "Uranus",
+      "b": "Neptune",
+      "type": "conjunction",
+      "orb": 0.7747809223043305,
+      "applying": true
+    },
+    {
+      "a": "Mercury",
+      "b": "Uranus",
+      "type": "opposition",
+      "orb": 1.015018201686189,
+      "applying": true
+    },
+    {
+      "a": "Uranus",
+      "b": "Pluto",
+      "type": "sextile",
+      "orb": 2.0894574721963295,
+      "applying": false
+    },
+    {
+      "a": "Neptune",
+      "b": "Pluto",
+      "type": "sextile",
+      "orb": 2.86423839450066,
+      "applying": false
+    },
+    {
+      "a": "Mars",
+      "b": "Pluto",
+      "type": "square",
+      "orb": 2.915357206468286,
+      "applying": false
+    },
+    {
+      "a": "Mercury",
+      "b": "Pluto",
+      "type": "trine",
+      "orb": 3.1044756738825185,
+      "applying": true
+    },
+    {
+      "a": "Mars",
+      "b": "Saturn",
+      "type": "opposition",
+      "orb": 4.087437106157722,
+      "applying": true
+    },
+    {
+      "a": "Sun",
+      "b": "Saturn",
+      "type": "trine",
+      "orb": 4.7695169437857885,
+      "applying": true
+    },
+    {
+      "a": "Moon",
+      "b": "Venus",
+      "type": "conjunction",
+      "orb": 5.0450501646791395,
+      "applying": false
+    },
+    {
+      "a": "Moon",
+      "b": "Neptune",
+      "type": "trine",
+      "orb": 5.487849747823759,
+      "applying": true
+    },
+    {
+      "a": "Moon",
+      "b": "Uranus",
+      "type": "trine",
+      "orb": 6.26263067012809,
+      "applying": true
+    },
+    {
+      "a": "Moon",
+      "b": "Pluto",
+      "type": "opposition",
+      "orb": 8.352088142324419,
+      "applying": true
+    }
+  ]
+}

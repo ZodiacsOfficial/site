@@ -1,0 +1,79 @@
+{
+  "capturedAt": "2026-07-24T03:48:34.993Z",
+  "moon": {
+    "phase": "Waxing Gibbous",
+    "angle": 120.10444328855374,
+    "illumination": 0.7507889140784418
+  },
+  "bodies": [
+    {
+      "body": "Sun",
+      "lon": 121.29644390764298,
+      "retrograde": false
+    },
+    {
+      "body": "Moon",
+      "lon": 241.33764366940227,
+      "retrograde": false
+    },
+    {
+      "body": "Mercury",
+      "lon": 106.31931397688533,
+      "retrograde": false
+    },
+    {
+      "body": "Venus",
+      "lon": 165.78822547310403,
+      "retrograde": false
+    },
+    {
+      "body": "Mars",
+      "lon": 77.73357523500977,
+      "retrograde": false
+    },
+    {
+      "body": "Jupiter",
+      "lon": 125.22478393541132,
+      "retrograde": false
+    },
+    {
+      "body": "Saturn",
+      "lon": 14.741272820317818,
+      "retrograde": false
+    },
+    {
+      "body": "Uranus",
+      "lon": 64.7333440703161,
+      "retrograde": false
+    },
+    {
+      "body": "Neptune",
+      "lon": 4.346879203802246,
+      "retrograde": true
+    },
+    {
+      "body": "Pluto",
+      "lon": 304.35845352893944,
+      "retrograde": true
+    },
+    {
+      "body": "North Node",
+      "lon": 330.20030655736866,
+      "retrograde": true
+    },
+    {
+      "body": "South Node",
+      "lon": 150.20030655736866,
+      "retrograde": true
+    }
+  ],
+  "nextEclipse": {
+    "type": "solar",
+    "kind": "total",
+    "peak": "2026-08-12T17:45:46.794Z",
+    "sign": "leo",
+    "lon": 140.04,
+    "degree": 20,
+    "obscuration": 1
+  }
+}
