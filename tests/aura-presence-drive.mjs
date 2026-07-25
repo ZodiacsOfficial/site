@@ -648,6 +648,22 @@ async function verifySampleAndLiveCollection(browser, baseURL) {
     false,
     'no media condition may survive into the capture',
   );
+  // Announcements are written for assistive technology, not for a picture.
+  assert.equal(
+    capturedSvg.includes('class="sr-only"'),
+    false,
+    'screen-reader-only nodes stay out of the card',
+  );
+  assert.equal(
+    capturedSvg.includes('Cabinet editions displayed'),
+    false,
+    'the live-region announcement must never be lettered across the case',
+  );
+  assert.equal(
+    /will-change:\s*(?!auto)/.test(capturedSvg),
+    false,
+    'nothing in a still export should promise future change',
+  );
   const cabinetCardSize = await cabinetPreviewImage.evaluate((image) => ({
     width: image.naturalWidth,
     height: image.naturalHeight,
@@ -691,6 +707,46 @@ async function verifySampleAndLiveCollection(browser, baseURL) {
   const strayMaterials = (capturedSvg.match(/class="[^"]*aura-collection-cabinet__material[^"]*"/g) ?? [])
     .filter((attribute) => !attribute.includes('is-current'));
   assert.deepEqual(strayMaterials, [], 'only the current material layer belongs in the capture');
+  // A card can carry a full case and still lose every sculpture, so read the
+  // artwork itself: each represented seat's own picture must be embedded and
+  // must be asked to resolve immediately, and its pixels must be on the card.
+  const embeddedArtwork = (capturedSvg.match(/<img[^>]*>/g) ?? []);
+  assert.equal(
+    embeddedArtwork.length > 0,
+    true,
+    'the capture must carry the artwork for the represented seats',
+  );
+  for (const tag of embeddedArtwork) {
+    assert.match(tag, /src="data:image\//, 'every exported image must be inlined');
+    assert.equal(/loading="lazy"/.test(tag), false, 'a still export cannot defer an image');
+    assert.equal(/decoding="async"/.test(tag), false, 'a still export cannot defer a decode');
+  }
+  const artworkInk = await cabinetPreviewImage.evaluate(async (image) => {
+    const canvas = document.createElement('canvas');
+    canvas.width = image.naturalWidth;
+    canvas.height = image.naturalHeight;
+    const context = canvas.getContext('2d');
+    context.drawImage(image, 0, 0);
+    // The upper middle of the first seat: sculpture territory, clear of the
+    // frame, the Nº label, the badge, the roundels, and the name.
+    const box = {
+      x: Math.round(canvas.width * 0.12),
+      y: Math.round(canvas.height * 0.1),
+      w: Math.round(canvas.width * 0.16),
+      h: Math.round(canvas.height * 0.05),
+    };
+    const { data } = context.getImageData(box.x, box.y, box.w, box.h);
+    let brightest = 0;
+    for (let index = 0; index < data.length; index += 4) {
+      brightest = Math.max(brightest, data[index], data[index + 1], data[index + 2]);
+    }
+    return brightest;
+  });
+  assert.equal(
+    artworkInk > 90,
+    true,
+    `the first seat must show its sculpture, not an empty niche (brightest sample ${artworkInk})`,
+  );
   await page
     .locator('.aura-stage .aura-share-preview')
     .getByRole('button', { name: 'Close preview' })

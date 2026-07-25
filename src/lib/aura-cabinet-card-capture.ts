@@ -179,6 +179,19 @@ export function rewriteViewportUnits(declarations: string, width: number): strin
     .join('; ');
 }
 
+/**
+ * Removes declarations that only make sense for a surface that will change
+ * again. `will-change` hands the artwork's own layer to the compositor, which
+ * is how a case can rasterise with every border and letter but empty niches;
+ * `content-visibility` lets a rasteriser skip content it thinks is offscreen,
+ * and in a still there is no scrolling to bring it back.
+ */
+export function dropDeferredDeclarations(declarations: string): string {
+  return splitDeclarations(declarations)
+    .filter((declaration) => !/^(will-change|content-visibility)\s*:/i.test(declaration))
+    .join('; ');
+}
+
 function trimNumber(value: number): string {
   return String(Math.round(value * 100) / 100);
 }
@@ -257,7 +270,9 @@ function flattenCabinetRules(width: number): string {
         const selector = rule.selectorText ?? '';
         if (!cabinetSelectorKeeps(selector)) continue;
         collected.push(
-          `${rewriteCabinetSelector(selector)}{${rewriteViewportUnits(rule.style.cssText, width)}}`,
+          `${rewriteCabinetSelector(selector)}{${
+            rewriteViewportUnits(dropDeferredDeclarations(rule.style.cssText), width)
+          }}`,
         );
         continue;
       }
@@ -288,6 +303,30 @@ function flattenCabinetRules(width: number): string {
  * phone. Pruning only where a current layer exists keeps a mid-reveal or
  * unexpected state from being emptied out.
  */
+/**
+ * Reads the signature of text that exists for screen readers only: clipped to
+ * nothing, or squeezed into a one-pixel box. Matching on the computed effect
+ * rather than a class name keeps the card honest whatever the utility is
+ * called — an announcement meant for assistive technology has no business
+ * being lettered across a picture.
+ */
+export function looksScreenReaderOnly(style: {
+  position?: string;
+  width?: string;
+  height?: string;
+  overflow?: string;
+  clip?: string;
+  clipPath?: string;
+}): boolean {
+  const clipped = /^rect\(\s*0/.test(style.clip ?? '') || /^inset\(\s*50%/.test(style.clipPath ?? '');
+  const pinhole =
+    style.position === 'absolute'
+    && (Number.parseFloat(style.width ?? '') || 0) <= 1
+    && (Number.parseFloat(style.height ?? '') || 0) <= 1
+    && style.overflow === 'hidden';
+  return clipped || pinhole;
+}
+
 function pruneHiddenMaterials(clone: HTMLElement): void {
   clone.querySelectorAll('.aura-collection-cabinet__object').forEach((object) => {
     const materials = Array.from(object.querySelectorAll('.aura-collection-cabinet__material'));
@@ -298,24 +337,102 @@ function pruneHiddenMaterials(clone: HTMLElement): void {
   });
 }
 
+/**
+ * Chooses which file to embed for one image.
+ *
+ * `currentSrc` is what the browser itself resolved for this element — the
+ * format it prefers and has already decoded once. Embedding that, rather than
+ * the markup's fallback, keeps the export on a code path the engine has
+ * proven it can read. The pastel disc is the one deliberate substitution: it
+ * ships a 400px master beside the page's 128px asset, and the export is a
+ * dense bitmap.
+ */
+/**
+ * Re-encodes fetched artwork through a canvas.
+ *
+ * Two things come free from drawing the bytes once here: the export carries a
+ * bitmap this browser has demonstrably decoded, and it carries it in the
+ * plainest possible format. A rasteriser that will not wait for a nested
+ * image to decode is the likeliest reason a case renders with empty niches,
+ * and this is the cheapest way to stop asking it to wait.
+ */
+async function decodedBitmap(uri: string, maxEdge = 320): Promise<string> {
+  try {
+    const decoded = await rasterise(uri);
+    const { naturalWidth: w, naturalHeight: h } = decoded;
+    if (!w || !h) return uri;
+    const ratio = Math.min(1, maxEdge / Math.max(w, h));
+    const canvas = document.createElement('canvas');
+    canvas.width = Math.max(1, Math.round(w * ratio));
+    canvas.height = Math.max(1, Math.round(h * ratio));
+    const context = canvas.getContext('2d');
+    if (!context) return uri;
+    context.drawImage(decoded, 0, 0, canvas.width, canvas.height);
+    return canvas.toDataURL('image/png');
+  } catch {
+    // The fetched bytes still beat a path that cannot resolve in an SVG.
+    return uri;
+  }
+}
+
+export function artworkSources(currentSrc: string, srcAttribute: string): string[] {
+  const candidates: string[] = [];
+  const add = (value: string) => {
+    if (value && !value.startsWith('data:') && !candidates.includes(value)) candidates.push(value);
+  };
+  const sharper = (value: string) =>
+    value.includes('/assets/zodiac-icons/128/')
+      ? value.replace('/assets/zodiac-icons/128/', '/assets/zodiac-icons/400/')
+      : '';
+  add(sharper(currentSrc || srcAttribute));
+  add(currentSrc);
+  add(srcAttribute);
+  return candidates;
+}
+
+/**
+ * Strips every attribute that lets an image resolve later.
+ *
+ * A rasterised `foreignObject` has one shot: there is no viewport to scroll a
+ * lazy image into and no second frame in which an async decode can land. An
+ * engine that honours those hints paints nothing at all.
+ */
+export function readyImageForExport(image: HTMLImageElement): void {
+  image.removeAttribute('loading');
+  image.removeAttribute('fetchpriority');
+  image.removeAttribute('sizes');
+  image.removeAttribute('srcset');
+  image.setAttribute('decoding', 'sync');
+}
+
 /** Swaps every artwork reference in the clone for an inlined copy. */
-async function inlineArtwork(clone: HTMLElement): Promise<void> {
-  // <source> elements would win over the inlined <img src>, and their AVIF
+async function inlineArtwork(clone: HTMLElement, source: HTMLElement): Promise<void> {
+  // Keyed by the markup's own src, because layers have already been pruned
+  // from the clone and its images no longer line up with the page's.
+  const chosen = new Map<string, string>();
+  source.querySelectorAll('img').forEach((image) => {
+    const key = image.getAttribute('src');
+    if (key && image.currentSrc) chosen.set(key, image.currentSrc);
+  });
+
+  // <source> elements would win over the inlined <img src>, and their
   // candidates cannot be resolved inside a foreignObject at all.
   clone.querySelectorAll('source').forEach((node) => node.remove());
 
   await Promise.all(
     Array.from(clone.querySelectorAll('img')).map(async (image) => {
-      const raw = image.getAttribute('src');
-      if (!raw || raw.startsWith('data:')) return;
-      const resolved = new URL(raw, document.baseURI).toString();
-      // The pastel discs ship a 400px master beside the page's 128px asset;
-      // the export is a 2× bitmap, so prefer the sharper file when it exists.
-      const upgraded = resolved.includes('/assets/zodiac-icons/128/')
-        ? resolved.replace('/assets/zodiac-icons/128/', '/assets/zodiac-icons/400/')
-        : null;
-      const uri = (upgraded ? await dataUri(upgraded) : null) ?? (await dataUri(resolved));
-      if (uri) image.setAttribute('src', uri);
+      readyImageForExport(image);
+      const raw = image.getAttribute('src') ?? '';
+      if (raw.startsWith('data:')) return;
+      const candidates = artworkSources(chosen.get(raw) ?? '', raw)
+        .map((candidate) => new URL(candidate, document.baseURI).toString());
+      for (const candidate of candidates) {
+        const uri = await dataUri(candidate);
+        if (uri) {
+          image.setAttribute('src', await decodedBitmap(uri));
+          return;
+        }
+      }
       // On failure the original reference stays: an unloadable image renders
       // an empty layer, while removing the node would collapse the seat.
     }),
@@ -438,11 +555,14 @@ export async function captureCabinet(
     );
   }
 
-  const [fonts] = await Promise.all([embeddedFonts(), inlineArtwork(clone)]);
+  const [fonts] = await Promise.all([embeddedFonts(), inlineArtwork(clone, section)]);
   const preamble =
-    ':root{font-size:16px;}' +
-    '*{-webkit-font-smoothing:antialiased;}' +
-    '*,*::before,*::after{animation:none!important;transition:none!important;}';
+    ':root{font-size:16px;}'
+    + '*{-webkit-font-smoothing:antialiased;}'
+    // A still needs no animation, no transition, and above all no promise of
+    // future change: `will-change` puts the artwork's own layer on a
+    // compositing path that a one-shot rasteriser may simply never paint.
+    + '*,*::before,*::after{animation:none!important;transition:none!important;will-change:auto!important;}';
   const flattened = flattenCabinetRules(width);
 
   // Measure the clone at the export width in the live document. This block is
@@ -459,6 +579,21 @@ export async function captureCabinet(
   probe.appendChild(wrapper);
   try {
     document.body.appendChild(probe);
+    // This is the one moment the clone is laid out under real CSS, so it is
+    // also where the export stops depending on the rasteriser resolving
+    // anything: assistive-only text goes, and the artwork's box is written
+    // back in plain pixels rather than left to container units.
+    Array.from(wrapper.querySelectorAll<HTMLElement>('*')).forEach((node) => {
+      if (looksScreenReaderOnly(getComputedStyle(node))) node.remove();
+    });
+    wrapper
+      .querySelectorAll<HTMLElement>('.aura-collection-cabinet__object, .aura-collection-cabinet__material, .aura-collection-cabinet__material img')
+      .forEach((node) => {
+        const box = node.getBoundingClientRect();
+        if (box.width <= 0 || box.height <= 0) return;
+        node.style.width = `${box.width}px`;
+        node.style.height = `${box.height}px`;
+      });
     height = Math.ceil(wrapper.getBoundingClientRect().height);
   } finally {
     probe.remove();
