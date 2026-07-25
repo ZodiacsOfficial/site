@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Proof 20 — Keyboard focus traversal</title>
+<link rel="stylesheet" href="proof.css">
+</head>
+<body>
+<header class="proof-head">
+  <span class="kicker">Phase 5A People · proof 20</span>
+  <h1>Every control reachable, every ring visible</h1>
+  <p>Handoff §15. Tab order follows reading order. The focus ring is the site’s existing 2 px outline at 3 px offset, drawn here on each control in sequence. Minimum target 44×44 px. The evidence disclosure opens from the keyboard because it is a native <code>&lt;details&gt;</code>, not a scripted panel.</p>
+</header>
+<section class="board">
+  <div class="board__note"><strong>Tab sequence on a person page.</strong> 1 skip link → 2 sign disc link → 3 birthday cross-link → 4 sign guide → 5 disclosure summary → 6 correction link → 7 share.</div>
+  <div class="board__stage">
+    <div class="surface">
+      <div class="btn-row" style="margin-bottom:16px"><span class="btn btn--ghost focused">Skip to the reading<span class="focus-tag">1</span></span></div>
+      <div class="person-head">
+
+        <div class="person-head__body">
+          <img class="person-head__disc" src="assets/signs/gemini.webp" width="62" height="62" alt="" style="width:62px;height:62px;border-radius:50%">
+          <h1 class="display">Walt Whitman</h1>
+          <p class="identity">Poet and essayist · United States · 1819–1892</p>
+          <p class="mono" style="margin-top:8px">Gemini 9.3° · born May 31, 1819</p>
+        </div>
+      </div>
+      <div class="btn-row" style="margin-top:16px">
+        <a class="btn btn--ghost focused" href="#">Everyone born on May 31<span class="focus-tag">3</span></a>
+        <a class="btn btn--text focused" href="#">The Gemini guide<span class="focus-tag">4</span></a>
+      </div>
+      <div class="disclosure focused" style="margin-top:16px">
+        <div class="disclosure__summary"><span><strong>Where this comes from<span class="focus-tag">5</span></strong><small>Opens with Enter or Space — a native details element</small></span><span class="disclosure__mark">+</span></div>
+      </div>
+      <p class="fine" style="margin-top:14px"><a class="focused" href="mailto:people@zodiacs.org">Ask us to correct or remove it<span class="focus-tag">6</span></a></p>
+      <div class="btn-row"><span class="btn btn--primary focused">Share<span class="focus-tag">7</span></span></div>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>

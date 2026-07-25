@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Proof 18 — Broken image and offline</title>
+<link rel="stylesheet" href="proof.css">
+</head>
+<body>
+<header class="proof-head">
+  <span class="kicker">Phase 5A People · proof 18</span>
+  <h1>Two failures that should not look like failures</h1>
+  <p>Handoff §9.16. A portrait that fails to load removes its own figure and falls back to the no-portrait lockup — no broken-image icon, no empty box. Offline, the person page is ordinary static HTML: the positions are already in the document, so nothing about the reading needs the network.</p>
+</header>
+<section class="board">
+  <div class="board__note"><strong>Broken portrait.</strong> Left: what the browser would show without handling. Right: the fallback, which is simply the no-portrait lockup from proof 10.</div>
+  <div class="board__stage">
+    <div class="surface surface--narrow">
+      <span class="tag">Unhandled — never shipped</span>
+      <div class="person-head">
+        <div class="broken">image failed<br>to load</div>
+        <div class="person-head__body">
+          <h1 class="display" style="font-size:26px">Rosalind Franklin</h1>
+          <p class="identity">Crystallographer and chemist · United Kingdom · 1920–1958</p>
+        </div>
+      </div>
+    </div>
+    <div class="surface surface--narrow">
+      <span class="tag">Shipped fallback</span>
+      <div class="person-head">
+        <div class="person-head__body">
+          <img class="person-head__disc person-head__disc--large" src="assets/signs/leo.webp" width="96" height="96" alt="" style="width:96px;height:96px;border-radius:50%">
+          <h1 class="display" style="font-size:26px">Rosalind Franklin</h1>
+          <p class="identity">Crystallographer and chemist · United Kingdom · 1920–1958</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="board">
+  <div class="board__note"><strong>Offline.</strong> The existing service worker is network-first for HTML and serves its offline fallback. A person page already in the cache reads completely, because the chart is in the HTML rather than fetched.</div>
+  <div class="board__stage">
+    <div class="surface">
+      <div class="notice">
+        <h3>You are offline</h3>
+        <p>This page was already saved on this device, so it reads in full. Anything you have not visited yet will need a connection.</p>
+      </div>
+      <div style="margin-top:16px">
+        <div class="person-head">
+
+        <div class="person-head__body">
+          <img class="person-head__disc" src="assets/signs/virgo.webp" width="62" height="62" alt="" style="width:62px;height:62px;border-radius:50%">
+          <h1 class="display">Clara Schumann</h1>
+          <p class="identity">Pianist and composer · Germany · 1819–1896</p>
+          <p class="mono" style="margin-top:8px">Virgo 19.8° · born September 13, 1819</p>
+        </div>
+      </div>
+        <div class="quality" style="--sign: var(--virgo)">
+        <strong>Birth date sourced. Birth time unknown.</strong>
+        <span>Without an hour there is no rising sign, no houses and no angles. Everything below is what the day itself settles.</span>
+      </div>
+        <p class="lede">The Moon stands at 13.0° Cancer, in domicile — the planet in its own sign, running on home rules. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>
