@@ -14,8 +14,8 @@ import { normalizeHeldSigns } from "../lib/aura/normalize";
 import { AURA_EXAMPLE_HOLDINGS } from "../lib/aura/example";
 import {
   AuraCollectionCabinet,
-  FINISH_META,
-  FINISH_ORDER,
+  EDITION_META,
+  EDITION_ORDER,
   principalSign,
 } from "./aura/AuraCollectionCabinet";
 import {
@@ -44,6 +44,7 @@ import {
   type AuraAddressMode,
   type AuraShareState,
 } from "./aura/AuraResult";
+import { AuraSharePreview } from "./aura/AuraSharePreview";
 
 interface RegistryAuraProps {
   availableChains: WalletChain[];
@@ -59,7 +60,10 @@ interface AuraResultState {
   mode: AuraAddressMode;
 }
 
+export type AuraShareCardKind = "seal" | "cabinet";
+
 interface AuraSharePreviewState {
+  kind: AuraShareCardKind;
   blob: Blob;
   url: string;
   shareSupported: boolean;
@@ -67,6 +71,72 @@ interface AuraSharePreviewState {
 }
 
 type RequestState = "idle" | "busy" | "error";
+
+interface PreparedShareCard {
+  blob: Blob;
+  shareSupported: boolean;
+  accessibleDescription: string;
+  share: (blob: Blob) => Promise<AuraShareActionOutcome>;
+  download: (blob: Blob) => "downloaded";
+}
+
+/** The dated talisman: the represented set, the Sun, and the Moon. */
+async function prepareSealCard(result: AuraResultState): Promise<PreparedShareCard> {
+  const {
+    auraShareAccessibleDescription,
+    canShareAuraCardBlob,
+    downloadAuraCardBlob,
+    drawAuraShareCard,
+    shareAuraCardBlob,
+  } = await import("../lib/aura-share-card");
+  const cardInput = {
+    heldSigns: result.composition.heldSigns,
+    holdings: result.holdings,
+    checkedAt: result.checkedAt,
+    skyAt: result.composition.currentSky.observedAt,
+    currentSky: {
+      sun: result.composition.currentSky.sun.sign,
+      moon: result.composition.currentSky.moon.sign,
+    },
+  } as const;
+  const blob = await drawAuraShareCard(cardInput);
+  return {
+    blob,
+    shareSupported: canShareAuraCardBlob(blob),
+    accessibleDescription: auraShareAccessibleDescription(cardInput),
+    share: shareAuraCardBlob,
+    download: downloadAuraCardBlob,
+  };
+}
+
+/** The case itself: twelve seats, the editions earned, the places reserved. */
+async function prepareCabinetCard(result: AuraResultState): Promise<PreparedShareCard> {
+  const {
+    auraCabinetAccessibleDescription,
+    canShareAuraCabinetBlob,
+    downloadAuraCabinetBlob,
+    drawAuraCabinetCard,
+    shareAuraCabinetBlob,
+  } = await import("../lib/aura-cabinet-card");
+  // The live case is the card: capture the display the visitor is looking at.
+  // The frame is the display — the placard beneath it is a reading surface,
+  // not part of the case, and repeating it would only crowd the image.
+  const element = document.querySelector<HTMLElement>(".aura-collection-cabinet__frame");
+  const cardInput = {
+    element,
+    holdings: result.holdings,
+    checkedAt: result.checkedAt,
+    chain: result.chain,
+  } as const;
+  const blob = await drawAuraCabinetCard(cardInput);
+  return {
+    blob,
+    shareSupported: canShareAuraCabinetBlob(blob),
+    accessibleDescription: auraCabinetAccessibleDescription(cardInput),
+    share: shareAuraCabinetBlob,
+    download: downloadAuraCabinetBlob,
+  };
+}
 
 const CABINET_FINISHES = new Set<AuraCabinetFinish>([
   "pastel",
@@ -239,6 +309,7 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
   const baseConnectRef = useRef<HTMLButtonElement>(null);
   const resultHeadingRef = useRef<HTMLHeadingElement>(null);
   const exampleButtonRef = useRef<HTMLButtonElement>(null);
+  const cabinetShareRef = useRef<HTMLButtonElement>(null);
   const exampleOriginRef = useRef<HTMLElement | null>(null);
   const sessionRef = useRef<ConnectedWalletSession | null>(null);
   const connectedAddressRef = useRef<string | null>(null);
@@ -797,50 +868,38 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
       });
   };
 
-  const createSharePreview = async () => {
+  const createSharePreview = async (kind: AuraShareCardKind = "seal") => {
     if (!result || result.composition.heldSigns.length === 0) return;
     const generation = shareGenerationRef.current + 1;
     shareGenerationRef.current = generation;
     setShareState("busy");
     try {
-      const {
-        auraShareAccessibleDescription,
-        canShareAuraCardBlob,
-        downloadAuraCardBlob,
-        drawAuraShareCard,
-        shareAuraCardBlob,
-      } = await import("../lib/aura-share-card");
-      const cardInput = {
-        heldSigns: result.composition.heldSigns,
-        holdings: result.holdings,
-        checkedAt: result.checkedAt,
-        skyAt: result.composition.currentSky.observedAt,
-        currentSky: {
-          sun: result.composition.currentSky.sun.sign,
-          moon: result.composition.currentSky.moon.sign,
-        },
-      } as const;
-      const accessibleDescription = auraShareAccessibleDescription(cardInput);
-      const blob = await drawAuraShareCard(cardInput);
-      const url = URL.createObjectURL(blob);
+      const prepared = kind === "cabinet"
+        ? await prepareCabinetCard(result)
+        : await prepareSealCard(result);
+      if (shareGenerationRef.current !== generation) return;
+      const url = URL.createObjectURL(prepared.blob);
       if (shareGenerationRef.current !== generation) {
         URL.revokeObjectURL(url);
         return;
       }
       setSharePreview({
-        blob,
+        kind,
+        blob: prepared.blob,
         url,
-        shareSupported: canShareAuraCardBlob(blob),
-        accessibleDescription,
+        shareSupported: prepared.shareSupported,
+        accessibleDescription: prepared.accessibleDescription,
       });
-      preparedShareActionRef.current = shareAuraCardBlob;
-      preparedDownloadActionRef.current = downloadAuraCardBlob;
+      preparedShareActionRef.current = prepared.share;
+      preparedDownloadActionRef.current = prepared.download;
       setShareState("idle");
-      trackAnalytics("aura_share", { outcome: "preview" });
+      trackAnalytics("aura_share", { outcome: "preview", card: kind });
     } catch {
       if (shareGenerationRef.current === generation) setShareState("error");
     }
   };
+
+  const shareReviewedCardKind = () => sharePreview?.kind ?? "seal";
 
   const shareReviewedCard = async () => {
     if (!sharePreview) return;
@@ -861,10 +920,10 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
       if (shareGenerationRef.current === generation) {
         setShareState(outcome === "cancelled" ? "idle" : outcome);
       }
-      trackAnalytics("aura_share", { outcome });
+      trackAnalytics("aura_share", { outcome, card: shareReviewedCardKind() });
     } catch {
       if (shareGenerationRef.current === generation) setShareState("error");
-      trackAnalytics("aura_share", { outcome: "error" });
+      trackAnalytics("aura_share", { outcome: "error", card: shareReviewedCardKind() });
     }
   };
 
@@ -882,10 +941,10 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
       if (shareGenerationRef.current !== generation) return;
       const outcome = downloadPreparedBlob(blob);
       if (shareGenerationRef.current === generation) setShareState(outcome);
-      trackAnalytics("aura_share", { outcome });
+      trackAnalytics("aura_share", { outcome, card: shareReviewedCardKind() });
     } catch {
       if (shareGenerationRef.current === generation) setShareState("error");
-      trackAnalytics("aura_share", { outcome: "error" });
+      trackAnalytics("aura_share", { outcome: "error", card: shareReviewedCardKind() });
     }
   };
 
@@ -893,6 +952,7 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
     invalidateSharePreview();
   };
 
+  const cabinetPreview = sharePreview?.kind === "cabinet" ? sharePreview : null;
   const stagedHoldings = result?.holdings ?? AURA_EXAMPLE_HOLDINGS;
   const stagedIllustrative = !result || result.mode === "example";
   const stagedRevealMode: AuraCabinetRevealMode = result?.revealMode ?? "settled";
@@ -1267,27 +1327,63 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
           plateDate={stagePlateDate}
           headingRef={resultHeadingRef}
         />
+
+        {result && !stagedIllustrative && (
+          <div class="aura-stage__share">
+            <button
+              ref={cabinetShareRef}
+              class="btn btn--primary"
+              type="button"
+              onClick={() => void createSharePreview("cabinet")}
+              disabled={shareState === "busy" && cabinetPreview === null}
+            >
+              {shareState === "busy" && cabinetPreview === null
+                ? "Creating preview…"
+                : cabinetPreview
+                  ? "Rebuild cabinet image"
+                  : "Share this cabinet"}
+            </button>
+            <p class="aura-stage__share-note">
+              An image of the case as it stands — the twelve seats, their
+              editions, and today’s date. Never the address.
+            </p>
+          </div>
+        )}
+
+        {cabinetPreview && (
+          <AuraSharePreview
+            kind="cabinet"
+            previewUrl={cabinetPreview.url}
+            shareSupported={cabinetPreview.shareSupported}
+            accessibleDescription={cabinetPreview.accessibleDescription}
+            busy={shareState === "busy"}
+            returnFocusRef={cabinetShareRef}
+            onShare={() => void shareReviewedCard()}
+            onDownload={() => void downloadReviewedCard()}
+            onClose={closeSharePreview}
+          />
+        )}
       </section>
 
       <section class="aura-editions" aria-labelledby="aura-editions-title">
         <p class="aura-editions__kicker">How the cabinet works</p>
         <h2 id="aura-editions-title">
-          Four editions, one rule: the more of a sign an address holds, the
+          Five editions, one rule: the more of a sign an address holds, the
           finer its casting.
         </h2>
         <ol class="aura-editions__ladder">
-          {FINISH_ORDER.map((finish) => (
+          {EDITION_ORDER.map((edition) => (
             <li
-              key={finish}
-              class={`aura-editions__row aura-editions__row--${finish}`}
+              key={edition}
+              class={`aura-editions__row aura-editions__row--${edition}`}
             >
               <span class="aura-editions__numeral" aria-hidden="true">
-                {FINISH_META[finish].numeral}
+                {EDITION_META[edition].numeral}
               </span>
-              <span class="aura-editions__name">{FINISH_META[finish].name}</span>
-              <span class="aura-editions__range">{FINISH_META[finish].range}</span>
+              <span class="aura-editions__name">{EDITION_META[edition].name}</span>
+              <span class="aura-editions__range">{EDITION_META[edition].range}</span>
               <span class="aura-editions__material">
-                {FINISH_META[finish].material}
+                {EDITION_META[edition].material}
               </span>
             </li>
           ))}
@@ -1302,9 +1398,12 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
             or plainer.
           </p>
           <p>
-            Gold counts in sculptures — one for each complete million held. A
-            seat badge shows up to ×9; beyond that it reads ×9+ and the placard
-            keeps the exact count.
+            Gold counts in sculptures — one for each complete million held. The
+            tenth sculpture in a single seat, 10,000,000 held, is the last
+            edition — Crown Gold. That seat is framed in gold, the case is gilded around it,
+            and the whole cabinet carries a cast plate sealed V. A seat badge
+            shows up to ×99; beyond that it reads ×99+ and the placard keeps
+            the exact count.
           </p>
           <p>
             Arrangements follow presence alone: an opposite pair, an element
@@ -1335,7 +1434,7 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
           selectedSign={activeSign}
           refreshing={requestState === "busy"}
           shareState={shareState}
-          sharePreviewUrl={sharePreview?.url ?? null}
+          sharePreviewUrl={sharePreview?.kind === "seal" ? sharePreview.url : null}
           shareSupported={sharePreview?.shareSupported ?? false}
           shareAccessibleDescription={sharePreview?.accessibleDescription ?? ""}
           profileReady={profileReady}

@@ -185,7 +185,7 @@ describe("Registry Aura collection talisman snapshot", () => {
     expect(serialized).not.toMatch(/address|wallet|balance|price|birth|name of owner/i);
   });
 
-  it("shows exact Gold counts through nine and caps larger public tallies", () => {
+  it("shows exact Gold counts through ninety-nine and caps larger public tallies", () => {
     const exact = auraShareSnapshot({
       ...input,
       holdings: input.holdings?.map((holding) => (
@@ -198,13 +198,13 @@ describe("Registry Aura collection talisman snapshot", () => {
       ...input,
       holdings: input.holdings?.map((holding) => (
         holding.sign === "leo"
-          ? { sign: "leo", finish: "gold" as const, goldCount: "47" }
+          ? { sign: "leo", finish: "gold" as const, goldCount: "470" }
           : holding
       )),
     }).represented.find((sign) => sign.slug === "leo")!;
 
-    expect(exact).toMatchObject({ goldCountLabel: "×2", goldTallyArcs: 1 });
-    expect(capped).toMatchObject({ goldCountLabel: "×9+", goldTallyArcs: 2 });
+    expect(exact).toMatchObject({ goldCountLabel: "×2", goldTallyArcs: 1, edition: "gold" });
+    expect(capped).toMatchObject({ goldCountLabel: "×99+", goldTallyArcs: 2, edition: "crown" });
   });
 
   it("ignores runtime extra fields so private data cannot reach the snapshot", () => {

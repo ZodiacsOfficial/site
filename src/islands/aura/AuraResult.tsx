@@ -10,10 +10,11 @@ import {
 import type { WalletChain } from "../../lib/wallet/types";
 import { auraDateStamp, auraDateTime } from "../../lib/aura/copy";
 import {
-  FINISH_META,
+  EDITION_META,
   exactGoldCount,
   normalizedGoldCount,
 } from "./AuraCollectionCabinet";
+import { cabinetEditionForHolding } from "../../lib/aura/cabinet-finish";
 import { AuraSharePreview } from "./AuraSharePreview";
 import { AuraTalisman } from "./AuraTalisman";
 import { ZodiacMedallion } from "./ZodiacMedallion";
@@ -152,7 +153,7 @@ export function AuraResult({
               onClick={onCreateSharePreview}
               disabled={shareState === "busy"}
             >
-              {shareState === "busy" ? "Creating preview…" : "Share this collection"}
+              {shareState === "busy" ? "Creating preview…" : "Share the dated seal"}
             </button>
           </div>
         )}
@@ -249,7 +250,7 @@ export function AuraResult({
         <ol class="aura-ledger" aria-label="Record of represented signs">
           {ledgerRows.map(({ sign, holding }) => {
             const record = signBySlug(sign);
-            const meta = FINISH_META[holding.finish];
+            const meta = EDITION_META[cabinetEditionForHolding(holding)];
             const goldCount = holding.finish === "gold"
               ? normalizedGoldCount(holding.goldCount)
               : null;
@@ -342,8 +343,8 @@ export function AuraResult({
                 {shareState === "busy"
                   ? "Creating preview…"
                   : sharePreviewUrl
-                    ? "Recreate the seal"
-                    : "Share this collection"}
+                    ? "Rebuild the seal"
+                    : "Share the dated seal"}
               </button>
               <button class="btn btn--ghost" type="button" onClick={onClear}>
                 Open another collection
