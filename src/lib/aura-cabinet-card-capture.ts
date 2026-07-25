@@ -278,6 +278,26 @@ function flattenCabinetRules(width: number): string {
   return collected.join('\n');
 }
 
+/**
+ * Drops the material layers a seat is not currently showing.
+ *
+ * Every seat stacks each material it has earned and reveals exactly one
+ * (`.is-current`); the rest sit at zero opacity. Carrying their artwork into
+ * the export is pure weight — a crowned case would embed twelve invisible
+ * pastel discs — and weight is what an embedded raster can least afford on a
+ * phone. Pruning only where a current layer exists keeps a mid-reveal or
+ * unexpected state from being emptied out.
+ */
+function pruneHiddenMaterials(clone: HTMLElement): void {
+  clone.querySelectorAll('.aura-collection-cabinet__object').forEach((object) => {
+    const materials = Array.from(object.querySelectorAll('.aura-collection-cabinet__material'));
+    if (!materials.some((material) => material.classList.contains('is-current'))) return;
+    materials.forEach((material) => {
+      if (!material.classList.contains('is-current')) material.remove();
+    });
+  });
+}
+
 /** Swaps every artwork reference in the clone for an inlined copy. */
 async function inlineArtwork(clone: HTMLElement): Promise<void> {
   // <source> elements would win over the inlined <img src>, and their AVIF
@@ -315,8 +335,68 @@ export interface CabinetCaptureResult {
 }
 
 /**
+ * Reads a coarse grid of an image and reports whether every sample is the same
+ * colour — the signature of a raster that decoded but drew nothing.
+ *
+ * Pure so the verdict is testable: a rendered case is never one flat colour,
+ * because the frame's filet, the seat borders, and the lettering all differ
+ * from the ground.
+ */
+export function sampleLooksBlank(pixels: ArrayLike<number>, tolerance = 8): boolean {
+  if (pixels.length < 4) return true;
+  const [r, g, b, a] = [pixels[0], pixels[1], pixels[2], pixels[3]];
+  for (let index = 4; index < pixels.length; index += 4) {
+    if (
+      Math.abs(pixels[index] - r) > tolerance
+      || Math.abs(pixels[index + 1] - g) > tolerance
+      || Math.abs(pixels[index + 2] - b) > tolerance
+      || Math.abs(pixels[index + 3] - a) > tolerance
+    ) {
+      return false;
+    }
+  }
+  return true;
+}
+
+/**
+ * Verdict on a decoded capture: `true` blank, `false` drew something, `null`
+ * unverifiable. An engine that will not hand back pixels is not evidence of a
+ * fault, so an unverifiable read must never block an otherwise fine export.
+ */
+function captureLooksBlank(image: HTMLImageElement): boolean | null {
+  try {
+    if (!image.naturalWidth || !image.naturalHeight) return true;
+    const probe = document.createElement('canvas');
+    probe.width = 48;
+    probe.height = 96;
+    const context = probe.getContext('2d');
+    if (!context) return null;
+    context.drawImage(image, 0, 0, probe.width, probe.height);
+    return sampleLooksBlank(context.getImageData(0, 0, probe.width, probe.height).data);
+  } catch {
+    return null;
+  }
+}
+
+function rasterise(svg: string): Promise<HTMLImageElement> {
+  return new Promise<HTMLImageElement>((resolve, reject) => {
+    const image = new Image();
+    image.onload = () => resolve(image);
+    image.onerror = () => reject(new Error('cabinet_capture_failed'));
+    image.src = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+  });
+}
+
+/**
  * Captures the cabinet to an image at the fixed export width, `scale` device
  * pixels per CSS pixel. Accepts the section or anything inside it.
+ *
+ * The bitmap is always 1:1 with the SVG's own width and height — the density
+ * comes from laying the clone out larger (`zoom`), never from scaling a
+ * `foreignObject` through a `viewBox`, which some engines rasterise as an
+ * empty box. If the dense pass comes back blank anyway, the export falls back
+ * to a plain unzoomed raster, and if that is blank too it fails loudly rather
+ * than handing anyone an empty case.
  */
 export async function captureCabinet(
   element: HTMLElement,
@@ -324,6 +404,7 @@ export async function captureCabinet(
 ): Promise<CabinetCaptureResult> {
   const section = (element.closest('.aura-collection-cabinet') as HTMLElement | null) ?? element;
   const width = CABINET_EXPORT_WIDTH;
+  const density = Math.max(1, Math.round(scale));
 
   const clone = section.cloneNode(true) as HTMLElement;
   // The card draws its own chrome; the case is the picture.
@@ -336,11 +417,15 @@ export async function captureCabinet(
   clone.setAttribute('data-aura-cabinet-stage', 'settled');
   clone.style.width = '100%';
   clone.style.margin = '0';
+  pruneHiddenMaterials(clone);
 
   const wrapper = document.createElement('div');
   wrapper.setAttribute('xmlns', 'http://www.w3.org/1999/xhtml');
   wrapper.setAttribute('data-aura-cabinet-capture-root', '');
-  wrapper.style.cssText = `box-sizing:border-box;width:${width}px;background:transparent;`;
+  const wrapperStyle = (zoom: number) =>
+    `box-sizing:border-box;width:${width}px;background:transparent;`
+    + (zoom > 1 ? `zoom:${zoom};` : '');
+  wrapper.style.cssText = wrapperStyle(1);
   wrapper.appendChild(clone);
 
   // Metrics must be final before the probe measures text-bearing rows.
@@ -380,21 +465,39 @@ export async function captureCabinet(
   }
   if (height <= 0) throw new Error('cabinet_capture_failed');
 
-  // The measured markup is serialized once and rastered verbatim.
-  const markup = new XMLSerializer().serializeToString(wrapper);
   const css = `${fonts}\n${preamble}\n${flattened}`;
-  const svg =
-    `<svg xmlns="http://www.w3.org/2000/svg" width="${width * scale}" height="${height * scale}" viewBox="0 0 ${width} ${height}">` +
-    `<defs><style type="text/css"><![CDATA[${css}]]></style></defs>` +
-    `<foreignObject x="0" y="0" width="${width}" height="${height}">${markup}</foreignObject>` +
-    `</svg>`;
+  // One box, one raster: the SVG, its viewBox, and its foreignObject always
+  // agree, so nothing is ever scaled during rasterisation.
+  const build = (zoom: number): string => {
+    wrapper.style.cssText = wrapperStyle(zoom);
+    const boxW = width * zoom;
+    const boxH = height * zoom;
+    return (
+      `<svg xmlns="http://www.w3.org/2000/svg" width="${boxW}" height="${boxH}" viewBox="0 0 ${boxW} ${boxH}">`
+      + `<defs><style type="text/css"><![CDATA[${css}]]></style></defs>`
+      + `<foreignObject x="0" y="0" width="${boxW}" height="${boxH}">`
+      + new XMLSerializer().serializeToString(wrapper)
+      + `</foreignObject></svg>`
+    );
+  };
 
-  const image = new Image();
-  await new Promise<void>((resolve, reject) => {
-    image.onload = () => resolve();
-    image.onerror = () => reject(new Error('cabinet_capture_failed'));
-    image.src = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
-  });
-  if (typeof image.decode === 'function') await image.decode().catch(() => {});
+  const load = async (zoom: number): Promise<HTMLImageElement> => {
+    const image = await rasterise(build(zoom));
+    image.width = width * zoom;
+    image.height = height * zoom;
+    if (typeof image.decode === 'function') await image.decode().catch(() => {});
+    return image;
+  };
+
+  let image = await load(density);
+  if (density > 1 && captureLooksBlank(image) === true) {
+    // Some engines rasterise a zoomed foreignObject as an empty box. A plain
+    // one-to-one pass is softer at card size but it is the case, not a void.
+    image = await load(1);
+  }
+  if (captureLooksBlank(image) === true) throw new Error('cabinet_capture_blank');
+
+  // The card draws at CSS-pixel size inside a scaled context, so the bitmap
+  // lands one-to-one on the canvas whichever pass produced it.
   return { image, width, height };
 }

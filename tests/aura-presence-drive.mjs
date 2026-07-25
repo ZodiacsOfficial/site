@@ -663,6 +663,34 @@ async function verifySampleAndLiveCollection(browser, baseURL) {
     true,
     `the cabinet card height should sit near the three-column case (got ${cabinetCardSize.height})`,
   );
+  // A card can carry perfect chrome around an empty box if the capture
+  // decodes but draws nothing, so read the pixels: the band between the
+  // header and the footer must be a rendered case, not void.
+  const cabinetInk = await cabinetPreviewImage.evaluate(async (image) => {
+    const canvas = document.createElement('canvas');
+    canvas.width = image.naturalWidth;
+    canvas.height = image.naturalHeight;
+    const context = canvas.getContext('2d');
+    context.drawImage(image, 0, 0);
+    const top = Math.round(canvas.height * 0.12);
+    const bottom = Math.round(canvas.height * 0.86);
+    const { data } = context.getImageData(0, top, canvas.width, bottom - top);
+    let lit = 0;
+    // #07080B is the card ground; anything brighter is the case itself.
+    for (let index = 0; index < data.length; index += 4) {
+      if (data[index] > 22 || data[index + 1] > 23 || data[index + 2] > 26) lit += 1;
+    }
+    return { lit, total: data.length / 4 };
+  });
+  assert.equal(
+    cabinetInk.lit / cabinetInk.total > 0.05,
+    true,
+    `the exported case must not be blank (only ${((cabinetInk.lit / cabinetInk.total) * 100).toFixed(2)}% of the band carried ink)`,
+  );
+  // Invisible material layers are pruned, so every layer that travels shows.
+  const strayMaterials = (capturedSvg.match(/class="[^"]*aura-collection-cabinet__material[^"]*"/g) ?? [])
+    .filter((attribute) => !attribute.includes('is-current'));
+  assert.deepEqual(strayMaterials, [], 'only the current material layer belongs in the capture');
   await page
     .locator('.aura-stage .aura-share-preview')
     .getByRole('button', { name: 'Close preview' })
