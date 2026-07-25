@@ -102,7 +102,11 @@ The directory is a reading room, not a leaderboard.
 **Person page order** — the reader's reason for visiting comes first:
 
 1. Name, one-line identifying description, pastel Sun disc, portrait
-   when one is licensed.
+   when one is licensed. The description is
+   `{discipline} · {country of birth} · {life years}` — the country is
+   the **birthplace's** country, taken from the birthplace entity, and
+   is never presented as nationality or citizenship, which the pilot
+   does not source.
 2. **The reading.** The lede, then three to five observation blocks.
 3. The chart wheel, in the existing chart-wheel visual language, with
    the house ring absent rather than empty on unknown-time records.
@@ -446,12 +450,16 @@ Replaces the Moon block, and the data-quality label gains a third line:
 
 - Label: **"Birth date sourced. Sun sign undetermined."**
 - Heading: "Two signs, and the day cannot choose"
-- Body: "The Sun crossed from {SignA} into {SignB} at {utc} UTC — inside
+- Body: "The Sun crossed from {SignA} into {SignB} at {utc} — inside
   the day {Name} was born. Which sign the Sun was in depends on the
   hour, and the hour is not recorded. Both discs are shown at equal
   weight because the honest answer is both."
 - Index consequence, shown in the disclosure: "This page is not listed
   in search. Its central fact is undetermined."
+- `{utc}` is rendered **to the minute** (`1887-12-22 03:04 UTC`).
+  Millisecond precision is spurious for an ephemeris boundary and reads
+  as machine spill inside a sentence; the full value stays in the
+  record and in the disclosure.
 
 ### 9.7 Person page — exact time (design fixture only)
 

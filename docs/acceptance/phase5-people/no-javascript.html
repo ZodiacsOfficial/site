@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Proof 15 — No JavaScript</title>
+<link rel="stylesheet" href="proof.css">
+</head>
+<body>
+<header class="proof-head">
+  <span class="kicker">Phase 5A People · proof 15</span>
+  <h1>Everything that matters is in the HTML</h1>
+  <p>Handoff §15. The directory, every filter result, every person page, the chart wheel (server-rendered SVG), the data-quality label and the evidence disclosure all work without JavaScript. Filters are real links; the disclosure is a native <code>&lt;details&gt;</code>. Only the type-ahead field needs JS, and it is hidden without it.</p>
+</header>
+<section class="board">
+  <div class="board__note"><strong>Directory without JS.</strong> Each sign disc is an anchor to a server-rendered URL. The name field is absent rather than present-and-dead.</div>
+  <div class="board__stage">
+    <div class="surface surface--wide">
+      <h1 class="display" style="font-size:30px">People</h1>
+      <p class="mono--label mono" style="margin:16px 0 7px">By sign — each disc is a link</p>
+      <div class="disc-rail"><img class="" src="assets/signs/aries.webp" width="46" height="46" alt="" style="width:46px;height:46px;border-radius:50%"><img class="" src="assets/signs/taurus.webp" width="46" height="46" alt="" style="width:46px;height:46px;border-radius:50%"><img class="" src="assets/signs/gemini.webp" width="46" height="46" alt="" style="width:46px;height:46px;border-radius:50%"><img class="" src="assets/signs/cancer.webp" width="46" height="46" alt="" style="width:46px;height:46px;border-radius:50%"><img class="" src="assets/signs/leo.webp" width="46" height="46" alt="" style="width:46px;height:46px;border-radius:50%"><img class="" src="assets/signs/virgo.webp" width="46" height="46" alt="" style="width:46px;height:46px;border-radius:50%"><img class="" src="assets/signs/libra.webp" width="46" height="46" alt="" style="width:46px;height:46px;border-radius:50%"><img class="" src="assets/signs/scorpio.webp" width="46" height="46" alt="" style="width:46px;height:46px;border-radius:50%"><img class="" src="assets/signs/sagittarius.webp" width="46" height="46" alt="" style="width:46px;height:46px;border-radius:50%"><img class="" src="assets/signs/capricorn.webp" width="46" height="46" alt="" style="width:46px;height:46px;border-radius:50%"><img class="" src="assets/signs/aquarius.webp" width="46" height="46" alt="" style="width:46px;height:46px;border-radius:50%"><img class="" src="assets/signs/pisces.webp" width="46" height="46" alt="" style="width:46px;height:46px;border-radius:50%"></div>
+      <p class="mono" style="margin-top:8px">/people/?sign=leo · /people/?sign=virgo · … each rendered on the server</p>
+      <p class="fine">The “Find a name” field is not rendered at all without JavaScript. A dead input is worse than an absent one.</p>
+      <div class="dir-grid" style="margin-top:12px"><div class="tile">
+          <img class="" src="assets/signs/leo.webp" width="38" height="38" alt="" style="width:38px;height:38px;border-radius:50%">
+          <div class="tile__body">
+            <span class="tile__name">Emily Brontë</span>
+            <span class="tile__meta">Leo · born July 30, 1818</span>
+            <span class="tile__desc">Novelist and poet · United Kingdom · 1818–1848</span>
+          </div>
+        </div>
+<div class="tile">
+          <img class="" src="assets/signs/virgo.webp" width="38" height="38" alt="" style="width:38px;height:38px;border-radius:50%">
+          <div class="tile__body">
+            <span class="tile__name">Clara Schumann</span>
+            <span class="tile__meta">Virgo · born September 13, 1819</span>
+            <span class="tile__desc">Pianist and composer · Germany · 1819–1896</span>
+          </div>
+        </div></div>
+    </div>
+  </div>
+</section>
+<section class="board">
+  <div class="board__note"><strong>Person page without JS.</strong> The reading, the wheel, the label and the disclosure are all server-rendered. The disclosure is a native details element, open here by keyboard alone.</div>
+  <div class="board__stage">
+    <div class="surface">
+      <div class="person-head">
+
+        <div class="person-head__body">
+          <img class="person-head__disc" src="assets/signs/leo.webp" width="62" height="62" alt="" style="width:62px;height:62px;border-radius:50%">
+          <h1 class="display">Emily Brontë</h1>
+          <p class="identity">Novelist and poet · United Kingdom · 1818–1848</p>
+          <p class="mono" style="margin-top:8px">Leo 6.6° · born July 30, 1818</p>
+        </div>
+      </div>
+      <div class="quality" style="--sign: var(--leo)">
+        <strong>Birth date sourced. Birth time unknown.</strong>
+        <span>Without an hour there is no rising sign, no houses and no angles. Everything below is what the day itself settles.</span>
+      </div>
+      <p class="lede">The Sun stands at 6.6° Leo, in domicile — the planet in its own sign, running on home rules. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.</p>
+      <div class="wheel">
+      <svg viewBox="0 0 320 320" role="img" aria-label="Chart wheel for Emily Brontë: ten bodies by sign and degree. No house ring — the birth time is unknown.">
+      <path d="M 160 160 L 160.0 12.0 A 148 148 0 0 1 234.0 31.8 Z" fill="var(--aries)" fill-opacity="0.10" stroke="rgba(198,204,218,0.14)" stroke-width="0.75"/>
+      <path d="M 160 160 L 234.0 31.8 A 148 148 0 0 1 288.2 86.0 Z" fill="var(--taurus)" fill-opacity="0.10" stroke="rgba(198,204,218,0.14)" stroke-width="0.75"/>
+      <path d="M 160 160 L 288.2 86.0 A 148 148 0 0 1 308.0 160.0 Z" fill="var(--gemini)" fill-opacity="0.10" stroke="rgba(198,204,218,0.14)" stroke-width="0.75"/>
+      <path d="M 160 160 L 308.0 160.0 A 148 148 0 0 1 288.2 234.0 Z" fill="var(--cancer)" fill-opacity="0.10" stroke="rgba(198,204,218,0.14)" stroke-width="0.75"/>
+      <path d="M 160 160 L 288.2 234.0 A 148 148 0 0 1 234.0 288.2 Z" fill="var(--leo)" fill-opacity="0.10" stroke="rgba(198,204,218,0.14)" stroke-width="0.75"/>
+      <path d="M 160 160 L 234.0 288.2 A 148 148 0 0 1 160.0 308.0 Z" fill="var(--virgo)" fill-opacity="0.10" stroke="rgba(198,204,218,0.14)" stroke-width="0.75"/>
+      <path d="M 160 160 L 160.0 308.0 A 148 148 0 0 1 86.0 288.2 Z" fill="var(--libra)" fill-opacity="0.10" stroke="rgba(198,204,218,0.14)" stroke-width="0.75"/>
+      <path d="M 160 160 L 86.0 288.2 A 148 148 0 0 1 31.8 234.0 Z" fill="var(--scorpio)" fill-opacity="0.10" stroke="rgba(198,204,218,0.14)" stroke-width="0.75"/>
+      <path d="M 160 160 L 31.8 234.0 A 148 148 0 0 1 12.0 160.0 Z" fill="var(--sagittarius)" fill-opacity="0.10" stroke="rgba(198,204,218,0.14)" stroke-width="0.75"/>
+      <path d="M 160 160 L 12.0 160.0 A 148 148 0 0 1 31.8 86.0 Z" fill="var(--capricorn)" fill-opacity="0.10" stroke="rgba(198,204,218,0.14)" stroke-width="0.75"/>
+      <path d="M 160 160 L 31.8 86.0 A 148 148 0 0 1 86.0 31.8 Z" fill="var(--aquarius)" fill-opacity="0.10" stroke="rgba(198,204,218,0.14)" stroke-width="0.75"/>
+      <path d="M 160 160 L 86.0 31.8 A 148 148 0 0 1 160.0 12.0 Z" fill="var(--pisces)" fill-opacity="0.10" stroke="rgba(198,204,218,0.14)" stroke-width="0.75"/>
+      <circle cx="160" cy="160" r="102" fill="none" stroke="rgba(198,204,218,0.10)"/>
+      <g><circle cx="257.9" cy="232.8" r="10" fill="#0B0E15" stroke="rgba(198,204,218,0.16)"/><text x="257.9" y="237.8" text-anchor="middle" font-size="14" fill="#EEF1F7" font-family="JetBrains Mono, monospace">☉</text></g>
+      <g><circle cx="281.2" cy="174.0" r="10" fill="#0B0E15" stroke="rgba(198,204,218,0.16)"/><text x="281.2" y="179.0" text-anchor="middle" font-size="14" fill="#EEF1F7" font-family="JetBrains Mono, monospace">☾</text></g>
+      <g><circle cx="237.8" cy="254.0" r="10" fill="#0B0E15" stroke="rgba(198,204,218,0.16)"/><text x="237.8" y="259.0" text-anchor="middle" font-size="14" fill="#EEF1F7" font-family="JetBrains Mono, monospace">☿</text></g>
+      <g><circle cx="197.5" cy="276.1" r="10" fill="#0B0E15" stroke="rgba(198,204,218,0.16)"/><text x="197.5" y="281.1" text-anchor="middle" font-size="14" fill="#EEF1F7" font-family="JetBrains Mono, monospace">♀</text></g>
+      <g><circle cx="198.0" cy="275.9" r="10" fill="#0B0E15" stroke="rgba(198,204,218,0.16)"/><text x="198.0" y="280.9" text-anchor="middle" font-size="14" fill="#EEF1F7" font-family="JetBrains Mono, monospace">♂</text></g>
+      <g><circle cx="38.4" cy="150.2" r="10" fill="#0B0E15" stroke="rgba(198,204,218,0.16)"/><text x="38.4" y="155.2" text-anchor="middle" font-size="14" fill="#EEF1F7" font-family="JetBrains Mono, monospace">♃</text></g>
+      <g><circle cx="133.5" cy="40.9" r="10" fill="#0B0E15" stroke="rgba(198,204,218,0.16)"/><text x="133.5" y="45.9" text-anchor="middle" font-size="14" fill="#EEF1F7" font-family="JetBrains Mono, monospace">♄</text></g>
+      <g><circle cx="41.4" cy="188.6" r="10" fill="#0B0E15" stroke="rgba(198,204,218,0.16)"/><text x="41.4" y="193.6" text-anchor="middle" font-size="14" fill="#EEF1F7" font-family="JetBrains Mono, monospace">♅</text></g>
+      <g><circle cx="38.7" cy="172.6" r="10" fill="#0B0E15" stroke="rgba(198,204,218,0.16)"/><text x="38.7" y="177.6" text-anchor="middle" font-size="14" fill="#EEF1F7" font-family="JetBrains Mono, monospace">♆</text></g>
+      <g><circle cx="152.1" cy="38.3" r="10" fill="#0B0E15" stroke="rgba(198,204,218,0.16)"/><text x="152.1" y="43.3" text-anchor="middle" font-size="14" fill="#EEF1F7" font-family="JetBrains Mono, monospace">♇</text></g>
+      </svg>
+      <p class="mono wheel__caption">Positions at 12:00 civil time in The Brontë Birthplace — a reference instant, not a birth time.</p>
+    </div>
+      <div class="disclosure">
+        <div class="disclosure__summary">
+          <span><strong>Where this comes from</strong><small>Sources, revisions, and exactly what the chart assumes</small></span>
+          <span class="disclosure__mark">−</span>
+        </div>
+        <dl class="rows">
+          <div class="row"><dt>Source article</dt><dd>en.wikipedia.org/wiki/Emily_Brontë · rev 1365227432</dd></div>
+          <div class="row"><dt>Wikidata</dt><dd>Q80137 · rev 2520235246</dd></div>
+          <div class="row"><dt>Retrieved</dt><dd>2026-07-25T17:05:12.504Z</dd></div>
+          <div class="row"><dt>Birth date as stored</dt><dd>1818-07-30 · day precision</dd></div>
+          <div class="row"><dt>Calendar model</dt><dd>proleptic-gregorian · none required — the stored value is already proleptic Gregorian</dd></div>
+          <div class="row"><dt>Birthplace</dt><dd>The Brontë Birthplace, United Kingdom · Q17534538</dd></div>
+          <div class="row"><dt>Coordinates</dt><dd>53.7910, -1.8487 · from The Brontë Birthplace</dd></div>
+          <div class="row"><dt>Zone and offset</dt><dd>Europe/London · -1.25 min from UTC</dd></div>
+          <div class="row"><dt>Reference instant</dt><dd>1818-07-30T12:01:15.000Z · noon civil time, not a birth time</dd></div>
+          <div class="row"><dt>Omitted</dt><dd>rising sign, houses, angles, sect — all require a birth time</dd></div>
+          <div class="row"><dt>Moon across the day</dt><dd>11.95° · stays in Cancer</dd></div>
+          <div class="row"><dt>Engine</dt><dd>astronomy-engine (repository dependency) · aspects @zodiacs/engine/internal/math</dd></div>
+          <div class="row"><dt>Portrait</dt><dd>Branwell Brontë · public domain · Wikimedia Commons</dd></div>
+        </dl>
+        <p class="fine" style="padding-bottom:12px">Something wrong here? <a href="mailto:people@zodiacs.org">Ask us to correct or remove it</a>.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>
