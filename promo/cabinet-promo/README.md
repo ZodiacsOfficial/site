@@ -9,7 +9,44 @@
   </a>
 </p>
 
-Welcome to your Remotion project!
+Promo films for zodiacs.org — the Registry wing's Cabinet of Twelve.
+
+## Compositions
+
+| id | size | length | what it is |
+| --- | --- | --- | --- |
+| `CabinetPromoWide` | 1920×1080 | 19.3s | **The campaign film.** Five editions, explained one threshold at a time. |
+| `CabinetPromo` | 1080×1920 | 19.3s | Vertical cut of the same film |
+
+The film's job is the ladder. A title card, then the case fills in pastel,
+and from there each edition gets the same treatment: a full-screen **HOLD**
+card counting up to the threshold, then the material landing across the
+twelve seats. Bronze at 10,000, Silver at 100,000, Gold at 1,000,000, and
+Crown Gold at 10,000,000 — where one seat frames itself in gold and the case
+is gilded around it. Tier-to-tier is roughly two thirds of the runtime, which
+is what the film is for.
+
+Silver's promotion lives in the case, not the artwork: the niche becomes a
+brushed platinum bar with a travelling specular sheen while the medallion
+keeps its pastel art. That is what separates it from Bronze at a glance.
+
+## Audio
+
+The cue is pure-math synthesis — no samples, no third-party audio, nothing to
+clear. The voices live in `scripts/synth.mjs`.
+
+```console
+node scripts/make-audio.mjs   # public/score.wav
+```
+
+Deterministic: the same script always writes the same bytes.
+
+## Rendering
+
+```console
+npx remotion render CabinetPromoWide out/cabinet-promo-wide.mp4
+npx remotion render CabinetPromo     out/cabinet-promo-vertical.mp4
+```
 
 ## Commands
 

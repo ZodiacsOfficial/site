@@ -6,6 +6,12 @@ const OVERSHOOT = Easing.bezier(0.34, 1.56, 0.64, 1);
 
 const BRONZE_RIM = '#B08D57';
 const GOLD_RIM = '#E0B080';
+/** Crown Gold's leaf: the fifth edition's metal, brighter than Gold's rim. */
+const LEAF = '#E8C46A';
+const LEAF_BRIGHT = '#FFF2C4';
+const LEAF_INK = '#2A1D07';
+const LEAF_BAR =
+  'linear-gradient(146deg, #FFF6D8 0%, #E6BD5C 22%, #8D6626 46%, #F6E3A8 68%, #C1913C 100%)';
 
 export interface CabinetWaves {
   /** Per-seat landing frames for each material, zodiac order. */
@@ -13,20 +19,28 @@ export interface CabinetWaves {
   bronze: number[];
   silver: number[];
   gold: number[];
+  /**
+   * Crown Gold: the frame the crowned seat is cast, and which seat earns it.
+   * One seat frames itself in gold and the whole case is gilded around it.
+   */
+  crown: number;
+  crownSeat: number;
   /** The engraved case plate appears here. */
   plateFrame: number;
 }
 
-type Finish = 'reserved' | 'pastel' | 'bronze' | 'silver' | 'gold';
+type Finish = 'reserved' | 'pastel' | 'bronze' | 'silver' | 'gold' | 'crown';
 
 const FINISH_CAPTION: Record<Exclude<Finish, 'reserved'>, string> = {
   pastel: 'I · PASTEL',
   bronze: 'II · BRONZE',
   silver: 'III · SILVER',
-  gold: 'IV · GOLD ×9+',
+  gold: 'IV · GOLD ×9',
+  crown: 'V · CROWN ×12',
 };
 
 function seatFinish(index: number, frame: number, waves: CabinetWaves): Finish {
+  if (index === waves.crownSeat && frame >= waves.crown) return 'crown';
   if (frame >= waves.gold[index]) return 'gold';
   if (frame >= waves.silver[index]) return 'silver';
   if (frame >= waves.bronze[index]) return 'bronze';
@@ -62,6 +76,11 @@ export const Cabinet = ({ waves }: { waves: CabinetWaves }) => {
     extrapolateRight: 'clamp',
     easing: SLOW,
   });
+  const crowned = interpolate(frame, [waves.crown, waves.crown + 20], [0, 1], {
+    extrapolateLeft: 'clamp',
+    extrapolateRight: 'clamp',
+    easing: SLOW,
+  });
   const allGoldAt = waves.gold[11];
   const bloom = interpolate(frame, [allGoldAt, allGoldAt + 16], [0, 1], {
     extrapolateLeft: 'clamp',
@@ -79,10 +98,14 @@ export const Cabinet = ({ waves }: { waves: CabinetWaves }) => {
         flexDirection: 'column',
         gap: 16,
         padding: 24,
-        border: `2px solid ${bloom > 0 ? `rgba(224,176,128,${0.3 + bloom * 0.45})` : HAIR}`,
+        border: `2px solid ${crowned > 0
+          ? `rgba(232,196,106,${0.4 + crowned * 0.5})`
+          : bloom > 0 ? `rgba(224,176,128,${0.3 + bloom * 0.45})` : HAIR}`,
         borderRadius: 30,
         background: 'linear-gradient(180deg, rgba(198,204,218,0.035), rgba(198,204,218,0.008) 70%)',
-        boxShadow: bloom > 0 ? `0 0 ${70 + bloom * 70}px rgba(224,176,128,${0.14 + bloom * 0.2})` : 'none',
+        boxShadow: crowned > 0
+          ? `0 0 ${90 + crowned * 90}px rgba(200,150,60,${0.18 + crowned * 0.22}), inset 0 0 0 ${3 * crowned}px rgba(6,7,10,0.9), inset 0 0 0 ${4 * crowned}px rgba(232,196,106,${0.6 * crowned})`
+          : bloom > 0 ? `0 0 ${70 + bloom * 70}px rgba(224,176,128,${0.14 + bloom * 0.2})` : 'none',
       }}
     >
       <div
@@ -104,8 +127,16 @@ export const Cabinet = ({ waves }: { waves: CabinetWaves }) => {
             extrapolateRight: 'clamp',
             easing: OVERSHOOT,
           });
-          const isGold = finish === 'gold';
+          const isCrown = finish === 'crown';
+          const isGold = finish === 'gold' || isCrown;
           const isSilver = finish === 'silver';
+          const crownIn = isCrown
+            ? interpolate(frame, [waves.crown, waves.crown + 16], [0, 1], {
+                extrapolateLeft: 'clamp',
+                extrapolateRight: 'clamp',
+                easing: SLOW,
+              })
+            : 0;
           // The medallion keeps its bronze circle ring from silver onward; the
           // silver promotion lives in the case: the niche becomes a platinum bar.
           const circleRim = finish === 'bronze' || isSilver ? BRONZE_RIM : null;
@@ -157,6 +188,23 @@ export const Cabinet = ({ waves }: { waves: CabinetWaves }) => {
                     : 'none',
               }}
             >
+              {isCrown && (
+                <div
+                  style={{
+                    position: 'absolute',
+                    inset: 0,
+                    borderRadius: 18,
+                    padding: 5 * crownIn,
+                    background: LEAF_BAR,
+                    opacity: crownIn,
+                    WebkitMask:
+                      'linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0)',
+                    mask: 'linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0)',
+                    maskComposite: 'exclude',
+                    WebkitMaskComposite: 'xor',
+                  }}
+                />
+              )}
               {isSilver && (
                 <div
                   style={{
@@ -187,16 +235,18 @@ export const Cabinet = ({ waves }: { waves: CabinetWaves }) => {
                     top: 8,
                     right: 12,
                     padding: '3px 12px',
-                    border: `1.5px solid ${GOLD_RIM}aa`,
+                    border: `1.5px solid ${isCrown ? LEAF_BRIGHT : `${GOLD_RIM}aa`}`,
                     borderRadius: 999,
+                    background: isCrown ? LEAF_BAR : 'transparent',
                     fontFamily: MONO,
+                    fontWeight: isCrown ? 700 : 400,
                     fontSize: 18,
-                    color: GOLD_RIM,
+                    color: isCrown ? LEAF_INK : GOLD_RIM,
                     opacity: badgeIn,
                     scale: String(0.7 + badgeIn * 0.3),
                   }}
                 >
-                  ×9+
+                  {isCrown ? '×12' : '×9'}
                 </span>
               )}
 
@@ -286,7 +336,7 @@ export const Cabinet = ({ waves }: { waves: CabinetWaves }) => {
                   fontSize: 15,
                   letterSpacing: '0.2em',
                   textTransform: 'uppercase',
-                  color: isGold ? GOLD_RIM : INK_2,
+                  color: isCrown ? LEAF_BRIGHT : isGold ? GOLD_RIM : INK_2,
                   opacity: finish === 'reserved' ? 0 : 0.9,
                 }}
               >
@@ -304,16 +354,23 @@ export const Cabinet = ({ waves }: { waves: CabinetWaves }) => {
           alignItems: 'center',
           gap: 6,
           padding: '18px 0 10px',
-          borderTop: `1px solid ${plateIn > 0 ? 'rgba(224,176,128,0.4)' : 'transparent'}`,
+          borderTop: `1px solid ${plateIn > 0 ? (crowned > 0 ? 'rgba(232,196,106,0.55)' : 'rgba(224,176,128,0.4)') : 'transparent'}`,
           opacity: plateIn,
           translate: `0px ${(1 - plateIn) * 14}px`,
         }}
       >
-        <span style={{ fontFamily: MONO, fontSize: 26, letterSpacing: '0.34em', color: GOLD_RIM }}>
-          THE COMPLETE TWELVE
+        <span
+          style={{
+            fontFamily: MONO,
+            fontSize: 26,
+            letterSpacing: '0.34em',
+            color: crowned > 0 ? LEAF_BRIGHT : GOLD_RIM,
+          }}
+        >
+          {crowned > 0 ? 'CROWN GOLD · SEALED V' : 'THE COMPLETE TWELVE'}
         </span>
-        <span style={{ fontFamily: MONO, fontSize: 19, letterSpacing: '0.3em', color: 'rgba(224,176,128,0.7)' }}>
-          RECORDED JULY 24, 2026 UTC
+        <span style={{ fontFamily: MONO, fontSize: 19, letterSpacing: '0.3em', color: crowned > 0 ? LEAF : 'rgba(224,176,128,0.7)' }}>
+          {crowned > 0 ? 'THE COMPLETE TWELVE · RECORDED JULY 24, 2026 UTC' : 'RECORDED JULY 24, 2026 UTC'}
         </span>
       </div>
     </div>

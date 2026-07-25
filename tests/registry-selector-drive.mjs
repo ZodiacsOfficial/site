@@ -330,12 +330,19 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       registryMaterialPage.goto(`${baseURL}/registry/`, { waitUntil: 'domcontentloaded' }),
     ]);
     const material = async (page, selector, lens) => {
+      // This assertion compares the settled material recipes, not animation
+      // timing. CI runners can briefly suspend a page while another page is
+      // sampled, so a wall-clock delay can still catch the 420ms transition
+      // between its endpoints. Disable that transition for this measurement.
+      await page.locator(selector).evaluateAll((actions) => {
+        for (const action of actions) {
+          action.style.setProperty('transition', 'none', 'important');
+        }
+      });
       await page.evaluate((enabled) => document.documentElement.classList.toggle('zdx-lens', enabled), lens);
-      // Let the Registry's existing 420ms button background transition settle
-      // after switching between the Chromium lens and Safari/iOS fallback
-      // recipes. Sampling mid-transition makes equivalent settled materials
-      // serialize with different alpha values in Chromium.
-      await page.waitForTimeout(480);
+      await page.evaluate(() => new Promise((resolve) => {
+        requestAnimationFrame(() => requestAnimationFrame(resolve));
+      }));
       return page.locator(selector).evaluateAll((actions) => actions.map((action) => {
         const style = getComputedStyle(action);
         return {

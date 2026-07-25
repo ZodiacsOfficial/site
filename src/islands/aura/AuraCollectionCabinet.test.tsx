@@ -5,9 +5,11 @@ import { render } from 'preact-render-to-string';
 import { describe, expect, it } from 'vitest';
 import { AURA_SIGN_ORDER, type AuraCabinetHolding } from '../../lib/aura/types';
 import AuraCollectionCabinet, {
+  cabinetVisibleEdition,
   cabinetVisibleFinish,
   compactGoldCount,
   exactGoldCount,
+  isCrownHolding,
   normalizedGoldCount,
   principalSign,
 } from './AuraCollectionCabinet';
@@ -116,7 +118,57 @@ describe('AuraCollectionCabinet', () => {
     expect(cabinetVisibleFinish('gold', 'silver')).toBe('silver');
     expect(cabinetVisibleFinish('gold', 'gold')).toBe('gold');
     expect(cabinetVisibleFinish('gold', 'strike')).toBe('gold');
+    expect(cabinetVisibleFinish('gold', 'gild')).toBe('gold');
     expect(cabinetVisibleFinish('silver', 'settled')).toBe('silver');
+  });
+
+  it('holds Crown Gold behind Gold until its own beat', () => {
+    const crowned = { sign: 'leo', finish: 'gold', goldCount: '12' } as const;
+    const single = { sign: 'leo', finish: 'gold', goldCount: '9' } as const;
+
+    expect(isCrownHolding(crowned)).toBe(true);
+    expect(isCrownHolding(single)).toBe(false);
+    expect(isCrownHolding({ sign: 'leo', finish: 'silver' })).toBe(false);
+    expect(cabinetVisibleEdition(crowned, 'silver')).toBe('silver');
+    expect(cabinetVisibleEdition(crowned, 'gold')).toBe('gold');
+    expect(cabinetVisibleEdition(crowned, 'strike')).toBe('gold');
+    expect(cabinetVisibleEdition(crowned, 'gild')).toBe('crown');
+    expect(cabinetVisibleEdition(crowned, 'settled')).toBe('crown');
+    expect(cabinetVisibleEdition(single, 'settled')).toBe('gold');
+  });
+
+  it('crowns the case, frames the seat, and seals the fifth edition V', () => {
+    const markup = render(h(AuraCollectionCabinet, {
+      holdings: [
+        { sign: 'aries', finish: 'pastel' },
+        { sign: 'leo', finish: 'gold', goldCount: '12' },
+      ],
+      selectedSign: 'leo',
+    }));
+    const uncrowned = render(h(AuraCollectionCabinet, {
+      holdings: [{ sign: 'leo', finish: 'gold', goldCount: '9' }],
+      selectedSign: 'leo',
+    }));
+
+    expect(markup).toContain('data-aura-cabinet-crown="true"');
+    expect(markup).toContain('aura-collection-cabinet__gilding');
+    expect(markup).toContain('data-aura-cabinet-crown-plate');
+    expect(markup).toContain('Crown Gold');
+    expect(markup).toContain('sealed V');
+    expect(markup).toContain('From 10,000,000 held');
+    expect(markup).toContain('data-aura-cabinet-edition="crown"');
+    expect(markup).toContain('data-aura-cabinet-lineage="crown"');
+    expect(markup).toContain('>×12</span>');
+    // The seat still holds a Gold sculpture: gilding frames it, never replaces it.
+    expect(markup).toContain('/assets/cabinet-materials/gold/leo.webp');
+    // Nine sculptures is still the Gold Sculpture, and the case stays plain.
+    expect(uncrowned).toContain('data-aura-cabinet-crown="false"');
+    expect(uncrowned).not.toContain('data-aura-cabinet-crown-plate');
+    expect(uncrowned).not.toContain('data-aura-cabinet-edition="crown"');
+    // Rung V stands in the rail either way — the ladder is always the whole ladder.
+    expect(uncrowned).toContain('data-aura-cabinet-lineage="crown"');
+    // Standing is recorded, never sold.
+    expect(markup).not.toMatch(/buy|acquire|upgrade|unlock/i);
   });
 
   it('shows additional Masterworks as struck roundels with one capped grammar', () => {
@@ -134,8 +186,8 @@ describe('AuraCollectionCabinet', () => {
     expect(doubleMarkup).toContain('×2');
     expect(doubleMarkup).toContain('2 gold sculptures — one for each complete million held.');
     expect(largeMarkup.match(/aura-collection-cabinet__strike-roundel--more/g)).toHaveLength(1);
-    // The badge caps at ×9+ everywhere public; the placard keeps the exact figure.
-    expect(largeMarkup).toContain('×9+');
+    // The badge caps at ×99+ everywhere public; the placard keeps the exact figure.
+    expect(largeMarkup).toContain('×99+');
     expect(largeMarkup).not.toContain('×2.5K');
     expect(largeMarkup).toContain('2,500 gold sculptures — one for each complete million held.');
     expect(largeMarkup).toContain('· ×2,500');
@@ -149,8 +201,10 @@ describe('AuraCollectionCabinet', () => {
     expect(exactGoldCount('1234567')).toBe('1,234,567');
     expect(compactGoldCount('2')).toBe('2');
     expect(compactGoldCount('9')).toBe('9');
-    expect(compactGoldCount('10')).toBe('9+');
-    expect(compactGoldCount('2500')).toBe('9+');
+    expect(compactGoldCount('10')).toBe('10');
+    expect(compactGoldCount('99')).toBe('99');
+    expect(compactGoldCount('100')).toBe('99+');
+    expect(compactGoldCount('2500')).toBe('99+');
   });
 
   it('names the principal work by edition, then Gold count, then zodiac order', () => {
@@ -223,6 +277,12 @@ describe('AuraCollectionCabinet', () => {
     expect(css).toMatch(/\.aura-collection-cabinet__strike-roundel\s*\{[^}]*opacity:\s*0;/s);
     expect(css).toContain('calc(var(--aura-strike-index) * 120ms)');
     expect(css).toContain('.aura-collection-cabinet__case-plate');
+    expect(css).toContain('.aura-collection-cabinet__gilding');
+    expect(css).toContain('aura-cabinet-gilding-pass');
+    expect(css).toContain('aura-cabinet-gilding-sheen');
+    // The gilding beat dims the room further than the gold beat did.
+    expect(css).toMatch(/data-aura-cabinet-stage="gild"[^{]*:not\(\[data-aura-cabinet-edition="crown"\]\)/);
+    expect(css).toMatch(/\.aura-collection-cabinet__lineage\s*\{[^}]*repeat\(5,/s);
     expect(css).toContain('@media (hover: hover) and (pointer: fine)');
     expect(css).toContain('@media (prefers-reduced-motion: reduce)');
     expect(css).toContain('@media (forced-colors: active)');
@@ -237,6 +297,9 @@ describe('AuraCollectionCabinet', () => {
     expect(source).toContain("['gold', 2_650]");
     expect(source).toContain("['strike', 3_500]");
     expect(source).toContain('REVEAL_SETTLE_MS = 4_100');
+    // The gilding beat is additive: only cabinets that earned it wait longer.
+    expect(source).toContain('GILD_BEAT_MS = 4_300');
+    expect(source).toContain('GILD_SETTLE_MS = 5_500');
     expect(source).toContain('typeof IntersectionObserver');
     expect(source).toContain("document.addEventListener('visibilitychange'");
     // A visitor's click or keypress mid-reveal settles the case immediately.

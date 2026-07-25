@@ -1,13 +1,25 @@
 {
   "version": 1,
-  "id": "public-launch-p1-remediation-2026-07-23",
-  "baseCommit": "ad91e7ebb2987067e9b7258224fa94bf7702cc45",
-  "reason": "Owner-approved bounded public-launch remediation for the Registry no-JavaScript mobile overflow and the approved public contact identity, without changing Registry data, localization activation, indexing, navigation, or Phase 3 feature flags.",
+  "id": "registry-collection-crown-gold-2026-07-25",
+  "baseCommit": "e47531006aaf90b19fb8ebe506cef488023e39a7",
+  "reason": "Owner-approved bounded Registry Collection release for Crown Gold, the cabinet share card, and campaign film, without changing Registry data, localization activation, indexing, navigation, or Phase 3 and Phase 4 feature flags.",
   "protectedPaths": [
-    "public/registry/index.html",
-    "src/pages/es/privacy/index.astro",
-    "src/pages/fr/privacy/index.astro",
-    "src/pages/it/privacy/index.astro",
-    "src/pages/pt/privacy/index.astro"
+    "src/islands/RegistryAura.tsx",
+    "src/islands/aura/AuraCollectionCabinet.css",
+    "src/islands/aura/AuraCollectionCabinet.test.tsx",
+    "src/islands/aura/AuraCollectionCabinet.tsx",
+    "src/islands/aura/AuraResult.test.tsx",
+    "src/islands/aura/AuraResult.tsx",
+    "src/islands/aura/AuraSharePreview.tsx",
+    "src/lib/aura-share-card.test.ts",
+    "src/lib/aura-share-card.ts",
+    "src/lib/aura/cabinet-finish.test.ts",
+    "src/lib/aura/cabinet-finish.ts",
+    "src/lib/aura/example.ts",
+    "src/lib/aura/talisman.test.ts",
+    "src/lib/aura/talisman.ts",
+    "src/lib/aura/types.ts",
+    "src/pages/registry/collection/index.astro",
+    "src/styles/registry-aura.css"
   ]
 }

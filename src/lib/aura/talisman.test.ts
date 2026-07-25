@@ -151,7 +151,9 @@ describe('Registry Aura talisman geometry', () => {
       { sign: 'aquarius', finish: 'gold', count: '×3', arcs: 2 },
     ]);
     expect(talismanGoldCountLabel('9')).toBe('×9');
-    expect(talismanGoldCountLabel('10')).toBe('×9+');
+    expect(talismanGoldCountLabel('10')).toBe('×10');
+    expect(talismanGoldCountLabel('99')).toBe('×99');
+    expect(talismanGoldCountLabel('100')).toBe('×99+');
   });
 });
 
