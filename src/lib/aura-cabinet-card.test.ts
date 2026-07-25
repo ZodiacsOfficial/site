@@ -10,6 +10,13 @@ import {
   type AuraCabinetCardInput,
 } from "./aura-cabinet-card";
 import { AURA_SIGN_ORDER } from "./aura/types";
+import {
+  CABINET_EXPORT_WIDTH,
+  cabinetMediaMatches,
+  cabinetSelectorKeeps,
+  rewriteCabinetSelector,
+  rewriteViewportUnits,
+} from "./aura-cabinet-card-capture";
 
 const input: AuraCabinetCardInput = {
   holdings: [
@@ -222,5 +229,65 @@ describe("Registry Aura cabinet PNG", () => {
 
     expect(canShareAuraCabinetBlob(blob)).toBe(false);
     expect(await shareAuraCabinetBlob(blob)).toBe("unavailable");
+  });
+});
+
+describe("cabinet capture flattening", () => {
+  it("decides media conditions at the fixed export width", () => {
+    // The export width sits inside the phone cascade: the three-column case.
+    expect(cabinetMediaMatches("(max-width: 639px)", CABINET_EXPORT_WIDTH)).toBe(true);
+    expect(cabinetMediaMatches("(max-width: 639px)", 700)).toBe(false);
+    expect(cabinetMediaMatches("(max-width: 719px)", CABINET_EXPORT_WIDTH)).toBe(true);
+    expect(cabinetMediaMatches("(min-width: 640px)", CABINET_EXPORT_WIDTH)).toBe(false);
+    expect(cabinetMediaMatches("screen and (max-width: 899px)", CABINET_EXPORT_WIDTH)).toBe(true);
+    expect(cabinetMediaMatches("(max-width: 400px), (max-width: 639px)", CABINET_EXPORT_WIDTH)).toBe(true);
+    expect(cabinetMediaMatches("not screen and (min-width: 640px)", CABINET_EXPORT_WIDTH)).toBe(true);
+    // A still export has no pointer, no motion preference, no orientation.
+    expect(cabinetMediaMatches("(hover: hover) and (pointer: fine)", CABINET_EXPORT_WIDTH)).toBe(false);
+    expect(cabinetMediaMatches("(prefers-reduced-motion: reduce)", CABINET_EXPORT_WIDTH)).toBe(false);
+    expect(cabinetMediaMatches("(forced-colors: active)", CABINET_EXPORT_WIDTH)).toBe(false);
+    expect(cabinetMediaMatches("(orientation: landscape)", CABINET_EXPORT_WIDTH)).toBe(false);
+    expect(cabinetMediaMatches("", CABINET_EXPORT_WIDTH)).toBe(true);
+  });
+
+  it("keeps the base resets the cabinet's layout depends on", () => {
+    // These three casualties were the clipped, unbordered card: box-sizing,
+    // the document font size, and the button reset behind every niche.
+    expect(cabinetSelectorKeeps("*, *::before, *::after")).toBe(true);
+    expect(cabinetSelectorKeeps("html, body")).toBe(true);
+    expect(cabinetSelectorKeeps("button")).toBe(true);
+    expect(cabinetSelectorKeeps("img, svg, video")).toBe(true);
+    expect(cabinetSelectorKeeps(":root")).toBe(true);
+    expect(cabinetSelectorKeeps(".aura-collection-cabinet__grid")).toBe(true);
+    expect(cabinetSelectorKeeps(".zodiac-medallion::after")).toBe(true);
+    expect(cabinetSelectorKeeps(".btn--primary")).toBe(false);
+    expect(cabinetSelectorKeeps(".aura-page__hero .kicker")).toBe(false);
+  });
+
+  it("re-targets document selectors at what exists inside the capture", () => {
+    expect(rewriteCabinetSelector("html, body")).toBe(
+      ":root, [data-aura-cabinet-capture-root]",
+    );
+    expect(rewriteCabinetSelector("html.js .aura-collection-cabinet__frame")).toBe(
+      ":root .aura-collection-cabinet__frame",
+    );
+    expect(rewriteCabinetSelector(".aura-collection-cabinet__name")).toBe(
+      ".aura-collection-cabinet__name",
+    );
+  });
+
+  it("resolves viewport widths to pixels and drops viewport heights", () => {
+    expect(rewriteViewportUnits("padding: clamp(9px, 1.5vw, 16px)", CABINET_EXPORT_WIDTH)).toBe(
+      "padding: clamp(9px, 7.29px, 16px)",
+    );
+    expect(
+      rewriteViewportUnits("min-height: 100dvh; color: rgb(0, 0, 0)", CABINET_EXPORT_WIDTH),
+    ).toBe("color: rgb(0, 0, 0)");
+  });
+
+  it("exports a PNG exactly 1080 device pixels wide", () => {
+    // Card padding is round(width × 0.055) per side at a 2× raster.
+    const pad = Math.round(CABINET_EXPORT_WIDTH * 0.055);
+    expect((CABINET_EXPORT_WIDTH + pad * 2) * 2).toBe(1080);
   });
 });

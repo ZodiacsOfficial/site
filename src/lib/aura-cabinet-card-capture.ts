@@ -7,7 +7,7 @@
  * fonts and artwork embedded. What the visitor sees is what they post.
  *
  * The technique is an SVG <foreignObject> wrapping a clone of the element.
- * Two details make it faithful rather than merely close:
+ * Three details make it faithful rather than merely close:
  *
  *   · The real CSS is embedded, not per-element inline styles. The cabinet is
  *     built out of ::before/::after — the frame's corner marks, the struck
@@ -16,21 +16,191 @@
  *   · Fonts and images are inlined as data URIs. An <img src="/…"> inside a
  *     foreignObject never loads, and a missing @font-face silently reflows
  *     every label.
+ *   · The export is laid out at one fixed width — the portrait three-column
+ *     case — no matter what device captures it. Media conditions are decided
+ *     here, in code, against that width, and viewport units are resolved to
+ *     pixels, so neither the sharer's screen nor the SVG raster size can
+ *     re-flow the clone.
  *
- * Browser-only by construction: it reads the document, so it is imported
- * lazily and never runs during SSR or in a unit test.
+ * The capture clones the cabinet SECTION, because the section carries every
+ * `--aura-cabinet-*` token, the `is-complete`/`is-crown` classes, and the
+ * settled-stage attribute the state selectors read. The page header, placard,
+ * and plaques are removed from the clone: the card draws its own chrome, and
+ * the case — frame, seats, engraved plates — is the picture.
+ *
+ * Browser-only by construction (the pure helpers above `captureCabinet` are
+ * unit-tested; the capture itself reads the document, so it is imported
+ * lazily and never runs during SSR).
  */
 
 /** Stylesheet rules the cabinet needs; everything else is dead weight. */
 const RELEVANT = /aura-collection-cabinet|zodiac-medallion/;
 
-/** The three faces the cabinet actually sets. */
+/**
+ * The one width every export uses, in CSS pixels. 486 sits inside the
+ * ≤639px cascade, so the clone lays out as the portrait three-column case —
+ * the cabinet as a phone shows it. The card pads it by round(486 × 0.055)
+ * per side: (486 + 54) × 2 = a PNG exactly 1080 device pixels wide.
+ */
+export const CABINET_EXPORT_WIDTH = 486;
+
+export const CABINET_CAPTURE_SCALE = 2;
+
+/** The four faces the cabinet actually sets. */
 const FONT_FACES: { family: string; weight: string; style: string; url: string }[] = [
   { family: 'EB Garamond', weight: '400', style: 'normal', url: '/fonts/eb-garamond-latin-400-normal.woff2' },
   { family: 'EB Garamond', weight: '500', style: 'normal', url: '/fonts/eb-garamond-latin-500-normal.woff2' },
   { family: 'Instrument Sans', weight: '100 900', style: 'normal', url: '/fonts/instrument-sans-latin-wght-normal.woff2' },
   { family: 'JetBrains Mono', weight: '100 800', style: 'normal', url: '/fonts/jetbrains-mono-latin-wght-normal.woff2' },
 ];
+
+/** Splits at the top nesting level only, so `(a, b)` never splits inside. */
+function splitTopLevel(text: string, separator: ',' | ' and '): string[] {
+  const parts: string[] = [];
+  let depth = 0;
+  let current = '';
+  let index = 0;
+  while (index < text.length) {
+    const char = text[index];
+    if (char === '(') depth += 1;
+    else if (char === ')') depth = Math.max(0, depth - 1);
+    if (depth === 0 && text.startsWith(separator, index)) {
+      parts.push(current);
+      current = '';
+      index += separator.length;
+      continue;
+    }
+    current += char;
+    index += 1;
+  }
+  parts.push(current);
+  return parts;
+}
+
+function mediaLengthPx(value: string): number | null {
+  const match = /^\s*(-?\d*\.?\d+)(px|em|rem)\s*$/.exec(value);
+  if (!match) return null;
+  const amount = Number.parseFloat(match[1]);
+  return match[2] === 'px' ? amount : amount * 16;
+}
+
+function mediaTermMatches(term: string, width: number): boolean {
+  const trimmed = term.trim();
+  if (!trimmed) return false;
+  if (/^(all|screen)$/i.test(trimmed)) return true;
+  const feature = /^\(\s*([a-z-]+)\s*:\s*([^)]+)\)$/i.exec(trimmed);
+  if (!feature) return false;
+  const name = feature[1].toLowerCase();
+  if (name === 'max-width') {
+    const limit = mediaLengthPx(feature[2]);
+    return limit !== null && width <= limit;
+  }
+  if (name === 'min-width') {
+    const limit = mediaLengthPx(feature[2]);
+    return limit !== null && width >= limit;
+  }
+  // Interaction, preference, orientation, and unknown features are decided
+  // conservatively: a still export has no pointer, no motion preference, and
+  // no orientation, so their conditional styling is simply not the page's
+  // settled default and stays out.
+  return false;
+}
+
+/**
+ * Decides a media condition against the fixed export width. Pure, so the
+ * decision is unit-testable and identical wherever the export runs.
+ */
+export function cabinetMediaMatches(condition: string, width: number): boolean {
+  const text = condition.trim();
+  if (!text) return true;
+  return splitTopLevel(text, ',').some((query) => {
+    let clause = query.trim();
+    let negate = false;
+    if (/^not\s/i.test(clause)) {
+      negate = true;
+      clause = clause.slice(4).trim();
+    }
+    if (/^only\s/i.test(clause)) clause = clause.slice(5).trim();
+    const matched = splitTopLevel(clause, ' and ').every((term) => mediaTermMatches(term, width));
+    return negate ? !matched : matched;
+  });
+}
+
+/**
+ * Keeps a rule when any of its selector parts is one the clone can match:
+ * `:root` (the SVG root carries the token custom properties), a type-only
+ * base reset (`*`, `html, body`, `button`, `img, svg, video` — the resets the
+ * cabinet's layout silently depends on), or a cabinet/medallion class.
+ */
+export function cabinetSelectorKeeps(selectorText: string): boolean {
+  return splitTopLevel(selectorText, ',').some((part) => {
+    const trimmed = part.trim();
+    if (!trimmed) return false;
+    if (trimmed.startsWith(':root')) return true;
+    if (RELEVANT.test(trimmed)) return true;
+    return !/[.#[]/.test(trimmed);
+  });
+}
+
+/**
+ * Re-targets document-level selectors at what actually exists inside the SVG:
+ * there is no <html> or <body> element, so `html` becomes `:root` (the SVG
+ * root) and `body` becomes the capture wrapper, which hosts the body-level
+ * inheritance — font family, size, line height, ink colour.
+ */
+export function rewriteCabinetSelector(selectorText: string): string {
+  return splitTopLevel(selectorText, ',')
+    .map((part) => {
+      const trimmed = part.trim();
+      if (!trimmed) return trimmed;
+      return trimmed
+        .replace(/^html(\.[\w-]+)*(?=$|[\s>+~:])/, ':root')
+        .replace(/^body(?=$|[\s>+~:])/, '[data-aura-cabinet-capture-root]');
+    })
+    .filter(Boolean)
+    .join(', ');
+}
+
+/**
+ * Resolves viewport units against the fixed export width so the measurement
+ * probe and the SVG raster cannot disagree: `vw` families become pixels, and
+ * any declaration leaning on a viewport HEIGHT is dropped — the export's
+ * height is decided by content, never by a viewport.
+ */
+export function rewriteViewportUnits(declarations: string, width: number): string {
+  return splitDeclarations(declarations)
+    .filter((declaration) => !/\d(vh|svh|lvh|dvh)\b/.test(declaration))
+    .map((declaration) =>
+      declaration.replace(
+        /(\d*\.?\d+)(vw|svw|lvw|dvw)\b/g,
+        (_, amount: string) => `${trimNumber((Number.parseFloat(amount) * width) / 100)}px`,
+      ),
+    )
+    .join('; ');
+}
+
+function trimNumber(value: number): string {
+  return String(Math.round(value * 100) / 100);
+}
+
+/** Splits a declaration block on top-level semicolons (url(data:…) is safe). */
+function splitDeclarations(declarations: string): string[] {
+  const parts: string[] = [];
+  let depth = 0;
+  let current = '';
+  for (const char of declarations) {
+    if (char === '(') depth += 1;
+    else if (char === ')') depth = Math.max(0, depth - 1);
+    if (char === ';' && depth === 0) {
+      if (current.trim()) parts.push(current.trim());
+      current = '';
+      continue;
+    }
+    current += char;
+  }
+  if (current.trim()) parts.push(current.trim());
+  return parts;
+}
 
 async function dataUri(url: string): Promise<string | null> {
   try {
@@ -60,39 +230,41 @@ async function embeddedFonts(): Promise<string> {
 }
 
 /**
- * Collects the rules that style the cabinet, keeping media conditions intact.
- *
- * Reduced-motion and forced-colours blocks are dropped: the export is a still
- * of the settled case, so a rule that exists to stop animation or to strip
- * colour for accessibility would only flatten the artwork.
+ * Flattens the stylesheet for the export: media conditions are decided at the
+ * export width and unwrapped in document order (so the three-column rules win
+ * their cascade ties exactly as they do on a phone), selectors are filtered
+ * and re-targeted, and no `@media` survives — the raster viewport cannot
+ * re-flow what has already been decided.
  */
-function cabinetRules(): string {
+function flattenCabinetRules(width: number): string {
   const collected: string[] = [];
 
-  const walk = (rules: CSSRuleList, wrap?: string) => {
+  const walk = (rules: CSSRuleList) => {
     for (const rule of Array.from(rules)) {
       if (rule instanceof CSSMediaRule) {
-        const condition = rule.conditionText ?? '';
-        if (/prefers-reduced-motion|forced-colors|prefers-contrast/.test(condition)) continue;
-        // Narrow viewport rules would re-flow the grid at export size.
-        if (/max-width/.test(condition)) continue;
-        walk(rule.cssRules, condition);
+        if (cabinetMediaMatches(rule.conditionText ?? '', width)) walk(rule.cssRules);
         continue;
       }
       if (rule instanceof CSSSupportsRule) {
-        walk(rule.cssRules, wrap);
+        try {
+          if (CSS.supports(rule.conditionText ?? '')) walk(rule.cssRules);
+        } catch {
+          // An unparseable condition is treated as unsupported.
+        }
         continue;
       }
       if (rule instanceof CSSStyleRule) {
         const selector = rule.selectorText ?? '';
-        const isRoot = selector === ':root' || selector === 'html' || selector === ':root,html';
-        if (!isRoot && !RELEVANT.test(selector)) continue;
-        collected.push(wrap ? `@media ${wrap}{${rule.cssText}}` : rule.cssText);
+        if (!cabinetSelectorKeeps(selector)) continue;
+        collected.push(
+          `${rewriteCabinetSelector(selector)}{${rewriteViewportUnits(rule.style.cssText, width)}}`,
+        );
         continue;
       }
-      if (rule instanceof CSSKeyframesRule) {
-        if (RELEVANT.test(rule.name) || /aura-cabinet/.test(rule.name)) collected.push(rule.cssText);
-      }
+      // Keyframes are deliberately dropped: the preamble stills every
+      // animation, and the settled case is expressed by static rules.
+      const nested = (rule as { cssRules?: CSSRuleList }).cssRules;
+      if (nested && !(rule instanceof CSSKeyframesRule)) walk(nested);
     }
   };
 
@@ -107,22 +279,25 @@ function cabinetRules(): string {
 }
 
 /** Swaps every artwork reference in the clone for an inlined copy. */
-async function inlineArtwork(clone: HTMLElement, source: HTMLElement): Promise<void> {
-  const sourceImages = Array.from(source.querySelectorAll('img'));
-  const cloneImages = Array.from(clone.querySelectorAll('img'));
-
+async function inlineArtwork(clone: HTMLElement): Promise<void> {
   // <source> elements would win over the inlined <img src>, and their AVIF
   // candidates cannot be resolved inside a foreignObject at all.
   clone.querySelectorAll('source').forEach((node) => node.remove());
 
   await Promise.all(
-    cloneImages.map(async (image, index) => {
-      const original = sourceImages[index];
-      const href = original?.currentSrc || original?.src || image.src;
-      if (!href) return;
-      const uri = await dataUri(href);
+    Array.from(clone.querySelectorAll('img')).map(async (image) => {
+      const raw = image.getAttribute('src');
+      if (!raw || raw.startsWith('data:')) return;
+      const resolved = new URL(raw, document.baseURI).toString();
+      // The pastel discs ship a 400px master beside the page's 128px asset;
+      // the export is a 2× bitmap, so prefer the sharper file when it exists.
+      const upgraded = resolved.includes('/assets/zodiac-icons/128/')
+        ? resolved.replace('/assets/zodiac-icons/128/', '/assets/zodiac-icons/400/')
+        : null;
+      const uri = (upgraded ? await dataUri(upgraded) : null) ?? (await dataUri(resolved));
       if (uri) image.setAttribute('src', uri);
-      else image.remove();
+      // On failure the original reference stays: an unloadable image renders
+      // an empty layer, while removing the node would collapse the seat.
     }),
   );
 }
@@ -130,53 +305,96 @@ async function inlineArtwork(clone: HTMLElement, source: HTMLElement): Promise<v
 export interface CabinetCaptureOptions {
   /** Pixel density of the exported bitmap. Two keeps type crisp at feed size. */
   scale?: number;
-  /** Void padding drawn around the captured case, in CSS pixels. */
-  padding?: number;
-  background?: string;
+}
+
+export interface CabinetCaptureResult {
+  image: HTMLImageElement;
+  /** Laid-out size in CSS pixels; the bitmap is `scale` times larger. */
+  width: number;
+  height: number;
 }
 
 /**
- * Captures one cabinet element to an image, at `scale` device pixels per CSS
- * pixel. Resolves to a decoded <img> the caller can compose onto a card.
+ * Captures the cabinet to an image at the fixed export width, `scale` device
+ * pixels per CSS pixel. Accepts the section or anything inside it.
  */
 export async function captureCabinet(
   element: HTMLElement,
-  { scale = 2, padding = 0, background = 'transparent' }: CabinetCaptureOptions = {},
-): Promise<HTMLImageElement> {
-  const rect = element.getBoundingClientRect();
-  const width = Math.ceil(rect.width) + padding * 2;
-  const height = Math.ceil(rect.height) + padding * 2;
+  { scale = CABINET_CAPTURE_SCALE }: CabinetCaptureOptions = {},
+): Promise<CabinetCaptureResult> {
+  const section = (element.closest('.aura-collection-cabinet') as HTMLElement | null) ?? element;
+  const width = CABINET_EXPORT_WIDTH;
 
-  const clone = element.cloneNode(true) as HTMLElement;
+  const clone = section.cloneNode(true) as HTMLElement;
+  // The card draws its own chrome; the case is the picture.
+  clone
+    .querySelectorAll(
+      '.aura-collection-cabinet__header, .aura-collection-cabinet__placard, .aura-collection-cabinet__plaques',
+    )
+    .forEach((node) => node.remove());
   // The reveal sequence is irrelevant to a still: export the settled case.
   clone.setAttribute('data-aura-cabinet-stage', 'settled');
-  clone.style.width = `${Math.ceil(rect.width)}px`;
+  clone.style.width = '100%';
   clone.style.margin = '0';
-
-  const [fonts] = await Promise.all([embeddedFonts(), inlineArtwork(clone, element)]);
-  const css = `${fonts}\n*{-webkit-font-smoothing:antialiased;}\n${cabinetRules()}`;
 
   const wrapper = document.createElement('div');
   wrapper.setAttribute('xmlns', 'http://www.w3.org/1999/xhtml');
-  wrapper.style.cssText = `box-sizing:border-box;width:${width}px;padding:${padding}px;background:${background};`;
+  wrapper.setAttribute('data-aura-cabinet-capture-root', '');
+  wrapper.style.cssText = `box-sizing:border-box;width:${width}px;background:transparent;`;
   wrapper.appendChild(clone);
 
+  // Metrics must be final before the probe measures text-bearing rows.
+  if (typeof document.fonts !== 'undefined') {
+    await document.fonts.ready;
+    await Promise.all(
+      ["400 1em 'EB Garamond'", "500 1em 'EB Garamond'", "500 1em 'Instrument Sans'", "500 1em 'JetBrains Mono'"].map(
+        (face) => document.fonts.load(face).catch(() => []),
+      ),
+    );
+  }
+
+  const [fonts] = await Promise.all([embeddedFonts(), inlineArtwork(clone)]);
+  const preamble =
+    ':root{font-size:16px;}' +
+    '*{-webkit-font-smoothing:antialiased;}' +
+    '*,*::before,*::after{animation:none!important;transition:none!important;}';
+  const flattened = flattenCabinetRules(width);
+
+  // Measure the clone at the export width in the live document. This block is
+  // fully synchronous — nothing can paint between append and remove. The
+  // probe styles exclude the data-URI fonts on purpose: the page CSP forbids
+  // them in-document, and the page's own identical faces are already active.
+  let height = 0;
+  const probe = document.createElement('div');
+  probe.style.cssText =
+    `position:fixed;left:-10000px;top:0;width:${width}px;visibility:hidden;pointer-events:none;`;
+  const probeStyle = document.createElement('style');
+  probeStyle.textContent = `${preamble}\n${flattened}`;
+  probe.appendChild(probeStyle);
+  probe.appendChild(wrapper);
+  try {
+    document.body.appendChild(probe);
+    height = Math.ceil(wrapper.getBoundingClientRect().height);
+  } finally {
+    probe.remove();
+  }
+  if (height <= 0) throw new Error('cabinet_capture_failed');
+
+  // The measured markup is serialized once and rastered verbatim.
+  const markup = new XMLSerializer().serializeToString(wrapper);
+  const css = `${fonts}\n${preamble}\n${flattened}`;
   const svg =
-    `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">` +
+    `<svg xmlns="http://www.w3.org/2000/svg" width="${width * scale}" height="${height * scale}" viewBox="0 0 ${width} ${height}">` +
     `<defs><style type="text/css"><![CDATA[${css}]]></style></defs>` +
-    `<foreignObject x="0" y="0" width="${width}" height="${height}">${new XMLSerializer().serializeToString(wrapper)}</foreignObject>` +
+    `<foreignObject x="0" y="0" width="${width}" height="${height}">${markup}</foreignObject>` +
     `</svg>`;
 
   const image = new Image();
-  image.width = width;
-  image.height = height;
   await new Promise<void>((resolve, reject) => {
     image.onload = () => resolve();
     image.onerror = () => reject(new Error('cabinet_capture_failed'));
     image.src = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
   });
   if (typeof image.decode === 'function') await image.decode().catch(() => {});
-  return image;
+  return { image, width, height };
 }
-
-export const CABINET_CAPTURE_SCALE = 2;

@@ -1,25 +1,10 @@
 {
   "version": 1,
-  "id": "registry-collection-crown-gold-2026-07-25",
-  "baseCommit": "e47531006aaf90b19fb8ebe506cef488023e39a7",
-  "reason": "Owner-approved bounded Registry Collection release for Crown Gold, the cabinet share card, and campaign film, without changing Registry data, localization activation, indexing, navigation, or Phase 3 and Phase 4 feature flags.",
+  "id": "registry-collection-cabinet-card-fidelity-2026-07-25",
+  "baseCommit": "c6113b65e01bc63dff7a8dc2d215163e462ce09c",
+  "reason": "Owner-approved fix making the cabinet share card capture the cabinet section with its design tokens and settled state at a fixed portrait export width, and the preview dialog report the card's true dimensions. No Registry data, localization, indexing, navigation, or feature-flag changes.",
   "protectedPaths": [
     "src/islands/RegistryAura.tsx",
-    "src/islands/aura/AuraCollectionCabinet.css",
-    "src/islands/aura/AuraCollectionCabinet.test.tsx",
-    "src/islands/aura/AuraCollectionCabinet.tsx",
-    "src/islands/aura/AuraResult.test.tsx",
-    "src/islands/aura/AuraResult.tsx",
-    "src/islands/aura/AuraSharePreview.tsx",
-    "src/lib/aura-share-card.test.ts",
-    "src/lib/aura-share-card.ts",
-    "src/lib/aura/cabinet-finish.test.ts",
-    "src/lib/aura/cabinet-finish.ts",
-    "src/lib/aura/example.ts",
-    "src/lib/aura/talisman.test.ts",
-    "src/lib/aura/talisman.ts",
-    "src/lib/aura/types.ts",
-    "src/pages/registry/collection/index.astro",
-    "src/styles/registry-aura.css"
+    "src/islands/aura/AuraSharePreview.tsx"
   ]
 }

@@ -66,6 +66,9 @@ interface AuraSharePreviewState {
   kind: AuraShareCardKind;
   blob: Blob;
   url: string;
+  /** Intrinsic bitmap size, so the preview reserves the card's true aspect. */
+  pixelWidth: number;
+  pixelHeight: number;
   shareSupported: boolean;
   accessibleDescription: string;
 }
@@ -74,6 +77,9 @@ type RequestState = "idle" | "busy" | "error";
 
 interface PreparedShareCard {
   blob: Blob;
+  /** Intrinsic bitmap size of the reviewed PNG, in device pixels. */
+  pixelWidth: number;
+  pixelHeight: number;
   shareSupported: boolean;
   accessibleDescription: string;
   share: (blob: Blob) => Promise<AuraShareActionOutcome>;
@@ -102,6 +108,8 @@ async function prepareSealCard(result: AuraResultState): Promise<PreparedShareCa
   const blob = await drawAuraShareCard(cardInput);
   return {
     blob,
+    pixelWidth: 1080,
+    pixelHeight: 1350,
     shareSupported: canShareAuraCardBlob(blob),
     accessibleDescription: auraShareAccessibleDescription(cardInput),
     share: shareAuraCardBlob,
@@ -118,20 +126,23 @@ async function prepareCabinetCard(result: AuraResultState): Promise<PreparedShar
     drawAuraCabinetCard,
     shareAuraCabinetBlob,
   } = await import("../lib/aura-cabinet-card");
-  // The live case is the card: capture the display the visitor is looking at.
-  // The frame is the display — the placard beneath it is a reading surface,
-  // not part of the case, and repeating it would only crowd the image.
-  const element = document.querySelector<HTMLElement>(".aura-collection-cabinet__frame");
+  // The live case is the card. The capture needs the cabinet SECTION — it
+  // carries the design tokens and the settled/complete/crown state the frame's
+  // styling reads — and it strips the page header, placard, and plaques
+  // itself, leaving the case: the frame, the seats, the engraved plates.
+  const element = document.querySelector<HTMLElement>(".aura-stage .aura-collection-cabinet");
   const cardInput = {
     element,
     holdings: result.holdings,
     checkedAt: result.checkedAt,
     chain: result.chain,
   } as const;
-  const blob = await drawAuraCabinetCard(cardInput);
+  const card = await drawAuraCabinetCard(cardInput);
   return {
-    blob,
-    shareSupported: canShareAuraCabinetBlob(blob),
+    blob: card.blob,
+    pixelWidth: card.width,
+    pixelHeight: card.height,
+    shareSupported: canShareAuraCabinetBlob(card.blob),
     accessibleDescription: auraCabinetAccessibleDescription(cardInput),
     share: shareAuraCabinetBlob,
     download: downloadAuraCabinetBlob,
@@ -887,6 +898,8 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
         kind,
         blob: prepared.blob,
         url,
+        pixelWidth: prepared.pixelWidth,
+        pixelHeight: prepared.pixelHeight,
         shareSupported: prepared.shareSupported,
         accessibleDescription: prepared.accessibleDescription,
       });
@@ -1354,6 +1367,8 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
           <AuraSharePreview
             kind="cabinet"
             previewUrl={cabinetPreview.url}
+            previewWidth={cabinetPreview.pixelWidth}
+            previewHeight={cabinetPreview.pixelHeight}
             shareSupported={cabinetPreview.shareSupported}
             accessibleDescription={cabinetPreview.accessibleDescription}
             busy={shareState === "busy"}

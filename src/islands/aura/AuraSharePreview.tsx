@@ -21,6 +21,9 @@ interface AuraSharePreviewProps {
   /** Which card is under review; defaults to the dated talisman. */
   kind?: keyof typeof COPY;
   previewUrl: string;
+  /** Intrinsic bitmap size, so layout reserves the card's true aspect. */
+  previewWidth?: number;
+  previewHeight?: number;
   shareSupported: boolean;
   accessibleDescription: string;
   busy: boolean;
@@ -33,6 +36,8 @@ interface AuraSharePreviewProps {
 export function AuraSharePreview({
   kind = "seal",
   previewUrl,
+  previewWidth = 1080,
+  previewHeight = 1350,
   shareSupported,
   accessibleDescription,
   busy,
@@ -72,8 +77,8 @@ export function AuraSharePreview({
         </p>
         <img
           src={previewUrl}
-          width="1080"
-          height="1350"
+          width={previewWidth}
+          height={previewHeight}
           alt={copy.alt}
           aria-describedby={`${copy.id}-card-description`}
           draggable={false}
