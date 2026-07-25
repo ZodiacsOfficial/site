@@ -60,16 +60,12 @@ export interface AuraCabinetSnapshot {
 
 export const AURA_CABINET_FILENAME = "zodiacs-cabinet.png";
 
-const W = 1080;
-const H = 1350;
 const BG = "#07080B";
 const INK = "#EEF1F7";
 const MUTED = "#9CA5B8";
 const HAIR = "rgba(205, 212, 226, 0.16)";
 const BRASS = "#C6AD78";
-const LEAF = "#E8C46A";
 const LEAF_BRIGHT = "#FFF2C4";
-const LEAF_INK = "#2A1D07";
 const SCALE = 2;
 const SERIF = '"EB Garamond", Georgia, serif';
 const MONO = '"JetBrains Mono", ui-monospace, Menlo, monospace';
@@ -195,14 +191,22 @@ export function auraCabinetAccessibleDescription(input: AuraCabinetCardInput): s
   return `The Cabinet of Twelve. ${lead}${rest} Read from the ${snapshot.chainLabel} public record on ${snapshot.checkedDate}.`;
 }
 
+export interface AuraCabinetCardResult {
+  blob: Blob;
+  /** Bitmap size in device pixels — the preview's intrinsic dimensions. */
+  width: number;
+  height: number;
+}
+
 /**
  * Draws the shareable card: the captured cabinet, on the void, with a header
  * and a footer that carry provenance.
  *
  * Only the chrome is drawn here. The case in the middle is a bitmap of the
- * live element, so it can never disagree with the page.
+ * live element — laid out at the fixed portrait export width — so it can
+ * never disagree with the page.
  */
-export async function drawAuraCabinetCard(input: AuraCabinetCardInput): Promise<Blob> {
+export async function drawAuraCabinetCard(input: AuraCabinetCardInput): Promise<AuraCabinetCardResult> {
   const snapshot = auraCabinetSnapshot(input);
   const element = input.element;
   if (!element) throw new TypeError("A cabinet element is required to capture.");
@@ -264,8 +268,9 @@ export async function drawAuraCabinetCard(input: AuraCabinetCardInput): Promise<
     pad + headerH * 0.8,
   );
 
-  // The case itself, exactly as the page drew it.
-  context.drawImage(capture, pad, pad + headerH, cabinetW, cabinetH);
+  // The case itself, exactly as the page drew it. Destination device size
+  // equals the capture's intrinsic bitmap — one-to-one texels, no resample.
+  context.drawImage(capture.image, pad, pad + headerH, cabinetW, cabinetH);
 
   const footerY = pad + headerH + cabinetH;
   context.strokeStyle = HAIR;
@@ -288,7 +293,7 @@ export async function drawAuraCabinetCard(input: AuraCabinetCardInput): Promise<
     canvas.toBlob(resolve, "image/png"),
   );
   if (!blob) throw new Error("png_encode_failed");
-  return blob;
+  return { blob, width: canvas.width, height: canvas.height };
 }
 
 

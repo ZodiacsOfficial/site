@@ -114,6 +114,21 @@ async function installState(context, storedProfile = profile, storedAura = null)
       globalThis.__auraPaintedText.push(String(text));
       return nativeFillText.call(this, text, ...args);
     };
+    // The cabinet card rasters an SVG capture of the live case; record every
+    // SVG image source so the drive can inspect the flattened document.
+    globalThis.__auraCabinetSvg = [];
+    const nativeImageSrc = Object.getOwnPropertyDescriptor(HTMLImageElement.prototype, 'src');
+    Object.defineProperty(HTMLImageElement.prototype, 'src', {
+      configurable: true,
+      enumerable: nativeImageSrc.enumerable,
+      get: nativeImageSrc.get,
+      set(value) {
+        if (typeof value === 'string' && value.startsWith('data:image/svg+xml')) {
+          globalThis.__auraCabinetSvg.push(value);
+        }
+        return nativeImageSrc.set.call(this, value);
+      },
+    });
   }, { storedProfile, storedAura, now: fixedNow });
 }
 
@@ -554,6 +569,105 @@ async function verifySampleAndLiveCollection(browser, baseURL) {
     assert.equal(paintedText.includes(forbidden), false, `share image must omit ${forbidden}`);
   }
 
+  // The cabinet card is a capture of the live case. Drive it on the 390px
+  // viewport and verify the drawn chrome, the flattened capture document —
+  // fixed portrait three-column layout, base resets intact, settled state,
+  // no page placard, no surviving media condition — and the exported size.
+  await page.evaluate(() => { globalThis.__auraPaintedText = []; });
+  const cabinetShareButton = page.getByRole('button', { name: 'Share this cabinet', exact: true });
+  await cabinetShareButton.scrollIntoViewIfNeeded();
+  await cabinetShareButton.click();
+  const cabinetPreviewImage = page.locator('.aura-stage .aura-share-preview img');
+  await cabinetPreviewImage.waitFor();
+  await page.waitForFunction(() => {
+    const image = document.querySelector('.aura-stage .aura-share-preview img');
+    return image !== null && image.naturalWidth > 0;
+  });
+  const cabinetPainted = (await page.evaluate(() => globalThis.__auraPaintedText)).join(' ');
+  const cabinetPaintedLower = cabinetPainted.toLowerCase();
+  for (const expected of [
+    'collection display',
+    'the cabinet of twelve',
+    '4 of the twelve',
+    'solana · jul 16, 2026 utc',
+    'editions read from the public record',
+    'zodiacs · org',
+  ]) {
+    assert.equal(
+      cabinetPaintedLower.includes(expected),
+      true,
+      `cabinet card chrome should include ${expected}`,
+    );
+  }
+  for (const forbidden of [address, profile.charts[0].name, profile.charts[0].birth.date]) {
+    assert.equal(cabinetPainted.includes(forbidden), false, `cabinet card must omit ${forbidden}`);
+  }
+  const capturedSvg = await page.evaluate(() => {
+    const entries = globalThis.__auraCabinetSvg || [];
+    return entries.length ? decodeURIComponent(entries[entries.length - 1]) : null;
+  });
+  assert.notEqual(capturedSvg, null, 'the cabinet card should raster an SVG capture');
+  assert.match(
+    capturedSvg,
+    /repeat\(3,\s*minmax\(0(px)?,\s*1fr\)\)/,
+    'the capture must lay out the portrait three-column case',
+  );
+  assert.equal(
+    capturedSvg.includes('box-sizing: border-box'),
+    true,
+    'the capture must keep the box-sizing reset',
+  );
+  assert.match(
+    capturedSvg,
+    /button[^{}]*\{[^}]*font(-family)?:\s*inherit/,
+    'the capture must keep the button reset behind every niche',
+  );
+  assert.equal(
+    capturedSvg.includes('data-aura-cabinet-stage="settled"'),
+    true,
+    'the capture must export the settled case',
+  );
+  assert.equal(
+    capturedSvg.includes('aura-collection-cabinet__frame'),
+    true,
+    'the capture must carry the case frame',
+  );
+  // Stylesheet selectors legitimately mention the class; the markup must not.
+  assert.equal(
+    capturedSvg.includes('class="aura-collection-cabinet__placard'),
+    false,
+    'the page placard stays out of the card',
+  );
+  assert.equal(
+    capturedSvg.includes('class="aura-collection-cabinet__header'),
+    false,
+    'the page header stays out of the card',
+  );
+  assert.equal(
+    capturedSvg.includes('@media'),
+    false,
+    'no media condition may survive into the capture',
+  );
+  const cabinetCardSize = await cabinetPreviewImage.evaluate((image) => ({
+    width: image.naturalWidth,
+    height: image.naturalHeight,
+  }));
+  assert.equal(
+    cabinetCardSize.width,
+    1080,
+    'the cabinet card is 1080 device pixels wide on every device',
+  );
+  assert.equal(cabinetCardSize.height > cabinetCardSize.width, true, 'the cabinet card is portrait');
+  assert.equal(
+    cabinetCardSize.height >= 1750 && cabinetCardSize.height <= 2150,
+    true,
+    `the cabinet card height should sit near the three-column case (got ${cabinetCardSize.height})`,
+  );
+  await page
+    .locator('.aura-stage .aura-share-preview')
+    .getByRole('button', { name: 'Close preview' })
+    .click();
+
   await page.screenshot({ path: resolve('/tmp', 'zodiacs-registry-aura-mobile-gallery.png'), fullPage: true });
   assert.equal(
     await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth),
@@ -708,4 +822,4 @@ try {
   await browser.close();
 }
 
-console.log('aura-presence-drive: one-stage cabinet, five material editions, light-to-strike reveal, principal-work placard, accession ledger, settled v2 restoration, dated seal, chart echoes, restricted preview, house voice, desktop fold, and reduced motion verified');
+console.log('aura-presence-drive: one-stage cabinet, five material editions, light-to-strike reveal, principal-work placard, accession ledger, settled v2 restoration, dated seal, fixed-portrait cabinet share capture, chart echoes, restricted preview, house voice, desktop fold, and reduced motion verified');
