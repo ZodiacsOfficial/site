@@ -16,6 +16,7 @@ import {
   cabinetSelectorKeeps,
   rewriteCabinetSelector,
   rewriteViewportUnits,
+  sampleLooksBlank,
 } from "./aura-cabinet-card-capture";
 
 const input: AuraCabinetCardInput = {
@@ -289,5 +290,25 @@ describe("cabinet capture flattening", () => {
     // Card padding is round(width × 0.055) per side at a 2× raster.
     const pad = Math.round(CABINET_EXPORT_WIDTH * 0.055);
     expect((CABINET_EXPORT_WIDTH + pad * 2) * 2).toBe(1080);
+  });
+
+  it("recognises a raster that decoded but drew nothing", () => {
+    const flat = (r: number, g: number, b: number, a: number, count: number) =>
+      new Uint8ClampedArray(count * 4).map((_, index) => [r, g, b, a][index % 4]);
+
+    // A capture that never painted: fully transparent, or flat void.
+    expect(sampleLooksBlank(flat(0, 0, 0, 0, 64))).toBe(true);
+    expect(sampleLooksBlank(flat(7, 8, 11, 255, 64))).toBe(true);
+    // Sub-tolerance noise is still blank; a gold filet against the ground is not.
+    const almostFlat = flat(7, 8, 11, 255, 8);
+    almostFlat[20] = 12;
+    expect(sampleLooksBlank(almostFlat)).toBe(true);
+    const withFilet = flat(7, 8, 11, 255, 8);
+    withFilet[16] = 232;
+    withFilet[17] = 196;
+    withFilet[18] = 106;
+    expect(sampleLooksBlank(withFilet)).toBe(false);
+    // Nothing to read is not evidence of a good render.
+    expect(sampleLooksBlank(new Uint8ClampedArray(0))).toBe(true);
   });
 });
