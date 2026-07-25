@@ -1,0 +1,128 @@
+{
+  "schema": "zodiacs.phase5.evidence.v1",
+  "slug": "walt-whitman",
+  "qid": "Q81438",
+  "displayName": "Walt Whitman",
+  "wikidataLabel": "Walt Whitman",
+  "wikidataDescription": "American poet, essayist and journalist (1819–1892)",
+  "retrievedAtUtc": "2026-07-25T17:05:12.504Z",
+  "sources": {
+    "wikidata": {
+      "entityUrl": "https://www.wikidata.org/wiki/Q81438",
+      "propertiesUsed": [
+        "P569",
+        "P19",
+        "P625",
+        "P106",
+        "P18",
+        "P570",
+        "P17",
+        "P131"
+      ],
+      "lastrevid": 2518042563
+    },
+    "wikipedia": {
+      "language": "en",
+      "title": "Walt Whitman",
+      "articleUrl": "https://en.wikipedia.org/wiki/Walt_Whitman",
+      "pageId": 33870,
+      "revisionId": 1365693830,
+      "revisionTimestamp": "2026-07-23T22:32:41Z"
+    }
+  },
+  "birth": {
+    "claimCount": 1,
+    "distinctDayPrecisionValues": [
+      "+1819-05-31T00:00:00Z|proleptic-gregorian"
+    ],
+    "allValues": [
+      {
+        "time": "+1819-05-31T00:00:00Z",
+        "precision": 11,
+        "calendar": "proleptic-gregorian",
+        "rank": "normal"
+      }
+    ],
+    "time": "+1819-05-31T00:00:00Z",
+    "precision": "day",
+    "calendarModel": "proleptic-gregorian",
+    "timeOfDay": null,
+    "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+  },
+  "death": {
+    "time": "+1892-03-26T00:00:00Z",
+    "precision": "day",
+    "calendarModel": "proleptic-gregorian"
+  },
+  "living": false,
+  "birthPlace": {
+    "entity": "Q3461211",
+    "label": "West Hills",
+    "entityUrl": "https://www.wikidata.org/wiki/Q3461211",
+    "country": {
+      "entity": "Q30",
+      "label": "United States"
+    },
+    "claimCount": 2,
+    "coordinates": {
+      "sourceEntity": "Q3461211",
+      "sourceEntityLabel": "West Hills",
+      "latitude": 40.8242,
+      "longitude": -73.4344,
+      "precision": 0.0001,
+      "escalationSteps": 0
+    }
+  },
+  "occupations": [
+    {
+      "entity": "Q36180",
+      "label": "writer"
+    },
+    {
+      "entity": "Q2516866",
+      "label": "publisher"
+    },
+    {
+      "entity": "Q11774202",
+      "label": "essayist"
+    },
+    {
+      "entity": "Q1229025",
+      "label": "typographer"
+    },
+    {
+      "entity": "Q37226",
+      "label": "teacher"
+    },
+    {
+      "entity": "Q1930187",
+      "label": "journalist"
+    },
+    {
+      "entity": "Q49757",
+      "label": "poet"
+    },
+    {
+      "entity": "Q6625963",
+      "label": "novelist"
+    },
+    {
+      "entity": "Q1607826",
+      "label": "editor"
+    }
+  ],
+  "portrait": {
+    "file": "File:Walt Whitman - George Collins Cox.jpg",
+    "filePage": "https://commons.wikimedia.org/wiki/File:Walt%20Whitman%20-%20George%20Collins%20Cox.jpg",
+    "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Walt_Whitman_-_George_Collins_Cox.jpg",
+    "width": 1983,
+    "height": 2456,
+    "licenseShortName": "Public domain",
+    "licenseUrl": null,
+    "artist": "George Collins Cox / Adam Cuerden",
+    "credit": "This image is available from the United States Library of Congress's Prints and Photographs division under the digital ID ppmsca.07549.This tag does not indicate the copyright status of the attached work. A normal copyright tag is still required. See Commons:Licensing.",
+    "usageTerms": "Public domain",
+    "attributionRequired": "false",
+    "restrictions": ""
+  }
+}

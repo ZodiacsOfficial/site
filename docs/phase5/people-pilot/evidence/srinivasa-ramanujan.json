@@ -1,0 +1,100 @@
+{
+  "schema": "zodiacs.phase5.evidence.v1",
+  "slug": "srinivasa-ramanujan",
+  "qid": "Q83163",
+  "displayName": "Srinivasa Ramanujan",
+  "wikidataLabel": "Srinivasa Ramanujan",
+  "wikidataDescription": "Indian mathematician (1887–1920)",
+  "retrievedAtUtc": "2026-07-25T17:05:12.504Z",
+  "sources": {
+    "wikidata": {
+      "entityUrl": "https://www.wikidata.org/wiki/Q83163",
+      "propertiesUsed": [
+        "P569",
+        "P19",
+        "P625",
+        "P106",
+        "P18",
+        "P570",
+        "P17",
+        "P131"
+      ],
+      "lastrevid": 2520427113
+    },
+    "wikipedia": {
+      "language": "en",
+      "title": "Srinivasa Ramanujan",
+      "articleUrl": "https://en.wikipedia.org/wiki/Srinivasa_Ramanujan",
+      "pageId": 47717,
+      "revisionId": 1364616091,
+      "revisionTimestamp": "2026-07-17T15:23:52Z"
+    }
+  },
+  "birth": {
+    "claimCount": 1,
+    "distinctDayPrecisionValues": [
+      "+1887-12-22T00:00:00Z|proleptic-gregorian"
+    ],
+    "allValues": [
+      {
+        "time": "+1887-12-22T00:00:00Z",
+        "precision": 11,
+        "calendar": "proleptic-gregorian",
+        "rank": "normal"
+      }
+    ],
+    "time": "+1887-12-22T00:00:00Z",
+    "precision": "day",
+    "calendarModel": "proleptic-gregorian",
+    "timeOfDay": null,
+    "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+  },
+  "death": {
+    "time": "+1920-04-26T00:00:00Z",
+    "precision": "day",
+    "calendarModel": "proleptic-gregorian"
+  },
+  "living": false,
+  "birthPlace": {
+    "entity": "Q9824",
+    "label": "Erode",
+    "entityUrl": "https://www.wikidata.org/wiki/Q9824",
+    "country": {
+      "entity": "Q668",
+      "label": "India"
+    },
+    "claimCount": 1,
+    "coordinates": {
+      "sourceEntity": "Q9824",
+      "sourceEntityLabel": "Erode",
+      "latitude": 11.340833333333,
+      "longitude": 77.717222222222,
+      "precision": 0.00027777777777778,
+      "escalationSteps": 0
+    }
+  },
+  "occupations": [
+    {
+      "entity": "Q170790",
+      "label": "mathematician"
+    },
+    {
+      "entity": "Q326653",
+      "label": "accountant"
+    }
+  ],
+  "portrait": {
+    "file": "File:Srinivasa Ramanujan - OPC - 2 (cleaned).jpg",
+    "filePage": "https://commons.wikimedia.org/wiki/File:Srinivasa%20Ramanujan%20-%20OPC%20-%202%20(cleaned).jpg",
+    "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Srinivasa_Ramanujan_-_OPC_-_2_(cleaned).jpg",
+    "width": 288,
+    "height": 375,
+    "licenseShortName": "Public domain",
+    "licenseUrl": null,
+    "artist": "Konrad Jacobs",
+    "credit": "https://opc.mfo.de/detail?photoID=2328",
+    "usageTerms": "Public domain",
+    "attributionRequired": "false",
+    "restrictions": ""
+  }
+}

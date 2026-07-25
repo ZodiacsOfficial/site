@@ -1,0 +1,91 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "mahatma-gandhi",
+  "qid": "Q1001",
+  "displayName": "Mohandas K. Gandhi",
+  "identity": "Barrister and political writer · India · 1869–1948",
+  "title": "Mohandas K. Gandhi's birth chart",
+  "metaDescription": "Mohandas K. Gandhi's chart, computed from a sourced birth date: Sun at 9.1° Libra. Birth time unknown, so no houses or rising sign.",
+  "lede": "Mars and Pluto sit 0.8° from an exact opposition — near enough that the tradition reads drive and depth as a single working part. An opposition puts two needs on opposite shores of the same water. Neither drowns; neither gets the whole beach.",
+  "ledeFact": "aspect:Mars:Pluto:opposition",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:9.07",
+        "decan:libra:first"
+      ],
+      "text": "The Sun's exact place is 9.1° Libra. That falls in the first decan, 0°–10°, sub-ruled by Venus in the classical scheme — a air sign read through a cardinal season."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mars:Pluto:opposition:0.85",
+        "aspect:Venus:Pluto:opposition:1.05",
+        "aspect:Jupiter:Uranus:sextile:1.53"
+      ],
+      "text": "The tightest geometry in the chart puts Mars directly across the wheel from Pluto, 0.8° off exact. Across the wheel, each body sees the other in full. The old reading is not conflict so much as permanent mutual visibility. Behind it, Venus opposition Pluto at 1.1°, and Jupiter sextile Uranus at 1.5° — both still well inside the orbs this site uses. All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:fall",
+        "dignity:Venus:detriment",
+        "dignity:Mars:domicile"
+      ],
+      "text": "The dignity table, which predates the outer planets and only ever spoke for seven, marks three placements here. The Sun in Libra at 9.1° is in fall — the tradition’s uphill placement, strength earned rather than given; Venus in Scorpio at 16.6° is in detriment — the planet opposite its home, working against the grain; Mars in Scorpio at 18.5° is in domicile — the planet in its own sign, running on home rules. None of these labels is a verdict on a person; they describe how a function is situated, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water4-fire3-earth2-air1",
+        "modalities:fixed6-cardinal3-mutable1",
+        "retrograde:3"
+      ],
+      "text": "Counted by element the chart runs 4 water, 3 fire, 2 earth, 1 air, and by modality 6 fixed, 3 cardinal, 1 mutable. A water emphasis reads as porousness: the room is registered whole, long before it is analysed in parts. Jupiter, Neptune and Pluto were retrograde — apparent backward motion from where the Earth sits, which the tradition reads as a function turned inward before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:leo",
+        "moon-band:14.5"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Leo for the whole of that day at the birthplace, covering 14.5° between midnight and midnight. The sign survives the missing hour; the degree does not, and is given as a reference rather than a fact. At the noon reference it stands at 22.1°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/october-2/",
+    "label": "Everyone born on October 2"
+  },
+  "signLink": {
+    "href": "/libra/",
+    "label": "The Libra guide"
+  },
+  "substantiveFacts": [
+    "aspect:Mars:Pluto:opposition",
+    "sun-degree:9.07",
+    "decan:libra:first",
+    "aspect:Mars:Pluto:opposition:0.85",
+    "aspect:Venus:Pluto:opposition:1.05",
+    "aspect:Jupiter:Uranus:sextile:1.53",
+    "dignity:Sun:fall",
+    "dignity:Venus:detriment",
+    "dignity:Mars:domicile",
+    "elements:water4-fire3-earth2-air1",
+    "modalities:fixed6-cardinal3-mutable1",
+    "retrograde:3",
+    "moon-sign:leo",
+    "moon-band:14.5"
+  ],
+  "measurements": {
+    "originalWords": 367,
+    "substantiveStatements": 14,
+    "blocks": 5
+  }
+}

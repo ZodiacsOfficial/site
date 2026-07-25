@@ -1,0 +1,112 @@
+{
+  "schema": "zodiacs.phase5.evidence.v1",
+  "slug": "wangari-maathai",
+  "qid": "Q46795",
+  "displayName": "Wangari Maathai",
+  "wikidataLabel": "Wangari Muta Maathai",
+  "wikidataDescription": "Kenyan environmentalist and politician who won the Nobel Peace Prize in 2004 (1940–2011)",
+  "retrievedAtUtc": "2026-07-25T17:05:12.504Z",
+  "sources": {
+    "wikidata": {
+      "entityUrl": "https://www.wikidata.org/wiki/Q46795",
+      "propertiesUsed": [
+        "P569",
+        "P19",
+        "P625",
+        "P106",
+        "P18",
+        "P570",
+        "P17",
+        "P131"
+      ],
+      "lastrevid": 2515644532
+    },
+    "wikipedia": {
+      "language": "en",
+      "title": "Wangarĩ Maathai",
+      "articleUrl": "https://en.wikipedia.org/wiki/Wangar%C4%A9_Maathai",
+      "pageId": 1049151,
+      "revisionId": 1365953013,
+      "revisionTimestamp": "2026-07-25T11:13:39Z"
+    }
+  },
+  "birth": {
+    "claimCount": 1,
+    "distinctDayPrecisionValues": [
+      "+1940-04-01T00:00:00Z|proleptic-gregorian"
+    ],
+    "allValues": [
+      {
+        "time": "+1940-04-01T00:00:00Z",
+        "precision": 11,
+        "calendar": "proleptic-gregorian",
+        "rank": "normal"
+      }
+    ],
+    "time": "+1940-04-01T00:00:00Z",
+    "precision": "day",
+    "calendarModel": "proleptic-gregorian",
+    "timeOfDay": null,
+    "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+  },
+  "death": {
+    "time": "+2011-09-25T00:00:00Z",
+    "precision": "day",
+    "calendarModel": "proleptic-gregorian"
+  },
+  "living": false,
+  "birthPlace": {
+    "entity": "Q380130",
+    "label": "Nyeri",
+    "entityUrl": "https://www.wikidata.org/wiki/Q380130",
+    "country": {
+      "entity": "Q114",
+      "label": "Kenya"
+    },
+    "claimCount": 1,
+    "coordinates": {
+      "sourceEntity": "Q380130",
+      "sourceEntityLabel": "Nyeri",
+      "latitude": -0.41666666666667,
+      "longitude": 36.95,
+      "precision": 0.016666666666667,
+      "escalationSteps": 0
+    }
+  },
+  "occupations": [
+    {
+      "entity": "Q37226",
+      "label": "teacher"
+    },
+    {
+      "entity": "Q82955",
+      "label": "politician"
+    },
+    {
+      "entity": "Q12362622",
+      "label": "philanthropist"
+    },
+    {
+      "entity": "Q864503",
+      "label": "biologist"
+    },
+    {
+      "entity": "Q3578589",
+      "label": "environmentalist"
+    }
+  ],
+  "portrait": {
+    "file": "File:Wangari Matthai 2001 (cropped).jpg",
+    "filePage": "https://commons.wikimedia.org/wiki/File:Wangari%20Matthai%202001%20(cropped).jpg",
+    "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Wangari_Matthai_2001_(cropped).jpg",
+    "width": 466,
+    "height": 656,
+    "licenseShortName": "CC BY-SA 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+    "artist": "Kingkongphoto & www.celebrity-photos.com from Laurel Maryland, USA",
+    "credit": "Wangari Matthai",
+    "usageTerms": "Creative Commons Attribution-Share Alike 2.0",
+    "attributionRequired": "true",
+    "restrictions": ""
+  }
+}

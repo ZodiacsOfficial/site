@@ -1,0 +1,93 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "emily-bronte",
+  "qid": "Q80137",
+  "displayName": "Emily Brontë",
+  "identity": "Novelist and poet · United Kingdom · 1818–1848",
+  "title": "Emily Brontë's birth chart",
+  "metaDescription": "Emily Brontë's chart, computed from a sourced birth date: Sun at 6.6° Leo. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Sun stands at 6.6° Leo, in domicile — the planet in its own sign, running on home rules. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.",
+  "ledeFact": "dignity:Sun:domicile",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:6.64",
+        "decan:leo:first"
+      ],
+      "text": "The Sun's exact place is 6.6° Leo. That falls in the first decan, 0°–10°, sub-ruled by the Sun in the classical scheme — a fire sign read through a fixed season."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Venus:Mars:conjunction:0.26",
+        "aspect:Saturn:Uranus:square:1.03",
+        "aspect:Neptune:Pluto:square:2.19"
+      ],
+      "text": "The tightest geometry in the chart puts Venus in the same degree of the zodiac from Mars, 0.3° off exact. Two bodies in the same degree are not read as neighbours but as a merger: whatever one wants, the other is already funding. Behind it, Saturn square Uranus at 1.0°, and Neptune square Pluto at 2.2° — both still well inside the orbs this site uses. All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:domicile",
+        "dignity:Moon:domicile",
+        "dignity:Venus:fall",
+        "dignity:Jupiter:fall"
+      ],
+      "text": "Of the seven planets the classical scheme judges, four sit in a sign it has an opinion about. The Sun in Leo at 6.6° is in domicile — the planet in its own sign, running on home rules; the Moon in Cancer at 6.6° is in domicile; Venus in Virgo at 12.1° is in fall — the tradition’s uphill placement, strength earned rather than given; Jupiter in Capricorn at 4.6° is in fall. The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:fire4-water3-earth3",
+        "modalities:mutable6-fixed2-cardinal2",
+        "retrograde:5"
+      ],
+      "text": "By element the ten bodies divide 4 fire, 3 water, 3 earth; by modality, 6 mutable, 2 fixed, 2 cardinal. Fire signs carry the scheme’s forward pressure: heat applied early, patience treated as a later skill. No body at all in air — an absence the tradition treats as information, not as a defect. Jupiter, Saturn, Uranus, Neptune and Pluto were retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:cancer",
+        "moon-band:12.0"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Cancer for the whole of that day at the birthplace, covering 12.0° between midnight and midnight. That is quick enough to make the exact degree a neighbourhood rather than an address, and slow enough to leave the sign settled. At the noon reference it stands at 6.6°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/july-30/",
+    "label": "Everyone born on July 30"
+  },
+  "signLink": {
+    "href": "/leo/",
+    "label": "The Leo guide"
+  },
+  "substantiveFacts": [
+    "dignity:Sun:domicile",
+    "sun-degree:6.64",
+    "decan:leo:first",
+    "aspect:Venus:Mars:conjunction:0.26",
+    "aspect:Saturn:Uranus:square:1.03",
+    "aspect:Neptune:Pluto:square:2.19",
+    "dignity:Sun:domicile",
+    "dignity:Moon:domicile",
+    "dignity:Venus:fall",
+    "dignity:Jupiter:fall",
+    "elements:fire4-water3-earth3",
+    "modalities:mutable6-fixed2-cardinal2",
+    "retrograde:5",
+    "moon-sign:cancer",
+    "moon-band:12.0"
+  ],
+  "measurements": {
+    "originalWords": 385,
+    "substantiveStatements": 14,
+    "blocks": 5
+  }
+}

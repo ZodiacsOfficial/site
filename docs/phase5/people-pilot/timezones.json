@@ -1,0 +1,23 @@
+{
+  "_note": "Reviewed IANA zone per pilot birthplace. The zone is the frame the site's own chart engine uses for an unknown-time birth (12:00 civil time at the birthplace), resolved through the complete tzdb history via Intl — which for pre-standardisation births is the zone's local mean time, not the settlement's own meridian. Each zone below is the unambiguous modern zone containing the Wikidata birthplace entity; the residual meridian difference is measured per person in computed/{slug}.json.",
+  "vincent-van-gogh": "Europe/Amsterdam",
+  "wangari-maathai": "Africa/Nairobi",
+  "rabindranath-tagore": "Asia/Kolkata",
+  "ella-fitzgerald": "America/New_York",
+  "walt-whitman": "America/New_York",
+  "chien-shiung-wu": "Asia/Shanghai",
+  "ida-b-wells": "America/Chicago",
+  "frida-kahlo": "America/Mexico_City",
+  "emily-bronte": "Europe/London",
+  "rosalind-franklin": "Europe/London",
+  "clara-schumann": "Europe/Berlin",
+  "katherine-johnson": "America/New_York",
+  "mahatma-gandhi": "Asia/Kolkata",
+  "serena-williams": "America/Detroit",
+  "zaha-hadid": "Asia/Baghdad",
+  "ada-lovelace": "Europe/London",
+  "simone-de-beauvoir": "Europe/Paris",
+  "rigoberta-menchu": "America/Guatemala",
+  "virginia-woolf": "Europe/London",
+  "albert-einstein": "Europe/Berlin"
+}

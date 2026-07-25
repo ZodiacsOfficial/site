@@ -1,0 +1,120 @@
+{
+  "schema": "zodiacs.phase5.evidence.v1",
+  "slug": "pele",
+  "qid": "Q12897",
+  "displayName": "Pelé",
+  "wikidataLabel": "Pelé",
+  "wikidataDescription": "Brazilian footballer (1940–2022)",
+  "retrievedAtUtc": "2026-07-25T17:05:12.504Z",
+  "sources": {
+    "wikidata": {
+      "entityUrl": "https://www.wikidata.org/wiki/Q12897",
+      "propertiesUsed": [
+        "P569",
+        "P19",
+        "P625",
+        "P106",
+        "P18",
+        "P570",
+        "P17",
+        "P131"
+      ],
+      "lastrevid": 2522575183
+    },
+    "wikipedia": {
+      "language": "en",
+      "title": "Pelé",
+      "articleUrl": "https://en.wikipedia.org/wiki/Pel%C3%A9",
+      "pageId": 24953,
+      "revisionId": 1365982187,
+      "revisionTimestamp": "2026-07-25T15:23:11Z"
+    }
+  },
+  "birth": {
+    "claimCount": 1,
+    "distinctDayPrecisionValues": [
+      "+1940-10-23T00:00:00Z|proleptic-gregorian"
+    ],
+    "allValues": [
+      {
+        "time": "+1940-10-23T00:00:00Z",
+        "precision": 11,
+        "calendar": "proleptic-gregorian",
+        "rank": "normal"
+      }
+    ],
+    "time": "+1940-10-23T00:00:00Z",
+    "precision": "day",
+    "calendarModel": "proleptic-gregorian",
+    "timeOfDay": null,
+    "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+  },
+  "death": {
+    "time": "+2022-12-29T00:00:00Z",
+    "precision": "day",
+    "calendarModel": "proleptic-gregorian"
+  },
+  "living": false,
+  "birthPlace": {
+    "entity": "Q1439211",
+    "label": "Três Corações",
+    "entityUrl": "https://www.wikidata.org/wiki/Q1439211",
+    "country": {
+      "entity": "Q155",
+      "label": "Brazil"
+    },
+    "claimCount": 1,
+    "coordinates": {
+      "sourceEntity": "Q1439211",
+      "sourceEntityLabel": "Três Corações",
+      "latitude": -21.694722222222,
+      "longitude": -45.255277777778,
+      "precision": 0.00027777777777778,
+      "escalationSteps": 0
+    }
+  },
+  "occupations": [
+    {
+      "entity": "Q937857",
+      "label": "association football player"
+    },
+    {
+      "entity": "Q82955",
+      "label": "politician"
+    },
+    {
+      "entity": "Q10800557",
+      "label": "film actor"
+    },
+    {
+      "entity": "Q33999",
+      "label": "actor"
+    },
+    {
+      "entity": "Q2066131",
+      "label": "athlete"
+    },
+    {
+      "entity": "Q36834",
+      "label": "composer"
+    },
+    {
+      "entity": "Q639669",
+      "label": "musician"
+    }
+  ],
+  "portrait": {
+    "file": "File:Pele con brasil (cropped).jpg",
+    "filePage": "https://commons.wikimedia.org/wiki/File:Pele%20con%20brasil%20(cropped).jpg",
+    "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Pele_con_brasil_(cropped).jpg",
+    "width": 388,
+    "height": 526,
+    "licenseShortName": "Public domain",
+    "licenseUrl": null,
+    "artist": "Unknown author",
+    "credit": "El Gráfico",
+    "usageTerms": "Public domain",
+    "attributionRequired": "false",
+    "restrictions": ""
+  }
+}

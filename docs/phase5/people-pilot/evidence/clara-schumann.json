@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.evidence.v1",
+  "slug": "clara-schumann",
+  "qid": "Q132232",
+  "displayName": "Clara Schumann",
+  "wikidataLabel": "Clara Schumann",
+  "wikidataDescription": "German musician and composer (1819–1896)",
+  "retrievedAtUtc": "2026-07-25T17:05:12.504Z",
+  "sources": {
+    "wikidata": {
+      "entityUrl": "https://www.wikidata.org/wiki/Q132232",
+      "propertiesUsed": [
+        "P569",
+        "P19",
+        "P625",
+        "P106",
+        "P18",
+        "P570",
+        "P17",
+        "P131"
+      ],
+      "lastrevid": 2522259792
+    },
+    "wikipedia": {
+      "language": "en",
+      "title": "Clara Schumann",
+      "articleUrl": "https://en.wikipedia.org/wiki/Clara_Schumann",
+      "pageId": 45181,
+      "revisionId": 1361210480,
+      "revisionTimestamp": "2026-06-26T12:03:06Z"
+    }
+  },
+  "birth": {
+    "claimCount": 1,
+    "distinctDayPrecisionValues": [
+      "+1819-09-13T00:00:00Z|proleptic-gregorian"
+    ],
+    "allValues": [
+      {
+        "time": "+1819-09-13T00:00:00Z",
+        "precision": 11,
+        "calendar": "proleptic-gregorian",
+        "rank": "normal"
+      }
+    ],
+    "time": "+1819-09-13T00:00:00Z",
+    "precision": "day",
+    "calendarModel": "proleptic-gregorian",
+    "timeOfDay": null,
+    "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+  },
+  "death": {
+    "time": "+1896-05-20T00:00:00Z",
+    "precision": "day",
+    "calendarModel": "proleptic-gregorian"
+  },
+  "living": false,
+  "birthPlace": {
+    "entity": "Q2079",
+    "label": "Leipzig",
+    "entityUrl": "https://www.wikidata.org/wiki/Q2079",
+    "country": {
+      "entity": "Q183",
+      "label": "Germany"
+    },
+    "claimCount": 1,
+    "coordinates": {
+      "sourceEntity": "Q2079",
+      "sourceEntityLabel": "Leipzig",
+      "latitude": 51.3406321,
+      "longitude": 12.3747329,
+      "precision": 1e-7,
+      "escalationSteps": 0
+    }
+  },
+  "occupations": [
+    {
+      "entity": "Q486748",
+      "label": "pianist"
+    },
+    {
+      "entity": "Q36834",
+      "label": "composer"
+    },
+    {
+      "entity": "Q16145150",
+      "label": "music educator"
+    },
+    {
+      "entity": "Q1607826",
+      "label": "editor"
+    },
+    {
+      "entity": "Q1643514",
+      "label": "music arranger"
+    },
+    {
+      "entity": "Q17303149",
+      "label": "piano teacher"
+    }
+  ],
+  "portrait": {
+    "file": "File:Franz Hanfstaengl - Clara Schumann (1857).jpg",
+    "filePage": "https://commons.wikimedia.org/wiki/File:Franz%20Hanfstaengl%20-%20Clara%20Schumann%20(1857).jpg",
+    "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Franz_Hanfstaengl_-_Clara_Schumann_(1857).jpg",
+    "width": 2082,
+    "height": 2651,
+    "licenseShortName": "Public domain",
+    "licenseUrl": null,
+    "artist": "Franz Hanfstaengl",
+    "credit": "Self-scanned",
+    "usageTerms": "Public domain",
+    "attributionRequired": "false",
+    "restrictions": ""
+  }
+}

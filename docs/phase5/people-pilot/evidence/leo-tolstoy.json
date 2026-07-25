@@ -1,0 +1,155 @@
+{
+  "schema": "zodiacs.phase5.evidence.v1",
+  "slug": "leo-tolstoy",
+  "qid": "Q7243",
+  "displayName": "Leo Tolstoy",
+  "wikidataLabel": "Leo Tolstoy",
+  "wikidataDescription": "Russian author (1828–1910)",
+  "retrievedAtUtc": "2026-07-25T17:05:12.504Z",
+  "sources": {
+    "wikidata": {
+      "entityUrl": "https://www.wikidata.org/wiki/Q7243",
+      "propertiesUsed": [
+        "P569",
+        "P19",
+        "P625",
+        "P106",
+        "P18",
+        "P570",
+        "P17",
+        "P131"
+      ],
+      "lastrevid": 2521216571
+    },
+    "wikipedia": {
+      "language": "en",
+      "title": "Leo Tolstoy",
+      "articleUrl": "https://en.wikipedia.org/wiki/Leo_Tolstoy",
+      "pageId": 18622119,
+      "revisionId": 1365709805,
+      "revisionTimestamp": "2026-07-24T00:29:53Z"
+    }
+  },
+  "birth": {
+    "claimCount": 2,
+    "distinctDayPrecisionValues": [
+      "+1828-08-28T00:00:00Z|proleptic-julian",
+      "+1828-09-09T00:00:00Z|proleptic-gregorian"
+    ],
+    "allValues": [
+      {
+        "time": "+1828-08-28T00:00:00Z",
+        "precision": 11,
+        "calendar": "proleptic-julian",
+        "rank": "preferred"
+      },
+      {
+        "time": "+1828-09-09T00:00:00Z",
+        "precision": 11,
+        "calendar": "proleptic-gregorian",
+        "rank": "normal"
+      }
+    ],
+    "time": "+1828-08-28T00:00:00Z",
+    "precision": "day",
+    "calendarModel": "proleptic-julian",
+    "timeOfDay": null,
+    "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+  },
+  "death": {
+    "time": "+1910-11-07T00:00:00Z",
+    "precision": "day",
+    "calendarModel": "proleptic-julian"
+  },
+  "living": false,
+  "birthPlace": {
+    "entity": "Q749556",
+    "label": "Yasnaya Polyana",
+    "entityUrl": "https://www.wikidata.org/wiki/Q749556",
+    "country": {
+      "entity": "Q159",
+      "label": "Russia"
+    },
+    "claimCount": 1,
+    "coordinates": {
+      "sourceEntity": "Q749556",
+      "sourceEntityLabel": "Yasnaya Polyana",
+      "latitude": 54.075127,
+      "longitude": 37.526385,
+      "precision": 0.000001,
+      "escalationSteps": 0
+    }
+  },
+  "occupations": [
+    {
+      "entity": "Q36180",
+      "label": "writer"
+    },
+    {
+      "entity": "Q214917",
+      "label": "playwright"
+    },
+    {
+      "entity": "Q4964182",
+      "label": "philosopher"
+    },
+    {
+      "entity": "Q6625963",
+      "label": "novelist"
+    },
+    {
+      "entity": "Q1231865",
+      "label": "pedagogue"
+    },
+    {
+      "entity": "Q11774202",
+      "label": "essayist"
+    },
+    {
+      "entity": "Q4853732",
+      "label": "children's writer"
+    },
+    {
+      "entity": "Q18939491",
+      "label": "diarist"
+    },
+    {
+      "entity": "Q12144794",
+      "label": "prose writer"
+    },
+    {
+      "entity": "Q6051619",
+      "label": "opinion journalist"
+    },
+    {
+      "entity": "Q860918",
+      "label": "Esperantist"
+    },
+    {
+      "entity": "Q16003550",
+      "label": "pacifist"
+    },
+    {
+      "entity": "Q49757",
+      "label": "poet"
+    },
+    {
+      "entity": "Q15949613",
+      "label": "short story writer"
+    }
+  ],
+  "portrait": {
+    "file": "File:L.N.Tolstoy Prokudin-Gorsky.jpg",
+    "filePage": "https://commons.wikimedia.org/wiki/File:L.N.Tolstoy%20Prokudin-Gorsky.jpg",
+    "descriptionUrl": "https://commons.wikimedia.org/wiki/File:L.N.Tolstoy_Prokudin-Gorsky.jpg",
+    "width": 2167,
+    "height": 3000,
+    "licenseShortName": "Public domain",
+    "licenseUrl": null,
+    "artist": "Sergei Prokudin-Gorskii",
+    "credit": "http://vm1.culture.ru/gosudarstvennyy_muzey_tolstogo/catalog/0003600108/",
+    "usageTerms": "Public domain",
+    "attributionRequired": "false",
+    "restrictions": ""
+  }
+}

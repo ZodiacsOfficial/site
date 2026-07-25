@@ -1,0 +1,73 @@
+{
+  "schema": "zodiacs.phase5.depth-report.v1",
+  "metric": "5-word shingle Jaccard similarity, the metric scripts/check-programmatic-uniqueness.mjs already applies to the 78 compatibility pages",
+  "pages": 20,
+  "originalWords": {
+    "min": 315,
+    "max": 393,
+    "median": 353
+  },
+  "substantiveStatements": {
+    "min": 11,
+    "max": 14
+  },
+  "highestSimilarity": {
+    "pair": [
+      "rosalind-franklin",
+      "katherine-johnson"
+    ],
+    "similarity": 0.2786
+  },
+  "topPairs": [
+    {
+      "a": "rosalind-franklin",
+      "b": "katherine-johnson",
+      "similarity": 0.2786
+    },
+    {
+      "a": "ida-b-wells",
+      "b": "rosalind-franklin",
+      "similarity": 0.2356
+    },
+    {
+      "a": "wangari-maathai",
+      "b": "serena-williams",
+      "similarity": 0.2281
+    },
+    {
+      "a": "emily-bronte",
+      "b": "clara-schumann",
+      "similarity": 0.2174
+    },
+    {
+      "a": "wangari-maathai",
+      "b": "rosalind-franklin",
+      "similarity": 0.2037
+    },
+    {
+      "a": "vincent-van-gogh",
+      "b": "albert-einstein",
+      "similarity": 0.1991
+    },
+    {
+      "a": "ida-b-wells",
+      "b": "zaha-hadid",
+      "similarity": 0.1917
+    },
+    {
+      "a": "ida-b-wells",
+      "b": "virginia-woolf",
+      "similarity": 0.1915
+    },
+    {
+      "a": "ella-fitzgerald",
+      "b": "rosalind-franklin",
+      "similarity": 0.1909
+    },
+    {
+      "a": "emily-bronte",
+      "b": "zaha-hadid",
+      "similarity": 0.1874
+    }
+  ]
+}

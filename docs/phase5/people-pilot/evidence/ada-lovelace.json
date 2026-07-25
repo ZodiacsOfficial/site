@@ -1,0 +1,124 @@
+{
+  "schema": "zodiacs.phase5.evidence.v1",
+  "slug": "ada-lovelace",
+  "qid": "Q7259",
+  "displayName": "Ada Lovelace",
+  "wikidataLabel": "Ada Lovelace",
+  "wikidataDescription": "English mathematician (1815–1852)",
+  "retrievedAtUtc": "2026-07-25T17:05:12.504Z",
+  "sources": {
+    "wikidata": {
+      "entityUrl": "https://www.wikidata.org/wiki/Q7259",
+      "propertiesUsed": [
+        "P569",
+        "P19",
+        "P625",
+        "P106",
+        "P18",
+        "P570",
+        "P17",
+        "P131"
+      ],
+      "lastrevid": 2522257655
+    },
+    "wikipedia": {
+      "language": "en",
+      "title": "Ada Lovelace",
+      "articleUrl": "https://en.wikipedia.org/wiki/Ada_Lovelace",
+      "pageId": 974,
+      "revisionId": 1360639004,
+      "revisionTimestamp": "2026-06-22T18:42:17Z"
+    }
+  },
+  "birth": {
+    "claimCount": 1,
+    "distinctDayPrecisionValues": [
+      "+1815-12-10T00:00:00Z|proleptic-gregorian"
+    ],
+    "allValues": [
+      {
+        "time": "+1815-12-10T00:00:00Z",
+        "precision": 11,
+        "calendar": "proleptic-gregorian",
+        "rank": "normal"
+      }
+    ],
+    "time": "+1815-12-10T00:00:00Z",
+    "precision": "day",
+    "calendarModel": "proleptic-gregorian",
+    "timeOfDay": null,
+    "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+  },
+  "death": {
+    "time": "+1852-11-27T00:00:00Z",
+    "precision": "day",
+    "calendarModel": "proleptic-gregorian"
+  },
+  "living": false,
+  "birthPlace": {
+    "entity": "Q84",
+    "label": "London",
+    "entityUrl": "https://www.wikidata.org/wiki/Q84",
+    "country": {
+      "entity": "Q145",
+      "label": "United Kingdom"
+    },
+    "claimCount": 1,
+    "coordinates": {
+      "sourceEntity": "Q84",
+      "sourceEntityLabel": "London",
+      "latitude": 51.507222222222,
+      "longitude": -0.1275,
+      "precision": 0.00027777777777778,
+      "escalationSteps": 0
+    }
+  },
+  "occupations": [
+    {
+      "entity": "Q170790",
+      "label": "mathematician"
+    },
+    {
+      "entity": "Q5482740",
+      "label": "programmer"
+    },
+    {
+      "entity": "Q49757",
+      "label": "poet"
+    },
+    {
+      "entity": "Q82594",
+      "label": "computer scientist"
+    },
+    {
+      "entity": "Q205375",
+      "label": "inventor"
+    },
+    {
+      "entity": "Q333634",
+      "label": "translator"
+    },
+    {
+      "entity": "Q36180",
+      "label": "writer"
+    },
+    {
+      "entity": "Q81096",
+      "label": "engineer"
+    }
+  ],
+  "portrait": {
+    "file": "File:Ada Byron daguerreotype by Antoine Claudet 1843 or 1850 - cropped.png",
+    "filePage": "https://commons.wikimedia.org/wiki/File:Ada%20Byron%20daguerreotype%20by%20Antoine%20Claudet%201843%20or%201850%20-%20cropped.png",
+    "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Ada_Byron_daguerreotype_by_Antoine_Claudet_1843_or_1850_-_cropped.png",
+    "width": 664,
+    "height": 830,
+    "licenseShortName": "Public domain",
+    "licenseUrl": null,
+    "artist": "Antoine Claudet",
+    "credit": "File:Ada Byron daguerreotype by Antoine Claudet 1843 or 1850.jpg, Own work",
+    "usageTerms": "Public domain",
+    "attributionRequired": "false",
+    "restrictions": ""
+  }
+}

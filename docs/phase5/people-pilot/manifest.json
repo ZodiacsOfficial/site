@@ -1,0 +1,3242 @@
+{
+  "schema": "zodiacs.phase5.people-manifest.v1",
+  "status": "design pilot — not published, not indexed, no route exists",
+  "julianRule": "Option A — Julian-dated births are excluded from the Phase 5A pilot",
+  "thresholds": {
+    "schema": "zodiacs.phase5.thresholds.v1",
+    "originalWordFloor": 250,
+    "substantiveStatementFloor": 8,
+    "similarityCeiling": 0.32,
+    "similarityMetric": "5-word shingle Jaccard, the metric scripts/check-programmatic-uniqueness.mjs already applies to the 78 compatibility pages",
+    "reasoning": {
+      "originalWordFloor": "Measured minimum across the 20 pilot pages is 315 original words, excluding every shared boilerplate string. A 250-word floor sits about 20% under that minimum: ordinary variation in a future person cannot trip it, while a genuinely thin page — one where the chart offered little to say — fails closed. For scale, the site's own daily readings run 90–140 words and weekly 200–300.",
+      "substantiveStatementFloor": "Measured minimum is 11 distinct substantive statements. A floor of 8 leaves headroom for a chart with fewer aspects inside orb and no dignities at all, which is the sparsest case the pilot's own screening produced.",
+      "similarityCeiling": "Measured maximum pairwise similarity is 0.2786 (rosalind-franklin <> katherine-johnson). A 0.32 ceiling sits about 15% above that, and well under the 0.42 the repository already accepts for the more formulaic compatibility pairs.",
+      "excludedFromOriginalCount": "Shared strings — the data-quality note, the evidence-disclosure labels, navigation, cross-link labels and the portrait credit — are boilerplate by design and are not counted as original copy. Counting them would let a page pass on chrome."
+    },
+    "sectExclusionNote": "Sect (day/night chart) is time-dependent: it asks whether the Sun was above the horizon. On an unknown-time record the noon convention would always answer 'day chart', which is an artefact of the assumption rather than a fact about the person. Sect is therefore excluded from the substantive-statement set for unknown-time records, alongside rising sign, houses and angles, and is available only where a real birth time is sourced."
+  },
+  "generatedFrom": [
+    "docs/phase5/people-pilot/evidence/*.json (Wikidata, Wikipedia, Wikimedia Commons)",
+    "docs/phase5/people-pilot/computed/*.json (repository ephemeris)",
+    "docs/phase5/people-pilot/copy/*.json (composed copy)"
+  ],
+  "people": [
+    {
+      "qid": "Q7259",
+      "slug": "ada-lovelace",
+      "displayName": "Ada Lovelace",
+      "shortDescription": "Mathematician · United Kingdom · 1815–1852",
+      "disciplines": [
+        "mathematician"
+      ],
+      "birthDate": {
+        "storedValue": "1815-12-10",
+        "precision": "day",
+        "calendarModel": "proleptic-gregorian",
+        "calendarConversion": "none required — the stored value is already proleptic Gregorian",
+        "displayedDate": "1815-12-10",
+        "computedGregorianDate": "1815-12-10",
+        "birthdayCrossLinkKey": "1815-12-10",
+        "birthdayRoute": "/birthday/december-10/"
+      },
+      "birthTime": null,
+      "timeQuality": "unknown",
+      "birthTimeEvidence": "none — Wikidata carries no birth-time claim for this person",
+      "birthPlace": {
+        "entity": "Q84",
+        "entityLabel": "London",
+        "normalisedLabel": "London, United Kingdom",
+        "country": {
+          "entity": "Q145",
+          "label": "United Kingdom"
+        },
+        "coordinates": {
+          "latitude": 51.507222222222,
+          "longitude": -0.1275,
+          "sourceEntity": "Q84",
+          "sourceEntityLabel": "London",
+          "wikidataPrecision": 0.00027777777777778,
+          "escalationSteps": 0,
+          "precisionDowngrade": null
+        },
+        "timeZone": "Europe/London"
+      },
+      "computation": {
+        "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
+        "timeZone": "Europe/London",
+        "civilTime": "12:00",
+        "utcInstant": "1815-12-10T12:01:15.000Z",
+        "utcOffsetMinutesAtBirth": -1.25,
+        "civilDayStartUtc": "1815-12-10T00:01:15.000Z",
+        "civilDayEndUtc": "1815-12-11T00:00:15.000Z",
+        "latitude": 51.507222222222,
+        "longitude": -0.1275,
+        "coordinateEscalationSteps": 0,
+        "coordinateSourceEntity": "Q84",
+        "ephemeris": "astronomy-engine via GeoVector + Rotation_EQJ_ECT (server-ephemeris.ts convention)",
+        "aspectTable": "@zodiacs/engine/internal/math",
+        "anglesComputed": false,
+        "housesComputed": false,
+        "sectComputed": false,
+        "meridianResidualMinutes": 0.74,
+        "meridianResidualMoonDegrees": 0.0068
+      },
+      "sunSign": {
+        "slug": "sagittarius",
+        "name": "Sagittarius",
+        "degree": 17.63,
+        "determinable": true,
+        "cuspCheck": {
+          "ambiguous": false,
+          "boundaryUtc": null,
+          "degreesInsideAtWindowStart": 17.1201,
+          "degreesToNextBoundaryAtWindowEnd": 11.8631
+        }
+      },
+      "moon": {
+        "sign": "aries",
+        "signName": "Aries",
+        "degree": 5.16,
+        "uncertain": true,
+        "signAtCivilDayStart": "pisces",
+        "signAtCivilDayEnd": "aries"
+      },
+      "unknownTimeErrorBandDegrees": {
+        "Sun": 1.016,
+        "Moon": 12.119,
+        "Mercury": 1.434,
+        "Venus": 0.899,
+        "Mars": 0.256,
+        "Jupiter": 0.182,
+        "Saturn": 0.089,
+        "Uranus": 0.061,
+        "Neptune": 0.038,
+        "Pluto": 0.002
+      },
+      "dataQualityLabel": "Birth date sourced; birth time unknown; Moon sign undetermined",
+      "sources": {
+        "wikidata": {
+          "entityUrl": "https://www.wikidata.org/wiki/Q7259",
+          "propertiesUsed": [
+            "P569",
+            "P19",
+            "P625",
+            "P106",
+            "P18",
+            "P570",
+            "P17",
+            "P131"
+          ],
+          "lastrevid": 2522257655
+        },
+        "wikipedia": {
+          "language": "en",
+          "title": "Ada Lovelace",
+          "articleUrl": "https://en.wikipedia.org/wiki/Ada_Lovelace",
+          "pageId": 974,
+          "revisionId": 1360639004,
+          "revisionTimestamp": "2026-06-22T18:42:17Z"
+        },
+        "retrievedAtUtc": "2026-07-25T17:05:12.504Z"
+      },
+      "portrait": {
+        "available": true,
+        "file": "File:Ada Byron daguerreotype by Antoine Claudet 1843 or 1850 - cropped.png",
+        "filePage": "https://commons.wikimedia.org/wiki/File:Ada%20Byron%20daguerreotype%20by%20Antoine%20Claudet%201843%20or%201850%20-%20cropped.png",
+        "creator": "Antoine Claudet",
+        "licence": "Public domain",
+        "licenceUrl": null,
+        "attributionRequired": false,
+        "renderedAttribution": "Antoine Claudet · public domain · Wikimedia Commons",
+        "renderedAttributionLinks": {
+          "creator": "https://commons.wikimedia.org/wiki/File:Ada%20Byron%20daguerreotype%20by%20Antoine%20Claudet%201843%20or%201850%20-%20cropped.png",
+          "licence": null,
+          "source": "https://commons.wikimedia.org/wiki/File:Ada%20Byron%20daguerreotype%20by%20Antoine%20Claudet%201843%20or%201850%20-%20cropped.png"
+        },
+        "width": 664,
+        "height": 830
+      },
+      "living": false,
+      "reviewedAtUtc": "2026-07-25T00:00:00Z",
+      "computationInputVersion": {
+        "ephemeris": "astronomy-engine (repository dependency)",
+        "aspectTable": "@zodiacs/engine/internal/math",
+        "pilotTools": "docs/phase5/people-pilot/tools @ phase5a"
+      },
+      "contentDepth": {
+        "originalWords": 343,
+        "substantiveStatements": 13,
+        "highestPairwiseSimilarity": 0
+      },
+      "indexEligibility": {
+        "eligible": false,
+        "blockedBy": [
+          "phase-5a-is-design-only — no People route exists yet"
+        ],
+        "contentChecksPassed": true,
+        "contentCheckFailures": []
+      },
+      "suppression": {
+        "status": "active",
+        "requestedBy": null,
+        "decidedAtUtc": null,
+        "note": null
+      }
+    },
+    {
+      "qid": "Q937",
+      "slug": "albert-einstein",
+      "displayName": "Albert Einstein",
+      "shortDescription": "Theoretical physicist · Germany · 1879–1955",
+      "disciplines": [
+        "theoretical physicist"
+      ],
+      "birthDate": {
+        "storedValue": "1879-03-14",
+        "precision": "day",
+        "calendarModel": "proleptic-gregorian",
+        "calendarConversion": "none required — the stored value is already proleptic Gregorian",
+        "displayedDate": "1879-03-14",
+        "computedGregorianDate": "1879-03-14",
+        "birthdayCrossLinkKey": "1879-03-14",
+        "birthdayRoute": "/birthday/march-14/"
+      },
+      "birthTime": null,
+      "timeQuality": "unknown",
+      "birthTimeEvidence": "none — Wikidata carries no birth-time claim for this person",
+      "birthPlace": {
+        "entity": "Q3012",
+        "entityLabel": "Ulm",
+        "normalisedLabel": "Ulm, Germany",
+        "country": {
+          "entity": "Q183",
+          "label": "Germany"
+        },
+        "coordinates": {
+          "latitude": 48.39861111111111,
+          "longitude": 9.991111111111111,
+          "sourceEntity": "Q3012",
+          "sourceEntityLabel": "Ulm",
+          "wikidataPrecision": 0.0002777777777777778,
+          "escalationSteps": 0,
+          "precisionDowngrade": null
+        },
+        "timeZone": "Europe/Berlin"
+      },
+      "computation": {
+        "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
+        "timeZone": "Europe/Berlin",
+        "civilTime": "12:00",
+        "utcInstant": "1879-03-14T11:06:32.000Z",
+        "utcOffsetMinutesAtBirth": 53.4667,
+        "civilDayStartUtc": "1879-03-13T23:06:32.000Z",
+        "civilDayEndUtc": "1879-03-14T23:05:32.000Z",
+        "latitude": 48.39861111111111,
+        "longitude": 9.991111111111111,
+        "coordinateEscalationSteps": 0,
+        "coordinateSourceEntity": "Q3012",
+        "ephemeris": "astronomy-engine via GeoVector + Rotation_EQJ_ECT (server-ephemeris.ts convention)",
+        "aspectTable": "@zodiacs/engine/internal/math",
+        "anglesComputed": false,
+        "housesComputed": false,
+        "sectComputed": false,
+        "meridianResidualMinutes": -13.5,
+        "meridianResidualMoonDegrees": 0.1238
+      },
+      "sunSign": {
+        "slug": "pisces",
+        "name": "Pisces",
+        "degree": 23.52,
+        "determinable": true,
+        "cuspCheck": {
+          "ambiguous": false,
+          "boundaryUtc": null,
+          "degreesInsideAtWindowStart": 23.0581,
+          "degreesToNextBoundaryAtWindowEnd": 5.946
+        }
+      },
+      "moon": {
+        "sign": "sagittarius",
+        "signName": "Sagittarius",
+        "degree": 14.69,
+        "uncertain": false,
+        "signAtCivilDayStart": "sagittarius",
+        "signAtCivilDayEnd": "sagittarius"
+      },
+      "unknownTimeErrorBandDegrees": {
+        "Sun": 0.995,
+        "Moon": 13.905,
+        "Mercury": 1.95,
+        "Venus": 1.231,
+        "Mars": 0.728,
+        "Jupiter": 0.227,
+        "Saturn": 0.123,
+        "Uranus": 0.04,
+        "Neptune": 0.029,
+        "Pluto": 0.012
+      },
+      "dataQualityLabel": "Birth date sourced; birth time unknown",
+      "sources": {
+        "wikidata": {
+          "entityUrl": "https://www.wikidata.org/wiki/Q937",
+          "propertiesUsed": [
+            "P569",
+            "P19",
+            "P625",
+            "P106",
+            "P18",
+            "P570",
+            "P17",
+            "P131"
+          ],
+          "lastrevid": 2522560668
+        },
+        "wikipedia": {
+          "language": "en",
+          "title": "Albert Einstein",
+          "articleUrl": "https://en.wikipedia.org/wiki/Albert_Einstein",
+          "pageId": 736,
+          "revisionId": 1365975877,
+          "revisionTimestamp": "2026-07-25T14:29:11Z"
+        },
+        "retrievedAtUtc": "2026-07-25T17:05:12.504Z"
+      },
+      "portrait": {
+        "available": true,
+        "file": "File:Albert Einstein Head cleaned.jpg",
+        "filePage": "https://commons.wikimedia.org/wiki/File:Albert%20Einstein%20Head%20cleaned.jpg",
+        "creator": "Oren Jack Turner",
+        "licence": "Public domain",
+        "licenceUrl": null,
+        "attributionRequired": false,
+        "renderedAttribution": "Oren Jack Turner · public domain · Wikimedia Commons",
+        "renderedAttributionLinks": {
+          "creator": "https://commons.wikimedia.org/wiki/File:Albert%20Einstein%20Head%20cleaned.jpg",
+          "licence": null,
+          "source": "https://commons.wikimedia.org/wiki/File:Albert%20Einstein%20Head%20cleaned.jpg"
+        },
+        "width": 4530,
+        "height": 5607
+      },
+      "living": false,
+      "reviewedAtUtc": "2026-07-25T00:00:00Z",
+      "computationInputVersion": {
+        "ephemeris": "astronomy-engine (repository dependency)",
+        "aspectTable": "@zodiacs/engine/internal/math",
+        "pilotTools": "docs/phase5/people-pilot/tools @ phase5a"
+      },
+      "contentDepth": {
+        "originalWords": 356,
+        "substantiveStatements": 14,
+        "highestPairwiseSimilarity": 0.1991
+      },
+      "indexEligibility": {
+        "eligible": false,
+        "blockedBy": [
+          "phase-5a-is-design-only — no People route exists yet"
+        ],
+        "contentChecksPassed": true,
+        "contentCheckFailures": []
+      },
+      "suppression": {
+        "status": "active",
+        "requestedBy": null,
+        "decidedAtUtc": null,
+        "note": null
+      }
+    },
+    {
+      "qid": "Q450317",
+      "slug": "chien-shiung-wu",
+      "displayName": "Chien-Shiung Wu",
+      "shortDescription": "Nuclear physicist · People's Republic of China · 1912–1997",
+      "disciplines": [
+        "nuclear physicist"
+      ],
+      "birthDate": {
+        "storedValue": "1912-05-31",
+        "precision": "day",
+        "calendarModel": "proleptic-gregorian",
+        "calendarConversion": "none required — the stored value is already proleptic Gregorian",
+        "displayedDate": "1912-05-31",
+        "computedGregorianDate": "1912-05-31",
+        "birthdayCrossLinkKey": "1912-05-31",
+        "birthdayRoute": "/birthday/may-31/"
+      },
+      "birthTime": null,
+      "timeQuality": "unknown",
+      "birthTimeEvidence": "none — Wikidata carries no birth-time claim for this person",
+      "birthPlace": {
+        "entity": "Q61985",
+        "entityLabel": "Taicang",
+        "normalisedLabel": "Taicang, People's Republic of China",
+        "country": {
+          "entity": "Q148",
+          "label": "People's Republic of China"
+        },
+        "coordinates": {
+          "latitude": 31.45152,
+          "longitude": 121.10435,
+          "sourceEntity": "Q61985",
+          "sourceEntityLabel": "Taicang",
+          "wikidataPrecision": null,
+          "escalationSteps": 0,
+          "precisionDowngrade": null
+        },
+        "timeZone": "Asia/Shanghai"
+      },
+      "computation": {
+        "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
+        "timeZone": "Asia/Shanghai",
+        "civilTime": "12:00",
+        "utcInstant": "1912-05-31T04:00:00.000Z",
+        "utcOffsetMinutesAtBirth": 480,
+        "civilDayStartUtc": "1912-05-30T16:00:00.000Z",
+        "civilDayEndUtc": "1912-05-31T15:59:00.000Z",
+        "latitude": 31.45152,
+        "longitude": 121.10435,
+        "coordinateEscalationSteps": 0,
+        "coordinateSourceEntity": "Q61985",
+        "ephemeris": "astronomy-engine via GeoVector + Rotation_EQJ_ECT (server-ephemeris.ts convention)",
+        "aspectTable": "@zodiacs/engine/internal/math",
+        "anglesComputed": false,
+        "housesComputed": false,
+        "sectComputed": false,
+        "meridianResidualMinutes": 4.42,
+        "meridianResidualMoonDegrees": 0.0405
+      },
+      "sunSign": {
+        "slug": "gemini",
+        "name": "Gemini",
+        "degree": 9.32,
+        "determinable": true,
+        "cuspCheck": {
+          "ambiguous": false,
+          "boundaryUtc": null,
+          "degreesInsideAtWindowStart": 9.1588,
+          "degreesToNextBoundaryAtWindowEnd": 19.8834
+        }
+      },
+      "moon": {
+        "sign": "sagittarius",
+        "signName": "Sagittarius",
+        "degree": 11.47,
+        "uncertain": false,
+        "signAtCivilDayStart": "sagittarius",
+        "signAtCivilDayEnd": "sagittarius"
+      },
+      "unknownTimeErrorBandDegrees": {
+        "Sun": 0.957,
+        "Moon": 12.371,
+        "Mercury": 1.736,
+        "Venus": 1.225,
+        "Mars": 0.59,
+        "Jupiter": 0.127,
+        "Saturn": 0.127,
+        "Uranus": 0.018,
+        "Neptune": 0.029,
+        "Pluto": 0.023
+      },
+      "dataQualityLabel": "Birth date sourced; birth time unknown",
+      "sources": {
+        "wikidata": {
+          "entityUrl": "https://www.wikidata.org/wiki/Q450317",
+          "propertiesUsed": [
+            "P569",
+            "P19",
+            "P625",
+            "P106",
+            "P18",
+            "P570",
+            "P17",
+            "P131"
+          ],
+          "lastrevid": 2515867720
+        },
+        "wikipedia": {
+          "language": "en",
+          "title": "Chien-Shiung Wu",
+          "articleUrl": "https://en.wikipedia.org/wiki/Chien-Shiung_Wu",
+          "pageId": 252131,
+          "revisionId": 1365901887,
+          "revisionTimestamp": "2026-07-25T02:30:18Z"
+        },
+        "retrievedAtUtc": "2026-07-25T17:05:12.504Z"
+      },
+      "portrait": {
+        "available": false,
+        "reason": "licence \"No restrictions\" is outside the accepted set (public domain, CC0, CC BY, CC BY-SA)",
+        "file": "File:Chien-shiung Wu (1912-1997) (cropped).jpg"
+      },
+      "living": false,
+      "reviewedAtUtc": "2026-07-25T00:00:00Z",
+      "computationInputVersion": {
+        "ephemeris": "astronomy-engine (repository dependency)",
+        "aspectTable": "@zodiacs/engine/internal/math",
+        "pilotTools": "docs/phase5/people-pilot/tools @ phase5a"
+      },
+      "contentDepth": {
+        "originalWords": 324,
+        "substantiveStatements": 12,
+        "highestPairwiseSimilarity": 0
+      },
+      "indexEligibility": {
+        "eligible": false,
+        "blockedBy": [
+          "phase-5a-is-design-only — no People route exists yet"
+        ],
+        "contentChecksPassed": true,
+        "contentCheckFailures": []
+      },
+      "suppression": {
+        "status": "active",
+        "requestedBy": null,
+        "decidedAtUtc": null,
+        "note": null
+      }
+    },
+    {
+      "qid": "Q132232",
+      "slug": "clara-schumann",
+      "displayName": "Clara Schumann",
+      "shortDescription": "Pianist and composer · Germany · 1819–1896",
+      "disciplines": [
+        "pianist",
+        "composer"
+      ],
+      "birthDate": {
+        "storedValue": "1819-09-13",
+        "precision": "day",
+        "calendarModel": "proleptic-gregorian",
+        "calendarConversion": "none required — the stored value is already proleptic Gregorian",
+        "displayedDate": "1819-09-13",
+        "computedGregorianDate": "1819-09-13",
+        "birthdayCrossLinkKey": "1819-09-13",
+        "birthdayRoute": "/birthday/september-13/"
+      },
+      "birthTime": null,
+      "timeQuality": "unknown",
+      "birthTimeEvidence": "none — Wikidata carries no birth-time claim for this person",
+      "birthPlace": {
+        "entity": "Q2079",
+        "entityLabel": "Leipzig",
+        "normalisedLabel": "Leipzig, Germany",
+        "country": {
+          "entity": "Q183",
+          "label": "Germany"
+        },
+        "coordinates": {
+          "latitude": 51.3406321,
+          "longitude": 12.3747329,
+          "sourceEntity": "Q2079",
+          "sourceEntityLabel": "Leipzig",
+          "wikidataPrecision": 1e-7,
+          "escalationSteps": 0,
+          "precisionDowngrade": null
+        },
+        "timeZone": "Europe/Berlin"
+      },
+      "computation": {
+        "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
+        "timeZone": "Europe/Berlin",
+        "civilTime": "12:00",
+        "utcInstant": "1819-09-13T11:06:32.000Z",
+        "utcOffsetMinutesAtBirth": 53.4667,
+        "civilDayStartUtc": "1819-09-12T23:06:32.000Z",
+        "civilDayEndUtc": "1819-09-13T23:05:32.000Z",
+        "latitude": 51.3406321,
+        "longitude": 12.3747329,
+        "coordinateEscalationSteps": 0,
+        "coordinateSourceEntity": "Q2079",
+        "ephemeris": "astronomy-engine via GeoVector + Rotation_EQJ_ECT (server-ephemeris.ts convention)",
+        "aspectTable": "@zodiacs/engine/internal/math",
+        "anglesComputed": false,
+        "housesComputed": false,
+        "sectComputed": false,
+        "meridianResidualMinutes": -3.97,
+        "meridianResidualMoonDegrees": 0.0364
+      },
+      "sunSign": {
+        "slug": "virgo",
+        "name": "Virgo",
+        "degree": 19.79,
+        "determinable": true,
+        "cuspCheck": {
+          "ambiguous": false,
+          "boundaryUtc": null,
+          "degreesInsideAtWindowStart": 19.3361,
+          "degreesToNextBoundaryAtWindowEnd": 9.6891
+        }
+      },
+      "moon": {
+        "sign": "cancer",
+        "signName": "Cancer",
+        "degree": 12.99,
+        "uncertain": false,
+        "signAtCivilDayStart": "cancer",
+        "signAtCivilDayEnd": "cancer"
+      },
+      "unknownTimeErrorBandDegrees": {
+        "Sun": 0.974,
+        "Moon": 11.911,
+        "Mercury": 0.461,
+        "Venus": 1.242,
+        "Mars": 0.579,
+        "Jupiter": 0.066,
+        "Saturn": 0.076,
+        "Uranus": 0.012,
+        "Neptune": 0.003,
+        "Pluto": 0.02
+      },
+      "dataQualityLabel": "Birth date sourced; birth time unknown",
+      "sources": {
+        "wikidata": {
+          "entityUrl": "https://www.wikidata.org/wiki/Q132232",
+          "propertiesUsed": [
+            "P569",
+            "P19",
+            "P625",
+            "P106",
+            "P18",
+            "P570",
+            "P17",
+            "P131"
+          ],
+          "lastrevid": 2522259792
+        },
+        "wikipedia": {
+          "language": "en",
+          "title": "Clara Schumann",
+          "articleUrl": "https://en.wikipedia.org/wiki/Clara_Schumann",
+          "pageId": 45181,
+          "revisionId": 1361210480,
+          "revisionTimestamp": "2026-06-26T12:03:06Z"
+        },
+        "retrievedAtUtc": "2026-07-25T17:05:12.504Z"
+      },
+      "portrait": {
+        "available": true,
+        "file": "File:Franz Hanfstaengl - Clara Schumann (1857).jpg",
+        "filePage": "https://commons.wikimedia.org/wiki/File:Franz%20Hanfstaengl%20-%20Clara%20Schumann%20(1857).jpg",
+        "creator": "Franz Hanfstaengl",
+        "licence": "Public domain",
+        "licenceUrl": null,
+        "attributionRequired": false,
+        "renderedAttribution": "Franz Hanfstaengl · public domain · Wikimedia Commons",
+        "renderedAttributionLinks": {
+          "creator": "https://commons.wikimedia.org/wiki/File:Franz%20Hanfstaengl%20-%20Clara%20Schumann%20(1857).jpg",
+          "licence": null,
+          "source": "https://commons.wikimedia.org/wiki/File:Franz%20Hanfstaengl%20-%20Clara%20Schumann%20(1857).jpg"
+        },
+        "width": 2082,
+        "height": 2651
+      },
+      "living": false,
+      "reviewedAtUtc": "2026-07-25T00:00:00Z",
+      "computationInputVersion": {
+        "ephemeris": "astronomy-engine (repository dependency)",
+        "aspectTable": "@zodiacs/engine/internal/math",
+        "pilotTools": "docs/phase5/people-pilot/tools @ phase5a"
+      },
+      "contentDepth": {
+        "originalWords": 382,
+        "substantiveStatements": 14,
+        "highestPairwiseSimilarity": 0.2174
+      },
+      "indexEligibility": {
+        "eligible": false,
+        "blockedBy": [
+          "phase-5a-is-design-only — no People route exists yet"
+        ],
+        "contentChecksPassed": true,
+        "contentCheckFailures": []
+      },
+      "suppression": {
+        "status": "active",
+        "requestedBy": null,
+        "decidedAtUtc": null,
+        "note": null
+      }
+    },
+    {
+      "qid": "Q1768",
+      "slug": "ella-fitzgerald",
+      "displayName": "Ella Fitzgerald",
+      "shortDescription": "Jazz musician and singer-songwriter · United States · 1917–1996",
+      "disciplines": [
+        "jazz musician",
+        "singer-songwriter"
+      ],
+      "birthDate": {
+        "storedValue": "1917-04-25",
+        "precision": "day",
+        "calendarModel": "proleptic-gregorian",
+        "calendarConversion": "none required — the stored value is already proleptic Gregorian",
+        "displayedDate": "1917-04-25",
+        "computedGregorianDate": "1917-04-25",
+        "birthdayCrossLinkKey": "1917-04-25",
+        "birthdayRoute": "/birthday/april-25/"
+      },
+      "birthTime": null,
+      "timeQuality": "unknown",
+      "birthTimeEvidence": "none — Wikidata carries no birth-time claim for this person",
+      "birthPlace": {
+        "entity": "Q335017",
+        "entityLabel": "Newport News",
+        "normalisedLabel": "Newport News, United States",
+        "country": {
+          "entity": "Q30",
+          "label": "United States"
+        },
+        "coordinates": {
+          "latitude": 37.070833333333,
+          "longitude": -76.484444444444,
+          "sourceEntity": "Q335017",
+          "sourceEntityLabel": "Newport News",
+          "wikidataPrecision": 0.00027777777777778,
+          "escalationSteps": 0,
+          "precisionDowngrade": null
+        },
+        "timeZone": "America/New_York"
+      },
+      "computation": {
+        "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
+        "timeZone": "America/New_York",
+        "civilTime": "12:00",
+        "utcInstant": "1917-04-25T17:00:00.000Z",
+        "utcOffsetMinutesAtBirth": -300,
+        "civilDayStartUtc": "1917-04-25T05:00:00.000Z",
+        "civilDayEndUtc": "1917-04-26T04:59:00.000Z",
+        "latitude": 37.070833333333,
+        "longitude": -76.484444444444,
+        "coordinateEscalationSteps": 0,
+        "coordinateSourceEntity": "Q335017",
+        "ephemeris": "astronomy-engine via GeoVector + Rotation_EQJ_ECT (server-ephemeris.ts convention)",
+        "aspectTable": "@zodiacs/engine/internal/math",
+        "anglesComputed": false,
+        "housesComputed": false,
+        "sectComputed": false,
+        "meridianResidualMinutes": -5.94,
+        "meridianResidualMoonDegrees": 0.0544
+      },
+      "sunSign": {
+        "slug": "taurus",
+        "name": "Taurus",
+        "degree": 4.9,
+        "determinable": true,
+        "cuspCheck": {
+          "ambiguous": false,
+          "boundaryUtc": null,
+          "degreesInsideAtWindowStart": 4.2125,
+          "degreesToNextBoundaryAtWindowEnd": 24.8141
+        }
+      },
+      "moon": {
+        "sign": "gemini",
+        "signName": "Gemini",
+        "degree": 25.77,
+        "uncertain": true,
+        "signAtCivilDayStart": "gemini",
+        "signAtCivilDayEnd": "cancer"
+      },
+      "unknownTimeErrorBandDegrees": {
+        "Sun": 0.973,
+        "Moon": 12.538,
+        "Mercury": 0.894,
+        "Venus": 1.234,
+        "Mars": 0.758,
+        "Jupiter": 0.236,
+        "Saturn": 0.054,
+        "Uranus": 0.027,
+        "Neptune": 0.007,
+        "Pluto": 0.014
+      },
+      "dataQualityLabel": "Birth date sourced; birth time unknown; Moon sign undetermined",
+      "sources": {
+        "wikidata": {
+          "entityUrl": "https://www.wikidata.org/wiki/Q1768",
+          "propertiesUsed": [
+            "P569",
+            "P19",
+            "P625",
+            "P106",
+            "P18",
+            "P570",
+            "P17",
+            "P131"
+          ],
+          "lastrevid": 2518724086
+        },
+        "wikipedia": {
+          "language": "en",
+          "title": "Ella Fitzgerald",
+          "articleUrl": "https://en.wikipedia.org/wiki/Ella_Fitzgerald",
+          "pageId": 50350,
+          "revisionId": 1365576366,
+          "revisionTimestamp": "2026-07-23T06:38:55Z"
+        },
+        "retrievedAtUtc": "2026-07-25T17:05:12.504Z"
+      },
+      "portrait": {
+        "available": true,
+        "file": "File:Ella Fitzgerald by Carl Van Vechten - American Flag (cropped).jpg",
+        "filePage": "https://commons.wikimedia.org/wiki/File:Ella%20Fitzgerald%20by%20Carl%20Van%20Vechten%20-%20American%20Flag%20(cropped).jpg",
+        "creator": "Carl Van Vechten",
+        "licence": "Public domain",
+        "licenceUrl": null,
+        "attributionRequired": false,
+        "renderedAttribution": "Carl Van Vechten · public domain · Wikimedia Commons",
+        "renderedAttributionLinks": {
+          "creator": "https://commons.wikimedia.org/wiki/File:Ella%20Fitzgerald%20by%20Carl%20Van%20Vechten%20-%20American%20Flag%20(cropped).jpg",
+          "licence": null,
+          "source": "https://commons.wikimedia.org/wiki/File:Ella%20Fitzgerald%20by%20Carl%20Van%20Vechten%20-%20American%20Flag%20(cropped).jpg"
+        },
+        "width": 2911,
+        "height": 4206
+      },
+      "living": false,
+      "reviewedAtUtc": "2026-07-25T00:00:00Z",
+      "computationInputVersion": {
+        "ephemeris": "astronomy-engine (repository dependency)",
+        "aspectTable": "@zodiacs/engine/internal/math",
+        "pilotTools": "docs/phase5/people-pilot/tools @ phase5a"
+      },
+      "contentDepth": {
+        "originalWords": 350,
+        "substantiveStatements": 13,
+        "highestPairwiseSimilarity": 0.1909
+      },
+      "indexEligibility": {
+        "eligible": false,
+        "blockedBy": [
+          "phase-5a-is-design-only — no People route exists yet"
+        ],
+        "contentChecksPassed": true,
+        "contentCheckFailures": []
+      },
+      "suppression": {
+        "status": "active",
+        "requestedBy": null,
+        "decidedAtUtc": null,
+        "note": null
+      }
+    },
+    {
+      "qid": "Q80137",
+      "slug": "emily-bronte",
+      "displayName": "Emily Brontë",
+      "shortDescription": "Novelist and poet · United Kingdom · 1818–1848",
+      "disciplines": [
+        "novelist",
+        "poet"
+      ],
+      "birthDate": {
+        "storedValue": "1818-07-30",
+        "precision": "day",
+        "calendarModel": "proleptic-gregorian",
+        "calendarConversion": "none required — the stored value is already proleptic Gregorian",
+        "displayedDate": "1818-07-30",
+        "computedGregorianDate": "1818-07-30",
+        "birthdayCrossLinkKey": "1818-07-30",
+        "birthdayRoute": "/birthday/july-30/"
+      },
+      "birthTime": null,
+      "timeQuality": "unknown",
+      "birthTimeEvidence": "none — Wikidata carries no birth-time claim for this person",
+      "birthPlace": {
+        "entity": "Q17534538",
+        "entityLabel": "The Brontë Birthplace",
+        "normalisedLabel": "The Brontë Birthplace, United Kingdom",
+        "country": {
+          "entity": "Q145",
+          "label": "United Kingdom"
+        },
+        "coordinates": {
+          "latitude": 53.791,
+          "longitude": -1.84867,
+          "sourceEntity": "Q17534538",
+          "sourceEntityLabel": "The Brontë Birthplace",
+          "wikidataPrecision": 0.000001,
+          "escalationSteps": 0,
+          "precisionDowngrade": null
+        },
+        "timeZone": "Europe/London"
+      },
+      "computation": {
+        "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
+        "timeZone": "Europe/London",
+        "civilTime": "12:00",
+        "utcInstant": "1818-07-30T12:01:15.000Z",
+        "utcOffsetMinutesAtBirth": -1.25,
+        "civilDayStartUtc": "1818-07-30T00:01:15.000Z",
+        "civilDayEndUtc": "1818-07-31T00:00:15.000Z",
+        "latitude": 53.791,
+        "longitude": -1.84867,
+        "coordinateEscalationSteps": 0,
+        "coordinateSourceEntity": "Q17534538",
+        "ephemeris": "astronomy-engine via GeoVector + Rotation_EQJ_ECT (server-ephemeris.ts convention)",
+        "aspectTable": "@zodiacs/engine/internal/math",
+        "anglesComputed": false,
+        "housesComputed": false,
+        "sectComputed": false,
+        "meridianResidualMinutes": -6.14,
+        "meridianResidualMoonDegrees": 0.0563
+      },
+      "sunSign": {
+        "slug": "leo",
+        "name": "Leo",
+        "degree": 6.64,
+        "determinable": true,
+        "cuspCheck": {
+          "ambiguous": false,
+          "boundaryUtc": null,
+          "degreesInsideAtWindowStart": 6.1625,
+          "degreesToNextBoundaryAtWindowEnd": 22.8803
+        }
+      },
+      "moon": {
+        "sign": "cancer",
+        "signName": "Cancer",
+        "degree": 6.57,
+        "uncertain": false,
+        "signAtCivilDayStart": "cancer",
+        "signAtCivilDayEnd": "cancer"
+      },
+      "unknownTimeErrorBandDegrees": {
+        "Sun": 0.956,
+        "Moon": 11.952,
+        "Mercury": 1.824,
+        "Venus": 1.183,
+        "Mars": 0.623,
+        "Jupiter": 0.091,
+        "Saturn": 0.048,
+        "Uranus": 0.021,
+        "Neptune": 0.018,
+        "Pluto": 0.012
+      },
+      "dataQualityLabel": "Birth date sourced; birth time unknown",
+      "sources": {
+        "wikidata": {
+          "entityUrl": "https://www.wikidata.org/wiki/Q80137",
+          "propertiesUsed": [
+            "P569",
+            "P19",
+            "P625",
+            "P106",
+            "P18",
+            "P570",
+            "P17",
+            "P131"
+          ],
+          "lastrevid": 2520235246
+        },
+        "wikipedia": {
+          "language": "en",
+          "title": "Emily Brontë",
+          "articleUrl": "https://en.wikipedia.org/wiki/Emily_Bront%C3%AB",
+          "pageId": 9810,
+          "revisionId": 1365227432,
+          "revisionTimestamp": "2026-07-21T02:34:49Z"
+        },
+        "retrievedAtUtc": "2026-07-25T17:05:12.504Z"
+      },
+      "portrait": {
+        "available": true,
+        "file": "File:Emily Brontë cropped.jpg",
+        "filePage": "https://commons.wikimedia.org/wiki/File:Emily%20Bront%C3%AB%20cropped.jpg",
+        "creator": "Branwell Brontë",
+        "licence": "Public domain",
+        "licenceUrl": null,
+        "attributionRequired": false,
+        "renderedAttribution": "Branwell Brontë · public domain · Wikimedia Commons",
+        "renderedAttributionLinks": {
+          "creator": "https://commons.wikimedia.org/wiki/File:Emily%20Bront%C3%AB%20cropped.jpg",
+          "licence": null,
+          "source": "https://commons.wikimedia.org/wiki/File:Emily%20Bront%C3%AB%20cropped.jpg"
+        },
+        "width": 952,
+        "height": 1467
+      },
+      "living": false,
+      "reviewedAtUtc": "2026-07-25T00:00:00Z",
+      "computationInputVersion": {
+        "ephemeris": "astronomy-engine (repository dependency)",
+        "aspectTable": "@zodiacs/engine/internal/math",
+        "pilotTools": "docs/phase5/people-pilot/tools @ phase5a"
+      },
+      "contentDepth": {
+        "originalWords": 385,
+        "substantiveStatements": 14,
+        "highestPairwiseSimilarity": 0.2174
+      },
+      "indexEligibility": {
+        "eligible": false,
+        "blockedBy": [
+          "phase-5a-is-design-only — no People route exists yet"
+        ],
+        "contentChecksPassed": true,
+        "contentCheckFailures": []
+      },
+      "suppression": {
+        "status": "active",
+        "requestedBy": null,
+        "decidedAtUtc": null,
+        "note": null
+      }
+    },
+    {
+      "qid": "Q5588",
+      "slug": "frida-kahlo",
+      "displayName": "Frida Kahlo",
+      "shortDescription": "Painter · Mexico · 1907–1954",
+      "disciplines": [
+        "painter"
+      ],
+      "birthDate": {
+        "storedValue": "1907-07-06",
+        "precision": "day",
+        "calendarModel": "proleptic-gregorian",
+        "calendarConversion": "none required — the stored value is already proleptic Gregorian",
+        "displayedDate": "1907-07-06",
+        "computedGregorianDate": "1907-07-06",
+        "birthdayCrossLinkKey": "1907-07-06",
+        "birthdayRoute": "/birthday/july-6/"
+      },
+      "birthTime": null,
+      "timeQuality": "unknown",
+      "birthTimeEvidence": "none — Wikidata carries no birth-time claim for this person",
+      "birthPlace": {
+        "entity": "Q2597249",
+        "entityLabel": "Coyoacán",
+        "normalisedLabel": "Coyoacán, Mexico",
+        "country": {
+          "entity": "Q96",
+          "label": "Mexico"
+        },
+        "coordinates": {
+          "latitude": 19.353773,
+          "longitude": -99.13589,
+          "sourceEntity": "Q1489",
+          "sourceEntityLabel": "Mexico City",
+          "wikidataPrecision": 0.000001,
+          "escalationSteps": 1,
+          "precisionDowngrade": "coordinates taken from Mexico City, one administrative step above the recorded birthplace"
+        },
+        "timeZone": "America/Mexico_City"
+      },
+      "computation": {
+        "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
+        "timeZone": "America/Mexico_City",
+        "civilTime": "12:00",
+        "utcInstant": "1907-07-06T18:36:36.000Z",
+        "utcOffsetMinutesAtBirth": -396.6,
+        "civilDayStartUtc": "1907-07-06T06:36:36.000Z",
+        "civilDayEndUtc": "1907-07-07T06:35:36.000Z",
+        "latitude": 19.353773,
+        "longitude": -99.13589,
+        "coordinateEscalationSteps": 1,
+        "coordinateSourceEntity": "Q1489",
+        "ephemeris": "astronomy-engine via GeoVector + Rotation_EQJ_ECT (server-ephemeris.ts convention)",
+        "aspectTable": "@zodiacs/engine/internal/math",
+        "anglesComputed": false,
+        "housesComputed": false,
+        "sectComputed": false,
+        "meridianResidualMinutes": 0.06,
+        "meridianResidualMoonDegrees": 0.0005
+      },
+      "sunSign": {
+        "slug": "cancer",
+        "name": "Cancer",
+        "degree": 13.51,
+        "determinable": true,
+        "cuspCheck": {
+          "ambiguous": false,
+          "boundaryUtc": null,
+          "degreesInsideAtWindowStart": 12.7751,
+          "degreesToNextBoundaryAtWindowEnd": 16.2712
+        }
+      },
+      "moon": {
+        "sign": "gemini",
+        "signName": "Gemini",
+        "degree": 1.46,
+        "uncertain": true,
+        "signAtCivilDayStart": "taurus",
+        "signAtCivilDayEnd": "gemini"
+      },
+      "unknownTimeErrorBandDegrees": {
+        "Sun": 0.953,
+        "Moon": 11.996,
+        "Mercury": 0.362,
+        "Venus": 1.216,
+        "Mars": 0.294,
+        "Jupiter": 0.223,
+        "Saturn": 0.005,
+        "Uranus": 0.04,
+        "Neptune": 0.037,
+        "Pluto": 0.022
+      },
+      "dataQualityLabel": "Birth date sourced; birth time unknown; Moon sign undetermined",
+      "sources": {
+        "wikidata": {
+          "entityUrl": "https://www.wikidata.org/wiki/Q5588",
+          "propertiesUsed": [
+            "P569",
+            "P19",
+            "P625",
+            "P106",
+            "P18",
+            "P570",
+            "P17",
+            "P131"
+          ],
+          "lastrevid": 2521357976
+        },
+        "wikipedia": {
+          "language": "en",
+          "title": "Frida Kahlo",
+          "articleUrl": "https://en.wikipedia.org/wiki/Frida_Kahlo",
+          "pageId": 162276,
+          "revisionId": 1365718605,
+          "revisionTimestamp": "2026-07-24T01:32:46Z"
+        },
+        "retrievedAtUtc": "2026-07-25T17:05:12.504Z"
+      },
+      "portrait": {
+        "available": true,
+        "file": "File:Frida Kahlo, by Guillermo Kahlo (cropped).jpg",
+        "filePage": "https://commons.wikimedia.org/wiki/File:Frida%20Kahlo%2C%20by%20Guillermo%20Kahlo%20(cropped).jpg",
+        "creator": "Guillermo Kahlo",
+        "licence": "Public domain",
+        "licenceUrl": null,
+        "attributionRequired": false,
+        "renderedAttribution": "Guillermo Kahlo · public domain · Wikimedia Commons",
+        "renderedAttributionLinks": {
+          "creator": "https://commons.wikimedia.org/wiki/File:Frida%20Kahlo%2C%20by%20Guillermo%20Kahlo%20(cropped).jpg",
+          "licence": null,
+          "source": "https://commons.wikimedia.org/wiki/File:Frida%20Kahlo%2C%20by%20Guillermo%20Kahlo%20(cropped).jpg"
+        },
+        "width": 1197,
+        "height": 1440
+      },
+      "living": false,
+      "reviewedAtUtc": "2026-07-25T00:00:00Z",
+      "computationInputVersion": {
+        "ephemeris": "astronomy-engine (repository dependency)",
+        "aspectTable": "@zodiacs/engine/internal/math",
+        "pilotTools": "docs/phase5/people-pilot/tools @ phase5a"
+      },
+      "contentDepth": {
+        "originalWords": 348,
+        "substantiveStatements": 12,
+        "highestPairwiseSimilarity": 0
+      },
+      "indexEligibility": {
+        "eligible": false,
+        "blockedBy": [
+          "phase-5a-is-design-only — no People route exists yet"
+        ],
+        "contentChecksPassed": true,
+        "contentCheckFailures": []
+      },
+      "suppression": {
+        "status": "active",
+        "requestedBy": null,
+        "decidedAtUtc": null,
+        "note": null
+      }
+    },
+    {
+      "qid": "Q289428",
+      "slug": "ida-b-wells",
+      "displayName": "Ida B. Wells",
+      "shortDescription": "Journalist and sociologist · United States · 1862–1931",
+      "disciplines": [
+        "journalist",
+        "sociologist"
+      ],
+      "birthDate": {
+        "storedValue": "1862-07-16",
+        "precision": "day",
+        "calendarModel": "proleptic-gregorian",
+        "calendarConversion": "none required — the stored value is already proleptic Gregorian",
+        "displayedDate": "1862-07-16",
+        "computedGregorianDate": "1862-07-16",
+        "birthdayCrossLinkKey": "1862-07-16",
+        "birthdayRoute": "/birthday/july-16/"
+      },
+      "birthTime": null,
+      "timeQuality": "unknown",
+      "birthTimeEvidence": "none — Wikidata carries no birth-time claim for this person",
+      "birthPlace": {
+        "entity": "Q2273202",
+        "entityLabel": "Holly Springs",
+        "normalisedLabel": "Holly Springs, United States",
+        "country": {
+          "entity": "Q30",
+          "label": "United States"
+        },
+        "coordinates": {
+          "latitude": 34.7733,
+          "longitude": -89.4464,
+          "sourceEntity": "Q2273202",
+          "sourceEntityLabel": "Holly Springs",
+          "wikidataPrecision": 0.0001,
+          "escalationSteps": 0,
+          "precisionDowngrade": null
+        },
+        "timeZone": "America/Chicago"
+      },
+      "computation": {
+        "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
+        "timeZone": "America/Chicago",
+        "civilTime": "12:00",
+        "utcInstant": "1862-07-16T17:50:36.000Z",
+        "utcOffsetMinutesAtBirth": -350.6,
+        "civilDayStartUtc": "1862-07-16T05:50:36.000Z",
+        "civilDayEndUtc": "1862-07-17T05:49:36.000Z",
+        "latitude": 34.7733,
+        "longitude": -89.4464,
+        "coordinateEscalationSteps": 0,
+        "coordinateSourceEntity": "Q2273202",
+        "ephemeris": "astronomy-engine via GeoVector + Rotation_EQJ_ECT (server-ephemeris.ts convention)",
+        "aspectTable": "@zodiacs/engine/internal/math",
+        "anglesComputed": false,
+        "housesComputed": false,
+        "sectComputed": false,
+        "meridianResidualMinutes": -7.19,
+        "meridianResidualMoonDegrees": 0.0659
+      },
+      "sunSign": {
+        "slug": "cancer",
+        "name": "Cancer",
+        "degree": 23.86,
+        "determinable": true,
+        "cuspCheck": {
+          "ambiguous": false,
+          "boundaryUtc": null,
+          "degreesInsideAtWindowStart": 23.1505,
+          "degreesToNextBoundaryAtWindowEnd": 5.8956
+        }
+      },
+      "moon": {
+        "sign": "aries",
+        "signName": "Aries",
+        "degree": 1.03,
+        "uncertain": true,
+        "signAtCivilDayStart": "pisces",
+        "signAtCivilDayEnd": "aries"
+      },
+      "unknownTimeErrorBandDegrees": {
+        "Sun": 0.953,
+        "Moon": 12.868,
+        "Mercury": 0.183,
+        "Venus": 1.167,
+        "Mars": 0.493,
+        "Jupiter": 0.154,
+        "Saturn": 0.088,
+        "Uranus": 0.051,
+        "Neptune": 0.005,
+        "Pluto": 0.009
+      },
+      "dataQualityLabel": "Birth date sourced; birth time unknown; Moon sign undetermined",
+      "sources": {
+        "wikidata": {
+          "entityUrl": "https://www.wikidata.org/wiki/Q289428",
+          "propertiesUsed": [
+            "P569",
+            "P19",
+            "P625",
+            "P106",
+            "P18",
+            "P570",
+            "P17",
+            "P131"
+          ],
+          "lastrevid": 2521472371
+        },
+        "wikipedia": {
+          "language": "en",
+          "title": "Ida B. Wells",
+          "articleUrl": "https://en.wikipedia.org/wiki/Ida_B._Wells",
+          "pageId": 394117,
+          "revisionId": 1363286489,
+          "revisionTimestamp": "2026-07-09T06:31:26Z"
+        },
+        "retrievedAtUtc": "2026-07-25T17:05:12.504Z"
+      },
+      "portrait": {
+        "available": true,
+        "file": "File:Mary Garrity - Ida B. Wells-Barnett - Google Art Project - restoration crop.jpg",
+        "filePage": "https://commons.wikimedia.org/wiki/File:Mary%20Garrity%20-%20Ida%20B.%20Wells-Barnett%20-%20Google%20Art%20Project%20-%20restoration%20crop.jpg",
+        "creator": "Adam Cuerden",
+        "licence": "Public domain",
+        "licenceUrl": null,
+        "attributionRequired": false,
+        "renderedAttribution": "Adam Cuerden · public domain · Wikimedia Commons",
+        "renderedAttributionLinks": {
+          "creator": "https://commons.wikimedia.org/wiki/File:Mary%20Garrity%20-%20Ida%20B.%20Wells-Barnett%20-%20Google%20Art%20Project%20-%20restoration%20crop.jpg",
+          "licence": null,
+          "source": "https://commons.wikimedia.org/wiki/File:Mary%20Garrity%20-%20Ida%20B.%20Wells-Barnett%20-%20Google%20Art%20Project%20-%20restoration%20crop.jpg"
+        },
+        "width": 2673,
+        "height": 3818
+      },
+      "living": false,
+      "reviewedAtUtc": "2026-07-25T00:00:00Z",
+      "computationInputVersion": {
+        "ephemeris": "astronomy-engine (repository dependency)",
+        "aspectTable": "@zodiacs/engine/internal/math",
+        "pilotTools": "docs/phase5/people-pilot/tools @ phase5a"
+      },
+      "contentDepth": {
+        "originalWords": 326,
+        "substantiveStatements": 12,
+        "highestPairwiseSimilarity": 0.2356
+      },
+      "indexEligibility": {
+        "eligible": false,
+        "blockedBy": [
+          "phase-5a-is-design-only — no People route exists yet"
+        ],
+        "contentChecksPassed": true,
+        "contentCheckFailures": []
+      },
+      "suppression": {
+        "status": "active",
+        "requestedBy": null,
+        "decidedAtUtc": null,
+        "note": null
+      }
+    },
+    {
+      "qid": "Q11740",
+      "slug": "katherine-johnson",
+      "displayName": "Katherine Johnson",
+      "shortDescription": "Mathematician · United States · 1918–2020",
+      "disciplines": [
+        "mathematician"
+      ],
+      "birthDate": {
+        "storedValue": "1918-08-26",
+        "precision": "day",
+        "calendarModel": "proleptic-gregorian",
+        "calendarConversion": "none required — the stored value is already proleptic Gregorian",
+        "displayedDate": "1918-08-26",
+        "computedGregorianDate": "1918-08-26",
+        "birthdayCrossLinkKey": "1918-08-26",
+        "birthdayRoute": "/birthday/august-26/"
+      },
+      "birthTime": null,
+      "timeQuality": "unknown",
+      "birthTimeEvidence": "none — Wikidata carries no birth-time claim for this person",
+      "birthPlace": {
+        "entity": "Q2035099",
+        "entityLabel": "White Sulphur Springs",
+        "normalisedLabel": "White Sulphur Springs, United States",
+        "country": {
+          "entity": "Q30",
+          "label": "United States"
+        },
+        "coordinates": {
+          "latitude": 37.793888888889,
+          "longitude": -80.303611111111,
+          "sourceEntity": "Q2035099",
+          "sourceEntityLabel": "White Sulphur Springs",
+          "wikidataPrecision": 0.00027777777777778,
+          "escalationSteps": 0,
+          "precisionDowngrade": null
+        },
+        "timeZone": "America/New_York"
+      },
+      "computation": {
+        "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
+        "timeZone": "America/New_York",
+        "civilTime": "12:00",
+        "utcInstant": "1918-08-26T16:00:00.000Z",
+        "utcOffsetMinutesAtBirth": -240,
+        "civilDayStartUtc": "1918-08-26T04:00:00.000Z",
+        "civilDayEndUtc": "1918-08-27T03:59:00.000Z",
+        "latitude": 37.793888888889,
+        "longitude": -80.303611111111,
+        "coordinateEscalationSteps": 0,
+        "coordinateSourceEntity": "Q2035099",
+        "ephemeris": "astronomy-engine via GeoVector + Rotation_EQJ_ECT (server-ephemeris.ts convention)",
+        "aspectTable": "@zodiacs/engine/internal/math",
+        "anglesComputed": false,
+        "housesComputed": false,
+        "sectComputed": false,
+        "meridianResidualMinutes": -81.21,
+        "meridianResidualMoonDegrees": 0.7445
+      },
+      "sunSign": {
+        "slug": "virgo",
+        "name": "Virgo",
+        "degree": 2.59,
+        "determinable": true,
+        "cuspCheck": {
+          "ambiguous": false,
+          "boundaryUtc": null,
+          "degreesInsideAtWindowStart": 1.9442,
+          "degreesToNextBoundaryAtWindowEnd": 27.0907
+        }
+      },
+      "moon": {
+        "sign": "taurus",
+        "signName": "Taurus",
+        "degree": 4.48,
+        "uncertain": true,
+        "signAtCivilDayStart": "aries",
+        "signAtCivilDayEnd": "taurus"
+      },
+      "unknownTimeErrorBandDegrees": {
+        "Sun": 0.965,
+        "Moon": 14.436,
+        "Mercury": 0.687,
+        "Venus": 1.22,
+        "Mars": 0.641,
+        "Jupiter": 0.176,
+        "Saturn": 0.126,
+        "Uranus": 0.039,
+        "Neptune": 0.034,
+        "Pluto": 0.015
+      },
+      "dataQualityLabel": "Birth date sourced; birth time unknown; Moon sign undetermined",
+      "sources": {
+        "wikidata": {
+          "entityUrl": "https://www.wikidata.org/wiki/Q11740",
+          "propertiesUsed": [
+            "P569",
+            "P19",
+            "P625",
+            "P106",
+            "P18",
+            "P570",
+            "P17",
+            "P131"
+          ],
+          "lastrevid": 2517790725
+        },
+        "wikipedia": {
+          "language": "en",
+          "title": "Katherine Johnson",
+          "articleUrl": "https://en.wikipedia.org/wiki/Katherine_Johnson",
+          "pageId": 25568315,
+          "revisionId": 1365626570,
+          "revisionTimestamp": "2026-07-23T14:25:21Z"
+        },
+        "retrievedAtUtc": "2026-07-25T17:05:12.504Z"
+      },
+      "portrait": {
+        "available": true,
+        "file": "File:Katherine Johnson 1983.jpg",
+        "filePage": "https://commons.wikimedia.org/wiki/File:Katherine%20Johnson%201983.jpg",
+        "creator": "NASA",
+        "licence": "Public domain",
+        "licenceUrl": null,
+        "attributionRequired": false,
+        "renderedAttribution": "NASA · public domain · Wikimedia Commons",
+        "renderedAttributionLinks": {
+          "creator": "https://commons.wikimedia.org/wiki/File:Katherine%20Johnson%201983.jpg",
+          "licence": null,
+          "source": "https://commons.wikimedia.org/wiki/File:Katherine%20Johnson%201983.jpg"
+        },
+        "width": 2400,
+        "height": 3000
+      },
+      "living": false,
+      "reviewedAtUtc": "2026-07-25T00:00:00Z",
+      "computationInputVersion": {
+        "ephemeris": "astronomy-engine (repository dependency)",
+        "aspectTable": "@zodiacs/engine/internal/math",
+        "pilotTools": "docs/phase5/people-pilot/tools @ phase5a"
+      },
+      "contentDepth": {
+        "originalWords": 393,
+        "substantiveStatements": 14,
+        "highestPairwiseSimilarity": 0.2786
+      },
+      "indexEligibility": {
+        "eligible": false,
+        "blockedBy": [
+          "phase-5a-is-design-only — no People route exists yet"
+        ],
+        "contentChecksPassed": true,
+        "contentCheckFailures": []
+      },
+      "suppression": {
+        "status": "active",
+        "requestedBy": null,
+        "decidedAtUtc": null,
+        "note": null
+      }
+    },
+    {
+      "qid": "Q1001",
+      "slug": "mahatma-gandhi",
+      "displayName": "Mohandas K. Gandhi",
+      "shortDescription": "Barrister and political writer · India · 1869–1948",
+      "disciplines": [
+        "barrister",
+        "political writer"
+      ],
+      "birthDate": {
+        "storedValue": "1869-10-02",
+        "precision": "day",
+        "calendarModel": "proleptic-gregorian",
+        "calendarConversion": "none required — the stored value is already proleptic Gregorian",
+        "displayedDate": "1869-10-02",
+        "computedGregorianDate": "1869-10-02",
+        "birthdayCrossLinkKey": "1869-10-02",
+        "birthdayRoute": "/birthday/october-2/"
+      },
+      "birthTime": null,
+      "timeQuality": "unknown",
+      "birthTimeEvidence": "none — Wikidata carries no birth-time claim for this person",
+      "birthPlace": {
+        "entity": "Q6419912",
+        "entityLabel": "Porbandar",
+        "normalisedLabel": "Porbandar, India",
+        "country": {
+          "entity": "Q668",
+          "label": "India"
+        },
+        "coordinates": {
+          "latitude": 21.6425,
+          "longitude": 69.604722222222,
+          "sourceEntity": "Q6419912",
+          "sourceEntityLabel": "Porbandar",
+          "wikidataPrecision": 0.00027777777777778,
+          "escalationSteps": 0,
+          "precisionDowngrade": null
+        },
+        "timeZone": "Asia/Kolkata"
+      },
+      "computation": {
+        "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
+        "timeZone": "Asia/Kolkata",
+        "civilTime": "12:00",
+        "utcInstant": "1869-10-02T06:06:40.000Z",
+        "utcOffsetMinutesAtBirth": 353.3333,
+        "civilDayStartUtc": "1869-10-01T18:06:40.000Z",
+        "civilDayEndUtc": "1869-10-02T18:05:40.000Z",
+        "latitude": 21.6425,
+        "longitude": 69.604722222222,
+        "coordinateEscalationSteps": 0,
+        "coordinateSourceEntity": "Q6419912",
+        "ephemeris": "astronomy-engine via GeoVector + Rotation_EQJ_ECT (server-ephemeris.ts convention)",
+        "aspectTable": "@zodiacs/engine/internal/math",
+        "anglesComputed": false,
+        "housesComputed": false,
+        "sectComputed": false,
+        "meridianResidualMinutes": -74.91,
+        "meridianResidualMoonDegrees": 0.6867
+      },
+      "sunSign": {
+        "slug": "libra",
+        "name": "Libra",
+        "degree": 9.07,
+        "determinable": true,
+        "cuspCheck": {
+          "ambiguous": false,
+          "boundaryUtc": null,
+          "degreesInsideAtWindowStart": 8.8227,
+          "degreesToNextBoundaryAtWindowEnd": 20.1917
+        }
+      },
+      "moon": {
+        "sign": "leo",
+        "signName": "Leo",
+        "degree": 22.11,
+        "uncertain": false,
+        "signAtCivilDayStart": "leo",
+        "signAtCivilDayEnd": "leo"
+      },
+      "unknownTimeErrorBandDegrees": {
+        "Sun": 0.985,
+        "Moon": 14.481,
+        "Mercury": 0.607,
+        "Venus": 1.193,
+        "Mars": 0.697,
+        "Jupiter": 0.073,
+        "Saturn": 0.073,
+        "Uranus": 0.023,
+        "Neptune": 0.027,
+        "Pluto": 0.014
+      },
+      "dataQualityLabel": "Birth date sourced; birth time unknown",
+      "sources": {
+        "wikidata": {
+          "entityUrl": "https://www.wikidata.org/wiki/Q1001",
+          "propertiesUsed": [
+            "P569",
+            "P19",
+            "P625",
+            "P106",
+            "P18",
+            "P570",
+            "P17",
+            "P131"
+          ],
+          "lastrevid": 2517820865
+        },
+        "wikipedia": {
+          "language": "en",
+          "title": "Mahatma Gandhi",
+          "articleUrl": "https://en.wikipedia.org/wiki/Mahatma_Gandhi",
+          "pageId": 19379,
+          "revisionId": 1365511067,
+          "revisionTimestamp": "2026-07-22T22:46:51Z"
+        },
+        "retrievedAtUtc": "2026-07-25T17:05:12.504Z"
+      },
+      "portrait": {
+        "available": true,
+        "file": "File:Mahatma-Gandhi, studio, 1931.jpg",
+        "filePage": "https://commons.wikimedia.org/wiki/File:Mahatma-Gandhi%2C%20studio%2C%201931.jpg",
+        "creator": "Elliott & Fry",
+        "licence": "Public domain",
+        "licenceUrl": null,
+        "attributionRequired": false,
+        "renderedAttribution": "Elliott & Fry · public domain · Wikimedia Commons",
+        "renderedAttributionLinks": {
+          "creator": "https://commons.wikimedia.org/wiki/File:Mahatma-Gandhi%2C%20studio%2C%201931.jpg",
+          "licence": null,
+          "source": "https://commons.wikimedia.org/wiki/File:Mahatma-Gandhi%2C%20studio%2C%201931.jpg"
+        },
+        "width": 2620,
+        "height": 3270
+      },
+      "living": false,
+      "reviewedAtUtc": "2026-07-25T00:00:00Z",
+      "computationInputVersion": {
+        "ephemeris": "astronomy-engine (repository dependency)",
+        "aspectTable": "@zodiacs/engine/internal/math",
+        "pilotTools": "docs/phase5/people-pilot/tools @ phase5a"
+      },
+      "contentDepth": {
+        "originalWords": 367,
+        "substantiveStatements": 14,
+        "highestPairwiseSimilarity": 0
+      },
+      "indexEligibility": {
+        "eligible": false,
+        "blockedBy": [
+          "phase-5a-is-design-only — no People route exists yet"
+        ],
+        "contentChecksPassed": true,
+        "contentCheckFailures": []
+      },
+      "suppression": {
+        "status": "active",
+        "requestedBy": null,
+        "decidedAtUtc": null,
+        "note": null
+      }
+    },
+    {
+      "qid": "Q7241",
+      "slug": "rabindranath-tagore",
+      "displayName": "Rabindranath Tagore",
+      "shortDescription": "Poet and composer · India · 1861–1941",
+      "disciplines": [
+        "poet",
+        "composer"
+      ],
+      "birthDate": {
+        "storedValue": "1861-05-07",
+        "precision": "day",
+        "calendarModel": "proleptic-gregorian",
+        "calendarConversion": "none required — the stored value is already proleptic Gregorian",
+        "displayedDate": "1861-05-07",
+        "computedGregorianDate": "1861-05-07",
+        "birthdayCrossLinkKey": "1861-05-07",
+        "birthdayRoute": "/birthday/may-7/"
+      },
+      "birthTime": null,
+      "timeQuality": "unknown",
+      "birthTimeEvidence": "none — Wikidata carries no birth-time claim for this person",
+      "birthPlace": {
+        "entity": "Q1348",
+        "entityLabel": "Kolkata",
+        "normalisedLabel": "Kolkata, India",
+        "country": {
+          "entity": "Q668",
+          "label": "India"
+        },
+        "coordinates": {
+          "latitude": 22.5675,
+          "longitude": 88.37,
+          "sourceEntity": "Q1348",
+          "sourceEntityLabel": "Kolkata",
+          "wikidataPrecision": 0.0002777777777777778,
+          "escalationSteps": 0,
+          "precisionDowngrade": null
+        },
+        "timeZone": "Asia/Kolkata"
+      },
+      "computation": {
+        "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
+        "timeZone": "Asia/Kolkata",
+        "civilTime": "12:00",
+        "utcInstant": "1861-05-07T06:06:40.000Z",
+        "utcOffsetMinutesAtBirth": 353.3333,
+        "civilDayStartUtc": "1861-05-06T18:06:40.000Z",
+        "civilDayEndUtc": "1861-05-07T18:05:40.000Z",
+        "latitude": 22.5675,
+        "longitude": 88.37,
+        "coordinateEscalationSteps": 0,
+        "coordinateSourceEntity": "Q1348",
+        "ephemeris": "astronomy-engine via GeoVector + Rotation_EQJ_ECT (server-ephemeris.ts convention)",
+        "aspectTable": "@zodiacs/engine/internal/math",
+        "anglesComputed": false,
+        "housesComputed": false,
+        "sectComputed": false,
+        "meridianResidualMinutes": 0.15,
+        "meridianResidualMoonDegrees": 0.0013
+      },
+      "sunSign": {
+        "slug": "taurus",
+        "name": "Taurus",
+        "degree": 16.63,
+        "determinable": true,
+        "cuspCheck": {
+          "ambiguous": false,
+          "boundaryUtc": null,
+          "degreesInsideAtWindowStart": 16.3842,
+          "degreesToNextBoundaryAtWindowEnd": 12.649
+        }
+      },
+      "moon": {
+        "sign": "aries",
+        "signName": "Aries",
+        "degree": 16.98,
+        "uncertain": false,
+        "signAtCivilDayStart": "aries",
+        "signAtCivilDayEnd": "aries"
+      },
+      "unknownTimeErrorBandDegrees": {
+        "Sun": 0.966,
+        "Moon": 11.846,
+        "Mercury": 1.835,
+        "Venus": 1.231,
+        "Mars": 0.65,
+        "Jupiter": 0.072,
+        "Saturn": 0.005,
+        "Uranus": 0.055,
+        "Neptune": 0.029,
+        "Pluto": 0.023
+      },
+      "dataQualityLabel": "Birth date sourced; birth time unknown",
+      "sources": {
+        "wikidata": {
+          "entityUrl": "https://www.wikidata.org/wiki/Q7241",
+          "propertiesUsed": [
+            "P569",
+            "P19",
+            "P625",
+            "P106",
+            "P18",
+            "P570",
+            "P17",
+            "P131"
+          ],
+          "lastrevid": 2517803425
+        },
+        "wikipedia": {
+          "language": "en",
+          "title": "Rabindranath Tagore",
+          "articleUrl": "https://en.wikipedia.org/wiki/Rabindranath_Tagore",
+          "pageId": 5052533,
+          "revisionId": 1364723051,
+          "revisionTimestamp": "2026-07-18T04:00:01Z"
+        },
+        "retrievedAtUtc": "2026-07-25T17:05:12.504Z"
+      },
+      "portrait": {
+        "available": true,
+        "file": "File:Rabindranath Tagore in 1909.jpg",
+        "filePage": "https://commons.wikimedia.org/wiki/File:Rabindranath%20Tagore%20in%201909.jpg",
+        "creator": "Generalstabens litografiska anstalt",
+        "licence": "Public domain",
+        "licenceUrl": null,
+        "attributionRequired": false,
+        "renderedAttribution": "Generalstabens litografiska anstalt · public domain · Wikimedia Commons",
+        "renderedAttributionLinks": {
+          "creator": "https://commons.wikimedia.org/wiki/File:Rabindranath%20Tagore%20in%201909.jpg",
+          "licence": null,
+          "source": "https://commons.wikimedia.org/wiki/File:Rabindranath%20Tagore%20in%201909.jpg"
+        },
+        "width": 1071,
+        "height": 1500
+      },
+      "living": false,
+      "reviewedAtUtc": "2026-07-25T00:00:00Z",
+      "computationInputVersion": {
+        "ephemeris": "astronomy-engine (repository dependency)",
+        "aspectTable": "@zodiacs/engine/internal/math",
+        "pilotTools": "docs/phase5/people-pilot/tools @ phase5a"
+      },
+      "contentDepth": {
+        "originalWords": 323,
+        "substantiveStatements": 12,
+        "highestPairwiseSimilarity": 0
+      },
+      "indexEligibility": {
+        "eligible": false,
+        "blockedBy": [
+          "phase-5a-is-design-only — no People route exists yet"
+        ],
+        "contentChecksPassed": true,
+        "contentCheckFailures": []
+      },
+      "suppression": {
+        "status": "active",
+        "requestedBy": null,
+        "decidedAtUtc": null,
+        "note": null
+      }
+    },
+    {
+      "qid": "Q188620",
+      "slug": "rigoberta-menchu",
+      "displayName": "Rigoberta Menchú",
+      "shortDescription": "Human rights defender · Guatemala · born 1959",
+      "disciplines": [
+        "human rights defender"
+      ],
+      "birthDate": {
+        "storedValue": "1959-01-09",
+        "precision": "day",
+        "calendarModel": "proleptic-gregorian",
+        "calendarConversion": "none required — the stored value is already proleptic Gregorian",
+        "displayedDate": "1959-01-09",
+        "computedGregorianDate": "1959-01-09",
+        "birthdayCrossLinkKey": "1959-01-09",
+        "birthdayRoute": "/birthday/january-9/"
+      },
+      "birthTime": null,
+      "timeQuality": "unknown",
+      "birthTimeEvidence": "none — Wikidata carries no birth-time claim for this person",
+      "birthPlace": {
+        "entity": "Q2963651",
+        "entityLabel": "Laj Chimel",
+        "normalisedLabel": "Laj Chimel, Guatemala",
+        "country": {
+          "entity": "Q774",
+          "label": "Guatemala"
+        },
+        "coordinates": {
+          "latitude": 15.5627,
+          "longitude": -90.0051,
+          "sourceEntity": "Q2963651",
+          "sourceEntityLabel": "Laj Chimel",
+          "wikidataPrecision": 0.0001,
+          "escalationSteps": 0,
+          "precisionDowngrade": null
+        },
+        "timeZone": "America/Guatemala"
+      },
+      "computation": {
+        "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
+        "timeZone": "America/Guatemala",
+        "civilTime": "12:00",
+        "utcInstant": "1959-01-09T18:00:00.000Z",
+        "utcOffsetMinutesAtBirth": -360,
+        "civilDayStartUtc": "1959-01-09T06:00:00.000Z",
+        "civilDayEndUtc": "1959-01-10T05:59:00.000Z",
+        "latitude": 15.5627,
+        "longitude": -90.0051,
+        "coordinateEscalationSteps": 0,
+        "coordinateSourceEntity": "Q2963651",
+        "ephemeris": "astronomy-engine via GeoVector + Rotation_EQJ_ECT (server-ephemeris.ts convention)",
+        "aspectTable": "@zodiacs/engine/internal/math",
+        "anglesComputed": false,
+        "housesComputed": false,
+        "sectComputed": false,
+        "meridianResidualMinutes": -0.02,
+        "meridianResidualMoonDegrees": 0.0002
+      },
+      "sunSign": {
+        "slug": "capricorn",
+        "name": "Capricorn",
+        "degree": 18.74,
+        "determinable": true,
+        "cuspCheck": {
+          "ambiguous": false,
+          "boundaryUtc": null,
+          "degreesInsideAtWindowStart": 17.9749,
+          "degreesToNextBoundaryAtWindowEnd": 11.0056
+        }
+      },
+      "moon": {
+        "sign": "capricorn",
+        "signName": "Capricorn",
+        "degree": 25.46,
+        "uncertain": true,
+        "signAtCivilDayStart": "capricorn",
+        "signAtCivilDayEnd": "aquarius"
+      },
+      "unknownTimeErrorBandDegrees": {
+        "Sun": 1.019,
+        "Moon": 13.9,
+        "Mercury": 1.368,
+        "Venus": 1.253,
+        "Mars": 0.229,
+        "Jupiter": 0.171,
+        "Saturn": 0.114,
+        "Uranus": 0.038,
+        "Neptune": 0.016,
+        "Pluto": 0.016
+      },
+      "dataQualityLabel": "Birth date sourced; birth time unknown; Moon sign undetermined",
+      "sources": {
+        "wikidata": {
+          "entityUrl": "https://www.wikidata.org/wiki/Q188620",
+          "propertiesUsed": [
+            "P569",
+            "P19",
+            "P625",
+            "P106",
+            "P18",
+            "P570",
+            "P17",
+            "P131"
+          ],
+          "lastrevid": 2515671615
+        },
+        "wikipedia": {
+          "language": "en",
+          "title": "Rigoberta Menchú",
+          "articleUrl": "https://en.wikipedia.org/wiki/Rigoberta_Mench%C3%BA",
+          "pageId": 191208,
+          "revisionId": 1365750062,
+          "revisionTimestamp": "2026-07-24T06:23:18Z"
+        },
+        "retrievedAtUtc": "2026-07-25T17:05:12.504Z"
+      },
+      "portrait": {
+        "available": true,
+        "file": "File:20240620 NP PRESIDENTE BERNARDO AREVALO Y KARIN HERRERA PARTICIPAN EN DIALOGO PREMIO NOBEL DE LA PAZ 054.jpg",
+        "filePage": "https://commons.wikimedia.org/wiki/File:20240620%20NP%20PRESIDENTE%20BERNARDO%20AREVALO%20Y%20KARIN%20HERRERA%20PARTICIPAN%20EN%20DIALOGO%20PREMIO%20NOBEL%20DE%20LA%20PAZ%20054.jpg",
+        "creator": "Gobierno de Guatemala",
+        "licence": "Public domain",
+        "licenceUrl": null,
+        "attributionRequired": false,
+        "renderedAttribution": "Gobierno de Guatemala · public domain · Wikimedia Commons",
+        "renderedAttributionLinks": {
+          "creator": "https://commons.wikimedia.org/wiki/File:20240620%20NP%20PRESIDENTE%20BERNARDO%20AREVALO%20Y%20KARIN%20HERRERA%20PARTICIPAN%20EN%20DIALOGO%20PREMIO%20NOBEL%20DE%20LA%20PAZ%20054.jpg",
+          "licence": null,
+          "source": "https://commons.wikimedia.org/wiki/File:20240620%20NP%20PRESIDENTE%20BERNARDO%20AREVALO%20Y%20KARIN%20HERRERA%20PARTICIPAN%20EN%20DIALOGO%20PREMIO%20NOBEL%20DE%20LA%20PAZ%20054.jpg"
+        },
+        "width": 6720,
+        "height": 4480
+      },
+      "living": true,
+      "reviewedAtUtc": "2026-07-25T00:00:00Z",
+      "computationInputVersion": {
+        "ephemeris": "astronomy-engine (repository dependency)",
+        "aspectTable": "@zodiacs/engine/internal/math",
+        "pilotTools": "docs/phase5/people-pilot/tools @ phase5a"
+      },
+      "contentDepth": {
+        "originalWords": 371,
+        "substantiveStatements": 13,
+        "highestPairwiseSimilarity": 0
+      },
+      "indexEligibility": {
+        "eligible": false,
+        "blockedBy": [
+          "phase-5a-is-design-only — no People route exists yet"
+        ],
+        "contentChecksPassed": true,
+        "contentCheckFailures": []
+      },
+      "suppression": {
+        "status": "active",
+        "requestedBy": null,
+        "decidedAtUtc": null,
+        "note": null
+      }
+    },
+    {
+      "qid": "Q7474",
+      "slug": "rosalind-franklin",
+      "displayName": "Rosalind Franklin",
+      "shortDescription": "Crystallographer and chemist · United Kingdom · 1920–1958",
+      "disciplines": [
+        "crystallographer",
+        "chemist"
+      ],
+      "birthDate": {
+        "storedValue": "1920-07-25",
+        "precision": "day",
+        "calendarModel": "proleptic-gregorian",
+        "calendarConversion": "none required — the stored value is already proleptic Gregorian",
+        "displayedDate": "1920-07-25",
+        "computedGregorianDate": "1920-07-25",
+        "birthdayCrossLinkKey": "1920-07-25",
+        "birthdayRoute": "/birthday/july-25/"
+      },
+      "birthTime": null,
+      "timeQuality": "unknown",
+      "birthTimeEvidence": "none — Wikidata carries no birth-time claim for this person",
+      "birthPlace": {
+        "entity": "Q215354",
+        "entityLabel": "Notting Hill",
+        "normalisedLabel": "Notting Hill, United Kingdom",
+        "country": {
+          "entity": "Q145",
+          "label": "United Kingdom"
+        },
+        "coordinates": {
+          "latitude": 51.5096,
+          "longitude": -0.2043,
+          "sourceEntity": "Q215354",
+          "sourceEntityLabel": "Notting Hill",
+          "wikidataPrecision": 0.00027777777777778,
+          "escalationSteps": 0,
+          "precisionDowngrade": null
+        },
+        "timeZone": "Europe/London"
+      },
+      "computation": {
+        "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
+        "timeZone": "Europe/London",
+        "civilTime": "12:00",
+        "utcInstant": "1920-07-25T11:00:00.000Z",
+        "utcOffsetMinutesAtBirth": 60,
+        "civilDayStartUtc": "1920-07-24T23:00:00.000Z",
+        "civilDayEndUtc": "1920-07-25T22:59:00.000Z",
+        "latitude": 51.5096,
+        "longitude": -0.2043,
+        "coordinateEscalationSteps": 0,
+        "coordinateSourceEntity": "Q215354",
+        "ephemeris": "astronomy-engine via GeoVector + Rotation_EQJ_ECT (server-ephemeris.ts convention)",
+        "aspectTable": "@zodiacs/engine/internal/math",
+        "anglesComputed": false,
+        "housesComputed": false,
+        "sectComputed": false,
+        "meridianResidualMinutes": -60.82,
+        "meridianResidualMoonDegrees": 0.5575
+      },
+      "sunSign": {
+        "slug": "leo",
+        "name": "Leo",
+        "degree": 2.17,
+        "determinable": true,
+        "cuspCheck": {
+          "ambiguous": false,
+          "boundaryUtc": null,
+          "degreesInsideAtWindowStart": 1.7277,
+          "degreesToNextBoundaryAtWindowEnd": 27.3171
+        }
+      },
+      "moon": {
+        "sign": "sagittarius",
+        "signName": "Sagittarius",
+        "degree": 1.73,
+        "uncertain": true,
+        "signAtCivilDayStart": "scorpio",
+        "signAtCivilDayEnd": "sagittarius"
+      },
+      "unknownTimeErrorBandDegrees": {
+        "Sun": 0.955,
+        "Moon": 11.871,
+        "Mercury": 0.718,
+        "Venus": 1.231,
+        "Mars": 0.482,
+        "Jupiter": 0.21,
+        "Saturn": 0.108,
+        "Uranus": 0.031,
+        "Neptune": 0.037,
+        "Pluto": 0.023
+      },
+      "dataQualityLabel": "Birth date sourced; birth time unknown; Moon sign undetermined",
+      "sources": {
+        "wikidata": {
+          "entityUrl": "https://www.wikidata.org/wiki/Q7474",
+          "propertiesUsed": [
+            "P569",
+            "P19",
+            "P625",
+            "P106",
+            "P18",
+            "P570",
+            "P17",
+            "P131"
+          ],
+          "lastrevid": 2518604380
+        },
+        "wikipedia": {
+          "language": "en",
+          "title": "Rosalind Franklin",
+          "articleUrl": "https://en.wikipedia.org/wiki/Rosalind_Franklin",
+          "pageId": 90472,
+          "revisionId": 1365925655,
+          "revisionTimestamp": "2026-07-25T06:33:08Z"
+        },
+        "retrievedAtUtc": "2026-07-25T17:05:12.504Z"
+      },
+      "portrait": {
+        "available": true,
+        "file": "File:Rosalind Franklin.jpg",
+        "filePage": "https://commons.wikimedia.org/wiki/File:Rosalind%20Franklin.jpg",
+        "creator": "MRC Laboratory of Molecular Biology",
+        "licence": "CC BY-SA 4.0",
+        "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "attributionRequired": true,
+        "renderedAttribution": "MRC Laboratory of Molecular Biology · CC BY-SA 4.0 · Wikimedia Commons",
+        "renderedAttributionLinks": {
+          "creator": "https://commons.wikimedia.org/wiki/File:Rosalind%20Franklin.jpg",
+          "licence": "https://creativecommons.org/licenses/by-sa/4.0",
+          "source": "https://commons.wikimedia.org/wiki/File:Rosalind%20Franklin.jpg"
+        },
+        "width": 521,
+        "height": 626
+      },
+      "living": false,
+      "reviewedAtUtc": "2026-07-25T00:00:00Z",
+      "computationInputVersion": {
+        "ephemeris": "astronomy-engine (repository dependency)",
+        "aspectTable": "@zodiacs/engine/internal/math",
+        "pilotTools": "docs/phase5/people-pilot/tools @ phase5a"
+      },
+      "contentDepth": {
+        "originalWords": 368,
+        "substantiveStatements": 12,
+        "highestPairwiseSimilarity": 0.2786
+      },
+      "indexEligibility": {
+        "eligible": false,
+        "blockedBy": [
+          "phase-5a-is-design-only — no People route exists yet"
+        ],
+        "contentChecksPassed": true,
+        "contentCheckFailures": []
+      },
+      "suppression": {
+        "status": "active",
+        "requestedBy": null,
+        "decidedAtUtc": null,
+        "note": null
+      }
+    },
+    {
+      "qid": "Q11459",
+      "slug": "serena-williams",
+      "displayName": "Serena Williams",
+      "shortDescription": "Tennis player · United States · born 1981",
+      "disciplines": [
+        "tennis player"
+      ],
+      "birthDate": {
+        "storedValue": "1981-09-26",
+        "precision": "day",
+        "calendarModel": "proleptic-gregorian",
+        "calendarConversion": "none required — the stored value is already proleptic Gregorian",
+        "displayedDate": "1981-09-26",
+        "computedGregorianDate": "1981-09-26",
+        "birthdayCrossLinkKey": "1981-09-26",
+        "birthdayRoute": "/birthday/september-26/"
+      },
+      "birthTime": null,
+      "timeQuality": "unknown",
+      "birthTimeEvidence": "none — Wikidata carries no birth-time claim for this person",
+      "birthPlace": {
+        "entity": "Q719",
+        "entityLabel": "Saginaw",
+        "normalisedLabel": "Saginaw, United States",
+        "country": {
+          "entity": "Q30",
+          "label": "United States"
+        },
+        "coordinates": {
+          "latitude": 43.4199247,
+          "longitude": -83.9500261,
+          "sourceEntity": "Q719",
+          "sourceEntityLabel": "Saginaw",
+          "wikidataPrecision": 1e-7,
+          "escalationSteps": 0,
+          "precisionDowngrade": null
+        },
+        "timeZone": "America/Detroit"
+      },
+      "computation": {
+        "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
+        "timeZone": "America/Detroit",
+        "civilTime": "12:00",
+        "utcInstant": "1981-09-26T16:00:00.000Z",
+        "utcOffsetMinutesAtBirth": -240,
+        "civilDayStartUtc": "1981-09-26T04:00:00.000Z",
+        "civilDayEndUtc": "1981-09-27T03:59:00.000Z",
+        "latitude": 43.4199247,
+        "longitude": -83.9500261,
+        "coordinateEscalationSteps": 0,
+        "coordinateSourceEntity": "Q719",
+        "ephemeris": "astronomy-engine via GeoVector + Rotation_EQJ_ECT (server-ephemeris.ts convention)",
+        "aspectTable": "@zodiacs/engine/internal/math",
+        "anglesComputed": false,
+        "housesComputed": false,
+        "sectComputed": false,
+        "meridianResidualMinutes": -95.8,
+        "meridianResidualMoonDegrees": 0.8782
+      },
+      "sunSign": {
+        "slug": "libra",
+        "name": "Libra",
+        "degree": 3.47,
+        "determinable": true,
+        "cuspCheck": {
+          "ambiguous": false,
+          "boundaryUtc": null,
+          "degreesInsideAtWindowStart": 2.8141,
+          "degreesToNextBoundaryAtWindowEnd": 26.2048
+        }
+      },
+      "moon": {
+        "sign": "virgo",
+        "signName": "Virgo",
+        "degree": 15.89,
+        "uncertain": false,
+        "signAtCivilDayStart": "virgo",
+        "signAtCivilDayEnd": "virgo"
+      },
+      "unknownTimeErrorBandDegrees": {
+        "Sun": 0.981,
+        "Moon": 12.794,
+        "Mercury": 0.82,
+        "Venus": 1.151,
+        "Mars": 0.613,
+        "Jupiter": 0.213,
+        "Saturn": 0.122,
+        "Uranus": 0.042,
+        "Neptune": 0.013,
+        "Pluto": 0.038
+      },
+      "dataQualityLabel": "Birth date sourced; birth time unknown",
+      "sources": {
+        "wikidata": {
+          "entityUrl": "https://www.wikidata.org/wiki/Q11459",
+          "propertiesUsed": [
+            "P569",
+            "P19",
+            "P625",
+            "P106",
+            "P18",
+            "P570",
+            "P17",
+            "P131"
+          ],
+          "lastrevid": 2518319039
+        },
+        "wikipedia": {
+          "language": "en",
+          "title": "Serena Williams",
+          "articleUrl": "https://en.wikipedia.org/wiki/Serena_Williams",
+          "pageId": 164910,
+          "revisionId": 1364854980,
+          "revisionTimestamp": "2026-07-18T22:47:38Z"
+        },
+        "retrievedAtUtc": "2026-07-25T17:05:12.504Z"
+      },
+      "portrait": {
+        "available": true,
+        "file": "File:Serena Williams at 2013 US Open.jpg",
+        "filePage": "https://commons.wikimedia.org/wiki/File:Serena%20Williams%20at%202013%20US%20Open.jpg",
+        "creator": "Edwin Martinez",
+        "licence": "CC BY 2.0",
+        "licenceUrl": "https://creativecommons.org/licenses/by/2.0",
+        "attributionRequired": true,
+        "renderedAttribution": "Edwin Martinez · CC BY 2.0 · Wikimedia Commons",
+        "renderedAttributionLinks": {
+          "creator": "https://commons.wikimedia.org/wiki/File:Serena%20Williams%20at%202013%20US%20Open.jpg",
+          "licence": "https://creativecommons.org/licenses/by/2.0",
+          "source": "https://commons.wikimedia.org/wiki/File:Serena%20Williams%20at%202013%20US%20Open.jpg"
+        },
+        "width": 932,
+        "height": 1228
+      },
+      "living": true,
+      "reviewedAtUtc": "2026-07-25T00:00:00Z",
+      "computationInputVersion": {
+        "ephemeris": "astronomy-engine (repository dependency)",
+        "aspectTable": "@zodiacs/engine/internal/math",
+        "pilotTools": "docs/phase5/people-pilot/tools @ phase5a"
+      },
+      "contentDepth": {
+        "originalWords": 357,
+        "substantiveStatements": 14,
+        "highestPairwiseSimilarity": 0.2281
+      },
+      "indexEligibility": {
+        "eligible": false,
+        "blockedBy": [
+          "phase-5a-is-design-only — no People route exists yet"
+        ],
+        "contentChecksPassed": true,
+        "contentCheckFailures": []
+      },
+      "suppression": {
+        "status": "active",
+        "requestedBy": null,
+        "decidedAtUtc": null,
+        "note": null
+      }
+    },
+    {
+      "qid": "Q7197",
+      "slug": "simone-de-beauvoir",
+      "displayName": "Simone de Beauvoir",
+      "shortDescription": "Political philosopher and novelist · France · 1908–1986",
+      "disciplines": [
+        "political philosopher",
+        "novelist"
+      ],
+      "birthDate": {
+        "storedValue": "1908-01-09",
+        "precision": "day",
+        "calendarModel": "proleptic-gregorian",
+        "calendarConversion": "none required — the stored value is already proleptic Gregorian",
+        "displayedDate": "1908-01-09",
+        "computedGregorianDate": "1908-01-09",
+        "birthdayCrossLinkKey": "1908-01-09",
+        "birthdayRoute": "/birthday/january-9/"
+      },
+      "birthTime": null,
+      "timeQuality": "unknown",
+      "birthTimeEvidence": "none — Wikidata carries no birth-time claim for this person",
+      "birthPlace": {
+        "entity": "Q245546",
+        "entityLabel": "6th arrondissement of Paris",
+        "normalisedLabel": "6th arrondissement of Paris, France",
+        "country": {
+          "entity": "Q142",
+          "label": "France"
+        },
+        "coordinates": {
+          "latitude": 48.850530555556,
+          "longitude": 2.3322333333333,
+          "sourceEntity": "Q245546",
+          "sourceEntityLabel": "6th arrondissement of Paris",
+          "wikidataPrecision": 0.0000027777777777778,
+          "escalationSteps": 0,
+          "precisionDowngrade": null
+        },
+        "timeZone": "Europe/Paris"
+      },
+      "computation": {
+        "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
+        "timeZone": "Europe/Paris",
+        "civilTime": "12:00",
+        "utcInstant": "1908-01-09T11:50:39.000Z",
+        "utcOffsetMinutesAtBirth": 9.35,
+        "civilDayStartUtc": "1908-01-08T23:50:39.000Z",
+        "civilDayEndUtc": "1908-01-09T23:49:39.000Z",
+        "latitude": 48.850530555556,
+        "longitude": 2.3322333333333,
+        "coordinateEscalationSteps": 0,
+        "coordinateSourceEntity": "Q245546",
+        "ephemeris": "astronomy-engine via GeoVector + Rotation_EQJ_ECT (server-ephemeris.ts convention)",
+        "aspectTable": "@zodiacs/engine/internal/math",
+        "anglesComputed": false,
+        "housesComputed": false,
+        "sectComputed": false,
+        "meridianResidualMinutes": -0.02,
+        "meridianResidualMoonDegrees": 0.0002
+      },
+      "sunSign": {
+        "slug": "capricorn",
+        "name": "Capricorn",
+        "degree": 17.84,
+        "determinable": true,
+        "cuspCheck": {
+          "ambiguous": false,
+          "boundaryUtc": null,
+          "degreesInsideAtWindowStart": 17.3358,
+          "degreesToNextBoundaryAtWindowEnd": 11.6449
+        }
+      },
+      "moon": {
+        "sign": "aries",
+        "signName": "Aries",
+        "degree": 4.29,
+        "uncertain": true,
+        "signAtCivilDayStart": "pisces",
+        "signAtCivilDayEnd": "aries"
+      },
+      "unknownTimeErrorBandDegrees": {
+        "Sun": 1.019,
+        "Moon": 13.729,
+        "Mercury": 1.612,
+        "Venus": 1.239,
+        "Mars": 0.703,
+        "Jupiter": 0.114,
+        "Saturn": 0.075,
+        "Uranus": 0.06,
+        "Neptune": 0.028,
+        "Pluto": 0.018
+      },
+      "dataQualityLabel": "Birth date sourced; birth time unknown; Moon sign undetermined",
+      "sources": {
+        "wikidata": {
+          "entityUrl": "https://www.wikidata.org/wiki/Q7197",
+          "propertiesUsed": [
+            "P569",
+            "P19",
+            "P625",
+            "P106",
+            "P18",
+            "P570",
+            "P17",
+            "P131"
+          ],
+          "lastrevid": 2521377153
+        },
+        "wikipedia": {
+          "language": "en",
+          "title": "Simone de Beauvoir",
+          "articleUrl": "https://en.wikipedia.org/wiki/Simone_de_Beauvoir",
+          "pageId": 62034,
+          "revisionId": 1365431221,
+          "revisionTimestamp": "2026-07-22T10:47:05Z"
+        },
+        "retrievedAtUtc": "2026-07-25T17:05:12.504Z"
+      },
+      "portrait": {
+        "available": true,
+        "file": "File:Simone de Beauvoir2.png",
+        "filePage": "https://commons.wikimedia.org/wiki/File:Simone%20de%20Beauvoir2.png",
+        "creator": "Moshe Milner",
+        "licence": "CC BY-SA 3.0",
+        "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+        "attributionRequired": true,
+        "renderedAttribution": "Moshe Milner · CC BY-SA 3.0 · Wikimedia Commons",
+        "renderedAttributionLinks": {
+          "creator": "https://commons.wikimedia.org/wiki/File:Simone%20de%20Beauvoir2.png",
+          "licence": "https://creativecommons.org/licenses/by-sa/3.0",
+          "source": "https://commons.wikimedia.org/wiki/File:Simone%20de%20Beauvoir2.png"
+        },
+        "width": 564,
+        "height": 780
+      },
+      "living": false,
+      "reviewedAtUtc": "2026-07-25T00:00:00Z",
+      "computationInputVersion": {
+        "ephemeris": "astronomy-engine (repository dependency)",
+        "aspectTable": "@zodiacs/engine/internal/math",
+        "pilotTools": "docs/phase5/people-pilot/tools @ phase5a"
+      },
+      "contentDepth": {
+        "originalWords": 315,
+        "substantiveStatements": 11,
+        "highestPairwiseSimilarity": 0
+      },
+      "indexEligibility": {
+        "eligible": false,
+        "blockedBy": [
+          "phase-5a-is-design-only — no People route exists yet"
+        ],
+        "contentChecksPassed": true,
+        "contentCheckFailures": []
+      },
+      "suppression": {
+        "status": "active",
+        "requestedBy": null,
+        "decidedAtUtc": null,
+        "note": null
+      }
+    },
+    {
+      "qid": "Q5582",
+      "slug": "vincent-van-gogh",
+      "displayName": "Vincent van Gogh",
+      "shortDescription": "Painter and draftsperson · Netherlands · 1853–1890",
+      "disciplines": [
+        "painter",
+        "draftsperson"
+      ],
+      "birthDate": {
+        "storedValue": "1853-03-30",
+        "precision": "day",
+        "calendarModel": "proleptic-gregorian",
+        "calendarConversion": "none required — the stored value is already proleptic Gregorian",
+        "displayedDate": "1853-03-30",
+        "computedGregorianDate": "1853-03-30",
+        "birthdayCrossLinkKey": "1853-03-30",
+        "birthdayRoute": "/birthday/march-30/"
+      },
+      "birthTime": null,
+      "timeQuality": "unknown",
+      "birthTimeEvidence": "none — Wikidata carries no birth-time claim for this person",
+      "birthPlace": {
+        "entity": "Q9883",
+        "entityLabel": "Zundert",
+        "normalisedLabel": "Zundert, Netherlands",
+        "country": {
+          "entity": "Q55",
+          "label": "Netherlands"
+        },
+        "coordinates": {
+          "latitude": 51.4703,
+          "longitude": 4.66,
+          "sourceEntity": "Q9883",
+          "sourceEntityLabel": "Zundert",
+          "wikidataPrecision": 0.001,
+          "escalationSteps": 0,
+          "precisionDowngrade": null
+        },
+        "timeZone": "Europe/Amsterdam"
+      },
+      "computation": {
+        "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
+        "timeZone": "Europe/Amsterdam",
+        "civilTime": "12:00",
+        "utcInstant": "1853-03-30T11:42:30.000Z",
+        "utcOffsetMinutesAtBirth": 17.5,
+        "civilDayStartUtc": "1853-03-29T23:42:30.000Z",
+        "civilDayEndUtc": "1853-03-30T23:41:30.000Z",
+        "latitude": 51.4703,
+        "longitude": 4.66,
+        "coordinateEscalationSteps": 0,
+        "coordinateSourceEntity": "Q9883",
+        "ephemeris": "astronomy-engine via GeoVector + Rotation_EQJ_ECT (server-ephemeris.ts convention)",
+        "aspectTable": "@zodiacs/engine/internal/math",
+        "anglesComputed": false,
+        "housesComputed": false,
+        "sectComputed": false,
+        "meridianResidualMinutes": 1.14,
+        "meridianResidualMoonDegrees": 0.0105
+      },
+      "sunSign": {
+        "slug": "aries",
+        "name": "Aries",
+        "degree": 9.7,
+        "determinable": true,
+        "cuspCheck": {
+          "ambiguous": false,
+          "boundaryUtc": null,
+          "degreesInsideAtWindowStart": 9.2145,
+          "degreesToNextBoundaryAtWindowEnd": 19.7992
+        }
+      },
+      "moon": {
+        "sign": "sagittarius",
+        "signName": "Sagittarius",
+        "degree": 21.34,
+        "uncertain": false,
+        "signAtCivilDayStart": "sagittarius",
+        "signAtCivilDayEnd": "sagittarius"
+      },
+      "unknownTimeErrorBandDegrees": {
+        "Sun": 0.986,
+        "Moon": 14.155,
+        "Mercury": 0.182,
+        "Venus": 1.238,
+        "Mars": 0.779,
+        "Jupiter": 0.035,
+        "Saturn": 0.113,
+        "Uranus": 0.053,
+        "Neptune": 0.035,
+        "Pluto": 0.022
+      },
+      "dataQualityLabel": "Birth date sourced; birth time unknown",
+      "sources": {
+        "wikidata": {
+          "entityUrl": "https://www.wikidata.org/wiki/Q5582",
+          "propertiesUsed": [
+            "P569",
+            "P19",
+            "P625",
+            "P106",
+            "P18",
+            "P570",
+            "P17",
+            "P131"
+          ],
+          "lastrevid": 2522529470
+        },
+        "wikipedia": {
+          "language": "en",
+          "title": "Vincent van Gogh",
+          "articleUrl": "https://en.wikipedia.org/wiki/Vincent_van_Gogh",
+          "pageId": 32603,
+          "revisionId": 1365516977,
+          "revisionTimestamp": "2026-07-22T23:33:34Z"
+        },
+        "retrievedAtUtc": "2026-07-25T17:05:12.504Z"
+      },
+      "portrait": {
+        "available": false,
+        "reason": "the recorded creator is the subject (\"Vincent van Gogh\"), so the licence holder of this reproduction cannot be credited accurately without separate review",
+        "file": "File:Self-portrait - Vincent van Gogh.jpg"
+      },
+      "living": false,
+      "reviewedAtUtc": "2026-07-25T00:00:00Z",
+      "computationInputVersion": {
+        "ephemeris": "astronomy-engine (repository dependency)",
+        "aspectTable": "@zodiacs/engine/internal/math",
+        "pilotTools": "docs/phase5/people-pilot/tools @ phase5a"
+      },
+      "contentDepth": {
+        "originalWords": 353,
+        "substantiveStatements": 13,
+        "highestPairwiseSimilarity": 0.1991
+      },
+      "indexEligibility": {
+        "eligible": false,
+        "blockedBy": [
+          "phase-5a-is-design-only — no People route exists yet"
+        ],
+        "contentChecksPassed": true,
+        "contentCheckFailures": []
+      },
+      "suppression": {
+        "status": "active",
+        "requestedBy": null,
+        "decidedAtUtc": null,
+        "note": null
+      }
+    },
+    {
+      "qid": "Q40909",
+      "slug": "virginia-woolf",
+      "displayName": "Virginia Woolf",
+      "shortDescription": "Novelist and essayist · United Kingdom · 1882–1941",
+      "disciplines": [
+        "novelist",
+        "essayist"
+      ],
+      "birthDate": {
+        "storedValue": "1882-01-25",
+        "precision": "day",
+        "calendarModel": "proleptic-gregorian",
+        "calendarConversion": "none required — the stored value is already proleptic Gregorian",
+        "displayedDate": "1882-01-25",
+        "computedGregorianDate": "1882-01-25",
+        "birthdayCrossLinkKey": "1882-01-25",
+        "birthdayRoute": "/birthday/january-25/"
+      },
+      "birthTime": null,
+      "timeQuality": "unknown",
+      "birthTimeEvidence": "none — Wikidata carries no birth-time claim for this person",
+      "birthPlace": {
+        "entity": "Q84",
+        "entityLabel": "London",
+        "normalisedLabel": "London, United Kingdom",
+        "country": {
+          "entity": "Q145",
+          "label": "United Kingdom"
+        },
+        "coordinates": {
+          "latitude": 51.507222222222,
+          "longitude": -0.1275,
+          "sourceEntity": "Q84",
+          "sourceEntityLabel": "London",
+          "wikidataPrecision": 0.00027777777777778,
+          "escalationSteps": 0,
+          "precisionDowngrade": null
+        },
+        "timeZone": "Europe/London"
+      },
+      "computation": {
+        "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
+        "timeZone": "Europe/London",
+        "civilTime": "12:00",
+        "utcInstant": "1882-01-25T12:00:00.000Z",
+        "utcOffsetMinutesAtBirth": 0,
+        "civilDayStartUtc": "1882-01-25T00:00:00.000Z",
+        "civilDayEndUtc": "1882-01-25T23:59:00.000Z",
+        "latitude": 51.507222222222,
+        "longitude": -0.1275,
+        "coordinateEscalationSteps": 0,
+        "coordinateSourceEntity": "Q84",
+        "ephemeris": "astronomy-engine via GeoVector + Rotation_EQJ_ECT (server-ephemeris.ts convention)",
+        "aspectTable": "@zodiacs/engine/internal/math",
+        "anglesComputed": false,
+        "housesComputed": false,
+        "sectComputed": false,
+        "meridianResidualMinutes": -0.51,
+        "meridianResidualMoonDegrees": 0.0047
+      },
+      "sunSign": {
+        "slug": "aquarius",
+        "name": "Aquarius",
+        "degree": 5.48,
+        "determinable": true,
+        "cuspCheck": {
+          "ambiguous": false,
+          "boundaryUtc": null,
+          "degreesInsideAtWindowStart": 4.9725,
+          "degreesToNextBoundaryAtWindowEnd": 24.0111
+        }
+      },
+      "moon": {
+        "sign": "aries",
+        "signName": "Aries",
+        "degree": 25.19,
+        "uncertain": true,
+        "signAtCivilDayStart": "aries",
+        "signAtCivilDayEnd": "taurus"
+      },
+      "unknownTimeErrorBandDegrees": {
+        "Sun": 1.016,
+        "Moon": 13.689,
+        "Mercury": 1.699,
+        "Venus": 1.255,
+        "Mars": 0.108,
+        "Jupiter": 0.051,
+        "Saturn": 0.034,
+        "Uranus": 0.028,
+        "Neptune": 0.001,
+        "Pluto": 0.006
+      },
+      "dataQualityLabel": "Birth date sourced; birth time unknown; Moon sign undetermined",
+      "sources": {
+        "wikidata": {
+          "entityUrl": "https://www.wikidata.org/wiki/Q40909",
+          "propertiesUsed": [
+            "P569",
+            "P19",
+            "P625",
+            "P106",
+            "P18",
+            "P570",
+            "P17",
+            "P131"
+          ],
+          "lastrevid": 2519146809
+        },
+        "wikipedia": {
+          "language": "en",
+          "title": "Virginia Woolf",
+          "articleUrl": "https://en.wikipedia.org/wiki/Virginia_Woolf",
+          "pageId": 32742,
+          "revisionId": 1363674957,
+          "revisionTimestamp": "2026-07-11T16:49:32Z"
+        },
+        "retrievedAtUtc": "2026-07-25T17:05:12.504Z"
+      },
+      "portrait": {
+        "available": true,
+        "file": "File:Virginia Woolf 1927.jpg",
+        "filePage": "https://commons.wikimedia.org/wiki/File:Virginia%20Woolf%201927.jpg",
+        "creator": "Unknown author",
+        "licence": "Public domain",
+        "licenceUrl": null,
+        "attributionRequired": false,
+        "renderedAttribution": "Unknown author · public domain · Wikimedia Commons",
+        "renderedAttributionLinks": {
+          "creator": "https://commons.wikimedia.org/wiki/File:Virginia%20Woolf%201927.jpg",
+          "licence": null,
+          "source": "https://commons.wikimedia.org/wiki/File:Virginia%20Woolf%201927.jpg"
+        },
+        "width": 1263,
+        "height": 1843
+      },
+      "living": false,
+      "reviewedAtUtc": "2026-07-25T00:00:00Z",
+      "computationInputVersion": {
+        "ephemeris": "astronomy-engine (repository dependency)",
+        "aspectTable": "@zodiacs/engine/internal/math",
+        "pilotTools": "docs/phase5/people-pilot/tools @ phase5a"
+      },
+      "contentDepth": {
+        "originalWords": 344,
+        "substantiveStatements": 11,
+        "highestPairwiseSimilarity": 0.1915
+      },
+      "indexEligibility": {
+        "eligible": false,
+        "blockedBy": [
+          "phase-5a-is-design-only — no People route exists yet"
+        ],
+        "contentChecksPassed": true,
+        "contentCheckFailures": []
+      },
+      "suppression": {
+        "status": "active",
+        "requestedBy": null,
+        "decidedAtUtc": null,
+        "note": null
+      }
+    },
+    {
+      "qid": "Q81438",
+      "slug": "walt-whitman",
+      "displayName": "Walt Whitman",
+      "shortDescription": "Poet and essayist · United States · 1819–1892",
+      "disciplines": [
+        "poet",
+        "essayist"
+      ],
+      "birthDate": {
+        "storedValue": "1819-05-31",
+        "precision": "day",
+        "calendarModel": "proleptic-gregorian",
+        "calendarConversion": "none required — the stored value is already proleptic Gregorian",
+        "displayedDate": "1819-05-31",
+        "computedGregorianDate": "1819-05-31",
+        "birthdayCrossLinkKey": "1819-05-31",
+        "birthdayRoute": "/birthday/may-31/"
+      },
+      "birthTime": null,
+      "timeQuality": "unknown",
+      "birthTimeEvidence": "none — Wikidata carries no birth-time claim for this person",
+      "birthPlace": {
+        "entity": "Q3461211",
+        "entityLabel": "West Hills",
+        "normalisedLabel": "West Hills, United States",
+        "country": {
+          "entity": "Q30",
+          "label": "United States"
+        },
+        "coordinates": {
+          "latitude": 40.8242,
+          "longitude": -73.4344,
+          "sourceEntity": "Q3461211",
+          "sourceEntityLabel": "West Hills",
+          "wikidataPrecision": 0.0001,
+          "escalationSteps": 0,
+          "precisionDowngrade": null
+        },
+        "timeZone": "America/New_York"
+      },
+      "computation": {
+        "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
+        "timeZone": "America/New_York",
+        "civilTime": "12:00",
+        "utcInstant": "1819-05-31T16:56:02.000Z",
+        "utcOffsetMinutesAtBirth": -296.0333,
+        "civilDayStartUtc": "1819-05-31T04:56:02.000Z",
+        "civilDayEndUtc": "1819-06-01T04:55:02.000Z",
+        "latitude": 40.8242,
+        "longitude": -73.4344,
+        "coordinateEscalationSteps": 0,
+        "coordinateSourceEntity": "Q3461211",
+        "ephemeris": "astronomy-engine via GeoVector + Rotation_EQJ_ECT (server-ephemeris.ts convention)",
+        "aspectTable": "@zodiacs/engine/internal/math",
+        "anglesComputed": false,
+        "housesComputed": false,
+        "sectComputed": false,
+        "meridianResidualMinutes": 2.3,
+        "meridianResidualMoonDegrees": 0.021
+      },
+      "sunSign": {
+        "slug": "gemini",
+        "name": "Gemini",
+        "degree": 9.34,
+        "determinable": true,
+        "cuspCheck": {
+          "ambiguous": false,
+          "boundaryUtc": null,
+          "degreesInsideAtWindowStart": 8.6641,
+          "degreesToNextBoundaryAtWindowEnd": 20.3781
+        }
+      },
+      "moon": {
+        "sign": "virgo",
+        "signName": "Virgo",
+        "degree": 4.16,
+        "uncertain": true,
+        "signAtCivilDayStart": "leo",
+        "signAtCivilDayEnd": "virgo"
+      },
+      "unknownTimeErrorBandDegrees": {
+        "Sun": 0.957,
+        "Moon": 12.069,
+        "Mercury": 1.034,
+        "Venus": 1.184,
+        "Mars": 0.748,
+        "Jupiter": 0.017,
+        "Saturn": 0.067,
+        "Uranus": 0.039,
+        "Neptune": 0.025,
+        "Pluto": 0.01
+      },
+      "dataQualityLabel": "Birth date sourced; birth time unknown; Moon sign undetermined",
+      "sources": {
+        "wikidata": {
+          "entityUrl": "https://www.wikidata.org/wiki/Q81438",
+          "propertiesUsed": [
+            "P569",
+            "P19",
+            "P625",
+            "P106",
+            "P18",
+            "P570",
+            "P17",
+            "P131"
+          ],
+          "lastrevid": 2518042563
+        },
+        "wikipedia": {
+          "language": "en",
+          "title": "Walt Whitman",
+          "articleUrl": "https://en.wikipedia.org/wiki/Walt_Whitman",
+          "pageId": 33870,
+          "revisionId": 1365693830,
+          "revisionTimestamp": "2026-07-23T22:32:41Z"
+        },
+        "retrievedAtUtc": "2026-07-25T17:05:12.504Z"
+      },
+      "portrait": {
+        "available": true,
+        "file": "File:Walt Whitman - George Collins Cox.jpg",
+        "filePage": "https://commons.wikimedia.org/wiki/File:Walt%20Whitman%20-%20George%20Collins%20Cox.jpg",
+        "creator": "George Collins Cox / Adam Cuerden",
+        "licence": "Public domain",
+        "licenceUrl": null,
+        "attributionRequired": false,
+        "renderedAttribution": "George Collins Cox / Adam Cuerden · public domain · Wikimedia Commons",
+        "renderedAttributionLinks": {
+          "creator": "https://commons.wikimedia.org/wiki/File:Walt%20Whitman%20-%20George%20Collins%20Cox.jpg",
+          "licence": null,
+          "source": "https://commons.wikimedia.org/wiki/File:Walt%20Whitman%20-%20George%20Collins%20Cox.jpg"
+        },
+        "width": 1983,
+        "height": 2456
+      },
+      "living": false,
+      "reviewedAtUtc": "2026-07-25T00:00:00Z",
+      "computationInputVersion": {
+        "ephemeris": "astronomy-engine (repository dependency)",
+        "aspectTable": "@zodiacs/engine/internal/math",
+        "pilotTools": "docs/phase5/people-pilot/tools @ phase5a"
+      },
+      "contentDepth": {
+        "originalWords": 335,
+        "substantiveStatements": 12,
+        "highestPairwiseSimilarity": 0
+      },
+      "indexEligibility": {
+        "eligible": false,
+        "blockedBy": [
+          "phase-5a-is-design-only — no People route exists yet"
+        ],
+        "contentChecksPassed": true,
+        "contentCheckFailures": []
+      },
+      "suppression": {
+        "status": "active",
+        "requestedBy": null,
+        "decidedAtUtc": null,
+        "note": null
+      }
+    },
+    {
+      "qid": "Q46795",
+      "slug": "wangari-maathai",
+      "displayName": "Wangari Maathai",
+      "shortDescription": "Biologist and environmentalist · Kenya · 1940–2011",
+      "disciplines": [
+        "biologist",
+        "environmentalist"
+      ],
+      "birthDate": {
+        "storedValue": "1940-04-01",
+        "precision": "day",
+        "calendarModel": "proleptic-gregorian",
+        "calendarConversion": "none required — the stored value is already proleptic Gregorian",
+        "displayedDate": "1940-04-01",
+        "computedGregorianDate": "1940-04-01",
+        "birthdayCrossLinkKey": "1940-04-01",
+        "birthdayRoute": "/birthday/april-1/"
+      },
+      "birthTime": null,
+      "timeQuality": "unknown",
+      "birthTimeEvidence": "none — Wikidata carries no birth-time claim for this person",
+      "birthPlace": {
+        "entity": "Q380130",
+        "entityLabel": "Nyeri",
+        "normalisedLabel": "Nyeri, Kenya",
+        "country": {
+          "entity": "Q114",
+          "label": "Kenya"
+        },
+        "coordinates": {
+          "latitude": -0.41666666666667,
+          "longitude": 36.95,
+          "sourceEntity": "Q380130",
+          "sourceEntityLabel": "Nyeri",
+          "wikidataPrecision": 0.016666666666667,
+          "escalationSteps": 0,
+          "precisionDowngrade": null
+        },
+        "timeZone": "Africa/Nairobi"
+      },
+      "computation": {
+        "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
+        "timeZone": "Africa/Nairobi",
+        "civilTime": "12:00",
+        "utcInstant": "1940-04-01T09:15:00.000Z",
+        "utcOffsetMinutesAtBirth": 165,
+        "civilDayStartUtc": "1940-03-31T21:15:00.000Z",
+        "civilDayEndUtc": "1940-04-01T21:14:00.000Z",
+        "latitude": -0.41666666666667,
+        "longitude": 36.95,
+        "coordinateEscalationSteps": 0,
+        "coordinateSourceEntity": "Q380130",
+        "ephemeris": "astronomy-engine via GeoVector + Rotation_EQJ_ECT (server-ephemeris.ts convention)",
+        "aspectTable": "@zodiacs/engine/internal/math",
+        "anglesComputed": false,
+        "housesComputed": false,
+        "sectComputed": false,
+        "meridianResidualMinutes": -17.2,
+        "meridianResidualMoonDegrees": 0.1577
+      },
+      "sunSign": {
+        "slug": "aries",
+        "name": "Aries",
+        "degree": 11.5,
+        "determinable": true,
+        "cuspCheck": {
+          "ambiguous": false,
+          "boundaryUtc": null,
+          "degreesInsideAtWindowStart": 11.1161,
+          "degreesToNextBoundaryAtWindowEnd": 17.8975
+        }
+      },
+      "moon": {
+        "sign": "aquarius",
+        "signName": "Aquarius",
+        "degree": 1.03,
+        "uncertain": true,
+        "signAtCivilDayStart": "capricorn",
+        "signAtCivilDayEnd": "aquarius"
+      },
+      "unknownTimeErrorBandDegrees": {
+        "Sun": 0.986,
+        "Moon": 12.209,
+        "Mercury": 0.29,
+        "Venus": 1.069,
+        "Mars": 0.663,
+        "Jupiter": 0.24,
+        "Saturn": 0.123,
+        "Uranus": 0.048,
+        "Neptune": 0.026,
+        "Pluto": 0.005
+      },
+      "dataQualityLabel": "Birth date sourced; birth time unknown; Moon sign undetermined",
+      "sources": {
+        "wikidata": {
+          "entityUrl": "https://www.wikidata.org/wiki/Q46795",
+          "propertiesUsed": [
+            "P569",
+            "P19",
+            "P625",
+            "P106",
+            "P18",
+            "P570",
+            "P17",
+            "P131"
+          ],
+          "lastrevid": 2515644532
+        },
+        "wikipedia": {
+          "language": "en",
+          "title": "Wangarĩ Maathai",
+          "articleUrl": "https://en.wikipedia.org/wiki/Wangar%C4%A9_Maathai",
+          "pageId": 1049151,
+          "revisionId": 1365953013,
+          "revisionTimestamp": "2026-07-25T11:13:39Z"
+        },
+        "retrievedAtUtc": "2026-07-25T17:05:12.504Z"
+      },
+      "portrait": {
+        "available": true,
+        "file": "File:Wangari Matthai 2001 (cropped).jpg",
+        "filePage": "https://commons.wikimedia.org/wiki/File:Wangari%20Matthai%202001%20(cropped).jpg",
+        "creator": "Kingkongphoto & www.celebrity-photos.com from Laurel Maryland, USA",
+        "licence": "CC BY-SA 2.0",
+        "licenceUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+        "attributionRequired": true,
+        "renderedAttribution": "Kingkongphoto & www.celebrity-photos.com from Laurel Maryland, USA · CC BY-SA 2.0 · Wikimedia Commons",
+        "renderedAttributionLinks": {
+          "creator": "https://commons.wikimedia.org/wiki/File:Wangari%20Matthai%202001%20(cropped).jpg",
+          "licence": "https://creativecommons.org/licenses/by-sa/2.0",
+          "source": "https://commons.wikimedia.org/wiki/File:Wangari%20Matthai%202001%20(cropped).jpg"
+        },
+        "width": 466,
+        "height": 656
+      },
+      "living": false,
+      "reviewedAtUtc": "2026-07-25T00:00:00Z",
+      "computationInputVersion": {
+        "ephemeris": "astronomy-engine (repository dependency)",
+        "aspectTable": "@zodiacs/engine/internal/math",
+        "pilotTools": "docs/phase5/people-pilot/tools @ phase5a"
+      },
+      "contentDepth": {
+        "originalWords": 369,
+        "substantiveStatements": 13,
+        "highestPairwiseSimilarity": 0.2281
+      },
+      "indexEligibility": {
+        "eligible": false,
+        "blockedBy": [
+          "phase-5a-is-design-only — no People route exists yet"
+        ],
+        "contentChecksPassed": true,
+        "contentCheckFailures": []
+      },
+      "suppression": {
+        "status": "active",
+        "requestedBy": null,
+        "decidedAtUtc": null,
+        "note": null
+      }
+    },
+    {
+      "qid": "Q47780",
+      "slug": "zaha-hadid",
+      "displayName": "Zaha Hadid",
+      "shortDescription": "Architect · Iraq · 1950–2016",
+      "disciplines": [
+        "architect"
+      ],
+      "birthDate": {
+        "storedValue": "1950-10-31",
+        "precision": "day",
+        "calendarModel": "proleptic-gregorian",
+        "calendarConversion": "none required — the stored value is already proleptic Gregorian",
+        "displayedDate": "1950-10-31",
+        "computedGregorianDate": "1950-10-31",
+        "birthdayCrossLinkKey": "1950-10-31",
+        "birthdayRoute": "/birthday/october-31/"
+      },
+      "birthTime": null,
+      "timeQuality": "unknown",
+      "birthTimeEvidence": "none — Wikidata carries no birth-time claim for this person",
+      "birthPlace": {
+        "entity": "Q1530",
+        "entityLabel": "Baghdad",
+        "normalisedLabel": "Baghdad, Iraq",
+        "country": {
+          "entity": "Q796",
+          "label": "Iraq"
+        },
+        "coordinates": {
+          "latitude": 33.31527777777778,
+          "longitude": 44.36611111111111,
+          "sourceEntity": "Q1530",
+          "sourceEntityLabel": "Baghdad",
+          "wikidataPrecision": 0.0002777777777777778,
+          "escalationSteps": 0,
+          "precisionDowngrade": null
+        },
+        "timeZone": "Asia/Baghdad"
+      },
+      "computation": {
+        "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
+        "timeZone": "Asia/Baghdad",
+        "civilTime": "12:00",
+        "utcInstant": "1950-10-31T09:00:00.000Z",
+        "utcOffsetMinutesAtBirth": 180,
+        "civilDayStartUtc": "1950-10-30T21:00:00.000Z",
+        "civilDayEndUtc": "1950-10-31T20:59:00.000Z",
+        "latitude": 33.31527777777778,
+        "longitude": 44.36611111111111,
+        "coordinateEscalationSteps": 0,
+        "coordinateSourceEntity": "Q1530",
+        "ephemeris": "astronomy-engine via GeoVector + Rotation_EQJ_ECT (server-ephemeris.ts convention)",
+        "aspectTable": "@zodiacs/engine/internal/math",
+        "anglesComputed": false,
+        "housesComputed": false,
+        "sectComputed": false,
+        "meridianResidualMinutes": -2.54,
+        "meridianResidualMoonDegrees": 0.0232
+      },
+      "sunSign": {
+        "slug": "scorpio",
+        "name": "Scorpio",
+        "degree": 7.37,
+        "determinable": true,
+        "cuspCheck": {
+          "ambiguous": false,
+          "boundaryUtc": null,
+          "degreesInsideAtWindowStart": 6.9947,
+          "degreesToNextBoundaryAtWindowEnd": 22.0053
+        }
+      },
+      "moon": {
+        "sign": "cancer",
+        "signName": "Cancer",
+        "degree": 7.44,
+        "uncertain": false,
+        "signAtCivilDayStart": "cancer",
+        "signAtCivilDayEnd": "cancer"
+      },
+      "unknownTimeErrorBandDegrees": {
+        "Sun": 0.999,
+        "Moon": 11.973,
+        "Mercury": 1.64,
+        "Venus": 1.253,
+        "Mars": 0.743,
+        "Jupiter": 0.024,
+        "Saturn": 0.106,
+        "Uranus": 0.013,
+        "Neptune": 0.036,
+        "Pluto": 0.01
+      },
+      "dataQualityLabel": "Birth date sourced; birth time unknown",
+      "sources": {
+        "wikidata": {
+          "entityUrl": "https://www.wikidata.org/wiki/Q47780",
+          "propertiesUsed": [
+            "P569",
+            "P19",
+            "P625",
+            "P106",
+            "P18",
+            "P570",
+            "P17",
+            "P131"
+          ],
+          "lastrevid": 2516826002
+        },
+        "wikipedia": {
+          "language": "en",
+          "title": "Zaha Hadid",
+          "articleUrl": "https://en.wikipedia.org/wiki/Zaha_Hadid",
+          "pageId": 513402,
+          "revisionId": 1364079612,
+          "revisionTimestamp": "2026-07-14T10:32:46Z"
+        },
+        "retrievedAtUtc": "2026-07-25T17:05:12.504Z"
+      },
+      "portrait": {
+        "available": false,
+        "reason": "licence \"FAL\" is outside the accepted set (public domain, CC0, CC BY, CC BY-SA)",
+        "file": "File:Zaha Hadid in Heydar Aliyev Cultural center in Baku nov 2013 (cropped).jpg"
+      },
+      "living": false,
+      "reviewedAtUtc": "2026-07-25T00:00:00Z",
+      "computationInputVersion": {
+        "ephemeris": "astronomy-engine (repository dependency)",
+        "aspectTable": "@zodiacs/engine/internal/math",
+        "pilotTools": "docs/phase5/people-pilot/tools @ phase5a"
+      },
+      "contentDepth": {
+        "originalWords": 341,
+        "substantiveStatements": 12,
+        "highestPairwiseSimilarity": 0.1917
+      },
+      "indexEligibility": {
+        "eligible": false,
+        "blockedBy": [
+          "phase-5a-is-design-only — no People route exists yet"
+        ],
+        "contentChecksPassed": true,
+        "contentCheckFailures": []
+      },
+      "suppression": {
+        "status": "active",
+        "requestedBy": null,
+        "decidedAtUtc": null,
+        "note": null
+      }
+    }
+  ]
+}
