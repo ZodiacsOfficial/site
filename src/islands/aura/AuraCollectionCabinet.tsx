@@ -114,7 +114,7 @@ export const EDITION_META: Record<AuraCabinetEdition, FinishMeta> = {
     short: 'Crown',
     range: 'From 10,000,000 held',
     material:
-      'Ten gold sculptures standing in one seat. Its niche is framed in gold, and the case is gilded around it.',
+      'Ten gold sculptures standing in one seat. Its seat is framed in gold, and the case is gilded around it.',
   },
 };
 

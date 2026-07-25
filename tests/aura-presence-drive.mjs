@@ -13,6 +13,10 @@ const expectedHoldings = [
   { sign: 'scorpio', finish: 'silver' },
   { sign: 'aquarius', finish: 'gold', goldCount: '3' },
 ];
+const expectedSampleHoldings = [
+  { sign: 'aries', finish: 'gold', goldCount: '12' },
+  ...expectedHoldings,
+];
 const expectedHeldSigns = expectedHoldings.map(({ sign }) => sign);
 // A true v2 record: gold carries no count and migrates to one Masterwork.
 const restoredAura = {
@@ -80,7 +84,10 @@ async function waitForSettledMotion(locator) {
   await locator.evaluate(async (node) => {
     const animations = node
       .getAnimations({ subtree: true })
-      .filter((animation) => animation.playState === 'pending' || animation.playState === 'running');
+      .filter((animation) => (
+        (animation.playState === 'pending' || animation.playState === 'running')
+        && animation.effect?.getTiming().iterations !== Infinity
+      ));
     await Promise.all(animations.map((animation) => animation.finished.catch(() => undefined)));
   });
 }
@@ -212,7 +219,7 @@ async function waitForStageKicker(page, expected) {
   ), expected);
 }
 
-function assertUpgradeSequence(stages, label) {
+function assertUpgradeSequence(stages, label, expected = expectedHoldings) {
   const names = stages.map(({ stage }) => stage);
   let cursor = -1;
   for (const expected of ['light', 'pastel', 'bronze', 'silver', 'gold', 'strike', 'settled']) {
@@ -221,23 +228,28 @@ function assertUpgradeSequence(stages, label) {
     cursor = next;
   }
 
-  const expectedAtStage = {
-    pastel: { cancer: 'pastel', leo: 'pastel', scorpio: 'pastel', aquarius: 'pastel' },
-    bronze: { cancer: 'pastel', leo: 'bronze', scorpio: 'bronze', aquarius: 'bronze' },
-    silver: { cancer: 'pastel', leo: 'bronze', scorpio: 'silver', aquarius: 'silver' },
-    gold: { cancer: 'pastel', leo: 'bronze', scorpio: 'silver', aquarius: 'gold' },
-    settled: { cancer: 'pastel', leo: 'bronze', scorpio: 'silver', aquarius: 'gold' },
-  };
+  const materialOrder = ['pastel', 'bronze', 'silver', 'gold'];
+  const expectedAtStage = Object.fromEntries(
+    [...materialOrder, 'settled'].map((stage) => {
+      const stageRank = stage === 'settled'
+        ? materialOrder.length - 1
+        : materialOrder.indexOf(stage);
+      return [stage, Object.fromEntries(expected.map(({ sign, finish }) => {
+        const finishRank = materialOrder.indexOf(finish);
+        return [sign, materialOrder[Math.min(stageRank, finishRank)]];
+      }))];
+    }),
+  );
   for (const [stage, expectedMaterials] of Object.entries(expectedAtStage)) {
     assert.deepEqual(
-      stages.find((entry) => entry.stage === stage)?.materials,
+      stages.findLast((entry) => entry.stage === stage)?.materials,
       expectedMaterials,
       `${label} should show the correct material editions at ${stage}`,
     );
   }
 }
 
-async function assertSettledEditions(cabinet, label) {
+async function assertSettledEditions(cabinet, label, expected = expectedHoldings) {
   assert.equal(await cabinet.getAttribute('data-aura-cabinet-stage'), 'settled');
   const observed = await cabinet.locator('[data-aura-cabinet-finish]').evaluateAll((items) => (
     items.map((item) => {
@@ -253,7 +265,7 @@ async function assertSettledEditions(cabinet, label) {
   ));
   assert.deepEqual(
     observed,
-    expectedHoldings.map(({ sign, finish }) => ({ sign, finish, current: finish })),
+    expected.map(({ sign, finish }) => ({ sign, finish, current: finish })),
     `${label} should settle every represented sign at its verified edition`,
   );
 }
@@ -326,14 +338,14 @@ async function verifyNoJavaScriptSample(browser, baseURL) {
   // The stage server-renders the curator's sample: no JavaScript, full case.
   const cabinet = stageCabinet(page);
   assert.equal(await cabinet.locator('[data-aura-cabinet-sign]').count(), 12);
-  assert.equal(await cabinet.locator('[data-aura-cabinet-represented="true"]').count(), 4);
-  assert.equal(await cabinet.locator('[data-zodiac-medallion]').count(), 4);
-  assert.equal(await cabinet.locator('.aura-collection-cabinet__reserved-mark').count(), 8);
+  assert.equal(await cabinet.locator('[data-aura-cabinet-represented="true"]').count(), 5);
+  assert.equal(await cabinet.locator('[data-zodiac-medallion]').count(), 5);
+  assert.equal(await cabinet.locator('.aura-collection-cabinet__reserved-mark').count(), 7);
   assert.equal(
     normalized(await cabinet.locator('.aura-collection-cabinet__kicker').first().innerText()).toLowerCase(),
     'curator’s sample',
   );
-  await assertSettledEditions(cabinet, 'the static sample stage');
+  await assertSettledEditions(cabinet, 'the static sample stage', expectedSampleHoldings);
   await assertCabinetCraft(cabinet, 'the 390px static sample stage');
   assert.equal(
     normalized(await page.locator('.aura-desk .aura-desk-details > summary').innerText()),
@@ -378,11 +390,11 @@ async function verifySampleAndLiveCollection(browser, baseURL) {
   await page.goto(`${baseURL}/registry/collection/`, { waitUntil: 'networkidle' });
   await page.screenshot({ path: resolve('/tmp', 'zodiacs-registry-aura-cabinet-top.png') });
   assert.equal(await stageCabinet(page).locator('[data-aura-cabinet-sign]').count(), 12);
-  // The sample opens on its principal work: the Gold Masterwork, not the
-  // first pastel in zodiac order.
+  // The sample opens on its principal work: Crown Gold, not the first pastel
+  // in zodiac order.
   assert.equal(
     await page.locator('.aura-stage [data-aura-cabinet-placard]').getAttribute('data-aura-cabinet-placard'),
-    'aquarius',
+    'aries',
   );
 
   await installCabinetStageRecorder(page);
@@ -390,15 +402,19 @@ async function verifySampleAndLiveCollection(browser, baseURL) {
   await waitForStageRevealStart(page);
   await waitForStageKicker(page, 'Curator’s sample');
   const sampleCabinet = await waitForStageSettled(page);
-  assertUpgradeSequence(await recordedCabinetStages(page), 'the explicitly opened sample');
-  await assertSettledEditions(sampleCabinet, 'the explicitly opened sample');
+  assertUpgradeSequence(
+    await recordedCabinetStages(page),
+    'the explicitly opened sample',
+    expectedSampleHoldings,
+  );
+  await assertSettledEditions(sampleCabinet, 'the explicitly opened sample', expectedSampleHoldings);
   await assertCabinetCraft(sampleCabinet, 'the 390px opened sample');
   assert.equal(await page.locator('.aura-result__room--talisman [data-aura-talisman]').count(), 1);
   assert.match(
     normalized(await page.locator('.aura-result__room--talisman').innerText()),
     /The sample’s dated seal\./,
   );
-  assert.equal(await page.locator('.aura-result__room--provenance [data-aura-ledger-sign]').count(), 4);
+  assert.equal(await page.locator('.aura-result__room--provenance [data-aura-ledger-sign]').count(), 5);
   assert.match(
     normalized(await page.locator('.aura-result__room--provenance').innerText()),
     /Curator’s sample — no address was looked up/,
@@ -563,7 +579,11 @@ async function verifyReducedMotion(browser, baseURL) {
   const page = await context.newPage();
   await page.goto(`${baseURL}/registry/collection/`, { waitUntil: 'networkidle' });
 
-  await assertSettledEditions(stageCabinet(page), 'the reduced-motion static sample');
+  await assertSettledEditions(
+    stageCabinet(page),
+    'the reduced-motion static sample',
+    expectedSampleHoldings,
+  );
 
   await installCabinetStageRecorder(page);
   await page.locator('#aura-primer-example').click();
@@ -581,7 +601,7 @@ async function verifyReducedMotion(browser, baseURL) {
     false,
     `reduced motion should settle without upgrade stages: ${stages.map(({ stage }) => stage).join(' -> ')}`,
   );
-  await assertSettledEditions(cabinet, 'the reduced-motion opened sample');
+  await assertSettledEditions(cabinet, 'the reduced-motion opened sample', expectedSampleHoldings);
   assert.equal(
     await page.locator('.aura-result__room--talisman .aura-talisman__segments')
       .evaluate((node) => getComputedStyle(node).animationName),
@@ -644,7 +664,7 @@ async function verifyDesktopFold(browser, baseURL) {
   );
 
   const cabinet = stageCabinet(page);
-  await assertSettledEditions(cabinet, 'the desktop static sample');
+  await assertSettledEditions(cabinet, 'the desktop static sample', expectedSampleHoldings);
   await assertCabinetCraft(cabinet, 'the 1280px static sample');
   // The case owns the full width; its label hangs beneath it.
   const frame = await page.locator('.aura-stage .aura-collection-cabinet__frame').boundingBox();
@@ -688,4 +708,4 @@ try {
   await browser.close();
 }
 
-console.log('aura-presence-drive: one-stage cabinet, four material editions, light-to-strike reveal, principal-work placard, accession ledger, settled v2 restoration, dated seal, chart echoes, restricted preview, house voice, desktop fold, and reduced motion verified');
+console.log('aura-presence-drive: one-stage cabinet, five material editions, light-to-strike reveal, principal-work placard, accession ledger, settled v2 restoration, dated seal, chart echoes, restricted preview, house voice, desktop fold, and reduced motion verified');
