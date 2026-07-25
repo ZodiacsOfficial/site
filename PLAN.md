@@ -194,6 +194,32 @@ New work reuses these tokens. It introduces no new decorative color, chrome lang
 | 5. People directory | Phase 4 complete | 500 people + 366 birthday pages live; schema/sitemap complete; 20 sampled charts verified; provenance and data-quality label on every person; no thin indexed pages. |
 | 6. Ask Zodiacs | Phase 5 complete | Grounded chat behind flag; ≥90% internal-link sample; written red-team passes; rate limit and disclosure proven; static fallback useful. |
 
+## Phase 4 formal closure
+
+Phase 4 is **complete as of 2026-07-25**. The private canary, independent
+Fable review, explicit owner authorization, separate public-authorization
+change, full CI, production configuration, and live verification all passed.
+Public creation remains limited to valid signed-in users selecting a
+synchronized saved chart they own; authentication, explicit consent, caps,
+terminal authority destruction, the paired kill switches, retained canary
+allowlist, and hourly cleanup remain in force.
+
+- Public-authorization PR: `#159`
+- Production merge: `b7075f3d1dc94282cee472decbd94a0270adb331`
+- Merge UTC: `2026-07-25T07:01:06Z`
+- Post-merge Site Check: run `30148543319`, attempt 1, `success`
+- Production deployment: `dpl_7S22DcjeFHkgWx5pJHDUJkcj61eU`
+- Deployment URL:
+  `https://zodiacs-pu8mdb794-zodiacsofficial.vercel.app`
+- Production alias cutover: `2026-07-25T07:34:10.644Z`
+
+Live verification found the English invitation UI in the production build,
+an unauthenticated create request returned `401 sign_in_required`, and an
+invalid token returned `303` to the generic unavailable state with
+`private, no-store` and `noindex, nofollow, noarchive`. No invitation, email,
+or notification was created during public-launch verification. Phase 5's
+entry gate is open; this closeout contains no Phase 5 implementation.
+
 ## Phase 3 formal closure
 
 Phase 3 is **complete as of 2026-07-23**. The implementation review has
@@ -370,14 +396,17 @@ boundary. Exact operational evidence is in
 - [x] Obtain explicit owner approval before allowing anyone beyond the canary
   allowlist. The owner authorized public creation on 2026-07-25 for signed-in
   users selecting a synchronized saved chart, with Phase 5 paused.
-- [ ] Release the separate `COMPAT_INVITES_PUBLIC_ENABLED=1` authorization
+- [x] Release the separate `COMPAT_INVITES_PUBLIC_ENABLED=1` authorization
   change through green CI, then enable it with the existing server/UI flags
-  and verify production. Authentication, owned-chart enforcement, and the
-  retained canary allowlist remain mandatory.
+  and verify production. PR `#159` merged as
+  `b7075f3d1dc94282cee472decbd94a0270adb331`; post-merge Site Check run
+  `30148543319` passed, and deployment `dpl_7S22DcjeFHkgWx5pJHDUJkcj61eU`
+  was aliased to production at `2026-07-25T07:34:10.644Z`.
 
-Until the remaining public-release item is genuine, keep
-`PUBLIC_COMPAT_INVITES_ENABLED` and `COMPAT_INVITES_ENABLED` unset/off, retain
-the exact owner allowlist and cleanup path, and do not begin Phase 5.
+Phase 4 is formally closed. Production keeps the reader, server, and public
+authorization flags enabled together, retains the exact canary owner as the
+rollback boundary, and keeps cleanup operational. Phase 5 may now begin as a
+separate bounded phase.
 
 ## Current Phase 1 status
 
@@ -434,6 +463,24 @@ The prior release cutover is superseded; the current hardening candidate must es
 Keep clean data and route seams for these; do not implement them inside this program.
 
 ## Change log
+
+### 2026-07-25 — Phase 4 publicly launched and formally complete
+
+- Released public authorization through PR `#159` at merge
+  `b7075f3d1dc94282cee472decbd94a0270adb331`; post-merge Site Check run
+  `30148543319` passed all jobs on attempt 1.
+- Enabled the English reader UI, server create/open path, and public
+  authorization together. Creation still requires a valid signed-in account,
+  explicit consent, and one synchronized saved chart owned by that account.
+- Redeployed the exact green merge as
+  `dpl_7S22DcjeFHkgWx5pJHDUJkcj61eU`; `zodiacs.org` cut over at
+  `2026-07-25T07:34:10.644Z`.
+- Verified the public UI, guest rejection, generic private token failure,
+  responsive layouts, and unchanged Registry Collection operation without
+  creating an invitation or sending an email or notification.
+- Retained the canary allowlist, paired kill switches, terminal cleanup, and
+  hourly sweep as the reviewed rollback and lifecycle boundary. Phase 5's
+  entry gate is open; no Phase 5 implementation is included here.
 
 ### 2026-07-24 — Phase 4 private canary complete; public launch remains off
 
@@ -568,6 +615,6 @@ Keep clean data and route seams for these; do not implement them inside this pro
 - Selected exact-date event URLs to avoid same-month event collisions.
 - Preserved truthful Organization authorship for the AI-only operating model without a prominent reader-facing automation badge.
 
-Phase 4 implementation is released flag-off and its private canary is
-complete, but public launch and formal phase closure remain pending. Phase 5
-and Phase 6 have not started.
+Phase 4 is publicly launched and formally complete. Phase 5's entry gate is
+open but Phase 5 implementation has not started; Phase 6 remains gated on
+Phase 5 completion.

@@ -1,7 +1,11 @@
-# Phase 4 — Private sharing loop technical contract
+# Phase 4 — Sharing loop technical contract
 
-Status: implementation candidate; multi-tab capability hardening implemented
-and unit/API verified; unreleased, uncanaried, and disabled
+Status: released and formally complete on 2026-07-25
+
+Production release:
+`b7075f3d1dc94282cee472decbd94a0270adb331` ·
+`dpl_7S22DcjeFHkgWx5pJHDUJkcj61eU` ·
+`2026-07-25T07:34:10.644Z`
 
 Baseline: `734c36ff960d4743ac268ab6368bd915d063ed4f`
 
@@ -18,15 +22,14 @@ The reader experience and final English copy remain Fable's authority.
 between that handoff and this security contract, with one subsequent
 release-hardening amendment: a non-secret, per-arrival session handle selects
 one handle-scoped HttpOnly capability cookie so two open invitations cannot
-overwrite each other. The candidate implements that amendment and its focused
-unit/API isolation tests pass; the full browser, parity, CI, migration, and
-canary evidence remains a release gate. Nothing in this document is evidence
-that the migration has been applied, a flag has been enabled, a canary has
-run, or production has changed.
+overwrite each other. The released implementation includes that amendment.
+Its browser, parity, CI, migration, private-canary, independent-review, public
+authorization, and production evidence are recorded in
+`docs/PHASE4-SHARING-CANARY.md`.
 
 ## 1. Fixed release boundary
 
-The bounded candidate is:
+The released feature is:
 
 - English only.
 - Available only to signed-in inviters who select one synchronized saved
@@ -62,9 +65,8 @@ The first release is not:
   an invite.
 
 All non-English compatibility routes and the feature-off English experience
-must keep their existing behavior. The candidate has not yet completed the
-full parity, preview, canary, or release ladder needed to claim that outcome
-in production.
+keep their existing behavior. The full parity, preview, canary, and public
+release ladder passed before formal closure.
 
 ## 2. Existing surfaces to reuse
 
@@ -668,21 +670,16 @@ manifest.
 
 ## 15. Release ladder
 
-Candidate checkpoint on 2026-07-24: Fable's docs/proofs are integrated and
-the isolated branch contains the migration, server APIs, disabled UI, codecs,
-email template, analytics allowlist, private route, OG asset, hourly workflow,
-and focused tests. The handle-scoped multi-tab capability hardening described
-in §§3, 5, 7, and 14 is implemented; its focused unit/API isolation suite
-passes 47/47, the feature-off browser suite passes 8/8, and the
-fixture-enabled A→B suite passes 35/35, including two simultaneous invitation
-tabs. The production build, 1,399-test unit suite, schema, bundles, visual
-regression, locale/Registry/legacy drift, widgets, Phase 1–3 regressions, and
-server-secret scan are green locally. Seventeen of eighteen three-run
-Lighthouse templates pass; the unchanged `/ru/birth-chart/` baseline measured
-2.56s locally against the 2.50s ceiling, so fresh candidate CI remains
-binding. Fable implementation review, live migration, preview, canary, PR
-merge, and production verification have not yet been completed. Both public
-and server flags remain off.
+Completed release record: Fable's docs/proofs were integrated, the
+handle-scoped unit/API suite passed 47/47, feature-off browser coverage passed
+8/8, and the fixture A→B suite passed 35/35 with simultaneous invitation tabs.
+The migration, private canary, one-shot email proof, duplicate prevention,
+independent Fable review, explicit owner authorization, and public
+authorization all passed. PR `#159` merged as
+`b7075f3d1dc94282cee472decbd94a0270adb331`; post-merge Site Check run
+`30148543319` passed on attempt 1. Deployment
+`dpl_7S22DcjeFHkgWx5pJHDUJkcj61eU` reached the production alias at
+`2026-07-25T07:34:10.644Z`.
 
 1. Merge the Fable design/copy handoff into the integration branch.
 2. Implement schema, strict types/codecs, and disposable SQL tests.
@@ -733,30 +730,15 @@ Sequential second wave:
 There is one implementation branch and one final release candidate. Do not
 split schema, APIs, and UI across independently releasable production branches.
 
-## 17. Remaining release blockers
+## 17. Formal closure
 
-The technical contract itself has no unresolved privacy or architecture
-decision, and Fable's final handoff is integrated. Local implementation does
-not wait on a live service.
+There is no open Phase 4 release blocker. The implementation and live evidence
+close every item in the release ladder: green CI, Fable review, verified
+migration/RLS boundary, authenticated cleanup, allowlisted A→B canary,
+one-shot provider/database evidence, duplicate prevention, explicit owner
+approval, separate public authorization, and live production verification.
 
-The bounded candidate is still blocked from release by evidence, not by a
-design decision:
-
-- obtain green fresh-machine candidate CI; local flag-off, browser, visual,
-  accessibility, bundle, schema, locale, Registry, and security gates are
-  complete, with the one candid local Lighthouse measurement recorded in the
-  release-ladder checkpoint;
-- Fable's bounded implementation review and resolution of any deterministic
-  P0/P1 finding;
-- reviewed live migration application plus RLS/grant/RPC verification;
-- provisioned `COMPAT_INVITE_SWEEP_SECRET`,
-  `COMPAT_INVITE_RECIPIENT_HASH_SECRET`, and hourly workflow evidence;
-- confirmation of the approved production canary user ID before any live
-  flag configuration;
-- a genuine allowlisted A→B→send-back canary with provider, database,
-  duplicate-prevention, privacy, and expiry evidence; and
-- explicit owner approval plus a separately reviewed authorization change
-  before any access broader than the canary allowlist.
-
-Until those gates pass, Phase 4 is an unreleased candidate. No environment
-variable in this contract should be read as permission to enable it.
+Production keeps the reader, server, and public-authorization controls aligned.
+The exact canary owner remains the rollback boundary, and the hourly cleanup
+path remains mandatory. Phase 5 may proceed only as its own bounded phase; no
+Phase 5 behavior is authorized by this contract.

@@ -1,7 +1,7 @@
 # Phase 4 private sharing loop — canary record
 
 Date: 2026-07-24  
-Scope: owner-only private canary; no public launch  
+Scope: owner-only private canary; public-launch closure appended below
 Production merge: `9a975477a380513e3f28145721346b745d9ced61`
 
 ## Outcome
@@ -13,10 +13,11 @@ The owner received exactly one completion email. A second guest session made
 the same completion attempt without producing a second delivery claim or
 mailbox message.
 
-Both Phase 4 flags were returned to off in production and preview. The exact
-owner allowlist remains configured, the cleanup path remains active, and no
-public creator access was granted. Phase 4 is not publicly launched or
-formally complete.
+Both Phase 4 flags were returned to off in production and preview at the end
+of this bounded canary. The exact owner allowlist remained configured, the
+cleanup path remained active, and no public creator access was granted during
+the canary. The later public-launch closure is recorded at the end of this
+document.
 
 ## Released foundation
 
@@ -195,8 +196,7 @@ future bounded backlog, not permission to expand this canary.
 2. The owner gives a separate explicit approval for public launch.
 3. Any public authorization change is reviewed and released separately.
 
-Until all three happen, keep both Phase 4 flags off, retain the exact owner
-allowlist, and do not begin Phase 5.
+All three subsequently passed. The resulting public launch is recorded below.
 
 ## 2026-07-25 independent review and owner authorization
 
@@ -215,3 +215,39 @@ authentication, chart ownership, explicit positions-sharing consent, the
 server/UI kill switches, caps, authority destruction, or cleanup. The exact
 canary owner allowlist remains configured so disabling public authorization
 restores the reviewed private boundary.
+
+## Public launch and formal closure — 2026-07-25
+
+The separately reviewed public-authorization change was released through PR
+`#159`:
+
+- merge SHA: `b7075f3d1dc94282cee472decbd94a0270adb331`;
+- merge UTC: `2026-07-25T07:01:06Z`;
+- post-merge Site Check: run `30148543319`, attempt 1, `success`;
+- production deployment: `dpl_7S22DcjeFHkgWx5pJHDUJkcj61eU`;
+- deployment URL:
+  `https://zodiacs-pu8mdb794-zodiacsofficial.vercel.app`;
+- production alias cutover: `2026-07-25T07:34:10.644Z`.
+
+Production has the English UI, create/open switch, and public authorization
+enabled together. A valid signed-in account must still select one synchronized
+saved chart it owns and explicitly consent. The exact canary owner remains in
+the allowlist, so turning off public authorization restores the reviewed
+private boundary without weakening revocation, completion replay, delivery
+finalization, or cleanup.
+
+Read-only live verification found:
+
+- the invitation UI present in the production compatibility build;
+- a same-origin unauthenticated create request rejected with
+  `401 sign_in_required`;
+- `/c/not-a-real-token/` returning `303` to the generic unavailable state
+  with `private, no-store`, `no-referrer`, and
+  `noindex, nofollow, noarchive`;
+- zero unexpected horizontal overflow at 390px and 1280px; and
+- Registry Collection still working after the combined release.
+
+No invitation, email, or notification was created during launch verification.
+All Phase 4 Definition of Done evidence is genuine, so Phase 4 is formally
+complete. Phase 5's entry gate is open; this record contains no Phase 5
+implementation.

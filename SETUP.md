@@ -1,6 +1,6 @@
 # Zodiacs.org setup and operations
 
-Last updated: 2026-07-20
+Last updated: 2026-07-25
 
 This is the provisioning source of truth for the six-phase household-name program. It consolidates the live repository's external services, environment variables, feature flags, and scheduled jobs. It contains names and procedures only—never secrets or secret values.
 
@@ -39,7 +39,7 @@ Do not put credentials in `.env` files that can be committed, Markdown, fixtures
 | --- | --- | --- | --- |
 | Vercel | Existing | Static hosting, previews, and `api/` serverless functions | Keep Production, Preview, and Development env scopes aligned. Deploy `main`. |
 | GitHub Actions | Existing | CI, daily/monthly data generation, digest, push, and refresh jobs | Give only the permissions declared by each workflow. Store secrets as Actions secrets and non-secret switches as variables. |
-| Supabase | Existing | Magic-link auth, RLS chart sync, digest preferences, daily-chart consent and delivery receipts, assistant quota, push subscriptions; unreleased Phase 4 compatibility-invite candidate | Apply migrations, keep RLS on, and never expose the service-role key. Do not infer that candidate schema is live. |
+| Supabase | Existing | Magic-link auth, RLS chart sync, digest preferences, daily-chart consent and delivery receipts, assistant quota, push subscriptions, and released Phase 4 compatibility invitations | Apply migrations, keep RLS on, and never expose the service-role key. |
 | Resend | Selected standard | Double-opt-in capture, weekly/daily email, unsubscribe-compatible delivery | Authenticate `zodiacs.org` with SPF/DKIM and use a domain sender. |
 | Buttondown or Loops | Supported alternatives | Standalone capture only | Configure exactly one provider. Do not combine providers in one deployment. |
 | Anthropic | Existing optional integration | Ask Zodiacs; optional future Phase 1 prose build | Use server/CI-only keys. Keep daily-prose and assistant budgets independently revocable. |
@@ -220,11 +220,12 @@ overwrite or cross-read one another. The `/c/` fallback and all token paths
 remain noindex, absent from sitemap/hreflang/language selection,
 private/no-store, and no-referrer.
 
-This handle-scoped multi-tab hardening is implemented. Its focused unit/API
+This handle-scoped multi-tab hardening is released. Its focused unit/API
 isolation suite passes 47/47, its feature-off browser suite passes 8/8, and
 its fixture-enabled A→B browser suite passes 35/35, including two simultaneous
-invitation tabs. Do not provision a canary until candidate CI and Fable's
-bounded implementation review are green.
+invitation tabs. The private canary, Fable review, public authorization, and
+production verification are recorded in
+`docs/PHASE4-SHARING-CANARY.md`.
 
 Status, revocation, hiding, completion replay, delivery finalization, and
 cleanup are deliberately not disabled by the create/open switch. The hourly
@@ -281,9 +282,10 @@ These are outside this program and should remain off unless separately authorize
 | Registry Collection | `PUBLIC_REGISTRY_COLLECTION_ENABLED=1` + RPCs + firewall rule | No entry point, sitemap entry, or Aura route exposure. |
 | Wallet chart | `PUBLIC_WALLET_CHART_ENABLED=1` + a supported provider | Endpoint returns disabled; ordinary birth chart is unaffected. |
 
-The Phase 4 candidate reads the paired flag contract above, but both values
-remain unset/off. Their presence in this document records the deployment
-contract; it does not mean Phase 4 is released or canaried.
+Phase 4 production uses the reader, server, and public-authorization flags
+together. Authentication and owned synchronized-chart checks still apply.
+The exact canary owner remains configured so disabling public authorization
+restores the reviewed private boundary.
 
 ## Supabase provisioning
 
@@ -297,8 +299,7 @@ Required released migrations:
 4. `supabase/migrations/20260720074516_phase3_habit_layer.sql`
 5. `supabase/migrations/20260720145526_phase3_delivery_guards.sql`
 
-Phase 4 adds one candidate migration that is committed on the isolated
-implementation branch but is not claimed live:
+Phase 4 adds one released migration that is live and verified:
 
 6. `supabase/migrations/20260724003109_phase4_compat_invites.sql`
 
@@ -344,8 +345,8 @@ Before enabling server features, add and apply committed idempotent migrations f
 
 - Assistant quota table and `assistant_quota_bump` function.
 
-Before enabling either Phase 4 switch, apply and verify the Phase 4 candidate
-migration through the reviewed production path. It creates the
+The Phase 4 migration was applied and verified through the reviewed production
+path before launch. It creates the
 server-owned `compatibility_invites`,
 `compatibility_invite_delivery_claims`, and
 `compatibility_invite_events` tables with RLS on, zero browser policies,
@@ -454,6 +455,13 @@ Daily messages send both `List-Unsubscribe` and `List-Unsubscribe-Post: List-Uns
    completion replay, delivery finalization, and cleanup infrastructure
    available for existing rows.
 
+The ladder completed on 2026-07-25. PR `#159` merged as
+`b7075f3d1dc94282cee472decbd94a0270adb331`; post-merge Site Check run
+`30148543319` passed, and production deployment
+`dpl_7S22DcjeFHkgWx5pJHDUJkcj61eU` was aliased at
+`2026-07-25T07:34:10.644Z`. Keep the three production flags aligned and retain
+the canary allowlist and hourly cleanup path.
+
 ## Ask Zodiacs provisioning
 
 1. Create a dedicated Anthropic key and set a hard provider budget/alert.
@@ -471,7 +479,7 @@ All schedules are UTC.
 | --- | --- | --- | --- |
 | `.github/workflows/daily-horoscopes.yml` | Daily 00:00 | Builds facts/publication, verifies, replays 30 days, commits changes, waits for live edition, pings IndexNow. GitHub may start the runner after the declared boundary. | Always on. Phase 1 covers all daily cuts and Monday weekly generation. |
 | `.github/workflows/daily-email.yml` | Hourly at UTC minute 13 | Runs a credential-free fixture smoke; when explicitly enabled, verifies the exact live edition and selects eligible test-list recipients. | Off by default; real delivery requires GitHub `DAILY_EMAIL_ENABLED=1`. Workflow is hardcoded to `test`; no general-audience path exists. |
-| `.github/workflows/compat-invite-sweep.yml` | Hourly at UTC minute 17 | Candidate workflow closes overdue Phase 4 invitations in bounded batches and prunes 30-day evidence when its secret is provisioned; otherwise exits cleanly. | Not yet released or provisioned. Required before a Phase 4 canary, and never an enablement signal by itself. |
+| `.github/workflows/compat-invite-sweep.yml` | Hourly at UTC minute 17 | Closes overdue Phase 4 invitations in bounded batches and prunes 30-day evidence; missing configuration exits cleanly. | Released, provisioned, and required while invitations can exist. |
 | `.github/workflows/weekly-digest.yml` | Monday 06:00 | Fixture smoke always; real send only when `DIGEST_ENABLED=true`. | Off by default. |
 | `.github/workflows/pulse-refresh.yml` | Monday 06:17 | Refreshes Wikipedia/Trends pulse data and commits changes. | Existing, best effort. |
 | `.github/workflows/distribution-refresh.yml` | Monday 06:31 | Refreshes Registry ownership distribution and commits changes. | Existing Registry operation. |
