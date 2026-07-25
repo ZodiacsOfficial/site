@@ -34,9 +34,12 @@ The bounded candidate is:
 - Its reader UI is hidden unless `PUBLIC_COMPAT_INVITES_ENABLED=1`.
 - Creating and opening invitations are separately disabled unless
   `COMPAT_INVITES_ENABLED=1` and the complete server contract is present.
-- Creation requires an exact match in `COMPAT_INVITE_TEST_USER_IDS`. A missing
-  or empty canary allowlist denies every creator. Status, revocation, hiding,
-  completion replay, and cleanup are not blocked by the canary allowlist.
+- Creation requires either `COMPAT_INVITES_PUBLIC_ENABLED=1` or an exact
+  match in `COMPAT_INVITE_TEST_USER_IDS`. Public authorization still requires
+  a valid signed-in Auth user and one synchronized chart owned by that user.
+  With public authorization off, a missing or empty canary allowlist denies
+  every creator. Status, revocation, hiding, completion replay, and cleanup
+  are not blocked by either creation authorization.
 - It adds one private token path, `/c/{token}/`, which exchanges the token for
   a new non-secret 16-byte, 22-character base64url session handle, stores the
   raw capability only in that handle's scoped HttpOnly cookie, and redirects to
@@ -338,7 +341,10 @@ The server contract exists only when `PUBLIC_SUPABASE_URL` and
 `SUPABASE_SERVICE_ROLE_KEY` are valid. `COMPAT_INVITES_ENABLED=1` gates only
 creation, exchange, and session reads. Owner status, revocation, hiding,
 completion replay, delivery finalization, and cleanup remain available when
-the contract exists. The production canary allowlist applies only to create.
+the contract exists. `COMPAT_INVITES_PUBLIC_ENABLED=1` authorizes any valid
+signed-in Auth user to reach the create path; the create path independently
+requires a synchronized saved chart owned by that user. When public
+authorization is off, the production canary allowlist applies only to create.
 
 ### `POST /api/compatibility/invites`
 
@@ -694,14 +700,17 @@ and server flags remain off.
 12. Record database/RLS evidence, provider evidence, screenshots, CI SHA,
     deployment, and UTC cutover.
 13. Fable reviews the live canary against its handoff.
-14. Public launch requires an explicit owner approval after the canary and a
-    separately reviewed authorization change. This candidate has no
-    unrestricted-creator mode: clearing the test allowlist denies everyone.
-    The paired flags and rollback remain.
+14. After Fable's canary review and explicit owner approval, release the
+    separate public-authorization change. Set
+    `COMPAT_INVITES_PUBLIC_ENABLED=1` only with the existing server and reader
+    flags. Retain the test allowlist so disabling public authorization
+    restores the reviewed owner-only boundary. Authentication, synchronized
+    saved-chart ownership, paired kill switches, and rollback remain.
 
-Rollback is immediate: turn off the public flag, then the server flag. Existing
-invites remain revocable and cleanup remains operational; recipient endpoints
-return the generic unavailable state. Do not drop tables during rollback.
+Rollback is immediate: turn off the reader flag, then the server flag, then
+the public authorization. Existing invites remain revocable and cleanup
+remains operational; recipient endpoints return the generic unavailable
+state. Do not drop tables during rollback.
 
 ## 16. Implementation order and ownership
 

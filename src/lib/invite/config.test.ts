@@ -41,6 +41,18 @@ describe('Phase 4 invite configuration and token boundary', () => {
     })).toBe(false);
   });
 
+  it('opens creation to valid signed-in user ids only behind the exact public authorization', () => {
+    expect(compatibilityInviteUserAllowed(USER, {
+      COMPAT_INVITES_PUBLIC_ENABLED: '1',
+    })).toBe(true);
+    expect(compatibilityInviteUserAllowed(USER, {
+      COMPAT_INVITES_PUBLIC_ENABLED: 'true',
+    })).toBe(false);
+    expect(compatibilityInviteUserAllowed('not-a-user-id', {
+      COMPAT_INVITES_PUBLIC_ENABLED: '1',
+    })).toBe(false);
+  });
+
   it('mints exactly 256-bit base64url secrets and hashes them deterministically', () => {
     const first = createCompatibilityInviteToken();
     const second = createCompatibilityInviteToken();

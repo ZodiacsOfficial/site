@@ -137,6 +137,31 @@ describe('Phase 4 invite API boundary', () => {
     expect(String(fetcher.mock.calls[0]?.[0])).toContain('/auth/v1/user');
   });
 
+  it('lets public users reach only their own synchronized saved-chart boundary', async () => {
+    configure();
+    delete process.env.COMPAT_INVITE_TEST_USER_IDS;
+    process.env.COMPAT_INVITES_PUBLIC_ENABLED = '1';
+    const fetcher = vi.fn(async (input: string | URL | Request) => {
+      const url = String(input);
+      if (url.endsWith('/auth/v1/user')) {
+        return json({ id: OWNER_ID, email: 'owner@example.com' });
+      }
+      if (url.includes('/rest/v1/charts?')) return json([]);
+      throw new Error(`Unexpected request: ${url}`);
+    });
+    vi.stubGlobal('fetch', fetcher);
+    const response = responseRecorder();
+    await invitesHandler({
+      method: 'POST',
+      headers: BROWSER_HEADERS,
+      body: { chartId: CHART_ID, consent: true, notify: false },
+    }, response);
+    expect(response.statusCode).toBe(404);
+    expect(JSON.parse(response.body)).toEqual({ error: 'chart_not_found' });
+    expect(fetcher).toHaveBeenCalledTimes(2);
+    expect(String(fetcher.mock.calls[1]?.[0])).toContain('/rest/v1/charts?');
+  });
+
   it('authenticates, derives positions server-side, and returns the raw URL once', async () => {
     configure();
     let createBody: Record<string, unknown> | null = null;

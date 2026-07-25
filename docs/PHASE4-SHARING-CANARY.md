@@ -197,3 +197,21 @@ future bounded backlog, not permission to expand this canary.
 
 Until all three happen, keep both Phase 4 flags off, retain the exact owner
 allowlist, and do not begin Phase 5.
+
+## 2026-07-25 independent review and owner authorization
+
+Fable's final independent read-only review returned **PASS** with no open P0
+or P1. It independently confirmed the migration/RLS boundary, one-shot
+delivery claims, strict flags and allowlist, token exchange, successful CI,
+live feature-off state, and the merged responsive-overflow fix. The
+intermittent first-load status fallback remains a P2 reliability backlog item;
+it failed honestly and does not weaken creation, revocation, or deletion
+claims.
+
+The owner then explicitly authorized public Phase 4 creation for all signed-in
+users with a saved synchronized chart and kept Phase 5 paused. The separate
+authorization uses `COMPAT_INVITES_PUBLIC_ENABLED=1`; it does not bypass
+authentication, chart ownership, explicit positions-sharing consent, the
+server/UI kill switches, caps, authority destruction, or cleanup. The exact
+canary owner allowlist remains configured so disabling public authorization
+restores the reviewed private boundary.

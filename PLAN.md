@@ -1,12 +1,14 @@
 # Zodiacs.org household-name program
 
-Last updated: 2026-07-24
+Last updated: 2026-07-25
 
 Active phase: **Phase 4 private sharing loop — implementation merged and the
-owner-only private canary completed successfully. Public access remains off.
-Fable's live-canary review and a separate explicit owner approval are still
-required before public launch or formal Phase 4 closure. Phase 5 has not
-begun; Phase 1 external closure monitoring continues independently.**
+owner-only private canary completed successfully. Fable's independent
+live-canary review passed with no open P0/P1, and the owner explicitly
+authorized public launch for signed-in users with a synchronized saved chart.
+The separately gated public-authorization release remains in progress. Phase
+5 has not begun; Phase 1 external closure monitoring continues
+independently.**
 
 ## Authority and operating rule
 
@@ -362,14 +364,18 @@ boundary. Exact operational evidence is in
   destruction. The production canary delivered exactly one completion email
   to the approved owner, retained one delivery claim after a repeat, and
   ended with both flags off.
-- [ ] Obtain Fable's bounded review of the live private canary against the
-  committed handoff. This review may report evidence or a genuine P0/P1 only;
-  it does not authorize public launch.
-- [ ] Obtain explicit owner approval plus a separately reviewed authorization
-  change before allowing anyone beyond the canary allowlist. Clearing the
-  allowlist must continue to deny creation.
+- [x] Obtain Fable's bounded review of the live private canary against the
+  committed handoff. The 2026-07-25 independent review returned **PASS** with
+  no open P0/P1; the honest first-load status fallback remains P2 backlog.
+- [x] Obtain explicit owner approval before allowing anyone beyond the canary
+  allowlist. The owner authorized public creation on 2026-07-25 for signed-in
+  users selecting a synchronized saved chart, with Phase 5 paused.
+- [ ] Release the separate `COMPAT_INVITES_PUBLIC_ENABLED=1` authorization
+  change through green CI, then enable it with the existing server/UI flags
+  and verify production. Authentication, owned-chart enforcement, and the
+  retained canary allowlist remain mandatory.
 
-Until the two remaining public-launch items are genuine, keep
+Until the remaining public-release item is genuine, keep
 `PUBLIC_COMPAT_INVITES_ENABLED` and `COMPAT_INVITES_ENABLED` unset/off, retain
 the exact owner allowlist and cleanup path, and do not begin Phase 5.
 

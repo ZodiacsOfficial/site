@@ -31,9 +31,14 @@ export function compatibilityInviteUserAllowed(
   env: Environment = process.env,
 ): boolean {
   if (!UUID.test(userId)) return false;
+  // Public creation is a separate, deliberate server-side authorization.
+  // Authentication and owned synchronized-chart checks remain independent
+  // requirements in the creation route.
+  if (value(env, 'COMPAT_INVITES_PUBLIC_ENABLED') === '1') return true;
   const configured = value(env, 'COMPAT_INVITE_TEST_USER_IDS');
-  // Phase 4 opens as a canary. An enabled server flag without an explicit
-  // account allowlist must never turn into an accidental public launch.
+  // Canary mode remains fail-closed. The allowlist can stay configured after
+  // public launch so turning the public authorization off restores the exact
+  // reviewed private-canary boundary.
   if (!configured) return false;
   const allowlist = configured
     .split(',')
