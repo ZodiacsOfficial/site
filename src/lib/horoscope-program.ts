@@ -965,8 +965,11 @@ function dailySurface(
       catalog.event(exact, sign, { date: daily.date, sourceId: daily.eventsSource ?? `daily-snapshot:${daily.date}` }),
     ));
   } else {
+    const quietFocus = moonHouse === secondaryHouse
+      ? `Keep ${HOUSE_THEME[moonHouse]} centered in the choice`
+      : `Connect ${HOUSE_THEME[moonHouse]} with ${HOUSE_THEME[secondaryHouse]}`;
     passages.push(passage(
-      `${dayWord}, the practical move is to ${profile.test}. ${cap(profile.weekly)}.`,
+      `${quietFocus}; ${profile.test}.`,
       [...catalog.position(daily, moon, sign), ...catalog.position(daily, secondary, sign)],
     ));
   }

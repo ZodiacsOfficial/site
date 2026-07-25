@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import { verifyHoroscopeProgramCopy } from '../../scripts/independent-copy-verifier';
 import dailyData from '../data/daily.json';
 import type { Daily } from './daily';
 import {
@@ -93,6 +94,9 @@ describe('horoscope program domain', () => {
       ]);
     }
     expect(validateHoroscopeProgramAgainstInput(input, first)).toEqual([]);
+    expect(verifyHoroscopeProgramCopy(first).filter(({ path }) => (
+      path.includes('.readings.today.')
+    ))).toEqual([]);
   });
 
   it('enforces the master-brief word bounds and voice rules on every surface', () => {
