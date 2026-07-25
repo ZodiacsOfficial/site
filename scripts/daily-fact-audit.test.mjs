@@ -32,7 +32,18 @@ describe('independent daily fact audit', () => {
     const candidate = clone(daily);
     candidate.moon.phase = 'Full Moon';
     candidate.moon.illumination = 0;
-    candidate.events = [];
+    candidate.events = [{
+      kind: 'aspect',
+      a: 'Mars',
+      b: 'Saturn',
+      type: 'sextile',
+      orb: 0,
+      aSign: 'gemini',
+      aDegree: 12,
+      bSign: 'aries',
+      bDegree: 12,
+      at: `${candidate.date}T06:00:00.000Z`,
+    }];
     const rules = (await auditDailyAstronomy(candidate, repoRoot)).map((item) => item.ruleId);
     expect(rules).toContain('ASTRO-MOON-PHASE');
     expect(rules).toContain('ASTRO-MOON-ILLUMINATION');

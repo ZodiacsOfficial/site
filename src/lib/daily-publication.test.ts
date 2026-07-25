@@ -169,19 +169,19 @@ describe('daily editorial publication', () => {
   });
 
   it('requires canonical same-day ISO instants in chronological order', () => {
-    const nonCanonical = clone(daily);
+    const nonCanonical = dailyWithExactAspect();
     nonCanonical.events[0].at = `${daily.date}T18:05:52.329+00:00`;
     expect(validateDailyFacts(nonCanonical).map((failure) => failure.ruleId))
       .toContain('FACT-EVENT-INSTANT');
 
-    const wrongDay = clone(daily);
+    const wrongDay = dailyWithExactAspect();
     const adjacentDate = new Date(`${daily.date}T00:00:00.000Z`);
     adjacentDate.setUTCDate(adjacentDate.getUTCDate() + 1);
     wrongDay.events[0].at = `${adjacentDate.toISOString().slice(0, 10)}T00:05:52.329Z`;
     expect(validateDailyFacts(wrongDay).map((failure) => failure.ruleId))
       .toContain('FACT-EVENT-DATE');
 
-    const outOfOrder = clone(daily);
+    const outOfOrder = dailyWithExactAspect();
     const later = clone(outOfOrder.events[0]);
     later.at = `${daily.date}T20:05:52.329Z`;
     const earlier = clone(outOfOrder.events[0]);
@@ -192,7 +192,7 @@ describe('daily editorial publication', () => {
   });
 
   it('rejects duplicate event fact IDs', () => {
-    const candidate = clone(daily);
+    const candidate = dailyWithExactAspect();
     candidate.events.push(clone(candidate.events[0]));
     expect(validateDailyFacts(candidate).map((failure) => failure.ruleId))
       .toContain('FACT-EVENT-DUPLICATE-ID');
