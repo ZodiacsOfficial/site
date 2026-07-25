@@ -1,0 +1,505 @@
+/**
+ * Phase 5A pilot copy composition and content-depth measurement.
+ *
+ * Every reader-facing sentence about a person is composed here from that
+ * person's computed chart facts. Nothing is copied from Wikipedia; no
+ * biography, achievement, or private-life material enters the copy; no
+ * placement is said to have caused anything. Third-person pronouns for
+ * the subject are avoided entirely — the name or "the chart" carries the
+ * sentence, so no page ever guesses a living person's pronouns.
+ *
+ * House practice: this is the same deterministic composition-from-a-
+ * curated-phrase-library the daily engine uses (PLAN.md, Phase 1). The
+ * variety between pages comes from the facts, not from paraphrase.
+ *
+ *   node docs/phase5/people-pilot/tools/compose-copy.mjs
+ */
+import { readFile, writeFile, mkdir } from 'node:fs/promises';
+import { fileURLToPath } from 'node:url';
+import { dirname, join } from 'node:path';
+
+const HERE = dirname(fileURLToPath(import.meta.url));
+const PILOT = join(HERE, '..');
+
+const FUNCTION = {
+  Sun: 'identity and vitality',
+  Moon: 'feeling and rhythm',
+  Mercury: 'thinking and speech',
+  Venus: 'attraction and taste',
+  Mars: 'drive and appetite',
+  Jupiter: 'expansion and meaning',
+  Saturn: 'limit and structure',
+  Uranus: 'disruption',
+  Neptune: 'imagination',
+  Pluto: 'depth and power',
+};
+const SHORT_FUNCTION = {
+  Sun: 'identity', Moon: 'feeling', Mercury: 'thinking', Venus: 'taste',
+  Mars: 'drive', Jupiter: 'expansion', Saturn: 'structure', Uranus: 'disruption',
+  Neptune: 'imagination', Pluto: 'depth',
+};
+const ASPECT_GEOMETRY = {
+  conjunction: 'in the same degree of the zodiac',
+  opposition: 'directly across the wheel',
+  square: 'at right angles',
+  trine: 'a third of the circle apart',
+  sextile: 'a sixth of the circle apart',
+};
+const ASPECT_SENSE = {
+  conjunction: [
+    'The tradition stops reading a conjunction as two things. It is one appetite with two names, and it moves together or not at all.',
+    'Two bodies in the same degree are not read as neighbours but as a merger: whatever one wants, the other is already funding.',
+    'A conjunction is the least negotiable aspect in the scheme — no distance to argue across, so the pair arrives as a single instinct.',
+  ],
+  opposition: [
+    'An opposition is the tradition’s tug of war. Both ends are real, and the work is holding them at once rather than picking a winner.',
+    'Across the wheel, each body sees the other in full. The old reading is not conflict so much as permanent mutual visibility.',
+    'An opposition puts two needs on opposite shores of the same water. Neither drowns; neither gets the whole beach.',
+  ],
+  square: [
+    'A square is friction that produces motion — the aspect the tradition credits with building capability precisely by refusing to be comfortable.',
+    'Right angles are where the scheme puts its grit. A square asks two functions to work in a mode neither would have chosen.',
+    'The old texts treat a square as the aspect you feel earliest and thank latest: obstruction first, competence afterwards.',
+  ],
+  trine: [
+    'A trine is an open channel. The two cooperate without being asked, which is exactly why it is easy to spend and easy to take for granted.',
+    'A third of the circle is the tradition’s friendliest distance — same element, shared assumptions, no translation required.',
+    'Trines are read as inheritance rather than achievement: the ease is genuine, and nothing about it was earned.',
+  ],
+  sextile: [
+    'A sextile is an offer rather than a given: available when it is reached for, quiet when it is not.',
+    'The scheme reads a sextile as a door left unlocked. Useful, and entirely dependent on someone walking through it.',
+    'A sixth of the circle is close enough for cooperation and far enough that it stays optional.',
+  ],
+};
+const DIGNITY_GLOSS = {
+  domicile: 'the planet in its own sign, running on home rules',
+  exaltation: 'the tradition’s honoured-guest placement, working at its best',
+  detriment: 'the planet opposite its home, working against the grain',
+  fall: 'the tradition’s uphill placement, strength earned rather than given',
+};
+const ELEMENT_SENSE = {
+  fire: [
+    'Fire weights a chart toward initiative — starting, asserting, spending energy to find out what happens.',
+    'A fire emphasis is read as appetite for the first move, with information gathered by doing rather than before doing.',
+    'Fire signs carry the scheme’s forward pressure: heat applied early, patience treated as a later skill.',
+  ],
+  earth: [
+    'Earth weights a chart toward the material and the durable — what can be built, kept, and relied on.',
+    'An earth emphasis reads as trust in the tangible: the plan matters less than whether the thing stands up.',
+    'Earth signs hold the scheme’s slow end, where results are measured in what survives rather than what starts.',
+  ],
+  air: [
+    'Air weights a chart toward language and pattern — the impulse to name a thing before deciding how to feel about it.',
+    'An air emphasis is read as distance for the sake of clarity: the idea gets examined before it gets adopted.',
+    'Air signs carry exchange in the scheme — comparison, argument, the sentence that makes the situation legible.',
+  ],
+  water: [
+    'Water weights a chart toward the felt and the remembered — information that arrives as atmosphere before it arrives as words.',
+    'A water emphasis reads as porousness: the room is registered whole, long before it is analysed in parts.',
+    'Water signs hold memory in the scheme, where nothing is quite finished and little is genuinely forgotten.',
+  ],
+};
+const MODALITY_SENSE = {
+  cardinal: [
+    'Cardinal signs open the seasons, and a cardinal-heavy chart is read as one that starts things.',
+    'The four cardinal signs sit at the solstices and equinoxes — the scheme’s ignition points, and this chart is weighted to them.',
+    'Cardinal weight is read as initiative: the instinct to be the reason something began.',
+  ],
+  fixed: [
+    'Fixed signs hold the middle of their seasons, and a fixed-heavy chart is read as one that consolidates and does not easily let go.',
+    'The fixed signs are the scheme’s ballast — mid-season, fully committed, expensive to turn.',
+    'Fixed weight is read as endurance, with the same machinery producing both loyalty and stubbornness.',
+  ],
+  mutable: [
+    'Mutable signs end their seasons, and a mutable-heavy chart is read as one built for adaptation and hand-off rather than for standing still.',
+    'The mutable signs sit where one season is already becoming the next — the scheme’s translators.',
+    'Mutable weight is read as flexibility, and the old texts are frank that its cost is scatter.',
+  ],
+};
+const SIGN_NAMES = {
+  aries: 'Aries', taurus: 'Taurus', gemini: 'Gemini', cancer: 'Cancer',
+  leo: 'Leo', virgo: 'Virgo', libra: 'Libra', scorpio: 'Scorpio',
+  sagittarius: 'Sagittarius', capricorn: 'Capricorn', aquarius: 'Aquarius', pisces: 'Pisces',
+};
+const ELEMENT = {
+  aries: 'fire', leo: 'fire', sagittarius: 'fire',
+  taurus: 'earth', virgo: 'earth', capricorn: 'earth',
+  gemini: 'air', libra: 'air', aquarius: 'air',
+  cancer: 'water', scorpio: 'water', pisces: 'water',
+};
+const MODALITY = {
+  aries: 'cardinal', cancer: 'cardinal', libra: 'cardinal', capricorn: 'cardinal',
+  taurus: 'fixed', leo: 'fixed', scorpio: 'fixed', aquarius: 'fixed',
+  gemini: 'mutable', virgo: 'mutable', sagittarius: 'mutable', pisces: 'mutable',
+};
+/** Triplicity decans with traditional rulers — the rule src/lib/birthdays.ts uses. */
+const ELEMENT_ORDER = {
+  fire: ['aries', 'leo', 'sagittarius'],
+  earth: ['taurus', 'virgo', 'capricorn'],
+  air: ['gemini', 'libra', 'aquarius'],
+  water: ['cancer', 'scorpio', 'pisces'],
+};
+const CLASSIC_RULER = {
+  aries: 'Mars', taurus: 'Venus', gemini: 'Mercury', cancer: 'the Moon',
+  leo: 'the Sun', virgo: 'Mercury', libra: 'Venus', scorpio: 'Mars',
+  sagittarius: 'Jupiter', capricorn: 'Saturn', aquarius: 'Saturn', pisces: 'Jupiter',
+};
+const ORDINAL = ['first', 'second', 'third'];
+const MONTHS = ['january', 'february', 'march', 'april', 'may', 'june',
+  'july', 'august', 'september', 'october', 'november', 'december'];
+const MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June',
+  'July', 'August', 'September', 'October', 'November', 'December'];
+
+function decanOf(signSlug, degree) {
+  const index = Math.min(2, Math.floor(degree / 10));
+  const sequence = ELEMENT_ORDER[ELEMENT[signSlug]];
+  const position = sequence.indexOf(signSlug);
+  return {
+    ordinal: ORDINAL[index],
+    span: `${index * 10}°–${(index + 1) * 10}°`,
+    ruler: CLASSIC_RULER[sequence[(position + index) % 3]],
+  };
+}
+
+/**
+ * Deterministic per-page selector. Each call site passes its own salt, so
+ * two pages that happen to share one fact still differ everywhere else —
+ * the frames are decorrelated rather than moving together.
+ */
+function pick(list, slug, salt) {
+  let hash = 2166136261;
+  for (const character of `${slug}:${salt}`) {
+    hash ^= character.codePointAt(0);
+    hash = Math.imul(hash, 16777619) >>> 0;
+  }
+  return list[hash % list.length];
+}
+
+const deg = (value) => `${value.toFixed(1)}°`;
+const bodyLabel = (name) => (name === 'Sun' || name === 'Moon' ? `the ${name}` : name);
+const capitalise = (text) => text.charAt(0).toUpperCase() + text.slice(1);
+const WORD_NUMBER = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'];
+const spell = (value) => WORD_NUMBER[value] ?? String(value);
+
+function identityLine(evidence, record, candidate) {
+  // Disciplines are an editorial selection *from* this person's sourced
+  // P106 claims — never invented. validate-pilot.mjs re-checks each one
+  // against the evidence record.
+  const disciplines = candidate.disciplines ?? evidence.occupations.slice(0, 1).map((item) => item.label);
+  const country = evidence.birthPlace?.country?.label ?? null;
+  const born = record.gregorianDate.slice(0, 4);
+  const died = evidence.death?.time?.slice(1, 5) ?? null;
+  const years = died ? `${born}–${died}` : `born ${born}`;
+  const label = disciplines.length > 1
+    ? `${capitalise(disciplines[0])} and ${disciplines.slice(1).join(' and ')}`
+    : capitalise(disciplines[0]);
+  return [label, country, years]
+    .filter(Boolean)
+    .join(' · ');
+}
+
+/* ── The lede: one leading fact, chosen by a fixed priority ────────── */
+function lede(record, slug) {
+  const { patterns, placements, aspectsStableAcrossCivilDay: aspects } = record;
+  const stellium = patterns.stelliums.sort((a, b) => b.count - a.count)[0];
+  const luminaryDignity = placements.find((placement) => (
+    (placement.body === 'Sun' || placement.body === 'Moon')
+    && (placement.dignity === 'domicile' || placement.dignity === 'exaltation')
+    && placement.stableAcrossDay
+  ));
+  const tight = aspects.find((aspect) => aspect.orb < 1
+    && ['Sun', 'Mercury', 'Venus', 'Mars'].includes(aspect.a)
+    && aspect.b !== 'Moon');
+  const dominantElement = Object.entries(patterns.elements).sort((a, b) => b[1] - a[1])[0];
+  const dominantModality = Object.entries(patterns.modalities).sort((a, b) => b[1] - a[1])[0];
+
+  if (stellium && stellium.count >= 4) {
+    const bodies = placements.filter((placement) => placement.sign === stellium.sign)
+      .map((placement) => bodyLabel(placement.body));
+    return {
+      fact: `stellium:${stellium.sign}:${stellium.count}`,
+      text: `${capitalise(spell(stellium.count))} of the ten bodies stand in ${SIGN_NAMES[stellium.sign]} — ${bodies.slice(0, -1).join(', ')} and ${bodies.at(-1)}. A cluster that size stops being one voice among ten. It becomes the section the rest of the chart plays around.`,
+    };
+  }
+  if (luminaryDignity) {
+    return {
+      fact: `dignity:${luminaryDignity.body}:${luminaryDignity.dignity}`,
+      text: `${capitalise(bodyLabel(luminaryDignity.body))} stands at ${deg(luminaryDignity.degree)} ${luminaryDignity.signName}, in ${luminaryDignity.dignity} — ${DIGNITY_GLOSS[luminaryDignity.dignity]}. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.`,
+    };
+  }
+  if (tight) {
+    return {
+      fact: `aspect:${tight.a}:${tight.b}:${tight.type}`,
+      text: `${capitalise(bodyLabel(tight.a))} and ${bodyLabel(tight.b)} sit ${deg(tight.orb)} from an exact ${tight.type} — near enough that the tradition reads ${SHORT_FUNCTION[tight.a]} and ${SHORT_FUNCTION[tight.b]} as a single working part. ${pick(ASPECT_SENSE[tight.type], slug, 'lede-aspect')}`,
+    };
+  }
+  if (dominantElement[1] >= 5) {
+    return {
+      fact: `element:${dominantElement[0]}:${dominantElement[1]}`,
+      text: `${capitalise(spell(dominantElement[1]))} of the ten bodies fall in ${dominantElement[0]} signs — half the chart or more in one temperament. ${pick(ELEMENT_SENSE[dominantElement[0]], slug, 'lede-element')}`,
+    };
+  }
+  return {
+    fact: `modality:${dominantModality[0]}:${dominantModality[1]}`,
+    text: `${capitalise(spell(dominantModality[1]))} of the ten bodies fall in ${dominantModality[0]} signs, the widest single weighting in the chart. ${pick(MODALITY_SENSE[dominantModality[0]], slug, 'lede-modality')}`,
+  };
+}
+
+/* ── Sun block ─────────────────────────────────────────────────────── */
+function sunBlock(record, slug) {
+  const sun = record.placements.find((placement) => placement.body === 'Sun');
+  const decan = decanOf(sun.sign, sun.degree);
+  const element = ELEMENT[sun.sign];
+  const modality = MODALITY[sun.sign];
+  const frames = [
+    `The Sun sits at ${deg(sun.degree)} ${sun.signName} — the ${decan.ordinal} decan, ${decan.span}, which the tradition sub-rules by ${decan.ruler}. Degrees matter more than the sign label here: two people born a fortnight apart share ${sun.signName} and share almost nothing else about where the Sun actually stood.`,
+    `At noon on that date the Sun stood at ${deg(sun.degree)} ${sun.signName}, inside the ${decan.ordinal} decan (${decan.span}), whose traditional sub-ruler is ${decan.ruler}. The decan is the older, finer division — it is what the sign looks like once you stop rounding it to thirty degrees.`,
+    `The Sun's exact place is ${deg(sun.degree)} ${sun.signName}. That falls in the ${decan.ordinal} decan, ${decan.span}, sub-ruled by ${decan.ruler} in the classical scheme — a ${element} sign read through a ${modality} season.`,
+  ];
+  return {
+    key: 'sun',
+    title: 'Where the Sun actually stood',
+    facts: [`sun-degree:${sun.degree.toFixed(2)}`, `decan:${sun.sign}:${decan.ordinal}`],
+    text: pick(frames, slug, 'sun'),
+  };
+}
+
+/* ── Geometry block: the two or three tightest stable aspects ──────── */
+function geometryBlock(record, slug) {
+  const aspects = record.aspectsStableAcrossCivilDay
+    .filter((aspect) => aspect.a !== 'Moon' && aspect.b !== 'Moon')
+    .slice(0, 3);
+  if (aspects.length === 0) return null;
+  const [first, ...rest] = aspects;
+  const opening = pick([
+    `The tightest geometry in the chart puts ${bodyLabel(first.a)} ${ASPECT_GEOMETRY[first.type]} from ${bodyLabel(first.b)}, ${deg(first.orb)} off exact.`,
+    `${capitalise(bodyLabel(first.a))} and ${bodyLabel(first.b)} hold the closest angle here — a ${first.type}, ${deg(first.orb)} wide.`,
+    `Closest first: ${bodyLabel(first.a)} to ${bodyLabel(first.b)}, a ${first.type} with ${deg(first.orb)} of slack.`,
+  ], slug, 'geometry-open');
+  const tail = rest.length > 0
+    ? ` Behind it, ${rest.map((aspect) => `${bodyLabel(aspect.a)} ${aspect.type} ${bodyLabel(aspect.b)} at ${deg(aspect.orb)}`).join(', and ')} — both still well inside the orbs this site uses.`
+    : '';
+  return {
+    key: 'geometry',
+    title: 'The angles that hold',
+    facts: aspects.map((aspect) => `aspect:${aspect.a}:${aspect.b}:${aspect.type}:${aspect.orb}`),
+    text: `${opening} ${pick(ASPECT_SENSE[first.type], slug, 'geometry-sense')}${tail} ${pick([
+      'Every angle named here holds for the whole of that day at the birthplace, so an unknown hour cannot take it away.',
+      'These angles were checked at both ends of that civil day and survive either way, which is why an unrecorded hour does not disturb them.',
+      'All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down.',
+    ], slug, 'geometry-tail')}`,
+  };
+}
+
+/* ── Dignity block ─────────────────────────────────────────────────── */
+function dignityBlock(record, slug) {
+  const dignified = record.placements.filter((placement) => placement.dignity && placement.stableAcrossDay);
+  if (dignified.length === 0) {
+    return {
+      key: 'dignity',
+      title: 'The classical map',
+      facts: ['dignity:none'],
+      text: pick([
+        'None of the seven classical planets falls in a sign the old scheme marks as strong or stretched. Worth saying plainly rather than leaving out: there is no ready-made verdict from the dignity table here, and the chart’s weight sits in its angles instead.',
+        'The dignity table has nothing to say about this chart. All seven classical planets sit in signs it treats as neutral, so the reading rests entirely on placement and angle.',
+        'No planet here is at home, exalted, in detriment, or in fall. That silence from the oldest layer of the scheme is itself a result, and it moves the weight of the reading onto the geometry.',
+      ], slug, 'dignity-none'),
+    };
+  }
+  // A condition is glossed on first mention only; repeating the same
+  // clause four times is how a template announces itself as a template.
+  const glossed = new Set();
+  const lines = dignified.map((placement) => {
+    const first = !glossed.has(placement.dignity);
+    glossed.add(placement.dignity);
+    return `${bodyLabel(placement.body)} in ${placement.signName} at ${deg(placement.degree)} is in ${placement.dignity}${first ? ` — ${DIGNITY_GLOSS[placement.dignity]}` : ''}`;
+  });
+  return {
+    key: 'dignity',
+    title: 'The classical map',
+    facts: dignified.map((placement) => `dignity:${placement.body}:${placement.dignity}`),
+    text: `${pick([
+      `The dignity table, which predates the outer planets and only ever spoke for seven, marks ${dignified.length === 1 ? 'one placement' : `${spell(dignified.length)} placements`} here.`,
+      `Of the seven planets the classical scheme judges, ${dignified.length === 1 ? 'one sits' : `${spell(dignified.length)} sit`} in a sign it has an opinion about.`,
+      `The oldest layer of the scheme — seven planets, four conditions — flags ${dignified.length === 1 ? 'a single placement' : `${spell(dignified.length)} placements`} in this chart.`,
+    ], slug, 'dignity-open')} ${capitalise(lines.join('; '))}. ${pick([
+      'Dignity is a statement about conditions, not about worth.',
+      'None of these labels is a verdict on a person; they describe how a function is situated, nothing more.',
+      'The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished.',
+    ], slug, 'dignity-close')}`,
+  };
+}
+
+/* ── Shape block ───────────────────────────────────────────────────── */
+function shapeBlock(record, slug) {
+  const { elements, modalities, retrograde } = record.patterns;
+  const orderedElements = Object.entries(elements).sort((a, b) => b[1] - a[1]);
+  const orderedModalities = Object.entries(modalities).sort((a, b) => b[1] - a[1]);
+  const missing = ['fire', 'earth', 'air', 'water'].filter((element) => !elements[element]);
+  const retroLine = retrograde.length === 0
+    ? ` ${pick([
+      'Nothing was retrograde that day, which is less common than it sounds.',
+      'Every body was moving forward that day — no apparent reversals anywhere in the chart.',
+      'Not one planet was retrograde, so the whole chart reads in direct motion.',
+    ], slug, 'retro-none')}`
+    : ` ${retrograde.length === 1 ? `${bodyLabel(retrograde[0])} was` : `${retrograde.map(bodyLabel).slice(0, -1).join(', ')} and ${bodyLabel(retrograde.at(-1))} were`} retrograde — ${pick([
+      'apparent backward motion from where the Earth sits, which the tradition reads as a function turned inward before it is turned out.',
+      'the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases.',
+      'motion that reverses only from this vantage point, and which the old reading treats as delay used for revision.',
+    ], slug, 'retro-some')}`;
+  const missingLine = missing.length > 0
+    ? ` No body at all in ${missing.join(' or ')} — an absence the tradition treats as information, not as a defect.`
+    : '';
+  const frames = [
+    `By element the ten bodies divide ${orderedElements.map(([name, count]) => `${count} ${name}`).join(', ')}; by modality, ${orderedModalities.map(([name, count]) => `${count} ${name}`).join(', ')}.`,
+    `The balance sheet: ${orderedElements.map(([name, count]) => `${name} ${count}`).join(', ')} across the elements, and ${orderedModalities.map(([name, count]) => `${name} ${count}`).join(', ')} across the modalities.`,
+    `Counted by element the chart runs ${orderedElements.map(([name, count]) => `${count} ${name}`).join(', ')}, and by modality ${orderedModalities.map(([name, count]) => `${count} ${name}`).join(', ')}.`,
+  ];
+  return {
+    key: 'shape',
+    title: 'The shape of the whole',
+    facts: [
+      `elements:${orderedElements.map(([name, count]) => `${name}${count}`).join('-')}`,
+      `modalities:${orderedModalities.map(([name, count]) => `${name}${count}`).join('-')}`,
+      `retrograde:${retrograde.length}`,
+    ],
+    text: `${pick(frames, slug, 'shape')} ${pick(ELEMENT_SENSE[orderedElements[0][0]], slug, 'shape-element')}${missingLine}${retroLine}`,
+  };
+}
+
+/* ── Moon block: stable, or the uncertain-Moon state ───────────────── */
+function moonBlock(record, slug) {
+  const moon = record.placements.find((placement) => placement.body === 'Moon');
+  const band = record.unknownTimeErrorBandDegrees.Moon;
+  if (record.moon.uncertain) {
+    return {
+      key: 'moon',
+      title: 'The Moon is genuinely open',
+      facts: [`moon-uncertain:${record.moon.signAtCivilDayStart}:${record.moon.signAtCivilDayEnd}`],
+      uncertain: true,
+      text: `The Moon crossed from ${SIGN_NAMES[record.moon.signAtCivilDayStart]} into ${SIGN_NAMES[record.moon.signAtCivilDayEnd]} during that day at the birthplace, travelling ${deg(band)} between one midnight and the next. ${pick([
+        'Without a recorded hour there is no honest way to say which side it was on, so this reading does not say. The Moon sign is a real question here, not a rounding error, and it needs a birth time nobody has published.',
+        'Which of the two it was depends entirely on the hour, and the hour is not recorded. Rather than pick the likelier half, the reading leaves the Moon open.',
+        'A birth time would settle it in a second; there isn’t one. So the Moon stays unnamed here — the alternative is a guess wearing the clothes of a fact.',
+      ], slug, 'moon-uncertain')}`,
+    };
+  }
+  return {
+    key: 'moon',
+    title: 'The Moon, and how far it can move',
+    facts: [`moon-sign:${moon.sign}`, `moon-band:${band.toFixed(1)}`],
+    uncertain: false,
+    text: `The Moon stayed in ${moon.signName} for the whole of that day at the birthplace, covering ${deg(band)} between midnight and midnight. ${pick([
+      'Fast enough that its degree is approximate, slow enough that its sign is not in doubt.',
+      'That is quick enough to make the exact degree a neighbourhood rather than an address, and slow enough to leave the sign settled.',
+      'The sign survives the missing hour; the degree does not, and is given as a reference rather than a fact.',
+    ], slug, 'moon-stable')} At the noon reference it stands at ${deg(moon.degree)}.`,
+  };
+}
+
+/* ── Assembly ──────────────────────────────────────────────────────── */
+const candidates = JSON.parse(await readFile(join(PILOT, 'candidates.json'), 'utf8'))
+  .filter((candidate) => candidate.role === 'pilot');
+await mkdir(join(PILOT, 'copy'), { recursive: true });
+
+const pages = [];
+const bySign = {};
+for (const candidate of candidates) {
+  const record = JSON.parse(await readFile(join(PILOT, 'computed', `${candidate.slug}.json`), 'utf8'));
+  bySign[record.sun.sign] = bySign[record.sun.sign] ?? [];
+  bySign[record.sun.sign].push(candidate.slug);
+}
+
+for (const candidate of candidates) {
+  const record = JSON.parse(await readFile(join(PILOT, 'computed', `${candidate.slug}.json`), 'utf8'));
+  const evidence = JSON.parse(await readFile(join(PILOT, 'evidence', `${candidate.slug}.json`), 'utf8'));
+  const opening = lede(record, candidate.slug);
+  const blocks = [
+    sunBlock(record, candidate.slug),
+    geometryBlock(record, candidate.slug),
+    dignityBlock(record, candidate.slug),
+    shapeBlock(record, candidate.slug),
+    moonBlock(record, candidate.slug),
+  ].filter(Boolean);
+
+  const month = Number(record.gregorianDate.slice(5, 7));
+  const day = Number(record.gregorianDate.slice(8, 10));
+  const page = {
+    schema: 'zodiacs.phase5.copy.v1',
+    slug: candidate.slug,
+    qid: record.qid,
+    displayName: record.displayName,
+    identity: identityLine(evidence, record, candidate),
+    title: `${record.displayName}'s birth chart`,
+    metaDescription: `${record.displayName}'s chart, computed from a sourced birth date: Sun at ${deg(record.sun.degree)} ${record.sun.signName}. Birth time unknown, so no houses or rising sign.`,
+    lede: opening.text,
+    ledeFact: opening.fact,
+    blocks,
+    birthdayLink: {
+      href: `/birthday/${MONTHS[month - 1]}-${day}/`,
+      label: `Everyone born on ${MONTH_NAMES[month - 1]} ${day}`,
+    },
+    signLink: { href: `/${record.sun.sign}/`, label: `The ${record.sun.signName} guide` },
+    substantiveFacts: [opening.fact, ...blocks.flatMap((block) => block.facts)],
+  };
+  const original = [page.lede, ...blocks.map((block) => block.text)].join('\n\n');
+  page.measurements = {
+    originalWords: original.trim().split(/\s+/u).length,
+    substantiveStatements: new Set(page.substantiveFacts).size,
+    blocks: blocks.length,
+  };
+  await writeFile(join(PILOT, 'copy', `${candidate.slug}.json`), `${JSON.stringify(page, null, 2)}\n`, 'utf8');
+  pages.push(page);
+}
+
+/* ── Cross-page similarity, using the repository's own metric ──────── */
+function normalisedWords(source) {
+  return source.replace(/[^a-z0-9\s]/gi, ' ').toLowerCase().split(/\s+/u).filter((word) => word.length > 2);
+}
+function shingles(source, width = 5) {
+  const words = normalisedWords(source);
+  return new Set(words.slice(0, Math.max(0, words.length - width + 1))
+    .map((_, index) => words.slice(index, index + width).join(' ')));
+}
+function jaccard(left, right) {
+  let intersection = 0;
+  for (const value of left) if (right.has(value)) intersection += 1;
+  const union = left.size + right.size - intersection;
+  return union === 0 ? 1 : intersection / union;
+}
+
+const grams = pages.map((page) => ({
+  slug: page.slug,
+  sign: JSON.parse('null') ?? null,
+  set: shingles([page.lede, ...page.blocks.map((block) => block.text)].join(' ')),
+}));
+let highest = { similarity: 0, pair: [] };
+const matrix = [];
+for (let i = 0; i < grams.length; i += 1) {
+  for (let j = i + 1; j < grams.length; j += 1) {
+    const similarity = jaccard(grams[i].set, grams[j].set);
+    matrix.push({ a: grams[i].slug, b: grams[j].slug, similarity: Number(similarity.toFixed(4)) });
+    if (similarity > highest.similarity) highest = { similarity, pair: [grams[i].slug, grams[j].slug] };
+  }
+}
+matrix.sort((a, b) => b.similarity - a.similarity);
+
+const words = pages.map((page) => page.measurements.originalWords);
+const statements = pages.map((page) => page.measurements.substantiveStatements);
+const report = {
+  schema: 'zodiacs.phase5.depth-report.v1',
+  metric: '5-word shingle Jaccard similarity, the metric scripts/check-programmatic-uniqueness.mjs already applies to the 78 compatibility pages',
+  pages: pages.length,
+  originalWords: { min: Math.min(...words), max: Math.max(...words), median: words.sort((a, b) => a - b)[Math.floor(words.length / 2)] },
+  substantiveStatements: { min: Math.min(...statements), max: Math.max(...statements) },
+  highestSimilarity: { pair: highest.pair, similarity: Number(highest.similarity.toFixed(4)) },
+  topPairs: matrix.slice(0, 10),
+};
+await writeFile(join(PILOT, 'depth-report.json'), `${JSON.stringify(report, null, 2)}\n`, 'utf8');
+
+console.log(`Composed ${pages.length} pages.`);
+console.log(`Original words: min ${report.originalWords.min}, median ${report.originalWords.median}, max ${report.originalWords.max}`);
+console.log(`Substantive statements: min ${report.substantiveStatements.min}, max ${report.substantiveStatements.max}`);
+console.log(`Highest cross-page similarity: ${report.highestSimilarity.similarity} (${report.highestSimilarity.pair.join(' <> ')})`);
+console.table(report.topPairs.slice(0, 5));

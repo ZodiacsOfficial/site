@@ -1,0 +1,89 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "wangari-maathai",
+  "qid": "Q46795",
+  "displayName": "Wangari Maathai",
+  "identity": "Biologist and environmentalist · Kenya · 1940–2011",
+  "title": "Wangari Maathai's birth chart",
+  "metaDescription": "Wangari Maathai's chart, computed from a sourced birth date: Sun at 11.5° Aries. Birth time unknown, so no houses or rising sign.",
+  "lede": "Four of the ten bodies stand in Taurus — Venus, Mars, Saturn and Uranus. A cluster that size stops being one voice among ten. It becomes the section the rest of the chart plays around.",
+  "ledeFact": "stellium:taurus:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:11.50",
+        "decan:aries:second"
+      ],
+      "text": "The Sun sits at 11.5° Aries — the second decan, 10°–20°, which the tradition sub-rules by the Sun. Degrees matter more than the sign label here: two people born a fortnight apart share Aries and share almost nothing else about where the Sun actually stood."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Saturn:Pluto:square:0.79",
+        "aspect:Mars:Pluto:sextile:0.91",
+        "aspect:Mercury:Uranus:sextile:2.4"
+      ],
+      "text": "Saturn and Pluto hold the closest angle here — a square, 0.8° wide. The old texts treat a square as the aspect you feel earliest and thank latest: obstruction first, competence afterwards. Behind it, Mars sextile Pluto at 0.9°, and Mercury sextile Uranus at 2.4° — both still well inside the orbs this site uses. Every angle named here holds for the whole of that day at the birthplace, so an unknown hour cannot take it away."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:exaltation",
+        "dignity:Mercury:fall",
+        "dignity:Venus:domicile"
+      ],
+      "text": "The dignity table, which predates the outer planets and only ever spoke for seven, marks three placements here. The Sun in Aries at 11.5° is in exaltation — the tradition’s honoured-guest placement, working at its best; Mercury in Pisces at 17.3° is in fall — the tradition’s uphill placement, strength earned rather than given; Venus in Taurus at 26.4° is in domicile — the planet in its own sign, running on home rules. The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth5-fire3-air1-water1",
+        "modalities:fixed6-cardinal2-mutable2",
+        "retrograde:2"
+      ],
+      "text": "The balance sheet: earth 5, fire 3, air 1, water 1 across the elements, and fixed 6, cardinal 2, mutable 2 across the modalities. Earth signs hold the scheme’s slow end, where results are measured in what survives rather than what starts. Neptune and Pluto were retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:capricorn:aquarius"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Capricorn into Aquarius during that day at the birthplace, travelling 12.2° between one midnight and the next. Which of the two it was depends entirely on the hour, and the hour is not recorded. Rather than pick the likelier half, the reading leaves the Moon open."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/april-1/",
+    "label": "Everyone born on April 1"
+  },
+  "signLink": {
+    "href": "/aries/",
+    "label": "The Aries guide"
+  },
+  "substantiveFacts": [
+    "stellium:taurus:4",
+    "sun-degree:11.50",
+    "decan:aries:second",
+    "aspect:Saturn:Pluto:square:0.79",
+    "aspect:Mars:Pluto:sextile:0.91",
+    "aspect:Mercury:Uranus:sextile:2.4",
+    "dignity:Sun:exaltation",
+    "dignity:Mercury:fall",
+    "dignity:Venus:domicile",
+    "elements:earth5-fire3-air1-water1",
+    "modalities:fixed6-cardinal2-mutable2",
+    "retrograde:2",
+    "moon-uncertain:capricorn:aquarius"
+  ],
+  "measurements": {
+    "originalWords": 369,
+    "substantiveStatements": 13,
+    "blocks": 5
+  }
+}

@@ -1,0 +1,132 @@
+{
+  "schema": "zodiacs.phase5.evidence.v1",
+  "slug": "ida-b-wells",
+  "qid": "Q289428",
+  "displayName": "Ida B. Wells",
+  "wikidataLabel": "Ida B. Wells",
+  "wikidataDescription": "American journalist and civil rights activist (1862–1931)",
+  "retrievedAtUtc": "2026-07-25T17:05:12.504Z",
+  "sources": {
+    "wikidata": {
+      "entityUrl": "https://www.wikidata.org/wiki/Q289428",
+      "propertiesUsed": [
+        "P569",
+        "P19",
+        "P625",
+        "P106",
+        "P18",
+        "P570",
+        "P17",
+        "P131"
+      ],
+      "lastrevid": 2521472371
+    },
+    "wikipedia": {
+      "language": "en",
+      "title": "Ida B. Wells",
+      "articleUrl": "https://en.wikipedia.org/wiki/Ida_B._Wells",
+      "pageId": 394117,
+      "revisionId": 1363286489,
+      "revisionTimestamp": "2026-07-09T06:31:26Z"
+    }
+  },
+  "birth": {
+    "claimCount": 1,
+    "distinctDayPrecisionValues": [
+      "+1862-07-16T00:00:00Z|proleptic-gregorian"
+    ],
+    "allValues": [
+      {
+        "time": "+1862-07-16T00:00:00Z",
+        "precision": 11,
+        "calendar": "proleptic-gregorian",
+        "rank": "normal"
+      }
+    ],
+    "time": "+1862-07-16T00:00:00Z",
+    "precision": "day",
+    "calendarModel": "proleptic-gregorian",
+    "timeOfDay": null,
+    "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+  },
+  "death": {
+    "time": "+1931-03-25T00:00:00Z",
+    "precision": "day",
+    "calendarModel": "proleptic-gregorian"
+  },
+  "living": false,
+  "birthPlace": {
+    "entity": "Q2273202",
+    "label": "Holly Springs",
+    "entityUrl": "https://www.wikidata.org/wiki/Q2273202",
+    "country": {
+      "entity": "Q30",
+      "label": "United States"
+    },
+    "claimCount": 1,
+    "coordinates": {
+      "sourceEntity": "Q2273202",
+      "sourceEntityLabel": "Holly Springs",
+      "latitude": 34.7733,
+      "longitude": -89.4464,
+      "precision": 0.0001,
+      "escalationSteps": 0
+    }
+  },
+  "occupations": [
+    {
+      "entity": "Q1930187",
+      "label": "journalist"
+    },
+    {
+      "entity": "Q2306091",
+      "label": "sociologist"
+    },
+    {
+      "entity": "Q27532437",
+      "label": "suffragist"
+    },
+    {
+      "entity": "Q36180",
+      "label": "writer"
+    },
+    {
+      "entity": "Q1476215",
+      "label": "human rights defender"
+    },
+    {
+      "entity": "Q96050759",
+      "label": "newspaperperson"
+    },
+    {
+      "entity": "Q1021386",
+      "label": "civil rights advocate"
+    },
+    {
+      "entity": "Q9379869",
+      "label": "lecturer"
+    },
+    {
+      "entity": "Q8359428",
+      "label": "social activist"
+    },
+    {
+      "entity": "Q33112378",
+      "label": "clubwoman"
+    }
+  ],
+  "portrait": {
+    "file": "File:Mary Garrity - Ida B. Wells-Barnett - Google Art Project - restoration crop.jpg",
+    "filePage": "https://commons.wikimedia.org/wiki/File:Mary%20Garrity%20-%20Ida%20B.%20Wells-Barnett%20-%20Google%20Art%20Project%20-%20restoration%20crop.jpg",
+    "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Mary_Garrity_-_Ida_B._Wells-Barnett_-_Google_Art_Project_-_restoration_crop.jpg",
+    "width": 2673,
+    "height": 3818,
+    "licenseShortName": "Public domain",
+    "licenseUrl": null,
+    "artist": "Adam Cuerden",
+    "credit": "Based on image originally from Google Arts & Culture — NAEMVZELXQV2iw",
+    "usageTerms": "Public domain",
+    "attributionRequired": "false",
+    "restrictions": ""
+  }
+}

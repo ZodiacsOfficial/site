@@ -1,0 +1,89 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "ada-lovelace",
+  "qid": "Q7259",
+  "displayName": "Ada Lovelace",
+  "identity": "Mathematician · United Kingdom · 1815–1852",
+  "title": "Ada Lovelace's birth chart",
+  "metaDescription": "Ada Lovelace's chart, computed from a sourced birth date: Sun at 17.6° Sagittarius. Birth time unknown, so no houses or rising sign.",
+  "lede": "Four of the ten bodies stand in Sagittarius — the Sun, Mercury, Uranus and Neptune. A cluster that size stops being one voice among ten. It becomes the section the rest of the chart plays around.",
+  "ledeFact": "stellium:sagittarius:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:17.63",
+        "decan:sagittarius:second"
+      ],
+      "text": "The Sun's exact place is 17.6° Sagittarius. That falls in the second decan, 10°–20°, sub-ruled by Mars in the classical scheme — a fire sign read through a mutable season."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Venus:Jupiter:conjunction:0.74",
+        "aspect:Saturn:Uranus:sextile:0.77",
+        "aspect:Mars:Neptune:trine:0.81"
+      ],
+      "text": "The tightest geometry in the chart puts Venus in the same degree of the zodiac from Jupiter, 0.7° off exact. Two bodies in the same degree are not read as neighbours but as a merger: whatever one wants, the other is already funding. Behind it, Saturn sextile Uranus at 0.8°, and Mars trine Neptune at 0.8° — both still well inside the orbs this site uses. Every angle named here holds for the whole of that day at the birthplace, so an unknown hour cannot take it away."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Venus:detriment",
+        "dignity:Mars:domicile",
+        "dignity:Saturn:domicile"
+      ],
+      "text": "Of the seven planets the classical scheme judges, three sit in a sign it has an opinion about. Venus in Scorpio at 1.5° is in detriment — the planet opposite its home, working against the grain; Mars in Aries at 20.4° is in domicile — the planet in its own sign, running on home rules; Saturn in Aquarius at 8.6° is in domicile. Dignity is a statement about conditions, not about worth."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:fire6-water3-air1",
+        "modalities:mutable5-fixed3-cardinal2",
+        "retrograde:0"
+      ],
+      "text": "By element the ten bodies divide 6 fire, 3 water, 1 air; by modality, 5 mutable, 3 fixed, 2 cardinal. Fire weights a chart toward initiative — starting, asserting, spending energy to find out what happens. No body at all in earth — an absence the tradition treats as information, not as a defect. Nothing was retrograde that day, which is less common than it sounds."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:pisces:aries"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Pisces into Aries during that day at the birthplace, travelling 12.1° between one midnight and the next. A birth time would settle it in a second; there isn’t one. So the Moon stays unnamed here — the alternative is a guess wearing the clothes of a fact."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/december-10/",
+    "label": "Everyone born on December 10"
+  },
+  "signLink": {
+    "href": "/sagittarius/",
+    "label": "The Sagittarius guide"
+  },
+  "substantiveFacts": [
+    "stellium:sagittarius:4",
+    "sun-degree:17.63",
+    "decan:sagittarius:second",
+    "aspect:Venus:Jupiter:conjunction:0.74",
+    "aspect:Saturn:Uranus:sextile:0.77",
+    "aspect:Mars:Neptune:trine:0.81",
+    "dignity:Venus:detriment",
+    "dignity:Mars:domicile",
+    "dignity:Saturn:domicile",
+    "elements:fire6-water3-air1",
+    "modalities:mutable5-fixed3-cardinal2",
+    "retrograde:0",
+    "moon-uncertain:pisces:aries"
+  ],
+  "measurements": {
+    "originalWords": 343,
+    "substantiveStatements": 13,
+    "blocks": 5
+  }
+}

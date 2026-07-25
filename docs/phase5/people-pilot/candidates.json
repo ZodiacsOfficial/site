@@ -1,0 +1,276 @@
+[
+  {
+    "slug": "vincent-van-gogh",
+    "enwiki": "Vincent van Gogh",
+    "displayName": "Vincent van Gogh",
+    "role": "pilot",
+    "intendedSign": "aries",
+    "note": "Painting · Netherlands · 19th century",
+    "disciplines": [
+      "painter",
+      "draftsperson"
+    ]
+  },
+  {
+    "slug": "wangari-maathai",
+    "enwiki": "Wangarĩ Maathai",
+    "displayName": "Wangari Maathai",
+    "role": "pilot",
+    "intendedSign": "aries",
+    "note": "Environmental science and civic organising · Kenya · 20th century",
+    "disciplines": [
+      "biologist",
+      "environmentalist"
+    ]
+  },
+  {
+    "slug": "rabindranath-tagore",
+    "enwiki": "Rabindranath Tagore",
+    "displayName": "Rabindranath Tagore",
+    "role": "pilot",
+    "intendedSign": "taurus",
+    "note": "Poetry and music · Bengal · 19th century",
+    "disciplines": [
+      "poet",
+      "composer"
+    ]
+  },
+  {
+    "slug": "ella-fitzgerald",
+    "enwiki": "Ella Fitzgerald",
+    "displayName": "Ella Fitzgerald",
+    "role": "pilot",
+    "intendedSign": "taurus",
+    "note": "Jazz singing · United States · 20th century",
+    "disciplines": [
+      "jazz musician",
+      "singer-songwriter"
+    ]
+  },
+  {
+    "slug": "walt-whitman",
+    "enwiki": "Walt Whitman",
+    "displayName": "Walt Whitman",
+    "role": "pilot",
+    "intendedSign": "gemini",
+    "note": "Poetry · United States · 19th century",
+    "disciplines": [
+      "poet",
+      "essayist"
+    ]
+  },
+  {
+    "slug": "chien-shiung-wu",
+    "enwiki": "Chien-Shiung Wu",
+    "displayName": "Chien-Shiung Wu",
+    "role": "pilot",
+    "intendedSign": "gemini",
+    "note": "Experimental physics · China and United States · 20th century",
+    "disciplines": [
+      "nuclear physicist"
+    ]
+  },
+  {
+    "slug": "ida-b-wells",
+    "enwiki": "Ida B. Wells",
+    "displayName": "Ida B. Wells",
+    "role": "pilot",
+    "intendedSign": "cancer",
+    "note": "Journalism and civic research · United States · 19th century",
+    "disciplines": [
+      "journalist",
+      "sociologist"
+    ]
+  },
+  {
+    "slug": "frida-kahlo",
+    "enwiki": "Frida Kahlo",
+    "displayName": "Frida Kahlo",
+    "role": "pilot",
+    "intendedSign": "cancer",
+    "note": "Painting · Mexico · 20th century",
+    "disciplines": [
+      "painter"
+    ]
+  },
+  {
+    "slug": "emily-bronte",
+    "enwiki": "Emily Brontë",
+    "displayName": "Emily Brontë",
+    "role": "pilot",
+    "intendedSign": "leo",
+    "note": "Novels and poetry · England · 19th century",
+    "disciplines": [
+      "novelist",
+      "poet"
+    ]
+  },
+  {
+    "slug": "rosalind-franklin",
+    "enwiki": "Rosalind Franklin",
+    "displayName": "Rosalind Franklin",
+    "role": "pilot",
+    "intendedSign": "leo",
+    "note": "X-ray crystallography · England · 20th century",
+    "disciplines": [
+      "crystallographer",
+      "chemist"
+    ]
+  },
+  {
+    "slug": "clara-schumann",
+    "enwiki": "Clara Schumann",
+    "displayName": "Clara Schumann",
+    "role": "pilot",
+    "intendedSign": "virgo",
+    "note": "Piano and composition · Saxony · 19th century",
+    "disciplines": [
+      "pianist",
+      "composer"
+    ]
+  },
+  {
+    "slug": "katherine-johnson",
+    "enwiki": "Katherine Johnson",
+    "displayName": "Katherine Johnson",
+    "role": "pilot",
+    "intendedSign": "virgo",
+    "note": "Orbital mathematics · United States · 20th century",
+    "disciplines": [
+      "mathematician"
+    ]
+  },
+  {
+    "slug": "mahatma-gandhi",
+    "enwiki": "Mahatma Gandhi",
+    "displayName": "Mohandas K. Gandhi",
+    "role": "pilot",
+    "intendedSign": "libra",
+    "note": "Law and civic organising · India · 19th century",
+    "disciplines": [
+      "barrister",
+      "political writer"
+    ]
+  },
+  {
+    "slug": "serena-williams",
+    "enwiki": "Serena Williams",
+    "displayName": "Serena Williams",
+    "role": "pilot",
+    "intendedSign": "libra",
+    "note": "Tennis · United States · 20th century · living",
+    "disciplines": [
+      "tennis player"
+    ]
+  },
+  {
+    "slug": "zaha-hadid",
+    "enwiki": "Zaha Hadid",
+    "displayName": "Zaha Hadid",
+    "role": "pilot",
+    "intendedSign": "scorpio",
+    "note": "Architecture · Iraq and United Kingdom · 20th century",
+    "disciplines": [
+      "architect"
+    ]
+  },
+  {
+    "slug": "ada-lovelace",
+    "enwiki": "Ada Lovelace",
+    "displayName": "Ada Lovelace",
+    "role": "pilot",
+    "intendedSign": "sagittarius",
+    "note": "Mathematics and early computing · England · 19th century",
+    "disciplines": [
+      "mathematician"
+    ]
+  },
+  {
+    "slug": "simone-de-beauvoir",
+    "enwiki": "Simone de Beauvoir",
+    "displayName": "Simone de Beauvoir",
+    "role": "pilot",
+    "intendedSign": "capricorn",
+    "note": "Philosophy and literature · France · 20th century",
+    "disciplines": [
+      "political philosopher",
+      "novelist"
+    ]
+  },
+  {
+    "slug": "rigoberta-menchu",
+    "enwiki": "Rigoberta Menchú",
+    "displayName": "Rigoberta Menchú",
+    "role": "pilot",
+    "intendedSign": "capricorn",
+    "note": "Indigenous rights advocacy · Guatemala · 20th century · living",
+    "disciplines": [
+      "human rights defender"
+    ]
+  },
+  {
+    "slug": "virginia-woolf",
+    "enwiki": "Virginia Woolf",
+    "displayName": "Virginia Woolf",
+    "role": "pilot",
+    "intendedSign": "aquarius",
+    "note": "Novels and essays · England · 19th century",
+    "disciplines": [
+      "novelist",
+      "essayist"
+    ]
+  },
+  {
+    "slug": "albert-einstein",
+    "enwiki": "Albert Einstein",
+    "displayName": "Albert Einstein",
+    "role": "pilot",
+    "intendedSign": "pisces",
+    "note": "Theoretical physics · Germany, Switzerland and United States · 19th century",
+    "disciplines": [
+      "theoretical physicist"
+    ]
+  },
+  {
+    "slug": "johann-sebastian-bach",
+    "enwiki": "Johann Sebastian Bach",
+    "displayName": "Johann Sebastian Bach",
+    "role": "screening",
+    "note": "Screened to test the Julian calendar-model rule"
+  },
+  {
+    "slug": "leo-tolstoy",
+    "enwiki": "Leo Tolstoy",
+    "displayName": "Leo Tolstoy",
+    "role": "screening",
+    "note": "Screened to test the Old Style / New Style rule"
+  },
+  {
+    "slug": "srinivasa-ramanujan",
+    "enwiki": "Srinivasa Ramanujan",
+    "displayName": "Srinivasa Ramanujan",
+    "role": "screening",
+    "note": "Screened to test the cusp-ingress rule"
+  },
+  {
+    "slug": "pele",
+    "enwiki": "Pelé",
+    "displayName": "Pelé",
+    "role": "screening",
+    "note": "Screened to test the cusp-ingress rule"
+  },
+  {
+    "slug": "ludwig-van-beethoven",
+    "enwiki": "Ludwig van Beethoven",
+    "displayName": "Ludwig van Beethoven",
+    "role": "screening",
+    "note": "Screened to test the date-precision rule"
+  },
+  {
+    "slug": "umm-kulthum",
+    "enwiki": "Umm Kulthum",
+    "displayName": "Umm Kulthum",
+    "role": "screening",
+    "note": "Screened to test the conflicting-evidence rule"
+  }
+]

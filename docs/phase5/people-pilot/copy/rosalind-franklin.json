@@ -1,0 +1,87 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "rosalind-franklin",
+  "qid": "Q7474",
+  "displayName": "Rosalind Franklin",
+  "identity": "Crystallographer and chemist · United Kingdom · 1920–1958",
+  "title": "Rosalind Franklin's birth chart",
+  "metaDescription": "Rosalind Franklin's chart, computed from a sourced birth date: Sun at 2.2° Leo. Birth time unknown, so no houses or rising sign.",
+  "lede": "Five of the ten bodies stand in Leo — the Sun, Mercury, Venus, Jupiter and Neptune. A cluster that size stops being one voice among ten. It becomes the section the rest of the chart plays around.",
+  "ledeFact": "stellium:leo:5",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:2.17",
+        "decan:leo:first"
+      ],
+      "text": "The Sun sits at 2.2° Leo — the first decan, 0°–10°, which the tradition sub-rules by the Sun. Degrees matter more than the sign label here: two people born a fortnight apart share Leo and share almost nothing else about where the Sun actually stood."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mercury:Mars:square:1.21",
+        "aspect:Mars:Pluto:trine:1.43",
+        "aspect:Mars:Uranus:trine:1.57"
+      ],
+      "text": "The tightest geometry in the chart puts Mercury at right angles from Mars, 1.2° off exact. A square is friction that produces motion — the aspect the tradition credits with building capability precisely by refusing to be comfortable. Behind it, Mars trine Pluto at 1.4°, and Mars trine Uranus at 1.6° — both still well inside the orbs this site uses. These angles were checked at both ends of that civil day and survive either way, which is why an unrecorded hour does not disturb them."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:domicile",
+        "dignity:Mars:domicile"
+      ],
+      "text": "The dignity table, which predates the outer planets and only ever spoke for seven, marks two placements here. The Sun in Leo at 2.2° is in domicile — the planet in its own sign, running on home rules; Mars in Scorpio at 6.5° is in domicile. None of these labels is a verdict on a person; they describe how a function is situated, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:fire6-water3-earth1",
+        "modalities:fixed6-mutable3-cardinal1",
+        "retrograde:2"
+      ],
+      "text": "The balance sheet: fire 6, water 3, earth 1 across the elements, and fixed 6, mutable 3, cardinal 1 across the modalities. A fire emphasis is read as appetite for the first move, with information gathered by doing rather than before doing. No body at all in air — an absence the tradition treats as information, not as a defect. Mercury and Uranus were retrograde — motion that reverses only from this vantage point, and which the old reading treats as delay used for revision."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:scorpio:sagittarius"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Scorpio into Sagittarius during that day at the birthplace, travelling 11.9° between one midnight and the next. Which of the two it was depends entirely on the hour, and the hour is not recorded. Rather than pick the likelier half, the reading leaves the Moon open."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/july-25/",
+    "label": "Everyone born on July 25"
+  },
+  "signLink": {
+    "href": "/leo/",
+    "label": "The Leo guide"
+  },
+  "substantiveFacts": [
+    "stellium:leo:5",
+    "sun-degree:2.17",
+    "decan:leo:first",
+    "aspect:Mercury:Mars:square:1.21",
+    "aspect:Mars:Pluto:trine:1.43",
+    "aspect:Mars:Uranus:trine:1.57",
+    "dignity:Sun:domicile",
+    "dignity:Mars:domicile",
+    "elements:fire6-water3-earth1",
+    "modalities:fixed6-mutable3-cardinal1",
+    "retrograde:2",
+    "moon-uncertain:scorpio:sagittarius"
+  ],
+  "measurements": {
+    "originalWords": 368,
+    "substantiveStatements": 12,
+    "blocks": 5
+  }
+}

@@ -1,0 +1,115 @@
+{
+  "schema": "zodiacs.phase5.evidence.v1",
+  "slug": "umm-kulthum",
+  "qid": "Q1110560",
+  "displayName": "Umm Kulthum",
+  "wikidataLabel": "Umm Kulthum",
+  "wikidataDescription": "Egyptian singer and actress (1904–1975)",
+  "retrievedAtUtc": "2026-07-25T17:05:12.504Z",
+  "sources": {
+    "wikidata": {
+      "entityUrl": "https://www.wikidata.org/wiki/Q1110560",
+      "propertiesUsed": [
+        "P569",
+        "P19",
+        "P625",
+        "P106",
+        "P18",
+        "P570",
+        "P17",
+        "P131"
+      ],
+      "lastrevid": 2516932207
+    },
+    "wikipedia": {
+      "language": "en",
+      "title": "Umm Kulthum",
+      "articleUrl": "https://en.wikipedia.org/wiki/Umm_Kulthum",
+      "pageId": 214221,
+      "revisionId": 1364900462,
+      "revisionTimestamp": "2026-07-19T04:21:04Z"
+    }
+  },
+  "birth": {
+    "claimCount": 2,
+    "distinctDayPrecisionValues": [
+      "+1898-12-31T00:00:00Z|proleptic-gregorian",
+      "+1904-05-04T00:00:00Z|proleptic-gregorian"
+    ],
+    "allValues": [
+      {
+        "time": "+1898-12-31T00:00:00Z",
+        "precision": 11,
+        "calendar": "proleptic-gregorian",
+        "rank": "normal"
+      },
+      {
+        "time": "+1904-05-04T00:00:00Z",
+        "precision": 11,
+        "calendar": "proleptic-gregorian",
+        "rank": "normal"
+      }
+    ],
+    "time": "+1898-12-31T00:00:00Z",
+    "precision": "day",
+    "calendarModel": "proleptic-gregorian",
+    "timeOfDay": null,
+    "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+  },
+  "death": {
+    "time": "+1975-02-03T00:00:00Z",
+    "precision": "day",
+    "calendarModel": "proleptic-gregorian"
+  },
+  "living": false,
+  "birthPlace": {
+    "entity": "Q12221870",
+    "label": "Tamayy Elzahayra",
+    "entityUrl": "https://www.wikidata.org/wiki/Q12221870",
+    "country": {
+      "entity": "Q79",
+      "label": "Egypt"
+    },
+    "claimCount": 1,
+    "coordinates": {
+      "sourceEntity": "Q12221870",
+      "sourceEntityLabel": "Tamayy Elzahayra",
+      "latitude": 30.909982,
+      "longitude": 31.470594,
+      "precision": 0.000001,
+      "escalationSteps": 0
+    }
+  },
+  "occupations": [
+    {
+      "entity": "Q177220",
+      "label": "singer"
+    },
+    {
+      "entity": "Q33999",
+      "label": "actor"
+    },
+    {
+      "entity": "Q10800557",
+      "label": "film actor"
+    },
+    {
+      "entity": "Q639669",
+      "label": "musician"
+    }
+  ],
+  "portrait": {
+    "file": "File:Umm Kulthum as Fatimah.jpg",
+    "filePage": "https://commons.wikimedia.org/wiki/File:Umm%20Kulthum%20as%20Fatimah.jpg",
+    "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Umm_Kulthum_as_Fatimah.jpg",
+    "width": 316,
+    "height": 437,
+    "licenseShortName": "Public domain",
+    "licenseUrl": null,
+    "artist": "Production company",
+    "credit": "https://m.imdb.com/title/tt0237233/mediaviewer/rm1088215554/",
+    "usageTerms": "Public domain",
+    "attributionRequired": "false",
+    "restrictions": ""
+  }
+}

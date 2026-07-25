@@ -1,0 +1,108 @@
+{
+  "schema": "zodiacs.phase5.evidence.v1",
+  "slug": "rigoberta-menchu",
+  "qid": "Q188620",
+  "displayName": "Rigoberta Menchú",
+  "wikidataLabel": "Rigoberta Menchú",
+  "wikidataDescription": "Guatemalan human rights activist",
+  "retrievedAtUtc": "2026-07-25T17:05:12.504Z",
+  "sources": {
+    "wikidata": {
+      "entityUrl": "https://www.wikidata.org/wiki/Q188620",
+      "propertiesUsed": [
+        "P569",
+        "P19",
+        "P625",
+        "P106",
+        "P18",
+        "P570",
+        "P17",
+        "P131"
+      ],
+      "lastrevid": 2515671615
+    },
+    "wikipedia": {
+      "language": "en",
+      "title": "Rigoberta Menchú",
+      "articleUrl": "https://en.wikipedia.org/wiki/Rigoberta_Mench%C3%BA",
+      "pageId": 191208,
+      "revisionId": 1365750062,
+      "revisionTimestamp": "2026-07-24T06:23:18Z"
+    }
+  },
+  "birth": {
+    "claimCount": 1,
+    "distinctDayPrecisionValues": [
+      "+1959-01-09T00:00:00Z|proleptic-gregorian"
+    ],
+    "allValues": [
+      {
+        "time": "+1959-01-09T00:00:00Z",
+        "precision": 11,
+        "calendar": "proleptic-gregorian",
+        "rank": "normal"
+      }
+    ],
+    "time": "+1959-01-09T00:00:00Z",
+    "precision": "day",
+    "calendarModel": "proleptic-gregorian",
+    "timeOfDay": null,
+    "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+  },
+  "death": null,
+  "living": true,
+  "birthPlace": {
+    "entity": "Q2963651",
+    "label": "Laj Chimel",
+    "entityUrl": "https://www.wikidata.org/wiki/Q2963651",
+    "country": {
+      "entity": "Q774",
+      "label": "Guatemala"
+    },
+    "claimCount": 1,
+    "coordinates": {
+      "sourceEntity": "Q2963651",
+      "sourceEntityLabel": "Laj Chimel",
+      "latitude": 15.5627,
+      "longitude": -90.0051,
+      "precision": 0.0001,
+      "escalationSteps": 0
+    }
+  },
+  "occupations": [
+    {
+      "entity": "Q82955",
+      "label": "politician"
+    },
+    {
+      "entity": "Q36180",
+      "label": "writer"
+    },
+    {
+      "entity": "Q18814623",
+      "label": "autobiographer"
+    },
+    {
+      "entity": "Q1476215",
+      "label": "human rights defender"
+    },
+    {
+      "entity": "Q1397808",
+      "label": "resistance fighter"
+    }
+  ],
+  "portrait": {
+    "file": "File:20240620 NP PRESIDENTE BERNARDO AREVALO Y KARIN HERRERA PARTICIPAN EN DIALOGO PREMIO NOBEL DE LA PAZ 054.jpg",
+    "filePage": "https://commons.wikimedia.org/wiki/File:20240620%20NP%20PRESIDENTE%20BERNARDO%20AREVALO%20Y%20KARIN%20HERRERA%20PARTICIPAN%20EN%20DIALOGO%20PREMIO%20NOBEL%20DE%20LA%20PAZ%20054.jpg",
+    "descriptionUrl": "https://commons.wikimedia.org/wiki/File:20240620_NP_PRESIDENTE_BERNARDO_AREVALO_Y_KARIN_HERRERA_PARTICIPAN_EN_DIALOGO_PREMIO_NOBEL_DE_LA_PAZ_054.jpg",
+    "width": 6720,
+    "height": 4480,
+    "licenseShortName": "Public domain",
+    "licenseUrl": null,
+    "artist": "Gobierno de Guatemala",
+    "credit": "https://www.flickr.com/photos/guatemalagob/53805436302/",
+    "usageTerms": "Public domain",
+    "attributionRequired": "false",
+    "restrictions": ""
+  }
+}

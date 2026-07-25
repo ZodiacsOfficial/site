@@ -1,0 +1,278 @@
+{
+  "schema": "zodiacs.phase5.computed.v1",
+  "slug": "ella-fitzgerald",
+  "qid": "Q1768",
+  "displayName": "Ella Fitzgerald",
+  "calendarModel": "proleptic-gregorian",
+  "storedDate": "1917-04-25",
+  "gregorianDate": "1917-04-25",
+  "displayedDate": "1917-04-25",
+  "birthdayCrossLinkKey": "1917-04-25",
+  "timeQuality": "unknown",
+  "computation": {
+    "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
+    "timeZone": "America/New_York",
+    "civilTime": "12:00",
+    "utcInstant": "1917-04-25T17:00:00.000Z",
+    "utcOffsetMinutesAtBirth": -300,
+    "civilDayStartUtc": "1917-04-25T05:00:00.000Z",
+    "civilDayEndUtc": "1917-04-26T04:59:00.000Z",
+    "latitude": 37.070833333333,
+    "longitude": -76.484444444444,
+    "coordinateEscalationSteps": 0,
+    "coordinateSourceEntity": "Q335017",
+    "ephemeris": "astronomy-engine via GeoVector + Rotation_EQJ_ECT (server-ephemeris.ts convention)",
+    "aspectTable": "@zodiacs/engine/internal/math",
+    "anglesComputed": false,
+    "housesComputed": false,
+    "sectComputed": false
+  },
+  "sun": {
+    "sign": "taurus",
+    "signName": "Taurus",
+    "degree": 4.9
+  },
+  "moon": {
+    "sign": "gemini",
+    "signName": "Gemini",
+    "degree": 25.77,
+    "uncertain": true,
+    "signAtCivilDayStart": "gemini",
+    "signAtCivilDayEnd": "cancer"
+  },
+  "cusp": {
+    "ambiguous": false,
+    "boundaryUtc": null,
+    "degreesInsideAtWindowStart": 4.2125,
+    "degreesToNextBoundaryAtWindowEnd": 24.8141
+  },
+  "unknownTimeErrorBandDegrees": {
+    "Sun": 0.973,
+    "Moon": 12.538,
+    "Mercury": 0.894,
+    "Venus": 1.234,
+    "Mars": 0.758,
+    "Jupiter": 0.236,
+    "Saturn": 0.054,
+    "Uranus": 0.027,
+    "Neptune": 0.007,
+    "Pluto": 0.014
+  },
+  "placements": [
+    {
+      "body": "Sun",
+      "sign": "taurus",
+      "signName": "Taurus",
+      "degree": 4.9,
+      "retrograde": false,
+      "speedPerDay": 0.9733,
+      "dignity": null,
+      "stableAcrossDay": true
+    },
+    {
+      "body": "Moon",
+      "sign": "gemini",
+      "signName": "Gemini",
+      "degree": 25.77,
+      "retrograde": false,
+      "speedPerDay": 12.5368,
+      "dignity": null,
+      "stableAcrossDay": false
+    },
+    {
+      "body": "Mercury",
+      "sign": "taurus",
+      "signName": "Taurus",
+      "degree": 25.06,
+      "retrograde": false,
+      "speedPerDay": 0.8926,
+      "dignity": null,
+      "stableAcrossDay": true
+    },
+    {
+      "body": "Venus",
+      "sign": "taurus",
+      "signName": "Taurus",
+      "degree": 4.72,
+      "retrograde": false,
+      "speedPerDay": 1.2352,
+      "dignity": "domicile",
+      "stableAcrossDay": true
+    },
+    {
+      "body": "Mars",
+      "sign": "aries",
+      "signName": "Aries",
+      "degree": 23.05,
+      "retrograde": false,
+      "speedPerDay": 0.7583,
+      "dignity": "domicile",
+      "stableAcrossDay": true
+    },
+    {
+      "body": "Jupiter",
+      "sign": "taurus",
+      "signName": "Taurus",
+      "degree": 14.98,
+      "retrograde": false,
+      "speedPerDay": 0.2362,
+      "dignity": null,
+      "stableAcrossDay": true
+    },
+    {
+      "body": "Saturn",
+      "sign": "cancer",
+      "signName": "Cancer",
+      "degree": 24.5,
+      "retrograde": false,
+      "speedPerDay": 0.0539,
+      "dignity": "detriment",
+      "stableAcrossDay": true
+    },
+    {
+      "body": "Uranus",
+      "sign": "aquarius",
+      "signName": "Aquarius",
+      "degree": 23.26,
+      "retrograde": false,
+      "speedPerDay": 0.0267,
+      "dignity": null,
+      "stableAcrossDay": true
+    },
+    {
+      "body": "Neptune",
+      "sign": "leo",
+      "signName": "Leo",
+      "degree": 2.14,
+      "retrograde": false,
+      "speedPerDay": 0.0071,
+      "dignity": null,
+      "stableAcrossDay": true
+    },
+    {
+      "body": "Pluto",
+      "sign": "cancer",
+      "signName": "Cancer",
+      "degree": 2.63,
+      "retrograde": false,
+      "speedPerDay": 0.0144,
+      "dignity": null,
+      "stableAcrossDay": true
+    }
+  ],
+  "aspectsStableAcrossCivilDay": [
+    {
+      "a": "Sun",
+      "b": "Venus",
+      "type": "conjunction",
+      "orb": 0.18,
+      "applying": true
+    },
+    {
+      "a": "Mars",
+      "b": "Uranus",
+      "type": "sextile",
+      "orb": 0.22,
+      "applying": true
+    },
+    {
+      "a": "Mercury",
+      "b": "Saturn",
+      "type": "sextile",
+      "orb": 0.56,
+      "applying": false
+    },
+    {
+      "a": "Mars",
+      "b": "Saturn",
+      "type": "square",
+      "orb": 1.45,
+      "applying": true
+    },
+    {
+      "a": "Mercury",
+      "b": "Uranus",
+      "type": "square",
+      "orb": 1.79,
+      "applying": false
+    },
+    {
+      "a": "Venus",
+      "b": "Pluto",
+      "type": "sextile",
+      "orb": 2.1,
+      "applying": false
+    },
+    {
+      "a": "Sun",
+      "b": "Pluto",
+      "type": "sextile",
+      "orb": 2.28,
+      "applying": false
+    },
+    {
+      "a": "Venus",
+      "b": "Neptune",
+      "type": "square",
+      "orb": 2.59,
+      "applying": false
+    },
+    {
+      "a": "Sun",
+      "b": "Neptune",
+      "type": "square",
+      "orb": 2.77,
+      "applying": false
+    },
+    {
+      "a": "Saturn",
+      "b": "Neptune",
+      "type": "conjunction",
+      "orb": 7.64,
+      "applying": true
+    }
+  ],
+  "aspectsAtNoonOnly": [
+    {
+      "a": "Moon",
+      "b": "Uranus",
+      "type": "trine",
+      "orb": 2.51,
+      "applying": false
+    },
+    {
+      "a": "Moon",
+      "b": "Mars",
+      "type": "sextile",
+      "orb": 2.73,
+      "applying": false
+    },
+    {
+      "a": "Moon",
+      "b": "Pluto",
+      "type": "conjunction",
+      "orb": 6.85,
+      "applying": true
+    }
+  ],
+  "patterns": {
+    "stelliums": [
+      {
+        "sign": "taurus",
+        "count": 4
+      }
+    ],
+    "elements": {
+      "earth": 4,
+      "air": 2,
+      "fire": 2,
+      "water": 2
+    },
+    "modalities": {
+      "fixed": 6,
+      "mutable": 1,
+      "cardinal": 3
+    },
+    "retrograde": []
+  }
+}

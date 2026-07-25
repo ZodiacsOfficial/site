@@ -1,0 +1,91 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "albert-einstein",
+  "qid": "Q937",
+  "displayName": "Albert Einstein",
+  "identity": "Theoretical physicist · Germany · 1879–1955",
+  "title": "Albert Einstein's birth chart",
+  "metaDescription": "Albert Einstein's chart, computed from a sourced birth date: Sun at 23.5° Pisces. Birth time unknown, so no houses or rising sign.",
+  "lede": "Four of the ten bodies fall in cardinal signs, the widest single weighting in the chart. Cardinal weight is read as initiative: the instinct to be the reason something began.",
+  "ledeFact": "modality:cardinal:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:23.52",
+        "decan:pisces:third"
+      ],
+      "text": "The Sun sits at 23.5° Pisces — the third decan, 20°–30°, which the tradition sub-rules by Mars. Degrees matter more than the sign label here: two people born a fortnight apart share Pisces and share almost nothing else about where the Sun actually stood."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mercury:Saturn:conjunction:1.02",
+        "aspect:Sun:Pluto:sextile:1.21",
+        "aspect:Mars:Pluto:trine:2.2"
+      ],
+      "text": "Mercury and Saturn hold the closest angle here — a conjunction, 1.0° wide. The tradition stops reading a conjunction as two things. It is one appetite with two names, and it moves together or not at all. Behind it, the Sun sextile Pluto at 1.2°, and Mars trine Pluto at 2.2° — both still well inside the orbs this site uses. These angles were checked at both ends of that civil day and survive either way, which is why an unrecorded hour does not disturb them."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Venus:detriment",
+        "dignity:Mars:exaltation",
+        "dignity:Saturn:fall"
+      ],
+      "text": "The dignity table, which predates the outer planets and only ever spoke for seven, marks three placements here. Venus in Aries at 17.0° is in detriment — the planet opposite its home, working against the grain; Mars in Capricorn at 26.9° is in exaltation — the tradition’s honoured-guest placement, working at its best; Saturn in Aries at 4.2° is in fall — the tradition’s uphill placement, strength earned rather than given. Dignity is a statement about conditions, not about worth."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:fire4-earth4-water1-air1",
+        "modalities:cardinal4-mutable3-fixed3",
+        "retrograde:1"
+      ],
+      "text": "Counted by element the chart runs 4 fire, 4 earth, 1 water, 1 air, and by modality 4 cardinal, 3 mutable, 3 fixed. A fire emphasis is read as appetite for the first move, with information gathered by doing rather than before doing. Uranus was retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:sagittarius",
+        "moon-band:13.9"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Sagittarius for the whole of that day at the birthplace, covering 13.9° between midnight and midnight. Fast enough that its degree is approximate, slow enough that its sign is not in doubt. At the noon reference it stands at 14.7°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/march-14/",
+    "label": "Everyone born on March 14"
+  },
+  "signLink": {
+    "href": "/pisces/",
+    "label": "The Pisces guide"
+  },
+  "substantiveFacts": [
+    "modality:cardinal:4",
+    "sun-degree:23.52",
+    "decan:pisces:third",
+    "aspect:Mercury:Saturn:conjunction:1.02",
+    "aspect:Sun:Pluto:sextile:1.21",
+    "aspect:Mars:Pluto:trine:2.2",
+    "dignity:Venus:detriment",
+    "dignity:Mars:exaltation",
+    "dignity:Saturn:fall",
+    "elements:fire4-earth4-water1-air1",
+    "modalities:cardinal4-mutable3-fixed3",
+    "retrograde:1",
+    "moon-sign:sagittarius",
+    "moon-band:13.9"
+  ],
+  "measurements": {
+    "originalWords": 356,
+    "substantiveStatements": 14,
+    "blocks": 5
+  }
+}

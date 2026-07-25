@@ -1,0 +1,124 @@
+{
+  "schema": "zodiacs.phase5.evidence.v1",
+  "slug": "rosalind-franklin",
+  "qid": "Q7474",
+  "displayName": "Rosalind Franklin",
+  "wikidataLabel": "Rosalind Franklin",
+  "wikidataDescription": "British chemist, biophysicist, and X-ray crystallographer (1920–1958)",
+  "retrievedAtUtc": "2026-07-25T17:05:12.504Z",
+  "sources": {
+    "wikidata": {
+      "entityUrl": "https://www.wikidata.org/wiki/Q7474",
+      "propertiesUsed": [
+        "P569",
+        "P19",
+        "P625",
+        "P106",
+        "P18",
+        "P570",
+        "P17",
+        "P131"
+      ],
+      "lastrevid": 2518604380
+    },
+    "wikipedia": {
+      "language": "en",
+      "title": "Rosalind Franklin",
+      "articleUrl": "https://en.wikipedia.org/wiki/Rosalind_Franklin",
+      "pageId": 90472,
+      "revisionId": 1365925655,
+      "revisionTimestamp": "2026-07-25T06:33:08Z"
+    }
+  },
+  "birth": {
+    "claimCount": 1,
+    "distinctDayPrecisionValues": [
+      "+1920-07-25T00:00:00Z|proleptic-gregorian"
+    ],
+    "allValues": [
+      {
+        "time": "+1920-07-25T00:00:00Z",
+        "precision": 11,
+        "calendar": "proleptic-gregorian",
+        "rank": "normal"
+      }
+    ],
+    "time": "+1920-07-25T00:00:00Z",
+    "precision": "day",
+    "calendarModel": "proleptic-gregorian",
+    "timeOfDay": null,
+    "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+  },
+  "death": {
+    "time": "+1958-04-16T00:00:00Z",
+    "precision": "day",
+    "calendarModel": "proleptic-gregorian"
+  },
+  "living": false,
+  "birthPlace": {
+    "entity": "Q215354",
+    "label": "Notting Hill",
+    "entityUrl": "https://www.wikidata.org/wiki/Q215354",
+    "country": {
+      "entity": "Q145",
+      "label": "United Kingdom"
+    },
+    "claimCount": 1,
+    "coordinates": {
+      "sourceEntity": "Q215354",
+      "sourceEntityLabel": "Notting Hill",
+      "latitude": 51.5096,
+      "longitude": -0.2043,
+      "precision": 0.00027777777777778,
+      "escalationSteps": 0
+    }
+  },
+  "occupations": [
+    {
+      "entity": "Q593644",
+      "label": "chemist"
+    },
+    {
+      "entity": "Q15839206",
+      "label": "molecular biologist"
+    },
+    {
+      "entity": "Q169470",
+      "label": "physicist"
+    },
+    {
+      "entity": "Q2919046",
+      "label": "biochemist"
+    },
+    {
+      "entity": "Q14906342",
+      "label": "biophysicist"
+    },
+    {
+      "entity": "Q15142825",
+      "label": "crystallographer"
+    },
+    {
+      "entity": "Q1622272",
+      "label": "university teacher"
+    },
+    {
+      "entity": "Q3126128",
+      "label": "geneticist"
+    }
+  ],
+  "portrait": {
+    "file": "File:Rosalind Franklin.jpg",
+    "filePage": "https://commons.wikimedia.org/wiki/File:Rosalind%20Franklin.jpg",
+    "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Rosalind_Franklin.jpg",
+    "width": 521,
+    "height": 626,
+    "licenseShortName": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "artist": "MRC Laboratory of Molecular Biology",
+    "credit": "From the personal collection of Jenifer Glynn.",
+    "usageTerms": "Creative Commons Attribution-Share Alike 4.0",
+    "attributionRequired": "true",
+    "restrictions": ""
+  }
+}
