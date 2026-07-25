@@ -67,7 +67,7 @@ These values may appear in client bundles. They must never contain a secret.
 | `PUBLIC_PLAUSIBLE_DOMAIN` | Optional analytics override | Analytics site/domain identifier. |
 | `PUBLIC_WEB_PUSH_ENABLED` | Browser push prompt enabled | Must equal `1`; one half of the push kill switch. |
 | `PUBLIC_VAPID_KEY` | Browser push enabled | Browser-visible VAPID public key. |
-| `PUBLIC_COMPAT_INVITES_ENABLED` | Phase 4 invitation UI enabled | Must equal `1`; exposes the English invitation, arrival, profile-register, send-back, and return-link UI. This is public configuration, not a secret, and remains unset/off on the unreleased candidate. |
+| `PUBLIC_COMPAT_INVITES_ENABLED` | Phase 4 invitation UI enabled | Must equal `1`; exposes the English invitation, arrival, profile-register, send-back, and return-link UI. This is public configuration, not a secret. |
 | `PUBLIC_REGISTRY_COLLECTION_ENABLED` | Registry Collection enabled | Must equal `1`; out-of-program flag, preserved. |
 | `PUBLIC_WALLET_CHART_ENABLED` | Wallet chart enabled | Must equal `1`; out-of-program flag, preserved. |
 
@@ -78,7 +78,8 @@ These values may appear in client bundles. They must never contain a secret.
 | `SUPABASE_SERVICE_ROLE_KEY` | Vercel server + GitHub Actions secret | Server-only Supabase credential for digest, daily-email preferences/receipts, unsubscribe, push, and assistant quota. Never expose it to a browser. |
 | `DIGEST_UNSUBSCRIBE_SECRET` | Vercel server + GitHub Actions secret | Signs one-click unsubscribe tokens. Use a long random value and rotate only with a deliberate invalidation plan. |
 | `COMPAT_INVITES_ENABLED` | Vercel server flag | Must equal `1` to create, exchange, or read Phase 4 invitations. Status, revocation, hiding, completion replay, and cleanup remain available whenever the underlying server contract exists. Leave unset/off until the reviewed canary step. |
-| `COMPAT_INVITE_TEST_USER_IDS` | Vercel server configuration | Required comma-separated list of exact Auth user UUIDs allowed to create invitations in this candidate. Missing or empty fails closed: nobody can create. Keep only the approved canary owner configured. A later public launch needs a separately reviewed authorization change; clearing this value never launches the feature. |
+| `COMPAT_INVITES_PUBLIC_ENABLED` | Vercel server authorization | Must equal `1` to authorize creation for any valid signed-in Auth user. It never bypasses authentication or the owned synchronized saved-chart check. Missing or any other value retains canary-only authorization. |
+| `COMPAT_INVITE_TEST_USER_IDS` | Vercel server configuration | Comma-separated list of exact Auth user UUIDs allowed to create invitations while public authorization is off. Missing or empty fails closed: nobody can create. Retain the approved canary owner after launch so disabling `COMPAT_INVITES_PUBLIC_ENABLED` restores the reviewed private boundary. Clearing this value never launches the feature. |
 | `COMPAT_INVITE_BASE_URL` | Vercel server configuration, optional | HTTPS site origin used in the one-time creation URL; defaults to `https://zodiacs.org`. |
 | `COMPAT_INVITE_SWEEP_SECRET` | Vercel + GitHub Actions secret | At least 32 characters. The same value authenticates the hourly cleanup workflow to the server endpoint. |
 | `COMPAT_INVITE_RECIPIENT_HASH_SECRET` | Vercel server secret | At least 32 characters. HMACs the resolved account email for the one-shot completion-email delivery claim; raw email is never stored in the Phase 4 tables. |
@@ -177,16 +178,19 @@ The production schema must include the RLS-protected `push_subscriptions` and
 enabling push. Delivery claims are the database authority for the advertised
 rolling caps; an in-memory or workflow-only counter is not sufficient.
 
-### Phase 4 private compatibility invitations
+### Phase 4 compatibility invitations
 
-The Phase 4 candidate uses two independent switches:
+Phase 4 uses three independent controls:
 
 - `PUBLIC_COMPAT_INVITES_ENABLED=1` includes the English reader UI.
 - `COMPAT_INVITES_ENABLED=1` permits new creation and recipient open/session
   reads after the server contract is present.
+- `COMPAT_INVITES_PUBLIC_ENABLED=1` authorizes creation for every valid
+  signed-in Auth user; the create route still requires one synchronized chart
+  owned by that user.
 
-Both are currently unset/off. Do not configure either as part of an ordinary
-deployment. A canary deployment also requires:
+Canary mode keeps the public authorization off and uses the exact owner
+allowlist. Both canary and public operation also require:
 
 - `PUBLIC_SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY`;
 - the applied and verified
@@ -271,6 +275,7 @@ These are outside this program and should remain off unless separately authorize
 | Scheduled push delivery | GitHub `PUSH_ENABLED=true` | Scheduled job stops before delivery. |
 | Phase 4 invitation UI | `PUBLIC_COMPAT_INVITES_ENABLED=1` | No invitation panel, arrival handling, profile register, send-back block, or returned-reading band. Existing compatibility behavior remains. |
 | Phase 4 create/open | `COMPAT_INVITES_ENABLED=1` + Supabase server contract | Creation, token exchange, and session reads fail closed. Existing status, revocation, hiding, completion replay, and cleanup remain available when the contract exists. |
+| Phase 4 public creation | `COMPAT_INVITES_PUBLIC_ENABLED=1` | Creation remains limited to exact Auth UUIDs in the canary allowlist. Authentication and owned synchronized-chart checks apply in either mode. |
 | Phase 4 canary creation | `COMPAT_INVITE_TEST_USER_IDS` | Only exact listed Auth user UUIDs may create. Missing or empty denies every creator; clearing it never creates public access. |
 | Ask Zodiacs model call | `ASSISTANT_ENABLED=1` + key/quota config | Static/disabled experience; no model request. |
 | Registry Collection | `PUBLIC_REGISTRY_COLLECTION_ENABLED=1` + RPCs + firewall rule | No entry point, sitemap entry, or Aura route exposure. |
@@ -439,14 +444,15 @@ Daily messages send both `List-Unsubscribe` and `List-Unsubscribe-Post: List-Uns
    network evidence, completion, optional one-shot email provider and mailbox
    receipts, duplicate prevention, return link/card, revocation, expiry,
    cleanup, accessibility, reduced motion, and 1×/2× card review.
-6. Obtain Fable's bounded live implementation review and resolve only
-   deterministic release blockers. Public launch needs a separate explicit
-   owner approval and a separately reviewed authorization change; this
-   candidate deliberately has no “everyone” mode. Both kill switches and the
-   cleanup job remain mandatory.
-7. Roll back immediately by turning off the public UI flag and then the server
-   create/open flag. Leave status, revocation, completion replay, delivery
-   finalization, and cleanup infrastructure available for existing rows.
+6. Obtain Fable's bounded live implementation review and explicit owner
+   approval. Release the separately reviewed authorization change, then set
+   `COMPAT_INVITES_PUBLIC_ENABLED=1` together with the two existing flags.
+   Retain the exact canary allowlist as the safe rollback boundary. Both kill
+   switches, owned-chart enforcement, and the cleanup job remain mandatory.
+7. Roll back immediately by turning off the public UI flag, then the server
+   create/open flag, then the public authorization. Leave status, revocation,
+   completion replay, delivery finalization, and cleanup infrastructure
+   available for existing rows.
 
 ## Ask Zodiacs provisioning
 
