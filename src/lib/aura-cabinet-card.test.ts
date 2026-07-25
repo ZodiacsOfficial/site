@@ -12,8 +12,11 @@ import {
 import { AURA_SIGN_ORDER } from "./aura/types";
 import {
   CABINET_EXPORT_WIDTH,
+  artworkSources,
   cabinetMediaMatches,
   cabinetSelectorKeeps,
+  dropDeferredDeclarations,
+  looksScreenReaderOnly,
   rewriteCabinetSelector,
   rewriteViewportUnits,
   sampleLooksBlank,
@@ -290,6 +293,55 @@ describe("cabinet capture flattening", () => {
     // Card padding is round(width × 0.055) per side at a 2× raster.
     const pad = Math.round(CABINET_EXPORT_WIDTH * 0.055);
     expect((CABINET_EXPORT_WIDTH + pad * 2) * 2).toBe(1080);
+  });
+
+  it("embeds the file the browser itself resolved, sharpening only the disc", () => {
+    // The engine has already decoded currentSrc once, so that format is the
+    // safest thing to hand a one-shot rasteriser; the markup src is the net.
+    expect(
+      artworkSources(
+        "https://zodiacs.org/assets/cabinet-materials/gold/aries.avif",
+        "/assets/cabinet-materials/gold/aries.webp",
+      ),
+    ).toEqual([
+      "https://zodiacs.org/assets/cabinet-materials/gold/aries.avif",
+      "/assets/cabinet-materials/gold/aries.webp",
+    ]);
+    // The pastel disc ships a larger master, and the export is a dense bitmap.
+    expect(
+      artworkSources(
+        "https://zodiacs.org/assets/zodiac-icons/128/leo.avif",
+        "/assets/zodiac-icons/128/leo.webp",
+      )[0],
+    ).toBe("https://zodiacs.org/assets/zodiac-icons/400/leo.avif");
+    // A missing currentSrc still yields a usable candidate list.
+    expect(artworkSources("", "/assets/cabinet-materials/gold/leo.webp")).toEqual([
+      "/assets/cabinet-materials/gold/leo.webp",
+    ]);
+    expect(artworkSources("data:image/webp;base64,AA", "data:image/webp;base64,AA")).toEqual([]);
+  });
+
+  it("drops declarations that defer painting to a frame that never comes", () => {
+    // will-change hands the artwork's layer to the compositor — the reason a
+    // case can export with every border and letter but empty niches.
+    expect(
+      dropDeferredDeclarations("opacity: 1; will-change: opacity, transform; z-index: 3"),
+    ).toBe("opacity: 1; z-index: 3");
+    expect(dropDeferredDeclarations("content-visibility: auto; color: red")).toBe("color: red");
+    expect(dropDeferredDeclarations("transform: scale(1)")).toBe("transform: scale(1)");
+  });
+
+  it("spots text that exists for screen readers only", () => {
+    // The cabinet announces itself through a clipped live region; that
+    // sentence must never be lettered across the picture.
+    expect(looksScreenReaderOnly({ clip: "rect(0, 0, 0, 0)" })).toBe(true);
+    expect(looksScreenReaderOnly({ clipPath: "inset(50%)" })).toBe(true);
+    expect(
+      looksScreenReaderOnly({ position: "absolute", width: "1px", height: "1px", overflow: "hidden" }),
+    ).toBe(true);
+    // Real content is left alone.
+    expect(looksScreenReaderOnly({ position: "absolute", width: "151px", height: "189px" })).toBe(false);
+    expect(looksScreenReaderOnly({})).toBe(false);
   });
 
   it("recognises a raster that decoded but drew nothing", () => {
