@@ -71,7 +71,7 @@ describe('horoscope page sky strip', () => {
     },
   );
 
-  it('pairs the current Moon position with the exact daily event', () => {
+  it('pairs the current Moon with an exact event or the next cited position', () => {
     const reading = pageReadingFromProgram(program, 'aries', 'today');
     const receipts = directEvidence('today');
     const moon = receipts.find((receipt) => receipt.kind === 'body-position' && receipt.body === 'Moon');
@@ -81,9 +81,23 @@ describe('horoscope page sky strip', () => {
     expect(moon?.moonPhase).toBeTruthy();
     expect(reading.skyStrip.markers[0].value).toContain(moon?.moonPhase);
     expect(reading.skyStrip.markers[0].value).not.toMatch(/^Moon\b/);
-    expect(reading.skyStrip.markers[1]).toMatchObject({ label: 'Exact' });
-    expect(event).toBeTruthy();
-    expect(reading.skyStrip.markers[1]).toMatchObject({ value: event?.label, datetime: event?.at });
+    if (event) {
+      expect(reading.skyStrip.markers[1]).toMatchObject({
+        label: 'Exact',
+        value: event.label,
+        datetime: event.at,
+      });
+    } else {
+      const nextPosition = receipts.find((receipt) => (
+        receipt.kind === 'body-position' && receipt.id !== moon?.id
+      ));
+      expect(nextPosition).toBeTruthy();
+      expect(reading.skyStrip.markers[1]).toMatchObject({
+        label: nextPosition?.body,
+        datetime: nextPosition?.at,
+      });
+      expect(reading.skyStrip.markers.some(({ label }) => label === 'Exact')).toBe(false);
+    }
   });
 
   it('uses tomorrow’s own Moon phase without repeating the marker label', () => {
