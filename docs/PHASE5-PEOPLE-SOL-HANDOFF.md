@@ -1,24 +1,24 @@
 # Phase 5B People pilot — Sol implementation handoff
 
-Status: **release candidate complete, independently reviewed and locally
-verified; not yet published**
+Status: **released as the bounded noindex pilot; Phase 5C remains blocked**
 
 Prepared: 2026-07-26
 
-Production base: `51573a87ef492f15cb41177e727d0b46320d5fef`
+Integrated production base:
+`f4dff60903c442b9c0ca0e96cf82ee79e8964585`
 
 Fable handoff commits integrated: `e824752`, `93a8b9e`
 
 ## Release boundary
 
-This candidate adds exactly twenty English People records and twenty profile
+This release adds exactly twenty English People records and twenty profile
 routes plus the `/people/` directory. Every route is `noindex, nofollow`,
 excluded from navigation, sitemap, search, hreflang and assistant discovery,
 and protected by the matching `X-Robots-Tag` response header.
 
-The candidate has not been pushed, previewed, deployed, indexed or released.
-Only the three owner-authorized mailbox tests recorded below have been sent.
-Phase 6 has not begun.
+The noindex pilot was released through PR #165. No People route was made
+indexable or submitted through IndexNow. Only the three owner-authorized
+mailbox tests recorded below were sent. Phase 6 has not begun.
 
 The independent Fable review commit
 `40a5fd81c42b09481b6e6699e2d40bb0f435d4b1` was integrated onto the current
@@ -29,6 +29,30 @@ Mercury on Ada Lovelace and Rabindranath Tagore, Venus on Chien-Shiung Wu, and
 Mars on Wangari Maathai, and renders the same exact transition in an `Open
 signs` evidence row. The generator, independent validator, integrity test,
 unit test and browser drive all pin that rule.
+
+## Release evidence
+
+- Candidate head: `1b5ab93fd8b0f39877274365fa6f370cba1dd496`.
+- Candidate CI: Site Check run `30207609219`, success.
+- Release PR:
+  `https://github.com/ZodiacsOfficial/site/pull/165`, merged at
+  `2026-07-26T15:27:25Z`.
+- Production merge SHA:
+  `dadb0821567cdc078b9f7b38e5e1e3ba2061352a`.
+- Post-merge CI: Site Check run `30208236247`, success on that exact SHA.
+- Vercel production deployment: GitHub deployment `5611511229`, completed at
+  `2026-07-26T15:30:05Z`, with immutable deployment URL
+  `https://zodiacs-asf024oe8-zodiacsofficial.vercel.app`.
+- Live verification completed at `2026-07-26T15:47:47Z`: all 21 People routes
+  returned `200`, self-canonicals, page-level `noindex, nofollow`,
+  server-level `noindex, nofollow, noarchive`, and no hreflang links. The live
+  sitemap and search index contained zero People URLs.
+- The four review corrections were present in production: Mercury on Ada
+  Lovelace and Rabindranath Tagore, Venus on Chien-Shiung Wu, and Mars on
+  Wangari Maathai were named both in the reading and the `Open signs` evidence
+  row.
+- `/registry/collection/` remained `200` with the current Cabinet of Twelve
+  output. The release contains no Registry or Collection source change.
 
 A read-only Gmail search at 2026-07-26T06:01:21Z found no message to, delivered
 to, or mentioning `people@zodiacs.org` in the connected sending account. The
@@ -140,9 +164,9 @@ Before a noindex pilot release:
 3. ~~Obtain an independent Fable implementation review from the candidate
    SHA and close every P0/P1.~~ Complete; no P0, and the single P1 is fixed and
    pinned by the 491-check validator and 365-assertion browser drive.
-4. Push the isolated candidate, obtain green CI, merge normally, verify all
+4. ~~Push the isolated candidate, obtain green CI, merge normally, verify all
    People response headers and discovery exclusions in production, and record
-   the merge SHA, deployment and UTC cutover.
+   the merge SHA, deployment and UTC cutover.~~ Complete; see Release evidence.
 
 Before Phase 5C may make any People route indexable:
 
