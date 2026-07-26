@@ -24,7 +24,11 @@ const longDate = new Intl.DateTimeFormat('en-US', {
   year: 'numeric',
 }).format(new Date(`${person.birthDate.displayedDate}T12:00:00Z`));
 const related = PEOPLE
-  .filter((candidate) => candidate.slug !== person.slug && candidate.sunSign.slug === person.sunSign.slug)
+  .filter((candidate) => (
+    candidate.slug !== person.slug
+    && candidate.indexEligibility.eligible
+    && candidate.sunSign.slug === person.sunSign.slug
+  ))
   .slice(0, 3);
 const wheelBodies = person.placements.map((placement) => ({
   body: placement.body,
@@ -100,8 +104,8 @@ const jsonLd = [
   path={`/people/${person.slug}/`}
   image={image}
   imageAlt={`${person.displayName}'s sourced birth-date chart — birth time unknown`}
-  noindex
-  nofollow
+  noindex={!person.indexEligibility.eligible}
+  nofollow={!person.indexEligibility.eligible}
   jsonLd={jsonLd}
   stableTypography
 >

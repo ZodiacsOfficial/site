@@ -200,11 +200,24 @@ const personSchema = z.object({
     highestPairwiseSimilarity: z.number().min(0).max(0.32),
   }).strict(),
   indexEligibility: z.object({
-    eligible: z.literal(false),
-    blockedBy: z.array(z.string().min(1)).min(1),
+    eligible: z.boolean(),
+    blockedBy: z.array(z.string().min(1)),
     contentChecksPassed: z.literal(true),
     contentCheckFailures: z.array(z.string()).length(0),
-  }).strict(),
+  }).strict().superRefine((eligibility, context) => {
+    if (eligibility.eligible && eligibility.blockedBy.length > 0) {
+      context.addIssue({
+        code: 'custom',
+        message: 'An indexable People record cannot retain a blocker',
+      });
+    }
+    if (!eligibility.eligible && eligibility.blockedBy.length === 0) {
+      context.addIssue({
+        code: 'custom',
+        message: 'A protected People record must state its blocker',
+      });
+    }
+  }),
   suppression: z.object({
     status: z.literal('active'),
     requestedBy: z.null(),
@@ -248,9 +261,12 @@ const personSchema = z.object({
 
 const peoplePilotSchema = z.object({
   schema: z.literal('zodiacs.phase5.people.v1'),
-  status: z.literal('Phase 5B noindex pilot — 20 reviewed records'),
+  status: z.literal('Phase 5C conservative public release — 18 indexable deceased records, 2 protected living records'),
   reviewedAtUtc: isoInstantSchema,
   sourceManifestSha256: z.string().regex(/^[a-f0-9]{64}$/u),
+  sourceIndexPolicySha256: z.string().regex(/^[a-f0-9]{64}$/u),
+  indexPolicyApprovedAtUtc: isoInstantSchema,
+  directoryIndexable: z.literal(false),
   people: z.array(personSchema).length(20),
 }).strict();
 
@@ -258,6 +274,8 @@ export const PEOPLE_PILOT = peoplePilotSchema.parse(rawPeople);
 export type PersonRecord = z.infer<typeof personSchema>;
 export const PEOPLE = PEOPLE_PILOT.people;
 export const PEOPLE_BY_SLUG = new Map(PEOPLE.map((person) => [person.slug, person] as const));
+export const INDEXABLE_PEOPLE = PEOPLE.filter((person) => person.indexEligibility.eligible);
+export const PEOPLE_DIRECTORY_INDEXABLE = PEOPLE_PILOT.directoryIndexable;
 
 export const PEOPLE_DISCIPLINE_FILTERS = [
   { slug: 'science', name: 'Science' },
@@ -307,6 +325,8 @@ export function peopleDisciplineGroups(person: PersonRecord): PeopleDisciplineGr
 
 export function peopleForBirthday(route: string) {
   return PEOPLE.filter((person) => (
-    person.suppression.status === 'active' && person.birthDate.birthdayRoute === route
+    person.suppression.status === 'active'
+    && person.indexEligibility.eligible
+    && person.birthDate.birthdayRoute === route
   )).slice(0, 3);
 }

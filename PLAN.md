@@ -1,14 +1,14 @@
 # Zodiacs.org household-name program
 
-Last updated: 2026-07-25
+Last updated: 2026-07-26
 
-Active phase: **Phase 4 private sharing loop — implementation merged and the
-owner-only private canary completed successfully. Fable's independent
-live-canary review passed with no open P0/P1, and the owner explicitly
-authorized public launch for signed-in users with a synchronized saved chart.
-The separately gated public-authorization release remains in progress. Phase
-5 has not begun; Phase 1 external closure monitoring continues
-independently.**
+Active phase: **Phase 5C conservative People search release. Phase 4 is
+complete and Phase 5B's twenty-profile noindex pilot is released. The owner
+declined outside legal advice and approved a documented conservative boundary:
+only the eighteen reviewed profiles of deceased public figures may enter
+search. The two living profiles and the People directory remain noindex and
+outside search discovery. Phase 6 has not begun; Phase 1 external closure
+monitoring continues independently.**
 
 ## Authority and operating rule
 
@@ -266,8 +266,39 @@ indexing is not authorized.
 - No People URL was submitted through IndexNow because every People route is
   deliberately noindex.
 
-Phase 5C remains blocked on qualified legal review of the personal-data
-position and a separate exact-release review. Phase 6 has not begun.
+## Phase 5C conservative indexing decision
+
+The owner explicitly chose not to obtain outside legal advice and authorized
+the narrower owner-led risk boundary recorded in
+`docs/PHASE5-PEOPLE-OWNER-RISK-DECISION.md`. This is not represented as a legal
+opinion or universal legal clearance.
+
+- Exactly eighteen reviewed profiles of deceased public figures are on the
+  explicit index allowlist.
+- Rigoberta Menchú and Serena Williams remain `noindex, nofollow`, absent from
+  the sitemap and site search, excluded from indexable birthday and
+  related-person links, and protected from portrait/OG image indexing.
+- `/people/` remains `noindex, nofollow` because the existing directory rule
+  requires at least twenty indexable profiles and this release has eighteen.
+- No profile is auto-promoted. The committed allowlist is a required build
+  input and drift gate.
+- The English privacy page now explains the public-source People data and the
+  low-friction correction, withholding, and removal route.
+- No Registry or Collection source, locale, navigation, feature flag,
+  ingestion job, or Phase 6 surface is changed.
+
+The release candidate has passed the 493-check independent People validator,
+369 focused browser assertions, all 1,431 unit tests, Astro's 653-file check
+with zero errors or warnings, the existing visual and R0/R2 locale drives, the
+3,791-file production-build integrity gate, exact sitemap/search/header
+distribution checks, 2,526 structured-data documents with zero errors, and
+all bundle budgets. Three-run Lighthouse results were 100/100/100 with a
+1.35-second LCP for the protected directory, 98/100/100 with a 2.33-second LCP
+for indexable Ada Lovelace, and 98/100/100 with a 2.33-second LCP for protected
+Serena Williams; the intentional noindex audit was the only excluded SEO audit
+on the two protected routes. CI, production deployment, live verification,
+and IndexNow receipts remain required before this section may record Phase 5C
+as released. Phase 6 has not begun.
 
 ## Phase 3 formal closure
 
@@ -666,6 +697,6 @@ Keep clean data and route seams for these; do not implement them inside this pro
 - Selected exact-date event URLs to avoid same-month event collisions.
 - Preserved truthful Organization authorship for the AI-only operating model without a prominent reader-facing automation badge.
 
-Phase 4 is publicly launched and formally complete. Phase 5B is the active
-bounded noindex pilot; Phase 5C indexing is not authorized, and Phase 6
-remains gated on Phase 5 completion.
+Phase 4 is publicly launched and formally complete. Phase 5C is the active
+bounded People indexing step under the conservative owner-approved policy.
+Phase 6 remains gated on the full Phase 5 Definition of Done.

@@ -4,6 +4,9 @@ import { fileURLToPath } from 'node:url';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const data = JSON.parse(await readFile(resolve(root, 'src/data/people.json'), 'utf8'));
+const indexPolicy = JSON.parse(
+  await readFile(resolve(root, 'docs/phase5/people-pilot/index-policy.json'), 'utf8'),
+);
 const pilot = resolve(root, 'docs/phase5/people-pilot');
 const failures = [];
 const signIndex = [
@@ -21,10 +24,32 @@ const birthdayFiles = new Set(
     .map((file) => file.replace(/\.mdx$/u, '')),
 );
 
+const indexableSlugs = new Set(indexPolicy.indexableProfiles);
+const protectedLivingSlugs = new Set(indexPolicy.protectedLivingProfiles);
+if (indexableSlugs.size !== indexPolicy.indexableProfiles.length) failures.push('duplicate indexable policy slug');
+if (protectedLivingSlugs.size !== indexPolicy.protectedLivingProfiles.length) failures.push('duplicate protected policy slug');
+if (indexableSlugs.size < indexPolicy.minimumIndexableProfilesForDirectory
+    && indexPolicy.directoryIndexable) {
+  failures.push('directory indexed below its minimum eligible-profile threshold');
+}
+
 for (const person of data.people) {
-  if (person.indexEligibility.eligible !== false
-      || !person.indexEligibility.blockedBy.some((reason) => reason.includes('noindex'))) {
-    failures.push(`${person.slug}: not pinned to the noindex pilot`);
+  const expectedEligible = indexableSlugs.has(person.slug);
+  const expectedProtected = protectedLivingSlugs.has(person.slug);
+  if (expectedEligible === expectedProtected) {
+    failures.push(`${person.slug}: missing from or duplicated across policy sets`);
+  }
+  if (person.indexEligibility.eligible !== expectedEligible) {
+    failures.push(`${person.slug}: eligibility disagrees with the explicit policy`);
+  }
+  if (expectedEligible && (person.living || person.indexEligibility.blockedBy.length > 0)) {
+    failures.push(`${person.slug}: living or blocked record entered the index allowlist`);
+  }
+  if (expectedProtected && (
+    !person.living
+    || !person.indexEligibility.blockedBy.some((reason) => reason.includes('living-person-protection'))
+  )) {
+    failures.push(`${person.slug}: living-person protection drifted`);
   }
   const computed = JSON.parse(
     await readFile(resolve(pilot, 'computed', `${person.slug}.json`), 'utf8'),
@@ -72,7 +97,7 @@ for (const person of data.people) {
 
 const sitemap = await readFile(resolve(root, 'src/pages/sitemap.xml.ts'), 'utf8');
 const nav = await readFile(resolve(root, 'src/components/SiteNav.astro'), 'utf8');
-if (/\/people\//u.test(sitemap)) failures.push('People route entered the sitemap');
+if (!sitemap.includes('INDEXABLE_PEOPLE')) failures.push('sitemap is not driven by the People index allowlist');
 if (/\/people\//u.test(nav)) failures.push('People route entered primary navigation');
 
 if (failures.length) {
@@ -80,4 +105,7 @@ if (failures.length) {
   for (const failure of failures) console.error(`  - ${failure}`);
   process.exit(1);
 }
-console.log('people-pilot-integrity: OK — 20 exact records, uncertain-time aggregates honest, discovery surfaces unchanged');
+console.log(
+  `people-release-integrity: OK — ${indexableSlugs.size} explicitly indexable deceased records,`
+  + ` ${protectedLivingSlugs.size} protected living records, uncertain-time aggregates honest`,
+);

@@ -10,6 +10,7 @@ import { LEGACY_URLS } from '../lib/legacy/urls';
 import { DEFAULT_LOCALE, LOCALE_META, alternatePathEntries, alternatePaths } from '../lib/i18n';
 import { CHINESE_ZODIAC_PATHS } from '../lib/programmatic-paths';
 import { registryAuraSitemapEntry } from '../lib/registry-aura-entry.mjs';
+import { INDEXABLE_PEOPLE } from '../lib/people';
 import { SIGNS } from '../lib/signs';
 import daily from '../data/daily.json';
 import horoscopeProgram from '../data/horoscope-program.json';
@@ -49,6 +50,7 @@ const EVERGREEN_LASTMOD = new Map<string, string>([
   // Phase 4 re-exposes the already-reviewed Big Three share card from the
   // birth-chart result sheet.
   ['/birth-chart/', '2026-07-24'],
+  ['/privacy/', '2026-07-26'],
   ...LEGACY_URLS.map((url) => [url.path, '2026-07-10'] as const),
   ...[
     '/disclosure/',
@@ -187,6 +189,11 @@ export const GET: APIRoute = async () => {
       loc: event.path,
       priority: 0.64,
       lastmod: event.lastModified,
+    })),
+    ...INDEXABLE_PEOPLE.map((person) => ({
+      loc: `/people/${person.slug}/`,
+      priority: 0.58,
+      lastmod: person.reviewedAtUtc.slice(0, 10),
     })),
     ...guides.map((g) => ({
       loc: `/${g.data.sign}/`,

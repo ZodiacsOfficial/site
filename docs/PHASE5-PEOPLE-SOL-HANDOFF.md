@@ -1,6 +1,6 @@
 # Phase 5B People pilot — Sol implementation handoff
 
-Status: **released as the bounded noindex pilot; Phase 5C remains blocked**
+Status: **Phase 5B released; Phase 5C conservative indexing candidate in verification**
 
 Prepared: 2026-07-26
 
@@ -168,12 +168,35 @@ Before a noindex pilot release:
    People response headers and discovery exclusions in production, and record
    the merge SHA, deployment and UTC cutover.~~ Complete; see Release evidence.
 
-Before Phase 5C may make any People route indexable:
+## Phase 5C owner decision and candidate boundary
 
-1. Complete the required legal review of the personal-data position.
-2. Close every P0/P1 from the independent review and private pilot.
-3. Re-run the content, source, portrait, search-discovery, schema, visual,
-   accessibility and three-run Lighthouse gates on the exact release SHA.
+The owner declined outside legal advice and authorized the narrower risk
+decision in `docs/PHASE5-PEOPLE-OWNER-RISK-DECISION.md`. It is explicitly not
+described as legal advice or universal legal clearance.
+
+- Eighteen reviewed deceased-public-figure profiles are explicitly allowlisted
+  for sitemap and search.
+- Rigoberta Menchú and Serena Williams remain `noindex, nofollow`, outside the
+  sitemap and site search, outside indexable birthday/related rails, and under
+  image-asset `X-Robots-Tag` protection.
+- The directory remains `noindex, nofollow` because eighteen is below its
+  twenty-profile eligibility floor.
+- The production builder reads a committed explicit policy; a new record
+  cannot become indexable merely by entering the manifest.
+- No navigation entry, localized People route, expansion, scheduled ingestion,
+  Registry/Collection change, or Phase 6 work is included.
+
+Candidate verification completed so far: 493/493 People validation checks,
+369/369 focused browser assertions, 1,431/1,431 unit tests, Astro check across
+653 files with zero errors or warnings, the existing visual and R0/R2 locale
+drives, a clean 3,791-file production build, exact 18/2
+sitemap/search/meta/header distribution, schema 2,526 documents/0 errors, and
+bundle budgets green. Three-run Lighthouse passed at 100/100/100 with a
+1.35-second LCP for the protected directory, 98/100/100 with a 2.33-second LCP
+for indexable Ada Lovelace, and 98/100/100 with a 2.33-second LCP for protected
+Serena Williams; the intentional noindex audit was the only excluded SEO audit
+on the two protected routes. CI, production verification and IndexNow remain
+release gates.
 
 Do not expand beyond the twenty-person pilot, add localized People routes, add
 People to global navigation/search, or begin Phase 6 under this handoff.

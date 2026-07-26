@@ -187,11 +187,65 @@
       ]
     },
     {
-      "source": "/people/(.*)",
+      "source": "/people/",
       "headers": [
         {
           "key": "X-Robots-Tag",
           "value": "noindex, nofollow, noarchive"
+        }
+      ]
+    },
+    {
+      "source": "/people/rigoberta-menchu/",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow, noarchive"
+        }
+      ]
+    },
+    {
+      "source": "/people/serena-williams/",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow, noarchive"
+        }
+      ]
+    },
+    {
+      "source": "/assets/people/rigoberta-menchu(.*)",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, noimageindex, noarchive"
+        }
+      ]
+    },
+    {
+      "source": "/assets/people/serena-williams(.*)",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, noimageindex, noarchive"
+        }
+      ]
+    },
+    {
+      "source": "/assets/og/v2/people/rigoberta-menchu.png",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, noimageindex, noarchive"
+        }
+      ]
+    },
+    {
+      "source": "/assets/og/v2/people/serena-williams.png",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, noimageindex, noarchive"
         }
       ]
     },

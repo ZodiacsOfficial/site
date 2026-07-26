@@ -13,6 +13,8 @@ const HERE = dirname(fileURLToPath(import.meta.url));
 const PILOT = join(HERE, '..');
 const REPO = join(PILOT, '..', '..', '..');
 const phase5b = process.argv.includes('--phase5b');
+const phase5c = process.argv.includes('--phase5c');
+if (phase5b && phase5c) throw new Error('Choose one People release phase');
 
 const results = [];
 const failures = [];
@@ -341,13 +343,53 @@ check('no suppressed record appears in any output surface', suppressed.length ==
   suppressed.map((person) => person.slug).join(', '));
 
 /* 20 — Phase boundary: Phase 5A publishes nothing; Phase 5B may add only
-   the noindex pilot routes and must still stay out of discovery surfaces. */
+   noindex routes; Phase 5C may publish only the explicit conservative
+   allowlist while retaining the living-person and directory protections. */
 const sitemap = await readFile(join(REPO, 'src/pages/sitemap.xml.ts'), 'utf8');
-check('no /people/ entry in the sitemap', !/\/people\//u.test(sitemap), '');
 const pagesDir = await readdir(join(REPO, 'src/pages'));
 const nav = await readFile(join(REPO, 'src/components/SiteNav.astro'), 'utf8');
 check('no People entry in the navigation', !/\/people\//u.test(nav), '');
-if (phase5b) {
+if (phase5c) {
+  const production = JSON.parse(await readFile(join(REPO, 'src/data/people.json'), 'utf8'));
+  const policy = JSON.parse(await readFile(join(PILOT, 'index-policy.json'), 'utf8'));
+  const directoryRoute = await readFile(join(REPO, 'src/pages/people/index.astro'), 'utf8').catch(() => '');
+  const personRoute = await readFile(join(REPO, 'src/pages/people/[slug].astro'), 'utf8').catch(() => '');
+  const indexable = production.people.filter((person) => person.indexEligibility.eligible);
+  const protectedLiving = production.people.filter((person) => !person.indexEligibility.eligible);
+  check('Phase 5C people route exists', pagesDir.includes('people'), '');
+  check('Phase 5C sitemap is allowlist-driven', sitemap.includes('INDEXABLE_PEOPLE.map'), '');
+  check(
+    'Phase 5C route robots are eligibility-driven',
+    directoryRoute.includes('noindex={!PEOPLE_DIRECTORY_INDEXABLE}')
+      && directoryRoute.includes('nofollow={!PEOPLE_DIRECTORY_INDEXABLE}')
+      && personRoute.includes('noindex={!person.indexEligibility.eligible}')
+      && personRoute.includes('nofollow={!person.indexEligibility.eligible}'),
+    '',
+  );
+  check(
+    'Phase 5C exact indexable set',
+    indexable.length === 18
+      && indexable.every((person) => !person.living)
+      && indexable.map((person) => person.slug).sort().join(',')
+        === [...policy.indexableProfiles].sort().join(','),
+    `${indexable.length} indexable`,
+  );
+  check(
+    'Phase 5C exact protected living set',
+    protectedLiving.length === 2
+      && protectedLiving.every((person) => person.living)
+      && protectedLiving.map((person) => person.slug).sort().join(',')
+        === [...policy.protectedLivingProfiles].sort().join(','),
+    `${protectedLiving.length} protected`,
+  );
+  check(
+    'Phase 5C directory remains below threshold and noindex',
+    policy.directoryIndexable === false
+      && indexable.length < policy.minimumIndexableProfilesForDirectory,
+    `${indexable.length}/${policy.minimumIndexableProfilesForDirectory}`,
+  );
+} else if (phase5b) {
+  check('no /people/ entry in the sitemap', !/\/people\//u.test(sitemap), '');
   const directoryRoute = await readFile(join(REPO, 'src/pages/people/index.astro'), 'utf8').catch(() => '');
   const personRoute = await readFile(join(REPO, 'src/pages/people/[slug].astro'), 'utf8').catch(() => '');
   check('Phase 5B people route exists', pagesDir.includes('people'), '');
@@ -357,10 +399,13 @@ if (phase5b) {
     '',
   );
 } else {
+  check('no /people/ entry in the sitemap', !/\/people\//u.test(sitemap), '');
   check('no src/pages/people route exists', !pagesDir.includes('people'), '');
 }
-check(`every pilot record is index-ineligible in Phase ${phase5b ? '5B' : '5A'}`,
-  people.every((person) => person.indexEligibility.eligible === false), '');
+if (!phase5c) {
+  check(`every pilot record is index-ineligible in Phase ${phase5b ? '5B' : '5A'}`,
+    people.every((person) => person.indexEligibility.eligible === false), '');
+}
 check('every pilot record passes its content checks',
   people.every((person) => person.indexEligibility.contentChecksPassed === true),
   people.filter((person) => !person.indexEligibility.contentChecksPassed).map((person) => person.slug).join(', '));
@@ -395,9 +440,9 @@ console.log(`\nContent depth: ${depth.originalWords.min}–${depth.originalWords
   + `(floor ${thresholds.substantiveStatementFloor}), max similarity ${depth.highestSimilarity.similarity} (ceiling ${thresholds.similarityCeiling}).`);
 
 if (failures.length > 0) {
-  console.error(`\nPhase ${phase5b ? '5B noindex' : '5A'} pilot validation FAILED — ${failures.length} of ${results.length} checks.`);
+  console.error(`\nPhase ${phase5c ? '5C conservative release' : phase5b ? '5B noindex' : '5A'} pilot validation FAILED — ${failures.length} of ${results.length} checks.`);
   for (const failure of failures) console.error(`  ${failure.name}${failure.detail ? ` — ${failure.detail}` : ''}`);
   process.exitCode = 1;
 } else {
-  console.log(`\nPhase ${phase5b ? '5B noindex' : '5A'} pilot validation PASSED — ${results.length}/${results.length} checks.`);
+  console.log(`\nPhase ${phase5c ? '5C conservative release' : phase5b ? '5B noindex' : '5A'} pilot validation PASSED — ${results.length}/${results.length} checks.`);
 }
