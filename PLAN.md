@@ -220,17 +220,18 @@ invalid token returned `303` to the generic unavailable state with
 or notification was created during public-launch verification. Phase 5's
 entry gate is open; this closeout contains no Phase 5 implementation.
 
-## Phase 5B noindex pilot release candidate
+## Phase 5B noindex pilot released
 
-Phase 5 is active at the deliberately bounded Phase 5B step. This repository
-state adds one English `/people/` directory and twenty reviewed English profile
-pages. Every People route remains `noindex, nofollow` and absent from global
-navigation, search, sitemap, hreflang and assistant discovery. Phase 5C
+Phase 5 is active at the deliberately bounded Phase 5B step. The released
+noindex pilot adds one English `/people/` directory and twenty reviewed English
+profile pages. Every People route remains `noindex, nofollow` and absent from
+global navigation, search, sitemap, hreflang and assistant discovery. Phase 5C
 indexing is not authorized.
 
-- Production base: `51573a87ef492f15cb41177e727d0b46320d5fef`,
+- Integrated production base:
+  `f4dff60903c442b9c0ca0e96cf82ee79e8964585`,
   which already contains the released Registry Collection rename and updates.
-  The Phase 5B candidate changes no Registry or Collection source.
+  The Phase 5B release changes no Registry or Collection source.
 - Mailbox gate: `people@zodiacs.org` is a monitored alias of
   `admin@zodiacs.org`; the owner confirmed the final authorized receipt at
   `2026-07-26T14:23:53Z` after marking the sender safe.
@@ -247,6 +248,23 @@ indexing is not authorized.
 - Content remains inside the reviewed bounds: 332–414 original words,
   12–15 substantive statements, and maximum pairwise similarity `0.3048`
   against the unchanged `0.32` ceiling.
+- Release PR
+  [#165](https://github.com/ZodiacsOfficial/site/pull/165) merged at
+  `2026-07-26T15:27:25Z` as
+  `dadb0821567cdc078b9f7b38e5e1e3ba2061352a`. Candidate run
+  `30207609219` and post-merge main run `30208236247` both passed.
+- Vercel production deployment `5611511229` completed at
+  `2026-07-26T15:30:05Z`:
+  `https://zodiacs-asf024oe8-zodiacsofficial.vercel.app`.
+- Production verification completed at `2026-07-26T15:47:47Z`: all 21
+  People routes returned `200`, self-canonical metadata, page-level
+  `noindex, nofollow`, server-level
+  `noindex, nofollow, noarchive`, and zero hreflang links. People remained
+  absent from the live sitemap and search index. The four reviewed open-sign
+  corrections were reader-visible, and `/registry/collection/` remained `200`
+  with the current Cabinet of Twelve output.
+- No People URL was submitted through IndexNow because every People route is
+  deliberately noindex.
 
 Phase 5C remains blocked on qualified legal review of the personal-data
 position and a separate exact-release review. Phase 6 has not begun.
@@ -262,8 +280,10 @@ delivered once and rejected as a duplicate on replay. Phase 4 is now
 authorized. Fable's reader-experience handoff and Sol's reconciled
 privacy/security contract are now released in the flag-off production build.
 The live migration, authenticated cleanup, and allowlisted private canary are
-recorded below. This is not a public-launch claim: both Phase 4 flags are back
-off, the owner allowlist remains in place, and Phase 5 has not begun.
+recorded below. This was not a public-launch claim: both Phase 4 flags were
+back off and the owner allowlist remained in place at that checkpoint. Phase
+5B has since been released as the separately reviewed noindex pilot recorded
+above.
 
 ### Live schema and consent evidence
 
