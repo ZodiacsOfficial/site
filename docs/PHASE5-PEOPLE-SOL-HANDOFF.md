@@ -31,10 +31,20 @@ authorized exactly one end-to-end test:
 - Receipt state at 2026-07-26T12:12:48Z: absent from the monitored Inbox and
   absent from all non-Sent mail; no delivery-failure notice present
 
-This proves that the single authorized message was sent, but it is not positive
-evidence that the destination is monitored. No retry was sent. Because the
-pilot contains pages about living people, no preview or production publication
-may occur before a genuine end-to-end receipt is confirmed.
+The owner authorized one retest after the first receipt remained absent:
+
+- Sent: 2026-07-26T12:35:16Z
+- Subject: `[Zodiacs Phase 5 mailbox retest] 20260726T123504Z`
+- Receipt token: `PHASE5-PEOPLE-RETEST-20260726T123504Z`
+- Gmail message/thread: `19f9e6c26ca31296`
+- Provider state: accepted into `SENT`
+- Receipt state at 2026-07-26T12:36:27Z: absent from the monitored Inbox and
+  absent from all non-Sent mail; no delivery-failure notice present
+
+This proves that both authorized messages were sent, but it is not positive
+evidence that the destination is monitored. No third message was sent. Because
+the pilot contains pages about living people, no preview or production
+publication may occur before a genuine end-to-end receipt is confirmed.
 
 ## What was implemented
 
