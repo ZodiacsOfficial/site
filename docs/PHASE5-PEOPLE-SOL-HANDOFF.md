@@ -16,12 +16,12 @@ excluded from navigation, sitemap, search, hreflang and assistant discovery,
 and protected by the matching `X-Robots-Tag` response header.
 
 The candidate has not been pushed, previewed, deployed, indexed or released.
-No email has been sent. Phase 6 has not begun.
+Only the three owner-authorized mailbox tests recorded below have been sent.
+Phase 6 has not begun.
 
-The release remains blocked until `people@zodiacs.org` is proven to exist and
-to be monitored. A read-only Gmail search at 2026-07-26T06:01:21Z found no
-message to, delivered to, or mentioning that exact address. The owner then
-authorized exactly one end-to-end test:
+A read-only Gmail search at 2026-07-26T06:01:21Z found no message to, delivered
+to, or mentioning `people@zodiacs.org` in the connected sending account. The
+owner then authorized exactly one end-to-end test:
 
 - Sent: 2026-07-26T12:10:35Z
 - Subject: `[Zodiacs Phase 5 mailbox test] 20260726T121020Z`
@@ -41,10 +41,23 @@ The owner authorized one retest after the first receipt remained absent:
 - Receipt state at 2026-07-26T12:36:27Z: absent from the monitored Inbox and
   absent from all non-Sent mail; no delivery-failure notice present
 
-This proves that both authorized messages were sent, but it is not positive
-evidence that the destination is monitored. No third message was sent. Because
-the pilot contains pages about living people, no preview or production
-publication may occur before a genuine end-to-end receipt is confirmed.
+The owner subsequently confirmed that an authorized test was received in the
+`admin@zodiacs.org` Spam folder, that `people@zodiacs.org` is an alias of that
+monitored Workspace account, and that the sender was marked safe. This is
+positive end-to-end evidence; the mailbox release gate is closed.
+
+One final owner-authorized classification test was then sent:
+
+- Sent: 2026-07-26T14:20:14Z
+- Subject: `[Zodiacs Phase 5 final mailbox test] 20260726T141953Z`
+- Receipt token: `PHASE5-PEOPLE-FINAL-20260726T141953Z`
+- Gmail message/thread: `19f9ecc42eb8d6ea`
+- Provider state: accepted into `SENT`
+- Receipt state: pending owner confirmation in the separate Workspace inbox;
+  the connected Gmail tool is attached to the sending account and cannot
+  inspect that destination
+
+No fourth message was sent.
 
 ## What was implemented
 
@@ -110,9 +123,9 @@ Current reviewed content range:
 
 Before a noindex pilot release:
 
-1. Provision `people@zodiacs.org`.
-2. Send one authorized end-to-end test and confirm the receipt in the monitored
-   mailbox.
+1. ~~Provision `people@zodiacs.org`.~~ Complete.
+2. ~~Confirm an authorized end-to-end receipt in the monitored mailbox.~~
+   Complete; the owner found the receipt in Spam and marked the sender safe.
 3. Obtain an independent Fable implementation review from the candidate SHA.
 4. Push the isolated candidate, obtain green CI, merge normally, verify all
    People response headers and discovery exclusions in production, and record
