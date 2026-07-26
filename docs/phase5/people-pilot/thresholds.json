@@ -1,0 +1,14 @@
+{
+  "schema": "zodiacs.phase5.thresholds.v1",
+  "originalWordFloor": 250,
+  "substantiveStatementFloor": 8,
+  "similarityCeiling": 0.32,
+  "similarityMetric": "5-word shingle Jaccard, the metric scripts/check-programmatic-uniqueness.mjs already applies to the 78 compatibility pages",
+  "reasoning": {
+    "originalWordFloor": "Measured minimum across the 20 pilot pages is 315 original words, excluding every shared boilerplate string. A 250-word floor sits about 20% under that minimum: ordinary variation in a future person cannot trip it, while a genuinely thin page — one where the chart offered little to say — fails closed. For scale, the site's own daily readings run 90–140 words and weekly 200–300.",
+    "substantiveStatementFloor": "Measured minimum is 11 distinct substantive statements. A floor of 8 leaves headroom for a chart with fewer aspects inside orb and no dignities at all, which is the sparsest case the pilot's own screening produced.",
+    "similarityCeiling": "Measured maximum pairwise similarity is 0.3048 (rosalind-franklin <> katherine-johnson). A 0.32 ceiling leaves a narrow fail-closed margin and remains well under the 0.42 the repository already accepts for the more formulaic compatibility pairs.",
+    "excludedFromOriginalCount": "Shared strings — the data-quality note, the evidence-disclosure labels, navigation, cross-link labels and the portrait credit — are boilerplate by design and are not counted as original copy. Counting them would let a page pass on chrome."
+  },
+  "sectExclusionNote": "Sect (day/night chart) is time-dependent: it asks whether the Sun was above the horizon. On an unknown-time record the noon convention would always answer 'day chart', which is an artefact of the assumption rather than a fact about the person. Sect is therefore excluded from the substantive-statement set for unknown-time records, alongside rising sign, houses and angles, and is available only where a real birth time is sourced."
+}

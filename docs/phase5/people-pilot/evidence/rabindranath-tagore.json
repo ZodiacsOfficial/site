@@ -1,0 +1,179 @@
+{
+  "schema": "zodiacs.phase5.evidence.v1",
+  "slug": "rabindranath-tagore",
+  "qid": "Q7241",
+  "displayName": "Rabindranath Tagore",
+  "wikidataLabel": "Rabindranath Tagore",
+  "wikidataDescription": "Bengali poet, philosopher and polymath (1861–1941)",
+  "retrievedAtUtc": "2026-07-25T17:05:12.504Z",
+  "sources": {
+    "wikidata": {
+      "entityUrl": "https://www.wikidata.org/wiki/Q7241",
+      "propertiesUsed": [
+        "P569",
+        "P19",
+        "P625",
+        "P106",
+        "P18",
+        "P570",
+        "P17",
+        "P131"
+      ],
+      "lastrevid": 2517803425
+    },
+    "wikipedia": {
+      "language": "en",
+      "title": "Rabindranath Tagore",
+      "articleUrl": "https://en.wikipedia.org/wiki/Rabindranath_Tagore",
+      "pageId": 5052533,
+      "revisionId": 1364723051,
+      "revisionTimestamp": "2026-07-18T04:00:01Z"
+    }
+  },
+  "birth": {
+    "claimCount": 2,
+    "distinctDayPrecisionValues": [
+      "+1861-05-07T00:00:00Z|proleptic-gregorian",
+      "+1861-05-06T00:00:00Z|proleptic-gregorian"
+    ],
+    "allValues": [
+      {
+        "time": "+1861-05-07T00:00:00Z",
+        "precision": 11,
+        "calendar": "proleptic-gregorian",
+        "rank": "normal"
+      },
+      {
+        "time": "+1861-05-06T00:00:00Z",
+        "precision": 11,
+        "calendar": "proleptic-gregorian",
+        "rank": "deprecated"
+      }
+    ],
+    "time": "+1861-05-07T00:00:00Z",
+    "precision": "day",
+    "calendarModel": "proleptic-gregorian",
+    "timeOfDay": null,
+    "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+  },
+  "death": {
+    "time": "+1941-08-07T00:00:00Z",
+    "precision": "day",
+    "calendarModel": "proleptic-gregorian"
+  },
+  "living": false,
+  "birthPlace": {
+    "entity": "Q1348",
+    "label": "Kolkata",
+    "entityUrl": "https://www.wikidata.org/wiki/Q1348",
+    "country": {
+      "entity": "Q668",
+      "label": "India"
+    },
+    "claimCount": 1,
+    "coordinates": {
+      "sourceEntity": "Q1348",
+      "sourceEntityLabel": "Kolkata",
+      "latitude": 22.5675,
+      "longitude": 88.37,
+      "precision": 0.0002777777777777778,
+      "escalationSteps": 0
+    }
+  },
+  "occupations": [
+    {
+      "entity": "Q1028181",
+      "label": "painter"
+    },
+    {
+      "entity": "Q49757",
+      "label": "poet"
+    },
+    {
+      "entity": "Q36834",
+      "label": "composer"
+    },
+    {
+      "entity": "Q214917",
+      "label": "playwright"
+    },
+    {
+      "entity": "Q11774202",
+      "label": "essayist"
+    },
+    {
+      "entity": "Q4964182",
+      "label": "philosopher"
+    },
+    {
+      "entity": "Q483501",
+      "label": "artist"
+    },
+    {
+      "entity": "Q36180",
+      "label": "writer"
+    },
+    {
+      "entity": "Q822146",
+      "label": "lyricist"
+    },
+    {
+      "entity": "Q753110",
+      "label": "songwriter"
+    },
+    {
+      "entity": "Q177220",
+      "label": "singer"
+    },
+    {
+      "entity": "Q2526255",
+      "label": "film director"
+    },
+    {
+      "entity": "Q30242234",
+      "label": "freedom fighter"
+    },
+    {
+      "entity": "Q115784320",
+      "label": "Nobel Prize winner"
+    },
+    {
+      "entity": "Q8178443",
+      "label": "librettist"
+    },
+    {
+      "entity": "Q33999",
+      "label": "actor"
+    },
+    {
+      "entity": "Q15949613",
+      "label": "short story writer"
+    },
+    {
+      "entity": "Q6625963",
+      "label": "novelist"
+    },
+    {
+      "entity": "Q16611574",
+      "label": "social reformer"
+    },
+    {
+      "entity": "Q3579035",
+      "label": "travel writer"
+    }
+  ],
+  "portrait": {
+    "file": "File:Rabindranath Tagore in 1909.jpg",
+    "filePage": "https://commons.wikimedia.org/wiki/File:Rabindranath%20Tagore%20in%201909.jpg",
+    "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Rabindranath_Tagore_in_1909.jpg",
+    "width": 1071,
+    "height": 1500,
+    "licenseShortName": "Public domain",
+    "licenseUrl": null,
+    "artist": "Generalstabens litografiska anstalt",
+    "credit": "Various, e.g. [1], published in 1914 in Sweden in Les Prix Nobel 1913, p. 60",
+    "usageTerms": "Public domain",
+    "attributionRequired": "false",
+    "restrictions": ""
+  }
+}

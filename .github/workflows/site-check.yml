@@ -106,6 +106,9 @@ jobs:
       - name: Phase 2 sky-events publication drive
         run: OUT_DIR=tests/visual/artifacts/events npm run test:events:browser
 
+      - name: Phase 5 People noindex pilot
+        run: OUT_DIR=tests/visual/artifacts/phase5-people npm run test:phase5:people
+
       - name: Today SSR and personalization
         run: npm run test:today:browser
 

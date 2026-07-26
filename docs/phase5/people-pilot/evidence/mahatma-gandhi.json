@@ -1,0 +1,168 @@
+{
+  "schema": "zodiacs.phase5.evidence.v1",
+  "slug": "mahatma-gandhi",
+  "qid": "Q1001",
+  "displayName": "Mohandas K. Gandhi",
+  "wikidataLabel": "Mahatma Gandhi",
+  "wikidataDescription": "Indian independence activist (1869–1948)",
+  "retrievedAtUtc": "2026-07-25T17:05:12.504Z",
+  "sources": {
+    "wikidata": {
+      "entityUrl": "https://www.wikidata.org/wiki/Q1001",
+      "propertiesUsed": [
+        "P569",
+        "P19",
+        "P625",
+        "P106",
+        "P18",
+        "P570",
+        "P17",
+        "P131"
+      ],
+      "lastrevid": 2517820865
+    },
+    "wikipedia": {
+      "language": "en",
+      "title": "Mahatma Gandhi",
+      "articleUrl": "https://en.wikipedia.org/wiki/Mahatma_Gandhi",
+      "pageId": 19379,
+      "revisionId": 1365511067,
+      "revisionTimestamp": "2026-07-22T22:46:51Z"
+    }
+  },
+  "birth": {
+    "claimCount": 1,
+    "distinctDayPrecisionValues": [
+      "+1869-10-02T00:00:00Z|proleptic-gregorian"
+    ],
+    "allValues": [
+      {
+        "time": "+1869-10-02T00:00:00Z",
+        "precision": 11,
+        "calendar": "proleptic-gregorian",
+        "rank": "normal"
+      }
+    ],
+    "time": "+1869-10-02T00:00:00Z",
+    "precision": "day",
+    "calendarModel": "proleptic-gregorian",
+    "timeOfDay": null,
+    "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+  },
+  "death": {
+    "time": "+1948-01-30T00:00:00Z",
+    "precision": "day",
+    "calendarModel": "proleptic-gregorian"
+  },
+  "living": false,
+  "birthPlace": {
+    "entity": "Q6419912",
+    "label": "Porbandar",
+    "entityUrl": "https://www.wikidata.org/wiki/Q6419912",
+    "country": {
+      "entity": "Q668",
+      "label": "India"
+    },
+    "claimCount": 1,
+    "coordinates": {
+      "sourceEntity": "Q6419912",
+      "sourceEntityLabel": "Porbandar",
+      "latitude": 21.6425,
+      "longitude": 69.604722222222,
+      "precision": 0.00027777777777778,
+      "escalationSteps": 0
+    }
+  },
+  "occupations": [
+    {
+      "entity": "Q82955",
+      "label": "politician"
+    },
+    {
+      "entity": "Q808967",
+      "label": "barrister"
+    },
+    {
+      "entity": "Q15958642",
+      "label": "political writer"
+    },
+    {
+      "entity": "Q1930187",
+      "label": "journalist"
+    },
+    {
+      "entity": "Q4964182",
+      "label": "philosopher"
+    },
+    {
+      "entity": "Q18814623",
+      "label": "autobiographer"
+    },
+    {
+      "entity": "Q11774202",
+      "label": "essayist"
+    },
+    {
+      "entity": "Q17351648",
+      "label": "newspaper editor"
+    },
+    {
+      "entity": "Q1021386",
+      "label": "civil rights advocate"
+    },
+    {
+      "entity": "Q11774156",
+      "label": "memoirist"
+    },
+    {
+      "entity": "Q22336956",
+      "label": "humanitarian"
+    },
+    {
+      "entity": "Q16323111",
+      "label": "peace activist"
+    },
+    {
+      "entity": "Q3242115",
+      "label": "revolutionary"
+    },
+    {
+      "entity": "Q36180",
+      "label": "writer"
+    },
+    {
+      "entity": "Q30242234",
+      "label": "freedom fighter"
+    },
+    {
+      "entity": "Q16003550",
+      "label": "pacifist"
+    },
+    {
+      "entity": "Q185351",
+      "label": "jurist"
+    },
+    {
+      "entity": "Q40348",
+      "label": "lawyer"
+    },
+    {
+      "entity": "Q482980",
+      "label": "author"
+    }
+  ],
+  "portrait": {
+    "file": "File:Mahatma-Gandhi, studio, 1931.jpg",
+    "filePage": "https://commons.wikimedia.org/wiki/File:Mahatma-Gandhi%2C%20studio%2C%201931.jpg",
+    "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Mahatma-Gandhi,_studio,_1931.jpg",
+    "width": 2620,
+    "height": 3270,
+    "licenseShortName": "Public domain",
+    "licenseUrl": null,
+    "artist": "Elliott & Fry",
+    "credit": "philogalichet.fr (context)",
+    "usageTerms": "Public domain",
+    "attributionRequired": "false",
+    "restrictions": ""
+  }
+}

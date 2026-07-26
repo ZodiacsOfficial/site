@@ -1,0 +1,87 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "simone-de-beauvoir",
+  "qid": "Q7197",
+  "displayName": "Simone de Beauvoir",
+  "identity": "Political philosopher and novelist · France · 1908–1986",
+  "title": "Simone de Beauvoir's birth chart",
+  "metaDescription": "Simone de Beauvoir's chart, computed from a sourced birth date: Sun at 17.8° Capricorn. Birth time unknown, so no houses or rising sign.",
+  "lede": "Four of the nine placements whose signs are settled fall in cardinal signs, the widest weighting the unknown hour leaves certain. Cardinal weight is read as initiative: the instinct to be the reason something began.",
+  "ledeFact": "modality:cardinal:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:17.84",
+        "decan:capricorn:second"
+      ],
+      "text": "The Sun sits at 17.8° Capricorn — the second decan, 10°–20°, which the tradition sub-rules by Venus. Degrees matter more than the sign label here: two people born a fortnight apart share Capricorn and share almost nothing else about where the Sun actually stood."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Uranus:Neptune:opposition:0.26",
+        "aspect:Saturn:Pluto:square:0.89",
+        "aspect:Mercury:Neptune:opposition:1.41"
+      ],
+      "text": "Closest first: Uranus to Neptune, a opposition with 0.3° of slack. An opposition is the tradition’s tug of war. Both ends are real, and the work is holding them at once rather than picking a winner. Behind it, Saturn square Pluto at 0.9°, and Mercury opposition Neptune at 1.4° — both still well inside the orbs this site uses. All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:none"
+      ],
+      "text": "No planet here is at home, exalted, in detriment, or in fall. That silence from the oldest layer of the scheme is itself a result, and it moves the weight of the reading onto the geometry."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth3-water3-air2-fire1",
+        "modalities:cardinal4-mutable3-fixed2",
+        "settled-signs:9",
+        "retrograde:3"
+      ],
+      "text": "The honest balance sheet uses the 9 placements whose signs hold for the whole day: earth 3, water 3, air 2, fire 1 across the elements, and cardinal 4, mutable 3, fixed 2 across the modalities. An earth emphasis reads as trust in the tangible: the plan matters less than whether the thing stands up. Jupiter, Neptune and Pluto were retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:pisces:aries"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Pisces into Aries during that day at the birthplace, travelling 13.7° between one midnight and the next. Which of the two it was depends entirely on the hour, and the hour is not recorded. Rather than pick the likelier half, the reading leaves the Moon open."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/january-9/",
+    "label": "Everyone born on January 9"
+  },
+  "signLink": {
+    "href": "/capricorn/",
+    "label": "The Capricorn guide"
+  },
+  "substantiveFacts": [
+    "modality:cardinal:4",
+    "sun-degree:17.84",
+    "decan:capricorn:second",
+    "aspect:Uranus:Neptune:opposition:0.26",
+    "aspect:Saturn:Pluto:square:0.89",
+    "aspect:Mercury:Neptune:opposition:1.41",
+    "dignity:none",
+    "elements:earth3-water3-air2-fire1",
+    "modalities:cardinal4-mutable3-fixed2",
+    "settled-signs:9",
+    "retrograde:3",
+    "moon-uncertain:pisces:aries"
+  ],
+  "measurements": {
+    "originalWords": 332,
+    "substantiveStatements": 12,
+    "blocks": 5
+  }
+}

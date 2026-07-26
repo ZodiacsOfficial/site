@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.evidence.v1",
+  "slug": "emily-bronte",
+  "qid": "Q80137",
+  "displayName": "Emily Brontë",
+  "wikidataLabel": "Emily Brontë",
+  "wikidataDescription": "English novelist and poet (1818–1848)",
+  "retrievedAtUtc": "2026-07-25T17:05:12.504Z",
+  "sources": {
+    "wikidata": {
+      "entityUrl": "https://www.wikidata.org/wiki/Q80137",
+      "propertiesUsed": [
+        "P569",
+        "P19",
+        "P625",
+        "P106",
+        "P18",
+        "P570",
+        "P17",
+        "P131"
+      ],
+      "lastrevid": 2520235246
+    },
+    "wikipedia": {
+      "language": "en",
+      "title": "Emily Brontë",
+      "articleUrl": "https://en.wikipedia.org/wiki/Emily_Bront%C3%AB",
+      "pageId": 9810,
+      "revisionId": 1365227432,
+      "revisionTimestamp": "2026-07-21T02:34:49Z"
+    }
+  },
+  "birth": {
+    "claimCount": 1,
+    "distinctDayPrecisionValues": [
+      "+1818-07-30T00:00:00Z|proleptic-gregorian"
+    ],
+    "allValues": [
+      {
+        "time": "+1818-07-30T00:00:00Z",
+        "precision": 11,
+        "calendar": "proleptic-gregorian",
+        "rank": "normal"
+      }
+    ],
+    "time": "+1818-07-30T00:00:00Z",
+    "precision": "day",
+    "calendarModel": "proleptic-gregorian",
+    "timeOfDay": null,
+    "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+  },
+  "death": {
+    "time": "+1848-12-19T00:00:00Z",
+    "precision": "day",
+    "calendarModel": "proleptic-gregorian"
+  },
+  "living": false,
+  "birthPlace": {
+    "entity": "Q17534538",
+    "label": "The Brontë Birthplace",
+    "entityUrl": "https://www.wikidata.org/wiki/Q17534538",
+    "country": {
+      "entity": "Q145",
+      "label": "United Kingdom"
+    },
+    "claimCount": 2,
+    "coordinates": {
+      "sourceEntity": "Q17534538",
+      "sourceEntityLabel": "The Brontë Birthplace",
+      "latitude": 53.791,
+      "longitude": -1.84867,
+      "precision": 0.000001,
+      "escalationSteps": 0
+    }
+  },
+  "occupations": [
+    {
+      "entity": "Q49757",
+      "label": "poet"
+    },
+    {
+      "entity": "Q6625963",
+      "label": "novelist"
+    },
+    {
+      "entity": "Q36180",
+      "label": "writer"
+    },
+    {
+      "entity": "Q37226",
+      "label": "teacher"
+    },
+    {
+      "entity": "Q1540278",
+      "label": "governess"
+    },
+    {
+      "entity": "Q8178443",
+      "label": "librettist"
+    }
+  ],
+  "portrait": {
+    "file": "File:Emily Brontë cropped.jpg",
+    "filePage": "https://commons.wikimedia.org/wiki/File:Emily%20Bront%C3%AB%20cropped.jpg",
+    "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Emily_Bront%C3%AB_cropped.jpg",
+    "width": 952,
+    "height": 1467,
+    "licenseShortName": "Public domain",
+    "licenseUrl": null,
+    "artist": "Branwell Brontë",
+    "credit": "http://www.abm-enterprises.net/emily.htm",
+    "usageTerms": "Public domain",
+    "attributionRequired": "false",
+    "restrictions": ""
+  }
+}

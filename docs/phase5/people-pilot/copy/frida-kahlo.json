@@ -1,0 +1,89 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "frida-kahlo",
+  "qid": "Q5588",
+  "displayName": "Frida Kahlo",
+  "identity": "Painter · Mexico · 1907–1954",
+  "title": "Frida Kahlo's birth chart",
+  "metaDescription": "Frida Kahlo's chart, computed from a sourced birth date: Sun at 13.5° Cancer. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Sun and Mars sit 0.2° from an exact opposition — near enough that the tradition reads identity and drive as a single working part. Across the wheel, each body sees the other in full. The old reading is not conflict so much as permanent mutual visibility.",
+  "ledeFact": "aspect:Sun:Mars:opposition",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:13.51",
+        "decan:cancer:second"
+      ],
+      "text": "At noon on that date the Sun stood at 13.5° Cancer, inside the second decan (10°–20°), whose traditional sub-ruler is Mars. The decan is the older, finer division — it is what the sign looks like once you stop rounding it to thirty degrees."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Mars:opposition:0.16",
+        "aspect:Venus:Pluto:conjunction:0.77",
+        "aspect:Mars:Neptune:opposition:0.95"
+      ],
+      "text": "Closest first: the Sun to Mars, a opposition with 0.2° of slack. Across the wheel, each body sees the other in full. The old reading is not conflict so much as permanent mutual visibility. Behind it, Venus conjunction Pluto at 0.8°, and Mars opposition Neptune at 0.9° — both still well inside the orbs this site uses. These angles were checked through every hour of that civil day and survive throughout, which is why an unrecorded hour does not disturb them."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mars:exaltation",
+        "dignity:Jupiter:exaltation"
+      ],
+      "text": "The oldest layer of the scheme — seven planets, four conditions — flags two placements in this chart. Mars in Capricorn at 13.3° is in exaltation — the tradition’s honoured-guest placement, working at its best; Jupiter in Cancer at 20.5° is in exaltation. Dignity is a statement about conditions, not about worth."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water4-air2-earth2-fire1",
+        "modalities:cardinal5-mutable3-fixed1",
+        "settled-signs:9",
+        "retrograde:2"
+      ],
+      "text": "Counting only the 9 placements whose signs hold for the whole day, the chart runs 4 water, 2 air, 2 earth, 1 fire by element and 5 cardinal, 3 mutable, 1 fixed by modality. A water emphasis reads as porousness: the room is registered whole, long before it is analysed in parts. Mars and Uranus were retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:taurus:gemini"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Taurus into Gemini during that day at the birthplace, travelling 12.0° between one midnight and the next. A birth time would settle it in a second; there isn’t one. So the Moon stays unnamed here — the alternative is a guess wearing the clothes of a fact."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/july-6/",
+    "label": "Everyone born on July 6"
+  },
+  "signLink": {
+    "href": "/cancer/",
+    "label": "The Cancer guide"
+  },
+  "substantiveFacts": [
+    "aspect:Sun:Mars:opposition",
+    "sun-degree:13.51",
+    "decan:cancer:second",
+    "aspect:Sun:Mars:opposition:0.16",
+    "aspect:Venus:Pluto:conjunction:0.77",
+    "aspect:Mars:Neptune:opposition:0.95",
+    "dignity:Mars:exaltation",
+    "dignity:Jupiter:exaltation",
+    "elements:water4-air2-earth2-fire1",
+    "modalities:cardinal5-mutable3-fixed1",
+    "settled-signs:9",
+    "retrograde:2",
+    "moon-uncertain:taurus:gemini"
+  ],
+  "measurements": {
+    "originalWords": 358,
+    "substantiveStatements": 13,
+    "blocks": 5
+  }
+}

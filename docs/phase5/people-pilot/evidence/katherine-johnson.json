@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.evidence.v1",
+  "slug": "katherine-johnson",
+  "qid": "Q11740",
+  "displayName": "Katherine Johnson",
+  "wikidataLabel": "Katherine Johnson",
+  "wikidataDescription": "African-American mathematician",
+  "retrievedAtUtc": "2026-07-25T17:05:12.504Z",
+  "sources": {
+    "wikidata": {
+      "entityUrl": "https://www.wikidata.org/wiki/Q11740",
+      "propertiesUsed": [
+        "P569",
+        "P19",
+        "P625",
+        "P106",
+        "P18",
+        "P570",
+        "P17",
+        "P131"
+      ],
+      "lastrevid": 2517790725
+    },
+    "wikipedia": {
+      "language": "en",
+      "title": "Katherine Johnson",
+      "articleUrl": "https://en.wikipedia.org/wiki/Katherine_Johnson",
+      "pageId": 25568315,
+      "revisionId": 1365626570,
+      "revisionTimestamp": "2026-07-23T14:25:21Z"
+    }
+  },
+  "birth": {
+    "claimCount": 1,
+    "distinctDayPrecisionValues": [
+      "+1918-08-26T00:00:00Z|proleptic-gregorian"
+    ],
+    "allValues": [
+      {
+        "time": "+1918-08-26T00:00:00Z",
+        "precision": 11,
+        "calendar": "proleptic-gregorian",
+        "rank": "normal"
+      }
+    ],
+    "time": "+1918-08-26T00:00:00Z",
+    "precision": "day",
+    "calendarModel": "proleptic-gregorian",
+    "timeOfDay": null,
+    "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+  },
+  "death": {
+    "time": "+2020-02-24T00:00:00Z",
+    "precision": "day",
+    "calendarModel": "proleptic-gregorian"
+  },
+  "living": false,
+  "birthPlace": {
+    "entity": "Q2035099",
+    "label": "White Sulphur Springs",
+    "entityUrl": "https://www.wikidata.org/wiki/Q2035099",
+    "country": {
+      "entity": "Q30",
+      "label": "United States"
+    },
+    "claimCount": 1,
+    "coordinates": {
+      "sourceEntity": "Q2035099",
+      "sourceEntityLabel": "White Sulphur Springs",
+      "latitude": 37.793888888889,
+      "longitude": -80.303611111111,
+      "precision": 0.00027777777777778,
+      "escalationSteps": 0
+    }
+  },
+  "occupations": [
+    {
+      "entity": "Q82594",
+      "label": "computer scientist"
+    },
+    {
+      "entity": "Q169470",
+      "label": "physicist"
+    },
+    {
+      "entity": "Q10497074",
+      "label": "military flight engineer"
+    },
+    {
+      "entity": "Q170790",
+      "label": "mathematician"
+    },
+    {
+      "entity": "Q37226",
+      "label": "teacher"
+    },
+    {
+      "entity": "Q36180",
+      "label": "writer"
+    }
+  ],
+  "portrait": {
+    "file": "File:Katherine Johnson 1983.jpg",
+    "filePage": "https://commons.wikimedia.org/wiki/File:Katherine%20Johnson%201983.jpg",
+    "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Katherine_Johnson_1983.jpg",
+    "width": 2400,
+    "height": 3000,
+    "licenseShortName": "Public domain",
+    "licenseUrl": null,
+    "artist": "NASA",
+    "credit": "https://crgis.ndc.nasa.gov/historic/File:1983-L-04373.jpg",
+    "usageTerms": "Public domain",
+    "attributionRequired": "false",
+    "restrictions": ""
+  }
+}

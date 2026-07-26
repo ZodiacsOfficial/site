@@ -1,0 +1,89 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "ida-b-wells",
+  "qid": "Q289428",
+  "displayName": "Ida B. Wells",
+  "identity": "Journalist and sociologist · United States · 1862–1931",
+  "title": "Ida B. Wells's birth chart",
+  "metaDescription": "Ida B. Wells's chart, computed from a sourced birth date: Sun at 23.9° Cancer. Birth time unknown, so no houses or rising sign.",
+  "lede": "Four of the nine placements whose signs are settled fall in cardinal signs, the widest weighting the unknown hour leaves certain. Cardinal signs open the seasons, and a cardinal-heavy chart is read as one that starts things.",
+  "ledeFact": "modality:cardinal:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:23.86",
+        "decan:cancer:third"
+      ],
+      "text": "The Sun's exact place is 23.9° Cancer. That falls in the third decan, 20°–30°, sub-ruled by Jupiter in the classical scheme — a water sign read through a cardinal season."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Saturn:Uranus:square:0",
+        "aspect:Sun:Jupiter:sextile:1.01",
+        "aspect:Venus:Uranus:conjunction:1.04"
+      ],
+      "text": "Saturn and Uranus hold the closest angle here — a square, 0.0° wide. A square is friction that produces motion — the aspect the tradition credits with building capability precisely by refusing to be comfortable. Behind it, the Sun sextile Jupiter at 1.0°, and Venus conjunction Uranus at 1.0° — both still well inside the orbs this site uses. These angles were checked through every hour of that civil day and survive throughout, which is why an unrecorded hour does not disturb them."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mars:domicile",
+        "dignity:Jupiter:detriment"
+      ],
+      "text": "The dignity table, which predates the outer planets and only ever spoke for seven, marks two placements here. Mars in Aries at 5.7° is in domicile — the planet in its own sign, running on home rules; Jupiter in Virgo at 22.9° is in detriment — the planet opposite its home, working against the grain. Dignity is a statement about conditions, not about worth."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth3-water2-air2-fire2",
+        "modalities:cardinal4-mutable4-fixed1",
+        "settled-signs:9",
+        "retrograde:1"
+      ],
+      "text": "Among the 9 placements whose signs hold for the whole day, the elements divide 3 earth, 2 water, 2 air, 2 fire; by modality, 4 cardinal, 4 mutable, 1 fixed. An earth emphasis reads as trust in the tangible: the plan matters less than whether the thing stands up. Neptune was retrograde — motion that reverses only from this vantage point, and which the old reading treats as delay used for revision."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:pisces:aries"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Pisces into Aries during that day at the birthplace, travelling 12.9° between one midnight and the next. A birth time would settle it in a second; there isn’t one. So the Moon stays unnamed here — the alternative is a guess wearing the clothes of a fact."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/july-16/",
+    "label": "Everyone born on July 16"
+  },
+  "signLink": {
+    "href": "/cancer/",
+    "label": "The Cancer guide"
+  },
+  "substantiveFacts": [
+    "modality:cardinal:4",
+    "sun-degree:23.86",
+    "decan:cancer:third",
+    "aspect:Saturn:Uranus:square:0",
+    "aspect:Sun:Jupiter:sextile:1.01",
+    "aspect:Venus:Uranus:conjunction:1.04",
+    "dignity:Mars:domicile",
+    "dignity:Jupiter:detriment",
+    "elements:earth3-water2-air2-fire2",
+    "modalities:cardinal4-mutable4-fixed1",
+    "settled-signs:9",
+    "retrograde:1",
+    "moon-uncertain:pisces:aries"
+  ],
+  "measurements": {
+    "originalWords": 337,
+    "substantiveStatements": 13,
+    "blocks": 5
+  }
+}

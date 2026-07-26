@@ -1,0 +1,139 @@
+{
+  "schema": "zodiacs.phase5.evidence.v1",
+  "slug": "ella-fitzgerald",
+  "qid": "Q1768",
+  "displayName": "Ella Fitzgerald",
+  "wikidataLabel": "Ella Fitzgerald",
+  "wikidataDescription": "American jazz singer (1917–1996)",
+  "retrievedAtUtc": "2026-07-25T17:05:12.504Z",
+  "sources": {
+    "wikidata": {
+      "entityUrl": "https://www.wikidata.org/wiki/Q1768",
+      "propertiesUsed": [
+        "P569",
+        "P19",
+        "P625",
+        "P106",
+        "P18",
+        "P570",
+        "P17",
+        "P131"
+      ],
+      "lastrevid": 2518724086
+    },
+    "wikipedia": {
+      "language": "en",
+      "title": "Ella Fitzgerald",
+      "articleUrl": "https://en.wikipedia.org/wiki/Ella_Fitzgerald",
+      "pageId": 50350,
+      "revisionId": 1365576366,
+      "revisionTimestamp": "2026-07-23T06:38:55Z"
+    }
+  },
+  "birth": {
+    "claimCount": 2,
+    "distinctDayPrecisionValues": [
+      "+1917-04-25T00:00:00Z|proleptic-gregorian",
+      "+1918-04-25T00:00:00Z|proleptic-gregorian"
+    ],
+    "allValues": [
+      {
+        "time": "+1917-04-25T00:00:00Z",
+        "precision": 11,
+        "calendar": "proleptic-gregorian",
+        "rank": "normal"
+      },
+      {
+        "time": "+1918-04-25T00:00:00Z",
+        "precision": 11,
+        "calendar": "proleptic-gregorian",
+        "rank": "deprecated"
+      }
+    ],
+    "time": "+1917-04-25T00:00:00Z",
+    "precision": "day",
+    "calendarModel": "proleptic-gregorian",
+    "timeOfDay": null,
+    "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+  },
+  "death": {
+    "time": "+1996-06-15T00:00:00Z",
+    "precision": "day",
+    "calendarModel": "proleptic-gregorian"
+  },
+  "living": false,
+  "birthPlace": {
+    "entity": "Q335017",
+    "label": "Newport News",
+    "entityUrl": "https://www.wikidata.org/wiki/Q335017",
+    "country": {
+      "entity": "Q30",
+      "label": "United States"
+    },
+    "claimCount": 1,
+    "coordinates": {
+      "sourceEntity": "Q335017",
+      "sourceEntityLabel": "Newport News",
+      "latitude": 37.070833333333,
+      "longitude": -76.484444444444,
+      "precision": 0.00027777777777778,
+      "escalationSteps": 0
+    }
+  },
+  "occupations": [
+    {
+      "entity": "Q488205",
+      "label": "singer-songwriter"
+    },
+    {
+      "entity": "Q36834",
+      "label": "composer"
+    },
+    {
+      "entity": "Q158852",
+      "label": "conductor"
+    },
+    {
+      "entity": "Q806349",
+      "label": "bandleader"
+    },
+    {
+      "entity": "Q10800557",
+      "label": "film actor"
+    },
+    {
+      "entity": "Q55960555",
+      "label": "recording artist"
+    },
+    {
+      "entity": "Q15981151",
+      "label": "jazz musician"
+    },
+    {
+      "entity": "Q177220",
+      "label": "singer"
+    },
+    {
+      "entity": "Q66314404",
+      "label": "jazz singer"
+    },
+    {
+      "entity": "Q639669",
+      "label": "musician"
+    }
+  ],
+  "portrait": {
+    "file": "File:Ella Fitzgerald by Carl Van Vechten - American Flag (cropped).jpg",
+    "filePage": "https://commons.wikimedia.org/wiki/File:Ella%20Fitzgerald%20by%20Carl%20Van%20Vechten%20-%20American%20Flag%20(cropped).jpg",
+    "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Ella_Fitzgerald_by_Carl_Van_Vechten_-_American_Flag_(cropped).jpg",
+    "width": 2911,
+    "height": 4206,
+    "licenseShortName": "Public domain",
+    "licenseUrl": null,
+    "artist": "Carl Van Vechten",
+    "credit": "https://collections.library.yale.edu/catalog/2018461",
+    "usageTerms": "Public domain",
+    "attributionRequired": "false",
+    "restrictions": ""
+  }
+}

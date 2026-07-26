@@ -1,0 +1,100 @@
+{
+  "schema": "zodiacs.phase5.evidence.v1",
+  "slug": "frida-kahlo",
+  "qid": "Q5588",
+  "displayName": "Frida Kahlo",
+  "wikidataLabel": "Frida Kahlo",
+  "wikidataDescription": "Mexican painter (1907–1954)",
+  "retrievedAtUtc": "2026-07-25T17:05:12.504Z",
+  "sources": {
+    "wikidata": {
+      "entityUrl": "https://www.wikidata.org/wiki/Q5588",
+      "propertiesUsed": [
+        "P569",
+        "P19",
+        "P625",
+        "P106",
+        "P18",
+        "P570",
+        "P17",
+        "P131"
+      ],
+      "lastrevid": 2521357976
+    },
+    "wikipedia": {
+      "language": "en",
+      "title": "Frida Kahlo",
+      "articleUrl": "https://en.wikipedia.org/wiki/Frida_Kahlo",
+      "pageId": 162276,
+      "revisionId": 1365718605,
+      "revisionTimestamp": "2026-07-24T01:32:46Z"
+    }
+  },
+  "birth": {
+    "claimCount": 1,
+    "distinctDayPrecisionValues": [
+      "+1907-07-06T00:00:00Z|proleptic-gregorian"
+    ],
+    "allValues": [
+      {
+        "time": "+1907-07-06T00:00:00Z",
+        "precision": 11,
+        "calendar": "proleptic-gregorian",
+        "rank": "normal"
+      }
+    ],
+    "time": "+1907-07-06T00:00:00Z",
+    "precision": "day",
+    "calendarModel": "proleptic-gregorian",
+    "timeOfDay": null,
+    "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+  },
+  "death": {
+    "time": "+1954-07-13T00:00:00Z",
+    "precision": "day",
+    "calendarModel": "proleptic-gregorian"
+  },
+  "living": false,
+  "birthPlace": {
+    "entity": "Q2597249",
+    "label": "Coyoacán",
+    "entityUrl": "https://www.wikidata.org/wiki/Q2597249",
+    "country": {
+      "entity": "Q96",
+      "label": "Mexico"
+    },
+    "claimCount": 2,
+    "coordinates": {
+      "sourceEntity": "Q1489",
+      "sourceEntityLabel": "Mexico City",
+      "latitude": 19.353773,
+      "longitude": -99.13589,
+      "precision": 0.000001,
+      "escalationSteps": 1
+    }
+  },
+  "occupations": [
+    {
+      "entity": "Q1028181",
+      "label": "painter"
+    },
+    {
+      "entity": "Q483501",
+      "label": "artist"
+    }
+  ],
+  "portrait": {
+    "file": "File:Frida Kahlo, by Guillermo Kahlo (cropped).jpg",
+    "filePage": "https://commons.wikimedia.org/wiki/File:Frida%20Kahlo%2C%20by%20Guillermo%20Kahlo%20(cropped).jpg",
+    "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Frida_Kahlo,_by_Guillermo_Kahlo_(cropped).jpg",
+    "width": 1197,
+    "height": 1440,
+    "licenseShortName": "Public domain",
+    "licenseUrl": null,
+    "artist": "Guillermo Kahlo",
+    "credit": "Sotheby's",
+    "usageTerms": "Public domain",
+    "attributionRequired": "false",
+    "restrictions": ""
+  }
+}

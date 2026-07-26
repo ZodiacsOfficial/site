@@ -1,0 +1,238 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zodiacs.org/schemas/phase5-people-manifest.v1.json",
+  "title": "Zodiacs.org Phase 5 people manifest",
+  "description": "The reviewed, versioned input a future static People generator may read. A production build consumes this file and never contacts Wikidata, Wikipedia or Commons.",
+  "type": "object",
+  "required": ["schema", "status", "julianRule", "thresholds", "people"],
+  "additionalProperties": false,
+  "properties": {
+    "schema": { "const": "zodiacs.phase5.people-manifest.v1" },
+    "status": { "type": "string" },
+    "julianRule": { "type": "string" },
+    "generatedFrom": { "type": "array", "items": { "type": "string" } },
+    "thresholds": { "type": "object" },
+    "people": { "type": "array", "items": { "$ref": "#/$defs/person" }, "minItems": 1 }
+  },
+  "$defs": {
+    "person": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "qid", "slug", "displayName", "shortDescription", "disciplines", "birthDate",
+        "birthTime", "timeQuality", "birthTimeEvidence", "birthPlace", "computation",
+        "sunSign", "moon", "unknownTimeErrorBandDegrees", "dataQualityLabel", "sources",
+        "portrait", "living", "reviewedAtUtc", "computationInputVersion", "contentDepth",
+        "indexEligibility", "suppression"
+      ],
+      "properties": {
+        "qid": { "type": "string", "pattern": "^Q[1-9][0-9]*$" },
+        "slug": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" },
+        "displayName": { "type": "string", "minLength": 1 },
+        "shortDescription": {
+          "type": "string", "minLength": 1, "maxLength": 120,
+          "description": "Original identifying line composed from sourced claims. Never copied from an article."
+        },
+        "disciplines": {
+          "type": "array", "minItems": 1, "items": { "type": "string" },
+          "description": "Editorial selection from this person's own Wikidata P106 claims. Every value must appear in the evidence record."
+        },
+        "birthDate": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["storedValue", "precision", "calendarModel", "calendarConversion", "displayedDate", "computedGregorianDate", "birthdayCrossLinkKey", "birthdayRoute"],
+          "properties": {
+            "storedValue": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
+            "precision": { "const": "day", "description": "Month and year precision fail closed; they never reach the manifest." },
+            "calendarModel": { "enum": ["proleptic-gregorian", "proleptic-julian"] },
+            "calendarConversion": { "type": "string", "minLength": 1 },
+            "displayedDate": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
+            "computedGregorianDate": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
+            "birthdayCrossLinkKey": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
+            "birthdayRoute": { "type": "string", "pattern": "^/birthday/[a-z]+-\\d{1,2}/$" }
+          }
+        },
+        "birthTime": {
+          "oneOf": [{ "type": "null" }, { "type": "string", "pattern": "^\\d{2}:\\d{2}$" }],
+          "description": "Null unless an allowed source explicitly supplies a time. Never inferred, never copied from an astrology source."
+        },
+        "timeQuality": { "enum": ["exact", "unknown", "conflicting"] },
+        "birthTimeEvidence": { "type": "string", "minLength": 1 },
+        "birthPlace": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["entity", "entityLabel", "normalisedLabel", "coordinates", "timeZone"],
+          "properties": {
+            "entity": { "type": "string", "pattern": "^Q[1-9][0-9]*$" },
+            "entityLabel": { "type": "string" },
+            "normalisedLabel": { "type": "string" },
+            "country": {
+              "oneOf": [{ "type": "null" }, {
+                "type": "object", "required": ["entity", "label"],
+                "properties": { "entity": { "type": "string" }, "label": { "type": "string" } }
+              }]
+            },
+            "coordinates": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["latitude", "longitude", "sourceEntity", "sourceEntityLabel", "escalationSteps", "precisionDowngrade"],
+              "properties": {
+                "latitude": { "type": "number", "minimum": -90, "maximum": 90 },
+                "longitude": { "type": "number", "minimum": -180, "maximum": 180 },
+                "sourceEntity": { "type": "string", "pattern": "^Q[1-9][0-9]*$" },
+                "sourceEntityLabel": { "type": "string" },
+                "wikidataPrecision": { "type": ["number", "null"] },
+                "escalationSteps": {
+                  "type": "integer", "minimum": 0, "maximum": 1,
+                  "description": "0 = the birthplace entity carried its own coordinates. 1 = one administrative step up, with a recorded precision downgrade. 2 or more fails closed."
+                },
+                "precisionDowngrade": { "type": ["string", "null"] }
+              }
+            },
+            "timeZone": { "type": "string", "minLength": 1 }
+          }
+        },
+        "computation": {
+          "type": "object",
+          "required": ["convention", "timeZone", "civilTime", "utcInstant", "anglesComputed", "housesComputed", "sectComputed", "ephemeris", "aspectTable"],
+          "properties": {
+            "convention": { "type": "string" },
+            "timeZone": { "type": "string" },
+            "civilTime": { "type": "string" },
+            "utcInstant": { "type": "string", "format": "date-time" },
+            "utcOffsetMinutesAtBirth": { "type": "number" },
+            "civilDayStartUtc": { "type": "string" },
+            "civilDayEndUtc": { "type": "string" },
+            "latitude": { "type": "number" },
+            "longitude": { "type": "number" },
+            "coordinateEscalationSteps": { "type": "integer" },
+            "coordinateSourceEntity": { "type": "string" },
+            "ephemeris": { "type": "string" },
+            "aspectTable": { "type": "string" },
+            "anglesComputed": { "const": false },
+            "housesComputed": { "const": false },
+            "sectComputed": { "const": false }
+          }
+        },
+        "sunSign": {
+          "type": "object",
+          "required": ["slug", "name", "degree", "determinable", "cuspCheck"],
+          "properties": {
+            "slug": { "enum": ["aries", "taurus", "gemini", "cancer", "leo", "virgo", "libra", "scorpio", "sagittarius", "capricorn", "aquarius", "pisces"] },
+            "name": { "type": "string" },
+            "degree": { "type": "number", "minimum": 0, "exclusiveMaximum": 30 },
+            "determinable": { "const": true },
+            "cuspCheck": {
+              "type": "object",
+              "required": ["ambiguous"],
+              "properties": {
+                "ambiguous": { "const": false },
+                "boundaryUtc": { "type": ["string", "null"] },
+                "degreesInsideAtWindowStart": { "type": "number" },
+                "degreesToNextBoundaryAtWindowEnd": { "type": "number" }
+              }
+            }
+          }
+        },
+        "moon": {
+          "type": "object",
+          "required": ["sign", "signName", "degree", "uncertain", "signAtCivilDayStart", "signAtCivilDayEnd"],
+          "properties": {
+            "sign": { "type": "string" }, "signName": { "type": "string" },
+            "degree": { "type": "number" }, "uncertain": { "type": "boolean" },
+            "signAtCivilDayStart": { "type": "string" }, "signAtCivilDayEnd": { "type": "string" }
+          }
+        },
+        "unknownTimeErrorBandDegrees": { "type": "object", "additionalProperties": { "type": "number" } },
+        "dataQualityLabel": { "type": "string", "minLength": 1 },
+        "sources": {
+          "type": "object",
+          "required": ["wikidata", "wikipedia", "retrievedAtUtc"],
+          "properties": {
+            "wikidata": {
+              "type": "object", "required": ["entityUrl", "propertiesUsed", "lastrevid"],
+              "properties": {
+                "entityUrl": { "type": "string", "pattern": "^https://www\\.wikidata\\.org/wiki/Q[0-9]+$" },
+                "propertiesUsed": { "type": "array", "items": { "type": "string" } },
+                "lastrevid": { "type": "integer" }
+              }
+            },
+            "wikipedia": {
+              "type": "object", "required": ["language", "title", "articleUrl", "pageId", "revisionId", "revisionTimestamp"],
+              "properties": {
+                "language": { "const": "en" },
+                "title": { "type": "string" },
+                "articleUrl": { "type": "string", "pattern": "^https://en\\.wikipedia\\.org/wiki/" },
+                "pageId": { "type": "integer" },
+                "revisionId": { "type": "integer" },
+                "revisionTimestamp": { "type": "string" }
+              }
+            },
+            "retrievedAtUtc": { "type": "string", "format": "date-time" }
+          }
+        },
+        "portrait": {
+          "oneOf": [
+            {
+              "type": "object", "required": ["available", "reason"],
+              "properties": { "available": { "const": false }, "reason": { "type": "string", "minLength": 1 }, "file": { "type": "string" } }
+            },
+            {
+              "type": "object",
+              "required": ["available", "file", "filePage", "creator", "licence", "attributionRequired", "renderedAttribution", "renderedAttributionLinks"],
+              "properties": {
+                "available": { "const": true },
+                "file": { "type": "string" },
+                "filePage": { "type": "string", "pattern": "^https://commons\\.wikimedia\\.org/" },
+                "creator": { "type": "string", "minLength": 1 },
+                "licence": { "type": "string", "pattern": "(?i)^(public domain|CC0.*|CC BY [0-9.]+|CC BY-SA [0-9.]+)$" },
+                "licenceUrl": { "type": ["string", "null"] },
+                "attributionRequired": { "type": "boolean" },
+                "renderedAttribution": {
+                  "type": "string", "minLength": 1,
+                  "description": "The credit that must be VISIBLE beside the image. Storing licence metadata without rendering it does not satisfy CC BY or CC BY-SA."
+                },
+                "renderedAttributionLinks": { "type": "object" },
+                "width": { "type": ["integer", "null"] },
+                "height": { "type": ["integer", "null"] }
+              }
+            }
+          ]
+        },
+        "living": { "type": "boolean" },
+        "reviewedAtUtc": { "type": "string", "format": "date-time" },
+        "computationInputVersion": { "type": "object" },
+        "contentDepth": {
+          "type": "object",
+          "required": ["originalWords", "substantiveStatements", "highestPairwiseSimilarity"],
+          "properties": {
+            "originalWords": { "type": "integer", "minimum": 0 },
+            "substantiveStatements": { "type": "integer", "minimum": 0 },
+            "highestPairwiseSimilarity": { "type": "number", "minimum": 0, "maximum": 1 }
+          }
+        },
+        "indexEligibility": {
+          "type": "object",
+          "required": ["eligible", "blockedBy", "contentChecksPassed", "contentCheckFailures"],
+          "properties": {
+            "eligible": { "type": "boolean" },
+            "blockedBy": { "type": "array", "items": { "type": "string" } },
+            "contentChecksPassed": { "type": "boolean" },
+            "contentCheckFailures": { "type": "array", "items": { "type": "string" } }
+          }
+        },
+        "suppression": {
+          "type": "object",
+          "required": ["status"],
+          "properties": {
+            "status": { "enum": ["active", "noindex", "removed"] },
+            "requestedBy": { "type": ["string", "null"] },
+            "decidedAtUtc": { "type": ["string", "null"] },
+            "note": { "type": ["string", "null"] }
+          },
+          "description": "A record whose status is 'removed' must not appear in any generated route, sitemap entry, search-index record, birthday cross-link, OG asset or share artifact. The decision is retained so a later ingestion pass cannot silently reinstate the person."
+        }
+      }
+    }
+  }
+}

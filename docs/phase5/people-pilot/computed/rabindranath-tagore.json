@@ -1,0 +1,260 @@
+{
+  "schema": "zodiacs.phase5.computed.v1",
+  "slug": "rabindranath-tagore",
+  "qid": "Q7241",
+  "displayName": "Rabindranath Tagore",
+  "calendarModel": "proleptic-gregorian",
+  "storedDate": "1861-05-07",
+  "gregorianDate": "1861-05-07",
+  "displayedDate": "1861-05-07",
+  "birthdayCrossLinkKey": "1861-05-07",
+  "timeQuality": "unknown",
+  "computation": {
+    "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
+    "timeZone": "Asia/Kolkata",
+    "civilTime": "12:00",
+    "utcInstant": "1861-05-07T06:06:40.000Z",
+    "utcOffsetMinutesAtBirth": 353.3333,
+    "civilDayStartUtc": "1861-05-06T18:06:40.000Z",
+    "civilDayEndUtc": "1861-05-07T18:06:40.000Z",
+    "latitude": 22.5675,
+    "longitude": 88.37,
+    "coordinateEscalationSteps": 0,
+    "coordinateSourceEntity": "Q1348",
+    "ephemeris": "astronomy-engine via GeoVector + Rotation_EQJ_ECT (server-ephemeris.ts convention)",
+    "aspectTable": "@zodiacs/engine/internal/math",
+    "anglesComputed": false,
+    "housesComputed": false,
+    "sectComputed": false
+  },
+  "sun": {
+    "sign": "taurus",
+    "signName": "Taurus",
+    "degree": 16.63
+  },
+  "moon": {
+    "sign": "aries",
+    "signName": "Aries",
+    "degree": 16.98,
+    "uncertain": false,
+    "signAtCivilDayStart": "aries",
+    "signAtCivilDayEnd": "aries"
+  },
+  "cusp": {
+    "ambiguous": false,
+    "boundaryUtc": null,
+    "degreesInsideAtWindowStart": 16.3842,
+    "degreesToNextBoundaryAtWindowEnd": 12.649
+  },
+  "unknownTimeErrorBandDegrees": {
+    "Sun": 0.967,
+    "Moon": 11.854,
+    "Mercury": 1.836,
+    "Venus": 1.232,
+    "Mars": 0.651,
+    "Jupiter": 0.072,
+    "Saturn": 0.005,
+    "Uranus": 0.055,
+    "Neptune": 0.029,
+    "Pluto": 0.023
+  },
+  "signUncertainTransitions": [
+    {
+      "body": "Mercury",
+      "signAtCivilDayStart": "aries",
+      "signAtCivilDayEnd": "taurus"
+    }
+  ],
+  "placements": [
+    {
+      "body": "Sun",
+      "sign": "taurus",
+      "signName": "Taurus",
+      "degree": 16.63,
+      "retrograde": false,
+      "speedPerDay": 0.9669,
+      "dignity": null,
+      "stableAcrossDay": true,
+      "retrogradeStableAcrossDay": true
+    },
+    {
+      "body": "Moon",
+      "sign": "aries",
+      "signName": "Aries",
+      "degree": 16.98,
+      "retrograde": false,
+      "speedPerDay": 11.8528,
+      "dignity": null,
+      "stableAcrossDay": true,
+      "retrogradeStableAcrossDay": true
+    },
+    {
+      "body": "Mercury",
+      "sign": "taurus",
+      "signName": "Taurus",
+      "degree": 0.46,
+      "retrograde": false,
+      "speedPerDay": 1.837,
+      "dignity": null,
+      "stableAcrossDay": false,
+      "retrogradeStableAcrossDay": true
+    },
+    {
+      "body": "Venus",
+      "sign": "taurus",
+      "signName": "Taurus",
+      "degree": 15.45,
+      "retrograde": false,
+      "speedPerDay": 1.2323,
+      "dignity": "domicile",
+      "stableAcrossDay": true,
+      "retrogradeStableAcrossDay": true
+    },
+    {
+      "body": "Mars",
+      "sign": "gemini",
+      "signName": "Gemini",
+      "degree": 22.32,
+      "retrograde": false,
+      "speedPerDay": 0.6508,
+      "dignity": null,
+      "stableAcrossDay": true,
+      "retrogradeStableAcrossDay": true
+    },
+    {
+      "body": "Jupiter",
+      "sign": "leo",
+      "signName": "Leo",
+      "degree": 17.9,
+      "retrograde": false,
+      "speedPerDay": 0.0718,
+      "dignity": null,
+      "stableAcrossDay": true,
+      "retrogradeStableAcrossDay": true
+    },
+    {
+      "body": "Saturn",
+      "sign": "virgo",
+      "signName": "Virgo",
+      "degree": 2.67,
+      "retrograde": false,
+      "speedPerDay": 0.0048,
+      "dignity": null,
+      "stableAcrossDay": true,
+      "retrogradeStableAcrossDay": true
+    },
+    {
+      "body": "Uranus",
+      "sign": "gemini",
+      "signName": "Gemini",
+      "degree": 10.59,
+      "retrograde": false,
+      "speedPerDay": 0.055,
+      "dignity": null,
+      "stableAcrossDay": true,
+      "retrogradeStableAcrossDay": true
+    },
+    {
+      "body": "Neptune",
+      "sign": "aries",
+      "signName": "Aries",
+      "degree": 0.76,
+      "retrograde": false,
+      "speedPerDay": 0.0285,
+      "dignity": null,
+      "stableAcrossDay": true,
+      "retrogradeStableAcrossDay": true
+    },
+    {
+      "body": "Pluto",
+      "sign": "taurus",
+      "signName": "Taurus",
+      "degree": 9.14,
+      "retrograde": false,
+      "speedPerDay": 0.0226,
+      "dignity": null,
+      "stableAcrossDay": true,
+      "retrogradeStableAcrossDay": true
+    }
+  ],
+  "aspectsStableAcrossCivilDay": [
+    {
+      "a": "Moon",
+      "b": "Jupiter",
+      "type": "trine",
+      "orb": 0.92,
+      "applying": true
+    },
+    {
+      "a": "Sun",
+      "b": "Venus",
+      "type": "conjunction",
+      "orb": 1.18,
+      "applying": true
+    },
+    {
+      "a": "Sun",
+      "b": "Jupiter",
+      "type": "square",
+      "orb": 1.27,
+      "applying": true
+    },
+    {
+      "a": "Mercury",
+      "b": "Saturn",
+      "type": "trine",
+      "orb": 2.21,
+      "applying": true
+    },
+    {
+      "a": "Venus",
+      "b": "Jupiter",
+      "type": "square",
+      "orb": 2.45,
+      "applying": true
+    },
+    {
+      "a": "Venus",
+      "b": "Pluto",
+      "type": "conjunction",
+      "orb": 6.31,
+      "applying": false
+    },
+    {
+      "a": "Saturn",
+      "b": "Pluto",
+      "type": "trine",
+      "orb": 6.47,
+      "applying": false
+    },
+    {
+      "a": "Sun",
+      "b": "Pluto",
+      "type": "conjunction",
+      "orb": 7.49,
+      "applying": false
+    }
+  ],
+  "aspectsAtNoonOnly": [],
+  "patterns": {
+    "settledBodyCount": 9,
+    "stelliums": [
+      {
+        "sign": "taurus",
+        "count": 3
+      }
+    ],
+    "elements": {
+      "earth": 4,
+      "fire": 3,
+      "air": 2
+    },
+    "modalities": {
+      "fixed": 4,
+      "cardinal": 2,
+      "mutable": 3
+    },
+    "retrograde": [],
+    "directionUncertain": []
+  }
+}

@@ -1,0 +1,108 @@
+{
+  "schema": "zodiacs.phase5.evidence.v1",
+  "slug": "chien-shiung-wu",
+  "qid": "Q450317",
+  "displayName": "Chien-Shiung Wu",
+  "wikidataLabel": "Chien-Shiung Wu",
+  "wikidataDescription": "Chinese-American physicist (1912–1997) (death at 85 years)",
+  "retrievedAtUtc": "2026-07-25T17:05:12.504Z",
+  "sources": {
+    "wikidata": {
+      "entityUrl": "https://www.wikidata.org/wiki/Q450317",
+      "propertiesUsed": [
+        "P569",
+        "P19",
+        "P625",
+        "P106",
+        "P18",
+        "P570",
+        "P17",
+        "P131"
+      ],
+      "lastrevid": 2515867720
+    },
+    "wikipedia": {
+      "language": "en",
+      "title": "Chien-Shiung Wu",
+      "articleUrl": "https://en.wikipedia.org/wiki/Chien-Shiung_Wu",
+      "pageId": 252131,
+      "revisionId": 1365901887,
+      "revisionTimestamp": "2026-07-25T02:30:18Z"
+    }
+  },
+  "birth": {
+    "claimCount": 1,
+    "distinctDayPrecisionValues": [
+      "+1912-05-31T00:00:00Z|proleptic-gregorian"
+    ],
+    "allValues": [
+      {
+        "time": "+1912-05-31T00:00:00Z",
+        "precision": 11,
+        "calendar": "proleptic-gregorian",
+        "rank": "preferred"
+      }
+    ],
+    "time": "+1912-05-31T00:00:00Z",
+    "precision": "day",
+    "calendarModel": "proleptic-gregorian",
+    "timeOfDay": null,
+    "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+  },
+  "death": {
+    "time": "+1997-02-16T00:00:00Z",
+    "precision": "day",
+    "calendarModel": "proleptic-gregorian"
+  },
+  "living": false,
+  "birthPlace": {
+    "entity": "Q61985",
+    "label": "Taicang",
+    "entityUrl": "https://www.wikidata.org/wiki/Q61985",
+    "country": {
+      "entity": "Q148",
+      "label": "People's Republic of China"
+    },
+    "claimCount": 1,
+    "coordinates": {
+      "sourceEntity": "Q61985",
+      "sourceEntityLabel": "Taicang",
+      "latitude": 31.45152,
+      "longitude": 121.10435,
+      "precision": null,
+      "escalationSteps": 0
+    }
+  },
+  "occupations": [
+    {
+      "entity": "Q16742096",
+      "label": "nuclear physicist"
+    },
+    {
+      "entity": "Q1622272",
+      "label": "university teacher"
+    },
+    {
+      "entity": "Q169470",
+      "label": "physicist"
+    },
+    {
+      "entity": "Q901",
+      "label": "scientist"
+    }
+  ],
+  "portrait": {
+    "file": "File:Chien-shiung Wu (1912-1997) (cropped).jpg",
+    "filePage": "https://commons.wikimedia.org/wiki/File:Chien-shiung%20Wu%20(1912-1997)%20(cropped).jpg",
+    "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Chien-shiung_Wu_(1912-1997)_(cropped).jpg",
+    "width": 425,
+    "height": 630,
+    "licenseShortName": "No restrictions",
+    "licenseUrl": "https://www.flickr.com/commons/usage/",
+    "artist": "Smithsonian Institution from United States",
+    "credit": "left to right: Chien-shiung Wu (1912-1997), Y.K. Lee, and L.W. Mo Uploaded by Fæ",
+    "usageTerms": "No known copyright restrictions",
+    "attributionRequired": "false",
+    "restrictions": ""
+  }
+}

@@ -24,6 +24,9 @@ const russianOut = resolve(out, 'ru');
 const eventsPublication = JSON.parse(
   await readFile(resolve(root, 'src/data/events-publication.json'), 'utf8'),
 );
+const peoplePilot = JSON.parse(
+  await readFile(resolve(root, 'src/data/people.json'), 'utf8'),
+).people;
 const signSlugs = [
   'aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo',
   'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces',
@@ -42,6 +45,7 @@ const expected = [
   'tool/compatibility-invite.png',
   ...(eventsPublication.hub.indexEligible ? ['events/index.png'] : []),
   ...eventsPublication.pages.map((event) => `events/${event.id}.png`),
+  ...peoplePilot.map((person) => `people/${person.slug}.png`),
   'registry.png',
   'thesis.png',
   'disclosure.png',

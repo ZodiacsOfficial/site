@@ -1,0 +1,73 @@
+{
+  "schema": "zodiacs.phase5.depth-report.v1",
+  "metric": "5-word shingle Jaccard similarity, the metric scripts/check-programmatic-uniqueness.mjs already applies to the 78 compatibility pages",
+  "pages": 20,
+  "originalWords": {
+    "min": 332,
+    "max": 414,
+    "median": 371
+  },
+  "substantiveStatements": {
+    "min": 12,
+    "max": 15
+  },
+  "highestSimilarity": {
+    "pair": [
+      "rosalind-franklin",
+      "katherine-johnson"
+    ],
+    "similarity": 0.3048
+  },
+  "topPairs": [
+    {
+      "a": "rosalind-franklin",
+      "b": "katherine-johnson",
+      "similarity": 0.3048
+    },
+    {
+      "a": "emily-bronte",
+      "b": "clara-schumann",
+      "similarity": 0.2309
+    },
+    {
+      "a": "ella-fitzgerald",
+      "b": "rosalind-franklin",
+      "similarity": 0.2124
+    },
+    {
+      "a": "ida-b-wells",
+      "b": "rosalind-franklin",
+      "similarity": 0.2076
+    },
+    {
+      "a": "rosalind-franklin",
+      "b": "virginia-woolf",
+      "similarity": 0.2074
+    },
+    {
+      "a": "ida-b-wells",
+      "b": "zaha-hadid",
+      "similarity": 0.2047
+    },
+    {
+      "a": "vincent-van-gogh",
+      "b": "albert-einstein",
+      "similarity": 0.204
+    },
+    {
+      "a": "ida-b-wells",
+      "b": "virginia-woolf",
+      "similarity": 0.2036
+    },
+    {
+      "a": "wangari-maathai",
+      "b": "clara-schumann",
+      "similarity": 0.2024
+    },
+    {
+      "a": "emily-bronte",
+      "b": "zaha-hadid",
+      "similarity": 0.2018
+    }
+  ]
+}

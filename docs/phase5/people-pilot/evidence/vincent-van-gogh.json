@@ -1,0 +1,128 @@
+{
+  "schema": "zodiacs.phase5.evidence.v1",
+  "slug": "vincent-van-gogh",
+  "qid": "Q5582",
+  "displayName": "Vincent van Gogh",
+  "wikidataLabel": "Vincent van Gogh",
+  "wikidataDescription": "Dutch painter (1853–1890)",
+  "retrievedAtUtc": "2026-07-25T17:05:12.504Z",
+  "sources": {
+    "wikidata": {
+      "entityUrl": "https://www.wikidata.org/wiki/Q5582",
+      "propertiesUsed": [
+        "P569",
+        "P19",
+        "P625",
+        "P106",
+        "P18",
+        "P570",
+        "P17",
+        "P131"
+      ],
+      "lastrevid": 2522529470
+    },
+    "wikipedia": {
+      "language": "en",
+      "title": "Vincent van Gogh",
+      "articleUrl": "https://en.wikipedia.org/wiki/Vincent_van_Gogh",
+      "pageId": 32603,
+      "revisionId": 1365516977,
+      "revisionTimestamp": "2026-07-22T23:33:34Z"
+    }
+  },
+  "birth": {
+    "claimCount": 1,
+    "distinctDayPrecisionValues": [
+      "+1853-03-30T00:00:00Z|proleptic-gregorian"
+    ],
+    "allValues": [
+      {
+        "time": "+1853-03-30T00:00:00Z",
+        "precision": 11,
+        "calendar": "proleptic-gregorian",
+        "rank": "normal"
+      }
+    ],
+    "time": "+1853-03-30T00:00:00Z",
+    "precision": "day",
+    "calendarModel": "proleptic-gregorian",
+    "timeOfDay": null,
+    "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+  },
+  "death": {
+    "time": "+1890-07-29T00:00:00Z",
+    "precision": "day",
+    "calendarModel": "proleptic-gregorian"
+  },
+  "living": false,
+  "birthPlace": {
+    "entity": "Q9883",
+    "label": "Zundert",
+    "entityUrl": "https://www.wikidata.org/wiki/Q9883",
+    "country": {
+      "entity": "Q55",
+      "label": "Netherlands"
+    },
+    "claimCount": 1,
+    "coordinates": {
+      "sourceEntity": "Q9883",
+      "sourceEntityLabel": "Zundert",
+      "latitude": 51.4703,
+      "longitude": 4.66,
+      "precision": 0.001,
+      "escalationSteps": 0
+    }
+  },
+  "occupations": [
+    {
+      "entity": "Q1028181",
+      "label": "painter"
+    },
+    {
+      "entity": "Q3148760",
+      "label": "botanical illustrator"
+    },
+    {
+      "entity": "Q15296811",
+      "label": "draftsperson"
+    },
+    {
+      "entity": "Q11569986",
+      "label": "printmaker"
+    },
+    {
+      "entity": "Q2079935",
+      "label": "architectural drafter"
+    },
+    {
+      "entity": "Q10862983",
+      "label": "etcher"
+    },
+    {
+      "entity": "Q16947657",
+      "label": "lithographer"
+    },
+    {
+      "entity": "Q1925963",
+      "label": "graphic artist"
+    },
+    {
+      "entity": "Q173950",
+      "label": "art dealer"
+    }
+  ],
+  "portrait": {
+    "file": "File:Self-portrait - Vincent van Gogh.jpg",
+    "filePage": "https://commons.wikimedia.org/wiki/File:Self-portrait%20-%20Vincent%20van%20Gogh.jpg",
+    "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Self-portrait_-_Vincent_van_Gogh.jpg",
+    "width": 4248,
+    "height": 5808,
+    "licenseShortName": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "artist": "Vincent van Gogh",
+    "credit": "Own work",
+    "usageTerms": "Creative Commons Attribution-Share Alike 4.0",
+    "attributionRequired": "true",
+    "restrictions": ""
+  }
+}

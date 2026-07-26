@@ -1,0 +1,152 @@
+{
+  "schema": "zodiacs.phase5.evidence.v1",
+  "slug": "simone-de-beauvoir",
+  "qid": "Q7197",
+  "displayName": "Simone de Beauvoir",
+  "wikidataLabel": "Simone de Beauvoir",
+  "wikidataDescription": "French philosopher, social theorist and activist (1908–1986)",
+  "retrievedAtUtc": "2026-07-25T17:05:12.504Z",
+  "sources": {
+    "wikidata": {
+      "entityUrl": "https://www.wikidata.org/wiki/Q7197",
+      "propertiesUsed": [
+        "P569",
+        "P19",
+        "P625",
+        "P106",
+        "P18",
+        "P570",
+        "P17",
+        "P131"
+      ],
+      "lastrevid": 2521377153
+    },
+    "wikipedia": {
+      "language": "en",
+      "title": "Simone de Beauvoir",
+      "articleUrl": "https://en.wikipedia.org/wiki/Simone_de_Beauvoir",
+      "pageId": 62034,
+      "revisionId": 1365431221,
+      "revisionTimestamp": "2026-07-22T10:47:05Z"
+    }
+  },
+  "birth": {
+    "claimCount": 1,
+    "distinctDayPrecisionValues": [
+      "+1908-01-09T00:00:00Z|proleptic-gregorian"
+    ],
+    "allValues": [
+      {
+        "time": "+1908-01-09T00:00:00Z",
+        "precision": 11,
+        "calendar": "proleptic-gregorian",
+        "rank": "normal"
+      }
+    ],
+    "time": "+1908-01-09T00:00:00Z",
+    "precision": "day",
+    "calendarModel": "proleptic-gregorian",
+    "timeOfDay": null,
+    "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+  },
+  "death": {
+    "time": "+1986-04-14T00:00:00Z",
+    "precision": "day",
+    "calendarModel": "proleptic-gregorian"
+  },
+  "living": false,
+  "birthPlace": {
+    "entity": "Q245546",
+    "label": "6th arrondissement of Paris",
+    "entityUrl": "https://www.wikidata.org/wiki/Q245546",
+    "country": {
+      "entity": "Q142",
+      "label": "France"
+    },
+    "claimCount": 2,
+    "coordinates": {
+      "sourceEntity": "Q245546",
+      "sourceEntityLabel": "6th arrondissement of Paris",
+      "latitude": 48.850530555556,
+      "longitude": 2.3322333333333,
+      "precision": 0.0000027777777777778,
+      "escalationSteps": 0
+    }
+  },
+  "occupations": [
+    {
+      "entity": "Q18930007",
+      "label": "political philosopher"
+    },
+    {
+      "entity": "Q1930187",
+      "label": "journalist"
+    },
+    {
+      "entity": "Q6625963",
+      "label": "novelist"
+    },
+    {
+      "entity": "Q18814623",
+      "label": "autobiographer"
+    },
+    {
+      "entity": "Q11774202",
+      "label": "essayist"
+    },
+    {
+      "entity": "Q11499147",
+      "label": "political activist"
+    },
+    {
+      "entity": "Q18939491",
+      "label": "diarist"
+    },
+    {
+      "entity": "Q3589292",
+      "label": "women letter writer"
+    },
+    {
+      "entity": "Q4964182",
+      "label": "philosopher"
+    },
+    {
+      "entity": "Q4263842",
+      "label": "literary critic"
+    },
+    {
+      "entity": "Q36180",
+      "label": "writer"
+    },
+    {
+      "entity": "Q482980",
+      "label": "author"
+    },
+    {
+      "entity": "Q34074720",
+      "label": "feminist"
+    },
+    {
+      "entity": "Q48930480",
+      "label": "philosophy teacher"
+    },
+    {
+      "entity": "Q10800557",
+      "label": "film actor"
+    }
+  ],
+  "portrait": {
+    "file": "File:Simone de Beauvoir2.png",
+    "filePage": "https://commons.wikimedia.org/wiki/File:Simone%20de%20Beauvoir2.png",
+    "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Simone_de_Beauvoir2.png",
+    "width": 564,
+    "height": 780,
+    "licenseShortName": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "artist": "Moshe Milner",
+    "credit": "Crop of File:Flickr - Government Press Office (GPO) - Jean Paul Sartre and Simone De Beauvoir welcomed by Avraham Shlonsky and Leah Goldberg.jpg",
+    "usageTerms": "Creative Commons Attribution-Share Alike 3.0",
+    "attributionRequired": "true",
+    "restrictions": ""
+  }
+}

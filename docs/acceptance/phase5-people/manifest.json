@@ -1,0 +1,543 @@
+{
+  "schema": "zodiacs.phase5.proof-manifest.v1",
+  "tooling": "playwright-core (repository lockfile) + system Chromium via tests/visual/browser.mjs",
+  "widths": [
+    360,
+    390,
+    781,
+    1280
+  ],
+  "exemptions": {
+    "og-card": "rendered once at its canonical 1200×630 share size",
+    "reduced-motion / keyboard-focus / zoom-200": "rendered at 390 and 1280 only"
+  },
+  "boards": 21,
+  "renders": 75,
+  "captures": [
+    {
+      "board": "birthday-crosslink",
+      "width": 360,
+      "file": "birthday-crosslink-360.png",
+      "overflow": 0,
+      "errors": 0
+    },
+    {
+      "board": "birthday-crosslink",
+      "width": 390,
+      "file": "birthday-crosslink-390.png",
+      "overflow": 0,
+      "errors": 0
+    },
+    {
+      "board": "birthday-crosslink",
+      "width": 781,
+      "file": "birthday-crosslink-781.png",
+      "overflow": 0,
+      "errors": 0
+    },
+    {
+      "board": "birthday-crosslink",
+      "width": 1280,
+      "file": "birthday-crosslink-1280.png",
+      "overflow": 0,
+      "errors": 0
+    },
+    {
+      "board": "conflicting-evidence",
+      "width": 360,
+      "file": "conflicting-evidence-360.png",
+      "overflow": 0,
+      "errors": 0
+    },
+    {
+      "board": "conflicting-evidence",
+      "width": 390,
+      "file": "conflicting-evidence-390.png",
+      "overflow": 0,
+      "errors": 0
+    },
+    {
+      "board": "conflicting-evidence",
+      "width": 781,
+      "file": "conflicting-evidence-781.png",
+      "overflow": 0,
+      "errors": 0
+    },
+    {
+      "board": "conflicting-evidence",
+      "width": 1280,
+      "file": "conflicting-evidence-1280.png",
+      "overflow": 0,
+      "errors": 0
+    },
+    {
+      "board": "directory-default",
+      "width": 360,
+      "file": "directory-default-360.png",
+      "overflow": 0,
+      "errors": 0
+    },
+    {
+      "board": "directory-default",
+      "width": 390,
+      "file": "directory-default-390.png",
+      "overflow": 0,
+      "errors": 0
+    },
+    {
+      "board": "directory-default",
+      "width": 781,
+      "file": "directory-default-781.png",
+      "overflow": 0,
+      "errors": 0
+    },
+    {
+      "board": "directory-default",
+      "width": 1280,
+      "file": "directory-default-1280.png",
+      "overflow": 0,
+      "errors": 0
+    },
+    {
+      "board": "directory-empty",
+      "width": 360,
+      "file": "directory-empty-360.png",
+      "overflow": 0,
+      "errors": 0
+    },
+    {
+      "board": "directory-empty",
+      "width": 390,
+      "file": "directory-empty-390.png",
+      "overflow": 0,
+      "errors": 0
+    },
+    {
+      "board": "directory-empty",
+      "width": 781,
+      "file": "directory-empty-781.png",
+      "overflow": 0,
+      "errors": 0
+    },
+    {
+      "board": "directory-empty",
+      "width": 1280,
+      "file": "directory-empty-1280.png",
+      "overflow": 0,
+      "errors": 0
+    },
+    {
+      "board": "directory-filtered",
+      "width": 360,
+      "file": "directory-filtered-360.png",
+      "overflow": 0,
+      "errors": 0
+    },
+    {
+      "board": "directory-filtered",
+      "width": 390,
+      "file": "directory-filtered-390.png",
+      "overflow": 0,
+      "errors": 0
+    },
+    {
+      "board": "directory-filtered",
+      "width": 781,
+      "file": "directory-filtered-781.png",
+      "overflow": 0,
+      "errors": 0
+    },
+    {
+      "board": "directory-filtered",
+      "width": 1280,
+      "file": "directory-filtered-1280.png",
+      "overflow": 0,
+      "errors": 0
+    },
+    {
+      "board": "error-states",
+      "width": 360,
+      "file": "error-states-360.png",
+      "overflow": 0,
+      "errors": 0
+    },
+    {
+      "board": "error-states",
+      "width": 390,
+      "file": "error-states-390.png",
+      "overflow": 0,
+      "errors": 0
+    },
+    {
+      "board": "error-states",
+      "width": 781,
+      "file": "error-states-781.png",
+      "overflow": 0,
+      "errors": 0
+    },
+    {
+      "board": "error-states",
+      "width": 1280,
+      "file": "error-states-1280.png",
+      "overflow": 0,
+      "errors": 0
+    },
+    {
+      "board": "keyboard-focus",
+      "width": 390,
+      "file": "keyboard-focus-390.png",
+      "overflow": 0,
+      "errors": 0
+    },
+    {
+      "board": "keyboard-focus",
+      "width": 1280,
+      "file": "keyboard-focus-1280.png",
+      "overflow": 0,
+      "errors": 0
+    },
+    {
+      "board": "no-javascript",
+      "width": 360,
+      "file": "no-javascript-360.png",
+      "overflow": 0,
+      "errors": 0
+    },
+    {
+      "board": "no-javascript",
+      "width": 390,
+      "file": "no-javascript-390.png",
+      "overflow": 0,
+      "errors": 0
+    },
+    {
+      "board": "no-javascript",
+      "width": 781,
+      "file": "no-javascript-781.png",
+      "overflow": 0,
+      "errors": 0
+    },
+    {
+      "board": "no-javascript",
+      "width": 1280,
+      "file": "no-javascript-1280.png",
+      "overflow": 0,
+      "errors": 0
+    },
+    {
+      "board": "og-card",
+      "width": 1200,
+      "file": "og-card-1200.png",
+      "overflow": 0,
+      "errors": 0
+    },
+    {
+      "board": "portrait-attribution",
+      "width": 360,
+      "file": "portrait-attribution-360.png",
+      "overflow": 0,
+      "errors": 0
+    },
+    {
+      "board": "portrait-attribution",
+      "width": 390,
+      "file": "portrait-attribution-390.png",
+      "overflow": 0,
+      "errors": 0
+    },
+    {
+      "board": "portrait-attribution",
+      "width": 781,
+      "file": "portrait-attribution-781.png",
+      "overflow": 0,
+      "errors": 0
+    },
+    {
+      "board": "portrait-attribution",
+      "width": 1280,
+      "file": "portrait-attribution-1280.png",
+      "overflow": 0,
+      "errors": 0
+    },
+    {
+      "board": "portrait-missing",
+      "width": 360,
+      "file": "portrait-missing-360.png",
+      "overflow": 0,
+      "errors": 0
+    },
+    {
+      "board": "portrait-missing",
+      "width": 390,
+      "file": "portrait-missing-390.png",
+      "overflow": 0,
+      "errors": 0
+    },
+    {
+      "board": "portrait-missing",
+      "width": 781,
+      "file": "portrait-missing-781.png",
+      "overflow": 0,
+      "errors": 0
+    },
+    {
+      "board": "portrait-missing",
+      "width": 1280,
+      "file": "portrait-missing-1280.png",
+      "overflow": 0,
+      "errors": 0
+    },
+    {
+      "board": "profile-cusp-uncertain",
+      "width": 360,
+      "file": "profile-cusp-uncertain-360.png",
+      "overflow": 0,
+      "errors": 0
+    },
+    {
+      "board": "profile-cusp-uncertain",
+      "width": 390,
+      "file": "profile-cusp-uncertain-390.png",
+      "overflow": 0,
+      "errors": 0
+    },
+    {
+      "board": "profile-cusp-uncertain",
+      "width": 781,
+      "file": "profile-cusp-uncertain-781.png",
+      "overflow": 0,
+      "errors": 0
+    },
+    {
+      "board": "profile-cusp-uncertain",
+      "width": 1280,
+      "file": "profile-cusp-uncertain-1280.png",
+      "overflow": 0,
+      "errors": 0
+    },
+    {
+      "board": "profile-dual-date",
+      "width": 360,
+      "file": "profile-dual-date-360.png",
+      "overflow": 0,
+      "errors": 0
+    },
+    {
+      "board": "profile-dual-date",
+      "width": 390,
+      "file": "profile-dual-date-390.png",
+      "overflow": 0,
+      "errors": 0
+    },
+    {
+      "board": "profile-dual-date",
+      "width": 781,
+      "file": "profile-dual-date-781.png",
+      "overflow": 0,
+      "errors": 0
+    },
+    {
+      "board": "profile-dual-date",
+      "width": 1280,
+      "file": "profile-dual-date-1280.png",
+      "overflow": 0,
+      "errors": 0
+    },
+    {
+      "board": "profile-exact-fixture",
+      "width": 360,
+      "file": "profile-exact-fixture-360.png",
+      "overflow": 0,
+      "errors": 0
+    },
+    {
+      "board": "profile-exact-fixture",
+      "width": 390,
+      "file": "profile-exact-fixture-390.png",
+      "overflow": 0,
+      "errors": 0
+    },
+    {
+      "board": "profile-exact-fixture",
+      "width": 781,
+      "file": "profile-exact-fixture-781.png",
+      "overflow": 0,
+      "errors": 0
+    },
+    {
+      "board": "profile-exact-fixture",
+      "width": 1280,
+      "file": "profile-exact-fixture-1280.png",
+      "overflow": 0,
+      "errors": 0
+    },
+    {
+      "board": "profile-uncertain-moon",
+      "width": 360,
+      "file": "profile-uncertain-moon-360.png",
+      "overflow": 0,
+      "errors": 0
+    },
+    {
+      "board": "profile-uncertain-moon",
+      "width": 390,
+      "file": "profile-uncertain-moon-390.png",
+      "overflow": 0,
+      "errors": 0
+    },
+    {
+      "board": "profile-uncertain-moon",
+      "width": 781,
+      "file": "profile-uncertain-moon-781.png",
+      "overflow": 0,
+      "errors": 0
+    },
+    {
+      "board": "profile-uncertain-moon",
+      "width": 1280,
+      "file": "profile-uncertain-moon-1280.png",
+      "overflow": 0,
+      "errors": 0
+    },
+    {
+      "board": "profile-unknown-time",
+      "width": 360,
+      "file": "profile-unknown-time-360.png",
+      "overflow": 0,
+      "errors": 0
+    },
+    {
+      "board": "profile-unknown-time",
+      "width": 390,
+      "file": "profile-unknown-time-390.png",
+      "overflow": 0,
+      "errors": 0
+    },
+    {
+      "board": "profile-unknown-time",
+      "width": 781,
+      "file": "profile-unknown-time-781.png",
+      "overflow": 0,
+      "errors": 0
+    },
+    {
+      "board": "profile-unknown-time",
+      "width": 1280,
+      "file": "profile-unknown-time-1280.png",
+      "overflow": 0,
+      "errors": 0
+    },
+    {
+      "board": "provenance-expanded",
+      "width": 360,
+      "file": "provenance-expanded-360.png",
+      "overflow": 0,
+      "errors": 0
+    },
+    {
+      "board": "provenance-expanded",
+      "width": 390,
+      "file": "provenance-expanded-390.png",
+      "overflow": 0,
+      "errors": 0
+    },
+    {
+      "board": "provenance-expanded",
+      "width": 781,
+      "file": "provenance-expanded-781.png",
+      "overflow": 0,
+      "errors": 0
+    },
+    {
+      "board": "provenance-expanded",
+      "width": 1280,
+      "file": "provenance-expanded-1280.png",
+      "overflow": 0,
+      "errors": 0
+    },
+    {
+      "board": "reduced-motion",
+      "width": 390,
+      "file": "reduced-motion-390.png",
+      "overflow": 0,
+      "errors": 0
+    },
+    {
+      "board": "reduced-motion",
+      "width": 1280,
+      "file": "reduced-motion-1280.png",
+      "overflow": 0,
+      "errors": 0
+    },
+    {
+      "board": "share-sheet",
+      "width": 360,
+      "file": "share-sheet-360.png",
+      "overflow": 0,
+      "errors": 0
+    },
+    {
+      "board": "share-sheet",
+      "width": 390,
+      "file": "share-sheet-390.png",
+      "overflow": 0,
+      "errors": 0
+    },
+    {
+      "board": "share-sheet",
+      "width": 781,
+      "file": "share-sheet-781.png",
+      "overflow": 0,
+      "errors": 0
+    },
+    {
+      "board": "share-sheet",
+      "width": 1280,
+      "file": "share-sheet-1280.png",
+      "overflow": 0,
+      "errors": 0
+    },
+    {
+      "board": "withheld",
+      "width": 360,
+      "file": "withheld-360.png",
+      "overflow": 0,
+      "errors": 0
+    },
+    {
+      "board": "withheld",
+      "width": 390,
+      "file": "withheld-390.png",
+      "overflow": 0,
+      "errors": 0
+    },
+    {
+      "board": "withheld",
+      "width": 781,
+      "file": "withheld-781.png",
+      "overflow": 0,
+      "errors": 0
+    },
+    {
+      "board": "withheld",
+      "width": 1280,
+      "file": "withheld-1280.png",
+      "overflow": 0,
+      "errors": 0
+    },
+    {
+      "board": "zoom-200",
+      "width": 390,
+      "file": "zoom-200-390.png",
+      "overflow": 0,
+      "errors": 0
+    },
+    {
+      "board": "zoom-200",
+      "width": 1280,
+      "file": "zoom-200-1280.png",
+      "overflow": 0,
+      "errors": 0
+    }
+  ]
+}

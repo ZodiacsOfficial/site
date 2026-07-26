@@ -1,0 +1,91 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "ella-fitzgerald",
+  "qid": "Q1768",
+  "displayName": "Ella Fitzgerald",
+  "identity": "Jazz musician and singer-songwriter · United States · 1917–1996",
+  "title": "Ella Fitzgerald's birth chart",
+  "metaDescription": "Ella Fitzgerald's chart, computed from a sourced birth date: Sun at 4.9° Taurus. Birth time unknown, so no houses or rising sign.",
+  "lede": "Four of the nine placements whose signs are settled stand in Taurus — the Sun, Mercury, Venus and Jupiter. The placements whose signs could change with an unknown hour are not counted. A cluster that size becomes the section the rest of the chart plays around.",
+  "ledeFact": "stellium:taurus:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:4.90",
+        "decan:taurus:first"
+      ],
+      "text": "At noon on that date the Sun stood at 4.9° Taurus, inside the first decan (0°–10°), whose traditional sub-ruler is Venus. The decan is the older, finer division — it is what the sign looks like once you stop rounding it to thirty degrees."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Venus:conjunction:0.18",
+        "aspect:Mars:Uranus:sextile:0.22",
+        "aspect:Mercury:Saturn:sextile:0.56"
+      ],
+      "text": "The Sun and Venus hold the closest angle here — a conjunction, 0.2° wide. The tradition stops reading a conjunction as two things. It is one appetite with two names, and it moves together or not at all. Behind it, Mars sextile Uranus at 0.2°, and Mercury sextile Saturn at 0.6° — both still well inside the orbs this site uses. These angles were checked through every hour of that civil day and survive throughout, which is why an unrecorded hour does not disturb them."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Venus:domicile",
+        "dignity:Mars:domicile",
+        "dignity:Saturn:detriment"
+      ],
+      "text": "The oldest layer of the scheme — seven planets, four conditions — flags three placements in this chart. Venus in Taurus at 4.7° is in domicile — the planet in its own sign, running on home rules; Mars in Aries at 23.1° is in domicile; Saturn in Cancer at 24.5° is in detriment — the planet opposite its home, working against the grain. None of these labels is a verdict on a person; they describe how a function is situated, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth4-fire2-water2-air1",
+        "modalities:fixed6-cardinal3",
+        "settled-signs:9",
+        "retrograde:0"
+      ],
+      "text": "Among the 9 placements whose signs hold for the whole day, the elements divide 4 earth, 2 fire, 2 water, 1 air; by modality, 6 fixed, 3 cardinal. Earth signs hold the scheme’s slow end, where results are measured in what survives rather than what starts. Nothing was retrograde that day, which is less common than it sounds."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:gemini:cancer"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Gemini into Cancer during that day at the birthplace, travelling 12.5° between one midnight and the next. Which of the two it was depends entirely on the hour, and the hour is not recorded. Rather than pick the likelier half, the reading leaves the Moon open."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/april-25/",
+    "label": "Everyone born on April 25"
+  },
+  "signLink": {
+    "href": "/taurus/",
+    "label": "The Taurus guide"
+  },
+  "substantiveFacts": [
+    "stellium:taurus:4",
+    "sun-degree:4.90",
+    "decan:taurus:first",
+    "aspect:Sun:Venus:conjunction:0.18",
+    "aspect:Mars:Uranus:sextile:0.22",
+    "aspect:Mercury:Saturn:sextile:0.56",
+    "dignity:Venus:domicile",
+    "dignity:Mars:domicile",
+    "dignity:Saturn:detriment",
+    "elements:earth4-fire2-water2-air1",
+    "modalities:fixed6-cardinal3",
+    "settled-signs:9",
+    "retrograde:0",
+    "moon-uncertain:gemini:cancer"
+  ],
+  "measurements": {
+    "originalWords": 365,
+    "substantiveStatements": 14,
+    "blocks": 5
+  }
+}

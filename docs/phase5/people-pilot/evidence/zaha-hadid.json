@@ -1,0 +1,120 @@
+{
+  "schema": "zodiacs.phase5.evidence.v1",
+  "slug": "zaha-hadid",
+  "qid": "Q47780",
+  "displayName": "Zaha Hadid",
+  "wikidataLabel": "Zaha Hadid",
+  "wikidataDescription": "Iraqi British architect, designer and painter (1950–2016)",
+  "retrievedAtUtc": "2026-07-25T17:05:12.504Z",
+  "sources": {
+    "wikidata": {
+      "entityUrl": "https://www.wikidata.org/wiki/Q47780",
+      "propertiesUsed": [
+        "P569",
+        "P19",
+        "P625",
+        "P106",
+        "P18",
+        "P570",
+        "P17",
+        "P131"
+      ],
+      "lastrevid": 2516826002
+    },
+    "wikipedia": {
+      "language": "en",
+      "title": "Zaha Hadid",
+      "articleUrl": "https://en.wikipedia.org/wiki/Zaha_Hadid",
+      "pageId": 513402,
+      "revisionId": 1364079612,
+      "revisionTimestamp": "2026-07-14T10:32:46Z"
+    }
+  },
+  "birth": {
+    "claimCount": 1,
+    "distinctDayPrecisionValues": [
+      "+1950-10-31T00:00:00Z|proleptic-gregorian"
+    ],
+    "allValues": [
+      {
+        "time": "+1950-10-31T00:00:00Z",
+        "precision": 11,
+        "calendar": "proleptic-gregorian",
+        "rank": "normal"
+      }
+    ],
+    "time": "+1950-10-31T00:00:00Z",
+    "precision": "day",
+    "calendarModel": "proleptic-gregorian",
+    "timeOfDay": null,
+    "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+  },
+  "death": {
+    "time": "+2016-03-31T00:00:00Z",
+    "precision": "day",
+    "calendarModel": "proleptic-gregorian"
+  },
+  "living": false,
+  "birthPlace": {
+    "entity": "Q1530",
+    "label": "Baghdad",
+    "entityUrl": "https://www.wikidata.org/wiki/Q1530",
+    "country": {
+      "entity": "Q796",
+      "label": "Iraq"
+    },
+    "claimCount": 1,
+    "coordinates": {
+      "sourceEntity": "Q1530",
+      "sourceEntityLabel": "Baghdad",
+      "latitude": 33.31527777777778,
+      "longitude": 44.36611111111111,
+      "precision": 0.0002777777777777778,
+      "escalationSteps": 0
+    }
+  },
+  "occupations": [
+    {
+      "entity": "Q42973",
+      "label": "architect"
+    },
+    {
+      "entity": "Q5322166",
+      "label": "designer"
+    },
+    {
+      "entity": "Q1622272",
+      "label": "university teacher"
+    },
+    {
+      "entity": "Q2519376",
+      "label": "jewelry designer"
+    },
+    {
+      "entity": "Q483501",
+      "label": "artist"
+    },
+    {
+      "entity": "Q1281618",
+      "label": "sculptor"
+    },
+    {
+      "entity": "Q1028181",
+      "label": "painter"
+    }
+  ],
+  "portrait": {
+    "file": "File:Zaha Hadid in Heydar Aliyev Cultural center in Baku nov 2013 (cropped).jpg",
+    "filePage": "https://commons.wikimedia.org/wiki/File:Zaha%20Hadid%20in%20Heydar%20Aliyev%20Cultural%20center%20in%20Baku%20nov%202013%20(cropped).jpg",
+    "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Zaha_Hadid_in_Heydar_Aliyev_Cultural_center_in_Baku_nov_2013_(cropped).jpg",
+    "width": 394,
+    "height": 566,
+    "licenseShortName": "FAL",
+    "licenseUrl": "http://artlibre.org/licence/lal/en",
+    "artist": "Dmitry Ternovoy",
+    "credit": "https://terranova.viewbook.com/album/portraits.html",
+    "usageTerms": "Free Art License",
+    "attributionRequired": "true",
+    "restrictions": ""
+  }
+}

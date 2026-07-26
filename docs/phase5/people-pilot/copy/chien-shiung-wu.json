@@ -1,0 +1,91 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "chien-shiung-wu",
+  "qid": "Q450317",
+  "displayName": "Chien-Shiung Wu",
+  "identity": "Nuclear physicist · People's Republic of China · 1912–1997",
+  "title": "Chien-Shiung Wu's birth chart",
+  "metaDescription": "Chien-Shiung Wu's chart, computed from a sourced birth date: Sun at 9.3° Gemini. Birth time unknown, so no houses or rising sign.",
+  "lede": "Four of the nine placements whose signs are settled fall in mutable signs, the widest weighting the unknown hour leaves certain. The mutable signs sit where one season is already becoming the next — the scheme’s translators.",
+  "ledeFact": "modality:mutable:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:9.32",
+        "decan:gemini:first"
+      ],
+      "text": "The Sun sits at 9.3° Gemini — the first decan, 0°–10°, which the tradition sub-rules by Mercury. Degrees matter more than the sign label here: two people born a fortnight apart share Gemini and share almost nothing else about where the Sun actually stood."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mercury:Neptune:sextile:1.19",
+        "aspect:Sun:Jupiter:opposition:1.37",
+        "aspect:Mars:Uranus:opposition:1.58"
+      ],
+      "text": "Closest first: Mercury to Neptune, a sextile with 1.2° of slack. A sixth of the circle is close enough for cooperation and far enough that it stays optional. Behind it, the Sun opposition Jupiter at 1.4°, and Mars opposition Uranus at 1.6° — both still well inside the orbs this site uses. Every angle named here holds for the whole of that day at the birthplace, so an unknown hour cannot take it away."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Jupiter:domicile"
+      ],
+      "text": "Of the seven planets the classical scheme judges, one sits in a sign it has an opinion about. Jupiter in Sagittarius at 10.7° is in domicile — the planet in its own sign, running on home rules. None of these labels is a verdict on a person; they describe how a function is situated, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air3-fire3-earth2-water1",
+        "modalities:mutable4-fixed4-cardinal1",
+        "settled-signs:9",
+        "retrograde:2",
+        "sign-uncertain:Venus:taurus:gemini"
+      ],
+      "text": "Counting only the 9 placements whose signs hold for the whole day, the chart runs 3 air, 3 fire, 2 earth, 1 water by element and 4 mutable, 4 fixed, 1 cardinal by modality. Air weights a chart toward language and pattern — the impulse to name a thing before deciding how to feel about it. Venus crossed from Taurus into Gemini during that day, so its sign is left open. Jupiter and Uranus were retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:sagittarius",
+        "moon-band:12.4"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Sagittarius for the whole of that day at the birthplace, covering 12.4° between midnight and midnight. Fast enough that its degree is approximate, slow enough that its sign is not in doubt. At the noon reference it stands at 11.5°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/may-31/",
+    "label": "Everyone born on May 31"
+  },
+  "signLink": {
+    "href": "/gemini/",
+    "label": "The Gemini guide"
+  },
+  "substantiveFacts": [
+    "modality:mutable:4",
+    "sun-degree:9.32",
+    "decan:gemini:first",
+    "aspect:Mercury:Neptune:sextile:1.19",
+    "aspect:Sun:Jupiter:opposition:1.37",
+    "aspect:Mars:Uranus:opposition:1.58",
+    "dignity:Jupiter:domicile",
+    "elements:air3-fire3-earth2-water1",
+    "modalities:mutable4-fixed4-cardinal1",
+    "settled-signs:9",
+    "retrograde:2",
+    "sign-uncertain:Venus:taurus:gemini",
+    "moon-sign:sagittarius",
+    "moon-band:12.4"
+  ],
+  "measurements": {
+    "originalWords": 357,
+    "substantiveStatements": 14,
+    "blocks": 5
+  }
+}

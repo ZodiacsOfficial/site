@@ -1,0 +1,32 @@
+---
+import { peopleDisciplineGroups, type PersonRecord } from '../../lib/people';
+import SignIcon from '../SignIcon.astro';
+
+interface Props {
+  person: PersonRecord;
+  compact?: boolean;
+}
+
+const { person, compact = false } = Astro.props;
+const birthDate = new Intl.DateTimeFormat('en-US', {
+  timeZone: 'UTC',
+  month: 'long',
+  day: 'numeric',
+  year: 'numeric',
+}).format(new Date(`${person.birthDate.displayedDate}T12:00:00Z`));
+---
+<a
+  class:list={['people-card', compact && 'people-card--compact']}
+  href={`/people/${person.slug}/`}
+  data-person-card
+  data-sign={person.sunSign.slug}
+  data-disciplines={peopleDisciplineGroups(person).join(' ')}
+  data-person-name={person.displayName.toLowerCase()}
+>
+  <SignIcon sign={person.sunSign.slug} size={compact ? 36 : 44} loading="lazy" />
+  <span class="people-card__body">
+    <strong>{person.displayName}</strong>
+    <span>{person.sunSign.name} · born {birthDate}</span>
+    {!compact && <small>{person.shortDescription}</small>}
+  </span>
+</a>

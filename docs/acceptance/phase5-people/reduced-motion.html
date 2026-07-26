@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Proof 19 — Reduced motion, settled</title>
+<link rel="stylesheet" href="proof.css">
+</head>
+<body>
+<header class="proof-head">
+  <span class="kicker">Phase 5A People · proof 19</span>
+  <h1>The whole page, final on first paint</h1>
+  <p>Handoff §14. Under <code>prefers-reduced-motion: reduce</code> the one orchestrated moment — the chart wheel’s entrance — does not play, and every element renders at its final position and opacity. Nothing on the page depends on an animation completing, so there is no state a reduced-motion visitor can fail to reach.</p>
+</header>
+<section class="board">
+  <div class="board__note"><strong>Settled render.</strong> Captured with reduced motion forced. Identical in content to proof 5; the difference is that no transition ever ran.</div>
+  <div class="board__stage">
+    <div class="surface">
+      <div class="person-head">
+
+        <div class="person-head__body">
+          <img class="person-head__disc" src="assets/signs/libra.webp" width="62" height="62" alt="" style="width:62px;height:62px;border-radius:50%">
+          <h1 class="display">Serena Williams</h1>
+          <p class="identity">Tennis player · United States · born 1981</p>
+          <p class="mono" style="margin-top:8px">Libra 3.5° · born September 26, 1981</p>
+        </div>
+      </div>
+      <div class="quality" style="--sign: var(--libra)">
+        <strong>Birth date sourced. Birth time unknown.</strong>
+        <span>Without an hour there is no rising sign, no houses and no angles. Everything below is what the day itself settles.</span>
+      </div>
+      <p class="lede">Five of the ten placements whose signs are settled stand in Libra — the Sun, Mercury, Jupiter, Saturn and Pluto. The placements whose signs could change with an unknown hour are not counted. A cluster that size becomes the section the rest of the chart plays around.</p>
+      <div class="wheel">
+      <svg viewBox="0 0 320 320" role="img" aria-label="Chart wheel for Serena Williams: ten bodies by sign and degree. No house ring — the birth time is unknown.">
+      <path d="M 160 160 L 160.0 12.0 A 148 148 0 0 1 234.0 31.8 Z" fill="var(--aries)" fill-opacity="0.10" stroke="rgba(198,204,218,0.14)" stroke-width="0.75"/>
+      <path d="M 160 160 L 234.0 31.8 A 148 148 0 0 1 288.2 86.0 Z" fill="var(--taurus)" fill-opacity="0.10" stroke="rgba(198,204,218,0.14)" stroke-width="0.75"/>
+      <path d="M 160 160 L 288.2 86.0 A 148 148 0 0 1 308.0 160.0 Z" fill="var(--gemini)" fill-opacity="0.10" stroke="rgba(198,204,218,0.14)" stroke-width="0.75"/>
+      <path d="M 160 160 L 308.0 160.0 A 148 148 0 0 1 288.2 234.0 Z" fill="var(--cancer)" fill-opacity="0.10" stroke="rgba(198,204,218,0.14)" stroke-width="0.75"/>
+      <path d="M 160 160 L 288.2 234.0 A 148 148 0 0 1 234.0 288.2 Z" fill="var(--leo)" fill-opacity="0.10" stroke="rgba(198,204,218,0.14)" stroke-width="0.75"/>
+      <path d="M 160 160 L 234.0 288.2 A 148 148 0 0 1 160.0 308.0 Z" fill="var(--virgo)" fill-opacity="0.10" stroke="rgba(198,204,218,0.14)" stroke-width="0.75"/>
+      <path d="M 160 160 L 160.0 308.0 A 148 148 0 0 1 86.0 288.2 Z" fill="var(--libra)" fill-opacity="0.10" stroke="rgba(198,204,218,0.14)" stroke-width="0.75"/>
+      <path d="M 160 160 L 86.0 288.2 A 148 148 0 0 1 31.8 234.0 Z" fill="var(--scorpio)" fill-opacity="0.10" stroke="rgba(198,204,218,0.14)" stroke-width="0.75"/>
+      <path d="M 160 160 L 31.8 234.0 A 148 148 0 0 1 12.0 160.0 Z" fill="var(--sagittarius)" fill-opacity="0.10" stroke="rgba(198,204,218,0.14)" stroke-width="0.75"/>
+      <path d="M 160 160 L 12.0 160.0 A 148 148 0 0 1 31.8 86.0 Z" fill="var(--capricorn)" fill-opacity="0.10" stroke="rgba(198,204,218,0.14)" stroke-width="0.75"/>
+      <path d="M 160 160 L 31.8 86.0 A 148 148 0 0 1 86.0 31.8 Z" fill="var(--aquarius)" fill-opacity="0.10" stroke="rgba(198,204,218,0.14)" stroke-width="0.75"/>
+      <path d="M 160 160 L 86.0 31.8 A 148 148 0 0 1 160.0 12.0 Z" fill="var(--pisces)" fill-opacity="0.10" stroke="rgba(198,204,218,0.14)" stroke-width="0.75"/>
+      <circle cx="160" cy="160" r="102" fill="none" stroke="rgba(198,204,218,0.10)"/>
+      <g><circle cx="152.6" cy="281.8" r="10" fill="#0B0E15" stroke="rgba(198,204,218,0.16)"/><text x="152.6" y="286.8" text-anchor="middle" font-size="14" fill="#EEF1F7" font-family="JetBrains Mono, monospace">☉</text></g>
+      <g><circle cx="189.7" cy="278.3" r="10" fill="#0B0E15" stroke="rgba(198,204,218,0.16)"/><text x="189.7" y="283.3" text-anchor="middle" font-size="14" fill="#EEF1F7" font-family="JetBrains Mono, monospace">☾</text></g>
+      <g><circle cx="100.2" cy="266.3" r="10" fill="#0B0E15" stroke="rgba(198,204,218,0.16)"/><text x="100.2" y="271.3" text-anchor="middle" font-size="14" fill="#EEF1F7" font-family="JetBrains Mono, monospace">☿</text></g>
+      <g><circle cx="72.4" cy="244.9" r="10" fill="#0B0E15" stroke="rgba(198,204,218,0.16)"/><text x="72.4" y="249.9" text-anchor="middle" font-size="14" fill="#EEF1F7" font-family="JetBrains Mono, monospace">♀</text></g>
+      <g><circle cx="245.7" cy="246.8" r="10" fill="#0B0E15" stroke="rgba(198,204,218,0.16)"/><text x="245.7" y="251.8" text-anchor="middle" font-size="14" fill="#EEF1F7" font-family="JetBrains Mono, monospace">♂</text></g>
+      <g><circle cx="124.4" cy="276.7" r="10" fill="#0B0E15" stroke="rgba(198,204,218,0.16)"/><text x="124.4" y="281.7" text-anchor="middle" font-size="14" fill="#EEF1F7" font-family="JetBrains Mono, monospace">♃</text></g>
+      <g><circle cx="135.3" cy="279.5" r="10" fill="#0B0E15" stroke="rgba(198,204,218,0.16)"/><text x="135.3" y="284.5" text-anchor="middle" font-size="14" fill="#EEF1F7" font-family="JetBrains Mono, monospace">♄</text></g>
+      <g><circle cx="57.4" cy="226.0" r="10" fill="#0B0E15" stroke="rgba(198,204,218,0.16)"/><text x="57.4" y="231.0" text-anchor="middle" font-size="14" fill="#EEF1F7" font-family="JetBrains Mono, monospace">♅</text></g>
+      <g><circle cx="39.1" cy="176.5" r="10" fill="#0B0E15" stroke="rgba(198,204,218,0.16)"/><text x="39.1" y="181.5" text-anchor="middle" font-size="14" fill="#EEF1F7" font-family="JetBrains Mono, monospace">♆</text></g>
+      <g><circle cx="111.5" cy="271.9" r="10" fill="#0B0E15" stroke="rgba(198,204,218,0.16)"/><text x="111.5" y="276.9" text-anchor="middle" font-size="14" fill="#EEF1F7" font-family="JetBrains Mono, monospace">♇</text></g>
+      </svg>
+      <p class="mono wheel__caption">Positions at 12:00 civil time in Saginaw — a reference instant, not a birth time.</p>
+    </div>
+      <div class="read">
+        <div class="read__block">
+          <h3>Where the Sun actually stood</h3>
+          <p>The Sun sits at 3.5° Libra — the first decan, 0°–10°, which the tradition sub-rules by Venus. Degrees matter more than the sign label here: two people born a fortnight apart share Libra and share almost nothing else about where the Sun actually stood.</p>
+        </div>
+        <div class="read__block">
+          <h3>The angles that hold</h3>
+          <p>The tightest geometry in the chart puts Venus at right angles from Mars, 0.6° off exact. The old texts treat a square as the aspect you feel earliest and thank latest: obstruction first, competence afterwards. Behind it, Neptune sextile Pluto at 1.2°, and Mars sextile Jupiter at 1.6° — both still well inside the orbs this site uses. Every angle named here holds for the whole of that day at the birthplace, so an unknown hour cannot take it away.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>

@@ -1,0 +1,148 @@
+{
+  "schema": "zodiacs.phase5.evidence.v1",
+  "slug": "albert-einstein",
+  "qid": "Q937",
+  "displayName": "Albert Einstein",
+  "wikidataLabel": "Albert Einstein",
+  "wikidataDescription": "German-born theoretical physicist (1879–1955)",
+  "retrievedAtUtc": "2026-07-25T17:05:12.504Z",
+  "sources": {
+    "wikidata": {
+      "entityUrl": "https://www.wikidata.org/wiki/Q937",
+      "propertiesUsed": [
+        "P569",
+        "P19",
+        "P625",
+        "P106",
+        "P18",
+        "P570",
+        "P17",
+        "P131"
+      ],
+      "lastrevid": 2522560668
+    },
+    "wikipedia": {
+      "language": "en",
+      "title": "Albert Einstein",
+      "articleUrl": "https://en.wikipedia.org/wiki/Albert_Einstein",
+      "pageId": 736,
+      "revisionId": 1365975877,
+      "revisionTimestamp": "2026-07-25T14:29:11Z"
+    }
+  },
+  "birth": {
+    "claimCount": 1,
+    "distinctDayPrecisionValues": [
+      "+1879-03-14T00:00:00Z|proleptic-gregorian"
+    ],
+    "allValues": [
+      {
+        "time": "+1879-03-14T00:00:00Z",
+        "precision": 11,
+        "calendar": "proleptic-gregorian",
+        "rank": "normal"
+      }
+    ],
+    "time": "+1879-03-14T00:00:00Z",
+    "precision": "day",
+    "calendarModel": "proleptic-gregorian",
+    "timeOfDay": null,
+    "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+  },
+  "death": {
+    "time": "+1955-04-18T00:00:00Z",
+    "precision": "day",
+    "calendarModel": "proleptic-gregorian"
+  },
+  "living": false,
+  "birthPlace": {
+    "entity": "Q3012",
+    "label": "Ulm",
+    "entityUrl": "https://www.wikidata.org/wiki/Q3012",
+    "country": {
+      "entity": "Q183",
+      "label": "Germany"
+    },
+    "claimCount": 1,
+    "coordinates": {
+      "sourceEntity": "Q3012",
+      "sourceEntityLabel": "Ulm",
+      "latitude": 48.39861111111111,
+      "longitude": 9.991111111111111,
+      "precision": 0.0002777777777777778,
+      "escalationSteps": 0
+    }
+  },
+  "occupations": [
+    {
+      "entity": "Q19350898",
+      "label": "theoretical physicist"
+    },
+    {
+      "entity": "Q16389557",
+      "label": "philosopher of science"
+    },
+    {
+      "entity": "Q205375",
+      "label": "inventor"
+    },
+    {
+      "entity": "Q3745071",
+      "label": "science writer"
+    },
+    {
+      "entity": "Q1231865",
+      "label": "pedagogue"
+    },
+    {
+      "entity": "Q1622272",
+      "label": "university teacher"
+    },
+    {
+      "entity": "Q169470",
+      "label": "physicist"
+    },
+    {
+      "entity": "Q4964182",
+      "label": "philosopher"
+    },
+    {
+      "entity": "Q36180",
+      "label": "writer"
+    },
+    {
+      "entity": "Q901",
+      "label": "scientist"
+    },
+    {
+      "entity": "Q170790",
+      "label": "mathematician"
+    },
+    {
+      "entity": "Q2896489",
+      "label": "patent examiner"
+    },
+    {
+      "entity": "Q121594",
+      "label": "professor"
+    },
+    {
+      "entity": "Q16003550",
+      "label": "pacifist"
+    }
+  ],
+  "portrait": {
+    "file": "File:Albert Einstein Head cleaned.jpg",
+    "filePage": "https://commons.wikimedia.org/wiki/File:Albert%20Einstein%20Head%20cleaned.jpg",
+    "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Albert_Einstein_Head_cleaned.jpg",
+    "width": 4530,
+    "height": 5607,
+    "licenseShortName": "Public domain",
+    "licenseUrl": null,
+    "artist": "Oren Jack Turner",
+    "credit": "This image is available from the United States Library of Congress's Prints and Photographs division under the digital ID cph.3b46036.This tag does not indicate the copyright status of the attached work. A normal copyright tag is still required. See Commons:Licensing.",
+    "usageTerms": "Public domain",
+    "attributionRequired": "false",
+    "restrictions": ""
+  }
+}

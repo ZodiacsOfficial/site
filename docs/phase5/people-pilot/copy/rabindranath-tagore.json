@@ -1,0 +1,91 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "rabindranath-tagore",
+  "qid": "Q7241",
+  "displayName": "Rabindranath Tagore",
+  "identity": "Poet and composer · India · 1861–1941",
+  "title": "Rabindranath Tagore's birth chart",
+  "metaDescription": "Rabindranath Tagore's chart, computed from a sourced birth date: Sun at 16.6° Taurus. Birth time unknown, so no houses or rising sign.",
+  "lede": "Four of the nine placements whose signs are settled fall in fixed signs, the widest weighting the unknown hour leaves certain. Fixed signs hold the middle of their seasons, and a fixed-heavy chart is read as one that consolidates and does not easily let go.",
+  "ledeFact": "modality:fixed:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:16.63",
+        "decan:taurus:second"
+      ],
+      "text": "The Sun's exact place is 16.6° Taurus. That falls in the second decan, 10°–20°, sub-ruled by Mercury in the classical scheme — a earth sign read through a fixed season."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Venus:conjunction:1.18",
+        "aspect:Sun:Jupiter:square:1.27",
+        "aspect:Mercury:Saturn:trine:2.21"
+      ],
+      "text": "The tightest geometry in the chart puts the Sun in the same degree of the zodiac from Venus, 1.2° off exact. A conjunction is the least negotiable aspect in the scheme — no distance to argue across, so the pair arrives as a single instinct. Behind it, the Sun square Jupiter at 1.3°, and Mercury trine Saturn at 2.2° — both still well inside the orbs this site uses. All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Venus:domicile"
+      ],
+      "text": "The dignity table, which predates the outer planets and only ever spoke for seven, marks one placement here. Venus in Taurus at 15.4° is in domicile — the planet in its own sign, running on home rules. Dignity is a statement about conditions, not about worth."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth4-fire3-air2",
+        "modalities:fixed4-mutable3-cardinal2",
+        "settled-signs:9",
+        "retrograde:0",
+        "sign-uncertain:Mercury:aries:taurus"
+      ],
+      "text": "Counting only the 9 placements whose signs hold for the whole day, the chart runs 4 earth, 3 fire, 2 air by element and 4 fixed, 3 mutable, 2 cardinal by modality. Earth weights a chart toward the material and the durable — what can be built, kept, and relied on. Mercury crossed from Aries into Taurus during that day, so its sign is left open. No settled placement falls in water — an absence the tradition treats as information, not as a defect. Nothing was retrograde that day, which is less common than it sounds."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:aries",
+        "moon-band:11.9"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Aries for the whole of that day at the birthplace, covering 11.9° between midnight and midnight. That is quick enough to make the exact degree a neighbourhood rather than an address, and slow enough to leave the sign settled. At the noon reference it stands at 17.0°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/may-7/",
+    "label": "Everyone born on May 7"
+  },
+  "signLink": {
+    "href": "/taurus/",
+    "label": "The Taurus guide"
+  },
+  "substantiveFacts": [
+    "modality:fixed:4",
+    "sun-degree:16.63",
+    "decan:taurus:second",
+    "aspect:Sun:Venus:conjunction:1.18",
+    "aspect:Sun:Jupiter:square:1.27",
+    "aspect:Mercury:Saturn:trine:2.21",
+    "dignity:Venus:domicile",
+    "elements:earth4-fire3-air2",
+    "modalities:fixed4-mutable3-cardinal2",
+    "settled-signs:9",
+    "retrograde:0",
+    "sign-uncertain:Mercury:aries:taurus",
+    "moon-sign:aries",
+    "moon-band:11.9"
+  ],
+  "measurements": {
+    "originalWords": 358,
+    "substantiveStatements": 14,
+    "blocks": 5
+  }
+}

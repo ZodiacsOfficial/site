@@ -1,0 +1,89 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "walt-whitman",
+  "qid": "Q81438",
+  "displayName": "Walt Whitman",
+  "identity": "Poet and essayist · United States · 1819–1892",
+  "title": "Walt Whitman's birth chart",
+  "metaDescription": "Walt Whitman's chart, computed from a sourced birth date: Sun at 9.3° Gemini. Birth time unknown, so no houses or rising sign.",
+  "lede": "Mars and Uranus sit 0.2° from an exact trine — near enough that the tradition reads drive and disruption as a single working part. A third of the circle is the tradition’s friendliest distance — same element, shared assumptions, no translation required.",
+  "ledeFact": "aspect:Mars:Uranus:trine",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:9.34",
+        "decan:gemini:first"
+      ],
+      "text": "The Sun's exact place is 9.3° Gemini. That falls in the first decan, 0°–10°, sub-ruled by Mercury in the classical scheme — a air sign read through a mutable season."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mars:Uranus:trine:0.24",
+        "aspect:Neptune:Pluto:square:0.34",
+        "aspect:Saturn:Neptune:square:1.47"
+      ],
+      "text": "Mars and Uranus hold the closest angle here — a trine, 0.2° wide. Trines are read as inheritance rather than achievement: the ease is genuine, and nothing about it was earned. Behind it, Neptune square Pluto at 0.3°, and Saturn square Neptune at 1.5° — both still well inside the orbs this site uses. Every angle named here holds for the whole of that day at the birthplace, so an unknown hour cannot take it away."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Venus:domicile",
+        "dignity:Mars:domicile"
+      ],
+      "text": "The dignity table, which predates the outer planets and only ever spoke for seven, marks two placements here. Venus in Taurus at 5.5° is in domicile — the planet in its own sign, running on home rules; Mars in Aries at 23.3° is in domicile. Dignity is a statement about conditions, not about worth."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:fire3-air2-earth2-water2",
+        "modalities:mutable5-fixed3-cardinal1",
+        "settled-signs:9",
+        "retrograde:2"
+      ],
+      "text": "Among the 9 placements whose signs hold for the whole day, the elements divide 3 fire, 2 air, 2 earth, 2 water; by modality, 5 mutable, 3 fixed, 1 cardinal. Fire weights a chart toward initiative — starting, asserting, spending energy to find out what happens. Uranus and Neptune were retrograde — apparent backward motion from where the Earth sits, which the tradition reads as a function turned inward before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:leo:virgo"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Leo into Virgo during that day at the birthplace, travelling 12.1° between one midnight and the next. Without a recorded hour there is no honest way to say which side it was on, so this reading does not say. The Moon sign is a real question here, not a rounding error, and it needs a birth time nobody has published."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/may-31/",
+    "label": "Everyone born on May 31"
+  },
+  "signLink": {
+    "href": "/gemini/",
+    "label": "The Gemini guide"
+  },
+  "substantiveFacts": [
+    "aspect:Mars:Uranus:trine",
+    "sun-degree:9.34",
+    "decan:gemini:first",
+    "aspect:Mars:Uranus:trine:0.24",
+    "aspect:Neptune:Pluto:square:0.34",
+    "aspect:Saturn:Neptune:square:1.47",
+    "dignity:Venus:domicile",
+    "dignity:Mars:domicile",
+    "elements:fire3-air2-earth2-water2",
+    "modalities:mutable5-fixed3-cardinal1",
+    "settled-signs:9",
+    "retrograde:2",
+    "moon-uncertain:leo:virgo"
+  ],
+  "measurements": {
+    "originalWords": 340,
+    "substantiveStatements": 13,
+    "blocks": 5
+  }
+}

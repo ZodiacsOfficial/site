@@ -1,0 +1,93 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "katherine-johnson",
+  "qid": "Q11740",
+  "displayName": "Katherine Johnson",
+  "identity": "Mathematician · United States · 1918–2020",
+  "title": "Katherine Johnson's birth chart",
+  "metaDescription": "Katherine Johnson's chart, computed from a sourced birth date: Sun at 2.6° Virgo. Birth time unknown, so no houses or rising sign.",
+  "lede": "Mars and Pluto sit 0.3° from an exact trine — near enough that the tradition reads drive and depth as a single working part. Trines are read as inheritance rather than achievement: the ease is genuine, and nothing about it was earned.",
+  "ledeFact": "aspect:Mars:Pluto:trine",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:2.59",
+        "decan:virgo:first"
+      ],
+      "text": "The Sun sits at 2.6° Virgo — the first decan, 0°–10°, which the tradition sub-rules by Mercury. Degrees matter more than the sign label here: two people born a fortnight apart share Virgo and share almost nothing else about where the Sun actually stood."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mars:Pluto:trine:0.32",
+        "aspect:Mars:Neptune:square:1.81",
+        "aspect:Venus:Neptune:conjunction:1.88"
+      ],
+      "text": "The tightest geometry in the chart puts Mars a third of the circle apart from Pluto, 0.3° off exact. A trine is an open channel. The two cooperate without being asked, which is exactly why it is easy to spend and easy to take for granted. Behind it, Mars square Neptune at 1.8°, and Venus conjunction Neptune at 1.9° — both still well inside the orbs this site uses. These angles were checked through every hour of that civil day and survive throughout, which is why an unrecorded hour does not disturb them."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mercury:exaltation",
+        "dignity:Mars:domicile",
+        "dignity:Jupiter:exaltation",
+        "dignity:Saturn:detriment"
+      ],
+      "text": "The dignity table, which predates the outer planets and only ever spoke for seven, marks four placements here. Mercury in Virgo at 14.3° is in exaltation — the tradition’s honoured-guest placement, working at its best; Mars in Scorpio at 6.0° is in domicile — the planet in its own sign, running on home rules; Jupiter in Cancer at 9.0° is in exaltation; Saturn in Leo at 20.0° is in detriment — the planet opposite its home, working against the grain. The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:fire3-water3-earth2-air1",
+        "modalities:fixed5-mutable2-cardinal2",
+        "settled-signs:9",
+        "retrograde:2"
+      ],
+      "text": "Counting only the 9 placements whose signs hold for the whole day, the chart runs 3 fire, 3 water, 2 earth, 1 air by element and 5 fixed, 2 mutable, 2 cardinal by modality. A fire emphasis is read as appetite for the first move, with information gathered by doing rather than before doing. Mercury and Uranus were retrograde — motion that reverses only from this vantage point, and which the old reading treats as delay used for revision."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:aries:taurus"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Aries into Taurus during that day at the birthplace, travelling 14.4° between one midnight and the next. Which of the two it was depends entirely on the hour, and the hour is not recorded. Rather than pick the likelier half, the reading leaves the Moon open."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/august-26/",
+    "label": "Everyone born on August 26"
+  },
+  "signLink": {
+    "href": "/virgo/",
+    "label": "The Virgo guide"
+  },
+  "substantiveFacts": [
+    "aspect:Mars:Pluto:trine",
+    "sun-degree:2.59",
+    "decan:virgo:first",
+    "aspect:Mars:Pluto:trine:0.32",
+    "aspect:Mars:Neptune:square:1.81",
+    "aspect:Venus:Neptune:conjunction:1.88",
+    "dignity:Mercury:exaltation",
+    "dignity:Mars:domicile",
+    "dignity:Jupiter:exaltation",
+    "dignity:Saturn:detriment",
+    "elements:fire3-water3-earth2-air1",
+    "modalities:fixed5-mutable2-cardinal2",
+    "settled-signs:9",
+    "retrograde:2",
+    "moon-uncertain:aries:taurus"
+  ],
+  "measurements": {
+    "originalWords": 404,
+    "substantiveStatements": 15,
+    "blocks": 5
+  }
+}

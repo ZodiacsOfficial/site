@@ -1,0 +1,502 @@
+{
+  "schema": "zodiacs.phase5.screening.v1",
+  "generatedFrom": "docs/phase5/people-pilot/evidence + repository ephemeris",
+  "julianRule": "Option A — Julian-dated births are excluded from the Phase 5A pilot",
+  "cuspRule": "excluded when a solar ingress falls inside the 24-hour UTC window of the birth date",
+  "candidates": [
+    {
+      "slug": "vincent-van-gogh",
+      "qid": "Q5582",
+      "displayName": "Vincent van Gogh",
+      "role": "pilot",
+      "verdict": "accepted",
+      "storedDate": "1853-03-30",
+      "calendarModel": "proleptic-gregorian",
+      "gregorianDate": "1853-03-30",
+      "sun": "Aries 9.70°",
+      "moonUncertain": false,
+      "cusp": {
+        "ambiguous": false,
+        "boundaryUtc": null,
+        "degreesInsideAtWindowStart": 9.2145,
+        "degreesToNextBoundaryAtWindowEnd": 19.7992
+      },
+      "reasons": []
+    },
+    {
+      "slug": "wangari-maathai",
+      "qid": "Q46795",
+      "displayName": "Wangari Maathai",
+      "role": "pilot",
+      "verdict": "accepted",
+      "storedDate": "1940-04-01",
+      "calendarModel": "proleptic-gregorian",
+      "gregorianDate": "1940-04-01",
+      "sun": "Aries 11.50°",
+      "moonUncertain": true,
+      "cusp": {
+        "ambiguous": false,
+        "boundaryUtc": null,
+        "degreesInsideAtWindowStart": 11.1161,
+        "degreesToNextBoundaryAtWindowEnd": 17.8975
+      },
+      "reasons": []
+    },
+    {
+      "slug": "rabindranath-tagore",
+      "qid": "Q7241",
+      "displayName": "Rabindranath Tagore",
+      "role": "pilot",
+      "verdict": "accepted",
+      "storedDate": "1861-05-07",
+      "calendarModel": "proleptic-gregorian",
+      "gregorianDate": "1861-05-07",
+      "sun": "Taurus 16.63°",
+      "moonUncertain": false,
+      "cusp": {
+        "ambiguous": false,
+        "boundaryUtc": null,
+        "degreesInsideAtWindowStart": 16.3842,
+        "degreesToNextBoundaryAtWindowEnd": 12.649
+      },
+      "reasons": []
+    },
+    {
+      "slug": "ella-fitzgerald",
+      "qid": "Q1768",
+      "displayName": "Ella Fitzgerald",
+      "role": "pilot",
+      "verdict": "accepted",
+      "storedDate": "1917-04-25",
+      "calendarModel": "proleptic-gregorian",
+      "gregorianDate": "1917-04-25",
+      "sun": "Taurus 4.90°",
+      "moonUncertain": true,
+      "cusp": {
+        "ambiguous": false,
+        "boundaryUtc": null,
+        "degreesInsideAtWindowStart": 4.2125,
+        "degreesToNextBoundaryAtWindowEnd": 24.8141
+      },
+      "reasons": []
+    },
+    {
+      "slug": "walt-whitman",
+      "qid": "Q81438",
+      "displayName": "Walt Whitman",
+      "role": "pilot",
+      "verdict": "accepted",
+      "storedDate": "1819-05-31",
+      "calendarModel": "proleptic-gregorian",
+      "gregorianDate": "1819-05-31",
+      "sun": "Gemini 9.34°",
+      "moonUncertain": true,
+      "cusp": {
+        "ambiguous": false,
+        "boundaryUtc": null,
+        "degreesInsideAtWindowStart": 8.6641,
+        "degreesToNextBoundaryAtWindowEnd": 20.3781
+      },
+      "reasons": []
+    },
+    {
+      "slug": "chien-shiung-wu",
+      "qid": "Q450317",
+      "displayName": "Chien-Shiung Wu",
+      "role": "pilot",
+      "verdict": "accepted",
+      "storedDate": "1912-05-31",
+      "calendarModel": "proleptic-gregorian",
+      "gregorianDate": "1912-05-31",
+      "sun": "Gemini 9.32°",
+      "moonUncertain": false,
+      "cusp": {
+        "ambiguous": false,
+        "boundaryUtc": null,
+        "degreesInsideAtWindowStart": 9.1588,
+        "degreesToNextBoundaryAtWindowEnd": 19.8834
+      },
+      "reasons": []
+    },
+    {
+      "slug": "ida-b-wells",
+      "qid": "Q289428",
+      "displayName": "Ida B. Wells",
+      "role": "pilot",
+      "verdict": "accepted",
+      "storedDate": "1862-07-16",
+      "calendarModel": "proleptic-gregorian",
+      "gregorianDate": "1862-07-16",
+      "sun": "Cancer 23.86°",
+      "moonUncertain": true,
+      "cusp": {
+        "ambiguous": false,
+        "boundaryUtc": null,
+        "degreesInsideAtWindowStart": 23.1505,
+        "degreesToNextBoundaryAtWindowEnd": 5.8956
+      },
+      "reasons": []
+    },
+    {
+      "slug": "frida-kahlo",
+      "qid": "Q5588",
+      "displayName": "Frida Kahlo",
+      "role": "pilot",
+      "verdict": "accepted",
+      "storedDate": "1907-07-06",
+      "calendarModel": "proleptic-gregorian",
+      "gregorianDate": "1907-07-06",
+      "sun": "Cancer 13.51°",
+      "moonUncertain": true,
+      "cusp": {
+        "ambiguous": false,
+        "boundaryUtc": null,
+        "degreesInsideAtWindowStart": 12.7751,
+        "degreesToNextBoundaryAtWindowEnd": 16.2712
+      },
+      "reasons": []
+    },
+    {
+      "slug": "emily-bronte",
+      "qid": "Q80137",
+      "displayName": "Emily Brontë",
+      "role": "pilot",
+      "verdict": "accepted",
+      "storedDate": "1818-07-30",
+      "calendarModel": "proleptic-gregorian",
+      "gregorianDate": "1818-07-30",
+      "sun": "Leo 6.64°",
+      "moonUncertain": false,
+      "cusp": {
+        "ambiguous": false,
+        "boundaryUtc": null,
+        "degreesInsideAtWindowStart": 6.1625,
+        "degreesToNextBoundaryAtWindowEnd": 22.8803
+      },
+      "reasons": []
+    },
+    {
+      "slug": "rosalind-franklin",
+      "qid": "Q7474",
+      "displayName": "Rosalind Franklin",
+      "role": "pilot",
+      "verdict": "accepted",
+      "storedDate": "1920-07-25",
+      "calendarModel": "proleptic-gregorian",
+      "gregorianDate": "1920-07-25",
+      "sun": "Leo 2.17°",
+      "moonUncertain": true,
+      "cusp": {
+        "ambiguous": false,
+        "boundaryUtc": null,
+        "degreesInsideAtWindowStart": 1.7277,
+        "degreesToNextBoundaryAtWindowEnd": 27.3171
+      },
+      "reasons": []
+    },
+    {
+      "slug": "clara-schumann",
+      "qid": "Q132232",
+      "displayName": "Clara Schumann",
+      "role": "pilot",
+      "verdict": "accepted",
+      "storedDate": "1819-09-13",
+      "calendarModel": "proleptic-gregorian",
+      "gregorianDate": "1819-09-13",
+      "sun": "Virgo 19.79°",
+      "moonUncertain": false,
+      "cusp": {
+        "ambiguous": false,
+        "boundaryUtc": null,
+        "degreesInsideAtWindowStart": 19.3361,
+        "degreesToNextBoundaryAtWindowEnd": 9.6891
+      },
+      "reasons": []
+    },
+    {
+      "slug": "katherine-johnson",
+      "qid": "Q11740",
+      "displayName": "Katherine Johnson",
+      "role": "pilot",
+      "verdict": "accepted",
+      "storedDate": "1918-08-26",
+      "calendarModel": "proleptic-gregorian",
+      "gregorianDate": "1918-08-26",
+      "sun": "Virgo 2.59°",
+      "moonUncertain": true,
+      "cusp": {
+        "ambiguous": false,
+        "boundaryUtc": null,
+        "degreesInsideAtWindowStart": 1.9442,
+        "degreesToNextBoundaryAtWindowEnd": 27.0907
+      },
+      "reasons": []
+    },
+    {
+      "slug": "mahatma-gandhi",
+      "qid": "Q1001",
+      "displayName": "Mohandas K. Gandhi",
+      "role": "pilot",
+      "verdict": "accepted",
+      "storedDate": "1869-10-02",
+      "calendarModel": "proleptic-gregorian",
+      "gregorianDate": "1869-10-02",
+      "sun": "Libra 9.07°",
+      "moonUncertain": false,
+      "cusp": {
+        "ambiguous": false,
+        "boundaryUtc": null,
+        "degreesInsideAtWindowStart": 8.8227,
+        "degreesToNextBoundaryAtWindowEnd": 20.1917
+      },
+      "reasons": []
+    },
+    {
+      "slug": "serena-williams",
+      "qid": "Q11459",
+      "displayName": "Serena Williams",
+      "role": "pilot",
+      "verdict": "accepted",
+      "storedDate": "1981-09-26",
+      "calendarModel": "proleptic-gregorian",
+      "gregorianDate": "1981-09-26",
+      "sun": "Libra 3.47°",
+      "moonUncertain": false,
+      "cusp": {
+        "ambiguous": false,
+        "boundaryUtc": null,
+        "degreesInsideAtWindowStart": 2.8141,
+        "degreesToNextBoundaryAtWindowEnd": 26.2048
+      },
+      "reasons": []
+    },
+    {
+      "slug": "zaha-hadid",
+      "qid": "Q47780",
+      "displayName": "Zaha Hadid",
+      "role": "pilot",
+      "verdict": "accepted",
+      "storedDate": "1950-10-31",
+      "calendarModel": "proleptic-gregorian",
+      "gregorianDate": "1950-10-31",
+      "sun": "Scorpio 7.37°",
+      "moonUncertain": false,
+      "cusp": {
+        "ambiguous": false,
+        "boundaryUtc": null,
+        "degreesInsideAtWindowStart": 6.9947,
+        "degreesToNextBoundaryAtWindowEnd": 22.0053
+      },
+      "reasons": []
+    },
+    {
+      "slug": "ada-lovelace",
+      "qid": "Q7259",
+      "displayName": "Ada Lovelace",
+      "role": "pilot",
+      "verdict": "accepted",
+      "storedDate": "1815-12-10",
+      "calendarModel": "proleptic-gregorian",
+      "gregorianDate": "1815-12-10",
+      "sun": "Sagittarius 17.63°",
+      "moonUncertain": true,
+      "cusp": {
+        "ambiguous": false,
+        "boundaryUtc": null,
+        "degreesInsideAtWindowStart": 17.1201,
+        "degreesToNextBoundaryAtWindowEnd": 11.8631
+      },
+      "reasons": []
+    },
+    {
+      "slug": "simone-de-beauvoir",
+      "qid": "Q7197",
+      "displayName": "Simone de Beauvoir",
+      "role": "pilot",
+      "verdict": "accepted",
+      "storedDate": "1908-01-09",
+      "calendarModel": "proleptic-gregorian",
+      "gregorianDate": "1908-01-09",
+      "sun": "Capricorn 17.84°",
+      "moonUncertain": true,
+      "cusp": {
+        "ambiguous": false,
+        "boundaryUtc": null,
+        "degreesInsideAtWindowStart": 17.3358,
+        "degreesToNextBoundaryAtWindowEnd": 11.6449
+      },
+      "reasons": []
+    },
+    {
+      "slug": "rigoberta-menchu",
+      "qid": "Q188620",
+      "displayName": "Rigoberta Menchú",
+      "role": "pilot",
+      "verdict": "accepted",
+      "storedDate": "1959-01-09",
+      "calendarModel": "proleptic-gregorian",
+      "gregorianDate": "1959-01-09",
+      "sun": "Capricorn 18.74°",
+      "moonUncertain": true,
+      "cusp": {
+        "ambiguous": false,
+        "boundaryUtc": null,
+        "degreesInsideAtWindowStart": 17.9749,
+        "degreesToNextBoundaryAtWindowEnd": 11.0056
+      },
+      "reasons": []
+    },
+    {
+      "slug": "virginia-woolf",
+      "qid": "Q40909",
+      "displayName": "Virginia Woolf",
+      "role": "pilot",
+      "verdict": "accepted",
+      "storedDate": "1882-01-25",
+      "calendarModel": "proleptic-gregorian",
+      "gregorianDate": "1882-01-25",
+      "sun": "Aquarius 5.48°",
+      "moonUncertain": true,
+      "cusp": {
+        "ambiguous": false,
+        "boundaryUtc": null,
+        "degreesInsideAtWindowStart": 4.9725,
+        "degreesToNextBoundaryAtWindowEnd": 24.0111
+      },
+      "reasons": []
+    },
+    {
+      "slug": "albert-einstein",
+      "qid": "Q937",
+      "displayName": "Albert Einstein",
+      "role": "pilot",
+      "verdict": "accepted",
+      "storedDate": "1879-03-14",
+      "calendarModel": "proleptic-gregorian",
+      "gregorianDate": "1879-03-14",
+      "sun": "Pisces 23.52°",
+      "moonUncertain": false,
+      "cusp": {
+        "ambiguous": false,
+        "boundaryUtc": null,
+        "degreesInsideAtWindowStart": 23.0581,
+        "degreesToNextBoundaryAtWindowEnd": 5.946
+      },
+      "reasons": []
+    },
+    {
+      "slug": "johann-sebastian-bach",
+      "qid": "Q1339",
+      "displayName": "Johann Sebastian Bach",
+      "role": "screening",
+      "verdict": "excluded",
+      "storedDate": "1685-03-21",
+      "calendarModel": "proleptic-julian",
+      "gregorianDate": "1685-03-31",
+      "cusp": {
+        "ambiguous": false,
+        "boundaryUtc": null,
+        "degreesInsideAtWindowStart": 10.8893,
+        "degreesToNextBoundaryAtWindowEnd": 18.1267
+      },
+      "reasons": [
+        "Julian-dated birth — excluded by the Phase 5A Option A rule"
+      ]
+    },
+    {
+      "slug": "leo-tolstoy",
+      "qid": "Q7243",
+      "displayName": "Leo Tolstoy",
+      "role": "screening",
+      "verdict": "excluded",
+      "storedDate": "1828-08-28",
+      "calendarModel": "proleptic-julian",
+      "gregorianDate": "1828-09-09",
+      "cusp": {
+        "ambiguous": false,
+        "boundaryUtc": null,
+        "degreesInsideAtWindowStart": 16.241,
+        "degreesToNextBoundaryAtWindowEnd": 12.7856
+      },
+      "reasons": [
+        "Julian-dated birth — excluded by the Phase 5A Option A rule"
+      ]
+    },
+    {
+      "slug": "srinivasa-ramanujan",
+      "qid": "Q83163",
+      "displayName": "Srinivasa Ramanujan",
+      "role": "screening",
+      "verdict": "excluded",
+      "storedDate": "1887-12-22",
+      "calendarModel": "proleptic-gregorian",
+      "gregorianDate": "1887-12-22",
+      "cusp": {
+        "ambiguous": true,
+        "boundaryUtc": "1887-12-22T03:04:50.019Z",
+        "fromSign": "sagittarius",
+        "toSign": "capricorn"
+      },
+      "reasons": [
+        "cusp-ambiguous: solar ingress sagittarius→capricorn at 1887-12-22T03:04:50.019Z"
+      ]
+    },
+    {
+      "slug": "pele",
+      "qid": "Q12897",
+      "displayName": "Pelé",
+      "role": "screening",
+      "verdict": "excluded",
+      "storedDate": "1940-10-23",
+      "calendarModel": "proleptic-gregorian",
+      "gregorianDate": "1940-10-23",
+      "cusp": {
+        "ambiguous": true,
+        "boundaryUtc": "1940-10-23T13:39:12.952Z",
+        "fromSign": "libra",
+        "toSign": "scorpio"
+      },
+      "reasons": [
+        "cusp-ambiguous: solar ingress libra→scorpio at 1940-10-23T13:39:12.952Z"
+      ]
+    },
+    {
+      "slug": "ludwig-van-beethoven",
+      "qid": "Q255",
+      "displayName": "Ludwig van Beethoven",
+      "role": "screening",
+      "verdict": "excluded",
+      "storedDate": "1770-12-16",
+      "calendarModel": "proleptic-gregorian",
+      "gregorianDate": "1770-12-16",
+      "cusp": {
+        "ambiguous": false,
+        "boundaryUtc": null,
+        "degreesInsideAtWindowStart": 24.1695,
+        "degreesToNextBoundaryAtWindowEnd": 4.8116
+      },
+      "reasons": [
+        "conflicting birth dates after calendar normalisation: 1770-12-16 vs 1770-12-17"
+      ]
+    },
+    {
+      "slug": "umm-kulthum",
+      "qid": "Q1110560",
+      "displayName": "Umm Kulthum",
+      "role": "screening",
+      "verdict": "excluded",
+      "storedDate": "1898-12-31",
+      "calendarModel": "proleptic-gregorian",
+      "gregorianDate": "1898-12-31",
+      "cusp": {
+        "ambiguous": false,
+        "boundaryUtc": null,
+        "degreesInsideAtWindowStart": 9.3824,
+        "degreesToNextBoundaryAtWindowEnd": 19.5985
+      },
+      "reasons": [
+        "conflicting birth dates after calendar normalisation: 1898-12-31 vs 1904-05-04"
+      ]
+    }
+  ]
+}

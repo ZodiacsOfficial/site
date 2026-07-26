@@ -1,0 +1,147 @@
+{
+  "schema": "zodiacs.phase5.evidence.v1",
+  "slug": "johann-sebastian-bach",
+  "qid": "Q1339",
+  "displayName": "Johann Sebastian Bach",
+  "wikidataLabel": "Johann Sebastian Bach",
+  "wikidataDescription": "German composer (1685–1750)",
+  "retrievedAtUtc": "2026-07-25T17:05:12.504Z",
+  "sources": {
+    "wikidata": {
+      "entityUrl": "https://www.wikidata.org/wiki/Q1339",
+      "propertiesUsed": [
+        "P569",
+        "P19",
+        "P625",
+        "P106",
+        "P18",
+        "P570",
+        "P17",
+        "P131"
+      ],
+      "lastrevid": 2522561864
+    },
+    "wikipedia": {
+      "language": "en",
+      "title": "Johann Sebastian Bach",
+      "articleUrl": "https://en.wikipedia.org/wiki/Johann_Sebastian_Bach",
+      "pageId": 9906294,
+      "revisionId": 1363718508,
+      "revisionTimestamp": "2026-07-11T23:30:23Z"
+    }
+  },
+  "birth": {
+    "claimCount": 2,
+    "distinctDayPrecisionValues": [
+      "+1685-03-21T00:00:00Z|proleptic-julian",
+      "+1685-03-31T00:00:00Z|proleptic-gregorian"
+    ],
+    "allValues": [
+      {
+        "time": "+1685-03-21T00:00:00Z",
+        "precision": 11,
+        "calendar": "proleptic-julian",
+        "rank": "preferred"
+      },
+      {
+        "time": "+1685-03-31T00:00:00Z",
+        "precision": 11,
+        "calendar": "proleptic-gregorian",
+        "rank": "normal"
+      }
+    ],
+    "time": "+1685-03-21T00:00:00Z",
+    "precision": "day",
+    "calendarModel": "proleptic-julian",
+    "timeOfDay": null,
+    "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+  },
+  "death": {
+    "time": "+1750-07-28T00:00:00Z",
+    "precision": "day",
+    "calendarModel": "proleptic-gregorian"
+  },
+  "living": false,
+  "birthPlace": {
+    "entity": "Q7070",
+    "label": "Eisenach",
+    "entityUrl": "https://www.wikidata.org/wiki/Q7070",
+    "country": {
+      "entity": "Q183",
+      "label": "Germany"
+    },
+    "claimCount": 1,
+    "coordinates": {
+      "sourceEntity": "Q7070",
+      "sourceEntityLabel": "Eisenach",
+      "latitude": 50.974722222222,
+      "longitude": 10.324444444444,
+      "precision": 0.00027777777777778,
+      "escalationSteps": 0
+    }
+  },
+  "occupations": [
+    {
+      "entity": "Q36834",
+      "label": "composer"
+    },
+    {
+      "entity": "Q765778",
+      "label": "organist"
+    },
+    {
+      "entity": "Q5371902",
+      "label": "harpsichordist"
+    },
+    {
+      "entity": "Q1259917",
+      "label": "violinist"
+    },
+    {
+      "entity": "Q899758",
+      "label": "violist"
+    },
+    {
+      "entity": "Q158852",
+      "label": "conductor"
+    },
+    {
+      "entity": "Q1076502",
+      "label": "choir director"
+    },
+    {
+      "entity": "Q691031",
+      "label": "concertmaster"
+    },
+    {
+      "entity": "Q14915627",
+      "label": "musicologist"
+    },
+    {
+      "entity": "Q16145150",
+      "label": "music educator"
+    },
+    {
+      "entity": "Q214970",
+      "label": "virtuoso"
+    },
+    {
+      "entity": "Q2251335",
+      "label": "school teacher"
+    }
+  ],
+  "portrait": {
+    "file": "File:Johann Sebastian Bach.png",
+    "filePage": "https://commons.wikimedia.org/wiki/File:Johann%20Sebastian%20Bach.png",
+    "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Johann_Sebastian_Bach.png",
+    "width": 1376,
+    "height": 1786,
+    "licenseShortName": "Public domain",
+    "licenseUrl": null,
+    "artist": "Elias Gottlob Haussmann",
+    "credit": "http://www.jsbach.net/bass/elements/bach-hausmann.jpg",
+    "usageTerms": "Public domain",
+    "attributionRequired": "false",
+    "restrictions": ""
+  }
+}

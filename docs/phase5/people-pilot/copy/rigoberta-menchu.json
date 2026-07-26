@@ -1,0 +1,91 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "rigoberta-menchu",
+  "qid": "Q188620",
+  "displayName": "Rigoberta Menchú",
+  "identity": "Human rights defender · Guatemala · born 1959",
+  "title": "Rigoberta Menchú's birth chart",
+  "metaDescription": "Rigoberta Menchú's chart, computed from a sourced birth date: Sun at 18.7° Capricorn. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Sun and Mars sit 0.3° from an exact trine — near enough that the tradition reads identity and drive as a single working part. Trines are read as inheritance rather than achievement: the ease is genuine, and nothing about it was earned.",
+  "ledeFact": "aspect:Sun:Mars:trine",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:18.74",
+        "decan:capricorn:second"
+      ],
+      "text": "At noon on that date the Sun stood at 18.7° Capricorn, inside the second decan (10°–20°), whose traditional sub-ruler is Venus. The decan is the older, finer division — it is what the sign looks like once you stop rounding it to thirty degrees."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Mars:trine:0.33",
+        "aspect:Mercury:Saturn:conjunction:1.79",
+        "aspect:Neptune:Pluto:sextile:2.78"
+      ],
+      "text": "Closest first: the Sun to Mars, a trine with 0.3° of slack. Trines are read as inheritance rather than achievement: the ease is genuine, and nothing about it was earned. Behind it, Mercury conjunction Saturn at 1.8°, and Neptune sextile Pluto at 2.8° — both still well inside the orbs this site uses. All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mercury:detriment",
+        "dignity:Mars:detriment",
+        "dignity:Saturn:domicile"
+      ],
+      "text": "Of the seven planets the classical scheme judges, three sit in a sign it has an opinion about. Mercury in Sagittarius at 28.7° is in detriment — the planet opposite its home, working against the grain; Mars in Taurus at 19.1° is in detriment; Saturn in Capricorn at 0.5° is in domicile — the planet in its own sign, running on home rules. Dignity is a statement about conditions, not about worth."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth4-fire2-water2-air1",
+        "modalities:fixed5-cardinal2-mutable2",
+        "settled-signs:9",
+        "retrograde:2"
+      ],
+      "text": "The honest balance sheet uses the 9 placements whose signs hold for the whole day: earth 4, fire 2, water 2, air 1 across the elements, and fixed 5, cardinal 2, mutable 2 across the modalities. An earth emphasis reads as trust in the tangible: the plan matters less than whether the thing stands up. Uranus and Pluto were retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:capricorn:aquarius"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Capricorn into Aquarius during that day at the birthplace, travelling 13.9° between one midnight and the next. Without a recorded hour there is no honest way to say which side it was on, so this reading does not say. The Moon sign is a real question here, not a rounding error, and it needs a birth time nobody has published."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/january-9/",
+    "label": "Everyone born on January 9"
+  },
+  "signLink": {
+    "href": "/capricorn/",
+    "label": "The Capricorn guide"
+  },
+  "substantiveFacts": [
+    "aspect:Sun:Mars:trine",
+    "sun-degree:18.74",
+    "decan:capricorn:second",
+    "aspect:Sun:Mars:trine:0.33",
+    "aspect:Mercury:Saturn:conjunction:1.79",
+    "aspect:Neptune:Pluto:sextile:2.78",
+    "dignity:Mercury:detriment",
+    "dignity:Mars:detriment",
+    "dignity:Saturn:domicile",
+    "elements:earth4-fire2-water2-air1",
+    "modalities:fixed5-cardinal2-mutable2",
+    "settled-signs:9",
+    "retrograde:2",
+    "moon-uncertain:capricorn:aquarius"
+  ],
+  "measurements": {
+    "originalWords": 383,
+    "substantiveStatements": 14,
+    "blocks": 5
+  }
+}
