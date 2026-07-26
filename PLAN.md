@@ -2,12 +2,13 @@
 
 Last updated: 2026-07-26
 
-Active phase: **Phase 5C conservative People search release. Phase 4 is
-complete and Phase 5B's twenty-profile noindex pilot is released. The owner
-declined outside legal advice and approved a documented conservative boundary:
-only the eighteen reviewed profiles of deceased public figures may enter
-search. The two living profiles and the People directory remain noindex and
-outside search discovery. Phase 6 has not begun; Phase 1 external closure
+Active phase: **Phase 5C conservative People search release is complete.
+Phase 4 is complete and Phase 5B's twenty-profile pilot remains released. The
+owner declined outside legal advice and approved a documented conservative
+boundary: only the eighteen reviewed profiles of deceased public figures are
+open to search. The two living profiles and the People directory remain
+noindex and outside search discovery. The wider Phase 5 expansion is not
+authorized by this release. Phase 6 has not begun; Phase 1 external closure
 monitoring continues independently.**
 
 ## Authority and operating rule
@@ -296,9 +297,44 @@ all bundle budgets. Three-run Lighthouse results were 100/100/100 with a
 1.35-second LCP for the protected directory, 98/100/100 with a 2.33-second LCP
 for indexable Ada Lovelace, and 98/100/100 with a 2.33-second LCP for protected
 Serena Williams; the intentional noindex audit was the only excluded SEO audit
-on the two protected routes. CI, production deployment, live verification,
-and IndexNow receipts remain required before this section may record Phase 5C
-as released. Phase 6 has not begun.
+on the two protected routes.
+
+### Phase 5C release evidence
+
+- Release PR
+  [#167](https://github.com/ZodiacsOfficial/site/pull/167) merged at
+  `2026-07-26T17:31:56Z` as
+  `877c16a1c7378e41eff13e4ec1308d1e56b4f96e`.
+- Candidate Site Check run
+  [30212027374](https://github.com/ZodiacsOfficial/site/actions/runs/30212027374)
+  passed on `2d408090df3e25f854ac1e583b23504fa2ff52de`.
+  Post-merge Site Check run
+  [30212771757](https://github.com/ZodiacsOfficial/site/actions/runs/30212771757)
+  passed on the exact merge SHA.
+- Vercel completed the production deployment at
+  `2026-07-26T17:34:32Z`; this is the Phase 5C UTC cutover. The canonical
+  deployment is <https://zodiacs.org>, and the immutable Vercel release record
+  is
+  <https://vercel.com/zodiacsofficial/zodiacs-org/7aC5jL2G3uoiTsTXkj3citAusbiX>.
+- Live verification completed at `2026-07-26T17:53:29Z`: all twenty profile
+  routes returned `200` with self-canonicals and zero hreflang links; the
+  eighteen allowlisted profiles were indexable and were the exact People set
+  in sitemap and site search; the directory and two living profiles retained
+  page- and server-level noindex; all four living-person portrait/OG assets
+  retained `noimageindex`; and the privacy explanation was live. Eight
+  JavaScript browser checks across `390px` and `1280px` found meaningful
+  content, zero overflow, and zero console/page errors. The current
+  `/registry/collection/` remained `200` and intact.
+- IndexNow accepted twenty-one changed canonical URLs with HTTP `200` at
+  `2026-07-26T17:53:04.139Z`: the eighteen allowlisted People profiles,
+  `/privacy/`, `/birthday/january-9/`, and
+  `/birthday/september-26/`. The directory and both protected living profiles
+  were not submitted.
+
+Phase 5C is released under the recorded owner decision. This does not complete
+the wider 500-person Phase 5 Definition of Done and does not authorize person
+21, automated ingestion, directory indexing, living-person indexing, or Phase
+6.
 
 ## Phase 3 formal closure
 
