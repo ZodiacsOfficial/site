@@ -1,8 +1,11 @@
 {
   "schema": "zodiacs.phase5.people.v1",
-  "status": "Phase 5B noindex pilot — 20 reviewed records",
+  "status": "Phase 5C conservative public release — 18 indexable deceased records, 2 protected living records",
   "reviewedAtUtc": "2026-07-25T00:00:00Z",
   "sourceManifestSha256": "c7765c8b780557b91c9a6ad10ffc8daa5da83a10899c1ff406711759fe670f14",
+  "sourceIndexPolicySha256": "77afdf67fb6ce15d26c9ac1f2375aa141d6578df107a25b58a175508382acd7e",
+  "indexPolicyApprovedAtUtc": "2026-07-26T16:50:40Z",
+  "directoryIndexable": false,
   "people": [
     {
       "qid": "Q7259",
@@ -153,10 +156,8 @@
         "highestPairwiseSimilarity": 0
       },
       "indexEligibility": {
-        "eligible": false,
-        "blockedBy": [
-          "phase-5b-noindex-pilot — owner approval and legal review required before indexing"
-        ],
+        "eligible": true,
+        "blockedBy": [],
         "contentChecksPassed": true,
         "contentCheckFailures": []
       },
@@ -588,10 +589,8 @@
         "highestPairwiseSimilarity": 0.204
       },
       "indexEligibility": {
-        "eligible": false,
-        "blockedBy": [
-          "phase-5b-noindex-pilot — owner approval and legal review required before indexing"
-        ],
+        "eligible": true,
+        "blockedBy": [],
         "contentChecksPassed": true,
         "contentCheckFailures": []
       },
@@ -1013,10 +1012,8 @@
         "highestPairwiseSimilarity": 0
       },
       "indexEligibility": {
-        "eligible": false,
-        "blockedBy": [
-          "phase-5b-noindex-pilot — owner approval and legal review required before indexing"
-        ],
+        "eligible": true,
+        "blockedBy": [],
         "contentChecksPassed": true,
         "contentCheckFailures": []
       },
@@ -1475,10 +1472,8 @@
         "highestPairwiseSimilarity": 0.2309
       },
       "indexEligibility": {
-        "eligible": false,
-        "blockedBy": [
-          "phase-5b-noindex-pilot — owner approval and legal review required before indexing"
-        ],
+        "eligible": true,
+        "blockedBy": [],
         "contentChecksPassed": true,
         "contentCheckFailures": []
       },
@@ -1946,10 +1941,8 @@
         "highestPairwiseSimilarity": 0.2124
       },
       "indexEligibility": {
-        "eligible": false,
-        "blockedBy": [
-          "phase-5b-noindex-pilot — owner approval and legal review required before indexing"
-        ],
+        "eligible": true,
+        "blockedBy": [],
         "contentChecksPassed": true,
         "contentCheckFailures": []
       },
@@ -2395,10 +2388,8 @@
         "highestPairwiseSimilarity": 0.2309
       },
       "indexEligibility": {
-        "eligible": false,
-        "blockedBy": [
-          "phase-5b-noindex-pilot — owner approval and legal review required before indexing"
-        ],
+        "eligible": true,
+        "blockedBy": [],
         "contentChecksPassed": true,
         "contentCheckFailures": []
       },
@@ -2860,10 +2851,8 @@
         "highestPairwiseSimilarity": 0
       },
       "indexEligibility": {
-        "eligible": false,
-        "blockedBy": [
-          "phase-5b-noindex-pilot — owner approval and legal review required before indexing"
-        ],
+        "eligible": true,
+        "blockedBy": [],
         "contentChecksPassed": true,
         "contentCheckFailures": []
       },
@@ -3319,10 +3308,8 @@
         "highestPairwiseSimilarity": 0.2076
       },
       "indexEligibility": {
-        "eligible": false,
-        "blockedBy": [
-          "phase-5b-noindex-pilot — owner approval and legal review required before indexing"
-        ],
+        "eligible": true,
+        "blockedBy": [],
         "contentChecksPassed": true,
         "contentCheckFailures": []
       },
@@ -3771,10 +3758,8 @@
         "highestPairwiseSimilarity": 0.3048
       },
       "indexEligibility": {
-        "eligible": false,
-        "blockedBy": [
-          "phase-5b-noindex-pilot — owner approval and legal review required before indexing"
-        ],
+        "eligible": true,
+        "blockedBy": [],
         "contentChecksPassed": true,
         "contentCheckFailures": []
       },
@@ -4232,10 +4217,8 @@
         "highestPairwiseSimilarity": 0
       },
       "indexEligibility": {
-        "eligible": false,
-        "blockedBy": [
-          "phase-5b-noindex-pilot — owner approval and legal review required before indexing"
-        ],
+        "eligible": true,
+        "blockedBy": [],
         "contentChecksPassed": true,
         "contentCheckFailures": []
       },
@@ -4708,10 +4691,8 @@
         "highestPairwiseSimilarity": 0
       },
       "indexEligibility": {
-        "eligible": false,
-        "blockedBy": [
-          "phase-5b-noindex-pilot — owner approval and legal review required before indexing"
-        ],
+        "eligible": true,
+        "blockedBy": [],
         "contentChecksPassed": true,
         "contentCheckFailures": []
       },
@@ -5144,7 +5125,7 @@
       "indexEligibility": {
         "eligible": false,
         "blockedBy": [
-          "phase-5b-noindex-pilot — owner approval and legal review required before indexing"
+          "phase-5c-living-person-protection — separate consent or qualified review required"
         ],
         "contentChecksPassed": true,
         "contentCheckFailures": []
@@ -5576,10 +5557,8 @@
         "highestPairwiseSimilarity": 0.3048
       },
       "indexEligibility": {
-        "eligible": false,
-        "blockedBy": [
-          "phase-5b-noindex-pilot — owner approval and legal review required before indexing"
-        ],
+        "eligible": true,
+        "blockedBy": [],
         "contentChecksPassed": true,
         "contentCheckFailures": []
       },
@@ -6077,7 +6056,7 @@
       "indexEligibility": {
         "eligible": false,
         "blockedBy": [
-          "phase-5b-noindex-pilot — owner approval and legal review required before indexing"
+          "phase-5c-living-person-protection — separate consent or qualified review required"
         ],
         "contentChecksPassed": true,
         "contentCheckFailures": []
@@ -6512,10 +6491,8 @@
         "highestPairwiseSimilarity": 0
       },
       "indexEligibility": {
-        "eligible": false,
-        "blockedBy": [
-          "phase-5b-noindex-pilot — owner approval and legal review required before indexing"
-        ],
+        "eligible": true,
+        "blockedBy": [],
         "contentChecksPassed": true,
         "contentCheckFailures": []
       },
@@ -6951,10 +6928,8 @@
         "highestPairwiseSimilarity": 0.204
       },
       "indexEligibility": {
-        "eligible": false,
-        "blockedBy": [
-          "phase-5b-noindex-pilot — owner approval and legal review required before indexing"
-        ],
+        "eligible": true,
+        "blockedBy": [],
         "contentChecksPassed": true,
         "contentCheckFailures": []
       },
@@ -7391,10 +7366,8 @@
         "highestPairwiseSimilarity": 0.2074
       },
       "indexEligibility": {
-        "eligible": false,
-        "blockedBy": [
-          "phase-5b-noindex-pilot — owner approval and legal review required before indexing"
-        ],
+        "eligible": true,
+        "blockedBy": [],
         "contentChecksPassed": true,
         "contentCheckFailures": []
       },
@@ -7834,10 +7807,8 @@
         "highestPairwiseSimilarity": 0
       },
       "indexEligibility": {
-        "eligible": false,
-        "blockedBy": [
-          "phase-5b-noindex-pilot — owner approval and legal review required before indexing"
-        ],
+        "eligible": true,
+        "blockedBy": [],
         "contentChecksPassed": true,
         "contentCheckFailures": []
       },
@@ -8281,10 +8252,8 @@
         "highestPairwiseSimilarity": 0.2024
       },
       "indexEligibility": {
-        "eligible": false,
-        "blockedBy": [
-          "phase-5b-noindex-pilot — owner approval and legal review required before indexing"
-        ],
+        "eligible": true,
+        "blockedBy": [],
         "contentChecksPassed": true,
         "contentCheckFailures": []
       },
@@ -8741,10 +8710,8 @@
         "highestPairwiseSimilarity": 0.2047
       },
       "indexEligibility": {
-        "eligible": false,
-        "blockedBy": [
-          "phase-5b-noindex-pilot — owner approval and legal review required before indexing"
-        ],
+        "eligible": true,
+        "blockedBy": [],
         "contentChecksPassed": true,
         "contentCheckFailures": []
       },

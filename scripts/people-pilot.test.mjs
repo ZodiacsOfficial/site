@@ -4,11 +4,22 @@ import { resolve } from 'node:path';
 import peopleData from '../src/data/people.json';
 
 describe('Phase 5 People pilot contract', () => {
-  it('contains exactly 20 distinct, index-ineligible records', () => {
+  it('contains exactly 20 distinct records with the conservative 18/2 release boundary', () => {
     expect(peopleData.people).toHaveLength(20);
     expect(new Set(peopleData.people.map((person) => person.slug)).size).toBe(20);
     expect(new Set(peopleData.people.map((person) => person.qid)).size).toBe(20);
-    expect(peopleData.people.every((person) => person.indexEligibility.eligible === false)).toBe(true);
+    const indexable = peopleData.people.filter((person) => person.indexEligibility.eligible);
+    const protectedLiving = peopleData.people.filter((person) => !person.indexEligibility.eligible);
+    expect(indexable).toHaveLength(18);
+    expect(indexable.every((person) => !person.living && person.indexEligibility.blockedBy.length === 0)).toBe(true);
+    expect(protectedLiving.map((person) => person.slug).sort()).toEqual([
+      'rigoberta-menchu',
+      'serena-williams',
+    ]);
+    expect(protectedLiving.every((person) => (
+      person.living
+      && person.indexEligibility.blockedBy.some((reason) => reason.includes('living-person-protection'))
+    ))).toBe(true);
   });
 
   it('never counts an uncertain sign in chart aggregates', () => {
@@ -39,18 +50,19 @@ describe('Phase 5 People pilot contract', () => {
     }
   });
 
-  it('pins both route templates to noindex and nofollow', async () => {
-    for (const file of ['src/pages/people/index.astro', 'src/pages/people/[slug].astro']) {
-      const source = await readFile(resolve(file), 'utf8');
-      expect(source).toMatch(/\bnoindex\b/u);
-      expect(source).toMatch(/\bnofollow\b/u);
-    }
+  it('keeps the directory protected and derives profile robots from eligibility', async () => {
+    const directory = await readFile(resolve('src/pages/people/index.astro'), 'utf8');
+    const profile = await readFile(resolve('src/pages/people/[slug].astro'), 'utf8');
+    expect(directory).toContain('noindex={!PEOPLE_DIRECTORY_INDEXABLE}');
+    expect(directory).toContain('nofollow={!PEOPLE_DIRECTORY_INDEXABLE}');
+    expect(profile).toContain('noindex={!person.indexEligibility.eligible}');
+    expect(profile).toContain('nofollow={!person.indexEligibility.eligible}');
   });
 
-  it('keeps People out of the sitemap and primary navigation', async () => {
+  it('publishes only allowlisted profiles in the sitemap and keeps People out of primary navigation', async () => {
     const sitemap = await readFile(resolve('src/pages/sitemap.xml.ts'), 'utf8');
     const nav = await readFile(resolve('src/components/SiteNav.astro'), 'utf8');
-    expect(sitemap).not.toContain('/people/');
+    expect(sitemap).toContain('INDEXABLE_PEOPLE.map');
     expect(nav).not.toContain('/people/');
   });
 });

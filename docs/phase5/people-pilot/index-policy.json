@@ -1,0 +1,32 @@
+{
+  "schema": "zodiacs.phase5.people-index-policy.v1",
+  "approvedAtUtc": "2026-07-26T16:50:40Z",
+  "decision": "owner-led conservative public release",
+  "outsideLegalAdviceObtained": false,
+  "minimumIndexableProfilesForDirectory": 20,
+  "directoryIndexable": false,
+  "indexableProfiles": [
+    "ada-lovelace",
+    "albert-einstein",
+    "chien-shiung-wu",
+    "clara-schumann",
+    "ella-fitzgerald",
+    "emily-bronte",
+    "frida-kahlo",
+    "ida-b-wells",
+    "katherine-johnson",
+    "mahatma-gandhi",
+    "rabindranath-tagore",
+    "rosalind-franklin",
+    "simone-de-beauvoir",
+    "vincent-van-gogh",
+    "virginia-woolf",
+    "walt-whitman",
+    "wangari-maathai",
+    "zaha-hadid"
+  ],
+  "protectedLivingProfiles": [
+    "rigoberta-menchu",
+    "serena-williams"
+  ]
+}

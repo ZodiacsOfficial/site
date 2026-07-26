@@ -5,6 +5,7 @@ import SignIcon from '../../components/SignIcon.astro';
 import PeopleCard from '../../components/people/PeopleCard.astro';
 import {
   PEOPLE,
+  PEOPLE_DIRECTORY_INDEXABLE,
   PEOPLE_DISCIPLINE_FILTERS,
   peopleDisciplineGroups,
 } from '../../lib/people';
@@ -63,15 +64,15 @@ const jsonLd = [
   title="People — sourced birth charts | Zodiacs.org"
   description="Twenty astrology charts computed from sourced public birth dates, with unknown birth times and uncertain Moon signs stated plainly."
   path="/people/"
-  noindex
-  nofollow
+  noindex={!PEOPLE_DIRECTORY_INDEXABLE}
+  nofollow={!PEOPLE_DIRECTORY_INDEXABLE}
   jsonLd={jsonLd}
   stableTypography
   localTypography
 >
   <section class="people-page">
     <header class="people-page__hero">
-      <p class="people-kicker">People · noindex pilot</p>
+      <p class="people-kicker">People · sourced charts</p>
       <h1 class="display">People</h1>
       <p class="people-page__lede">
         Charts for people whose birth dates are a matter of public record. Each one is computed here,

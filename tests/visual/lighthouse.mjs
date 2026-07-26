@@ -27,7 +27,8 @@ const routes = [
   { name: 'event-ingress', path: '/events/saturn-enters-aries-2026-02-14/' },
   { name: 'event-aspect', path: '/events/jupiter-trine-saturn-2026-08-31/' },
   { name: 'people-directory', path: '/people/', intentionalNoindex: true },
-  { name: 'people-profile', path: '/people/ada-lovelace/', intentionalNoindex: true },
+  { name: 'people-profile', path: '/people/ada-lovelace/' },
+  { name: 'people-living-profile', path: '/people/serena-williams/', intentionalNoindex: true },
   // R2 makes the reviewed Russian core public. Gate each distinct Russian
   // template family instead of assuming the English scores transfer across
   // longer Cyrillic copy and the locale-specific font preload path.
@@ -146,9 +147,9 @@ try {
         results.push({
           performance: categoryScore(lhr, 'performance'),
           accessibility: categoryScore(lhr, 'accessibility'),
-          // The People pilot must remain noindex. Gate every SEO audit except
-          // Lighthouse's intentional "is-crawlable" failure, then separately
-          // require that audit to fail closed on all three runs.
+          // Deliberately protected routes must remain noindex. Gate every SEO
+          // audit except the intentional "is-crawlable" failure, then
+          // separately require that audit to fail closed on all runs.
           seo: route.intentionalNoindex
             ? categoryScoreWithout(lhr, 'seo', new Set(['is-crawlable']))
             : categoryScore(lhr, 'seo'),

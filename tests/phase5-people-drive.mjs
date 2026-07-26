@@ -14,12 +14,14 @@ const check = (condition, message) => {
 
 const people = peopleData.people;
 const routes = ['/people/', ...people.map((person) => `/people/${person.slug}/`)];
+const indexablePeople = people.filter((person) => person.indexEligibility.eligible);
+const protectedLiving = people.filter((person) => !person.indexEligibility.eligible);
+const indexablePaths = new Set(indexablePeople.map((person) => `/people/${person.slug}/`));
 const representative = [
   '/people/ada-lovelace/',
   '/people/serena-williams/',
   '/people/chien-shiung-wu/',
 ];
-const expectedRobots = 'noindex, nofollow, max-image-preview:large';
 
 if (OUT) await mkdir(OUT, { recursive: true });
 
@@ -30,7 +32,8 @@ await withPreview({ port: 4425 }, async (baseURL) => {
   });
 
   try {
-    // Every generated route receives the same search/privacy contract.
+    // Every generated route receives the search/privacy contract derived from
+    // the explicit Phase 5C allowlist.
     const inventoryContext = await browser.newContext({
       viewport: { width: 1280, height: 900 },
       reducedMotion: 'no-preference',
@@ -61,6 +64,9 @@ await withPreview({ port: 4425 }, async (baseURL) => {
             }
           }),
       }));
+      const expectedRobots = indexablePaths.has(route)
+        ? 'max-image-preview:large'
+        : 'noindex, nofollow, max-image-preview:large';
       check(state.robots === expectedRobots, `${route}: robots=${state.robots}`);
       check(state.canonical === `https://zodiacs.org${route}`, `${route}: canonical=${state.canonical}`);
       check(state.alternates === 0, `${route}: emitted ${state.alternates} hreflang alternates`);
@@ -137,6 +143,12 @@ await withPreview({ port: 4425 }, async (baseURL) => {
       }
     }
     check(inventoryErrors.length === 0, `inventory browser errors: ${inventoryErrors.join(' | ')}`);
+    check(indexablePeople.length === 18, `expected 18 indexable profiles, found ${indexablePeople.length}`);
+    check(
+      protectedLiving.map((person) => person.slug).sort().join(',')
+        === 'rigoberta-menchu,serena-williams',
+      'protected living-person set drifted',
+    );
     await inventoryContext.close();
 
     // Directory: exact pilot size, progressive enhancement, 44px targets,
@@ -294,6 +306,16 @@ await withPreview({ port: 4425 }, async (baseURL) => {
       await birthdayPage.locator('a[href="/people/ada-lovelace/"]').count() === 1,
       'birthday page does not cross-link Ada Lovelace',
     );
+    await birthdayPage.goto(`${baseURL}/birthday/september-26/`, { waitUntil: 'domcontentloaded' });
+    check(
+      await birthdayPage.locator('a[href="/people/serena-williams/"]').count() === 0,
+      'indexable birthday page links to a protected living profile',
+    );
+    await birthdayPage.goto(`${baseURL}/people/mahatma-gandhi/`, { waitUntil: 'domcontentloaded' });
+    check(
+      await birthdayPage.locator('.person-related a[href="/people/serena-williams/"]').count() === 0,
+      'indexable related-person rail links to a protected living profile',
+    );
     await birthdayPage.goto(`${baseURL}/birthday/february-29/`, { waitUntil: 'domcontentloaded' });
     check(
       await birthdayPage.locator('.bday-people').count() === 0,
@@ -311,4 +333,8 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log(`phase5-people-drive: PASS — ${assertions} assertions; 21 noindex routes, 20 portraits/fallbacks, no-JS, responsive, keyboard and reduced-motion states`);
+console.log(
+  `phase5-people-drive: PASS — ${assertions} assertions;`
+  + ' 18 indexable profiles, directory + 2 living profiles protected,'
+  + ' 20 portraits/fallbacks, no-JS, responsive, keyboard and reduced-motion states',
+);

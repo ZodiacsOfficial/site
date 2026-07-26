@@ -1001,14 +1001,20 @@ if (sitemapLocs.has('/registry/collection/') !== registryAuraBuildEnabled) {
 // seven-surface horoscope program contributes 84 English-only sign pages.
 // Keep exact counts so sitemap drift fails loudly.
 const registryAuraIndexed = sitemapLocs.has('/registry/collection/');
+const indexablePeoplePaths = new Set(
+  JSON.parse(await readFile(resolve(repo, 'src/data/people.json'), 'utf8')).people
+    .filter((person) => person.indexEligibility.eligible)
+    .map((person) => `/people/${person.slug}/`),
+);
 const sitemapPolicy = {
-  total: 2418 + Number(registryAuraIndexed) + publishedEventPaths.size,
+  total: 2418 + Number(registryAuraIndexed) + publishedEventPaths.size + indexablePeoplePaths.size,
   compatibilityPairs: 78,
   birthdays: 1830,
   chineseZodiac: 65,
   disclosures: 6,
   horoscopePages: 84,
   eventPages: publishedEventPaths.size,
+  peoplePages: indexablePeoplePaths.size,
   translatedBlocks: 2051,
 };
 const indexedFamilies = [
@@ -1028,6 +1034,12 @@ const indexedFamilies = [
     expected: sitemapPolicy.eventPages,
     localized: false,
   },
+  {
+    label: 'Phase 5 People profiles',
+    pattern: /^\/people\/[a-z0-9-]+\/$/,
+    expected: sitemapPolicy.peoplePages,
+    localized: false,
+  },
   { label: 'Registry Collection', pattern: /^\/registry\/collection\/$/, expected: Number(registryAuraIndexed), localized: false },
 ];
 
@@ -1040,6 +1052,11 @@ requireExactSet(
   'sitemap.xml Russian core routes',
   new Set([...sitemapLocs].filter((path) => path === '/ru/' || path.startsWith('/ru/'))),
   RUSSIAN_INDEXED_PATHS,
+);
+requireExactSet(
+  'sitemap.xml Phase 5 People profiles',
+  new Set([...sitemapLocs].filter((path) => /^\/people\/[a-z0-9-]+\/$/u.test(path))),
+  indexablePeoplePaths,
 );
 
 if (sitemapLocs.size !== sitemapPolicy.total) {

@@ -18,7 +18,31 @@ const outputPath = resolve(root, 'src/data/people.json');
 const checkOnly = process.argv.includes('--check');
 
 const manifest = JSON.parse(await readFile(resolve(pilot, 'manifest.json'), 'utf8'));
+const indexPolicyPath = resolve(pilot, 'index-policy.json');
+const indexPolicy = JSON.parse(await readFile(indexPolicyPath, 'utf8'));
+const indexableProfiles = new Set(indexPolicy.indexableProfiles);
+const protectedLivingProfiles = new Set(indexPolicy.protectedLivingProfiles);
 const people = [];
+
+if (indexPolicy.schema !== 'zodiacs.phase5.people-index-policy.v1') {
+  throw new Error(`Unsupported People index policy: ${indexPolicy.schema}`);
+}
+if (indexableProfiles.size !== indexPolicy.indexableProfiles.length
+    || protectedLivingProfiles.size !== indexPolicy.protectedLivingProfiles.length) {
+  throw new Error('People index policy contains a duplicate slug');
+}
+const manifestSlugs = new Set(manifest.people.map((person) => person.slug));
+for (const slug of [...indexableProfiles, ...protectedLivingProfiles]) {
+  if (!manifestSlugs.has(slug)) throw new Error(`People index policy names unknown slug: ${slug}`);
+}
+if (indexableProfiles.size + protectedLivingProfiles.size !== manifestSlugs.size) {
+  throw new Error('People index policy does not partition the complete reviewed manifest');
+}
+if (indexPolicy.directoryIndexable !== (
+  indexableProfiles.size >= indexPolicy.minimumIndexableProfilesForDirectory
+)) {
+  throw new Error('People directory eligibility disagrees with its minimum-profile rule');
+}
 
 for (const source of manifest.people) {
   const computed = JSON.parse(
@@ -32,12 +56,34 @@ for (const source of manifest.people) {
     'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces',
   ];
 
+  const indexEligible = indexableProfiles.has(source.slug);
+  const livingProtected = protectedLivingProfiles.has(source.slug);
+  if (indexEligible === livingProtected) {
+    throw new Error(`${source.slug}: must appear in exactly one Phase 5C policy set`);
+  }
+  if (indexEligible && source.living) {
+    throw new Error(`${source.slug}: living profile cannot enter the conservative index allowlist`);
+  }
+  if (livingProtected && !source.living) {
+    throw new Error(`${source.slug}: protected-living policy disagrees with the reviewed record`);
+  }
+  if (indexEligible && (
+    source.suppression.status !== 'active'
+    || !source.sunSign.determinable
+    || !source.indexEligibility.contentChecksPassed
+    || source.indexEligibility.contentCheckFailures.length > 0
+  )) {
+    throw new Error(`${source.slug}: failed an immutable profile index-eligibility check`);
+  }
+
   people.push({
     ...source,
     indexEligibility: {
       ...source.indexEligibility,
-      eligible: false,
-      blockedBy: ['phase-5b-noindex-pilot — owner approval and legal review required before indexing'],
+      eligible: indexEligible,
+      blockedBy: indexEligible
+        ? []
+        : ['phase-5c-living-person-protection — separate consent or qualified review required'],
     },
     portrait: source.portrait.available
       ? { ...source.portrait, assetPath: `/assets/people/${source.slug}.webp` }
@@ -65,11 +111,16 @@ for (const source of manifest.people) {
 
 const output = `${JSON.stringify({
   schema: 'zodiacs.phase5.people.v1',
-  status: 'Phase 5B noindex pilot — 20 reviewed records',
+  status: 'Phase 5C conservative public release — 18 indexable deceased records, 2 protected living records',
   reviewedAtUtc: '2026-07-25T00:00:00Z',
   sourceManifestSha256: createHash('sha256')
     .update(await readFile(resolve(pilot, 'manifest.json')))
     .digest('hex'),
+  sourceIndexPolicySha256: createHash('sha256')
+    .update(await readFile(indexPolicyPath))
+    .digest('hex'),
+  indexPolicyApprovedAtUtc: indexPolicy.approvedAtUtc,
+  directoryIndexable: indexPolicy.directoryIndexable,
   people: people.sort((a, b) => a.slug.localeCompare(b.slug)),
 }, null, 2)}\n`;
 
@@ -79,8 +130,14 @@ if (checkOnly) {
     console.error('people-pilot: src/data/people.json drifted; run node scripts/build-people-pilot.mjs');
     process.exit(1);
   }
-  console.log(`people-pilot: OK — ${people.length} reviewed noindex records, generated data exact`);
+  console.log(
+    `people-release: OK — ${indexableProfiles.size} indexable profiles,`
+    + ` ${protectedLivingProfiles.size} protected living profiles, generated data exact`,
+  );
 } else {
   await writeFile(outputPath, output, 'utf8');
-  console.log(`people-pilot: wrote ${people.length} reviewed noindex records to src/data/people.json`);
+  console.log(
+    `people-release: wrote ${people.length} reviewed records`
+    + ` (${indexableProfiles.size} indexable) to src/data/people.json`,
+  );
 }
