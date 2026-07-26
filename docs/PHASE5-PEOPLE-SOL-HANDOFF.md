@@ -1,6 +1,6 @@
 # Phase 5B People pilot — Sol implementation handoff
 
-Status: **Phase 5B released; Phase 5C conservative indexing candidate in verification**
+Status: **Phase 5B and the conservative Phase 5C indexing boundary are released**
 
 Prepared: 2026-07-26
 
@@ -195,8 +195,30 @@ bundle budgets green. Three-run Lighthouse passed at 100/100/100 with a
 1.35-second LCP for the protected directory, 98/100/100 with a 2.33-second LCP
 for indexable Ada Lovelace, and 98/100/100 with a 2.33-second LCP for protected
 Serena Williams; the intentional noindex audit was the only excluded SEO audit
-on the two protected routes. CI, production verification and IndexNow remain
-release gates.
+on the two protected routes.
+
+### Phase 5C release evidence
+
+- PR `#167` merged at `2026-07-26T17:31:56Z` as
+  `877c16a1c7378e41eff13e4ec1308d1e56b4f96e`.
+- Candidate run `30212027374` passed on
+  `2d408090df3e25f854ac1e583b23504fa2ff52de`; post-merge run
+  `30212771757` passed on the exact merge SHA.
+- Vercel completed the canonical <https://zodiacs.org> deployment at
+  `2026-07-26T17:34:32Z`. The immutable deployment record is
+  <https://vercel.com/zodiacsofficial/zodiacs-org/7aC5jL2G3uoiTsTXkj3citAusbiX>.
+- Live verification completed at `2026-07-26T17:53:29Z`: exact 18/2
+  discovery and protection distribution, twenty self-canonical profile pages,
+  no People hreflang, four protected living-person image assets, privacy copy,
+  and the unchanged Registry Collection route all passed. Eight live browser
+  checks at `390px` and `1280px` passed with zero overflow or browser errors.
+- IndexNow accepted the eighteen approved profile URLs, `/privacy/`, and the
+  two changed birthday routes with HTTP `200` at
+  `2026-07-26T17:53:04.139Z`. No protected URL was submitted.
+
+This completes only the conservative Phase 5C release boundary. It does not
+complete the wider 500-person Phase 5 Definition of Done, authorize person
+21, or open Phase 6.
 
 Do not expand beyond the twenty-person pilot, add localized People routes, add
 People to global navigation/search, or begin Phase 6 under this handoff.
