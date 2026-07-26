@@ -1,10 +1,9 @@
 {
   "version": 1,
-  "id": "registry-collection-cabinet-card-fidelity-2026-07-25",
-  "baseCommit": "c6113b65e01bc63dff7a8dc2d215163e462ce09c",
-  "reason": "Owner-approved fix making the cabinet share card capture the cabinet section with its design tokens and settled state at a fixed portrait export width, and the preview dialog report the card's true dimensions. No Registry data, localization, indexing, navigation, or feature-flag changes.",
+  "id": "registry-collection-silver-metal-ladder-2026-07-26",
+  "baseCommit": "51573a87ef492f15cb41177e727d0b46320d5fef",
+  "reason": "Owner-directed cabinet edition ladder: the third and fourth editions cast their own niche openings in platinum and brass so Silver reads as a step up from Bronze, with the fifth edition still the brightest bar. Presentation only — no Registry data, thresholds, copy, localization, indexing, navigation, or feature-flag changes.",
   "protectedPaths": [
-    "src/islands/RegistryAura.tsx",
-    "src/islands/aura/AuraSharePreview.tsx"
+    "src/islands/aura/AuraCollectionCabinet.css"
   ]
 }

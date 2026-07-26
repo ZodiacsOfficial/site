@@ -66,7 +66,9 @@ const MUTED = "#9CA5B8";
 const HAIR = "rgba(205, 212, 226, 0.16)";
 const BRASS = "#C6AD78";
 const LEAF_BRIGHT = "#FFF2C4";
-const SCALE = 2;
+// The case is captured at a phone's width, so the density is what carries the
+// card to feed resolution: 432 CSS pixels × 2.5 is exactly 1080 wide.
+const SCALE = 2.5;
 const SERIF = '"EB Garamond", Georgia, serif';
 const MONO = '"JetBrains Mono", ui-monospace, Menlo, monospace';
 
@@ -268,9 +270,20 @@ export async function drawAuraCabinetCard(input: AuraCabinetCardInput): Promise<
     pad + headerH * 0.8,
   );
 
-  // The case itself, exactly as the page drew it. Destination device size
-  // equals the capture's intrinsic bitmap — one-to-one texels, no resample.
-  context.drawImage(capture.image, pad, pad + headerH, cabinetW, cabinetH);
+  // The case itself, exactly as the page drew it. Drawn on the device grid
+  // rather than through the scaled transform: at a fractional density a CSS
+  // offset can land on a half pixel, and resampling the whole case to blur it
+  // by half a pixel would undo the point of capturing at this density.
+  context.save();
+  context.setTransform(1, 0, 0, 1, 0, 0);
+  context.drawImage(
+    capture.image,
+    Math.round(pad * SCALE),
+    Math.round((pad + headerH) * SCALE),
+    Math.round(cabinetW * SCALE),
+    Math.round(cabinetH * SCALE),
+  );
+  context.restore();
 
   const footerY = pad + headerH + cabinetH;
   context.strokeStyle = HAIR;
