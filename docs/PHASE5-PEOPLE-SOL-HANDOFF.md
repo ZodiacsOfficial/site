@@ -53,9 +53,9 @@ One final owner-authorized classification test was then sent:
 - Receipt token: `PHASE5-PEOPLE-FINAL-20260726T141953Z`
 - Gmail message/thread: `19f9ecc42eb8d6ea`
 - Provider state: accepted into `SENT`
-- Receipt state: pending owner confirmation in the separate Workspace inbox;
-  the connected Gmail tool is attached to the sending account and cannot
-  inspect that destination
+- Receipt state: owner confirmed receipt in the monitored Workspace mailbox at
+  2026-07-26T14:23:53Z; the connected Gmail tool is attached to the sending
+  account and could not inspect that destination directly
 
 No fourth message was sent.
 
