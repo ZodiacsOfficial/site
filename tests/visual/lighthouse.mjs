@@ -26,6 +26,8 @@ const routes = [
   { name: 'event-retrograde', path: '/mercury-retrograde/2026-06-29/' },
   { name: 'event-ingress', path: '/events/saturn-enters-aries-2026-02-14/' },
   { name: 'event-aspect', path: '/events/jupiter-trine-saturn-2026-08-31/' },
+  { name: 'people-directory', path: '/people/', intentionalNoindex: true },
+  { name: 'people-profile', path: '/people/ada-lovelace/', intentionalNoindex: true },
   // R2 makes the reviewed Russian core public. Gate each distinct Russian
   // template family instead of assuming the English scores transfer across
   // longer Cyrillic copy and the locale-specific font preload path.
@@ -78,6 +80,20 @@ function categoryScore(lhr, categoryId) {
   return value;
 }
 
+function categoryScoreWithout(lhr, categoryId, excludedAuditIds) {
+  let earned = 0;
+  let possible = 0;
+  for (const ref of lhr.categories[categoryId]?.auditRefs ?? []) {
+    if (excludedAuditIds.has(ref.id) || ref.weight <= 0) continue;
+    const score = lhr.audits[ref.id]?.score;
+    if (!Number.isFinite(score)) continue;
+    earned += score * ref.weight;
+    possible += ref.weight;
+  }
+  if (possible === 0) throw new Error(`Lighthouse returned no scored ${categoryId} audits.`);
+  return earned / possible;
+}
+
 function gateSummary(results) {
   return {
     // The brief requires three passing runs, so report and gate the weakest
@@ -88,6 +104,7 @@ function gateSummary(results) {
     lcp: Math.max(...results.map((result) => result.lcp)),
     cls: Math.max(...results.map((result) => result.cls)),
     tbt: Math.max(...results.map((result) => result.tbt)),
+    searchPrivate: results.every((result) => result.searchPrivate),
   };
 }
 
@@ -129,7 +146,15 @@ try {
         results.push({
           performance: categoryScore(lhr, 'performance'),
           accessibility: categoryScore(lhr, 'accessibility'),
-          seo: categoryScore(lhr, 'seo'),
+          // The People pilot must remain noindex. Gate every SEO audit except
+          // Lighthouse's intentional "is-crawlable" failure, then separately
+          // require that audit to fail closed on all three runs.
+          seo: route.intentionalNoindex
+            ? categoryScoreWithout(lhr, 'seo', new Set(['is-crawlable']))
+            : categoryScore(lhr, 'seo'),
+          searchPrivate: route.intentionalNoindex
+            ? lhr.audits['is-crawlable']?.score === 0
+            : true,
           lcp: metric(lhr, 'largest-contentful-paint'),
           cls: metric(lhr, 'cumulative-layout-shift'),
           tbt: metric(lhr, 'total-blocking-time'),
@@ -144,6 +169,7 @@ try {
       const failed = values.performance < budgets.score
         || values.accessibility < budgets.score
         || values.seo < budgets.score
+        || (route.intentionalNoindex && !values.searchPrivate)
         || values.lcp > budgets.lcp
         || values.cls > budgets.cls
         || values.tbt > budgets.tbt;
@@ -151,6 +177,9 @@ try {
       console.log(
         `${failed ? 'FAIL' : 'pass'} ${route.path.padEnd(22)} ${Math.round(values.performance * 100).toString().padStart(3)}   ${Math.round(values.accessibility * 100).toString().padStart(3)}   ${Math.round(values.seo * 100).toString().padStart(3)}   ${(values.lcp / 1000).toFixed(2).padStart(6)}s   ${values.cls.toFixed(3).padStart(6)}   ${Math.round(values.tbt).toString().padStart(5)}ms`,
       );
+      if (route.intentionalNoindex) {
+        console.log('     ↳ SEO excludes only the intentional noindex audit; noindex remained active in every run.');
+      }
     }
   });
 } finally {

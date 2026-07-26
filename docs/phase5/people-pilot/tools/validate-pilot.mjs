@@ -12,6 +12,7 @@ import { dirname, join } from 'node:path';
 const HERE = dirname(fileURLToPath(import.meta.url));
 const PILOT = join(HERE, '..');
 const REPO = join(PILOT, '..', '..', '..');
+const phase5b = process.argv.includes('--phase5b');
 
 const results = [];
 const failures = [];
@@ -146,6 +147,7 @@ const FORBIDDEN_UNKNOWN_TIME = /\b(rising sign|ascendant|\basc\b|midheaven|\bmc\
 const NEGATED = /\b(no|without|omit\w*|not) [^.]{0,40}\b(houses?|rising sign|angles?|ascendant|midheaven|sect)\b/iu;
 for (const person of people) {
   const copy = JSON.parse(await readFile(join(PILOT, 'copy', `${person.slug}.json`), 'utf8'));
+  const computed = JSON.parse(await readFile(join(PILOT, 'computed', `${person.slug}.json`), 'utf8'));
   const text = [copy.lede, ...copy.blocks.map((block) => block.text)].join(' ');
   const match = text.match(FORBIDDEN_UNKNOWN_TIME);
   check(`no angle/house/sect claim ${person.slug}`, match === null, match ? `matched "${match[0]}"` : '');
@@ -161,6 +163,36 @@ for (const person of people) {
       && person.computation.housesComputed === false
       && person.computation.sectComputed === false,
     '',
+  );
+
+  const settled = computed.placements.filter((placement) => placement.stableAcrossDay);
+  const elementTotal = Object.values(computed.patterns.elements).reduce((sum, value) => sum + value, 0);
+  const modalityTotal = Object.values(computed.patterns.modalities).reduce((sum, value) => sum + value, 0);
+  const expectedBySign = settled.reduce((counts, placement) => {
+    counts[placement.sign] = (counts[placement.sign] ?? 0) + 1;
+    return counts;
+  }, {});
+  check(
+    `unknown-time aggregates use settled signs only ${person.slug}`,
+    computed.patterns.settledBodyCount === settled.length
+      && elementTotal === settled.length
+      && modalityTotal === settled.length
+      && computed.patterns.stelliums.every(({ sign, count }) => expectedBySign[sign] === count),
+    `${settled.length} settled; element total ${elementTotal}; modality total ${modalityTotal}`,
+  );
+  check(
+    `uncertain placements do not claim ten-body totals ${person.slug}`,
+    settled.length === 10 || !/\bten bodies\b/iu.test(text),
+    `${settled.length} settled placements`,
+  );
+  const daySpanHours = (
+    Date.parse(computed.computation.civilDayEndUtc) - Date.parse(computed.computation.civilDayStartUtc)
+  ) / 3_600_000;
+  check(
+    `complete civil-day bounds ${person.slug}`,
+    daySpanHours >= 23 && daySpanHours <= 25
+      && !computed.computation.civilDayEndUtc.includes('23:59'),
+    `${computed.computation.civilDayStartUtc} → ${computed.computation.civilDayEndUtc} (${daySpanHours}h)`,
   );
 }
 
@@ -282,14 +314,26 @@ const suppressed = people.filter((person) => person.suppression.status !== 'acti
 check('no suppressed record appears in any output surface', suppressed.length === 0,
   suppressed.map((person) => person.slug).join(', '));
 
-/* 20 — Phase 5A publishes nothing: no route, sitemap, schema or index entry */
+/* 20 — Phase boundary: Phase 5A publishes nothing; Phase 5B may add only
+   the noindex pilot routes and must still stay out of discovery surfaces. */
 const sitemap = await readFile(join(REPO, 'src/pages/sitemap.xml.ts'), 'utf8');
 check('no /people/ entry in the sitemap', !/\/people\//u.test(sitemap), '');
 const pagesDir = await readdir(join(REPO, 'src/pages'));
-check('no src/pages/people route exists', !pagesDir.includes('people'), '');
 const nav = await readFile(join(REPO, 'src/components/SiteNav.astro'), 'utf8');
 check('no People entry in the navigation', !/\/people\//u.test(nav), '');
-check('every pilot record is index-ineligible in Phase 5A',
+if (phase5b) {
+  const directoryRoute = await readFile(join(REPO, 'src/pages/people/index.astro'), 'utf8').catch(() => '');
+  const personRoute = await readFile(join(REPO, 'src/pages/people/[slug].astro'), 'utf8').catch(() => '');
+  check('Phase 5B people route exists', pagesDir.includes('people'), '');
+  check(
+    'Phase 5B routes are source-pinned noindex and nofollow',
+    [directoryRoute, personRoute].every((source) => /\bnoindex\b/u.test(source) && /\bnofollow\b/u.test(source)),
+    '',
+  );
+} else {
+  check('no src/pages/people route exists', !pagesDir.includes('people'), '');
+}
+check(`every pilot record is index-ineligible in Phase ${phase5b ? '5B' : '5A'}`,
   people.every((person) => person.indexEligibility.eligible === false), '');
 check('every pilot record passes its content checks',
   people.every((person) => person.indexEligibility.contentChecksPassed === true),
@@ -325,9 +369,9 @@ console.log(`\nContent depth: ${depth.originalWords.min}–${depth.originalWords
   + `(floor ${thresholds.substantiveStatementFloor}), max similarity ${depth.highestSimilarity.similarity} (ceiling ${thresholds.similarityCeiling}).`);
 
 if (failures.length > 0) {
-  console.error(`\nPhase 5A pilot validation FAILED — ${failures.length} of ${results.length} checks.`);
+  console.error(`\nPhase ${phase5b ? '5B noindex' : '5A'} pilot validation FAILED — ${failures.length} of ${results.length} checks.`);
   for (const failure of failures) console.error(`  ${failure.name}${failure.detail ? ` — ${failure.detail}` : ''}`);
   process.exitCode = 1;
 } else {
-  console.log(`\nPhase 5A pilot validation PASSED — ${results.length}/${results.length} checks.`);
+  console.log(`\nPhase ${phase5b ? '5B noindex' : '5A'} pilot validation PASSED — ${results.length}/${results.length} checks.`);
 }

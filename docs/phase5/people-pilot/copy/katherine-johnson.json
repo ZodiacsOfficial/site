@@ -26,7 +26,7 @@
         "aspect:Mars:Neptune:square:1.81",
         "aspect:Venus:Neptune:conjunction:1.88"
       ],
-      "text": "The tightest geometry in the chart puts Mars a third of the circle apart from Pluto, 0.3° off exact. A trine is an open channel. The two cooperate without being asked, which is exactly why it is easy to spend and easy to take for granted. Behind it, Mars square Neptune at 1.8°, and Venus conjunction Neptune at 1.9° — both still well inside the orbs this site uses. These angles were checked at both ends of that civil day and survive either way, which is why an unrecorded hour does not disturb them."
+      "text": "The tightest geometry in the chart puts Mars a third of the circle apart from Pluto, 0.3° off exact. A trine is an open channel. The two cooperate without being asked, which is exactly why it is easy to spend and easy to take for granted. Behind it, Mars square Neptune at 1.8°, and Venus conjunction Neptune at 1.9° — both still well inside the orbs this site uses. These angles were checked through every hour of that civil day and survive throughout, which is why an unrecorded hour does not disturb them."
     },
     {
       "key": "dignity",
@@ -43,11 +43,12 @@
       "key": "shape",
       "title": "The shape of the whole",
       "facts": [
-        "elements:earth3-fire3-water3-air1",
-        "modalities:fixed6-mutable2-cardinal2",
+        "elements:fire3-water3-earth2-air1",
+        "modalities:fixed5-mutable2-cardinal2",
+        "settled-signs:9",
         "retrograde:2"
       ],
-      "text": "Counted by element the chart runs 3 earth, 3 fire, 3 water, 1 air, and by modality 6 fixed, 2 mutable, 2 cardinal. An earth emphasis reads as trust in the tangible: the plan matters less than whether the thing stands up. Mercury and Uranus were retrograde — motion that reverses only from this vantage point, and which the old reading treats as delay used for revision."
+      "text": "Counting only the 9 placements whose signs hold for the whole day, the chart runs 3 fire, 3 water, 2 earth, 1 air by element and 5 fixed, 2 mutable, 2 cardinal by modality. A fire emphasis is read as appetite for the first move, with information gathered by doing rather than before doing. Mercury and Uranus were retrograde — motion that reverses only from this vantage point, and which the old reading treats as delay used for revision."
     },
     {
       "key": "moon",
@@ -78,14 +79,15 @@
     "dignity:Mars:domicile",
     "dignity:Jupiter:exaltation",
     "dignity:Saturn:detriment",
-    "elements:earth3-fire3-water3-air1",
-    "modalities:fixed6-mutable2-cardinal2",
+    "elements:fire3-water3-earth2-air1",
+    "modalities:fixed5-mutable2-cardinal2",
+    "settled-signs:9",
     "retrograde:2",
     "moon-uncertain:aries:taurus"
   ],
   "measurements": {
-    "originalWords": 393,
-    "substantiveStatements": 14,
+    "originalWords": 404,
+    "substantiveStatements": 15,
     "blocks": 5
   }
 }

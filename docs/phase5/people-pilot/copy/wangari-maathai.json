@@ -6,8 +6,8 @@
   "identity": "Biologist and environmentalist · Kenya · 1940–2011",
   "title": "Wangari Maathai's birth chart",
   "metaDescription": "Wangari Maathai's chart, computed from a sourced birth date: Sun at 11.5° Aries. Birth time unknown, so no houses or rising sign.",
-  "lede": "Four of the ten bodies stand in Taurus — Venus, Mars, Saturn and Uranus. A cluster that size stops being one voice among ten. It becomes the section the rest of the chart plays around.",
-  "ledeFact": "stellium:taurus:4",
+  "lede": "The Sun stands at 11.5° Aries, in exaltation — the tradition’s honoured-guest placement, working at its best. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.",
+  "ledeFact": "dignity:Sun:exaltation",
   "blocks": [
     {
       "key": "sun",
@@ -42,11 +42,12 @@
       "key": "shape",
       "title": "The shape of the whole",
       "facts": [
-        "elements:earth5-fire3-air1-water1",
-        "modalities:fixed6-cardinal2-mutable2",
+        "elements:earth4-fire3-water1",
+        "modalities:fixed4-cardinal2-mutable2",
+        "settled-signs:8",
         "retrograde:2"
       ],
-      "text": "The balance sheet: earth 5, fire 3, air 1, water 1 across the elements, and fixed 6, cardinal 2, mutable 2 across the modalities. Earth signs hold the scheme’s slow end, where results are measured in what survives rather than what starts. Neptune and Pluto were retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
+      "text": "The honest balance sheet uses the 8 placements whose signs hold for the whole day: earth 4, fire 3, water 1 across the elements, and fixed 4, cardinal 2, mutable 2 across the modalities. Earth signs hold the scheme’s slow end, where results are measured in what survives rather than what starts. No settled placement falls in air — an absence the tradition treats as information, not as a defect. Neptune and Pluto were retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
     },
     {
       "key": "moon",
@@ -67,7 +68,7 @@
     "label": "The Aries guide"
   },
   "substantiveFacts": [
-    "stellium:taurus:4",
+    "dignity:Sun:exaltation",
     "sun-degree:11.50",
     "decan:aries:second",
     "aspect:Saturn:Pluto:square:0.79",
@@ -76,13 +77,14 @@
     "dignity:Sun:exaltation",
     "dignity:Mercury:fall",
     "dignity:Venus:domicile",
-    "elements:earth5-fire3-air1-water1",
-    "modalities:fixed6-cardinal2-mutable2",
+    "elements:earth4-fire3-water1",
+    "modalities:fixed4-cardinal2-mutable2",
+    "settled-signs:8",
     "retrograde:2",
     "moon-uncertain:capricorn:aquarius"
   ],
   "measurements": {
-    "originalWords": 369,
+    "originalWords": 399,
     "substantiveStatements": 13,
     "blocks": 5
   }

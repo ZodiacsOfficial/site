@@ -202,6 +202,9 @@ function identityLine(evidence, record, candidate) {
 /* ── The lede: one leading fact, chosen by a fixed priority ────────── */
 function lede(record, slug) {
   const { patterns, placements, aspectsStableAcrossCivilDay: aspects } = record;
+  const settledPlacements = placements.filter((placement) => placement.stableAcrossDay);
+  const settledCount = patterns.settledBodyCount;
+  const settledScope = `${spell(settledCount)} placements whose signs are settled`;
   const stellium = patterns.stelliums.sort((a, b) => b.count - a.count)[0];
   const luminaryDignity = placements.find((placement) => (
     (placement.body === 'Sun' || placement.body === 'Moon')
@@ -215,11 +218,11 @@ function lede(record, slug) {
   const dominantModality = Object.entries(patterns.modalities).sort((a, b) => b[1] - a[1])[0];
 
   if (stellium && stellium.count >= 4) {
-    const bodies = placements.filter((placement) => placement.sign === stellium.sign)
+    const bodies = settledPlacements.filter((placement) => placement.sign === stellium.sign)
       .map((placement) => bodyLabel(placement.body));
     return {
       fact: `stellium:${stellium.sign}:${stellium.count}`,
-      text: `${capitalise(spell(stellium.count))} of the ten bodies stand in ${SIGN_NAMES[stellium.sign]} — ${bodies.slice(0, -1).join(', ')} and ${bodies.at(-1)}. A cluster that size stops being one voice among ten. It becomes the section the rest of the chart plays around.`,
+      text: `${capitalise(spell(stellium.count))} of the ${settledScope} stand in ${SIGN_NAMES[stellium.sign]} — ${bodies.slice(0, -1).join(', ')} and ${bodies.at(-1)}. The placements whose signs could change with an unknown hour are not counted. A cluster that size becomes the section the rest of the chart plays around.`,
     };
   }
   if (luminaryDignity) {
@@ -234,15 +237,15 @@ function lede(record, slug) {
       text: `${capitalise(bodyLabel(tight.a))} and ${bodyLabel(tight.b)} sit ${deg(tight.orb)} from an exact ${tight.type} — near enough that the tradition reads ${SHORT_FUNCTION[tight.a]} and ${SHORT_FUNCTION[tight.b]} as a single working part. ${pick(ASPECT_SENSE[tight.type], slug, 'lede-aspect')}`,
     };
   }
-  if (dominantElement[1] >= 5) {
+  if (dominantElement[1] >= Math.ceil(settledCount / 2)) {
     return {
       fact: `element:${dominantElement[0]}:${dominantElement[1]}`,
-      text: `${capitalise(spell(dominantElement[1]))} of the ten bodies fall in ${dominantElement[0]} signs — half the chart or more in one temperament. ${pick(ELEMENT_SENSE[dominantElement[0]], slug, 'lede-element')}`,
+      text: `${capitalise(spell(dominantElement[1]))} of the ${settledScope} fall in ${dominantElement[0]} signs — at least half of what the unknown hour leaves certain. ${pick(ELEMENT_SENSE[dominantElement[0]], slug, 'lede-element')}`,
     };
   }
   return {
     fact: `modality:${dominantModality[0]}:${dominantModality[1]}`,
-    text: `${capitalise(spell(dominantModality[1]))} of the ten bodies fall in ${dominantModality[0]} signs, the widest single weighting in the chart. ${pick(MODALITY_SENSE[dominantModality[0]], slug, 'lede-modality')}`,
+    text: `${capitalise(spell(dominantModality[1]))} of the ${settledScope} fall in ${dominantModality[0]} signs, the widest weighting the unknown hour leaves certain. ${pick(MODALITY_SENSE[dominantModality[0]], slug, 'lede-modality')}`,
   };
 }
 
@@ -286,7 +289,7 @@ function geometryBlock(record, slug) {
     facts: aspects.map((aspect) => `aspect:${aspect.a}:${aspect.b}:${aspect.type}:${aspect.orb}`),
     text: `${opening} ${pick(ASPECT_SENSE[first.type], slug, 'geometry-sense')}${tail} ${pick([
       'Every angle named here holds for the whole of that day at the birthplace, so an unknown hour cannot take it away.',
-      'These angles were checked at both ends of that civil day and survive either way, which is why an unrecorded hour does not disturb them.',
+      'These angles were checked through every hour of that civil day and survive throughout, which is why an unrecorded hour does not disturb them.',
       'All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down.',
     ], slug, 'geometry-tail')}`,
   };
@@ -333,11 +336,13 @@ function dignityBlock(record, slug) {
 
 /* ── Shape block ───────────────────────────────────────────────────── */
 function shapeBlock(record, slug) {
-  const { elements, modalities, retrograde } = record.patterns;
+  const {
+    elements, modalities, retrograde, directionUncertain, settledBodyCount,
+  } = record.patterns;
   const orderedElements = Object.entries(elements).sort((a, b) => b[1] - a[1]);
   const orderedModalities = Object.entries(modalities).sort((a, b) => b[1] - a[1]);
   const missing = ['fire', 'earth', 'air', 'water'].filter((element) => !elements[element]);
-  const retroLine = retrograde.length === 0
+  const stableDirectionLine = retrograde.length === 0
     ? ` ${pick([
       'Nothing was retrograde that day, which is less common than it sounds.',
       'Every body was moving forward that day — no apparent reversals anywhere in the chart.',
@@ -348,13 +353,21 @@ function shapeBlock(record, slug) {
       'the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases.',
       'motion that reverses only from this vantage point, and which the old reading treats as delay used for revision.',
     ], slug, 'retro-some')}`;
+  const retroLine = directionUncertain.length === 0
+    ? stableDirectionLine
+    : ` ${retrograde.length > 0
+      ? `${retrograde.length === 1 ? `${bodyLabel(retrograde[0])} was` : `${retrograde.map(bodyLabel).slice(0, -1).join(', ')} and ${bodyLabel(retrograde.at(-1))} were`} retrograde.`
+      : 'Every other body stayed direct.'} ${directionUncertain.length === 1
+      ? `${bodyLabel(directionUncertain[0])} changed direction during the day, so its motion is left open.`
+      : `${directionUncertain.map(bodyLabel).slice(0, -1).join(', ')} and ${bodyLabel(directionUncertain.at(-1))} changed direction during the day, so their motion is left open.`}`;
   const missingLine = missing.length > 0
-    ? ` No body at all in ${missing.join(' or ')} — an absence the tradition treats as information, not as a defect.`
+    ? ` No settled placement falls in ${missing.join(' or ')} — an absence the tradition treats as information, not as a defect.`
     : '';
+  const settledScope = `${settledBodyCount} placements whose signs hold for the whole day`;
   const frames = [
-    `By element the ten bodies divide ${orderedElements.map(([name, count]) => `${count} ${name}`).join(', ')}; by modality, ${orderedModalities.map(([name, count]) => `${count} ${name}`).join(', ')}.`,
-    `The balance sheet: ${orderedElements.map(([name, count]) => `${name} ${count}`).join(', ')} across the elements, and ${orderedModalities.map(([name, count]) => `${name} ${count}`).join(', ')} across the modalities.`,
-    `Counted by element the chart runs ${orderedElements.map(([name, count]) => `${count} ${name}`).join(', ')}, and by modality ${orderedModalities.map(([name, count]) => `${count} ${name}`).join(', ')}.`,
+    `Among the ${settledScope}, the elements divide ${orderedElements.map(([name, count]) => `${count} ${name}`).join(', ')}; by modality, ${orderedModalities.map(([name, count]) => `${count} ${name}`).join(', ')}.`,
+    `The honest balance sheet uses the ${settledScope}: ${orderedElements.map(([name, count]) => `${name} ${count}`).join(', ')} across the elements, and ${orderedModalities.map(([name, count]) => `${name} ${count}`).join(', ')} across the modalities.`,
+    `Counting only the ${settledScope}, the chart runs ${orderedElements.map(([name, count]) => `${count} ${name}`).join(', ')} by element and ${orderedModalities.map(([name, count]) => `${count} ${name}`).join(', ')} by modality.`,
   ];
   return {
     key: 'shape',
@@ -362,6 +375,7 @@ function shapeBlock(record, slug) {
     facts: [
       `elements:${orderedElements.map(([name, count]) => `${name}${count}`).join('-')}`,
       `modalities:${orderedModalities.map(([name, count]) => `${name}${count}`).join('-')}`,
+      `settled-signs:${settledBodyCount}`,
       `retrograde:${retrograde.length}`,
     ],
     text: `${pick(frames, slug, 'shape')} ${pick(ELEMENT_SENSE[orderedElements[0][0]], slug, 'shape-element')}${missingLine}${retroLine}`,

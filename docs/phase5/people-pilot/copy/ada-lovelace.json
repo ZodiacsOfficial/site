@@ -6,8 +6,8 @@
   "identity": "Mathematician · United Kingdom · 1815–1852",
   "title": "Ada Lovelace's birth chart",
   "metaDescription": "Ada Lovelace's chart, computed from a sourced birth date: Sun at 17.6° Sagittarius. Birth time unknown, so no houses or rising sign.",
-  "lede": "Four of the ten bodies stand in Sagittarius — the Sun, Mercury, Uranus and Neptune. A cluster that size stops being one voice among ten. It becomes the section the rest of the chart plays around.",
-  "ledeFact": "stellium:sagittarius:4",
+  "lede": "Venus and Jupiter sit 0.7° from an exact conjunction — near enough that the tradition reads taste and expansion as a single working part. A conjunction is the least negotiable aspect in the scheme — no distance to argue across, so the pair arrives as a single instinct.",
+  "ledeFact": "aspect:Venus:Jupiter:conjunction",
   "blocks": [
     {
       "key": "sun",
@@ -42,11 +42,12 @@
       "key": "shape",
       "title": "The shape of the whole",
       "facts": [
-        "elements:fire6-water3-air1",
-        "modalities:mutable5-fixed3-cardinal2",
+        "elements:fire4-water3-air1",
+        "modalities:mutable4-fixed3-cardinal1",
+        "settled-signs:8",
         "retrograde:0"
       ],
-      "text": "By element the ten bodies divide 6 fire, 3 water, 1 air; by modality, 5 mutable, 3 fixed, 2 cardinal. Fire weights a chart toward initiative — starting, asserting, spending energy to find out what happens. No body at all in earth — an absence the tradition treats as information, not as a defect. Nothing was retrograde that day, which is less common than it sounds."
+      "text": "Among the 8 placements whose signs hold for the whole day, the elements divide 4 fire, 3 water, 1 air; by modality, 4 mutable, 3 fixed, 1 cardinal. Fire weights a chart toward initiative — starting, asserting, spending energy to find out what happens. No settled placement falls in earth — an absence the tradition treats as information, not as a defect. Nothing was retrograde that day, which is less common than it sounds."
     },
     {
       "key": "moon",
@@ -67,7 +68,7 @@
     "label": "The Sagittarius guide"
   },
   "substantiveFacts": [
-    "stellium:sagittarius:4",
+    "aspect:Venus:Jupiter:conjunction",
     "sun-degree:17.63",
     "decan:sagittarius:second",
     "aspect:Venus:Jupiter:conjunction:0.74",
@@ -76,14 +77,15 @@
     "dignity:Venus:detriment",
     "dignity:Mars:domicile",
     "dignity:Saturn:domicile",
-    "elements:fire6-water3-air1",
-    "modalities:mutable5-fixed3-cardinal2",
+    "elements:fire4-water3-air1",
+    "modalities:mutable4-fixed3-cardinal1",
+    "settled-signs:8",
     "retrograde:0",
     "moon-uncertain:pisces:aries"
   ],
   "measurements": {
-    "originalWords": 343,
-    "substantiveStatements": 13,
+    "originalWords": 363,
+    "substantiveStatements": 14,
     "blocks": 5
   }
 }

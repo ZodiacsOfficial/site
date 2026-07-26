@@ -56,6 +56,15 @@ export const PHASE1_TEMPLATE_SOURCE_DIRECTORIES = Object.freeze([
 export const PHASE1_TEMPLATE_SOURCE_EXCLUDED_DIRECTORIES = Object.freeze([
   'src/lib/daily-email',
   'src/lib/email',
+  // Phase 5's noindex People components are isolated from every Phase 1
+  // reader template. Keep their future pilot revisions from churning the
+  // already-released Phase 1 screenshot receipt.
+  'src/components/people',
+]);
+
+export const PHASE1_TEMPLATE_SOURCE_EXCLUDED_PATHS = Object.freeze([
+  'src/lib/people.ts',
+  'src/styles/people.css',
 ]);
 
 export function sha256(value) {
@@ -84,7 +93,7 @@ export async function phase1TemplateSourceSha256(
     PHASE1_TEMPLATE_SOURCE_DIRECTORIES.map((path) => sourceFiles(repositoryRoot, path)),
   )).flat().filter((path) => !PHASE1_TEMPLATE_SOURCE_EXCLUDED_DIRECTORIES.some(
     (directory) => path === directory || path.startsWith(`${directory}/`),
-  ));
+  ) && !PHASE1_TEMPLATE_SOURCE_EXCLUDED_PATHS.includes(path));
   const paths = [...new Set([...PHASE1_TEMPLATE_SOURCE_PATHS, ...directoryFiles])].sort();
   for (const path of paths) {
     const absolute = resolve(repositoryRoot, path);

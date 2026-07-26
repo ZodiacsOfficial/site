@@ -11,7 +11,7 @@
     "reasoning": {
       "originalWordFloor": "Measured minimum across the 20 pilot pages is 315 original words, excluding every shared boilerplate string. A 250-word floor sits about 20% under that minimum: ordinary variation in a future person cannot trip it, while a genuinely thin page — one where the chart offered little to say — fails closed. For scale, the site's own daily readings run 90–140 words and weekly 200–300.",
       "substantiveStatementFloor": "Measured minimum is 11 distinct substantive statements. A floor of 8 leaves headroom for a chart with fewer aspects inside orb and no dignities at all, which is the sparsest case the pilot's own screening produced.",
-      "similarityCeiling": "Measured maximum pairwise similarity is 0.2786 (rosalind-franklin <> katherine-johnson). A 0.32 ceiling sits about 15% above that, and well under the 0.42 the repository already accepts for the more formulaic compatibility pairs.",
+      "similarityCeiling": "Measured maximum pairwise similarity is 0.3048 (rosalind-franklin <> katherine-johnson). A 0.32 ceiling leaves a narrow fail-closed margin and remains well under the 0.42 the repository already accepts for the more formulaic compatibility pairs.",
       "excludedFromOriginalCount": "Shared strings — the data-quality note, the evidence-disclosure labels, navigation, cross-link labels and the portrait credit — are boilerplate by design and are not counted as original copy. Counting them would let a page pass on chrome."
     },
     "sectExclusionNote": "Sect (day/night chart) is time-dependent: it asks whether the Sun was above the horizon. On an unknown-time record the noon convention would always answer 'day chart', which is an artefact of the assumption rather than a fact about the person. Sect is therefore excluded from the substantive-statement set for unknown-time records, alongside rising sign, houses and angles, and is available only where a real birth time is sourced."
@@ -69,7 +69,7 @@
         "utcInstant": "1815-12-10T12:01:15.000Z",
         "utcOffsetMinutesAtBirth": -1.25,
         "civilDayStartUtc": "1815-12-10T00:01:15.000Z",
-        "civilDayEndUtc": "1815-12-11T00:00:15.000Z",
+        "civilDayEndUtc": "1815-12-11T00:01:15.000Z",
         "latitude": 51.507222222222,
         "longitude": -0.1275,
         "coordinateEscalationSteps": 0,
@@ -103,9 +103,9 @@
         "signAtCivilDayEnd": "aries"
       },
       "unknownTimeErrorBandDegrees": {
-        "Sun": 1.016,
-        "Moon": 12.119,
-        "Mercury": 1.434,
+        "Sun": 1.017,
+        "Moon": 12.128,
+        "Mercury": 1.435,
         "Venus": 0.899,
         "Mars": 0.256,
         "Jupiter": 0.182,
@@ -165,8 +165,8 @@
         "pilotTools": "docs/phase5/people-pilot/tools @ phase5a"
       },
       "contentDepth": {
-        "originalWords": 343,
-        "substantiveStatements": 13,
+        "originalWords": 363,
+        "substantiveStatements": 14,
         "highestPairwiseSimilarity": 0
       },
       "indexEligibility": {
@@ -231,7 +231,7 @@
         "utcInstant": "1879-03-14T11:06:32.000Z",
         "utcOffsetMinutesAtBirth": 53.4667,
         "civilDayStartUtc": "1879-03-13T23:06:32.000Z",
-        "civilDayEndUtc": "1879-03-14T23:05:32.000Z",
+        "civilDayEndUtc": "1879-03-14T23:06:32.000Z",
         "latitude": 48.39861111111111,
         "longitude": 9.991111111111111,
         "coordinateEscalationSteps": 0,
@@ -265,13 +265,13 @@
         "signAtCivilDayEnd": "sagittarius"
       },
       "unknownTimeErrorBandDegrees": {
-        "Sun": 0.995,
-        "Moon": 13.905,
-        "Mercury": 1.95,
-        "Venus": 1.231,
-        "Mars": 0.728,
+        "Sun": 0.996,
+        "Moon": 13.915,
+        "Mercury": 1.952,
+        "Venus": 1.232,
+        "Mars": 0.729,
         "Jupiter": 0.227,
-        "Saturn": 0.123,
+        "Saturn": 0.124,
         "Uranus": 0.04,
         "Neptune": 0.029,
         "Pluto": 0.012
@@ -327,9 +327,9 @@
         "pilotTools": "docs/phase5/people-pilot/tools @ phase5a"
       },
       "contentDepth": {
-        "originalWords": 356,
-        "substantiveStatements": 14,
-        "highestPairwiseSimilarity": 0.1991
+        "originalWords": 371,
+        "substantiveStatements": 15,
+        "highestPairwiseSimilarity": 0.204
       },
       "indexEligibility": {
         "eligible": false,
@@ -393,7 +393,7 @@
         "utcInstant": "1912-05-31T04:00:00.000Z",
         "utcOffsetMinutesAtBirth": 480,
         "civilDayStartUtc": "1912-05-30T16:00:00.000Z",
-        "civilDayEndUtc": "1912-05-31T15:59:00.000Z",
+        "civilDayEndUtc": "1912-05-31T16:00:00.000Z",
         "latitude": 31.45152,
         "longitude": 121.10435,
         "coordinateEscalationSteps": 0,
@@ -427,10 +427,10 @@
         "signAtCivilDayEnd": "sagittarius"
       },
       "unknownTimeErrorBandDegrees": {
-        "Sun": 0.957,
-        "Moon": 12.371,
-        "Mercury": 1.736,
-        "Venus": 1.225,
+        "Sun": 0.958,
+        "Moon": 12.379,
+        "Mercury": 1.738,
+        "Venus": 1.226,
         "Mars": 0.59,
         "Jupiter": 0.127,
         "Saturn": 0.127,
@@ -477,8 +477,8 @@
         "pilotTools": "docs/phase5/people-pilot/tools @ phase5a"
       },
       "contentDepth": {
-        "originalWords": 324,
-        "substantiveStatements": 12,
+        "originalWords": 342,
+        "substantiveStatements": 13,
         "highestPairwiseSimilarity": 0
       },
       "indexEligibility": {
@@ -544,7 +544,7 @@
         "utcInstant": "1819-09-13T11:06:32.000Z",
         "utcOffsetMinutesAtBirth": 53.4667,
         "civilDayStartUtc": "1819-09-12T23:06:32.000Z",
-        "civilDayEndUtc": "1819-09-13T23:05:32.000Z",
+        "civilDayEndUtc": "1819-09-13T23:06:32.000Z",
         "latitude": 51.3406321,
         "longitude": 12.3747329,
         "coordinateEscalationSteps": 0,
@@ -578,11 +578,11 @@
         "signAtCivilDayEnd": "cancer"
       },
       "unknownTimeErrorBandDegrees": {
-        "Sun": 0.974,
-        "Moon": 11.911,
-        "Mercury": 0.461,
-        "Venus": 1.242,
-        "Mars": 0.579,
+        "Sun": 0.975,
+        "Moon": 11.919,
+        "Mercury": 0.462,
+        "Venus": 1.243,
+        "Mars": 0.58,
         "Jupiter": 0.066,
         "Saturn": 0.076,
         "Uranus": 0.012,
@@ -640,9 +640,9 @@
         "pilotTools": "docs/phase5/people-pilot/tools @ phase5a"
       },
       "contentDepth": {
-        "originalWords": 382,
-        "substantiveStatements": 14,
-        "highestPairwiseSimilarity": 0.2174
+        "originalWords": 390,
+        "substantiveStatements": 15,
+        "highestPairwiseSimilarity": 0.2309
       },
       "indexEligibility": {
         "eligible": false,
@@ -707,7 +707,7 @@
         "utcInstant": "1917-04-25T17:00:00.000Z",
         "utcOffsetMinutesAtBirth": -300,
         "civilDayStartUtc": "1917-04-25T05:00:00.000Z",
-        "civilDayEndUtc": "1917-04-26T04:59:00.000Z",
+        "civilDayEndUtc": "1917-04-26T05:00:00.000Z",
         "latitude": 37.070833333333,
         "longitude": -76.484444444444,
         "coordinateEscalationSteps": 0,
@@ -742,9 +742,9 @@
       },
       "unknownTimeErrorBandDegrees": {
         "Sun": 0.973,
-        "Moon": 12.538,
+        "Moon": 12.546,
         "Mercury": 0.894,
-        "Venus": 1.234,
+        "Venus": 1.235,
         "Mars": 0.758,
         "Jupiter": 0.236,
         "Saturn": 0.054,
@@ -803,9 +803,9 @@
         "pilotTools": "docs/phase5/people-pilot/tools @ phase5a"
       },
       "contentDepth": {
-        "originalWords": 350,
-        "substantiveStatements": 13,
-        "highestPairwiseSimilarity": 0.1909
+        "originalWords": 365,
+        "substantiveStatements": 14,
+        "highestPairwiseSimilarity": 0.2124
       },
       "indexEligibility": {
         "eligible": false,
@@ -870,7 +870,7 @@
         "utcInstant": "1818-07-30T12:01:15.000Z",
         "utcOffsetMinutesAtBirth": -1.25,
         "civilDayStartUtc": "1818-07-30T00:01:15.000Z",
-        "civilDayEndUtc": "1818-07-31T00:00:15.000Z",
+        "civilDayEndUtc": "1818-07-31T00:01:15.000Z",
         "latitude": 53.791,
         "longitude": -1.84867,
         "coordinateEscalationSteps": 0,
@@ -904,10 +904,10 @@
         "signAtCivilDayEnd": "cancer"
       },
       "unknownTimeErrorBandDegrees": {
-        "Sun": 0.956,
-        "Moon": 11.952,
-        "Mercury": 1.824,
-        "Venus": 1.183,
+        "Sun": 0.957,
+        "Moon": 11.96,
+        "Mercury": 1.825,
+        "Venus": 1.184,
         "Mars": 0.623,
         "Jupiter": 0.091,
         "Saturn": 0.048,
@@ -966,9 +966,9 @@
         "pilotTools": "docs/phase5/people-pilot/tools @ phase5a"
       },
       "contentDepth": {
-        "originalWords": 385,
-        "substantiveStatements": 14,
-        "highestPairwiseSimilarity": 0.2174
+        "originalWords": 393,
+        "substantiveStatements": 15,
+        "highestPairwiseSimilarity": 0.2309
       },
       "indexEligibility": {
         "eligible": false,
@@ -1032,7 +1032,7 @@
         "utcInstant": "1907-07-06T18:36:36.000Z",
         "utcOffsetMinutesAtBirth": -396.6,
         "civilDayStartUtc": "1907-07-06T06:36:36.000Z",
-        "civilDayEndUtc": "1907-07-07T06:35:36.000Z",
+        "civilDayEndUtc": "1907-07-07T06:36:36.000Z",
         "latitude": 19.353773,
         "longitude": -99.13589,
         "coordinateEscalationSteps": 1,
@@ -1066,10 +1066,10 @@
         "signAtCivilDayEnd": "gemini"
       },
       "unknownTimeErrorBandDegrees": {
-        "Sun": 0.953,
-        "Moon": 11.996,
+        "Sun": 0.954,
+        "Moon": 12.004,
         "Mercury": 0.362,
-        "Venus": 1.216,
+        "Venus": 1.217,
         "Mars": 0.294,
         "Jupiter": 0.223,
         "Saturn": 0.005,
@@ -1128,8 +1128,8 @@
         "pilotTools": "docs/phase5/people-pilot/tools @ phase5a"
       },
       "contentDepth": {
-        "originalWords": 348,
-        "substantiveStatements": 12,
+        "originalWords": 358,
+        "substantiveStatements": 13,
         "highestPairwiseSimilarity": 0
       },
       "indexEligibility": {
@@ -1195,7 +1195,7 @@
         "utcInstant": "1862-07-16T17:50:36.000Z",
         "utcOffsetMinutesAtBirth": -350.6,
         "civilDayStartUtc": "1862-07-16T05:50:36.000Z",
-        "civilDayEndUtc": "1862-07-17T05:49:36.000Z",
+        "civilDayEndUtc": "1862-07-17T05:50:36.000Z",
         "latitude": 34.7733,
         "longitude": -89.4464,
         "coordinateEscalationSteps": 0,
@@ -1229,10 +1229,10 @@
         "signAtCivilDayEnd": "aries"
       },
       "unknownTimeErrorBandDegrees": {
-        "Sun": 0.953,
-        "Moon": 12.868,
+        "Sun": 0.954,
+        "Moon": 12.877,
         "Mercury": 0.183,
-        "Venus": 1.167,
+        "Venus": 1.168,
         "Mars": 0.493,
         "Jupiter": 0.154,
         "Saturn": 0.088,
@@ -1291,9 +1291,9 @@
         "pilotTools": "docs/phase5/people-pilot/tools @ phase5a"
       },
       "contentDepth": {
-        "originalWords": 326,
-        "substantiveStatements": 12,
-        "highestPairwiseSimilarity": 0.2356
+        "originalWords": 337,
+        "substantiveStatements": 13,
+        "highestPairwiseSimilarity": 0.2076
       },
       "indexEligibility": {
         "eligible": false,
@@ -1357,7 +1357,7 @@
         "utcInstant": "1918-08-26T16:00:00.000Z",
         "utcOffsetMinutesAtBirth": -240,
         "civilDayStartUtc": "1918-08-26T04:00:00.000Z",
-        "civilDayEndUtc": "1918-08-27T03:59:00.000Z",
+        "civilDayEndUtc": "1918-08-27T04:00:00.000Z",
         "latitude": 37.793888888889,
         "longitude": -80.303611111111,
         "coordinateEscalationSteps": 0,
@@ -1392,9 +1392,9 @@
       },
       "unknownTimeErrorBandDegrees": {
         "Sun": 0.965,
-        "Moon": 14.436,
-        "Mercury": 0.687,
-        "Venus": 1.22,
+        "Moon": 14.445,
+        "Mercury": 0.688,
+        "Venus": 1.221,
         "Mars": 0.641,
         "Jupiter": 0.176,
         "Saturn": 0.126,
@@ -1453,9 +1453,9 @@
         "pilotTools": "docs/phase5/people-pilot/tools @ phase5a"
       },
       "contentDepth": {
-        "originalWords": 393,
-        "substantiveStatements": 14,
-        "highestPairwiseSimilarity": 0.2786
+        "originalWords": 404,
+        "substantiveStatements": 15,
+        "highestPairwiseSimilarity": 0.3048
       },
       "indexEligibility": {
         "eligible": false,
@@ -1520,7 +1520,7 @@
         "utcInstant": "1869-10-02T06:06:40.000Z",
         "utcOffsetMinutesAtBirth": 353.3333,
         "civilDayStartUtc": "1869-10-01T18:06:40.000Z",
-        "civilDayEndUtc": "1869-10-02T18:05:40.000Z",
+        "civilDayEndUtc": "1869-10-02T18:06:40.000Z",
         "latitude": 21.6425,
         "longitude": 69.604722222222,
         "coordinateEscalationSteps": 0,
@@ -1555,11 +1555,11 @@
       },
       "unknownTimeErrorBandDegrees": {
         "Sun": 0.985,
-        "Moon": 14.481,
+        "Moon": 14.492,
         "Mercury": 0.607,
-        "Venus": 1.193,
-        "Mars": 0.697,
-        "Jupiter": 0.073,
+        "Venus": 1.194,
+        "Mars": 0.698,
+        "Jupiter": 0.074,
         "Saturn": 0.073,
         "Uranus": 0.023,
         "Neptune": 0.027,
@@ -1616,8 +1616,8 @@
         "pilotTools": "docs/phase5/people-pilot/tools @ phase5a"
       },
       "contentDepth": {
-        "originalWords": 367,
-        "substantiveStatements": 14,
+        "originalWords": 378,
+        "substantiveStatements": 15,
         "highestPairwiseSimilarity": 0
       },
       "indexEligibility": {
@@ -1683,7 +1683,7 @@
         "utcInstant": "1861-05-07T06:06:40.000Z",
         "utcOffsetMinutesAtBirth": 353.3333,
         "civilDayStartUtc": "1861-05-06T18:06:40.000Z",
-        "civilDayEndUtc": "1861-05-07T18:05:40.000Z",
+        "civilDayEndUtc": "1861-05-07T18:06:40.000Z",
         "latitude": 22.5675,
         "longitude": 88.37,
         "coordinateEscalationSteps": 0,
@@ -1717,11 +1717,11 @@
         "signAtCivilDayEnd": "aries"
       },
       "unknownTimeErrorBandDegrees": {
-        "Sun": 0.966,
-        "Moon": 11.846,
-        "Mercury": 1.835,
-        "Venus": 1.231,
-        "Mars": 0.65,
+        "Sun": 0.967,
+        "Moon": 11.854,
+        "Mercury": 1.836,
+        "Venus": 1.232,
+        "Mars": 0.651,
         "Jupiter": 0.072,
         "Saturn": 0.005,
         "Uranus": 0.055,
@@ -1779,8 +1779,8 @@
         "pilotTools": "docs/phase5/people-pilot/tools @ phase5a"
       },
       "contentDepth": {
-        "originalWords": 323,
-        "substantiveStatements": 12,
+        "originalWords": 343,
+        "substantiveStatements": 13,
         "highestPairwiseSimilarity": 0
       },
       "indexEligibility": {
@@ -1845,7 +1845,7 @@
         "utcInstant": "1959-01-09T18:00:00.000Z",
         "utcOffsetMinutesAtBirth": -360,
         "civilDayStartUtc": "1959-01-09T06:00:00.000Z",
-        "civilDayEndUtc": "1959-01-10T05:59:00.000Z",
+        "civilDayEndUtc": "1959-01-10T06:00:00.000Z",
         "latitude": 15.5627,
         "longitude": -90.0051,
         "coordinateEscalationSteps": 0,
@@ -1880,9 +1880,9 @@
       },
       "unknownTimeErrorBandDegrees": {
         "Sun": 1.019,
-        "Moon": 13.9,
-        "Mercury": 1.368,
-        "Venus": 1.253,
+        "Moon": 13.909,
+        "Mercury": 1.369,
+        "Venus": 1.254,
         "Mars": 0.229,
         "Jupiter": 0.171,
         "Saturn": 0.114,
@@ -1941,8 +1941,8 @@
         "pilotTools": "docs/phase5/people-pilot/tools @ phase5a"
       },
       "contentDepth": {
-        "originalWords": 371,
-        "substantiveStatements": 13,
+        "originalWords": 383,
+        "substantiveStatements": 14,
         "highestPairwiseSimilarity": 0
       },
       "indexEligibility": {
@@ -2008,7 +2008,7 @@
         "utcInstant": "1920-07-25T11:00:00.000Z",
         "utcOffsetMinutesAtBirth": 60,
         "civilDayStartUtc": "1920-07-24T23:00:00.000Z",
-        "civilDayEndUtc": "1920-07-25T22:59:00.000Z",
+        "civilDayEndUtc": "1920-07-25T23:00:00.000Z",
         "latitude": 51.5096,
         "longitude": -0.2043,
         "coordinateEscalationSteps": 0,
@@ -2043,11 +2043,11 @@
       },
       "unknownTimeErrorBandDegrees": {
         "Sun": 0.955,
-        "Moon": 11.871,
+        "Moon": 11.879,
         "Mercury": 0.718,
-        "Venus": 1.231,
-        "Mars": 0.482,
-        "Jupiter": 0.21,
+        "Venus": 1.232,
+        "Mars": 0.483,
+        "Jupiter": 0.211,
         "Saturn": 0.108,
         "Uranus": 0.031,
         "Neptune": 0.037,
@@ -2104,9 +2104,9 @@
         "pilotTools": "docs/phase5/people-pilot/tools @ phase5a"
       },
       "contentDepth": {
-        "originalWords": 368,
-        "substantiveStatements": 12,
-        "highestPairwiseSimilarity": 0.2786
+        "originalWords": 389,
+        "substantiveStatements": 13,
+        "highestPairwiseSimilarity": 0.3048
       },
       "indexEligibility": {
         "eligible": false,
@@ -2170,7 +2170,7 @@
         "utcInstant": "1981-09-26T16:00:00.000Z",
         "utcOffsetMinutesAtBirth": -240,
         "civilDayStartUtc": "1981-09-26T04:00:00.000Z",
-        "civilDayEndUtc": "1981-09-27T03:59:00.000Z",
+        "civilDayEndUtc": "1981-09-27T04:00:00.000Z",
         "latitude": 43.4199247,
         "longitude": -83.9500261,
         "coordinateEscalationSteps": 0,
@@ -2205,11 +2205,11 @@
       },
       "unknownTimeErrorBandDegrees": {
         "Sun": 0.981,
-        "Moon": 12.794,
-        "Mercury": 0.82,
-        "Venus": 1.151,
+        "Moon": 12.803,
+        "Mercury": 0.821,
+        "Venus": 1.152,
         "Mars": 0.613,
-        "Jupiter": 0.213,
+        "Jupiter": 0.214,
         "Saturn": 0.122,
         "Uranus": 0.042,
         "Neptune": 0.013,
@@ -2266,9 +2266,9 @@
         "pilotTools": "docs/phase5/people-pilot/tools @ phase5a"
       },
       "contentDepth": {
-        "originalWords": 357,
-        "substantiveStatements": 14,
-        "highestPairwiseSimilarity": 0.2281
+        "originalWords": 375,
+        "substantiveStatements": 15,
+        "highestPairwiseSimilarity": 0
       },
       "indexEligibility": {
         "eligible": false,
@@ -2333,7 +2333,7 @@
         "utcInstant": "1908-01-09T11:50:39.000Z",
         "utcOffsetMinutesAtBirth": 9.35,
         "civilDayStartUtc": "1908-01-08T23:50:39.000Z",
-        "civilDayEndUtc": "1908-01-09T23:49:39.000Z",
+        "civilDayEndUtc": "1908-01-09T23:50:39.000Z",
         "latitude": 48.850530555556,
         "longitude": 2.3322333333333,
         "coordinateEscalationSteps": 0,
@@ -2368,8 +2368,8 @@
       },
       "unknownTimeErrorBandDegrees": {
         "Sun": 1.019,
-        "Moon": 13.729,
-        "Mercury": 1.612,
+        "Moon": 13.739,
+        "Mercury": 1.613,
         "Venus": 1.239,
         "Mars": 0.703,
         "Jupiter": 0.114,
@@ -2429,8 +2429,8 @@
         "pilotTools": "docs/phase5/people-pilot/tools @ phase5a"
       },
       "contentDepth": {
-        "originalWords": 315,
-        "substantiveStatements": 11,
+        "originalWords": 332,
+        "substantiveStatements": 12,
         "highestPairwiseSimilarity": 0
       },
       "indexEligibility": {
@@ -2496,7 +2496,7 @@
         "utcInstant": "1853-03-30T11:42:30.000Z",
         "utcOffsetMinutesAtBirth": 17.5,
         "civilDayStartUtc": "1853-03-29T23:42:30.000Z",
-        "civilDayEndUtc": "1853-03-30T23:41:30.000Z",
+        "civilDayEndUtc": "1853-03-30T23:42:30.000Z",
         "latitude": 51.4703,
         "longitude": 4.66,
         "coordinateEscalationSteps": 0,
@@ -2531,10 +2531,10 @@
       },
       "unknownTimeErrorBandDegrees": {
         "Sun": 0.986,
-        "Moon": 14.155,
+        "Moon": 14.165,
         "Mercury": 0.182,
-        "Venus": 1.238,
-        "Mars": 0.779,
+        "Venus": 1.239,
+        "Mars": 0.78,
         "Jupiter": 0.035,
         "Saturn": 0.113,
         "Uranus": 0.053,
@@ -2580,9 +2580,9 @@
         "pilotTools": "docs/phase5/people-pilot/tools @ phase5a"
       },
       "contentDepth": {
-        "originalWords": 353,
-        "substantiveStatements": 13,
-        "highestPairwiseSimilarity": 0.1991
+        "originalWords": 360,
+        "substantiveStatements": 14,
+        "highestPairwiseSimilarity": 0.204
       },
       "indexEligibility": {
         "eligible": false,
@@ -2647,7 +2647,7 @@
         "utcInstant": "1882-01-25T12:00:00.000Z",
         "utcOffsetMinutesAtBirth": 0,
         "civilDayStartUtc": "1882-01-25T00:00:00.000Z",
-        "civilDayEndUtc": "1882-01-25T23:59:00.000Z",
+        "civilDayEndUtc": "1882-01-26T00:00:00.000Z",
         "latitude": 51.507222222222,
         "longitude": -0.1275,
         "coordinateEscalationSteps": 0,
@@ -2682,10 +2682,10 @@
       },
       "unknownTimeErrorBandDegrees": {
         "Sun": 1.016,
-        "Moon": 13.689,
-        "Mercury": 1.699,
-        "Venus": 1.255,
-        "Mars": 0.108,
+        "Moon": 13.699,
+        "Mercury": 1.7,
+        "Venus": 1.256,
+        "Mars": 0.109,
         "Jupiter": 0.051,
         "Saturn": 0.034,
         "Uranus": 0.028,
@@ -2743,9 +2743,9 @@
         "pilotTools": "docs/phase5/people-pilot/tools @ phase5a"
       },
       "contentDepth": {
-        "originalWords": 344,
-        "substantiveStatements": 11,
-        "highestPairwiseSimilarity": 0.1915
+        "originalWords": 364,
+        "substantiveStatements": 12,
+        "highestPairwiseSimilarity": 0.2074
       },
       "indexEligibility": {
         "eligible": false,
@@ -2810,7 +2810,7 @@
         "utcInstant": "1819-05-31T16:56:02.000Z",
         "utcOffsetMinutesAtBirth": -296.0333,
         "civilDayStartUtc": "1819-05-31T04:56:02.000Z",
-        "civilDayEndUtc": "1819-06-01T04:55:02.000Z",
+        "civilDayEndUtc": "1819-06-01T04:56:02.000Z",
         "latitude": 40.8242,
         "longitude": -73.4344,
         "coordinateEscalationSteps": 0,
@@ -2844,10 +2844,10 @@
         "signAtCivilDayEnd": "virgo"
       },
       "unknownTimeErrorBandDegrees": {
-        "Sun": 0.957,
-        "Moon": 12.069,
+        "Sun": 0.958,
+        "Moon": 12.077,
         "Mercury": 1.034,
-        "Venus": 1.184,
+        "Venus": 1.185,
         "Mars": 0.748,
         "Jupiter": 0.017,
         "Saturn": 0.067,
@@ -2906,8 +2906,8 @@
         "pilotTools": "docs/phase5/people-pilot/tools @ phase5a"
       },
       "contentDepth": {
-        "originalWords": 335,
-        "substantiveStatements": 12,
+        "originalWords": 340,
+        "substantiveStatements": 13,
         "highestPairwiseSimilarity": 0
       },
       "indexEligibility": {
@@ -2973,7 +2973,7 @@
         "utcInstant": "1940-04-01T09:15:00.000Z",
         "utcOffsetMinutesAtBirth": 165,
         "civilDayStartUtc": "1940-03-31T21:15:00.000Z",
-        "civilDayEndUtc": "1940-04-01T21:14:00.000Z",
+        "civilDayEndUtc": "1940-04-01T21:15:00.000Z",
         "latitude": -0.41666666666667,
         "longitude": 36.95,
         "coordinateEscalationSteps": 0,
@@ -3008,11 +3008,11 @@
       },
       "unknownTimeErrorBandDegrees": {
         "Sun": 0.986,
-        "Moon": 12.209,
-        "Mercury": 0.29,
+        "Moon": 12.217,
+        "Mercury": 0.291,
         "Venus": 1.069,
         "Mars": 0.663,
-        "Jupiter": 0.24,
+        "Jupiter": 0.241,
         "Saturn": 0.123,
         "Uranus": 0.048,
         "Neptune": 0.026,
@@ -3069,9 +3069,9 @@
         "pilotTools": "docs/phase5/people-pilot/tools @ phase5a"
       },
       "contentDepth": {
-        "originalWords": 369,
+        "originalWords": 399,
         "substantiveStatements": 13,
-        "highestPairwiseSimilarity": 0.2281
+        "highestPairwiseSimilarity": 0.2079
       },
       "indexEligibility": {
         "eligible": false,
@@ -3135,7 +3135,7 @@
         "utcInstant": "1950-10-31T09:00:00.000Z",
         "utcOffsetMinutesAtBirth": 180,
         "civilDayStartUtc": "1950-10-30T21:00:00.000Z",
-        "civilDayEndUtc": "1950-10-31T20:59:00.000Z",
+        "civilDayEndUtc": "1950-10-31T21:00:00.000Z",
         "latitude": 33.31527777777778,
         "longitude": 44.36611111111111,
         "coordinateEscalationSteps": 0,
@@ -3169,10 +3169,10 @@
         "signAtCivilDayEnd": "cancer"
       },
       "unknownTimeErrorBandDegrees": {
-        "Sun": 0.999,
-        "Moon": 11.973,
-        "Mercury": 1.64,
-        "Venus": 1.253,
+        "Sun": 1,
+        "Moon": 11.982,
+        "Mercury": 1.641,
+        "Venus": 1.254,
         "Mars": 0.743,
         "Jupiter": 0.024,
         "Saturn": 0.106,
@@ -3219,9 +3219,9 @@
         "pilotTools": "docs/phase5/people-pilot/tools @ phase5a"
       },
       "contentDepth": {
-        "originalWords": 341,
-        "substantiveStatements": 12,
-        "highestPairwiseSimilarity": 0.1917
+        "originalWords": 348,
+        "substantiveStatements": 13,
+        "highestPairwiseSimilarity": 0.2047
       },
       "indexEligibility": {
         "eligible": false,

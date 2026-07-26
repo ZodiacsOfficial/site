@@ -32,6 +32,7 @@ interface Props {
   imageAlt?: string;
   type?: 'website' | 'article';
   noindex?: boolean;
+  nofollow?: boolean;
   jsonLd?: Record<string, unknown>[];
   locale?: Locale;
 }
@@ -45,6 +46,7 @@ const {
   imageAlt: explicitImageAlt,
   type = 'website',
   noindex = false,
+  nofollow = false,
   jsonLd = [],
   locale: rawLocale = 'en',
 } = Astro.props;
@@ -259,7 +261,12 @@ const graph = graphNodes.length
     <link rel="alternate" hreflang="x-default" href={site + defaultAlternate} />
   </>
 )}
-<meta name="robots" content={noindex ? 'noindex, follow, max-image-preview:large' : 'max-image-preview:large'} />
+<meta
+  name="robots"
+  content={noindex
+    ? `${nofollow ? 'noindex, nofollow' : 'noindex, follow'}, max-image-preview:large`
+    : 'max-image-preview:large'}
+/>
 
 <meta property="og:site_name" content="Zodiacs.org" />
 <meta property="og:title" content={title} />

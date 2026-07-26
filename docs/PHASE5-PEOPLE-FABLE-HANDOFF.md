@@ -338,6 +338,18 @@ Two rules follow, both enforced in the pilot data:
   that exist only at noon are recorded separately and never published.
   Between eight and seventeen aspects survive this test per pilot page.
 
+**Phase 5B accuracy amendment (2026-07-26).** The implementation found
+that endpoint-only testing was not conservative enough: a fast body can
+change sign and return, or an aspect can leave and re-enter its orb,
+inside the same civil day. The committed computation now samples every
+hour from the exact opening midnight through the exact next midnight
+(25 samples, including both boundaries). A placement, direction or
+aspect is publishable only when the relevant state holds across every
+sample. Stelliums, elements, modalities, retrograde counts and missing
+elements are computed only from placements whose signs are settled
+across all 25 samples. This amendment supersedes the endpoint-only
+wording above and is enforced by the production validator.
+
 ### Missing-coordinate fallback
 
 1. Birthplace entity carries `P625` → use it, escalation 0.
@@ -616,16 +628,16 @@ boilerplate string:
 
 | Measure | Threshold | Measured | Headroom |
 | --- | --- | --- | --- |
-| Original words per page | ≥ **250** | 315–393 (median 353) | +26% at the minimum |
-| Distinct substantive statements | ≥ **8** | 11–14 | +37% at the minimum |
-| Pairwise similarity | ≤ **0.32** | max **0.2786** | 15% |
+| Original words per page | ≥ **250** | 332–404 (median 365) | +33% at the minimum |
+| Distinct substantive statements | ≥ **8** | 12–15 | +50% at the minimum |
+| Pairwise similarity | ≤ **0.32** | max **0.3048** | 5% |
 
 **Metric.** 5-word shingle Jaccard similarity — the metric
 `scripts/check-programmatic-uniqueness.mjs` already applies to the 78
 compatibility pages, where the accepted ceiling is 0.42. People pages
 are held to a stricter number because they concern named individuals.
-The worst pair is `rosalind-franklin` / `katherine-johnson` at 0.2786;
-the second-worst is 0.2204.
+The worst pair is `rosalind-franklin` / `katherine-johnson` at 0.3048;
+the second-worst is `emily-bronte` / `clara-schumann` at 0.2309.
 
 **What counts as a substantive statement:** degree-level placement
 detail, aspect geometry with orb, classical dignity, and chart-pattern
@@ -650,7 +662,7 @@ frame and its interpretive gloss from independent per-page seeds, so two
 pages sharing one fact still differ everywhere else. The first
 composition pass, with single-rendering glosses, measured 0.5152 — above
 even the compatibility ceiling. Expanding each gloss to three renderings
-and decorrelating the selectors brought it to 0.2786. **That first
+and decorrelating the selectors brought it below the 0.32 ceiling. **That first
 number is why era separation is a selection rule and not a copy
 tweak.**
 

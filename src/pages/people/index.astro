@@ -1,0 +1,186 @@
+---
+import '../../styles/people.css';
+import Base from '../../layouts/Base.astro';
+import SignIcon from '../../components/SignIcon.astro';
+import PeopleCard from '../../components/people/PeopleCard.astro';
+import {
+  PEOPLE,
+  PEOPLE_DISCIPLINE_FILTERS,
+  peopleDisciplineGroups,
+} from '../../lib/people';
+import { SIGNS } from '../../lib/signs';
+
+const disciplines = PEOPLE_DISCIPLINE_FILTERS.map((discipline) => ({
+  ...discipline,
+  count: PEOPLE.filter((person) => peopleDisciplineGroups(person).includes(discipline.slug)).length,
+}));
+const signCounts = new Map(SIGNS.map((sign) => [
+  sign.slug,
+  PEOPLE.filter((person) => person.sunSign.slug === sign.slug).length,
+]));
+
+const filterCss = [
+  ...SIGNS.flatMap((sign) => [
+    `#filter-sign-${sign.slug}:target ~ .people-directory [data-person-card]:not([data-sign="${sign.slug}"]){display:none}`,
+    `#filter-sign-${sign.slug}:target ~ .people-directory [data-filter-sign="${sign.slug}"]{border-color:var(--hair-2);background:rgba(198,204,218,.07)}`,
+    `#filter-sign-${sign.slug}:target ~ .people-directory .people-count--default{display:none}`,
+    `#filter-sign-${sign.slug}:target ~ .people-directory .people-count--sign-${sign.slug}{display:block}`,
+  ]),
+  ...disciplines.flatMap((discipline) => [
+    `#filter-discipline-${discipline.slug}:target ~ .people-directory [data-person-card]:not([data-disciplines~="${discipline.slug}"]){display:none}`,
+    `#filter-discipline-${discipline.slug}:target ~ .people-directory [data-filter-discipline="${discipline.slug}"]{border-color:var(--hair-2);background:rgba(198,204,218,.07);color:var(--text)}`,
+    `#filter-discipline-${discipline.slug}:target ~ .people-directory .people-count--default{display:none}`,
+    `#filter-discipline-${discipline.slug}:target ~ .people-directory .people-count--discipline-${discipline.slug}{display:block}`,
+  ]),
+  '.people-directory[data-searching="true"] .people-count:not(.people-count--js){display:none}',
+  '.people-directory[data-searching="true"] .people-count--js{display:block}',
+].join('\n');
+
+const jsonLd = [
+  {
+    '@type': 'CollectionPage',
+    '@id': 'https://zodiacs.org/people/#page',
+    url: 'https://zodiacs.org/people/',
+    name: 'People',
+    description: 'Twenty sourced, time-honest astrology charts for people in the public record.',
+    mainEntity: { '@id': 'https://zodiacs.org/people/#list' },
+    isPartOf: { '@id': 'https://zodiacs.org/#site' },
+  },
+  {
+    '@type': 'ItemList',
+    '@id': 'https://zodiacs.org/people/#list',
+    numberOfItems: PEOPLE.length,
+    itemListElement: PEOPLE.map((person, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: person.displayName,
+      url: `https://zodiacs.org/people/${person.slug}/`,
+    })),
+  },
+];
+---
+<Base
+  title="People — sourced birth charts | Zodiacs.org"
+  description="Twenty astrology charts computed from sourced public birth dates, with unknown birth times and uncertain Moon signs stated plainly."
+  path="/people/"
+  noindex
+  nofollow
+  jsonLd={jsonLd}
+  stableTypography
+  localTypography
+>
+  <section class="people-page">
+    <header class="people-page__hero">
+      <p class="people-kicker">People · noindex pilot</p>
+      <h1 class="display">People</h1>
+      <p class="people-page__lede">
+        Charts for people whose birth dates are a matter of public record. Each one is computed here,
+        from a sourced date, with the parts we cannot know left visibly empty.
+      </p>
+    </header>
+
+    {SIGNS.map((sign) => (
+      <span id={`filter-sign-${sign.slug}`} class="people-filter-target" aria-hidden="true"></span>
+    ))}
+    {disciplines.map((discipline) => (
+      <span id={`filter-discipline-${discipline.slug}`} class="people-filter-target" aria-hidden="true"></span>
+    ))}
+
+    <section class="people-directory" id="people-results" aria-label="People directory" data-people-directory>
+      <div class="people-filter">
+        <p class="people-label">By sign</p>
+        <nav class="people-filter__rail" aria-label="Filter people by Sun sign">
+          {SIGNS.map((sign) => (
+            <a
+              class="people-filter__sign"
+              href={`/people/?sign=${sign.slug}#filter-sign-${sign.slug}`}
+              data-filter-sign={sign.slug}
+              aria-label={`${sign.name}: ${signCounts.get(sign.slug)} people`}
+            >
+              <SignIcon sign={sign.slug} size={42} loading="eager" />
+            </a>
+          ))}
+        </nav>
+      </div>
+
+      <div class="people-filter">
+        <p class="people-label">By discipline</p>
+        <nav class="people-chips" aria-label="Filter people by discipline">
+          {disciplines.map((discipline) => (
+            <a
+              class="people-chip"
+              href={`/people/?discipline=${discipline.slug}#filter-discipline-${discipline.slug}`}
+              data-filter-discipline={discipline.slug}
+            >
+              {discipline.name}
+            </a>
+          ))}
+          <a class="people-chip" href="/people/#people-results">Show everyone</a>
+        </nav>
+      </div>
+
+      <div class="people-search-slot">
+        <div class="people-search" data-people-search hidden>
+          <label class="people-label" for="people-name">Find a name</label>
+          <input id="people-name" type="search" autocomplete="off" placeholder="Start typing a name…" />
+        </div>
+      </div>
+      <noscript><style>.people-search-slot{display:none}</style></noscript>
+
+      <p class="people-count people-count--default">20 people. All birth times unknown.</p>
+      {SIGNS.map((sign) => (
+        <p class:list={['people-count', 'people-count--filter', `people-count--sign-${sign.slug}`]}>
+          {signCounts.get(sign.slug)} of 20 people · {sign.name}
+        </p>
+      ))}
+      {disciplines.map((discipline) => (
+        <p class:list={['people-count', 'people-count--filter', `people-count--discipline-${discipline.slug}`]}>
+          {discipline.count} of 20 people · {discipline.name}
+        </p>
+      ))}
+      <p class="people-count people-count--js" aria-live="polite" data-people-count></p>
+
+      <div class="people-grid" data-people-grid>
+        {PEOPLE.map((person) => <PeopleCard person={person} />)}
+      </div>
+
+      <div class="people-empty" data-people-empty>
+        <strong>Nothing matches that yet.</strong>
+        <p>
+          This directory is small on purpose—every person here was researched and reviewed one at a time.
+          Try another name, or clear the filter.
+        </p>
+      </div>
+
+      <p class="people-directory__footer">
+        Something wrong on one of these pages?
+        <a href="mailto:people@zodiacs.org">Ask us to correct or remove it.</a>
+      </p>
+    </section>
+    <style is:inline set:html={filterCss}></style>
+  </section>
+
+  <script>
+    const directory = document.querySelector<HTMLElement>('[data-people-directory]');
+    const searchWrap = directory?.querySelector<HTMLElement>('[data-people-search]');
+    const input = directory?.querySelector<HTMLInputElement>('#people-name');
+    const cards = [...(directory?.querySelectorAll<HTMLElement>('[data-person-card]') ?? [])];
+    const count = directory?.querySelector<HTMLElement>('[data-people-count]');
+    if (directory && searchWrap && input && count) {
+      searchWrap.hidden = false;
+      const refresh = () => {
+        const query = input.value.trim().toLowerCase();
+        for (const card of cards) {
+          card.hidden = Boolean(query) && !(card.dataset.personName ?? '').includes(query);
+        }
+        requestAnimationFrame(() => {
+          const visible = cards.filter((card) => !card.hidden && getComputedStyle(card).display !== 'none').length;
+          directory.dataset.searching = query ? 'true' : 'false';
+          directory.dataset.empty = visible === 0 ? 'true' : 'false';
+          count.textContent = `${visible} of ${cards.length} people.`;
+        });
+      };
+      input.addEventListener('input', refresh);
+    }
+  </script>
+</Base>

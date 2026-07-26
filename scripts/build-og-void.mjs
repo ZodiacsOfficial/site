@@ -57,6 +57,9 @@ const {
 const EVENTS_PUBLICATION = JSON.parse(
   await readFile(resolve(root, 'src/data/events-publication.json'), 'utf8'),
 );
+const PEOPLE_PILOT = JSON.parse(
+  await readFile(resolve(root, 'src/data/people.json'), 'utf8'),
+).people;
 
 const { chromium } = await import(process.env.PLAYWRIGHT_MODULE ?? 'playwright-core');
 const executablePath =
@@ -496,6 +499,23 @@ function almanacCard({ title, sub, path, hub = false }) {
   return shell(body, `zodiacs.org${path}`);
 }
 
+function personCard(person) {
+  const titleSize = person.displayName.length > 22 ? 58
+    : person.displayName.length > 16 ? 66
+      : person.displayName.length > 11 ? 76 : 88;
+  const body = `
+  <div class="stage">
+    <div class="left" style="max-width:700px;">
+      <span class="kicker">People · sourced birth date</span>
+      <div class="display" style="font-size:${titleSize}px;">${escapeHtml(person.displayName)}</div>
+      <div class="sub" style="font-size:24px;color:${MUTED};max-width:680px;">${escapeHtml(person.shortDescription)}</div>
+      <div class="data">${escapeHtml(person.sunSign.name)} ${person.sunSign.degree.toFixed(1)}° · Birth time unknown</div>
+    </div>
+    <img class="disc" src="${DISCS[person.sunSign.slug]}" width="270" height="270" />
+  </div>`;
+  return shell(body, `zodiacs.org/people/${person.slug}/`);
+}
+
 const EVENT_FAMILY = {
   lunation: { label: 'Moon calendar', glyph: '☽' },
   eclipse: { label: 'Eclipse season', glyph: '◐' },
@@ -574,9 +594,34 @@ const almanacEntries = (await Promise.all(
 )).filter((entry) => !entry.draft);
 
 const TOOLS = OG_EN.tools;
+const englishRequiredCards = () => [
+  ...SIGNS.map((s) => `sign/${s.slug}.png`),
+  ...SIGNS.map((s) => `registry/${s.slug}.png`),
+  ...SIGNS.flatMap((s) => HOROSCOPE_OG_SURFACES.map((surface) => horoscopeCardPath(s, surface))),
+  ...TOOLS.map((tool) => `tool/${tool.key}.png`),
+  'tool/compatibility-invite.png',
+  ...(EVENTS_PUBLICATION.hub.indexEligible ? ['events/index.png'] : []),
+  ...EVENTS_PUBLICATION.pages.map((event) => `events/${event.id}.png`),
+  ...PEOPLE_PILOT.map((person) => `people/${person.slug}.png`),
+  'registry.png',
+  'thesis.png',
+  'disclosure.png',
+].sort();
+
+async function writeEnglishManifest() {
+  await writeFile(resolve(OUT, 'manifest.json'), `${JSON.stringify({
+    schema: 'zodiacs.og-cards.v1',
+    locale: 'en',
+    width: 1200,
+    height: 630,
+    iconSource: '/assets/zodiac-icons/128/{sign}.webp',
+    fallback: '/assets/og/v2/share.png',
+    requiredCards: englishRequiredCards(),
+  }, null, 2)}\n`);
+}
 
 // ── Render loop ───────────────────────────────────────────────────────
-for (const dir of ['', 'sign', 'registry', 'tool', 'pair', 'horoscope', 'placements', 'rising', 'almanac', 'events', 'pin', 'ru', 'ru/sign', 'ru/tool']) {
+for (const dir of ['', 'sign', 'registry', 'tool', 'pair', 'horoscope', 'placements', 'rising', 'almanac', 'events', 'people', 'pin', 'ru', 'ru/sign', 'ru/tool']) {
   await mkdir(resolve(OUT, dir), { recursive: true });
 }
 
@@ -585,6 +630,7 @@ const page = await browser.newPage({ viewport: { width: 1200, height: 630 }, dev
 const onlyHoroscopes = process.argv.includes('--only-horoscopes');
 const onlyInvite = process.argv.includes('--only-compatibility-invite');
 const onlyRussian = process.argv.includes('--only-ru');
+const onlyPeople = process.argv.includes('--only-people');
 
 let total = 0;
 let count = 0;
@@ -630,11 +676,18 @@ async function shoot(html, outPath) {
   // 64-colour palette keeps type edges and the canonical pastel sign art
   // crisp while cutting this repeated family enough to preserve the complete
   // v2 bundle's 15MiB ceiling.
-  const compactPalette = outPath.startsWith('events/') || outPath.startsWith('ru/');
+  const compactPalette = outPath.startsWith('events/')
+    || outPath.startsWith('people/')
+    || outPath.startsWith('ru/');
+  const compactColors = outPath.startsWith('people/') ? 32 : 64;
+  // Re-quantize People cards from the full-colour capture. Reprocessing the
+  // already-indexed first pass can preserve its larger palette in libvips,
+  // which defeats this small family's tighter launch budget.
+  const compactInput = outPath.startsWith('people/') ? raw : firstPass;
   const buf = compactPalette
-    ? await sharp(firstPass).png({
+    ? await sharp(compactInput).png({
         palette: true,
-        colors: 64,
+        colors: compactColors,
         dither: 0.6,
         compressionLevel: 9,
         effort: 10,
@@ -676,6 +729,17 @@ if (onlyRussian) {
   console.log('Rendering Russian OG cards…');
   await renderRussianCards();
   console.log(`Done: ${count} Russian cards, ${(russianTotal / 1024).toFixed(1)}KiB.`);
+  await browser.close();
+  process.exit(0);
+}
+
+if (onlyPeople) {
+  console.log('Rendering People pilot OG cards…');
+  for (const person of PEOPLE_PILOT) {
+    await shoot(personCard(person), `people/${person.slug}.png`);
+  }
+  await writeEnglishManifest();
+  console.log(`Done: ${count} People cards, ${(total / 1024).toFixed(0)}KB.`);
   await browser.close();
   process.exit(0);
 }
@@ -774,6 +838,9 @@ if (onlyHoroscopes) {
       await shoot(eventCard(event), `events/${event.id}.png`);
     }
   }
+  for (const person of PEOPLE_PILOT) {
+    await shoot(personCard(person), `people/${person.slug}.png`);
+  }
   await renderRussianCards();
 }
 
@@ -855,27 +922,7 @@ if (!onlyHoroscopes) {
 for (const s of SIGNS) await shoot(pinHoroscope(s), `pin/horoscope-${s.slug}.png`);
 if (!onlyHoroscopes) await shoot(pinHowTo(), 'pin/how-to-read-a-birth-chart.png');
 
-const requiredCards = [
-  ...SIGNS.map((s) => `sign/${s.slug}.png`),
-  ...SIGNS.map((s) => `registry/${s.slug}.png`),
-  ...SIGNS.flatMap((s) => HOROSCOPE_OG_SURFACES.map((surface) => horoscopeCardPath(s, surface))),
-  ...TOOLS.map((tool) => `tool/${tool.key}.png`),
-  'tool/compatibility-invite.png',
-  ...(EVENTS_PUBLICATION.hub.indexEligible ? ['events/index.png'] : []),
-  ...EVENTS_PUBLICATION.pages.map((event) => `events/${event.id}.png`),
-  'registry.png',
-  'thesis.png',
-  'disclosure.png',
-].sort();
-await writeFile(resolve(OUT, 'manifest.json'), `${JSON.stringify({
-  schema: 'zodiacs.og-cards.v1',
-  locale: 'en',
-  width: 1200,
-  height: 630,
-  iconSource: '/assets/zodiac-icons/128/{sign}.webp',
-  fallback: '/assets/og/v2/share.png',
-  requiredCards,
-}, null, 2)}\n`);
+await writeEnglishManifest();
 
 await browser.close();
 

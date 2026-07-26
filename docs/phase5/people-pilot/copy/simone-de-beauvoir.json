@@ -6,8 +6,8 @@
   "identity": "Political philosopher and novelist · France · 1908–1986",
   "title": "Simone de Beauvoir's birth chart",
   "metaDescription": "Simone de Beauvoir's chart, computed from a sourced birth date: Sun at 17.8° Capricorn. Birth time unknown, so no houses or rising sign.",
-  "lede": "Five of the ten bodies fall in cardinal signs, the widest single weighting in the chart. Cardinal weight is read as initiative: the instinct to be the reason something began.",
-  "ledeFact": "modality:cardinal:5",
+  "lede": "Four of the nine placements whose signs are settled fall in cardinal signs, the widest weighting the unknown hour leaves certain. Cardinal weight is read as initiative: the instinct to be the reason something began.",
+  "ledeFact": "modality:cardinal:4",
   "blocks": [
     {
       "key": "sun",
@@ -40,11 +40,12 @@
       "key": "shape",
       "title": "The shape of the whole",
       "facts": [
-        "elements:earth3-water3-fire2-air2",
-        "modalities:cardinal5-mutable3-fixed2",
+        "elements:earth3-water3-air2-fire1",
+        "modalities:cardinal4-mutable3-fixed2",
+        "settled-signs:9",
         "retrograde:3"
       ],
-      "text": "The balance sheet: earth 3, water 3, fire 2, air 2 across the elements, and cardinal 5, mutable 3, fixed 2 across the modalities. An earth emphasis reads as trust in the tangible: the plan matters less than whether the thing stands up. Jupiter, Neptune and Pluto were retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
+      "text": "The honest balance sheet uses the 9 placements whose signs hold for the whole day: earth 3, water 3, air 2, fire 1 across the elements, and cardinal 4, mutable 3, fixed 2 across the modalities. An earth emphasis reads as trust in the tangible: the plan matters less than whether the thing stands up. Jupiter, Neptune and Pluto were retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
     },
     {
       "key": "moon",
@@ -65,21 +66,22 @@
     "label": "The Capricorn guide"
   },
   "substantiveFacts": [
-    "modality:cardinal:5",
+    "modality:cardinal:4",
     "sun-degree:17.84",
     "decan:capricorn:second",
     "aspect:Uranus:Neptune:opposition:0.26",
     "aspect:Saturn:Pluto:square:0.89",
     "aspect:Mercury:Neptune:opposition:1.41",
     "dignity:none",
-    "elements:earth3-water3-fire2-air2",
-    "modalities:cardinal5-mutable3-fixed2",
+    "elements:earth3-water3-air2-fire1",
+    "modalities:cardinal4-mutable3-fixed2",
+    "settled-signs:9",
     "retrograde:3",
     "moon-uncertain:pisces:aries"
   ],
   "measurements": {
-    "originalWords": 315,
-    "substantiveStatements": 11,
+    "originalWords": 332,
+    "substantiveStatements": 12,
     "blocks": 5
   }
 }

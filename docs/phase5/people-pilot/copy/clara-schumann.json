@@ -45,9 +45,10 @@
       "facts": [
         "elements:water4-earth3-fire2-air1",
         "modalities:mutable7-cardinal2-fixed1",
+        "settled-signs:10",
         "retrograde:4"
       ],
-      "text": "By element the ten bodies divide 4 water, 3 earth, 2 fire, 1 air; by modality, 7 mutable, 2 cardinal, 1 fixed. A water emphasis reads as porousness: the room is registered whole, long before it is analysed in parts. Mercury, Jupiter, Saturn and Pluto were retrograde — apparent backward motion from where the Earth sits, which the tradition reads as a function turned inward before it is turned out."
+      "text": "Among the 10 placements whose signs hold for the whole day, the elements divide 4 water, 3 earth, 2 fire, 1 air; by modality, 7 mutable, 2 cardinal, 1 fixed. A water emphasis reads as porousness: the room is registered whole, long before it is analysed in parts. Mercury, Jupiter, Saturn and Pluto were retrograde — apparent backward motion from where the Earth sits, which the tradition reads as a function turned inward before it is turned out."
     },
     {
       "key": "moon",
@@ -81,13 +82,14 @@
     "dignity:Mars:fall",
     "elements:water4-earth3-fire2-air1",
     "modalities:mutable7-cardinal2-fixed1",
+    "settled-signs:10",
     "retrograde:4",
     "moon-sign:cancer",
     "moon-band:11.9"
   ],
   "measurements": {
-    "originalWords": 382,
-    "substantiveStatements": 14,
+    "originalWords": 390,
+    "substantiveStatements": 15,
     "blocks": 5
   }
 }

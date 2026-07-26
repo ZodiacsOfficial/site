@@ -67,6 +67,10 @@ const COLLAPSE = /\s+/g;
 const LOCALIZED_PAGE_PREFIXES = LOCALES
   .filter((locale) => locale !== DEFAULT_LOCALE)
   .map((locale) => `${locale}/`);
+// Reachable does not mean recommendable. Phase 5's reviewed pilot remains
+// deliberately absent from all discovery surfaces until its separate
+// indexing authorization; the assistant must honor that boundary too.
+const UNLISTED_ROUTE_PREFIXES = Object.freeze(['/people/']);
 
 function compareText(left, right) {
   return left < right ? -1 : left > right ? 1 : 0;
@@ -213,6 +217,7 @@ async function loadStaticPages(repoRoot, context) {
     if (local.includes('[')) continue;
     if (local === '404.astro') continue;
     const route = pagePath(file, pagesRoot);
+    if (UNLISTED_ROUTE_PREFIXES.some((prefix) => route.startsWith(prefix))) continue;
     // Registry-only, feature-flagged utility: keep it out of the consumer
     // astrology assistant and its deliberately strict vocabulary boundary.
     if (route.startsWith('/registry/')) continue;

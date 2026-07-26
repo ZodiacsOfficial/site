@@ -41,11 +41,12 @@
       "key": "shape",
       "title": "The shape of the whole",
       "facts": [
-        "elements:earth3-fire3-air2-water2",
-        "modalities:mutable6-fixed3-cardinal1",
+        "elements:fire3-air2-earth2-water2",
+        "modalities:mutable5-fixed3-cardinal1",
+        "settled-signs:9",
         "retrograde:2"
       ],
-      "text": "By element the ten bodies divide 3 earth, 3 fire, 2 air, 2 water; by modality, 6 mutable, 3 fixed, 1 cardinal. Earth weights a chart toward the material and the durable — what can be built, kept, and relied on. Uranus and Neptune were retrograde — apparent backward motion from where the Earth sits, which the tradition reads as a function turned inward before it is turned out."
+      "text": "Among the 9 placements whose signs hold for the whole day, the elements divide 3 fire, 2 air, 2 earth, 2 water; by modality, 5 mutable, 3 fixed, 1 cardinal. Fire weights a chart toward initiative — starting, asserting, spending energy to find out what happens. Uranus and Neptune were retrograde — apparent backward motion from where the Earth sits, which the tradition reads as a function turned inward before it is turned out."
     },
     {
       "key": "moon",
@@ -74,14 +75,15 @@
     "aspect:Saturn:Neptune:square:1.47",
     "dignity:Venus:domicile",
     "dignity:Mars:domicile",
-    "elements:earth3-fire3-air2-water2",
-    "modalities:mutable6-fixed3-cardinal1",
+    "elements:fire3-air2-earth2-water2",
+    "modalities:mutable5-fixed3-cardinal1",
+    "settled-signs:9",
     "retrograde:2",
     "moon-uncertain:leo:virgo"
   ],
   "measurements": {
-    "originalWords": 335,
-    "substantiveStatements": 12,
+    "originalWords": 340,
+    "substantiveStatements": 13,
     "blocks": 5
   }
 }

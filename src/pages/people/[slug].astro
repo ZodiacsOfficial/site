@@ -1,0 +1,290 @@
+---
+import '../../styles/people.css';
+import Base from '../../layouts/Base.astro';
+import EvidenceDisclosure from '../../components/EvidenceDisclosure.astro';
+import ShareRow from '../../components/ShareRow.astro';
+import SignIcon from '../../components/SignIcon.astro';
+import Wheel from '../../lib/wheel/Wheel';
+import { PEOPLE, type PersonRecord } from '../../lib/people';
+import { signBySlug } from '../../lib/signs';
+
+export function getStaticPaths() {
+  return PEOPLE.map((person) => ({
+    params: { slug: person.slug },
+    props: { person },
+  }));
+}
+
+const { person } = Astro.props as { person: PersonRecord };
+const sign = signBySlug(person.sunSign.slug);
+const longDate = new Intl.DateTimeFormat('en-US', {
+  timeZone: 'UTC',
+  month: 'long',
+  day: 'numeric',
+  year: 'numeric',
+}).format(new Date(`${person.birthDate.displayedDate}T12:00:00Z`));
+const related = PEOPLE
+  .filter((candidate) => candidate.slug !== person.slug && candidate.sunSign.slug === person.sunSign.slug)
+  .slice(0, 3);
+const wheelBodies = person.placements.map((placement) => ({
+  body: placement.body,
+  lon: placement.longitude,
+  retrograde: placement.retrograde,
+}));
+const wheelAspects = person.aspectsStableAcrossCivilDay.map((aspect) => ({
+  a: aspect.a,
+  b: aspect.b,
+  type: aspect.type,
+}));
+const coordinates = person.birthPlace.coordinates;
+const moonStatement = person.moon.uncertain
+  ? `Moon sign undetermined. The Moon crossed from ${signBySlug(person.moon.signAtCivilDayStart).name} into ${signBySlug(person.moon.signAtCivilDayEnd).name} during that day.`
+  : `The Moon remained in ${person.moon.signName} throughout that civil day.`;
+const pageUrl = `https://zodiacs.org/people/${person.slug}/`;
+const image = `/assets/og/v2/people/${person.slug}.png`;
+
+const jsonLd = [
+  {
+    '@type': 'WebPage',
+    '@id': `${pageUrl}#page`,
+    url: pageUrl,
+    name: person.copy.title,
+    description: person.copy.metaDescription,
+    about: { '@id': `${pageUrl}#person` },
+    isPartOf: { '@id': 'https://zodiacs.org/#site' },
+  },
+  {
+    '@type': 'Person',
+    '@id': `${pageUrl}#person`,
+    name: person.displayName,
+    description: person.shortDescription,
+    birthDate: person.birthDate.displayedDate,
+    birthPlace: {
+      '@type': 'Place',
+      name: person.birthPlace.normalisedLabel,
+      sameAs: `https://www.wikidata.org/wiki/${person.birthPlace.entity}`,
+    },
+    sameAs: [
+      person.sources.wikidata.entityUrl,
+      person.sources.wikipedia.articleUrl,
+    ],
+  },
+  {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Zodiacs.org', item: 'https://zodiacs.org/' },
+      { '@type': 'ListItem', position: 2, name: 'People', item: 'https://zodiacs.org/people/' },
+      { '@type': 'ListItem', position: 3, name: person.displayName, item: pageUrl },
+    ],
+  },
+];
+---
+<Base
+  title={`${person.copy.title} | Zodiacs.org`}
+  description={person.copy.metaDescription}
+  path={`/people/${person.slug}/`}
+  image={image}
+  imageAlt={`${person.displayName}'s sourced birth-date chart — birth time unknown`}
+  noindex
+  nofollow
+  jsonLd={jsonLd}
+  stableTypography
+>
+  <article class="person-page" style={`--sign:${sign.hue}`}>
+    <div class="person-layout">
+      <header class="person-identity">
+        {person.portrait.available ? (
+          <>
+            <figure class="person-portrait" data-person-portrait>
+              <img
+                src={person.portrait.assetPath}
+                srcset={`/assets/people/${person.slug}-192.webp 192w, ${person.portrait.assetPath} ${person.portrait.width}w`}
+                sizes="(max-width: 559px) 96px, (min-width: 1060px) 278px, calc(100vw - 60px)"
+                width={person.portrait.width}
+                height={person.portrait.height}
+                alt={person.displayName}
+                loading="eager"
+                decoding="async"
+                fetchpriority="high"
+                data-person-portrait-image
+              />
+              <figcaption class="person-credit">
+                <a href={person.portrait.renderedAttributionLinks.creator} target="_blank" rel="noopener noreferrer">
+                  {person.portrait.creator}
+                </a>
+                {' · '}
+                {person.portrait.licenceUrl ? (
+                  <a href={person.portrait.licenceUrl} target="_blank" rel="noopener noreferrer">{person.portrait.licence}</a>
+                ) : person.portrait.licence.toLowerCase()}
+                {' · '}
+                <a href={person.portrait.renderedAttributionLinks.source} target="_blank" rel="noopener noreferrer">
+                  Wikimedia Commons
+                </a>
+              </figcaption>
+            </figure>
+            <div class="person-portrait-fallback" data-person-portrait-fallback hidden>
+              <SignIcon sign={person.sunSign.slug} size={96} loading="eager" />
+            </div>
+          </>
+        ) : (
+          <div class="person-portrait-fallback person-portrait-fallback--permanent">
+            <SignIcon sign={person.sunSign.slug} size={96} loading="eager" />
+          </div>
+        )}
+        <div class="person-identity__name">
+          <p class="people-kicker">People · sourced chart</p>
+          <div class="person-identity__top">
+            <SignIcon sign={person.sunSign.slug} size={48} loading="eager" />
+            <h1 class="display">{person.displayName}</h1>
+          </div>
+        </div>
+        <p class="person-identity__description">{person.shortDescription}</p>
+        <p class="person-identity__meta">
+          {person.sunSign.name} {person.sunSign.degree.toFixed(1)}° · born {longDate}<br />
+          Birth time unknown
+        </p>
+        <p class="person-quality">
+          <strong>Birth date sourced. Birth time unknown.</strong>
+          <span>{moonStatement} Everything below uses only what the complete civil day settles.</span>
+        </p>
+      </header>
+
+      <div class="person-reading">
+        <p class="people-kicker">The day, read honestly</p>
+        <p class="person-lede">{person.copy.lede}</p>
+
+        <div class="person-wheel">
+          <Wheel
+            bodies={wheelBodies}
+            aspects={wheelAspects}
+            animate
+            ariaLabel={`Time-unknown chart wheel for ${person.displayName}: ten bodies at the noon reference, with no houses or angles`}
+          />
+          <p class="person-wheel__caption">
+            Positions at 12:00 civil time in {person.birthPlace.entityLabel}—a reference instant, not a birth time.
+            No houses, rising sign, angles, or sect were computed.
+          </p>
+        </div>
+
+        <div class="person-blocks">
+          {person.copy.blocks.map((block) => (
+            <section class="person-block">
+              <h2>{block.title}</h2>
+              <p>{block.text}</p>
+            </section>
+          ))}
+        </div>
+
+        <nav class="person-actions" aria-label="Related readings">
+          <a href={person.copy.birthdayLink.href}>{person.copy.birthdayLink.label}</a>
+          <a href={person.copy.signLink.href}>{person.copy.signLink.label}</a>
+          <a href="/people/">All people</a>
+        </nav>
+
+        <EvidenceDisclosure
+          class="person-evidence"
+          label="Where this comes from"
+          description="Sources, revisions, and exactly what this chart assumes"
+          variant="panel"
+        >
+          <dl>
+            <div>
+              <dt>Source article</dt>
+              <dd>
+                <a href={person.sources.wikipedia.articleUrl} target="_blank" rel="noopener noreferrer">
+                  {person.sources.wikipedia.title}
+                </a>
+                {' · revision '}{person.sources.wikipedia.revisionId}
+              </dd>
+            </div>
+            <div>
+              <dt>Wikidata</dt>
+              <dd>
+                <a href={person.sources.wikidata.entityUrl} target="_blank" rel="noopener noreferrer">{person.qid}</a>
+                {' · revision '}{person.sources.wikidata.lastrevid}
+              </dd>
+            </div>
+            <div><dt>Retrieved</dt><dd>{person.sources.retrievedAtUtc}</dd></div>
+            <div>
+              <dt>Birth date</dt>
+              <dd>{person.birthDate.storedValue} · day precision · {person.birthDate.calendarModel}</dd>
+            </div>
+            <div>
+              <dt>Birthplace</dt>
+              <dd>{person.birthPlace.normalisedLabel} · {person.birthPlace.entity}</dd>
+            </div>
+            <div>
+              <dt>Coordinates</dt>
+              <dd>
+                {coordinates.latitude.toFixed(4)}, {coordinates.longitude.toFixed(4)} · from {coordinates.sourceEntityLabel}
+                {coordinates.precisionDowngrade ? ` · ${coordinates.precisionDowngrade}` : ''}
+              </dd>
+            </div>
+            <div>
+              <dt>Reference instant</dt>
+              <dd>{person.computation.utcInstant} · noon civil time, not a birth time</dd>
+            </div>
+            <div><dt>Omitted</dt><dd>Rising sign, houses, angles, and sect—all require a birth time.</dd></div>
+            <div>
+              <dt>Unknown-time range</dt>
+              <dd>
+                Moon travelled {person.unknownTimeErrorBandDegrees.Moon.toFixed(2)}°
+                {' · '}{moonStatement}
+              </dd>
+            </div>
+            <div>
+              <dt>Engine</dt>
+              <dd>{person.computationInputVersion.ephemeris} · {person.computationInputVersion.aspectTable}</dd>
+            </div>
+            <div>
+              <dt>Portrait</dt>
+              <dd>
+                {person.portrait.available
+                  ? person.portrait.renderedAttribution
+                  : `None published · ${person.portrait.reason}`}
+              </dd>
+            </div>
+          </dl>
+          <p class="person-evidence__correction">
+            Something wrong here?
+            <a href={`mailto:people@zodiacs.org?subject=${encodeURIComponent(`Correction or removal: ${person.displayName}`)}`}>
+              Ask us to correct or remove it.
+            </a>
+          </p>
+        </EvidenceDisclosure>
+
+        {related.length > 0 && (
+          <section class="person-related" aria-labelledby="related-people">
+            <p class="people-label" id="related-people">Also {person.sunSign.name}</p>
+            <ul class="person-related__list">
+              {related.map((candidate) => (
+                <li><a href={`/people/${candidate.slug}/`}>{candidate.displayName}</a></li>
+              ))}
+            </ul>
+          </section>
+        )}
+
+        <div style="margin-top:30px">
+          <ShareRow
+            text={`${person.displayName}'s chart, computed from a sourced birth date`}
+            url={pageUrl}
+          />
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <script>
+    const image = document.querySelector<HTMLImageElement>('[data-person-portrait-image]');
+    if (image) {
+      const fail = () => {
+        const figure = image.closest<HTMLElement>('[data-person-portrait]');
+        const fallback = figure?.parentElement?.querySelector<HTMLElement>('[data-person-portrait-fallback]');
+        if (figure) figure.hidden = true;
+        if (fallback) fallback.hidden = false;
+      };
+      image.addEventListener('error', fail, { once: true });
+      if (image.complete && image.naturalWidth === 0) fail();
+    }
+  </script>
+</Base>

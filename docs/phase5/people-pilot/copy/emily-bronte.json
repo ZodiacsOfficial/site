@@ -45,9 +45,10 @@
       "facts": [
         "elements:fire4-water3-earth3",
         "modalities:mutable6-fixed2-cardinal2",
+        "settled-signs:10",
         "retrograde:5"
       ],
-      "text": "By element the ten bodies divide 4 fire, 3 water, 3 earth; by modality, 6 mutable, 2 fixed, 2 cardinal. Fire signs carry the scheme’s forward pressure: heat applied early, patience treated as a later skill. No body at all in air — an absence the tradition treats as information, not as a defect. Jupiter, Saturn, Uranus, Neptune and Pluto were retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
+      "text": "Among the 10 placements whose signs hold for the whole day, the elements divide 4 fire, 3 water, 3 earth; by modality, 6 mutable, 2 fixed, 2 cardinal. Fire signs carry the scheme’s forward pressure: heat applied early, patience treated as a later skill. No settled placement falls in air — an absence the tradition treats as information, not as a defect. Jupiter, Saturn, Uranus, Neptune and Pluto were retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
     },
     {
       "key": "moon",
@@ -81,13 +82,14 @@
     "dignity:Jupiter:fall",
     "elements:fire4-water3-earth3",
     "modalities:mutable6-fixed2-cardinal2",
+    "settled-signs:10",
     "retrograde:5",
     "moon-sign:cancer",
     "moon-band:12.0"
   ],
   "measurements": {
-    "originalWords": 385,
-    "substantiveStatements": 14,
+    "originalWords": 393,
+    "substantiveStatements": 15,
     "blocks": 5
   }
 }

@@ -6,8 +6,8 @@
   "identity": "Nuclear physicist · People's Republic of China · 1912–1997",
   "title": "Chien-Shiung Wu's birth chart",
   "metaDescription": "Chien-Shiung Wu's chart, computed from a sourced birth date: Sun at 9.3° Gemini. Birth time unknown, so no houses or rising sign.",
-  "lede": "Five of the ten bodies fall in fixed signs, the widest single weighting in the chart. The fixed signs are the scheme’s ballast — mid-season, fully committed, expensive to turn.",
-  "ledeFact": "modality:fixed:5",
+  "lede": "Four of the nine placements whose signs are settled fall in mutable signs, the widest weighting the unknown hour leaves certain. The mutable signs sit where one season is already becoming the next — the scheme’s translators.",
+  "ledeFact": "modality:mutable:4",
   "blocks": [
     {
       "key": "sun",
@@ -40,11 +40,12 @@
       "key": "shape",
       "title": "The shape of the whole",
       "facts": [
-        "elements:air3-fire3-earth3-water1",
-        "modalities:fixed5-mutable4-cardinal1",
+        "elements:air3-fire3-earth2-water1",
+        "modalities:mutable4-fixed4-cardinal1",
+        "settled-signs:9",
         "retrograde:2"
       ],
-      "text": "Counted by element the chart runs 3 air, 3 fire, 3 earth, 1 water, and by modality 5 fixed, 4 mutable, 1 cardinal. Air weights a chart toward language and pattern — the impulse to name a thing before deciding how to feel about it. Jupiter and Uranus were retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
+      "text": "Counting only the 9 placements whose signs hold for the whole day, the chart runs 3 air, 3 fire, 2 earth, 1 water by element and 4 mutable, 4 fixed, 1 cardinal by modality. Air weights a chart toward language and pattern — the impulse to name a thing before deciding how to feel about it. Jupiter and Uranus were retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
     },
     {
       "key": "moon",
@@ -66,22 +67,23 @@
     "label": "The Gemini guide"
   },
   "substantiveFacts": [
-    "modality:fixed:5",
+    "modality:mutable:4",
     "sun-degree:9.32",
     "decan:gemini:first",
     "aspect:Mercury:Neptune:sextile:1.19",
     "aspect:Sun:Jupiter:opposition:1.37",
     "aspect:Mars:Uranus:opposition:1.58",
     "dignity:Jupiter:domicile",
-    "elements:air3-fire3-earth3-water1",
-    "modalities:fixed5-mutable4-cardinal1",
+    "elements:air3-fire3-earth2-water1",
+    "modalities:mutable4-fixed4-cardinal1",
+    "settled-signs:9",
     "retrograde:2",
     "moon-sign:sagittarius",
     "moon-band:12.4"
   ],
   "measurements": {
-    "originalWords": 324,
-    "substantiveStatements": 12,
+    "originalWords": 342,
+    "substantiveStatements": 13,
     "blocks": 5
   }
 }

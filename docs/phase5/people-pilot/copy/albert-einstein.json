@@ -6,7 +6,7 @@
   "identity": "Theoretical physicist · Germany · 1879–1955",
   "title": "Albert Einstein's birth chart",
   "metaDescription": "Albert Einstein's chart, computed from a sourced birth date: Sun at 23.5° Pisces. Birth time unknown, so no houses or rising sign.",
-  "lede": "Four of the ten bodies fall in cardinal signs, the widest single weighting in the chart. Cardinal weight is read as initiative: the instinct to be the reason something began.",
+  "lede": "Four of the ten placements whose signs are settled fall in cardinal signs, the widest weighting the unknown hour leaves certain. Cardinal weight is read as initiative: the instinct to be the reason something began.",
   "ledeFact": "modality:cardinal:4",
   "blocks": [
     {
@@ -26,7 +26,7 @@
         "aspect:Sun:Pluto:sextile:1.21",
         "aspect:Mars:Pluto:trine:2.2"
       ],
-      "text": "Mercury and Saturn hold the closest angle here — a conjunction, 1.0° wide. The tradition stops reading a conjunction as two things. It is one appetite with two names, and it moves together or not at all. Behind it, the Sun sextile Pluto at 1.2°, and Mars trine Pluto at 2.2° — both still well inside the orbs this site uses. These angles were checked at both ends of that civil day and survive either way, which is why an unrecorded hour does not disturb them."
+      "text": "Mercury and Saturn hold the closest angle here — a conjunction, 1.0° wide. The tradition stops reading a conjunction as two things. It is one appetite with two names, and it moves together or not at all. Behind it, the Sun sextile Pluto at 1.2°, and Mars trine Pluto at 2.2° — both still well inside the orbs this site uses. These angles were checked through every hour of that civil day and survive throughout, which is why an unrecorded hour does not disturb them."
     },
     {
       "key": "dignity",
@@ -44,9 +44,10 @@
       "facts": [
         "elements:fire4-earth4-water1-air1",
         "modalities:cardinal4-mutable3-fixed3",
+        "settled-signs:10",
         "retrograde:1"
       ],
-      "text": "Counted by element the chart runs 4 fire, 4 earth, 1 water, 1 air, and by modality 4 cardinal, 3 mutable, 3 fixed. A fire emphasis is read as appetite for the first move, with information gathered by doing rather than before doing. Uranus was retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
+      "text": "Counting only the 10 placements whose signs hold for the whole day, the chart runs 4 fire, 4 earth, 1 water, 1 air by element and 4 cardinal, 3 mutable, 3 fixed by modality. A fire emphasis is read as appetite for the first move, with information gathered by doing rather than before doing. Uranus was retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
     },
     {
       "key": "moon",
@@ -79,13 +80,14 @@
     "dignity:Saturn:fall",
     "elements:fire4-earth4-water1-air1",
     "modalities:cardinal4-mutable3-fixed3",
+    "settled-signs:10",
     "retrograde:1",
     "moon-sign:sagittarius",
     "moon-band:13.9"
   ],
   "measurements": {
-    "originalWords": 356,
-    "substantiveStatements": 14,
+    "originalWords": 371,
+    "substantiveStatements": 15,
     "blocks": 5
   }
 }

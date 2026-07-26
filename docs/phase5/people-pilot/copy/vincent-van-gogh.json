@@ -26,7 +26,7 @@
         "aspect:Mars:Jupiter:square:1.89",
         "aspect:Venus:Mars:conjunction:1.95"
       ],
-      "text": "Mercury and Jupiter hold the closest angle here — a trine, 1.4° wide. Trines are read as inheritance rather than achievement: the ease is genuine, and nothing about it was earned. Behind it, Mars square Jupiter at 1.9°, and Venus conjunction Mars at 1.9° — both still well inside the orbs this site uses. These angles were checked at both ends of that civil day and survive either way, which is why an unrecorded hour does not disturb them."
+      "text": "Mercury and Jupiter hold the closest angle here — a trine, 1.4° wide. Trines are read as inheritance rather than achievement: the ease is genuine, and nothing about it was earned. Behind it, Mars square Jupiter at 1.9°, and Venus conjunction Mars at 1.9° — both still well inside the orbs this site uses. These angles were checked through every hour of that civil day and survive throughout, which is why an unrecorded hour does not disturb them."
     },
     {
       "key": "dignity",
@@ -44,9 +44,10 @@
       "facts": [
         "elements:fire4-water3-earth3",
         "modalities:mutable5-fixed3-cardinal2",
+        "settled-signs:10",
         "retrograde:0"
       ],
-      "text": "By element the ten bodies divide 4 fire, 3 water, 3 earth; by modality, 5 mutable, 3 fixed, 2 cardinal. A fire emphasis is read as appetite for the first move, with information gathered by doing rather than before doing. No body at all in air — an absence the tradition treats as information, not as a defect. Every body was moving forward that day — no apparent reversals anywhere in the chart."
+      "text": "Among the 10 placements whose signs hold for the whole day, the elements divide 4 fire, 3 water, 3 earth; by modality, 5 mutable, 3 fixed, 2 cardinal. A fire emphasis is read as appetite for the first move, with information gathered by doing rather than before doing. No settled placement falls in air — an absence the tradition treats as information, not as a defect. Every body was moving forward that day — no apparent reversals anywhere in the chart."
     },
     {
       "key": "moon",
@@ -79,13 +80,14 @@
     "dignity:Jupiter:domicile",
     "elements:fire4-water3-earth3",
     "modalities:mutable5-fixed3-cardinal2",
+    "settled-signs:10",
     "retrograde:0",
     "moon-sign:sagittarius",
     "moon-band:14.2"
   ],
   "measurements": {
-    "originalWords": 353,
-    "substantiveStatements": 13,
+    "originalWords": 360,
+    "substantiveStatements": 14,
     "blocks": 5
   }
 }

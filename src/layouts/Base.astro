@@ -22,6 +22,8 @@ interface Props {
   imageAlt?: string;
   type?: 'website' | 'article';
   noindex?: boolean;
+  /** Pair with noindex for routes that must not pass discovery onward. */
+  nofollow?: boolean;
   jsonLd?: Record<string, unknown>[];
   locale?: Locale;
   sources?: SourceLink[];

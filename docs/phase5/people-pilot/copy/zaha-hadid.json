@@ -26,7 +26,7 @@
         "aspect:Neptune:Pluto:sextile:1.91",
         "aspect:Sun:Uranus:trine:2.02"
       ],
-      "text": "The Sun and Mercury hold the closest angle here — a conjunction, 0.8° wide. A conjunction is the least negotiable aspect in the scheme — no distance to argue across, so the pair arrives as a single instinct. Behind it, Neptune sextile Pluto at 1.9°, and the Sun trine Uranus at 2.0° — both still well inside the orbs this site uses. These angles were checked at both ends of that civil day and survive either way, which is why an unrecorded hour does not disturb them."
+      "text": "The Sun and Mercury hold the closest angle here — a conjunction, 0.8° wide. A conjunction is the least negotiable aspect in the scheme — no distance to argue across, so the pair arrives as a single instinct. Behind it, Neptune sextile Pluto at 1.9°, and the Sun trine Uranus at 2.0° — both still well inside the orbs this site uses. These angles were checked through every hour of that civil day and survive throughout, which is why an unrecorded hour does not disturb them."
     },
     {
       "key": "dignity",
@@ -43,9 +43,10 @@
       "facts": [
         "elements:water5-fire2-air2-earth1",
         "modalities:fixed5-cardinal3-mutable2",
+        "settled-signs:10",
         "retrograde:1"
       ],
-      "text": "By element the ten bodies divide 5 water, 2 fire, 2 air, 1 earth; by modality, 5 fixed, 3 cardinal, 2 mutable. Water signs hold memory in the scheme, where nothing is quite finished and little is genuinely forgotten. Uranus was retrograde — motion that reverses only from this vantage point, and which the old reading treats as delay used for revision."
+      "text": "Among the 10 placements whose signs hold for the whole day, the elements divide 5 water, 2 fire, 2 air, 1 earth; by modality, 5 fixed, 3 cardinal, 2 mutable. Water signs hold memory in the scheme, where nothing is quite finished and little is genuinely forgotten. Uranus was retrograde — motion that reverses only from this vantage point, and which the old reading treats as delay used for revision."
     },
     {
       "key": "moon",
@@ -77,13 +78,14 @@
     "dignity:Venus:detriment",
     "elements:water5-fire2-air2-earth1",
     "modalities:fixed5-cardinal3-mutable2",
+    "settled-signs:10",
     "retrograde:1",
     "moon-sign:cancer",
     "moon-band:12.0"
   ],
   "measurements": {
-    "originalWords": 341,
-    "substantiveStatements": 12,
+    "originalWords": 348,
+    "substantiveStatements": 13,
     "blocks": 5
   }
 }

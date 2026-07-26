@@ -4,6 +4,8 @@ import Base from '../../layouts/Base.astro';
 import Faq from '../../components/Faq.astro';
 import ShareRow from '../../components/ShareRow.astro';
 import SignIcon from '../../components/SignIcon.astro';
+import PeopleCard from '../../components/people/PeopleCard.astro';
+import '../../styles/people.css';
 import { signBySlug, formatLongitude } from '../../lib/signs';
 import {
   birthdaySlug, birthdayLabel, prevDate, nextDate,
@@ -12,6 +14,7 @@ import {
 } from '../../lib/birthdays';
 import birthdays from '../../data/birthdays.json';
 import { EDITOR_AUTHOR } from '../../lib/editorial';
+import { peopleForBirthday } from '../../lib/people';
 
 export async function getStaticPaths() {
   const entries = await getCollection('birthdays', (e) => !e.data.draft);
@@ -107,6 +110,7 @@ const next = nextDate(month, day);
 const prevSlug = birthdaySlug(prev.month, prev.day);
 const nextSlug = birthdaySlug(next.month, next.day);
 const linkSigns = sign ? [sign] : cusp ? [cusp.a, cusp.b] : [];
+const birthdayPeople = peopleForBirthday(`/birthday/${slug}/`);
 
 const ogImage = `/assets/og/v2/sign/${heroSign!.slug}.png`;
 
@@ -303,6 +307,15 @@ const jsonLd = [
       </div>
     </nav>
 
+    {birthdayPeople.length > 0 && (
+      <section class="bday-people reveal" aria-labelledby="bday-people-heading">
+        <span class="bday-more__head" id="bday-people-heading">People born on this date</span>
+        <div class="bday-people__grid">
+          {birthdayPeople.map((person) => <PeopleCard person={person} compact />)}
+        </div>
+      </section>
+    )}
+
     <ShareRow text={`Born ${label} — here's what that sky says`} url={`https://zodiacs.org/birthday/${slug}/`} />
   </article>
 </Base>
@@ -347,6 +360,12 @@ const jsonLd = [
   }
   .bday__identity strong { font-size: var(--text-md); }
   .bday__identity a { color: var(--text); text-decoration-color: var(--hair-2); }
+
+  .bday-people { display: grid; gap: 12px; }
+  .bday-people__grid { display: grid; gap: 8px; }
+  @media (min-width: 700px) {
+    .bday-people__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
 
   .bday-facts {
     width: 100%;

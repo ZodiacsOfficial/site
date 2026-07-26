@@ -6,7 +6,7 @@
   "identity": "Tennis player · United States · born 1981",
   "title": "Serena Williams's birth chart",
   "metaDescription": "Serena Williams's chart, computed from a sourced birth date: Sun at 3.5° Libra. Birth time unknown, so no houses or rising sign.",
-  "lede": "Five of the ten bodies stand in Libra — the Sun, Mercury, Jupiter, Saturn and Pluto. A cluster that size stops being one voice among ten. It becomes the section the rest of the chart plays around.",
+  "lede": "Five of the ten placements whose signs are settled stand in Libra — the Sun, Mercury, Jupiter, Saturn and Pluto. The placements whose signs could change with an unknown hour are not counted. A cluster that size becomes the section the rest of the chart plays around.",
   "ledeFact": "stellium:libra:5",
   "blocks": [
     {
@@ -44,9 +44,10 @@
       "facts": [
         "elements:air5-water2-fire2-earth1",
         "modalities:cardinal5-fixed3-mutable2",
+        "settled-signs:10",
         "retrograde:0"
       ],
-      "text": "By element the ten bodies divide 5 air, 2 water, 2 fire, 1 earth; by modality, 5 cardinal, 3 fixed, 2 mutable. An air emphasis is read as distance for the sake of clarity: the idea gets examined before it gets adopted. Every body was moving forward that day — no apparent reversals anywhere in the chart."
+      "text": "Among the 10 placements whose signs hold for the whole day, the elements divide 5 air, 2 water, 2 fire, 1 earth; by modality, 5 cardinal, 3 fixed, 2 mutable. An air emphasis is read as distance for the sake of clarity: the idea gets examined before it gets adopted. Every body was moving forward that day — no apparent reversals anywhere in the chart."
     },
     {
       "key": "moon",
@@ -79,13 +80,14 @@
     "dignity:Saturn:exaltation",
     "elements:air5-water2-fire2-earth1",
     "modalities:cardinal5-fixed3-mutable2",
+    "settled-signs:10",
     "retrograde:0",
     "moon-sign:virgo",
     "moon-band:12.8"
   ],
   "measurements": {
-    "originalWords": 357,
-    "substantiveStatements": 14,
+    "originalWords": 375,
+    "substantiveStatements": 15,
     "blocks": 5
   }
 }

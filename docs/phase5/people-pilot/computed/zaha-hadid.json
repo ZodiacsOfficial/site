@@ -16,7 +16,7 @@
     "utcInstant": "1950-10-31T09:00:00.000Z",
     "utcOffsetMinutesAtBirth": 180,
     "civilDayStartUtc": "1950-10-30T21:00:00.000Z",
-    "civilDayEndUtc": "1950-10-31T20:59:00.000Z",
+    "civilDayEndUtc": "1950-10-31T21:00:00.000Z",
     "latitude": 33.31527777777778,
     "longitude": 44.36611111111111,
     "coordinateEscalationSteps": 0,
@@ -47,10 +47,10 @@
     "degreesToNextBoundaryAtWindowEnd": 22.0053
   },
   "unknownTimeErrorBandDegrees": {
-    "Sun": 0.999,
-    "Moon": 11.973,
-    "Mercury": 1.64,
-    "Venus": 1.253,
+    "Sun": 1,
+    "Moon": 11.982,
+    "Mercury": 1.641,
+    "Venus": 1.254,
     "Mars": 0.743,
     "Jupiter": 0.024,
     "Saturn": 0.106,
@@ -67,7 +67,8 @@
       "retrograde": false,
       "speedPerDay": 1,
       "dignity": null,
-      "stableAcrossDay": true
+      "stableAcrossDay": true,
+      "retrogradeStableAcrossDay": true
     },
     {
       "body": "Moon",
@@ -77,7 +78,8 @@
       "retrograde": false,
       "speedPerDay": 11.9817,
       "dignity": "domicile",
-      "stableAcrossDay": true
+      "stableAcrossDay": true,
+      "retrogradeStableAcrossDay": true
     },
     {
       "body": "Mercury",
@@ -87,7 +89,8 @@
       "retrograde": false,
       "speedPerDay": 1.6412,
       "dignity": null,
-      "stableAcrossDay": true
+      "stableAcrossDay": true,
+      "retrogradeStableAcrossDay": true
     },
     {
       "body": "Venus",
@@ -97,7 +100,8 @@
       "retrograde": false,
       "speedPerDay": 1.2542,
       "dignity": "detriment",
-      "stableAcrossDay": true
+      "stableAcrossDay": true,
+      "retrogradeStableAcrossDay": true
     },
     {
       "body": "Mars",
@@ -107,7 +111,8 @@
       "retrograde": false,
       "speedPerDay": 0.7433,
       "dignity": null,
-      "stableAcrossDay": true
+      "stableAcrossDay": true,
+      "retrogradeStableAcrossDay": true
     },
     {
       "body": "Jupiter",
@@ -117,7 +122,8 @@
       "retrograde": false,
       "speedPerDay": 0.024,
       "dignity": null,
-      "stableAcrossDay": true
+      "stableAcrossDay": true,
+      "retrogradeStableAcrossDay": true
     },
     {
       "body": "Saturn",
@@ -127,7 +133,8 @@
       "retrograde": false,
       "speedPerDay": 0.106,
       "dignity": null,
-      "stableAcrossDay": true
+      "stableAcrossDay": true,
+      "retrogradeStableAcrossDay": true
     },
     {
       "body": "Uranus",
@@ -137,7 +144,8 @@
       "retrograde": true,
       "speedPerDay": -0.0135,
       "dignity": null,
-      "stableAcrossDay": true
+      "stableAcrossDay": true,
+      "retrogradeStableAcrossDay": true
     },
     {
       "body": "Neptune",
@@ -147,7 +155,8 @@
       "retrograde": false,
       "speedPerDay": 0.0356,
       "dignity": null,
-      "stableAcrossDay": true
+      "stableAcrossDay": true,
+      "retrogradeStableAcrossDay": true
     },
     {
       "body": "Pluto",
@@ -157,7 +166,8 @@
       "retrograde": false,
       "speedPerDay": 0.0102,
       "dignity": null,
-      "stableAcrossDay": true
+      "stableAcrossDay": true,
+      "retrogradeStableAcrossDay": true
     }
   ],
   "aspectsStableAcrossCivilDay": [
@@ -277,6 +287,7 @@
     }
   ],
   "patterns": {
+    "settledBodyCount": 10,
     "stelliums": [
       {
         "sign": "scorpio",
@@ -296,6 +307,7 @@
     },
     "retrograde": [
       "Uranus"
-    ]
+    ],
+    "directionUncertain": []
   }
 }

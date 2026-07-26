@@ -42,11 +42,12 @@
       "key": "shape",
       "title": "The shape of the whole",
       "facts": [
-        "elements:earth5-fire2-water2-air1",
-        "modalities:fixed5-cardinal3-mutable2",
+        "elements:earth4-fire2-water2-air1",
+        "modalities:fixed5-cardinal2-mutable2",
+        "settled-signs:9",
         "retrograde:2"
       ],
-      "text": "The balance sheet: earth 5, fire 2, water 2, air 1 across the elements, and fixed 5, cardinal 3, mutable 2 across the modalities. An earth emphasis reads as trust in the tangible: the plan matters less than whether the thing stands up. Uranus and Pluto were retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
+      "text": "The honest balance sheet uses the 9 placements whose signs hold for the whole day: earth 4, fire 2, water 2, air 1 across the elements, and fixed 5, cardinal 2, mutable 2 across the modalities. An earth emphasis reads as trust in the tangible: the plan matters less than whether the thing stands up. Uranus and Pluto were retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
     },
     {
       "key": "moon",
@@ -76,14 +77,15 @@
     "dignity:Mercury:detriment",
     "dignity:Mars:detriment",
     "dignity:Saturn:domicile",
-    "elements:earth5-fire2-water2-air1",
-    "modalities:fixed5-cardinal3-mutable2",
+    "elements:earth4-fire2-water2-air1",
+    "modalities:fixed5-cardinal2-mutable2",
+    "settled-signs:9",
     "retrograde:2",
     "moon-uncertain:capricorn:aquarius"
   ],
   "measurements": {
-    "originalWords": 371,
-    "substantiveStatements": 13,
+    "originalWords": 383,
+    "substantiveStatements": 14,
     "blocks": 5
   }
 }

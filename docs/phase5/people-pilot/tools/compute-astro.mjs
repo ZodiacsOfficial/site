@@ -127,6 +127,15 @@ function civilToUtc(dateIso, hhmm, timeZone) {
   return { utc: new Date(guess), offsetMinutes: offsetMinutes(timeZone, guess) };
 }
 
+function nextCivilDate(dateIso) {
+  const next = new Date(Date.UTC(
+    Number(dateIso.slice(0, 4)),
+    Number(dateIso.slice(5, 7)) - 1,
+    Number(dateIso.slice(8, 10)) + 1,
+  ));
+  return next.toISOString().slice(0, 10);
+}
+
 /** Julian calendar day → proleptic Gregorian ISO date. */
 function julianToGregorian(iso) {
   const year = Number(iso.slice(0, 4));
@@ -259,11 +268,18 @@ for (const candidate of candidates) {
   // ── Accepted: compute the chart at noon civil time at the birthplace ──
   const { utc: noonUtc, offsetMinutes: noonOffset } = civilToUtc(gregorianDate, '12:00', timeZone);
   const dayStart = civilToUtc(gregorianDate, '00:00', timeZone).utc;
-  const dayEnd = civilToUtc(gregorianDate, '23:59', timeZone).utc;
+  const dayEnd = civilToUtc(nextCivilDate(gregorianDate), '00:00', timeZone).utc;
 
   const noon = positions(noonUtc);
   const early = positions(dayStart);
   const late = positions(dayEnd);
+  // The endpoints alone cannot prove a body did not cross a boundary and
+  // return during a station. Sample the complete civil day hourly, including
+  // both bounding midnights. This remains deterministic and comfortably
+  // cheap for the 20-record pilot.
+  const civilDaySamples = Array.from({ length: 25 }, (_, index) => (
+    positions(new Date(dayStart.getTime() + ((dayEnd.getTime() - dayStart.getTime()) * index) / 24))
+  ));
 
   const moonEarly = signOf(early.find((body) => body.body === 'Moon').lon);
   const moonLate = signOf(late.find((body) => body.body === 'Moon').lon);
@@ -282,12 +298,13 @@ for (const candidate of candidates) {
 
   // Aspects that hold across the whole civil day, reported at noon.
   const noonAspects = findAspects(noon);
-  const earlyAspects = new Set(findAspects(early).map((a) => `${a.a}|${a.b}|${a.type}`));
-  const lateAspects = new Set(findAspects(late).map((a) => `${a.a}|${a.b}|${a.type}`));
+  const sampledAspectKeys = civilDaySamples.map((sample) => (
+    new Set(findAspects(sample).map((aspect) => `${aspect.a}|${aspect.b}|${aspect.type}`))
+  ));
   const stableAspects = noonAspects
     .filter((aspect) => {
       const key = `${aspect.a}|${aspect.b}|${aspect.type}`;
-      return earlyAspects.has(key) && lateAspects.has(key);
+      return sampledAspectKeys.every((keys) => keys.has(key));
     })
     .map((aspect) => ({ ...aspect, orb: Number(aspect.orb.toFixed(2)) }))
     .sort((a, b) => a.orb - b.orb);
@@ -295,6 +312,9 @@ for (const candidate of candidates) {
   const placements = noon.map((body) => {
     const sign = signOf(body.lon);
     const dignity = DIGNITY[body.body];
+    const sampledBodies = civilDaySamples.map((sample) => (
+      sample.find((value) => value.body === body.body)
+    ));
     let condition = null;
     if (dignity) {
       // Exaltation/fall outrank domicile/detriment where they overlap,
@@ -312,21 +332,25 @@ for (const candidate of candidates) {
       retrograde: body.retrograde,
       speedPerDay: Number(body.speed.toFixed(4)),
       dignity: condition,
-      stableAcrossDay: signOf(early.find((v) => v.body === body.body).lon).slug
-        === signOf(late.find((v) => v.body === body.body).lon).slug,
+      stableAcrossDay: sampledBodies.every((value) => signOf(value.lon).slug === sign.slug),
+      retrogradeStableAcrossDay: sampledBodies.every((value) => value.retrograde === body.retrograde),
     };
   });
 
-  const stelliums = Object.entries(placements.reduce((acc, placement) => {
+  // Unknown-time aggregates may use only signs that hold for the complete
+  // civil day. In particular, an uncertain Moon must never silently decide
+  // an element balance, modality balance, or stellium.
+  const settledPlacements = placements.filter((placement) => placement.stableAcrossDay);
+  const stelliums = Object.entries(settledPlacements.reduce((acc, placement) => {
     acc[placement.sign] = (acc[placement.sign] ?? 0) + 1;
     return acc;
   }, {})).filter(([, count]) => count >= 3).map(([sign, count]) => ({ sign, count }));
 
-  const elements = placements.reduce((acc, placement) => {
+  const elements = settledPlacements.reduce((acc, placement) => {
     acc[ELEMENT[placement.sign]] = (acc[ELEMENT[placement.sign]] ?? 0) + 1;
     return acc;
   }, {});
-  const modalities = placements.reduce((acc, placement) => {
+  const modalities = settledPlacements.reduce((acc, placement) => {
     acc[MODALITY[placement.sign]] = (acc[MODALITY[placement.sign]] ?? 0) + 1;
     return acc;
   }, {});
@@ -376,7 +400,18 @@ for (const candidate of candidates) {
     aspectsAtNoonOnly: noonAspects
       .filter((aspect) => !stableAspects.some((stable) => stable.a === aspect.a && stable.b === aspect.b && stable.type === aspect.type))
       .map((aspect) => ({ ...aspect, orb: Number(aspect.orb.toFixed(2)) })),
-    patterns: { stelliums, elements, modalities, retrograde: placements.filter((p) => p.retrograde).map((p) => p.body) },
+    patterns: {
+      settledBodyCount: settledPlacements.length,
+      stelliums,
+      elements,
+      modalities,
+      retrograde: placements
+        .filter((placement) => placement.retrograde && placement.retrogradeStableAcrossDay)
+        .map((placement) => placement.body),
+      directionUncertain: placements
+        .filter((placement) => !placement.retrogradeStableAcrossDay)
+        .map((placement) => placement.body),
+    },
   };
 
   await writeFile(

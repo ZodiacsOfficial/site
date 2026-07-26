@@ -44,9 +44,10 @@
       "facts": [
         "elements:water4-fire3-earth2-air1",
         "modalities:fixed6-cardinal3-mutable1",
+        "settled-signs:10",
         "retrograde:3"
       ],
-      "text": "Counted by element the chart runs 4 water, 3 fire, 2 earth, 1 air, and by modality 6 fixed, 3 cardinal, 1 mutable. A water emphasis reads as porousness: the room is registered whole, long before it is analysed in parts. Jupiter, Neptune and Pluto were retrograde — apparent backward motion from where the Earth sits, which the tradition reads as a function turned inward before it is turned out."
+      "text": "Counting only the 10 placements whose signs hold for the whole day, the chart runs 4 water, 3 fire, 2 earth, 1 air by element and 6 fixed, 3 cardinal, 1 mutable by modality. A water emphasis reads as porousness: the room is registered whole, long before it is analysed in parts. Jupiter, Neptune and Pluto were retrograde — apparent backward motion from where the Earth sits, which the tradition reads as a function turned inward before it is turned out."
     },
     {
       "key": "moon",
@@ -79,13 +80,14 @@
     "dignity:Mars:domicile",
     "elements:water4-fire3-earth2-air1",
     "modalities:fixed6-cardinal3-mutable1",
+    "settled-signs:10",
     "retrograde:3",
     "moon-sign:leo",
     "moon-band:14.5"
   ],
   "measurements": {
-    "originalWords": 367,
-    "substantiveStatements": 14,
+    "originalWords": 378,
+    "substantiveStatements": 15,
     "blocks": 5
   }
 }

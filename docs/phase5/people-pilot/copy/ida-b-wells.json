@@ -6,8 +6,8 @@
   "identity": "Journalist and sociologist · United States · 1862–1931",
   "title": "Ida B. Wells's birth chart",
   "metaDescription": "Ida B. Wells's chart, computed from a sourced birth date: Sun at 23.9° Cancer. Birth time unknown, so no houses or rising sign.",
-  "lede": "Five of the ten bodies fall in cardinal signs, the widest single weighting in the chart. Cardinal signs open the seasons, and a cardinal-heavy chart is read as one that starts things.",
-  "ledeFact": "modality:cardinal:5",
+  "lede": "Four of the nine placements whose signs are settled fall in cardinal signs, the widest weighting the unknown hour leaves certain. Cardinal signs open the seasons, and a cardinal-heavy chart is read as one that starts things.",
+  "ledeFact": "modality:cardinal:4",
   "blocks": [
     {
       "key": "sun",
@@ -26,7 +26,7 @@
         "aspect:Sun:Jupiter:sextile:1.01",
         "aspect:Venus:Uranus:conjunction:1.04"
       ],
-      "text": "Saturn and Uranus hold the closest angle here — a square, 0.0° wide. A square is friction that produces motion — the aspect the tradition credits with building capability precisely by refusing to be comfortable. Behind it, the Sun sextile Jupiter at 1.0°, and Venus conjunction Uranus at 1.0° — both still well inside the orbs this site uses. These angles were checked at both ends of that civil day and survive either way, which is why an unrecorded hour does not disturb them."
+      "text": "Saturn and Uranus hold the closest angle here — a square, 0.0° wide. A square is friction that produces motion — the aspect the tradition credits with building capability precisely by refusing to be comfortable. Behind it, the Sun sextile Jupiter at 1.0°, and Venus conjunction Uranus at 1.0° — both still well inside the orbs this site uses. These angles were checked through every hour of that civil day and survive throughout, which is why an unrecorded hour does not disturb them."
     },
     {
       "key": "dignity",
@@ -41,11 +41,12 @@
       "key": "shape",
       "title": "The shape of the whole",
       "facts": [
-        "elements:fire3-earth3-water2-air2",
-        "modalities:cardinal5-mutable4-fixed1",
+        "elements:earth3-water2-air2-fire2",
+        "modalities:cardinal4-mutable4-fixed1",
+        "settled-signs:9",
         "retrograde:1"
       ],
-      "text": "By element the ten bodies divide 3 fire, 3 earth, 2 water, 2 air; by modality, 5 cardinal, 4 mutable, 1 fixed. A fire emphasis is read as appetite for the first move, with information gathered by doing rather than before doing. Neptune was retrograde — motion that reverses only from this vantage point, and which the old reading treats as delay used for revision."
+      "text": "Among the 9 placements whose signs hold for the whole day, the elements divide 3 earth, 2 water, 2 air, 2 fire; by modality, 4 cardinal, 4 mutable, 1 fixed. An earth emphasis reads as trust in the tangible: the plan matters less than whether the thing stands up. Neptune was retrograde — motion that reverses only from this vantage point, and which the old reading treats as delay used for revision."
     },
     {
       "key": "moon",
@@ -66,7 +67,7 @@
     "label": "The Cancer guide"
   },
   "substantiveFacts": [
-    "modality:cardinal:5",
+    "modality:cardinal:4",
     "sun-degree:23.86",
     "decan:cancer:third",
     "aspect:Saturn:Uranus:square:0",
@@ -74,14 +75,15 @@
     "aspect:Venus:Uranus:conjunction:1.04",
     "dignity:Mars:domicile",
     "dignity:Jupiter:detriment",
-    "elements:fire3-earth3-water2-air2",
-    "modalities:cardinal5-mutable4-fixed1",
+    "elements:earth3-water2-air2-fire2",
+    "modalities:cardinal4-mutable4-fixed1",
+    "settled-signs:9",
     "retrograde:1",
     "moon-uncertain:pisces:aries"
   ],
   "measurements": {
-    "originalWords": 326,
-    "substantiveStatements": 12,
+    "originalWords": 337,
+    "substantiveStatements": 13,
     "blocks": 5
   }
 }
