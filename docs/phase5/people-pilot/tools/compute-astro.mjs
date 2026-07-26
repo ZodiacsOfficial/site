@@ -213,8 +213,16 @@ const candidates = JSON.parse(await readFile(join(PILOT, CANDIDATES_FILE), 'utf8
 const zones = EXPANSION ? {} : JSON.parse(await readFile(join(PILOT, 'timezones.json'), 'utf8'));
 let tzLookup = null;
 if (EXPANSION) {
+  /* Research-only dependency, deliberately outside the production
+     lockfile (the daily provenance record hashes package-lock.json).
+     Install ephemerally when running the expansion pipeline:
+       npm install --no-save tz-lookup@6.1.25 */
   const { createRequire: createTzRequire } = await import('node:module');
-  tzLookup = createTzRequire(import.meta.url)('tz-lookup');
+  try {
+    tzLookup = createTzRequire(import.meta.url)('tz-lookup');
+  } catch {
+    throw new Error('tz-lookup is required for PEOPLE_SET=expansion: npm install --no-save tz-lookup@6.1.25');
+  }
 }
 await mkdir(join(PILOT, COMPUTED_DIR), { recursive: true });
 
