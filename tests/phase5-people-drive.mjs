@@ -88,6 +88,26 @@ await withPreview({ port: 4425 }, async (baseURL) => {
           await inventoryPage.locator('a[href^="mailto:people@zodiacs.org"]').count() === 1,
           `${route}: correction route missing`,
         );
+        const openSignFacts = source?.copy.blocks
+          .flatMap((block) => block.facts)
+          .filter((fact) => fact.startsWith('sign-uncertain:')) ?? [];
+        check(
+          await inventoryPage.locator('.person-evidence dt', { hasText: 'Open signs' }).count()
+            === (openSignFacts.length > 0 ? 1 : 0),
+          `${route}: open-sign disclosure-row state drifted`,
+        );
+        const pageText = await inventoryPage.locator('.person-page').innerText();
+        for (const fact of openSignFacts) {
+          const [, body, start, end] = fact.split(':');
+          const startName = start.charAt(0).toUpperCase() + start.slice(1);
+          const endName = end.charAt(0).toUpperCase() + end.slice(1);
+          check(
+            pageText.includes(
+              `${body} crossed from ${startName} into ${endName} during that day, so its sign is left open.`,
+            ),
+            `${route}: ${body} sign uncertainty is not reader-visible`,
+          );
+        }
 
         if (source?.portrait.available) {
           const image = inventoryPage.locator('[data-person-portrait-image]');

@@ -45,9 +45,10 @@
         "elements:earth4-fire3-water1",
         "modalities:fixed4-cardinal2-mutable2",
         "settled-signs:8",
-        "retrograde:2"
+        "retrograde:2",
+        "sign-uncertain:Mars:taurus:gemini"
       ],
-      "text": "The honest balance sheet uses the 8 placements whose signs hold for the whole day: earth 4, fire 3, water 1 across the elements, and fixed 4, cardinal 2, mutable 2 across the modalities. Earth signs hold the scheme’s slow end, where results are measured in what survives rather than what starts. No settled placement falls in air — an absence the tradition treats as information, not as a defect. Neptune and Pluto were retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
+      "text": "The honest balance sheet uses the 8 placements whose signs hold for the whole day: earth 4, fire 3, water 1 across the elements, and fixed 4, cardinal 2, mutable 2 across the modalities. Earth signs hold the scheme’s slow end, where results are measured in what survives rather than what starts. Mars crossed from Taurus into Gemini during that day, so its sign is left open. No settled placement falls in air — an absence the tradition treats as information, not as a defect. Neptune and Pluto were retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
     },
     {
       "key": "moon",
@@ -81,11 +82,12 @@
     "modalities:fixed4-cardinal2-mutable2",
     "settled-signs:8",
     "retrograde:2",
+    "sign-uncertain:Mars:taurus:gemini",
     "moon-uncertain:capricorn:aquarius"
   ],
   "measurements": {
-    "originalWords": 399,
-    "substantiveStatements": 13,
+    "originalWords": 414,
+    "substantiveStatements": 14,
     "blocks": 5
   }
 }

@@ -58,6 +58,13 @@
     "Neptune": 0.016,
     "Pluto": 0.016
   },
+  "signUncertainTransitions": [
+    {
+      "body": "Moon",
+      "signAtCivilDayStart": "capricorn",
+      "signAtCivilDayEnd": "aquarius"
+    }
+  ],
   "placements": [
     {
       "body": "Sun",

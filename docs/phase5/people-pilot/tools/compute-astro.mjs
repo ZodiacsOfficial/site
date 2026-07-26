@@ -336,6 +336,17 @@ for (const candidate of candidates) {
       retrogradeStableAcrossDay: sampledBodies.every((value) => value.retrograde === body.retrograde),
     };
   });
+  const signUncertainTransitions = placements
+    .filter((placement) => !placement.stableAcrossDay)
+    .map((placement) => ({
+      body: placement.body,
+      signAtCivilDayStart: signOf(
+        early.find((value) => value.body === placement.body).lon,
+      ).slug,
+      signAtCivilDayEnd: signOf(
+        late.find((value) => value.body === placement.body).lon,
+      ).slug,
+    }));
 
   // Unknown-time aggregates may use only signs that hold for the complete
   // civil day. In particular, an uncertain Moon must never silently decide
@@ -395,6 +406,7 @@ for (const candidate of candidates) {
     },
     cusp,
     unknownTimeErrorBandDegrees: band,
+    signUncertainTransitions,
     placements,
     aspectsStableAcrossCivilDay: stableAspects,
     aspectsAtNoonOnly: noonAspects

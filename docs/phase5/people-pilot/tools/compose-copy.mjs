@@ -364,6 +364,17 @@ function shapeBlock(record, slug) {
     ? ` No settled placement falls in ${missing.join(' or ')} — an absence the tradition treats as information, not as a defect.`
     : '';
   const settledScope = `${settledBodyCount} placements whose signs hold for the whole day`;
+  const signTransitions = (record.signUncertainTransitions ?? [])
+    .filter((transition) => transition.body !== 'Moon');
+  const signTransitionFacts = signTransitions.map((transition) => (
+    `sign-uncertain:${transition.body}:${transition.signAtCivilDayStart}:${transition.signAtCivilDayEnd}`
+  ));
+  const signTransitionLine = signTransitions.length === 0
+    ? ''
+    : ` ${signTransitions.map((transition) => (
+      `${bodyLabel(transition.body)} crossed from ${SIGN_NAMES[transition.signAtCivilDayStart]} `
+      + `into ${SIGN_NAMES[transition.signAtCivilDayEnd]} during that day, so its sign is left open.`
+    )).join(' ')}`;
   const frames = [
     `Among the ${settledScope}, the elements divide ${orderedElements.map(([name, count]) => `${count} ${name}`).join(', ')}; by modality, ${orderedModalities.map(([name, count]) => `${count} ${name}`).join(', ')}.`,
     `The honest balance sheet uses the ${settledScope}: ${orderedElements.map(([name, count]) => `${name} ${count}`).join(', ')} across the elements, and ${orderedModalities.map(([name, count]) => `${name} ${count}`).join(', ')} across the modalities.`,
@@ -377,8 +388,9 @@ function shapeBlock(record, slug) {
       `modalities:${orderedModalities.map(([name, count]) => `${name}${count}`).join('-')}`,
       `settled-signs:${settledBodyCount}`,
       `retrograde:${retrograde.length}`,
+      ...signTransitionFacts,
     ],
-    text: `${pick(frames, slug, 'shape')} ${pick(ELEMENT_SENSE[orderedElements[0][0]], slug, 'shape-element')}${missingLine}${retroLine}`,
+    text: `${pick(frames, slug, 'shape')} ${pick(ELEMENT_SENSE[orderedElements[0][0]], slug, 'shape-element')}${signTransitionLine}${missingLine}${retroLine}`,
   };
 }
 

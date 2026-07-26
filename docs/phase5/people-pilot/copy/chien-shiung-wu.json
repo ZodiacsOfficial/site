@@ -43,9 +43,10 @@
         "elements:air3-fire3-earth2-water1",
         "modalities:mutable4-fixed4-cardinal1",
         "settled-signs:9",
-        "retrograde:2"
+        "retrograde:2",
+        "sign-uncertain:Venus:taurus:gemini"
       ],
-      "text": "Counting only the 9 placements whose signs hold for the whole day, the chart runs 3 air, 3 fire, 2 earth, 1 water by element and 4 mutable, 4 fixed, 1 cardinal by modality. Air weights a chart toward language and pattern — the impulse to name a thing before deciding how to feel about it. Jupiter and Uranus were retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
+      "text": "Counting only the 9 placements whose signs hold for the whole day, the chart runs 3 air, 3 fire, 2 earth, 1 water by element and 4 mutable, 4 fixed, 1 cardinal by modality. Air weights a chart toward language and pattern — the impulse to name a thing before deciding how to feel about it. Venus crossed from Taurus into Gemini during that day, so its sign is left open. Jupiter and Uranus were retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
     },
     {
       "key": "moon",
@@ -78,12 +79,13 @@
     "modalities:mutable4-fixed4-cardinal1",
     "settled-signs:9",
     "retrograde:2",
+    "sign-uncertain:Venus:taurus:gemini",
     "moon-sign:sagittarius",
     "moon-band:12.4"
   ],
   "measurements": {
-    "originalWords": 342,
-    "substantiveStatements": 13,
+    "originalWords": 357,
+    "substantiveStatements": 14,
     "blocks": 5
   }
 }

@@ -50,6 +50,20 @@ for (const person of data.people) {
     const text = [person.copy.lede, ...person.copy.blocks.map((block) => block.text)].join(' ');
     if (/\bten bodies\b/iu.test(text)) failures.push(`${person.slug}: uncertain chart claims ten-body total`);
   }
+  const copyFacts = person.copy.blocks.flatMap((block) => block.facts);
+  const copyText = [person.copy.lede, ...person.copy.blocks.map((block) => block.text)].join(' ');
+  for (const placement of person.placements.filter((entry) => (
+    !entry.stableAcrossDay && entry.body !== 'Moon'
+  ))) {
+    const fact = copyFacts.find((entry) => entry.startsWith(`sign-uncertain:${placement.body}:`));
+    const [, body, start, end] = fact?.split(':') ?? [];
+    const startName = start ? start.charAt(0).toUpperCase() + start.slice(1) : '';
+    const endName = end ? end.charAt(0).toUpperCase() + end.slice(1) : '';
+    const sentence = `${body} crossed from ${startName} into ${endName} during that day, so its sign is left open.`;
+    if (!fact || !copyText.includes(sentence)) {
+      failures.push(`${person.slug}: ${placement.body} sign uncertainty is not named`);
+    }
+  }
   const birthdaySlug = person.birthDate.birthdayRoute
     .replace(/^\/birthday\//u, '')
     .replace(/\/$/u, '');

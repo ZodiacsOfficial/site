@@ -58,6 +58,7 @@
     "Neptune": 0.013,
     "Pluto": 0.038
   },
+  "signUncertainTransitions": [],
   "placements": [
     {
       "body": "Sun",

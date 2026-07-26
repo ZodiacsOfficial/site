@@ -165,8 +165,8 @@
         "pilotTools": "docs/phase5/people-pilot/tools @ phase5a"
       },
       "contentDepth": {
-        "originalWords": 363,
-        "substantiveStatements": 14,
+        "originalWords": 378,
+        "substantiveStatements": 15,
         "highestPairwiseSimilarity": 0
       },
       "indexEligibility": {
@@ -477,8 +477,8 @@
         "pilotTools": "docs/phase5/people-pilot/tools @ phase5a"
       },
       "contentDepth": {
-        "originalWords": 342,
-        "substantiveStatements": 13,
+        "originalWords": 357,
+        "substantiveStatements": 14,
         "highestPairwiseSimilarity": 0
       },
       "indexEligibility": {
@@ -1779,8 +1779,8 @@
         "pilotTools": "docs/phase5/people-pilot/tools @ phase5a"
       },
       "contentDepth": {
-        "originalWords": 343,
-        "substantiveStatements": 13,
+        "originalWords": 358,
+        "substantiveStatements": 14,
         "highestPairwiseSimilarity": 0
       },
       "indexEligibility": {
@@ -3069,9 +3069,9 @@
         "pilotTools": "docs/phase5/people-pilot/tools @ phase5a"
       },
       "contentDepth": {
-        "originalWords": 399,
-        "substantiveStatements": 13,
-        "highestPairwiseSimilarity": 0.2079
+        "originalWords": 414,
+        "substantiveStatements": 14,
+        "highestPairwiseSimilarity": 0.2024
       },
       "indexEligibility": {
         "eligible": false,

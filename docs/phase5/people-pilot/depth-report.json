@@ -4,8 +4,8 @@
   "pages": 20,
   "originalWords": {
     "min": 332,
-    "max": 404,
-    "median": 365
+    "max": 414,
+    "median": 371
   },
   "substantiveStatements": {
     "min": 12,
@@ -35,11 +35,6 @@
       "similarity": 0.2124
     },
     {
-      "a": "wangari-maathai",
-      "b": "clara-schumann",
-      "similarity": 0.2079
-    },
-    {
       "a": "ida-b-wells",
       "b": "rosalind-franklin",
       "similarity": 0.2076
@@ -63,6 +58,11 @@
       "a": "ida-b-wells",
       "b": "virginia-woolf",
       "similarity": 0.2036
+    },
+    {
+      "a": "wangari-maathai",
+      "b": "clara-schumann",
+      "similarity": 0.2024
     },
     {
       "a": "emily-bronte",

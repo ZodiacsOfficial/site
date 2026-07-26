@@ -45,9 +45,10 @@
         "elements:fire4-water3-air1",
         "modalities:mutable4-fixed3-cardinal1",
         "settled-signs:8",
-        "retrograde:0"
+        "retrograde:0",
+        "sign-uncertain:Mercury:scorpio:sagittarius"
       ],
-      "text": "Among the 8 placements whose signs hold for the whole day, the elements divide 4 fire, 3 water, 1 air; by modality, 4 mutable, 3 fixed, 1 cardinal. Fire weights a chart toward initiative — starting, asserting, spending energy to find out what happens. No settled placement falls in earth — an absence the tradition treats as information, not as a defect. Nothing was retrograde that day, which is less common than it sounds."
+      "text": "Among the 8 placements whose signs hold for the whole day, the elements divide 4 fire, 3 water, 1 air; by modality, 4 mutable, 3 fixed, 1 cardinal. Fire weights a chart toward initiative — starting, asserting, spending energy to find out what happens. Mercury crossed from Scorpio into Sagittarius during that day, so its sign is left open. No settled placement falls in earth — an absence the tradition treats as information, not as a defect. Nothing was retrograde that day, which is less common than it sounds."
     },
     {
       "key": "moon",
@@ -81,11 +82,12 @@
     "modalities:mutable4-fixed3-cardinal1",
     "settled-signs:8",
     "retrograde:0",
+    "sign-uncertain:Mercury:scorpio:sagittarius",
     "moon-uncertain:pisces:aries"
   ],
   "measurements": {
-    "originalWords": 363,
-    "substantiveStatements": 14,
+    "originalWords": 378,
+    "substantiveStatements": 15,
     "blocks": 5
   }
 }

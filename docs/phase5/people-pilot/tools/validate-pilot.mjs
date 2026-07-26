@@ -38,6 +38,7 @@ check('20 unique slugs', slugs.size === 20, `${slugs.size}`);
 /* 2 — all twelve Sun signs */
 const SIGNS = ['aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo',
   'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces'];
+const signName = (slug) => slug.charAt(0).toUpperCase() + slug.slice(1);
 const bySign = {};
 for (const person of people) (bySign[person.sunSign.slug] ??= []).push(person);
 const missingSigns = SIGNS.filter((sign) => !bySign[sign]);
@@ -185,6 +186,31 @@ for (const person of people) {
     settled.length === 10 || !/\bten bodies\b/iu.test(text),
     `${settled.length} settled placements`,
   );
+  const unsettledNonMoon = computed.placements.filter((placement) => (
+    !placement.stableAcrossDay && placement.body !== 'Moon'
+  ));
+  const transitions = computed.signUncertainTransitions ?? [];
+  const transitionBodies = transitions
+    .filter((transition) => transition.body !== 'Moon')
+    .map((transition) => transition.body)
+    .sort();
+  const unsettledBodies = unsettledNonMoon.map((placement) => placement.body).sort();
+  check(
+    `non-Moon sign-transition inventory ${person.slug}`,
+    JSON.stringify(transitionBodies) === JSON.stringify(unsettledBodies),
+    `computed ${transitionBodies.join(', ') || 'none'}; expected ${unsettledBodies.join(', ') || 'none'}`,
+  );
+  const facts = copy.blocks.flatMap((block) => block.facts);
+  for (const transition of transitions.filter((entry) => entry.body !== 'Moon')) {
+    const expectedFact = `sign-uncertain:${transition.body}:${transition.signAtCivilDayStart}:${transition.signAtCivilDayEnd}`;
+    const expectedSentence = `${transition.body} crossed from ${signName(transition.signAtCivilDayStart)} `
+      + `into ${signName(transition.signAtCivilDayEnd)} during that day, so its sign is left open.`;
+    check(
+      `non-Moon sign uncertainty named ${person.slug}-${transition.body.toLowerCase()}`,
+      facts.includes(expectedFact) && text.includes(expectedSentence),
+      expectedSentence,
+    );
+  }
   const daySpanHours = (
     Date.parse(computed.computation.civilDayEndUtc) - Date.parse(computed.computation.civilDayStartUtc)
   ) / 3_600_000;

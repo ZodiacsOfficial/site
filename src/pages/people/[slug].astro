@@ -40,6 +40,21 @@ const coordinates = person.birthPlace.coordinates;
 const moonStatement = person.moon.uncertain
   ? `Moon sign undetermined. The Moon crossed from ${signBySlug(person.moon.signAtCivilDayStart).name} into ${signBySlug(person.moon.signAtCivilDayEnd).name} during that day.`
   : `The Moon remained in ${person.moon.signName} throughout that civil day.`;
+const openSignTransitions = person.copy.blocks.flatMap((block) => (
+  block.facts.flatMap((fact) => {
+    const match = fact.match(/^sign-uncertain:([^:]+):([a-z]+):([a-z]+)$/u);
+    return match
+      ? [{
+          body: match[1],
+          start: signBySlug(match[2]).name,
+          end: signBySlug(match[3]).name,
+        }]
+      : [];
+  })
+));
+const openSignStatement = openSignTransitions.map((transition) => (
+  `${transition.body} crossed from ${transition.start} into ${transition.end} during that day, so its sign is left open.`
+)).join(' ');
 const pageUrl = `https://zodiacs.org/people/${person.slug}/`;
 const image = `/assets/og/v2/people/${person.slug}.png`;
 
@@ -145,7 +160,11 @@ const jsonLd = [
         </p>
         <p class="person-quality">
           <strong>Birth date sourced. Birth time unknown.</strong>
-          <span>{moonStatement} Everything below uses only what the complete civil day settles.</span>
+          <span>
+            {moonStatement}
+            {openSignStatement && ` ${openSignStatement}`}
+            {' '}Everything below uses only what the complete civil day settles.
+          </span>
         </p>
       </header>
 
@@ -232,6 +251,12 @@ const jsonLd = [
                 {' · '}{moonStatement}
               </dd>
             </div>
+            {openSignTransitions.length > 0 && (
+              <div>
+                <dt>Open signs</dt>
+                <dd>{openSignStatement}</dd>
+              </div>
+            )}
             <div>
               <dt>Engine</dt>
               <dd>{person.computationInputVersion.ephemeris} · {person.computationInputVersion.aspectTable}</dd>

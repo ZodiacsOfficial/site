@@ -43,9 +43,10 @@
         "elements:earth4-fire3-air2",
         "modalities:fixed4-mutable3-cardinal2",
         "settled-signs:9",
-        "retrograde:0"
+        "retrograde:0",
+        "sign-uncertain:Mercury:aries:taurus"
       ],
-      "text": "Counting only the 9 placements whose signs hold for the whole day, the chart runs 4 earth, 3 fire, 2 air by element and 4 fixed, 3 mutable, 2 cardinal by modality. Earth weights a chart toward the material and the durable — what can be built, kept, and relied on. No settled placement falls in water — an absence the tradition treats as information, not as a defect. Nothing was retrograde that day, which is less common than it sounds."
+      "text": "Counting only the 9 placements whose signs hold for the whole day, the chart runs 4 earth, 3 fire, 2 air by element and 4 fixed, 3 mutable, 2 cardinal by modality. Earth weights a chart toward the material and the durable — what can be built, kept, and relied on. Mercury crossed from Aries into Taurus during that day, so its sign is left open. No settled placement falls in water — an absence the tradition treats as information, not as a defect. Nothing was retrograde that day, which is less common than it sounds."
     },
     {
       "key": "moon",
@@ -78,12 +79,13 @@
     "modalities:fixed4-mutable3-cardinal2",
     "settled-signs:9",
     "retrograde:0",
+    "sign-uncertain:Mercury:aries:taurus",
     "moon-sign:aries",
     "moon-band:11.9"
   ],
   "measurements": {
-    "originalWords": 343,
-    "substantiveStatements": 13,
+    "originalWords": 358,
+    "substantiveStatements": 14,
     "blocks": 5
   }
 }

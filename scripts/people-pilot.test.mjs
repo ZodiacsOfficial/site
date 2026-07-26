@@ -20,6 +20,25 @@ describe('Phase 5 People pilot contract', () => {
     }
   });
 
+  it('names every non-Moon placement whose sign is uncertain', () => {
+    for (const person of peopleData.people) {
+      const facts = person.copy.blocks.flatMap((block) => block.facts);
+      const text = person.copy.blocks.map((block) => block.text).join(' ');
+      for (const placement of person.placements.filter((entry) => (
+        !entry.stableAcrossDay && entry.body !== 'Moon'
+      ))) {
+        const fact = facts.find((entry) => entry.startsWith(`sign-uncertain:${placement.body}:`));
+        expect(fact).toBeTruthy();
+        const [, body, start, end] = fact.split(':');
+        const startName = start.charAt(0).toUpperCase() + start.slice(1);
+        const endName = end.charAt(0).toUpperCase() + end.slice(1);
+        expect(text).toContain(
+          `${body} crossed from ${startName} into ${endName} during that day, so its sign is left open.`,
+        );
+      }
+    }
+  });
+
   it('pins both route templates to noindex and nofollow', async () => {
     for (const file of ['src/pages/people/index.astro', 'src/pages/people/[slug].astro']) {
       const source = await readFile(resolve(file), 'utf8');

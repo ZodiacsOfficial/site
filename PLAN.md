@@ -220,6 +220,37 @@ invalid token returned `303` to the generic unavailable state with
 or notification was created during public-launch verification. Phase 5's
 entry gate is open; this closeout contains no Phase 5 implementation.
 
+## Phase 5B noindex pilot release candidate
+
+Phase 5 is active at the deliberately bounded Phase 5B step. This repository
+state adds one English `/people/` directory and twenty reviewed English profile
+pages. Every People route remains `noindex, nofollow` and absent from global
+navigation, search, sitemap, hreflang and assistant discovery. Phase 5C
+indexing is not authorized.
+
+- Production base: `51573a87ef492f15cb41177e727d0b46320d5fef`,
+  which already contains the released Registry Collection rename and updates.
+  The Phase 5B candidate changes no Registry or Collection source.
+- Mailbox gate: `people@zodiacs.org` is a monitored alias of
+  `admin@zodiacs.org`; the owner confirmed the final authorized receipt at
+  `2026-07-26T14:23:53Z` after marking the sender safe.
+- Independent Fable review: `40a5fd81c42b09481b6e6699e2d40bb0f435d4b1`,
+  integrated as `a97f8309189348108098001280caf7495813f43d`.
+- Review result: no P0. The single P1 was closed by naming every non-Moon
+  placement whose sign changes during the unknown birth-time day and adding
+  the matching reader-visible `Open signs` evidence row.
+- Exact local closure evidence: 1,431/1,431 unit tests; 491/491 independent
+  People data/content checks; 365/365 focused People browser assertions;
+  21/21 noindex distribution checks; 15/15 visual references; R0 and R2
+  localization gates green; three Lighthouse runs each at 98–100 performance
+  and 100 accessibility/adjusted SEO; build, schema and bundle gates green.
+- Content remains inside the reviewed bounds: 332–414 original words,
+  12–15 substantive statements, and maximum pairwise similarity `0.3048`
+  against the unchanged `0.32` ceiling.
+
+Phase 5C remains blocked on qualified legal review of the personal-data
+position and a separate exact-release review. Phase 6 has not begun.
+
 ## Phase 3 formal closure
 
 Phase 3 is **complete as of 2026-07-23**. The implementation review has
@@ -615,6 +646,6 @@ Keep clean data and route seams for these; do not implement them inside this pro
 - Selected exact-date event URLs to avoid same-month event collisions.
 - Preserved truthful Organization authorship for the AI-only operating model without a prominent reader-facing automation badge.
 
-Phase 4 is publicly launched and formally complete. Phase 5's entry gate is
-open but Phase 5 implementation has not started; Phase 6 remains gated on
-Phase 5 completion.
+Phase 4 is publicly launched and formally complete. Phase 5B is the active
+bounded noindex pilot; Phase 5C indexing is not authorized, and Phase 6
+remains gated on Phase 5 completion.

@@ -1,6 +1,6 @@
 # Zodiacs.org setup and operations
 
-Last updated: 2026-07-25
+Last updated: 2026-07-26
 
 This is the provisioning source of truth for the six-phase household-name program. It consolidates the live repository's external services, environment variables, feature flags, and scheduled jobs. It contains names and procedures only—never secrets or secret values.
 
@@ -41,6 +41,7 @@ Do not put credentials in `.env` files that can be committed, Markdown, fixtures
 | GitHub Actions | Existing | CI, daily/monthly data generation, digest, push, and refresh jobs | Give only the permissions declared by each workflow. Store secrets as Actions secrets and non-secret switches as variables. |
 | Supabase | Existing | Magic-link auth, RLS chart sync, digest preferences, daily-chart consent and delivery receipts, assistant quota, push subscriptions, and released Phase 4 compatibility invitations | Apply migrations, keep RLS on, and never expose the service-role key. |
 | Resend | Selected standard | Double-opt-in capture, weekly/daily email, unsubscribe-compatible delivery | Authenticate `zodiacs.org` with SPF/DKIM and use a domain sender. |
+| Google Workspace | Existing | Monitored public contact and correction mailboxes | `people@zodiacs.org` is an alternate address for the monitored `admin@zodiacs.org` account, not a separate inbox. Keep the alias active and monitor Spam as well as Inbox. |
 | Buttondown or Loops | Supported alternatives | Standalone capture only | Configure exactly one provider. Do not combine providers in one deployment. |
 | Anthropic | Existing optional integration | Ask Zodiacs; optional future Phase 1 prose build | Use server/CI-only keys. Keep daily-prose and assistant budgets independently revocable. |
 | Plausible-compatible analytics | Optional, approved | Cookieless allowlisted product events | No script is emitted when unconfigured. Never send birth data, email, chart positions, wallet addresses, free text, query strings, or fragments. |
@@ -48,8 +49,16 @@ Do not put credentials in `.env` files that can be committed, Markdown, fixtures
 | Solana/Base RPC providers | Existing optional Registry integrations | Wallet-chart and Registry Collection reads | Out of scope for this six-phase program; preserve their flags and server-only endpoints. |
 | Vercel Firewall | Existing Registry integration | Registry Collection rate limit | Keep the rule ID `registry-aura-holdings-v1` if Aura is enabled. |
 | GeoNames | Existing build-time data source | Place-search shards | Attribution remains in the footer; no runtime credential is required by the committed build. |
-| Wikidata/Wikipedia | Phase 5, not provisioned | Reviewed public-figure facts and source URLs | Use public APIs/exports with an identifying User-Agent and cache source snapshots; never scrape astrology sites. |
+| Wikidata/Wikipedia | Phase 5B pilot cached | Reviewed public-figure facts and source URLs | Use public APIs/exports with an identifying User-Agent and cache source snapshots; never scrape astrology sites. |
 | Google Search Console, Bing Webmaster Tools, IndexNow | Existing operational surface | Discovery and crawl notification | Verify the domain and submit `/sitemap.xml`; the daily workflow already pings IndexNow after live verification. |
+
+The People correction route uses `people@zodiacs.org`. The owner confirmed
+that this alias delivers to the monitored `admin@zodiacs.org` Workspace
+mailbox. The first authorized probe was found in Spam, the sender was marked
+safe, and the final authorized test was confirmed received at
+`2026-07-26T14:23:53Z`. Do not create a second inbox or change the public
+address without updating the correction route and repeating the delivery
+proof.
 
 ## Environment variables
 

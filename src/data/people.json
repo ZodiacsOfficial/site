@@ -2,7 +2,7 @@
   "schema": "zodiacs.phase5.people.v1",
   "status": "Phase 5B noindex pilot — 20 reviewed records",
   "reviewedAtUtc": "2026-07-25T00:00:00Z",
-  "sourceManifestSha256": "077ede57ebc286588b147f017dde176df661458f5053843f7233ba14fe53c799",
+  "sourceManifestSha256": "c7765c8b780557b91c9a6ad10ffc8daa5da83a10899c1ff406711759fe670f14",
   "people": [
     {
       "qid": "Q7259",
@@ -148,8 +148,8 @@
         "pilotTools": "docs/phase5/people-pilot/tools @ phase5a"
       },
       "contentDepth": {
-        "originalWords": 363,
-        "substantiveStatements": 14,
+        "originalWords": 378,
+        "substantiveStatements": 15,
         "highestPairwiseSimilarity": 0
       },
       "indexEligibility": {
@@ -409,9 +409,10 @@
               "elements:fire4-water3-air1",
               "modalities:mutable4-fixed3-cardinal1",
               "settled-signs:8",
-              "retrograde:0"
+              "retrograde:0",
+              "sign-uncertain:Mercury:scorpio:sagittarius"
             ],
-            "text": "Among the 8 placements whose signs hold for the whole day, the elements divide 4 fire, 3 water, 1 air; by modality, 4 mutable, 3 fixed, 1 cardinal. Fire weights a chart toward initiative — starting, asserting, spending energy to find out what happens. No settled placement falls in earth — an absence the tradition treats as information, not as a defect. Nothing was retrograde that day, which is less common than it sounds."
+            "text": "Among the 8 placements whose signs hold for the whole day, the elements divide 4 fire, 3 water, 1 air; by modality, 4 mutable, 3 fixed, 1 cardinal. Fire weights a chart toward initiative — starting, asserting, spending energy to find out what happens. Mercury crossed from Scorpio into Sagittarius during that day, so its sign is left open. No settled placement falls in earth — an absence the tradition treats as information, not as a defect. Nothing was retrograde that day, which is less common than it sounds."
           },
           {
             "key": "moon",
@@ -432,8 +433,8 @@
           "label": "The Sagittarius guide"
         },
         "measurements": {
-          "originalWords": 363,
-          "substantiveStatements": 14,
+          "originalWords": 378,
+          "substantiveStatements": 15,
           "blocks": 5
         }
       }
@@ -1007,8 +1008,8 @@
         "pilotTools": "docs/phase5/people-pilot/tools @ phase5a"
       },
       "contentDepth": {
-        "originalWords": 342,
-        "substantiveStatements": 13,
+        "originalWords": 357,
+        "substantiveStatements": 14,
         "highestPairwiseSimilarity": 0
       },
       "indexEligibility": {
@@ -1293,9 +1294,10 @@
               "elements:air3-fire3-earth2-water1",
               "modalities:mutable4-fixed4-cardinal1",
               "settled-signs:9",
-              "retrograde:2"
+              "retrograde:2",
+              "sign-uncertain:Venus:taurus:gemini"
             ],
-            "text": "Counting only the 9 placements whose signs hold for the whole day, the chart runs 3 air, 3 fire, 2 earth, 1 water by element and 4 mutable, 4 fixed, 1 cardinal by modality. Air weights a chart toward language and pattern — the impulse to name a thing before deciding how to feel about it. Jupiter and Uranus were retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
+            "text": "Counting only the 9 placements whose signs hold for the whole day, the chart runs 3 air, 3 fire, 2 earth, 1 water by element and 4 mutable, 4 fixed, 1 cardinal by modality. Air weights a chart toward language and pattern — the impulse to name a thing before deciding how to feel about it. Venus crossed from Taurus into Gemini during that day, so its sign is left open. Jupiter and Uranus were retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
           },
           {
             "key": "moon",
@@ -1317,8 +1319,8 @@
           "label": "The Gemini guide"
         },
         "measurements": {
-          "originalWords": 342,
-          "substantiveStatements": 13,
+          "originalWords": 357,
+          "substantiveStatements": 14,
           "blocks": 5
         }
       }
@@ -4701,8 +4703,8 @@
         "pilotTools": "docs/phase5/people-pilot/tools @ phase5a"
       },
       "contentDepth": {
-        "originalWords": 343,
-        "substantiveStatements": 13,
+        "originalWords": 358,
+        "substantiveStatements": 14,
         "highestPairwiseSimilarity": 0
       },
       "indexEligibility": {
@@ -4960,9 +4962,10 @@
               "elements:earth4-fire3-air2",
               "modalities:fixed4-mutable3-cardinal2",
               "settled-signs:9",
-              "retrograde:0"
+              "retrograde:0",
+              "sign-uncertain:Mercury:aries:taurus"
             ],
-            "text": "Counting only the 9 placements whose signs hold for the whole day, the chart runs 4 earth, 3 fire, 2 air by element and 4 fixed, 3 mutable, 2 cardinal by modality. Earth weights a chart toward the material and the durable — what can be built, kept, and relied on. No settled placement falls in water — an absence the tradition treats as information, not as a defect. Nothing was retrograde that day, which is less common than it sounds."
+            "text": "Counting only the 9 placements whose signs hold for the whole day, the chart runs 4 earth, 3 fire, 2 air by element and 4 fixed, 3 mutable, 2 cardinal by modality. Earth weights a chart toward the material and the durable — what can be built, kept, and relied on. Mercury crossed from Aries into Taurus during that day, so its sign is left open. No settled placement falls in water — an absence the tradition treats as information, not as a defect. Nothing was retrograde that day, which is less common than it sounds."
           },
           {
             "key": "moon",
@@ -4984,8 +4987,8 @@
           "label": "The Taurus guide"
         },
         "measurements": {
-          "originalWords": 343,
-          "substantiveStatements": 13,
+          "originalWords": 358,
+          "substantiveStatements": 14,
           "blocks": 5
         }
       }
@@ -8273,9 +8276,9 @@
         "pilotTools": "docs/phase5/people-pilot/tools @ phase5a"
       },
       "contentDepth": {
-        "originalWords": 399,
-        "substantiveStatements": 13,
-        "highestPairwiseSimilarity": 0.2079
+        "originalWords": 414,
+        "substantiveStatements": 14,
+        "highestPairwiseSimilarity": 0.2024
       },
       "indexEligibility": {
         "eligible": false,
@@ -8572,9 +8575,10 @@
               "elements:earth4-fire3-water1",
               "modalities:fixed4-cardinal2-mutable2",
               "settled-signs:8",
-              "retrograde:2"
+              "retrograde:2",
+              "sign-uncertain:Mars:taurus:gemini"
             ],
-            "text": "The honest balance sheet uses the 8 placements whose signs hold for the whole day: earth 4, fire 3, water 1 across the elements, and fixed 4, cardinal 2, mutable 2 across the modalities. Earth signs hold the scheme’s slow end, where results are measured in what survives rather than what starts. No settled placement falls in air — an absence the tradition treats as information, not as a defect. Neptune and Pluto were retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
+            "text": "The honest balance sheet uses the 8 placements whose signs hold for the whole day: earth 4, fire 3, water 1 across the elements, and fixed 4, cardinal 2, mutable 2 across the modalities. Earth signs hold the scheme’s slow end, where results are measured in what survives rather than what starts. Mars crossed from Taurus into Gemini during that day, so its sign is left open. No settled placement falls in air — an absence the tradition treats as information, not as a defect. Neptune and Pluto were retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
           },
           {
             "key": "moon",
@@ -8595,8 +8599,8 @@
           "label": "The Aries guide"
         },
         "measurements": {
-          "originalWords": 399,
-          "substantiveStatements": 13,
+          "originalWords": 414,
+          "substantiveStatements": 14,
           "blocks": 5
         }
       }
