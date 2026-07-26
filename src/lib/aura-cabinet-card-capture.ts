@@ -37,14 +37,17 @@
 const RELEVANT = /aura-collection-cabinet|zodiac-medallion/;
 
 /**
- * The one width every export uses, in CSS pixels. 486 sits inside the
- * ≤639px cascade, so the clone lays out as the portrait three-column case —
- * the cabinet as a phone shows it. The card pads it by round(486 × 0.055)
- * per side: (486 + 54) × 2 = a PNG exactly 1080 device pixels wide.
+ * The one width every export uses, in CSS pixels: a phone's logical width, so
+ * the card carries the proportions the cabinet actually has on a phone. Type
+ * in the case is clamped to the same pixel size at 390, 402 and 486, so a
+ * wider export would only make the same letters look small in a roomier case.
+ *
+ * The card pads it by round(390 × 0.055) = 21 a side, and 432 × 2.5 is a PNG
+ * exactly 1080 device pixels wide.
  */
-export const CABINET_EXPORT_WIDTH = 486;
+export const CABINET_EXPORT_WIDTH = 390;
 
-export const CABINET_CAPTURE_SCALE = 2;
+export const CABINET_CAPTURE_SCALE = 2.5;
 
 /** The four faces the cabinet actually sets. */
 const FONT_FACES: { family: string; weight: string; style: string; url: string }[] = [
@@ -521,7 +524,10 @@ export async function captureCabinet(
 ): Promise<CabinetCaptureResult> {
   const section = (element.closest('.aura-collection-cabinet') as HTMLElement | null) ?? element;
   const width = CABINET_EXPORT_WIDTH;
-  const density = Math.max(1, Math.round(scale));
+  // Not rounded: the density is fractional by design (2.5 turns a 432px card
+  // into exactly 1080 device pixels), and rounding it would break the
+  // one-to-one match between the bitmap and the box the card draws it into.
+  const density = Math.max(1, scale);
 
   const clone = section.cloneNode(true) as HTMLElement;
   // The card draws its own chrome; the case is the picture.
@@ -587,7 +593,16 @@ export async function captureCabinet(
       if (looksScreenReaderOnly(getComputedStyle(node))) node.remove();
     });
     wrapper
-      .querySelectorAll<HTMLElement>('.aura-collection-cabinet__object, .aura-collection-cabinet__material, .aura-collection-cabinet__material img')
+      .querySelectorAll<HTMLElement>([
+        '.aura-collection-cabinet__object',
+        '.aura-collection-cabinet__material',
+        '.aura-collection-cabinet__material img',
+        // The edition disc and its numeral are round because their box is
+        // square. Freezing that box here means no engine has to resolve an
+        // aspect ratio inside the raster to keep the seal a circle.
+        '.aura-collection-cabinet__edition-disc',
+        '.aura-collection-cabinet__edition-seal',
+      ].join(', '))
       .forEach((node) => {
         const box = node.getBoundingClientRect();
         if (box.width <= 0 || box.height <= 0) return;

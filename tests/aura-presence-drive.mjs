@@ -1,8 +1,15 @@
 import assert from 'node:assert/strict';
 import { resolve } from 'node:path';
+import pixelmatch from 'pixelmatch';
+import { PNG } from 'pngjs';
 import { chromium } from 'playwright-core';
 import { findChromium, STABLE_CHROMIUM_ARGS } from './visual/browser.mjs';
 import { withPreview } from './visual/preview-server.mjs';
+import { CABINET_CAPTURE_SCALE, CABINET_EXPORT_WIDTH } from '../src/lib/aura-cabinet-card-capture.ts';
+
+// The card's own geometry, read from the renderer so the gate cannot drift.
+const CARD_EXPORT_WIDTH = CABINET_EXPORT_WIDTH;
+const CARD_DENSITY = CABINET_CAPTURE_SCALE;
 
 const fixedNow = '2026-07-16T12:00:00.000Z';
 const checkedAt = '2026-07-16T11:58:00.000Z';
@@ -891,6 +898,102 @@ async function verifyDesktopFold(browser, baseURL) {
   await context.close();
 }
 
+/**
+ * The card claims to be a photograph of the case, so prove it: render the live
+ * case at the export's own width and density, and diff it against the case
+ * region of the exported PNG. Every share-card regression so far — a clipped
+ * grid, a blank case, missing sculptures, a stray announcement — would have
+ * failed here, because each one made the picture stop matching the page.
+ */
+async function verifyCardMatchesPage(browser, baseURL) {
+  const context = await browser.newContext({
+    viewport: { width: CARD_EXPORT_WIDTH, height: 900 },
+    deviceScaleFactor: CARD_DENSITY,
+    colorScheme: 'dark',
+  });
+  await installState(context);
+  const page = await context.newPage();
+  await page.route('**/api/aura-holdings', (route) => route.fulfill({
+    status: 200,
+    contentType: 'application/json',
+    body: JSON.stringify({
+      chain: 'solana',
+      heldSigns: expectedHeldSigns,
+      holdings: expectedHoldings,
+      checkedAt,
+    }),
+  }));
+  await page.goto(`${baseURL}/registry/collection/`, { waitUntil: 'networkidle' });
+  await page.locator('#aura-address').fill(address);
+  await page.getByRole('button', { name: 'Show my collection', exact: true }).click();
+  await waitForStageSettled(page);
+
+  // A focus ring belongs to the page, not to a still of it.
+  await page.evaluate(() => document.activeElement?.blur());
+  const caseElement = page.locator('.aura-stage .aura-collection-cabinet__frame');
+  // The export lays the case out at the full export width, while on the page
+  // the same case sits inside the page's own gutters. Widen the viewport until
+  // the live case measures what the export gives it, so the two are compared
+  // at one scale rather than across a silent resize.
+  for (let attempt = 0; attempt < 4; attempt += 1) {
+    const measured = await caseElement.evaluate((node) => node.getBoundingClientRect().width);
+    const delta = CARD_EXPORT_WIDTH - measured;
+    if (Math.abs(delta) < 0.5) break;
+    const size = page.viewportSize();
+    await page.setViewportSize({ width: Math.round(size.width + delta), height: size.height });
+  }
+  const pageShot = PNG.sync.read(await caseElement.screenshot());
+
+  await page.getByRole('button', { name: 'Share this cabinet', exact: true }).click();
+  const preview = page.locator('.aura-stage .aura-share-preview img');
+  await preview.waitFor();
+  await page.waitForFunction(() => {
+    const node = document.querySelector('.aura-stage .aura-share-preview img');
+    return node !== null && node.naturalWidth > 0;
+  });
+  const cardBase64 = await preview.evaluate(async (image) => {
+    const blob = await (await fetch(image.src)).blob();
+    const bytes = new Uint8Array(await blob.arrayBuffer());
+    let binary = '';
+    for (let index = 0; index < bytes.length; index += 1) binary += String.fromCharCode(bytes[index]);
+    return btoa(binary);
+  });
+  const card = PNG.sync.read(Buffer.from(cardBase64, 'base64'));
+  await context.close();
+
+  // The case sits inset by the card's own padding and header, both derived
+  // from the export width exactly as the renderer derives them.
+  const pad = Math.round(CARD_EXPORT_WIDTH * 0.055);
+  const headerH = Math.round(CARD_EXPORT_WIDTH * 0.105);
+  const originX = Math.round(pad * CARD_DENSITY);
+  const originY = Math.round((pad + headerH) * CARD_DENSITY);
+  const width = Math.min(pageShot.width, card.width - originX);
+  const height = Math.min(pageShot.height, card.height - originY);
+  assert.ok(
+    width > 600 && height > 600,
+    `the case region should be substantial (got ${width}×${height})`,
+  );
+
+  const fromCard = new PNG({ width, height });
+  PNG.bitblt(card, fromCard, originX, originY, width, height, 0, 0);
+  const fromPage = new PNG({ width, height });
+  PNG.bitblt(pageShot, fromPage, 0, 0, width, height, 0, 0);
+  const diff = pixelmatch(fromPage.data, fromCard.data, null, width, height, {
+    threshold: 0.12,
+    includeAA: false,
+  });
+  const ratio = diff / (width * height);
+  // Both halves come from one browser in one run, so type rendering cancels
+  // out and what remains is sub-pixel edge noise — measured at ~2%. The
+  // ceiling leaves headroom for that without tolerating a real divergence: a
+  // lost sculpture, a dropped frame, or a blank case all read far higher.
+  assert.ok(
+    ratio <= 0.035,
+    `the exported case must match the live case (${(ratio * 100).toFixed(2)}% of pixels differ over ${width}×${height})`,
+  );
+  return ratio;
+}
+
 const executablePath = await findChromium();
 const browser = await chromium.launch({ executablePath, headless: true, args: STABLE_CHROMIUM_ARGS });
 try {
@@ -900,6 +1003,8 @@ try {
     await verifyReducedMotion(browser, baseURL);
     await verifyRestoredCabinet(browser, baseURL);
     await verifyDesktopFold(browser, baseURL);
+    const cardDrift = await verifyCardMatchesPage(browser, baseURL);
+    console.log(`aura-presence-drive: exported case matches the live case within ${(cardDrift * 100).toFixed(2)}%`);
     assert.deepEqual(productFailures, [], 'the gallery browser verification found product regressions');
   });
 } finally {

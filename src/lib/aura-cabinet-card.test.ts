@@ -281,18 +281,22 @@ describe("cabinet capture flattening", () => {
   });
 
   it("resolves viewport widths to pixels and drops viewport heights", () => {
+    // 1.5vw of the 390px export width.
     expect(rewriteViewportUnits("padding: clamp(9px, 1.5vw, 16px)", CABINET_EXPORT_WIDTH)).toBe(
-      "padding: clamp(9px, 7.29px, 16px)",
+      "padding: clamp(9px, 5.85px, 16px)",
     );
     expect(
       rewriteViewportUnits("min-height: 100dvh; color: rgb(0, 0, 0)", CABINET_EXPORT_WIDTH),
     ).toBe("color: rgb(0, 0, 0)");
   });
 
-  it("exports a PNG exactly 1080 device pixels wide", () => {
-    // Card padding is round(width × 0.055) per side at a 2× raster.
+  it("exports a PNG exactly 1080 device pixels wide from a phone-width case", () => {
+    // The case is laid out at a phone's width so the card carries the page's
+    // proportions; padding is round(width × 0.055) a side, density 2.5.
+    expect(CABINET_EXPORT_WIDTH).toBe(390);
     const pad = Math.round(CABINET_EXPORT_WIDTH * 0.055);
-    expect((CABINET_EXPORT_WIDTH + pad * 2) * 2).toBe(1080);
+    expect(pad).toBe(21);
+    expect((CABINET_EXPORT_WIDTH + pad * 2) * 2.5).toBe(1080);
   });
 
   it("embeds the file the browser itself resolved, sharpening only the disc", () => {
